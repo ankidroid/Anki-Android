@@ -31,7 +31,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.PixelFormat
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.util.Linkify
 import android.view.KeyEvent
@@ -103,7 +102,6 @@ import com.ichi2.anki.contextmenu.MouseContextMenuHandler
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.IncludeDeckPickerBinding
 import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
-import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -170,12 +168,11 @@ import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
-import com.ichi2.anki.utils.ext.getSizeOfBitmapFromCollection
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
+import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.utils.runWithOOMCheck
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
@@ -200,7 +197,6 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -1045,82 +1041,23 @@ open class DeckPicker :
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)
     }
 
-    // Note: when changing this method consider OutOfMemoryErrors
     private suspend fun applyDeckPickerBackground() {
-        // Allow the user to clear data and get back to a good state if they provide an invalid background.
-        if (!Prefs.isBackgroundEnabled) {
-            Timber.d("No DeckPicker background preference")
-            deckPickerBinding.background.setBackgroundResource(0)
-            deckListAdapter.activityHasBackground = false
-            return
+        val result = BackgroundImage.resolve(this)
+        if (result is BackgroundImage.ResolveResult.Failure) {
+            showThemedToast(this, result.message(this), shortLength = false)
         }
-        val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
-        val imgFile = File(currentAnkiDroidDirectory, BackgroundImage.FILENAME)
-        if (!imgFile.exists()) {
-            Timber.d("No DeckPicker background image")
-            deckPickerBinding.background.setBackgroundResource(0)
-            deckListAdapter.activityHasBackground = false
-            return
-        }
+        val drawable = (result as? BackgroundImage.ResolveResult.Ready)?.drawable
 
-        // TODO: Temporary fix to stop a crash on startup [15450], it can be removed either:
-        // * by moving this check to an upgrade path
-        // * once enough time has passed
-        // null shouldn't happen as we check for the file being present above this call
-        val (bitmapWidth, bitmapHeight) = getSizeOfBitmapFromCollection(BackgroundImage.FILENAME) ?: return
-        if (bitmapWidth <= 0 || bitmapHeight <= 0) {
-            Timber.w("Decoding background image for dimensions info failed")
-            deckPickerBinding.background.setBackgroundResource(0)
-            deckListAdapter.activityHasBackground = false
-            return
-        }
-        if (bitmapWidth * bitmapHeight * BITMAP_BYTES_PER_PIXEL > BackgroundImage.MAX_BITMAP_SIZE) {
-            Timber.w("DeckPicker background image dimensions too large")
-            deckPickerBinding.background.setBackgroundResource(0)
-            deckListAdapter.activityHasBackground = false
-            return
-        }
-
-        fun onOOMError(error: OutOfMemoryError) {
-            Timber.w(error, "Failed to apply background - OOM")
-            showThemedToast(
-                this@DeckPicker,
-                getString(R.string.background_image_too_large),
-                false,
-            )
-            deckListAdapter.activityHasBackground = false
-        }
-
-        try {
-            Timber.i("Applying background image selected by user")
-            val drawable =
-                withContext(Dispatchers.IO) {
-                    // 6608 - OOM should be catchable here.
-                    runWithOOMCheck(
-                        { Drawable.createFromPath(imgFile.absolutePath) },
-                        ::onOOMError,
-                    )
-                }
-            runWithOOMCheck(
-                {
-                    deckPickerBinding.background.setImageDrawable(drawable)
-                    deckListAdapter.activityHasBackground = drawable != null
-                },
-                onError = ::onOOMError,
-            )
-        } catch (e: Exception) {
-            if (e is CancellationException) {
-                throw e
-            } else {
-                Timber.w(e, "Failed to apply background")
-                showThemedToast(
-                    this,
-                    getString(R.string.failed_to_apply_background_image, e.localizedMessage),
-                    false,
-                )
-                deckListAdapter.activityHasBackground = false
+        var hasBackground = drawable != null
+        if (drawable != null) {
+            deckPickerBinding.background.setImageDrawableSafe(drawable) {
+                showThemedToast(this, getString(R.string.background_image_too_large), shortLength = false)
+                hasBackground = false
             }
+        } else {
+            deckPickerBinding.background.setBackgroundResource(0)
         }
+        deckListAdapter.activityHasBackground = hasBackground
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
