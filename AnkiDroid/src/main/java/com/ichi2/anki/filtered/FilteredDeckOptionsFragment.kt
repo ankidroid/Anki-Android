@@ -26,6 +26,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -42,6 +43,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.openUrl
@@ -53,7 +55,6 @@ import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import java.util.Locale.getDefault
-import kotlin.text.replaceFirstChar
 
 /**
  * Represents the screen where a filtered deck can be built or rebuilt after updating its properties.
@@ -64,6 +65,14 @@ import kotlin.text.replaceFirstChar
 class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_options) {
     private val binding by viewBinding(FragmentFilteredDeckOptionsBinding::bind)
     private val viewModel by viewModels<FilteredDeckOptionsViewModel>()
+    private val discardBackHandler =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                DiscardChangesDialog.showDialog(context = requireActivity()) {
+                    requireActivity().finish()
+                }
+            }
+        }
 
     override fun onViewCreated(
         view: View,
@@ -91,6 +100,15 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.secondFilterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
         bindLabels()
         bindListeners()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            discardBackHandler,
+        )
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.hasUnsavedChanges.collect { status ->
+                discardBackHandler.isEnabled = status
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->

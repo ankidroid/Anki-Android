@@ -310,6 +310,71 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `changing user input updates changed status`() =
+        runTest {
+            val testDid = createTestFilteredDeck()
+            withViewModel(did = testDid) {
+                assertThat(current.name, equalTo("Filtered"))
+                assertThat(current.filter1State.search, equalTo("flag:1"))
+                assertThat(current.filter1State.limit, equalTo("5"))
+                assertTrue(current.isSecondFilterEnabled)
+                assertThat(current.filter2State?.search, equalTo("flag:2"))
+                assertThat(current.filter2State?.limit, equalTo("5"))
+                assertFalse(hasUnsavedChanges.value)
+                // check status for name changes
+                onDeckNameChange("Not")
+                assertTrue(hasUnsavedChanges.value)
+                onDeckNameChange("Filtered")
+                assertFalse(hasUnsavedChanges.value)
+                // check status for filter 1 content changes
+                onSearchChange(FilterIndex.First, "flags:7")
+                assertTrue(hasUnsavedChanges.value)
+                onSearchChange(FilterIndex.First, "flag:1")
+                assertFalse(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.First, "100")
+                assertTrue(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.First, "5")
+                assertFalse(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.First, 10)
+                assertTrue(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.First, 1)
+                assertFalse(hasUnsavedChanges.value)
+                // check status if the second filter availability is changed
+                onSecondFilterStatusChange(false)
+                assertTrue(hasUnsavedChanges.value)
+                onSecondFilterStatusChange(true)
+                assertFalse(hasUnsavedChanges.value)
+                // check status for filter 2 content changes
+                onSearchChange(FilterIndex.Second, "flags:7")
+                assertTrue(hasUnsavedChanges.value)
+                onSearchChange(FilterIndex.Second, "flag:2")
+                assertFalse(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.Second, "100")
+                assertTrue(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.Second, "5")
+                assertFalse(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.Second, 10)
+                assertTrue(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.Second, 1)
+                assertFalse(hasUnsavedChanges.value)
+            }
+        }
+
+    @Test
+    fun `changed status is not updated for properties that are not observed`() =
+        runTest {
+            val testDid = createTestFilteredDeck()
+            withViewModel(did = testDid) {
+                assertFalse(current.allowEmpty)
+                assertTrue(current.shouldReschedule)
+                assertFalse(hasUnsavedChanges.value)
+                onAllowEmptyChange(true)
+                onRescheduleChange(false)
+                assertFalse(hasUnsavedChanges.value)
+            }
+        }
+
     /** Returns the current state as a [FilteredDeckOptions] or throw otherwise */
     private val FilteredDeckOptionsViewModel.current: FilteredDeckOptions
         get() = state.value as FilteredDeckOptions
@@ -337,6 +402,41 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
             moveToDeck("A", false)
             setup()
         }
+
+    /** Note: created filtered deck has the second filter enabled by default */
+    private suspend fun createTestFilteredDeck(): DeckId {
+        addDeck("A", true)
+        addNoteToDeckA { flagCardForNote(this, Flag.RED) }
+        addNoteToDeckA { flagCardForNote(this, Flag.GREEN) }
+        val data =
+            filteredDeckForUpdate {
+                id = 0
+                name = "Filtered"
+                config =
+                    filtered {
+                        reschedule = true
+                        searchTerms.add(
+                            searchTerm {
+                                search = "flag:1"
+                                limit = 5
+                                order =
+                                    Deck.Filtered.SearchTerm.Order
+                                        .forNumber(1)
+                            },
+                        )
+                        searchTerms.add(
+                            searchTerm {
+                                search = "flag:2"
+                                limit = 5
+                                order =
+                                    Deck.Filtered.SearchTerm.Order
+                                        .forNumber(1)
+                            },
+                        )
+                    }
+            }
+        return withCol { sched.addOrUpdateFilteredDeck(data) }.id
+    }
 
     companion object {
         private const val TEST_DECK_NAME = "TestFiltered"

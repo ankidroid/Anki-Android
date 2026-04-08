@@ -55,6 +55,10 @@ class FilteredDeckOptionsViewModel(
 
     private var decksNames = emptyList<String>()
 
+    val hasUnsavedChanges: StateFlow<Boolean>
+        field = MutableStateFlow<Boolean>(false)
+    private var initialState: FilteredDeckOptions? = null
+
     /** The [DeckId] of a filtered deck to edit or 0 if we are creating a new filtered deck. */
     private val did: DeckId
         get() = savedStateHandle.get<Long>(ARG_DECK_ID) ?: 0L
@@ -79,12 +83,15 @@ class FilteredDeckOptionsViewModel(
                     return@launch
                 }
             decksNames = withCol { safeGetDecksNames() }
-            savedStateHandle[ARG_DATA] =
-                filteredDeckData.asInitialState(
+            filteredDeckData
+                .asInitialState(
                     cardsOptions = cardsOptions,
                     defaultSearch1 = search,
                     defaultSearch2 = search2,
-                )
+                ).apply {
+                    savedStateHandle[ARG_DATA] = this
+                    initialState = this
+                }
             state.update { currentState() }
         }
     }
@@ -99,6 +106,7 @@ class FilteredDeckOptionsViewModel(
             }
         if (currentState().name == name) return
         updateCurrentState { copy(name = name, nameInputError = error) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onSearchChange(
@@ -109,6 +117,7 @@ class FilteredDeckOptionsViewModel(
         val targetFilterState = currentFilterState(index)
         if (targetFilterState?.search == searchQuery) return
         updateCurrentFilterState(index) { copy(search = searchQuery) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onLimitChange(
@@ -124,6 +133,7 @@ class FilteredDeckOptionsViewModel(
             }
         if (limit == currentFilterState(index)?.limit) return
         updateCurrentFilterState(index) { copy(limit = limit, error = inputError) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onCardsOptionsChange(
@@ -133,6 +143,7 @@ class FilteredDeckOptionsViewModel(
         Timber.i("Filtered deck filter($filterIndex) cards options index changing to $cardOptionIndex")
         if (currentFilterState(filterIndex)?.index == cardOptionIndex) return
         updateCurrentFilterState(filterIndex) { copy(index = cardOptionIndex) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onSearchInBrowser(filterIndex: FilterIndex) {
@@ -170,6 +181,7 @@ class FilteredDeckOptionsViewModel(
                 filter2State = filter2State ?: SearchTermState(),
             )
         }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onRescheduleChange(isEnabled: Boolean) {
@@ -214,7 +226,8 @@ class FilteredDeckOptionsViewModel(
     fun onShowExcludedCards() {
         Timber.i("Building unmovable cards search query to show in browser")
         viewModelScope.launch {
-            val manualFilters = mutableListOf(currentFilterState(FilterIndex.First)?.search ?: return@launch)
+            val manualFilters =
+                mutableListOf(currentFilterState(FilterIndex.First)?.search ?: return@launch)
             if (currentState().isSecondFilterEnabled && currentFilterState(FilterIndex.Second) != null) {
                 manualFilters.add(currentFilterState(FilterIndex.Second)?.search ?: return@launch)
             }
@@ -227,7 +240,8 @@ class FilteredDeckOptionsViewModel(
             val manualFilter = withCol { groupSearches(manualFilters, SearchJoiner.OR) }
             val implicitFilter = withCol { groupSearches(implicitFilters, SearchJoiner.OR) }
             try {
-                val browserSearch = withCol { buildSearchString(listOf(manualFilter, implicitFilter)) }
+                val browserSearch =
+                    withCol { buildSearchString(listOf(manualFilter, implicitFilter)) }
                 updateCurrentState { copy(browserQuery = browserSearch) }
             } catch (ex: Exception) {
                 updateCurrentState { copy(throwable = ex) }
@@ -279,6 +293,38 @@ class FilteredDeckOptionsViewModel(
         Timber.i("Clearing error from state")
         updateCurrentState { copy(throwable = null) }
     }
+
+    /**
+     * Checks the current state with the state that was loaded initially.
+     */
+    private fun wasStateModified(): Boolean {
+        val initial = initialState ?: return false
+        val current = (state.value as? FilteredDeckOptions) ?: return false
+        return initial.name != current.name ||
+            isFilter1Changed(initial, current) ||
+            initial.isSecondFilterEnabled != current.isSecondFilterEnabled ||
+            isFilter2Changed(initial, current)
+    }
+
+    private fun isFilter1Changed(
+        initial: FilteredDeckOptions,
+        current: FilteredDeckOptions,
+    ): Boolean =
+        initial.filter1State.search != current.filter1State.search ||
+            initial.filter1State.limit != current.filter1State.limit ||
+            initial.filter1State.index != current.filter1State.index
+
+    private fun isFilter2Changed(
+        initial: FilteredDeckOptions,
+        current: FilteredDeckOptions,
+    ): Boolean =
+        if (!current.isSecondFilterEnabled || !initial.isSecondFilterEnabled) {
+            false
+        } else {
+            initial.filter2State?.search != current.filter2State?.search ||
+                initial.filter2State?.limit != current.filter2State?.limit ||
+                initial.filter2State?.index != current.filter2State?.index
+        }
 
     /** Get the current state as it's found in the associated [SavedStateHandle]. Throws if state is not found. */
     private fun currentState(): FilteredDeckOptions = requireNotNull(savedStateHandle[ARG_DATA])
