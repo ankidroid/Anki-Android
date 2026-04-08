@@ -146,6 +146,12 @@ abstract class CardViewerFragment(
 
     protected open fun onCreateWebChromeClient() = CardViewerWebChromeClient()
 
+    /**
+     * Reconfigures the [WebView] after a render process crash by calling [setupWebView].
+     *
+     * Subclasses that override this method must call `super.onWebViewRecreated(webView)`,
+     * as the base implementation reapplies all clients, settings, and content.
+     */
     override fun onWebViewRecreated(webView: WebView) {
         setupWebView(null)
     }
