@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_warning">This may take a long time. Proceed?</string>
+    <string name="check_db_warning">Potrebbe richiedere molto tempo. Procedere?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Elimina il mazzo</string>
     <string name="delete_deck_title">Elimina il mazzo</string>
     <plurals name="delete_deck_message">
@@ -82,14 +82,14 @@
     <string name="restore_backup_choose_another">Scegli un altro</string>
     <string name="dialog_cancel">Annulla</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Aggiungi</string>
+    <string name="restore">Ripristina</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Conferma</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Si</string>
     <string name="dialog_keep">Mantieni</string>
     <string name="dialog_remove">Rimuovi</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Esci</string>
     <string name="dialog_continue">Continua</string>
     <string name="dialog_processing">Elaborazione&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crea</string>
@@ -104,7 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Errore durante l\'analisi del certificato</string>
     <string name="dialog_updated_custom_certificate">Certificato aggiornato</string>
     <!-- Media checking -->
-    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
+    <string name="check_media_warning">Potrebbe richiedere molto tempo per collezioni multimediali di grandi dimensioni. Procedere?</string>
     <string name="check_media_message">Controllo i media&#8230;</string>
     <string name="check_media_adding_missing_tag">Aggiungi etichetta</string>
     <string name="check_media_tags_added">Etichette aggiunte</string>
@@ -268,15 +268,15 @@
     <string name="error_no_changes_to_save">Nessuna modifica da salvare</string>
     <string name="choose_color">Seleziona colore</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Campi</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
-    <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
+    <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>»]]></string>
     <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
     <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
     <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">L\'ID della carta%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
 </resources>

@@ -51,8 +51,8 @@
     <string name="add_to_deck_decide_by_note_type">Decidi per tipo di nota</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Come da sistema</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">Giorno</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">Notte</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Chiaro</string>
     <string name="day_theme_plain">Semplice</string>
@@ -72,9 +72,9 @@
     <string name="answer_hard" maxLength="41">Rispondi \"difficile\"</string>
     <string name="answer_good" maxLength="41">Rispondi \"normale\"</string>
     <string name="answer_easy" maxLength="41">Rispondi \"facile\"</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">Chiudi la schermata di studio</string>
     <string name="gesture_flag_red" maxLength="41">Attiva/disattiva contrassegno rosso</string>
-    <string name="gesture_flag_orange" maxLength="41">Attiva/disattiva contrassegno aracione</string>
+    <string name="gesture_flag_orange" maxLength="41">Attiva/disattiva contrassegno arancione</string>
     <string name="gesture_flag_green" maxLength="41">Attiva/disattiva contrassegno verde</string>
     <string name="gesture_flag_blue" maxLength="41">Attiva/disattiva contrassegno blu</string>
     <string name="gesture_flag_pink" maxLength="41">Attiva/Disattiva contrassegno rosa</string>
@@ -84,7 +84,7 @@
     <string name="gesture_page_up" maxLength="41">Vai su</string>
     <string name="gesture_page_down" maxLength="41">Vai giù</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Attiva/Disattiva la lavagna</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_eraser" maxLength="41">Attiva/disattiva la gomma</string>
     <string name="gesture_show_hint" maxLength="41">Mostra suggerimento</string>
     <string name="gesture_show_all_hints" maxLength="41">Mostra tutti i suggerimenti</string>
     <string name="record_voice" maxLength="41">Registra la voce</string>

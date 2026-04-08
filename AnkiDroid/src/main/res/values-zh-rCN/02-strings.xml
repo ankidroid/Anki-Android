@@ -211,9 +211,9 @@
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">擦除模式已激活</string>
     <string name="white_board_eraser_disabled">擦除模式已停用</string>
-    <string name="media_file_size_warning_title">Media too large</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
-    <string name="media_file_size_add_anyway">Add anyway</string>
+    <string name="media_file_size_warning_title">媒体太大</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">文件“%1$s”（%2$s）超过 AnkiWeb 的 %3$s 限制，无法同步。仍要添加吗？</string>
+    <string name="media_file_size_add_anyway">仍要添加</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">保存白板图像失败。 %s</string>
     <string name="white_board_image_saved">白板图像已保存到 %s</string>

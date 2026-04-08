@@ -45,13 +45,13 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Backup non salvato. Non è rimasto abbastanza spazio nella memoria di archiviazione. Diminuisci la profondità di backup o rimuovi alcuni altri file.</string>
-    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Meno di %d MB di spazio rimanente nella tua memoria di archiviazione.\nLibera dello spazio per evitare perdita di dati.</string>
     <string name="backup_restore" maxLength="28">Ripristina dal backup</string>
     <string name="backup_new_collection">Nuova collezione</string>
     <string name="backup_del_collection">Elimina collezione e creane una nuova</string>
     <string name="backup_del_collection_question">Vuoi veramente eliminare la collezione e crearne una nuova? Tutti i tuoi progressi di apprendimento e tutte le tue carte andranno persi!</string>
     <string name="backup_one_way_sync_from_server">Sincronizzazione unidirezionale dal server</string>
-    <string name="backup_use_default_folder">Use default collection folder</string>
+    <string name="backup_use_default_folder">Usa cartella per collezione predefinita</string>
     <string name="backup_full_sync_from_server_question">Vuoi veramente sovrascrivere la tua collezione con quella su AnkiWeb? Tutti i tuoi progressi di apprendimento e le informazioni aggiunte dopo l\'ultima sincronizzazione andranno persi!</string>
     <string name="error_handling_title">Gestione errori</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opzioni</string>

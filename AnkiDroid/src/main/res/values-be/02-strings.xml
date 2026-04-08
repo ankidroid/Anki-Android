@@ -99,11 +99,11 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Правядзіце, каб скасаваць</string>
     <string name="filter_by_flags" maxLength="41">Сцягі</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Затрымка для Зноў</string>
-    <string name="filtered_option_delay_hard">Затрымка для Цяжка</string>
-    <string name="filtered_option_delay_good">Затрымка для Добра</string>
+    <string name="filtered_option_delay_again">Затрымка для «Зноў»</string>
+    <string name="filtered_option_delay_hard">Затрымка для «Цяжка»</string>
+    <string name="filtered_option_delay_good">Затрымка для «Добра»</string>
     <!-- Custom study options -->
-    <string name="custom_study_loading_tags">Пабудова спіса метак&#8230;</string>
+    <string name="custom_study_loading_tags">Пабудова спіса тэгаў&#8230;</string>
     <!-- Study options -->
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d адкладзеная</item>
@@ -199,7 +199,7 @@
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
-    <string name="tag_already_exists">Метка ўжо існуе</string>
+    <string name="tag_already_exists">Тэг ужо існуе</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
@@ -213,16 +213,16 @@
     <string name="background_image_title" maxLength="41">Фон</string>
     <string name="choose_an_image" maxLength="41">Выбраць відарыс</string>
     <string name="remove_wallpaper_image" maxLength="41">Выдаліць фон</string>
-    <string name="remove_background_image">Вы дакладна хочаце выдаліць фон?</string>
+    <string name="remove_background_image">Вы сапраўды хочаце выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Аднавіць па змаўчанні</string>
+    <string name="restore_default" maxLength="28">Аднавіць да прадвызначаных</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Рэжым гумкі актываваны</string>
     <string name="white_board_eraser_disabled">Рэжым гумкі дэактываваны</string>
-    <string name="media_file_size_warning_title">Media too large</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
-    <string name="media_file_size_add_anyway">Add anyway</string>
+    <string name="media_file_size_warning_title">Медыяфайл занадта вялікі</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">Файл «%1$s» (памер якога складае %2$s) перавышае абмежаванне AnkiWeb у %3$s і не можа быць сінхранізаваны. Усё роўна дадаць?</string>
+    <string name="media_file_size_add_anyway">Усё роўна дадаць</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Не атрымалася захаваць відарыс дошкі. %s</string>
     <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
@@ -248,8 +248,8 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>
-    <string name="format_insert_bold">Фарматаваць як паўтлусты</string>
-    <string name="format_insert_italic">Фарматаваць як нахілены</string>
+    <string name="format_insert_bold">Фарматаваць як тлусты</string>
+    <string name="format_insert_italic">Фарматаваць як курсіў</string>
     <string name="format_insert_underline">Фарматаваць як падкрэслены</string>
     <string name="insert_horizontal_line">Уставіць гарызантальную лінію</string>
     <string name="insert_heading">Уставіць загаловак</string>
@@ -291,10 +291,10 @@
     <string name="downloading_file">Спампоўванне %s</string>
     <string name="import_deck">Імпартаваць калоду</string>
     <string name="something_wrong">Нешта пайшло не так, калі ласка, паспрабуйце яшчэ раз</string>
-    <string name="download_failed">Памылка спампоўкі</string>
+    <string name="download_failed">Збой спампоўвання</string>
     <string name="deck_download_progress_message">Можаце карыстацца іншымі праграмамі падчас спампоўвання</string>
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
-    <string name="external_storage_unavailable">Спампоўванне абарвана, бо знешняе сховішча недаступна</string>
+    <string name="external_storage_unavailable">Спампоўванне перарвана. Прычына: знешняе сховішча недаступна</string>
     <string name="home" maxLength="28">Галоўная</string>
     <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -327,9 +327,9 @@
         <item quantity="other">Выбраны %d тыпаў нататкі</item>
     </plurals>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Вучыцеся менш</string>
-    <string name="intro_ankidroid_tagline_two">Запамінайце больш</string>
-    <string name="intro_short_ankidroid_explanation">Запланаваныя карткі Anki ашчаджаюць час узмацняючы вашы слабейшыя ўспаміны і трымаюць вас у тонусе</string>
+    <string name="intro_ankidroid_tagline_one">Вучыцеся менш,</string>
+    <string name="intro_ankidroid_tagline_two">а запамінайце больш</string>
+    <string name="intro_short_ankidroid_explanation">Запланаваныя карткі Anki ашчаджаюць час узмацняючы вашу ненадзейную памяць і трымаюць яе ў тонусе</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Пачаць працу</string>
     <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
     <!-- IntentHandler -->
@@ -342,7 +342,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
-    <string name="toggle_cards_notes">Пераключыць Карткі/Нататкі</string>
+    <string name="toggle_cards_notes">Пераключыць карткі/нататкі</string>
     <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
     <string name="browser_options_dialog_heading">Параметры браўзера</string>
     <string name="audio_saved">Запіс захаваны</string>

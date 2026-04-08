@@ -65,8 +65,8 @@
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
     <!-- Reviewer -->
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
-        <item quantity="one">Засталося %d хвілін</item>
-        <item quantity="few">Засталося %d хвілін</item>
+        <item quantity="one">Засталася %d хвіліна</item>
+        <item quantity="few">Засталося %d хвіліны</item>
         <item quantity="many">Засталося %d хвілін</item>
         <item quantity="other">Засталося %d хвілін</item>
     </plurals>
@@ -92,7 +92,7 @@
     <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' уключаны</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Адмяніць</string>
-    <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Паўтарыць</string>
+    <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Узнавіць</string>
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Адрабіць штрых</string>
     <string name="move_all_to_deck">Перамясціць усё ў калоду</string>
@@ -122,7 +122,7 @@
     <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
     <string name="menu_enable_voice_playback" maxLength="28">Уключыць прайграванне голасу</string>
     <string name="menu_disable_voice_playback">Адключыць прайграванне голасу</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Стварыць рэзервовую копію</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="new_dynamic_deck">Стварыць фільтраваную калоду</string>
     <string name="directory_inaccessible">Каталог AnkiDroid недаступны</string>
@@ -198,7 +198,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">Немагчыма запісаць або стварыць файл %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недаступная калекцыя</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Мы не можам атрымаць доступ да вашай калекцыі пасля выдалення AnkiDroid па прычыне змены палітыкі Play Store\n\nВашы даныя знаходзяцца ў бяспецы і могуць быць адноўлены. Яны размяшчаюцца ў\n%s\n\nВыберыце параметр ніжэй, каб аднавіць:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android выдаліў дазвол AnkiDroid %1$s па прычыне неактыўнасці праграмы.\n\nВашы даныя знаходзяцца ў бяспецы і могуць быць адноўлены. Яны размяшчаюцца ў\n%2$s\n\nВыберыце параметр ніжэй, каб аднавіць іх:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android выдаліў дазвол AnkiDroid %1$s з прычыны неактыўнасці праграмы.\n\nВашы даныя знаходзяцца ў бяспецы і могуць быць адноўлены. Яны размяшчаюцца ў\n%2$s\n\nВыберыце параметр ніжэй, каб аднавіць іх:</string>
     <string name="restore_data_from_ankiweb">Аднавіць з AnkiWeb (рэкамендавана)</string>
     <string name="install_non_play_store_ankidroid_recommended">Аднавіць доступ да папкі (рэкамендавана)</string>
     <string name="install_non_play_store_ankidroid">Аднавіць доступ да папкі (пашырана)</string>

@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_warning">This may take a long time. Proceed?</string>
+    <string name="check_db_warning">Гэта можа заняць шмат часу. Працягнуць?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Выдаліць калоду</string>
     <string name="delete_deck_title">Выдаліць калоду?</string>
     <plurals name="delete_deck_message">
@@ -106,9 +106,9 @@
     <string name="dialog_collection_path_not_dir">Азначаны шлях не з\'яўляецца дапушчальным каталогам</string>
     <string name="dialog_invalid_custom_certificate">Прыведзены тэкст не пераўтвараецца ў дапушчальны сертыфікат X509 з кадзіраваннем PEM</string>
     <string name="dialog_invalid_custom_certificate_title">Памылка разборкі сертыфіката</string>
-    <string name="dialog_updated_custom_certificate">Сертыфікат адноўлены</string>
+    <string name="dialog_updated_custom_certificate">Сертыфікат абноўлены</string>
     <!-- Media checking -->
-    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
+    <string name="check_media_warning">Гэта можа заняць шмат часу ў тым выпадку, калі калекцыя медыяфайлаў занадта вялікая. Працягнуць?</string>
     <string name="check_media_message">Праверка медыяфайлаў&#8230;</string>
     <string name="check_media_adding_missing_tag">Дадаванне тэгаў&#8230;</string>
     <string name="check_media_tags_added">Тэгі дададзены</string>
@@ -287,9 +287,9 @@
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Палі</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Спецыяльныя</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">Змест пярэдняга шаблону. Аўдыё не прайграваецца аўтаматычна</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Калода картак цалкам, у тым ліку бацькоўскія калоды%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Бягучая калода картак, за выключэннем бацькоўскіх калод%s</string>
+    <string name="special_field_front_side_help">Змесціва пярэдняга шаблона. Аўдыя не праграваецца аўтаматычна</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Поўная калода картак, якая ўключае бацькоўскія калоды%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Бягучая калода картак, якая выключае бацькоўскія калоды%s</string>
     <string name="special_field_flag_help">Паказвае ‘%1$s’, дзе %2$s код сцяга (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Меткі нататкі%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Ідэнтыфікатар карткі%s</string>
