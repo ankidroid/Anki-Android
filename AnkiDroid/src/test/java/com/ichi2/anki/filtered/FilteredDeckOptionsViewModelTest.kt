@@ -289,6 +289,27 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `invalid name produces expected state`() {
+        runTest {
+            addDeck("A")
+            withViewModel {
+                assertNull(current.nameInputError)
+
+                onDeckNameChange("")
+                assertThat(current.nameInputError, equalTo(FilteredNameInputError.Empty))
+                assertFalse(current.isBuildingAllowed)
+
+                onDeckNameChange("A")
+                assertThat(current.nameInputError, equalTo(FilteredNameInputError.AlreadyExists))
+                assertFalse(current.isBuildingAllowed)
+
+                onDeckNameChange("Filtered")
+                assertTrue(current.isBuildingAllowed)
+            }
+        }
+    }
+
     /** Returns the current state as a [FilteredDeckOptions] or throw otherwise */
     private val FilteredDeckOptionsViewModel.current: FilteredDeckOptions
         get() = state.value as FilteredDeckOptions

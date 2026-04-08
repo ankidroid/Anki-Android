@@ -53,6 +53,8 @@ data class FilteredDeckOptions(
     val id: DeckId? = null,
     /** Name of the filtered deck, initial name with the following format: "Filtered deck HH:mm" */
     val name: String = "",
+    /** If not null, there's an error related to the text entered */
+    val nameInputError: FilteredNameInputError? = null,
     /**
      * String used as the title of the filtered options screen. Similar to [name], this will be the
      * name we get when first loading the deck data and will not change for the lifetime of the screen.
@@ -104,7 +106,9 @@ data class FilteredDeckOptions(
 val FilteredDeckOptions.isBuildingAllowed: Boolean
     get() {
         val hasNoInputErrors =
-            filter1State.error == null && !(isSecondFilterEnabled && filter2State?.error != null)
+            filter1State.error == null &&
+                !(isSecondFilterEnabled && filter2State?.error != null) &&
+                nameInputError == null
         return !isBuildingBrowserSearch && hasNoInputErrors
     }
 
@@ -121,6 +125,12 @@ data class SearchTermState(
 enum class SearchInputError {
     Empty,
     NotANumber,
+}
+
+/** Signals errors related to the filtered deck name */
+enum class FilteredNameInputError {
+    Empty,
+    AlreadyExists,
 }
 
 /** Type of custom delays the user can set. */

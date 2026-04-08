@@ -53,6 +53,8 @@ class FilteredDeckOptionsViewModel(
     val state: StateFlow<FilteredDeckOptionsState>
         field = MutableStateFlow<FilteredDeckOptionsState>(Initializing())
 
+    private var decksNames = emptyList<String>()
+
     /** The [DeckId] of a filtered deck to edit or 0 if we are creating a new filtered deck. */
     private val did: DeckId
         get() = savedStateHandle.get<Long>(ARG_DECK_ID) ?: 0L
@@ -76,6 +78,7 @@ class FilteredDeckOptionsViewModel(
                     state.update { Initializing(throwable = throwable) }
                     return@launch
                 }
+            decksNames = withCol { safeGetDecksNames() }
             savedStateHandle[ARG_DATA] =
                 filteredDeckData.asInitialState(
                     cardsOptions = cardsOptions,
@@ -88,8 +91,14 @@ class FilteredDeckOptionsViewModel(
 
     fun onDeckNameChange(name: String) {
         Timber.i("Filtered deck name is changing")
+        val error =
+            when {
+                name.isBlank() -> FilteredNameInputError.Empty
+                decksNames.contains(name) -> FilteredNameInputError.AlreadyExists
+                else -> null
+            }
         if (currentState().name == name) return
-        updateCurrentState { copy(name = name) }
+        updateCurrentState { copy(name = name, nameInputError = error) }
     }
 
     fun onSearchChange(
@@ -339,6 +348,15 @@ class FilteredDeckOptionsViewModel(
             Result.success(sched.addOrUpdateFilteredDeck(deckData))
         } catch (ex: Exception) {
             Result.failure(ex)
+        }
+
+    /** Invokes the backend to get the names of decks. Errors are ignored, an empty list will be returned instead. */
+    private fun Collection.safeGetDecksNames(): List<String> =
+        try {
+            decks.allNamesAndIds(skipEmptyDefault = false, includeFiltered = true).map { it.name }
+        } catch (_: Exception) {
+            Timber.w("Failed to retrieve deck names")
+            emptyList()
         }
 
     /**

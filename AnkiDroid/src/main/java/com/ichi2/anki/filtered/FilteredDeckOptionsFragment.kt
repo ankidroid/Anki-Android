@@ -159,6 +159,12 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         // the deck name is also done for the normal deck options screen so we are consistent)
         binding.toolbar.title = state.title
         binding.deckNameInput.setTextIfChanged(state.name)
+        binding.deckNameInputLayout.error =
+            when (state.nameInputError) {
+                FilteredNameInputError.Empty -> getString(R.string.empty_cram_label)
+                FilteredNameInputError.AlreadyExists -> getString(R.string.error_name_exists)
+                null -> null
+            }
         binding.checkBoxAllowEmpty.setCheckedIfChanged(state.allowEmpty)
         binding.btnBuild.text = if (state.id == null) TR.decksBuild() else TR.actionsRebuild()
         binding.btnBuild.isEnabled = state.isBuildingAllowed
