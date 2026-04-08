@@ -25,7 +25,6 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.cardviewer.SingleCardSide
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.i18n.getIso3LanguageOrNull
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
@@ -98,7 +97,6 @@ object ReadText {
      * @param qa   The card question or card answer
      */
     @SuppressLint("CheckResult")
-    @NeedsTest("ensure languages are sorted alphabetically in the dialog")
     fun selectTts(
         text: String?,
         did: DeckId,
