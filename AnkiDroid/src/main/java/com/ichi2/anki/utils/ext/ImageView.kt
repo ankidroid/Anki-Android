@@ -22,11 +22,17 @@ import com.ichi2.anki.utils.runWithOOMCheck
 
 /**
  * [ImageView.setImageDrawable] guarded against [OutOfMemoryError] (#6608).
+ *
+ * @return `true` if the drawable was applied, `false` if an [OutOfMemoryError] occurred
  */
 fun ImageView.setImageDrawableSafe(
     drawable: Drawable?,
     onError: (OutOfMemoryError) -> Unit = {},
-) = runWithOOMCheck(
-    action = { setImageDrawable(drawable) },
-    onError = onError,
-)
+): Boolean =
+    runWithOOMCheck(
+        action = {
+            setImageDrawable(drawable)
+            true
+        },
+        onError = onError,
+    ) ?: false

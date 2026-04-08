@@ -1047,17 +1047,12 @@ open class DeckPicker :
             showThemedToast(this, result.message(this), shortLength = false)
         }
         val drawable = (result as? BackgroundImage.ResolveResult.Ready)?.drawable
-
-        var hasBackground = drawable != null
-        if (drawable != null) {
+        val applied =
             deckPickerBinding.background.setImageDrawableSafe(drawable) {
                 showThemedToast(this, getString(R.string.background_image_too_large), shortLength = false)
-                hasBackground = false
             }
-        } else {
-            deckPickerBinding.background.setBackgroundResource(0)
-        }
-        deckListAdapter.activityHasBackground = hasBackground
+        // activityHasBackground calls notifyDataSetChanged, ensure only 1 call
+        deckListAdapter.activityHasBackground = applied && drawable != null
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
