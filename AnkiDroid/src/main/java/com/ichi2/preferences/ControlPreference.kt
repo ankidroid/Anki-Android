@@ -215,7 +215,7 @@ open class ControlPreference :
      *
      * @see getRelatedPreferences
      */
-    protected fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
+    protected open fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
         for (pref in getRelatedPreferences()) {
             val bindings = pref.getMappableBindings().map { it.binding }
             if (binding in bindings) {

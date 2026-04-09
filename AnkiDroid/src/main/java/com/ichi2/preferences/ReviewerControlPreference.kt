@@ -19,6 +19,7 @@ import android.content.Context
 import android.util.AttributeSet
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.GestureProcessor
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.preferences.allPreferences
 import com.ichi2.anki.reviewer.Binding
@@ -77,6 +78,16 @@ open class ReviewerControlPreference : ControlPreference {
             .filter {
                 it::class == ReviewerControlPreference::class
             } as List<ReviewerControlPreference>
+
+    @NeedsTest("Ensure correct preference is returned for side-specific binding")
+    override fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
+        val cardSide = side ?: return super.getPreferenceAssignedTo(binding)
+        val reviewerBinding = ReviewerBinding(binding, cardSide)
+        // Bindings only conflict when the card sides overlap
+        return getRelatedPreferences().firstOrNull { preference ->
+            reviewerBinding in preference.getMappableBindings()
+        }
+    }
 
     fun interface OnBindingSelectedListener {
         /**
