@@ -222,7 +222,7 @@
         Als dit niet is ingesteld, wordt in plaats daarvan de standaard AnkiWeb-server gebruikt.
         <a href="%s">Meer informatie</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">URL synchroniseren</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Aangepast root-certificaat (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Toetsenbord</string>

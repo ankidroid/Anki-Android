@@ -222,7 +222,7 @@
         அமைக்கப்படவில்லை என்றால், அதற்குப் பதிலாக இயல்புநிலை AnkiWeb சேவையகம் பயன்படுத்தப்படும்.
         <a href="%s">மேலும் அறிக</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">url ஐ ஒத்திசைக்கவும்</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">தனிப்பயன் ரூட் சான்றிதழ் (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">விசைப்பலகை</string>

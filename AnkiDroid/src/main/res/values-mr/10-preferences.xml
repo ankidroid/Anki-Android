@@ -221,7 +221,7 @@
         सिंक्रोनाइझेशनसाठी तुम्ही तुमचा स्वतःचा सर्व्हर वापरू शकता.
         सेट न केल्यास, त्याऐवजी डीफॉल्ट AnkiWeb सर्व्हर वापरला जाईल.
         <a href="%s">अधिक जाणून घ्या</a>]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">url समक्रमित करा</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">कस्टम रूट प्रमाणपत्र (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">कीबोर्ड</string>

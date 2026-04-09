@@ -223,7 +223,7 @@
         If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">ইউআরএল সিঙ্ক করুন</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">কাস্টম রুট সার্টিফিকেট (PEM</string>
     <!-- Key Bindings -->
     <string name="keyboard">কীবোর্ড</string>

@@ -227,7 +227,7 @@
         Калі не зададзена, то прадвызначана выкарыстоўваецца сервер AnkiWeb.
         <a href="%s">Даведацца больш</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Спасылка для сінхранізацыі</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Карыстальніцкі каранёвы сертыфікат (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавіятура</string>

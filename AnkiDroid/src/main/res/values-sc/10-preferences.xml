@@ -222,7 +222,7 @@
         Si no est impostadu, in càmbiu s\'at a impreare su serbidore predefinidu de AnkiWeb.
         <a href="%s">Impara de prus</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Url de sincronizatzione</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Tzertificadu de raighina pròpiu (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tecladu</string>

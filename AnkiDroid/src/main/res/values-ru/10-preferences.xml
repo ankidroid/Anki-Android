@@ -225,7 +225,7 @@
         Если не установлено, то будет использоваться AnkiWeb сервер по умолчанию.
         <a href="%s">Подробнее</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Свой корневой сертификат (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавиатура</string>

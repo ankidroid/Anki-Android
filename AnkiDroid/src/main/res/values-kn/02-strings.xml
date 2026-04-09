@@ -265,6 +265,9 @@
     <string name="create_shortcut_error">ಶಾರ್ಟ್‌ಕಟ್ ಸೇರಿಸುವಲ್ಲಿ ದೋಷ:%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ವಾಕ್ಯಗಳನ್ನು ದೊಡ್ಡಕ್ಷರಗೊಳಿಸಿ</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ಸ್ಕ್ರಾಲ್ ಟೂಲ್ಬಾರ್</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Certificate</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

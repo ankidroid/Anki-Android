@@ -222,7 +222,7 @@
         Si no lo estableces, se utilizará el servidor AnkiWeb predeterminado.
         <a href="%s">Más información</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sincronizar url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Certificado raíz personalizado (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>

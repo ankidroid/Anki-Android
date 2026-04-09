@@ -222,7 +222,7 @@
         ᱡᱩᱫᱤ ᱵᱟᱝ ᱥᱚᱫᱚᱨ ᱟᱠᱟᱱᱟ, ᱮᱱᱠᱷᱟᱱ ᱰᱤᱯᱚᱞᱴ AnkiWeb ᱥᱟᱨᱵᱟᱨ ᱵᱮᱵᱷᱟᱨ ᱦᱩᱭᱩᱜᱼᱟ ᱾
         <a href="%s">ᱟᱨᱦᱚᱸ ᱵᱟᱰᱟᱭ ᱢᱮ</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">ᱟᱹᱫᱤᱢ ᱨᱩᱴ ᱥᱟᱨᱴᱤᱯᱷᱤᱠᱮᱴ (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">ᱠᱤᱵᱚᱨᱰ</string>

@@ -227,7 +227,7 @@
         Jei nenustatyta, bus naudojamas numatytasis "AnkiWeb" serveris.
         <a href=„%s“>Sužinokite daugiau</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sinchronizavimo adresas</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Pasirinktinis šakninis sertifikatas (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klaviatūra</string>

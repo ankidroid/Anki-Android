@@ -221,7 +221,7 @@
         Jika tidak diatur, server AnkiWeb akan digunakan saja.
         <a href="%s">Pelajari lebih lanjut</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sinkronisasi url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Papan ketik</string>

@@ -265,6 +265,9 @@
     <string name="create_shortcut_error">കുറുക്കുവഴി ചേർക്കുന്നതിൽ പിശക്: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">വാക്യങ്ങൾ വലിയക്ഷരമാക്കുക</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ടൂൾബാർ സ്ക്രോൾ ചെയ്യുക</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Certificate</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

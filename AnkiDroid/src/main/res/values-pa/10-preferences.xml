@@ -222,7 +222,7 @@
         ਤੁਸੀਂ ਸਮਕਾਲੀਕਰਨ ਲਈ ਆਪਣੇ ਸਰਵਰ ਦੀ ਵਰਤੋਂ ਕਰ ਸਕਦੇ ਹੋ।
         ਜੇਕਰ ਸੈੱਟ ਨਹੀਂ ਕੀਤਾ ਗਿਆ, ਤਾਂ ਇਸਦੀ ਬਜਾਏ ਡਿਫੌਲਟ AnkiWeb ਸਰਵਰ ਵਰਤਿਆ ਜਾਵੇਗਾ।
         <a href="%s">ਹੋਰ ਜਾਣੋ</a>]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">url ਸਿੰਕ ਕਰੋ</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">ਕਸਟਮ ਰੂਟ ਸਰਟੀਫਿਕੇਟ (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">ਕੀਬੋਰਡ</string>

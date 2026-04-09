@@ -225,7 +225,7 @@
         Ja nav iestatīts, tiks izmantots noklusējuma AnkiWeb serveris.
         <a href="%s">Uzzināt vairāk</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Vienādošanas URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Pielāgots saknes sertifikāts (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tastatūra</string>

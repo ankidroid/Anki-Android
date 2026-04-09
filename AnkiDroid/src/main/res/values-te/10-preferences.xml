@@ -221,7 +221,7 @@
         సమకాలీకరణ కోసం మీరు మీ స్వంత సర్వర్‌ని ఉపయోగించవచ్చు.
         సెట్ చేయకుంటే, డిఫాల్ట్ AnkiWeb సర్వర్ బదులుగా ఉపయోగించబడుతుంది.
         <a href="%s">మరింత తెలుసుకోండి</a>]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Url ని సమకాలీకరించండి</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">కస్టమ్ రూట్ సర్టిఫికేట్ (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">కీబోర్డ్</string>

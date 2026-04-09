@@ -231,7 +231,7 @@
         إذا لم يتم ضبطه، سيتم استخدام خادم آنكي ويب بشكل افتراضي.
         <a href="%s">تعلم المزيد</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">رابط المزامنة</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">شهادة جذر مخصصة (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">لوحة المفاتيح</string>

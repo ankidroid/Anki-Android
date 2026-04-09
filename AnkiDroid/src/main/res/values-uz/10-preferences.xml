@@ -222,7 +222,7 @@
         Agar sozlanmagan boʻlsa, oʻrniga birlamchi AnkiWeb serveri ishlatiladi.
         <a href="%s">Batafsil maʼlumot</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sinxronizatsiya URLʼi</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Moslashtirilgan root sertifikati (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klaviatura</string>
