@@ -117,6 +117,30 @@ class SetDueDateDialogTest : RobolectricTest() {
             assertThat(viewModel.calculateDaysParameter(), equalTo("1-2!"))
         }
 
+    @Test
+    fun `single day input limited to 5 digits`() =
+        testDialog {
+            selectTab(0)
+            singleDayText.setText("123456")
+            assertThat(singleDayText.text.toString(), equalTo("12345"))
+        }
+
+    @Test
+    fun `range start input limited to 5 digits`() =
+        testDialog {
+            selectTab(1)
+            dateRangeStart.setText("123456")
+            assertThat(dateRangeStart.text.toString(), equalTo("12345"))
+        }
+
+    @Test
+    fun `range end input limited to 5 digits`() =
+        testDialog {
+            selectTab(1)
+            dateRangeEnd.setText("123456")
+            assertThat(dateRangeEnd.text.toString(), equalTo("12345"))
+        }
+
     private fun testDialog(
         cards: List<CardId> = listOf(1),
         action: SetDueDateDialog.() -> Unit,
