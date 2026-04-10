@@ -1609,7 +1609,6 @@ class CardBrowserTest : RobolectricTest() {
             val expectedMenuItems =
                 listOf(
                     R.id.action_edit_note to true,
-                    R.id.action_delete_card to true,
                     R.id.action_view_card_info to true,
                     R.id.action_flag to true,
                     R.id.action_mark_card to true,
@@ -1624,8 +1623,9 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_reset_cards_progress to true,
                     R.id.action_preview_many to true,
                     R.id.action_export_selected to true,
-                    R.id.action_undo to true,
                     R.id.action_find_replace to false,
+                    R.id.action_delete_card to true,
+                    R.id.action_undo to true,
                 )
 
             assertMenusEqual(expectedMenuItems, menu)
@@ -1647,7 +1647,6 @@ class CardBrowserTest : RobolectricTest() {
             val expectedMenuItems =
                 listOf(
                     R.id.action_edit_note to false,
-                    R.id.action_delete_card to false,
                     R.id.action_view_card_info to false,
                     R.id.action_flag to false,
                     R.id.action_mark_card to false,
@@ -1662,8 +1661,9 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_reset_cards_progress to false,
                     R.id.action_preview_many to true,
                     R.id.action_export_selected to false,
-                    R.id.action_undo to true,
                     R.id.action_find_replace to false,
+                    R.id.action_delete_card to false,
+                    R.id.action_undo to true,
                 )
 
             assertMenusEqual(expectedMenuItems, menu)
@@ -1722,7 +1722,6 @@ class CardBrowserTest : RobolectricTest() {
                 listOf(
                     // should never be enabled, the fragment handles the editing
                     R.id.action_edit_note to false,
-                    R.id.action_delete_card to true,
                     R.id.action_view_card_info to true,
                     R.id.action_flag to true,
                     R.id.action_mark_card to true,
@@ -1737,8 +1736,9 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_reset_cards_progress to true,
                     R.id.action_preview_many to false,
                     R.id.action_export_selected to true,
-                    R.id.action_undo to true,
                     R.id.action_find_replace to false,
+                    R.id.action_delete_card to true,
+                    R.id.action_undo to true,
                     // Note Editor
                     R.id.action_save to true,
                     R.id.action_preview to true,
