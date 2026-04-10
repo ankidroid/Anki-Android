@@ -116,7 +116,7 @@ class LayoutValidationTest : InstrumentedTest() {
                     }
 
             return layout::class.java.fields
-                .map { arrayOf(it.getInt(layout), it.name) }
+                .map { arrayOf<Any>(it.getInt(layout), it.name) }
                 .filterNot { (id, name) -> name in nonAnkiFieldNames || id in ignoredLayoutIds }
         }
 
