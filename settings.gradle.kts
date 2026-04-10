@@ -24,7 +24,6 @@ include(
     ":common",
     ":compat",
     ":libanki",
-    ":libanki:testutils",
     ":lint-rules",
     ":vbpd",
 )

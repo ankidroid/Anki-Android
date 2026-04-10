@@ -457,7 +457,7 @@ dependencies {
     // build via AnkiDroidApp.
     implementation libs.leakcanary.android
 
-    testImplementation project(":libanki:testutils")
+    testImplementation testFixtures(project(":libanki"))
     testImplementation testFixtures(project(":common"))
     testImplementation testFixtures(project(":compat"))
 
