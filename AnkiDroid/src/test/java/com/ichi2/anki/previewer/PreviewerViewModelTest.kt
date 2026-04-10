@@ -63,7 +63,8 @@ class PreviewerViewModelTest : JvmTest() {
     }
 
     @Before
-    fun setup() {
+    override fun setUp() {
+        super.setUp()
         val cardIds =
             (0..3).flatMap {
                 val note = addBasicNote()
