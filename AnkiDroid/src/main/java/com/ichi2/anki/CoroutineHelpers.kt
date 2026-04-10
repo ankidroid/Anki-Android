@@ -41,6 +41,7 @@ import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
 import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
 import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.snackbar.showSnackbar
@@ -207,7 +208,11 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.e(exc, errorMessage)
                 DatabaseErrorDialog.databaseCorruptFlag = true
                 if (callerTrace != null) Timber.e(callerTrace)
-                DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(CollectionLoadingErrorDialog().toMessage())
+                (this as? AnkiActivity)
+                    ?.showDatabaseErrorDialog(
+                        errorDialogType = DatabaseErrorDialogType.DIALOG_LOAD_FAILED,
+                        exceptionData = DatabaseErrorDialog.CustomExceptionData.fromException(exc),
+                    )
             }
             else -> {
                 Timber.e(exc, errorMessage)

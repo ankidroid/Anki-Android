@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
@@ -676,6 +677,14 @@ class DeckPickerTest : RobolectricTest() {
                 viewModel.flowOfStartupResponse.value,
                 nullValue(),
             )
+        }
+
+    /** Regression test for [#20712](https://github.com/ankidroid/Anki-Android/issues/20712) */
+    @Test
+    fun `SQLiteDatabaseCorruptException in runCatching shows database error dialog`() =
+        deckPickerEx {
+            runCatching { throw SQLiteDatabaseCorruptException() }
+            assertThat(databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED))
         }
 
     /**
