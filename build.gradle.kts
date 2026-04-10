@@ -183,35 +183,42 @@ val gradleTestMaxParallelForks by extra(
 
 private fun String?.parseIntOrDefault(defaultValue: Int): Int = this?.toIntOrNull() ?: defaultValue
 
+var loggedTestSuiteCount = 0
+
 private fun logTestResultsToGitHubActions(desc: TestDescriptor, result: TestResult) {
     if (!ciBuild) return
 
-    val elapsed = (result.endTime - result.startTime).milliseconds
+    val header = if (loggedTestSuiteCount == 0) {
+        """
+            |## Test Results
+            |
+            || Suite | Result | Duration | Tests | Passed | Failed | Skipped |
+            || ----- | ------ | -------- | ----- | ------ | ------ | ------- |
+            |
+        """.trimMargin()
+    } else {
+        ""
+    }
+    loggedTestSuiteCount++
 
+    val summaryPath = System.getenv("GITHUB_STEP_SUMMARY") ?: return
+
+    val duration = (result.endTime - result.startTime).milliseconds
+    val seconds = (duration.inWholeMilliseconds % 60000) / 1000.0
+    // both digits are zero-padded: 01m 05.220s
+    val elapsed = "%02dm %06.3fs".format(duration.inWholeMinutes, seconds)
     val tests = result.testCount
     val passed = result.successfulTestCount
     val failed = result.failedTestCount
     val skipped = result.skippedTestCount
 
-    // Gradle Test Run :AnkiDroid:testPlayDebugUnitTest returned SUCCESS in 5m 30s
-    val markdownSummary = """
-                        |${desc.displayName} returned **${result.resultType}** in $elapsed
-                        || Tests | Passed | Failed | Skipped |
-                        ||-------|--------|--------|---------|
-                        || $tests| $passed| $failed| $skipped|
-                        |----
-                    """.trimMargin()
+    // Gradle Test Run :common:testDebugUnitTest | SUCCESS | ...
+    val row = "| ${desc.displayName} | **${result.resultType}** | $elapsed | $tests | $passed | $failed | $skipped |\n"
 
-    appendToGitHubActionsSummary(markdownSummary)
-}
-
-private fun appendToGitHubActionsSummary(message: String) {
-    if (!ciBuild) return
-    val summaryPath = System.getenv("GITHUB_STEP_SUMMARY") ?: return
     Files.writeString(
         Paths.get(summaryPath),
-        message,
+        header + row,
         StandardOpenOption.CREATE,
-        StandardOpenOption.APPEND
+        StandardOpenOption.APPEND,
     )
 }
