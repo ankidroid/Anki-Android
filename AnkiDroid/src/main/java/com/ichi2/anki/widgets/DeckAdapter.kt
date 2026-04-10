@@ -112,7 +112,6 @@ class DeckAdapter(
      * Update the current selected deck so the adapter shows the proper backgrounds.
      * Calls [notifyDataSetChanged].
      */
-    @NeedsTest("18658: ensure a deck can be selected after this")
     fun updateSelectedDeck(deckId: DeckId) {
         submitList(
             this.currentList.map { it.withUpdatedDeckId(deckId) },
