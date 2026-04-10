@@ -656,10 +656,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     override val dialogHandlerMessage
         get() = ShowDatabaseErrorDialog(requireDialogType())
 
-    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), DIALOG_KEY, DatabaseErrorDialogType::class.java)!!
+    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG, DatabaseErrorDialogType::class.java)!!
 
     private val exceptionData: CustomExceptionData? by lazy {
-        BundleCompat.getParcelable(requireArguments(), EXCEPTION_KEY, CustomExceptionData::class.java)
+        BundleCompat.getParcelable(requireArguments(), ARG_EXCEPTION, CustomExceptionData::class.java)
     }
 
     @Parcelize
@@ -697,10 +697,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
          *
          * @see CustomExceptionData
          */
-        private const val EXCEPTION_KEY = "exception"
+        private const val ARG_EXCEPTION = "exception"
 
         // Key for the dialog type in the Bundle, indicating which dialog to show
-        private const val DIALOG_KEY = "dialog"
+        private const val ARG_DIALOG = "dialog"
 
         /**
          * A set of dialogs which deal with problems with the database when it can't load
@@ -714,8 +714,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         ): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()
-            args.putParcelable(DIALOG_KEY, dialogType)
-            exceptionData?.let { args.putParcelable(EXCEPTION_KEY, it) }
+            args.putParcelable(ARG_DIALOG, dialogType)
+            exceptionData?.let { args.putParcelable(ARG_EXCEPTION, it) }
             f.arguments = args
             return f
         }
@@ -737,13 +737,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 what = this@ShowDatabaseErrorDialog.what
                 data =
                     bundleOf(
-                        DIALOG_KEY to dialogType,
+                        ARG_DIALOG to dialogType,
                     )
             }
 
         companion object {
             fun fromMessage(message: Message): ShowDatabaseErrorDialog {
-                val dialogType = BundleCompat.getParcelable(message.data, DIALOG_KEY, DatabaseErrorDialogType::class.java)!!
+                val dialogType = BundleCompat.getParcelable(message.data, ARG_DIALOG, DatabaseErrorDialogType::class.java)!!
                 return ShowDatabaseErrorDialog(dialogType)
             }
         }
