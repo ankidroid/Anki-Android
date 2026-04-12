@@ -87,8 +87,8 @@ class ReviewReminderGroup(
         underlyingMap.remove(id)
     }
 
-    fun forEach(action: (ReviewReminderId, ReviewReminder) -> Unit) {
-        underlyingMap.forEach { (id, reminder) -> action(id, reminder) }
+    fun forEach(action: (Pair<ReviewReminderId, ReviewReminder>) -> Unit) {
+        underlyingMap.forEach { (id, reminder) -> action(id to reminder) }
     }
 
     /**
