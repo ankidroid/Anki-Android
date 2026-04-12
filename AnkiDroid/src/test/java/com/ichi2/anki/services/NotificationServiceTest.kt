@@ -85,7 +85,7 @@ class NotificationServiceTest : RobolectricTest() {
     }
 
     @Test
-    fun `onReceive with less cards than card threshold should not fire notification but schedule next`() =
+    fun `triggering with less cards than card threshold should not fire notification but schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 3)
@@ -105,7 +105,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with happy path for single deck should fire notification and schedule next`() =
+    fun `triggering with happy path for single deck should fire notification and schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminder = createAndSaveDummyDeckSpecificReminder(did1)
@@ -119,7 +119,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with happy path for global reminder should fire notification and schedule next`() =
+    fun `triggering with happy path for global reminder should fire notification and schedule next`() =
         runTest {
             addDeck("Deck1").withNotes(count = 2)
             addDeck("Deck2").withNotes(count = 2)
@@ -134,9 +134,10 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with non-existent deck should not fire notification but schedule next`() =
+    fun `triggering with non-existent deck should not fire notification but schedule next`() =
         runTest {
-            val reviewReminder = createTestReminder(deckId = 9999)
+            val did1 = addDeck("Deck")
+            val reviewReminder = createTestReminder(deckId = did1 + 1)
             val creationTime = reviewReminder.latestNotifTime
 
             triggerDummyReminderNotification(reviewReminder)
@@ -147,7 +148,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with reviews today and onlyNotifyIfNoReviews is true should not fire notification`() =
+    fun `triggering with reviews today and onlyNotifyIfNoReviews is true should not fire notification`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
             col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
@@ -162,7 +163,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with no reviews ever and onlyNotifyIfNoReviews is true should fire notification`() =
+    fun `triggering with no reviews ever and onlyNotifyIfNoReviews is true should fire notification`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
@@ -177,7 +178,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with review yesterday but none today and onlyNotifyIfNoReviews is true should fire notification`() =
+    fun `triggering with review yesterday but none today and onlyNotifyIfNoReviews is true should fire notification`() =
         runTest {
             TimeManager.resetWith(yesterday) // Wind back time and perform the review
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
@@ -201,7 +202,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with onlyNotifyIfNoReviews is false should always fire notification`() =
+    fun `triggering with onlyNotifyIfNoReviews is false should always fire notification`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
             val reviewReminderDeckSpecific = createAndSaveDummyDeckSpecificReminder(did1)
@@ -218,7 +219,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with blocked collection should not fire notification but schedule next`() =
+    fun `triggering with blocked collection should not fire notification but schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createAndSaveDummyDeckSpecificReminder(did1)
@@ -238,7 +239,7 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `onReceive with snoozed notification should fire notification but not schedule next`() =
+    fun `triggering with snoozed notification should fire notification but not schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
             val reviewReminderDeckSpecific = createAndSaveDummyDeckSpecificReminder(did1)
@@ -246,10 +247,8 @@ class NotificationServiceTest : RobolectricTest() {
             val deckSpecificCreationTime = reviewReminderDeckSpecific.latestNotifTime
             val appWideCreationTime = reviewReminderAppWide.latestNotifTime
 
-            val intentDeckSpecific = reviewReminderDeckSpecific.getNotifIntent(NotifIntent.SNOOZE)
-            val intentAppWide = reviewReminderAppWide.getNotifIntent(NotifIntent.SNOOZE)
-            NotificationService().onReceive(context, intentDeckSpecific)
-            NotificationService().onReceive(context, intentAppWide)
+            triggerDummyReminderNotification(reviewReminderDeckSpecific, isRecurring = false)
+            triggerDummyReminderNotification(reviewReminderAppWide, isRecurring = false)
 
             verifyNotifSent(reviewReminderDeckSpecific)
             verifyNotifSent(reviewReminderAppWide)
@@ -270,11 +269,8 @@ class NotificationServiceTest : RobolectricTest() {
             val slotOne = slot<Notification>()
             val slotTwo = slot<Notification>()
 
-            val intentOne = reviewReminderOne.getNotifIntent(NotifIntent.RECURRING)
-            NotificationService().onReceive(context, intentOne)
-
-            val intentTwo = reviewReminderTwo.getNotifIntent(NotifIntent.RECURRING)
-            NotificationService().onReceive(context, intentTwo)
+            triggerDummyReminderNotification(reviewReminderOne)
+            triggerDummyReminderNotification(reviewReminderTwo)
 
             verifyNotifSent(reviewReminderOne, slot = slotOne)
             verifyNotifSent(reviewReminderTwo, slot = slotTwo)
@@ -301,9 +297,15 @@ class NotificationServiceTest : RobolectricTest() {
         return reviewReminder
     }
 
-    private fun triggerDummyReminderNotification(reviewReminder: ReviewReminder) {
-        val intent = reviewReminder.getNotifIntent(NotifIntent.RECURRING)
-        NotificationService().onReceive(context, intent)
+    private suspend fun triggerDummyReminderNotification(
+        reviewReminder: ReviewReminder,
+        isRecurring: Boolean = true,
+    ) {
+        NotificationService.handleReviewReminderNotification(
+            context,
+            reviewReminder,
+            isRecurringNotification = isRecurring,
+        )
     }
 
     /**
@@ -367,20 +369,4 @@ class NotificationServiceTest : RobolectricTest() {
             assertThat(previousTime, equalTo(storedReminder.latestNotifTime))
         }
     }
-
-    /**
-     * Convenience enum class to minimize verbosity in test methods when using [getNotifIntent].
-     */
-    private enum class NotifIntent {
-        RECURRING,
-        SNOOZE,
-    }
-
-    private fun ReviewReminder.getNotifIntent(action: NotifIntent) =
-        when (action) {
-            NotifIntent.RECURRING -> NotificationService.NotificationServiceAction.ScheduleRecurringNotifications
-            NotifIntent.SNOOZE -> NotificationService.NotificationServiceAction.SnoozeNotification
-        }.let { action ->
-            NotificationService.getIntent(context, this, action)
-        }
 }

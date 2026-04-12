@@ -47,6 +47,7 @@ import com.ichi2.anki.utils.remainingTime
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
@@ -79,8 +80,49 @@ class NotificationService : BroadcastReceiver() {
 
         /**
          * Timeout for the process of sending a review reminder notification.
+         * Should be below 10 seconds as BroadcastReceivers may ANR when onReceive takes longer than 10 seconds.
+         * See [the docs](https://developer.android.com/reference/android/content/BroadcastReceiver#goAsync()).
          */
-        private val SEND_REVIEW_REMINDER_TIMEOUT = 10.seconds
+        private val SEND_REVIEW_REMINDER_TIMEOUT = 8.seconds
+
+        /**
+         * Triggered by [onReceive]. Does some bookkeeping if the triggered notification is of the recurring type
+         * or does nothing if it is a snoozed one, and then begins the process of sending the notification.
+         */
+        @VisibleForTesting
+        suspend fun handleReviewReminderNotification(
+            context: Context,
+            reviewReminder: ReviewReminder,
+            isRecurringNotification: Boolean,
+        ) {
+            if (isRecurringNotification) {
+                // Record this latest routine notification-firing attempt's timestamp
+                reviewReminder.updateLatestNotifTime()
+                when (val scope = reviewReminder.scope) {
+                    is ReviewReminderScope.DeckSpecific ->
+                        ReviewRemindersDatabase.editRemindersForDeck(
+                            scope.did,
+                            upsertReminder(reviewReminder),
+                        )
+                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(upsertReminder(reviewReminder))
+                }
+
+                // Schedule the next routine notification-firing
+                Timber.d("Scheduling next review reminder notification")
+                AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder)
+            }
+
+            // Send the notification
+            try {
+                sendReviewReminderNotification(context, reviewReminder)
+            } catch (e: BackendException) {
+                // This may occur if the collection is blocked, in which case we should fail gracefully
+                Timber.w(e, "Aborted review reminder notification due to backend exception")
+            } catch (e: CancellationException) {
+                Timber.w(e, "Aborted review reminder notification due to cancellation exception")
+                throw e // Rethrow to propagate to parent coroutine
+            }
+        }
 
         /**
          * Sends a notification for a review reminder.
@@ -421,35 +463,16 @@ class NotificationService : BroadcastReceiver() {
                 ) ?: return
             Timber.d("onReceive: ${reviewReminder.id}")
 
-            // If this is a recurring notification...
-            if (action == NotificationServiceAction.ScheduleRecurringNotifications.actionString) {
-                // Record this latest routine notification-firing attempt's timestamp
-                reviewReminder.updateLatestNotifTime()
-                when (val scope = reviewReminder.scope) {
-                    is ReviewReminderScope.DeckSpecific ->
-                        ReviewRemindersDatabase.editRemindersForDeck(
-                            scope.did,
-                            upsertReminder(reviewReminder),
-                        )
-                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(upsertReminder(reviewReminder))
-                }
-
-                // Schedule the next routine notification-firing
-                Timber.d("Scheduling next review reminder notification")
-                AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder)
-            }
-
+            // We must run some suspending functions. Hence we mark this onReceive function as long-running
+            // and use the global scope for simplicity's sake. Theoretically, we could also use an expedited Worker,
+            // but AnkiDroid is only allotted a fixed number of expedited Worker calls per day
+            // and those expedited calls are also used by the sync service, so it's best to conserve them.
             runGloballyWithTimeout(SEND_REVIEW_REMINDER_TIMEOUT) {
-                // We run this on the global scope for simplicity's sake, as BroadcastReceivers do not have CoroutineScopes.
-                // Theoretically we could also use an expedited Worker, but AnkiDroid is only allotted a fixed number
-                // of expedited Worker calls per day, and these expedited calls are also used by the sync service,
-                // so it's best to conserve them.
-                try {
-                    sendReviewReminderNotification(context, reviewReminder)
-                } catch (e: BackendException) {
-                    // This may occur if the collection is blocked, in which case we should fail gracefully
-                    Timber.w(e, "Aborted review reminder notification due to backend exception")
-                }
+                handleReviewReminderNotification(
+                    context,
+                    reviewReminder,
+                    isRecurringNotification = (action == NotificationServiceAction.ScheduleRecurringNotifications.actionString),
+                )
             }
         } else {
             triggerNotificationFor(context)

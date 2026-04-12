@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabaseCorruptException
@@ -80,6 +81,7 @@ import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /** Overridable reference to [Dispatchers.IO]. Useful if tests can't use it */
 // COULD_BE_BETTER: this shouldn't be necessary, but TestClass::runWith needs it
@@ -612,21 +614,44 @@ private fun Activity.showError(
 ) = showError(throwable.toString(), throwable.toCrashReportData(context = this, reportException))
 
 /**
- * Launches a coroutine which is guaranteed to terminate within the [timeout] duration, which means
- * it is safe to call on the global coroutine scope. We handle the global scope carefully here to ensure
- * that the coroutine eventually terminates and does not cause a memory leak.
+ * Since BroadcastReceiver onReceive methods are expected to finish quickly, this helper function
+ * is required to run a suspending function from an onReceive method. [BroadcastReceiver.goAsync]
+ * extends the lifetime of the onReceive method and tells the OS not to kill the process prematurely.
+ *
+ * Do not call [BroadcastReceiver.goAsync] directly before calling this function.
+ *
+ * @param timeout Just in case the block hangs. Cannot exceed 8 seconds, because an ANR may occur if a
+ * BroadcastReceiver's onReceive method runs for longer than 10 seconds.
+ * See [the docs](https://developer.android.com/reference/android/content/BroadcastReceiver#goAsync()).
+ * @param block The suspending function to run.
  */
-fun runGloballyWithTimeout(
+fun BroadcastReceiver.runGloballyWithTimeout(
     timeout: Duration,
     block: suspend () -> Unit,
 ) {
+    val pendingResult = goAsync()
+    if (pendingResult == null) {
+        // pendingResult should never be null, so this should never happen.
+        // According to the implementation of goAsync, if it is, that indicates goAsync was called twice for the same onReceive.
+        Timber.w("goAsync returned null, cannot run block")
+        CrashReportService.sendExceptionReport(
+            message =
+                "goAsync returned null for BroadcastReceiver: " +
+                    "This should never happen and indicates goAsync was called twice for the same onReceive",
+            origin = "CoroutineHelpers:BroadcastReceiver.runGloballyWithTimeout",
+        )
+        return
+    }
+
     AnkiDroidApp.applicationScope.launch {
         try {
-            withTimeout(timeout) {
+            withTimeout(minOf(timeout, 8.seconds)) {
                 block()
             }
         } catch (e: TimeoutCancellationException) {
             Timber.w(e, "runGloballyWithTimeout timed out after $timeout")
+        } finally {
+            pendingResult.finish()
         }
     }
 }
