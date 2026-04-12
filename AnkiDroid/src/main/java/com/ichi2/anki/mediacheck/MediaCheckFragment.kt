@@ -34,6 +34,7 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import com.ichi2.utils.toRGBHex
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -119,8 +120,8 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         val backgroundColor = getColorFromAttr(requireContext(), android.R.attr.colorBackground)
         val textColor = getColorFromAttr(requireContext(), android.R.attr.textColorPrimary)
 
-        val backgroundColorHex = String.format("#%06X", 0xFFFFFF and backgroundColor)
-        val textColorHex = String.format("#%06X", 0xFFFFFF and textColor)
+        val backgroundColorHex = backgroundColor.toRGBHex()
+        val textColorHex = textColor.toRGBHex()
 
         val html =
             """
