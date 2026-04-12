@@ -35,28 +35,24 @@ import androidx.core.text.parseAsHtml
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.backend.stripHTMLScriptAndStyleTags
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
-import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CollectionMediaImageGetter
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
@@ -73,7 +69,9 @@ class StudyOptionsFragment :
     Fragment(),
     ChangeManager.Subscriber,
     MenuProvider {
-    private var currentContentView = CONTENT_STUDY_OPTIONS
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val viewModel: StudyOptionsViewModel by viewModels()
+
     private lateinit var deckInfoLayout: Group
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
@@ -88,15 +86,14 @@ class StudyOptionsFragment :
     private lateinit var totalNewCardsCount: TextView
     private lateinit var totalCardsCount: TextView
 
-    private var retryMenuRefreshJob: Job? = null
-
     private var fragmented = false
 
     private val buttonClickListener =
         View.OnClickListener { v: View ->
             if (v.id == R.id.studyoptions_start) {
                 Timber.i("StudyOptionsFragment:: start study button pressed")
-                if (currentContentView != CONTENT_CONGRATS) {
+                val state = viewModel.state
+                if (state !is StudyOptionsState.Congrats) {
                     parentFragmentManager.setFragmentResult(
                         REQUEST_STUDY_OPTIONS_STUDY,
                         Bundle(),
@@ -116,7 +113,6 @@ class StudyOptionsFragment :
         val studyOptionsView = inflater.inflate(R.layout.fragment_study_options, container, false)
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
-        refreshInterface()
         ChangeManager.subscribe(this)
         return studyOptionsView
     }
@@ -127,6 +123,8 @@ class StudyOptionsFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        viewModel.flowOfState.launchCollectionInLifecycleScope(::rebuildUi)
+        refreshInterface()
     }
 
     override fun onCreateMenu(
@@ -188,7 +186,7 @@ class StudyOptionsFragment :
     }
 
     private fun showCustomStudyContextMenu() {
-        val dialog = CustomStudyDialog.createInstance(deckId = col!!.decks.selected())
+        val dialog = CustomStudyDialog.createInstance(deckId = viewModel.selectedDeckId)
         requireActivity().showDialogFragment(dialog)
     }
 
@@ -196,14 +194,15 @@ class StudyOptionsFragment :
         when (item.itemId) {
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
-                if (col!!.decks.isFiltered(col!!.decks.selected())) {
-                    val i = FilteredDeckOptionsFragment.getIntent(requireActivity(), did = col!!.decks.current().id)
+                val deckId = viewModel.selectedDeckId
+                if (viewModel.isFilteredDeck) {
+                    val i = FilteredDeckOptionsFragment.getIntent(requireActivity(), did = deckId)
                     Timber.i("Opening filtered deck options")
                     onDeckOptionsActivityResult.launch(i)
                 } else {
                     val i =
                         com.ichi2.anki.pages.DeckOptions
-                            .getIntent(requireContext(), col!!.decks.current().id)
+                            .getIntent(requireContext(), deckId)
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
                 }
@@ -219,99 +218,61 @@ class StudyOptionsFragment :
                 val intent =
                     ScheduleRemindersFragment.getIntent(
                         requireContext(),
-                        ReviewReminderScope.DeckSpecific(col!!.decks.current().id),
+                        ReviewReminderScope.DeckSpecific(viewModel.selectedDeckId),
                     )
                 startActivity(intent)
                 return true
             }
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
-                launchCatchingTask {
-                    undoableOp<OpChanges> { sched.unburyDeck(decks.getCurrentId()) }
-                }
+                viewModel.unbury()
                 item.isVisible = false
                 return true
             }
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
-                launchCatchingTask { rebuildCram() }
+                launchCatchingTask {
+                    withProgress(R.string.rebuild_filtered_deck) {
+                        viewModel.rebuildCram()
+                    }
+                }
                 return true
             }
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
-                launchCatchingTask { emptyCram() }
+                launchCatchingTask {
+                    withProgress(R.string.empty_filtered_deck) {
+                        viewModel.emptyCram()
+                    }
+                }
                 return true
             }
             else -> return false
         }
     }
 
-    private suspend fun rebuildCram() {
-        val result =
-            requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
-                undoableOp {
-                    Timber.d("doInBackground - RebuildCram")
-                    sched.rebuildFilteredDeck(decks.selected())
-                }
-                withCol { fetchStudyOptionsData() }
-            }
-        rebuildUi(result)
-    }
-
-    @VisibleForTesting
-    suspend fun emptyCram() {
-        val result =
-            requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
-                undoableOp {
-                    Timber.d("doInBackgroundEmptyCram")
-                    sched.emptyFilteredDeck(decks.selected())
-                }
-                withCol { fetchStudyOptionsData() }
-            }
-        rebuildUi(result)
-    }
-
     override fun onPrepareMenu(menu: Menu) {
         super.onPrepareMenu(menu)
         Timber.i("configureToolbarInternal()")
-        try {
-            // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (col != null && col!!.decks.isFiltered(col!!.decks.selected())) {
-                menu.findItem(R.id.action_rebuild)?.isVisible = true
-                menu.findItem(R.id.action_empty)?.isVisible = true
-                menu.findItem(R.id.action_custom_study)?.isVisible = false
-                menu.findItem(R.id.action_deck_or_study_options)?.setTitle(R.string.menu__study_options)
-            } else {
-                menu.findItem(R.id.action_rebuild)?.isVisible = false
-                menu.findItem(R.id.action_empty)?.isVisible = false
-                menu.findItem(R.id.action_custom_study)?.isVisible = true
-                menu.findItem(R.id.action_deck_or_study_options)?.title = TR.sentenceCase.deckOptions
-            }
-            // Don't show custom study icon if congrats shown
-            if (currentContentView == CONTENT_CONGRATS) {
-                menu.findItem(R.id.action_custom_study)?.isVisible = false
-            }
-            // Use new review reminders system if enabled
-            menu.findItem(R.id.action_schedule_reminders)?.isVisible = Prefs.newReviewRemindersEnabled
-            // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury)?.isVisible = col != null && col!!.sched.haveBuried()
-        } catch (e: IllegalStateException) {
-            if (!CollectionManager.isOpenUnsafe()) {
-                // This will allow a maximum of one invalidate menu attempt in order to workaround
-                // database closes caused by sync on startup where this might be running then have
-                // the collection close
-                Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.")
-                if (retryMenuRefreshJob != null) {
-                    return // we already are doing a refresh, so abort to avoid entering an endless loop
-                }
-                retryMenuRefreshJob =
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        delay(1000)
-                        retryMenuRefreshJob = null
-                        activity?.invalidateMenu()
-                    }
-            }
+        val state = viewModel.state
+        if (state is StudyOptionsState.Loading) return
+
+        if (viewModel.isFilteredDeck) {
+            menu.findItem(R.id.action_rebuild)?.isVisible = true
+            menu.findItem(R.id.action_empty)?.isVisible = true
+            menu.findItem(R.id.action_custom_study)?.isVisible = false
+            menu.findItem(R.id.action_deck_or_study_options)?.setTitle(R.string.menu__study_options)
+        } else {
+            menu.findItem(R.id.action_rebuild)?.isVisible = false
+            menu.findItem(R.id.action_empty)?.isVisible = false
+            menu.findItem(R.id.action_custom_study)?.isVisible = true
+            menu.findItem(R.id.action_deck_or_study_options)?.title = TR.sentenceCase.deckOptions
         }
+        if (state is StudyOptionsState.Congrats) {
+            menu.findItem(R.id.action_custom_study)?.isVisible = false
+        }
+        menu.findItem(R.id.action_schedule_reminders)?.isVisible = Prefs.newReviewRemindersEnabled
+        menu.findItem(R.id.action_unbury)?.isVisible = viewModel.haveBuried
     }
 
     private var onDeckOptionsActivityResult =
@@ -335,60 +296,13 @@ class StudyOptionsFragment :
             }
         }
 
-    private var updateValuesFromDeckJob: Job? = null
-
     fun refreshInterface() {
         Timber.d("Refreshing StudyOptionsFragment")
-        updateValuesFromDeckJob?.cancel()
-        // Load the deck counts for the deck from Collection asynchronously
-        updateValuesFromDeckJob =
-            launchCatchingTask {
-                if (CollectionManager.isOpenUnsafe()) {
-                    val result = withCol { fetchStudyOptionsData() }
-                    rebuildUi(result)
-                }
-            }
+        viewModel.refreshData()
     }
 
-    class DeckStudyData(
-        /**
-         * The number of new card to see today in a deck, including subdecks.
-         */
-        val newCardsToday: Int,
-        /**
-         * The number of (repetition of) card in learning to see today in a deck, including subdecks. The exact way cards with multiple steps are counted depends on the scheduler
-         */
-        val lrnCardsToday: Int,
-        /**
-         * The number of review card to see today in a deck, including subdecks.
-         */
-        val revCardsToday: Int,
-        val buriedNew: Int,
-        val buriedLearning: Int,
-        val buriedReview: Int,
-        val totalNewCards: Int,
-        /**
-         * Number of cards in this decks and its subdecks.
-         */
-        val numberOfCardsInDeck: Int,
-    )
-
-    private val col: Collection?
-        get() {
-            try {
-                return CollectionManager.getColUnsafe()
-            } catch (_: Exception) {
-                // This may happen if the backend is locked or similar.
-            }
-            return null
-        }
-
-    override fun onPause() {
-        super.onPause()
-        updateValuesFromDeckJob?.cancel()
-    }
-
-    private fun rebuildUi(result: DeckStudyData) {
+    private fun rebuildUi(state: StudyOptionsState) {
+        if (state is StudyOptionsState.Loading) return
         view?.findViewById<View?>(R.id.progress_bar)?.visibility = View.GONE
         // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
         if (activity == null) {
@@ -398,70 +312,54 @@ class StudyOptionsFragment :
         // #5506 If we have no view, short circuit all UI logic
         val studyOptionsView = view ?: return
 
-        val col =
-            col
-                ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
-
-        // Reinitialize controls in case changed to filtered deck
         initAllContentViews(studyOptionsView)
-        // Set the deck name
-        val deck = col.decks.current()
-        // Main deck name
-        val fullName = deck.getString("name")
-        val name = Decks.path(fullName)
-        val nameBuilder = StringBuilder()
-        if (name.isNotEmpty()) {
-            nameBuilder.append(name[0])
-        }
-        if (name.size > 1) {
-            nameBuilder.append("\n").append(name[1])
-        }
-        if (name.size > 3) {
-            nameBuilder.append("...")
-        }
-        if (name.size > 2) {
-            nameBuilder.append("\n").append(name[name.size - 1])
-        }
-        textDeckName.text = nameBuilder.toString()
 
-        // Switch between the empty view, the ordinary view, and the "congratulations" view
-        val isDynamic = deck.isFiltered
-        if (result.numberOfCardsInDeck == 0 && !isDynamic) {
-            currentContentView = CONTENT_EMPTY
-            deckInfoLayout.visibility = View.VISIBLE
-            buttonStart.visibility = View.GONE
-        } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
-            currentContentView = CONTENT_CONGRATS
-            if (!isDynamic) {
-                deckInfoLayout.visibility = View.GONE
-                buttonStart.visibility = View.VISIBLE
-                buttonStart.text = TR.sentenceCase.customStudy
-            } else {
+        updateDeckNameView(state)
+
+        when (state) {
+            is StudyOptionsState.Empty -> {
+                deckInfoLayout.visibility = View.VISIBLE
                 buttonStart.visibility = View.GONE
             }
-        } else {
-            currentContentView = CONTENT_STUDY_OPTIONS
-            deckInfoLayout.visibility = View.VISIBLE
-            buttonStart.visibility = View.VISIBLE
-            buttonStart.setText(R.string.studyoptions_start)
+            is StudyOptionsState.Congrats -> {
+                if (!state.isDynamic) {
+                    deckInfoLayout.visibility = View.GONE
+                    buttonStart.visibility = View.VISIBLE
+                    buttonStart.text = TR.sentenceCase.customStudy
+                } else {
+                    buttonStart.visibility = View.GONE
+                }
+            }
+            is StudyOptionsState.StudyOptions -> {
+                deckInfoLayout.visibility = View.VISIBLE
+                buttonStart.visibility = View.VISIBLE
+                buttonStart.setText(R.string.studyoptions_start)
+            }
+            is StudyOptionsState.Loading -> return
         }
 
-        // Set deck description
+        val isDynamic =
+            when (state) {
+                is StudyOptionsState.StudyOptions -> state.isDynamic
+                is StudyOptionsState.Congrats -> state.isDynamic
+                else -> false
+            }
+
+        val description =
+            when (state) {
+                is StudyOptionsState.StudyOptions -> state.deckDescription
+                else -> null
+            }
+
         @Language("HTML")
         val desc: String =
             if (isDynamic) {
                 resources.getString(R.string.dyn_deck_desc)
             } else {
-                val deck = col.decks.current()
-                if (deck.descriptionAsMarkdown) {
-                    @Suppress("DEPRECATION") // renderMarkdown is fine here.
-                    col.renderMarkdown(deck.description, sanitize = true)
-                } else {
-                    deck.description
-                }
+                description ?: ""
             }
         if (desc.isNotEmpty()) {
-            val mediaDir = col.media.dir
+            val mediaDir = CollectionManager.getColUnsafe().media.dir
             val imageGetter =
                 CollectionMediaImageGetter(
                     requireContext(),
@@ -469,20 +367,20 @@ class StudyOptionsFragment :
                     mediaDir,
                     viewLifecycleOwner.lifecycleScope,
                 )
-
             textDeckDescription.text = formatDescription(desc, imageGetter)
             textDeckDescription.visibility = View.VISIBLE
         } else {
             textDeckDescription.visibility = View.GONE
         }
 
-        // Set new/learn/review card counts
-        newCountText.text = result.newCardsToday.toString()
-        learningCountText.text = result.lrnCardsToday.toString()
-        reviewCountText.text = result.revCardsToday.toString()
+        val data = state.dataOrNull() ?: return
+
+        newCountText.text = data.newCardsToday.toString()
+        learningCountText.text = data.lrnCardsToday.toString()
+        reviewCountText.text = data.revCardsToday.toString()
 
         // set bury numbers
-        buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
+        buryInfoLabel.isVisible = data.hasBuriedCards
 
         fun TextView.updateBuryText(count: Int) {
             this.isVisible = count > 0
@@ -498,40 +396,35 @@ class StudyOptionsFragment :
                     else -> ""
                 }
         }
-        newBuryText.updateBuryText(result.buriedNew)
-        learningBuryText.updateBuryText(result.buriedLearning)
-        reviewBuryText.updateBuryText(result.buriedReview)
-        totalNewCardsCount.text = result.totalNewCards.toString()
-        totalCardsCount.text = result.numberOfCardsInDeck.toString()
-        // Rebuild the options menu
+        newBuryText.updateBuryText(data.buriedNew)
+        learningBuryText.updateBuryText(data.buriedLearning)
+        reviewBuryText.updateBuryText(data.buriedReview)
+        totalNewCardsCount.text = data.totalNewCards.toString()
+        totalCardsCount.text = data.numberOfCardsInDeck.toString()
         activity?.invalidateMenu()
     }
 
     /**
-     * See https://github.com/ankitects/anki/blob/b05c9d15986ab4e33daa2a47a947efb066bb69b6/qt/aqt/overview.py#L226-L272
+     * Sets [textDeckName] from [state]. No-op when [state] does not carry a deck name
+     * (i.e. [StudyOptionsState.Loading]) — the rest of [rebuildUi] is unaffected.
      */
-    private fun Collection.fetchStudyOptionsData(): DeckStudyData {
-        val deckId = decks.current().id
-        val counts = sched.counts()
-        var buriedNew = 0
-        var buriedLearning = 0
-        var buriedReview = 0
-        val tree = sched.deckDueTree(deckId)
-        if (tree != null) {
-            buriedNew = tree.newCount - counts.new
-            buriedLearning = tree.learnCount - counts.lrn
-            buriedReview = tree.reviewCount - counts.rev
+    private fun updateDeckNameView(state: StudyOptionsState) {
+        val fullName = state.deckNameOrNull() ?: return
+        val name = Decks.path(fullName)
+        val nameBuilder = StringBuilder()
+        if (name.isNotEmpty()) {
+            nameBuilder.append(name[0])
         }
-        return DeckStudyData(
-            newCardsToday = counts.new,
-            lrnCardsToday = counts.lrn,
-            revCardsToday = counts.rev,
-            buriedNew = buriedNew,
-            buriedLearning = buriedLearning,
-            buriedReview = buriedReview,
-            totalNewCards = sched.totalNewForCurrentDeck(),
-            numberOfCardsInDeck = decks.cardCount(deckId, includeSubdecks = true),
-        )
+        if (name.size > 1) {
+            nameBuilder.append("\n").append(name[1])
+        }
+        if (name.size > 3) {
+            nameBuilder.append("...")
+        }
+        if (name.size > 2) {
+            nameBuilder.append("\n").append(name[name.size - 1])
+        }
+        textDeckName.text = nameBuilder.toString()
     }
 
     companion object {
@@ -540,13 +433,6 @@ class StudyOptionsFragment :
          * this fragment need to handle this request and initialize the study screen as they see fit.
          */
         const val REQUEST_STUDY_OPTIONS_STUDY = "request_study_option_study"
-
-        /**
-         * Constants for selecting which content view to display
-         */
-        private const val CONTENT_STUDY_OPTIONS = 0
-        private const val CONTENT_CONGRATS = 1
-        private const val CONTENT_EMPTY = 2
 
         @VisibleForTesting
         fun formatDescription(
