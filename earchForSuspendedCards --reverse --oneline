@@ -1,0 +1,161 @@
+[33mcommit cff45c77121edd307e1a4251bcf5888243682836[m
+Author: David Allison <62114487+david-allison@users.noreply.github.com>
+Date:   Mon Jun 30 16:42:59 2025 +0100
+
+    refactor(card-browser): move 'menu/onKeyUp' to Fragment
+
+[1mdiff --git a/AnkiDroid/src/main/java/com/ichi2/anki/CardBrowser.kt b/AnkiDroid/src/main/java/com/ichi2/anki/CardBrowser.kt[m
+[1mindex 7257291d5c..7f938aa80e 100644[m
+[1m--- a/AnkiDroid/src/main/java/com/ichi2/anki/CardBrowser.kt[m
+[1m+++ b/AnkiDroid/src/main/java/com/ichi2/anki/CardBrowser.kt[m
+[36m@@ -65,25 +65,10 @@[m [mimport com.ichi2.anki.browser.CardOrNoteId[m
+ import com.ichi2.anki.browser.IdsFile[m
+ import com.ichi2.anki.browser.SaveSearchResult[m
+ import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository[m
+[31m-import com.ichi2.anki.browser.changeDisplayOrder[m
+ import com.ichi2.anki.browser.deleteSelectedNotes[m
+[31m-import com.ichi2.anki.browser.exportSelected[m
+[31m-import com.ichi2.anki.browser.onResetProgress[m
+ import com.ichi2.anki.browser.registerFindReplaceHandler[m
+[31m-import com.ichi2.anki.browser.repositionSelectedCards[m
+[31m-import com.ichi2.anki.browser.rescheduleSelectedCards[m
+[31m-import com.ichi2.anki.browser.searchForMarkedNotes[m
+[31m-import com.ichi2.anki.browser.searchForSuspendedCards[m
+[31m-import com.ichi2.anki.browser.showChangeDeckDialog[m
+[31m-import com.ichi2.anki.browser.showCreateFilteredDeckDialog[m
+[31m-import com.ichi2.anki.browser.showEditTagsDialog[m
+[31m-import com.ichi2.anki.browser.showFilterByTagsDialog[m
+[31m-import com.ichi2.anki.browser.showFindAndReplaceDialog[m
+ import com.ichi2.anki.browser.showOptionsDialog[m
+ import com.ichi2.anki.browser.toCardBrowserLaunchOptions[m
+[31m-import com.ichi2.anki.browser.toggleBury[m
+[31m-import com.ichi2.anki.browser.toggleMark[m
+[31m-import com.ichi2.anki.browser.toggleSuspendCards[m
+ import com.ichi2.anki.browser.updateFlagForSelectedRows[m
+ import com.ichi2.anki.common.annotations.NeedsTest[m
+ import com.ichi2.anki.common.utils.annotation.KotlinCleanup[m
+[36m@@ -625,27 +610,16 @@[m [mopen class CardBrowser :[m
+         keyCode: Int,[m
+         event: KeyEvent,[m
+     ): Boolean {[m
+[32m+[m[32m        if (cardBrowserFragment.onKeyUp(keyCode, event)) {[m
+[32m+[m[32m            return true[m
+[32m+[m[32m        }[m
+[32m+[m
+         // This method is called even when the user is typing in the search text field.[m
+         // So we must ensure that all shortcuts uses a modifier.[m
+         // A shortcut without modifier would be triggered while the user types, which is not what we want.[m
+         when (keyCode) {[m
+[31m-            KeyEvent.KEYCODE_A -> {[m
+[31m-                if (event.isCtrlPressed && event.isShiftPressed) {[m
+[31m-                    Timber.i("Ctrl+Shift+A - Show edit tags dialog")[m
+[31m-                    showEditTagsDialog()[m
+[31m-                    return true[m
+[31m-                } else if (event.isCtrlPressed) {[m
+[31m-                    Timber.i("Ctrl+A - Select All")[m
+[31m-                    viewModel.selectAll()[m
+[31m-                    return true[m
+[31m-                }[m
+[31m-            }[m
+             KeyEvent.KEYCODE_E -> {[m
+[31m-                if (event.isCtrlPressed && event.isShiftPressed) {[m
+[31m-                    Timber.i("Ctrl+Shift+E: Export selected cards")[m
+[31m-                    exportSelected()[m
+[31m-                    return true[m
+[31m-                } else if (event.isCtrlPressed) {[m
+[32m+[m[32m                if (event.isCtrlPressed) {[m
+                     Timber.i("Ctrl+E: Add Note")[m
+                     launchCatchingTask { addNoteFromCardBrowser() }[m
+                     return true[m
+[36m@@ -666,27 +640,6 @@[m [mopen class CardBrowser :[m
+                     return false[m
+                 }[m
+             }[m
+[31m-            KeyEvent.KEYCODE_D -> {[m
+[31m-                if (event.isCtrlPressed) {[m
+[31m-                    Timber.i("Ctrl+D: Change Deck")[m
+[31m-                    showChangeDeckDialog()[m
+[31m-                    return true[m
+[31m-                }[m
+[31m-            }[m
+[31m-            KeyEvent.KEYCODE_K -> {[m
+[31m-                if (event.isCtrlPressed) {[m
+[31m-                    Timber.i("Ctrl+K: Toggle Mark")[m
+[31m-                    toggleMark()[m
+[31m-                    return true[m
+[31m-                }[m
+[31m-            }[m
+[31m-            KeyEvent.KEYCODE_R -> {[m
+[31m-                if (event.isCtrlPressed && event.isAltPressed) {[m
+[31m-                    Timber.i("Ctrl+Alt+R - Reschedule")[m
+[31m-                    rescheduleSelectedCards()[m
+[31m-                    return true[m
+[31m-                }[m
+[31m-            }[m
+             KeyEvent.KEYCODE_G -> {[m
+                 if (event.isCtrlPressed && event.isShiftPressed) {[m
+                     Timber.i("Ctrl+Shift+G - Grade Now")[m
+[36m@@ -707,11 +660,6 @@[m [mopen class CardBrowser :[m
+                 }[m
+             }[m
+             KeyEvent.KEYCODE_F -> {[m
+[31m-                if (event.isCtrlPressed && event.isAltPressed) {[m
+[31m-                    Timber.i("CTRL+ALT+F - Find and replace")[m
+[31m-                    showFindAndReplaceDialog()[m
+[31m-                    return true[m
+[31m-                }[m
+                 if (event.isCtrlPressed) {[m
+                     Timber.i("Ctrl+F - Find notes")[m
+                     searchItem?.expandActionView()[m
+[36m@@ -725,30 +673,8 @@[m [mopen class CardBrowser :[m
+                     return true[m
+                 }[m
+             }[m
+[31m-            KeyEvent.KEYCODE_N -> {[m
+[31m-                if (event.isCtrlPressed && event.isAltPressed) {[m
+[31m-                    Timber.i("Ctrl+Alt+N: Reset card progress")[m
+[31m-                    onResetProgress()[m
+[31m-                    return true[m
+[31m-                }[m
+[31m-            }[m
+[31m-            KeyEvent.KEYCODE_T -> {[m
+[31m-                if (event.isCtrlPressed && event.isAltPressed) {[m
+[31m-                    Timber.i("Ctrl+Alt+T: Toggle cards/notes")[m
+[31m-                    showOptionsDialog()[m
+[31m-                    return true[m
+[31m-                } else if (event.isCtrlPressed) {[m
+[31m-                    Timber.i("Ctrl+T: Show filter by tags dialog")[m
+[31m-                    showFilterByTagsDialog()[m
+[31m-                    return true[m
+[31m-                }[m
+[31m-            }[m
+             KeyEvent.KEYCODE_S -> {[m
+[31m-                if (event.isCtrlPressed && event.isShiftPressed) {[m
+[31m-                    Timber.i("Ctrl+Shift+S: Reposition selected cards")[m
+[31m-                    repositionSelectedCards()[m
+[31m-                    return true[m
+[31m-                } else if (event.isCtrlPressed && event.isAltPressed) {[m
+[32m+[m[32m                if (event.isCtrlPressed && event.isAltPressed) {[m
+                     Timber.i("Ctrl+Alt+S: Show saved searches")[m
+                     showSavedSearches()[m
+                     return true[m
+[36m@@ -756,21 +682,6 @@[m [mopen class CardBrowser :[m
+                     Timber.i("Ctrl+S: Save search")[m
+                     openSaveSearchView()[m
+                     return true[m
+[31m-                } else if (event.isAltPressed) {[m
+[31m-                    Timber.i("Alt+S: Show suspended cards")[m
+[31m-                    searchForSuspendedCards()[m
+[31m-                    return true[m
+[31m-                }[m
+[31m-            }[m
+[31m-            KeyEvent.KEYCODE_J -> {[m
+[31m-                if (event.isCtrlPressed && event.isShiftPressed) {[m
+[31m-                    Timber.i("Ctrl+Shift+J: Toggle bury cards")[m
+[31m-                    toggleBury()[m
+[31m-                    return true[m
+[31m-                } else if (event.isCtrlPressed) {[m
+[31m-                    Timber.i("Ctrl+J: Toggle suspended cards")[m
+[31m-                    toggleSuspendCards()[m
+[31m-                    return true[m
+                 }
