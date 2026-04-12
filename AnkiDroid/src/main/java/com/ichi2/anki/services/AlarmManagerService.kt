@@ -29,9 +29,7 @@ import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.reviewreminders.ReviewReminder
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
-import com.ichi2.anki.reviewreminders.upsertReminder
 import com.ichi2.anki.services.AlarmManagerService.Companion.WINDOW_LENGTH_MS
 import com.ichi2.anki.services.AlarmManagerService.Companion.getIntent
 import com.ichi2.anki.services.AlarmManagerService.Companion.scheduleAllEnabledReviewReminderNotifications
@@ -140,11 +138,6 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * Queues a review reminder to have its notification fired at its specified time. Does not check
          * if the review reminder is enabled or not, the caller must handle this.
          *
-         * If the review reminder has failed to fire a notification at its most recent specified time for some
-         * reason (ex. if the device was off, or if the OS delayed the notification for some reason),
-         * a notification will be fired immediately and no alarm will be immediately scheduled, as the
-         * notification should automatically trigger the scheduling of the next alarm.
-         *
          * Note that this only schedules the next upcoming notification, using [AlarmManager.setWindow]
          * rather than [AlarmManager.setRepeating]. This is because [AlarmManager.setRepeating] sometimes
          * postpones alarm firings for long periods of time, with intervals as long as one hour observed
@@ -152,7 +145,7 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * length of time the OS can delay the alarm for, leading to a better UX. Each time an alarm is fired,
          * triggering [NotificationService.sendReviewReminderNotification], this method is called again to
          * schedule the next upcoming notification. If for some reason the next day's alarm fails to be set by
-         * the current day's notification, we fall back to setting alarms whenever the app is opened: see
+         * the current day's notification, we fall back to setting alarms whenever the application process is started: see
          * [com.ichi2.anki.AnkiDroidApp]'s call to [scheduleAllEnabledReviewReminderNotifications].
          *
          * If an old version of this review reminder with the same review reminder ID has already had
@@ -161,11 +154,20 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * notifications scheduled, this will NOT delete the old scheduled notifications. They must be
          * manually deleted via [unscheduleReviewReminderNotifications].
          *
+         * @param context
+         * @param reviewReminder
+         * @param attemptImmediateNotification If true, attempts to fire the notification immediately as well.
+         * This is to handle cases where the most recent notification firing may have been been missed.
+         * [NotificationService] protects against deduplication and aborts redundant sends, so when in doubt,
+         * it's safe to set this to true.
+         *
+         * @see NotificationService.handleReviewReminderNotification
          * @see NotificationService.NotificationServiceAction.ScheduleRecurringNotifications
          */
         fun scheduleReviewReminderNotification(
             context: Context,
             reviewReminder: ReviewReminder,
+            attemptImmediateNotification: Boolean,
         ) {
             Timber.d("Beginning scheduleReviewReminderNotifications for ${reviewReminder.id}")
             Timber.v("Review reminder: $reviewReminder")
@@ -177,20 +179,26 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
                 ) ?: return
             Timber.v("Pending intent for ${reviewReminder.id} is $pendingIntent")
 
-            if (reviewReminder.shouldImmediatelyFire()) {
-                immediatelyFireNotification(context, reviewReminder)
-                // Once the notification has fired, it will automatically trigger the setting of the next alarm
-                // so we can return immediately
-                return
+            if (attemptImmediateNotification) {
+                // Attempt an immediate notification: If it has already been fired for the most recent scheduled time,
+                // NotificationService will detect it and abort the notification.
+                val immediateNotificationIntent =
+                    NotificationService.getIntent(
+                        context,
+                        reviewReminder,
+                        NotificationService.NotificationServiceAction.ScheduleRecurringNotifications,
+                    )
+                context.sendBroadcast(immediateNotificationIntent)
             }
 
+            // Schedule the next notification
             val currentTimestamp = TimeManager.time.calendar()
             val alarmTimestamp = currentTimestamp.clone() as Calendar
             alarmTimestamp.apply {
                 set(Calendar.HOUR_OF_DAY, reviewReminder.time.hour)
                 set(Calendar.MINUTE, reviewReminder.time.minute)
                 set(Calendar.SECOND, 0)
-                if (before(currentTimestamp)) {
+                if (before(currentTimestamp) || this == currentTimestamp) {
                     add(Calendar.DAY_OF_YEAR, 1)
                 }
             }
@@ -204,37 +212,6 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
                 )
                 Timber.d("Successfully scheduled review reminder notifications for ${reviewReminder.id}")
             }
-        }
-
-        /**
-         * Immediately fires a review reminder notification for a review reminder, which in turn then schedules the next notification.
-         * Used when a review reminder's notification has been delayed and failed to fire for some reason.
-         */
-        private fun immediatelyFireNotification(
-            context: Context,
-            reviewReminder: ReviewReminder,
-        ) {
-            Timber.d("Review reminder ${reviewReminder.id} should have fired already, sending notification immediately")
-
-            // Immediately (redundantly) record this latest routine notification-firing attempt's timestamp
-            // to prevent this from being triggered multiple times in rapid succession
-            reviewReminder.updateLatestNotifTime()
-            when (val scope = reviewReminder.scope) {
-                is ReviewReminderScope.DeckSpecific ->
-                    ReviewRemindersDatabase.editRemindersForDeck(
-                        scope.did,
-                        upsertReminder(reviewReminder),
-                    )
-                is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(upsertReminder(reviewReminder))
-            }
-
-            val immediateNotificationIntent =
-                NotificationService.getIntent(
-                    context,
-                    reviewReminder,
-                    NotificationService.NotificationServiceAction.ScheduleRecurringNotifications,
-                )
-            context.sendBroadcast(immediateNotificationIntent)
         }
 
         /**
@@ -264,6 +241,8 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
 
         /**
          * Schedules notifications for all currently-enabled review reminders. Reads from the [ReviewRemindersDatabase].
+         * Also attempts a notification send just in case the most recent one was missed. Deduplication and aborting
+         * redundant notifications is handled by [NotificationService].
          *
          * If, for a review reminder in the database, an old version of a review reminder with the same review
          * reminder ID has already had its notifications scheduled, this will merely update the existing notifications.
@@ -271,13 +250,16 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * notifications scheduled, this will NOT delete the old scheduled notifications. They must be
          * manually deleted via [unscheduleReviewReminderNotifications].
          */
-        fun scheduleAllEnabledReviewReminderNotifications(context: Context) {
+        suspend fun scheduleAllEnabledReviewReminderNotifications(context: Context) {
             Timber.d("scheduleAllEnabledReviewReminderNotifications")
-            val allReviewRemindersAsMap =
-                ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
-            val enabledReviewReminders = allReviewRemindersAsMap.getRemindersList().filter { it.enabled }
+            val enabledReviewReminders =
+                ReviewRemindersDatabase
+                    .getAllReminders()
+                    .getRemindersList()
+                    .filter { it.enabled }
+
             for (reviewReminder in enabledReviewReminders) {
-                scheduleReviewReminderNotification(context, reviewReminder)
+                scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = true)
             }
         }
 
@@ -327,7 +309,7 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * device start-up, on app start-up, etc.
          * To extend the notifications created by AnkiDroid, add more functionality to the body of this method.
          */
-        fun scheduleAllNotifications(context: Context) {
+        suspend fun scheduleAllNotifications(context: Context) {
             // currently, the only scheduled notifications supported by AnkiDroid are review reminder notifications
             scheduleAllEnabledReviewReminderNotifications(context)
         }

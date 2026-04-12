@@ -315,7 +315,9 @@ open class AnkiDroidApp :
             val context = this.withAppLocale()
             if (Prefs.newReviewRemindersEnabled) {
                 Timber.i("Setting review reminder notifications if they have not already been set")
-                AlarmManagerService.scheduleAllNotifications(context)
+                applicationScope.launch {
+                    AlarmManagerService.scheduleAllNotifications(context)
+                }
             } else {
                 // Register for notifications
                 Timber.i("AnkiDroidApp: Starting Services")

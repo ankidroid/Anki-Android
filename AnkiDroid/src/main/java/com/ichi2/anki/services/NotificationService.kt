@@ -40,7 +40,6 @@ import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
-import com.ichi2.anki.reviewreminders.upsertReminder
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.services.NotificationService.Companion.addAction
 import com.ichi2.anki.services.NotificationService.Companion.getIntent
@@ -99,26 +98,32 @@ class NotificationService : AnkiBroadcastReceiver() {
             reviewReminder: ReviewReminder,
             isRecurringNotification: Boolean,
         ) {
-            if (isRecurringNotification) {
-                // Record this latest routine notification-firing attempt's timestamp
-                reviewReminder.updateLatestNotifTime()
-                when (val scope = reviewReminder.scope) {
-                    is ReviewReminderScope.DeckSpecific ->
-                        ReviewRemindersDatabase.editRemindersForDeck(
-                            scope.did,
-                            upsertReminder(reviewReminder),
-                        )
-                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(upsertReminder(reviewReminder))
-                }
+            val reminderForNotification =
+                if (isRecurringNotification) {
+                    val refreshedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminder)
+                    if (refreshedReminder == null) {
+                        Timber.i("Aborting notification and not scheduling next one, notification not required at this time")
+                        return
+                    }
 
-                // Schedule the next routine notification-firing
-                Timber.d("Scheduling next review reminder notification")
-                AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder)
-            }
+                    // Schedule the next routine notification-firing
+                    Timber.d("Scheduling next review reminder notification")
+                    // Because this scheduling is already the result of a notification, we do not trigger an immediate notification.
+                    AlarmManagerService.scheduleReviewReminderNotification(
+                        context,
+                        refreshedReminder,
+                        attemptImmediateNotification = false,
+                    )
+
+                    refreshedReminder
+                } else {
+                    // No need to perform any bookkeeping for snoozed notifications, just immediately fire
+                    reviewReminder
+                }
 
             // Send the notification
             try {
-                sendReviewReminderNotification(context, reviewReminder)
+                sendReviewReminderNotification(context, reminderForNotification)
             } catch (e: BackendException) {
                 // This may occur if the collection is blocked, in which case we should fail gracefully
                 Timber.w(e, "Aborted review reminder notification due to backend exception")
@@ -459,25 +464,27 @@ class NotificationService : AnkiBroadcastReceiver() {
             Timber.d("onReceiveBroadcast")
             val action = intent.action ?: return
             val extras = intent.extras ?: return
-            val reviewReminder =
-                try {
-                    extras.getParcelableCompat<ReviewReminder>(EXTRA_REVIEW_REMINDER) ?: return
-                } catch (e: BadParcelableException) {
-                    // #20782: If the extra's review reminder has an invalid schema, attempt a full re-schedule of all
-                    // review reminder notifications, as that will retrieve reminders from Shared Preferences
-                    // and handle any necessary schema updates. It will also trigger immediate notifications
-                    // (and thus this onReceiveBroadcast again for an uncorrupted version of this corrupted review reminder) as necessary.
-                    Timber.w(e, "Failed to get review reminder from intent extras, triggering full re-schedule")
-                    AlarmManagerService.scheduleAllEnabledReviewReminderNotifications(context)
-                    return
-                }
-            Timber.d("onReceiveBroadcast: ${reviewReminder.id}")
 
             // We must run some suspending functions. Hence we mark this onReceiveBroadcast function as long-running
             // and use the global scope for simplicity's sake. Theoretically, we could also use an expedited Worker,
             // but AnkiDroid is only allotted a fixed number of expedited Worker calls per day
             // and those expedited calls are also used by the sync service, so it's best to conserve them.
             runGloballyWithTimeout(SEND_REVIEW_REMINDER_TIMEOUT) {
+                val reviewReminder =
+                    try {
+                        extras.getParcelableCompat<ReviewReminder>(EXTRA_REVIEW_REMINDER)
+                            ?: return@runGloballyWithTimeout
+                    } catch (e: BadParcelableException) {
+                        // #20782: If the extra's review reminder has an invalid schema, attempt a full re-schedule of all
+                        // review reminder notifications, as that will retrieve reminders from Shared Preferences
+                        // and handle any necessary schema updates. It will also trigger immediate notifications
+                        // (and thus this onReceiveBroadcast again for an uncorrupted version of this corrupted review reminder) as necessary.
+                        Timber.w(e, "Failed to get review reminder from intent extras, triggering full re-schedule")
+                        AlarmManagerService.scheduleAllEnabledReviewReminderNotifications(context)
+                        return@runGloballyWithTimeout
+                    }
+                Timber.d("onReceiveBroadcast: ${reviewReminder.id}")
+
                 handleReviewReminderNotification(
                     context,
                     reviewReminder,

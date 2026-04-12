@@ -36,7 +36,7 @@ import com.ichi2.anki.common.android.R as CommonR
 class ScheduleRemindersAdapter(
     private val retrieveDeckNameFromID: (DeckId, callback: (deckName: String) -> Unit) -> Unit,
     private val retrieveCanUserAccessDeck: (DeckId, callback: (isDeckAccessible: Boolean) -> Unit) -> Unit,
-    private val toggleReminderEnabled: (ReviewReminderId, ReviewReminderScope) -> Unit,
+    private val toggleReminder: (ReviewReminder) -> Unit,
     private val editReminder: (ReviewReminder) -> Unit,
 ) : ListAdapter<ReviewReminder, ScheduleRemindersAdapter.ViewHolder>(diffCallback) {
     class ViewHolder(
@@ -70,7 +70,7 @@ class ScheduleRemindersAdapter(
         holder.itemView.setOnClickListener { editReminder(reminder) }
 
         holder.switchView.isChecked = reminder.enabled
-        holder.switchView.setOnClickListener { toggleReminderEnabled(reminder.id, reminder.scope) }
+        holder.switchView.setOnClickListener { toggleReminder(reminder) }
 
         errorReminderIfDeckNotFound(reminder.scope, holder)
     }
