@@ -432,8 +432,6 @@ class CardBrowserFragment :
                     menu.findItem(R.id.action_undo).setupUndo()
                 }
 
-                @NeedsTest("filter-marked query needs testing")
-                @NeedsTest("filter-suspended query needs testing")
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     if (vm.isInMultiSelectMode) return false
 
