@@ -164,7 +164,7 @@
     <string name="safe_display_summ">Адключыць усю анімацыю і выкарыстоўваць бяспечны метад для адлюстравання картак. Гэта можа быць актуальна для прылад з экранамі на электронных чарнілах.</string>
     <string name="disable_extended_text_ui" maxLength="41">Адключыць рэжым адзіночнага поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Уключае кантэкстнае меню \"Заданне з пропускамі\" ў альбомным рэжыме.</string>
+    <string name="disable_extended_text_ui_summ">Уключае кантэкстнае меню \"Заданні з пропускамі\" ў альбомным рэжыме.</string>
     <string name="vertical_centering" maxLength="41">Выраўноўваць па цэнтры</string>
     <string name="vertical_centering_summ">Цэнтраваць змесціва картак вертыкальна</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтэрвал у падвойным дотыку</string>
@@ -176,7 +176,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Паказваць вялікія кнопкі адказу</string>
     <string name="show_large_answer_buttons_summ">Паказваць кнопкі адказу ў 2 радкі</string>
     <string name="show_top_bar" maxLength="41">Паказваць верхнюю панэль</string>
-    <string name="show_top_bar_summary">Паказваць лічыльнік картак, таймер адказу, сцяжок і пазнаку на верхняй панэлі</string>
+    <string name="show_top_bar_summary">Паказваць лічыльнік картак, таймер адказу і пазнакі на верхняй панэлі</string>
     <string name="show_progress" maxLength="41">Паказаць тое, што засталося</string>
     <string name="show_progress_summ">Паказваць лічыльнік картак, якія засталіся</string>
     <string name="show_eta" maxLength="41">Паказваць прыблізны час</string>

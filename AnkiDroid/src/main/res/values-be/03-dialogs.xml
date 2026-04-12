@@ -279,7 +279,7 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Нумары картак застануцца без змяненняў</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">Калі вы змяняеце тып нататкі на звычайную, і блізкіх выдаленняў больш, чым даступных шаблонаў картак, усе лішнія карткі будуць выдалены.</string>
+    <string name="extra_cloze_deletions_removed">Калі вы змяняеце тып нататкі на звычайны, а заданняў з пропускамі больш, чым даступных шаблонаў картак, то ўсе лішнія карткі будуць выдалены.</string>
     <string name="different_note_types_selected">Выберыце нататкі толькі аднаго тыпу.</string>
     <string name="error_no_changes_to_save">Адсутнічаюць змены для захавання</string>
     <string name="choose_color">Выберыце колер</string>
@@ -287,10 +287,10 @@
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Палі</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Спецыяльныя</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">Змесціва пярэдняга шаблона. Аўдыя не праграваецца аўтаматычна</string>
+    <string name="special_field_front_side_help">Змесціва пярэдняга шаблона. Аўдыя не будзе прайгравацца аўтаматычна</string>
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Поўная калода картак, якая ўключае бацькоўскія калоды%s</string>
     <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Бягучая калода картак, якая выключае бацькоўскія калоды%s</string>
-    <string name="special_field_flag_help">Паказвае ‘%1$s’, дзе %2$s код сцяга (%3$s\–%4$s\)</string>
+    <string name="special_field_flag_help">Выводзіць ‘%1$s’, дзе %2$s код пазнакі (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Меткі нататкі%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Ідэнтыфікатар карткі%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Назва шаблону карткі%s</string>

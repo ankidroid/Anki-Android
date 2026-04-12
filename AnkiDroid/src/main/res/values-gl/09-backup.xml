@@ -51,7 +51,7 @@
     <string name="backup_del_collection">Eliminar a colección e crear unha nova</string>
     <string name="backup_del_collection_question">Queres eliminar a colección e crear unha nova? Isto fará que perdas todo o teu progreso de aprendizaxe e que se eliminen todas as tarxetas.</string>
     <string name="backup_one_way_sync_from_server">Sincronización unidireccional dende o servidor</string>
-    <string name="backup_use_default_folder">Use default collection folder</string>
+    <string name="backup_use_default_folder">Usar o cartafol da colección por defecto</string>
     <string name="backup_full_sync_from_server_question">Sobrescribir a túa colección coa de AnkiWeb? Eliminarase todo o teu progreso de aprendizaxe e a información engadida dende a última sincronización.</string>
     <string name="error_handling_title">Xestión dos erros</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opcións</string>

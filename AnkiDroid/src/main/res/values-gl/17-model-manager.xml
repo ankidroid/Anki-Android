@@ -50,12 +50,12 @@
     <string name="rename_model">Renomear tipo de nota</string>
     <string name="rename_card_type">Renomear tipo de tarxeta</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Estableceuse a pista do idioma a %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Estabeleceuse a pista do idioma a %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_add" maxLength="28">Engadir campo</string>
     <string name="model_field_editor_delete">Eliminar campo</string>
     <string name="model_field_editor_rename">Renomear campo</string>
-    <string name="model_field_editor_language_hint">Establecer pista do idioma do teclado</string>
+    <string name="model_field_editor_language_hint">Estabelecer pista do idioma do teclado</string>
     <string name="model_field_editor_reposition_menu">Campo de reposición</string>
     <string name="model_field_editor_changing">Actualizando campos</string>
     <string name="model_field_editor_sort_field">Ordenar por este campo</string>
@@ -81,7 +81,7 @@
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Antepoñer baralla (activado)</string>
     <string name="card_template_editor_deck_override_off">Antepoñer baralla (desactivado)</string>
-    <string name="model_manager_deck_override_added_message">Estableceuse a baralla predeterminada de ‘%1$s’ a ‘%2$s’</string>
+    <string name="model_manager_deck_override_added_message">Estabeleceuse a baralla predeterminada de ‘%1$s’ a ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Eliminouse a baralla predeterminada para  ‘%s’</string>
     <string name="deck_override_explanation">Seleccionar baralla para colocar as novas tarxetas ‘%s’</string>
     <string name="deck_picker_dialog_filter_decks" maxLength="28">Filtrar barallas</string>

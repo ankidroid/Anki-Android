@@ -69,7 +69,7 @@
     <string name="card_browser_show_marked" maxLength="28">Фільтраваць пазначаныя</string>
     <string name="card_browser_show_suspended" maxLength="28">Фільтраваць прыпыненыя</string>
     <string name="card_browser_search_by_tag" maxLength="28">Фільтраваць па метках</string>
-    <string name="card_browser_search_by_flag" maxLength="28">Фільтраваць па пазнаках</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Фільтраваць па пазнацы</string>
     <string name="card_browser_list_my_searches" maxLength="28">Мае запыты пошуку</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">Захаваць запыты пошуку</string>
     <string name="card_browser_list_my_searches_title">Выберыце захаваны запыт пошуку</string>

@@ -97,7 +97,7 @@
     <string name="webview_crash_loop_dialog_title">Памылка апрацоўшчыка сістэмнага WebView</string>
     <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Правядзіце, каб скасаваць</string>
-    <string name="filter_by_flags" maxLength="41">Сцягі</string>
+    <string name="filter_by_flags" maxLength="41">Пазнакі</string>
     <!-- filtered deck options -->
     <string name="filtered_option_delay_again">Затрымка для «Зноў»</string>
     <string name="filtered_option_delay_hard">Затрымка для «Цяжка»</string>
@@ -181,12 +181,10 @@
     <string name="export_save_apkg_unsuccessful">Памылка захавання пакета Anki</string>
     <string name="export_share_title">Адправіць пакет Anki з выкарыстаннем</string>
     <string name="export_email_subject">AnkiDroid экспартаваў калоды картак для запамінання: %s</string>
-    <string name="export_email_text"><![CDATA[        Вітанкі!
+    <string name="export_email_text"><![CDATA[        Вітаем!
         <br/><br/>
-        Гэта калода картак Anki была адпраўлена з праграмы AnkiDroid[1].
-        Паспрабуйце адкрыць яе з дапамогай адной з версій праграмы Anki[2] і атрымайце асалоду ад лёгкага і эфектыўнага навучання!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
+        Гэта калода картак была адпраўленая з праграмы <a href="%1$s">AnkiDroid</a>.
+        Вы можаце адкрыць яе з дапамогай праграмы <a href="%2$s">Anki</a> і атрымаць асалоду ад лёгкага і эфектыўнага навучання!
         ]]></string>
     <string name="export_choice_share">Абагуліць</string>
     <string name="export_choice_save_to">Захаваць у</string>
@@ -199,7 +197,7 @@
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
-    <string name="tag_already_exists">Тэг ужо існуе</string>
+    <string name="tag_already_exists">Метка ўжо існуе</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
@@ -319,7 +317,7 @@
     <string name="malicious_archive_exceeds_limit">Шкодны архіў. Памер перавышае %1$s або змяшчае больш %2$d файлаў</string>
     <string name="file_extract_exceeds_storage_space">Памер файла перавышае аб\'ём памяці</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Разгарнуць метку \'%s\'</string>
+    <string name="expand_tag">Разгарнуць метку «%s»</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Збой атрымання доступу да калекцыі. Калі ласка, паспрабуйце яшчэ раз!</string>
     <string name="cd_manage_notetypes_add">Дадаць новы тып нататкі</string>
@@ -403,5 +401,5 @@
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Такая назва ўжо існуе.</string>
+    <string name="error_name_exists">Такая назва ўжо існуе</string>
 </resources>

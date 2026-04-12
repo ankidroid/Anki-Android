@@ -73,14 +73,14 @@
     <string name="answer_good" maxLength="41">Добры адказ</string>
     <string name="answer_easy" maxLength="41">Просты адказ</string>
     <string name="gesture_abort_learning" maxLength="41">Закрыць экран навучання</string>
-    <string name="gesture_flag_red" maxLength="41">Пераключыць чырвоны сцяжок</string>
-    <string name="gesture_flag_orange" maxLength="41">Пераключыць аранжавы сцяжок</string>
-    <string name="gesture_flag_green" maxLength="41">Пераключыць зялёны сцяжок</string>
-    <string name="gesture_flag_blue" maxLength="41">Пераключыць блакітны сцяжок</string>
-    <string name="gesture_flag_pink" maxLength="41">Пераключыць ружовы сцяжок</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Пераключыць туркусовы сцяжок</string>
-    <string name="gesture_flag_purple" maxLength="41">Пераключыць фіялетавы сцяжок</string>
-    <string name="gesture_flag_remove" maxLength="41">Прыбраць сцяжок</string>
+    <string name="gesture_flag_red" maxLength="41">Пераключыць чырвоную пазнаку</string>
+    <string name="gesture_flag_orange" maxLength="41">Пераключыць аранжавую пазнаку</string>
+    <string name="gesture_flag_green" maxLength="41">Пераключыць зялёную пазнаку</string>
+    <string name="gesture_flag_blue" maxLength="41">Пераключыць блакітную пазнаку</string>
+    <string name="gesture_flag_pink" maxLength="41">Пераключыць ружовую пазнаку</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Пераключыць бірузовую пазнаку</string>
+    <string name="gesture_flag_purple" maxLength="41">Пераключыць фіялетавую пазнаку</string>
+    <string name="gesture_flag_remove" maxLength="41">Выдаліць пазнаку</string>
     <string name="gesture_page_up" maxLength="41">Папярэдняя старонка</string>
     <string name="gesture_page_down" maxLength="41">Наступная старонка</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">Пераключыць дошку</string>
