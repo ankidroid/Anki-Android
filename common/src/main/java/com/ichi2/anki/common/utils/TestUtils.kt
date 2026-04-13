@@ -13,7 +13,9 @@
  */
 package com.ichi2.anki.common.utils
 
-import timber.log.Timber
+import org.slf4j.LoggerFactory
+
+private val logger = LoggerFactory.getLogger("TestUtils")
 
 /** make default HTML / JS debugging true for debug build and disable for unit/android tests
  * isRunningAsUnitTest checks if we are in debug or testing environment by checking if org.junit.Test class
@@ -25,9 +27,9 @@ val isRunningAsUnitTest: Boolean
         try {
             Class.forName("org.junit.Test")
         } catch (ignored: ClassNotFoundException) {
-            Timber.d("isRunningAsUnitTest: %b", false)
+            logger.debug("isRunningAsUnitTest: {}", false)
             return false
         }
-        Timber.d("isRunningAsUnitTest: %b", true)
+        logger.debug("isRunningAsUnitTest: {}", true)
         return true
     }

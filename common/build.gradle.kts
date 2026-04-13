@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.google.material)
     implementation(libs.jakewharton.timber)
+    implementation(libs.slf4j.api)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.vintage.engine)
     testImplementation(libs.hamcrest)
@@ -60,6 +61,7 @@ dependencies {
 
     testFixturesImplementation(libs.hamcrest)
     testFixturesImplementation(libs.jakewharton.timber)
+    testFixturesImplementation(libs.slf4j.api)
     testFixturesImplementation(libs.androidx.annotation)
     // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
     // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors

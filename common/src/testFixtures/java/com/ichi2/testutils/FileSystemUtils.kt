@@ -19,16 +19,18 @@ package com.ichi2.testutils
 import androidx.annotation.CheckResult
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
-import timber.log.Timber
+import org.slf4j.LoggerFactory
 import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 
 /** Utilities which assist testing changes to files/directories */
+private val logger = LoggerFactory.getLogger(FileSystemUtils::class.java)
+
 @Suppress("unused")
 object FileSystemUtils {
     /**
-     * Prints a directory structure using [Timber.d]
+     * Prints a directory structure
      * @param description The prefix to print before the tree is listed
      * @param file the root of the tree to print
      *
@@ -47,7 +49,7 @@ object FileSystemUtils {
         description: String,
         file: File,
     ) {
-        Timber.d("$description: $file\n${printDirectoryTree(file)}")
+        logger.debug("$description: $file\n${printDirectoryTree(file)}")
     }
 
     /** from https://stackoverflow.com/a/13130974/ */
@@ -135,7 +137,7 @@ fun createTransientFile(
 fun File.createTransientDirectory(name: String): File {
     File(this, name).also { directory ->
         directory.deleteOnExit()
-        Timber.d("test: creating $directory")
+        logger.debug("test: creating $directory")
         MatcherAssert.assertThat("directory should have been created", directory.mkdirs(), CoreMatchers.equalTo(true))
         return directory
     }
