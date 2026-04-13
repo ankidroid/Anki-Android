@@ -107,9 +107,9 @@ object ReviewRemindersDatabase {
     /**
      * Current [ReviewReminder] schema version. Whenever [ReviewReminder] is modified, this integer MUST be incremented.
      *
-     * Version 1: 3 August 2025 - Initial version
-     * Version 2: 25 January 2026 - Added [ReviewReminder.onlyNotifyIfNoReviews]
-     * Version 3: 8 February 2026 - Added [ReviewReminder.latestNotifTime]
+     * - Version 1: [ReviewReminderSchemaV1]: 3 August 2025 -  Initial version
+     * - Version 2: [ReviewReminderSchemaV2]: 25 January 2026 - Added [ReviewReminder.onlyNotifyIfNoReviews]
+     * - Version 3: [ReviewReminder]: 8 February 2026 - Added [ReviewReminder.latestNotifTime]
      *
      * @see [oldReviewReminderSchemasForMigration]
      * @see [ReviewReminder]
@@ -274,6 +274,8 @@ object ReviewRemindersDatabase {
      * Get the [ReviewReminder]s for a specific key.
      * Deletes the stored review reminders and returns an empty [ReviewReminderGroup] if deserialization fails
      * and no valid schema migrations exist.
+     *
+     * @see decodeJson
      */
     private fun getRemindersForKey(key: String): ReviewReminderGroup {
         val jsonString = remindersSharedPrefs.getString(key, null) ?: return ReviewReminderGroup()
@@ -445,15 +447,15 @@ object ReviewRemindersDatabase {
      */
     fun checkDeserializationErrors(context: Context) {
         Prefs.reviewReminderDeserializationErrors?.let { errorString ->
-            if (errorString.isNotEmpty()) {
-                context.showError(
-                    message =
-                        "An error occurred while loading your review reminders, corrupted reminders have been deleted. " +
-                            "Details:\n\n$errorString",
-                    crashReportData = null, // Crash reports are sent when the error is first encountered
-                )
-                Prefs.reviewReminderDeserializationErrors = ""
-            }
+            if (errorString.isEmpty()) return
+
+            context.showError(
+                message =
+                    "An error occurred while loading your review reminders, corrupted reminders have been deleted. " +
+                        "Details:\n\n${errorString.ellipsize(1000)}",
+                crashReportData = null, // Crash reports are sent when the error is first encountered
+            )
+            Prefs.reviewReminderDeserializationErrors = ""
         }
     }
 }
