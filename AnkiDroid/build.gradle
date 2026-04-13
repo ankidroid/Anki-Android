@@ -385,6 +385,7 @@ dependencies {
 
     // modules
     implementation project(":common")
+    implementation project(":common:android")
     implementation project(":compat")
     implementation project(":libanki")
     implementation project(":vbpd")

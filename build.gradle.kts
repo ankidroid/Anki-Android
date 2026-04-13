@@ -116,7 +116,7 @@ subprojects {
                     compilerArgs += "-XXLanguage:+ExplicitBackingFields"
                 }
 
-                if (project.path !in listOf(":api", ":common")) {
+                if (project.path !in listOf(":api", ":common", ":common:android")) {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
                 }
                 if (project.path != ":api") {

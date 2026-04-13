@@ -126,8 +126,10 @@ tasks.register('jacocoTestReport', JacocoReport) {
     dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
 
-// modules do not yet support flavors (play/full)
-def modulesToUnitTest = [":common", ":libanki", ":compat"]
+// Android library modules (do not yet support flavors play/full)
+def androidModulesToUnitTest = [":libanki", ":compat"]
+// JVM modules: use 'test' task and 'classes/kotlin/main' class dir
+def jvmModulesToUnitTest = [":common"]
 
 // A unit-test only report task
 tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
@@ -145,9 +147,14 @@ tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
     includeUnitTestCoverage(report, getProject(), flavorClassDir)
     dependsOn('testPlayDebugUnitTest')
 
-    for (module in modulesToUnitTest) {
+    for (module in androidModulesToUnitTest) {
         includeUnitTestCoverage(report, project(module), moduleClassDir)
         dependsOn("${module}:testDebugUnitTest")
+    }
+
+    for (module in jvmModulesToUnitTest) {
+        includeUnitTestCoverage(report, project(module), 'classes/kotlin/main')
+        dependsOn("${module}:test")
     }
 }
 
@@ -159,8 +166,14 @@ gradle.projectsEvaluated {
             task.outputs.cacheIf { false }
         }
     }
-    for (module in modulesToUnitTest) {
+    for (module in androidModulesToUnitTest) {
         project(module).tasks.named('testDebugUnitTest')?.configure {task ->
+            task.outputs.upToDateWhen { false }
+            task.outputs.cacheIf { false }
+        }
+    }
+    for (module in jvmModulesToUnitTest) {
+        project(module).tasks.named('test')?.configure {task ->
             task.outputs.upToDateWhen { false }
             task.outputs.cacheIf { false }
         }

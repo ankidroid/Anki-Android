@@ -22,6 +22,7 @@ include(
     ":api",
     ":AnkiDroid",
     ":common",
+    ":common:android",
     ":compat",
     ":libanki",
     ":lint-rules",
