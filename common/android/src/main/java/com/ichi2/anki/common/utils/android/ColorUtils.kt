@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.utils.android
+package com.ichi2.anki.common.utils.android
 
 import android.graphics.Color
 import androidx.annotation.ColorInt

@@ -39,11 +39,11 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.darkenColor
+import com.ichi2.anki.common.utils.android.lightenColorAbsolute
 import com.ichi2.anki.common.utils.ext.replaceWith
 import com.ichi2.anki.databinding.ItemCardBrowserBinding
 import com.ichi2.anki.databinding.ViewBrowserColumnCellBinding
-import com.ichi2.anki.utils.android.darkenColor
-import com.ichi2.anki.utils.android.lightenColorAbsolute
 import com.ichi2.themes.Themes
 import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
