@@ -31,6 +31,7 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.collection.OpChanges
 import anki.config.ConfigKey
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
@@ -730,6 +731,85 @@ class NoteEditorTest : RobolectricTest() {
                 editor.editFields,
                 equalTo(originalRef),
             )
+        }
+
+    @Test
+    fun `opExecuted with notetype change triggers field repopulation`() =
+        runTest {
+            var notetype = col.notetypes.byName("Basic")!!
+            col.notetypes.addFieldModChanged(notetype, col.notetypes.newField("Extra"))
+            col.notetypes.update(notetype)
+            col.notetypes.clearCache()
+
+            val note = col.newNote(notetype)
+            note.setField(0, "Front")
+            note.setField(1, "Back")
+            note.setField(2, "Extra")
+            col.addNote(note, col.decks.id("Default"))
+
+            val editor = getNoteEditorEditingExistingBasicNote(note, REVIEWER)
+            advanceRobolectricLooper()
+            assertThat(editor.editFields!!.size, equalTo(3))
+
+            // Simulate external notetype change: backend removes the extra field
+            col.notetypes.remFieldLegacy(notetype, notetype.fields.last())
+            col.notetypes.update(notetype)
+            col.notetypes.clearCache()
+
+            val originalRef = editor.editFields
+            val previousFieldNames =
+                editor.editorNote!!
+                    .notetype.fieldsNames
+                    .toList()
+
+            // Simulate a notetype change notification from ChangeManager
+            val opChanges = OpChanges.newBuilder().setNotetype(true).build()
+            editor.opExecuted(opChanges, handler = null)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "editFields reference must change when notetype is changed externally",
+                editor.editFields,
+                not(equalTo(originalRef)),
+            )
+            assertThat(
+                "Field count should match the updated notetype",
+                editor.editFields!!.size,
+                equalTo(2),
+            )
+        }
+
+    @Test
+    fun `opExecuted ignores changes from self`() =
+        runTest {
+            val note = addBasicNote("Front", "Back")
+            val editor = getNoteEditorEditingExistingBasicNote(note, REVIEWER)
+            advanceRobolectricLooper()
+
+            val originalRef = editor.editFields
+
+            // Simulate a notetype change from the editor itself (handler = editor)
+            val opChanges = OpChanges.newBuilder().setNotetype(true).build()
+            editor.opExecuted(opChanges, handler = editor)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "editFields reference must not change when change is from self",
+                editor.editFields,
+                equalTo(originalRef),
+            )
+        }
+
+    @Test
+    fun `opExecuted ignores add note mode`() =
+        runTest {
+            val editor = getNoteEditorAddingNote(REVIEWER)
+            advanceRobolectricLooper()
+
+            // Simulate a notetype change via ChangeManager
+            val opChanges = OpChanges.newBuilder().setNotetype(true).build()
+            editor.opExecuted(opChanges, handler = null)
+            advanceRobolectricLooper()
         }
 
     private suspend fun withNoteEditorAdding(

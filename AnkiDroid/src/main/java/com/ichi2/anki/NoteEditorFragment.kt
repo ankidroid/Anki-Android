@@ -76,6 +76,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import anki.collection.OpChanges
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
@@ -140,6 +141,7 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
@@ -219,7 +221,8 @@ class NoteEditorFragment :
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
     MenuProvider,
-    ShortcutGroupProvider {
+    ShortcutGroupProvider,
+    ChangeManager.Subscriber {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -591,6 +594,9 @@ class NoteEditorFragment :
             viewLifecycleOwner,
             Lifecycle.State.RESUMED,
         )
+
+        // Subscribe to note type changes
+        ChangeManager.subscribe(this)
     }
 
     /**
@@ -2915,6 +2921,26 @@ class NoteEditorFragment :
             )
             populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
         }
+        updateToolbar()
+    }
+
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?,
+    ) {
+        if (addNote) return
+        if (handler === this) return
+        if (!changes.notetype) return
+
+        Timber.d("Note type changed externally, reloading notetype")
+        val editorNote = this.editorNote ?: return
+        val noteTypeId = editorNote.noteTypeId
+        val currentNotetype = getColUnsafe.notetypes.get(noteTypeId) ?: return
+
+        // Always update notetype and repopulate fields when notetype changes externally
+        // This ensures field order changes are also handled correctly
+        editorNote.notetype = currentNotetype
+        populateEditFields(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
         updateToolbar()
     }
 

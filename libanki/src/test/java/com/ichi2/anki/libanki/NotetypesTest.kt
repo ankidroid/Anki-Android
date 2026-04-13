@@ -21,8 +21,10 @@ import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasItems
 import org.junit.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class NotetypesTest : InMemoryAnkiTest() {
     @Test
@@ -72,5 +74,38 @@ class NotetypesTest : InMemoryAnkiTest() {
         val result =
             assertFailsWith<BackendInvalidInputException> { col.notetypes.getSingleNotetypeOfNotes(listOf(basicNote.id, clozeNote.id)) }
         assertThat(result.message, equalTo("Please select notes from only one note type."))
+    }
+
+    @Test
+    fun `updating note notetype updates fMap`() {
+        val notetype = col.notetypes.byName("Basic")!!
+        val note = col.newNote(notetype)
+
+        col.notetypes.addFieldModChanged(notetype, col.notetypes.newField("Extra"))
+        col.notetypes.update(notetype)
+        col.notetypes.clearCache()
+
+        note.notetype = col.notetypes.get(notetype.id)!!
+
+        val fieldNames = note.notetype.fieldsNames
+        assertThat(fieldNames, hasItems("Front", "Back", "Extra"))
+    }
+
+    @Test
+    fun `note items reflects updated notetype`() {
+        val notetype = col.notetypes.byName("Basic")!!
+
+        col.notetypes.addFieldModChanged(notetype, col.notetypes.newField("Extra"))
+        col.notetypes.update(notetype)
+        col.notetypes.clearCache()
+
+        val note = col.newNote(notetype)
+        note.setField(0, "Front")
+        note.setField(1, "Back")
+        note.setField(2, "Extra")
+
+        val items = note.items()
+        val itemFieldNames = items.map { it[0] }
+        assertThat(itemFieldNames, hasItems("Front", "Back", "Extra"))
     }
 }

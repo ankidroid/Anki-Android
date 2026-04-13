@@ -45,6 +45,7 @@ class Note : Cloneable {
         get() = _notetype!!
         set(value) {
             _notetype = value
+            fMap = Notetypes.fieldMap(value)
         }
 
     val noteTypeId: NoteTypeId
