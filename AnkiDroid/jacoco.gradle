@@ -127,7 +127,7 @@ tasks.register('jacocoTestReport', JacocoReport) {
 }
 
 // Android library modules (do not yet support flavors play/full)
-def androidModulesToUnitTest = [":libanki", ":compat"]
+def androidModulesToUnitTest = [":common:android", ":libanki", ":compat"]
 // JVM modules: use 'test' task and 'classes/kotlin/main' class dir
 def jvmModulesToUnitTest = [":common"]
 

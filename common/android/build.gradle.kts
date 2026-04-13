@@ -60,4 +60,11 @@ dependencies {
 
     implementation(libs.androidx.annotation)
     implementation(libs.jakewharton.timber)
+
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.platform.launcher)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.junit)
 }
