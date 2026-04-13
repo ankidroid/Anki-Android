@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.common.utils.ext
 
-import androidx.core.math.MathUtils.clamp
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

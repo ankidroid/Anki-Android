@@ -15,9 +15,9 @@
  */
 package com.ichi2.anki.common.time
 
-import android.icu.util.Calendar
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.util.Calendar
 import java.util.TimeZone
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.milliseconds

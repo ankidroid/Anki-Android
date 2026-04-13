@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.common.time
 
-import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
 import java.util.Stack
 
@@ -26,7 +25,6 @@ import java.util.Stack
  *
  * For later: move this into a DI container
  */
-@SuppressLint("DirectSystemTimeInstantiation")
 object TimeManager {
     @VisibleForTesting
     fun reset() {
