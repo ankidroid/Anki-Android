@@ -60,7 +60,9 @@ class ViewerResourceHandler(
                 return WebResourceResponse(guessMimeType(path), null, inputStream)
             }
 
-            val file = File(mediaDir, path)
+            // We need to remove the leading slash so that the file is resolved relative to the
+            // media directory. On Android, File(parent, "/child") resolves to the root "/child".
+            val file = File(mediaDir, path.removePrefix("/"))
             if (!file.exists()) {
                 return null
             }
