@@ -36,6 +36,7 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.TypeSafeMatcher
+import org.intellij.lang.annotations.Language
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -475,6 +476,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
      */
     @Test
     fun `raw ReviewReminder string can be deserialized without throwing`() {
+        @Language("JSON")
         val rawString =
             """
             {

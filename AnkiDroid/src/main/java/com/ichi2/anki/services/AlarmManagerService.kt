@@ -157,7 +157,7 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * @param context
          * @param reviewReminder
          * @param attemptImmediateNotification If true, attempts to fire the notification immediately as well.
-         * This is to handle cases where the most recent notification firing may have been been missed.
+         * This is to handle cases where the most recent notification firing may have been missed.
          * [NotificationService] protects against deduplication and aborts redundant sends, so when in doubt,
          * it's safe to set this to true.
          *
