@@ -116,8 +116,10 @@ subprojects {
                     compilerArgs += "-XXLanguage:+ExplicitBackingFields"
                 }
 
-                if (project.name != "api") {
+                if (project.path !in listOf(":api", ":common")) {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+                }
+                if (project.path != ":api") {
                     compilerArgs += "-Xcontext-parameters"
                 }
                 freeCompilerArgs = compilerArgs

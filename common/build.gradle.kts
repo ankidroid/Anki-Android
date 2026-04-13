@@ -63,7 +63,4 @@ dependencies {
     testFixturesImplementation(libs.jakewharton.timber)
     testFixturesImplementation(libs.slf4j.api)
     testFixturesImplementation(libs.androidx.annotation)
-    // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
-    // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors
-    testFixturesImplementation(libs.kotlinx.coroutines.core)
 }
