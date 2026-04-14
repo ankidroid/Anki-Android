@@ -159,6 +159,16 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew jacocoUnitTestReport --daemon
 
+
+      # Only runs:
+      # - on a scheduled run
+      # - on a manually dispatched run
+      # This is not run on the 'happy' CI path as it's a rare de-flake, and would unnecessarily slow
+      #  down CI
+      - name: De-flake EmptyApplication Tests (schedule/manual run only)
+        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.iteration == 1 && matrix.os == 'ubuntu-latest'
+        run: ./gradlew testFullDebugUnitTest -PemptyApplication --daemon
+
       - name: Store Logcat as Artifact
         # cancelled() handles test timeouts
         # remove when test timeouts cause a failure()
