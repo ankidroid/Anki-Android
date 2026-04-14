@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.model.SpecialField
@@ -28,12 +29,14 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.emptyString
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 /** Tests for [InsertFieldDialog] */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class InsertFieldDialogTest : RobolectricTest() {
     val metadata =
         InsertFieldMetadata(

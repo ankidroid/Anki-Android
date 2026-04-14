@@ -19,6 +19,7 @@ package com.ichi2.anki.pages.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteId
@@ -34,6 +35,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertInstanceOf
 import org.junit.jupiter.api.assertNull
@@ -48,6 +50,7 @@ import kotlin.test.assertNotNull
 // TODO: make this run with no Android dependencies
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class ImageOcclusionViewModelTest : JvmTest() {
     private var deckIdToSwitchTo by notNull<DeckId>()
 

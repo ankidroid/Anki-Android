@@ -17,6 +17,7 @@ package com.ichi2.utils
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.common.utils.ext.deepClone
 import com.ichi2.anki.common.utils.ext.deepClonedInto
 import com.ichi2.anki.common.utils.ext.fromMap
@@ -26,6 +27,7 @@ import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
@@ -34,6 +36,7 @@ import org.robolectric.annotation.Config
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 // TODO: move to common test
 @SuppressLint("CheckResult") // many usages: checking exceptions
 class JSONObjectTest {

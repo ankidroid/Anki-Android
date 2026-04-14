@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.testutils.EmptyApplication
+import org.junit.experimental.categories.Category
 import org.robolectric.annotation.Config
 
 /**
@@ -25,5 +26,6 @@ import org.robolectric.annotation.Config
  */
 // @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 @NeedsTest("reimplement: doubleTapAddsNote; singleTapTogglesFab")
 class DeckPickerFloatingActionMenuTest

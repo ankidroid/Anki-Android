@@ -23,6 +23,7 @@ import android.view.KeyEvent.KEYCODE_9
 import android.view.KeyEvent.KEYCODE_ENDCALL
 import android.view.KeyEvent.KEYCODE_STAR
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.KeyUtils.getDigit
 import com.ichi2.utils.KeyUtils.isDigit
@@ -30,11 +31,13 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class KeyUtilsTest {
     @Test
     fun testIsDigit() {

@@ -29,6 +29,7 @@ import org.junit.Assert
 import org.junit.Assume.assumeThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
@@ -37,7 +38,8 @@ import org.robolectric.annotation.Config
 import java.util.stream.Collectors
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-@Config(application = EmptyApplication::class) // no point in Application init if we don't use it
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class) // no point in Application init if we don't use it
 class ActivityStartupUnderBackupTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField // required for Parameter

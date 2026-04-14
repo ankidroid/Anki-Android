@@ -21,11 +21,13 @@ import android.database.sqlite.SQLiteException
 import android.net.Uri
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
@@ -34,6 +36,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class) // needs a URI instance
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class ContentResolverUtilTest {
     @Test
     fun testViaQueryWorking() {

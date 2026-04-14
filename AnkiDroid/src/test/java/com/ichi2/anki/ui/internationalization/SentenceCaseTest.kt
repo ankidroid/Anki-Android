@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.EmptyAnkiActivity
@@ -28,11 +29,13 @@ import com.ichi2.testutils.launchFragmentInContainer
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class SentenceCaseTest : RobolectricTest() {
     @Test
     fun `English is converted to sentence case`() {

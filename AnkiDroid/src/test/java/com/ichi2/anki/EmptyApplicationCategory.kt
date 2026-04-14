@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,18 +13,17 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.testutils
 
-import android.app.Application
-import com.ichi2.anki.AnkiDroidApp
+package com.ichi2.anki
+
+import com.ichi2.testutils.EmptyApplication
 
 /**
- * A performance improvement to be used to avoid the startup cost of [AnkiDroidApp].
+ * Support de-flaking [EmptyApplication] usages which have an AnkiDroidApp dependency
  *
  * usage:
  *
  * ```kt
- * @Config(application = EmptyApplication::class)
  * @Category(EmptyApplicationCategory::class)
  * ```
  *
@@ -34,11 +33,4 @@ import com.ichi2.anki.AnkiDroidApp
  * ./gradlew testFullDebugUnitTest -PemptyApplication
  * ```
  */
-class EmptyApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-
-        // reset the static state of the app
-        AnkiDroidApp.simulateRestoreFromBackup()
-    }
-}
+interface EmptyApplicationCategory

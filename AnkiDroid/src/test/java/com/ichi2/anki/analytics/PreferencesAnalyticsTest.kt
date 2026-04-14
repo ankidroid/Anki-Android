@@ -16,6 +16,7 @@
 package com.ichi2.anki.analytics
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.preferences.PreferenceTestUtils
@@ -24,12 +25,14 @@ import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class PreferencesAnalyticsTest : RobolectricTest() {
     private val developerOptionsKeys = PreferenceTestUtils.getDeveloperOptionsKeys(targetContext)
 

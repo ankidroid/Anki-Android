@@ -18,6 +18,7 @@ package com.ichi2.anki.settings
 import android.content.res.Resources
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.preferences.PreferenceTestUtils
@@ -30,6 +31,7 @@ import io.mockk.mockk
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
@@ -47,6 +49,7 @@ import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class PrefsRobolectricTest : RobolectricTest() {
     private fun getKeysAndDefaultValues(): MutableMap<String, Any?> {
         val sharedPrefsSpy = spy(SPMockBuilder().createSharedPreferences())

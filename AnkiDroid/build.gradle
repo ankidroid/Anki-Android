@@ -252,6 +252,13 @@ android {
                     } else {
                         excludeTags "com.ichi2.anki.ScreenshotTestCategory"
                     }
+                    // TODO: run this in our de-flake test run
+                    // Ensures that no EmptyApplication test relies on AnkiDroidApp
+                    //  by only running EmptyApplication tests
+                    // ./gradlew testFullDebugUnitTest -PemptyApplication
+                    if (project.hasProperty("emptyApplication")) {
+                        includeTags "com.ichi2.anki.EmptyApplicationCategory"
+                    }
                 }
             }
         }

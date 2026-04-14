@@ -17,6 +17,7 @@
 package com.ichi2.anki.browser.search
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.libanki.DeckNameId
@@ -28,6 +29,7 @@ import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertFailsWith
@@ -35,6 +37,7 @@ import kotlin.test.assertFailsWith
 /** Tests for [SearchRequest] */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class SearchRequestTest : JvmTest() {
     @Test
     fun `search string generation - empty`() {
