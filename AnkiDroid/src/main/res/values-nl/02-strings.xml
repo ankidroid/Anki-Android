@@ -207,17 +207,17 @@
     <string name="background_image_title" maxLength="41">Achtergrond</string>
     <string name="choose_an_image" maxLength="41">Kies een afbeelding</string>
     <string name="remove_wallpaper_image" maxLength="41">Verwijder achtergrond</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Weet je zeker dat je de achtergrond wilt verwijderen?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Restore default</string>
+    <string name="restore_default" maxLength="28">Standaardinstellingen herstellen</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Wis-modus geactiveerd</string>
     <string name="white_board_eraser_disabled">Wis-modus gedeactiveerd</string>
     <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
-    <string name="media_file_size_warning_title">Media too large</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
-    <string name="media_file_size_add_anyway">Add anyway</string>
+    <string name="media_file_size_warning_title">Media te groot</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">Het bestand \"%1$s\" (%2$s) overschrijdt de AnkiWeb limiet van %3$s en kan niet worden gesynchroniseerd. Toch toevoegen?</string>
+    <string name="media_file_size_add_anyway">Toch toevoegen</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Opslaan van schrijfbordafbeelding is mislukt. %s</string>
     <string name="white_board_image_saved">schrijfbordafbeelding opgeslagen in %s</string>
@@ -248,7 +248,7 @@
     <string name="format_insert_underline">Format as underline</string>
     <string name="insert_horizontal_line">Insert horizontal line</string>
     <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
+    <string name="format_font_size">Tekengrootte wijzigen</string>
     <string name="insert_mathjax">Insert MathJax equation</string>
     <string name="note_editor_toolbar_icon">Knoptekst</string>
     <string name="before_text">HTML before selection</string>
@@ -268,7 +268,7 @@
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll werkbalk</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
-    <string name="dialog_hint_certificate">Certificate</string>
+    <string name="dialog_hint_certificate">Certificaat</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -367,7 +367,7 @@
     <string name="play_recording">Afspelen</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Volgende</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Kan kaarttype niet verwijderen</string>
     <string name="orphan_note_message">Als je dit kaarttype verwijdert, zullen sommige notities geen kaarten meer hebben.</string>
     <string name="voice_not_supported">Stem niet ondersteund. Kies een andere of installeer een stempakket.</string>
     <!--Keyboard shortcuts dialog-->
@@ -375,16 +375,16 @@
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Set verwijderen zonder bevestiging</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Notitie editor</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Kies set</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Selecteer notitietype</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Bewerk front-sjabloon</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Bewerk browserweergave</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Deze kaart heeft functies die nog niet worden ondersteund door het nieuwe studiescherm.</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
@@ -392,5 +392,5 @@
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <string name="error_name_exists">Naam bestaat al</string>
 </resources>

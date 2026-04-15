@@ -74,8 +74,8 @@
     <string name="model_browser_add_clone">Klonla: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Kartlarınızı görüntülemek için kullanılacak kart tarayıcı şablonunu giriniz. Daha anlaşılır bir yanıt görüntülemek için bunu kullanın.\n\nŞablonun önü\n\"{{Ülkesi}}nin başkenti: \"\nkart tarayıcıda şöyle sıkıştırılabilir\n\"Başkent: {{Ülke}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Question format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer format</string>
+    <string name="card_template_browser_appearance_question_format">Soru Biçimi</string>
+    <string name="card_template_browser_appearance_answer_format">Cevap Biçimi</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
     <string name="card_template_browser_appearance_saving_note">Kart şablonu kaydedildiğinde bu değişiklikler uygulanır</string>
     <!-- Deck Override -->

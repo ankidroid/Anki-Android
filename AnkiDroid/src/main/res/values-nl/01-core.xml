@@ -116,7 +116,7 @@
     <string name="menu_unmark_note">Notitie onmarkeren</string>
     <string name="menu_enable_voice_playback" maxLength="28">Spraakweergave inschakelen</string>
     <string name="menu_disable_voice_playback">Spraakweergave uitschakelen</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Back-up maken</string>
     <string name="new_deck">Leerset aanmaken</string>
     <string name="new_dynamic_deck">Gefilterde set maken</string>
     <string name="directory_inaccessible">AnkiDroidmap is ontoegankelijk</string>
@@ -214,7 +214,7 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Snel kaart maken</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
+    <string name="permission_access_summary">Vereist om de app te laten werken</string>
     <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
     <!-- Multiple profile -->
     <string name="add_profile">Voeg profiel toe</string>
