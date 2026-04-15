@@ -61,6 +61,11 @@ class ViewerResourceHandler(
             }
 
             val file = File(mediaDir, path)
+            if (!file.canonicalPath.startsWith(mediaDir.canonicalPath + File.separator)) {
+                Timber.w("Path traversal attempt blocked")
+                Timber.d("Path: %s", path)
+                return null
+            }
             if (!file.exists()) {
                 return null
             }
