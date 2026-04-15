@@ -219,7 +219,7 @@ fun File.withFileNameSafe(childName: String): File {
         val canonicalParent = this.canonicalPath
         val canonicalChild = child.canonicalPath
 
-        if (!canonicalChild.startsWith(canonicalParent)) {
+        if (!canonicalChild.startsWith(canonicalParent + File.separator)) {
             throw SecurityException("Invalid path: $childName traversal attempt detected")
         }
     } catch (e: IOException) {
