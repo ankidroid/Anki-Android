@@ -41,9 +41,12 @@ import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.reviewreminders.upsertReminder
 import com.ichi2.anki.runGloballyWithTimeout
+import com.ichi2.anki.services.NotificationService.Companion.addAction
+import com.ichi2.anki.services.NotificationService.Companion.getIntent
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.allDecksCounts
 import com.ichi2.anki.utils.remainingTime
+import com.ichi2.utils.LanguageUtil.withAppLocale
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -448,9 +451,11 @@ class NotificationService : BroadcastReceiver() {
      * @see getIntent
      */
     override fun onReceive(
-        context: Context,
+        rawContext: Context,
         intent: Intent,
     ) {
+        // #19048: On API < 33, BroadcastReceiver context uses the system locale.
+        val context = rawContext.withAppLocale()
         if (Prefs.newReviewRemindersEnabled) {
             Timber.d("onReceive")
             val action = intent.action ?: return

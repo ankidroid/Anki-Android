@@ -62,6 +62,7 @@ import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.LanguageUtil.withAppLocale
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
@@ -201,13 +202,14 @@ open class AnkiDroidApp :
 
         initializeAnkiDroidDirectory()
 
+        val context = this.withAppLocale()
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Setting review reminder notifications if they have not already been set")
-            AlarmManagerService.scheduleAllNotifications(applicationContext)
+            AlarmManagerService.scheduleAllNotifications(context)
         } else {
             // Register for notifications
             Timber.i("AnkiDroidApp: Starting Services")
-            notifications.observeForever { NotificationService.triggerNotificationFor(this) }
+            notifications.observeForever { NotificationService.triggerNotificationFor(context) }
         }
 
         // listen for day rollover: time + timezone changes
