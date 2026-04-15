@@ -93,7 +93,7 @@ object CrashReportService {
         val builder =
             CoreConfigurationBuilder()
                 .withBuildConfigClass(com.ichi2.anki.BuildConfig::class.java) // AnkiDroid BuildConfig - Acrarium#319
-                .withExcludeMatchingSharedPreferencesKeys("username", "hkey", "browser_search_history")
+                .withExcludeMatchingSharedPreferencesKeys("username", "hkey", "currentSyncUri", "browser_search_history")
                 .withSharedPreferencesName("acra")
                 .withReportContent(
                     ReportField.REPORT_ID,
