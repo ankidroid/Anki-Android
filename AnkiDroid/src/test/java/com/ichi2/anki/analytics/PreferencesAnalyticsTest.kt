@@ -103,6 +103,8 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.ignore_display_cutout_key, // ignoreDisplayCutout
             R.string.reviewer_toolbar_position_key, // reviewerToolbarPosition
             R.string.answer_button_size_pref_key, // answerBtnSize
+            // Security-sensitive settings (GHSL-2026-084)
+            R.string.pref_allow_dangerous_js_api, // allow_dangerous_js_api
         ).toStringResourceSet()
 
     @Test
