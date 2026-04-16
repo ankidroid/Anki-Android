@@ -140,6 +140,15 @@
             </Preference>
         </PreferenceCategory>
         <PreferenceCategory
+            android:title="@string/pref_cat_security" >
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="@string/pref_allow_dangerous_js_api"
+                android:icon="@drawable/ic_warning_white"
+                android:summary="@string/allow_dangerous_js_api_summ"
+                android:title="@string/allow_dangerous_js_api_title" />
+        </PreferenceCategory>
+        <PreferenceCategory
             android:title="@string/pref_cat_experimental">
             <SwitchPreferenceCompat
                 android:key="@string/pref_rust_backend_key"
