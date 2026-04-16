@@ -26,6 +26,8 @@ import android.webkit.JavascriptInterface
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.DangerousJsApiPermission
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
@@ -50,6 +52,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
 
     private val context: Context = activity
+    private val permissions = AppPermissions(context)
     private var cardSuppliedDeveloperContact = ""
     private var cardSuppliedApiVersion = ""
 
@@ -459,6 +462,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiSearchCardWithCallback(query: String) {
+        permissions.requirePermission(DangerousJsApiPermission.QUERY_COLLECTION)
         val cards = try {
             runBlocking {
                 searchForCards(query, SortOrder.UseCollectionOrdering(), true)

@@ -107,6 +107,7 @@
     <string name="double_scrolling_gap_key">double_scrolling</string>
     <string name="stats_default_deck_key">stats_default_deck</string>
     <string name="pref_advanced_statistics_key">advanced_statistics_link</string>
+    <string name="pref_allow_dangerous_js_api">allow_dangerous_js_api</string>
     <string name="html_javascript_debugging_key">html_javascript_debugging</string>
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>

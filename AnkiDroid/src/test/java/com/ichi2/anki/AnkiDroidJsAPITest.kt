@@ -19,7 +19,9 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.security.DangerousJsPermissionDeniedException
 import com.ichi2.libanki.Consts
+import com.ichi2.testutils.getString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
@@ -27,6 +29,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
@@ -347,6 +350,22 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         data.put("version", "0.0.1")
         data.put("developer", "test@example.com")
         return data.toString()
+    }
+
+    @Test
+    fun ankiSearchCardWithCallbackRespectsQueryCollectionPermission() {
+        addNoteUsingBasicModel("foo", "bar")
+        val reviewer: Reviewer = startReviewer()
+        val jsApi = reviewer.javaScriptFunction()
+        waitForAsyncTasksToComplete()
+
+        // Pref off: denied, the call throws and the search does not run.
+        assertFailsWith<DangerousJsPermissionDeniedException> { jsApi.ankiSearchCardWithCallback("foo") }
+
+        // Pref on: runs the search without error.
+        editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), true) }
+        jsApi.ankiSearchCardWithCallback("foo")
+        waitForAsyncTasksToComplete()
     }
 
     @Test
