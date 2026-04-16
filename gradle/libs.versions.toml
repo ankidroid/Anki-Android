@@ -76,7 +76,7 @@ commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
 commonsCompress = "1.28.0"
 # https://commons.apache.org/proper/commons-io/changes.html
-commonsIo = "2.21.0"
+commonsIo = "2.22.0"
 coroutines = '1.10.2'
 desugar-jdk-libs-nio = "2.1.5"
 drawer = "1.0.3"
@@ -89,17 +89,17 @@ javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.1.0"
 json = "20251224"
 # https://github.com/jhy/jsoup/releases
-jsoup = "1.22.1"
+jsoup = "1.22.2"
 androidTestJunit = "1.3.0"
 # https://github.com/junit-team/junit5/releases/
 junit = "6.0.3"
 # https://github.com/JetBrains/kotlin/releases/
-kotlin = '2.3.10'
+kotlin = '2.3.21'
 # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinxSerializationJson = "1.11.0"
 ktlintGradlePlugin = "14.2.0"
 leakcanaryAndroid = "2.14"
-lint = '32.1.1'
+lint = '32.2.0'
 material = "1.13.0"
 
 mockitoInline = "5.2.0"
@@ -112,7 +112,7 @@ protobufKotlinLite = "4.34.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16.1"
 # https://github.com/takahirom/roborazzi/releases
-roborazzi = "1.59.0"
+roborazzi = "1.60.0"
 searchpreference = "2.7.3"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
