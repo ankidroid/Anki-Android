@@ -20,7 +20,7 @@ ktlint = '1.8.0'
 # https://developer.android.com/build/releases/past-releases
 # Pinned to 9.0.1 until building androidTest in release mode circular dependency issue resolved
 # Upstream reference https://issuetracker.google.com/issues/491718901
-androidGradlePlugin = "9.0.1"
+androidGradlePlugin = "9.1.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.12.4"
 # https://developer.android.com/jetpack/androidx/releases/annotation
