@@ -114,4 +114,13 @@
         android:key="@string/tts_key"
         android:summary="@string/tts_summ"
         android:title="@string/tts" />
+    <PreferenceCategory
+        android:title="@string/pref_cat_security" >
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="@string/pref_allow_dangerous_js_api"
+            android:icon="@drawable/ic_warning"
+            android:summary="@string/allow_dangerous_js_api_summ"
+            android:title="@string/allow_dangerous_js_api_title" />
+    </PreferenceCategory>
 </PreferenceScreen>
