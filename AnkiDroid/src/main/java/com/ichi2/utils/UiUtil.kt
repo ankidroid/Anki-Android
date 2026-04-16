@@ -33,6 +33,9 @@ object UiUtil {
         return str
     }
 
+    /** Returns [string] as a [Spannable] with an underline applied. */
+    // BUG: this may not work if the user's system font does not support underlines.
+    // Reported as an issue with zFont
     fun underline(string: String): Spannable =
         SpannableString(string).apply {
             setSpan(UnderlineSpan(), 0, length, 0)
