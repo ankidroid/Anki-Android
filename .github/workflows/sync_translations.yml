@@ -3,6 +3,10 @@ name: 🌐 Sync Translations
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sync-translations
+  cancel-in-progress: true
+
 # We use a machine account PAT from secrets so workflows are triggered
 # the default token is not needed and should be fully restricted
 permissions: {}
@@ -10,7 +14,7 @@ permissions: {}
 jobs:
   sync_translations:
     name: 'Sync Translations with Crowdin'
-    timeout-minutes: 20
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -31,6 +35,28 @@ jobs:
           git checkout -b i18n_sync
           git reset --hard origin/main
         shell: bash
+
+      - name: Get second to latest run time
+        env:
+          GH_TOKEN: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+        run: |
+          OUTPUT=$(gh run list --workflow sync_translations.yml --json updatedAt | jq -r '.[1].updatedAt')
+          echo "LATEST_RUN=$OUTPUT" >> $GITHUB_ENV
+
+      - name: Calculate seconds passed
+        id: calc_time
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const lastRun = new Date(process.env.LATEST_RUN);
+            const secondsPassed = Math.floor((Date.now() - lastRun.getTime()) / 1000);
+            const timeLeft = 1800 - secondsPassed > 0 ? 1800 - secondsPassed: 0;
+            console.log('Seconds to sleep for: ' + timeLeft);
+            core.setOutput('time_left', timeLeft);
+
+      - name: Await CrowdIn API Cooldown If Needed
+        if: steps.calc_time.outputs.time_left > 0
+        run: sleep ${{ steps.calc_time.outputs.time_left }}
 
       - uses: actions/setup-node@v6
         with:
