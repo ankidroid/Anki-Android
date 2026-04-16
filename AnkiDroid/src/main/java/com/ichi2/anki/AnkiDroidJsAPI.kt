@@ -36,6 +36,8 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_NOTE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.flagCommands
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.DangerousJsApiPermission
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
@@ -68,6 +70,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
 
     private val context: Context = activity
+    private val permissions = AppPermissions(context)
 
     // Text to speech
     private val talker = JavaScriptTTS()
@@ -387,6 +390,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     }
 
     private suspend fun ankiSearchCardWithCallback(apiContract: ApiContract): ByteArray = withContext(Dispatchers.Main) {
+        permissions.requirePermission(DangerousJsApiPermission.QUERY_COLLECTION)
         val cards = try {
             searchForCards(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
         } catch (exc: Exception) {

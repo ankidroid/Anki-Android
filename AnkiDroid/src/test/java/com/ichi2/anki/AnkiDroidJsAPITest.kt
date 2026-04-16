@@ -19,20 +19,31 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
+import com.ichi2.anki.security.DangerousJsPermissionDeniedException
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.testutils.getString
 import com.ichi2.utils.BASIC_MODEL_NAME
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+        editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), false) }
+    }
 
     @Test
     fun ankiGetNextTimeTest() = runTest {
@@ -378,6 +389,24 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     }
 
     @Test
+    fun ankiSearchCardWithCallbackRespectsQueryCollectionPermission() = runTest {
+        addNoteUsingBasicModel("foo", "bar")
+        val reviewer: Reviewer = startReviewer()
+        val jsApi = reviewer.jsApi
+        waitForAsyncTasksToComplete()
+
+        // Pref off: denied, the call throws and the search does not run.
+        assertFailsWith<DangerousJsPermissionDeniedException> {
+            jsApi.searchCardWithCallback("foo")
+        }
+
+        // Pref on: runs the search without error.
+        editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), true) }
+        jsApi.searchCardWithCallback("foo")
+        waitForAsyncTasksToComplete()
+    }
+
+    @Test
     fun ankiResetProgressTest() = runTest {
         val n = addNoteUsingBasicModel("Front", "Back")
         val c = n.firstCard()
@@ -449,4 +478,8 @@ class AnkiDroidJsAPITest : RobolectricTest() {
                 .decodeToString()
         }
     }
+}
+
+suspend fun AnkiDroidJsAPI.searchCardWithCallback(value: String) {
+    handleJsApiRequest("searchCardWithCallback", jsApiContract(value), false).decodeToString()
 }
