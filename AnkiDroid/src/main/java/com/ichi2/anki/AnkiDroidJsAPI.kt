@@ -31,6 +31,8 @@ import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.DangerousJsApiPermission
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
@@ -68,6 +70,7 @@ open class AnkiDroidJsAPI(
      */
 
     private val context: Context = activity
+    private val permissions = AppPermissions(context)
 
     // Text to speech
     private val talker = JavaScriptTTS()
@@ -445,6 +448,7 @@ open class AnkiDroidJsAPI(
     @NeedsTest("needs coverage")
     private suspend fun ankiSearchCardWithCallback(apiContract: ApiContract): ByteArray =
         withContext(Dispatchers.Main) {
+            permissions.requirePermission(DangerousJsApiPermission.QUERY_COLLECTION)
             val cards =
                 try {
                     val searchString = withCol { SearchString.fromUserInput(apiContract.cardSuppliedData) }.getOrThrow()
