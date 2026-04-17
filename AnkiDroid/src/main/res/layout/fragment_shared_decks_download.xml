@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="This is how the title will look when a file with a long file name will be downloading" />
-    
+
     <com.ichi2.ui.FixedTextView
         android:id="@+id/download_dialog_info_text"
         android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/downloading_title" />
-    
+
     <com.ichi2.ui.FixedTextView
         android:id="@+id/download_percentage_text"
         android:layout_width="wrap_content"
@@ -47,18 +47,22 @@
         app:layout_constraintTop_toBottomOf="@id/download_dialog_info_text"
         tools:text="100 %" />
 
-    <ProgressBar
+    <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/download_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:scaleY="4"
+        app:trackThickness="8dp"
+        app:trackCornerRadius="8dp"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorSurfaceVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/download_percentage_text"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+        android:progress="0"
+        android:max="100" />
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/check_network_info_text"
