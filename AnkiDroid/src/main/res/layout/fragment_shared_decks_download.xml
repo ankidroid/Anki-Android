@@ -82,15 +82,14 @@
         app:layout_constraintTop_toBottomOf="@id/download_progress_bar"
         android:visibility="gone" />
 
-    <android.widget.Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/open_in_web_browser_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_max="320dp"
         android:text="@string/open_in_browser"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/Widget.Material3.Button.TextButton"
         android:textColor="@color/material_blue_500"
-        android:padding="8dp"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
@@ -99,16 +98,15 @@
         app:layout_constraintBottom_toTopOf="@id/try_download_again_button"
         android:visibility="gone" />
 
-    <android.widget.Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel_download_button"
-        android:layout_width="match_parent"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_max="320dp"
         android:text="@string/cancel_download"
-        android:background="@color/material_red_500"
+        app:backgroundTint="@color/material_red_500"
         android:textColor="@color/white"
-        android:padding="8dp"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
@@ -116,16 +114,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <android.widget.Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/try_download_again_button"
-        android:layout_width="match_parent"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_max="320dp"
         android:text="@string/try_again"
-        android:background="@color/material_blue_grey_500"
+        app:backgroundTint="@color/material_blue_grey_500"
         android:textColor="@color/white"
-        android:padding="8dp"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
@@ -134,16 +131,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone" />
 
-    <android.widget.Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/import_shared_deck_button"
-        android:layout_width="match_parent"
+        style="@style/Widget.Material3.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_max="320dp"
         android:text="@string/import_deck"
-        android:background="@color/material_blue_500"
+        app:backgroundTint="@color/material_blue_500"
         android:textColor="@color/white"
-        android:padding="8dp"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
