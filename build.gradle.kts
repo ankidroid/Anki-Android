@@ -1,18 +1,16 @@
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
+import com.ichi2.anki.gradle.GitHubActionsTestListener
+import com.ichi2.anki.gradle.TestSummaryService
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardOpenOption
 import java.util.Properties
 import kotlin.math.max
 import kotlin.system.exitProcess
-import kotlin.time.Duration.Companion.milliseconds
 
 
 // Top-level build file where you can add configuration options common to all subprojects/modules.
@@ -35,6 +33,14 @@ val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // can't be obtained inside 'subprojects'
 val ktlintVersion: String = libs.versions.ktlint.get()
+
+// Shared state for the GitHub Actions test summary listener.
+// Only registered when running under GitHub Actions; null otherwise.
+val testSummaryService = System.getenv("GITHUB_STEP_SUMMARY")?.let { path ->
+    gradle.sharedServices.registerIfAbsent("testSummaryService", TestSummaryService::class) {
+        parameters.path.set(path)
+    }
+}
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
@@ -63,13 +69,10 @@ subprojects {
                     exceptionFormat = TestExceptionFormat.FULL
                 }
 
-                // CI: Log the test results
-                it.afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
-                    if (desc.parent != null) {
-                        return@KotlinClosure2 // only log for the root suite
-                    }
-                    logTestResultsToGitHubActions(desc, result)
-                }))
+                // CI: Log test results to the GitHub Actions step summary.
+                testSummaryService?.let { service ->
+                    it.addTestListener(GitHubActionsTestListener(service))
+                }
 
                 it.maxParallelForks = gradleTestMaxParallelForks
                 it.forkEvery = 40
@@ -182,43 +185,3 @@ val gradleTestMaxParallelForks by extra(
 )
 
 private fun String?.parseIntOrDefault(defaultValue: Int): Int = this?.toIntOrNull() ?: defaultValue
-
-var loggedTestSuiteCount = 0
-
-private fun logTestResultsToGitHubActions(desc: TestDescriptor, result: TestResult) {
-    if (!ciBuild) return
-
-    val header = if (loggedTestSuiteCount == 0) {
-        """
-            |## Test Results
-            |
-            || Suite | Result | Duration | Tests | Passed | Failed | Skipped |
-            || ----- | ------ | -------- | ----- | ------ | ------ | ------- |
-            |
-        """.trimMargin()
-    } else {
-        ""
-    }
-    loggedTestSuiteCount++
-
-    val summaryPath = System.getenv("GITHUB_STEP_SUMMARY") ?: return
-
-    val duration = (result.endTime - result.startTime).milliseconds
-    val seconds = (duration.inWholeMilliseconds % 60000) / 1000.0
-    // both digits are zero-padded: 01m 05.220s
-    val elapsed = "%02dm %06.3fs".format(duration.inWholeMinutes, seconds)
-    val tests = result.testCount
-    val passed = result.successfulTestCount
-    val failed = result.failedTestCount
-    val skipped = result.skippedTestCount
-
-    // Gradle Test Run :common:testDebugUnitTest | SUCCESS | ...
-    val row = "| ${desc.displayName} | **${result.resultType}** | $elapsed | $tests | $passed | $failed | $skipped |\n"
-
-    Files.writeString(
-        Paths.get(summaryPath),
-        header + row,
-        StandardOpenOption.CREATE,
-        StandardOpenOption.APPEND,
-    )
-}
