@@ -37,6 +37,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.databinding.FragmentSharedDecksDownloadBinding
@@ -204,7 +205,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
         val downloadRequest = generateDeckDownloadRequest(fileToBeDownloaded, currentFileName)
 
-        // Store unique download ID to be used when onReceive() of BroadcastReceiver gets executed.
+        // Store unique download ID to be used when onReceiveBroadcast() of AnkiBroadcastReceiver gets executed.
         downloadId = downloadManager.enqueue(downloadRequest)
         fileName = currentFileName
         isDownloadInProgress = true
@@ -241,13 +242,13 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     /**
      * Registered in downloadFile() method.
-     * When onReceive() is called, open the deck file in AnkiDroid to import it.
+     * When [AnkiBroadcastReceiver.onReceiveBroadcast] is called, open the deck file in AnkiDroid to import it.
      */
     private var onComplete: BroadcastReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(
+        object : AnkiBroadcastReceiver() {
+            override fun onReceiveBroadcast(
                 context: Context,
-                intent: Intent?,
+                intent: Intent,
             ) {
                 Timber.i("Download might be complete now, verify and continue with import")
 
@@ -265,7 +266,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     }
 
                     // Return if mDownloadId does not match with the ID of the completed download.
-                    if (downloadId != intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)) {
+                    if (downloadId != intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)) {
                         Timber.w("Download id did not match expected id. Ignoring this download completion")
                         return false
                     }

@@ -18,7 +18,6 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabaseCorruptException
@@ -41,6 +40,7 @@ import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.CrashReportData.HelpAction
 import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
 import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
@@ -614,30 +614,34 @@ private fun Activity.showError(
 ) = showError(throwable.toString(), throwable.toCrashReportData(context = this, reportException))
 
 /**
- * Since BroadcastReceiver onReceive methods are expected to finish quickly, this helper function
- * is required to run a suspending function from an onReceive method. [BroadcastReceiver.goAsync]
- * extends the lifetime of the onReceive method and tells the OS not to kill the process prematurely.
+ * Since AnkiBroadcastReceiver's `onReceiveBroadcast` methods is expected to finish quickly, this
+ * helper function is required to run a suspending function from an `onReceiveBroadcast` method.
+ * [AnkiBroadcastReceiver.goAsync] extends the lifetime of the `onReceiveBroadcast` method and tells
+ * the OS not to kill the process prematurely.
  *
- * Do not call [BroadcastReceiver.goAsync] directly before calling this function.
+ * Do not call [AnkiBroadcastReceiver.goAsync] directly before calling this function.
  *
- * @param timeout Just in case the block hangs. Cannot exceed 8 seconds, because an ANR may occur if a
- * BroadcastReceiver's onReceive method runs for longer than 10 seconds.
+ * @param timeout Just in case the block hangs. Cannot exceed 8 seconds, because an ANR may occur if
+ * an AnkiBroadcastReceiver's onReceiveBroadcast method runs for longer than 10 seconds.
  * See [the docs](https://developer.android.com/reference/android/content/BroadcastReceiver#goAsync()).
  * @param block The suspending function to run.
+ *
+ * @see AnkiBroadcastReceiver.goAsync
+ * @see AnkiBroadcastReceiver.onReceiveBroadcast
  */
-fun BroadcastReceiver.runGloballyWithTimeout(
+fun AnkiBroadcastReceiver.runGloballyWithTimeout(
     timeout: Duration,
     block: suspend () -> Unit,
 ) {
     val pendingResult = goAsync()
     if (pendingResult == null) {
         // pendingResult should never be null, so this should never happen.
-        // According to the implementation of goAsync, if it is, that indicates goAsync was called twice for the same onReceive.
+        // According to the implementation of goAsync, if it is, that indicates goAsync was called twice for the same onReceiveBroadcast.
         Timber.w("goAsync returned null, cannot run block")
         CrashReportService.sendExceptionReport(
             message =
                 "goAsync returned null for BroadcastReceiver: " +
-                    "This should never happen and indicates goAsync was called twice for the same onReceive",
+                    "This should never happen and indicates goAsync was called twice for the same onReceiveBroadcast",
             origin = "CoroutineHelpers:BroadcastReceiver.runGloballyWithTimeout",
         )
         return

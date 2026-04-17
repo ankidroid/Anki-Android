@@ -19,7 +19,6 @@ package com.ichi2.anki.services
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.VisibleForTesting
@@ -27,11 +26,16 @@ import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import androidx.core.os.BundleCompat
 import com.ichi2.anki.R
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.reviewreminders.upsertReminder
+import com.ichi2.anki.services.AlarmManagerService.Companion.WINDOW_LENGTH_MS
+import com.ichi2.anki.services.AlarmManagerService.Companion.getIntent
+import com.ichi2.anki.services.AlarmManagerService.Companion.scheduleAllEnabledReviewReminderNotifications
+import com.ichi2.anki.services.AlarmManagerService.Companion.unscheduleReviewReminderNotifications
 import com.ichi2.anki.showThemedToast
 import timber.log.Timber
 import java.util.Calendar
@@ -46,11 +50,11 @@ import kotlin.time.Duration.Companion.minutes
  *
  * This service also handles scheduling snoozed instances of review reminders.
  * Notifications have snooze buttons (defined in [NotificationService]) which, when clicked,
- * trigger the [onReceive] method of this BroadcastReceiver. This service handles the snooze delay,
+ * trigger the [onReceiveBroadcast] method of this BroadcastReceiver. This service handles the snooze delay,
  * after which it dispatches a one-time [NotificationService.NotificationServiceAction.SnoozeNotification]
  * request to [NotificationService].
  */
-class AlarmManagerService : BroadcastReceiver() {
+class AlarmManagerService : AnkiBroadcastReceiver() {
     companion object {
         /**
          * Extra key for sending a review reminder as an extra to this BroadcastReceiver.
@@ -349,7 +353,7 @@ class AlarmManagerService : BroadcastReceiver() {
      * Begins snoozing a review reminder.
      * @see getIntent
      */
-    override fun onReceive(
+    override fun onReceiveBroadcast(
         context: Context,
         intent: Intent,
     ) {

@@ -17,18 +17,18 @@
 
 package com.ichi2.widget
 
-import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 
 /**
  * BroadcastReceiver to handle the scenario where storage permissions are granted,
  * triggering an update for widgets using the AddNoteWidget class.
  */
-class WidgetPermissionReceiver : BroadcastReceiver() {
-    override fun onReceive(
+class WidgetPermissionReceiver : AnkiBroadcastReceiver() {
+    override fun onReceiveBroadcast(
         context: Context,
         intent: Intent,
     ) {

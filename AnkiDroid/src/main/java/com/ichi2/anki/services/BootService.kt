@@ -18,13 +18,13 @@
 package com.ichi2.anki.services
 
 import android.app.AlarmManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.Time
@@ -45,11 +45,11 @@ import java.util.Calendar
  * intent, which could cause review reminders to not be scheduled.
  */
 @NeedsTest("Check on various Android versions that this can execute")
-class BootService : BroadcastReceiver() {
+class BootService : AnkiBroadcastReceiver() {
     @LegacyNotifications("Notifications will be scheduled rather than instantly shown on boot or app launch")
     private var failedToShowNotifications = false
 
-    override fun onReceive(
+    override fun onReceiveBroadcast(
         context: Context,
         intent: Intent,
     ) {

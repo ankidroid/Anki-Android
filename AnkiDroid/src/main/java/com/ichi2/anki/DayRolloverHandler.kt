@@ -23,7 +23,6 @@
 
 package com.ichi2.anki
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_TIMEZONE_CHANGED
@@ -35,6 +34,7 @@ import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import anki.collection.OpChanges
 import anki.collection.opChanges
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.libanki.EpochSeconds
 import com.ichi2.anki.libanki.sched.Scheduler
@@ -51,7 +51,7 @@ import timber.log.Timber
  * HACK: This exists due to Android's complexities of scheduling an event at a given time.
  * It would be preferred to receive an event at the instant of rollover
  */
-object DayRolloverHandler : BroadcastReceiver() {
+object DayRolloverHandler : AnkiBroadcastReceiver() {
     /** @see Scheduler.dayCutoff */
     private var lastCutoff: EpochSeconds? = null
 
@@ -67,13 +67,13 @@ object DayRolloverHandler : BroadcastReceiver() {
         register(IntentFilter(ACTION_TIMEZONE_CHANGED))
     }
 
-    override fun onReceive(
-        context: Context?,
-        intent: Intent?,
+    override fun onReceiveBroadcast(
+        context: Context,
+        intent: Intent,
     ) {
         // potential race condition if a timezone/tick change occur simultaneously
         // the outcome would be two calls to notifySubscribers, which is acceptable
-        Timber.v("received ${intent?.action}")
+        Timber.v("received ${intent.action}")
         // launch coroutine as we need access to `col.sched`
         AnkiDroidApp.applicationScope.launchCatching(Dispatchers.IO, errorMessageHandler = { msg ->
             CrashReportService.sendExceptionReport(

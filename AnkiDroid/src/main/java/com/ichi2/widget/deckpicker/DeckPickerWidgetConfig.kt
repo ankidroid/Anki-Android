@@ -17,7 +17,6 @@
 package com.ichi2.widget.deckpicker
 
 import android.appwidget.AppWidgetManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -34,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.databinding.WidgetDeckPickerConfigBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -440,12 +440,12 @@ class DeckPickerWidgetConfig :
 
     /** BroadcastReceiver to handle widget removal. */
     private val widgetRemovedReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(
-                context: Context?,
-                intent: Intent?,
+        object : AnkiBroadcastReceiver() {
+            override fun onReceiveBroadcast(
+                context: Context,
+                intent: Intent,
             ) {
-                if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
+                if (intent.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
                     return
                 }
 
@@ -454,7 +454,7 @@ class DeckPickerWidgetConfig :
                     return
                 }
 
-                context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
+                deckPickerWidgetPreferences.deleteDeckData(appWidgetId)
             }
         }
 
