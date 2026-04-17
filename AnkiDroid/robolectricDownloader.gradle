@@ -4,8 +4,6 @@
  * Once applied to your gradle project, can be executed with ./gradlew robolectricSdkDownload
  */
 
-import java.nio.file.Files
-
 // The general idea of this was borrowed from https://gist.github.com/xian/05c4f27da6d4156b9827842217c2cd5c
 // I then modified it heavily to allow easier addition of new SDK versions
 // The full implementation is from https://gist.github.com/simtel12/13ff3e57c37e78e468502b51ebb0f4f2
@@ -53,31 +51,23 @@ robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
     def sdkConfig = configurations.create(version)
     dependencies.add(version, "org.robolectric:android-all-instrumented:${version}")
 
+    // An ArtifactView on the existing configuration gives us the POM alongside the JAR so
+    // maven local has both.
+    def sdkPomFiles = sdkConfig.incoming.artifactView {
+        attributes {
+            attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, "pom")
+        }
+        // if the POM can't be resolved, return an empty collection rather than failing the build
+        lenient = true
+    }.files
+
     def mavenLocalFile = new File(this.repositories.mavenLocal().url)
     def mavenRobolectric = new File(mavenLocalFile, "org/robolectric/android-all-instrumented/${version}")
     // Copying all files downloaded for the created configuration into maven local.
     tasks.register("robolectricSdkDownload-${version}", Copy) {
         from sdkConfig
+        from sdkPomFiles
         into mavenRobolectric
-
-        doLast {
-            ArtifactResolutionResult result = dependencies.createArtifactResolutionQuery()
-                .forModule("org.robolectric", "android-all-instrumented", version)
-                .withArtifacts(MavenModule, MavenPomArtifact)
-                .execute()
-
-            for(component in result.resolvedComponents) {
-                def componentId = component.id
-
-                if(componentId instanceof ModuleComponentIdentifier) {
-                    File pomFile = component.getArtifacts(MavenPomArtifact)[0].file
-                    File dest = new File(mavenRobolectric, pomFile.name)
-                    if (!dest.exists()) {
-                        Files.copy(pomFile.toPath(), dest.toPath())
-                    }
-                }
-            }
-        }
     }
     robolectricSdkDownload.configure { dependsOn "robolectricSdkDownload-${version}" }
 }
