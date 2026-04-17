@@ -45,14 +45,14 @@ object ReportOpener {
 
         val os = OperatingSystem.current()
         when {
-            os.isWindows -> ProcessBuilder("cmd", "/c", "start $reportPath")
+            os.isWindows -> ProcessBuilder("cmd", "/c", "start $reportPath").start()
             os.isMacOsX -> ProcessBuilder("open", reportPath).start()
             os.isLinux ->
                 try {
-                    ProcessBuilder("xdg-open", reportPath)
+                    ProcessBuilder("xdg-open", reportPath).start()
                 } catch (ignored: Exception) {
                     if (!linuxHtmlCmd.isNullOrEmpty()) {
-                        ProcessBuilder(linuxHtmlCmd, reportPath)
+                        ProcessBuilder(linuxHtmlCmd, reportPath).start()
                     } else {
                         println("'linux-html-cmd' property could not be found in 'local.properties'")
                     }
