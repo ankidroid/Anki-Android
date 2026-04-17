@@ -39,6 +39,17 @@ def gitCommitHash = providers.exec {
     commandLine "git", "rev-parse", "HEAD"
 }.standardOutput.asText.map { it.trim() }
 
+/**
+ * Epoch millis of the build. Displayed on the 'About' screen.
+ *
+ * CI passes the real time via -PbuildTime=<epoch> # example: 1776422957
+ *
+ * A local build uses a stale value (captured in the configuration cache) so the configuration cache
+ * is not invalidated on every build.
+ */
+def buildTimeMillis = providers.gradleProperty("buildTime")
+    .orElse(providers.provider { System.currentTimeMillis().toString() })
+
 android {
     namespace = "com.ichi2.anki"
 
@@ -64,7 +75,7 @@ android {
         buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankiBackend.get()}\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash.get()}\""
-        buildConfigField "long", "BUILD_TIME", System.currentTimeMillis().toString()
+        buildConfigField "long", "BUILD_TIME", buildTimeMillis.get()
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:

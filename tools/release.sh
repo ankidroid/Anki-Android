@@ -30,6 +30,11 @@ if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
   exit 1
 fi
 
+# Captured once so every APK in this release reports the same BUILD_TIME
+# (consumed by AnkiDroid/build.gradle via -PbuildTime).
+BUILD_TIME_MS=$(date +%s000)
+export BUILD_TIME_MS
+
 # Define the location of the manifest file
 SRC_DIR="./AnkiDroid"
 GRADLEFILE="$SRC_DIR/build.gradle"
@@ -107,7 +112,7 @@ git tag v"$VERSION"
 # Configuration for pushing to Play specified in build.gradle.kts 'play' task
 echo "Running 'publishPlayReleaseApk' gradle target"
 ./gradlew --stop
-if ! ./gradlew publishPlayReleaseApk
+if ! ./gradlew publishPlayReleaseApk -PbuildTime="$BUILD_TIME_MS"
 then
   # APK contains problems, abort release
   exit 1
@@ -122,7 +127,7 @@ UCFLAVORS='Full Amazon Play'
 for UCFLAVOR in $UCFLAVORS; do
   ./gradlew --stop
   echo Running assemble"$UCFLAVOR"Release target with universal APK flag
-  if ! ./gradlew assemble"$UCFLAVOR"Release -Duniversal-apk=true
+  if ! ./gradlew assemble"$UCFLAVOR"Release -Duniversal-apk=true -PbuildTime="$BUILD_TIME_MS"
   then
     echo "unable to build release APKs for flavor $UCFLAVOR"
     exit 1
@@ -162,7 +167,7 @@ cp proguard-mappings.tar.gz "$PREFIX"proguard-mappings.tar.gz
 # Create a full universal build that disables minify, to help diagnose proguard issues
 ./gradlew --stop
 echo Running assembleFullRelease target with universal APK flag and MINIFY_ENABLED=false
-if ! MINIFY_ENABLED=false ./gradlew assembleFullRelease -Duniversal-apk=true
+if ! MINIFY_ENABLED=false ./gradlew assembleFullRelease -Duniversal-apk=true -PbuildTime="$BUILD_TIME_MS"
 then
   echo "unable to build full unminified APKs"
   exit 1
