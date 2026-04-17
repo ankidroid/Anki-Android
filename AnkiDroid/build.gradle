@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     // Gradle plugin portal
     alias(libs.plugins.tripletPlay)
@@ -33,12 +31,13 @@ idea {
 
 def homePath = System.properties['user.home']
 /**
- * @return the current git hash
+ * Calculates the current git hash, invalidates configuration cache if changed
  * @example edf739d95bad7b370a6ed4398d46723f8219b3cd
  */
-static def gitCommitHash() {
-    "git rev-parse HEAD".execute().text.trim()
-}
+// https://docs.gradle.org/current/userguide/configuration_cache_requirements.html#config_cache:requirements:external_processes
+def gitCommitHash = providers.exec {
+    commandLine "git", "rev-parse", "HEAD"
+}.standardOutput.asText.map { it.trim() }
 
 android {
     namespace = "com.ichi2.anki"
@@ -64,7 +63,7 @@ android {
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankiBackend.get()}\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
-        buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
+        buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash.get()}\""
         buildConfigField "long", "BUILD_TIME", System.currentTimeMillis().toString()
         resValue "string", "app_name", "AnkiDroid"
 
