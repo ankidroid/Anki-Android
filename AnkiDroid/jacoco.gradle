@@ -1,3 +1,4 @@
+import com.ichi2.anki.gradle.ReportOpener
 import groovy.transform.Memoized
 import groovy.xml.XmlParser
 
@@ -27,33 +28,8 @@ Properties getLocalProperties() {
     return properties
 }
 
-def openReport(htmlOutDir) {
-    final reportPath = "$htmlOutDir/index.html"
-
-    println "HTML Report: file://$reportPath"
-
-    if (!project.hasProperty("open-report")) {
-        println "to open the report automatically in your default browser add '-Popen-report' cli argument"
-        return
-    }
-
-    def os = org.gradle.internal.os.OperatingSystem.current()
-    if (os.isWindows()) {
-        new ProcessBuilder('cmd', '/c', "start $reportPath")
-    } else if (os.isMacOsX()) {
-        new ProcessBuilder('open', "$reportPath").start()
-    } else if (os.isLinux()) {
-        try {
-            new ProcessBuilder('xdg-open', "$reportPath" )
-        } catch (Exception ignored) {
-            if (localProperties.containsKey("linux-html-cmd")) {
-                new ProcessBuilder(properties.get("linux-html-cmd"), "$reportPath")
-            } else {
-                println "'linux-html-cmd' property could not be found in 'local.properties'"
-            }
-        }
-    }
-}
+def openReportRequested = project.hasProperty("open-report")
+def linuxHtmlCmd = localProperties["linux-html-cmd"]?.toString()
 
 tasks.withType(Test).configureEach {
     jacoco.includeNoLocationClasses = true
@@ -105,7 +81,7 @@ tasks.register('jacocoTestReport', JacocoReport) {
     def htmlOutDir = project.layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
-        openReport htmlOutDir
+        ReportOpener.open(htmlOutDir, openReportRequested, linuxHtmlCmd)
     }
 
     reports {
@@ -134,7 +110,7 @@ tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
-        openReport htmlOutDir
+        ReportOpener.open(htmlOutDir, openReportRequested, linuxHtmlCmd)
     }
 
     reports {
@@ -186,7 +162,7 @@ tasks.register('jacocoAndroidTestReport', JacocoReport) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
-        openReport htmlOutDir
+        ReportOpener.open(htmlOutDir, openReportRequested, linuxHtmlCmd)
     }
 
     reports {
