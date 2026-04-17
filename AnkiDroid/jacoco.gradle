@@ -207,8 +207,10 @@ tasks.register('jacocoAndroidTestReport', JacocoReport) {
 
 // Issue 16640 - some emulators run, but register zero coverage
 tasks.register('assertNonzeroAndroidTestCoverage') {
+    // Resolve the file at configuration time, which is Gradle Configuration Cache compatible
+    def jacocoReportFile = layout.buildDirectory.file("reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml")
     doLast {
-        File jacocoReport = layout.buildDirectory.dir("reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml").get().asFile
+        File jacocoReport = jacocoReportFile.get().asFile
 
         if (!jacocoReport.exists())
             throw new FileNotFoundException("jacocoAndroidTestReport.xml was not found after running jacocoAndroidTestReport")

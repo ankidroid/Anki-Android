@@ -339,9 +339,11 @@ tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
+    // Resolve the directory at configuration time, which is Gradle Configuration Cache compatible
+    def resultsDir = layout.buildDirectory.dir("outputs/androidTest-results/connected/flavors/play")
     doLast {
         // androidTest currently creates one .xml file per emulator with aggregate results in this dir
-        File folder = file("./build/outputs/androidTest-results/connected/flavors/play")
+        File folder = resultsDir.get().asFile
         File[] listOfFiles = folder.listFiles({ d, f -> f ==~ /.*.xml/ } as FilenameFilter)
         for (File file : listOfFiles) {
             // The aggregate results file currently contains a line with this pattern holding test count
