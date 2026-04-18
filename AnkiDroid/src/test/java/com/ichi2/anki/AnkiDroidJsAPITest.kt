@@ -407,6 +407,57 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     }
 
     @Test
+    fun addTagToCurrentNoteDoesNotRequirePermission() = runTest {
+        addNoteUsingBasicModel("foo", "bar")
+        val reviewer: Reviewer = startReviewer()
+        val jsapi = reviewer.jsApi
+        waitForAsyncTasksToComplete()
+
+        val currentNid = reviewer.currentCard!!.nid
+        val params = JSONObject().apply {
+            put("noteId", currentNid)
+            put("tag", "current")
+        }.toString()
+
+        // Pref off: tagging the current note is allowed.
+        assertThat(
+            getDataFromRequest("addTagToNote", jsapi, params),
+            equalTo(formatApiResult(true))
+        )
+        assertThat(col.getNote(currentNid).tags, equalTo(listOf("current")))
+    }
+
+    @Test
+    fun addTagToOtherNoteRequiresModifyTagsPermission() = runTest {
+        addNoteUsingBasicModel("foo", "bar")
+        addNoteUsingBasicModel("baz", "bak")
+        val reviewer: Reviewer = startReviewer()
+        val jsapi = reviewer.jsApi
+        waitForAsyncTasksToComplete()
+
+        val currentNid = reviewer.currentCard!!.nid
+        val targetNid = col.findNotes("").first { it != currentNid }
+        val params = JSONObject().apply {
+            put("noteId", targetNid)
+            put("tag", "remote")
+        }.toString()
+
+        // Pref off: denied, tag is not applied.
+        assertFailsWith<DangerousJsPermissionDeniedException> {
+            getDataFromRequest("addTagToNote", jsapi, params)
+        }
+        assertThat(col.getNote(targetNid).tags, equalTo(emptyList()))
+
+        // Pref on: the tag is applied to the other note.
+        editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), true) }
+        assertThat(
+            getDataFromRequest("addTagToNote", jsapi, params),
+            equalTo(formatApiResult(true))
+        )
+        assertThat(col.getNote(targetNid).tags, equalTo(listOf("remote")))
+    }
+
+    @Test
     fun ankiResetProgressTest() = runTest {
         val n = addNoteUsingBasicModel("Front", "Back")
         val c = n.firstCard()

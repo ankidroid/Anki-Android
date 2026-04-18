@@ -27,7 +27,9 @@ import timber.log.Timber
  */
 enum class DangerousJsApiPermission {
     /** Arbitrary field reads across the collection. Gates `searchCardWithCallback`. */
-    QUERY_COLLECTION
+    QUERY_COLLECTION,
+    /** Modify tags of any note in the collection. Gates `addTagToNote` */
+    MODIFY_TAGS,
 }
 
 /**
