@@ -16,9 +16,11 @@
 package com.ichi2.anki.security
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * JS API capabilities that reach beyond the card the user is currently reviewing. Every entry is
@@ -34,7 +36,10 @@ enum class DangerousJsApiPermission {
  * App-level, user-opt-in capabilities. Distinct from [com.ichi2.utils.Permissions], which wraps
  * Android runtime permissions (audio, storage, notifications).
  */
-class AppPermissions(private val context: Context) {
+class AppPermissions(
+    private val context: Context,
+    private val showSnackbar: (String) -> Unit = {},
+) {
     /**
      * Asserts that the user has granted [permission].
      *
@@ -44,9 +49,27 @@ class AppPermissions(private val context: Context) {
         val key = context.getString(R.string.pref_allow_dangerous_js_api)
         if (!context.sharedPrefs().getBoolean(key, false)) {
             Timber.w("requirePermission denied: %s", permission.name)
+            notifyJsApiDenied()
             // The exception is exposed to the JS as an error, as with any security failure from a
             // `JavascriptInterface` method.
             throw DangerousJsPermissionDeniedException(permission.name)
+        }
+    }
+
+    private fun notifyJsApiDenied() {
+        // Avoid decision fatigue by limiting the number of times the warning is shown.
+        // Reset on app restart.
+        if (jaApiDenialsSinceProcessStart.incrementAndGet() > MAX_SNACKBARS_PER_PROCESS) return
+        showSnackbar(context.getString(R.string.dangerous_js_api_denied_snackbar))
+    }
+
+    companion object {
+        private const val MAX_SNACKBARS_PER_PROCESS = 2
+        private val jaApiDenialsSinceProcessStart = AtomicInteger(0)
+
+        @VisibleForTesting
+        fun resetDenialCounterForTesting() {
+            jaApiDenialsSinceProcessStart.set(0)
         }
     }
 }

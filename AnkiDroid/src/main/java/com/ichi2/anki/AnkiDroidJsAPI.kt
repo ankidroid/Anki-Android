@@ -52,7 +52,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
 
     private val context: Context = activity
-    private val permissions = AppPermissions(context)
+    private val permissions = AppPermissions(context) { msg -> activity.showSnackbar(msg) }
     private var cardSuppliedDeveloperContact = ""
     private var cardSuppliedApiVersion = ""
 
