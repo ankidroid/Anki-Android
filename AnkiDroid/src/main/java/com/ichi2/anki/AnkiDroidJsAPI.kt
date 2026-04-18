@@ -45,6 +45,7 @@ import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.security.DangerousJsApiPermission
+import com.ichi2.anki.security.DangerousJsPermissionDeniedException
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
@@ -82,7 +83,7 @@ open class AnkiDroidJsAPI(
      */
 
     private val context: Context = activity
-    private val permissions = AppPermissions(context)
+    private val permissions = AppPermissions(context) { msg -> activity.showSnackbar(msg) }
 
     // Text to speech
     private val talker = JavaScriptTTS()
@@ -225,225 +226,338 @@ open class AnkiDroidJsAPI(
         val cardDataForJsAPI = activity.getCardDataForJsApi()
         val apiParams = apiContract.cardSuppliedData
 
-        return@withContext when (methodName) {
-            "init" -> convertToByteArray(apiContract, true)
-            "newCardCount" -> convertToByteArray(apiContract, cardDataForJsAPI.newCardCount)
-            "lrnCardCount" -> convertToByteArray(apiContract, cardDataForJsAPI.lrnCardCount)
-            "revCardCount" -> convertToByteArray(apiContract, cardDataForJsAPI.revCardCount)
-            "eta" -> convertToByteArray(apiContract, cardDataForJsAPI.eta)
-            "nextTime1" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime1)
-            "nextTime2" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime2)
-            "nextTime3" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime3)
-            "nextTime4" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime4)
-            "toggleFlag" -> {
-                if (apiParams !in flagCommands) {
-                    showDeveloperContact(ANKI_JS_ERROR_CODE_FLAG_CARD, apiContract.cardSuppliedDeveloperContact)
-                    return@withContext convertToByteArray(apiContract, false)
-                }
-                convertToByteArray(apiContract, activity.executeCommand(flagCommands[apiParams]!!))
-            }
-            "markCard" ->
-                processAction({
-                    activity.executeCommand(ViewerCommand.MARK)
-                }, apiContract, ANKI_JS_ERROR_CODE_MARK_CARD, ::convertToByteArray)
-            "buryCard" -> processAction(activity::buryCard, apiContract, ANKI_JS_ERROR_CODE_BURY_CARD, ::convertToByteArray)
-            "buryNote" -> processAction(activity::buryNote, apiContract, ANKI_JS_ERROR_CODE_BURT_NOTE, ::convertToByteArray)
-            "suspendCard" -> processAction(activity::suspendCard, apiContract, ANKI_JS_ERROR_CODE_SUSPEND_CARD, ::convertToByteArray)
-            "suspendNote" -> processAction(activity::suspendNote, apiContract, ANKI_JS_ERROR_CODE_SUSPEND_NOTE, ::convertToByteArray)
-            "setCardDue" -> {
-                try {
-                    val days = apiParams.toInt()
-                    if (days !in 0..9999) {
-                        showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
+        return@withContext try {
+            when (methodName) {
+                "init" -> convertToByteArray(apiContract, true)
+                "newCardCount" -> convertToByteArray(apiContract, cardDataForJsAPI.newCardCount)
+                "lrnCardCount" -> convertToByteArray(apiContract, cardDataForJsAPI.lrnCardCount)
+                "revCardCount" -> convertToByteArray(apiContract, cardDataForJsAPI.revCardCount)
+                "eta" -> convertToByteArray(apiContract, cardDataForJsAPI.eta)
+                "nextTime1" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime1)
+                "nextTime2" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime2)
+                "nextTime3" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime3)
+                "nextTime4" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime4)
+                "toggleFlag" -> {
+                    if (apiParams !in flagCommands) {
+                        showDeveloperContact(
+                            ANKI_JS_ERROR_CODE_FLAG_CARD,
+                            apiContract.cardSuppliedDeveloperContact,
+                        )
                         return@withContext convertToByteArray(apiContract, false)
                     }
-                    activity.launchCatchingTask {
-                        activity.rescheduleCards(listOf(currentCard.id), days)
-                    }
-                    return@withContext convertToByteArray(apiContract, true)
-                } catch (_: NumberFormatException) {
-                    showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
-                    return@withContext convertToByteArray(apiContract, false)
+                    convertToByteArray(
+                        apiContract,
+                        activity.executeCommand(flagCommands[apiParams]!!),
+                    )
                 }
-            }
-            "resetProgress" -> {
-                val cardIds = listOf(currentCard.id)
-                activity.launchCatchingTask { activity.resetCards(cardIds) }
-                convertToByteArray(apiContract, true)
-            }
-            "cardMark" -> convertToByteArray(apiContract, currentCard.note(getColUnsafe).hasTag(getColUnsafe, "marked"))
-            "cardFlag" -> convertToByteArray(apiContract, currentCard.userFlag())
-            "cardReps" -> convertToByteArray(apiContract, currentCard.reps)
-            "cardInterval" -> convertToByteArray(apiContract, currentCard.ivl)
-            "cardFactor" -> convertToByteArray(apiContract, currentCard.factor)
-            "cardMod" -> convertToByteArray(apiContract, currentCard.mod)
-            "cardId" -> convertToByteArray(apiContract, currentCard.id)
-            "cardNid" -> convertToByteArray(apiContract, currentCard.nid)
-            "cardType" -> convertToByteArray(apiContract, currentCard.type.code)
-            "cardDid" -> convertToByteArray(apiContract, currentCard.did)
-            "cardLeft" -> convertToByteArray(apiContract, currentCard.left)
-            "cardODid" -> convertToByteArray(apiContract, currentCard.oDid)
-            "cardODue" -> convertToByteArray(apiContract, currentCard.oDue)
-            "cardQueue" -> convertToByteArray(apiContract, currentCard.queue.code)
-            "cardLapses" -> convertToByteArray(apiContract, currentCard.lapses)
-            "cardDue" -> convertToByteArray(apiContract, currentCard.due)
-            "deckName" -> convertToByteArray(apiContract, Decks.basename(activity.getColUnsafe.decks.name(currentCard.did)))
-            "isActiveNetworkMetered" -> convertToByteArray(apiContract, NetworkUtils.isActiveNetworkMetered())
-            "ttsSetLanguage" -> convertToByteArray(apiContract, talker.setLanguage(apiParams))
-            "ttsSpeak" -> {
-                val jsonObject = JSONObject(apiParams)
-                val text = jsonObject.getString("text")
-                val queueMode = jsonObject.getInt("queueMode")
-                convertToByteArray(apiContract, talker.speak(text, queueMode))
-            }
-            "ttsIsSpeaking" -> convertToByteArray(apiContract, talker.isSpeaking)
-            "ttsSetPitch" -> convertToByteArray(apiContract, talker.setPitch(apiParams.toFloat()))
-            "ttsSetSpeechRate" -> convertToByteArray(apiContract, talker.setSpeechRate(apiParams.toFloat()))
-            "ttsFieldModifierIsAvailable" -> {
-                // Know if {{tts}} is supported - issue #10443
-                // Return false for now
-                convertToByteArray(apiContract, false)
-            }
-            "ttsStop" -> convertToByteArray(apiContract, talker.stop())
-            "searchCard" -> {
-                val intent =
-                    Intent(context, CardBrowser::class.java).apply {
-                        putExtra("currentCard", currentCard.id)
-                        putExtra("search_query", apiParams)
-                    }
-                activity.startActivity(intent)
-                convertToByteArray(apiContract, true)
-            }
-            "searchCardWithCallback" -> ankiSearchCardWithCallback(apiContract)
-            "isDisplayingAnswer" -> convertToByteArray(apiContract, activity.isDisplayingAnswer)
-            "addTagToCard" -> {
-                activity.runOnUiThread { activity.showTagsDialog() }
-                convertToByteArray(apiContract, true)
-            }
-            "isInFullscreen" -> convertToByteArray(apiContract, activity.isFullscreen)
-            "isTopbarShown" -> convertToByteArray(apiContract, activity.prefShowTopbar)
-            "isInNightMode" -> convertToByteArray(apiContract, activity.isInNightMode)
-            "enableHorizontalScrollbar" -> {
-                activity.webView!!.isHorizontalScrollBarEnabled = apiParams.toBoolean()
-                convertToByteArray(apiContract, true)
-            }
-            "enableVerticalScrollbar" -> {
-                activity.webView!!.isVerticalScrollBarEnabled = apiParams.toBoolean()
-                convertToByteArray(apiContract, true)
-            }
-            "showNavigationDrawer" -> {
-                activity.onNavigationPressed()
-                convertToByteArray(apiContract, true)
-            }
-            "showOptionsMenu" -> {
-                activity.openOptionsMenu()
-                convertToByteArray(apiContract, true)
-            }
-            "showToast" -> {
-                val jsonObject = JSONObject(apiParams)
-                val text = jsonObject.getString("text")
-                val shortLength = jsonObject.optBoolean("shortLength", true)
-                val msgDecode = activity.decodeUrl(text)
-                showThemedToast(context, msgDecode, shortLength)
-                convertToByteArray(apiContract, true)
-            }
-            "showAnswer" -> {
-                activity.displayCardAnswer()
-                convertToByteArray(apiContract, true)
-            }
-            "answerEase1" -> {
-                activity.flipOrAnswerCard(Rating.AGAIN)
-                convertToByteArray(apiContract, true)
-            }
-            "answerEase2" -> {
-                activity.flipOrAnswerCard(Rating.HARD)
-                convertToByteArray(apiContract, true)
-            }
-            "answerEase3" -> {
-                activity.flipOrAnswerCard(Rating.GOOD)
-                convertToByteArray(apiContract, true)
-            }
-            "answerEase4" -> {
-                activity.flipOrAnswerCard(Rating.EASY)
-                convertToByteArray(apiContract, true)
-            }
 
-            "addTagToNote" -> {
-                val jsonObject = JSONObject(apiParams)
-                val noteId = jsonObject.getLong("noteId")
-                val tag = jsonObject.getString("tag")
-                if (noteId != currentCard.nid) {
-                    permissions.requirePermission(DangerousJsApiPermission.MODIFY_TAGS)
-                }
-                val note =
-                    getColUnsafe.getNote(noteId).apply {
-                        addTag(tag)
-                    }
-                getColUnsafe.updateNote(note)
-                convertToByteArray(apiContract, true)
-            }
+                "markCard" ->
+                    processAction({
+                        activity.executeCommand(ViewerCommand.MARK)
+                    }, apiContract, ANKI_JS_ERROR_CODE_MARK_CARD, ::convertToByteArray)
 
-            "setNoteTags" -> {
-                val jsonObject = JSONObject(apiParams)
-                val noteId = currentCard.nid
-                val tags = jsonObject.getJSONArray("tags")
-                withCol {
-                    fun Note.setTagsFromList(tagList: List<String>) {
-                        val sanitizedTags = tagList.map { it.trim() }
-                        val spaces = "\\s|\u3000".toRegex()
-                        if (sanitizedTags.any { it.contains(spaces) }) {
-                            throw IllegalArgumentException("Tags cannot contain spaces")
+                "buryCard" ->
+                    processAction(
+                        activity::buryCard,
+                        apiContract,
+                        ANKI_JS_ERROR_CODE_BURY_CARD,
+                        ::convertToByteArray,
+                    )
+
+                "buryNote" ->
+                    processAction(
+                        activity::buryNote,
+                        apiContract,
+                        ANKI_JS_ERROR_CODE_BURT_NOTE,
+                        ::convertToByteArray,
+                    )
+
+                "suspendCard" ->
+                    processAction(
+                        activity::suspendCard,
+                        apiContract,
+                        ANKI_JS_ERROR_CODE_SUSPEND_CARD,
+                        ::convertToByteArray,
+                    )
+
+                "suspendNote" ->
+                    processAction(
+                        activity::suspendNote,
+                        apiContract,
+                        ANKI_JS_ERROR_CODE_SUSPEND_NOTE,
+                        ::convertToByteArray,
+                    )
+
+                "setCardDue" -> {
+                    try {
+                        val days = apiParams.toInt()
+                        if (days !in 0..9999) {
+                            showDeveloperContact(
+                                ANKI_JS_ERROR_CODE_SET_DUE,
+                                apiContract.cardSuppliedDeveloperContact,
+                            )
+                            return@withContext convertToByteArray(apiContract, false)
                         }
-                        val tagsAsString = this@withCol.tags.join(sanitizedTags)
-                        setTagsFromStr(this@withCol, tagsAsString)
+                        activity.launchCatchingTask {
+                            activity.rescheduleCards(listOf(currentCard.id), days)
+                        }
+                        return@withContext convertToByteArray(apiContract, true)
+                    } catch (_: NumberFormatException) {
+                        showDeveloperContact(
+                            ANKI_JS_ERROR_CODE_SET_DUE,
+                            apiContract.cardSuppliedDeveloperContact,
+                        )
+                        return@withContext convertToByteArray(apiContract, false)
                     }
+                }
 
+                "resetProgress" -> {
+                    val cardIds = listOf(currentCard.id)
+                    activity.launchCatchingTask { activity.resetCards(cardIds) }
+                    convertToByteArray(apiContract, true)
+                }
+
+                "cardMark" ->
+                    convertToByteArray(
+                        apiContract,
+                        currentCard.note(getColUnsafe).hasTag(getColUnsafe, "marked"),
+                    )
+
+                "cardFlag" -> convertToByteArray(apiContract, currentCard.userFlag())
+                "cardReps" -> convertToByteArray(apiContract, currentCard.reps)
+                "cardInterval" -> convertToByteArray(apiContract, currentCard.ivl)
+                "cardFactor" -> convertToByteArray(apiContract, currentCard.factor)
+                "cardMod" -> convertToByteArray(apiContract, currentCard.mod)
+                "cardId" -> convertToByteArray(apiContract, currentCard.id)
+                "cardNid" -> convertToByteArray(apiContract, currentCard.nid)
+                "cardType" -> convertToByteArray(apiContract, currentCard.type.code)
+                "cardDid" -> convertToByteArray(apiContract, currentCard.did)
+                "cardLeft" -> convertToByteArray(apiContract, currentCard.left)
+                "cardODid" -> convertToByteArray(apiContract, currentCard.oDid)
+                "cardODue" -> convertToByteArray(apiContract, currentCard.oDue)
+                "cardQueue" -> convertToByteArray(apiContract, currentCard.queue.code)
+                "cardLapses" -> convertToByteArray(apiContract, currentCard.lapses)
+                "cardDue" -> convertToByteArray(apiContract, currentCard.due)
+                "deckName" ->
+                    convertToByteArray(
+                        apiContract,
+                        Decks.basename(activity.getColUnsafe.decks.name(currentCard.did)),
+                    )
+
+                "isActiveNetworkMetered" ->
+                    convertToByteArray(
+                        apiContract,
+                        NetworkUtils.isActiveNetworkMetered(),
+                    )
+
+                "ttsSetLanguage" -> convertToByteArray(apiContract, talker.setLanguage(apiParams))
+                "ttsSpeak" -> {
+                    val jsonObject = JSONObject(apiParams)
+                    val text = jsonObject.getString("text")
+                    val queueMode = jsonObject.getInt("queueMode")
+                    convertToByteArray(apiContract, talker.speak(text, queueMode))
+                }
+
+                "ttsIsSpeaking" -> convertToByteArray(apiContract, talker.isSpeaking)
+                "ttsSetPitch" ->
+                    convertToByteArray(
+                        apiContract,
+                        talker.setPitch(apiParams.toFloat()),
+                    )
+
+                "ttsSetSpeechRate" ->
+                    convertToByteArray(
+                        apiContract,
+                        talker.setSpeechRate(apiParams.toFloat()),
+                    )
+
+                "ttsFieldModifierIsAvailable" -> {
+                    // Know if {{tts}} is supported - issue #10443
+                    // Return false for now
+                    convertToByteArray(apiContract, false)
+                }
+
+                "ttsStop" -> convertToByteArray(apiContract, talker.stop())
+                "searchCard" -> {
+                    val intent =
+                        Intent(context, CardBrowser::class.java).apply {
+                            putExtra("currentCard", currentCard.id)
+                            putExtra("search_query", apiParams)
+                        }
+                    activity.startActivity(intent)
+                    convertToByteArray(apiContract, true)
+                }
+
+                "searchCardWithCallback" -> ankiSearchCardWithCallback(apiContract)
+                "isDisplayingAnswer" -> convertToByteArray(apiContract, activity.isDisplayingAnswer)
+                "addTagToCard" -> {
+                    activity.runOnUiThread { activity.showTagsDialog() }
+                    convertToByteArray(apiContract, true)
+                }
+
+                "isInFullscreen" -> convertToByteArray(apiContract, activity.isFullscreen)
+                "isTopbarShown" -> convertToByteArray(apiContract, activity.prefShowTopbar)
+                "isInNightMode" -> convertToByteArray(apiContract, activity.isInNightMode)
+                "enableHorizontalScrollbar" -> {
+                    activity.webView!!.isHorizontalScrollBarEnabled = apiParams.toBoolean()
+                    convertToByteArray(apiContract, true)
+                }
+
+                "enableVerticalScrollbar" -> {
+                    activity.webView!!.isVerticalScrollBarEnabled = apiParams.toBoolean()
+                    convertToByteArray(apiContract, true)
+                }
+
+                "showNavigationDrawer" -> {
+                    activity.onNavigationPressed()
+                    convertToByteArray(apiContract, true)
+                }
+
+                "showOptionsMenu" -> {
+                    activity.openOptionsMenu()
+                    convertToByteArray(apiContract, true)
+                }
+
+                "showToast" -> {
+                    val jsonObject = JSONObject(apiParams)
+                    val text = jsonObject.getString("text")
+                    val shortLength = jsonObject.optBoolean("shortLength", true)
+                    val msgDecode = activity.decodeUrl(text)
+                    showThemedToast(context, msgDecode, shortLength)
+                    convertToByteArray(apiContract, true)
+                }
+
+                "showAnswer" -> {
+                    activity.displayCardAnswer()
+                    convertToByteArray(apiContract, true)
+                }
+
+                "answerEase1" -> {
+                    activity.flipOrAnswerCard(Rating.AGAIN)
+                    convertToByteArray(apiContract, true)
+                }
+
+                "answerEase2" -> {
+                    activity.flipOrAnswerCard(Rating.HARD)
+                    convertToByteArray(apiContract, true)
+                }
+
+                "answerEase3" -> {
+                    activity.flipOrAnswerCard(Rating.GOOD)
+                    convertToByteArray(apiContract, true)
+                }
+
+                "answerEase4" -> {
+                    activity.flipOrAnswerCard(Rating.EASY)
+                    convertToByteArray(apiContract, true)
+                }
+
+                "addTagToNote" -> {
+                    val jsonObject = JSONObject(apiParams)
+                    val noteId = jsonObject.getLong("noteId")
+                    val tag = jsonObject.getString("tag")
+                    if (noteId != currentCard.nid) {
+                        permissions.requirePermission(DangerousJsApiPermission.MODIFY_TAGS)
+                    }
                     val note =
-                        getNote(noteId).apply {
-                            setTagsFromList(tags.stringIterable().toList())
+                        getColUnsafe.getNote(noteId).apply {
+                            addTag(tag)
                         }
-                    updateNote(note)
+                    getColUnsafe.updateNote(note)
+                    convertToByteArray(apiContract, true)
                 }
-                convertToByteArray(apiContract, true)
-            }
 
-            "getNoteTags" -> {
-                val noteId = currentCard.nid
-                val noteTags =
+                "setNoteTags" -> {
+                    val jsonObject = JSONObject(apiParams)
+                    val noteId = currentCard.nid
+                    val tags = jsonObject.getJSONArray("tags")
                     withCol {
-                        getNote(noteId).tags
-                    }
-                convertToByteArray(apiContract, JSONArray(noteTags).toString())
-            }
-
-            "sttSetLanguage" -> convertToByteArray(apiContract, speechRecognizer.setLanguage(apiParams))
-            "sttStart" -> {
-                val callback =
-                    object : JavaScriptSTT.SpeechRecognitionCallback {
-                        override fun onResult(results: List<String>) {
-                            activity.lifecycleScope.launch {
-                                val apiResult = ApiResult.success(Json.encodeToString(ListSerializer(String.serializer()), results))
-                                val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
-                                activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
+                        fun Note.setTagsFromList(tagList: List<String>) {
+                            val sanitizedTags = tagList.map { it.trim() }
+                            val spaces = "\\s|\u3000".toRegex()
+                            if (sanitizedTags.any { it.contains(spaces) }) {
+                                throw IllegalArgumentException("Tags cannot contain spaces")
                             }
+                            val tagsAsString = this@withCol.tags.join(sanitizedTags)
+                            setTagsFromStr(this@withCol, tagsAsString)
                         }
 
-                        override fun onError(errorMessage: String) {
-                            activity.lifecycleScope.launch {
-                                val apiResult = ApiResult.failure(errorMessage)
-                                val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
-                                activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
+                        val note =
+                            getNote(noteId).apply {
+                                setTagsFromList(tags.stringIterable().toList())
+                            }
+                        updateNote(note)
+                    }
+                    convertToByteArray(apiContract, true)
+                }
+
+                "getNoteTags" -> {
+                    val noteId = currentCard.nid
+                    val noteTags =
+                        withCol {
+                            getNote(noteId).tags
+                        }
+                    convertToByteArray(apiContract, JSONArray(noteTags).toString())
+                }
+
+                "sttSetLanguage" ->
+                    convertToByteArray(
+                        apiContract,
+                        speechRecognizer.setLanguage(apiParams),
+                    )
+
+                "sttStart" -> {
+                    val callback =
+                        object : JavaScriptSTT.SpeechRecognitionCallback {
+                            override fun onResult(results: List<String>) {
+                                activity.lifecycleScope.launch {
+                                    val apiResult =
+                                        ApiResult.success(
+                                            Json.encodeToString(
+                                                ListSerializer(String.serializer()),
+                                                results,
+                                            ),
+                                        )
+                                    val jsonEncodedString =
+                                        withContext(Dispatchers.Default) {
+                                            JSONObject.quote(apiResult.toString())
+                                        }
+                                    activity.webView!!.evaluateJavascript(
+                                        "ankiSttResult($jsonEncodedString)",
+                                        null,
+                                    )
+                                }
+                            }
+
+                            override fun onError(errorMessage: String) {
+                                activity.lifecycleScope.launch {
+                                    val apiResult = ApiResult.failure(errorMessage)
+                                    val jsonEncodedString =
+                                        withContext(Dispatchers.Default) {
+                                            JSONObject.quote(apiResult.toString())
+                                        }
+                                    activity.webView!!.evaluateJavascript(
+                                        "ankiSttResult($jsonEncodedString)",
+                                        null,
+                                    )
+                                }
                             }
                         }
-                    }
-                speechRecognizer.setRecognitionCallback(callback)
-                convertToByteArray(apiContract, speechRecognizer.start())
+                    speechRecognizer.setRecognitionCallback(callback)
+                    convertToByteArray(apiContract, speechRecognizer.start())
+                }
+
+                "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
+                else -> {
+                    showDeveloperContact(
+                        ANKI_JS_ERROR_CODE_ERROR,
+                        apiContract.cardSuppliedDeveloperContact,
+                    )
+                    throw Exception("unhandled request: $methodName")
+                }
             }
-            "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
-            else -> {
-                showDeveloperContact(ANKI_JS_ERROR_CODE_ERROR, apiContract.cardSuppliedDeveloperContact)
-                throw Exception("unhandled request: $methodName")
-            }
+        } catch (_: DangerousJsPermissionDeniedException) {
+            return@withContext convertToByteArray(apiContract, false)
         }
     }
 
