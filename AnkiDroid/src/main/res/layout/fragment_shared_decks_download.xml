@@ -34,6 +34,7 @@
         android:textSize="20sp"
         android:text="@string/deck_download_progress_message"
         android:gravity="start"
+        android:textColor="?attr/colorOnSurfaceVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/downloading_title" />
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="42dp"
         android:textSize="24sp"
+        android:textColor="?attr/colorSecondary"
         app:layout_constraintStart_toStartOf="@id/download_progress_bar"
         app:layout_constraintTop_toBottomOf="@id/download_dialog_info_text"
         tools:text="100 %" />
