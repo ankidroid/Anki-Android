@@ -404,6 +404,11 @@ open class CardBrowser :
         setupMenuProvider()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        ChangeManager.unsubscribe(this)
+    }
+
     fun setupMenuProvider() {
         // the drawerToggle has priority over other menu items
         addMenuProvider(
@@ -1093,7 +1098,8 @@ open class CardBrowser :
             return
         }
 
-        if (changes.browserSidebar ||
+        if (changes.notetype ||
+            changes.browserSidebar ||
             changes.browserTable ||
             changes.noteText ||
             changes.card

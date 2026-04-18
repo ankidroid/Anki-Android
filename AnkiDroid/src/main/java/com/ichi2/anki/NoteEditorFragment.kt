@@ -599,6 +599,11 @@ class NoteEditorFragment :
         ChangeManager.subscribe(this)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        ChangeManager.unsubscribe(this)
+    }
+
     /**
      * Handles an intent containing an image from the user's gallery or the internet by opening
      * MultimediaActivity specifically for creating a new card.

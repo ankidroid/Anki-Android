@@ -696,6 +696,9 @@ class CardBrowserFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        ChangeManager.unsubscribe(this)
+
         if (::cardsListView.isInitialized) {
             cardsListView.adapter = null
         }
@@ -873,11 +876,13 @@ class CardBrowserFragment :
             return
         }
 
-        if (changes.browserSidebar ||
+        if (changes.notetype ||
+            changes.browserSidebar ||
             changes.browserTable ||
             changes.noteText ||
             changes.card
         ) {
+            Timber.d("CardBrowserFragment: refreshing adapter due to external change (notetype=%b)", changes.notetype)
             cardsAdapter.notifyDataSetChanged()
         }
     }
