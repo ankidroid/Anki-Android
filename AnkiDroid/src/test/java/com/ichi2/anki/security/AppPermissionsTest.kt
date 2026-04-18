@@ -23,6 +23,7 @@ import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.getString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
@@ -32,7 +33,13 @@ import kotlin.test.assertFailsWith
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class AppPermissionsTest : RobolectricTest() {
-    private val permissions get() = AppPermissions(targetContext)
+    private val snackbars = mutableListOf<String>()
+    private val permissions get() = AppPermissions(targetContext) { snackbars += it }
+
+    @Before
+    fun resetDenialCounter() {
+        AppPermissions.resetDenialCounterForTesting()
+    }
 
     @Test
     fun defaultsToDenied() {
@@ -47,6 +54,7 @@ class AppPermissionsTest : RobolectricTest() {
     fun allowedWhenToggleOn() {
         allowDangerousJsApis = true
         assertDoesNotThrow { permissions.requirePermission(QUERY_COLLECTION) }
+        assertThat(snackbars.size, equalTo(0))
     }
 
     @Test
@@ -55,6 +63,29 @@ class AppPermissionsTest : RobolectricTest() {
         assertFailsWith<DangerousJsPermissionDeniedException> {
             permissions.requirePermission(QUERY_COLLECTION)
         }
+    }
+
+    @Test
+    fun snackbarShownForFirstTwoDenialsThenSuppressed() {
+        repeat(5) {
+            assertFailsWith<DangerousJsPermissionDeniedException> {
+                permissions.requirePermission(QUERY_COLLECTION)
+            }
+        }
+        assertThat(snackbars.size, equalTo(2))
+    }
+
+    @Test
+    fun suppressionIsProcessWideAcrossInstances() {
+        repeat(2) {
+            assertFailsWith<DangerousJsPermissionDeniedException> {
+                AppPermissions(targetContext) { snackbars += it }.requirePermission(QUERY_COLLECTION)
+            }
+        }
+        assertFailsWith<DangerousJsPermissionDeniedException> {
+            AppPermissions(targetContext) { snackbars += it }.requirePermission(QUERY_COLLECTION)
+        }
+        assertThat(snackbars.size, equalTo(2))
     }
 }
 
