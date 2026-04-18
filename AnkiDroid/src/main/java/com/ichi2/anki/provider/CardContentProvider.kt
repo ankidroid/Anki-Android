@@ -1193,6 +1193,13 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.INTERVAL -> rb.add(currentCard.ivl)
                 FlashCardsContract.Card.RAW_SM2_FACTOR -> rb.add(currentCard.factor)
                 FlashCardsContract.Card.RAW_LEFT -> rb.add(currentCard.left)
+                FlashCardsContract.Card.ORIGINAL_POSITION -> rb.add(currentCard.originalPosition)
+                FlashCardsContract.Card.RAW_CUSTOM_DATA -> rb.add(currentCard.customData)
+                FlashCardsContract.Card.FSRS_STABILITY -> rb.add(currentCard.memoryStateStability)
+                FlashCardsContract.Card.FSRS_DIFFICULTY -> rb.add(currentCard.memoryStateDifficulty)
+                FlashCardsContract.Card.FSRS_DESIRED_RETENTION -> rb.add(currentCard.fsrsDesiredRetention)
+                FlashCardsContract.Card.FSRS_DECAY -> rb.add(currentCard.decay)
+                FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS -> rb.add(currentCard.lastReviewTimeSecs)
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }
@@ -1463,3 +1470,12 @@ private fun NotetypeJson.getEmptyCardIds(col: Collection): List<CardId> {
         .filter { noteIdsOfType.contains(it.noteId) }
         .flatMap { it.cardIdsList }
 }
+
+private val Card.memoryStateStability: Float?
+    get() = memoryState?.stability
+
+private val Card.memoryStateDifficulty: Float?
+    get() = memoryState?.difficulty
+
+private val Card.fsrsDesiredRetention: Float?
+    get() = desiredRetention

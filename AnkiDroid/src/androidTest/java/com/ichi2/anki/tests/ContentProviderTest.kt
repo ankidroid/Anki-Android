@@ -23,6 +23,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.CursorWindow
 import android.net.Uri
+import anki.cards.FsrsMemoryState
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.FlashCardsContract
@@ -541,6 +542,314 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.REPS))
             assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.LAPSES))
             assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.ORIGINAL_DECK_ID))
+        }
+    }
+
+    @Test
+    fun testQueryCardOriginalPosition() {
+        val expectedOriginalPosition = 37
+        val card =
+            getFirstCardFromScheduler(col)!!.update {
+                originalPosition = expectedOriginalPosition
+            }
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.ORIGINAL_POSITION) {
+            assertEquals(
+                expectedOriginalPosition,
+                it.getInt(it.getColumnIndex(FlashCardsContract.Card.ORIGINAL_POSITION)),
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardOriginalPosition_defaultsToNull() {
+        val card = getFirstCardFromScheduler(col)!!
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.ORIGINAL_POSITION) {
+            assertTrue(it.isNull(it.getColumnIndex(FlashCardsContract.Card.ORIGINAL_POSITION)))
+        }
+    }
+
+    @Test
+    fun testQueryCardRawCustomData() {
+        val expectedRawCustomData = """{"part3":true}"""
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setCustomData(expectedRawCustomData)
+                    .build(),
+            ),
+            true,
+        )
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.RAW_CUSTOM_DATA) {
+            assertEquals(
+                expectedRawCustomData,
+                it.getString(it.getColumnIndex(FlashCardsContract.Card.RAW_CUSTOM_DATA)),
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardRawCustomData_defaultsToEmptyString() {
+        val card = getFirstCardFromScheduler(col)!!
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.RAW_CUSTOM_DATA) {
+            assertEquals(
+                "",
+                it.getString(it.getColumnIndex(FlashCardsContract.Card.RAW_CUSTOM_DATA)),
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardFsrsStability() {
+        val expectedFsrsStability = 12.5f
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setMemoryState(
+                        FsrsMemoryState
+                            .newBuilder()
+                            .setStability(expectedFsrsStability)
+                            .setDifficulty(4.25f),
+                    ).build(),
+            ),
+            true,
+        )
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.FSRS_STABILITY) {
+            assertEquals(
+                expectedFsrsStability,
+                it.getFloat(it.getColumnIndex(FlashCardsContract.Card.FSRS_STABILITY)),
+                0.0f,
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardFsrsDifficulty() {
+        val expectedFsrsDifficulty = 4.25f
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setMemoryState(
+                        FsrsMemoryState
+                            .newBuilder()
+                            .setStability(12.5f)
+                            .setDifficulty(expectedFsrsDifficulty),
+                    ).build(),
+            ),
+            true,
+        )
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.FSRS_DIFFICULTY) {
+            assertEquals(
+                expectedFsrsDifficulty,
+                it.getFloat(it.getColumnIndex(FlashCardsContract.Card.FSRS_DIFFICULTY)),
+                0.0f,
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardFsrsDesiredRetention() {
+        val expectedFsrsDesiredRetention = 0.86f
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setDesiredRetention(expectedFsrsDesiredRetention)
+                    .build(),
+            ),
+            true,
+        )
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.FSRS_DESIRED_RETENTION) {
+            assertEquals(
+                expectedFsrsDesiredRetention,
+                it.getFloat(it.getColumnIndex(FlashCardsContract.Card.FSRS_DESIRED_RETENTION)),
+                0.0f,
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardFsrsDecay() {
+        val expectedFsrsDecay = -0.52f
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setDecay(expectedFsrsDecay)
+                    .build(),
+            ),
+            true,
+        )
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.FSRS_DECAY) {
+            assertEquals(
+                expectedFsrsDecay,
+                it.getFloat(it.getColumnIndex(FlashCardsContract.Card.FSRS_DECAY)),
+                0.0f,
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardLastReviewTimeSeconds() {
+        val expectedLastReviewTimeSeconds = 1_700_000_123L
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setLastReviewTimeSecs(expectedLastReviewTimeSeconds)
+                    .build(),
+            ),
+            true,
+        )
+
+        assertSingleCardColumn(card, FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS) {
+            assertEquals(
+                expectedLastReviewTimeSeconds,
+                it.getLong(it.getColumnIndex(FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS)),
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardFsrsFields_defaultToNull() {
+        val card = getFirstCardFromScheduler(col)!!
+        val projection =
+            arrayOf(
+                FlashCardsContract.Card.FSRS_STABILITY,
+                FlashCardsContract.Card.FSRS_DIFFICULTY,
+                FlashCardsContract.Card.FSRS_DESIRED_RETENTION,
+                FlashCardsContract.Card.FSRS_DECAY,
+                FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS,
+            )
+
+        assertSingleCardProjection(card, projection, projection.toList()) {
+            assertTrue(it.isNull(it.getColumnIndex(FlashCardsContract.Card.FSRS_STABILITY)))
+            assertTrue(it.isNull(it.getColumnIndex(FlashCardsContract.Card.FSRS_DIFFICULTY)))
+            assertTrue(it.isNull(it.getColumnIndex(FlashCardsContract.Card.FSRS_DESIRED_RETENTION)))
+            assertTrue(it.isNull(it.getColumnIndex(FlashCardsContract.Card.FSRS_DECAY)))
+            assertTrue(it.isNull(it.getColumnIndex(FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS)))
+        }
+    }
+
+    @Test
+    fun testSearchCards_withPart3Projection() {
+        val expectedRawCustomData = """{"part3":"search"}"""
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setCustomData(expectedRawCustomData)
+                    .build(),
+            ),
+            true,
+        )
+
+        assertSingleRowProjection(
+            FlashCardsContract.Card.CONTENT_URI,
+            arrayOf(FlashCardsContract.Card.RAW_CUSTOM_DATA),
+            listOf(FlashCardsContract.Card.RAW_CUSTOM_DATA),
+            selection = "cid:${card.id}",
+        ) {
+            assertEquals(
+                expectedRawCustomData,
+                it.getString(it.getColumnIndex(FlashCardsContract.Card.RAW_CUSTOM_DATA)),
+            )
+        }
+    }
+
+    @Test
+    fun testQueryNoteCardByOrd_withPart3Projection() {
+        val expectedLastReviewTimeSeconds = 1_700_000_456L
+        val card = getFirstCardFromScheduler(col)!!
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setLastReviewTimeSecs(expectedLastReviewTimeSeconds)
+                    .build(),
+            ),
+            true,
+        )
+        val noteCardsUri =
+            Uri.withAppendedPath(
+                Uri.withAppendedPath(
+                    FlashCardsContract.Note.CONTENT_URI,
+                    card.nid.toString(),
+                ),
+                "cards",
+            )
+        val specificCardUri = Uri.withAppendedPath(noteCardsUri, card.ord.toString())
+
+        assertSingleRowProjection(
+            specificCardUri,
+            arrayOf(FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS),
+            listOf(FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS),
+        ) {
+            assertEquals(
+                expectedLastReviewTimeSeconds,
+                it.getLong(it.getColumnIndex(FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS)),
+            )
+        }
+    }
+
+    @Test
+    fun testQueryCardById_defaultProjectionOmitsPart3Fields() {
+        val card =
+            getFirstCardFromScheduler(col)!!.update {
+                originalPosition = 37
+            }
+        col.backend.updateCards(
+            listOf(
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setCustomData("""{"part3":true}""")
+                    .setMemoryState(
+                        FsrsMemoryState
+                            .newBuilder()
+                            .setStability(12.5f)
+                            .setDifficulty(4.25f),
+                    ).setDesiredRetention(0.86f)
+                    .setDecay(-0.52f)
+                    .setLastReviewTimeSecs(1_700_000_123L)
+                    .build(),
+            ),
+            true,
+        )
+
+        assertSingleCardProjection(card, null, FlashCardsContract.Card.DEFAULT_PROJECTION.toList()) {
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.ORIGINAL_POSITION))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.RAW_CUSTOM_DATA))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.FSRS_STABILITY))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.FSRS_DIFFICULTY))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.FSRS_DESIRED_RETENTION))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.FSRS_DECAY))
+            assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS))
         }
     }
 
@@ -1978,6 +2287,53 @@ class ContentProviderTest : InstrumentedTest() {
                 .build()
         val exception = assertThrows<IllegalArgumentException> { contentResolver.delete(emptyCardsUri, null, null) }
         assertThat(exception.message, containsString("must be either numeric or"))
+    }
+
+    private fun assertSingleCardColumn(
+        card: Card,
+        column: String,
+        assertions: (Cursor) -> Unit,
+    ) {
+        assertSingleCardProjection(card, arrayOf(column), listOf(column), assertions)
+    }
+
+    private fun assertSingleCardProjection(
+        card: Card,
+        projection: Array<String>?,
+        expectedColumns: List<String>,
+        assertions: (Cursor) -> Unit,
+    ) {
+        val cardUri =
+            Uri.withAppendedPath(
+                FlashCardsContract.Card.CONTENT_URI,
+                card.id.toString(),
+            )
+
+        assertSingleRowProjection(cardUri, projection, expectedColumns, assertions = assertions)
+    }
+
+    private fun assertSingleRowProjection(
+        uri: Uri,
+        projection: Array<String>?,
+        expectedColumns: List<String>,
+        selection: String? = null,
+        assertions: (Cursor) -> Unit,
+    ) {
+        val cursor =
+            contentResolver.query(
+                uri,
+                projection,
+                selection,
+                null,
+                null,
+            )
+
+        assertNotNull(cursor)
+        cursor.use {
+            assertEquals(expectedColumns, it.columnNames.toList())
+            assertTrue(it.moveToFirst())
+            assertions(it)
+        }
     }
 
     /**

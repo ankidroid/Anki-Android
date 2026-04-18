@@ -787,6 +787,110 @@ public object FlashCardsContract {
         public const val RAW_LEFT: String = "left"
 
         /**
+         * The stored original position for this card, if the backend has one.
+         *
+         * This is raw card metadata from the backend. It is not the same as the card's current
+         * due/order value, and it is not related to filtered-deck original due handling.
+         *
+         * See [Anki's studying documentation](https://docs.ankiweb.net/studying.html#editing-and-more)
+         * for the user-facing "Restore original position" behavior, and
+         * [Anki's card info documentation](https://docs.ankiweb.net/stats.html#card-info) for the
+         * card position shown in card info.
+         *
+         * When present, Anki uses this to retain a card's original position independently from
+         * later user changes such as repositioning. Cards that do not have this metadata return
+         * `null`.
+         */
+        public const val ORIGINAL_POSITION: String = "original_position"
+
+        /**
+         * The raw custom data string stored on this card.
+         *
+         * This value is used by custom scheduling hooks. The provider exposes the backend value
+         * as-is: it does not parse, validate, normalize, or promise a schema for the string.
+         *
+         * See [Anki's custom-data search documentation](https://docs.ankiweb.net/searching.html#custom-data)
+         * for examples of how Anki treats this as custom scheduler data.
+         *
+         * Consumers should treat this as opaque text owned by the scheduler/custom scheduling
+         * code that wrote it. Cards with no custom data return an empty string.
+         */
+        public const val RAW_CUSTOM_DATA: String = "custom_data"
+
+        /**
+         * The FSRS stability value stored in the card's memory state, if present.
+         *
+         * This is raw FSRS scheduler state. Stability represents the estimated number of days it
+         * takes for recall probability to drop from 100% to 90% for this card's memory.
+         *
+         * See [Anki's card stability documentation](https://docs.ankiweb.net/stats.html#card-stability).
+         *
+         * Cards without stored FSRS memory state return `null`. Consumers should not expect this
+         * value to be present for cards scheduled without FSRS, new cards without memory state, or
+         * cards whose scheduler state has not stored FSRS memory data.
+         *
+         * @see FSRS_DIFFICULTY
+         */
+        public const val FSRS_STABILITY: String = "fsrs_stability"
+
+        /**
+         * The FSRS difficulty value stored in the card's memory state, if present.
+         *
+         * This is raw FSRS scheduler state. Difficulty represents the estimated inherent
+         * difficulty of recalling this card's memory.
+         *
+         * See [Anki's card difficulty documentation](https://docs.ankiweb.net/stats.html#card-difficulty).
+         *
+         * Cards without stored FSRS memory state return `null`. Consumers should not expect this
+         * value to be present for cards scheduled without FSRS, new cards without memory state, or
+         * cards whose scheduler state has not stored FSRS memory data.
+         *
+         * @see FSRS_STABILITY
+         */
+        public const val FSRS_DIFFICULTY: String = "fsrs_difficulty"
+
+        /**
+         * The desired retention value stored on this card, if present.
+         *
+         * This is raw FSRS scheduler metadata, expressed as a fraction such as `0.9` for 90%.
+         * It is exposed as stored by the backend and is not derived from deck options at query
+         * time.
+         *
+         * See [Anki's desired retention documentation](https://docs.ankiweb.net/deck-options.html#desired-retention).
+         *
+         * Cards without a stored desired-retention value return `null`.
+         */
+        public const val FSRS_DESIRED_RETENTION: String = "fsrs_desired_retention"
+
+        /**
+         * The FSRS decay value stored on this card, if present.
+         *
+         * This is raw FSRS scheduler metadata used by the FSRS forgetting curve. The provider
+         * exposes the backend value as-is and does not reinterpret it.
+         *
+         * See the [FSRS algorithm documentation](https://github.com/open-spaced-repetition/fsrs4anki/wiki/The-Algorithm#fsrs-6)
+         * for the forgetting-curve context.
+         *
+         * Cards without a stored decay value return `null`.
+         */
+        public const val FSRS_DECAY: String = "fsrs_decay"
+
+        /**
+         * The last review time stored on this card, if present.
+         *
+         * This is raw backend card metadata in Unix epoch seconds. It is not a formatted date and
+         * it is not synthesized from the revlog by this provider.
+         *
+         * See [Anki's revlog documentation](https://docs.ankiweb.net/stats.html#manual-analysis)
+         * for the related Unix epoch convention used in review history, and the upstream
+         * [last review time change](https://github.com/ankitects/anki/pull/4124) for why this
+         * card-level value exists.
+         *
+         * Cards without a stored last-review time return `null`.
+         */
+        public const val LAST_REVIEW_TIME_SECONDS: String = "last_review_time_secs"
+
+        /**
          * The content:// style URI for cards. Can be used to search for cards or access specific cards.
          * For examples on how to use the URI for queries see the overview in [FlashCardsContract].
          */
