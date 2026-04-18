@@ -372,6 +372,9 @@ open class AnkiDroidJsAPI(
                 val jsonObject = JSONObject(apiParams)
                 val noteId = jsonObject.getLong("noteId")
                 val tag = jsonObject.getString("tag")
+                if (noteId != currentCard.nid) {
+                    permissions.requirePermission(DangerousJsApiPermission.MODIFY_TAGS)
+                }
                 val note =
                     getColUnsafe.getNote(noteId).apply {
                         addTag(tag)
