@@ -2279,8 +2279,8 @@ class NoteEditorFragment :
         }
     }
 
-    @NeedsTest("13719: moving from a note type with more fields to one with fewer fields")
-    private fun saveToggleStickyMap() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun saveToggleStickyMap() {
         for ((key) in toggleStickyText.toMap()) {
             // handle fields for different note type with different size
             if (key < editFields!!.size) {

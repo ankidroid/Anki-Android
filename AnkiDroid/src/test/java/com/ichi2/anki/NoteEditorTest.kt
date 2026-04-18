@@ -723,6 +723,29 @@ class NoteEditorTest : RobolectricTest() {
             assertEquals(initialDeckId, col.getCard(cardIds[1]).did, "Sibling card should NOT move")
         }
 
+    @Test
+    fun `saveToggleStickyMap removes keys beyond current field count - 13719`() {
+        val editor = getNoteEditorAddingNote(DECK_LIST)
+        advanceRobolectricLooper()
+
+        val editFields = List(2) { index -> editor.getFieldForTest(index) }
+        editor.editFields!!.clear()
+        editor.editFields!!.addAll(editFields)
+        editor.toggleStickyText.putAll(
+            mapOf(
+                0 to "value0",
+                1 to "value1",
+                2 to "value2",
+            ),
+        )
+
+        editor.saveToggleStickyMap()
+
+        assertFalse(editor.toggleStickyText.containsKey(2), "key 2 should be removed when editFields has only 2 elements")
+        assertTrue(editor.toggleStickyText.containsKey(0), "key 0 should remain")
+        assertTrue(editor.toggleStickyText.containsKey(1), "key 1 should remain")
+    }
+
     private suspend fun withNoteEditorAdding(
         from: FromScreen = FromScreen.DECK_LIST,
         block: suspend NoteEditorFragment.() -> Unit,
