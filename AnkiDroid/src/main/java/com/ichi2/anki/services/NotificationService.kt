@@ -41,8 +41,6 @@ import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.runGloballyWithTimeout
-import com.ichi2.anki.services.NotificationService.Companion.addAction
-import com.ichi2.anki.services.NotificationService.Companion.getIntent
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.remainingTime
