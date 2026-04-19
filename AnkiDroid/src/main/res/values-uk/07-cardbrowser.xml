@@ -75,7 +75,7 @@
     <string name="card_browser_list_my_searches_title">Оберіть збережений пошуковий запит</string>
     <string name="card_browser_list_my_searches_new_name">Назва для пошукового запиту</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можна зберегти пошуковий запит без назви</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Така назва вже існує!</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Така назва вже існує</string>
     <string name="card_browser_list_my_searches_successful_save">Пошук збережено</string>
     <string name="no_note_to_edit">Немає записів для редагування</string>
     <string name="card_browser_list_my_searches_remove_content">Видалити «%1$s»?</string>

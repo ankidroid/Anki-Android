@@ -220,7 +220,7 @@
         未設定の場合は、AnkiWebサーバーを同期に使用します。
         <a href="%s">Learn more</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">カスタムルート証明書 (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>

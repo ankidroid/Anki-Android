@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_warning">This may take a long time. Proceed?</string>
+    <string name="check_db_warning">これには長い時間がかかることがあります。続行しますか？</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">デッキを削除</string>
     <string name="delete_deck_title">デッキを削除しますか？</string>
     <plurals name="delete_deck_message">
@@ -80,7 +80,7 @@
     <string name="restore_backup_choose_another">他を選択</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">追加</string>
     <string name="restore">Restore</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">いいえ</string>
@@ -245,7 +245,7 @@
     <string name="tts_error_dialog_supported_voices_button_text">読み上げオプション</string>
     <!-- import_cache_error_resolutions -->
     <string name="import_error_resolution_try_again">もう一度ファイルをインポートしてください</string>
-    <string name="import_error_resolution_free_up_space">あなたのデバイスに十分な空きがあることを確認してください</string>
+    <string name="import_error_resolution_free_up_space">デバイスに十分な空き容量があることを確認してください</string>
     <string name="import_error_resolution_check_internet">インターネットに接続されていることを確認してください</string>
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
     <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
@@ -260,15 +260,15 @@
     <string name="error_no_changes_to_save">保存する変更がありません</string>
     <string name="choose_color">色を選択</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">フィールド</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">特別ﾌｨｰﾙﾄﾞ</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_front_side_help">表面テンプレートの内容。この中の音声は自動的に再生されません。</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">このカードが所属するデッキ（親デッキも含む全体）%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">このカードが直に所属するデッキ（親デッキは含めない）%s</string>
+    <string name="special_field_flag_help">このカードのフラグの状態: %1$s（%2$s はフラグの状態を表す番号 %3$s\～%4$s\ の一つ）</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">ノートのタグ%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">カードのID%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">カードタイプの名前%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">ノートタイプの名前%s</string>
 </resources>

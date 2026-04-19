@@ -32,7 +32,7 @@
     <!--Toasts-->
     <string name="toast_last_model">Ви не можете видалити останній тип записів</string>
     <string name="toast_last_field">Типи записів повинні містити хоча б одне поле</string>
-    <string name="toast_empty_name">Необхідно ввести ім\'я</string>
+    <string name="toast_empty_name">Необхідно ввести назву</string>
     <string name="toast_duplicate_field">Назва поля вже існує</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
@@ -78,9 +78,9 @@
     <string name="model_browser_add_clone">Клонувати: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Введіть шаблон, який використовуватиме переглядач карток для показу ваших карток. Використовуйте це для показу стислішої відповіді.\n\nШаблон передньої сторони\n\"Столицею {{Країна}} є:\"\nможна стиснути в переглядачі карток до\n\"Столиця:{{Країна}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Question format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Are you sure you want to restore the browser appearance to default?</string>
+    <string name="card_template_browser_appearance_question_format">Формат запитань</string>
+    <string name="card_template_browser_appearance_answer_format">Формат відповіді</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Ви впевнені, що хочете повернути стандартний вигляд переглядача карток?</string>
     <string name="card_template_browser_appearance_saving_note">Зміни застосуються після збереження шаблону картки</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Перевизначення колоди (увімк.)</string>

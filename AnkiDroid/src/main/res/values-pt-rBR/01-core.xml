@@ -116,7 +116,7 @@
     <string name="menu_unmark_note">Desmarcar nota</string>
     <string name="menu_enable_voice_playback" maxLength="28">Ativar reprodução de voz</string>
     <string name="menu_disable_voice_playback">Desativar reprodução de voz</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Criar backup</string>
     <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho com filtros</string>
     <string name="directory_inaccessible">Diretório do AnkiDroid está inacessível</string>
@@ -130,7 +130,7 @@
     <string name="empty_cram_label" maxLength="28">Esvaziar</string>
     <string name="create_subdeck">Criar sub-baralho</string>
     <string name="empty_filtered_deck">Esvaziando baralho filtrado&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Você terminou por hoje.</string>
@@ -214,8 +214,8 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Cartão instantâneo</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="permission_access_summary">Necessário para o aplicativo funcionar</string>
+    <string name="permission_required_message">Por favor, conceda ao AnkiDroid a permissão de ‘%s’ para continuar</string>
     <!-- Multiple profile -->
     <string name="add_profile">Adicionar perfil</string>
 </resources>

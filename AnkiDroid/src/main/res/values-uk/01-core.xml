@@ -122,7 +122,7 @@
     <string name="menu_unmark_note">Зняти позначку запису</string>
     <string name="menu_enable_voice_playback" maxLength="28">Увімкнути запис голосу</string>
     <string name="menu_disable_voice_playback">Вимкнути запис голосу</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Створити резервну копію</string>
     <string name="new_deck">Створити колоду</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
     <string name="directory_inaccessible">Тека AnkiDroid недоступна</string>
@@ -224,8 +224,8 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Миттєве додання картки</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Інтернет</string>
-    <string name="permission_access_summary">Необхідно для роботи програми</string>
-    <string name="permission_required_message">Будь ласка, надайте доступ до ‘%s’ для AnkiDroid</string>
+    <string name="permission_access_summary">Необхідно для роботи додатку</string>
+    <string name="permission_required_message">Щоб продовжити, надайте AnkiDroid доступ до ‘%s’</string>
     <!-- Multiple profile -->
     <string name="add_profile">Додати профіль</string>
 </resources>

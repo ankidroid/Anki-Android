@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_warning">This may take a long time. Proceed?</string>
+    <string name="check_db_warning">Це може тривати довго. Продовжити?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Видалити колоду</string>
     <string name="delete_deck_title">Видалити колоду?</string>
     <plurals name="delete_deck_message">
@@ -86,14 +86,14 @@
     <string name="restore_backup_choose_another">Вибрати інший</string>
     <string name="dialog_cancel">Скасувати</string>
     <string name="dialog_ok">Ок</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Додати</string>
+    <string name="restore">Відновити</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Підтвердити</string>
     <string name="dialog_no">Ні</string>
     <string name="dialog_yes">Так</string>
     <string name="dialog_keep">Залишити</string>
     <string name="dialog_remove">Видалити</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Вихід</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Вийти</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_processing">Обробка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
@@ -108,7 +108,7 @@
     <string name="dialog_invalid_custom_certificate_title">Помилка парсингу сертифікату</string>
     <string name="dialog_updated_custom_certificate">Сертифікат оновлено</string>
     <!-- Media checking -->
-    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
+    <string name="check_media_warning">У випадку великих медіа-колекцій це може забрати багато часу. Продовжити?</string>
     <string name="check_media_message">Перевіряємо мультимедіа&#8230;</string>
     <string name="check_media_adding_missing_tag">Додавання тегів&#8230;</string>
     <string name="check_media_tags_added">Теги додано</string>
@@ -282,17 +282,17 @@
     <string name="extra_cloze_deletions_removed">Якщо ви змінюєте тип запису на звичайний, а кількість пропусків Cloze більша, ніж кількість доступних шаблонів карток, то надлишкові картки будуть видалені.</string>
     <string name="different_note_types_selected">Будь ласка, виберіть записи лише одного типу.</string>
     <string name="error_no_changes_to_save">Немає змін для збереження</string>
-    <string name="choose_color">Обрати колір</string>
+    <string name="choose_color">Виберіть колір</string>
     <!-- Special Fields -->
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Поля</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Спеціально</string>
-    <string name="special_field_example_suffix"><![CDATA[<b>%1$s</b>]]></string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Спеціальні</string>
+    <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
     <string name="special_field_front_side_help">Вміст переднього шаблону. Аудіо не відтворюється автоматично</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Повна колода карти, включаючи батьківські колоди%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Поточна колода карти, без урахування батьківських колод%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Тег нотатку%s</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Повна колода картки, включаючи батьківські колоди%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Поточна колода картки, без урахування батьківських колод%s</string>
+    <string name="special_field_flag_help">Виводить ‘%1$s’, де %2$s це код прапорця (%3$s\–%4$s\)</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Теги запису%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">ID картки%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Ім\'я шаблону картки%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Назва типу нотатки%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Назва шаблону картки%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Назва типу запису%s</string>
 </resources>

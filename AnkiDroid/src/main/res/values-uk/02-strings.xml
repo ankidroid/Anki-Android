@@ -84,7 +84,7 @@
     <string name="disable_eraser" maxLength="28">Вимкнути гумку</string>
     <string name="hide_whiteboard" maxLength="28">Сховати дошку</string>
     <string name="clear_whiteboard" maxLength="28">Очистити дошку</string>
-    <string name="hide_toolbar" maxLength="28">Приховати головну панель</string>
+    <string name="hide_toolbar" maxLength="28">Приховати панель інструментів</string>
     <string name="replay_media" maxLength="28">Відтворити медіафайл</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
@@ -99,9 +99,9 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Проведіть, щоб скасувати</string>
     <string name="filter_by_flags" maxLength="41">Прапорці</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Затримка «Знову»</string>
-    <string name="filtered_option_delay_hard">Затримка «Важко»</string>
-    <string name="filtered_option_delay_good">Затримка  «Добре»</string>
+    <string name="filtered_option_delay_again">Затримка для «Знову»</string>
+    <string name="filtered_option_delay_hard">Затримка для «Важко»</string>
+    <string name="filtered_option_delay_good">Затримка для «Добре»</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">Створюється список тегів&#8230;</string>
     <!-- Study options -->
@@ -169,7 +169,7 @@
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
     <string name="import_error_handle_exception">Не вдалося імпортувати пакет\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Ім\'я пакету “%s” не містить закінчення .apkg чи .colpkg</string>
+    <string name="import_error_not_apkg_extension">Назва пакету “%s” не містить закінчення .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Заміна Anki Database (.anki2) ще не підтримується. Перегляньте у посібнику інструкцію по заміні.</string>
     <string name="import_error_content_provider">Вибраний файл не вдалося імпортувати автоматично до AnkiDroid. Будь ласка, перегляньте посібник користувача для того аби вручну імпортувати Anki файли: \n%s</string>
     <string name="import_error_copy_to_cache_title">Не вдалося зберегти файл в кеш</string>
@@ -213,17 +213,17 @@
     <string name="background_image_title" maxLength="41">Фон</string>
     <string name="choose_an_image" maxLength="41">Оберіть зображення</string>
     <string name="remove_wallpaper_image" maxLength="41">Видалити фон</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Ви впевнені, що хочете видалити фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default" maxLength="28">Скидання за замовчуванням</string>
+    <string name="restore_default" maxLength="28">Відновити налаштування за замовчуванням</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Режим гумки активовано</string>
     <string name="white_board_eraser_disabled">Режим гумки деактивовано</string>
     <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
-    <string name="media_file_size_warning_title">Media too large</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
-    <string name="media_file_size_add_anyway">Add anyway</string>
+    <string name="media_file_size_warning_title">Медіафайл занадто великий</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">Файл \"%1$s\" (%2$s) перевищує ліміт AnkiWeb (до %3$s) і не може бути синхронізований. Додати все одно?</string>
+    <string name="media_file_size_add_anyway">Все одно додати</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
@@ -274,7 +274,7 @@
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Панель прокручування</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
-    <string name="dialog_hint_certificate">Certificate</string>
+    <string name="dialog_hint_certificate">Сертифікат</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -340,7 +340,7 @@
     <string name="app_not_initialized_new">AnkiDroid ще не ініціалізовано. Будь ласка, відкрийте AnkiDroid і спробуйте знову</string>
     <!-- Deck Creation -->
     <string name="deck_created">Створена колода</string>
-    <string name="deck_renamed">Перейменовано колоду</string>
+    <string name="deck_renamed">Колоду перейменовано</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Колоду було видалено. Будь ласка, видаліть ярлик</string>
     <!-- Browser Options Dialog -->
@@ -362,7 +362,7 @@
     <string name="shared_decks_login_required">Ввійдіть, будь ласка, до акаунту, щоб завантажити більше колод</string>
     <string name="deck_description_field_hint">Опис</string>
     <string name="deck_description_saved">Опис оновлено</string>
-    <string name="format_deck_description_as_markdown">Відформатувати як розмітку</string>
+    <string name="format_deck_description_as_markdown">Форматувати як Markdown</string>
     <string name="help_button_content_description">Відкрити допомогу для ‘%s’</string>
     <string name="failed_to_copy">Не вдалося скопіювати</string>
     <plurals name="unbury_cards_feedback">
@@ -404,5 +404,5 @@
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <string name="error_name_exists">Назва вже існує</string>
 </resources>

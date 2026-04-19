@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_warning">This may take a long time. Proceed?</string>
+    <string name="check_db_warning">Cela peut prendre beaucoup de temps. Continuer?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Supprimer le jeu de cartes</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
     <plurals name="delete_deck_message">
@@ -104,7 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Erreur lors de l’analyse du certificat</string>
     <string name="dialog_updated_custom_certificate">Certificat mis à jour</string>
     <!-- Media checking -->
-    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
+    <string name="check_media_warning">Cela peut prendre beaucoup de temps avec les grandes collections de médias. Continuer?</string>
     <string name="check_media_message">Vérification des médias&#8230;</string>
     <string name="check_media_adding_missing_tag">Ajout d\'étiquettes&#8230;</string>
     <string name="check_media_tags_added">Étiquettes ajoutées</string>
@@ -271,12 +271,12 @@
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Champs</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Spécial</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
+    <string name="special_field_front_side_help">Contenu du template avant. L\'audio n\'est pas automatiquement lu</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Le jeu complet de la carte, y compris les decks parents%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Le jeu actuel de la carte, excluant les decks parents%s</string>
     <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Les tags de la note%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">L\'ID de la carte%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Le nom du modèle de carte%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Le nom du type de note%s</string>
 </resources>

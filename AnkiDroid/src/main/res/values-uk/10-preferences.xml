@@ -227,7 +227,7 @@
         Якщо нічого не вказано, буде використаний сервер AnkiWeb.
         <a href="%s">Дізнатися більше</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Синхронізувати URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Власний кореневий сертифікат (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавіатура</string>
@@ -387,7 +387,7 @@
     <string name="new_study_screen_summ"><![CDATA[Покращений екран навчання, який замінить теперішній. Деякі функції старого екрану були змінені або видалені. Будь ласка, надсилайте нам будь-які <a href="%1$s">відгуки</a> або <a href="%2$s">помилки</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показувати фідбек відповіді</string>
     <string name="screen" maxLength="41">Екран</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Тільки відповідь</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Лише відповідь</string>
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Перевернути та відповісти</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Відкрити налаштування</string>
