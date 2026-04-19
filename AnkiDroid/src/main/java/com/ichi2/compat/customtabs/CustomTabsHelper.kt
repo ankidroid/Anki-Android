@@ -22,7 +22,7 @@ import androidx.core.net.toUri
 import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveServiceCompat
-import com.ichi2.anki.compat.GET_RESOLVED_FILTER
+import com.ichi2.anki.compat.GET_RESOLVED_FILTER_L
 import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import com.ichi2.anki.runCatchingWithReport
 import timber.log.Timber
@@ -123,7 +123,7 @@ object CustomTabsHelper {
             val handlers =
                 pm.queryIntentActivitiesCompat(
                     intent,
-                    ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER.toLong()),
+                    ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER_L),
                 )
             if (handlers.isEmpty()) {
                 return false

@@ -28,6 +28,9 @@
  *     limitations under the License.
  *
  *     https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/content/pm/PackageManager.java
+ *
+ * **Changes**
+ * * Added _L constants to fix 'Warning: Unexpected reference to null'
  */
 package com.ichi2.anki.compat
 
@@ -59,12 +62,18 @@ class ResolveInfoFlagsCompat private constructor(
  */
 const val GET_META_DATA = 0x00000080
 
+/** @see GET_META_DATA */
+const val GET_META_DATA_L: Long = GET_META_DATA.toLong()
+
 /**
  * [ResolveInfo] flag: return the IntentFilter that
  * was matched for a particular ResolveInfo in
  * [ResolveInfo.filter].
  */
 const val GET_RESOLVED_FILTER = 0x00000040
+
+/** @see GET_RESOLVED_FILTER */
+const val GET_RESOLVED_FILTER_L: Long = GET_RESOLVED_FILTER.toLong()
 
 /**
  * [ApplicationInfo] flag: return the
@@ -74,6 +83,9 @@ const val GET_RESOLVED_FILTER = 0x00000040
  * directly or nested inside of another.
  */
 const val GET_SHARED_LIBRARY_FILES = 0x00000400
+
+/** @see GET_SHARED_LIBRARY_FILES */
+const val GET_SHARED_LIBRARY_FILES_L: Long = GET_SHARED_LIBRARY_FILES.toLong()
 
 /**
  * Querying flag: if set and if the platform is doing any filtering of the
@@ -85,6 +97,9 @@ const val GET_SHARED_LIBRARY_FILES = 0x00000400
  */
 const val MATCH_ALL = 0x00020000
 
+/** @see MATCH_ALL */
+const val MATCH_ALL_L: Long = MATCH_ALL.toLong()
+
 /**
  * Resolution and querying flag: if set, only filters that support the
  * [android.content.Intent.CATEGORY_DEFAULT] will be considered for
@@ -92,6 +107,9 @@ const val MATCH_ALL = 0x00020000
  * supplied Intent.
  */
 const val MATCH_DEFAULT_ONLY = 0x00010000
+
+/** @see MATCH_DEFAULT_ONLY */
+const val MATCH_DEFAULT_ONLY_L: Long = MATCH_DEFAULT_ONLY.toLong()
 
 /**
  * Querying flag: automatically match components based on their Direct Boot
@@ -116,6 +134,9 @@ const val MATCH_DEFAULT_ONLY = 0x00010000
  */
 const val MATCH_DIRECT_BOOT_AUTO = 0x10000000
 
+/** @see MATCH_DIRECT_BOOT_AUTO */
+const val MATCH_DIRECT_BOOT_AUTO_L: Long = MATCH_DIRECT_BOOT_AUTO.toLong()
+
 /**
  * Querying flag: match components which are direct boot *aware* in
  * the returned info, regardless of the current user state.
@@ -133,6 +154,9 @@ const val MATCH_DIRECT_BOOT_AUTO = 0x10000000
  * @see UserManager.isUserUnlocked
  */
 const val MATCH_DIRECT_BOOT_AWARE = 0x00080000
+
+/** @see MATCH_DIRECT_BOOT_AWARE */
+const val MATCH_DIRECT_BOOT_AWARE_L: Long = MATCH_DIRECT_BOOT_AWARE.toLong()
 
 /**
  * Querying flag: match components which are direct boot *unaware* in
@@ -152,22 +176,25 @@ const val MATCH_DIRECT_BOOT_AWARE = 0x00080000
  */
 const val MATCH_DIRECT_BOOT_UNAWARE = 0x00040000
 
+/** @see MATCH_DIRECT_BOOT_UNAWARE */
+const val MATCH_DIRECT_BOOT_UNAWARE_L: Long = MATCH_DIRECT_BOOT_UNAWARE.toLong()
+
 @LongDef(
     flag = true,
     // prefix = ["GET_", "MATCH_"],
     value = [
-        GET_META_DATA.toLong(),
-        GET_RESOLVED_FILTER.toLong(),
-        GET_SHARED_LIBRARY_FILES.toLong(),
-        MATCH_ALL.toLong(),
-        MATCH_DISABLED_COMPONENTS.toLong(),
-        MATCH_DISABLED_UNTIL_USED_COMPONENTS.toLong(),
-        MATCH_DEFAULT_ONLY.toLong(),
-        MATCH_DIRECT_BOOT_AUTO.toLong(),
-        MATCH_DIRECT_BOOT_AWARE.toLong(),
-        MATCH_DIRECT_BOOT_UNAWARE.toLong(),
-        MATCH_SYSTEM_ONLY.toLong(),
-        MATCH_UNINSTALLED_PACKAGES.toLong(),
+        GET_META_DATA_L,
+        GET_RESOLVED_FILTER_L,
+        GET_SHARED_LIBRARY_FILES_L,
+        MATCH_ALL_L,
+        MATCH_DISABLED_COMPONENTS_L,
+        MATCH_DISABLED_UNTIL_USED_COMPONENTS_L,
+        MATCH_DEFAULT_ONLY_L,
+        MATCH_DIRECT_BOOT_AUTO_L,
+        MATCH_DIRECT_BOOT_AWARE_L,
+        MATCH_DIRECT_BOOT_UNAWARE_L,
+        MATCH_SYSTEM_ONLY_L,
+        MATCH_UNINSTALLED_PACKAGES_L,
         // PackageManager.MATCH_INSTANT, // @SystemApi
         // PackageManager.MATCH_DEBUG_TRIAGED_MISSING, // deprecated
         // PackageManager.GET_DISABLED_COMPONENTS, // deprecated
