@@ -7,6 +7,8 @@ compileSdk = "36"
 # to include the version codes of the last released version for the older
 # minSdk. It is critical to update those version codes when you change this.
 minSdk = "24"
+# The API should be as low as possible in order to enable dependencies to stay on a lower minSdk.
+apiMinSdk = "16"
 
 targetSdk = "35"  # affects which SDKs download in ../robolectricDownloader.gradle
 acra = '5.13.1'

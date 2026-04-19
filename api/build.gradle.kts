@@ -1,6 +1,5 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.internal.tasks.factory.dependsOn
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
@@ -32,7 +31,7 @@ configure<LibraryExtension> {
 
     defaultConfig {
         minSdk =
-            libs.versions.minSdk
+            libs.versions.apiMinSdk
                 .get()
                 .toInt()
         buildConfigField(
