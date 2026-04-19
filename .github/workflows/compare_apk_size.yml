@@ -42,6 +42,12 @@ jobs:
           echo y | keytool -genkeypair -dname "cn=AnkiDroid, ou=ankidroid, o=AnkiDroid, c=US" -alias $KEYALIAS -keypass $KEYPWD -keystore $KEYSTOREPATH -storepass $KEYSTOREPWD -keyalg RSA -validity 20000
         shell: bash
 
+      - name: Checkout PR
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: 'refs/pull/${{ github.event.inputs.prNumber }}/head'
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
         timeout-minutes: 5
@@ -49,12 +55,6 @@ jobs:
           # Use open source provider: https://github.com/gradle/actions/blob/main/docs/setup-gradle.md#basic-caching
           cache-provider: basic
           cache-read-only: true
-
-      - name: Checkout PR
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          ref: 'refs/pull/${{ github.event.inputs.prNumber }}/head'
 
       - name: Assemble PR APK
         # This makes sure we fetch gradle network resources with a retry
