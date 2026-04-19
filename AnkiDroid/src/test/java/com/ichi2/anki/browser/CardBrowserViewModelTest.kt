@@ -62,6 +62,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
+import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
@@ -1243,6 +1244,21 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
     }
+
+    @Test
+    fun `preview does not write to SharedPreferences - issue 19885`() =
+        runViewModelTest(notes = 1) {
+            // A crash/close here caused all columns to be visible.
+            sharedPrefs().edit { remove(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY) }
+
+            previewColumnHeadings(CardsOrNotes.CARDS)
+
+            assertThat(
+                "activeCols must not be written during preview",
+                sharedPrefs().contains(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY),
+                equalTo(false),
+            )
+        }
 
     @Suppress("SpellCheckingInspection") // German
     @Test
