@@ -48,7 +48,7 @@
     <string name="model_browser_template">Kartları düzenle</string>
     <!--Rename-->
     <string name="rename_model">Not türünün adını değiştir</string>
-    <string name="rename_card_type">Kart türünün ismini değiştir</string>
+    <string name="rename_card_type" maxLength="28">Kart türünün ismini değiştir</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Dil ipucunu %s olarak ayarla</string>
     <!--Field Editing-->
@@ -59,6 +59,9 @@
     <string name="model_field_editor_reposition_menu">Alanın yerini değiştir</string>
     <string name="model_field_editor_changing">Alanlar güncelleniyor</string>
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">Bu not türünü silmek istediğinize emin misiniz?</string>
     <!--

@@ -46,7 +46,7 @@
     <string name="model_browser_template">Chỉnh sửa thẻ</string>
     <!--Rename-->
     <string name="rename_model">Đổi tên loại ghi chú</string>
-    <string name="rename_card_type">Đổi tên loại thẻ</string>
+    <string name="rename_card_type" maxLength="28">Đổi tên loại thẻ</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Đặt gợi ý ngôn ngữ thành %s</string>
     <!--Field Editing-->
@@ -57,6 +57,9 @@
     <string name="model_field_editor_reposition_menu">Định vị lại trường</string>
     <string name="model_field_editor_changing">Cập nhật các trường</string>
     <string name="model_field_editor_sort_field">Sắp xếp theo trường này</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">Bạn có chắc chắn muốn xóa loại ghi chú này không?</string>
     <!--

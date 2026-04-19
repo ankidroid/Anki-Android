@@ -56,7 +56,7 @@
     <string name="model_browser_template">تحرير البطاقات</string>
     <!--Rename-->
     <string name="rename_model">تغيير اسم نوع الملحوظة</string>
-    <string name="rename_card_type">تغيير اسم نوع البطاقة</string>
+    <string name="rename_card_type" maxLength="28">تغيير اسم نوع البطاقة</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">تعيين تلميح اللغة إلى %s</string>
     <!--Field Editing-->
@@ -67,6 +67,9 @@
     <string name="model_field_editor_reposition_menu">تغيير موضع الحقل</string>
     <string name="model_field_editor_changing">يجري تحديث الحقول</string>
     <string name="model_field_editor_sort_field">فرز حسب هذا الحقل</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">أواثق أنك ترغب بحذف نوع الملحوظات هذا؟</string>
     <!--

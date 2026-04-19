@@ -52,7 +52,7 @@
     <string name="model_browser_template">Upravit karty</string>
     <!--Rename-->
     <string name="rename_model">Přejmenovat typ poznámky</string>
-    <string name="rename_card_type">Přejmenovat typ karty</string>
+    <string name="rename_card_type" maxLength="28">Přejmenovat typ karty</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Jazyk nápovědy nastaven na %s</string>
     <!--Field Editing-->
@@ -63,6 +63,9 @@
     <string name="model_field_editor_reposition_menu">Změnit umístění pole</string>
     <string name="model_field_editor_changing">Aktualizace polí</string>
     <string name="model_field_editor_sort_field">Seřadit podle tohoto pole</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">Opravdu si přejete odstranit tento typ poznámky?</string>
     <!--

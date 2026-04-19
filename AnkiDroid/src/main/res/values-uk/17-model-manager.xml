@@ -52,7 +52,7 @@
     <string name="model_browser_template">Редагувати картки</string>
     <!--Rename-->
     <string name="rename_model">Перейменувати тип запису</string>
-    <string name="rename_card_type">Перейменувати тип картки</string>
+    <string name="rename_card_type" maxLength="28">Перейменувати тип картки</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Встановити %s як мову підказок</string>
     <!--Field Editing-->
@@ -63,6 +63,9 @@
     <string name="model_field_editor_reposition_menu">Перемістити поле</string>
     <string name="model_field_editor_changing">Оновлення полів</string>
     <string name="model_field_editor_sort_field">Сортувати за цим полем</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">Ви впевнені, що хочете видалити цей тип запису?</string>
     <!--

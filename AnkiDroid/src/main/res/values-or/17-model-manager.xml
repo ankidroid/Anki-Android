@@ -48,7 +48,7 @@
     <string name="model_browser_template">ପତ୍ରଗୁଡ଼ିକୁ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <!--Rename-->
     <string name="rename_model">ନୋଟ୍ ପ୍ରକାରର ନାମ ବଦଳାଇବା</string>
-    <string name="rename_card_type">ପତ୍ର ପ୍ରକାରର ନାମ ବଦଳାଇବା</string>
+    <string name="rename_card_type" maxLength="28">ପତ୍ର ପ୍ରକାରର ନାମ ବଦଳାଇବା</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">ଭାଷା ସୂଚକ କୁ %s ସେଟ୍ କରନ୍ତୁ</string>
     <!--Field Editing-->
@@ -59,6 +59,9 @@
     <string name="model_field_editor_reposition_menu">କ୍ଷେତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବା</string>
     <string name="model_field_editor_changing">କ୍ଷେତ୍ରଗୁଡ଼ିକ ଅଦ୍ୟତିତ ହେଉଛି</string>
     <string name="model_field_editor_sort_field">ଏହି କ୍ଷେତ୍ର ଅନୁଯାୟୀ ସଜାନ୍ତୁ</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">ଆପଣ ନିଶ୍ଚିତ କି ଆପଣ ଏହି ନୋଟ୍ ପ୍ରକାର ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <!--
