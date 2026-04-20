@@ -164,12 +164,14 @@ import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.Stopwatch
+import com.ichi2.utils.isBlockedCardScheme
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.stripDangerousPermissions
 import com.ichi2.utils.title
+import com.ichi2.utils.usesDangerousScheme
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
@@ -2558,6 +2560,10 @@ abstract class AbstractFlashcardViewer :
                 if (intent != null) {
                     Timber.i("Launching user-defined intent")
                     intent.stripDangerousPermissions()
+                    if (intent.usesDangerousScheme()) {
+                        Timber.w("Blocked card-origin intent carrying dangerous data")
+                        return true
+                    }
                     if (packageManager.resolveActivityCompat(
                             intent,
                             ResolveInfoFlagsCompat.EMPTY,
@@ -2597,8 +2603,13 @@ abstract class AbstractFlashcardViewer :
                 Timber.w("Unable to parse intent uri: %s because: %s", url, t.message)
             }
             if (intent == null) {
+                val uri = url.toUri()
+                if (isBlockedCardScheme(uri.scheme)) {
+                    Timber.w("URL blocked")
+                    return true
+                }
                 Timber.d("Opening external link \"%s\" with an Intent", url)
-                intent = Intent(Intent.ACTION_VIEW, url.toUri())
+                intent = Intent(Intent.ACTION_VIEW, uri)
             } else {
                 Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent)
             }
