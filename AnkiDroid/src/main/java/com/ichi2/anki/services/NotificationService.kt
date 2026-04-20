@@ -19,6 +19,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.BadParcelableException
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
@@ -458,11 +459,21 @@ class NotificationService : AnkiBroadcastReceiver() {
             val action = intent.action ?: return
             val extras = intent.extras ?: return
             val reviewReminder =
-                BundleCompat.getParcelable(
-                    extras,
-                    EXTRA_REVIEW_REMINDER,
-                    ReviewReminder::class.java,
-                ) ?: return
+                try {
+                    BundleCompat.getParcelable(
+                        extras,
+                        EXTRA_REVIEW_REMINDER,
+                        ReviewReminder::class.java,
+                    ) ?: return
+                } catch (e: BadParcelableException) {
+                    // #20782: If the extra's review reminder has an invalid schema, attempt a full re-schedule of all
+                    // review reminder notifications, as that will retrieve reminders from Shared Preferences
+                    // and handle any necessary schema updates. It will also trigger immediate notifications
+                    // (and thus this onReceiveBroadcast again for an uncorrupted version of this corrupted review reminder) as necessary.
+                    Timber.w(e, "Failed to get review reminder from intent extras, triggering full re-schedule")
+                    AlarmManagerService.scheduleAllEnabledReviewReminderNotifications(context)
+                    return
+                }
             Timber.d("onReceiveBroadcast: ${reviewReminder.id}")
 
             // We must run some suspending functions. Hence we mark this onReceiveBroadcast function as long-running

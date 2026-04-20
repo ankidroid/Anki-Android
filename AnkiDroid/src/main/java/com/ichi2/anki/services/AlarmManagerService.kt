@@ -271,7 +271,7 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * notifications scheduled, this will NOT delete the old scheduled notifications. They must be
          * manually deleted via [unscheduleReviewReminderNotifications].
          */
-        private fun scheduleAllEnabledReviewReminderNotifications(context: Context) {
+        fun scheduleAllEnabledReviewReminderNotifications(context: Context) {
             Timber.d("scheduleAllEnabledReviewReminderNotifications")
             val allReviewRemindersAsMap =
                 ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
