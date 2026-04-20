@@ -168,6 +168,7 @@ import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import com.ichi2.utils.stripDangerousPermissions
 import com.ichi2.utils.title
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
@@ -2556,6 +2557,7 @@ abstract class AbstractFlashcardViewer :
                 }
                 if (intent != null) {
                     Timber.i("Launching user-defined intent")
+                    intent.stripDangerousPermissions()
                     if (packageManager.resolveActivityCompat(
                             intent,
                             ResolveInfoFlagsCompat.EMPTY,
