@@ -38,11 +38,34 @@ enum class DangerousJsApiPermission {
 /**
  * App-level, user-opt-in capabilities. Distinct from [com.ichi2.utils.Permissions], which wraps
  * Android runtime permissions (audio, storage, notifications).
+ *
+ * @param showSnackbar displays a message to the user, warning that a permission has been denied.
+ * e.g. "Security: Unsafe JavaScript call blocked ... this can be unblocked in the advanced settings"
  */
 class AppPermissions(
     private val context: Context,
     private val showSnackbar: (String) -> Unit = {}
 ) {
+    /**
+     * Returns true if cards may launch external apps;
+     * shows a rate-limited snackbar on denial.
+     */
+    fun checkCanLaunchExternalApps(): Boolean {
+        val allowed =
+            context
+                .sharedPrefs()
+                .getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
+        if (!allowed) notifyLaunchDenied()
+        return allowed
+    }
+
+    private fun notifyLaunchDenied() {
+        // Avoid decision fatigue by limiting the number of times the warning is shown.
+        // Reset on app restart.
+        if (launchDenialsSinceProcessStart.incrementAndGet() > MAX_SNACKBARS_PER_PROCESS) return
+        showSnackbar(context.getString(R.string.card_external_launch_denied_snackbar))
+    }
+
     /**
      * Asserts that the user has granted [permission].
      *
@@ -59,9 +82,6 @@ class AppPermissions(
         }
     }
 
-    fun checkCanLaunchExternalApps(): Boolean =
-        context.sharedPrefs().getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
-
     private fun notifyJsApiDenied() {
         // Avoid decision fatigue by limiting the number of times the warning is shown.
         // Reset on app restart.
@@ -72,13 +92,16 @@ class AppPermissions(
     companion object {
         private const val MAX_SNACKBARS_PER_PROCESS = 2
         private val jaApiDenialsSinceProcessStart = AtomicInteger(0)
+        private val launchDenialsSinceProcessStart = AtomicInteger(0)
 
         @VisibleForTesting
         fun resetDenialCounterForTesting() {
             jaApiDenialsSinceProcessStart.set(0)
+            launchDenialsSinceProcessStart.set(0)
         }
     }
 }
 
-class DangerousJsPermissionDeniedException(val permission: String) :
-    SecurityException("Dangerous permission blocked: $permission.")
+class DangerousJsPermissionDeniedException(
+    val permission: String
+) : SecurityException("Dangerous permission blocked: $permission.")
