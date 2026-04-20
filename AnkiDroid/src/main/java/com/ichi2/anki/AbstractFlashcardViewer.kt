@@ -118,6 +118,7 @@ import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.MotionEventHandler
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator
+import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -309,6 +310,8 @@ abstract class AbstractFlashcardViewer :
     @VisibleForTesting
     val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
+
+    private val appPermission by lazy { AppPermissions(this) }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -2456,6 +2459,10 @@ abstract class AbstractFlashcardViewer :
                     intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME)
                 }
                 if (intent != null) {
+                    if (!appPermission.checkCanLaunchExternalApps()) {
+                        Timber.w("launch blocked: canLaunchExternalApps")
+                        return true
+                    }
                     intent.stripDangerousPermissions()
                     if (intent.usesDangerousScheme()) {
                         Timber.w("Blocked card-origin intent carrying dangerous data")
@@ -2500,6 +2507,10 @@ abstract class AbstractFlashcardViewer :
             }
             if (intent == null) {
                 val uri = url.toUri()
+                if (!appPermission.checkCanLaunchExternalApps()) {
+                    Timber.w("URL blocked: canLaunchExternalApps")
+                    return true
+                }
                 if (isBlockedCardScheme(uri.scheme)) {
                     Timber.w("URL blocked")
                     return true

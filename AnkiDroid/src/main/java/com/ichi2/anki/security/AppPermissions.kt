@@ -59,6 +59,9 @@ class AppPermissions(
         }
     }
 
+    fun checkCanLaunchExternalApps(): Boolean =
+        context.sharedPrefs().getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
+
     private fun notifyJsApiDenied() {
         // Avoid decision fatigue by limiting the number of times the warning is shown.
         // Reset on app restart.
