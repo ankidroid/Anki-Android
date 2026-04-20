@@ -26,10 +26,10 @@ import timber.log.Timber
  * Tag names should not be logged using `Timber.i` or above to avoid leaking PII to crash reports.
  */
 @JvmInline
-value class TagName(
+value class TagName private constructor(
     val value: String,
 ) {
-    /** Ancestor tags, e.g. `TagName("a::b::c").ancestors` returns `["a", "a::b"]` */
+    /** Ancestor tags, e.g. `TagName.build("a::b::c").ancestors` returns `["a", "a::b"]` */
     val ancestors: List<String>
         get() {
             val parts = value.split("::")
@@ -46,6 +46,15 @@ value class TagName(
         }
 
     override fun toString(): String = value
+
+    companion object {
+        fun build(tagName: String): TagName? {
+            if (tagName.isBlank()) return null
+            // in upstream, a space is converted to "::" in the UI
+            // But "_" is converted to " " in some visual displays
+            return TagName(tagName.replace(" ", "_"))
+        }
+    }
 }
 
 // Extension methods serve two purposes: removing `.value` from the call site

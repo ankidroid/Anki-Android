@@ -231,7 +231,7 @@ class ManageTagsViewModel : ViewModel() {
                     val fullTag = if (parentFullTag.isEmpty()) child.name else "$parentFullTag::${child.name}"
                     result.add(
                         TagListItemState(
-                            fullTag = TagName(fullTag),
+                            fullTag = TagName.build(fullTag) ?: error("Invalid tag provided"),
                             displayName = child.name,
                             level = child.level - 1,
                             hasChildren = child.childrenList.isNotEmpty(),

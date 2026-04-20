@@ -21,14 +21,14 @@ internal val TagListItemState.fullTagName: String get() = fullTag.value
 internal val ManageTagsState.Content.visibleTagNames: List<String>
     get() = visibleNodes.map { it.fullTagName }
 
-internal fun ManageTagsViewModel.toggleCollapsed(tag: String) = toggleCollapsed(TagName(tag))
+internal fun ManageTagsViewModel.toggleCollapsed(tag: String) = toggleCollapsed(TagName.asValid(tag))
 
-internal fun ManageTagsViewModel.removeTag(tag: String) = removeTag(TagName(tag))
+internal fun ManageTagsViewModel.removeTag(tag: String) = removeTag(TagName.asValid(tag))
 
 internal fun ManageTagsViewModel.renameTag(
     oldName: String,
     newName: String,
-) = renameTag(TagName(oldName), TagName(newName))
+) = renameTag(TagName.asValid(oldName), TagName.asValid(newName))
 
 /** Creates a [TagListItemState] from a plain [String] tag */
 internal fun tagListItem(
@@ -38,9 +38,11 @@ internal fun tagListItem(
     hasChildren: Boolean,
     collapsed: Boolean,
 ) = TagListItemState(
-    fullTag = TagName(fullTag),
+    fullTag = TagName.asValid(fullTag),
     displayName = displayName,
     level = level,
     hasChildren = hasChildren,
     collapsed = collapsed,
 )
+
+fun TagName.Companion.asValid(name: String) = TagName.build(name)!!
