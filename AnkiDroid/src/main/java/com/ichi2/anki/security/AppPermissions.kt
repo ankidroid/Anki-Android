@@ -46,6 +46,9 @@ class AppPermissions(
     private val context: Context,
     private val showSnackbar: (String) -> Unit = {},
 ) {
+    fun checkCanLaunchExternalApps(): Boolean =
+        context.sharedPrefs().getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
+
     /**
      * Asserts that the user has granted [permission].
      *
