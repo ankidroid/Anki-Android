@@ -26,6 +26,7 @@ import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -120,8 +121,11 @@ class ManageTagsViewModel : ViewModel() {
                 // re-fetch tree to get updated collapsed state
                 tagList = flattenTree(withCol { tags.tree() })
                 updateState { it.copy(visibleNodes = computeVisibleNodes(it.searchQuery)) }
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 Timber.w(e, "Failed to toggle collapsed state")
+                state.value = Error(e)
             }
         }
 
@@ -179,6 +183,8 @@ class ManageTagsViewModel : ViewModel() {
             try {
                 block()
                 loadTags(searchQuery = previousLoaded?.searchQuery ?: "")
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 Timber.w(e, "launchTagOperation failed")
                 state.value = Error(e)
