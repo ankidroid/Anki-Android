@@ -338,7 +338,7 @@ abstract class AbstractFlashcardViewer :
     val mOnRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val mTTS = TTS()
 
-    private val appPermission by lazy { AppPermissions(this) }
+    private val appPermission by lazy { AppPermissions(this) { msg -> showSnackbar(msg) } }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
