@@ -103,7 +103,6 @@ object ImportUtils {
     fun isFileAValidDeck(fileName: String): Boolean =
         FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg")
 
-    @NeedsTest("Verify that only valid text or data file MIME types return true")
     fun isValidTextOrDataFile(
         context: Context,
         uri: Uri,
