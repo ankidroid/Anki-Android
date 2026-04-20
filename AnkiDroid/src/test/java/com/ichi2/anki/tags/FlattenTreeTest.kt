@@ -27,7 +27,7 @@ class FlattenTreeTest {
     private fun flattenAndFilter(
         root: anki.tags.TagTreeNode,
         searchQuery: String,
-    ): List<TagListItem> {
+    ): List<TagListItemState> {
         val all = ManageTagsViewModel.flattenTree(root)
         return if (searchQuery.isBlank()) {
             ManageTagsViewModel.applyCollapsedVisibility(all)

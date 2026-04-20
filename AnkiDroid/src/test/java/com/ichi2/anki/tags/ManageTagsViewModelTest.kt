@@ -42,7 +42,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
     fun `refreshTags loads empty collection`() =
         runTest {
             withViewModel {
-                assertIs<ManageTagsState.Loaded>(state.value)
+                assertIs<ManageTagsState.Content>(state.value)
                 assertThat(loadedState.visibleNodes, hasSize(0))
             }
         }
@@ -98,7 +98,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
     fun `initial state is Loaded after construction`() =
         runTest {
             withViewModel {
-                assertIs<ManageTagsState.Loaded>(state.value)
+                assertIs<ManageTagsState.Content>(state.value)
             }
         }
 
@@ -186,7 +186,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
             addTags("science")
             withViewModel {
                 toggleCollapsed("nonexistent")
-                val event = events.first() as ManageTagsEvent.DisplayMessage
+                val event = events.first()
                 assertIs<UserMessage.UnexpectedError>(event.message)
             }
         }
@@ -265,7 +265,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
             addUnusedTag("unused")
             withViewModel {
                 clearUnusedTags()
-                val event = events.first() as ManageTagsEvent.DisplayMessage
+                val event = events.first()
                 val message = assertIs<UserMessage.ClearedUnusedTags>(event.message)
                 assertThat(message.count, equalTo(1))
             }
@@ -279,7 +279,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
             addTags("science")
             withViewModel {
                 removeTag("science")
-                val event = events.first() as ManageTagsEvent.DisplayMessage
+                val event = events.first()
                 val message = assertIs<UserMessage.TagRemoved>(event.message)
                 assertThat(message.notesAffected, equalTo(2))
             }
@@ -293,7 +293,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
             addTags("science")
             withViewModel {
                 renameTag("science", "physics")
-                val event = events.first() as ManageTagsEvent.DisplayMessage
+                val event = events.first()
                 val message = assertIs<UserMessage.TagRenamed>(event.message)
                 assertThat(message.notesAffected, equalTo(2))
             }
@@ -383,5 +383,5 @@ class ManageTagsViewModelTest : RobolectricTest() {
     }
 }
 
-private val ManageTagsViewModel.loadedState: ManageTagsState.Loaded
-    get() = state.value as ManageTagsState.Loaded
+private val ManageTagsViewModel.loadedState: ManageTagsState.Content
+    get() = state.value as ManageTagsState.Content

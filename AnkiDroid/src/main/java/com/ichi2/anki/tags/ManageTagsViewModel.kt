@@ -21,7 +21,6 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.Tags
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.tags.ManageTagsEvent.DisplayMessage
 import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
 import com.ichi2.anki.tags.UserMessage.TagRemoved
@@ -46,19 +45,19 @@ import anki.tags.TagTreeNode as BackendTagTreeNode
  * This must handle a huge amount of tags, AnKing v11 contains ~17k tags.
  *
  * @see Tags for backend functions.
- * @see TagListItem for display.
+ * @see TagListItemState for display.
  * @see ManageTagsState for UI state.
- * @see ManageTagsEvent for one-shot events.
+ * @see events for one-shot events.
  */
 class ManageTagsViewModel : ViewModel() {
     val state: StateFlow<ManageTagsState>
         field = MutableStateFlow<ManageTagsState>(ManageTagsState.Loading)
 
-    private val _events = Channel<ManageTagsEvent>(Channel.BUFFERED)
+    private val _events = Channel<DisplayMessage>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
     /** Cached flat list of all tags, rebuilt when the backend tree changes */
-    private var tagList: List<TagListItem> = emptyList()
+    private var tagList: List<TagListItemState> = emptyList()
 
     init {
         refreshTags()
@@ -66,7 +65,7 @@ class ManageTagsViewModel : ViewModel() {
 
     /** Reloads the tag tree from the backend. Preserves the current search query if any */
     fun refreshTags() =
-        launchTagOperation {
+        launchTagOpAndRefresh {
             Timber.i("Refreshing tags")
         }
 
@@ -87,8 +86,8 @@ class ManageTagsViewModel : ViewModel() {
     }
 
     /** Returns the visible node for [tag], or null with a warning if not found or not loaded */
-    private fun findVisibleNode(tag: TagName): TagListItem? {
-        val loaded = state.value as? ManageTagsState.Loaded
+    private fun findVisibleNode(tag: TagName): TagListItemState? {
+        val loaded = state.value as? ManageTagsState.Content
         if (loaded == null) {
             Timber.w("findVisibleNode called while not loaded")
             return null
@@ -134,7 +133,7 @@ class ManageTagsViewModel : ViewModel() {
      * @see Tags.remove
      */
     fun removeTag(tag: TagName) =
-        launchTagOperation {
+        launchTagOpAndRefresh {
             val result = undoableOp { tags.remove(tag) }
             _events.send(DisplayMessage(TagRemoved(result.count)))
         }
@@ -146,7 +145,7 @@ class ManageTagsViewModel : ViewModel() {
     fun renameTag(
         oldName: TagName,
         newName: TagName,
-    ) = launchTagOperation {
+    ) = launchTagOpAndRefresh {
         val result = undoableOp { tags.rename(oldName, newName) }
         _events.send(DisplayMessage(TagRenamed(result.count)))
     }
@@ -156,7 +155,7 @@ class ManageTagsViewModel : ViewModel() {
      * @see Tags.clearUnusedTags
      */
     fun clearUnusedTags() =
-        launchTagOperation {
+        launchTagOpAndRefresh {
             val result = undoableOp { tags.clearUnusedTags() }
             Timber.i("Deleted %d unused tags", result.count)
             _events.send(DisplayMessage(ClearedUnusedTags(result.count)))
@@ -166,7 +165,7 @@ class ManageTagsViewModel : ViewModel() {
         Timber.i("Loading tags from collection")
         tagList = flattenTree(withCol { tags.tree() })
         state.value =
-            ManageTagsState.Loaded(
+            ManageTagsState.Content(
                 visibleNodes = computeVisibleNodes(searchQuery),
                 searchQuery = searchQuery,
             )
@@ -176,8 +175,8 @@ class ManageTagsViewModel : ViewModel() {
      * Sets [ManageTagsState.Loading], runs [block], then [reloads][loadTags].
      * On failure, transitions to [Error]
      */
-    private fun launchTagOperation(block: suspend () -> Unit): Job {
-        val previousLoaded = state.value as? ManageTagsState.Loaded
+    private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job {
+        val previousLoaded = state.value as? ManageTagsState.Content
         state.value = ManageTagsState.Loading
         return viewModelScope.launch {
             try {
@@ -192,7 +191,7 @@ class ManageTagsViewModel : ViewModel() {
         }
     }
 
-    private fun computeVisibleNodes(searchQuery: String): List<TagListItem> =
+    private fun computeVisibleNodes(searchQuery: String): List<TagListItemState> =
         if (searchQuery.isBlank()) {
             // filter out the collapsed nodes from the results
             applyCollapsedVisibility(tagList)
@@ -201,11 +200,11 @@ class ManageTagsViewModel : ViewModel() {
             applySearchFilter(tagList, searchQuery)
         }
 
-    /** Applies [transform] only if the current state is [ManageTagsState.Loaded]; no-ops otherwise */
-    private inline fun updateState(transform: (ManageTagsState.Loaded) -> ManageTagsState.Loaded) {
+    /** Applies [transform] only if the current state is [ManageTagsState.Content]; no-ops otherwise */
+    private inline fun updateState(transform: (ManageTagsState.Content) -> ManageTagsState.Content) {
         state.update { current ->
             when (current) {
-                is ManageTagsState.Loaded -> transform(current)
+                is ManageTagsState.Content -> transform(current)
                 else -> {
                     Timber.w("updateState called while in %s; ignoring", current::class.simpleName)
                     current
@@ -217,12 +216,12 @@ class ManageTagsViewModel : ViewModel() {
     companion object {
         /**
          * Converts the backend's recursive [BackendTagTreeNode] into a flat list of all
-         * [TagListItem]s in pre-order. Always recurses into all children regardless of
+         * [TagListItemState]s in pre-order. Always recurses into all children regardless of
          * collapsed state; the `collapsed` flag is preserved on each item for later filtering.
          */
         @VisibleForTesting
-        fun flattenTree(root: BackendTagTreeNode): List<TagListItem> {
-            val result = mutableListOf<TagListItem>()
+        fun flattenTree(root: BackendTagTreeNode): List<TagListItemState> {
+            val result = mutableListOf<TagListItemState>()
 
             fun traverse(
                 node: BackendTagTreeNode,
@@ -231,7 +230,7 @@ class ManageTagsViewModel : ViewModel() {
                 for (child in node.childrenList) {
                     val fullTag = if (parentFullTag.isEmpty()) child.name else "$parentFullTag::${child.name}"
                     result.add(
-                        TagListItem(
+                        TagListItemState(
                             fullTag = TagName(fullTag),
                             displayName = child.name,
                             level = child.level - 1,
@@ -254,7 +253,7 @@ class ManageTagsViewModel : ViewModel() {
          * Expects [allNodes] in pre-order (parent before children).
          */
         @VisibleForTesting
-        fun applyCollapsedVisibility(allNodes: List<TagListItem>): List<TagListItem> =
+        fun applyCollapsedVisibility(allNodes: List<TagListItemState>): List<TagListItemState> =
             buildList {
                 var skipBelowLevel: Int? = null
                 for (item in allNodes) {
@@ -275,9 +274,9 @@ class ManageTagsViewModel : ViewModel() {
          */
         @VisibleForTesting
         fun applySearchFilter(
-            allNodes: List<TagListItem>,
+            allNodes: List<TagListItemState>,
             searchQuery: String,
-        ): List<TagListItem> {
+        ): List<TagListItemState> {
             val queryLowercase = searchQuery.lowercase()
             val visibleTags = mutableSetOf<String>()
             val parentsWithVisibleChildren = mutableSetOf<String>()
@@ -311,7 +310,7 @@ class ManageTagsViewModel : ViewModel() {
  * @param displayName leaf name only, e.g. "biology"
  * @param level tree depth (0 = top-level)
  */
-data class TagListItem(
+data class TagListItemState(
     val fullTag: TagName,
     val displayName: String,
     val level: Int,
@@ -328,8 +327,8 @@ data class TagListItem(
 sealed class ManageTagsState {
     data object Loading : ManageTagsState()
 
-    data class Loaded(
-        val visibleNodes: List<TagListItem>,
+    data class Content(
+        val visibleNodes: List<TagListItemState>,
         val searchQuery: String = "",
     ) : ManageTagsState()
 
@@ -338,11 +337,9 @@ sealed class ManageTagsState {
     ) : ManageTagsState()
 }
 
-sealed interface ManageTagsEvent {
-    data class DisplayMessage(
-        val message: UserMessage,
-    ) : ManageTagsEvent
-}
+data class DisplayMessage(
+    val message: UserMessage,
+)
 
 sealed interface UserMessage {
     /** @param notesAffected number of notes the tag was removed from */

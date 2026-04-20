@@ -15,10 +15,10 @@
  */
 package com.ichi2.anki.tags
 
-/** Unwraps [TagListItem.fullTag] to a plain [String] for test assertions */
-internal val TagListItem.fullTagName: String get() = fullTag.value
+/** Unwraps [TagListItemState.fullTag] to a plain [String] for test assertions */
+internal val TagListItemState.fullTagName: String get() = fullTag.value
 
-internal val ManageTagsState.Loaded.visibleTagNames: List<String>
+internal val ManageTagsState.Content.visibleTagNames: List<String>
     get() = visibleNodes.map { it.fullTagName }
 
 internal fun ManageTagsViewModel.toggleCollapsed(tag: String) = toggleCollapsed(TagName(tag))
@@ -30,14 +30,14 @@ internal fun ManageTagsViewModel.renameTag(
     newName: String,
 ) = renameTag(TagName(oldName), TagName(newName))
 
-/** Creates a [TagListItem] from a plain [String] tag */
+/** Creates a [TagListItemState] from a plain [String] tag */
 internal fun tagListItem(
     fullTag: String,
     displayName: String,
     level: Int,
     hasChildren: Boolean,
     collapsed: Boolean,
-) = TagListItem(
+) = TagListItemState(
     fullTag = TagName(fullTag),
     displayName = displayName,
     level = level,
