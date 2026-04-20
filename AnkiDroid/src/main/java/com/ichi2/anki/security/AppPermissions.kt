@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger
  */
 enum class DangerousJsApiPermission {
     /** Arbitrary field reads across the collection. Gates `ankiSearchCardWithCallback`. */
-    QUERY_COLLECTION,
+    QUERY_COLLECTION
 }
 
 /**
@@ -38,7 +38,7 @@ enum class DangerousJsApiPermission {
  */
 class AppPermissions(
     private val context: Context,
-    private val showSnackbar: (String) -> Unit = {},
+    private val showSnackbar: (String) -> Unit = {}
 ) {
     /**
      * Asserts that the user has granted [permission].
@@ -55,6 +55,9 @@ class AppPermissions(
             throw DangerousJsPermissionDeniedException(permission.name)
         }
     }
+
+    fun checkCanLaunchExternalApps(): Boolean =
+        context.sharedPrefs().getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
 
     private fun notifyJsApiDenied() {
         // Avoid decision fatigue by limiting the number of times the warning is shown.

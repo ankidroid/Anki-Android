@@ -45,6 +45,10 @@
     <string name="pref_cat_plugins" maxLength="41">Plugins</string>
     <string name="pref_cat_security" maxLength="41">Security</string>
 
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="60">Allow cards to launch other apps</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
+
     <!-- Card template JavaScript API permissions -->
     <string name="allow_dangerous_js_api_title" maxLength="60">Globally allow dangerous JavaScript APIs</string>
     <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>

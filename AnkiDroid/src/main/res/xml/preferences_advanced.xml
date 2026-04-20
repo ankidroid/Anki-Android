@@ -147,6 +147,12 @@
                 android:icon="@drawable/ic_warning_white"
                 android:summary="@string/allow_dangerous_js_api_summ"
                 android:title="@string/allow_dangerous_js_api_title" />
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:key="@string/pref_allow_card_external_launch_key"
+                android:icon="@drawable/ic_warning_white"
+                android:summary="@string/allow_card_external_launch_summ"
+                android:title="@string/allow_card_external_launch_title" />
         </PreferenceCategory>
         <PreferenceCategory
             android:title="@string/pref_cat_experimental">
