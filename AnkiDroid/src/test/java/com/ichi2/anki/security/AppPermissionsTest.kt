@@ -15,9 +15,11 @@
  */
 package com.ichi2.anki.security
 
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.security.DangerousJsApiPermission.QUERY_COLLECTION
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.getString
@@ -42,7 +44,7 @@ class AppPermissionsTest : RobolectricTest() {
     }
 
     @Test
-    fun defaultsToDenied() {
+    fun jsPermission_defaultsToDenied() {
         val ex =
             assertFailsWith<DangerousJsPermissionDeniedException> {
                 permissions.requirePermission(QUERY_COLLECTION)
@@ -51,14 +53,14 @@ class AppPermissionsTest : RobolectricTest() {
     }
 
     @Test
-    fun allowedWhenToggleOn() {
+    fun jsPermission_allowedWhenToggleOn() {
         allowDangerousJsApis = true
         assertDoesNotThrow { permissions.requirePermission(QUERY_COLLECTION) }
         assertThat(snackbars.size, equalTo(0))
     }
 
     @Test
-    fun deniedWhenToggleOff() {
+    fun jsPermission_deniedWhenToggleOff() {
         allowDangerousJsApis = false
         assertFailsWith<DangerousJsPermissionDeniedException> {
             permissions.requirePermission(QUERY_COLLECTION)
@@ -66,7 +68,7 @@ class AppPermissionsTest : RobolectricTest() {
     }
 
     @Test
-    fun snackbarShownForFirstTwoDenialsThenSuppressed() {
+    fun jsPermission_snackbarShownForFirstTwoDenialsThenSuppressed() {
         repeat(5) {
             assertFailsWith<DangerousJsPermissionDeniedException> {
                 permissions.requirePermission(QUERY_COLLECTION)
@@ -76,7 +78,7 @@ class AppPermissionsTest : RobolectricTest() {
     }
 
     @Test
-    fun suppressionIsProcessWideAcrossInstances() {
+    fun jsPermission_suppressionIsProcessWideAcrossInstances() {
         repeat(2) {
             assertFailsWith<DangerousJsPermissionDeniedException> {
                 AppPermissions(targetContext) { snackbars += it }.requirePermission(QUERY_COLLECTION)
@@ -87,6 +89,33 @@ class AppPermissionsTest : RobolectricTest() {
         }
         assertThat(snackbars.size, equalTo(2))
     }
+
+    @Test
+    fun launchExternalApps_defaultsToDenied() {
+        assertThat(permissions.checkCanLaunchExternalApps(), equalTo(false))
+    }
+
+    @Test
+    fun launchExternalApps_allowedWhenToggleOn() {
+        allowCardExternalLaunch = true
+        assertThat(permissions.checkCanLaunchExternalApps(), equalTo(true))
+        assertThat(snackbars.size, equalTo(0))
+    }
+
+    @Test
+    fun launchExternalApps_snackbarShownForFirstTwoDenialsThenSuppressed() {
+        repeat(5) { assertThat(permissions.checkCanLaunchExternalApps(), equalTo(false)) }
+        assertThat(snackbars.size, equalTo(2))
+    }
+
+    @Test
+    fun launchExternalApps_suppressionIsProcessWideAcrossInstances() {
+        repeat(2) {
+            AppPermissions(targetContext) { snackbars += it }.checkCanLaunchExternalApps()
+        }
+        AppPermissions(targetContext) { snackbars += it }.checkCanLaunchExternalApps()
+        assertThat(snackbars.size, equalTo(2))
+    }
 }
 
 var AppPermissionsTest.allowDangerousJsApis: Boolean
@@ -95,3 +124,19 @@ var AppPermissionsTest.allowDangerousJsApis: Boolean
         editPreferences {
             putBoolean(getString(R.string.pref_allow_dangerous_js_api), value)
         }
+
+var AppPermissionsTest.allowCardExternalLaunch: Boolean
+    get() =
+        targetContext.sharedPrefs().getBoolean(
+            targetContext.getString(R.string.pref_allow_card_external_launch_key),
+            false,
+        )
+    set(value) =
+        targetContext
+            .sharedPrefs()
+            .edit {
+                putBoolean(
+                    targetContext.getString(R.string.pref_allow_card_external_launch_key),
+                    value,
+                )
+            }

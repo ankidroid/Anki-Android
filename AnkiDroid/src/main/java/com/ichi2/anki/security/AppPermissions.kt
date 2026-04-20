@@ -46,8 +46,25 @@ class AppPermissions(
     private val context: Context,
     private val showSnackbar: (String) -> Unit = {},
 ) {
-    fun checkCanLaunchExternalApps(): Boolean =
-        context.sharedPrefs().getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
+    /**
+     * Returns true if cards may launch external apps;
+     * shows a rate-limited snackbar on denial.
+     */
+    fun checkCanLaunchExternalApps(): Boolean {
+        val allowed =
+            context
+                .sharedPrefs()
+                .getBoolean(context.getString(R.string.pref_allow_card_external_launch_key), false)
+        if (!allowed) notifyLaunchDenied()
+        return allowed
+    }
+
+    private fun notifyLaunchDenied() {
+        // Avoid decision fatigue by limiting the number of times the warning is shown.
+        // Reset on app restart.
+        if (launchDenialsSinceProcessStart.incrementAndGet() > MAX_SNACKBARS_PER_PROCESS) return
+        showSnackbar(context.getString(R.string.card_external_launch_denied_snackbar))
+    }
 
     /**
      * Asserts that the user has granted [permission].
@@ -75,10 +92,12 @@ class AppPermissions(
     companion object {
         private const val MAX_SNACKBARS_PER_PROCESS = 2
         private val jaApiDenialsSinceProcessStart = AtomicInteger(0)
+        private val launchDenialsSinceProcessStart = AtomicInteger(0)
 
         @VisibleForTesting
         fun resetDenialCounterForTesting() {
             jaApiDenialsSinceProcessStart.set(0)
+            launchDenialsSinceProcessStart.set(0)
         }
     }
 }
