@@ -23,7 +23,6 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
-import java.lang.Exception
 
 /** GHSA-54q9-5c5p-9rxg: drop Uri-permission grant flags from a card-origin intent. */
 fun Intent.stripDangerousPermissions(): Intent = apply {
@@ -34,6 +33,24 @@ fun Intent.stripDangerousPermissions(): Intent = apply {
             Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
         ).inv()
 }
+
+/** Schemes that must never be dispatched via `startActivity` from user-provided content */
+private val BLOCKED_CARD_SCHEMES = setOf(
+    // executes in the handling browser's origin — historic Android cross-origin XSS vector
+    "javascript",
+    // leaks app-private storage to viewers on older devices / lax receivers
+    "file",
+    // hands provider data (sms, contacts, media) to any app that claims to view it
+    "content",
+    // smuggles attacker-controlled HTML/PDF into a rendering app (phishing, script execution)
+    "data"
+)
+
+fun isBlockedCardScheme(scheme: String?): Boolean = scheme?.lowercase() in BLOCKED_CARD_SCHEMES
+
+/** True if this intent's data URI (or its selector's data URI) uses a blocked card scheme. */
+fun Intent.usesDangerousScheme(): Boolean =
+    isBlockedCardScheme(data?.scheme) || isBlockedCardScheme(selector?.data?.scheme)
 
 object IntentUtil {
     @JvmStatic // (fixable) required due to structure of unit tests
