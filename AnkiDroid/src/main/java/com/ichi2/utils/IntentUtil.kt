@@ -23,7 +23,18 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
-import java.lang.Exception
+
+/** GHSA-54q9-5c5p-9rxg: drop Uri-permission grant flags from a card-origin intent. */
+fun Intent.stripDangerousPermissions(): Intent =
+    apply {
+        flags = flags and
+            (
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                    Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION or
+                    Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
+            ).inv()
+    }
 
 object IntentUtil {
     @JvmStatic // (fixable) required due to structure of unit tests
