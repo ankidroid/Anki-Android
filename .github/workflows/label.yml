@@ -2,7 +2,7 @@ name: 🛠️ Add/Remove Labels
 
 on:
   pull_request_target:
-    types: [ opened, closed ]
+    types: [ opened, synchronize, closed ]
 
 jobs:
   merge_job:
@@ -101,6 +101,14 @@ jobs:
             ];
 
             let stringsLabel = "Strings";
+    
+            async function getPullRequest() {
+                return await github.rest.pulls.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: context.issue.number,
+                });
+            }
 
             async function addLabel(labels) {
               await github.rest.issues.addLabels({
@@ -134,6 +142,25 @@ jobs:
               })
             }
 
+            async function checkForComments() {
+              // Try to find comment to delete
+              for await (const page of github.paginate.iterator(
+                octokit.rest.issues.listComments,
+                {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                },
+              )) {
+                for(const comment of page.data) {
+                  if (comment.user && comment.user.login === "github-actions[bot]" && comment.body.includes("This PR contains https://github.com/ankidroid/Anki-Android/labels/Strings changes")) {
+                    return true;
+                  }
+                }
+              }
+              return false;
+            }
+
             const changedFiles = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -143,6 +170,7 @@ jobs:
             // loop through list of files in current pr, then check if filename contains in i18n file name,
             // set boolean to true and use the boolean in outer loop to add label
             let fileChanged = false;
+            const pullRequestData = await getPullRequest();
             for (let files of changedFiles.data) {
               for (let i18n of I18N_FILES) {
                 if (files.filename.includes(i18n)) {
@@ -152,22 +180,17 @@ jobs:
               }
 
               if (fileChanged) {
-                addLabel([stringsLabel]);
-                addComments();
+                if (!pullRequestData.data.labels.find(label => label.name === stringsLabel)) {
+                  addLabel([stringsLabel]);
+                  if (!await checkForComments()) {
+                    addComments();
+                  }
+                }
                 break;
               }
             }
 
-            async function getPullRequest() {
-                return await github.rest.pulls.get({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    pull_number: context.issue.number,
-                });
-            }
-
             // if no file changed, remove label
-            const pullRequestData = await getPullRequest();
             if (!fileChanged) {
               if (pullRequestData.data.labels.find(label => label.name === stringsLabel)) {
                 console.log(`Removing #${stringsLabel} label from PR #${context.issue.number}`);
