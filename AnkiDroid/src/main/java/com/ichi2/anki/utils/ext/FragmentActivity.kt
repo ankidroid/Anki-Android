@@ -35,12 +35,15 @@ const val DIALOG_FRAGMENT_TAG = "dialog"
 
 /**
  * Global method to show dialog fragment including adding it to back stack
- * If you need to show a dialog from an async task, use [AnkiActivity.showAsyncDialogFragment]
+ * If you need to show a dialog from an async task, use[AnkiActivity.showAsyncDialogFragment]
  *
  * @param newFragment the [DialogFragment] you want to show
  */
 fun FragmentActivity.showDialogFragment(newFragment: DialogFragment) {
     runOnUiThread {
+        if (this.isFinishing || this.supportFragmentManager.isStateSaved) {
+            return@runOnUiThread
+        }
         showDialogFragmentImpl(this.supportFragmentManager, newFragment)
     }
 }

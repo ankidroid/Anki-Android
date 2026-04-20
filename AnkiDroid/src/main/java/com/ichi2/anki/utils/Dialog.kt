@@ -25,13 +25,17 @@ import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
  * Global method to show dialog fragment including adding it to back stack
  * If you need to show a dialog from an async task, use [AnkiActivity.showAsyncDialogFragment]
  *
- * @param manager The [FragmentManager] of the activity/fragment
+ * @param manager The[FragmentManager] of the activity/fragment
  * @param newFragment the [DialogFragment] you want to show
  */
 fun showDialogFragmentImpl(
     manager: FragmentManager,
     newFragment: DialogFragment,
 ) {
+    if (manager.isStateSaved) {
+        return
+    }
+
     // DialogFragment.show() will take care of adding the fragment
     // in a transaction. We also want to remove any currently showing
     // dialog, so make our own transaction and take care of that here.
