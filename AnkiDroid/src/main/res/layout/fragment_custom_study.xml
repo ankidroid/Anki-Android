@@ -18,74 +18,113 @@
 */
 -->
 
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="start"
-    android:orientation="vertical" >
+    android:fadeScrollbars="false">
 
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/details_text_1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="4dip"
-        android:layout_marginRight="4dip"
         android:gravity="start"
-        android:text=""
-        android:textSize="16sp" />
+        android:orientation="vertical" >
 
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/details_text_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginBottom="16dip"
-        android:layout_marginStart="4dip"
-        android:layout_weight="4"
-        android:gravity="start|center"
-        android:lines="2"
-        android:text=""
-        android:textSize="16sp" />
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/details_text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:gravity="start"
+            android:text=""
+            android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/details_edit_text_2_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/details_text_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="16dip"
+            android:layout_marginStart="4dip"
+            android:layout_weight="4"
+            android:gravity="start|center"
+            android:lines="2"
+            android:text=""
+            android:textSize="16sp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/details_edit_text_2"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/details_edit_text_2_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:inputType="number|numberSigned"
-            tools:text="1"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/cards_state_selector_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:visibility="gone"
-        tools:visibility="visible">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/details_edit_text_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="22dp"
+                android:inputType="number|numberSigned"
+                android:textColorHighlight="?attr/colorControlHighlight"
+                tools:text="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <!--
-        Material3Fix we shouldn't have to tint the dropdown background(otherwise it's transparent),
-        also the color of the selected entry needs to be updated in the theme
-         -->
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/cards_state_selector"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cards_state_selector_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textFilter|textMultiLine"
-            app:dropDownBackgroundTint="?android:attr/colorBackground"
-            tools:text="New cards only"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:errorEnabled="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <!--
+            Material3Fix we shouldn't have to tint the dropdown background(otherwise it's transparent),
+            also the color of the selected entry needs to be updated in the theme
+             -->
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/cards_state_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textFilter|textMultiLine"
+                app:dropDownBackgroundTint="?android:attr/colorBackground"
+                tools:text="New cards only"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tags_selection_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/card_details_tags">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tags_dummy_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:inputType="none"
+                    android:focusable="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tags_chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:chipSpacingVertical="-4dp"
+                app:chipSpacingHorizontal="8dp" />
+        </FrameLayout>
+    </LinearLayout>
+</ScrollView>

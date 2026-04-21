@@ -140,25 +140,24 @@ class TagsDialogViewModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `custom study mode makes all tags unchecked`() =
+    fun `custom study mode pre-checks previously selected tags`() =
         runTest(testDispatcher) {
             val vm =
                 TagsDialogViewModel(
                     noteIds = listOf(note1, note2),
                     checkedTags = listOf("a"),
                     isCustomStudying = true,
+                    filterQuery = "nid:$note1,$note2",
                 )
             val tags = vm.tags.await()
             // tags from both notes = {a,b,c,d}
             val all = tags.copyOfAllTagList().sorted()
             assertEquals(listOf("a", "b", "c", "d"), all)
-            // custom study: checked = empty
-            assertTrue(tags.copyOfCheckedTagList().isEmpty())
+            // "a" was previously selected, so it should be pre-checked on re-open
+            assertEquals(listOf("a"), tags.copyOfCheckedTagList())
             // custom study: indeterminate = empty
             assertTrue(tags.copyOfIndeterminateTagList().isEmpty())
-            // custom study:
-            // checked - empty, unchecked - empty, all - not empty
-            // implies unchecked = allTags
+            // all tags are still present in the list
             assertTrue(tags.copyOfAllTagList().isNotEmpty())
         }
 }
