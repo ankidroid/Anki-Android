@@ -51,6 +51,8 @@ class AppPermissions(
      * shows a rate-limited snackbar on denial.
      */
     fun checkCanLaunchExternalApps(): Boolean {
+        // TODO: Consider a permission system based on the provided intent
+        // TODO: Consider requiring the user has interacted with the WebView.
         val allowed =
             context
                 .sharedPrefs()
