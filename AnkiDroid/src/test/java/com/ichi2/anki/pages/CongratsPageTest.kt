@@ -136,7 +136,10 @@ class CongratsPageTest : RobolectricTest() {
                     onView(withText(TR.customStudyStudyByCardStateOrTag()))
                         .inRoot(isDialog())
                         .perform(scrollTo(), click())
-                    clickDialogPositiveButton()
+                    onView(withId(R.id.tags_dummy_edittext))
+                        .inRoot(isDialog())
+                        .perform(scrollTo(), click())
+                    shadowOf(Looper.getMainLooper()).idle()
                     controller.saveState()
                 }
 
@@ -150,6 +153,7 @@ class CongratsPageTest : RobolectricTest() {
                 onView(allOf(withId(R.id.tags_dialog_tag_item), hasDescendant(withText("selected"))))
                     .inRoot(isDialog())
                     .perform(click())
+                clickDialogPositiveButton()
                 clickDialogPositiveButton()
             }
 

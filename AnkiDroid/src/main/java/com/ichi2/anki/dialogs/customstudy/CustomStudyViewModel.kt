@@ -85,6 +85,13 @@ class CustomStudyViewModel(
                 CramKind.CRAM_KIND_NEW
             }
 
+    /** The list of tags selected by the user for the custom study session. */
+    var selectedTags: List<String>
+        get() = savedStateHandle.get<List<String>>(KEY_SELECTED_TAGS) ?: emptyList()
+        set(value) {
+            savedStateHandle[KEY_SELECTED_TAGS] = value
+        }
+
     companion object {
         /**
          * Required key for a [DeckId] which [CustomStudyDialog] expects to receive as an argument.
@@ -92,6 +99,7 @@ class CustomStudyViewModel(
         const val ARG_DECK_ID = "key_did"
         private const val KEY_CARDS_SELECTION_INDEX = "key_cards_selection_index"
         private const val KEY_USER_INPUT_TEXT = "key_user_input_text"
+        private const val KEY_SELECTED_TAGS = "key_selected_tags"
     }
 }
 
