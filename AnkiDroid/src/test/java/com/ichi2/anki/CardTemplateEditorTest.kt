@@ -696,6 +696,49 @@ class CardTemplateEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun `ensure 'Discard changes' dialog is enabled after note type changes - Issue 18518`() {
+        fun assertDiscardChangesDialogShown(shadowEditor: ShadowActivity) {
+            advanceRobolectricLooper()
+            assertTrue("Unable to click?", shadowEditor.clickMenuItem(android.R.id.home))
+            advanceRobolectricLooper()
+            assertEquals("Wrong dialog shown?", "Discard changes?", getAlertDialogText(true))
+            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, false)
+        }
+
+        // Case 1: Show dialog after deck override
+        withCardTemplateEditor {
+            val shadowEditor = shadowOf(this)
+            onDeckSelected(SelectableDeck.Deck(1, "hello"))
+            assertDiscardChangesDialogShown(shadowEditor)
+        }
+
+        // Case 2: Show dialog after changing card browser appearance
+        withCardTemplateEditor {
+            val shadowEditor = shadowOf(this)
+            assertTrue(
+                "Unable to click?",
+                shadowEditor.clickMenuItem(R.id.action_card_browser_appearance),
+            )
+            advanceRobolectricLooper()
+            shadowEditor.receiveResult(
+                shadowEditor.nextStartedActivity,
+                Activity.RESULT_OK,
+                Intent()
+                    .putExtra(CardTemplateBrowserAppearanceEditor.INTENT_QUESTION_FORMAT, "q")
+                    .putExtra(CardTemplateBrowserAppearanceEditor.INTENT_ANSWER_FORMAT, "a"),
+            )
+            assertDiscardChangesDialogShown(shadowEditor)
+        }
+
+        // Case 3: Show dialog after adding a card type
+        withCardTemplateEditor {
+            val shadowEditor = shadowOf(this)
+            addCardType(this, shadowEditor)
+            assertDiscardChangesDialogShown(shadowEditor)
+        }
+    }
+
+    @Test
     fun testContentPreservedAfterChangingEditorView() {
         val noteTypeName = "Basic"
 

@@ -366,6 +366,10 @@ open class CardTemplateEditor :
         return tempNoteType != null && tempNoteType!!.notetype.toString() != oldNoteType.toString()
     }
 
+    private fun enableDiscardChangesDialog() {
+        displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
+    }
+
     private fun showDiscardChangesDialog() =
         DiscardChangesDialog.showDialog(this) {
             Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
@@ -408,6 +412,7 @@ open class CardTemplateEditor :
 
         // Deck Override can change from "on" <-> "off"
         invalidateOptionsMenu()
+        enableDiscardChangesDialog()
     }
 
     override fun onKeyUp(
@@ -683,7 +688,7 @@ open class CardTemplateEditor :
                             }
                         refreshFragmentRunnable = updateRunnable
                         refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
-                        templateEditor.displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
+                        templateEditor.enableDiscardChangesDialog()
                     }
 
                     override fun beforeTextChanged(
@@ -848,6 +853,7 @@ open class CardTemplateEditor :
                 existingNames = existingNames,
             ) { newName ->
                 template.name = newName.value
+                templateEditor.enableDiscardChangesDialog()
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
@@ -1343,6 +1349,7 @@ open class CardTemplateEditor :
             val currentTemplate = getCurrentTemplate()
             if (currentTemplate != null) {
                 result.applyTo(currentTemplate)
+                templateEditor.enableDiscardChangesDialog()
             }
         }
 
@@ -1428,6 +1435,7 @@ open class CardTemplateEditor :
             try {
                 templateEditor.getColUnsafe.modSchema(check = true)
                 schemaChangingAction.run()
+                templateEditor.enableDiscardChangesDialog()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -1437,6 +1445,7 @@ open class CardTemplateEditor :
                     Runnable {
                         templateEditor.getColUnsafe.modSchema(check = false)
                         schemaChangingAction.run()
+                        templateEditor.enableDiscardChangesDialog()
                         templateEditor.dismissAllDialogFragments()
                     }
                 val cancel = Runnable { templateEditor.dismissAllDialogFragments() }
