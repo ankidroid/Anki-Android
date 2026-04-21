@@ -19,7 +19,7 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.security.DangerousJsApiPermission.QUERY_COLLECTION
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.getString
