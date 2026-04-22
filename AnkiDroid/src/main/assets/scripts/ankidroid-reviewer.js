@@ -31,13 +31,38 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
     }
 };
 
-document.addEventListener("focusin", event => {
-    window.location.href = `ankidroid://focusin`;
-});
+// ============================================================================
+// Input focus listeners
+// ============================================================================
 
-document.addEventListener("focusout", event => {
-    window.location.href = `ankidroid://focusout`;
-});
+(() => {
+    /**
+     * Checks if the target element is a text input field.
+     * @param {Event} event
+     * @returns {boolean}
+     */
+    function isTextInput(event) {
+        const target = event.target;
+        return target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA");
+    }
+
+    // Communicate whether a text input is focused to avoid triggering controls if necessary
+    document.addEventListener("focusin", event => {
+        if (isTextInput(event)) {
+            window.location.href = `ankidroid://focusin`;
+        }
+    });
+
+    document.addEventListener("focusout", event => {
+        if (isTextInput(event)) {
+            window.location.href = `ankidroid://focusout`;
+        }
+    });
+})();
+
+// ============================================================================
+// Gesture detection
+// ============================================================================
 
 (() => {
     const SCHEME = "gesture";
