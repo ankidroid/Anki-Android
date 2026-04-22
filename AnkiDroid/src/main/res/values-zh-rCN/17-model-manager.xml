@@ -58,8 +58,8 @@
     <string name="model_field_editor_changing">更新字段</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">删除卡片类型</string>
+    <string name="add_card_type" maxLength="28">添加卡片类型</string>
     <!--Warnings-->
     <string name="model_delete_warning">是否确定要删除此笔记模板？</string>
     <!--

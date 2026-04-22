@@ -60,8 +60,8 @@
     <string name="model_field_editor_changing">Maydonlar yangilanmoqda</string>
     <string name="model_field_editor_sort_field">Bu maydon boʻyicha tartiblash</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">Karta turini oʻchirish</string>
+    <string name="add_card_type" maxLength="28">Karta turini qoʻshish</string>
     <!--Warnings-->
     <string name="model_delete_warning">Rostdan ham bu qayd turini oʻchirib tashlamoqchimisiz?</string>
     <!--

@@ -58,8 +58,8 @@
     <string name="model_field_editor_changing">フィールドを更新</string>
     <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し・並べ替え用項目）に指定</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">カードタイプを削除</string>
+    <string name="add_card_type" maxLength="28">カードタイプを追加</string>
     <!--Warnings-->
     <string name="model_delete_warning">このノートタイプを削除します。本当によろしいですか？</string>
     <!--
