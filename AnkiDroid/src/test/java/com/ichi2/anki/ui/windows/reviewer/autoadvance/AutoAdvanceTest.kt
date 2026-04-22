@@ -169,13 +169,14 @@ class AutoAdvanceTest {
                     durationToShowQuestionFor = 2.seconds,
                 )
 
-            coEvery { AutoAdvanceSettings.createInstance(any()) } returns initialSettings andThen newSettings
+            coEvery { AutoAdvanceSettings.createInstance(1L) } returns initialSettings
 
             autoAdvance = createAutoAdvance()
             autoAdvance.isEnabled = true
             testScheduler.advanceUntilIdle()
 
             val newCard = mockk<Card>(relaxed = true)
+            coEvery { AutoAdvanceSettings.createInstance(2L) } returns newSettings
             every { newCard.currentDeckId() } returns 2L
             autoAdvance.onCardChange(newCard)
             testScheduler.advanceUntilIdle()
