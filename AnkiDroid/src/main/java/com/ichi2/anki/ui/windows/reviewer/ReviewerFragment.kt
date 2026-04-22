@@ -116,7 +116,6 @@ class ReviewerFragment :
     private val sensorManager get() = ContextCompat.getSystemService(requireContext(), SensorManager::class.java)
     private val whiteboardFragment get() = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName) as? WhiteboardFragment
     private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
-    private var webviewHasFocus = false
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView =
@@ -320,7 +319,7 @@ class ReviewerFragment :
 
     @NeedsTest("Whiteboard takes priority on key events")
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (webviewHasFocus ||
+        if (
             event.action != KeyEvent.ACTION_DOWN ||
             view?.let { binding.typeAnswerEditText }?.isFocused == true
         ) {
@@ -671,8 +670,6 @@ class ReviewerFragment :
                 }
                 "ankidroid" -> {
                     when (url.host) {
-                        "focusin" -> webviewHasFocus = true
-                        "focusout" -> webviewHasFocus = false
                         "show-answer" -> viewModel.onShowAnswer()
                     }
                     true

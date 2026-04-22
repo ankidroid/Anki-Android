@@ -99,6 +99,7 @@ class ReviewerViewModel(
                 ?: Card(anki.cards.Card.getDefaultInstance())
         }
     private val repository = StudyScreenRepository()
+    private var isInputFocused = false
     val finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
@@ -439,12 +440,23 @@ class ReviewerViewModel(
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
         bytes: ByteArray,
-    ): ByteArray =
-        when (uri.backendMethodName) {
+    ): ByteArray {
+        when (uri.ankidroidMethodName) {
+            "focusin" -> {
+                isInputFocused = true
+                return byteArrayOf()
+            }
+            "focusout" -> {
+                isInputFocused = false
+                return byteArrayOf()
+            }
+        }
+        return when (uri.backendMethodName) {
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
             "setSchedulingStates" -> setSchedulingStates(bytes)
             else -> super.handlePostRequest(uri, bytes)
         }
+    }
 
     override suspend fun showQuestion() {
         Timber.v("ReviewerViewModel::showQuestion")
@@ -750,7 +762,11 @@ class ReviewerViewModel(
         binding: ReviewerBinding,
     ): Boolean {
         Timber.v("ReviewerViewModel::processAction")
-        if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
+        if ((binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) ||
+            (binding.isKey && isInputFocused)
+        ) {
+            return false
+        }
         executeAction(action)
         return true
     }

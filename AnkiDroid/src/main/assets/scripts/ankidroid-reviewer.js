@@ -36,6 +36,16 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
 // ============================================================================
 
 (() => {
+    function localRequest(endpoint, payload = {}) {
+        fetch(`ankidroid/${endpoint}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        }).catch(err => console.log("Failed to reach local server:", err));
+    }
+
     /**
      * Checks if the target element is a text input field.
      * @param {Event} event
@@ -46,16 +56,15 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
         return target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA");
     }
 
-    // Communicate whether a text input is focused to avoid triggering controls if necessary
     document.addEventListener("focusin", event => {
         if (isTextInput(event)) {
-            window.location.href = `ankidroid://focusin`;
+            localRequest("focusin");
         }
     });
 
     document.addEventListener("focusout", event => {
         if (isTextInput(event)) {
-            window.location.href = `ankidroid://focusout`;
+            localRequest("focusout");
         }
     });
 })();
