@@ -184,4 +184,19 @@ class AnswerTimerTest {
         assertTrue(state is AnswerTimerState.Stopped)
         assertEquals(2000L, (state).elapsedTimeMs)
     }
+
+    @Test
+    fun `stop clamps elapsed time to limit if exceeded`() {
+        currentTime = 1000L
+        val limit = 5000
+        answerTimer.configureForCard(shouldShow = true, limitMs = limit)
+
+        currentTime = 7000L
+        answerTimer.stop()
+
+        val state = answerTimer.state.value
+        assertTrue(state is AnswerTimerState.Stopped)
+
+        assertEquals(5000L, (state).elapsedTimeMs)
+    }
 }

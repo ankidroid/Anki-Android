@@ -44,7 +44,8 @@ class AnswerTimer : DefaultLifecycleObserver {
     fun stop() {
         when (val currentState = _state.value) {
             is AnswerTimerState.Running -> {
-                val elapsed = SystemClock.elapsedRealtime() - currentState.baseTime
+                val elapsed = (SystemClock.elapsedRealtime() - currentState.baseTime).coerceAtMost(currentState.limitMs.toLong())
+
                 _state.value =
                     AnswerTimerState.Stopped(
                         elapsedTimeMs = elapsed,
