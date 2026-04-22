@@ -65,6 +65,7 @@ import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.LanguageUtil.withAppLocale
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.setWebContentsDebuggingEnabled
+import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.restoreRecurringAlarms
@@ -215,6 +216,7 @@ open class AnkiDroidApp :
 
         // listen for day rollover: time + timezone changes
         DayRolloverHandler.listenForRolloverEvents(this)
+        DayRolloverAlarm.scheduleNext(this)
 
         restoreRecurringAlarms(this)
 

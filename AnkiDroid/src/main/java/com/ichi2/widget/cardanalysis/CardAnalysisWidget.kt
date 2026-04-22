@@ -39,6 +39,7 @@ import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetIds
+import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.cancelRecurringAlarm
 import com.ichi2.widget.deckpicker.DeckWidgetData
 import com.ichi2.widget.deckpicker.getDeckNameAndStats
@@ -227,6 +228,11 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 updateWidget(context, appWidgetManager, appWidgetId)
             }
         }
+    }
+
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        DayRolloverAlarm.scheduleNext(context)
     }
 
     override fun performUpdate(

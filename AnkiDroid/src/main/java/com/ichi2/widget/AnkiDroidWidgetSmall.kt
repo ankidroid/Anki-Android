@@ -61,6 +61,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
         super.onEnabled(context)
         val preferences = context.sharedPrefs()
         preferences.edit(commit = true) { putBoolean("widgetSmallEnabled", true) }
+        DayRolloverAlarm.scheduleNext(context)
     }
 
     override fun onDisabled(context: Context) {

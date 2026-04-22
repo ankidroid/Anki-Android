@@ -34,6 +34,7 @@ import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showThemedToast
+import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.restoreRecurringAlarms
 import timber.log.Timber
 import java.util.Calendar
@@ -82,6 +83,7 @@ class BootService : AnkiBroadcastReceiver() {
         }
 
         restoreRecurringAlarms(context)
+        DayRolloverAlarm.scheduleNext(context)
         wasRun = true
     }
 

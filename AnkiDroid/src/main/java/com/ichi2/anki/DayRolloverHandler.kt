@@ -40,6 +40,7 @@ import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.libanki.EpochSeconds
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
@@ -50,7 +51,12 @@ import timber.log.Timber
  * If so, notifies [ChangeManager] that [studyQueues][OpChanges.getStudyQueues] have changed
  *
  * HACK: This exists due to Android's complexities of scheduling an event at a given time.
- * It would be preferred to receive an event at the instant of rollover
+ * It would be preferred to receive an event at the instant of rollover.
+ *
+ * NOTE: this may not be registered in the manifest as it listens for [ACTION_TIME_TICK].
+ *
+ * @see DayRolloverAlarm for a Manifest-registered alternative (using AlarmManager.setWindow - less
+ * precise).
  */
 object DayRolloverHandler : AnkiBroadcastReceiver() {
     /** @see Scheduler.dayCutoff */
@@ -102,6 +108,8 @@ object DayRolloverHandler : AnkiBroadcastReceiver() {
         if (lastCutoff == currentCutoff) return
 
         Timber.i("day cutoff changed %d -> %d", lastCutoff, currentCutoff)
+        // Re-arm the wall-clock alarm whenever the cutoff changes
+        DayRolloverAlarm.scheduleNext(AnkiDroidApp.instance)
         // we do not want to send a "study queues changes" message initially
         if (lastCutoff != null) {
             handleDayRollover()
