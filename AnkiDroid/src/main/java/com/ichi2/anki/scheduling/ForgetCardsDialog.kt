@@ -21,9 +21,11 @@ import android.os.Bundle
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -155,7 +157,7 @@ class ForgetCardsDialog : DialogFragment() {
  *
  * @param cardsIdsProducer lambda which returns the list of cards for which to reset the progress
  */
-internal fun AnkiActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
+internal fun FragmentActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
     setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET) { _, bundle ->
         forgetCards(
             cardsIdsProducer = cardsIdsProducer,
@@ -165,7 +167,23 @@ internal fun AnkiActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -
     }
 }
 
-private fun AnkiActivity.forgetCards(
+/**
+ * Listen for requests from [ForgetCardsDialog] and triggers backend calls to reset progress for
+ * current selected/reviewed card/cards. Callers need to supply the list of cards ids.
+ *
+ * @param cardsIdsProducer lambda which returns the list of cards for which to reset the progress
+ */
+internal fun Fragment.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
+    setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET) { _, bundle ->
+        activity?.forgetCards(
+            cardsIdsProducer = cardsIdsProducer,
+            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL),
+            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.ARG_RESET_REPETITION),
+        )
+    }
+}
+
+private fun FragmentActivity.forgetCards(
     cardsIdsProducer: suspend () -> List<CardId>,
     restoreOriginalPositionIfPossible: Boolean,
     resetRepetitionAndLapseCounts: Boolean,

@@ -70,7 +70,9 @@ import com.ichi2.anki.previewer.setFrameStyle
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
+import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.HideSystemBars
@@ -94,6 +96,8 @@ import com.squareup.seismic.ShakeDetector
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.max
@@ -176,6 +180,7 @@ class ReviewerFragment :
         setupToolbarPosition()
         setupAnswerTimer()
         setupMargins()
+        setupResetProgress()
         setupCheckPronunciation()
         setupActions()
         setupWhiteboard()
@@ -497,6 +502,17 @@ class ReviewerFragment :
         viewModel.answerTimer.state.collectIn(lifecycleScope) { state ->
             binding.timer.setup(state)
         }
+    }
+
+    private fun setupResetProgress() {
+        viewModel.resetProgressFlow
+            .flowWithLifecycle(lifecycle)
+            .onEach {
+                showDialogFragment(ForgetCardsDialog())
+            }.launchIn(lifecycleScope)
+        // TODO handle 'Reset progress' in the ViewModel instead of the activity, once
+        //  a mechanism of showing a progress bar if the operation takes too long is implemented
+        registerOnForgetHandler { listOf(viewModel.getCardId()) }
     }
 
     private fun setupCheckPronunciation() {
