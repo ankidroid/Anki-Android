@@ -273,4 +273,19 @@ interface Compat {
         context: Context,
         fallback: String,
     ): String
+
+    /**
+     * Returns `true` if the device is using gesture navigation (swipe from edges).
+     * Gesture navigation was introduced in Android 10 (API 29).
+     * On older versions, this always returns `false`.
+     *
+     * Note: this reads a `Settings.Secure` key that is not part of the public API.
+     * It will not throw, but the result is manufacturer dependent.
+     *
+     * @param defaultValue value returned when the `navigation_mode` key is unset
+     */
+    fun isUsingSystemGestureNavigation(
+        context: Context,
+        defaultValue: Boolean = false,
+    ): Boolean
 }

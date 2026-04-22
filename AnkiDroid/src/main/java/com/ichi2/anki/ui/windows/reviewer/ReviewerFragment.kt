@@ -49,13 +49,16 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.android.back.doubleBackPressCallback
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.anki.databinding.FragmentReviewerBinding
 import com.ichi2.anki.dialogs.showDeckOptionsSelectionDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -164,7 +167,7 @@ class ReviewerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.backButton.setOnClickListener {
-            requireActivity().finish()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         setupBindings()
@@ -527,8 +530,20 @@ class ReviewerFragment :
             },
             false,
         )
+        val doubleBackCallback =
+            doubleBackPressCallback(
+                enabled = false,
+                onFirstBack = { showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) },
+                shouldReEnable = {
+                    viewModel.whiteboardEnabledFlow.value &&
+                        compat.isUsingSystemGestureNavigation(requireContext())
+                },
+            )
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, doubleBackCallback)
         viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
             binding.whiteboardContainer.isVisible = isEnabled
+            doubleBackCallback.isEnabled =
+                isEnabled && compat.isUsingSystemGestureNavigation(requireContext())
             if (whiteboardFragment == null && isEnabled) {
                 childFragmentManager.commit {
                     add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)

@@ -22,6 +22,7 @@ import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Size
 import androidx.annotation.RequiresApi
 import com.ichi2.anki.common.time.TimeManager
@@ -82,6 +83,14 @@ open class CompatV29 : CompatV26() {
         newImage.put(MediaStore.Images.Media.IS_PENDING, 0)
         context.contentResolver.update(newImageUri, newImage, null, null)
         return newImageUri
+    }
+
+    override fun isUsingSystemGestureNavigation(
+        context: Context,
+        defaultValue: Boolean,
+    ): Boolean {
+        val defaultMode = if (defaultValue) 2 else 0
+        return Settings.Secure.getInt(context.contentResolver, "navigation_mode", defaultMode) == 2
     }
 
     companion object {

@@ -285,6 +285,12 @@ open class BaseCompat : Compat {
         context: Context,
         fallback: String,
     ): String = fallback
+
+    // Until API 29, gesture navigation does not exist
+    override fun isUsingSystemGestureNavigation(
+        context: Context,
+        defaultValue: Boolean,
+    ): Boolean = false
 }
 
 typealias CompatV24 = BaseCompat
