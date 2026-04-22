@@ -69,6 +69,16 @@ class CheckPronunciationViewModel(
         }
     }
 
+    fun pausePlayback() {
+        if (isPlaying) {
+            progressBarUpdateJob?.cancel()
+            audioPlayer.pause()
+            viewModelScope.launch {
+                isPlayingFlow.emit(false)
+            }
+        }
+    }
+
     fun onPlayOrReplay() {
         if (!isPlaybackVisibleFlow.value) return
 
@@ -77,6 +87,10 @@ class CheckPronunciationViewModel(
             viewModelScope.launch {
                 replayFlow.emit(Unit)
             }
+        } else if (audioPlayer.isPaused) {
+            viewModelScope.launch { isPlayingFlow.emit(true) }
+            audioPlayer.resume()
+            launchProgressBarUpdateJob()
         } else {
             viewModelScope.launch { isPlayingFlow.emit(true) }
             playCurrentFile()

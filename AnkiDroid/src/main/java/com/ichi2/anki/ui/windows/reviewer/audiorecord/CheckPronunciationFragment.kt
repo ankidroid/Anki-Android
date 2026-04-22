@@ -77,8 +77,10 @@ class CheckPronunciationFragment : Fragment(R.layout.fragment_check_pronunciatio
         if (requireActivity().isChangingConfigurations) {
             return
         }
-        viewModel.resetAll()
-        binding.recordView.forceReset()
+        if (binding.recordView.isRecording) {
+            binding.recordView.finishRecording()
+        }
+        viewModel.pausePlayback()
     }
 
     private fun setupViewListeners() {

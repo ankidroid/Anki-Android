@@ -56,6 +56,7 @@ class CheckPronunciationViewModelTest : JvmTest() {
             mockk(relaxUnitFun = true) {
                 every { play("test_file.3gp", capture(onPreparedCallback)) } just runs
                 every { isPlaying } answers { isPlayingMock }
+                every { isPaused } answers { isPausedMock }
                 every { duration } returns 3000
                 every { currentPosition } returns 1500
                 every { onCompletion = any() } answers {
@@ -115,6 +116,39 @@ class CheckPronunciationViewModelTest : JvmTest() {
             verify { mockPlayer.replay() }
             // Allow the progress bar job to complete
             isPlayingMock = false
+        }
+
+    @Test
+    fun `onPlayOrReplay when paused should resume playback and update UI`() =
+        runTest {
+            viewModel.isPlaybackVisibleFlow.value = true
+            isPlayingMock = false
+            isPausedMock = true
+
+            viewModel.isPlayingFlow.test {
+                assertFalse(awaitItem())
+                viewModel.onPlayOrReplay()
+                assertTrue(awaitItem())
+            }
+
+            verify { mockPlayer.resume() }
+        }
+
+    @Test
+    fun `pausePlayback should pause audio and update UI`() =
+        runTest {
+            viewModel.isPlaybackVisibleFlow.value = true
+            isPlayingMock = true
+            isPausedMock = false
+
+            viewModel.isPlayingFlow.value = true
+            viewModel.isPlayingFlow.test {
+                assertTrue(awaitItem())
+                viewModel.pausePlayback()
+                assertFalse(awaitItem())
+            }
+
+            verify { mockPlayer.pause() }
         }
 
     @Test
