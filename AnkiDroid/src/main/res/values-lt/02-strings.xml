@@ -284,7 +284,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Įveskite galiojantį el. pašto adresą</string>
     <string name="password_empty">Reikalingas slaptažodis</string>
-    <string name="back_pressed_once">Dar kartą paspauskite atgal, kad išeitumėte</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Atsisiųsti kortelių rinkinį</string>

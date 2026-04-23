@@ -278,7 +278,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Geben Sie eine gültige E-Mail ein</string>
     <string name="password_empty">Das Passwort ist erforderlich</string>
-    <string name="back_pressed_once">Zum Beenden erneut \"Zurück\" drücken</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Stapel herunterladen</string>

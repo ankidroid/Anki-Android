@@ -281,7 +281,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Jāievada derīga e-pasta adrese</string>
     <string name="password_empty">Parole ir nepieciešama</string>
-    <string name="back_pressed_once">Piespiest vēlreiz, lai izietu</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Lejuplādēt kavu</string>

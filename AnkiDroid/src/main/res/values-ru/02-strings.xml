@@ -284,7 +284,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Введите допустимую почту</string>
     <string name="password_empty">Требуется пароль</string>
-    <string name="back_pressed_once">Нажмите «Назад» ещё раз, чтобы выйти</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Скачать колоду</string>

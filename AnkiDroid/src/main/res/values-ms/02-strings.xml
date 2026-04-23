@@ -275,7 +275,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Kata laluan diperlukan</string>
-    <string name="back_pressed_once">Tekan kembali lagi untuk keluar</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Muat turun dek</string>

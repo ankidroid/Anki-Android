@@ -278,7 +278,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">സാധുവായ ഒരു ഇമെയിൽ നൽകുക</string>
     <string name="password_empty">പാസ്‌വേഡ് ആവശ്യമാണ്</string>
-    <string name="back_pressed_once">പുറത്തുകടക്കാൻ വീണ്ടും വീണ്ടും അമർത്തുക</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Download deck</string>

@@ -278,7 +278,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">ᱢᱤᱫ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱤᱢᱮᱞ ᱮᱢ ᱢᱮ</string>
     <string name="password_empty">ᱯᱟᱥᱣᱟᱰ ᱞᱟᱹᱠᱛᱤ ᱢᱮᱱᱟᱜ-ᱟ</string>
-    <string name="back_pressed_once">ᱩᱰᱩᱠᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱠᱭᱟᱠ ᱚᱛᱟᱭ ᱢᱮ</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ᱰᱮᱠ ᱰᱟᱩᱱᱞᱳᱰ ᱢᱮ</string>

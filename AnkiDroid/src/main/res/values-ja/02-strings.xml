@@ -275,7 +275,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">有効なメールアドレスを入力してください</string>
     <string name="password_empty">パスワードが必要です</string>
-    <string name="back_pressed_once">もう一度押すと終了します</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">デッキをダウンロード</string>

@@ -278,7 +278,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">ਇੱਕ ਵੈਧ ਈਮੇਲ ਦਾਖਲ ਕਰੋ</string>
     <string name="password_empty">ਪਾਸਵਰਡ ਲੋੜੀਂਦਾ ਹੈ</string>
-    <string name="back_pressed_once">ਬਾਹਰ ਜਾਣ ਲਈ ਦੁਬਾਰਾ ਦਬਾਓ</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ਡੇਕ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰੋ</string>
