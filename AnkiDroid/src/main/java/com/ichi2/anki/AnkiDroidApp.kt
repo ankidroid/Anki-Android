@@ -126,6 +126,12 @@ open class AnkiDroidApp :
         }
     }
 
+    /** ensures that [block] is called in the context of [receiver] */
+    inline fun <T, R> dependency(
+        receiver: T,
+        block: T.() -> R,
+    ): R = receiver.block()
+
     /**
      * On application creation.
      */
@@ -151,8 +157,7 @@ open class AnkiDroidApp :
 
         // Ensures any change is propagated to widgets
         ChangeManager.subscribe(this)
-
-        initializeAcraCrashReporter()
+        val acra = CrashReportingContext.apply { initializeAcraCrashReporter() }
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())
@@ -168,11 +173,7 @@ open class AnkiDroidApp :
         Timber.d("Startup - Application Start")
         Timber.i("Timber config: $logType")
 
-        // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
-        UsageAnalytics.initialize(this)
-        if (BuildConfig.DEBUG) {
-            UsageAnalytics.setDryRun(true)
-        }
+        setup("setupUsageAnalytics") { dependency(acra) { setupUsageAnalytics() } }
 
         // Last in the UncaughtExceptionHandlers chain is our filter service
         ThrowableFilterService.initialize()
@@ -215,6 +216,15 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
+    context(_: CrashReportingContext)
+    private fun setupUsageAnalytics() {
+        UsageAnalytics.initialize(this)
+        if (BuildConfig.DEBUG) {
+            UsageAnalytics.setDryRun(true)
+        }
     }
 
     private fun setupNotifications() {
@@ -429,6 +439,8 @@ open class AnkiDroidApp :
             Timber.d("No relevant changes to update the widget")
         }
     }
+
+    object CrashReportingContext
 
     companion object {
         /**
