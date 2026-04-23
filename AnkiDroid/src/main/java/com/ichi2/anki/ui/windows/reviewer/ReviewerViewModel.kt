@@ -115,7 +115,7 @@ class ReviewerViewModel(
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
-    val voiceRecorderEnabledFlow = MutableStateFlow(false)
+    val voiceRecorderEnabledFlow = MutableStateFlow(repository.isRecordVoiceEnabled)
     val whiteboardEnabledFlow = MutableStateFlow(repository.isWhiteboardEnabled)
     val replayVoiceFlow = MutableSharedFlow<Unit>()
     val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
@@ -676,6 +676,12 @@ class ReviewerViewModel(
         repository.isWhiteboardEnabled = newValue
     }
 
+    private fun toggleRecordVoice() {
+        val newValue = !voiceRecorderEnabledFlow.value
+        voiceRecorderEnabledFlow.value = newValue
+        repository.isRecordVoiceEnabled = newValue
+    }
+
     fun executeAction(action: ViewerAction) {
         Timber.v("ReviewerViewModel::executeAction %s", action.name)
         launchCatchingIO {
@@ -720,7 +726,7 @@ class ReviewerViewModel(
                     ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                     ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
                     ViewerAction.TOGGLE_WHITEBOARD -> toggleWhiteboard()
-                    ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
+                    ViewerAction.RECORD_VOICE -> toggleRecordVoice()
                     ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
                     ViewerAction.PAGE_UP -> pageUpFlow.emit(Unit)
                     ViewerAction.PAGE_DOWN -> pageDownFlow.emit(Unit)
