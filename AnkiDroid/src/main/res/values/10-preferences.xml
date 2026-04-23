@@ -468,4 +468,5 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
 
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
 </resources>

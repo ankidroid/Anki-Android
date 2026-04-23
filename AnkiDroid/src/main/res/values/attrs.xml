@@ -40,6 +40,11 @@
         <attr name="dialogHint" format="string|reference"/>
     </declare-styleable>
 
+    <declare-styleable name="RelatedSettingsPreference">
+        <attr name="relatedTitles" format="reference" />
+        <attr name="relatedFragments" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="NumberRangePreference">
         <attr name="min"/>
         <attr name="max"/>
