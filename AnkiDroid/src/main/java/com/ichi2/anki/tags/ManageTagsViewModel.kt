@@ -117,8 +117,11 @@ class ManageTagsViewModel : ViewModel() {
                     }
                 val newCollapsed = !node.collapsed
                 withCol { tags.setCollapsed(tag, newCollapsed) }
-                // re-fetch tree to get updated collapsed state
-                tagList = flattenTree(withCol { tags.tree() })
+                // Update the in-memory list with the new collapsed state
+                tagList =
+                    tagList.map {
+                        if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
+                    }
                 updateState { it.copy(visibleNodes = computeVisibleNodes(it.searchQuery)) }
             } catch (e: CancellationException) {
                 throw e
