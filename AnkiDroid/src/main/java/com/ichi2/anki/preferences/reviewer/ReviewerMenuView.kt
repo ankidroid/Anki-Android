@@ -26,6 +26,8 @@ import android.widget.LinearLayout
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.appcompat.widget.ActionMenuView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.size
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -87,7 +89,7 @@ class ReviewerMenuView : LinearLayout {
         for (action in submenuActions) {
             val subMenu = findItem(action.parentMenu!!.menuId)?.subMenu ?: continue
             subMenu.add(Menu.NONE, action.menuId, Menu.NONE, action.title(context))?.apply {
-                action.drawableRes?.let { setIcon(it) }
+                action.drawableRes?.let { setIconRes(it) }
             }
         }
     }
@@ -114,7 +116,7 @@ class ReviewerMenuView : LinearLayout {
                     menu.add(Menu.NONE, action.menuId, Menu.NONE, title)
                 }
             with(menuItem) {
-                action.drawableRes?.let { setIcon(it) }
+                action.drawableRes?.let { setIconRes(it) }
                 setShowAsAction(menuActionType)
             }
         }
@@ -137,5 +139,13 @@ class ReviewerMenuView : LinearLayout {
                 }
             },
         )
+    }
+
+    // ActionMenuView drawables don't handle directionality by default
+    private fun MenuItem.setIconRes(resId: Int) {
+        ContextCompat.getDrawable(context, resId)?.mutate()?.let { drawable ->
+            DrawableCompat.setLayoutDirection(drawable, context.resources.configuration.layoutDirection)
+            setIcon(drawable)
+        }
     }
 }
