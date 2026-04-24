@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.dialogs
 
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -42,7 +41,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -75,10 +73,6 @@ import com.ichi2.anki.utils.InitStatus
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.boldList
-import com.ichi2.utils.create
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.title
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -101,52 +95,51 @@ import timber.log.Timber
  *
  * @see ChangeNoteTypeViewModel
  */
-class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
+class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note_type) {
     private val viewModel: ChangeNoteTypeViewModel by viewModels { defaultViewModelProviderFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.ThemeOverlay_AnkiDroid_AlertDialog_FullScreen)
         setupFlows()
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = DialogChangeNoteTypeBinding.inflate(LayoutInflater.from(requireContext()))
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = DialogChangeNoteTypeBinding.bind(view)
 
-        return MaterialAlertDialogBuilder(requireContext())
-            .create {
-                title(text = TR.sentenceCase.changeNoteType)
-                positiveButton(R.string.dialog_ok)
-                negativeButton(R.string.dialog_cancel)
-                setView(binding.root)
-            }.apply {
-                show()
-                positiveButton.setOnClickListener {
-                    requireAnkiActivity().changeNoteType(viewModel)
-                    // dismiss() is handled via closeDialogFlow
-                }
-                launchCatchingTask {
-                    viewModel.flowOfInitStatus.collect {
-                        Timber.i("dialog init: %s", it)
-                        when (it) {
-                            InitStatus.Pending, InitStatus.InProgress -> {
-                                binding.changeNoteTypeLayout.isVisible = false
-                                binding.changeNoteTypeLoadingLayout.isVisible = true
-                                positiveButton.isEnabled = false
-                            }
-                            InitStatus.Completed -> {
-                                binding.changeNoteTypeLayout.isVisible = true
-                                binding.changeNoteTypeLoadingLayout.isVisible = false
-                                positiveButton.isEnabled = true
-                                setupChangeNoteTypeDialog(binding = binding)
-                            }
-                            is InitStatus.Failed -> {
-                                requireContext().showError(it.exception.toString(), it.exception.toCrashReportData(requireContext()))
-                                dismiss()
-                            }
-                        }
+        binding.toolbar.title = TR.sentenceCase.changeNoteType
+        binding.toolbar.setNavigationOnClickListener { dismiss() }
+        binding.btnSave.setOnClickListener {
+            requireAnkiActivity().changeNoteType(viewModel)
+            // dismiss() is handled via closeDialogFlow
+        }
+
+        launchCatchingTask {
+            viewModel.flowOfInitStatus.collect {
+                Timber.i("dialog init: %s", it)
+                when (it) {
+                    InitStatus.Pending, InitStatus.InProgress -> {
+                        binding.changeNoteTypeLayout.isVisible = false
+                        binding.changeNoteTypeLoadingLayout.isVisible = true
+                        binding.btnSave.isVisible = false
+                    }
+                    InitStatus.Completed -> {
+                        binding.changeNoteTypeLayout.isVisible = true
+                        binding.changeNoteTypeLoadingLayout.isVisible = false
+                        binding.btnSave.isVisible = true
+                        setupChangeNoteTypeDialog(binding = binding)
+                    }
+                    is InitStatus.Failed -> {
+                        requireContext().showError(it.exception.toString(), it.exception.toCrashReportData(requireContext()))
+                        dismiss()
                     }
                 }
             }
+        }
     }
 
     private fun setupFlows() {
@@ -330,12 +323,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
             }
         }
 
-        override fun onResume() {
-            super.onResume()
-            // update ViewPager2 height
-            binding.root.requestLayout()
-        }
-
         fun setupFlows() {
             lifecycleScope.launch {
                 Timber.d("setupFlows: collecting outputNoteTypeFlow")
@@ -467,12 +454,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
                     }
                 }
             }
-        }
-
-        override fun onResume() {
-            super.onResume()
-            // update ViewPager2 height
-            binding.root.requestLayout()
         }
 
         fun setupFlows() {
