@@ -13,9 +13,10 @@
         android:freezesText="true"
         android:layout_alignParentStart="true"
         app:layout_constraintBottom_toTopOf="@+id/edit_text"
-        app:layout_constraintEnd_toStartOf="@id/media_button"
+        app:layout_constraintEnd_toStartOf="@+id/toggle_sticky"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
         tools:text="Front\nNewline" />
 
     <ImageButton
