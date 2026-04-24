@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         app:navigationIcon="@drawable/close_icon"
-        app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:titleTextAppearance="@style/TextAppearance.AnkiDroid.TopAppBar.Title"
         tools:title="Change note type">
 
         <com.google.android.material.button.MaterialButton

@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/close_icon"
-        app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:titleTextAppearance="@style/TextAppearance.AnkiDroid.TopAppBar.Title"
         tools:title="Filtered deck 10:10"
         tools:menu="@menu/filtered_options">
 
