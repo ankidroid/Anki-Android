@@ -66,6 +66,7 @@ open class CompatV33 :
         flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? = packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
 
+    @Suppress("QueryPermissionsNeeded") // queries declaration is available in the main module manifest
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
