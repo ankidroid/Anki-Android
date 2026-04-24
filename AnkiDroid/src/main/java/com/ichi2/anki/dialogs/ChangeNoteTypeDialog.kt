@@ -483,6 +483,13 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment() {
                 }
             }
 
+            // Updates to (Nothing) if the map changes
+            lifecycleScope.launch {
+                viewModel.templateChangeMapFlow.collect {
+                    createTemplateSpinner()
+                }
+            }
+
             lifecycleScope.launch {
                 viewModel.conversionTypeFlow.collect { type ->
                     when (val layout = Layout.fromConversionType(type)) {
