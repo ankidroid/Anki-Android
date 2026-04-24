@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
@@ -51,9 +50,6 @@ import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SpecialField
 import com.ichi2.anki.model.SpecialFields
-import com.ichi2.utils.create
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import org.jetbrains.annotations.VisibleForTesting
 
@@ -63,8 +59,7 @@ import org.jetbrains.annotations.VisibleForTesting
  *
  * @see [CardTemplateEditor.CardTemplateFragment]
  */
-class InsertFieldDialog : DialogFragment() {
-    private lateinit var binding: DialogInsertFieldBinding
+class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
     private val viewModel by viewModels<InsertFieldDialogViewModel>()
     private val requestKey
         get() =
@@ -72,19 +67,20 @@ class InsertFieldDialog : DialogFragment() {
                 KEY_REQUEST_KEY
             }
 
-    /**
-     * A dialog for inserting field in card template editor
-     */
-    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.ThemeOverlay_AnkiDroid_AlertDialog_FullScreen)
+    }
 
-        binding = DialogInsertFieldBinding.inflate(layoutInflater)
-        val dialog =
-            AlertDialog.Builder(requireContext()).create {
-                title(R.string.card_template_editor_select_field)
-                negativeButton(R.string.dialog_cancel)
-                setView(binding.root)
-            }
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = DialogInsertFieldBinding.bind(view)
+
+        binding.toolbar.title = getString(R.string.card_template_editor_select_field)
+        binding.toolbar.setNavigationOnClickListener { dismiss() }
 
         binding.viewPager.adapter = InsertFieldDialogAdapter(this)
         TabLayoutMediator(
@@ -123,8 +119,6 @@ class InsertFieldDialog : DialogFragment() {
                 dismiss()
             }
         }
-
-        return dialog
     }
 
     companion object {
@@ -206,11 +200,6 @@ class InsertFieldDialog : DialogFragment() {
                     override fun getItemCount(): Int = viewModel.fieldNames.size
                 }
         }
-
-        override fun onResume() {
-            super.onResume()
-            this.requireView().post { requireView().requestLayout() }
-        }
     }
 
     class SelectSpecialFieldFragment : Fragment(R.layout.dialog_generic_recycler_view) {
@@ -252,12 +241,6 @@ class InsertFieldDialog : DialogFragment() {
                     override fun getItemCount(): Int = viewModel.specialFields.size
                 }
             binding.root.layoutManager = LinearLayoutManager(context)
-        }
-
-        override fun onResume() {
-            super.onResume()
-            // update the height of the ViewPager
-            this.requireView().post { requireView().requestLayout() }
         }
     }
 
