@@ -111,6 +111,19 @@
     <string name="card_browser_order_subtitle_date_ascending" comment="Sort direction subtitle for date columns when ascending (oldest entry first)">Oldest first</string>
     <string name="card_browser_order_subtitle_date_descending" comment="Sort direction subtitle for date columns when descending (newest entry first)">Newest first</string>
 
+    <!-- SortPill labels: a single character on each half hinting at the direction.
+         Translators: pick the first/last character of your locale's sort order. -->
+    <string name="sort_pill_label_text_ascending" comment="SortPill standard half marker for text columns. Use a 1-char glyph that suggests the start of the alphabet.">A</string>
+    <string name="sort_pill_label_text_descending" comment="SortPill reverse half marker for text columns. Use a 1-char glyph that suggests the end of the alphabet.">Z</string>
+    <string name="sort_pill_label_numeric_ascending" comment="SortPill standard half marker for numeric columns. Use a 1-char glyph that suggests the smallest value.">1</string>
+    <string name="sort_pill_label_numeric_descending" comment="SortPill reverse half marker for numeric columns. Use a 1-char glyph that suggests the largest value.">9</string>
+
+    <!-- SortPill accessibility descriptions, used by TalkBack. The host should prepend the
+         column name (e.g. "Front, ascending"); these strings are the direction half. -->
+    <string name="sort_pill_a11y_ascending" comment="SortPill accessibility: ascending half">Ascending</string>
+    <string name="sort_pill_a11y_descending" comment="SortPill accessibility: descending half">Descending</string>
+    <string name="sort_pill_a11y_selected" comment="SortPill accessibility: state announcement when this half is the active sort direction">Selected</string>
+
     <string name="card_browser_order_section_unavailable" comment="Header: browser columns that cannot be sorted (e.g. Question)">Unavailable</string>
     <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the 'Question/Answer' column is not sortable.">Card content can\'t be sorted. Use Sort Field</string>
     <string name="card_browser_order_subtitle_cards_mode_only" comment="Fix for trying to sort on FSRS columns in Notes mode">Only available in cards mode</string>
