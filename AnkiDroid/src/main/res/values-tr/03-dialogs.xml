@@ -104,7 +104,7 @@
     <string name="dialog_invalid_custom_certificate_title">Sertifika çözümlemesinde hata</string>
     <string name="dialog_updated_custom_certificate">Sertifika güncellendi</string>
     <!-- Media checking -->
-    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
+    <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun zaman alabilir. Devam edilsin mi?</string>
     <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
     <string name="check_media_adding_missing_tag">Etiketler ekleniyor&#8230;</string>
     <string name="check_media_tags_added">Etiketler eklendi</string>
@@ -275,8 +275,8 @@
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Bütün deste, üst desteler de dahil %s</string>
     <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
     <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Notun etiketleri%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Kartın ID\'si%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Kart şablonunun adı%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Not türünün adı%s</string>
 </resources>
