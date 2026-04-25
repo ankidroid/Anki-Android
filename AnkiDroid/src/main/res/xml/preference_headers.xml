@@ -39,7 +39,7 @@
 
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.ReviewerOptionsFragment"
-        android:title="@string/new_study_screen"
+        android:title="@string/pref_cat_reviewer"
         android:icon="@drawable/ic_cards_star"
         android:key="@string/new_reviewer_options_key"
         app:summaryEntries="@array/study_screen_summary_entries"

@@ -30,6 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.previewer.PreviewerAction
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
@@ -269,7 +270,7 @@ enum class ControlPreferenceScreen(
 
     fun getActions(): List<MappableAction<*>> =
         when (this) {
-            REVIEWER -> if (Prefs.isNewStudyScreenEnabled) ViewerAction.entries else ViewerCommand.entries
+            REVIEWER -> if (Prefs.isNewStudyScreenEnabled) ViewerAction.entries + WhiteboardAction.entries else ViewerCommand.entries
             PREVIEWER -> PreviewerAction.entries
         }
 }
