@@ -91,10 +91,21 @@ jobs:
       - name: Commit changes
         run: |
           git add docs/marketing/localized_description AnkiDroid/src/main/res
-          git commit -am 'Updated strings from Crowdin'
-          git push --set-upstream origin +i18n_sync
-          echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
-          echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"
+          # If Crowdin returned no string changes there is nothing to commit
+          # and `git commit` would exit 1 ("nothing to commit, working tree
+          # clean"), failing the whole workflow even though the run was
+          # operationally successful. Detect that case explicitly so the
+          # commit / push only runs when there are real changes -- the
+          # downstream `tr_check` step's HAS_CHANGES=false branch then
+          # short-circuits PR creation, leaving the run as a clean success.
+          if git diff --cached --quiet; then
+            echo "No string changes from Crowdin; skipping commit and push."
+          else
+            git commit -am 'Updated strings from Crowdin'
+            git push --set-upstream origin +i18n_sync
+            echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
+            echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"
+          fi
 
       - name: Check if there are strings changes
         id: tr_check
