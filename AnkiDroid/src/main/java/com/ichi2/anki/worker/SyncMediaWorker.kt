@@ -94,6 +94,11 @@ class SyncMediaWorker(
                 setContentTitle(CollectionManager.TR.syncMediaFailed())
                 throwable.localizedMessage?.let { message ->
                     setContentText(message)
+                    setStyle(
+                        NotificationCompat
+                            .BigTextStyle()
+                            .bigText(message),
+                    )
                 }
             }
             Timber.d("SyncMediaWorker: showing failure notification")
