@@ -29,11 +29,16 @@ import android.os.Bundle
 import android.os.Environment
 import android.system.Os
 import android.webkit.CookieManager
+import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
+import com.ichi2.anki.AnkiDroidApp.Companion.instance
+import com.ichi2.anki.AnkiDroidApp.Companion.isInitialized
+import com.ichi2.anki.AnkiDroidApp.Companion.makeBackendUsable
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
@@ -64,6 +69,7 @@ import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.LanguageUtil.withAppLocale
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
@@ -96,179 +102,252 @@ open class AnkiDroidApp :
     var progressDialogShown = false
 
     /**
+     * Executes a setup method: [block], logging execution time.
+     * Exceptions are logged and rethrown.
+     *
+     * @param methodName Method name, used for logging.
+     * @param block The method to execute and return
+     */
+    // 'inline fun' so logs use the correct context
+    inline fun <T> setup(
+        methodName: String,
+        crossinline block: () -> T,
+    ): T {
+        // TODO: #20168 warn users of non-fatal component errors rather than rethrowing
+        try {
+            return measureTime(methodName = methodName) { block() }
+        } catch (e: Exception) {
+            // NOTE: this can be called before Timber is initialized
+            Timber.w(e, "failed to execute $methodName")
+            throw e
+        }
+    }
+
+    /**
      * On application creation.
      */
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
-        try {
-            Os.setenv("PLATFORM", syncPlatform(), false)
-            // enable debug logging of sync actions
-            if (BuildConfig.DEBUG) {
-                Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug,fsrs=error", false)
-            }
-        } catch (_: Exception) {
-        }
-        // Uncomment the following lines to see a log of all SQL statements
-        // executed by the backend. The log may be delayed by 100ms, so you should not
-        // assume than a given SQL statement has run after a Timber.* line just
-        // because the SQL statement appeared later.
-        //   Os.setenv("TRACESQL", "1", false);
+        initAnkiBackend(debugTraceSqlCalls = false)
         super.onCreate()
-        val appLifecycleObserver = AppLifecycleObserver(applicationContext)
-
-        androidx.lifecycle.ProcessLifecycleOwner
-            .get()
-            .lifecycle
-            .addObserver(appLifecycleObserver)
-        if (isInitialized) {
-            Timber.i("onCreate() called multiple times")
-            // 5887 - fix crash.
-            if (instance.resources == null) {
-                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?")
-                return
-            }
+        if (!setupAnkiDroidApp()) {
+            return // instance.resources is invalid
         }
-        instance = this
-
-        // Get preferences
-        val preferences = this.sharedPrefs()
-
-        // Ensures any change is propagated to widgets
-        ChangeManager.subscribe(this)
-
-        initializeAcraCrashReporter()
-        val logType = LogType.value
-        when (logType) {
-            LogType.DEBUG -> Timber.plant(DebugTree())
-            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
-            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
-        }
-        if (BuildConfig.ENABLE_LEAK_CANARY) {
-            LeakCanaryConfiguration.setInitialConfigFor(this)
-        } else {
-            LeakCanaryConfiguration.disable()
-        }
-        Timber.tag(TAG)
-        Timber.d("Startup - Application Start")
-        Timber.i("Timber config: $logType")
-
-        // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
-        UsageAnalytics.initialize(this)
-        if (BuildConfig.DEBUG) {
-            UsageAnalytics.setDryRun(true)
-        }
+        val acra = CrashReportingContext.apply { initializeAcraCrashReporter() }
+        with(acra) { setupLogging() }
+        with(acra) { setupUsageAnalytics() }
 
         // Last in the UncaughtExceptionHandlers chain is our filter service
         ThrowableFilterService.initialize()
 
-        applicationScope.launch {
-            Timber.i("AnkiDroidApp: listing debug info")
-            Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
-        }
+        with(acra) { performStartupLogging() }
 
         // Stop after analytics and logging are initialised.
         if (isAcraSenderProcess()) {
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
             return
         }
-        if (AdaptionUtil.isUserATestClient) {
-            showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
-        }
-
-        setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
-
-        CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(
-            this,
-            preferences.getBoolean(
-                getString(R.string.card_browser_external_context_menu_key),
-                false,
-            ),
-        )
-        AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(
-            this,
-            preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true),
-        )
-        setupNotificationChannels(applicationContext)
-
-        makeBackendUsable(this)
-
+        setupContextMenus()
+        setup("makeBackendUsable") { makeBackendUsable(this) }
+        setupNotifications()
+        setupAppLifecycleObserver()
+        setupBackendChangeManager()
         // Probe WebView availability before any other init touches it (#5794).
-        if (!checkWebViewAvailable()) {
+        if (!setupWebView()) {
             return
         }
-
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId()
-        LanguageUtil.setDefaultBackendLanguages()
+        val anki = AnkiContext.apply { setupAnkiBackend() }
+        with(anki) { initializeAnkiDroidDirectory() }
+        with(anki) { setupDayRollover() }
+        restoreRecurringAlarms(this)
+        setupLifecycleLogging()
+        activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        setupTextToSpeech()
+    }
 
-        initializeAnkiDroidDirectory()
+    /**
+     * @param debugTraceSqlCalls Log all SQL statements executed by the backend.
+     * **Warning** The log may be delayed by 100ms, so you should not assume than a given SQL
+     * statement has run after a Timber.* line just because the SQL statement appeared later.
+     */
+    private fun initAnkiBackend(
+        @Suppress("SameParameterValue") debugTraceSqlCalls: Boolean = false,
+    ) {
+        runCatching {
+            setup("initAnkiBackend") {
+                // Note: This method runs before logs are enabled.
+                Os.setenv("PLATFORM", syncPlatform(), false)
+                // enable debug logging of sync actions
+                if (BuildConfig.DEBUG) {
+                    Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug,fsrs=error", false)
+                }
 
-        val context = this.withAppLocale()
-        if (Prefs.newReviewRemindersEnabled) {
-            Timber.i("Setting review reminder notifications if they have not already been set")
-            AlarmManagerService.scheduleAllNotifications(context)
-        } else {
-            // Register for notifications
-            Timber.i("AnkiDroidApp: Starting Services")
-            notifications.observeForever { NotificationService.triggerNotificationFor(context) }
+                if (debugTraceSqlCalls) {
+                    Os.setenv("TRACESQL", "1", false)
+                }
+            }
+        }
+    }
+
+    /**
+     * Sets [isInitialized] to `true` ([instance] != null)
+     *
+     * [onCreate] can be called multiple times due to ACRA using a separate sender process
+     *
+     * @return false if `instance.resources` is unusable
+     */
+    private fun setupAnkiDroidApp(): Boolean {
+        return setup("setupAnkiDroidApp") {
+            if (isInitialized) {
+                Timber.i("onCreate() called multiple times")
+                // 5887 - fix crash.
+                if (instance.resources == null) {
+                    Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?")
+                    return@setup false
+                }
+            }
+            instance = this
+            true
+        }
+    }
+
+    // crash reporting should be initialized before logging
+    context(_: CrashReportingContext)
+    private fun setupLogging() {
+        setup("setupLogging") {
+            val logType = LogType.value
+            when (logType) {
+                LogType.DEBUG -> Timber.plant(DebugTree())
+                LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
+                LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
+            }
+            if (BuildConfig.ENABLE_LEAK_CANARY) {
+                LeakCanaryConfiguration.setInitialConfigFor(this)
+            } else {
+                LeakCanaryConfiguration.disable()
+            }
+            Timber.tag(TAG)
+            Timber.d("Startup - Application Start")
+            Timber.i("Timber config: $logType")
+        }
+    }
+
+    // analytics after ACRA, they both install UncaughtExceptionHandlers but Analytics chains while ACRA does not
+    context(_: CrashReportingContext)
+    private fun setupUsageAnalytics() {
+        setup("setupUsageAnalytics") {
+            UsageAnalytics.initialize(this)
+            if (BuildConfig.DEBUG) {
+                UsageAnalytics.setDryRun(true)
+            }
+        }
+    }
+
+    context(_: CrashReportingContext)
+    private fun performStartupLogging() {
+        setup("performStartupLogging") {
+            applicationScope.launch {
+                Timber.i("AnkiDroidApp: listing debug info")
+                Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
+            }
+
+            // skip logging if we're under ACRA
+            if (isAcraSenderProcess()) return@setup
+
+            if (AdaptionUtil.isUserATestClient) {
+                showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
+            }
+        }
+    }
+
+    /**
+     * Sets up display of the context menus which appear when long pressing text on external apps,
+     * allowing it to be shared to this app.
+     *
+     * Example: 'Anki Card'
+     *
+     * @see Intent.ACTION_PROCESS_TEXT
+     */
+    private fun setupContextMenus() {
+        setup("setupContextMenus") {
+            val preferences = this.sharedPrefs()
+
+            // setup 'Card Browser'
+            CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(
+                this,
+                preferences.getBoolean(
+                    getString(R.string.card_browser_external_context_menu_key),
+                    false,
+                ),
+            )
+
+            // Setup 'Anki Card'
+            AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(
+                this,
+                preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true),
+            )
+        }
+    }
+
+    private fun setupNotifications() {
+        setup("setupNotifications") {
+            setupNotificationChannels(applicationContext)
+
+            val context = this.withAppLocale()
+            if (Prefs.newReviewRemindersEnabled) {
+                Timber.i("Setting review reminder notifications if they have not already been set")
+                AlarmManagerService.scheduleAllNotifications(context)
+            } else {
+                // Register for notifications
+                Timber.i("AnkiDroidApp: Starting Services")
+                notifications.observeForever { NotificationService.triggerNotificationFor(context) }
+            }
+        }
+    }
+
+    private fun setupAppLifecycleObserver() {
+        setup("setupAppLifecycleObserver") {
+            val appLifecycleObserver = AppLifecycleObserver(applicationContext)
+
+            ProcessLifecycleOwner
+                .get()
+                .lifecycle
+                .addObserver(appLifecycleObserver)
+        }
+    }
+
+    /**
+     * Ensures any changes in the backend are propagated to:
+     *
+     * - widgets
+     *
+     * @see opExecuted
+     * @see ChangeManager
+     */
+    private fun setupBackendChangeManager() {
+        setup("setupBackendChangeManager") {
+            ChangeManager.subscribe(this)
+        }
+    }
+
+    /**
+     * @return whether [WebView] is usable
+     * [fatalInitializationError] is set otherwise
+     */
+    private fun setupWebView(): Boolean =
+        setup("setupWebView") {
+            // TODO: duplicated logging
+            setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
+
+            return@setup checkWebViewAvailable()
         }
 
-        // listen for day rollover: time + timezone changes
-        DayRolloverHandler.listenForRolloverEvents(this)
-
-        restoreRecurringAlarms(this)
-
-        registerActivityLifecycleCallbacks(
-            object : ActivityLifecycleCallbacks {
-                override fun onActivityCreated(
-                    activity: Activity,
-                    savedInstanceState: Bundle?,
-                ) {
-                    Timber.i(
-                        "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
-                        savedInstanceState?.let { "${it.keySet().size} keys" },
-                    )
-                    (activity as? FragmentActivity)
-                        ?.supportFragmentManager
-                        ?.registerFragmentLifecycleCallbacks(
-                            FragmentLifecycleLogger(activity),
-                            true,
-                        )
-                }
-
-                override fun onActivityStarted(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onStart")
-                }
-
-                override fun onActivityResumed(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onResume")
-                }
-
-                override fun onActivityPaused(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onPause")
-                }
-
-                override fun onActivityStopped(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onStop")
-                }
-
-                override fun onActivitySaveInstanceState(
-                    activity: Activity,
-                    outState: Bundle,
-                ) {
-                    Timber.i("${activity::class.simpleName}::onSaveInstanceState")
-                }
-
-                override fun onActivityDestroyed(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onDestroy")
-                }
-            },
-        )
-
-        activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
-        TtsVoices.launchBuildLocalesJob()
-        // enable {{tts-voices:}} field filter
-        TtsVoicesFieldFilter.ensureApplied()
+    private fun setupAnkiBackend() {
+        setup("setupAnkiBackend") {
+            LanguageUtil.setDefaultBackendLanguages()
+        }
     }
 
     /**
@@ -280,39 +359,109 @@ open class AnkiDroidApp :
      * In most cases the Anki Backend now creates the collection and [initializeAnkiDroidDirectory]
      *  is called on startup of the activity.
      */
+    context(_: AnkiContext)
     private fun initializeAnkiDroidDirectory() {
-        // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
-        // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
-        //  is not considered to be a fatal error, unless the directory itself is not writable.
-        val ankiDroidDir =
-            try {
-                CollectionHelper.getCurrentAnkiDroidDirectory(this)
-            } catch (e: SystemStorageException) {
-                fatalInitializationError = FatalInitializationError.StorageError(e)
-                return
-            }
-
-        // TODO: This line is questionable, as it doesn't work on most post-scoped-storage
-        //  builds/Android versions, but we call initializeAnkiDroidDirectory later on startup
-        if (!Permissions.hasLegacyStorageAccessPermission(this)) return
-
-        try {
-            CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
-            return
-        } catch (e: StorageAccessException) {
-            Timber.e(e, "Could not initialize AnkiDroid directory")
-            try {
-                val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
-                if (isSdCardMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
-                    // Don't send report if the user is using a custom directory as SD cards trip up here a lot
-                    sendExceptionReport(e, "AnkiDroidApp.onCreate")
+        setup("initializeAnkiDroidDirectory") {
+            // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
+            // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
+            //  is not considered to be a fatal error, unless the directory itself is not writable.
+            val ankiDroidDir =
+                try {
+                    CollectionHelper.getCurrentAnkiDroidDirectory(this)
+                } catch (e: SystemStorageException) {
+                    fatalInitializationError = FatalInitializationError.StorageError(e)
+                    return@setup
                 }
-            } catch (e: SystemStorageException) {
-                // The user can't write to the AnkiDroid directory (=> cant write to the collection)
-                // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
-                // => show the 'fatal storage error' screen
-                fatalInitializationError = FatalInitializationError.StorageError(e)
+
+            // TODO: This line is questionable, as it doesn't work on most post-scoped-storage
+            //  builds/Android versions, but we call initializeAnkiDroidDirectory later on startup
+            if (!Permissions.hasLegacyStorageAccessPermission(this)) return@setup
+
+            try {
+                CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
+                return@setup
+            } catch (e: StorageAccessException) {
+                Timber.e(e, "Could not initialize AnkiDroid directory")
+                try {
+                    val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
+                    if (isSdCardMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
+                        // Don't send report if the user is using a custom directory as SD cards trip up here a lot
+                        sendExceptionReport(e, "AnkiDroidApp.onCreate")
+                    }
+                } catch (e: SystemStorageException) {
+                    // The user can't write to the AnkiDroid directory (=> cant write to the collection)
+                    // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
+                    // => show the 'fatal storage error' screen
+                    fatalInitializationError = FatalInitializationError.StorageError(e)
+                }
             }
+        }
+    }
+
+    /** listen for day rollover: time + timezone changes */
+    context(_: AnkiContext)
+    private fun setupDayRollover() {
+        setup("setupDayRollover") {
+            DayRolloverHandler.listenForRolloverEvents(this)
+        }
+    }
+
+    private fun setupLifecycleLogging() {
+        setup("setupLifecycleLogging") {
+            registerActivityLifecycleCallbacks(
+                object : ActivityLifecycleCallbacks {
+                    override fun onActivityCreated(
+                        activity: Activity,
+                        savedInstanceState: Bundle?,
+                    ) {
+                        Timber.i(
+                            "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
+                            savedInstanceState?.let { "${it.keySet().size} keys" },
+                        )
+                        (activity as? FragmentActivity)
+                            ?.supportFragmentManager
+                            ?.registerFragmentLifecycleCallbacks(
+                                FragmentLifecycleLogger(activity),
+                                true,
+                            )
+                    }
+
+                    override fun onActivityStarted(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onStart")
+                    }
+
+                    override fun onActivityResumed(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onResume")
+                    }
+
+                    override fun onActivityPaused(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onPause")
+                    }
+
+                    override fun onActivityStopped(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onStop")
+                    }
+
+                    override fun onActivitySaveInstanceState(
+                        activity: Activity,
+                        outState: Bundle,
+                    ) {
+                        Timber.i("${activity::class.simpleName}::onSaveInstanceState")
+                    }
+
+                    override fun onActivityDestroyed(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onDestroy")
+                    }
+                },
+            )
+        }
+    }
+
+    private fun setupTextToSpeech() {
+        setup("setupTextToSpeech") {
+            TtsVoices.launchBuildLocalesJob()
+            // enable {{tts-voices:}} field filter
+            TtsVoicesFieldFilter.ensureApplied()
         }
     }
 
@@ -373,6 +522,18 @@ open class AnkiDroidApp :
             Timber.d("No relevant changes to update the widget")
         }
     }
+
+    /**
+     * Initialization for the Anki Backend has completed:
+     * - [initAnkiBackend] - platform environment variables/logging
+     * - [makeBackendUsable] - load rsdroid.so
+     * - [setupBackendChangeManager]
+     * - [setupAnkiBackend] - i18n is set up
+     */
+
+    object AnkiContext
+
+    object CrashReportingContext
 
     companion object {
         /**
