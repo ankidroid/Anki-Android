@@ -75,6 +75,9 @@ class WhiteboardFragment :
     private var eraserPopup: PopupWindow? = null
     private var brushConfigPopup: PopupWindow? = null
 
+    /** Called when no bindings used the triggered gestures */
+    var gestureFallbackListener: ((Gesture) -> Unit)? = null
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -165,9 +168,12 @@ class WhiteboardFragment :
                     2 -> Gesture.TWO_FINGER_TAP
                     3 -> Gesture.THREE_FINGER_TAP
                     4 -> Gesture.FOUR_FINGER_TAP
-                    else -> null
+                    else -> return@setOnMultiTouchListener
                 }
-            gesture?.let { bindingMap.onGesture(it) }
+            val result = bindingMap.onGesture(gesture)
+            if (!result) {
+                gestureFallbackListener?.invoke(gesture)
+            }
         }
     }
 

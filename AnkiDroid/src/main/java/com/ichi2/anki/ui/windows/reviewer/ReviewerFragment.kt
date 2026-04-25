@@ -560,8 +560,12 @@ class ReviewerFragment :
             doubleBackCallback.isEnabled =
                 isEnabled && compat.isUsingSystemGestureNavigation(requireContext())
             if (whiteboardFragment == null && isEnabled) {
+                val whiteboardFragment = WhiteboardFragment()
+                whiteboardFragment.gestureFallbackListener = { gesture ->
+                    bindingMap.onGesture(gesture)
+                }
                 childFragmentManager.commit {
-                    add(R.id.whiteboard_container, WhiteboardFragment::class.java, null, WhiteboardFragment::class.jvmName)
+                    add(R.id.whiteboard_container, whiteboardFragment, WhiteboardFragment::class.jvmName)
                 }
             }
         }
