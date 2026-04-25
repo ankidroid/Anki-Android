@@ -39,40 +39,45 @@ fun ReviewerMenuView.setup(
         return
     }
 
-    viewModel.flagFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { flagCode ->
-            findItem(ViewerAction.FLAG_MENU.menuId)?.setPaddedIcon(context, flagCode.drawableRes)
-        }
-
-    val markItem = findItem(ViewerAction.MARK.menuId)
-    viewModel.isMarkedFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { isMarked ->
-            if (isMarked) {
-                markItem?.setPaddedIcon(context, R.drawable.ic_star)
-                markItem?.setTitle(R.string.menu_unmark_note)
-            } else {
-                markItem?.setPaddedIcon(context, R.drawable.ic_star_border_white)
-                markItem?.setTitle(R.string.menu_mark_note)
+    findItem(ViewerAction.FLAG_MENU.menuId)?.let { flagItem ->
+        viewModel.flagFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { flagCode ->
+                flagItem.setPaddedIcon(context, flagCode.drawableRes)
             }
-        }
+    }
 
-    val undoItem = findItem(ViewerAction.UNDO.menuId)
-    viewModel.undoLabelFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { label ->
-            undoItem?.title = label ?: CollectionManager.TR.undoUndo()
-            undoItem?.isEnabled = label != null
-        }
+    findItem(ViewerAction.MARK.menuId)?.let { markItem ->
+        viewModel.isMarkedFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { isMarked ->
+                if (isMarked) {
+                    markItem.setPaddedIcon(context, R.drawable.ic_star)
+                    markItem.setTitle(R.string.menu_unmark_note)
+                } else {
+                    markItem.setPaddedIcon(context, R.drawable.ic_star_border_white)
+                    markItem.setTitle(R.string.menu_mark_note)
+                }
+            }
+    }
 
-    val redoItem = findItem(ViewerAction.REDO.menuId)
-    viewModel.redoLabelFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { label ->
-            redoItem?.title = label ?: CollectionManager.TR.undoRedo()
-            redoItem?.isEnabled = label != null
-        }
+    findItem(ViewerAction.UNDO.menuId)?.let { undoItem ->
+        viewModel.undoLabelFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { label ->
+                undoItem.title = label ?: CollectionManager.TR.undoUndo()
+                undoItem.isEnabled = label != null
+            }
+    }
+
+    findItem(ViewerAction.REDO.menuId)?.let { redoItem ->
+        viewModel.redoLabelFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { label ->
+                redoItem.title = label ?: CollectionManager.TR.undoRedo()
+                redoItem.isEnabled = label != null
+            }
+    }
 
     findItem(ViewerAction.SUSPEND_MENU.menuId)?.let { suspendItem ->
         val suspendFlow = viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
