@@ -452,6 +452,11 @@ class CardBrowserViewModel(
 
     val flowOfInitCompleted = MutableStateFlow(false)
 
+    /**
+     * Cards/notes to be selected on the next search after init completes.
+     */
+    private var pendingSelectionRestore: List<CardOrNoteId> = emptyList()
+
     val flowOfColumnHeadings: StateFlow<List<ColumnHeading>> =
         combine(flowOfActiveColumns, flowOfCardsOrNotes, flowOfAllColumns) { activeColumns, cardsOrNotes, allColumns ->
             Timber.d("updated headings for %d columns", activeColumns.count)
@@ -516,7 +521,8 @@ class CardBrowserViewModel(
         performSearchFlow
             .onEach {
                 Timber.d("performSearchFlow -> launching search")
-                launchSearchForCards()
+                val ids = pendingSelectionRestore.also { pendingSelectionRestore = emptyList() }
+                launchSearchForCards(cardOrNoteIdsToSelect = ids)
             }.launchIn(viewModelScope)
 
         reverseDirectionFlow
@@ -553,13 +559,12 @@ class CardBrowserViewModel(
             Timber.i("initCompleted")
 
             if (!manualInit) {
-                flowOfInitCompleted.update { true }
                 // restore selection state
                 val idsFile =
                     savedStateHandle.get<Bundle>(STATE_MULTISELECT_VALUES)?.let { bundle ->
                         BundleCompat.getParcelable(bundle, STATE_MULTISELECT_VALUES, IdsFile::class.java)
                     }
-                val ids =
+                pendingSelectionRestore =
                     try {
                         idsFile?.getIds()?.map { CardOrNoteId(it) }
                     } catch (e: Exception) {
@@ -574,7 +579,7 @@ class CardBrowserViewModel(
                         null
                     } ?: emptyList()
 
-                launchSearchForCards(cardOrNoteIdsToSelect = ids)
+                flowOfInitCompleted.update { true }
             }
         }
 
