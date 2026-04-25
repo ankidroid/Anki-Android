@@ -343,7 +343,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 }
             }
             AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED -> {
-                // TODO: #17151: not yet handled. Exists to stop ACRA errors
+                Timber.d("ACTION_APPWIDGET_OPTIONS_CHANGED received from DeckPickerWidget")
             }
             AppWidgetManager.ACTION_APPWIDGET_ENABLED -> {
                 Timber.d("Widget enabled")

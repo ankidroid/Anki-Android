@@ -306,7 +306,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 }
             }
             AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED -> {
-                // TODO: #17151 not yet handled. Exists to stop ACRA errors
+                Timber.d("ACTION_APPWIDGET_OPTIONS_CHANGED received from CardAnalysisWidget")
             }
             AppWidgetManager.ACTION_APPWIDGET_DELETED -> {
                 Timber.d("ACTION_APPWIDGET_DELETED received")
