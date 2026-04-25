@@ -545,13 +545,13 @@ class ReviewerFragment :
             },
             false,
         )
+        val isUsingGesturesNavigation = compat.isUsingSystemGestureNavigation(requireContext())
         val doubleBackCallback =
             doubleBackPressCallback(
                 enabled = false,
                 onFirstBack = { showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) },
                 shouldReEnable = {
-                    viewModel.whiteboardEnabledFlow.value &&
-                        compat.isUsingSystemGestureNavigation(requireContext())
+                    viewModel.whiteboardEnabledFlow.value && isUsingGesturesNavigation
                 },
             )
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, doubleBackCallback)
