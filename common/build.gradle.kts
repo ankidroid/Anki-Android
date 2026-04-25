@@ -17,7 +17,10 @@ kotlin {
 }
 
 dependencies {
-    implementation(libs.json)
+    // #20852: JSON must be compile-time only: Bundling `org.json:json` into the APK ships a second
+    // copy with a different field schema (vs the system version in `android.jar`)
+    compileOnly(libs.json)
+    testImplementation(libs.json)
     implementation(libs.androidx.annotation)
     implementation(libs.slf4j.api)
 
