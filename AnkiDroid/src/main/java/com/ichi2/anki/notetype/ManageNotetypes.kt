@@ -99,6 +99,10 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
         binding.btnClearSelection.setOnClickListener { viewModel.clearSelection() }
+
+        binding.selectionToolbar.setOnClickListener {
+            // Consume touch events to prevent tap-through
+        }
         binding.btnDeleteSelection.setOnClickListener {
             launchCatchingTask {
                 val deleteMessage =
