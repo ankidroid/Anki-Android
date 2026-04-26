@@ -129,13 +129,13 @@
             />
 
         <Button
-            android:id="@+id/see_more"
+            android:id="@+id/toggle_search_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:paddingStart="16dp"
             style="@style/Widget.Material3.Button.TextButton.Icon"
-            android:text="See more"
+            android:text="@string/card_browser_see_more"
             app:layout_constraintTop_toBottomOf="@id/search_history"
             />
 

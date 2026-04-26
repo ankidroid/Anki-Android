@@ -52,7 +52,6 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -208,15 +207,8 @@ class StandardSearchFragment :
             fun toSpannable() = searchString?.let { entry.toUserSpannable(it) } ?: SpannableString("")
         }
 
-        fun buildUiModelList(historyItems: SearchHistoryItems): List<SearchHistoryItemUiModel> =
-            historyItems.entryToSearchString
-                .take(MAX_SEARCH_HISTORY_ENTRIES)
-                .map {
-                    SearchHistoryItemUiModel(
-                        entry = it.first,
-                        searchString = it.second,
-                    )
-                }
+        fun toUiModels(items: SearchHistoryItems): List<SearchHistoryItemUiModel> =
+            items.entryToSearchString.map { SearchHistoryItemUiModel(entry = it.first, searchString = it.second) }
 
         class SearchHistoryAdapter(
             private val context: Context,
@@ -254,7 +246,7 @@ class StandardSearchFragment :
         val searchHistoryAdapter =
             SearchHistoryAdapter(
                 context = requireContext(),
-                searches = buildUiModelList(viewModel.searchHistoryFlow.value),
+                searches = toUiModels(viewModel.displayedSearchHistoryFlow.value),
             )
         binding.searchHistory.apply {
             adapter = searchHistoryAdapter
@@ -263,14 +255,22 @@ class StandardSearchFragment :
             }
         }
 
-        binding.seeMore.apply {
-            setOnClickListener { showSnackbar("TODO") }
+        binding.toggleSearchHistory.setOnClickListener {
+            viewModel.toggleHistoryExpanded()
         }
 
-        // replace the data when the search history is updated
-        viewModel.searchHistoryFlow.launchCollectionInLifecycleScope {
+        // replace the data when the displayed search history is updated
+        viewModel.displayedSearchHistoryFlow.launchCollectionInLifecycleScope {
             searchHistoryAdapter.clear()
-            searchHistoryAdapter.addAll(buildUiModelList(it))
+            searchHistoryAdapter.addAll(toUiModels(it))
+        }
+
+        viewModel.showHistoryToggleFlow.launchCollectionInLifecycleScope {
+            binding.toggleSearchHistory.isVisible = it
+        }
+
+        viewModel.isHistoryExpandedFlow.launchCollectionInLifecycleScope {
+            binding.toggleSearchHistory.setText(if (it) R.string.card_browser_see_less else R.string.card_browser_see_more)
         }
 
         viewModel.searchHistoryAvailableFlow.launchCollectionInLifecycleScope {
@@ -335,9 +335,6 @@ class StandardSearchFragment :
 
     companion object {
         const val TAG = "STANDARD"
-
-        /** Limits the number of history items, so controls appear below without scrolling */
-        const val MAX_SEARCH_HISTORY_ENTRIES = 5
     }
 }
 

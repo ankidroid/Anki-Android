@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.browser.search
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
@@ -26,6 +27,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /** Test of [StandardSearchFragment] */
 @RunWith(AndroidJUnit4::class)
@@ -48,7 +51,7 @@ class StandardSearchFragmentTest : RobolectricTest() {
     @Test
     fun `history entries are truncated`() {
         val expectedMaxEntries = 5
-        assertEquals(expectedMaxEntries, StandardSearchFragment.MAX_SEARCH_HISTORY_ENTRIES)
+        assertEquals(expectedMaxEntries, CardBrowserSearchViewModel.MAX_SEARCH_HISTORY_ENTRIES)
 
         val history = SearchHistory()
         repeat(expectedMaxEntries + 1) {
@@ -58,6 +61,28 @@ class StandardSearchFragmentTest : RobolectricTest() {
         withFragment {
             assertEquals(expectedMaxEntries, binding.searchHistory.count)
             assertEquals(expectedMaxEntries + 1, viewModel.searchHistory.size)
+        }
+    }
+
+    @Test
+    fun `see more button is hidden when entries do not exceed limit`() {
+        val history = SearchHistory()
+        repeat(3) { history.addRecent(SearchHistoryEntry(it.toString())) }
+
+        withFragment {
+            assertFalse(binding.toggleSearchHistory.isVisible)
+        }
+    }
+
+    @Test
+    fun `see more button is visible when entries exceed limit`() {
+        val history = SearchHistory()
+        repeat(CardBrowserSearchViewModel.MAX_SEARCH_HISTORY_ENTRIES + 1) {
+            history.addRecent(SearchHistoryEntry(it.toString()))
+        }
+
+        withFragment {
+            assertTrue(binding.toggleSearchHistory.isVisible)
         }
     }
 

@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.SearchHistory
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
+import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.Companion.MAX_SEARCH_HISTORY_ENTRIES
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.UserMessage
 import com.ichi2.testutils.assertFalse
 import kotlinx.coroutines.flow.map
@@ -356,6 +357,70 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
                 deleteSavedSearch(SavedSearch("A", "sample query"))
 
                 assertEquals(false, expectMostRecentItem())
+            }
+        }
+
+    @Test
+    fun `search history - initially collapsed`() =
+        withViewModel {
+            assertThat("initially not expanded", isHistoryExpandedFlow.value, equalTo(false))
+        }
+
+    @Test
+    fun `search history - toggle expands and collapses`() =
+        withViewModel {
+            isHistoryExpandedFlow.test {
+                assertThat(expectMostRecentItem(), equalTo(false))
+                toggleHistoryExpanded()
+                assertThat(expectMostRecentItem(), equalTo(true))
+                toggleHistoryExpanded()
+                assertThat(expectMostRecentItem(), equalTo(false))
+            }
+        }
+
+    @Test
+    fun `search history - displayed list is truncated when collapsed`() =
+        withViewModel {
+            repeat(MAX_SEARCH_HISTORY_ENTRIES + 3) { i ->
+                submitSearch("search $i")
+            }
+            displayedSearchHistoryFlow.test {
+                val items = expectMostRecentItem()
+                assertThat(items.entryToSearchString, hasSize(MAX_SEARCH_HISTORY_ENTRIES))
+            }
+        }
+
+    @Test
+    fun `search history - displayed list shows all when expanded`() =
+        withViewModel {
+            val totalItems = MAX_SEARCH_HISTORY_ENTRIES + 3
+            repeat(totalItems) { i ->
+                submitSearch("search $i")
+            }
+            toggleHistoryExpanded()
+            displayedSearchHistoryFlow.test {
+                val items = expectMostRecentItem()
+                assertThat(items.entryToSearchString, hasSize(totalItems))
+            }
+        }
+
+    @Test
+    fun `search history - toggle button visible only when items exceed max`() =
+        withViewModel {
+            showHistoryToggleFlow.test {
+                assertThat(expectMostRecentItem(), equalTo(false))
+            }
+
+            repeat(MAX_SEARCH_HISTORY_ENTRIES) { i ->
+                submitSearch("search $i")
+            }
+            showHistoryToggleFlow.test {
+                assertThat(expectMostRecentItem(), equalTo(false))
+            }
+
+            submitSearch("one more search")
+            showHistoryToggleFlow.test {
+                assertThat(expectMostRecentItem(), equalTo(true))
             }
         }
 
