@@ -45,6 +45,7 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.collectIn
+import com.ichi2.anki.utils.ext.setIconRes
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.performClickIfEnabled
@@ -260,7 +261,7 @@ class PreviewerFragment :
                 setIcon(R.drawable.ic_card_answer)
                 setTitle(R.string.card_side_answer)
             } else {
-                setIcon(R.drawable.ic_card_question)
+                setIconRes(requireContext(), R.drawable.ic_card_question)
                 setTitle(R.string.card_side_both)
             }
         }
