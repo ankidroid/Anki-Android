@@ -48,6 +48,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.cancelable
+import com.ichi2.utils.configureIconsDirection
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -166,6 +167,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         val helpMenuItem: MenuItem? = binding.toolbar.menu.findItem(R.id.action_help)
         if (helpMenuItem == null) {
             binding.toolbar.inflateMenu(R.menu.filtered_options)
+            binding.toolbar.menu.configureIconsDirection(requireContext())
         }
     }
 
