@@ -770,7 +770,7 @@ class CardBrowserFragment :
                             return true
                         }
                         R.id.action_edit_note -> {
-                            requireCardBrowserActivity().openNoteEditorForCurrentlySelectedRow()
+                            openNoteEditorForCurrentlySelectedRow()
                             return true
                         }
                         R.id.action_view_card_info -> {
@@ -1175,10 +1175,27 @@ class CardBrowserFragment :
                 }
             }
             KeyEvent.KEYCODE_E -> {
+                // NOTE: Ctrl+E is 'Add Note', set in the Activity
                 if (event.isCtrlPressed && event.isShiftPressed) {
                     Timber.i("Ctrl+Shift+E: Export selected cards")
                     exportSelected()
                     return true
+                } else if (!event.isCtrlPressed) {
+                    if (legacySearchView?.isIconified == true) {
+                        // search box is not available so treat the event as a shortcut
+                        // Disable 'E' edit shortcut in split mode as the integrated NoteEditor
+                        // is already available in the split view, making the shortcut redundant
+                        if (activityViewModel.isFragmented) {
+                            Timber.i("E: Ignored in split mode")
+                            return true
+                        }
+                        Timber.i("E: Edit note")
+                        openNoteEditorForCurrentlySelectedRow()
+                        return true
+                    }
+                    Timber.i("E: Character added")
+                    // search box might be available and receiving input so treat this as usual text
+                    return false
                 }
             }
             KeyEvent.KEYCODE_D -> {
@@ -1368,6 +1385,17 @@ class CardBrowserFragment :
                 startActivity(destination.toIntent(requireContext()))
             }
         }
+
+    /**
+     * @see CardBrowserViewModel.openNoteEditorForCurrentlySelectedRow
+     */
+    @NeedsTest("note edits are saved")
+    @NeedsTest("I/O edits are saved")
+    fun openNoteEditorForCurrentlySelectedRow() {
+        if (!activityViewModel.openNoteEditorForCurrentlySelectedRow()) {
+            showSnackbar(R.string.no_note_to_edit)
+        }
+    }
 
     fun openGradeNow() =
         launchCatchingTask {
