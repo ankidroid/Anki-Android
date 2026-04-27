@@ -111,6 +111,8 @@ import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
 import com.ichi2.anki.dialogs.GradeNowDialog
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
+import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -544,7 +546,7 @@ class CardBrowserFragment :
                             return true
                         }
                         R.id.action_list_my_searches -> {
-                            requireCardBrowserActivity().showSavedSearches()
+                            showSavedSearches()
                             return true
                         }
                         R.id.action_undo -> {
@@ -1083,6 +1085,12 @@ class CardBrowserFragment :
                 is ChangeNoteTypeResponse.ChangeNoteType -> showDialogFragment(ChangeNoteTypeDialog.newInstance(result.noteIds))
             }
 
+        fun onSaveSearchNamePrompt(searchTerms: String) {
+            Timber.i("opening 'save search' name input dialog")
+            val dialog = SaveBrowserSearchDialogFragment.newInstance(searchQuery = searchTerms)
+            showDialogFragment(dialog)
+        }
+
         activityViewModel.reverseDirectionFlow.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -1104,6 +1112,7 @@ class CardBrowserFragment :
         searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
         activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
         activityViewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
+        activityViewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
     }
 
     private fun setupFragmentResultListeners() {
@@ -1212,8 +1221,15 @@ class CardBrowserFragment :
                     Timber.i("Ctrl+Shift+S: Reposition selected cards")
                     repositionSelectedCards()
                     return true
-                    // Ctrl+Alt+S / Ctrl+S in the activity take priority
-                } else if (!event.isCtrlPressed && event.isAltPressed) {
+                } else if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+S: Show saved searches")
+                    showSavedSearches()
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+S: Save search")
+                    activityViewModel.saveCurrentSearch()
+                    return true
+                } else if (event.isAltPressed) {
                     Timber.i("Alt+S: Show suspended cards")
                     activityViewModel.searchForSuspendedCards()
                     return true
@@ -1339,6 +1355,11 @@ class CardBrowserFragment :
         launchCatchingTask {
             val cardIds = activityViewModel.queryAllSelectedCardIds()
             GradeNowDialog.showDialog(requireAnkiActivity(), cardIds)
+        }
+
+    fun showSavedSearches() =
+        launchCatchingTask {
+            showDialogFragment(SavedBrowserSearchesDialogFragment.newInstance(activityViewModel.savedSearches()))
         }
 
     /** All the notes of the selected cards will be marked
