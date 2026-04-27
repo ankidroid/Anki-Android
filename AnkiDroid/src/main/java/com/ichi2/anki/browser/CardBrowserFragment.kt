@@ -546,7 +546,7 @@ class CardBrowserFragment :
                         }
                         R.id.action_undo -> {
                             Timber.w("CardBrowser:: Undo pressed")
-                            requireCardBrowserActivity().onUndo()
+                            onUndo()
                             return true
                         }
                         R.id.action_preview_many -> {
@@ -757,7 +757,7 @@ class CardBrowserFragment :
                         }
                         R.id.action_undo -> {
                             Timber.w("CardBrowser:: Undo pressed")
-                            requireCardBrowserActivity().onUndo()
+                            onUndo()
                             return true
                         }
                         R.id.action_preview_many -> {
@@ -1240,6 +1240,13 @@ class CardBrowserFragment :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_Z -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+Z: Undo")
+                    onUndo()
+                    return true
+                }
+            }
             KeyEvent.KEYCODE_ESCAPE -> {
                 Timber.i("ESC: Select none")
                 activityViewModel.selectNone()
@@ -1284,6 +1291,12 @@ class CardBrowserFragment :
                     .getAvailableDecks()
             val dialog = getChangeDeckDialog(selectableDecks)
             showDialogFragment(dialog)
+        }
+
+    @VisibleForTesting
+    fun onUndo() =
+        launchCatchingTask {
+            undoAndShowSnackbar()
         }
 
     /** All the notes of the selected cards will be marked
