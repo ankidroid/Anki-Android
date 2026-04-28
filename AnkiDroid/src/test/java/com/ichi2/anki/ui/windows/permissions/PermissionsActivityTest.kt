@@ -15,6 +15,8 @@
  */
 package com.ichi2.anki.ui.windows.permissions
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
@@ -26,14 +28,18 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.shadows.ShadowToast
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
     @Test
     fun testActivityCantBeClosedByBackButton() {
-        testActivity(ARBITRARY_PERMISSION_SET) { activity ->
+        testActivity { activity ->
             activity.onBackPressedDispatcher.onBackPressed()
             assertThat("activity is not finishing", !activity.isFinishing)
         }
@@ -41,7 +47,7 @@ class PermissionsActivityTest : RobolectricTest() {
 
     @Test
     fun testOnClickingContinueActivityFinishes() {
-        testActivity(ARBITRARY_PERMISSION_SET) { activity ->
+        testActivity { activity ->
             activity.setContinueButtonEnabled(true)
             activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
             assertThat("activity is finishing", activity.isFinishing)
@@ -49,8 +55,17 @@ class PermissionsActivityTest : RobolectricTest() {
     }
 
     @Test
+    fun `error toast is shown if PERMISSIONS_SET_EXTRA is missing`() {
+        testInvalidActivityFinishes()
+        assertThat(
+            ShadowToast.getTextOfLatestToast(),
+            equalTo(getResourceString(R.string.something_wrong)),
+        )
+    }
+
+    @Test
     fun `Each screen starts normally and has the same permissions of a PermissionSet`() {
-        testActivity(ARBITRARY_PERMISSION_SET) { activity ->
+        testActivity { activity ->
             for (permissionSet in PermissionSet.entries) {
                 val fragment = permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance() ?: continue
                 activity.supportFragmentManager.commitNow {
@@ -63,15 +78,22 @@ class PermissionsActivityTest : RobolectricTest() {
         }
     }
 
+    private fun testInvalidActivityFinishes() {
+        val ex = assertFailsWith<NullPointerException> { testActivity(permissionSet = null) { } }
+        assertEquals("Cannot run onActivity since Activity has been destroyed already", ex.message)
+    }
+
     private fun testActivity(
-        permissionSet: PermissionSet,
+        permissionSet: PermissionSet? = ARBITRARY_PERMISSION_SET,
         action: ActivityAction<PermissionsActivity>,
     ) {
+        val context = ApplicationProvider.getApplicationContext<Context>()
         val intent =
-            PermissionsActivity.getIntent(
-                ApplicationProvider.getApplicationContext(),
-                permissionSet,
-            )
+            if (permissionSet != null) {
+                PermissionsActivity.getIntent(context, permissionSet)
+            } else {
+                Intent(context, PermissionsActivity::class.java)
+            }
         ActivityScenario.launch<PermissionsActivity>(intent).use { scenario ->
             scenario.onActivity { activity ->
                 action.perform(activity)
