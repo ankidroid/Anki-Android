@@ -45,6 +45,7 @@ import com.ichi2.anki.common.utils.ext.replaceWith
 import com.ichi2.anki.databinding.ItemCardBrowserBinding
 import com.ichi2.anki.databinding.ViewBrowserColumnCellBinding
 import com.ichi2.themes.Themes
+import com.ichi2.utils.dp
 import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -260,8 +261,16 @@ class BrowserMultiColumnAdapter(
                 )
             holder.numberOfColumns = row.cellsCount
 
+            val edgePadding = 8.dp.toPx(context)
+            val innerPadding = 4.dp.toPx(context)
+
             for (i in 0 until row.cellsCount) {
-                holder.columnViews[i].text = renderColumn(i)
+                holder.columnViews[i].apply {
+                    text = renderColumn(i)
+                    val startPadding = if (i == 0) edgePadding else innerPadding
+                    val endPadding = if (i == row.cellsCount - 1) edgePadding else innerPadding
+                    setPaddingRelative(startPadding, paddingTop, endPadding, paddingBottom)
+                }
             }
             holder.setIsSelected(isSelected)
             val rowColor =
