@@ -235,13 +235,15 @@ class CardBrowserSearchViewModel(
     fun onSearchTextChanged(searchText: String) {
         Timber.v("onSearchTextChanged '%s'", searchText)
 
+        val sanitizedText = searchText.replace("\n", " ")
+
         // move from system back to 'user'
         updateFilterState { it.copy() }
 
         if (advancedSearchFlow.value) {
-            advancedSearchTextFlow.value = searchText
+            advancedSearchTextFlow.value = sanitizedText
         } else {
-            basicSearchTextFlow.value = searchText
+            basicSearchTextFlow.value = sanitizedText
         }
     }
 
