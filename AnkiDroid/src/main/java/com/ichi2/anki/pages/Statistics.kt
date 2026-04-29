@@ -17,6 +17,7 @@ package com.ichi2.anki.pages
 
 import android.os.Bundle
 import android.print.PrintAttributes
+import android.print.PrintJob
 import android.print.PrintManager
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
@@ -29,6 +30,7 @@ import com.ichi2.anki.databinding.PageStatisticsBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startDeckSelection
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
@@ -38,6 +40,10 @@ class Statistics :
     DeckSelectionDialog.DeckSelectionListener {
     override val pagePath: String = "graphs"
     private val binding by viewBinding(PageStatisticsBinding::bind)
+
+    /** The PrintJob launched by this Fragment */
+    // After killing the app, printManager.printJobs can still list active jobs
+    private var pendingPrintJob: PrintJob? = null
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(
@@ -74,15 +80,20 @@ class Statistics :
      * It uses the Android PrintManager service to create a print job, based on the content of the WebView.
      * The resulting output is a PDF document. **/
     private fun exportWebViewContentAsPDF() {
-        val printManager = getSystemService(requireContext(), PrintManager::class.java)
+        if (pendingPrintJob?.isActive == true) {
+            showSnackbar(R.string.already_in_progress)
+            return
+        }
+        val printManager = getSystemService(requireContext(), PrintManager::class.java) ?: return
         val currentDateTime = getTimestamp(TimeManager.time)
         val jobName = "${getString(R.string.app_name)}-stats-$currentDateTime"
         val printAdapter = webViewLayout.createPrintDocumentAdapter(jobName)
-        printManager?.print(
-            jobName,
-            printAdapter,
-            PrintAttributes.Builder().build(),
-        )
+        pendingPrintJob =
+            printManager.print(
+                jobName,
+                printAdapter,
+                PrintAttributes.Builder().build(),
+            )
     }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
@@ -119,3 +130,6 @@ class Statistics :
         private const val KEY_DECK_NAME = "key_deck_name"
     }
 }
+
+private val PrintJob.isActive: Boolean
+    get() = !isCompleted && !isFailed && !isCancelled

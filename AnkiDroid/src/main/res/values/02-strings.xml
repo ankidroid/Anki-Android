@@ -465,5 +465,7 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">Name already exists</string>
+
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>
 
