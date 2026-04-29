@@ -34,6 +34,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startDeckSelection
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
+import timber.log.Timber
 
 class Statistics :
     PageFragment(R.layout.page_statistics),
@@ -81,9 +82,11 @@ class Statistics :
      * The resulting output is a PDF document. **/
     private fun exportWebViewContentAsPDF() {
         if (pendingPrintJob?.isActive == true) {
+            Timber.w("Duplicate print attempted - skipping")
             showSnackbar(R.string.already_in_progress)
             return
         }
+        Timber.i("Saving Stats to PDF")
         val printManager = getSystemService(requireContext(), PrintManager::class.java) ?: return
         val currentDateTime = getTimestamp(TimeManager.time)
         val jobName = "${getString(R.string.app_name)}-stats-$currentDateTime"
