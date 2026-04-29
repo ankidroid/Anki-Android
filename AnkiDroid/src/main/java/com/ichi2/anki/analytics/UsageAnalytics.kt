@@ -30,6 +30,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsConstants.reportablePrefKeys
+import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsService
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.DisplayUtils
@@ -39,7 +41,7 @@ import org.acra.util.Installation
 import timber.log.Timber
 
 @KotlinCleanup("see if we can make variables lazy, or properties without the `s` prefix")
-object UsageAnalytics {
+object UsageAnalytics : Analytics {
     const val ANALYTICS_OPTIN_KEY = "analytics_opt_in"
 
     @KotlinCleanup("lateinit")
@@ -209,7 +211,7 @@ object UsageAnalytics {
      *
      * @param screenName screenName the name to show in analysis reports
      */
-    fun sendAnalyticsScreenView(screenName: String) {
+    override fun sendAnalyticsScreenView(screenName: String) {
         Timber.d("sendAnalyticsScreenView(): %s", screenName)
         if (!optIn) {
             return
@@ -225,11 +227,11 @@ object UsageAnalytics {
      * @param value    A value for the event, Integer.MIN_VALUE signifies caller shouldn't send the value
      * @param label    A label for the event, may be null
      */
-    fun sendAnalyticsEvent(
+    override fun sendAnalyticsEvent(
         category: String,
         action: String,
-        value: Int? = null,
-        label: String? = null,
+        value: Int?,
+        label: String?,
     ) {
         Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label)
         if (!optIn) {
@@ -274,7 +276,7 @@ object UsageAnalytics {
      * @param description API limited to 100 characters, truncated here to 100 if needed
      * @param fatal       whether it was fatal or not
      */
-    fun sendAnalyticsException(
+    override fun sendAnalyticsException(
         description: String,
         fatal: Boolean,
     ) {

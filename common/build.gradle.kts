@@ -23,6 +23,7 @@ dependencies {
     testImplementation(libs.json)
     implementation(libs.androidx.annotation)
     implementation(libs.slf4j.api)
+    implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.vintage.engine)

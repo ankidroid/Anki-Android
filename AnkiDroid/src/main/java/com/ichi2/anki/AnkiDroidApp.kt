@@ -37,9 +37,13 @@ import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.common.analytics.AnalyticsService
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.application.ApplicationHost
+import com.ichi2.anki.common.coroutines.ApplicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.preferences.SharedPrefsService
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -130,6 +134,12 @@ open class AnkiDroidApp :
             }
         }
         instance = this
+
+        // Initialize common services
+        ApplicationHost.setInstance(this)
+        ApplicationScope.setInstance(applicationScope)
+        AnalyticsService.setAnalytics(UsageAnalytics)
+        SharedPrefsService.setProvider { sharedPrefs() }
 
         // Get preferences
         val preferences = this.sharedPrefs()
