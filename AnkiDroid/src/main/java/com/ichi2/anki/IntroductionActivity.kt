@@ -27,10 +27,12 @@ import androidx.core.os.BundleCompat
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.account.LoginFragment
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.FRAGMENT_KEY
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.RESULT_KEY
+import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import timber.log.Timber
@@ -44,7 +46,16 @@ import timber.log.Timber
  */
 // TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
 @NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
-class IntroductionActivity : AnkiActivity(R.layout.activity_introduction) {
+class IntroductionActivity :
+    AnkiActivity(R.layout.activity_introduction),
+    CollectionPermissionScreenLauncher {
+    override val permissionScreenLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (hasCollectionStoragePermissions()) {
+                openLoginDialog()
+            }
+        }
+
     @NeedsTest("ensure this is called when the activity ends")
     private val onLoginResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -73,6 +84,7 @@ class IntroductionActivity : AnkiActivity(R.layout.activity_introduction) {
     }
 
     private fun openLoginDialog() {
+        if (collectionPermissionScreenWasOpened()) return
         Timber.i("Opening login screen")
         val intent = AccountActivity.getIntent(context = this, forResult = true)
         onLoginResult.launch(intent)
