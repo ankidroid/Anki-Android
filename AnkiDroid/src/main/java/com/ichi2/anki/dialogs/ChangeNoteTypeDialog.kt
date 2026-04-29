@@ -488,13 +488,18 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
             lifecycleScope.launch {
                 viewModel.canChangeTemplatesFlow.collect { canChangeTemplates ->
                     binding.templatesContainer.isVisible = canChangeTemplates
-                    binding.templatesContainer.isVisible = canChangeTemplates
+                    binding.templatesHeaderLayout.isVisible = canChangeTemplates
+                    if (!canChangeTemplates) {
+                        binding.templateRemovalText.isVisible = false
+                    }
                 }
             }
 
             lifecycleScope.launch {
                 viewModel.discardedTemplatesFlow.collect { discarded ->
-                    showDiscardedTemplatesMessage(discarded)
+                    if (viewModel.canChangeTemplatesFlow.value) {
+                        showDiscardedTemplatesMessage(discarded)
+                    }
                 }
             }
         }
