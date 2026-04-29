@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.junit.platform.launcher)
     testImplementation(libs.robolectric)
     testImplementation(libs.kotlin.test)
 
