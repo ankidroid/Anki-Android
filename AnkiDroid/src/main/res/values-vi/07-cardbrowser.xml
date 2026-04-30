@@ -119,4 +119,7 @@
     <string name="exclude_column">Loại bỏ mục</string>
     <string name="save_changes_message">Vui lòng lưu lại thay đổi của bạn trước tiên</string>
     <string name="browser_find_replace_loading_fields">Truy cập vào trường tên&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

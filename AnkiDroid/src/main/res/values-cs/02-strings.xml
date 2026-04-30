@@ -54,7 +54,7 @@
     <string name="CardEditorModel">Typ poznámky:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">Upravit okluze</string>
     <string name="paste_from_clipboard" maxLength="28">Vložit ze schránky</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
     <string name="add_tag" maxLength="28">Přidat štítek</string>
@@ -84,7 +84,7 @@
     <string name="disable_eraser" maxLength="28">Zakázat gumování</string>
     <string name="hide_whiteboard" maxLength="28">Skrýt tabuli</string>
     <string name="clear_whiteboard" maxLength="28">Smazat tabuli</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Skrýt nástrojovou lištu</string>
     <string name="replay_media" maxLength="28">Přehrát multimédia</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
@@ -199,7 +199,7 @@
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Štítek již existuje</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
@@ -213,7 +213,7 @@
     <string name="background_image_title" maxLength="41">Pozadí</string>
     <string name="choose_an_image" maxLength="41">Vybrat obrázek</string>
     <string name="remove_wallpaper_image" maxLength="41">Odebrat pozadí</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Jste si jisti, že chcete odstranit pozadí?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
@@ -221,9 +221,9 @@
     <string name="white_board_eraser_enabled">Režim gumování povolen</string>
     <string name="white_board_eraser_disabled">Režim gumování zakázán</string>
     <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
-    <string name="media_file_size_warning_title">Media too large</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
-    <string name="media_file_size_add_anyway">Add anyway</string>
+    <string name="media_file_size_warning_title">Multimédium je příliš velké</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">Soubor \"%1$s\" (%2$s) překračuje limit AnkiWeb %3$s a nelze jej synchronizovat. Přesto přidat?</string>
+    <string name="media_file_size_add_anyway">Přesto přidat</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
@@ -249,20 +249,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Velikost písma</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobrazit nástrojovou lištu</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="format_insert_bold">Formátovat jako tučné</string>
+    <string name="format_insert_italic">Formát jako kurzíva</string>
+    <string name="format_insert_underline">Formát jako podtržené</string>
+    <string name="insert_horizontal_line">Vložit vodorovnou čáru</string>
+    <string name="insert_heading">Vložit nadpis</string>
+    <string name="format_font_size">Změnit velikost písma</string>
+    <string name="insert_mathjax">Vložit rovnici MathJax</string>
     <string name="note_editor_toolbar_icon">Text tlačítka</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
+    <string name="before_text">HTML před výběrem</string>
+    <string name="after_text">HTML za výběrem</string>
+    <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
+    <string name="edit_toolbar_item">Upravit položku nástrojové lišty</string>
     <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ji upravili nebo odstranili</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
     <string name="note_editor_image_too_large">Obrázek je příliš velký, vložte ho prosím ručně</string>
     <string name="note_editor_video_too_large">Video je příliš velké, vložte ho prosím ručně</string>
     <string name="note_editor_audio_too_large">Zvukový soubor je příliš velký, vložte ho prosím ručně</string>
@@ -274,7 +274,7 @@
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Posouvat nástrojovou lištu</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
-    <string name="dialog_hint_certificate">Certificate</string>
+    <string name="dialog_hint_certificate">Certifikát</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -284,7 +284,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Zadejte platný e-mail</string>
     <string name="password_empty">Je požadováno heslo</string>
-    <string name="back_pressed_once">Go back again to exit</string>
+    <string name="back_pressed_once">Pro ukončení stiskněte znovu tlačítko zpět</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Stáhnout balíček</string>
@@ -346,7 +346,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
+    <string name="toggle_cards_notes">Přepnout karty/poznámky</string>
     <string name="truncate_content_help">Zkrátit výšku každého řádku prohlížeče, aby se zobrazily pouze první 3 řádky obsahu</string>
     <string name="browser_options_dialog_heading">Možnosti prohlížeče</string>
     <string name="audio_saved">Nahrávka uložena</string>
@@ -362,7 +362,7 @@
     <string name="shared_decks_login_required">Prosím přihlaste se, abyste mohli stáhnout více balíčků</string>
     <string name="deck_description_field_hint">Popisek</string>
     <string name="deck_description_saved">Popis aktualizován</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Formátovat jako markdown</string>
     <string name="help_button_content_description">Otevřít nápovědu pro „%s“</string>
     <string name="failed_to_copy">Kopírování se nezdařilo</string>
     <plurals name="unbury_cards_feedback">
@@ -379,7 +379,7 @@
     <string name="play_recording">Přehrát</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Další</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Typ karty nelze odstranit</string>
     <string name="orphan_note_message">Smazání tohoto typu karty zanechá některé poznámky bez jakýchkoliv karet.</string>
     <string name="voice_not_supported">Hlas není podporován. Zkuste jiný nebo nainstalujte hlasový modul.</string>
     <!--Keyboard shortcuts dialog-->
@@ -404,5 +404,5 @@
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <string name="error_name_exists">Název již existuje</string>
 </resources>

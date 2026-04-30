@@ -125,4 +125,7 @@
     <string name="exclude_column">𐍃𐌰𐌿𐌻𐌹𐌽𐍃 𐌿𐍃𐌽𐌹𐌼𐌰𐌽</string>
     <string name="save_changes_message">𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹 𐍆𐍂𐌿𐌼𐌹𐍃𐍄 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐍉𐍃 𐌸𐌴𐌹𐌽𐍉𐍃</string>
     <string name="browser_find_replace_loading_fields">𐍅𐌰𐌹𐍂𐌸𐌴 𐌽𐌰𐌼𐌽𐌰 𐌽𐌹𐌼𐌰𐌽𐌳𐌰&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

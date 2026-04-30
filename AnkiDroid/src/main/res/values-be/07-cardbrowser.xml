@@ -137,4 +137,7 @@
     <string name="exclude_column">Выключыць слупок</string>
     <string name="save_changes_message">Спачатку захавайце свае змяненні</string>
     <string name="browser_find_replace_loading_fields">Атрыманне палёў з назвамі&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

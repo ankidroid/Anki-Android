@@ -137,4 +137,7 @@
     <string name="exclude_column">Виключити стовпець</string>
     <string name="save_changes_message">Будь ласка, спочатку збережіть ваші зміни</string>
     <string name="browser_find_replace_loading_fields">Пошук назв полів&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

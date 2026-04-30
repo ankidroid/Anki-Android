@@ -119,4 +119,7 @@
     <string name="exclude_column">この列をブラウザのリストから除外</string>
     <string name="save_changes_message">先に変更を保存してください</string>
     <string name="browser_find_replace_loading_fields">フィールド名を取得しています&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

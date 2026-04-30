@@ -125,4 +125,7 @@
     <string name="exclude_column">Kolom uitsluiten</string>
     <string name="save_changes_message">Sla uw wijzigingen eerst op</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

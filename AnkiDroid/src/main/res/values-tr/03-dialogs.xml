@@ -263,18 +263,18 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Kart numaraları sabit kalacak</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="extra_cloze_deletions_removed">Normal bir not türüne geçilirse ve mevcut kart şablonlarından daha fazla cloze silme varsa, fazladan kartlar kaldırılacaktır.</string>
     <string name="different_note_types_selected">Lütfen sadece bir tür not seçin</string>
     <string name="error_no_changes_to_save">Kaydedilecek değişiklik yok</string>
     <string name="choose_color">Renk seç</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Alanlar</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Özel</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
+    <string name="special_field_front_side_help">Ön şablon içeriği. Ses otomatik olarak oynatılmıyor</string>
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Bütün deste, üst desteler de dahil %s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Şu anki deste, üst desteler hariç%s</string>
+    <string name="special_field_flag_help">\'%1$s\' çıktısını verir, burada %2$s bayrak kodudur (%3$s\-%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Notun etiketleri%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Kartın ID\'si%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Kart şablonunun adı%s</string>

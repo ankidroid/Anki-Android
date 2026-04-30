@@ -125,4 +125,7 @@
     <string name="exclude_column">Exclure la colonne</string>
     <string name="save_changes_message">Enregistrez vos changements en premier SVP</string>
     <string name="browser_find_replace_loading_fields">Récupération des noms des champs&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

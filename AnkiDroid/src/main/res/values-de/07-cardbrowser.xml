@@ -125,4 +125,7 @@
     <string name="exclude_column">Spalte ausschließen</string>
     <string name="save_changes_message">Bitte speichere deine Änderungen zuerst</string>
     <string name="browser_find_replace_loading_fields">Abrufen der Feldnamen&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

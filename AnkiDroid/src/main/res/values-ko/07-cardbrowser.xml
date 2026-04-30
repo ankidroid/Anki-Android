@@ -119,4 +119,7 @@
     <string name="exclude_column">열 제외하기</string>
     <string name="save_changes_message">변경사항을 먼저 저장하세요</string>
     <string name="browser_find_replace_loading_fields">필드 이름 검색 중&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>
