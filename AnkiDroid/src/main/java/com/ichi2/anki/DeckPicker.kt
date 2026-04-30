@@ -2001,6 +2001,11 @@ open class DeckPicker :
             if (AdaptionUtil.isVivo) {
                 showThemedToast(this, getString(R.string.create_shortcut_error_vivo), false)
             }
+            // #18601: MIUI gates shortcut creation behind Settings - Privacy Protection -
+            // Other permissions - AnkiDroid - Home screen shortcuts [add shortcuts to Home screen]
+            if (AdaptionUtil.isMiui) {
+                showThemedToast(this, getString(R.string.create_shortcut_error_miui, getString(R.string.app_name)), false)
+            }
             if (!success) {
                 showThemedToast(this, getString(R.string.create_shortcut_failed), false)
             }
