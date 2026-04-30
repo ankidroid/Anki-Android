@@ -1995,7 +1995,9 @@ open class DeckPicker :
                 .setLongLabel(shortcutData.longLabel)
                 .build()
         try {
+            // success does not mean the user selected 'create', only that the feature is supported
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
+            Timber.i("Create shortcut for deck %d. Request displayed: %b", shortcutData.deckId, success)
 
             // User report: "success" is true even if Vivo does not have permission
             if (AdaptionUtil.isVivo) {
@@ -2003,6 +2005,7 @@ open class DeckPicker :
             }
             // #18601: MIUI gates shortcut creation behind Settings - Privacy Protection -
             // Other permissions - AnkiDroid - Home screen shortcuts [add shortcuts to Home screen]
+            // TODO: Determine the result of 'success'
             if (AdaptionUtil.isMiui) {
                 showThemedToast(this, getString(R.string.create_shortcut_error_miui, getString(R.string.app_name)), false)
             }
