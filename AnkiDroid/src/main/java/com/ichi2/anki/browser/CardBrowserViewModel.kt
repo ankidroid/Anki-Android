@@ -1174,7 +1174,9 @@ class CardBrowserViewModel(
                 ).toSearchString()
             }.getOrThrow()
 
-        setFilterQuery(searchString.value)
+        // until we use SearchRequest for everything, we need to use () to ensure the OR
+        // takes precedence over an 'AND'
+        setFilterQuery("(${searchString.value})")
     }
 
     /** Previewing */

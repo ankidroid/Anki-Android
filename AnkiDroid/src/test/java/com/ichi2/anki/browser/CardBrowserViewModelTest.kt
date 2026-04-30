@@ -1516,12 +1516,34 @@ class CardBrowserViewModelTest : JvmTest() {
         runViewModelTest {
             filterByTags(listOf("être"), CardStateFilter.ALL_CARDS)
 
-            assertThat(searchTerms, equalTo("tag:être"))
+            assertThat(searchTerms, equalTo("(tag:être)"))
             assertThat("all tagged cards are returned", rowCount, equalTo(3))
 
             updateQueryText("tag:être hêllo")
             launchSearchForCards(tempSearchQuery!!)
             assertThat("input is unchanged", searchTerms, equalTo("tag:être hêllo"))
+        }
+    }
+
+    /**
+     * Regression test: parentheses are required until we fully use SearchRequest
+     *
+     * Otherwise, the 'AND' takes precedence over the 'OR':
+     *
+     * `tag:a OR tag:b a` is parsed as `tag:a OR (tag:b a)`
+     */
+    @Test
+    fun `single tag filter is parenthesized to preserve precedence`() {
+        addBasicNote().update { tags = mutableListOf("foo", "bar") }
+
+        runViewModelTest {
+            filterByTags(listOf("foo", "bar"), CardStateFilter.ALL_CARDS)
+
+            assertThat(
+                "single-tag filter wraps the tag clause so user-appended terms append safely",
+                searchTerms,
+                equalTo("(tag:foo OR tag:bar)"),
+            )
         }
     }
 
