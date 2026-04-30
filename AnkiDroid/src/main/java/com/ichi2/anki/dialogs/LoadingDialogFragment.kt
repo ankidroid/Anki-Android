@@ -110,7 +110,8 @@ fun AnkiActivity.showLoadingDialog(
     // parameters were requested for the new dialog fragment
     removeImmediately(fragment)
     val loadingDialog = LoadingDialogFragment.newInstance(message, cancellable)
-    loadingDialog.show(supportFragmentManager, LoadingDialogFragment.TAG)
+    // showNow() avoids a race condition - removal is synchronous
+    loadingDialog.showNow(supportFragmentManager, LoadingDialogFragment.TAG)
 }
 
 /** Synchronously removes the provided [LoadingDialogFragment] if valid(not null) */
