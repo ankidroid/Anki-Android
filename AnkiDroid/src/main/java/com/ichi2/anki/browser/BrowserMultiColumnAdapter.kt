@@ -169,10 +169,7 @@ class BrowserMultiColumnAdapter(
             require(pressedColor != color)
             val rippleDrawable =
                 RippleDrawable(
-                    ColorStateList(
-                        arrayOf(intArrayOf(android.R.attr.state_pressed)),
-                        intArrayOf(pressedColor),
-                    ),
+                    ColorStateList.valueOf(pressedColor),
                     color.toDrawable(),
                     null,
                 )
