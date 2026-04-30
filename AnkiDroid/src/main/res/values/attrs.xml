@@ -45,15 +45,6 @@
         <attr name="relatedFragments" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="NumberRangePreference">
-        <attr name="min"/>
-        <attr name="max"/>
-    </declare-styleable>
-
-    <declare-styleable name="StepsPreference">
-        <attr name="allowEmpty"/>
-    </declare-styleable>
-
     <declare-styleable name="NumberRangePreferenceCompat">
         <attr name="min"/>
         <attr name="max"/>
