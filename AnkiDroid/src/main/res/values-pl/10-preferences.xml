@@ -226,7 +226,7 @@
         Jeśli nie jest ustawiony, zamiast tego zostanie użyty domyślny serwer AnkiWeb.
         <a href="%s">Dowiedz się więcej</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Adres URL synchronizacji</string>
     <string name="custom_sync_certificate_title" maxLength="41">Własny certyfikat główny (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klawiatura</string>
@@ -390,5 +390,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Odwróć i odpowiedz</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Otwórz ustawienia</string>
-    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Powiązane ustawienia</string>
 </resources>

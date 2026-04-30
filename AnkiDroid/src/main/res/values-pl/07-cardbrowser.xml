@@ -77,7 +77,7 @@
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nie można zapisać wyszukiwania bez nazwy</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nazwa już istnieje</string>
     <string name="card_browser_list_my_searches_successful_save">Wyszukiwanie zostało zapisane</string>
-    <string name="card_browser_list_my_searches_successful_deleted">Search deleted</string>
+    <string name="card_browser_list_my_searches_successful_deleted">Usunięto wyszukiwanie</string>
     <string name="no_note_to_edit">Brak notatki do edycji</string>
     <string name="card_browser_list_my_searches_remove_content">Usunąć \"%1$s\"?</string>
     <string name="card_browser_change_display_order" maxLength="28">Zmień kolejność wyświetlania</string>
@@ -138,6 +138,6 @@
     <string name="save_changes_message">Proszę najpierw zapisać zmiany</string>
     <string name="browser_find_replace_loading_fields">Pobieranie nazw pól&#8230;</string>
     <!-- Search history -->
-    <string name="card_browser_see_more">See more</string>
-    <string name="card_browser_see_less">See less</string>
+    <string name="card_browser_see_more">Zobacz więcej</string>
+    <string name="card_browser_see_less">Zobacz mniej</string>
 </resources>

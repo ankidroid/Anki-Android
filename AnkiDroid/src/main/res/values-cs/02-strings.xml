@@ -405,4 +405,5 @@
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">Název již existuje</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>
