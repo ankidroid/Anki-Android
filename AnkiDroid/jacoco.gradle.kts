@@ -1,87 +1,120 @@
+/*
+ *  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import com.ichi2.anki.gradle.ReportOpener
-import groovy.transform.Memoized
+import groovy.util.Node
 import groovy.xml.XmlParser
+import org.gradle.api.GradleException
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.api.tasks.testing.Test
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
+import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
+import org.gradle.testing.jacoco.tasks.JacocoReport
+import java.io.FileNotFoundException
+import java.util.Properties
 
-apply plugin: 'jacoco'
+apply(plugin = "jacoco")
 
-jacoco {
-    toolVersion = libs.versions.jacoco.get()
+val jacocoVersion: String =
+    extensions
+        .getByType(VersionCatalogsExtension::class.java)
+        .named("libs")
+        .findVersion("jacoco")
+        .get()
+        .requiredVersion
 
+configure<JacocoPluginExtension> {
+    toolVersion = jacocoVersion
 }
 
-android {
-    testCoverage {
-        jacocoVersion = libs.versions.jacoco.get()
-    }
-}
+fun getLocalProperties(): Properties {
+    val propertiesFile = project.rootProject.file("local.properties")
 
-@Memoized
-Properties getLocalProperties() {
-    final propertiesFile = project.rootProject.file("local.properties")
-
-    final properties = new Properties()
+    val properties = Properties()
 
     if (propertiesFile.exists()) {
-        properties.load(propertiesFile.newDataInputStream())
+        properties.load(propertiesFile.inputStream())
     }
 
     return properties
 }
 
-def openReportRequested = project.hasProperty("open-report")
-def linuxHtmlCmd = localProperties["linux-html-cmd"]?.toString()
+val openReportRequested = project.hasProperty("open-report")
+val linuxHtmlCmd: String? = getLocalProperties()["linux-html-cmd"]?.toString()
 
-tasks.withType(Test).configureEach {
-    jacoco.includeNoLocationClasses = true
-    jacoco.excludes = ['jdk.internal.*']
+tasks.withType<Test>().configureEach {
+    val jacoco = the<JacocoTaskExtension>()
+    jacoco.isIncludeNoLocationClasses = true
+    jacoco.excludes = listOf("jdk.internal.*")
 }
 
 // source: https://medium.com/jamf-engineering/android-kotlin-code-coverage-with-jacoco-sonar-and-gradle-plugin-6-x-3933ed503a6e
-def fileFilter = [
+val fileFilter =
+    listOf(
         // android
-        '**/R.class',
-        '**/R$*.class',
-        '**/BuildConfig.*',
-        '**/Manifest*.*',
-        '**/*Test*.*',
-        'android/**/*.*',
+        "**/R.class",
+        "**/R\$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
         // kotlin
-        '**/*MapperImpl*.*',
-        '**/*$ViewInjector*.*',
-        '**/*$ViewBinder*.*',
-        '**/BuildConfig.*',
-        '**/*Component*.*',
-        '**/*BR*.*',
-        '**/Manifest*.*',
-        '**/*$Lambda$*.*',
-        '**/*Companion*.*',
-        '**/*Module*.*',
-        '**/*Dagger*.*',
-        '**/*Hilt*.*',
-        '**/*MembersInjector*.*',
-        '**/*_MembersInjector.class',
-        '**/*_Factory*.*',
-        '**/*_Provide*Factory*.*',
-        '**/*Extensions*.*',
+        "**/*MapperImpl*.*",
+        "**/*\$ViewInjector*.*",
+        "**/*\$ViewBinder*.*",
+        "**/BuildConfig.*",
+        "**/*Component*.*",
+        "**/*BR*.*",
+        "**/Manifest*.*",
+        "**/*\$Lambda\$*.*",
+        "**/*Companion*.*",
+        "**/*Module*.*",
+        "**/*Dagger*.*",
+        "**/*Hilt*.*",
+        "**/*MembersInjector*.*",
+        "**/*_MembersInjector.class",
+        "**/*_Factory*.*",
+        "**/*_Provide*Factory*.*",
+        "**/*Extensions*.*",
         // sealed and data classes
-        '**/*$Result.*',
-        '**/*$Result$*.*'
-]
+        "**/*\$Result.*",
+        "**/*\$Result\$*.*",
+    )
 
-static def builtInKotlincClassDir(String variant) {
+fun builtInKotlincClassDir(variant: String): String {
     // AGP9 built-in Kotlin compiler writes classes to
     // build/intermediates/built_in_kotlinc/<variant>/compile<Variant>Kotlin/classes
-    "intermediates/built_in_kotlinc/${variant}/compile${variant.capitalize()}Kotlin/classes"
+    return "intermediates/built_in_kotlinc/$variant/compile${variant.replaceFirstChar { it.uppercase() }}Kotlin/classes"
 }
-def flavorClassDir = builtInKotlincClassDir("play${rootProject.androidTestVariantName}")
-def moduleClassDir = builtInKotlincClassDir(rootProject.androidTestVariantName.toLowerCase())
+
+val flavorClassDir = builtInKotlincClassDir("play${rootProject.androidTestVariantName}")
+val moduleClassDir = builtInKotlincClassDir(rootProject.androidTestVariantName.lowercase())
 
 // Our merge report task
-tasks.register('jacocoTestReport', JacocoReport) {
-    def htmlOutDir = project.layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+tasks.register<JacocoReport>("jacocoTestReport") {
+    val htmlOutDir =
+        project.layout.buildDirectory
+            .dir("reports/jacoco/$name/html")
+            .get()
+            .asFile
+    val openReport = openReportRequested
+    val htmlCmd = linuxHtmlCmd
 
     doLast {
-        ReportOpener.open(htmlOutDir, openReportRequested, linuxHtmlCmd)
+        ReportOpener.open(htmlOutDir, openReport, htmlCmd)
     }
 
     reports {
@@ -89,30 +122,47 @@ tasks.register('jacocoTestReport', JacocoReport) {
         html.outputLocation = htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(flavorClassDir), excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
+    val kotlinClasses =
+        project.fileTree(
+            mapOf(
+                "dir" to project.layout.buildDirectory.dir(flavorClassDir),
+                "excludes" to fileFilter,
+            ),
+        )
+    val mainSrc = "${project.projectDir}/src/main/java"
 
-    sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
-            '**/*.exec',
-            '**/*.ec'
-    ])
-    dependsOn('testPlayDebugUnitTest')
+    sourceDirectories.setFrom(project.files(mainSrc))
+    classDirectories.setFrom(project.files(kotlinClasses))
+    executionData.setFrom(
+        project.fileTree(
+            mapOf(
+                "dir" to project.layout.buildDirectory,
+                "includes" to listOf("**/*.exec", "**/*.ec"),
+            ),
+        ),
+    )
+    dependsOn("testPlayDebugUnitTest")
     dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
 
 // Android library modules (do not yet support flavors play/full)
-def androidModulesToUnitTest = [":api", ":common:android", ":libanki", ":compat"]
+val androidModulesToUnitTest = listOf(":api", ":common:android", ":libanki", ":compat")
 // JVM modules: use 'test' task and 'classes/kotlin/main' class dir
-def jvmModulesToUnitTest = [":common"]
+val jvmModulesToUnitTest = listOf(":common")
 
 // A unit-test only report task
-tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
-    def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+tasks.register<JacocoReport>("jacocoUnitTestReport") {
+    val report = this
+    val htmlOutDir =
+        layout.buildDirectory
+            .dir("reports/jacoco/$name/html")
+            .get()
+            .asFile
+    val openReport = openReportRequested
+    val htmlCmd = linuxHtmlCmd
 
     doLast {
-        ReportOpener.open(htmlOutDir, openReportRequested, linuxHtmlCmd)
+        ReportOpener.open(htmlOutDir, openReport, htmlCmd)
     }
 
     reports {
@@ -121,61 +171,81 @@ tasks.register('jacocoUnitTestReport', JacocoReport) {report ->
     }
 
     includeUnitTestCoverage(report, getProject(), flavorClassDir)
-    dependsOn('testPlayDebugUnitTest')
+    dependsOn("testPlayDebugUnitTest")
 
     for (module in androidModulesToUnitTest) {
         includeUnitTestCoverage(report, project(module), moduleClassDir)
-        dependsOn("${module}:testDebugUnitTest")
+        dependsOn("$module:testDebugUnitTest")
     }
 
     for (module in jvmModulesToUnitTest) {
-        includeUnitTestCoverage(report, project(module), 'classes/kotlin/main')
-        dependsOn("${module}:test")
+        includeUnitTestCoverage(report, project(module), "classes/kotlin/main")
+        dependsOn("$module:test")
     }
 }
 
 gradle.projectsEvaluated {
     // ensure test results aren't cached
-    tasks.configureEach { task ->
-        if (task.name == 'testPlayDebugUnitTest') {
-            task.outputs.upToDateWhen { false }
-            task.outputs.cacheIf { false }
+    tasks.configureEach {
+        if (name == "testPlayDebugUnitTest") {
+            outputs.upToDateWhen { false }
+            outputs.cacheIf { false }
         }
     }
     for (module in androidModulesToUnitTest) {
-        project(module).tasks.named('testDebugUnitTest')?.configure {task ->
+        project(module).tasks.findByName("testDebugUnitTest")?.let { task ->
             task.outputs.upToDateWhen { false }
             task.outputs.cacheIf { false }
         }
     }
     for (module in jvmModulesToUnitTest) {
-        project(module).tasks.named('test')?.configure {task ->
+        project(module).tasks.findByName("test")?.let { task ->
             task.outputs.upToDateWhen { false }
             task.outputs.cacheIf { false }
         }
     }
 }
 
-
-
-ext.includeUnitTestCoverage = { JacocoReport report, Project project, String classDir ->
-    report.sourceDirectories.from.add(files("${project.projectDir}/src/main/java"))
-    report.classDirectories.from.add(files(
-            fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter))
+fun includeUnitTestCoverage(
+    report: JacocoReport,
+    project: Project,
+    classDir: String,
+) {
+    report.sourceDirectories.from(project.files("${project.projectDir}/src/main/java"))
+    report.classDirectories.from(
+        project.files(
+            project.fileTree(
+                mapOf(
+                    "dir" to project.layout.buildDirectory.dir(classDir),
+                    "excludes" to fileFilter,
+                ),
+            ),
+        ),
     )
-    report.executionData.from.add(files(
-            fileTree(dir: project.layout.buildDirectory, includes: [
-                    '**/*.exec',
-            ])
-    ))
+    report.executionData.from(
+        project.files(
+            project.fileTree(
+                mapOf(
+                    "dir" to project.layout.buildDirectory,
+                    "includes" to listOf("**/*.exec"),
+                ),
+            ),
+        ),
+    )
 }
 
 // A connected android tests only report task
-tasks.register('jacocoAndroidTestReport', JacocoReport) {
-    def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+tasks.register<JacocoReport>("jacocoAndroidTestReport") {
+    val htmlOutDir =
+        layout.buildDirectory
+            .dir("reports/jacoco/$name/html")
+            .get()
+            .asFile
+    val openReport = openReportRequested
+    val htmlCmd = linuxHtmlCmd
 
     doLast {
-        ReportOpener.open(htmlOutDir, openReportRequested, linuxHtmlCmd)
+        ReportOpener.open(htmlOutDir, openReport, htmlCmd)
     }
 
     reports {
@@ -183,50 +253,73 @@ tasks.register('jacocoAndroidTestReport', JacocoReport) {
         html.outputLocation = htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(flavorClassDir), excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
+    val kotlinClasses =
+        project.fileTree(
+            mapOf(
+                "dir" to project.layout.buildDirectory.dir(flavorClassDir),
+                "excludes" to fileFilter,
+            ),
+        )
+    val mainSrc = "${project.projectDir}/src/main/java"
 
-    sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
-            '**/*.ec'
-    ])
+    sourceDirectories.setFrom(project.files(mainSrc))
+    classDirectories.setFrom(project.files(kotlinClasses))
+    executionData.setFrom(
+        project.fileTree(
+            mapOf(
+                "dir" to project.layout.buildDirectory,
+                "includes" to listOf("**/*.ec"),
+            ),
+        ),
+    )
     dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
 
 // Issue 16640 - some emulators run, but register zero coverage
-tasks.register('assertNonzeroAndroidTestCoverage') {
+tasks.register("assertNonzeroAndroidTestCoverage") {
     // Resolve the file at configuration time, which is Gradle Configuration Cache compatible
-    def jacocoReportFile = layout.buildDirectory.file("reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml")
+    val jacocoReportFile = layout.buildDirectory.file("reports/jacoco/jacocoAndroidTestReport/jacocoAndroidTestReport.xml")
     doLast {
-        File jacocoReport = jacocoReportFile.get().asFile
+        val jacocoReport = jacocoReportFile.get().asFile
 
-        if (!jacocoReport.exists())
-            throw new FileNotFoundException("jacocoAndroidTestReport.xml was not found after running jacocoAndroidTestReport")
+        if (!jacocoReport.exists()) {
+            throw FileNotFoundException("jacocoAndroidTestReport.xml was not found after running jacocoAndroidTestReport")
+        }
 
-        XmlParser xmlParser = new XmlParser()
+        val xmlParser = XmlParser()
         xmlParser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
         xmlParser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
 
-        Node reportRoot = xmlParser.parse(jacocoReport)
-        boolean hasCovered = false
+        val reportRoot: Node = xmlParser.parse(jacocoReport)
+        var hasCovered = false
 
         // https://github.com/jacoco/jacoco/blob/5aabb2eb60bbcd05df968005f1746ba19dcd5361/org.jacoco.report/src/org/jacoco/report/internal/xml/ReportElement.java#L190
-        for (Node child : reportRoot.children()) {
-            if (child.name() != "counter")
-                continue
+        for (rawChild in reportRoot.children()) {
+            val child = rawChild as Node
+            if (child.name() != "counter") continue
 
             if (child.attribute("covered") == "0") {
-                logger.warn("jacoco registered zero code coverage for counter type " + child.attribute("type"), null)
+                logger.warn(
+                    "jacoco registered zero code coverage for counter type ${child.attribute("type")}",
+                    null as Throwable?,
+                )
             } else {
                 hasCovered = true
             }
         }
 
-        if (!hasCovered)
-            throw new GradleScriptException("androidTest registered zero code coverage in jacocoAndroidTestReport.xml. Probably some incompatibilities in the toolchain.", null)
+        if (!hasCovered) {
+            throw GradleException(
+                "androidTest registered zero code coverage in jacocoAndroidTestReport.xml. Probably some incompatibilities in the toolchain.",
+            )
+        }
     }
 }
+
 afterEvaluate {
-    tasks.named('jacocoAndroidTestReport').configure { finalizedBy('assertNonzeroAndroidTestCoverage') }
+    tasks.named("jacocoAndroidTestReport").configure {
+        finalizedBy("assertNonzeroAndroidTestCoverage")
+    }
 }
+
+val Project.androidTestVariantName: String get() = extra["androidTestVariantName"] as String
