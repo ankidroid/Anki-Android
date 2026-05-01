@@ -1034,18 +1034,10 @@ class CardContentProvider : ContentProvider() {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
                 val deck: Deck = col.decks.getLegacy(did)!!
-                @KotlinCleanup("remove the null check if deck is found to be not null in DeckManager.get(Long)")
-                @Suppress("SENSELESS_COMPARISON")
-                if (deck != null) {
-                    try {
-                        val deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC)
-                        if (deckDesc != null) {
-                            deck.put("desc", deckDesc)
-                        }
-                    } catch (e: JSONException) {
-                        Timber.e(e, "Could not set a field of new deck %s", deckName)
-                        return null
-                    }
+                val deckDesc = values.getAsString(FlashCardsContract.Deck.DECK_DESC)
+                if (deckDesc != null) {
+                    deck.description = deckDesc
+                    col.decks.save(deck)
                 }
                 Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, did.toString())
             }

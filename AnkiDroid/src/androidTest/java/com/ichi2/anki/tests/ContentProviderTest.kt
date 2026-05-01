@@ -1802,6 +1802,51 @@ class ContentProviderTest : InstrumentedTest() {
         }
     }
 
+    @Test
+    fun testInsertDeckWithDescription() {
+        val deckName = "test_deck_with_desc"
+        val deckDesc = "This is the deck description"
+        val values =
+            ContentValues().apply {
+                put(FlashCardsContract.Deck.DECK_NAME, deckName)
+                put(FlashCardsContract.Deck.DECK_DESC, deckDesc)
+            }
+        val newDeckUri = contentResolver.insert(FlashCardsContract.Deck.CONTENT_ALL_URI, values)
+        assertNotNull("Check that URI returned from insert is not null", newDeckUri)
+        val newDeckId = newDeckUri!!.lastPathSegment!!.toLong()
+        testDeckIds.add(newDeckId)
+
+        val reopenedCol = reopenCol()
+        val savedDeck = reopenedCol.decks.getLegacy(newDeckId)
+        assertNotNull("Check that the inserted deck exists", savedDeck)
+        assertEquals(
+            "Check that the deck description was persisted",
+            deckDesc,
+            savedDeck!!.description,
+        )
+    }
+
+    @Test
+    fun testInsertDeckWithoutDescription() {
+        val deckName = "test_deck_no_desc"
+        val values =
+            ContentValues().apply {
+                put(FlashCardsContract.Deck.DECK_NAME, deckName)
+            }
+        val newDeckUri = contentResolver.insert(FlashCardsContract.Deck.CONTENT_ALL_URI, values)
+        assertNotNull("Check that URI returned from insert is not null", newDeckUri)
+        val newDeckId = newDeckUri!!.lastPathSegment!!.toLong()
+        testDeckIds.add(newDeckId)
+
+        val savedDeck = col.decks.getLegacy(newDeckId)
+        assertNotNull("Check that the inserted deck exists", savedDeck)
+        assertEquals(
+            "Description should default to empty when not provided",
+            "",
+            savedDeck!!.description,
+        )
+    }
+
     /**
      * Test that query for the next card in the schedule returns a valid result without any deck selector
      */
