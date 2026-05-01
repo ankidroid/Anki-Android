@@ -154,8 +154,8 @@ class BrowserMultiColumnAdapter(
             @ColorInt color: Int,
         ) {
             val nightMode = Themes.isNightTheme
-            val pressedColor: Int
-            val focusedColor: Int
+            var pressedColor: Int
+            var focusedColor: Int
 
             if (nightMode) {
                 // 25% was determined by visual inspection
@@ -166,7 +166,12 @@ class BrowserMultiColumnAdapter(
                 focusedColor = darkenColor(color, 0.4f)
             }
 
-            require(pressedColor != color)
+            pressedColor = pressedColor.takeIf { it != color }
+                ?: if (nightMode) darkenColor(color, 0.85f) else lightenColorAbsolute(color, 0.25f)
+
+            focusedColor = focusedColor.takeIf { it != color }
+                ?: if (nightMode) darkenColor(color, 0.4f) else lightenColorAbsolute(color, 0.25f)
+
             val rippleDrawable =
                 RippleDrawable(
                     ColorStateList.valueOf(pressedColor),
