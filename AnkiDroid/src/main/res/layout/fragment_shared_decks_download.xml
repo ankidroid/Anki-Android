@@ -275,9 +275,12 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancel_download_button"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:backgroundTint="?attr/colorErrorContainer"
+                    android:textColor="?attr/colorOnErrorContainer"
+                    app:rippleColor="?attr/colorError"
                     android:text="@string/cancel_download" />
 
                 <com.google.android.material.button.MaterialButton
