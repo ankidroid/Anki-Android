@@ -264,6 +264,7 @@
     <string name="note_editor_audio_too_large">فایل صدا زیادی بزرگ است، لطفا صدا را دستی وارد کنید</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">پشتیبان گیری اندروید درحال انجام شدن هست. لطفا دوباره تلاش کنید</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">شما به iManager نیاز دارید تا به AnkiDroid اجازه اضافه کردن میانبر بدهید</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">صفحه اصلی شما به AnkiDroid اجازه میانبور اضافه کردن نمیدهد</string>
     <string name="create_shortcut_error">خطا در افزودن میانبُر: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">جملات را با حروف بزرگ بنویس</string>

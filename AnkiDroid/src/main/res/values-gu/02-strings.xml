@@ -262,6 +262,7 @@
     <string name="note_editor_audio_too_large">ઓડિયો ફાઇલ ખૂબ મોટી છે, મહેરબાની કરીને ઓડિયો ફાઇલ જાતે ઉમેરો</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">એન્ડ્રોઈડ બેકઅપ પ્રક્રિયામાં છે. મહેરબાની કરીને પછી પ્રયત્ન કરો</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid ને શૉર્ટકટ્સ ઉમેરવાની મંજૂરી આપવા માટે તમારે iManager નો ઉપયોગ કરવાની જરૂર પડી શકે છે</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">તમારી હોમ સ્ક્રીન AnkiDroid ને શોર્ટકટ ઉમેરવાની મંજૂરી આપતી નથી</string>
     <string name="create_shortcut_error">શૉર્ટકટ ઉમેરવામાં ભૂલ: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">વાક્યોને કેપિટલાઇઝ કરો</string>

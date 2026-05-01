@@ -259,6 +259,7 @@
     <string name="note_editor_audio_too_large">音声ファイルが大きすぎます。手動で音声を挿入してください</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Androidのバックアップが進行中です。もう一度やり直してください</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidのショートカットを追加するには、iManagerでの許可が必要な場合があります。</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面へのショートカットの追加が許可されませんでした</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">英語入力の際に文頭を大文字</string>

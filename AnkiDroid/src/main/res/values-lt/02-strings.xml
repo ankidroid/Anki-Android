@@ -268,6 +268,7 @@
     <string name="note_editor_audio_too_large">Garso failas yra per didelis, įdėkite garso įrašą rankiniu būdu</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">\"Android\" atsarginės kopijos kūrimo eiga. Bandykite dar kartą</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Gali prireikti naudoti \"iManager\", kad \"AnkiDroid\" galėtų pridėti nuorodas</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Jūsų pagrindinis ekranas neleidžia \"AnkiDroid\" pridėti nuorodų</string>
     <string name="create_shortcut_error">Klaida pridedant nuorodą: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Sakinių rašymas didžiąja raide</string>

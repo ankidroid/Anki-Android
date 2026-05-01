@@ -262,6 +262,7 @@
     <string name="note_editor_audio_too_large">O ficheiro de áudio é demasiado grande, por favor insira-o manualmente.</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Cópia de segurança em progresso. Por favor, tente de novo.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Pode precisar de utilizar o iManager para permitir que o AnkiDroid adicione atalhos.</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">O seu ecrã de início não permite que o AnkiDroid adicione atalhos.</string>
     <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Frases começam por maiúscula</string>

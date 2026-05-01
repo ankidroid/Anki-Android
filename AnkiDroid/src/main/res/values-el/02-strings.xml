@@ -262,6 +262,7 @@
     <string name="note_editor_audio_too_large">Το αρχείο ήχου είναι πολύ μεγάλο, παρακαλώ εισάγετε ήχο χειροκίνητα</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Ένα αντίγραφο ασφαλείας του Android βρίσκεται σε εξέλιξη. Δοκιμάστε ξανά</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Ίσως χρειαστεί να χρησιμοποιήσετε το iManager για να επιτρέψετε στο AnkiDroid να προσθέσει συντομεύσεις</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Η αρχική σας οθόνη δεν επιτρέπει στο AnkiDroid να προσθέσει συντομεύσεις</string>
     <string name="create_shortcut_error">Σφάλμα κατά την προσθήκη συντόμευσης: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Κεφαλαιοποίηση προτάσεων</string>

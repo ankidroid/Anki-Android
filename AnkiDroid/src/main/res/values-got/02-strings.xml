@@ -262,6 +262,7 @@
     <string name="note_editor_audio_too_large">𐌸𐌰𐍄𐌰 𐍆𐌰𐌾𐌻 𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌿𐍆𐌰𐍂𐌼𐌹𐌺𐌹𐌻 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽 𐌰𐍅𐌳𐌾𐍉𐌽 𐌷𐌰𐌽𐌳𐌿𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">𐌰𐌽𐌳𐍂𐌰𐌿𐌳 𐌱𐌰𐌹𐌺-𐌰𐍀 𐌹𐌽 𐍆𐍂𐌰𐌼𐌲𐌰𐌷𐍄𐌰𐌹. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐍃𐍉𐌺𐌴𐌹 𐌰𐍆𐍄𐍂𐌰.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">𐌲𐌰𐍂𐌳𐌰𐍃𐌺𐌰𐌹𐍂𐌼𐍃 𐌸𐌴𐌹𐌽𐍃 𐌽𐌹 𐌰𐌽𐌳𐌻𐌴𐍄𐌹𐌸 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌹𐍅𐌹𐌲𐌰𐌽𐍃</string>
     <string name="create_shortcut_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌿𐍅𐌹𐌲: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>

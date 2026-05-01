@@ -265,6 +265,7 @@
     <string name="note_editor_audio_too_large">Zvučna datoteka je prevelika, umetnite zvuk ručno</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Sigurnosna kopija Androida u tijeku. Pokušajte ponovno</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Možda ćete morati koristiti iManager kako biste dozvolili da AnkiDroid stvori prečace</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaš kućni ekran ne dozvoljava da AnkiDroid stvara prečace</string>
     <string name="create_shortcut_error">Greška pri dodavanju prečaca: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Veliko slovo na početku</string>

@@ -265,6 +265,7 @@
     <string name="note_editor_audio_too_large">Skaņu datne ir pārāk liela, lūgums ievietot skaņu pašrocīgi</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Notiek Android rezerves kopēšana. Lūgums mēģināt vēlreiz</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Var būt nepieciešams izmantot iManager, lai ļautu AnkiDroid pievienot saīsnes</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Sākuma ekrāns neļauj AnkiDroid pievienot saīsnes</string>
     <string name="create_shortcut_error">Kļūda saīsnes pievienošanā: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Sākt teikumus ar lielo burtu</string>

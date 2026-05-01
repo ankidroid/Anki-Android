@@ -268,6 +268,7 @@
     <string name="note_editor_audio_too_large">Zvukový soubor je příliš velký, vložte ho prosím ručně</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Probíhá zálohování Androidu. Zkuste to prosím znovu</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Prosím použijte iManager, abyste povolili přidávání zástupců AnkiDroid</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Velká počáteční písmena</string>
