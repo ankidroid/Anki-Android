@@ -7,72 +7,219 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.ichi2.ui.FixedTextView
+        android:id="@+id/downloading_label_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/download_downloading_label"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.1"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.ichi2.ui.FixedTextView
         android:id="@+id/downloading_title"
-        style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_max="600dp"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/download_dialog_info_text"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintVertical_bias="0.3"
-        tools:text="This is how the title will look when a file with a long file name will be downloading" />
-
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/download_dialog_info_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_max="600dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        android:text="@string/deck_download_progress_message"
-        android:gravity="center"
-        android:alpha="0.7"
-        android:textColor="?attr/colorOnSurfaceVariant"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintTop_toBottomOf="@id/downloading_label_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/downloading_title"
-        app:layout_constraintBottom_toTopOf="@id/download_percentage_text" />
+        app:layout_constraintHorizontal_bias="0.0"
+        tools:text="Core 2000: Japanese Vocabulary" />
 
-    <com.ichi2.ui.FixedTextView
-        android:id="@+id/download_percentage_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="?attr/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/download_dialog_info_text"
-        app:layout_constraintBottom_toTopOf="@id/download_progress_bar"
-        tools:text="100 %" />
-
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/download_progress_bar"
+    <!-- Space for center elements -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/center_progress_container"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_max="400dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        app:trackThickness="12dp"
-        app:trackCornerRadius="12dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/downloading_title"
+        app:layout_constraintBottom_toTopOf="@id/speed_time_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/download_percentage_text"
-        app:layout_constraintBottom_toTopOf="@id/check_network_info_text"
-        android:progress="0"
-        android:max="100" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/download_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorSize="240dp"
+            app:trackThickness="10dp"
+            app:trackCornerRadius="10dp"
+            android:progress="0"
+            android:max="100"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="@id/download_progress_bar"
+            app:layout_constraintBottom_toBottomOf="@id/download_progress_bar"
+            app:layout_constraintStart_toStartOf="@id/download_progress_bar"
+            app:layout_constraintEnd_toEndOf="@id/download_progress_bar">
+
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/download_percentage_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/textColorPrimary"
+                tools:text="100%" />
+
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/download_mb_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="42.8 MB / 42.8 MB" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/speed_time_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/download_info_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <com.ichi2.ui.FixedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/download_speed_label"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/download_speed_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="1.0 MB/s" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <com.ichi2.ui.FixedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/download_time_left_label"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/download_time_left_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="-" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/download_info_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:layout_constraintBottom_toTopOf="@id/bottom_buttons_flow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_done"
+                app:tint="?attr/colorOnTertiary"
+                android:background="@drawable/ic_square_box_background"
+                android:padding="4dp"
+                android:layout_marginEnd="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.ichi2.ui.FixedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/download_safe_to_leave"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+                <com.ichi2.ui.FixedTextView
+                    android:id="@+id/download_dialog_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="14sp"
+                    android:text="@string/deck_download_progress_message"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/check_network_info_text"
@@ -80,61 +227,54 @@
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:layout_marginTop="32dp"
-        android:textSize="20sp"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
         android:text="@string/check_network"
         android:textColor="?attr/colorError"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/download_progress_bar"
-        app:layout_constraintBottom_toTopOf="@id/open_in_web_browser_button"
+        app:layout_constraintBottom_toTopOf="@id/bottom_buttons_flow"
         android:visibility="gone" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/open_in_web_browser_button"
+    <!-- Adaptive Buttons -->
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/bottom_buttons_flow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_max="320dp"
-        android:text="@string/open_in_browser"
-        style="@style/Widget.Material3.Button.TextButton"
-        android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/try_download_again_button"
-        android:visibility="gone" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:flow_wrapMode="chain"
+        app:flow_horizontalStyle="spread_inside"
+        app:flow_horizontalGap="16dp"
+        app:flow_verticalGap="8dp"
+        app:constraint_referenced_ids="cancel_download_button,try_download_again_button,open_in_web_browser_button,import_shared_deck_button" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel_download_button"
-        style="@style/Widget.Material3.Button"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_max="320dp"
-        android:text="@string/cancel_download"
-        app:backgroundTint="?attr/colorError"
-        android:textColor="?attr/colorOnError"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="@string/cancel_download" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/try_download_again_button"
         style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_max="320dp"
         android:text="@string/try_again"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/open_in_web_browser_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/open_in_browser"
+        style="@style/Widget.Material3.Button.TextButton"
         android:visibility="gone" />
 
     <com.google.android.material.button.MaterialButton
@@ -142,16 +282,9 @@
         style="@style/Widget.Material3.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintWidth_max="320dp"
         android:text="@string/import_deck"
         app:backgroundTint="?attr/colorPrimary"
         android:textColor="?attr/colorOnPrimary"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

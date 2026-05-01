@@ -26,6 +26,7 @@ import android.database.Cursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.format.Formatter
 import android.view.View
 import android.webkit.CookieManager
 import androidx.activity.OnBackPressedCallback
@@ -50,6 +51,7 @@ import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.File
 import java.net.URLConnection
+import java.util.Locale
 import kotlin.math.abs
 
 /**
@@ -170,6 +172,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             Timber.i("Try again button clicked, retry downloading of deck")
             downloadManager.remove(downloadId)
             downloadFile(fileToBeDownloaded)
+            binding.downloadProgressBar.visibility = View.VISIBLE
             binding.cancelDownloadButton.visibility = View.VISIBLE
             binding.tryDownloadAgainButton.visibility = View.GONE
             binding.openInWebBrowserButton.visibility = View.GONE
@@ -213,7 +216,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         onBackPressedCallback.isEnabled = isDownloadInProgress
         Timber.d("Download ID -> $downloadId")
         Timber.d("File name -> $fileName")
-        binding.downloadingTitle.text = getString(R.string.downloading_file, fileName)
+        binding.downloadingTitle.text = fileName
         startDownloadProgressChecker()
     }
 
@@ -396,6 +399,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
      */
     private fun startDownloadProgressChecker() {
         Timber.d("Starting download progress checker")
+        lastBytesDownloaded = 0
+        lastTimeChecked = 0
         downloadProgressChecker.run()
         isProgressCheckerRunning = true
         binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
@@ -410,6 +415,9 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         handler.removeCallbacks(downloadProgressChecker)
         isProgressCheckerRunning = false
     }
+
+    private var lastBytesDownloaded: Long = 0
+    private var lastTimeChecked: Long = 0
 
     /**
      * Checks download progress and sets the current progress in ProgressBar.
@@ -450,6 +458,52 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 }
             binding.downloadPercentageText.text = getString(R.string.percentage, percentageValue)
             binding.downloadProgressBar.progress = downloadProgress.toInt()
+
+            // Update MB data
+            if (totalBytes > 0) {
+                val downloadedStr = Formatter.formatFileSize(requireContext(), downloadedBytes)
+                val totalStr = Formatter.formatFileSize(requireContext(), totalBytes.toLong())
+                binding.downloadMbText.text =
+                    getString(R.string.progress_amount_bytes, downloadedStr, totalStr)
+            } else {
+                val downloadedStr = Formatter.formatFileSize(requireContext(), downloadedBytes)
+                binding.downloadMbText.text = downloadedStr
+            }
+
+            // Calculate Speed and Time Left
+            val currentTime = System.currentTimeMillis()
+            if (lastTimeChecked in 1..<currentTime) {
+                val timeDiff = currentTime - lastTimeChecked
+                val bytesDiff = downloadedBytes - lastBytesDownloaded
+
+                if (bytesDiff >= 0) {
+                    val bytesPerSecond = (bytesDiff * 1000) / timeDiff
+
+                    // Display Speed
+                    val speedStr = Formatter.formatFileSize(requireContext(), bytesPerSecond)
+                    binding.downloadSpeedText.text = "$speedStr/s"
+
+                    // Display Time Left
+                    if (bytesPerSecond > 0 && totalBytes > 0) {
+                        val bytesRemaining = totalBytes - downloadedBytes
+                        val secondsRemaining = bytesRemaining / bytesPerSecond
+
+                        val minutes = secondsRemaining / 60
+                        val seconds = secondsRemaining % 60
+
+                        binding.downloadTimeLeftText.text =
+                            String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+                    } else {
+                        binding.downloadTimeLeftText.text = "-"
+                    }
+                }
+            } else if (lastTimeChecked == 0L) {
+                binding.downloadTimeLeftText.text = "-"
+                binding.downloadSpeedText.text = "-/s"
+            }
+
+            lastBytesDownloaded = downloadedBytes
+            lastTimeChecked = currentTime
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
             val columnIndexForReason = it.getColumnIndex(DownloadManager.COLUMN_REASON)
@@ -527,6 +581,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 binding.tryDownloadAgainButton.visibility = View.VISIBLE
                 binding.openInWebBrowserButton.visibility = View.VISIBLE
                 binding.cancelDownloadButton.visibility = View.GONE
+                binding.downloadProgressBar.visibility = View.INVISIBLE
                 binding.downloadPercentageText.text = getString(R.string.download_failed)
                 binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
             }
