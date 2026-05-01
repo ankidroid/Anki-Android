@@ -19,7 +19,6 @@ package com.ichi2.anki.multimedia
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -271,11 +270,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun handleImageUri() {
-        fun processExternalImage(uri: Uri): Uri? = internalizeUri(uri)?.let { Uri.fromFile(it) }
-
         if (imageUri != null) {
-            val internalUri = imageUri?.let { processExternalImage(it) }
-            handleSelectImageIntent(internalUri)
+            handleSelectImageIntent(imageUri)
         } else {
             handleSelectedImageOptions()
         }
@@ -507,20 +503,12 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     /**
-     * Resolves a [Uri] to a [File] on internal storage.
+     * Resolves [uri] to a local [File], reading our own cached `file://` URIs directly
+     * and copying anything else (content URIs, etc.) via [internalizeUri].
      *
-     * If the URI is a content URI, it is internalized by copying its contents to internal storage.
-     * If the URI is already a file URI, it is directly converted to a [File] object.
-     *
-     * @param uri The URI to resolve.
-     * @return The corresponding [File], or `null` if the URI is invalid or unsupported.
+     * See [resolveFileFromUri] for why we route `file://` around the content resolver.
      */
-    private fun resolveUriToFile(uri: Uri): File? {
-        return when (uri.scheme) {
-            ContentResolver.SCHEME_FILE -> File(uri.path ?: return null)
-            else -> internalizeUri(uri)
-        }
-    }
+    private fun resolveUriToFile(uri: Uri): File? = resolveFileFromUri(uri, ::internalizeUri)
 
     /**
      * Previews the selected image in a WebView.
@@ -571,10 +559,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         Timber.i("Loading non-SVG image using WebView")
 
         try {
-            val internalFile = internalizeUri(imageUri)?.takeIf { it.exists() }
+            val internalFile = resolveUriToFile(imageUri)?.takeIf { it.exists() }
             if (internalFile == null) {
                 Timber.w(
-                    "loadImage() unable to internalize image from Uri %s",
+                    "loadImage() unable to resolve image from Uri %s",
                     imageUri,
                 )
                 showSomethingWentWrong()
@@ -645,9 +633,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private fun loadSvgFromUri(uri: Uri): String? =
         try {
-            context?.contentResolver?.openInputStreamSafe(uri)?.use { inputStream ->
-                inputStream.convertToString()
-            }
+            openImageInputStream(uri) { context?.contentResolver?.openInputStreamSafe(it) }
+                ?.use { it.convertToString() }
         } catch (e: Exception) {
             Timber.w(e, "Error reading SVG from URI")
             null
