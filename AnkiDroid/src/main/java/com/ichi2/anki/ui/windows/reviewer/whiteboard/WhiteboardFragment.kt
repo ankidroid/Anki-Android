@@ -28,6 +28,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.PopupWindow
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
@@ -35,10 +36,13 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
+import com.ichi2.anki.android.back.doubleBackPressCallback
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.anki.databinding.FragmentWhiteboardBinding
 import com.ichi2.anki.databinding.PopupBrushOptionsBinding
 import com.ichi2.anki.databinding.PopupEraserOptionsBinding
@@ -71,6 +75,7 @@ class WhiteboardFragment :
 
     val binding by viewBinding(FragmentWhiteboardBinding::bind)
     private lateinit var bindingMap: BindingMap<ReviewerBinding, WhiteboardAction>
+    private var doubleBackCallback: OnBackPressedCallback? = null
 
     private var eraserPopup: PopupWindow? = null
     private var brushConfigPopup: PopupWindow? = null
@@ -89,11 +94,32 @@ class WhiteboardFragment :
 
         setupUI()
         observeViewModel(binding.whiteboardView)
+        setupDoubleBackPress()
 
         binding.whiteboardView.onNewPath = viewModel::addPath
         binding.whiteboardView.onEraseGestureStart = viewModel::startPathEraseGesture
         binding.whiteboardView.onEraseGestureMove = viewModel::erasePathsToPoint
         binding.whiteboardView.onEraseGestureEnd = viewModel::endPathEraseGesture
+    }
+
+    private fun setupDoubleBackPress() {
+        val isUsingGesturesNavigation = context?.let { compat.isUsingSystemGestureNavigation(it) } == true
+        doubleBackCallback =
+            doubleBackPressCallback(
+                enabled = !isHidden && isUsingGesturesNavigation,
+                onFirstBack = { showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) },
+                shouldReEnable = {
+                    !isHidden && isUsingGesturesNavigation
+                },
+            ).also {
+                requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it)
+            }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        val isUsingGesturesNavigation = context?.let { compat.isUsingSystemGestureNavigation(it) } == true
+        doubleBackCallback?.isEnabled = !hidden && isUsingGesturesNavigation
     }
 
     private fun setupUI() {

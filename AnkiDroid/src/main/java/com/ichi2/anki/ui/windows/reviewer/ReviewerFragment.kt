@@ -49,16 +49,13 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.android.back.doubleBackPressCallback
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.anki.databinding.FragmentReviewerBinding
 import com.ichi2.anki.dialogs.showDeckOptionsSelectionDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -170,7 +167,7 @@ class ReviewerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding.backButton.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            requireActivity().finish()
         }
 
         setupBindings()
@@ -545,27 +542,20 @@ class ReviewerFragment :
             },
             false,
         )
-        val isUsingGesturesNavigation = compat.isUsingSystemGestureNavigation(requireContext())
-        val doubleBackCallback =
-            doubleBackPressCallback(
-                enabled = false,
-                onFirstBack = { showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) },
-                shouldReEnable = {
-                    viewModel.whiteboardEnabledFlow.value && isUsingGesturesNavigation
-                },
-            )
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, doubleBackCallback)
+
         viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle).collectIn(lifecycleScope) { isEnabled ->
-            binding.whiteboardContainer.isVisible = isEnabled
-            doubleBackCallback.isEnabled =
-                isEnabled && compat.isUsingSystemGestureNavigation(requireContext())
-            if (whiteboardFragment == null && isEnabled) {
-                val whiteboardFragment = WhiteboardFragment()
-                whiteboardFragment.gestureFallbackListener = { gesture ->
-                    bindingMap.onGesture(gesture)
-                }
-                childFragmentManager.commit {
-                    add(R.id.whiteboard_container, whiteboardFragment, WhiteboardFragment::class.jvmName)
+            val existingFragment = whiteboardFragment
+            childFragmentManager.commit {
+                if (isEnabled) {
+                    if (existingFragment != null) {
+                        show(existingFragment)
+                    } else {
+                        val newFragment = WhiteboardFragment()
+                        newFragment.gestureFallbackListener = { gesture -> bindingMap.onGesture(gesture) }
+                        add(R.id.web_view_container, newFragment, WhiteboardFragment::class.jvmName)
+                    }
+                } else {
+                    existingFragment?.let { hide(it) }
                 }
             }
         }
