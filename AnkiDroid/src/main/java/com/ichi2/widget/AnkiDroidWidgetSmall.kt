@@ -36,6 +36,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.common.utils.android.isSdCardMounted
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.preferences.sharedPrefs
 import timber.log.Timber
@@ -111,7 +112,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
         private fun buildUpdate(context: Context): RemoteViews {
             Timber.d("updating small widget UI")
             val updateViews = RemoteViews(context.packageName, widgetSmallLayout)
-            val mounted = AnkiDroidApp.isSdCardMounted
+            val mounted = isSdCardMounted()
             if (!mounted) {
                 updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)

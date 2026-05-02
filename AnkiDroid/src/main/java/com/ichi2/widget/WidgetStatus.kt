@@ -19,6 +19,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.android.isSdCardMounted
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.allDecksCounts
@@ -88,7 +89,7 @@ object WidgetStatus {
         }
 
     suspend fun updateSmallWidgetStatus(context: Context) {
-        if (!AnkiDroidApp.isSdCardMounted) {
+        if (!isSdCardMounted()) {
             Timber.w("updateStatus failed: no SD Card")
             return
         }
