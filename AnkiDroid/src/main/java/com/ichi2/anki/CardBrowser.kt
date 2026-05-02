@@ -71,11 +71,11 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.ActivityCardBrowserBinding
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.GradeNowDialog
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
 import com.ichi2.anki.dialogs.registerSaveSearchHandler
 import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
@@ -111,7 +111,6 @@ import timber.log.Timber
 @KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
-    DeckSelectionListener,
     TagsDialogListener,
     ChangeManager.Subscriber,
     MenuHost {
@@ -141,7 +140,7 @@ open class CardBrowser :
             )
     }
 
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let { deck -> viewModel.setSelectedDeck(deck) }
     }
 
@@ -364,7 +363,7 @@ open class CardBrowser :
         setupNewSearchView()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
         registerSaveSearchHandler()
-
+        registerDeckSelectedHandler(action = ::onDeckSelected)
         registerFindReplaceHandler { result ->
             launchCatchingTask {
                 withProgress {
