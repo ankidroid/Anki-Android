@@ -28,6 +28,7 @@ import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.work.WorkManager
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
@@ -235,7 +236,7 @@ class IntentHandler : AbstractIntentHandler() {
         // TODO improve the handling of the imported temporary files
         // Launching this scope without tying it to a lifecycle since ,
         // IntentHandler finishes quickly, but deletion may still be in progress
-        AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+        applicationScope.launch(Dispatchers.IO) {
             try {
                 val file = File(path!!)
                 val fileUri =
@@ -295,7 +296,7 @@ class IntentHandler : AbstractIntentHandler() {
         // TODO improve the handling of the imported temporary files
         // Launching this scope without tying it to a lifecycle since ,
         // IntentHandler finishes quickly, but deletion may still be in progress
-        AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+        applicationScope.launch(Dispatchers.IO) {
             try {
                 contentResolver.delete(sharedDeckUri, null, null)
                 Timber.i("onCreate: downloaded shared deck deleted")

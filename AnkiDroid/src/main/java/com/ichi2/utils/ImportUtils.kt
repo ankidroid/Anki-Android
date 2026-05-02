@@ -31,6 +31,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.compat.CompatHelper
@@ -326,7 +327,7 @@ object ImportUtils {
         ) {
             // Use applicationScope: IntentHandler calls this and does not have a lifecycleScope
             fun copyDebugInfo(debugInfo: String) =
-                AnkiDroidApp.applicationScope.launch {
+                applicationScope.launch {
                     Timber.i("copying debug info to clipboard")
                     val stringToCopy =
                         buildString {

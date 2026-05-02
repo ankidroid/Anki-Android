@@ -26,9 +26,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import anki.collection.opChanges
-import com.ichi2.anki.AnkiDroidApp.Companion.applicationScope
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.exception.ManuallyReportedException

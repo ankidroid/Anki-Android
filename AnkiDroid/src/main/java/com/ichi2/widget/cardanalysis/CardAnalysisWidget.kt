@@ -24,10 +24,10 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.DeckId
@@ -89,7 +89,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 return
             }
 
-            AnkiDroidApp.applicationScope.launch {
+            applicationScope.launch {
                 val isCollectionEmpty = isCollectionEmpty()
                 if (isCollectionEmpty) {
                     showCollectionDeck(context, appWidgetManager, appWidgetId, remoteViews)

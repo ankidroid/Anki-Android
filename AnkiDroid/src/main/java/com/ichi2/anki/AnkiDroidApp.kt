@@ -39,6 +39,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
@@ -69,9 +70,6 @@ import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.restoreRecurringAlarms
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -377,24 +375,6 @@ open class AnkiDroidApp :
     }
 
     companion object {
-        /**
-         * [CoroutineScope] tied to the [Application], allowing executing of tasks which should
-         * execute as long as the app is running
-         *
-         * This scope is bound by default to [Dispatchers.Main.immediate][kotlinx.coroutines.MainCoroutineDispatcher.immediate].
-         * Use an alternate dispatcher if the main thread is not required: [Dispatchers.Default] or [Dispatchers.IO]
-         *
-         * This scope will not be cancelled; exceptions are handled by [SupervisorJob]
-         *
-         * See: [Operations that shouldn't be cancelled in Coroutines](https://medium.com/androiddevelopers/coroutines-patterns-for-work-that-shouldnt-be-cancelled-e26c40f142ad#d425)
-         *
-         * This replicates the manner which `lifecycleScope`/`viewModelScope` is exposed in Android
-         */
-        // lazy init required due to kotlinx-coroutines-test 1.10.0:
-        // Main was accessed when the platform dispatcher was absent and the test dispatcher
-        // was unset
-        val applicationScope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate) }
-
         /**
          * A [SharedPreferencesProvider] which does not require [onCreate] when run from tests
          *

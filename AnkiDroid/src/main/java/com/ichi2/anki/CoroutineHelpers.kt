@@ -42,6 +42,7 @@ import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
 import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
 import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.UseContextParameter
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
@@ -648,7 +649,7 @@ fun AnkiBroadcastReceiver.runGloballyWithTimeout(
         return
     }
 
-    AnkiDroidApp.applicationScope.launch {
+    applicationScope.launch {
         try {
             withTimeout(minOf(timeout, 8.seconds)) {
                 block()
