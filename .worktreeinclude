@@ -1,0 +1,3 @@
+# Includes the following files in Claude Code worktrees (gitignore syntax)
+# https://code.claude.com/docs/en/worktrees#copy-gitignored-files-into-worktrees
+local.properties
