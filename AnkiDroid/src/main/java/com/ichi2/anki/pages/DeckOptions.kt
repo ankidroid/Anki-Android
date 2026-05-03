@@ -213,8 +213,46 @@ class DeckOptions : PageFragment() {
                 // clicking a link to the online manual closes the modal and reloads the page
                 onBackFromModal.isEnabled = false
                 listenToModalShowHideEvents()
+                injectEasyDaysScrollFix()
             }
         }
+    }
+
+    /** HACK(#20929): vertical scrolling no longer changes values, but drag-to-change is disabled */
+    private fun injectEasyDaysScrollFix() {
+        // TODO: Do this properly if not fixed upstream by 2027
+        val js =
+            """
+            (function() {
+                if (document._easyDaysFix) return;
+                document._easyDaysFix = true;
+
+                // disable all touch events
+                const style = document.createElement('style');
+                style.textContent = '.easy-days-settings input[type="range"]{pointer-events:none}';
+                document.head.appendChild(style);
+
+                // re-implement 'click', so the value can still be set
+                document.addEventListener('click', (e) => {
+                    const container = e.target.closest('.easy-days-settings .input-container');
+                    if (!container) return;
+                    const slider = container.querySelector('input[type="range"]');
+
+                    const rect = slider.getBoundingClientRect();
+                    const fraction = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+
+                    const min = parseFloat(slider.min);
+                    const max = parseFloat(slider.max);
+                    const step = parseFloat(slider.step) || 1;
+                    const newValue = Math.round((min + (max - min) * fraction) / step) * step;
+
+                    if (parseFloat(slider.value) === newValue) return;
+                    slider.value = newValue;
+                    slider.dispatchEvent(new Event('input', { bubbles: true }));
+                });
+            })();
+            """.trimIndent()
+        webViewLayout.evaluateJavascript(js) {}
     }
 
     /**
