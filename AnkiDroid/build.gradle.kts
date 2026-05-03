@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.tripletPlay)
     id("ankidroid.android.app")
     id("ankidroid.plugins.jacoco")
+    id("ankidroid.plugins.robolectric-downloader")
     alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
@@ -718,8 +719,6 @@ afterEvaluate {
     }
 }
 
-apply(from = "./robolectricDownloader.gradle")
-
 android {
     lint {
         // Analyze project-local dependencies (:common:android etc.) as part of this
@@ -852,7 +851,8 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.hamcrest)
     testImplementation(libs.test.parameter.injector)
-    // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
+    // ankidroid.plugins.robolectric-downloader may need a new SDK jar entry
+    // when Robolectric or targetSdk changes. See the instructions in that plugin.
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.compose.ui.test.junit4)
     // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>()

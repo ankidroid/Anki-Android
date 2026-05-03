@@ -17,8 +17,7 @@ plugins {
 }
 
 dependencyResolutionManagement {
-    // TODO enforce repositories declared here, currently it clashes with robolectricDownloader.gradle
-    //  which uses a local maven repository
+    // TODO enforce repositories declared here
     // repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
