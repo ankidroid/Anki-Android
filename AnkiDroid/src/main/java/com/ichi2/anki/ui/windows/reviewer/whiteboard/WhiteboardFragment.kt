@@ -106,20 +106,24 @@ class WhiteboardFragment :
         val isUsingGesturesNavigation = context?.let { compat.isUsingSystemGestureNavigation(it) } == true
         doubleBackCallback =
             doubleBackPressCallback(
-                enabled = !isHidden && isUsingGesturesNavigation,
+                enabled = !isHidden && isUsingGesturesNavigation && !isEmpty(),
                 onFirstBack = { showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) },
                 shouldReEnable = {
-                    !isHidden && isUsingGesturesNavigation
+                    !isHidden && isUsingGesturesNavigation && !isEmpty()
                 },
             ).also {
                 requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it)
             }
+        combine(viewModel.canUndo, viewModel.canRedo) { canUndo, canRedo -> canUndo || canRedo }
+            .onEach { hasContent ->
+                doubleBackCallback?.isEnabled = !isHidden && isUsingGesturesNavigation && hasContent
+            }.launchIn(lifecycleScope)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         val isUsingGesturesNavigation = context?.let { compat.isUsingSystemGestureNavigation(it) } == true
-        doubleBackCallback?.isEnabled = !hidden && isUsingGesturesNavigation
+        doubleBackCallback?.isEnabled = !hidden && isUsingGesturesNavigation && !isEmpty()
     }
 
     private fun setupUI() {
