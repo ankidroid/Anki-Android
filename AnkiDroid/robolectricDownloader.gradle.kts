@@ -1,4 +1,7 @@
-/**
+import org.gradle.api.artifacts.type.ArtifactTypeDefinition
+import org.gradle.api.tasks.Copy
+
+/*
  * Downloads all android-all-instrumented dependencies and copies them to the mavenLocal() repository
  *
  * Once applied to your gradle project, can be executed with ./gradlew robolectricSdkDownload
@@ -18,57 +21,62 @@
 //   2. Run `./gradlew jacocoUnitTestReport` to run all unit tests.
 //   3. Run `find ~/.m2 -type d -name '*-robolectric-*'`.
 //   4. Update the lines below to match the output from `find`.
-def robolectricAndroidSdkVersions = [
-//        [androidVersion: "6.0.1_r3", frameworkSdkBuildVersion: "r1"],
-//        [androidVersion: "7.0.0_r1", frameworkSdkBuildVersion: "r1"],
-//        [androidVersion: "7.1.0_r7", frameworkSdkBuildVersion: "r1"],
-//        [androidVersion: "8.0.0_r4", frameworkSdkBuildVersion: "r1"],
-        [androidVersion: "8.1.0", frameworkSdkBuildVersion: "4611349"],
-        [androidVersion: "9", frameworkSdkBuildVersion: "4913185-2"],
-        [androidVersion: "10", frameworkSdkBuildVersion:  "5803371"],
-        [androidVersion: "11", frameworkSdkBuildVersion:  "6757853"],
-        [androidVersion: "12", frameworkSdkBuildVersion:  "7732740"],
-        [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
-        [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
-        [androidVersion: "14", frameworkSdkBuildVersion: "10818077"],
-        [androidVersion: "15", frameworkSdkBuildVersion: "13954326"], // current targetSdk
-        [androidVersion: "16", frameworkSdkBuildVersion: "13921718"], // used for `@Config(sdk = Build.VERSION_CODES.BAKLAVA)`
-]
+
+val robolectricAndroidSdkVersions =
+    listOf(
+//        mapOf("androidVersion" to "6.0.1_r3", "frameworkSdkBuildVersion" to "r1"),
+//        mapOf("androidVersion" to "7.0.0_r1", "frameworkSdkBuildVersion" to "r1"),
+//        mapOf("androidVersion" to "7.1.0_r7", "frameworkSdkBuildVersion" to "r1"),
+//        mapOf("androidVersion" to "8.0.0_r4", "frameworkSdkBuildVersion" to "r1"),
+        mapOf("androidVersion" to "8.1.0", "frameworkSdkBuildVersion" to "4611349"),
+        mapOf("androidVersion" to "9", "frameworkSdkBuildVersion" to "4913185-2"),
+        mapOf("androidVersion" to "10", "frameworkSdkBuildVersion" to "5803371"),
+        mapOf("androidVersion" to "11", "frameworkSdkBuildVersion" to "6757853"),
+        mapOf("androidVersion" to "12", "frameworkSdkBuildVersion" to "7732740"),
+        mapOf("androidVersion" to "12.1", "frameworkSdkBuildVersion" to "8229987"),
+        mapOf("androidVersion" to "13", "frameworkSdkBuildVersion" to "9030017"),
+        mapOf("androidVersion" to "14", "frameworkSdkBuildVersion" to "10818077"),
+        mapOf("androidVersion" to "15", "frameworkSdkBuildVersion" to "13954326"), // current targetSdk
+        mapOf("androidVersion" to "16", "frameworkSdkBuildVersion" to "13921718"), // used for `@Config(sdk = Build.VERSION_CODES.BAKLAVA)`
+    )
 
 // Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks
-tasks.register('robolectricSdkDownload') {
-    group = "Dependencies"
-    description = "Downloads all robolectric SDK dependencies into mavenLocal, for use with offline robolectric"
-}
+val robolectricSdkDownload =
+    tasks.register("robolectricSdkDownload") {
+        group = "Dependencies"
+        description = "Downloads all robolectric SDK dependencies into mavenLocal, for use with offline robolectric"
+    }
 
 // Generate the configuration and actual copy tasks.
 robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
     // the final part of this `-i<number>` comes from PREINSTRUMENTED_VERSION in upstream DefaultSdkProvider
-    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i7"
+    val version = "${robolectricSdkVersion["androidVersion"]}-robolectric-${robolectricSdkVersion["frameworkSdkBuildVersion"]}-i7"
 
     // Creating a configuration with a dependency allows Gradle to manage the actual resolution of
     // the jar file
-    def sdkConfig = configurations.create(version)
-    dependencies.add(version, "org.robolectric:android-all-instrumented:${version}")
+    val sdkConfig = configurations.create(version)
+    dependencies.add(version, "org.robolectric:android-all-instrumented:$version")
 
     // An ArtifactView on the existing configuration gives us the POM alongside the JAR so
     // maven local has both.
-    def sdkPomFiles = sdkConfig.incoming.artifactView {
-        attributes {
-            attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, "pom")
-        }
-        // if the POM can't be resolved, return an empty collection rather than failing the build
-        lenient = true
-    }.files
+    val sdkPomFiles =
+        sdkConfig.incoming
+            .artifactView {
+                attributes {
+                    attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, "pom")
+                }
+                // if the POM can't be resolved, return an empty collection rather than failing the build
+                isLenient = true
+            }.files
 
-    def mavenLocalFile = new File(this.repositories.mavenLocal().url)
-    def mavenRobolectric = new File(mavenLocalFile, "org/robolectric/android-all-instrumented/${version}")
+    val mavenLocalFile = File(repositories.mavenLocal().url)
+    val mavenRobolectric = File(mavenLocalFile, "org/robolectric/android-all-instrumented/$version")
     // Copying all files downloaded for the created configuration into maven local.
-    tasks.register("robolectricSdkDownload-${version}", Copy) {
-        from sdkConfig
-        from sdkPomFiles
-        into mavenRobolectric
-    }
-    robolectricSdkDownload.configure { dependsOn "robolectricSdkDownload-${version}" }
+    val copyTask =
+        tasks.register<Copy>("robolectricSdkDownload-$version") {
+            from(sdkConfig)
+            from(sdkPomFiles)
+            into(mavenRobolectric)
+        }
+    robolectricSdkDownload.configure { dependsOn(copyTask) }
 }
-
