@@ -154,9 +154,11 @@ gradle_quiet "${REPO_ROOT}/gradlew" -p "$REPO_ROOT" \
     ${GRADLE_TESTS_ARG[@]+"${GRADLE_TESTS_ARG[@]}"}
 
 
-shopt -s nullglob
-diffs=("${OUT_DIR}"/*_compare.png)
-shopt -u nullglob
+# Recurse — Roborazzi writes *_compare.png inside directories
+diffs=()
+while IFS= read -r line; do
+    diffs+=("$line")
+done < <(find "$OUT_DIR" -type f -name '*_compare.png')
 
 if [ ${#diffs[@]} -eq 0 ]; then
     label="${TEST_FILTER:-all screenshot tests}"

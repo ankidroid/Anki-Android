@@ -16,8 +16,6 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import androidx.test.core.app.ActivityScenario
-import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
-import com.github.takahirom.roborazzi.captureScreenRoboImage
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.settings.Prefs
@@ -40,7 +38,6 @@ class StudyScreenScreenshotTest(
         RuntimeEnvironment.setQualifiers(config.qualifier.toString())
     }
 
-    @OptIn(ExperimentalRoborazziApi::class)
     @Test
     fun captureScreenshot() {
         ActivityScenario
@@ -48,7 +45,7 @@ class StudyScreenScreenshotTest(
                 ReviewerFragment.getIntent(targetContext),
             ).use { scenario ->
                 scenario.onActivity {
-                    captureScreenRoboImage(filePath = "build/outputs/roborazzi/${this.javaClass.simpleName}/$config.png")
+                    captureScreen(config.toString())
                 }
             }
     }
