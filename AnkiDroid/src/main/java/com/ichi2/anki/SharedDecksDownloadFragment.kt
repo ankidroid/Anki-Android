@@ -26,7 +26,9 @@ import android.database.Cursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Spannable
 import android.text.format.Formatter
+import android.text.style.RelativeSizeSpan
 import android.view.View
 import android.webkit.CookieManager
 import androidx.activity.OnBackPressedCallback
@@ -35,6 +37,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.text.buildSpannedString
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
@@ -97,6 +100,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
         const val DOWNLOAD_STARTED_PROGRESS_PERCENTAGE = "0"
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
+
+        private const val PERCENT_SYMBOL_RELATIVE_SIZE = 0.6f
 
         const val EXTRA_IS_SHARED_DOWNLOAD = "extra_is_shared_download"
 
@@ -329,7 +334,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
                 if (isVisible) {
                     // Setting these since progress checker can stop before progress is updated to represent 100%
-                    binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE)
+                    setPercentageText(getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE))
                     binding.downloadProgressBar.progress = DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE.toInt()
 
                     // Remove cancel button and show import deck button
@@ -404,7 +409,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         lastTimeChecked = 0
         downloadProgressChecker.run()
         isProgressCheckerRunning = true
-        binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
+        setPercentageText(getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE))
         binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
     }
 
@@ -432,7 +437,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 downloadManager.query(query)
             } catch (_: IllegalArgumentException) {
                 // 19812: column local_filename is not allowed in queries
-                binding.downloadPercentageText.text = TR.syncDownloadingFromAnkiweb()
+                setPercentageText(TR.syncDownloadingFromAnkiweb())
                 binding.downloadProgressBar.progress = 0
                 return
             }
@@ -457,7 +462,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     // Show download progress percentage up to 1 decimal place.
                     "%.1f".format(downloadProgress)
                 }
-            binding.downloadPercentageText.text = getString(R.string.percentage, percentageValue)
+            setPercentageText(getString(R.string.percentage, percentageValue))
             binding.downloadProgressBar.progress = downloadProgress.toInt()
 
             // Update MB data
@@ -596,7 +601,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 binding.openInWebBrowserButton.visibility = View.VISIBLE
                 binding.cancelDownloadButton.visibility = View.GONE
                 binding.downloadProgressBar.visibility = View.INVISIBLE
-                binding.downloadPercentageText.text = getString(R.string.download_failed)
+                setPercentageText(getString(R.string.download_failed))
                 binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
             }
         }
@@ -607,6 +612,23 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
         // If the cancel confirmation dialog is being shown and the download is no longer in progress, then remove the dialog.
         removeCancelConfirmationDialog()
+    }
+
+    private fun setPercentageText(text: CharSequence) {
+        binding.downloadPercentageText.text =
+            buildSpannedString {
+                append(text)
+                var index = text.indexOf('%')
+                while (index != -1) {
+                    setSpan(
+                        RelativeSizeSpan(PERCENT_SYMBOL_RELATIVE_SIZE),
+                        index,
+                        index + 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
+                    )
+                    index = text.indexOf('%', index + 1)
+                }
+            }
     }
 
     private fun showCancelConfirmationDialog() {
