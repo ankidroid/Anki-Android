@@ -31,9 +31,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/download_downloading_label"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.1"
+                    android:letterSpacing="0.05"
                     android:layout_marginTop="24dp"
                     android:layout_marginStart="24dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -44,9 +44,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="28sp"
-                    android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintTop_toBottomOf="@id/downloading_label_text"
@@ -121,7 +120,7 @@
                     android:baselineAligned="false"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="12dp"
                     app:layout_constraintBottom_toTopOf="@id/download_info_card"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
@@ -130,7 +129,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="6dp"
                         app:cardElevation="0dp"
                         app:cardBackgroundColor="?attr/colorSurfaceVariant">
                         <LinearLayout
@@ -162,7 +161,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="6dp"
                         app:cardElevation="0dp"
                         app:cardBackgroundColor="?attr/colorSurfaceVariant">
                         <LinearLayout
