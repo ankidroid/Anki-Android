@@ -18,10 +18,19 @@ package com.ichi2.anki.common.utils.android
 import android.os.Environment
 
 /**
- * Whether the device's primary external storage (the "SD card") is currently mounted
- * and writable.
+ * Utilities for accessing an SD Card (if the user's device supports one).
  *
- * Returns false when storage is unmounted, removed, read-only, or in any other state
- * that prevents writes (see [Environment.getExternalStorageState]).
+ * The AnkiDroid collection folder can be stored on an external SD card. This was common
+ * in older versions of Android, and is still supported.
  */
-fun isSdCardMounted(): Boolean = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
+object SdCard {
+    /**
+     * Whether the device's primary external storage (the "SD card") is currently mounted
+     * and writable.
+     *
+     * Returns false when storage is unmounted, removed, read-only, or in any other state
+     * that prevents writes (see [Environment.getExternalStorageState]).
+     */
+    val isMounted: Boolean
+        get() = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
+}

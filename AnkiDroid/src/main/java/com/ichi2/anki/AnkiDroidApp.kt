@@ -40,7 +40,7 @@ import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
-import com.ichi2.anki.common.utils.android.isSdCardMounted
+import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -303,7 +303,7 @@ open class AnkiDroidApp :
             Timber.e(e, "Could not initialize AnkiDroid directory")
             try {
                 val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
-                if (isSdCardMounted() && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
+                if (SdCard.isMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
                     // Don't send report if the user is using a custom directory as SD cards trip up here a lot
                     sendExceptionReport(e, "AnkiDroidApp.onCreate")
                 }

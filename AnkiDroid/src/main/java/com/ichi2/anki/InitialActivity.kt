@@ -28,7 +28,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.core.content.edit
 import com.ichi2.anki.common.crashreporting.CrashReportService
-import com.ichi2.anki.common.utils.android.isSdCardMounted
+import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.exception.StorageAccessException
@@ -87,7 +87,7 @@ object InitialActivity {
                 StartupFailure.DBError(e)
             }
 
-        if (!isSdCardMounted()) {
+        if (!SdCard.isMounted) {
             return StartupFailure.SDCardNotMounted
         } else if (!initializeAnkiDroidDirectory()) {
             return StartupFailure.DirectoryNotAccessible
