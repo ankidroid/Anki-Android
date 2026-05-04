@@ -93,7 +93,7 @@
                             android:id="@+id/download_percentage_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="48sp"
+                            android:textSize="56sp"
                             android:textStyle="bold"
                             android:textColor="?android:attr/textColorPrimary"
                             android:fontFeatureSettings="tnum"
@@ -255,6 +255,7 @@
                     android:text="@string/check_network"
                     android:textColor="?attr/colorError"
                     android:gravity="center"
+                    android:accessibilityLiveRegion="polite"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/bottom_buttons_flow"
@@ -309,8 +310,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/import_deck"
-                    app:backgroundTint="?attr/colorPrimary"
-                    android:textColor="?attr/colorOnPrimary"
                     android:visibility="gone" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
