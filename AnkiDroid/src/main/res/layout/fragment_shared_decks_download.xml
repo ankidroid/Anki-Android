@@ -96,6 +96,7 @@
                             android:textSize="48sp"
                             android:textStyle="bold"
                             android:textColor="?android:attr/textColorPrimary"
+                            android:fontFeatureSettings="tnum"
                             tools:text="100%" />
 
                         <com.ichi2.ui.FixedTextView
@@ -105,6 +106,7 @@
                             android:layout_marginTop="4dp"
                             android:textSize="14sp"
                             android:textColor="?attr/colorOnSurfaceVariant"
+                            android:fontFeatureSettings="tnum"
                             tools:text="42.8 MB / 42.8 MB" />
 
                     </LinearLayout>
@@ -151,6 +153,7 @@
                                 android:textColor="?android:attr/textColorPrimary"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
+                                android:fontFeatureSettings="tnum"
                                 tools:text="1.0 MB/s" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -182,6 +185,7 @@
                                 android:textColor="?android:attr/textColorPrimary"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
+                                android:fontFeatureSettings="tnum"
                                 tools:text="-" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -212,7 +216,7 @@
                             android:layout_height="28dp"
                             android:src="@drawable/ic_done"
                             app:tint="?attr/colorOnTertiary"
-                            android:background="@drawable/ic_square_box_background"
+                            android:background="@drawable/ic_circle_background"
                             android:padding="4dp"
                             android:layout_marginEnd="16dp"
                             android:importantForAccessibility="no" />
