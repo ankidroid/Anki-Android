@@ -268,6 +268,8 @@ class CardBrowserViewModel(
 
     val shouldIgnoreAccents: Boolean get() = browserOptionsRepository.ignoreAccentsInSearch.value
 
+    val defaultBrowserSearch: String get() = browserOptionsRepository.defaultBrowserSearch.value
+
     private val _selectedRows: MutableSet<CardOrNoteId> = Collections.synchronizedSet(LinkedHashSet())
 
     // immutable accessor for _selectedRows
@@ -551,6 +553,11 @@ class CardBrowserViewModel(
         viewModelScope.launch {
             browserOptionsRepository.load()
 
+            // Apply the default search (if available)
+            if (Prefs.devUsingCardBrowserSearchView) {
+                searchTerms = searchTerms.ifEmpty { defaultBrowserSearch }
+            }
+
             val initialDeckId = if (selectAllDecks) SelectableDeck.AllDecks else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
             setSelectedDeck(initialDeckId)
@@ -795,6 +802,12 @@ class CardBrowserViewModel(
     fun setTruncated(value: Boolean) = viewModelScope.launch { browserOptionsRepository.setIsTruncated(value) }
 
     fun setIgnoreAccents(value: Boolean) = viewModelScope.launch { browserOptionsRepository.setIgnoreAccentsInSearch(value) }
+
+    fun setDefaultSearchText(text: String) =
+        viewModelScope.launch {
+            if (!Prefs.devUsingCardBrowserSearchView) return@launch
+            browserOptionsRepository.setDefaultBrowserSearch(text)
+        }
 
     fun selectAll(): Job? {
         if (!_selectedRows.addAll(cards)) return null
