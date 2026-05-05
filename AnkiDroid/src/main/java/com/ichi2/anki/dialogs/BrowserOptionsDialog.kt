@@ -18,7 +18,9 @@ package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
@@ -27,6 +29,7 @@ import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.databinding.DialogBrowserOptionsBinding
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
@@ -52,6 +55,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
         viewModel.setCardsOrNotes(dialogCardsOrNotes)
         viewModel.setTruncated(binding.truncateCheckBox.isChecked)
         viewModel.setIgnoreAccents(binding.ignoreAccentsCheckBox.isChecked)
+        viewModel.setDefaultSearchText(binding.defaultSearchText.text.orEmpty())
     }
 
     private val cardsOrNotes by lazy {
@@ -102,6 +106,15 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
             isChecked = viewModel.shouldIgnoreAccents
         }
 
+        if (Prefs.devUsingCardBrowserSearchView) {
+            binding.defaultSearchInputLayout.apply {
+                isVisible = true
+                hint = TR.preferencesDefaultSearchText()
+                placeholderText = TR.preferencesDefaultSearchTextExample()
+            }
+            binding.defaultSearchText.setText(viewModel.defaultBrowserSearch)
+        }
+
         binding.browsingTextView.text = TR.preferencesBrowsing()
 
         return MaterialAlertDialogBuilder(requireContext()).create {
@@ -137,3 +150,6 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
         }
     }
 }
+
+/** Returns the text content as a [String], or `""` if the receiver is `null`. */
+private fun Editable?.orEmpty(): String = this?.toString().orEmpty()
