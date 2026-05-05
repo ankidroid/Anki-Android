@@ -49,6 +49,7 @@ import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.databinding.FragmentSharedDecksDownloadBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.utils.DownloadSpeedCalculator
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.create
 import dev.androidbroadcast.vbpd.viewBinding
@@ -94,6 +95,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 showCancelConfirmationDialog()
             }
         }
+    private val speedCalculator = DownloadSpeedCalculator()
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
@@ -405,8 +407,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
      */
     private fun startDownloadProgressChecker() {
         Timber.d("Starting download progress checker")
-        lastBytesDownloaded = 0
-        lastTimeChecked = 0
+        speedCalculator.reset()
         downloadProgressChecker.run()
         isProgressCheckerRunning = true
         setPercentageText(getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE))
@@ -421,9 +422,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         handler.removeCallbacks(downloadProgressChecker)
         isProgressCheckerRunning = false
     }
-
-    private var lastBytesDownloaded: Long = 0
-    private var lastTimeChecked: Long = 0
 
     /**
      * Checks download progress and sets the current progress in ProgressBar.
@@ -514,38 +512,35 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         totalBytes: Int,
         currentTime: Long,
     ) {
-        if (lastTimeChecked in 1..<currentTime) {
-            val timeDiff = currentTime - lastTimeChecked
-            val bytesDiff = downloadedBytes - lastBytesDownloaded
+        val smoothedSpeed = speedCalculator.update(downloadedBytes, currentTime)
+        val bytesPerSecond = smoothedSpeed.toLong()
 
-            if (bytesDiff >= 0) {
-                val bytesPerSecond = (bytesDiff * 1000) / timeDiff
+        if (bytesPerSecond > 0) {
+            val speedStr = Formatter.formatFileSize(requireContext(), bytesPerSecond)
+            binding.downloadSpeedText.text = "$speedStr/s"
 
-                val speedStr = Formatter.formatFileSize(requireContext(), bytesPerSecond)
-                binding.downloadSpeedText.text = "$speedStr/s"
+            if (totalBytes > 0) {
+                val bytesRemaining = totalBytes - downloadedBytes
+                val secondsRemaining = bytesRemaining / bytesPerSecond
 
-                if (bytesPerSecond > 0 && totalBytes > 0) {
-                    val bytesRemaining = totalBytes - downloadedBytes
-                    val secondsRemaining = bytesRemaining / bytesPerSecond
+                val minutes = secondsRemaining / 60
+                val seconds = secondsRemaining % 60
 
-                    val minutes = secondsRemaining / 60
-                    val seconds = secondsRemaining % 60
-
-                    binding.downloadTimeLeftText.text =
-                        String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
-                } else if (totalBytes <= 0) {
-                    // Only revert to "-" if we don't know the total size.
-                    // If bytesPerSecond is 0 (stalled), we keep the last value.
-                    binding.downloadTimeLeftText.text = "-"
-                }
+                binding.downloadTimeLeftText.text =
+                    String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+            } else {
+                binding.downloadTimeLeftText.text = "-"
             }
-        } else if (lastTimeChecked == 0L) {
-            binding.downloadTimeLeftText.text = "-"
-            binding.downloadSpeedText.text = "-/s"
+        } else if (smoothedSpeed == 0.0) {
+            // Speed is 0, or it's the very first measurement.
+            if (binding.downloadSpeedText.text.isEmpty() || binding.downloadSpeedText.text == "-/s") {
+                binding.downloadTimeLeftText.text = "-"
+                binding.downloadSpeedText.text = "-/s"
+            }
+            if (bytesPerSecond == 0L && binding.downloadSpeedText.text != "-/s") {
+                binding.downloadSpeedText.text = "0 B/s"
+            }
         }
-
-        lastBytesDownloaded = downloadedBytes
-        lastTimeChecked = currentTime
     }
 
     /**
