@@ -47,18 +47,21 @@ class BrowserOptionsRepository(
     }
 
     suspend fun setCardsOrNotes(value: CardsOrNotes) {
+        if (cardsOrNotes.value == value) return
         Timber.i("setting cards/notes mode to %s", value)
         withCol { value.saveToCollection(this) }
         cardsOrNotes.value = value
     }
 
     fun setIsTruncated(value: Boolean) {
+        if (isTruncated.value == value) return
         Timber.d("setting truncated to %s", value)
         sharedPrefs.edit { putBoolean(PREF_IS_TRUNCATED, value) }
         isTruncated.value = value
     }
 
     suspend fun setIgnoreAccentsInSearch(value: Boolean) {
+        if (ignoreAccentsInSearch.value == value) return
         Timber.d("setting ignore accents in search to %s", value)
         withCol { config.ignoreAccentsInSearch = value }
         ignoreAccentsInSearch.value = value

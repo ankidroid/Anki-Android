@@ -49,19 +49,9 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
 
     /** Persists updated options to the ViewModel */
     fun saveChanges() {
-        if (cardsOrNotes != dialogCardsOrNotes) {
-            viewModel.setCardsOrNotes(dialogCardsOrNotes)
-        }
-        val newTruncate = binding.truncateCheckBox.isChecked
-
-        if (newTruncate != isTruncated) {
-            viewModel.setTruncated(newTruncate)
-        }
-
-        val newIgnoreAccent = binding.ignoreAccentsCheckBox.isChecked
-        if (newIgnoreAccent != viewModel.shouldIgnoreAccents) {
-            viewModel.setIgnoreAccents(newIgnoreAccent)
-        }
+        viewModel.setCardsOrNotes(dialogCardsOrNotes)
+        viewModel.setTruncated(binding.truncateCheckBox.isChecked)
+        viewModel.setIgnoreAccents(binding.ignoreAccentsCheckBox.isChecked)
     }
 
     private val cardsOrNotes by lazy {
