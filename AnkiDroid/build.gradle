@@ -325,9 +325,15 @@ play {
 }
 
 // Install Git pre-commit hook for Ktlint
+// Resolve via git so worktrees (where `.git` is a file) are handled correctly.
+def gitHooksDir = providers.exec {
+    workingDir = rootProject.rootDir
+    commandLine "git", "rev-parse", "--git-path", "hooks"
+}.standardOutput.asText.map { rootProject.rootDir.toPath().resolve(it.trim()).toFile() }
+
 tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
-    into { new File(rootProject.rootDir, '.git/hooks') }
+    into gitHooksDir
     filePermissions {
         user {
             read = write = execute = true
