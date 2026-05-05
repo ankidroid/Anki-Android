@@ -27,6 +27,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Spannable
+import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.text.style.RelativeSizeSpan
 import android.view.View
@@ -56,7 +57,6 @@ import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.File
 import java.net.URLConnection
-import java.util.Locale
 import kotlin.math.abs
 
 /**
@@ -517,28 +517,24 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
         if (bytesPerSecond > 0) {
             val speedStr = Formatter.formatFileSize(requireContext(), bytesPerSecond)
-            binding.downloadSpeedText.text = "$speedStr/s"
+            binding.downloadSpeedText.text = getString(R.string.download_speed_unit, speedStr)
 
             if (totalBytes > 0) {
                 val bytesRemaining = totalBytes - downloadedBytes
                 val secondsRemaining = bytesRemaining / bytesPerSecond
 
-                val minutes = secondsRemaining / 60
-                val seconds = secondsRemaining % 60
-
-                binding.downloadTimeLeftText.text =
-                    String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+                binding.downloadTimeLeftText.text = DateUtils.formatElapsedTime(secondsRemaining)
             } else {
-                binding.downloadTimeLeftText.text = "-"
+                binding.downloadTimeLeftText.text = getString(R.string.download_time_unknown)
             }
-        } else if (smoothedSpeed == 0.0) {
-            // Speed is 0, or it's the very first measurement.
-            if (binding.downloadSpeedText.text.isEmpty() || binding.downloadSpeedText.text == "-/s") {
-                binding.downloadTimeLeftText.text = "-"
-                binding.downloadSpeedText.text = "-/s"
-            }
-            if (bytesPerSecond == 0L && binding.downloadSpeedText.text != "-/s") {
-                binding.downloadSpeedText.text = "0 B/s"
+        } else {
+            if (downloadedBytes == 0L) {
+                binding.downloadSpeedText.text = getString(R.string.download_speed_unknown)
+                binding.downloadTimeLeftText.text = getString(R.string.download_time_unknown)
+            } else {
+                val zeroSize = Formatter.formatFileSize(requireContext(), 0)
+                binding.downloadSpeedText.text = getString(R.string.download_speed_unit, zeroSize)
+                binding.downloadTimeLeftText.text = getString(R.string.download_time_unknown)
             }
         }
     }
