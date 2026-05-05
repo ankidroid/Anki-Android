@@ -33,12 +33,12 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
-import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.onSelectedCsvForImport
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog

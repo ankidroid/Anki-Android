@@ -32,8 +32,8 @@ import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REP
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_KEY
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_NEVER
+import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ThrowableFilterService

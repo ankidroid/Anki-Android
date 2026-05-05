@@ -37,7 +37,7 @@ import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
-import com.ichi2.anki.exception.ManuallyReportedException
+import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.libanki.EpochSeconds
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager

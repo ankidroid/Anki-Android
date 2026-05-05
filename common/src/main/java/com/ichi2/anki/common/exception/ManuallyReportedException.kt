@@ -14,9 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.exception
-
-import java.lang.RuntimeException
+package com.ichi2.anki.common.exception
 
 /** An exception for manual reporting to ACRA  */
 class ManuallyReportedException(

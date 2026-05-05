@@ -30,8 +30,8 @@ import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.launchCatching
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.libanki.sched.Scheduler
