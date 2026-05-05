@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.utils.ext.defaultBrowserSearch
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,12 +32,18 @@ class BrowserOptionsRepository(
     val ignoreAccentsInSearch: StateFlow<Boolean>
         field = MutableStateFlow(false)
 
+    /** @see com.ichi2.anki.libanki.Config.defaultBrowserSearch */
+    val defaultBrowserSearch: StateFlow<String>
+        field = MutableStateFlow("")
+
     /** Reads persisted values into the flows. Call once during ViewModel init. */
     suspend fun load() =
         collectionOptionsMutex.withLock {
-            val (mode, ignoreAccents) = withCol { CardsOrNotes.fromCollection(this) to config.ignoreAccentsInSearch }
+            val (mode, ignoreAccents, defaultSearch) =
+                withCol { Triple(CardsOrNotes.fromCollection(this), config.ignoreAccentsInSearch, config.defaultBrowserSearch) }
             cardsOrNotes.value = mode
             ignoreAccentsInSearch.value = ignoreAccents
+            defaultBrowserSearch.value = defaultSearch
         }
 
     suspend fun setCardsOrNotes(value: CardsOrNotes) =
@@ -60,6 +67,14 @@ class BrowserOptionsRepository(
             Timber.d("setting ignore accents in search to %s", value)
             withCol { config.ignoreAccentsInSearch = value }
             ignoreAccentsInSearch.value = value
+        }
+
+    suspend fun setDefaultBrowserSearch(value: String) =
+        collectionOptionsMutex.withLock {
+            if (defaultBrowserSearch.value == value) return@withLock
+            Timber.d("setting default browser search to %s", value)
+            withCol { config.defaultBrowserSearch = value }
+            defaultBrowserSearch.value = value
         }
 
     companion object {
