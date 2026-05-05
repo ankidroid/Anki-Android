@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.CheckResult
-import androidx.core.content.edit
 import androidx.core.os.BundleCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -82,7 +81,6 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.utils.ext.currentCardBrowse
 import com.ichi2.anki.utils.ext.getCardOrNull
-import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
@@ -141,6 +139,8 @@ class CardBrowserViewModel(
     preferences: SharedPreferencesProvider,
     val isFragmented: Boolean,
     val savedStateHandle: SavedStateHandle,
+    private val browserOptionsRepository: BrowserOptionsRepository =
+        BrowserOptionsRepository(preferences.sharedPrefs()),
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
@@ -202,8 +202,8 @@ class CardBrowserViewModel(
      * Whether the browser is working in Cards mode or Notes mode.
      * default: [CARDS]
      * */
-    private val flowOfCardsOrNotes = MutableStateFlow(CARDS)
-    val cardsOrNotes get() = flowOfCardsOrNotes.value
+    val flowOfCardsOrNotes: StateFlow<CardsOrNotes> = browserOptionsRepository.cardsOrNotes
+    val cardsOrNotes: CardsOrNotes get() = flowOfCardsOrNotes.value
 
     /**
      * Ensures [focusedRow] points to a row in the current [cards] list, falling back to the
@@ -263,11 +263,10 @@ class CardBrowserViewModel(
             .map { it?.isNotEmpty() == true }
             .stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = false)
 
-    val flowOfIsTruncated: MutableStateFlow<Boolean> =
-        MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
-    val isTruncated get() = flowOfIsTruncated.value
+    val flowOfIsTruncated: StateFlow<Boolean> = browserOptionsRepository.isTruncated
+    val isTruncated: Boolean get() = flowOfIsTruncated.value
 
-    var shouldIgnoreAccents: Boolean = false
+    val shouldIgnoreAccents: Boolean get() = browserOptionsRepository.ignoreAccentsInSearch.value
 
     private val _selectedRows: MutableSet<CardOrNoteId> = Collections.synchronizedSet(LinkedHashSet())
 
@@ -550,15 +549,12 @@ class CardBrowserViewModel(
             }.launchIn(viewModelScope)
 
         viewModelScope.launch {
-            shouldIgnoreAccents = withCol { config.ignoreAccentsInSearch }
+            browserOptionsRepository.load()
 
             val initialDeckId = if (selectAllDecks) SelectableDeck.AllDecks else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
             setSelectedDeck(initialDeckId)
             refreshBackendColumns()
-
-            val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
-            flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
                 sortTypeFlow.update { LegacySortType.fromCol(config, cardsOrNotes, prefs) }
@@ -794,32 +790,11 @@ class CardBrowserViewModel(
             }
     }
 
-    fun setCardsOrNotes(newValue: CardsOrNotes) =
-        viewModelScope.launch {
-            Timber.i("setting mode to %s", newValue)
-            withCol {
-                // Change this to only change the preference on a state change
-                newValue.saveToCollection(this@withCol)
-            }
-            flowOfCardsOrNotes.update { newValue }
-        }
+    fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch { browserOptionsRepository.setCardsOrNotes(newValue) }
 
-    fun setTruncated(value: Boolean) {
-        viewModelScope.launch {
-            flowOfIsTruncated.emit(value)
-        }
-        sharedPrefs().edit {
-            putBoolean("isTruncated", value)
-        }
-    }
+    fun setTruncated(value: Boolean) = viewModelScope.launch { browserOptionsRepository.setIsTruncated(value) }
 
-    fun setIgnoreAccents(value: Boolean) {
-        Timber.d("Setting ignore accent in search to: $value")
-        viewModelScope.launch {
-            shouldIgnoreAccents = value
-            withCol { config.ignoreAccentsInSearch = value }
-        }
-    }
+    fun setIgnoreAccents(value: Boolean) = viewModelScope.launch { browserOptionsRepository.setIgnoreAccentsInSearch(value) }
 
     fun selectAll(): Job? {
         if (!_selectedRows.addAll(cards)) return null
