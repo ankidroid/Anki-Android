@@ -48,7 +48,7 @@ class DownloadSpeedCalculatorTest {
         calculator.update(0, 0)
         calculator.update(
             1000,
-            1000
+            1000,
         ) // First non-zero speed initializes the smoothed speed to 1000 B/s.
 
         // Next instant speed: 3000 B/s (diff: 3000 bytes in 1s)
