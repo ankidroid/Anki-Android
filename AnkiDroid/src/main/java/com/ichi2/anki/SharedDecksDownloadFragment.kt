@@ -40,6 +40,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.databinding.FragmentSharedDecksDownloadBinding
@@ -470,40 +471,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 binding.downloadMbText.text = downloadedStr
             }
 
-            // Calculate Speed and Time Left
-            val currentTime = System.currentTimeMillis()
-            if (lastTimeChecked in 1..<currentTime) {
-                val timeDiff = currentTime - lastTimeChecked
-                val bytesDiff = downloadedBytes - lastBytesDownloaded
-
-                if (bytesDiff >= 0) {
-                    val bytesPerSecond = (bytesDiff * 1000) / timeDiff
-
-                    // Display Speed
-                    val speedStr = Formatter.formatFileSize(requireContext(), bytesPerSecond)
-                    binding.downloadSpeedText.text = "$speedStr/s"
-
-                    // Display Time Left
-                    if (bytesPerSecond > 0 && totalBytes > 0) {
-                        val bytesRemaining = totalBytes - downloadedBytes
-                        val secondsRemaining = bytesRemaining / bytesPerSecond
-
-                        val minutes = secondsRemaining / 60
-                        val seconds = secondsRemaining % 60
-
-                        binding.downloadTimeLeftText.text =
-                            String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
-                    } else {
-                        binding.downloadTimeLeftText.text = "-"
-                    }
-                }
-            } else if (lastTimeChecked == 0L) {
-                binding.downloadTimeLeftText.text = "-"
-                binding.downloadSpeedText.text = "-/s"
-            }
-
-            lastBytesDownloaded = downloadedBytes
-            lastTimeChecked = currentTime
+            updateSpeedAndTimeLeft(downloadedBytes, totalBytes, TimeManager.time.intTimeMS())
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
             val columnIndexForReason = it.getColumnIndex(DownloadManager.COLUMN_REASON)
@@ -527,6 +495,52 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 binding.checkNetworkInfoText.visibility = View.GONE
             }
         }
+    }
+
+    /**
+     * Updates the UI with the calculated download speed and estimated time left.
+     *
+     * @param downloadedBytes The number of bytes downloaded so far.
+     * @param totalBytes The total size of the file being downloaded in bytes.
+     * @param currentTime The current system time in milliseconds.
+     */
+    private fun updateSpeedAndTimeLeft(
+        downloadedBytes: Long,
+        totalBytes: Int,
+        currentTime: Long,
+    ) {
+        if (lastTimeChecked in 1..<currentTime) {
+            val timeDiff = currentTime - lastTimeChecked
+            val bytesDiff = downloadedBytes - lastBytesDownloaded
+
+            if (bytesDiff >= 0) {
+                val bytesPerSecond = (bytesDiff * 1000) / timeDiff
+
+                val speedStr = Formatter.formatFileSize(requireContext(), bytesPerSecond)
+                binding.downloadSpeedText.text = "$speedStr/s"
+
+                if (bytesPerSecond > 0 && totalBytes > 0) {
+                    val bytesRemaining = totalBytes - downloadedBytes
+                    val secondsRemaining = bytesRemaining / bytesPerSecond
+
+                    val minutes = secondsRemaining / 60
+                    val seconds = secondsRemaining % 60
+
+                    binding.downloadTimeLeftText.text =
+                        String.format(Locale.getDefault(), "%d:%02d", minutes, seconds)
+                } else if (totalBytes <= 0) {
+                    // Only revert to "-" if we don't know the total size.
+                    // If bytesPerSecond is 0 (stalled), we keep the last value.
+                    binding.downloadTimeLeftText.text = "-"
+                }
+            }
+        } else if (lastTimeChecked == 0L) {
+            binding.downloadTimeLeftText.text = "-"
+            binding.downloadSpeedText.text = "-/s"
+        }
+
+        lastBytesDownloaded = downloadedBytes
+        lastTimeChecked = currentTime
     }
 
     /**
