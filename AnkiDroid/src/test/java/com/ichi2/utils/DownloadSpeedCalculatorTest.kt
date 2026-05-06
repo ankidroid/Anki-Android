@@ -42,15 +42,19 @@ class DownloadSpeedCalculatorTest {
     }
 
     @Test
-    fun `smoothing logic correctly applies EMA`() {
+    fun `smoothing logic correctly applies EMA with asymmetric alpha`() {
+        calculator = DownloadSpeedCalculator(alpha = 0.25)
+
         calculator.update(0, 0)
-        calculator.update(1000, 1000) // Baseline
-        calculator.update(2000, 2000) // First speed: 1000 B/s. lastSmoothedSpeed = 1000.
+        calculator.update(
+            1000,
+            1000
+        ) // First non-zero speed initializes the smoothed speed to 1000 B/s.
 
-        // Second speed: 2000 B/s (diff: 2000 bytes in 1s)
-        val speed = calculator.update(4000, 3000)
+        // Next instant speed: 3000 B/s (diff: 3000 bytes in 1s)
+        val speed = calculator.update(4000, 2000)
 
-        // EMA: (1000 * 0.5) + (2000 * 0.5) = 1500
+        // EMA: (1000 * 0.75) + (3000 * 0.25) = 1500
         assertEquals(1500.0, speed, 0.001)
     }
 
@@ -77,8 +81,11 @@ class DownloadSpeedCalculatorTest {
         calculator.update(1000, 1000)
         calculator.reset()
 
-        val speed = calculator.update(1000, 1000)
-        assertEquals(0.0, speed, 0.001)
+        val firstSpeedAfterReset = calculator.update(1000, 1000)
+        assertEquals(0.0, firstSpeedAfterReset, 0.001)
+
+        val secondSpeedAfterReset = calculator.update(2000, 2000)
+        assertEquals(1000.0, secondSpeedAfterReset, 0.001)
     }
 
     @Test
@@ -89,5 +96,29 @@ class DownloadSpeedCalculatorTest {
         // 2000 bytes in 2s = 1000 B/s
         val speed = calculator.update(3000, 3000)
         assertEquals(1000.0, speed, 0.001)
+    }
+
+    @Test
+    fun `duplicate timestamp keeps previous speed and rebases bytes for next sample`() {
+        calculator.update(0, 0)
+        calculator.update(1000, 1000)
+
+        val duplicateTimestampSpeed = calculator.update(1500, 1000)
+        assertEquals(1000.0, duplicateTimestampSpeed, 0.001)
+
+        val nextSpeed = calculator.update(2500, 2000)
+        assertEquals(1000.0, nextSpeed, 0.001)
+    }
+
+    @Test
+    fun `downloaded byte regression keeps previous speed but resets baseline`() {
+        calculator.update(0, 0)
+        calculator.update(1000, 1000)
+
+        val regressedProgressSpeed = calculator.update(900, 2000)
+        assertEquals(1000.0, regressedProgressSpeed, 0.001)
+
+        val nextSpeed = calculator.update(1900, 3000)
+        assertEquals(1000.0, nextSpeed, 0.001)
     }
 }
