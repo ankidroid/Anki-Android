@@ -316,7 +316,7 @@
     <string name="download_failed">Download failed</string>
     <string name="download_speed_unit">%1$s/s</string>
     <string name="download_speed_unknown">-/s</string>
-    <string name="download_time_unknown">-</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
     <string name="download_speed_label">Speed</string>
     <string name="download_time_left_label">Time left</string>
     <string name="download_safe_to_leave">Safe to leave this screen</string>
