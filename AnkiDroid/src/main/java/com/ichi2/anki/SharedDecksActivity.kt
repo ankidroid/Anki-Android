@@ -19,6 +19,7 @@ package com.ichi2.anki
 import android.app.DownloadManager
 import android.graphics.Color.TRANSPARENT
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.CookieManager
@@ -255,9 +256,8 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             if (supportFragmentManager.backStackEntryCount == 0) {
                 // Restore toolbar when returning to the webview
                 supportActionBar?.setTitle(R.string.download_deck)
-                // Use default background, theme handles it automatically, but we might need to reset properly
-                // The easiest is resolving the ?attr/appBarColor
-                val typedValue = android.util.TypedValue()
+
+                val typedValue = TypedValue()
                 theme.resolveAttribute(R.attr.appBarColor, typedValue, true)
                 binding.webviewToolbar.setBackgroundColor(typedValue.data)
             }
