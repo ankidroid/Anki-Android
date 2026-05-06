@@ -154,6 +154,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
+
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
 
@@ -185,6 +187,14 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             binding.tryDownloadAgainButton.visibility = View.GONE
             binding.openInWebBrowserButton.visibility = View.GONE
         }
+    }
+
+    override fun onDestroy() {
+        Timber.d("onDestroy")
+        stopDownloadProgressChecker()
+        unregisterReceiver()
+        removeCancelConfirmationDialog()
+        super.onDestroy()
     }
 
     /**
@@ -645,5 +655,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     private fun removeCancelConfirmationDialog() {
         downloadCancelConfirmationDialog?.dismiss()
+        downloadCancelConfirmationDialog = null
     }
 }
