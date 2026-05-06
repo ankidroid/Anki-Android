@@ -54,13 +54,26 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     tools:text="Core 2000: Japanese Vocabulary" />
 
+                <!-- Spring for stretching space above progress -->
+                <Space
+                    android:id="@+id/top_spring"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintTop_toBottomOf="@id/downloading_title"
+                    app:layout_constraintBottom_toTopOf="@id/center_progress_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
                 <!-- Space for center elements -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/center_progress_container"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintTop_toBottomOf="@id/downloading_title"
-                    app:layout_constraintBottom_toTopOf="@id/speed_time_container"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    app:layout_constraintTop_toBottomOf="@id/top_spring"
+                    app:layout_constraintBottom_toTopOf="@id/bottom_spring"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
@@ -112,6 +125,17 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!-- Spring for stretching space below progress -->
+                <Space
+                    android:id="@+id/bottom_spring"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintTop_toBottomOf="@id/center_progress_container"
+                    app:layout_constraintBottom_toTopOf="@id/speed_time_container"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
                 <LinearLayout
                     android:id="@+id/speed_time_container"
                     android:layout_width="match_parent"
@@ -121,6 +145,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/bottom_spring"
                     app:layout_constraintBottom_toTopOf="@id/download_info_card"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
@@ -200,6 +225,7 @@
                     android:layout_marginBottom="24dp"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                    app:layout_constraintTop_toBottomOf="@id/speed_time_container"
                     app:layout_constraintBottom_toTopOf="@id/check_network_info_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
@@ -257,6 +283,7 @@
                     android:accessibilityLiveRegion="polite"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/download_info_card"
                     app:layout_constraintBottom_toTopOf="@id/bottom_buttons_flow"
                     android:visibility="gone" />
 
@@ -270,6 +297,7 @@
                     android:layout_marginBottom="24dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/check_network_info_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:flow_wrapMode="chain"
                     app:flow_horizontalStyle="spread_inside"
