@@ -16,8 +16,6 @@
 
 package com.ichi2.utils
 
-import androidx.annotation.VisibleForTesting
-
 /**
  * Calculates download speed using Exponential Moving Average (EMA) to smooth out fluctuations.
  *
@@ -27,9 +25,13 @@ import androidx.annotation.VisibleForTesting
 class DownloadSpeedCalculator(
     private val alpha: Double = 0.5,
 ) {
+    init {
+        require(alpha in 0.0..1.0) { "Alpha must be between 0.0 and 1.0" }
+    }
+
     private var lastSmoothedSpeed: Double = 0.0
     private var lastBytesDownloaded: Long = 0
-    private var lastTimeChecked: Long = 0
+    private var lastTimeChecked: Long? = null
 
     /**
      * Updates the calculation with new data points.
@@ -42,8 +44,9 @@ class DownloadSpeedCalculator(
         downloadedBytes: Long,
         currentTime: Long,
     ): Double {
-        if (lastTimeChecked in 1..<currentTime) {
-            val timeDiff = currentTime - lastTimeChecked
+        val lastTime = lastTimeChecked
+        if (lastTime != null && currentTime > lastTime) {
+            val timeDiff = currentTime - lastTime
             val bytesDiff = downloadedBytes - lastBytesDownloaded
 
             if (bytesDiff >= 0) {
@@ -65,10 +68,9 @@ class DownloadSpeedCalculator(
     /**
      * Resets the internal state of the calculator.
      */
-    @VisibleForTesting
     fun reset() {
         lastSmoothedSpeed = 0.0
         lastBytesDownloaded = 0
-        lastTimeChecked = 0
+        lastTimeChecked = null
     }
 }
