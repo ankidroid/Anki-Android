@@ -200,7 +200,7 @@
                     android:layout_marginBottom="24dp"
                     app:cardElevation="0dp"
                     app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                    app:layout_constraintBottom_toTopOf="@id/bottom_buttons_flow"
+                    app:layout_constraintBottom_toTopOf="@id/check_network_info_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
