@@ -34,6 +34,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.windowInsetsControllerCompat
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.copyToClipboard
 import timber.log.Timber
@@ -149,7 +150,7 @@ fun View.hideKeyboard() {
  */
 fun FragmentActivity.doOnImeHidden(block: () -> Unit) {
     val view = window.decorView
-    WindowInsetsControllerCompat(window, view).hide(WindowInsetsCompat.Type.ime())
+    windowInsetsControllerCompat.hide(WindowInsetsCompat.Type.ime())
 
     var blockHasRun = false
 

@@ -1933,7 +1933,7 @@ abstract class AbstractFlashcardViewer :
                 ),
             )
             // hide system bars
-            with(WindowInsetsControllerCompat(window, window.decorView)) {
+            with(windowInsetsController) {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 hide(WindowInsetsCompat.Type.systemBars())
             }
@@ -1942,7 +1942,7 @@ abstract class AbstractFlashcardViewer :
         override fun onHideCustomView() {
             (window.decorView as FrameLayout).removeView(customView)
             // show system bars back
-            with(WindowInsetsControllerCompat(window, window.decorView)) {
+            with(windowInsetsController) {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                 show(WindowInsetsCompat.Type.systemBars())
             }

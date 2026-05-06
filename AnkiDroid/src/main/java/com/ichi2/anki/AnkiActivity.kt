@@ -45,7 +45,9 @@ import androidx.core.app.PendingIntentCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -82,11 +84,13 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.windowInsetsControllerCompat
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.themes.Themes
+import com.ichi2.themes.setTransparentNavigationBar
 import com.ichi2.utils.AdaptionUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -114,6 +118,9 @@ open class AnkiActivity(
 
     val dialogHandler = DialogHandler(this)
     override val ankiActivity = this
+
+    val windowInsetsController: WindowInsetsControllerCompat
+        get() = windowInsetsControllerCompat
 
     private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
@@ -143,7 +150,7 @@ open class AnkiActivity(
             )
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            window.navigationBarColor = getColor(R.color.transparent)
+            setTransparentNavigationBar()
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
             saveExportFile(
@@ -640,7 +647,10 @@ open class AnkiActivity(
     fun setNavigationBarColor(
         @AttrRes attr: Int,
     ) {
-        window.navigationBarColor = Themes.getColorFromAttr(this, attr)
+        val color = Themes.getColorFromAttr(this, attr)
+        window.navigationBarColor = color
+        val isLight = ColorUtils.calculateLuminance(color) > 0.5
+        windowInsetsController.isAppearanceLightNavigationBars = isLight
     }
 
     fun closeCollectionAndFinish() {
