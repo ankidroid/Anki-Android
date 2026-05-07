@@ -4,6 +4,7 @@ plugins {
     // TODO: migrate to .kts & replace the next 2 id lines with id("ankidroid.android.app")
     id 'com.android.application'
     id 'org.jetbrains.kotlin.plugin.parcelize'
+    id 'ankidroid.plugins.jacoco'
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
     alias(libs.plugins.roborazzi)
@@ -383,7 +384,6 @@ afterEvaluate {
 }
 
 apply from: "./robolectricDownloader.gradle"
-apply from: "./jacoco.gradle.kts"
 apply from: "../lint.gradle"
 
 dependencies {
