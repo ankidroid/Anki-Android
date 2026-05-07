@@ -80,11 +80,7 @@ android {
         resValues = true
     }
 
-    if (rootProject.testReleaseBuild) {
-        testBuildType = "release"
-    } else {
-        testBuildType = "debug"
-    }
+    testBuildType = if (rootProject.testReleaseBuild) "release" else "debug"
 
     defaultConfig {
         applicationId = "com.ichi2.anki"
@@ -275,11 +271,6 @@ android {
 
     testOptions {
         animationsDisabled = true
-        kotlin {
-            compilerOptions {
-                freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
-            }
-        }
         unitTests {
             all { test ->
                 test.useJUnitPlatform {
@@ -305,6 +296,7 @@ android {
     // ⚠️ There was an in-IDE warning: "Kotlin is not configured" when editing the testFixtures
     // files. I ended up ignoring the warning after the 'Configure' button in Android Studio
     // added dependencies but didn't fix the issue.
+    @Suppress("UnstableApiUsage")
     testFixtures {
         enable = true
     }
@@ -315,7 +307,7 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "META-INF/DEPENDENCIES"
         }
@@ -350,6 +342,7 @@ play {
     // If you retain APKs in a release with different names as we do above,
     // the plugin + Play Store has no idea how to name the release except by date.
     // release name is developer only, but sane names really help, so set one
+    @Suppress("DEPRECATION")
     releaseName.set(android.defaultConfig.versionName)
 }
 
@@ -427,7 +420,7 @@ apply(from = "../lint.gradle")
 
 configurations.configureEach {
     resolutionStrategy {
-        // Timber has this as a dependency but they are not up to date. We want to force our version.
+        // Timber has this as a dependency, but they are not up to date. We want to force our version.
         force(libs.jetbrains.annotations)
     }
 }
@@ -527,7 +520,6 @@ dependencies {
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.hamcrest)
-    // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.junit)
