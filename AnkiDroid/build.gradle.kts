@@ -63,6 +63,7 @@ val buildTimeMillis =
         .gradleProperty("buildTime")
         .orElse(providers.provider { System.currentTimeMillis().toString() })
 
+@Suppress("deprecation") // convert to configuration<> after android.newDsl=true (#20988)
 android {
     val app = this
 
