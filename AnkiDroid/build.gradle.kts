@@ -5,9 +5,7 @@ import java.util.Properties
 plugins {
     // Gradle plugin portal
     alias(libs.plugins.tripletPlay)
-    // TODO: migrate to .kts & replace the next 2 id lines with id("ankidroid.android.app")
-    id("com.android.application")
-    id("org.jetbrains.kotlin.plugin.parcelize")
+    id("ankidroid.android.app")
     id("ankidroid.plugins.jacoco")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
@@ -69,11 +67,6 @@ android {
 
     namespace = "com.ichi2.anki"
 
-    compileSdk =
-        libs.versions.compileSdk
-            .get()
-            .toInt()
-
     buildFeatures {
         buildConfig = true
         aidl = true
@@ -117,16 +110,7 @@ android {
         versionCode = 22400300
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
         versionName = "2.24.0"
-        minSdk =
-            libs.versions.minSdk
-                .get()
-                .toInt()
 
-        // After #13695: change .tests_emulator.yml
-        targetSdk =
-            libs.versions.targetSdk
-                .get()
-                .toInt()
         testApplicationId = "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "com.ichi2.testutils.NewCollectionPathTestRunner"
@@ -303,8 +287,6 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
     }
 
@@ -417,7 +399,6 @@ afterEvaluate {
 }
 
 apply(from = "./robolectricDownloader.gradle")
-apply(from = "../lint.gradle")
 
 configurations.configureEach {
     resolutionStrategy {
