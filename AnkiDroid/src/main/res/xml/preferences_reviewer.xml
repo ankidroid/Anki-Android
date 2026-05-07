@@ -3,25 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
-    android:title="@string/new_study_screen"
+    android:title="@string/pref_cat_reviewer"
     >
-
-    <com.ichi2.preferences.HtmlHelpPreference
-        android:summary="@string/new_study_screen_summ"
-        app:substitution1="@string/link_anki_forum_ankidroid"
-        app:substitution2="@string/link_help"
-        search:ignore="true"
-        />
-
     <SwitchPreferenceCompat
-        android:key="@string/new_reviewer_options_key"
-        android:title="@string/new_study_screen"
+        android:key="@string/old_reviewer_key"
+        android:title="@string/use_legacy_study_screen"
+        android:summary="@string/use_legacy_study_screen_summ"
         android:defaultValue="false"
         search:ignore="true"
         />
 
     <PreferenceCategory android:title="@string/screen">
-
         <ListPreference
             android:defaultValue="@string/reviewer_frame_style_card_value"
             android:entries="@array/reviewer_frame_style_entries"

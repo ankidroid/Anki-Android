@@ -43,10 +43,13 @@ class ReviewerOptionsFragment :
                     ignoreDisplayCutout.isEnabled = value != getString(HideSystemBars.NONE.entryResId)
                 }
             }
-        val newReviewerPref = requirePreference<SwitchPreferenceCompat>(R.string.new_reviewer_options_key)
+        val oldReviewerPRef =
+            requirePreference<SwitchPreferenceCompat>(R.string.old_reviewer_key).apply {
+                setDefaultValue(!Prefs.isNewStudyScreenEnabled)
+            }
 
         fun setPrefsEnableState(newValue: Boolean) {
-            val prefs = preferenceScreen.allPreferences() - newReviewerPref
+            val prefs = preferenceScreen.allPreferences() - oldReviewerPRef
             for (pref in prefs) {
                 if (pref is HtmlHelpPreference) continue
                 if (pref.key == ignoreDisplayCutout.key && newValue) {
@@ -57,9 +60,10 @@ class ReviewerOptionsFragment :
             }
         }
 
-        setPrefsEnableState(newReviewerPref.isChecked)
-        newReviewerPref.setOnPreferenceChangeListener { newValue ->
-            setPrefsEnableState(newValue)
+        setPrefsEnableState(!oldReviewerPRef.isChecked)
+        oldReviewerPRef.setOnPreferenceChangeListener { newValue ->
+            Prefs.isNewStudyScreenEnabled = !newValue
+            setPrefsEnableState(!newValue)
         }
 
         // Show play buttons on cards with audio
