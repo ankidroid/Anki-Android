@@ -1335,7 +1335,12 @@ class CardBrowserFragment :
 
     fun exportSelected() {
         val (type, selectedIds) = activityViewModel.querySelectionExportData() ?: return
-        ExportDialogFragment.newInstance(type, selectedIds).show(parentFragmentManager, "exportDialog")
+        ExportDialogFragment
+            .newInstance(
+                requireContext().externalCacheDir ?: requireContext().cacheDir,
+                type,
+                selectedIds,
+            ).show(parentFragmentManager, "exportDialog")
     }
 
     fun showOptionsDialog() {
