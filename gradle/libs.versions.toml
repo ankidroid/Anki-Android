@@ -44,7 +44,7 @@ androidxFragmentKtx = "1.8.9"
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidxLifecycleProcess = "2.10.0"
 # https://developer.android.com/jetpack/androidx/releases/media
-androidxMedia = "1.7.1"
+androidxMedia = "1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
 androidxMedia3 = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
