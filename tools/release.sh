@@ -31,13 +31,13 @@ if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
 fi
 
 # Captured once so every APK in this release reports the same BUILD_TIME
-# (consumed by AnkiDroid/build.gradle via -PbuildTime).
+# (consumed by AnkiDroid/build.gradle.kts via -PbuildTime).
 BUILD_TIME_MS=$(date +%s000)
 export BUILD_TIME_MS
 
 # Define the location of the manifest file
 SRC_DIR="./AnkiDroid"
-GRADLEFILE="$SRC_DIR/build.gradle"
+GRADLEFILE="$SRC_DIR/build.gradle.kts"
 CHANGELOG="$SRC_DIR/src/main/assets/changelog.html"
 
 if ! VERSION=$(grep 'versionName=' $GRADLEFILE | sed -e 's/.*="//' | sed -e 's/".*//')

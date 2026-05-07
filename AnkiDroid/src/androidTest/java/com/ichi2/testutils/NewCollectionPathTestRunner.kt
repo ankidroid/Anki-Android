@@ -24,7 +24,7 @@ import androidx.test.runner.AndroidJUnitRunner
  * A test runner which sets [com.ichi2.anki.AnkiDroidApp.INSTRUMENTATION_TESTING] to true
  * so a test collection path is used
  */
-@Suppress("unused") // referenced by build.gradle
+@Suppress("unused") // referenced by build.gradle.kts
 class NewCollectionPathTestRunner : AndroidJUnitRunner() {
     override fun newApplication(
         cl: ClassLoader?,
