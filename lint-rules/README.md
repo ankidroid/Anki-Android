@@ -35,4 +35,4 @@ This refreshes the checks in the IDE. Alternatively, run ./gradlew lint to check
 
 ## Documentation
 
-Android Lint Documentation: https://developer.android.com/studio/write/lint
+Custom Lint Rules Documentation: https://github.com/googlesamples/android-custom-lint-rules
