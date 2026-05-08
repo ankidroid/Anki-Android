@@ -51,6 +51,7 @@ import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.create
+import com.ichi2.utils.formatErrorMessage
 import com.ichi2.utils.message
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
@@ -287,7 +288,7 @@ fun Context.showError(
             .Builder(this)
             .create {
                 title(R.string.vague_error)
-                message(text = message)
+                message(text = formatErrorMessage(message))
                 positiveButton(R.string.dialog_ok)
                 if (crashReportData?.helpAction != null) {
                     neutralButton(R.string.help)
