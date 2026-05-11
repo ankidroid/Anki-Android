@@ -1,4 +1,3 @@
-// SPDX-FileCopyrightText: 2026 David Allison <davidallisongithub@gmail.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import com.android.build.api.dsl.LibraryExtension
@@ -17,4 +16,7 @@ configure<LibraryExtension> {
 dependencies {
     implementation(project(":common"))
     implementation(project(":libanki"))
+
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment.ktx)
 }
