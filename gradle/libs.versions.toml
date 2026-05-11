@@ -81,7 +81,7 @@ commonsCollections4 = "4.5.0"
 commonsCompress = "1.28.0"
 # https://commons.apache.org/proper/commons-io/changes.html
 commonsIo = "2.22.0"
-coroutines = '1.10.2'
+coroutines = '1.11.0'
 desugar-jdk-libs-nio = "2.1.5"
 drawer = "1.0.3"
 espresso = '3.7.0'
