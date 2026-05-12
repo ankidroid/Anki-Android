@@ -99,35 +99,23 @@ open class AnkiDroidJsAPI(
 
     open fun convertToByteArray(
         apiContract: ApiContract,
-        int: Int,
-    ): ByteArray = ApiResult.Integer(apiContract.isValid, int).toString().toByteArray()
+                        }
+                    speechRecognizer.setRecognitionCallback(callback)
+                    convertToByteArray(apiContract, speechRecognizer.start())
+                }
 
-    open fun convertToByteArray(
-        apiContract: ApiContract,
-        long: Long,
-    ): ByteArray = ApiResult.Long(apiContract.isValid, long).toString().toByteArray()
-
-    open fun convertToByteArray(
-        apiContract: ApiContract,
-        string: String,
-    ): ByteArray = ApiResult.String(apiContract.isValid, string).toString().toByteArray()
-
-    /**
-     * The method parse json data and return api contract object
-     * @param byteArray
-     * @return apiContract or null
-     */
-    private fun parseJsApiContract(byteArray: ByteArray): ApiContract? {
-        try {
-            val data = JSONObject(byteArray.decodeToString())
-            val cardSuppliedApiVersion = data.optString("version", "")
-            val cardSuppliedDeveloperContact = data.optString("developer", "")
-            val cardSuppliedData = data.optString("data", "")
-            val isValid = requireApiVersion(cardSuppliedApiVersion, cardSuppliedDeveloperContact)
-            return ApiContract(isValid, cardSuppliedDeveloperContact, cardSuppliedData)
-        } catch (j: JSONException) {
-            Timber.w(j)
-            activity.runOnUiThread {
+                "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
+                "toggleFullscreen" -> {
+                    val result = if (activity is Reviewer) activity.toggleFullScreen() else false
+                    convertToByteArray(apiContract, result)
+                }
+                else -> {
+                    showDeveloperContact(
+                        ANKI_JS_ERROR_CODE_ERROR,
+                        apiContract.cardSuppliedDeveloperContact,
+                    )
+                    throw Exception("unhandled request: $methodName")
+                }
                 activity.showSnackbar(context.getString(R.string.invalid_json_data, j.localizedMessage))
             }
         }
@@ -544,6 +532,7 @@ open class AnkiDroidJsAPI(
                                 }
                             }
                         }
+<<<<<<< HEAD
                     speechRecognizer.setRecognitionCallback(callback)
                     convertToByteArray(apiContract, speechRecognizer.start())
                 }
@@ -556,6 +545,20 @@ open class AnkiDroidJsAPI(
                     )
                     throw Exception("unhandled request: $methodName")
                 }
+=======
+                    }
+                speechRecognizer.setRecognitionCallback(callback)
+                convertToByteArray(apiContract, speechRecognizer.start())
+            }
+            "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
+            "toggleFullscreen" -> {
+                val result = if (activity is Reviewer) activity.toggleFullScreen() else false
+                convertToByteArray(apiContract, result)
+            }
+            else -> {
+                showDeveloperContact(ANKI_JS_ERROR_CODE_ERROR, apiContract.cardSuppliedDeveloperContact)
+                throw Exception("unhandled request: $methodName")
+>>>>>>> c13e9bf066 (Add JS API method to toggle fullscreen mode)
             }
         } catch (_: DangerousJsPermissionDeniedException) {
             return@withContext convertToByteArray(apiContract, false)
