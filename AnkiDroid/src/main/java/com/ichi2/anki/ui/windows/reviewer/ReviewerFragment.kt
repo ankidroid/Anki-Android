@@ -90,6 +90,7 @@ import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.ext.windowInsetsControllerCompat
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
@@ -380,10 +381,9 @@ class ReviewerFragment :
                 binding.answerArea.setNextTimes(times)
             }
 
-        val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
             if (isAnswerShown) {
-                insetsController.hide(WindowInsetsCompat.Type.ime())
+                withInsets { hide(WindowInsetsCompat.Type.ime()) }
             }
             binding.answerArea.setAnswerState(isAnswerShown)
         }
@@ -423,7 +423,7 @@ class ReviewerFragment :
                 HideSystemBars.ALL -> WindowInsetsCompat.Type.systemBars()
             }
 
-        with(requireAnkiActivity().windowInsetsController) {
+        withInsets {
             hide(barsToHide)
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }

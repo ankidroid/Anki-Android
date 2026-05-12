@@ -22,7 +22,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.view.WindowManager
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
@@ -45,7 +44,6 @@ import androidx.core.app.PendingIntentCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
@@ -82,9 +80,11 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.windowInsetsControllerCompat
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
@@ -642,15 +642,14 @@ open class AnkiActivity(
             activitySuperOnCreate = { state -> super.onCreate(state) },
         )
 
-    /** @see Window.setNavigationBarColor */
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(
         @AttrRes attr: Int,
     ) {
-        val color = Themes.getColorFromAttr(this, attr)
-        window.navigationBarColor = color
-        val isLight = ColorUtils.calculateLuminance(color) > 0.5
-        windowInsetsController.isAppearanceLightNavigationBars = isLight
+        window.apply {
+            navigationBarColor = Themes.getColorFromAttr(this@AnkiActivity, attr)
+            withInsets { isAppearanceLightNavigationBars = Themes.currentTheme !is NightTheme }
+        }
     }
 
     fun closeCollectionAndFinish() {

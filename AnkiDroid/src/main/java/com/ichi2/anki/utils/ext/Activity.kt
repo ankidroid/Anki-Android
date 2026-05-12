@@ -20,7 +20,6 @@ import android.view.Window
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.R
 
 val Activity.windowInsetsControllerCompat: WindowInsetsControllerCompat
     get() = window.windowInsetsControllerCompat
@@ -29,12 +28,10 @@ val Fragment.windowInsetsControllerCompat: WindowInsetsControllerCompat
     get() = window.windowInsetsControllerCompat
 
 val Window.windowInsetsControllerCompat: WindowInsetsControllerCompat
-    get() {
-        val view = decorView
-        var controller = view.getTag(R.id.window_insets_controller) as? WindowInsetsControllerCompat
-        if (controller == null) {
-            controller = WindowCompat.getInsetsController(this, view)
-            view.setTag(R.id.window_insets_controller, controller)
-        }
-        return controller
-    }
+    get() = WindowCompat.getInsetsController(this, decorView)
+
+inline fun Activity.withInsets(block: WindowInsetsControllerCompat.() -> Unit) = windowInsetsControllerCompat.apply(block)
+
+inline fun Fragment.withInsets(block: WindowInsetsControllerCompat.() -> Unit) = windowInsetsControllerCompat.apply(block)
+
+inline fun Window.withInsets(block: WindowInsetsControllerCompat.() -> Unit) = windowInsetsControllerCompat.apply(block)

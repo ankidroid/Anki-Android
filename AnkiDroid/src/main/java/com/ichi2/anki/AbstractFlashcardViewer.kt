@@ -158,6 +158,7 @@ import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import com.ichi2.anki.utils.ext.isTouchWithinBounds
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
@@ -1933,7 +1934,7 @@ abstract class AbstractFlashcardViewer :
                 ),
             )
             // hide system bars
-            with(windowInsetsController) {
+            withInsets {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 hide(WindowInsetsCompat.Type.systemBars())
             }
@@ -1942,7 +1943,7 @@ abstract class AbstractFlashcardViewer :
         override fun onHideCustomView() {
             (window.decorView as FrameLayout).removeView(customView)
             // show system bars back
-            with(windowInsetsController) {
+            withInsets {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                 show(WindowInsetsCompat.Type.systemBars())
             }
