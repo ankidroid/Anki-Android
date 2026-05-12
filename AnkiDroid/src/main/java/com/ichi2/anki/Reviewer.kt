@@ -1613,6 +1613,24 @@ open class Reviewer :
         activity: AnkiActivity,
     ): Boolean = activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
 
+    fun toggleFullScreen(): Boolean =
+        try {
+            val prefs = sharedPrefs()
+            val currentMode = FullScreenMode.fromPreference(prefs)
+            val nextMode =
+                when (currentMode) {
+                    FullScreenMode.BUTTONS_AND_MENU -> FullScreenMode.BUTTONS_ONLY
+                    FullScreenMode.BUTTONS_ONLY -> FullScreenMode.FULLSCREEN_ALL_GONE
+                    FullScreenMode.FULLSCREEN_ALL_GONE -> FullScreenMode.BUTTONS_AND_MENU
+                }
+            FullScreenMode.setPreference(prefs, nextMode)
+            setFullScreen(this)
+            true
+        } catch (e: Exception) {
+            Timber.w(e, "Error toggling fullscreen")
+            false
+        }
+
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
         bytes: ByteArray,

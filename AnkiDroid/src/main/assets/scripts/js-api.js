@@ -35,6 +35,7 @@ const jsApiList = {
     ankiGetCardLapses: "cardLapses",
     ankiGetCardDue: "cardDue",
     ankiIsInFullscreen: "isInFullscreen",
+    ankiToggleFullscreen: "toggleFullscreen",
     ankiIsTopbarShown: "isTopbarShown",
     ankiIsInNightMode: "isInNightMode",
     ankiIsDisplayingAnswer: "isDisplayingAnswer",
