@@ -531,6 +531,10 @@ open class AnkiDroidJsAPI(
                 }
 
                 "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
+                "toggleFullscreen" -> {
+                    val result = if (activity is Reviewer) activity.toggleFullScreen() else false
+                    convertToByteArray(apiContract, result)
+                }
                 else -> {
                     showDeveloperContact(
                         ANKI_JS_ERROR_CODE_ERROR,
