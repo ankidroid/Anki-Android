@@ -23,7 +23,6 @@ import android.graphics.drawable.RippleDrawable
 import android.graphics.drawable.StateListDrawable
 import android.text.TextUtils
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -34,7 +33,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.text.BidiFormatter
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import anki.search.BrowserRow.Color
@@ -76,7 +74,6 @@ class BrowserMultiColumnAdapter(
         get() = viewModel.cards
 
     private var originalTextSize = -1.0f
-    private val bidiFormatter = BidiFormatter.getInstance()
 
     inner class MultiColumnViewHolder(
         private val binding: ItemCardBrowserBinding,
@@ -267,20 +264,15 @@ class BrowserMultiColumnAdapter(
                 )
             holder.numberOfColumns = row.cellsCount
 
+            val edgePadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, context.resources.displayMetrics).toInt()
+            val innerPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, context.resources.displayMetrics).toInt()
+
             for (i in 0 until row.cellsCount) {
                 holder.columnViews[i].apply {
-                    val cellText = renderColumn(i)
-                    val isTextRtl = bidiFormatter.isRtl(cellText)
-                    text = bidiFormatter.unicodeWrap(cellText)
-                    if (isTextRtl) {
-                        layoutDirection = View.LAYOUT_DIRECTION_RTL
-                        textDirection = View.TEXT_DIRECTION_RTL
-                        gravity = Gravity.START or Gravity.CENTER_VERTICAL
-                    } else {
-                        layoutDirection = View.LAYOUT_DIRECTION_LTR
-                        textDirection = View.TEXT_DIRECTION_LTR
-                        gravity = Gravity.START or Gravity.CENTER_VERTICAL
-                    }
+                    text = renderColumn(i)
+                    val startPadding = if (i == 0) edgePadding else innerPadding
+                    val endPadding = if (i == row.cellsCount - 1) edgePadding else innerPadding
+                    setPaddingRelative(startPadding, paddingTop, endPadding, paddingBottom)
                 }
             }
             holder.setIsSelected(isSelected)
