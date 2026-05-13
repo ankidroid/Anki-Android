@@ -194,6 +194,7 @@
     <string name="tag_editor_add_feedback">“%1$s” qoʻshishni tasdiqlash uchun “%2$s” tugmasini bosing</string>
     <string name="tag_editor_add_feedback_existing">Mavjud boʻlgan “%1$s” tegi tanlandi</string>
     <string name="tag_already_exists">Teg allaqachon mavjud</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg faylni ulashishda xatolik yuz berdi</string>
@@ -215,9 +216,9 @@
     <string name="white_board_eraser_enabled">Oʻchirgʻich rejimi yoqildi</string>
     <string name="white_board_eraser_disabled">Oʻchirgʻich rejimi oʻchirildi</string>
     <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
-    <string name="media_file_size_warning_title">Media too large</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
-    <string name="media_file_size_add_anyway">Add anyway</string>
+    <string name="media_file_size_warning_title">Media fayl juda katta</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">\"%1$s\" (%2$s) fayli AnkiWebʼning %3$s limitidan oshadi va uni sinxronlab boʻlmaydi. Baribir qoʻshmoqchimisiz?</string>
+    <string name="media_file_size_add_anyway">Baribir qoʻshish</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Yozuv taxtasi rasmini saqlab boʻlmadi. %s</string>
     <string name="white_board_image_saved">Yozuv taxtasi rasmi %s ga saqlandi</string>
@@ -262,13 +263,14 @@
     <string name="note_editor_audio_too_large">Audio fayl juda katta, audio faylni qoʻlda kiriting</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android zaxiralashi amalga oshmoqda. Iltimos, qayta urinib koʻring</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidʼga yorliqlar qoʻshishga ruxsat berish uchun iManagerʼdan foydalanishingiz kerak boʻlishi mumkin</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Asosiy ekraningiz AnkiDroidʼga yorliqlar qoʻshishga ruxsat bermaydi</string>
     <string name="create_shortcut_error">Yorliq qoʻshishda xatolik: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Jumlalar bosh harf bilan</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Asboblar panelini aylantirish</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
-    <string name="dialog_hint_certificate">Certificate</string>
+    <string name="dialog_hint_certificate">Sertifikat</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -278,7 +280,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Yaroqli e-pochta manzilini kiriting</string>
     <string name="password_empty">Parol talab etiladi</string>
-    <string name="back_pressed_once">Chiqish uchun yana bir bor bosing</string>
+    <string name="back_pressed_once">Chiqish uchun yana orqaga qayting</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Dastani yuklab olish</string>
@@ -393,4 +395,5 @@
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">Ushbu nom allaqachon mavjud</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Bajarilmoqda</string>
 </resources>

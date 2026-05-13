@@ -27,7 +27,7 @@ import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.runCatchingWithReport
+import com.ichi2.anki.common.crashreporting.runCatchingWithReport
 import timber.log.Timber
 
 open class SafeWebViewLayout :

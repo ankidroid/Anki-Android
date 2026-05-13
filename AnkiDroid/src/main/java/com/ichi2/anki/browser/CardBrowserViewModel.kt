@@ -38,7 +38,6 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
@@ -54,6 +53,7 @@ import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
@@ -71,6 +71,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
@@ -193,10 +194,10 @@ class CardBrowserViewModel(
 
     val flowOfScrollRequest = MutableSharedFlow<RowSelection>()
 
-    private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
+    private val sortTypeFlow = MutableStateFlow(LegacySortType.NO_SORTING)
     val order get() = sortTypeFlow.value
 
-    private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
+    val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
     /**
@@ -304,6 +305,28 @@ class CardBrowserViewModel(
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
 
+    /**
+     * Returns the list of Card IDs that should be updated.
+     *
+     * In 'Notes' mode, this includes all cards of the current note (sibling cards).
+     * In 'Cards' mode, this returns only the selected cards.
+     */
+    suspend fun getCardIdsForNoteEditor(): List<CardId> {
+        val cardId = currentCardId ?: return emptyList()
+
+        return if (cardsOrNotes == NOTES) {
+            withCol {
+                getCard(cardId).note(this).cardIds(this)
+            }
+        } else {
+            if (isInMultiSelectMode) {
+                queryAllSelectedCardIds()
+            } else {
+                listOf(cardId)
+            }
+        }
+    }
+
     fun requestChangeNoteType() =
         viewModelScope.launch {
             val noteIds = queryAllSelectedNoteIds()
@@ -340,7 +363,8 @@ class CardBrowserViewModel(
                 is SelectableDeck.Deck -> listOf(deck.toDeckNameId())
             }
 
-        searchRequestFlow.value = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
+        val updatedFilter = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
+        launchSearchForCards(updatedFilter, forceRefresh = false)
     }
 
     val searchRequestFlow = MutableStateFlow(SearchRequest(query = ""))
@@ -351,7 +375,6 @@ class CardBrowserViewModel(
             searchRequestFlow.value = searchRequestFlow.value.copy(query = value)
         }
 
-    // TODO: replace with flowOfDeckSelection
     val flowOfDeckId =
         searchRequestFlow.map {
             it.filters.decks
@@ -364,15 +387,6 @@ class CardBrowserViewModel(
             searchRequestFlow.value.filters.decks
                 .firstOrNull()
                 ?.id
-
-    val flowOfDeckSelection =
-        flowOfDeckId.map { did ->
-            when (did) {
-                ALL_DECKS_ID -> return@map SelectableDeck.AllDecks
-                null -> return@map SelectableDeck.AllDecks
-                else -> return@map SelectableDeck.Deck.fromId(did)
-            }
-        }
 
     suspend fun queryCardInfoDestination(): CardInfoDestination? {
         val firstSelectedCard = selectedRows.firstOrNull()?.toCardId(cardsOrNotes) ?: return null
@@ -425,7 +439,7 @@ class CardBrowserViewModel(
      * A search should be triggered if these properties change
      */
     private val searchRequested =
-        flowOf(flowOfCardsOrNotes, flowOfDeckId)
+        flowOf(flowOfCardsOrNotes)
             .flattenMerge()
 
     /**
@@ -464,6 +478,7 @@ class CardBrowserViewModel(
 
         performSearchFlow
             .onEach {
+                Timber.d("performSearchFlow -> launching search")
                 launchSearchForCards()
             }.launchIn(viewModelScope)
 
@@ -495,7 +510,7 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, prefs) }
+                sortTypeFlow.update { LegacySortType.fromCol(config, cardsOrNotes, prefs) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
@@ -832,12 +847,30 @@ class CardBrowserViewModel(
         searchRequestFlow.value.filters.decks
             .isEmpty()
 
-    fun changeCardOrder(which: SortType) {
+    /**
+     * Updates the [SortType] and updates the search results
+     */
+    fun setSortType(sortType: SortType) =
+        viewModelScope.launch {
+            Timber.i("setting sort type: %s", sortType)
+
+            // Temporarily update legacy flows
+            sortTypeFlow.update { sortType.toLegacy() }
+            sortType.toLegacyReverse()?.let { newValue ->
+                reverseDirectionFlow.update { newValue }
+            }
+
+            sortType.save(cardsOrNotes)
+
+            launchSearchForCards()
+        }
+
+    fun changeCardOrder(which: LegacySortType) {
         val changeType =
             when {
                 which != order -> ChangeCardOrder.OrderChange(which)
                 // if the same element is selected again, reverse the order
-                which != SortType.NO_SORTING -> ChangeCardOrder.DirectionChange
+                which != LegacySortType.NO_SORTING -> ChangeCardOrder.DirectionChange
                 else -> null
             } ?: return
 
@@ -1083,6 +1116,20 @@ class CardBrowserViewModel(
         launchSearchForCards()
     }
 
+    fun setQuery(
+        query: String,
+        forceRefresh: Boolean = true,
+    ) = viewModelScope.launch {
+        val newValue = searchRequestFlow.value.copy(query = query)
+        if (!forceRefresh && withCol { searchRequestFlow.value.toSearchString() == newValue.toSearchString() }) {
+            Timber.i("skipped duplicate search launch")
+            return@launch
+        }
+
+        searchRequestFlow.value = newValue
+        launchSearchForCards()
+    }
+
     /**
      * Searches for all marked notes and replaces the current search results with these marked notes.
      */
@@ -1127,7 +1174,9 @@ class CardBrowserViewModel(
                 ).toSearchString()
             }.getOrThrow()
 
-        setFilterQuery(searchString.value)
+        // until we use SearchRequest for everything, we need to use () to ensure the OR
+        // takes precedence over an 'AND'
+        setFilterQuery("(${searchString.value})")
     }
 
     /** Previewing */
@@ -1433,7 +1482,7 @@ class CardBrowserViewModel(
 
     private sealed interface ChangeCardOrder {
         data class OrderChange(
-            val sortType: SortType,
+            val sortType: LegacySortType,
         ) : ChangeCardOrder
 
         data object DirectionChange : ChangeCardOrder

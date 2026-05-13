@@ -46,13 +46,13 @@
 <resources>
     <!-- Widget -->
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d ta AnkiDroid kartasini muddati keldi</item>
-        <item quantity="other">%d ta AnkiDroid kartasini muddati keldi</item>
+        <item quantity="one">%d ta AnkiDroid kartasi qoldi</item>
+        <item quantity="other">%d ta AnkiDroid kartasi qoldi</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid kichkina</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d ta kartani muddati keldi</item>
-        <item quantity="other">%d ta kartani muddati keldi</item>
+        <item quantity="one">%d ta karta qoldi</item>
+        <item quantity="other">%d ta karta qoldi</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="one">%d daqiqa qoldi</item>

@@ -23,6 +23,7 @@ include(
     ":AnkiDroid",
     ":baselineprofile",
     ":common",
+    ":common:android",
     ":compat",
     ":libanki",
     ":lint-rules",

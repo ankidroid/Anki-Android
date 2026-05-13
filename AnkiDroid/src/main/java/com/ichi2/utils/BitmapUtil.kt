@@ -24,7 +24,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import androidx.annotation.CheckResult
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream

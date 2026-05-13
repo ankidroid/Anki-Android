@@ -71,16 +71,16 @@
         <item quantity="other">Ostáva %d minút</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Zostáva %1$d hodina %2$d min</item>
+        <item quantity="few">Zostávajú %1$d hodiny %2$d min</item>
+        <item quantity="many">Zostáva %1$d hodiny %2$d min</item>
+        <item quantity="other">Zostáva %1$d hodín %2$d min</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="few">%1$d days %2$dh left</item>
-        <item quantity="many">%1$d days %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">Zostáva %1$d deň %2$dh</item>
+        <item quantity="few">Zostávajú %1$d dni %2$dh</item>
+        <item quantity="many">Zostáva %1$d dňa %2$dh</item>
+        <item quantity="other">Zostáva %1$d dní %2$dh</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Napísať odpoveď</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Zobraziť odpoveď</string>
@@ -113,7 +113,7 @@
     <string name="menu_suspend" maxLength="28">Pozastaviť</string>
     <string name="menu_delete_note" maxLength="28">Vymazať poznámku</string>
     <string name="menu_flag" maxLength="41">Vlajočka</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Premenovať príznaky</string>
     <string name="menu_flag_card" maxLength="28">Červená vlajočka</string>
     <string name="menu_edit_tags" maxLength="28">Upraviť štítky</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>
@@ -139,8 +139,8 @@
     <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
     <string name="empty_deck">Tento balíček je prázdny</string>
     <string name="invalid_deck_name">Neplatný názov balíčka</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for today.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">Blahoželáme! Na dnes ste tento balíček dokončili.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Balíček je na teraz dokončený! %s</string>
     <string name="studyoptions_no_cards_due">Ešte nie sú žiadne kartičky na preskúšanie</string>
     <string name="sd_card_not_mounted">Ukladacie zariadenie nepripojené</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Synchronizácia</string>

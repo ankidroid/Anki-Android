@@ -44,6 +44,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.DialogDeckPickerBinding
 import com.ichi2.anki.databinding.ItemDeckPickerDialogBinding
+import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
@@ -57,7 +58,6 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import timber.log.Timber
-import java.util.Locale
 
 /**
  * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
@@ -77,6 +77,7 @@ import java.util.Locale
 open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private lateinit var binding: DialogDeckPickerBinding
     private var dialog: AlertDialog? = null
+    private lateinit var decksAdapter: DecksArrayAdapter
     private lateinit var expandImage: Drawable
     private lateinit var collapseImage: Drawable
     private lateinit var decksRoot: DeckNode
@@ -113,9 +114,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val dividerItemDecoration = DividerItemDecoration(binding.list.context, DividerItemDecoration.VERTICAL)
         binding.list.addItemDecoration(dividerItemDecoration)
         val decks: List<SelectableDeck> = getDeckNames(arguments)
-        val adapter = DecksArrayAdapter(decks)
-        binding.list.adapter = adapter
-        adjustToolbar(binding.root, adapter)
+        decksAdapter = DecksArrayAdapter(decks)
+        binding.list.adapter = decksAdapter
+        adjustToolbar(binding.root, decksAdapter)
         dialog =
             AlertDialog.Builder(requireActivity()).create {
                 negativeButton(R.string.dialog_cancel)
@@ -239,13 +240,27 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     var deckCreationListener: DeckCreationListener? = null
 
+    private val isMultiSelect: Boolean
+        get() = requireArguments().getBoolean(MULTI_SELECT)
+
     /**
      * Same action as pressing on the deck in the list. I.e. send the deck to listener and close the dialog.
+     * When [isMultiSelect] is true, the dialog stays open and removes the selected deck from the list.
      */
     protected fun selectDeckAndClose(deck: SelectableDeck) {
         Timber.d("selected deck '%s'", deck)
         onDeckSelected(deck)
-        dialog!!.dismiss()
+        if (isMultiSelect) {
+            if (deck is SelectableDeck.Deck) {
+                decksAdapter.removeDeck(deck.deckId)
+            }
+            // dismiss dialog when all decks have been selected
+            if (decksAdapter.itemCount == 0) {
+                dialog!!.dismiss()
+            }
+        } else {
+            dialog!!.dismiss()
+        }
     }
 
     protected fun displayErrorAndCancel() {
@@ -306,6 +321,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             currentlyDisplayedDecks.clear()
             currentlyDisplayedDecks.addAll(allDecksList.filter(::isViewable))
             notifyDataSetChanged()
+        }
+
+        fun removeDeck(deckId: DeckId) {
+            val idsToRemove = mutableSetOf(deckId)
+            decksRoot.find(deckId)?.forEach { idsToRemove.add(it.did) }
+            allDecksList.removeAll { it.did in idsToRemove }
+            updateCurrentlyDisplayedDecks()
         }
 
         private val allDecksList = ArrayList<DeckNode>()
@@ -376,13 +398,16 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         override fun getFilter(): Filter = DecksFilter()
 
         private inner class DecksFilter : TypedFilter<DeckNode>(allDecksList) {
+            /**
+             * Returns all the deck nodes of [items] that contains every pattern of the constraints.
+             * In the constraints, patterns are separated by any whitespace character.
+             */
             override fun filterResults(
                 constraint: CharSequence,
                 items: List<DeckNode>,
-            ): List<DeckNode> {
-                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()
-                return items.filter {
-                    it.fullDeckName.lowercase(Locale.getDefault()).contains(filterPattern)
+            ) = DeckFilters.create(constraint).let { deckFilters ->
+                items.filter { node ->
+                    deckFilters.accept(node.fullDeckName)
                 }
             }
 
@@ -437,6 +462,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private const val TITLE = "title"
         private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"
         private const val DECK_NAMES = "deckNames"
+        private const val MULTI_SELECT = "multiSelect"
 
         /**
          * A dialog which handles selecting a deck
@@ -446,6 +472,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             summaryMessage: String?,
             keepRestoreDefaultButton: Boolean,
             decks: List<SelectableDeck>,
+            isMultiSelect: Boolean = false,
         ): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()
@@ -453,6 +480,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             args.putString(TITLE, title)
             args.putBoolean(KEEP_RESTORE_DEFAULT_BUTTON, keepRestoreDefaultButton)
             args.putParcelableArrayList(DECK_NAMES, ArrayList(decks))
+            args.putBoolean(MULTI_SELECT, isMultiSelect)
             f.arguments = args
             return f
         }

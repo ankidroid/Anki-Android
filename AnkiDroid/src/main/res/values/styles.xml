@@ -231,6 +231,8 @@
         <item name="android:windowBackground">?android:attr/colorBackground</item>
     </style>
 
+    <style name="TextAppearance.AnkiDroid.TopAppBar.Title" parent="TextAppearance.Material3.TitleMedium" />
+
     <style name="AnkiDroid.AlertDialog.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
         <!-- The default style uses onSurfaceVariant, which isn't defined yet -->
         <item name="android:textColor">?android:attr/textColor</item>

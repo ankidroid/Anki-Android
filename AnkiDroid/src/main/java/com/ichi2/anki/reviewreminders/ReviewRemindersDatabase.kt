@@ -21,7 +21,7 @@ import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showError

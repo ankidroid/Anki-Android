@@ -194,6 +194,7 @@
     <string name="tag_editor_add_feedback">\"%1$s\" ઉમેરવાની પુષ્ટિ કરવા માટે \"%2$s\" ને ટચ કરો</string>
     <string name="tag_editor_add_feedback_existing">હાલનું ટૅગ “%1$s” પસંદ કર્યું</string>
     <string name="tag_already_exists">Tag already exists</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ફાઇલ શેર કરવામાં ભૂલ</string>
@@ -262,6 +263,7 @@
     <string name="note_editor_audio_too_large">ઓડિયો ફાઇલ ખૂબ મોટી છે, મહેરબાની કરીને ઓડિયો ફાઇલ જાતે ઉમેરો</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">એન્ડ્રોઈડ બેકઅપ પ્રક્રિયામાં છે. મહેરબાની કરીને પછી પ્રયત્ન કરો</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid ને શૉર્ટકટ્સ ઉમેરવાની મંજૂરી આપવા માટે તમારે iManager નો ઉપયોગ કરવાની જરૂર પડી શકે છે</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">તમારી હોમ સ્ક્રીન AnkiDroid ને શોર્ટકટ ઉમેરવાની મંજૂરી આપતી નથી</string>
     <string name="create_shortcut_error">શૉર્ટકટ ઉમેરવામાં ભૂલ: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">વાક્યોને કેપિટલાઇઝ કરો</string>
@@ -278,7 +280,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">માન્ય ઇમેઇલ દાખલ કરો</string>
     <string name="password_empty">પાસવર્ડ અનિવાર્ય છે</string>
-    <string name="back_pressed_once">બહાર નીકળવા માટે ફરીથી પાછા દબાવો</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">ડેક ડાઉનલોડ કરો</string>
@@ -393,4 +395,5 @@
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">Name already exists</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

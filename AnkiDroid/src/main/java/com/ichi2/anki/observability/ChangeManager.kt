@@ -38,7 +38,7 @@ import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.collection.opChanges
 import anki.import_export.ImportResponse
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.utils.ext.ifNotZero
 import org.jetbrains.annotations.Contract
 import timber.log.Timber

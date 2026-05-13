@@ -1,9 +1,9 @@
 plugins {
     // Gradle plugin portal
     alias(libs.plugins.tripletPlay)
-    alias(libs.plugins.android.application)
+    id 'com.android.application'
     alias(libs.plugins.androidx.baselineprofile)
-    alias(libs.plugins.kotlin.parcelize)
+    id 'org.jetbrains.kotlin.plugin.parcelize'
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
     alias(libs.plugins.roborazzi)
@@ -108,9 +108,9 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22400114
+        versionCode=22400300
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
-        versionName="2.24.0alpha14"
+        versionName="2.24.0"
         minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
@@ -313,7 +313,7 @@ android {
 
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
-    track.set('alpha')
+    track.set('beta')
 
     // any time we bump minSdk we want Play Store to retain the old artifacts by version code,
     // so that they remain available for older devices
@@ -341,9 +341,15 @@ play {
 }
 
 // Install Git pre-commit hook for Ktlint
+// Resolve via git so worktrees (where `.git` is a file) are handled correctly.
+def gitHooksDir = providers.exec {
+    workingDir = rootProject.rootDir
+    commandLine "git", "rev-parse", "--git-path", "hooks"
+}.standardOutput.asText.map { rootProject.rootDir.toPath().resolve(it.trim()).toFile() }
+
 tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
-    into { new File(rootProject.rootDir, '.git/hooks') }
+    into gitHooksDir
     filePermissions {
         user {
             read = write = execute = true
@@ -392,7 +398,7 @@ afterEvaluate {
 }
 
 apply from: "./robolectricDownloader.gradle"
-apply from: "./jacoco.gradle"
+apply from: "./jacoco.gradle.kts"
 apply from: "../lint.gradle"
 
 dependencies {
@@ -413,6 +419,7 @@ dependencies {
 
     // modules
     implementation project(":common")
+    implementation project(":common:android")
     implementation project(":compat")
     implementation project(":libanki")
     implementation project(":vbpd")
@@ -427,7 +434,6 @@ dependencies {
     implementation libs.androidx.exifinterface
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.lifecycle.process
-    implementation libs.androidx.media
     implementation libs.androidx.preference.ktx
     implementation libs.androidx.profileinstaller
     implementation libs.androidx.recyclerview

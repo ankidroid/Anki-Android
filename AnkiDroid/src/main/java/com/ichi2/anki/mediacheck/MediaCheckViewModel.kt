@@ -30,8 +30,8 @@ import kotlinx.coroutines.launch
 
 @NeedsTest("Test the media check process i.e. the buttons and views")
 class MediaCheckViewModel : ViewModel() {
-    private val _mediaCheckResult = MutableStateFlow<CheckMediaResponse?>(null)
-    val mediaCheckResult: StateFlow<CheckMediaResponse?> = _mediaCheckResult
+    val mediaCheckResult: StateFlow<CheckMediaResponse?>
+        field = MutableStateFlow<CheckMediaResponse?>(null)
 
     private val deletedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
     private val taggedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
@@ -47,7 +47,7 @@ class MediaCheckViewModel : ViewModel() {
         viewModelScope.launch {
             val taggedNotes =
                 undoableOp {
-                    tags.bulkAdd(_mediaCheckResult.value?.missingMediaNotesList ?: listOf(), tag)
+                    tags.bulkAdd(mediaCheckResult.value?.missingMediaNotesList ?: listOf(), tag)
                 }
             taggedFilesCount.value = taggedNotes.count
         }
@@ -55,7 +55,7 @@ class MediaCheckViewModel : ViewModel() {
     fun checkMedia(): Job =
         viewModelScope.launch {
             val result = withCol { media.check() }
-            _mediaCheckResult.value = result
+            mediaCheckResult.value = result
         }
 
     fun deleteTrash(): Job = viewModelScope.launch { withCol { media.emptyTrash() } }
@@ -68,7 +68,7 @@ class MediaCheckViewModel : ViewModel() {
     // TODO: investigate: the underlying implementation exposes progress, which we do not yet handle.
     fun deleteUnusedMedia(): Job =
         viewModelScope.launch {
-            val unused = _mediaCheckResult.value?.unusedList ?: listOf()
+            val unused = mediaCheckResult.value?.unusedList ?: listOf()
             withCol { media.trashFiles(unused) }
             deletedFilesCount.value = unused.size
         }

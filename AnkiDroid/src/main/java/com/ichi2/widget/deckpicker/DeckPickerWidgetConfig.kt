@@ -17,7 +17,6 @@
 package com.ichi2.widget.deckpicker
 
 import android.appwidget.AppWidgetManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -34,6 +33,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.utils.ext.unregisterReceiverSilently
 import com.ichi2.anki.databinding.WidgetDeckPickerConfigBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -45,7 +46,6 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.unregisterReceiverSilently
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
@@ -154,8 +154,6 @@ class DeckPickerWidgetConfig :
 
         setupDoneButton()
 
-        // TODO: Implement multi-select functionality so that user can select desired decks in once.
-        // TODO: Implement a functionality to hide already selected deck.
         binding.fabWidgetDeckPicker.setOnClickListener {
             showDeckSelectionDialog()
         }
@@ -302,10 +300,10 @@ class DeckPickerWidgetConfig :
         }
     }
 
-    /** Asynchronously displays the list of deck in the selection dialog. */
+    /** Displays the deck selection dialog, filtering out already-selected decks. */
     private fun showDeckSelectionDialog() {
         lifecycleScope.launch {
-            val decks = fetchDecks()
+            val decks = fetchDecks().filter { it.deckId !in deckAdapter.deckIds }
             displayDeckSelectionDialog(decks)
         }
     }
@@ -324,8 +322,13 @@ class DeckPickerWidgetConfig :
                 summaryMessage = null,
                 keepRestoreDefaultButton = false,
                 decks = decks,
+                isMultiSelect = true,
             )
-        dialog.show(supportFragmentManager, "DeckSelectionDialog")
+        dialog.show(supportFragmentManager, DECK_SELECTION_DIALOG_TAG)
+    }
+
+    private fun dismissDeckSelectionDialog() {
+        (supportFragmentManager.findFragmentByTag(DECK_SELECTION_DIALOG_TAG) as? DeckSelectionDialog)?.dismiss()
     }
 
     /** Called when a deck is selected from the deck selection dialog. */
@@ -338,7 +341,6 @@ class DeckPickerWidgetConfig :
         val isDeckAlreadySelected = deckAdapter.deckIds.contains(deck.deckId)
 
         if (isDeckAlreadySelected) {
-            // TODO: Eventually, ensure that the user can't select a deck that is already selected.
             showSnackbar(getString(R.string.deck_already_selected_message))
             return
         }
@@ -350,19 +352,19 @@ class DeckPickerWidgetConfig :
                 showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
             }
             // The FAB visibility should be handled in updateFabVisibility()
-        } else {
-            // Add the deck and update views
-            deckAdapter.addDeck(deck)
-            updateViewVisibility()
-            updateFabVisibility()
-            setupDoneButton()
-            hasUnsavedChanges = true
-            setUnsavedChanges(true)
-
-            // Show snackbar if the deck is the 5th deck
-            if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
-            }
+            return
+        }
+        // Add the deck and update views
+        deckAdapter.addDeck(deck)
+        updateViewVisibility()
+        updateFabVisibility()
+        setupDoneButton()
+        hasUnsavedChanges = true
+        setUnsavedChanges(true)
+        // Show snackbar and dismiss the selection dialog once the 5th deck is reached
+        if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
+            showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
+            dismissDeckSelectionDialog()
         }
     }
 
@@ -440,12 +442,12 @@ class DeckPickerWidgetConfig :
 
     /** BroadcastReceiver to handle widget removal. */
     private val widgetRemovedReceiver =
-        object : BroadcastReceiver() {
-            override fun onReceive(
-                context: Context?,
-                intent: Intent?,
+        object : AnkiBroadcastReceiver() {
+            override fun onReceiveBroadcast(
+                context: Context,
+                intent: Intent,
             ) {
-                if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
+                if (intent.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
                     return
                 }
 
@@ -454,7 +456,7 @@ class DeckPickerWidgetConfig :
                     return
                 }
 
-                context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
+                deckPickerWidgetPreferences.deleteDeckData(appWidgetId)
             }
         }
 
@@ -463,5 +465,6 @@ class DeckPickerWidgetConfig :
          * Maximum number of decks allowed in the widget.
          */
         private const val MAX_DECKS_ALLOWED = 5
+        private const val DECK_SELECTION_DIALOG_TAG = "DeckSelectionDialog"
     }
 }

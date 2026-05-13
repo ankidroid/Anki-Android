@@ -28,6 +28,7 @@ import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.work.WorkManager
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
@@ -87,12 +88,12 @@ class IntentHandler : AbstractIntentHandler() {
         when (launchType) {
             LaunchType.FILE_IMPORT ->
                 runIfStoragePermissions {
-                    handleFileImport(fileIntent, reloadIntent, action)
+                    handleFileImport(intent, reloadIntent, action)
                     finish()
                 }
             LaunchType.TEXT_IMPORT ->
                 runIfStoragePermissions {
-                    onSelectedCsvForImport(fileIntent)
+                    onSelectedCsvForImport(intent)
                     finish()
                 }
             LaunchType.IMAGE_IMPORT ->
@@ -126,15 +127,6 @@ class IntentHandler : AbstractIntentHandler() {
             failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }
-
-    private val fileIntent: Intent
-        get() {
-            return if (intent.action == Intent.ACTION_SEND) {
-                IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Intent::class.java) ?: intent
-            } else {
-                intent
-            }
-        }
 
     /**
      * Execute the runnable if one of the two following conditions are satisfied:
@@ -235,7 +227,7 @@ class IntentHandler : AbstractIntentHandler() {
         // TODO improve the handling of the imported temporary files
         // Launching this scope without tying it to a lifecycle since ,
         // IntentHandler finishes quickly, but deletion may still be in progress
-        AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+        applicationScope.launch(Dispatchers.IO) {
             try {
                 val file = File(path!!)
                 val fileUri =
@@ -295,7 +287,7 @@ class IntentHandler : AbstractIntentHandler() {
         // TODO improve the handling of the imported temporary files
         // Launching this scope without tying it to a lifecycle since ,
         // IntentHandler finishes quickly, but deletion may still be in progress
-        AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+        applicationScope.launch(Dispatchers.IO) {
             try {
                 contentResolver.delete(sharedDeckUri, null, null)
                 Timber.i("onCreate: downloaded shared deck deleted")

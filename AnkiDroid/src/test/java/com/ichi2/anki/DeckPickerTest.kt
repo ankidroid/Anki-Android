@@ -7,15 +7,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteDatabaseCorruptException
-import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
-import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
@@ -25,13 +24,15 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
-import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
+import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.PERMISSIONS_SET_EXTRA
 import com.ichi2.anki.utils.Destination
@@ -78,6 +79,8 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
+
+typealias ContextMenuOption = DeckPickerContextMenuOption
 
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -384,15 +387,15 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker {
             val didA = addDeck("Deck 1")
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.RENAME_DECK, didA)
+            selectContextMenuOption(ContextMenuOption.RENAME_DECK, didA)
             assertDialogTitleEquals("Rename deck")
             dismissAllDialogFragments()
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SUBDECK, didA)
+            selectContextMenuOption(ContextMenuOption.CREATE_SUBDECK, didA)
             assertDialogTitleEquals("Create subdeck")
             dismissAllDialogFragments()
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY, didA)
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY, didA)
             assertDialogTitleEquals("Custom study")
             dismissAllDialogFragments()
 
@@ -403,17 +406,12 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     /** Simulates a selection in the context menu by setting the specific result in FragmentManager */
-    private fun FragmentManager.selectContextMenuOption(
+    private fun DeckPicker.selectContextMenuOption(
         option: DeckPickerContextMenuOption,
         deckId: DeckId,
-    ) {
-        val arguments =
-            Bundle().apply {
-                putLong(DeckPickerContextMenu.CONTEXT_MENU_DECK_ID, deckId)
-                putSerializable(DeckPickerContextMenu.CONTEXT_MENU_DECK_OPTION, option)
-            }
-        setFragmentResult(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, arguments)
-    }
+    ) = supportFragmentManager.setDeckPickerContextMenuResult(
+        DeckPickerContextMenuResult(deckId = deckId, option = option),
+    )
 
     private fun assertDialogTitleEquals(expectedTitle: String) {
         val actualTitle = (ShadowDialog.getLatestDialog() as AlertDialog).title
@@ -425,12 +423,12 @@ class DeckPickerTest : RobolectricTest() {
     fun `ContextMenu starts expected activities when specific options are selected`() =
         deckPicker {
             suspend fun DeckPicker.selectContextMenuOptionForActivity(
-                option: DeckPickerContextMenuOption,
+                option: ContextMenuOption,
                 deckId: DeckId,
             ): Intent {
                 var result: Destination? = null
                 viewModel.flowOfDestination.test(1.seconds) {
-                    supportFragmentManager.selectContextMenuOption(option, deckId)
+                    selectContextMenuOption(option, deckId)
                     result = awaitItem()
                 }
                 return result!!.toIntent(this)
@@ -467,7 +465,7 @@ class DeckPickerTest : RobolectricTest() {
     fun `ContextMenu deletes deck when selecting DELETE_DECK`() =
         deckPicker {
             val didA = addDeck("Deck 1")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DELETE_DECK, didA)
+            selectContextMenuOption(ContextMenuOption.DELETE_DECK, didA)
             assertThat(getColUnsafe.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(didA)))
         }
 
@@ -475,7 +473,7 @@ class DeckPickerTest : RobolectricTest() {
     fun `ContextMenu creates deck shortcut when selecting CREATE_SHORTCUT`() =
         deckPicker {
             val didA = addDeck("Deck 1")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SHORTCUT, didA)
+            selectContextMenuOption(ContextMenuOption.CREATE_SHORTCUT, didA)
             // Wait for the shortcut creation to complete
             ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
             assertEquals(
@@ -500,7 +498,7 @@ class DeckPickerTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(1, visibleDeckCount)
             assertTrue(getColUnsafe.sched.haveBuried(), "Deck should have buried cards")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.UNBURY, deckId)
+            selectContextMenuOption(ContextMenuOption.UNBURY, deckId)
             kotlin.test.assertFalse(getColUnsafe.sched.haveBuried())
         }
 
@@ -517,11 +515,11 @@ class DeckPickerTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY, deckId) // Empty
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_EMPTY, deckId)
 
             assertTrue(allCardsInSameDeck(cardIds, 1))
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD, deckId) // Rebuild
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_REBUILD, deckId)
 
             assertTrue(allCardsInSameDeck(cardIds, deckId))
         }
@@ -641,6 +639,39 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(getUndoTitle(), containsString("Update Note"))
             undo()
             assertThat(getUndoTitle(), containsString("Add Note"))
+        }
+
+    @Test
+    fun `baseSnackbarBuilder has no anchor when FAB is hidden`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            fab.visibility = View.GONE
+
+            val snackbar = showSnackbar("test")
+
+            snackbar?.let { baseSnackbarBuilder.invoke(it) }
+
+            assertThat(
+                "anchorView must be null when FAB is not visible",
+                snackbar?.anchorView,
+                nullValue(),
+            )
+        }
+
+    @Test
+    fun `baseSnackbarBuilder anchors to FAB when visible`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            fab.visibility = View.VISIBLE
+
+            val snackbar = showSnackbar("test")
+            snackbar?.let { baseSnackbarBuilder.invoke(it) }
+
+            assertThat(
+                "anchorView is the FAB when visible",
+                snackbar?.anchorView,
+                equalTo(fab),
+            )
         }
 
     @Test

@@ -90,7 +90,8 @@ import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.getStockNotetypeKinds
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.notetype.RenameCardTemplateDialog
+import com.ichi2.anki.notetype.CardTypeName
+import com.ichi2.anki.notetype.RenameCardTypeDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
@@ -365,6 +366,10 @@ open class CardTemplateEditor :
         return tempNoteType != null && tempNoteType!!.notetype.toString() != oldNoteType.toString()
     }
 
+    private fun enableDiscardChangesDialog() {
+        displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
+    }
+
     private fun showDiscardChangesDialog() =
         DiscardChangesDialog.showDialog(this) {
             Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
@@ -407,6 +412,7 @@ open class CardTemplateEditor :
 
         // Deck Override can change from "on" <-> "off"
         invalidateOptionsMenu()
+        enableDiscardChangesDialog()
     }
 
     override fun onKeyUp(
@@ -682,7 +688,7 @@ open class CardTemplateEditor :
                             }
                         refreshFragmentRunnable = updateRunnable
                         refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
-                        templateEditor.displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
+                        templateEditor.enableDiscardChangesDialog()
                     }
 
                     override fun beforeTextChanged(
@@ -834,11 +840,20 @@ open class CardTemplateEditor :
             val ordinal = templateEditor.ord
             val template = templateEditor.tempNoteType!!.getTemplate(ordinal)
 
-            RenameCardTemplateDialog.showInstance(
+            // obtain the current names (potentially unsaved)
+            val existingNames =
+                templateEditor.tempNoteType!!
+                    .notetype.templates
+                    .map { CardTypeName.fromString(it.name) }
+
+            RenameCardTypeDialog.showInstance(
                 requireContext(),
                 prefill = template.name,
+                currentName = CardTypeName.fromString(template.name),
+                existingNames = existingNames,
             ) { newName ->
-                template.name = newName
+                template.name = newName.value
+                templateEditor.enableDiscardChangesDialog()
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
@@ -1334,6 +1349,7 @@ open class CardTemplateEditor :
             val currentTemplate = getCurrentTemplate()
             if (currentTemplate != null) {
                 result.applyTo(currentTemplate)
+                templateEditor.enableDiscardChangesDialog()
             }
         }
 
@@ -1361,7 +1377,11 @@ open class CardTemplateEditor :
                     numAffectedCards,
                     tmpl.jsonObject.optString("name"),
                 )
-            d.setArgs(msg)
+            d.setArgs(
+                title = getString(R.string.delete_card_type),
+                message = msg,
+                positiveButtonText = getString(R.string.dialog_positive_delete),
+            )
 
             val deleteCard = Runnable { deleteTemplate(tmpl, notetype) }
             val confirm = Runnable { executeWithSyncCheck(deleteCard) }
@@ -1387,7 +1407,11 @@ open class CardTemplateEditor :
                     ),
                     numAffectedCards,
                 )
-            d.setArgs(msg)
+            d.setArgs(
+                title = getString(R.string.add_card_type),
+                message = msg,
+                positiveButtonText = getString(R.string.menu_add),
+            )
 
             val addCard = Runnable { addNewTemplate(notetype) }
             val confirm = Runnable { executeWithSyncCheck(addCard) }
@@ -1411,6 +1435,7 @@ open class CardTemplateEditor :
             try {
                 templateEditor.getColUnsafe.modSchema(check = true)
                 schemaChangingAction.run()
+                templateEditor.enableDiscardChangesDialog()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -1420,6 +1445,7 @@ open class CardTemplateEditor :
                     Runnable {
                         templateEditor.getColUnsafe.modSchema(check = false)
                         schemaChangingAction.run()
+                        templateEditor.enableDiscardChangesDialog()
                         templateEditor.dismissAllDialogFragments()
                     }
                 val cancel = Runnable { templateEditor.dismissAllDialogFragments() }

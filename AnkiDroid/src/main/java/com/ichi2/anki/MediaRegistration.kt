@@ -22,6 +22,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.libanki.exception.EmptyMediaException
 import com.ichi2.anki.multimediacard.fields.ImageField

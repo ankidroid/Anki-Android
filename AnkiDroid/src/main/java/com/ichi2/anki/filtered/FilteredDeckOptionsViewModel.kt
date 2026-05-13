@@ -39,7 +39,6 @@ import com.ichi2.anki.libanki.SearchJoiner
 import com.ichi2.anki.observability.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -51,8 +50,14 @@ import timber.log.Timber
 class FilteredDeckOptionsViewModel(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val _state = MutableStateFlow<FilteredDeckOptionsState>(Initializing())
-    val state: StateFlow<FilteredDeckOptionsState> = _state.asStateFlow()
+    val state: StateFlow<FilteredDeckOptionsState>
+        field = MutableStateFlow<FilteredDeckOptionsState>(Initializing())
+
+    private var decksNames = emptyList<String>()
+
+    val hasUnsavedChanges: StateFlow<Boolean>
+        field = MutableStateFlow<Boolean>(false)
+    private var initialState: FilteredDeckOptions? = null
 
     /** The [DeckId] of a filtered deck to edit or 0 if we are creating a new filtered deck. */
     private val did: DeckId
@@ -67,30 +72,41 @@ class FilteredDeckOptionsViewModel(
             Timber.i("Starting filtered deck options setup, deckId=$did")
             val previousState = savedStateHandle.get<FilteredDeckOptions>(ARG_DATA)
             if (previousState != null) {
-                _state.update { previousState }
+                state.update { previousState }
                 return@launch
             }
             Timber.i("No previous stored state, querying the collection")
             val backendQueryResult = withCol { safeBackendDataQuery(did) }
             val (filteredDeckData, cardsOptions) =
                 backendQueryResult.getOrElse { throwable ->
-                    _state.update { Initializing(throwable = throwable) }
+                    state.update { Initializing(throwable = throwable) }
                     return@launch
                 }
-            savedStateHandle[ARG_DATA] =
-                filteredDeckData.asInitialState(
+            decksNames = withCol { safeGetDecksNames() }
+            filteredDeckData
+                .asInitialState(
                     cardsOptions = cardsOptions,
                     defaultSearch1 = search,
                     defaultSearch2 = search2,
-                )
-            _state.update { currentState() }
+                ).apply {
+                    savedStateHandle[ARG_DATA] = this
+                    initialState = this
+                }
+            state.update { currentState() }
         }
     }
 
     fun onDeckNameChange(name: String) {
         Timber.i("Filtered deck name is changing")
+        val error =
+            when {
+                name.isBlank() -> FilteredNameInputError.Empty
+                decksNames.contains(name) -> FilteredNameInputError.AlreadyExists
+                else -> null
+            }
         if (currentState().name == name) return
-        updateCurrentState { copy(name = name) }
+        updateCurrentState { copy(name = name, nameInputError = error) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onSearchChange(
@@ -101,6 +117,7 @@ class FilteredDeckOptionsViewModel(
         val targetFilterState = currentFilterState(index)
         if (targetFilterState?.search == searchQuery) return
         updateCurrentFilterState(index) { copy(search = searchQuery) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onLimitChange(
@@ -116,6 +133,7 @@ class FilteredDeckOptionsViewModel(
             }
         if (limit == currentFilterState(index)?.limit) return
         updateCurrentFilterState(index) { copy(limit = limit, error = inputError) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onCardsOptionsChange(
@@ -125,6 +143,7 @@ class FilteredDeckOptionsViewModel(
         Timber.i("Filtered deck filter($filterIndex) cards options index changing to $cardOptionIndex")
         if (currentFilterState(filterIndex)?.index == cardOptionIndex) return
         updateCurrentFilterState(filterIndex) { copy(index = cardOptionIndex) }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onSearchInBrowser(filterIndex: FilterIndex) {
@@ -162,6 +181,7 @@ class FilteredDeckOptionsViewModel(
                 filter2State = filter2State ?: SearchTermState(),
             )
         }
+        hasUnsavedChanges.update { wasStateModified() }
     }
 
     fun onRescheduleChange(isEnabled: Boolean) {
@@ -206,7 +226,8 @@ class FilteredDeckOptionsViewModel(
     fun onShowExcludedCards() {
         Timber.i("Building unmovable cards search query to show in browser")
         viewModelScope.launch {
-            val manualFilters = mutableListOf(currentFilterState(FilterIndex.First)?.search ?: return@launch)
+            val manualFilters =
+                mutableListOf(currentFilterState(FilterIndex.First)?.search ?: return@launch)
             if (currentState().isSecondFilterEnabled && currentFilterState(FilterIndex.Second) != null) {
                 manualFilters.add(currentFilterState(FilterIndex.Second)?.search ?: return@launch)
             }
@@ -219,7 +240,8 @@ class FilteredDeckOptionsViewModel(
             val manualFilter = withCol { groupSearches(manualFilters, SearchJoiner.OR) }
             val implicitFilter = withCol { groupSearches(implicitFilters, SearchJoiner.OR) }
             try {
-                val browserSearch = withCol { buildSearchString(listOf(manualFilter, implicitFilter)) }
+                val browserSearch =
+                    withCol { buildSearchString(listOf(manualFilter, implicitFilter)) }
                 updateCurrentState { copy(browserQuery = browserSearch) }
             } catch (ex: Exception) {
                 updateCurrentState { copy(throwable = ex) }
@@ -246,16 +268,16 @@ class FilteredDeckOptionsViewModel(
 
     fun build() {
         Timber.i("Building/Rebuilding filtered deck")
-        _state.update { currentState().copy(isBuildingBrowserSearch = true) }
+        state.update { currentState().copy(isBuildingBrowserSearch = true) }
         val newFilterForUpdate = currentState().asBackendData()
         viewModelScope.launch {
             undoableOp<OpChangesWithId> {
                 val safeAddUpdateResult = safeAddOrUpdateFilteredDeck(newFilterForUpdate)
                 if (safeAddUpdateResult.isSuccess) {
-                    _state.update { DeckBuilt }
+                    state.update { DeckBuilt }
                     safeAddUpdateResult.getOrThrow()
                 } else {
-                    _state.update {
+                    state.update {
                         currentState().copy(
                             throwable = safeAddUpdateResult.exceptionOrNull(),
                             isBuildingBrowserSearch = false,
@@ -272,6 +294,38 @@ class FilteredDeckOptionsViewModel(
         updateCurrentState { copy(throwable = null) }
     }
 
+    /**
+     * Checks the current state with the state that was loaded initially.
+     */
+    private fun wasStateModified(): Boolean {
+        val initial = initialState ?: return false
+        val current = (state.value as? FilteredDeckOptions) ?: return false
+        return initial.name != current.name ||
+            isFilter1Changed(initial, current) ||
+            initial.isSecondFilterEnabled != current.isSecondFilterEnabled ||
+            isFilter2Changed(initial, current)
+    }
+
+    private fun isFilter1Changed(
+        initial: FilteredDeckOptions,
+        current: FilteredDeckOptions,
+    ): Boolean =
+        initial.filter1State.search != current.filter1State.search ||
+            initial.filter1State.limit != current.filter1State.limit ||
+            initial.filter1State.index != current.filter1State.index
+
+    private fun isFilter2Changed(
+        initial: FilteredDeckOptions,
+        current: FilteredDeckOptions,
+    ): Boolean =
+        if (!current.isSecondFilterEnabled || !initial.isSecondFilterEnabled) {
+            false
+        } else {
+            initial.filter2State?.search != current.filter2State?.search ||
+                initial.filter2State?.limit != current.filter2State?.limit ||
+                initial.filter2State?.index != current.filter2State?.index
+        }
+
     /** Get the current state as it's found in the associated [SavedStateHandle]. Throws if state is not found. */
     private fun currentState(): FilteredDeckOptions = requireNotNull(savedStateHandle[ARG_DATA])
 
@@ -286,7 +340,7 @@ class FilteredDeckOptionsViewModel(
     private fun updateCurrentState(action: FilteredDeckOptions.() -> FilteredDeckOptions) {
         val updatedState = currentState().action()
         savedStateHandle[ARG_DATA] = updatedState
-        _state.update { currentState() }
+        state.update { currentState() }
     }
 
     /**
@@ -309,7 +363,7 @@ class FilteredDeckOptionsViewModel(
                 savedStateHandle[ARG_DATA] = currentState().copy(filter2State = changeSearchState)
             }
         }
-        _state.update { currentState() }
+        state.update { currentState() }
     }
 
     /**
@@ -340,6 +394,15 @@ class FilteredDeckOptionsViewModel(
             Result.success(sched.addOrUpdateFilteredDeck(deckData))
         } catch (ex: Exception) {
             Result.failure(ex)
+        }
+
+    /** Invokes the backend to get the names of decks. Errors are ignored, an empty list will be returned instead. */
+    private fun Collection.safeGetDecksNames(): List<String> =
+        try {
+            decks.allNamesAndIds(skipEmptyDefault = false, includeFiltered = true).map { it.name }
+        } catch (_: Exception) {
+            Timber.w("Failed to retrieve deck names")
+            emptyList()
         }
 
     /**

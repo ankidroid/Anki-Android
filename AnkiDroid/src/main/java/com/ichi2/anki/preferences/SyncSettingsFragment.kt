@@ -23,8 +23,8 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.account.AccountActivity
+import com.ichi2.anki.common.crashreporting.runCatchingWithReport
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.runCatchingWithReport
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.ifNullOrEmpty

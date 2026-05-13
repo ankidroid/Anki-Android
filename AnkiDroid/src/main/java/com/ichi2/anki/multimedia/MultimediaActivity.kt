@@ -123,9 +123,6 @@ class MultimediaActivity :
         const val MULTIMEDIA_ARGS_EXTRA = "fragmentArgs"
         const val MULTIMEDIA_FRAGMENT_NAME_EXTRA = "fragmentName"
 
-        const val MULTIMEDIA_RESULT = "multimedia_result"
-        const val MULTIMEDIA_RESULT_FIELD_INDEX = "multimedia_result_index"
-
         /** used in case a fragment supports more than media operations **/
         const val EXTRA_MEDIA_OPTIONS = "extra_media_options"
 

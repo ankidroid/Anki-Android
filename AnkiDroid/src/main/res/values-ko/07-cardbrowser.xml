@@ -68,6 +68,7 @@
     <string name="card_browser_list_my_searches_new_search_error_empty_name">이름 없이 검색어를 저장할 수 없습니다.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">이름이 이미 존재합니다!</string>
     <string name="card_browser_list_my_searches_successful_save">Search was saved</string>
+    <string name="card_browser_list_my_searches_successful_deleted">Search deleted</string>
     <string name="no_note_to_edit">수정할 노트 없음</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\"을/를 삭제할까요?</string>
     <string name="card_browser_change_display_order" maxLength="28">표시 순서 변경</string>
@@ -118,4 +119,7 @@
     <string name="exclude_column">열 제외하기</string>
     <string name="save_changes_message">변경사항을 먼저 저장하세요</string>
     <string name="browser_find_replace_loading_fields">필드 이름 검색 중&#8230;</string>
+    <!-- Search history -->
+    <string name="card_browser_see_more">See more</string>
+    <string name="card_browser_see_less">See less</string>
 </resources>

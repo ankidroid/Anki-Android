@@ -40,13 +40,9 @@
         <attr name="dialogHint" format="string|reference"/>
     </declare-styleable>
 
-    <declare-styleable name="NumberRangePreference">
-        <attr name="min"/>
-        <attr name="max"/>
-    </declare-styleable>
-
-    <declare-styleable name="StepsPreference">
-        <attr name="allowEmpty"/>
+    <declare-styleable name="RelatedSettingsPreference">
+        <attr name="relatedTitles" format="reference" />
+        <attr name="relatedFragments" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="NumberRangePreferenceCompat">
@@ -233,4 +229,8 @@
     <attr name="checkMediaListForeground" format="color" />
 
     <attr name="progressDialogButtonTextColor" format="color"/>
+
+    <!-- Reminder troubleshooting -->
+    <attr name="reminderTroubleshootingOk" format="color"/>
+    <attr name="reminderTroubleshootingWarning" format="color"/>
 </resources>

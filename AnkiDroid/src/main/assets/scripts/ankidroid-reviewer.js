@@ -31,13 +31,47 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
     }
 };
 
-document.addEventListener("focusin", event => {
-    window.location.href = `ankidroid://focusin`;
-});
+// ============================================================================
+// Input focus listeners
+// ============================================================================
 
-document.addEventListener("focusout", event => {
-    window.location.href = `ankidroid://focusout`;
-});
+(() => {
+    function localRequest(endpoint, payload = {}) {
+        fetch(`ankidroid/${endpoint}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        }).catch(err => console.log("Failed to reach local server:", err));
+    }
+
+    /**
+     * Checks if the target element is a text input field.
+     * @param {Event} event
+     * @returns {boolean}
+     */
+    function isTextInput(event) {
+        const target = event.target;
+        return target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA");
+    }
+
+    document.addEventListener("focusin", event => {
+        if (isTextInput(event)) {
+            localRequest("focusin");
+        }
+    });
+
+    document.addEventListener("focusout", event => {
+        if (isTextInput(event)) {
+            localRequest("focusout");
+        }
+    });
+})();
+
+// ============================================================================
+// Gesture detection
+// ============================================================================
 
 (() => {
     const SCHEME = "gesture";

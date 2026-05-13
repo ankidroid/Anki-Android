@@ -16,10 +16,10 @@
 
 package com.ichi2.anki.receiver
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import timber.log.Timber
 
 /**
@@ -27,8 +27,8 @@ import timber.log.Timber
  * intent to all activities which might be open in order to show an appropriate screen After media has been remounted,
  * another broadcast intent will be sent to let the activities know about it
  */
-class SdCardReceiver : BroadcastReceiver() {
-    override fun onReceive(
+class SdCardReceiver : AnkiBroadcastReceiver() {
+    override fun onReceiveBroadcast(
         context: Context,
         intent: Intent,
     ) {

@@ -39,74 +39,81 @@ fun ReviewerMenuView.setup(
         return
     }
 
-    viewModel.flagFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { flagCode ->
-            findItem(ViewerAction.FLAG_MENU.menuId)?.setPaddedIcon(context, flagCode.drawableRes)
-        }
-
-    val markItem = findItem(ViewerAction.MARK.menuId)
-    viewModel.isMarkedFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { isMarked ->
-            if (isMarked) {
-                markItem?.setPaddedIcon(context, R.drawable.ic_star)
-                markItem?.setTitle(R.string.menu_unmark_note)
-            } else {
-                markItem?.setPaddedIcon(context, R.drawable.ic_star_border_white)
-                markItem?.setTitle(R.string.menu_mark_note)
+    findItem(ViewerAction.FLAG_MENU.menuId)?.let { flagItem ->
+        viewModel.flagFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { flagCode ->
+                flagItem.setPaddedIcon(context, flagCode.drawableRes)
             }
-        }
+    }
 
-    val undoItem = findItem(ViewerAction.UNDO.menuId)
-    viewModel.undoLabelFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { label ->
-            undoItem?.title = label ?: CollectionManager.TR.undoUndo()
-            undoItem?.isEnabled = label != null
-        }
-
-    val redoItem = findItem(ViewerAction.REDO.menuId)
-    viewModel.redoLabelFlow
-        .flowWithLifecycle(lifecycle)
-        .collectLatestIn(lifecycle.coroutineScope) { label ->
-            redoItem?.title = label ?: CollectionManager.TR.undoRedo()
-            redoItem?.isEnabled = label != null
-        }
-
-    val suspendItem = findItem(ViewerAction.SUSPEND_MENU.menuId) ?: return
-    val suspendFlow = viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
-    suspendFlow.collectLatestIn(lifecycle.coroutineScope) { canSuspendNote ->
-        if (canSuspendNote) {
-            if (suspendItem.hasSubMenu()) return@collectLatestIn
-            suspendItem.setTitle(ViewerAction.SUSPEND_MENU.titleRes)
-            val submenu =
-                SubMenuBuilder(context, suspendItem.menu, suspendItem).apply {
-                    add(Menu.NONE, ViewerAction.SUSPEND_NOTE.menuId, Menu.NONE, ViewerAction.SUSPEND_NOTE.titleRes)
-                    add(Menu.NONE, ViewerAction.SUSPEND_CARD.menuId, Menu.NONE, ViewerAction.SUSPEND_CARD.titleRes)
+    findItem(ViewerAction.MARK.menuId)?.let { markItem ->
+        viewModel.isMarkedFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { isMarked ->
+                if (isMarked) {
+                    markItem.setPaddedIcon(context, R.drawable.ic_star)
+                    markItem.setTitle(R.string.menu_unmark_note)
+                } else {
+                    markItem.setPaddedIcon(context, R.drawable.ic_star_border_white)
+                    markItem.setTitle(R.string.menu_mark_note)
                 }
-            suspendItem.setSubMenu(submenu)
-        } else {
-            suspendItem.removeSubMenu()
-            suspendItem.setTitle(ViewerAction.SUSPEND_CARD.titleRes)
+            }
+    }
+
+    findItem(ViewerAction.UNDO.menuId)?.let { undoItem ->
+        viewModel.undoLabelFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { label ->
+                undoItem.title = label ?: CollectionManager.TR.undoUndo()
+                undoItem.isEnabled = label != null
+            }
+    }
+
+    findItem(ViewerAction.REDO.menuId)?.let { redoItem ->
+        viewModel.redoLabelFlow
+            .flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycle.coroutineScope) { label ->
+                redoItem.title = label ?: CollectionManager.TR.undoRedo()
+                redoItem.isEnabled = label != null
+            }
+    }
+
+    findItem(ViewerAction.SUSPEND_MENU.menuId)?.let { suspendItem ->
+        val suspendFlow = viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
+        suspendFlow.collectLatestIn(lifecycle.coroutineScope) { canSuspendNote ->
+            if (canSuspendNote) {
+                if (suspendItem.hasSubMenu()) return@collectLatestIn
+                suspendItem.setTitle(ViewerAction.SUSPEND_MENU.titleRes)
+                val submenu =
+                    SubMenuBuilder(context, suspendItem.menu, suspendItem).apply {
+                        add(Menu.NONE, ViewerAction.SUSPEND_NOTE.menuId, Menu.NONE, ViewerAction.SUSPEND_NOTE.titleRes)
+                        add(Menu.NONE, ViewerAction.SUSPEND_CARD.menuId, Menu.NONE, ViewerAction.SUSPEND_CARD.titleRes)
+                    }
+                suspendItem.setSubMenu(submenu)
+            } else {
+                suspendItem.removeSubMenu()
+                suspendItem.setTitle(ViewerAction.SUSPEND_CARD.titleRes)
+            }
         }
     }
 
-    val buryItem = findItem(ViewerAction.BURY_MENU.menuId) ?: return
-    val flow = viewModel.canBuryNoteFlow.flowWithLifecycle(lifecycle)
-    flow.collectLatestIn(lifecycle.coroutineScope) { canBuryNote ->
-        if (canBuryNote) {
-            if (buryItem.hasSubMenu()) return@collectLatestIn
-            buryItem.setTitle(ViewerAction.BURY_MENU.titleRes)
-            val submenu =
-                SubMenuBuilder(context, buryItem.menu, buryItem).apply {
-                    add(Menu.NONE, ViewerAction.BURY_NOTE.menuId, Menu.NONE, ViewerAction.BURY_NOTE.titleRes)
-                    add(Menu.NONE, ViewerAction.BURY_CARD.menuId, Menu.NONE, ViewerAction.BURY_CARD.titleRes)
-                }
-            buryItem.setSubMenu(submenu)
-        } else {
-            buryItem.removeSubMenu()
-            buryItem.setTitle(ViewerAction.BURY_CARD.titleRes)
+    findItem(ViewerAction.BURY_MENU.menuId)?.let { buryItem ->
+        val buryFlow = viewModel.canBuryNoteFlow.flowWithLifecycle(lifecycle)
+        buryFlow.collectLatestIn(lifecycle.coroutineScope) { canBuryNote ->
+            if (canBuryNote) {
+                if (buryItem.hasSubMenu()) return@collectLatestIn
+                buryItem.setTitle(ViewerAction.BURY_MENU.titleRes)
+                val submenu =
+                    SubMenuBuilder(context, buryItem.menu, buryItem).apply {
+                        add(Menu.NONE, ViewerAction.BURY_NOTE.menuId, Menu.NONE, ViewerAction.BURY_NOTE.titleRes)
+                        add(Menu.NONE, ViewerAction.BURY_CARD.menuId, Menu.NONE, ViewerAction.BURY_CARD.titleRes)
+                    }
+                buryItem.setSubMenu(submenu)
+            } else {
+                buryItem.removeSubMenu()
+                buryItem.setTitle(ViewerAction.BURY_CARD.titleRes)
+            }
         }
     }
 }

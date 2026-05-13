@@ -32,7 +32,6 @@ import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
@@ -46,8 +45,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.FragmentMultimediaImageBinding
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_LIMIT
 import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_SAVE_MAX_WIDTH
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
@@ -100,12 +97,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
                     if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData =
-                            Intent().apply {
-                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                            }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
+                        setMultimediaResultAndFinish(MultimediaResult.Cancelled(indexValue))
                     }
                 }
 
@@ -132,12 +124,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 Activity.RESULT_CANCELED -> {
                     // If user didn't draw, return the indexValue as a result and finish the activity
                     if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData =
-                            Intent().apply {
-                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                            }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
+                        setMultimediaResultAndFinish(MultimediaResult.Cancelled(indexValue))
                     }
                 }
 
@@ -159,12 +146,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             hasStartedImageSelection = false
             when {
                 !isPictureTaken && viewModel.currentMultimediaUri.value == null -> {
-                    val resultData =
-                        Intent().apply {
-                            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                        }
-                    requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                    requireActivity().finish()
+                    setMultimediaResultAndFinish(MultimediaResult.Cancelled(indexValue))
                 }
 
                 isPictureTaken -> {
@@ -345,14 +327,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     private fun finishAddingImage() {
         field.mediaFile = viewModel.currentMultimediaPath.value
         field.hasTemporaryMedia = true
-
-        val resultData =
-            Intent().apply {
-                putExtra(MULTIMEDIA_RESULT, field)
-                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-            }
-        requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-        requireActivity().finish()
+        setMultimediaResultAndFinish(MultimediaResult.Success(indexValue, field))
     }
 
     private fun openGallery() {

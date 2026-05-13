@@ -50,7 +50,7 @@
     <string name="model_browser_template">Edit cards</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_card_type" maxLength="28">Rename card type</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
@@ -61,6 +61,9 @@
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_changing">Actualizare câmpuri</string>
     <string name="model_field_editor_sort_field">Sortează după acest câmp</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <!--

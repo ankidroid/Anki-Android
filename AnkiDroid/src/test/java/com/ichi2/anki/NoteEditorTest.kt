@@ -663,6 +663,89 @@ class NoteEditorTest : RobolectricTest() {
             assertFalse(hasUnsavedChanges())
         }
 
+    @Test
+    fun `changing deck with multiple card ids moves all sibling cards`() =
+        runTest {
+            // Create a note with 2 cards (Basic and Reversed)
+            val note = addBasicAndReversedNote()
+
+            val cardIds: List<Long> = note.cardIds(col)
+            val testDeckId: Long = addDeck("Test Deck")
+
+            // Launch Editor using the Launcher bundle (mimic launch from browser)
+            val bundle =
+                NoteEditorLauncher
+                    .EditSelection(
+                        cardIds = cardIds,
+                        animation = DEFAULT,
+                    ).toBundle()
+
+            val editor = openNoteEditorWithArgs(bundle)
+
+            // Change the note's deck to test deck and save
+            editor.onDeckSelected(SelectableDeck.Deck(testDeckId, "Test Deck"))
+            editor.saveNote()
+
+            advanceRobolectricLooper()
+
+            // Check if both cards belonging to the note have moved to the test deck
+            assertEquals(testDeckId, col.getCard(cardIds[0]).did, "First card should be in the test deck")
+            assertEquals(testDeckId, col.getCard(cardIds[1]).did, "Second card should also be in the test deck")
+        }
+
+    @Test
+    fun `changing deck with single card id moves only that card`() =
+        runTest {
+            // Create a note with 2 cards (Basic and Reversed)
+            val note = addBasicAndReversedNote()
+
+            val cardIds: List<Long> = note.cardIds(col)
+            val initialDeckId = col.getCard(cardIds[1]).did
+            val newDeckId: Long = addDeck("Test Deck")
+
+            // Launch Editor using the Launcher bundle with a single card id
+            val bundle =
+                NoteEditorLauncher
+                    .EditSelection(
+                        cardIds = listOf(cardIds[0]),
+                        animation = DEFAULT,
+                    ).toBundle()
+
+            val editor = openNoteEditorWithArgs(bundle)
+
+            // Change the card's deck to test deck and save
+            editor.onDeckSelected(SelectableDeck.Deck(newDeckId, "Test Deck"))
+            editor.saveNote()
+            advanceRobolectricLooper()
+
+            // Check whether sibling cards are unaffected and only the target card has moved to the test deck
+            assertEquals(newDeckId, col.getCard(cardIds[0]).did, "Selected card should move")
+            assertEquals(initialDeckId, col.getCard(cardIds[1]).did, "Sibling card should NOT move")
+        }
+
+    @Test
+    fun `saveToggleStickyMap removes keys beyond current field count - 13719`() {
+        val editor = getNoteEditorAddingNote(DECK_LIST)
+        advanceRobolectricLooper()
+
+        val editFields = List(2) { index -> editor.getFieldForTest(index) }
+        editor.editFields!!.clear()
+        editor.editFields!!.addAll(editFields)
+        editor.toggleStickyText.putAll(
+            mapOf(
+                0 to "value0",
+                1 to "value1",
+                2 to "value2",
+            ),
+        )
+
+        editor.saveToggleStickyMap()
+
+        assertFalse(editor.toggleStickyText.containsKey(2), "key 2 should be removed when editFields has only 2 elements")
+        assertTrue(editor.toggleStickyText.containsKey(0), "key 0 should remain")
+        assertTrue(editor.toggleStickyText.containsKey(1), "key 1 should remain")
+    }
+
     private suspend fun withNoteEditorAdding(
         from: FromScreen = FromScreen.DECK_LIST,
         block: suspend NoteEditorFragment.() -> Unit,
@@ -758,7 +841,7 @@ class NoteEditorTest : RobolectricTest() {
     ): NoteEditorFragment {
         val bundle =
             when (from) {
-                REVIEWER -> NoteEditorLauncher.EditSelection(n.firstCard().id, DEFAULT).toBundle()
+                REVIEWER -> NoteEditorLauncher.EditSelection(listOf(n.firstCard().id), DEFAULT).toBundle()
                 DECK_LIST -> NoteEditorLauncher.AddNote().toBundle()
             }
         return openNoteEditorWithArgs(bundle)

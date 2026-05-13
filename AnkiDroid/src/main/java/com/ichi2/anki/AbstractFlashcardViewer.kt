@@ -29,7 +29,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.hardware.SensorManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
@@ -87,6 +86,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.android.AnkiShakeDetector
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.backend.stripHTMLAndSpecialFields
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
@@ -799,7 +799,7 @@ abstract class AbstractFlashcardViewer :
         }
         val animation = fromGesture.toAnimationTransition().invert()
         Timber.i("Launching 'edit card'")
-        val editCardIntent = NoteEditorLauncher.EditSelection(currentCard!!.id, animation).toIntent(this)
+        val editCardIntent = NoteEditorLauncher.EditSelection(listOf(currentCard!!.id), animation).toIntent(this)
         editCurrentCardLauncher.launch(editCardIntent)
     }
 
@@ -1827,9 +1827,11 @@ abstract class AbstractFlashcardViewer :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        // Configure the snackbar to avoid the bottom answer buttons
+        // Configure the snackbar to avoid the bottom answer buttons.
+        // The answer buttons are animated to GONE in fullscreen mode (see Reviewer.hideViewWithAnimation),
+        // so check visibility to avoid anchoring the snackbar to a hidden view (#20946).
         if (answerButtonsPosition == "bottom") {
-            anchorView = findViewById(R.id.answer_options_layout)
+            anchorView = findViewById<View>(R.id.answer_options_layout)?.takeIf { it.isVisible }
         }
     }
 
@@ -2170,7 +2172,7 @@ abstract class AbstractFlashcardViewer :
     internal inner class LinkDetectingGestureDetector :
         MyGestureDetector(),
         ShakeDetector.Listener {
-        private var shakeDetector: ShakeDetector? = null
+        private var shakeDetector: AnkiShakeDetector? = null
 
         init {
             initShakeDetector()
@@ -2179,11 +2181,14 @@ abstract class AbstractFlashcardViewer :
         private fun initShakeDetector() {
             Timber.d("Initializing shake detector")
             if (gestureProcessor.isBound(Gesture.SHAKE)) {
-                val sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
                 shakeDetector =
-                    ShakeDetector(this).apply {
-                        start(sensorManager, SensorManager.SENSOR_DELAY_UI)
-                    }
+                    AnkiShakeDetector
+                        .createInstance(
+                            context = this@AbstractFlashcardViewer,
+                            listener = this@LinkDetectingGestureDetector,
+                        )?.apply {
+                            start()
+                        }
             }
         }
 
@@ -2205,7 +2210,6 @@ abstract class AbstractFlashcardViewer :
         private val dispatchedTouchEvents = hashSetInit<MotionEvent>(2)
 
         override fun hearShake() {
-            Timber.d("Shake detected!")
             gestureProcessor.onShake()
         }
 

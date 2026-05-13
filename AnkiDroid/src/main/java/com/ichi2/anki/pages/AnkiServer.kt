@@ -73,6 +73,7 @@ open class AnkiServer(
 
         /** Common prefix used on Anki requests */
         const val ANKI_PREFIX = "/_anki/"
+        const val ANKIDROID_PREFIX = "/ankidroid/"
         const val ANKIDROID_JS_PREFIX = "/jsapi/"
 
         fun getSessionBytes(session: IHTTPSession): ByteArray {

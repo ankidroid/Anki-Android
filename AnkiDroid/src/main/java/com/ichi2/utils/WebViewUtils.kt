@@ -28,8 +28,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber

@@ -22,14 +22,18 @@ import androidx.core.content.edit
 import androidx.test.annotation.UiThreadTest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS
-import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
+import com.ichi2.anki.acraCoreConfigBuilder
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReporter
+import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_ALWAYS
+import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ThrowableFilterService
+import com.ichi2.anki.setDebugACRAConfig
+import com.ichi2.anki.setProductionACRAConfig
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.acra.ACRA
 import org.acra.builder.ReportBuilder
@@ -70,7 +74,7 @@ class ACRATest : InstrumentedTest() {
     @Throws(Exception::class)
     fun testDebugConfiguration() {
         // Debug mode overrides all saved state so no setup needed
-        CrashReportService.setDebugACRAConfig(sharedPrefs)
+        setDebugACRAConfig(sharedPrefs)
         assertArrayEquals(
             "Debug logcat arguments not set correctly",
             CrashReportService.acraCoreConfigBuilder
@@ -90,9 +94,9 @@ class ACRATest : InstrumentedTest() {
         )
         assertEquals(
             "ACRA feedback was not turned off correctly",
-            CrashReportService.FEEDBACK_REPORT_NEVER,
+            CrashReporter.FEEDBACK_REPORT_NEVER,
             sharedPrefs
-                .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined"),
+                .getString(CrashReporter.FEEDBACK_REPORT_KEY, "undefined"),
         )
     }
 
@@ -100,11 +104,11 @@ class ACRATest : InstrumentedTest() {
     @Throws(Exception::class)
     fun testProductionConfigurationUserDisabled() {
         // set up as if the user had prefs saved to disable completely
-        setReportConfig(CrashReportService.FEEDBACK_REPORT_NEVER)
+        setReportConfig(CrashReporter.FEEDBACK_REPORT_NEVER)
 
         // ACRA initializes production logcat via annotation and we can't mock Build.DEBUG
         // That means we are restricted from verifying production logcat args and this is the debug case again
-        CrashReportService.setProductionACRAConfig(sharedPrefs)
+        setProductionACRAConfig(sharedPrefs)
         verifyDebugACRAPreferences()
     }
 
@@ -115,7 +119,7 @@ class ACRATest : InstrumentedTest() {
         setReportConfig(FEEDBACK_REPORT_ASK)
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        CrashReportService.setProductionACRAConfig(sharedPrefs)
+        setProductionACRAConfig(sharedPrefs)
         verifyACRANotDisabled()
 
         assertToastMessage(R.string.feedback_for_manual_toast_text)
@@ -134,7 +138,7 @@ class ACRATest : InstrumentedTest() {
 
         // If the user is set to always, then it's production, with interaction mode toast
         // will be useful with ACRA 5.2.0
-        CrashReportService.setProductionACRAConfig(sharedPrefs)
+        setProductionACRAConfig(sharedPrefs)
 
         // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
         val crash = Exception("testCrashReportSend at " + System.currentTimeMillis())
@@ -173,7 +177,7 @@ class ACRATest : InstrumentedTest() {
         )
 
         // Now let's clear data
-        CrashReportService.deleteACRALimiterData(testContext)
+        CrashReportService.deleteLimiterData(testContext)
 
         // A third send should work again
         assertTrue(
@@ -192,7 +196,7 @@ class ACRATest : InstrumentedTest() {
         setReportConfig(FEEDBACK_REPORT_ALWAYS)
 
         // If the user is set to always, then it's production, with interaction mode toast
-        CrashReportService.setProductionACRAConfig(sharedPrefs)
+        setProductionACRAConfig(sharedPrefs)
         verifyACRANotDisabled()
 
         assertToastMessage(R.string.feedback_auto_toast_text)
@@ -207,7 +211,7 @@ class ACRATest : InstrumentedTest() {
         setReportConfig(FEEDBACK_REPORT_ALWAYS)
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        CrashReportService.setProductionACRAConfig(sharedPrefs)
+        setProductionACRAConfig(sharedPrefs)
         verifyACRANotDisabled()
 
         assertDialogEnabledStatus("dialog should be disabled when status is ALWAYS", false)
@@ -226,7 +230,7 @@ class ACRATest : InstrumentedTest() {
         setReportConfig(FEEDBACK_REPORT_ASK)
 
         // If the user is set to ask, then it's production, with interaction mode dialog
-        CrashReportService.setProductionACRAConfig(sharedPrefs)
+        setProductionACRAConfig(sharedPrefs)
         verifyACRANotDisabled()
 
         assertToastMessage(R.string.feedback_for_manual_toast_text)
@@ -282,7 +286,7 @@ class ACRATest : InstrumentedTest() {
     }
 
     private fun setAcraReportingMode(feedbackReportAlways: String) {
-        CrashReportService.setAcraReportingMode(feedbackReportAlways)
+        CrashReportService.setReportingMode(feedbackReportAlways)
     }
 
     @Throws(ACRAConfigurationException::class)
@@ -333,7 +337,7 @@ class ACRATest : InstrumentedTest() {
     }
 
     private fun setReportConfig(feedbackReportAsk: String) {
-        sharedPrefs.edit { putString(CrashReportService.FEEDBACK_REPORT_KEY, feedbackReportAsk) }
+        sharedPrefs.edit { putString(CrashReporter.FEEDBACK_REPORT_KEY, feedbackReportAsk) }
     }
 
     private val sharedPrefs: SharedPreferences

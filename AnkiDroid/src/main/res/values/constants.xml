@@ -323,6 +323,19 @@
         <item>@string/pref_cat_plugins</item>
     </string-array>
 
+    <!-- Related settings -->
+    <string name="fragment_controls_preferences" tools:ignore="TranslationTypo">com.ichi2.anki.preferences.ControlsSettingsFragment</string>
+    <string name="fragment_accessibility_preferences" tools:ignore="TranslationTypo">com.ichi2.anki.preferences.AccessibilitySettingsFragment</string>
+
+    <string-array name="study_screen_related_titles">
+        <item>@string/pref_cat_controls</item>
+        <item>@string/accessibility</item>
+    </string-array>
+    <string-array name="study_screen_related_fragments">
+        <item>@string/fragment_controls_preferences</item>
+        <item>@string/fragment_accessibility_preferences</item>
+    </string-array>
+
     <!-- Sample deck names and for Deck Picker Widget layout in widget picker screen
        These strings are marked as `translatable=false` because translating them would defeat the purpose of the example, which relies on specific language usage.-->
     <string name="deck1Name_deck_picker_widget" translatable="false" comment="Example of a Deck name. Android's widget provider displays it as an example of what the Deck Picker widget may look like">English</string>

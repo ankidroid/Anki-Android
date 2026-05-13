@@ -35,8 +35,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
 import com.ichi2.anki.dialogs.dismissLoadingDialog
 import com.ichi2.anki.dialogs.showLoadingDialog
@@ -99,6 +99,10 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
         }
         binding.btnClearSelection.setOnClickListener { viewModel.clearSelection() }
+
+        binding.selectionToolbar.setOnClickListener {
+            // Consume touch events to prevent tap-through
+        }
         binding.btnDeleteSelection.setOnClickListener {
             launchCatchingTask {
                 val deleteMessage =

@@ -18,13 +18,16 @@
 package com.ichi2.anki.multiprofile
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.webkit.CookieManager
 import android.webkit.WebView
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import org.acra.ACRA
@@ -73,7 +76,7 @@ class ProfileManager private constructor(
         val defaultId = ProfileId.DEFAULT
 
         val metadata =
-            ProfileMetadata(displayName = DEFAULT_PROFILE_DISPLAY_NAME)
+            ProfileMetadata(displayName = ProfileName.fromTrustedSource(DEFAULT_PROFILE_DISPLAY_NAME))
 
         profileRegistry.saveProfile(id = defaultId, metadata = metadata, isActive = true)
         profileRegistry.setLastActiveProfileId(defaultId)
@@ -93,14 +96,14 @@ class ProfileManager private constructor(
      *
      * @throws Exception if profile creation or persistence fails.
      */
-    fun createNewProfile(displayName: String): ProfileId {
+    fun createNewProfile(displayName: ProfileName): ProfileId {
         val newProfileId = generateUniqueProfileId()
 
         val metadata = ProfileMetadata(displayName = displayName)
 
         profileRegistry.saveProfile(newProfileId, metadata)
 
-        Timber.i("Created new profile: $displayName (${newProfileId.value})")
+        Timber.i("Created new profile: ${displayName.value} (${newProfileId.value})")
         return newProfileId
     }
 
@@ -148,11 +151,16 @@ class ProfileManager private constructor(
         return newId
     }
 
+    /**
+     * Persists [newProfileId] as the active profile.
+     *
+     * @param newProfileId The [ProfileId] to activate on next launch.
+     */
+    @VisibleForTesting
+    context(_: ProfileSwitchContext)
     fun switchActiveProfile(newProfileId: ProfileId) {
         Timber.i("Switching profile to ID: $newProfileId")
-
         profileRegistry.setLastActiveProfileId(newProfileId)
-        triggerAppRestart()
     }
 
     private fun loadProfileData(profileId: ProfileId) {
@@ -224,9 +232,38 @@ class ProfileManager private constructor(
         return ProfileRestrictedDirectory(directoryFile)
     }
 
-    private fun triggerAppRestart() {
-        Timber.w("Restarting app to apply profile switch")
-        // TODO: Implement process restart logic (e.g. ProcessPhoenix)
+    /**
+     * Renames an existing profile by updating its display name in
+     * the registry.
+     *
+     * All other metadata fields (version, creation timestamp) are
+     * preserved. The change is persisted immediately.
+     *
+     * @param profileId      The [ProfileId] of the profile to rename.
+     * @param newDisplayName  The new user-facing name.
+     *
+     * @throws IllegalArgumentException if [profileId] does not
+     *   exist in the registry.
+     */
+    fun renameProfile(
+        profileId: ProfileId,
+        newDisplayName: ProfileName,
+    ) {
+        Timber.d("ProfileManager::renameProfile called for $profileId")
+
+        val existing =
+            profileRegistry.getProfileMetadata(profileId)
+                ?: throw IllegalArgumentException("Profile $profileId not found")
+
+        if (existing.displayName == newDisplayName) {
+            Timber.d("Rename skipped: New name matches existing name for $profileId")
+            return
+        }
+
+        val updated = existing.copy(displayName = newDisplayName)
+        profileRegistry.saveProfile(profileId, updated)
+
+        Timber.d("Renamed profile $profileId to '$newDisplayName'")
     }
 
     /**
@@ -234,14 +271,14 @@ class ProfileManager private constructor(
      * Converted to JSON for storage to allow future extensibility (e.g. avatars, themes).
      */
     data class ProfileMetadata(
-        val displayName: String,
+        val displayName: ProfileName,
         val version: Int = 1,
         val createdTimestamp: String = getTimestamp(TimeManager.time),
     ) {
         fun toJson(): String =
             JSONObject()
                 .apply {
-                    put("displayName", displayName)
+                    put("displayName", displayName.value)
                     put("version", version)
                     put("created", createdTimestamp)
                 }.toString()
@@ -250,7 +287,7 @@ class ProfileManager private constructor(
             fun fromJson(jsonString: String): ProfileMetadata {
                 val json = JSONObject(jsonString)
                 return ProfileMetadata(
-                    displayName = json.optString("displayName", "Unknown"),
+                    displayName = ProfileName.fromTrustedSource(json.optString("displayName", "Unknown")),
                     version = json.optInt("version", 1),
                     createdTimestamp = json.optString("created", ""),
                 )
@@ -329,6 +366,17 @@ class ProfileManager private constructor(
 
         fun contains(id: ProfileId): Boolean = globalPrefs.contains(id.value)
     }
+
+    /**
+     * A context representing that it is safe to switch profiles
+     *
+     * - Backups are not occurring
+     * - Sync is completed
+     * - Collection is not open
+     *
+     * @see ProfileSwitchGuard
+     */
+    object ProfileSwitchContext
 
     companion object {
         private const val MAX_ATTEMPTS = 10

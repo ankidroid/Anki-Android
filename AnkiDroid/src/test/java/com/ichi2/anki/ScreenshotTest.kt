@@ -15,8 +15,15 @@
  */
 package com.ichi2.anki
 
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
+import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
+import com.github.takahirom.roborazzi.RoborazziOptions
+import com.github.takahirom.roborazzi.captureScreenRoboImage
+import com.github.takahirom.roborazzi.provideRoborazziContext
 import org.junit.experimental.categories.Category
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.GraphicsMode
+import java.io.File
 
 interface ScreenshotTestCategory
 
@@ -25,4 +32,46 @@ interface ScreenshotTestCategory
  */
 @Category(ScreenshotTestCategory::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-abstract class ScreenshotTest : RobolectricTest()
+abstract class ScreenshotTest : RobolectricTest() {
+    /** Pixel-class phone in portrait, light theme. */
+    protected fun setPhoneQualifiers() {
+        RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumPhone)
+    }
+
+    /** Required for [DeckPicker.fragmented] to be true. */
+    protected fun setTabletQualifiers() {
+        RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumTablet)
+    }
+
+    /**
+     * Captures a screenshot to `build/outputs/roborazzi/<TestClass>/<name>.png`.
+     *
+     * Writes to /diffs/ if there is an issue.
+     */
+    @OptIn(ExperimentalRoborazziApi::class)
+    protected fun captureScreen(name: String) {
+        // Note: this.javaClass should not be used inside a lambda, as 'this' will be unnamed
+        val classDir = "build/outputs/roborazzi/${this.javaClass.simpleName}"
+        val diffDir = File("$classDir/diffs")
+        // baseline is always in the root for the class, copied to /diffs/ if a change occurred
+        val baseline = File("$classDir/$name.png")
+        captureScreenRoboImage(
+            filePath = baseline.path,
+            roborazziOptions = provideRoborazziContext().options.withCompareOutputDir(diffDir.path),
+        )
+
+        // copy the baseline into /diffs (if it exists)
+        // /diffs/ is used so 'clean' baselines are not mixed with diffs to inspect
+        val diffWritten =
+            File(diffDir, "${name}_compare.png").exists() ||
+                File(diffDir, "${name}_actual.png").exists()
+        if (diffWritten && baseline.isFile) {
+            baseline.copyTo(File(diffDir, baseline.name), overwrite = true)
+        }
+    }
+}
+
+/** Sets the directory for _actual.png and _compare.png */
+@OptIn(ExperimentalRoborazziApi::class)
+private fun RoborazziOptions.withCompareOutputDir(dir: String): RoborazziOptions =
+    copy(compareOptions = compareOptions.copy(outputDirectoryPath = dir))

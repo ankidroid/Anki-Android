@@ -194,6 +194,7 @@
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
     <string name="tag_already_exists">Etiket hâlihazırda var</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
@@ -262,6 +263,7 @@
     <string name="note_editor_audio_too_large">Bu ses dosyası fazla büyük, lütfen sesi elle ekleyin</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android yedeklemesi gerçekleştiriliyor. Lütfen yeniden deneyin</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid\'in kısayol eklemesine izin vermek için iManager kullanmanız gerekebilir</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">%s kısayol  ekleyebilmesi için \'Ana ekran kısayolları\'na sistem ayarlarından izin ver</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ana ekranın, kısayol ekleyebilmesi için AnkiDroid\'e izin vermiyor</string>
     <string name="create_shortcut_error">Kısayolu eklerken hata: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Cümlelerin baş harflerini büyült</string>
@@ -278,7 +280,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Geçerli bir e-posta girin</string>
     <string name="password_empty">Parola gereklidir</string>
-    <string name="back_pressed_once">Çıkmak için tekrar geriye basın</string>
+    <string name="back_pressed_once">Çıkmak için tekrar geri gidin</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Deste indir</string>
@@ -393,4 +395,5 @@
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">İsim zaten var</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">İşlem halen sürüyor</string>
 </resources>

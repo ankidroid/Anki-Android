@@ -26,6 +26,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -42,10 +43,12 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.cancelable
+import com.ichi2.utils.configureIconsDirection
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -53,7 +56,6 @@ import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import java.util.Locale.getDefault
-import kotlin.text.replaceFirstChar
 
 /**
  * Represents the screen where a filtered deck can be built or rebuilt after updating its properties.
@@ -64,6 +66,14 @@ import kotlin.text.replaceFirstChar
 class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_options) {
     private val binding by viewBinding(FragmentFilteredDeckOptionsBinding::bind)
     private val viewModel by viewModels<FilteredDeckOptionsViewModel>()
+    private val discardBackHandler =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                DiscardChangesDialog.showDialog(context = requireActivity()) {
+                    requireActivity().finish()
+                }
+            }
+        }
 
     override fun onViewCreated(
         view: View,
@@ -91,6 +101,15 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.secondFilterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
         bindLabels()
         bindListeners()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            discardBackHandler,
+        )
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.hasUnsavedChanges.collect { status ->
+                discardBackHandler.isEnabled = status
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
@@ -148,6 +167,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         val helpMenuItem: MenuItem? = binding.toolbar.menu.findItem(R.id.action_help)
         if (helpMenuItem == null) {
             binding.toolbar.inflateMenu(R.menu.filtered_options)
+            binding.toolbar.menu.configureIconsDirection(requireContext())
         }
     }
 
@@ -159,6 +179,12 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         // the deck name is also done for the normal deck options screen so we are consistent)
         binding.toolbar.title = state.title
         binding.deckNameInput.setTextIfChanged(state.name)
+        binding.deckNameInputLayout.error =
+            when (state.nameInputError) {
+                FilteredNameInputError.Empty -> getString(R.string.empty_cram_label)
+                FilteredNameInputError.AlreadyExists -> getString(R.string.error_name_exists)
+                null -> null
+            }
         binding.checkBoxAllowEmpty.setCheckedIfChanged(state.allowEmpty)
         binding.btnBuild.text = if (state.id == null) TR.decksBuild() else TR.actionsRebuild()
         binding.btnBuild.isEnabled = state.isBuildingAllowed

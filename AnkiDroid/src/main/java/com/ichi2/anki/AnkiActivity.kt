@@ -57,10 +57,13 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.LegacyNotifications
+import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
@@ -69,6 +72,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DialogHandler
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.ARG_SHARE_AS_TEXT
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
@@ -79,6 +83,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
@@ -150,7 +155,8 @@ open class AnkiActivity(
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SHARE, this) { _, bundle ->
             shareFile(
-                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+                path = bundle.requireString(KEY_EXPORT_PATH),
+                asText = bundle.getBoolean(ARG_SHARE_AS_TEXT, false),
             )
         }
         if (savedInstanceState != null) {
@@ -245,8 +251,8 @@ open class AnkiActivity(
             return
         }
         broadcastReceiver =
-            object : BroadcastReceiver() {
-                override fun onReceive(
+            object : AnkiBroadcastReceiver() {
+                override fun onReceiveBroadcast(
                     context: Context,
                     intent: Intent,
                 ) {
@@ -702,7 +708,11 @@ open class AnkiActivity(
         super.onSaveInstanceState(outState)
     }
 
-    private fun shareFile(path: String) {
+    @NeedsTest("#20993 verify that the proper mime type is used for the share intent")
+    private fun shareFile(
+        path: String,
+        asText: Boolean = false,
+    ) {
         // Make sure the file actually exists
         val attachment = File(path)
         if (!attachment.exists()) {
@@ -721,10 +731,12 @@ open class AnkiActivity(
                 showThemedToast(this, resources.getString(R.string.apk_share_error), false)
                 return
             }
+        val targetMimeType = if (asText) "text/plain" else "application/apkg"
+
         val sendIntent =
             ShareCompat
                 .IntentBuilder(this)
-                .setType("application/apkg")
+                .setType(targetMimeType)
                 .setStream(uri)
                 .setSubject(getString(R.string.export_email_subject, attachment.name))
                 .setHtmlText(

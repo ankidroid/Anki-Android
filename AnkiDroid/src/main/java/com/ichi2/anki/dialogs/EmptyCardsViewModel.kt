@@ -26,14 +26,12 @@ import com.ichi2.anki.dialogs.EmptyCardsUiState.SearchingForEmptyCards
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /** @see EmptyCardsDialogFragment */
 class EmptyCardsViewModel : ViewModel() {
-    private val _uiState =
-        MutableStateFlow<EmptyCardsUiState>(SearchingForEmptyCards)
-    val uiState: StateFlow<EmptyCardsUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<EmptyCardsUiState>
+        field = MutableStateFlow<EmptyCardsUiState>(SearchingForEmptyCards)
 
     fun searchForEmptyCards() {
         viewModelScope.launch {
@@ -42,9 +40,9 @@ class EmptyCardsViewModel : ViewModel() {
                     if (exception is CancellationException) {
                         throw exception
                     }
-                    _uiState.emit(EmptyCardsSearchFailure(exception))
+                    uiState.emit(EmptyCardsSearchFailure(exception))
                 }.onSuccess { emptyCardsReport ->
-                    _uiState.emit(EmptyCardsSearchResult(emptyCardsReport))
+                    uiState.emit(EmptyCardsSearchResult(emptyCardsReport))
                 }
         }
     }

@@ -19,6 +19,7 @@ package com.ichi2.widget
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
@@ -124,5 +125,54 @@ fun cancelRecurringAlarm(
     Timber.d("Canceling recurring alarm for widget ID: $appWidgetId")
     if (pendingIntent != null) {
         alarmManager.cancel(pendingIntent)
+    }
+}
+
+private fun AppWidgetManager.getAppWidgetIds(
+    context: Context,
+    widgetClass: Class<out AnalyticsWidgetProvider>,
+): List<AppWidgetId>? {
+    val componentName = ComponentName(context, widgetClass)
+    val ids = this.getAppWidgetIds(componentName)
+
+    if (ids.isEmpty()) return null
+
+    return ids.map { AppWidgetId(it) }
+}
+
+fun restoreRecurringAlarms(context: Context) {
+    val appWidgetManager = getAppWidgetManager(context) ?: return
+
+    for (widgetClass in RECURRING_WIDGETS) {
+        val activeIds =
+            try {
+                appWidgetManager.getAppWidgetIds(context, widgetClass)
+            } catch (e: SecurityException) {
+                Timber.w(e, "Failed to get widget IDs for %s because security exception", widgetClass.simpleName)
+                null
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to get widget IDs for %s", widgetClass.simpleName)
+                null
+            } ?: continue
+
+        Timber.d("Restoring %d alarms for %s", activeIds.size, widgetClass.simpleName)
+
+        for (id in activeIds) {
+            try {
+                setRecurringAlarm(
+                    context,
+                    id,
+                    widgetClass,
+                )
+            } catch (e: SecurityException) {
+                Timber.w(
+                    e,
+                    "Failed to restore alarms for %s because system alarm limit reached",
+                    widgetClass.simpleName,
+                )
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to restore alarms for %s", widgetClass.simpleName)
+            }
+        }
     }
 }

@@ -30,7 +30,7 @@ import androidx.core.net.toUri
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
-import com.ichi2.anki.compat.MATCH_DEFAULT_ONLY
+import com.ichi2.anki.compat.MATCH_DEFAULT_ONLY_L
 import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
@@ -80,7 +80,7 @@ object AdaptionUtil {
         }
         val intent = Intent(Intent.ACTION_VIEW, "http://www.google.com".toUri())
         val pm = context.packageManager
-        val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(MATCH_DEFAULT_ONLY.toLong()))
+        val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(MATCH_DEFAULT_ONLY_L))
         for (ri in list) {
             if (!isValidBrowser(ri)) {
                 continue

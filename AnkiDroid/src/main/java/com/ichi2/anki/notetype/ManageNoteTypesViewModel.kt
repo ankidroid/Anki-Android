@@ -39,15 +39,14 @@ import com.ichi2.anki.notetype.NoteTypeItemState.Companion.asModel
 import com.ichi2.anki.observability.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 
 class ManageNoteTypesViewModel : ViewModel() {
-    private val _state = MutableStateFlow(ManageNoteTypesState())
-    val state: StateFlow<ManageNoteTypesState> = _state.asStateFlow()
+    val state: StateFlow<ManageNoteTypesState>
+        field = MutableStateFlow(ManageNoteTypesState())
 
     init {
         refreshNoteTypes()
@@ -55,15 +54,15 @@ class ManageNoteTypesViewModel : ViewModel() {
 
     fun refreshNoteTypes() {
         Timber.i("Refreshing list of notetypes")
-        _state.update { oldState -> oldState.copy(isLoading = true) }
+        state.update { oldState -> oldState.copy(isLoading = true) }
         viewModelScope.launch {
             withCol { safeGetNotetypeNameIdUseCount() }
                 .onFailure {
-                    _state.update { oldState ->
+                    state.update { oldState ->
                         oldState.copy(isLoading = false, error = ReportableException(it))
                     }
                 }.onSuccess {
-                    _state.update { oldState ->
+                    state.update { oldState ->
                         oldState.copy(isLoading = false, noteTypes = it)
                     }
                 }
@@ -72,7 +71,7 @@ class ManageNoteTypesViewModel : ViewModel() {
 
     fun filter(query: String) {
         Timber.i("Filtering list of notetypes with query=$query")
-        _state.update { oldState ->
+        state.update { oldState ->
             val matchedNoteTypes =
                 oldState.noteTypes.map {
                     it.copy(shouldBeDisplayed = it.name.contains(query, ignoreCase = true))
@@ -86,12 +85,12 @@ class ManageNoteTypesViewModel : ViewModel() {
         name: String,
     ) {
         Timber.i("Renaming notetype with id $ntid")
-        _state.update { oldState -> oldState.copy(isLoading = true) }
+        state.update { oldState -> oldState.copy(isLoading = true) }
         viewModelScope.launch {
             undoableOp<OpChanges> {
                 safeRenameNoteType(ntid, name)
                     .onSuccess { changes ->
-                        _state.update { oldState ->
+                        state.update { oldState ->
                             val updatedNoteTypes =
                                 oldState.noteTypes.withUpdatedItem(ntid) { old -> old.copy(name = name) }
                             oldState.copy(isLoading = false, noteTypes = updatedNoteTypes)
@@ -101,7 +100,7 @@ class ManageNoteTypesViewModel : ViewModel() {
                         // TODO: Change to CardTypeException: https://github.com/ankidroid/Anki-Android-Backend/issues/537
                         // Card template 1 in note type 'character' has a problem.
                         // Expected to find a field replacement on the front of the card template.
-                        _state.update { oldState ->
+                        state.update { oldState ->
                             oldState.copy(
                                 isLoading = false,
                                 error = ReportableException(it, it !is BackendException),
@@ -117,19 +116,19 @@ class ManageNoteTypesViewModel : ViewModel() {
     /** Deletes the note type with [ntid] and also updates the multi select mode status if needed */
     fun delete(ntid: NoteTypeId) {
         Timber.i("Deleting notetype with id $ntid")
-        _state.update { oldState -> oldState.copy(isLoading = true) }
-        val noteTypesCount = _state.value.noteTypes.size
+        state.update { oldState -> oldState.copy(isLoading = true) }
+        val noteTypesCount = state.value.noteTypes.size
         viewModelScope.launch {
             undoableOp<OpChanges> {
                 if (noteTypesCount <= 1) {
-                    _state.update { oldState ->
+                    state.update { oldState ->
                         oldState.copy(isLoading = false, message = UserMessage.DeletingLastModel)
                     }
                     return@undoableOp OpChanges.getDefaultInstance()
                 }
                 safeRemoveNoteType(ntid)
                     .onSuccess { changes ->
-                        _state.update { oldState ->
+                        state.update { oldState ->
                             val updatedNoteTypes = oldState.noteTypes.filterNot { it.id == ntid }
                             oldState.copy(
                                 isLoading = false,
@@ -139,7 +138,7 @@ class ManageNoteTypesViewModel : ViewModel() {
                         }
                         return@undoableOp changes
                     }.onFailure {
-                        _state.update { oldState ->
+                        state.update { oldState ->
                             oldState.copy(isLoading = false, error = ReportableException(it))
                         }
                         return@undoableOp OpChanges.getDefaultInstance()
@@ -150,9 +149,9 @@ class ManageNoteTypesViewModel : ViewModel() {
     }
 
     fun onItemClick(entry: NoteTypeItemState) {
-        if (_state.value.isInMultiSelectMode) {
+        if (state.value.isInMultiSelectMode) {
             Timber.i("onItemClick: already in multiple selection mode, toggling selection for notetype with id: ${entry.id} ")
-            _state.update { oldState ->
+            state.update { oldState ->
                 val updatedNoteTypes =
                     oldState.noteTypes.withUpdatedItem(entry.id) { noteType ->
                         noteType.copy(isSelected = !noteType.isSelected)
@@ -164,16 +163,16 @@ class ManageNoteTypesViewModel : ViewModel() {
             }
         } else {
             Timber.i("onItemClick: not in multiple selection mode, sending show fields editor request")
-            _state.update { oldState ->
+            state.update { oldState ->
                 oldState.copy(destination = FieldsEditor(entry.id, entry.name))
             }
         }
     }
 
     fun onItemLongClick(entry: NoteTypeItemState) {
-        if (_state.value.isInMultiSelectMode) {
+        if (state.value.isInMultiSelectMode) {
             Timber.i("onItemLongClick: already in multiple selection mode, toggling selection for notetype with id: ${entry.id} ")
-            _state.update { oldState ->
+            state.update { oldState ->
                 val updatedNoteTypes =
                     oldState.noteTypes.withUpdatedItem(entry.id) { noteType ->
                         noteType.copy(isSelected = !noteType.isSelected)
@@ -185,7 +184,7 @@ class ManageNoteTypesViewModel : ViewModel() {
             }
         } else {
             Timber.i("onItemLongClick: no previous selection, starting multi select mode with notetype(${entry.id}) selected")
-            _state.update { oldState ->
+            state.update { oldState ->
                 val updatedNoteTypes =
                     oldState.noteTypes.withUpdatedItem(entry.id) { noteType ->
                         noteType.copy(isSelected = true)
@@ -201,9 +200,9 @@ class ManageNoteTypesViewModel : ViewModel() {
         isChecked: Boolean,
     ) {
         Timber.i("onItemCheck: update selection for notetype(${entry.id}) with new status: $isChecked")
-        _state.update { oldState ->
+        state.update { oldState ->
             val updatedNoteTypes =
-                _state.value.noteTypes.withUpdatedItem(entry.id) { old -> old.copy(isSelected = isChecked) }
+                state.value.noteTypes.withUpdatedItem(entry.id) { old -> old.copy(isSelected = isChecked) }
             oldState.copy(
                 noteTypes = updatedNoteTypes,
                 isInMultiSelectMode = updatedNoteTypes.multiSelectModeStatus,
@@ -214,7 +213,7 @@ class ManageNoteTypesViewModel : ViewModel() {
     /** Clears any selected note types and also exits the multi select mode */
     fun clearSelection() {
         Timber.i("Clearing selected notetypes")
-        _state.update { oldState ->
+        state.update { oldState ->
             val updatedNoteTypes =
                 oldState.noteTypes.map { noteTypeItemState ->
                     noteTypeItemState.copy(isSelected = false)
@@ -234,7 +233,7 @@ class ManageNoteTypesViewModel : ViewModel() {
         val noteTypesToDelete = selectedNoteTypes.toMutableList()
         Timber.i("Deleting currently selected notetypes: ${noteTypesToDelete.map { it.id }}")
         // show loading and clear selection
-        _state.update { oldState ->
+        state.update { oldState ->
             val updateNotetypes =
                 oldState.noteTypes.map { noteType ->
                     noteType.copy(isSelected = false)
@@ -260,14 +259,14 @@ class ManageNoteTypesViewModel : ViewModel() {
             // look through any errors we might have and remove from our list of note types the ones
             // that were in noteTypesToDelete but not in errors map(which presumably weren't deleted)
             val removedIds = noteTypesToDelete.map { it.id } - errors.keys.map { it.id }.toSet()
-            val updatedNoteTypes = _state.value.noteTypes.filterNot { it.id in removedIds }
+            val updatedNoteTypes = state.value.noteTypes.filterNot { it.id in removedIds }
             val combinedException =
                 CombinedException.from(
                     errors.map { (state, throwable) ->
                         "${state.name} - $throwable" to throwable
                     },
                 )
-            _state.update { oldState ->
+            state.update { oldState ->
                 oldState.copy(
                     isLoading = false,
                     noteTypes = updatedNoteTypes,
@@ -279,7 +278,7 @@ class ManageNoteTypesViewModel : ViewModel() {
 
     fun onCardEditorRequested(entry: NoteTypeItemState) {
         Timber.i("Sending open card editor request")
-        _state.update { oldState ->
+        state.update { oldState ->
             oldState.copy(destination = CardEditor(entry.id))
         }
     }
@@ -287,19 +286,19 @@ class ManageNoteTypesViewModel : ViewModel() {
     /** Clears any previous user messages from the state */
     fun clearMessage() {
         Timber.i("Clearing user message from state")
-        _state.update { oldState -> oldState.copy(message = null) }
+        state.update { oldState -> oldState.copy(message = null) }
     }
 
     /** Clears any previous errors from the state */
     fun clearError() {
         Timber.i("Clearing errors from state")
-        _state.update { oldState -> oldState.copy(error = null) }
+        state.update { oldState -> oldState.copy(error = null) }
     }
 
     /** Clears any previous destinations requested by the user from the state */
     fun clearDestination() {
         Timber.i("Clearing requested destinations from state")
-        _state.update { oldState -> oldState.copy(destination = null) }
+        state.update { oldState -> oldState.copy(destination = null) }
     }
 
     /**

@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_warning">This may take a long time. Proceed?</string>
+    <string name="check_db_warning">Môže to chvíľu trvať. Pokračovať?</string>
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Vymazať balíček</string>
     <string name="delete_deck_title">Vymazať balíček?</string>
     <plurals name="delete_deck_message">

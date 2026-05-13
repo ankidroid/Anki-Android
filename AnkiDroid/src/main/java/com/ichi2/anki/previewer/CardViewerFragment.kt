@@ -74,11 +74,18 @@ abstract class CardViewerFragment(
 
     override fun onStart() {
         super.onStart()
+        // A subclass may call requireActivity().finish() to abort setup so skip viewModel access here
+        if (activity?.isFinishing == true) return
         viewModel.setSoundPlayerEnabled(true)
     }
 
     override fun onStop() {
         super.onStop()
+        // If the activity is finishing, the ViewModel will be cleared shortly,
+        // releasing the CardMediaPlayer via its addCloseable hook
+        // (see CardViewerViewModel.cardMediaPlayer). We can skip the explicit
+        // shutdown here.
+        if (activity?.isFinishing == true) return
         if (!requireActivity().isChangingConfigurations) {
             viewModel.setSoundPlayerEnabled(false)
         }

@@ -24,6 +24,7 @@ package com.ichi2.anki
 
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.i18n.normalize
 import com.ichi2.anki.i18n.toAnkiTwoLetterCode
 import com.ichi2.anki.libanki.TemplateManager
@@ -146,7 +147,7 @@ object TtsVoices {
         // This is intended to be a global singleton outside the lifecycle of a specific activity
         // Most of the time of execution is waiting for the TTS Engine to initialize
         buildLocalesJob =
-            AnkiDroidApp.applicationScope.launch(Dispatchers.IO) {
+            applicationScope.launch(Dispatchers.IO) {
                 Timber.d("executing job")
                 loadTtsVoicesData()
                 buildLocalesJob = null

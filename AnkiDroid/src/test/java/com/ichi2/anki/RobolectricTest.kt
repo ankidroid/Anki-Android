@@ -18,10 +18,12 @@ package com.ichi2.anki
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
@@ -272,7 +274,7 @@ open class RobolectricTest :
         }
 
         @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
-        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+        protected fun <T : Activity?> startActivityNormallyOpenCollectionWithIntent(
             testClass: RobolectricTest,
             clazz: Class<T>?,
             i: Intent?,
@@ -299,6 +301,8 @@ open class RobolectricTest :
 
     val targetContext: Context
         get() = ApplicationProvider.getApplicationContext()
+
+    val resources: Resources get() = targetContext.resources
 
     /**
      * Returns an instance of [SharedPreferences] using the test context
@@ -347,14 +351,14 @@ open class RobolectricTest :
         return collectionModels.byName(noteTypeName)!!.deepClone()
     }
 
-    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+    internal fun <T : Activity?> startActivityNormallyOpenCollectionWithIntent(
         clazz: Class<T>?,
         i: Intent?,
     ): T = startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(): T = startRegularActivity(null)
+    internal inline fun <reified T : Activity?> startRegularActivity(): T = startRegularActivity(null)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T =
+    internal inline fun <reified T : Activity?> startRegularActivity(i: Intent? = null): T =
         startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
 
     fun equalFirstField(

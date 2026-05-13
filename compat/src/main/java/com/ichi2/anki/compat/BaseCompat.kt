@@ -230,6 +230,7 @@ open class BaseCompat : Compat {
     ): ResolveInfo? = packageManager.resolveService(intent, flags.value.toInt())
 
     // Until API 33
+    @Suppress("QueryPermissionsNeeded") // queries declaration is available in the main module manifest
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
@@ -285,6 +286,12 @@ open class BaseCompat : Compat {
         context: Context,
         fallback: String,
     ): String = fallback
+
+    // Until API 29, gesture navigation does not exist
+    override fun isUsingSystemGestureNavigation(
+        context: Context,
+        defaultValue: Boolean,
+    ): Boolean = false
 }
 
 typealias CompatV24 = BaseCompat

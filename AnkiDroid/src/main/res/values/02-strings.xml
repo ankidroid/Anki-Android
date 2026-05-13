@@ -192,6 +192,7 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <string name="tag_already_exists">Tag already exists</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
 
     <!-- Currently only used if exporting APKG fails -->
@@ -281,6 +282,7 @@
 
 
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: 'AnkiDroid'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
@@ -301,7 +303,7 @@
     <string name="invalid_email">Enter a valid email</string>
     <string name="password_empty">Password is required</string>
 
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="back_pressed_once">Go back again to exit</string>
 
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
@@ -465,5 +467,7 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">Name already exists</string>
+
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>
 

@@ -191,6 +191,7 @@
     <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
     <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
     <string name="tag_already_exists">标签已经存在</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">共享 apkg 文件时出错</string>
@@ -259,6 +260,7 @@
     <string name="note_editor_audio_too_large">音频文件太大，请手动插入音频</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android 备份正在进行中。请重试</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">请使用 iManager 来允许 AnkiDroid 添加快捷方式</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">在系统设置中允许“主屏幕快捷方式”以便 %s 添加快捷方式</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主屏幕不允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_error">添加快捷方式时出错：%s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">大写句子</string>
@@ -275,7 +277,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">输入有效的电子邮件地址</string>
     <string name="password_empty">密码是必填项</string>
-    <string name="back_pressed_once">再按一次返回键以退出</string>
+    <string name="back_pressed_once">再按一次返回键退出</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">下载牌组</string>
@@ -387,4 +389,5 @@
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">名称已存在</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">已在进行中</string>
 </resources>

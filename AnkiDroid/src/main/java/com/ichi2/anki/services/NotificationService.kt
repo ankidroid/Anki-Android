@@ -16,10 +16,10 @@ package com.ichi2.anki.services
 
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.BadParcelableException
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
@@ -30,6 +30,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
+import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.canUserAccessDeck
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.libanki.Decks
@@ -41,6 +42,8 @@ import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.reviewreminders.upsertReminder
 import com.ichi2.anki.runGloballyWithTimeout
+import com.ichi2.anki.services.NotificationService.Companion.addAction
+import com.ichi2.anki.services.NotificationService.Companion.getIntent
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.allDecksCounts
 import com.ichi2.anki.utils.remainingTime
@@ -62,7 +65,7 @@ import kotlin.time.Duration.Companion.seconds
  * This service can be triggered in one of two possible ways, depending on whether the notification
  * being fired is a recurring notification or a one-time snoozed notification. See [NotificationServiceAction].
  */
-class NotificationService : BroadcastReceiver() {
+class NotificationService : AnkiBroadcastReceiver() {
     companion object {
         /**
          * NotificationManager tag for review reminder notifications, passed to the [NotificationManager.notify] method.
@@ -80,13 +83,13 @@ class NotificationService : BroadcastReceiver() {
 
         /**
          * Timeout for the process of sending a review reminder notification.
-         * Should be below 10 seconds as BroadcastReceivers may ANR when onReceive takes longer than 10 seconds.
+         * Should be below 10 seconds as BroadcastReceivers may ANR when onReceiveBroadcast takes longer than 10 seconds.
          * See [the docs](https://developer.android.com/reference/android/content/BroadcastReceiver#goAsync()).
          */
         private val SEND_REVIEW_REMINDER_TIMEOUT = 8.seconds
 
         /**
-         * Triggered by [onReceive]. Does some bookkeeping if the triggered notification is of the recurring type
+         * Triggered by [onReceiveBroadcast]. Does some bookkeeping if the triggered notification is of the recurring type
          * or does nothing if it is a snoozed one, and then begins the process of sending the notification.
          */
         @VisibleForTesting
@@ -426,7 +429,7 @@ class NotificationService : BroadcastReceiver() {
      * pressed snooze.
      *
      * @see AlarmManagerService.getReviewReminderNotificationPendingIntent
-     * @see onReceive
+     * @see onReceiveBroadcast
      */
     sealed class NotificationServiceAction(
         val actionString: String,
@@ -447,23 +450,33 @@ class NotificationService : BroadcastReceiver() {
     /**
      * @see getIntent
      */
-    override fun onReceive(
+    override fun onReceiveBroadcast(
         context: Context,
         intent: Intent,
     ) {
         if (Prefs.newReviewRemindersEnabled) {
-            Timber.d("onReceive")
+            Timber.d("onReceiveBroadcast")
             val action = intent.action ?: return
             val extras = intent.extras ?: return
             val reviewReminder =
-                BundleCompat.getParcelable(
-                    extras,
-                    EXTRA_REVIEW_REMINDER,
-                    ReviewReminder::class.java,
-                ) ?: return
-            Timber.d("onReceive: ${reviewReminder.id}")
+                try {
+                    BundleCompat.getParcelable(
+                        extras,
+                        EXTRA_REVIEW_REMINDER,
+                        ReviewReminder::class.java,
+                    ) ?: return
+                } catch (e: BadParcelableException) {
+                    // #20782: If the extra's review reminder has an invalid schema, attempt a full re-schedule of all
+                    // review reminder notifications, as that will retrieve reminders from Shared Preferences
+                    // and handle any necessary schema updates. It will also trigger immediate notifications
+                    // (and thus this onReceiveBroadcast again for an uncorrupted version of this corrupted review reminder) as necessary.
+                    Timber.w(e, "Failed to get review reminder from intent extras, triggering full re-schedule")
+                    AlarmManagerService.scheduleAllEnabledReviewReminderNotifications(context)
+                    return
+                }
+            Timber.d("onReceiveBroadcast: ${reviewReminder.id}")
 
-            // We must run some suspending functions. Hence we mark this onReceive function as long-running
+            // We must run some suspending functions. Hence we mark this onReceiveBroadcast function as long-running
             // and use the global scope for simplicity's sake. Theoretically, we could also use an expedited Worker,
             // but AnkiDroid is only allotted a fixed number of expedited Worker calls per day
             // and those expedited calls are also used by the sync service, so it's best to conserve them.

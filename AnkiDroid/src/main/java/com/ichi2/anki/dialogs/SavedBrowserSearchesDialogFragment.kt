@@ -20,17 +20,20 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.search.SavedSearch
+import com.ichi2.anki.browser.search.SavedSearches
 import com.ichi2.anki.browser.search.toMap
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.ItemSavedSearchBinding
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.ARG_SAVED_SEARCH
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_REMOVED
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_SELECTED
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.utils.customListAdapter
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -131,6 +134,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
     ) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
+        const val TAG: String = "manageSavedSearches"
         const val REQUEST_SAVED_SEARCH_ACTION = "request_saved_search_action"
         const val TYPE_SEARCH_SELECTED = 0
         const val TYPE_SEARCH_REMOVED = 1
@@ -172,4 +176,45 @@ fun CardBrowser.registerSavedSearchActionHandler(action: (Int, String?) -> Unit)
         Timber.d("On user saved search selection named: %s", searchName)
         action(type, searchName)
     }
+}
+
+/**
+ * Registers a fragment result listener to notify [CardBrowser] about user actions on a saved search.
+ * @param action a lambda with the type of action and the name of the target saved search
+ */
+fun Fragment.registerSavedSearchActionHandler(action: (ManageSavedSearchAction) -> Unit) {
+    childFragmentManager.setFragmentResultListener(
+        SavedBrowserSearchesDialogFragment.REQUEST_SAVED_SEARCH_ACTION,
+        this,
+    ) { _, bundle ->
+        val type = bundle.getInt(SavedBrowserSearchesDialogFragment.ARG_TYPE)
+        val searchName = bundle.getString(SavedBrowserSearchesDialogFragment.ARG_SAVED_SEARCH) ?: return@setFragmentResultListener
+        Timber.d("On user saved search selection named: %s", searchName)
+
+        launchCatchingTask {
+            val search = SavedSearches.byName(searchName) ?: return@launchCatchingTask
+
+            val searchAction =
+                when (type) {
+                    TYPE_SEARCH_SELECTED -> ManageSavedSearchAction.SelectSearch(search)
+                    TYPE_SEARCH_REMOVED -> ManageSavedSearchAction.Delete(search)
+                    else -> {
+                        Timber.w("unhandled code %d", type)
+                        return@launchCatchingTask
+                    }
+                }
+
+            action(searchAction)
+        }
+    }
+}
+
+sealed class ManageSavedSearchAction {
+    data class SelectSearch(
+        val search: SavedSearch,
+    ) : ManageSavedSearchAction()
+
+    data class Delete(
+        val search: SavedSearch,
+    ) : ManageSavedSearchAction()
 }

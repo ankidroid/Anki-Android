@@ -15,8 +15,10 @@
  */
 package com.ichi2.anki.previewer
 
+import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.CheckResult
+import androidx.core.os.BundleCompat
 import androidx.lifecycle.SavedStateHandle
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
@@ -289,4 +291,19 @@ data class TemplatePreviewerArguments(
     val deckId: DeckId = DEFAULT_DECK_ID,
 ) : Parcelable {
     val notetype: NotetypeJson get() = notetypeFile.getNotetype()
+
+    companion object {
+        /**
+         * Returns `true` if [bundle] holds a [TemplatePreviewerArguments]
+         * whose backing [NotetypeFile] is still readable. Use this before
+         * constructing [TemplatePreviewerViewModel] to detect when the
+         * temp file was cleaned up by the OS (e.g. after process death) so
+         * the previewer can abort instead of throwing from the constructor.
+         */
+        fun isUsable(bundle: Bundle): Boolean =
+            BundleCompat
+                .getParcelable(bundle, TemplatePreviewerFragment.ARGS_KEY, TemplatePreviewerArguments::class.java)
+                ?.notetypeFile
+                ?.getNotetypeOrNull() != null
+    }
 }

@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.common.time
 
-import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -91,7 +90,6 @@ open class MockTime(
          * @param milliseconds, from 0 to 999
          * @return the time stamp of this instant in GMT calendar
          */
-        @SuppressLint("DirectGregorianInstantiation")
         fun timeStamp(
             year: Int,
             month: Int,

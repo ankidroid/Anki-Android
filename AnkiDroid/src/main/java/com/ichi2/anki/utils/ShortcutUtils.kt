@@ -18,7 +18,7 @@ package com.ichi2.anki.utils
 
 import android.content.Context
 import androidx.core.content.pm.ShortcutManagerCompat
-import com.ichi2.anki.runCatchingWithReport
+import com.ichi2.anki.common.crashreporting.runCatchingWithReport
 import timber.log.Timber
 
 /**

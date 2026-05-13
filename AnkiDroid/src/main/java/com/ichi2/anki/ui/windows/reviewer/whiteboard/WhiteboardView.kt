@@ -29,6 +29,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.graphics.createBitmap
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.windows.reviewer.whiteboard.SmoothPath.Companion.drawPath
 
 /**
  * A custom view for the whiteboard that handles drawing and touch events.
@@ -45,7 +46,7 @@ class WhiteboardView : View {
     var eraserMode: EraserMode = EraserMode.INK
     var isStylusOnlyMode: Boolean = false
 
-    private val currentPath = Path()
+    private val currentPath = SmoothPath()
     private val currentPaint =
         Paint().apply {
             isAntiAlias = true
@@ -147,7 +148,7 @@ class WhiteboardView : View {
                 if (!isDrawing) return false
 
                 hasMoved = true
-                currentPath.lineTo(touchX, touchY)
+                currentPath.drawAlong(event)
                 if (isPathEraser) {
                     onEraseGestureMove?.invoke(touchX, touchY)
                 }
@@ -164,7 +165,7 @@ class WhiteboardView : View {
                         // which makes it more robust for path operations.
                         currentPath.lineTo(touchX + 0.2f, touchY + 0.2f)
                     }
-                    onNewPath?.invoke(Path(currentPath))
+                    onNewPath?.invoke(currentPath.clone())
                 }
                 // Reset the path for the next gesture
                 currentPath.reset()
@@ -224,5 +225,78 @@ class WhiteboardView : View {
             bufferCanvas.drawPath(action.path, tempPaint)
         }
         invalidate()
+    }
+}
+
+/**
+ * A wrapper around a [Path] which supports smooth drawing & state tracking via [drawAlong]
+ */
+private class SmoothPath(
+    private val path: Path = Path(),
+) {
+    // for efficiency use two primitives rather than a 'point' class
+    private var lastX = 0f
+    private var lastY = 0f
+
+    /**
+     * Extracts and draws a smooth curve from the [MotionEvent]
+     */
+    fun drawAlong(event: MotionEvent) {
+        // use historySize for cases when the touchscreen samples faster than the screen
+        for (i in 0 until event.historySize) {
+            val hx = event.getHistoricalX(i)
+            val hy = event.getHistoricalY(i)
+            // draw Bézier curves between the midpoints, ensuring a continuous curve
+            path.quadTo(lastX, lastY, (lastX + hx) / 2f, (lastY + hy) / 2f)
+            lastX = hx
+            lastY = hy
+        }
+        // draw the current event
+        val x = event.x
+        val y = event.y
+        path.quadTo(lastX, lastY, (lastX + x) / 2f, (lastY + y) / 2f)
+        lastX = x
+        lastY = y
+    }
+
+    // Methods are reimplemented rather than using inheritance to ensure nothing is forgotten
+
+    /** @see Path.lineTo */
+    fun lineTo(
+        x: Float,
+        y: Float,
+    ) {
+        path.lineTo(x, y)
+        lastX = x
+        lastY = y
+    }
+
+    /** @see Path.moveTo */
+    fun moveTo(
+        x: Float,
+        y: Float,
+    ) {
+        path.moveTo(x, y)
+        lastX = x
+        lastY = y
+    }
+
+    /** @see Path.reset */
+    fun reset() {
+        path.reset()
+        lastX = 0f
+        lastY = 0f
+    }
+
+    fun clone() = Path(path)
+
+    companion object {
+        /** @see Canvas.drawPath */
+        fun Canvas.drawPath(
+            path: SmoothPath,
+            paint: Paint,
+        ) {
+            this.drawPath(path.path, paint)
+        }
     }
 }

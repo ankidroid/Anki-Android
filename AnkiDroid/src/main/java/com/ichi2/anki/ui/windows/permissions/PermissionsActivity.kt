@@ -26,12 +26,14 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 import dev.androidbroadcast.vbpd.viewBinding
+import timber.log.Timber
 
 /**
  * Screen responsible for getting permissions from the user.
@@ -60,10 +62,15 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
 
         binding.continueButton.setOnClickListener { finish() }
 
-        val permissionSet =
-            requireNotNull(IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)) {
-                "PERMISSIONS_SET_EXTRA not set"
-            }
+        // #20881: Activity should not be launchd without extras
+        val permissionSet = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
+        if (permissionSet == null) {
+            Timber.w("PERMISSIONS_SET_EXTRA not set; finishing")
+            showThemedToast(this, R.string.something_wrong, false)
+            setResult(RESULT_CANCELED)
+            finish()
+            return
+        }
         val permissionsFragment =
             requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
                 "invalid permissionsFragment"

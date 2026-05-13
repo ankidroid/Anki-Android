@@ -74,6 +74,12 @@ enum class ViewerAction(
     ADD_NOTE(R.id.action_add_note, R.drawable.ic_add, R.string.menu_add_note, DISABLED),
     TAG(R.id.action_edit_tags, R.drawable.ic_tag, R.string.menu_edit_tags, DISABLED),
     RESCHEDULE_NOTE(R.id.action_set_due_date, R.drawable.ic_reschedule, titleRes = R.string.empty_string, DISABLED),
+    RESET_PROGRESS(
+        R.id.action_reset_progress,
+        drawableRes = R.drawable.ic_backup_restore,
+        titleRes = R.string.card_editor_reset_card,
+        DISABLED,
+    ),
     TOGGLE_AUTO_ADVANCE(R.id.action_toggle_auto_advance, R.drawable.ic_fast_forward, R.string.toggle_auto_advance, DISABLED),
     RECORD_VOICE(R.id.action_record_voice, R.drawable.ic_action_mic, R.string.record_voice, DISABLED),
     PLAY_MEDIA(R.id.action_replay_media, R.drawable.ic_play_circle_white, R.string.replay_media, DISABLED),
@@ -149,6 +155,7 @@ enum class ViewerAction(
             STATISTICS -> listOf(keycode(KeyEvent.KEYCODE_T))
             PLAY_MEDIA -> listOf(keycode(KeyEvent.KEYCODE_R))
             PREVIOUS_CARD_INFO -> listOf(keycode(KeyEvent.KEYCODE_I, ModifierKeys(shift = false, ctrl = true, alt = true)))
+            RESET_PROGRESS -> listOf(keycode(KeyEvent.KEYCODE_N, ModifierKeys(ctrl = true, alt = true, shift = false)))
             TOGGLE_FLAG_RED ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_1, ctrl()),

@@ -18,9 +18,11 @@ package com.ichi2.anki.contextmenu
 
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.os.bundleOf
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
+import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 
@@ -44,12 +46,8 @@ class DeckPickerMenuContentProvider(
         val options = createOptionsList()
         val selectedOption = options.getOrNull(item.itemId) ?: return false
 
-        deckPicker.supportFragmentManager.setFragmentResult(
-            REQUEST_KEY_CONTEXT_MENU,
-            bundleOf(
-                CONTEXT_MENU_DECK_ID to id,
-                CONTEXT_MENU_DECK_OPTION to selectedOption,
-            ),
+        deckPicker.supportFragmentManager.setDeckPickerContextMenuResult(
+            DeckPickerContextMenuResult(deckId = id, option = selectedOption),
         )
         return true
     }
@@ -64,6 +62,32 @@ class DeckPickerMenuContentProvider(
     private fun createOptionsList(): List<DeckPickerContextMenu.DeckPickerContextMenuOption> = createOptionsList(isDynamic, hasBuriedInDeck)
 
     companion object {
+        /**
+         * Builds a [DeckPickerMenuContentProvider] for [deckId] (reading the dynamic /
+         * has-buried flags from the collection) and shows it as a popup anchored at
+         * ([x], [y]) on the deck picker's recycler view.
+         */
+        suspend fun show(
+            deckPicker: DeckPicker,
+            deckId: DeckId,
+            x: Float,
+            y: Float,
+        ) {
+            val provider =
+                withCol {
+                    DeckPickerMenuContentProvider(
+                        id = deckId,
+                        isDynamic = decks.isFiltered(deckId),
+                        hasBuriedInDeck = sched.haveBuried(),
+                        deckPicker = deckPicker,
+                    )
+                }
+            val anchorParent = deckPicker.deckPickerBinding.deckPickerContent
+            val target = deckPicker.deckPickerBinding.decks
+            MouseContextMenuHandler(viewGroup = anchorParent, menuContentProvider = provider)
+                .showContextMenu(view = target, x = x, y = y)
+        }
+
         fun createOptionsList(
             isDynamic: Boolean,
             hasBuriedInDeck: Boolean,
@@ -96,9 +120,5 @@ class DeckPickerMenuContentProvider(
                 }
                 add(DeckPickerContextMenu.DeckPickerContextMenuOption.DELETE_DECK)
             }
-
-        const val REQUEST_KEY_CONTEXT_MENU = "request_key_deck_context_menu_provider"
-        const val CONTEXT_MENU_DECK_OPTION = "context_menu_deck_option"
-        const val CONTEXT_MENU_DECK_ID = "context_menu_deck_id"
     }
 }

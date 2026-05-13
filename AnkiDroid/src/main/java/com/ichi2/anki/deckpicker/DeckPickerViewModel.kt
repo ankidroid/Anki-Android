@@ -89,7 +89,7 @@ class DeckPickerViewModel :
         }
 
     /** User filter of the deck list. Shown as a search in the UI */
-    private val flowOfCurrentDeckFilter = MutableStateFlow("")
+    private val flowOfCurrentDeckFilter = MutableStateFlow(DeckFilters.create(""))
 
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
@@ -277,6 +277,17 @@ class DeckPickerViewModel :
             flowOfDeckCountsChanged.emit(Unit)
         }
 
+    /**
+     * Marks [deckId] as the currently selected deck and updates the selection in the deck list.
+     */
+    fun selectDeck(deckId: DeckId) =
+        viewModelScope.launch {
+            // TODO: should we always reset the Card Browser default deck here?
+            withCol { decks.select(deckId) }
+            focusedDeck = deckId
+            flowOfRefreshDeckList.emit(Unit)
+        }
+
     fun browseCards(deckId: DeckId) =
         launchCatchingIO {
             withCol { decks.select(deckId) }
@@ -391,7 +402,7 @@ class DeckPickerViewModel :
 
     fun updateDeckFilter(filterText: String) {
         Timber.d("filter: %s", filterText)
-        flowOfCurrentDeckFilter.value = filterText
+        flowOfCurrentDeckFilter.value = DeckFilters.create(filterText)
     }
 
     fun toggleDeckExpand(deckId: DeckId) =

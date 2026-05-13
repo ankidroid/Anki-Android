@@ -214,12 +214,12 @@
         <com.ichi2.preferences.WhiteboardControlPreference
             android:key="@string/pref_key_whiteboard_undo"
             android:title="@string/undo"
-            android:icon="@drawable/ic_undo_white"
+            android:icon="@drawable/ic_undo_2"
             />
         <com.ichi2.preferences.WhiteboardControlPreference
             android:key="@string/pref_key_whiteboard_redo"
             android:title="@string/redo"
-            android:icon="@drawable/ic_redo"
+            android:icon="@drawable/ic_redo_2"
             />
         <com.ichi2.preferences.WhiteboardControlPreference
             android:key="@string/pref_key_whiteboard_clear"

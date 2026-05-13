@@ -39,6 +39,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
@@ -162,7 +163,7 @@ class ProfileManagerTest {
     fun `ProfileMetadata JSON round-trip preserves all fields`() {
         val original =
             ProfileManager.ProfileMetadata(
-                displayName = "Test User",
+                displayName = ProfileName.fromTrustedSource("Test User"),
                 version = 5,
                 createdTimestamp = "2025-12-31T23:59:59Z",
             )
@@ -177,8 +178,8 @@ class ProfileManagerTest {
     fun `getAllProfiles returns all registered profiles`() {
         val manager = ProfileManager.create(context)
 
-        val profile1 = manager.createNewProfile("Work")
-        val profile2 = manager.createNewProfile("Personal")
+        val profile1 = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        val profile2 = manager.createNewProfile(ProfileName.fromTrustedSource("Personal"))
 
         val allProfiles = manager.getAllProfiles()
 
@@ -186,9 +187,9 @@ class ProfileManagerTest {
         assertTrue(allProfiles.containsKey(ProfileId.DEFAULT))
         assertTrue(allProfiles.containsKey(profile1))
         assertTrue(allProfiles.containsKey(profile2))
-        assertEquals("Default", allProfiles[ProfileId.DEFAULT]?.displayName)
-        assertEquals("Work", allProfiles[profile1]?.displayName)
-        assertEquals("Personal", allProfiles[profile2]?.displayName)
+        assertEquals("Default", allProfiles[ProfileId.DEFAULT]?.displayName?.value)
+        assertEquals("Work", allProfiles[profile1]?.displayName?.value)
+        assertEquals("Personal", allProfiles[profile2]?.displayName?.value)
     }
 
     @Test
@@ -199,5 +200,67 @@ class ProfileManagerTest {
 
         assertEquals(1, allProfiles.size)
         assertTrue(allProfiles.containsKey(ProfileId.DEFAULT))
+    }
+
+    @Test
+    fun `renameProfile updates displayName in registry`() {
+        val manager = ProfileManager.create(context)
+        val profileId = manager.createNewProfile(ProfileName.fromTrustedSource("Original Name"))
+        val newName = ProfileName.fromTrustedSource("Updated Name")
+
+        manager.renameProfile(profileId, newName)
+
+        val json = prefs.getString(profileId.value, null)
+        val metadata = ProfileManager.ProfileMetadata.fromJson(json!!)
+
+        assertEquals(newName, metadata.displayName)
+    }
+
+    @Test
+    fun `renameProfile preserves version and createdTimestamp`() {
+        val manager = ProfileManager.create(context)
+        val profileId = manager.createNewProfile(ProfileName.fromTrustedSource("Original Name"))
+
+        val originalJson = prefs.getString(profileId.value, null)
+        val originalMetadata = ProfileManager.ProfileMetadata.fromJson(originalJson!!)
+
+        manager.renameProfile(profileId, ProfileName.fromTrustedSource("New Name"))
+
+        val updatedJson = prefs.getString(profileId.value, null)
+        val updatedMetadata = ProfileManager.ProfileMetadata.fromJson(updatedJson!!)
+
+        assertEquals("Version must be preserved", originalMetadata.version, updatedMetadata.version)
+        assertEquals(
+            "Timestamp must be preserved",
+            originalMetadata.createdTimestamp,
+            updatedMetadata.createdTimestamp,
+        )
+    }
+
+    @Test
+    fun `renameProfile does not write to disk if name is identical`() {
+        val manager = ProfileManager.create(context)
+        val name = ProfileName.fromTrustedSource("No Change")
+        val profileId = manager.createNewProfile(name)
+
+        val originalJson = prefs.getString(profileId.value, null)
+
+        manager.renameProfile(profileId, name)
+
+        val currentJson = prefs.getString(profileId.value, null)
+        assertEquals("No disk write should occur for identical names", originalJson, currentJson)
+    }
+
+    @Test
+    fun `renameProfile throws IllegalArgumentException for missing profile`() {
+        val manager = ProfileManager.create(context)
+        val fakeId = ProfileId("p_ghost")
+
+        val exception =
+            assertThrows(IllegalArgumentException::class.java) {
+                manager.renameProfile(fakeId, ProfileName.fromTrustedSource("New Name"))
+            }
+
+        assertTrue(exception.message!!.contains("not found"))
     }
 }

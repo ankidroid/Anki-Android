@@ -93,11 +93,11 @@ import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
-import com.ichi2.anki.contextmenu.MouseContextMenuHandler
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.IncludeDeckPickerBinding
 import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
@@ -136,6 +136,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
+import com.ichi2.anki.dialogs.setDeckPickerContextMenuResultListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
@@ -267,9 +268,6 @@ open class DeckPicker :
     private lateinit var deckListAdapter: DeckAdapter
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
-    // Right-click context menu handler using decoupled menu system
-    private lateinit var mouseContextMenuHandler: MouseContextMenuHandler
-
     private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
 
     var activeSnackBar: Snackbar? = null
@@ -287,7 +285,7 @@ open class DeckPicker :
             }
         }
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = floatingActionButtonBinding.fabMain
+        anchorView = floatingActionButtonBinding.fabMain.takeIf { it.isVisible }
         addCallback(activeSnackbarCallback)
     }
 
@@ -441,49 +439,26 @@ open class DeckPicker :
         }
     }
 
-    private fun showDeckPickerContextMenu(deckId: DeckId) {
+    private fun showDeckPickerContextMenu(deckId: DeckId) =
         launchCatchingTask {
-            val (deckName, isDynamic, hasBuriedInDeck) =
-                withCol {
-                    decks.select(deckId)
-                    Triple(
-                        decks.name(deckId),
-                        decks.isFiltered(deckId),
-                        sched.haveBuried(),
-                    )
-                }
+            viewModel.selectDeck(deckId).join()
+            val menu = DeckPickerContextMenu.newInstance(deckId)
             CardBrowser.clearLastDeckId()
-            updateDeckList()
-            showDialogFragment(
-                DeckPickerContextMenu.newInstance(
-                    id = deckId,
-                    name = deckName,
-                    isDynamic = isDynamic,
-                    hasBuriedInDeck = hasBuriedInDeck,
-                ),
-            )
+            showDialogFragment(menu)
         }
-    }
 
     private fun showDeckPickerRightClickContextMenu(
         deckId: DeckId,
         x: Float,
         y: Float,
-    ) {
-        launchCatchingTask {
-            val (isDynamic, hasBuriedInDeck) =
-                withCol {
-                    decks.select(deckId)
-                    Pair(
-                        decks.isFiltered(deckId),
-                        sched.haveBuried(),
-                    )
-                }
-            updateDeckList()
-            val menuContentProvider = DeckPickerMenuContentProvider(deckId, isDynamic, hasBuriedInDeck, this@DeckPicker)
-            mouseContextMenuHandler = MouseContextMenuHandler(deckPickerBinding.deckPickerContent, menuContentProvider)
-            mouseContextMenuHandler.showContextMenu(deckPickerBinding.decks, x, y)
-        }
+    ) = launchCatchingTask {
+        viewModel.selectDeck(deckId).join()
+        DeckPickerMenuContentProvider.show(
+            deckPicker = this@DeckPicker,
+            deckId = deckId,
+            x = x,
+            y = y,
+        )
     }
 
     // ----------------------------------------------------------------------------
@@ -602,20 +577,8 @@ open class DeckPicker :
             }
         }
 
-        setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU) { _, bundle ->
-            handleContextMenuSelection(
-                bundle.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerContextMenu.CONTEXT_MENU_DECK_OPTION)
-                    ?: error("Unable to retrieve selected context menu option"),
-                bundle.getLong(DeckPickerContextMenu.CONTEXT_MENU_DECK_ID, -1),
-            )
-        }
-
-        setFragmentResultListener(DeckPickerMenuContentProvider.REQUEST_KEY_CONTEXT_MENU) { _, bundle ->
-            handleContextMenuSelection(
-                bundle.getSerializableCompat<DeckPickerContextMenuOption>(DeckPickerMenuContentProvider.CONTEXT_MENU_DECK_OPTION)
-                    ?: error("Unable to retrieve selected context menu option"),
-                bundle.getLong(DeckPickerMenuContentProvider.CONTEXT_MENU_DECK_ID, -1),
-            )
+        setDeckPickerContextMenuResultListener { result ->
+            handleContextMenuSelection(result.option, result.deckId)
         }
 
         setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->
@@ -647,6 +610,7 @@ open class DeckPicker :
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
         fun onDeckDeleted(result: DeckDeletionResult) {
+            floatingActionButtonBinding.fabMain.isVisible = true
             showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
@@ -1124,6 +1088,7 @@ open class DeckPicker :
                     Timber.i("DeckPicker:: SearchItem opened")
                     // Hide the floating action button if it is visible
                     floatingActionMenu.hideFloatingActionButton()
+                    activeSnackBar?.anchorView = null
                     return true
                 }
 
@@ -1132,6 +1097,7 @@ open class DeckPicker :
                     Timber.i("DeckPicker:: SearchItem closed")
                     // Show the floating action button if it is hidden
                     floatingActionMenu.showFloatingActionButton()
+                    activeSnackBar?.anchorView = floatingActionButtonBinding.fabMain
                     return true
                 }
             },
@@ -1245,6 +1211,7 @@ open class DeckPicker :
             }
             R.id.action_sync -> {
                 Timber.i("DeckPicker:: Sync button pressed")
+                toolbarSearchItem?.collapseActionView()
                 val actionProvider = MenuItemCompat.getActionProvider(item) as? SyncActionProvider
                 if (actionProvider?.isProgressShown == true) {
                     launchCatchingTask {
@@ -1787,11 +1754,11 @@ open class DeckPicker :
             Timber.d("doInBackgroundRepairCollection")
             val result =
                 withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
-                    withCol {
-                        Timber.i("RepairCollection: Closing collection")
-                        close()
-                        BackupManager.repairCollection(this@withCol)
-                    }
+                    Timber.i("RepairCollection: Closing collection")
+                    CollectionManager.ensureClosed()
+                    val colFile =
+                        CollectionManager.collectionPathInValidFolder().requireDiskBasedCollection().colDb
+                    BackupManager.repairCollection(colFile)
                 }
             if (!result) {
                 showThemedToast(this@DeckPicker, resources.getString(R.string.deck_repair_error), true)
@@ -2028,11 +1995,19 @@ open class DeckPicker :
                 .setLongLabel(shortcutData.longLabel)
                 .build()
         try {
+            // success does not mean the user selected 'create', only that the feature is supported
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
+            Timber.i("Create shortcut for deck %d. Request displayed: %b", shortcutData.deckId, success)
 
             // User report: "success" is true even if Vivo does not have permission
             if (AdaptionUtil.isVivo) {
                 showThemedToast(this, getString(R.string.create_shortcut_error_vivo), false)
+            }
+            // #18601: MIUI gates shortcut creation behind Settings - Privacy Protection -
+            // Other permissions - AnkiDroid - Home screen shortcuts [add shortcuts to Home screen]
+            // TODO: Determine the result of 'success'
+            if (AdaptionUtil.isMiui) {
+                showThemedToast(this, getString(R.string.create_shortcut_error_miui, getString(R.string.app_name)), false)
             }
             if (!success) {
                 showThemedToast(this, getString(R.string.create_shortcut_failed), false)

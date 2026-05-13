@@ -1,30 +1,16 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.internal.tasks.factory.dependsOn
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.android.library)
+    id("ankidroid.android.api")
     id("maven-publish")
 }
 
 group = "com.ichi2.anki"
 version = "2.0.0"
 
-kotlin {
-    explicitApi()
-    compilerOptions {
-        // enable explicit api mode for additional checks related to the public api
-        // see https://kotlinlang.org/docs/whatsnew14.html#explicit-api-mode-for-library-authors
-        freeCompilerArgs.add("-Xexplicit-api=strict")
-    }
-}
-
 configure<LibraryExtension> {
     namespace = "com.ichi2.anki.api"
-    compileSdk =
-        libs.versions.compileSdk
-            .get()
-            .toInt()
 
     buildFeatures {
         buildConfig = true
@@ -32,7 +18,7 @@ configure<LibraryExtension> {
 
     defaultConfig {
         minSdk =
-            libs.versions.minSdk
+            libs.versions.apiMinSdk
                 .get()
                 .toInt()
         buildConfigField(
@@ -56,11 +42,6 @@ configure<LibraryExtension> {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        // API remains on VERSION_11 for compatibility
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
 
     publishing {
         singleVariant("release") {
@@ -70,13 +51,12 @@ configure<LibraryExtension> {
     }
 }
 
-apply(from = "../lint.gradle")
-
 dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.kotlin.stdlib)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.junit.platform.launcher)
     testImplementation(libs.robolectric)
     testImplementation(libs.kotlin.test)
 

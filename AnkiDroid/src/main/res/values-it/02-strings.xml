@@ -194,6 +194,7 @@
     <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
     <string name="tag_already_exists">Tag già esistente</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Errore nella condivisione del file apkg</string>
@@ -262,6 +263,7 @@
     <string name="note_editor_audio_too_large">Il file audio è troppo grande,  inserisci manualmente il file audio.</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Backup di Android in corso. Per favore riprova</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Utilizza iManager per consentire ad AnkiDroid di aggiungere scorciatoie</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">La tua schermata iniziale non consente ad AnkiDroid di aggiungere scorciatoie</string>
     <string name="create_shortcut_error">Errore nell\'aggiunta della scorciatoia: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Frasi in maiuscole</string>
@@ -278,7 +280,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Inserisci un\'email valida</string>
     <string name="password_empty">La password è obbligatoria</string>
-    <string name="back_pressed_once">Premi di nuovo indietro per uscire</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Scarica il mazzo</string>
@@ -393,4 +395,5 @@
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">Nome già esistente</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

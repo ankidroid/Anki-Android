@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.dialogs.utils.ankiListView
 import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.dialogs.utils.title
@@ -81,10 +82,10 @@ class DeckPickerNoExternalFilesDirTest : RobolectricTest() {
             withNoWritePermission {
                 CollectionHelper.ankiDroidDirectoryOverride = tempFolder.newFolder()
 
-                mockkObject(CollectionHelper, CollectionManager, AnkiDroidApp)
+                mockkObject(CollectionHelper, CollectionManager, SdCard)
                 every { CollectionHelper.isCurrentAnkiDroidDirAccessible(any()) } returns false
                 every { CollectionManager.getColUnsafe() } throws TestException("")
-                every { AnkiDroidApp.isSdCardMounted } returns true
+                every { SdCard.isMounted } returns true
 
                 setIntroductionSlidesShown(true)
 

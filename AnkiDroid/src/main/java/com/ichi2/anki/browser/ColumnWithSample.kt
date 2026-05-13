@@ -62,34 +62,22 @@ class ColumnWithSample(
         ): BrowserRow? {
             if (id == null) return null
 
-            // save the current columns
-            val originalColumns =
+            val originalKeys =
                 BrowserColumnCollection
-                    .replace(
-                        AnkiDroidApp.sharedPrefs(),
-                        cardsOrNotes,
-                        CardBrowserColumn.entries,
-                    ).let { result ->
-                        CollectionManager.withCol { backend.setActiveBrowserColumns(result.newColumns.backendKeys) }
-                        result.originalColumns
-                    }
+                    .load(AnkiDroidApp.sharedPrefs(), cardsOrNotes)
+                    .backendKeys
+                    .toList()
 
-            // obtain a sample row
-            val sampleRow: BrowserRow =
-                CollectionManager.withCol { browserRowForId(id.cardOrNoteId) }
-            Timber.d("got sample row")
-
-            // restore the past values
-            BrowserColumnCollection
-                .replace(
-                    AnkiDroidApp.sharedPrefs(),
-                    cardsOrNotes,
-                    originalColumns,
-                ).also { result ->
-                    CollectionManager.withCol { backend.setActiveBrowserColumns(result.newColumns.backendKeys) }
-                }
-
-            return sampleRow
+            return try {
+                val allKeys = CardBrowserColumn.entries.map { it.ankiColumnKey }
+                CollectionManager
+                    .withCol {
+                        backend.setActiveBrowserColumns(allKeys)
+                        browserRowForId(id.cardOrNoteId)
+                    }.also { Timber.d("got sample row") }
+            } finally {
+                CollectionManager.withCol { backend.setActiveBrowserColumns(originalKeys) }
+            }
         }
     }
 }

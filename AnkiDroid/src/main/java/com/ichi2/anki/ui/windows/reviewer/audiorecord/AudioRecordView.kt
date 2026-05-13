@@ -80,6 +80,9 @@ class AudioRecordView : ConstraintLayout {
     private val cancelFadeOffset: Float
     private val lockOffset: Float
 
+    val isRecording: Boolean
+        get() = state == ViewState.RECORDING || state == ViewState.LOCKED
+
     private var recordingListener: RecordingListener? = null
 
     fun setRecordingListener(recordingListener: RecordingListener) {
@@ -293,6 +296,12 @@ class AudioRecordView : ConstraintLayout {
     fun setRecordDisplayVisibility(isVisible: Boolean) {
         binding.chronometer.isVisible = isVisible
         binding.recordingDisplayIcon.isVisible = isVisible
+    }
+
+    fun finishRecording() {
+        if (isRecording) {
+            stopRecording(RecordingBehavior.RELEASE)
+        }
     }
 
     private fun displayRunningRecord() {

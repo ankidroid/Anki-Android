@@ -102,6 +102,8 @@ jobs:
       shell: bash
       run: |
         ./gradlew assemblePlayRelease -x lintVitalPlayRelease
+        # Free the Gradle daemon's heap before CodeQL analysis runs, or we OOM the runner (#20768)
+        ./gradlew --stop
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4

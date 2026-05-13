@@ -92,6 +92,9 @@ class PackageInfoFlagsCompat private constructor(
  */
 const val MATCH_UNINSTALLED_PACKAGES = 0x00002000 // API 24
 
+/** @see MATCH_UNINSTALLED_PACKAGES */
+const val MATCH_UNINSTALLED_PACKAGES_L: Long = MATCH_UNINSTALLED_PACKAGES.toLong()
+
 /**
  * [PackageInfo] flag: return the signing certificates associated with
  * this package.  Each entry is a signing certificate that the package
@@ -100,10 +103,16 @@ const val MATCH_UNINSTALLED_PACKAGES = 0x00002000 // API 24
  */
 const val GET_SIGNING_CERTIFICATES = 0x08000000 // API 28
 
+/** @see GET_SIGNING_CERTIFICATES */
+const val GET_SIGNING_CERTIFICATES_L: Long = GET_SIGNING_CERTIFICATES.toLong()
+
 /**
  * [PackageInfo] flag: include disabled components in the returned info.
  */
 const val MATCH_DISABLED_COMPONENTS = 0x00000200 // API 24
+
+/** @see MATCH_DISABLED_COMPONENTS */
+const val MATCH_DISABLED_COMPONENTS_L: Long = MATCH_DISABLED_COMPONENTS.toLong()
 
 /**
  * [PackageInfo] flag: include disabled components which are in
@@ -113,11 +122,17 @@ const val MATCH_DISABLED_COMPONENTS = 0x00000200 // API 24
  */
 const val MATCH_DISABLED_UNTIL_USED_COMPONENTS = 0x00008000 // API 24
 
+/** @see MATCH_DISABLED_UNTIL_USED_COMPONENTS */
+const val MATCH_DISABLED_UNTIL_USED_COMPONENTS_L: Long = MATCH_DISABLED_UNTIL_USED_COMPONENTS.toLong()
+
 /**
  * Querying flag: include only components from applications that are marked
  * with [ApplicationInfo.FLAG_SYSTEM].
  */
 const val MATCH_SYSTEM_ONLY = 0x00100000 // API 24
+
+/** @see MATCH_SYSTEM_ONLY */
+const val MATCH_SYSTEM_ONLY_L: Long = MATCH_SYSTEM_ONLY.toLong()
 
 /**
  * [PackageInfo] flag: include APEX packages that are currently
@@ -128,33 +143,66 @@ const val MATCH_SYSTEM_ONLY = 0x00100000 // API 24
  */
 const val MATCH_APEX = 0x40000000 // API 29
 
+/** @see MATCH_APEX */
+const val MATCH_APEX_L: Long = MATCH_APEX.toLong()
+
+/** @see AndroidPackageManager.GET_ACTIVITIES */
+const val GET_ACTIVITIES_L: Long = AndroidPackageManager.GET_ACTIVITIES.toLong()
+
+/** @see AndroidPackageManager.GET_CONFIGURATIONS */
+const val GET_CONFIGURATIONS_L: Long = AndroidPackageManager.GET_CONFIGURATIONS.toLong()
+
+/** @see AndroidPackageManager.GET_GIDS */
+const val GET_GIDS_L: Long = AndroidPackageManager.GET_GIDS.toLong()
+
+/** @see AndroidPackageManager.GET_INSTRUMENTATION */
+const val GET_INSTRUMENTATION_L: Long = AndroidPackageManager.GET_INSTRUMENTATION.toLong()
+
+/** @see AndroidPackageManager.GET_PERMISSIONS */
+const val GET_PERMISSIONS_L: Long = AndroidPackageManager.GET_PERMISSIONS.toLong()
+
+/** @see AndroidPackageManager.GET_PROVIDERS */
+const val GET_PROVIDERS_L: Long = AndroidPackageManager.GET_PROVIDERS.toLong()
+
+/** @see AndroidPackageManager.GET_RECEIVERS */
+const val GET_RECEIVERS_L: Long = AndroidPackageManager.GET_RECEIVERS.toLong()
+
+/** @see AndroidPackageManager.GET_SERVICES */
+const val GET_SERVICES_L: Long = AndroidPackageManager.GET_SERVICES.toLong()
+
+/** @see AndroidPackageManager.GET_URI_PERMISSION_PATTERNS */
+const val GET_URI_PERMISSION_PATTERNS_L: Long = AndroidPackageManager.GET_URI_PERMISSION_PATTERNS.toLong()
+
 /**
  * [PackageInfo] flag: return all attributions declared in the package manifest
  */
 const val GET_ATTRIBUTIONS = -0x80000000 // API 31
 
+/** @see GET_ATTRIBUTIONS */
+const val GET_ATTRIBUTIONS_L: Long = GET_ATTRIBUTIONS.toLong()
+
 @LongDef(
     flag = true,
     // prefix = ["GET_", "MATCH_"],
     value = [
-        AndroidPackageManager.GET_ACTIVITIES.toLong(),
-        AndroidPackageManager.GET_CONFIGURATIONS.toLong(),
-        AndroidPackageManager.GET_GIDS.toLong(),
-        AndroidPackageManager.GET_INSTRUMENTATION.toLong(),
-        AndroidPackageManager.GET_META_DATA.toLong(),
-        AndroidPackageManager.GET_PERMISSIONS.toLong(),
-        AndroidPackageManager.GET_PROVIDERS.toLong(),
-        AndroidPackageManager.GET_RECEIVERS.toLong(),
-        AndroidPackageManager.GET_SERVICES.toLong(),
-        AndroidPackageManager.GET_SHARED_LIBRARY_FILES.toLong(),
-        GET_SIGNING_CERTIFICATES.toLong(),
-        AndroidPackageManager.GET_URI_PERMISSION_PATTERNS.toLong(),
-        MATCH_UNINSTALLED_PACKAGES.toLong(),
-        MATCH_DISABLED_COMPONENTS.toLong(),
-        MATCH_DISABLED_UNTIL_USED_COMPONENTS.toLong(),
-        MATCH_SYSTEM_ONLY.toLong(),
-        MATCH_APEX.toLong(),
-        GET_ATTRIBUTIONS.toLong(),
+        GET_ACTIVITIES_L,
+        GET_CONFIGURATIONS_L,
+        GET_GIDS_L,
+        GET_INSTRUMENTATION_L,
+        GET_META_DATA_L,
+        GET_PERMISSIONS_L,
+        GET_PROVIDERS_L,
+        GET_RECEIVERS_L,
+        GET_SERVICES_L,
+        GET_SHARED_LIBRARY_FILES_L,
+        GET_SIGNING_CERTIFICATES_L,
+        GET_URI_PERMISSION_PATTERNS_L,
+        MATCH_UNINSTALLED_PACKAGES_L,
+        MATCH_DISABLED_COMPONENTS_L,
+        MATCH_DISABLED_UNTIL_USED_COMPONENTS_L,
+        MATCH_SYSTEM_ONLY_L,
+        MATCH_APEX_L,
+        GET_ATTRIBUTIONS_L,
 
         // not handled: Deprecated & unused in our code
         // PackageManager.GET_INTENT_FILTERS.toLong(),

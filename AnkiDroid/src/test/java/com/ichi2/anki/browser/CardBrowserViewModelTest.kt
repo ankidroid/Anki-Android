@@ -62,6 +62,7 @@ import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
+import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
@@ -73,10 +74,11 @@ import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.LegacySortType
+import com.ichi2.anki.model.LegacySortType.NO_SORTING
+import com.ichi2.anki.model.LegacySortType.SORT_FIELD
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.model.SortType.NO_SORTING
-import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
@@ -610,17 +612,17 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("initial direction", !orderAsc)
 
                 // changing the order performs a search & changes order
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order changed", order, equalTo(SortType.EASE))
+                assertThat("order changed", order, equalTo(LegacySortType.EASE))
                 assertThat("changed direction is the default", !orderAsc)
 
                 waitForSearchResults()
 
                 // pressing 'ease' again changes direction
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order unchanged", order, equalTo(SortType.EASE))
+                assertThat("order unchanged", order, equalTo(LegacySortType.EASE))
                 assertThat("direction is changed", orderAsc)
             }
         }
@@ -1244,6 +1246,21 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `preview does not write to SharedPreferences - issue 19885`() =
+        runViewModelTest(notes = 1) {
+            // A crash/close here caused all columns to be visible.
+            sharedPrefs().edit { remove(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY) }
+
+            previewColumnHeadings(CardsOrNotes.CARDS)
+
+            assertThat(
+                "activeCols must not be written during preview",
+                sharedPrefs().contains(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY),
+                equalTo(false),
+            )
+        }
+
     @Suppress("SpellCheckingInspection") // German
     @Test
     fun `columns headings - language change`() =
@@ -1499,12 +1516,34 @@ class CardBrowserViewModelTest : JvmTest() {
         runViewModelTest {
             filterByTags(listOf("être"), CardStateFilter.ALL_CARDS)
 
-            assertThat(searchTerms, equalTo("tag:être"))
+            assertThat(searchTerms, equalTo("(tag:être)"))
             assertThat("all tagged cards are returned", rowCount, equalTo(3))
 
             updateQueryText("tag:être hêllo")
             launchSearchForCards(tempSearchQuery!!)
             assertThat("input is unchanged", searchTerms, equalTo("tag:être hêllo"))
+        }
+    }
+
+    /**
+     * Regression test: parentheses are required until we fully use SearchRequest
+     *
+     * Otherwise, the 'AND' takes precedence over the 'OR':
+     *
+     * `tag:a OR tag:b a` is parsed as `tag:a OR (tag:b a)`
+     */
+    @Test
+    fun `single tag filter is parenthesized to preserve precedence`() {
+        addBasicNote().update { tags = mutableListOf("foo", "bar") }
+
+        runViewModelTest {
+            filterByTags(listOf("foo", "bar"), CardStateFilter.ALL_CARDS)
+
+            assertThat(
+                "single-tag filter wraps the tag clause so user-appended terms append safely",
+                searchTerms,
+                equalTo("(tag:foo OR tag:bar)"),
+            )
         }
     }
 
@@ -1528,6 +1567,67 @@ class CardBrowserViewModelTest : JvmTest() {
 
             assertThat("hello and hêllo are matched", rowCount, equalTo(2))
             assertThat("input is unchanged", searchTerms, equalTo("hello"))
+        }
+    }
+
+    @Test
+    fun `updating sort type launches search`() =
+        runViewModelTest {
+            flowOfSearchState.test {
+                expectNoEvents()
+
+                setSortType(SortType.NoOrdering)
+
+                expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `updating sort type updates flows - no ordering`() =
+        runViewModelTest {
+            assertEquals(LegacySortType.SORT_FIELD, order)
+
+            setSortType(SortType.NoOrdering)
+
+            assertEquals(LegacySortType.NO_SORTING, order)
+        }
+
+    @Test
+    fun `updating sort type updates flows - known column`() =
+        runViewModelTest {
+            assertEquals(LegacySortType.SORT_FIELD, order)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
+
+            assertEquals(LegacySortType.DUE_TIME, order)
+        }
+
+    @Test
+    fun `updating sort type updates order`() =
+        runViewModelTest {
+            assertEquals(false, orderAsc)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
+
+            assertEquals(true, orderAsc)
+        }
+
+    @Test
+    fun `sort type integration test`() {
+        val firstId = addBasicNote("a").firstCard().id
+        addBasicNote("b")
+        val lastId = addBasicNote("c").firstCard().id
+
+        runViewModelTest {
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true))
+
+            assertEquals(lastId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = false))
+
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
         }
     }
 

@@ -84,10 +84,12 @@ open class ReviewerControlPreference : ControlPreference {
         val cardSide = side ?: return super.getPreferenceAssignedTo(binding)
         val reviewerBinding = ReviewerBinding(binding, cardSide)
         // Bindings only conflict when the card sides overlap
-        return getRelatedPreferences().firstOrNull { preference ->
-            reviewerBinding in preference.getMappableBindings()
-        }
+        return getPreferencesAssignedTo(reviewerBinding).firstOrNull()
     }
+
+    @NeedsTest("Ensure correct preferences are returned for side-specific binding")
+    private fun getPreferencesAssignedTo(binding: ReviewerBinding): List<ReviewerControlPreference> =
+        getRelatedPreferences().filter { preference -> binding in preference.getMappableBindings() }
 
     fun interface OnBindingSelectedListener {
         /**
@@ -125,9 +127,19 @@ open class ReviewerControlPreference : ControlPreference {
         side: CardSide,
     ) {
         val newBinding = ReviewerBinding(binding, side)
-        getPreferenceAssignedTo(binding)?.removeMappableBinding(newBinding)
+        // Before adding new binding, remove all conflicting bindings
+        getPreferencesAssignedTo(newBinding).forEach { preference ->
+            preference.removeDuplicateBindings(newBinding)
+        }
         val bindings = ReviewerBinding.fromPreferenceString(value).toMutableList()
         bindings.add(newBinding)
+        value = bindings.toPreferenceString()
+    }
+
+    @NeedsTest("Check dup removal, including partial side overlap: e.g. QUESTION & BOTH")
+    private fun removeDuplicateBindings(binding: ReviewerBinding) {
+        val bindings = ReviewerBinding.fromPreferenceString(value).toMutableList()
+        bindings.removeAll { it == binding } // Uses overridden .equals() to detect overlaps
         value = bindings.toPreferenceString()
     }
 

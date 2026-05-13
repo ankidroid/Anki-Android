@@ -51,7 +51,7 @@
     <string name="backup_del_collection">Kolleksiyani oʻchirib yangisini yaratish</string>
     <string name="backup_del_collection_question">Kolleksiyani oʻchirib yangisi yaratmoqchimisiz? Barcha oʻrganish progressingizni yoʻqotasiz va barcha kartalarni oʻchiradi.</string>
     <string name="backup_one_way_sync_from_server">Serverdan bir tomonlama sinxronlash</string>
-    <string name="backup_use_default_folder">Use default collection folder</string>
+    <string name="backup_use_default_folder">Birlamchi kolleksiya jildini ishlatish</string>
     <string name="backup_full_sync_from_server_question">Kolleksiyangiz AnkiWeb kolleksiyasi bilan almashtirilsinmi? Oxirgi sinxronizatsiyadan keyingi barcha oʻrganish progressingiz va qoʻshilgan maʼlumotlaringiz yoʻqoladi.</string>
     <string name="error_handling_title">Xatolikni bartaraf qilish</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Parametrlar</string>

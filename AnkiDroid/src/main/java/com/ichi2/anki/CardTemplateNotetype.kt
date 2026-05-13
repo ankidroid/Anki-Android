@@ -542,8 +542,20 @@ class NotetypeFile(
                 NotetypeJson(target.toString())
             }
         } catch (e: IOException) {
-            Timber.e(e, "Unable to read+parse tempNoteType from file %s", absolutePath)
+            Timber.w(e, "Unable to read+parse tempNoteType from file %s", absolutePath)
             throw e
+        }
+
+    /**
+     * Returns the notetype, or `null` if the backing file can't be read (e.g. the temp
+     * file was cleaned up by the OS after process death, or the user cleared app data).
+     */
+    fun getNotetypeOrNull(): NotetypeJson? =
+        try {
+            getNotetype()
+        } catch (e: IOException) {
+            Timber.d(e, "Failed to read notetype")
+            null
         }
 
     override fun describeContents(): Int = 0

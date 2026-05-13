@@ -194,6 +194,7 @@
     <string name="tag_editor_add_feedback">\"%2$s\" 𐌰𐍄𐍄𐌴𐌺𐌰𐌽 𐌳𐌿 𐌲𐌰𐍄𐌿𐌻𐌲𐌾𐌰𐌽 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">𐍅𐌹𐍃𐌰𐌽𐌳𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 \"%1$s\" 𐌲𐌰𐍅𐌰𐌻𐌹𐌸</string>
     <string name="tag_already_exists">Tag already exists</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌳𐌰𐌹𐌻𐌾𐌰𐌽 apkg 𐍆𐌰𐌾𐌻</string>
@@ -262,6 +263,7 @@
     <string name="note_editor_audio_too_large">𐌸𐌰𐍄𐌰 𐍆𐌰𐌾𐌻 𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌿𐍆𐌰𐍂𐌼𐌹𐌺𐌹𐌻 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽 𐌰𐍅𐌳𐌾𐍉𐌽 𐌷𐌰𐌽𐌳𐌿𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">𐌰𐌽𐌳𐍂𐌰𐌿𐌳 𐌱𐌰𐌹𐌺-𐌰𐍀 𐌹𐌽 𐍆𐍂𐌰𐌼𐌲𐌰𐌷𐍄𐌰𐌹. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐍃𐍉𐌺𐌴𐌹 𐌰𐍆𐍄𐍂𐌰.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">𐌲𐌰𐍂𐌳𐌰𐍃𐌺𐌰𐌹𐍂𐌼𐍃 𐌸𐌴𐌹𐌽𐍃 𐌽𐌹 𐌰𐌽𐌳𐌻𐌴𐍄𐌹𐌸 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌹𐍅𐌹𐌲𐌰𐌽𐍃</string>
     <string name="create_shortcut_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌿𐍅𐌹𐌲: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
@@ -278,7 +280,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">𐌴-𐌼𐌴𐌻 𐍂𐌰𐌹𐌷𐍄 𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="password_empty">𐍂𐌿𐌽𐌰𐍅𐌰𐌿𐍂𐌳𐌹𐍃 𐌸𐌰𐌿𐍂𐍆𐍄 𐌹𐍃𐍄</string>
-    <string name="back_pressed_once">𐌸𐍂𐌿𐌺𐌴𐌹 𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌸𐌿𐌺 𐌰𐍆𐍄𐍂𐌰 𐌳𐌿 𐌰𐍆𐌻𐌴𐌹𐌸𐌰𐌽</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌽</string>
@@ -393,4 +395,5 @@
     <!-- Other errors -->
     <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
     <string name="error_name_exists">Name already exists</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

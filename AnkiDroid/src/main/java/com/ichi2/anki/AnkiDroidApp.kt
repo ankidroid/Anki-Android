@@ -26,7 +26,6 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.system.Os
 import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
@@ -35,11 +34,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
-import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.coroutines.applicationScope
+import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -62,13 +63,13 @@ import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.LanguageUtil.withAppLocale
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.setWebContentsDebuggingEnabled
+import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import com.ichi2.widget.restoreRecurringAlarms
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -134,7 +135,7 @@ open class AnkiDroidApp :
         // Ensures any change is propagated to widgets
         ChangeManager.subscribe(this)
 
-        CrashReportService.initialize(this)
+        initializeAcraCrashReporter()
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())
@@ -165,7 +166,7 @@ open class AnkiDroidApp :
         }
 
         // Stop after analytics and logging are initialised.
-        if (CrashReportService.isProperServiceProcess()) {
+        if (isAcraSenderProcess()) {
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
             return
         }
@@ -201,17 +202,21 @@ open class AnkiDroidApp :
 
         initializeAnkiDroidDirectory()
 
+        val context = this.withAppLocale()
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Setting review reminder notifications if they have not already been set")
-            AlarmManagerService.scheduleAllNotifications(applicationContext)
+            AlarmManagerService.scheduleAllNotifications(context)
         } else {
             // Register for notifications
             Timber.i("AnkiDroidApp: Starting Services")
-            notifications.observeForever { NotificationService.triggerNotificationFor(this) }
+            notifications.observeForever { NotificationService.triggerNotificationFor(context) }
         }
 
         // listen for day rollover: time + timezone changes
         DayRolloverHandler.listenForRolloverEvents(this)
+        DayRolloverAlarm.scheduleNext(this)
+
+        restoreRecurringAlarms(this)
 
         registerActivityLifecycleCallbacks(
             object : ActivityLifecycleCallbacks {
@@ -298,7 +303,7 @@ open class AnkiDroidApp :
             Timber.e(e, "Could not initialize AnkiDroid directory")
             try {
                 val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
-                if (isSdCardMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
+                if (SdCard.isMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
                     // Don't send report if the user is using a custom directory as SD cards trip up here a lot
                     sendExceptionReport(e, "AnkiDroidApp.onCreate")
                 }
@@ -370,24 +375,6 @@ open class AnkiDroidApp :
     }
 
     companion object {
-        /**
-         * [CoroutineScope] tied to the [Application], allowing executing of tasks which should
-         * execute as long as the app is running
-         *
-         * This scope is bound by default to [Dispatchers.Main.immediate][kotlinx.coroutines.MainCoroutineDispatcher.immediate].
-         * Use an alternate dispatcher if the main thread is not required: [Dispatchers.Default] or [Dispatchers.IO]
-         *
-         * This scope will not be cancelled; exceptions are handled by [SupervisorJob]
-         *
-         * See: [Operations that shouldn't be cancelled in Coroutines](https://medium.com/androiddevelopers/coroutines-patterns-for-work-that-shouldnt-be-cancelled-e26c40f142ad#d425)
-         *
-         * This replicates the manner which `lifecycleScope`/`viewModelScope` is exposed in Android
-         */
-        // lazy init required due to kotlinx-coroutines-test 1.10.0:
-        // Main was accessed when the platform dispatcher was absent and the test dispatcher
-        // was unset
-        val applicationScope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate) }
-
         /**
          * A [SharedPreferencesProvider] which does not require [onCreate] when run from tests
          *
@@ -468,8 +455,6 @@ open class AnkiDroidApp :
 
         val appResources: Resources
             get() = instance.resources
-        val isSdCardMounted: Boolean
-            get() = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
 
         fun getMarketIntent(context: Context): Intent {
             val uri =

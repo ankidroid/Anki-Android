@@ -20,6 +20,7 @@ import androidx.annotation.XmlRes
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.testutils.getInstanceFromClassName
 import org.xmlpull.v1.XmlPullParser
@@ -106,14 +107,14 @@ object PreferenceTestUtils {
         return fragments.distinctBy { it::class } // and remove any repeated fragments
     }
 
-    fun attrValueToString(
-        value: String,
-        context: Context,
-    ): String =
-        if (value.startsWith("@")) {
-            context.getString(value.substring(1).toInt())
+    context(test: RobolectricTest)
+    fun String.resValue(): String = resValue(test.targetContext)
+
+    fun String.resValue(context: Context): String =
+        if (this.startsWith("@")) {
+            context.getString(this.substring(1).toInt())
         } else {
-            value
+            this
         }
 
     fun attrToStringArray(
@@ -133,7 +134,7 @@ object PreferenceTestUtils {
                 emptySet()
             }
         return getAttrFromXml(context, xml, "key", excludeTags = exclusions)
-            .map { attrValueToString(it, context) }
+            .map { it.resValue(context) }
     }
 
     fun getAllPreferenceKeys(context: Context): Set<String> =

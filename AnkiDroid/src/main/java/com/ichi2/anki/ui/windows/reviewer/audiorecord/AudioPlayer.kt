@@ -25,7 +25,9 @@ class AudioPlayer : Closeable {
 
     var isPlaying = false
         private set
-    private var isPrepared = false
+    var isPaused = false
+        private set
+    var isPrepared = false
 
     var onCompletion: (() -> Unit)? = null
 
@@ -37,6 +39,7 @@ class AudioPlayer : Closeable {
     init {
         mediaPlayer.setOnCompletionListener {
             isPlaying = false
+            isPaused = false
             onCompletion?.invoke()
         }
     }
@@ -50,6 +53,7 @@ class AudioPlayer : Closeable {
             mediaPlayer.reset()
             isPrepared = false
             isPlaying = false
+            isPaused = false
 
             mediaPlayer.setDataSource(filePath)
             mediaPlayer.setOnPreparedListener { mp ->
@@ -65,12 +69,31 @@ class AudioPlayer : Closeable {
         }
     }
 
+    fun pause() {
+        Timber.i("AudioPlayer::pause (isPlaying %b)", isPlaying)
+        if (isPlaying) {
+            mediaPlayer.pause()
+            isPlaying = false
+            isPaused = true
+        }
+    }
+
+    fun resume() {
+        Timber.i("AudioPlayer::resume (isPaused %b)", isPaused)
+        if (isPaused) {
+            mediaPlayer.start()
+            isPlaying = true
+            isPaused = false
+        }
+    }
+
     fun replay() {
         Timber.i("AudioPlayer::replay (isPlaying %b) (isPrepared %b)", isPlaying, isPrepared)
         if (isPrepared) {
             mediaPlayer.seekTo(0)
             mediaPlayer.start()
             isPlaying = true
+            isPaused = false
         }
     }
 
@@ -79,5 +102,6 @@ class AudioPlayer : Closeable {
         mediaPlayer.reset()
         isPrepared = false
         isPlaying = false
+        isPaused = false
     }
 }

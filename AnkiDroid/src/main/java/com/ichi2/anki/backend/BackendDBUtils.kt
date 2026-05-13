@@ -20,7 +20,7 @@ import android.content.Context
 import androidx.annotation.CheckResult
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.libanki.DB
 import net.ankiweb.rsdroid.Backend

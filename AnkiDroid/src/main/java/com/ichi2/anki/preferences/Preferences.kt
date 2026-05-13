@@ -199,11 +199,11 @@ class PreferencesFragment :
         )
 
         // Configure headers highlight
-        childFragmentManager.executePendingTransactions() // wait for the headers page creation
-        childFragmentManager.findFragmentById(R.id.settings_container)?.let { fragment ->
+        childFragmentManager.addOnBackStackChangedListener {
             val headerFragment = childFragmentManager.findFragmentById(R.id.lateral_nav_container)
-            if (headerFragment !is HeaderFragment) return@let
-            val key = getHeaderKeyForFragment(fragment) ?: return@let
+            if (headerFragment !is HeaderFragment) return@addOnBackStackChangedListener
+            val fragment = childFragmentManager.findFragmentById(R.id.settings_container) ?: return@addOnBackStackChangedListener
+            val key = getHeaderKeyForFragment(fragment) ?: return@addOnBackStackChangedListener
             headerFragment.highlightPreference(key)
         }
     }
@@ -252,7 +252,7 @@ class PreferencesActivity :
     companion object {
         fun getIntent(
             context: Context,
-            initialFragment: KClass<out SettingsFragment>? = null,
+            initialFragment: KClass<out Fragment>? = null,
         ): Intent {
             val arguments = bundleOf(INITIAL_FRAGMENT_EXTRA to initialFragment?.jvmName)
             return Intent(context, PreferencesActivity::class.java).apply {

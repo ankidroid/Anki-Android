@@ -108,11 +108,15 @@ open class Card : Cloneable {
 
     @VisibleForTesting
     var flags = 0
-    private var memoryState: FSRSMemoryState? = null
-    private var desiredRetention: Float? = null
-    private var decay: Float? = null
+    var memoryState: FSRSMemoryState? = null
+        private set
+    var desiredRetention: Float? = null
+        private set
+    var decay: Float? = null
+        private set
 
-    private var lastReviewTimeSecs: Long? = null
+    var lastReviewTimeSecs: Long? = null
+        private set
 
     var renderOutput: TemplateRenderOutput? = null
     var note: Note? = null

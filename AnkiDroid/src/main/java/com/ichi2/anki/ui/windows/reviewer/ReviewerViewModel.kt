@@ -99,6 +99,7 @@ class ReviewerViewModel(
                 ?: Card(anki.cards.Card.getDefaultInstance())
         }
     private val repository = StudyScreenRepository()
+    private var isInputFocused = false
     val finishResultFlow = MutableSharedFlow<Int>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
@@ -114,8 +115,9 @@ class ReviewerViewModel(
     val destinationFlow = MutableSharedFlow<Destination>()
     val editNoteTagsFlow = MutableSharedFlow<NoteId>()
     val setDueDateFlow = MutableSharedFlow<CardId>()
+    val resetProgressFlow = MutableSharedFlow<Unit>()
     val answerFeedbackFlow = MutableSharedFlow<Rating>()
-    val voiceRecorderEnabledFlow = MutableStateFlow(false)
+    val voiceRecorderEnabledFlow = MutableStateFlow(repository.isRecordVoiceEnabled)
     val whiteboardEnabledFlow = MutableStateFlow(repository.isWhiteboardEnabled)
     val replayVoiceFlow = MutableSharedFlow<Unit>()
     val timeBoxReachedFlow = MutableSharedFlow<Collection.TimeboxReached>()
@@ -199,6 +201,8 @@ class ReviewerViewModel(
             }
         executeAction(action)
     }
+
+    suspend fun getCardId() = currentCard.await().id
 
     /**
      * Sends an [eval] request to load the card answer, and updates components
@@ -439,12 +443,23 @@ class ReviewerViewModel(
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
         bytes: ByteArray,
-    ): ByteArray =
-        when (uri.backendMethodName) {
+    ): ByteArray {
+        when (uri.ankidroidMethodName) {
+            "focusin" -> {
+                isInputFocused = true
+                return byteArrayOf()
+            }
+            "focusout" -> {
+                isInputFocused = false
+                return byteArrayOf()
+            }
+        }
+        return when (uri.backendMethodName) {
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
             "setSchedulingStates" -> setSchedulingStates(bytes)
             else -> super.handlePostRequest(uri, bytes)
         }
+    }
 
     override suspend fun showQuestion() {
         Timber.v("ReviewerViewModel::showQuestion")
@@ -659,6 +674,8 @@ class ReviewerViewModel(
         setDueDateFlow.emit(cardId)
     }
 
+    private suspend fun launchResetProgress() = resetProgressFlow.emit(Unit)
+
     private suspend fun setupAnswerTimer(card: Card) {
         val shouldShowTimer = withCol { card.shouldShowTimer(this@withCol) }
         val limitMs = withCol { card.timeLimit(this@withCol) }
@@ -674,6 +691,12 @@ class ReviewerViewModel(
         val newValue = !whiteboardEnabledFlow.value
         whiteboardEnabledFlow.value = newValue
         repository.isWhiteboardEnabled = newValue
+    }
+
+    private fun toggleRecordVoice() {
+        val newValue = !voiceRecorderEnabledFlow.value
+        voiceRecorderEnabledFlow.value = newValue
+        repository.isRecordVoiceEnabled = newValue
     }
 
     fun executeAction(action: ViewerAction) {
@@ -692,6 +715,7 @@ class ReviewerViewModel(
                     ViewerAction.REDO -> redo()
                     ViewerAction.UNDO -> undo()
                     ViewerAction.RESCHEDULE_NOTE -> launchSetDueDate()
+                    ViewerAction.RESET_PROGRESS -> launchResetProgress()
                     ViewerAction.TOGGLE_AUTO_ADVANCE -> toggleAutoAdvance()
                     ViewerAction.BURY_NOTE -> buryNote()
                     ViewerAction.BURY_CARD -> buryCard()
@@ -720,7 +744,7 @@ class ReviewerViewModel(
                     ViewerAction.SHOW_HINT -> eval.emit("ankidroid.showHint()")
                     ViewerAction.SHOW_ALL_HINTS -> eval.emit("ankidroid.showAllHints()")
                     ViewerAction.TOGGLE_WHITEBOARD -> toggleWhiteboard()
-                    ViewerAction.RECORD_VOICE -> voiceRecorderEnabledFlow.emit(!voiceRecorderEnabledFlow.value)
+                    ViewerAction.RECORD_VOICE -> toggleRecordVoice()
                     ViewerAction.REPLAY_VOICE -> replayVoiceFlow.emit(Unit)
                     ViewerAction.PAGE_UP -> pageUpFlow.emit(Unit)
                     ViewerAction.PAGE_DOWN -> pageDownFlow.emit(Unit)
@@ -750,19 +774,23 @@ class ReviewerViewModel(
         binding: ReviewerBinding,
     ): Boolean {
         Timber.v("ReviewerViewModel::processAction")
-        if (binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) return false
+        if ((binding.side != CardSide.BOTH && CardSide.fromAnswer(showingAnswer.value) != binding.side) ||
+            (binding.isKey && isInputFocused)
+        ) {
+            return false
+        }
         executeAction(action)
         return true
     }
 
     override suspend fun onAutoAdvanceAction(action: AutoAdvanceAction) {
         when (action) {
-            QuestionAction.SHOW_ANSWER -> showAnswerInternal()
+            QuestionAction.SHOW_ANSWER -> executeAction(ViewerAction.SHOW_ANSWER)
             QuestionAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingQuestionTimeElapsed())
-            AnswerAction.BURY_CARD -> buryCard()
-            AnswerAction.ANSWER_AGAIN -> answerCardInternal(Rating.AGAIN)
-            AnswerAction.ANSWER_GOOD -> answerCardInternal(Rating.GOOD)
-            AnswerAction.ANSWER_HARD -> answerCardInternal(Rating.HARD)
+            AnswerAction.BURY_CARD -> executeAction(ViewerAction.BURY_CARD)
+            AnswerAction.ANSWER_AGAIN -> executeAction(ViewerAction.ANSWER_AGAIN)
+            AnswerAction.ANSWER_GOOD -> executeAction(ViewerAction.ANSWER_GOOD)
+            AnswerAction.ANSWER_HARD -> executeAction(ViewerAction.ANSWER_HARD)
             AnswerAction.SHOW_REMINDER -> actionFeedbackFlow.emit(TR.studyingAnswerTimeElapsed())
         }
     }

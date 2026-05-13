@@ -15,9 +15,9 @@
  */
 package com.ichi2.anki
 
-import android.content.pm.PackageManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.GET_ACTIVITIES_L
 import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.testutils.ActivityList
 import org.hamcrest.MatcherAssert
@@ -32,7 +32,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
         // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()
 
         // we can't access this in a static context
-        val flags = PackageInfoFlagsCompat.of(PackageManager.GET_ACTIVITIES.toLong())
+        val flags = PackageInfoFlagsCompat.of(GET_ACTIVITIES_L)
         val packageInfo =
             targetContext.getPackageInfoCompat(targetContext.packageName, flags)
                 ?: throw IllegalStateException("getPackageInfo failed")

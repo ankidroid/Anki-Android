@@ -217,3 +217,8 @@ class CompatHelper private constructor() {
  * @param tooltipText the tooltip text
  */
 fun View.setTooltipTextCompat(tooltipText: CharSequence?) = TooltipCompat.setTooltipText(this, tooltipText)
+
+inline fun <reified T : Serializable> Bundle.requireSerializableCompat(key: String): T =
+    requireNotNull(compat.getSerializable(this, key, T::class.java)) {
+        "key: '$key' not found or null"
+    }
