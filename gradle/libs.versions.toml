@@ -124,7 +124,7 @@ seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
 slackKeeper = "0.16.1"
 # https://github.com/qos-ch/slf4j
-slf4j = "2.0.17"
+slf4j = "2.0.18"
 slf4jTimber = "3.1"
 # https://github.com/google/TestParameterInjector/blob/main/CHANGELOG.md
 testParameterInjector = "1.22"
