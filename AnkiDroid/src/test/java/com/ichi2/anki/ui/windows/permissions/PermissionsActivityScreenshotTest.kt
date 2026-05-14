@@ -2,11 +2,15 @@
 
 package com.ichi2.anki.ui.windows.permissions
 
+import androidx.core.content.edit
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.StoragePermissionSet
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.simulateEdgeToEdge
+import com.ichi2.testutils.publicCollectionPath
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
@@ -17,6 +21,7 @@ class PermissionsActivityScreenshotTest : ScreenshotTest() {
     fun permissions(
         @TestParameter isEdgeToEdge: Boolean,
     ) {
+        targetContext.sharedPrefs().edit { putString(CollectionHelper.PREF_COLLECTION_PATH, publicCollectionPath) }
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
                 PermissionsActivity::class.java,
