@@ -22,14 +22,14 @@ import android.os.Parcelable
 import androidx.activity.addCallback
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
-import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
-import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
-import com.ichi2.anki.utils.ext.setFragmentResultListener
+import com.ichi2.anki.storage.StorageDecision
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 import dev.androidbroadcast.vbpd.viewBinding
@@ -60,8 +60,13 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         Themes.setTheme(this)
         setTransparentStatusBar()
 
-        binding.continueButton.setOnClickListener { finish() }
-
+        binding.continueButton.setOnClickListener {
+            if (CollectionHelper.storageDecision() == StorageDecision.Decided) {
+                finish()
+            } else {
+                showPrivateStorageWarningDialog()
+            }
+        }
         // #20881: Activity should not be launchd without extras
         val permissionSet = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
         if (permissionSet == null) {
@@ -75,10 +80,6 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
             requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
                 "invalid permissionsFragment"
             }
-        setFragmentResultListener(PERMISSIONS_FRAGMENT_RESULT_KEY) { _, bundle ->
-            val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSIONS_KEY)
-            setContinueButtonEnabled(hasAllPermissions)
-        }
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
@@ -87,8 +88,19 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         onBackPressedDispatcher.addCallback {}
     }
 
-    fun setContinueButtonEnabled(isEnabled: Boolean) {
-        binding.continueButton.isEnabled = isEnabled
+    // TODO Rethink the UI - selection UI is preferred over a warning dialog: #21049
+    private fun showPrivateStorageWarningDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.private_storage_warning_title)
+            .setMessage(R.string.private_storage_warning)
+            .setPositiveButton(R.string.dialog_continue) { _, _ ->
+                if (!CollectionHelper.setPrivateStoragePath(this)) {
+                    showThemedToast(this, R.string.something_wrong, false)
+                    return@setPositiveButton
+                }
+                finish()
+            }.setNegativeButton(R.string.dialog_cancel, null)
+            .show()
     }
 
     companion object {
