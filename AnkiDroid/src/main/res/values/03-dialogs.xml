@@ -60,6 +60,7 @@
     <string name="dialog_remove">Remove</string>
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">Continue</string>
+    <string name="dialog_skip">Skip</string>
     <string name="dialog_processing">Processing…</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
     <string name="dialog_positive_delete" maxLength="28">Delete</string>
@@ -207,6 +208,9 @@
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
+
+    <string name="private_storage_warning_title">Limited storage access</string>
+    <string name="private_storage_warning">Without this permission, your AnkiDroid collection will be stored in app private storage and will be permanently deleted if you uninstall AnkiDroid.</string>
 
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 

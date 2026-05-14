@@ -6,6 +6,7 @@ package com.ichi2.anki.common.storage
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.edit
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.isInstrumentationTest
 import com.ichi2.anki.exception.StorageAccessException
@@ -101,6 +102,30 @@ object CollectionHelper {
      * @see Context.getExternalFilesDirs
      */
     fun getAppSpecificExternalDirectories(context: Context): List<File> = context.getExternalFilesDirs(null)?.filterNotNull() ?: listOf()
+
+    /**
+     * Checks if the currently configured collection path is an app-specific directory.
+     */
+    fun isAppPrivateStorage(context: Context): Boolean {
+        val currentPath = context.sharedPrefs().getString(PREF_COLLECTION_PATH, null) ?: return false
+        return getAppSpecificExternalDirectories(context).any { currentPath.startsWith(it.absolutePath) }
+    }
+
+    /**
+     * Sets the collection path to the app-specific private directory.
+     * @return true if successful, false otherwise.
+     */
+    fun setPrivateStoragePath(context: Context): Boolean {
+        val externalFilesDirs = getAppSpecificExternalDirectories(context)
+        if (externalFilesDirs.isEmpty()) {
+            return false
+        }
+        val privateDir = File(externalFilesDirs.first(), "AnkiDroid")
+        context.sharedPrefs().edit {
+            putString(PREF_COLLECTION_PATH, privateDir.absolutePath)
+        }
+        return true
+    }
 
     /**
      * Returns the absolute path to the private AnkiDroid directory under the app-specific, internal storage directory.
