@@ -211,6 +211,9 @@
     <string name="dismiss_backup_warning_new_user">Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled</string>
     <string name="dismiss_backup_warning_upgrade">Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled</string>
 
+    <string name="use_app_folder">Use app folder</string>
+    <string name="private_storage_explanation">Using an app folder is more secure, but uninstalling AnkiDroid will delete your on-device collection and backups.</string>
+
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
 
     <!-- Set Due Date -->

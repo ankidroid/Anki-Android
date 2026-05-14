@@ -3,7 +3,10 @@
 package com.ichi2.anki.ui.windows.permissions
 
 import android.Manifest
+import android.graphics.Rect
+import android.view.View
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import androidx.test.core.app.ActivityScenario
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.CommonString
@@ -21,13 +24,15 @@ import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.withManageExternalStorageInManifest
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
-/** Screenshots of required permissions and system-bar insets. */
+/** Screenshots of optional storage access, required permissions, and system-bar insets. */
 class PermissionsActivityScreenshotTest : ScreenshotTest() {
     @Test
     fun permissions(
@@ -47,6 +52,79 @@ class PermissionsActivityScreenshotTest : ScreenshotTest() {
         }
 
         captureScreen("permissions" + if (isEdgeToEdge) "_edgeToEdge" else "")
+    }
+
+    @Test
+    fun `storage permission and app folder explanation`(
+        @TestParameter("EXTERNAL_MANAGER") permissionSet: StoragePermissionSet,
+    ) {
+        targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
+        withPermissionsScreen(permissionSet) { activity ->
+            assertFalse(permissionSet.hasRequiredPermissions(activity))
+            assertTrue(activity.binding.privateStorageExplanation.isVisible)
+            assertTrue(activity.binding.continueButton.isEnabled)
+            assertEquals(getResourceString(CommonString.use_app_folder), activity.binding.continueButton.text)
+            val name = permissionSet.name.lowercase()
+            captureScreen(name)
+        }
+    }
+
+    @Test
+    fun `storage choices remain reachable with large text in a short window`(
+        @TestParameter("EXTERNAL_MANAGER") permissionSet: StoragePermissionSet,
+        @TestParameter("320", "600") heightDp: Int,
+    ) {
+        RuntimeEnvironment.setQualifiers("+w400dp-h${heightDp}dp")
+        RuntimeEnvironment.setFontScale(2f)
+        targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
+        withPermissionsScreen(permissionSet) { activity ->
+            val name = "app_folder_large_text_$heightDp"
+            val fragment = activity.binding.fragmentContainer.getFragment<PermissionsStartingAt30Fragment>()
+            val permissionSwitch =
+                FragmentPermissionsStartingAt30Binding
+                    .bind(
+                        fragment.requireView(),
+                    ).allFilesPermission.binding.switchWidget
+            assertCanScrollTo(permissionSwitch)
+            captureScreen("${name}_permission")
+
+            // The warning can be taller than the viewport; both its first and last lines must be reachable.
+            val explanation = activity.binding.privateStorageExplanation
+            assertCanScrollTo(explanation, Rect(0, 0, explanation.width, explanation.paddingTop + explanation.lineHeight))
+            captureScreen("${name}_warning_start")
+            assertCanScrollTo(
+                explanation,
+                Rect(0, explanation.height - explanation.paddingBottom - explanation.lineHeight, explanation.width, explanation.height),
+            )
+            captureScreen("${name}_warning_end")
+
+            val button = activity.binding.continueButton
+            assertTrue(button.isEnabled)
+            val visibleBounds = Rect()
+            assertTrue(button.getLocalVisibleRect(visibleBounds))
+            assertEquals(Rect(0, 0, button.width, button.height), visibleBounds)
+        }
+    }
+
+    private fun assertCanScrollTo(
+        view: View,
+        rectangle: Rect = Rect(0, 0, view.width, view.height),
+    ) {
+        view.requestRectangleOnScreen(Rect(rectangle), true)
+        advanceRobolectricLooper()
+        val visibleBounds = Rect()
+        assertTrue(view.getLocalVisibleRect(visibleBounds), "The requested view must be reachable by scrolling")
+        assertTrue(visibleBounds.contains(rectangle), "Visible area $visibleBounds must contain the requested area $rectangle")
+    }
+
+    @Test
+    fun `revoked storage access`(
+        @TestParameter("LEGACY_ACCESS", "EXTERNAL_MANAGER") permissionSet: StoragePermissionSet,
+    ) {
+        targetContext.sharedPrefs().edit { putString(CollectionHelper.PREF_COLLECTION_PATH, publicCollectionPath) }
+        withPermissionsScreen(permissionSet) { activity ->
+            captureRequiredPermissions(activity, "${permissionSet.name.lowercase()}_revoked")
+        }
     }
 
     @Test

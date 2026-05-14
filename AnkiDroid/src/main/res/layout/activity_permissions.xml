@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="32dp"
-                    android:text="@string/permissions_screen_headline"
+                    android:text="@string/permissions_screen_optional_headline"
                     android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                     android:textColor="?android:attr/textColorPrimary"
                     />
@@ -39,6 +39,24 @@
                     android:id="@+id/fragment_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    />
+                <!-- Keep the warning near the button when all content fits. -->
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/private_storage_explanation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:paddingVertical="8dp"
+                    android:text="@string/private_storage_explanation"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     />
             </LinearLayout>
         </ScrollView>
@@ -49,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:paddingVertical="12dp"
-            android:text="@string/dialog_continue"
+            android:text="@string/use_app_folder"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
