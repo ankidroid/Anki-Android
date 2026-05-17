@@ -47,6 +47,7 @@ import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.copy
 import anki.scheduler.customStudyRequest
 import anki.search.SearchNode
+import anki.search.searchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
@@ -147,13 +148,173 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         parentFragmentManager.setFragmentResultListener(ON_SELECTED_TAGS_KEY, this) { _, bundle ->
             val tagsToInclude = bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS) ?: emptyList<String>()
             val option = selectedSubDialog ?: return@setFragmentResultListener
-            val selectedCardStateIndex = viewModel.selectedCardStateIndex
-            if (selectedCardStateIndex == AdapterView.INVALID_POSITION) return@setFragmentResultListener
-            val kind = CustomStudyCardState.entries[selectedCardStateIndex].kind
-            val cardsAmount = userInputValue ?: 100 // the default value
-            launchCustomStudy(option, cardsAmount, kind, tagsToInclude, emptyList())
+            if (option == ContextMenuOption.STUDY_TAGS) {
+                viewModel.selectedTags = tagsToInclude
+                updateTags()
+                (dialog as? AlertDialog)?.let { validateSelection(it) }
+            }
         }
     }
+
+    /**
+     * Populates the chip group with the currently selected tags.
+     * Manages the dummy text field to ensure the outline box expands properly when tags are present.
+     */
+    private fun updateTags() {
+        if (!::binding.isInitialized) return
+        val tags = viewModel.selectedTags
+
+        binding.tagsDummyEdittext.setText(if (tags.isEmpty()) null else " ")
+
+        binding.tagsChipGroup.removeAllViews()
+        tags.forEach { tag ->
+            val chip =
+                com.google.android.material.chip
+                    .Chip(
+                        requireContext(),
+                        null,
+                        com.google.android.material.R.style.Widget_Material3_Chip_Suggestion_Elevated,
+                    ).apply {
+                        text = tag
+                        shapeAppearanceModel =
+                            shapeAppearanceModel
+                                .toBuilder()
+                                .setAllCornerSizes(
+                                    com.google.android.material.shape
+                                        .RelativeCornerSize(0.5f),
+                                ).build()
+                    }
+            binding.tagsChipGroup.addView(chip)
+        }
+    }
+
+    /**
+     * Fetches notes from the current deck and launches the [TagsDialog] for tag selection.
+     * The dialog is only shown if there are notes with tags available to filter.
+     */
+    private fun showTagSelectionDialog() {
+        launchCatchingTask {
+            val selectedState = CustomStudyCardState.entries[viewModel.selectedCardStateIndex]
+            val currentDeckName = withCol { decks.name(viewModel.deckId) }
+
+            // Find all notes in the deck that have at least one tag
+            val nids =
+                withCol {
+                    val searchNodes =
+                        buildList {
+                            add(SearchNode.newBuilder().setDeck(currentDeckName).build())
+                            add(SearchNode.newBuilder().setNegated(SearchNode.newBuilder().setTag("none").build()).build())
+                        }
+                    findNotes(buildSearchString(searchNodes))
+                }
+
+            if (isAdded && nids.isNotEmpty()) {
+                val stateQuery =
+                    withCol {
+                        buildSearchString(
+                            listOf(
+                                SearchNode.newBuilder().setDeck(currentDeckName).build(),
+                                selectedState.toSearchNode(),
+                            ),
+                        )
+                    }
+                TagsDialog()
+                    .withArguments(
+                        requireContext(),
+                        TagsDialog.DialogType.CUSTOM_STUDY,
+                        nids,
+                        stateQuery,
+                        ArrayList(viewModel.selectedTags),
+                    ).show(parentFragmentManager, "TagsDialog")
+            }
+        }
+    }
+
+    /**
+     * Validates the current card state selection and updates the dialog UI.
+     * Called when the card state dropdown changes or tags are updated.
+     */
+    private fun validateSelection(dialog: AlertDialog) {
+        val option = selectedSubDialog ?: return
+        if (option != STUDY_TAGS) return
+        launchCatchingTask {
+            val stateQuery = buildStateQuery()
+            if (withCol { findNotes(stateQuery).isEmpty() }) {
+                onNoCardsMatchState(dialog)
+            } else {
+                onValidCardState(dialog, stateQuery)
+            }
+        }
+    }
+
+    /** Builds the search query for the currently selected card state and deck. */
+    private suspend fun buildStateQuery(): String {
+        val selectedState = CustomStudyCardState.entries[viewModel.selectedCardStateIndex]
+        return withCol {
+            buildSearchString(
+                listOf(
+                    SearchNode.newBuilder().setDeck(decks.name(viewModel.deckId)).build(),
+                    selectedState.toSearchNode(),
+                ),
+            )
+        }
+    }
+
+    /** Updates UI to reflect that no cards match the selected state. Clears any selected tags. */
+    private fun onNoCardsMatchState(dialog: AlertDialog) {
+        binding.cardsStateSelectorLayout.error = TR.customStudyNoCardsMatchedTheCriteriaYou()
+        dialog.positiveButton.isEnabled = false
+        binding.tagsSelectionLayout.isEnabled = false
+        viewModel.selectedTags = emptyList()
+        updateTags()
+    }
+
+    /** Updates UI when the selected card state has matching cards. Filters stale tags and refreshes the chip group. */
+    private suspend fun onValidCardState(
+        dialog: AlertDialog,
+        stateQuery: String,
+    ) {
+        binding.cardsStateSelectorLayout.error = null
+        dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
+        viewModel.selectedTags = filterValidTags(stateQuery)
+        binding.tagsSelectionLayout.isEnabled = hasTagsForState(stateQuery)
+        updateTags()
+    }
+
+    /** Returns only the tags from [viewModel.selectedTags] that have matching notes in [stateQuery]. */
+    private suspend fun filterValidTags(stateQuery: String): List<String> {
+        val tags = viewModel.selectedTags
+        if (tags.isEmpty()) return emptyList()
+        return withCol {
+            tags.filter { tag ->
+                findNotes(
+                    buildSearchString(
+                        listOf(
+                            SearchNode.newBuilder().setParsableText(stateQuery).build(),
+                            SearchNode.newBuilder().setTag(tag).build(),
+                        ),
+                    ),
+                ).isNotEmpty()
+            }
+        }
+    }
+
+    /** Returns true if there are any tagged notes matching [stateQuery]. */
+    private suspend fun hasTagsForState(stateQuery: String): Boolean =
+        withCol {
+            findNotes(
+                buildSearchString(
+                    listOf(
+                        SearchNode.newBuilder().setParsableText(stateQuery).build(),
+                        SearchNode
+                            .newBuilder()
+                            .setNegated(
+                                SearchNode.newBuilder().setTag("none").build(),
+                            ).build(),
+                    ),
+                ),
+            ).isNotEmpty()
+        }
 
     /** @see customStudy */
     private fun launchCustomStudy(
@@ -297,9 +458,37 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         binding = FragmentCustomStudyBinding.inflate(requireActivity().layoutInflater)
 
         binding.detailsText1.text = text1
+        binding.detailsText1.isVisible = text1.isNotEmpty()
         binding.detailsText2.text = text2
+        binding.detailsText2.isVisible = text2.isNotEmpty()
 
+        binding.detailsEditText2Layout.hint =
+            when (contextMenuOption) {
+                STUDY_TAGS -> getString(R.string.custom_study_card_limit_hint)
+                STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW -> getString(R.string.custom_study_day_limit_hint)
+                EXTEND_NEW, EXTEND_REV -> ""
+            }
+        val tagsContainer = binding.tagsSelectionLayout.parent as? android.view.View
+        tagsContainer?.isVisible = contextMenuOption == STUDY_TAGS
         binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
+        if (contextMenuOption == STUDY_TAGS) {
+            updateTags()
+            // Open the tag selection dialog which is pre-filtered by the current card state
+            binding.tagsDummyEdittext.setOnClickListener { showTagSelectionDialog() }
+            binding.tagsChipGroup.setOnClickListener { showTagSelectionDialog() }
+
+            // Ensures the outline dynamically resizes to wrap the chips during layout reflows like rotation or split-screen
+            binding.tagsChipGroup.addOnLayoutChangeListener { _, _, top, _, bottom, _, oldTop, _, oldBottom ->
+                val newHeight = bottom - top
+                val oldHeight = oldBottom - oldTop
+
+                // Only request layout if the height actually changed to prevent infinite loops
+                if (newHeight != oldHeight) {
+                    binding.tagsDummyEdittext.minHeight = newHeight
+                    binding.tagsDummyEdittext.requestLayout()
+                }
+            }
+        }
         binding.cardsStateSelector.apply {
             fun setAdapterAndSelection(
                 entries: List<String>,
@@ -319,6 +508,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 AdapterView.OnItemClickListener { _, _, position, _ ->
                     viewModel.selectedCardStateIndex = position
                     setAdapterAndSelection(cardStates, viewModel.selectedCardStateIndex)
+                    validateSelection(dialog as AlertDialog)
                 }
             // set the first item as automatically selected if we don't already have a valid
             // position stored in the ViewModel
@@ -332,6 +522,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             // Give EditText focus and show keyboard
             setSelectAllOnFocus(true)
             requestFocus()
+            // Ensure the text is highlighted once the dialog and keyboard are ready
+            post {
+                selectAll()
+            }
+            filters = arrayOf(android.text.InputFilter.LengthFilter(5))
             // a user may enter a negative value when extending limits
             if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
@@ -339,7 +534,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
-                TR.customStudyChooseTags().toSentenceCase(R.string.sentence_choose_tags)
+                getString(R.string.dialog_positive_create)
             } else {
                 getString(R.string.dialog_ok)
             }
@@ -351,6 +546,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val dialog =
             AlertDialog
                 .Builder(requireActivity())
+                .title(text = contextMenuOption.getTitle(resources))
                 .customView(
                     view = binding.root,
                     paddingStart = horizontalPadding,
@@ -385,45 +581,37 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     // we come back we wouldn't be able to trigger again TagLimitFragment
                     allowSubmit = true
                     launchCatchingTask {
-                        val nids =
-                            withCol {
-                                val currentDeckName = decks.name(viewModel.deckId)
-                                // this allows us to skip the tag selection dialog entirely
-                                // if there are no tags available to choose from in this deck
-                                val searchNodes =
-                                    buildList {
-                                        add(SearchNode.newBuilder().setDeck(currentDeckName).build())
-                                        add(
-                                            SearchNode
-                                                .newBuilder()
-                                                .setNegated(SearchNode.newBuilder().setTag("none").build())
-                                                .build(),
-                                        )
-                                    }
-                                findNotes(buildSearchString(searchNodes))
-                            }
-                        // skip tag selection if there's no tags to select
-                        if (nids.isEmpty()) {
-                            launchCustomStudy(contextMenuOption, n)
-                            return@launchCatchingTask
-                        }
-                        if (isAdded) {
-                            TagsDialog()
-                                .withArguments(
-                                    requireContext(),
-                                    TagsDialog.DialogType.CUSTOM_STUDY,
-                                    nids,
-                                ).show(parentFragmentManager, "TagsDialog")
+                        val selectedCardStateIndex = viewModel.selectedCardStateIndex
+                        if (selectedCardStateIndex != AdapterView.INVALID_POSITION) {
+                            val kind = CustomStudyCardState.entries[selectedCardStateIndex].kind
+                            launchCustomStudy(
+                                contextMenuOption,
+                                n,
+                                kind,
+                                viewModel.selectedTags,
+                                emptyList(),
+                            )
                         }
                     }
-                    return@setOnClickListener
+                } else {
+                    launchCustomStudy(contextMenuOption, n)
                 }
-                launchCustomStudy(contextMenuOption, n)
             }
+            validateSelection(dialog)
         }
 
-        binding.detailsEditText2.doAfterTextChanged {
-            dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
+        binding.detailsEditText2.doAfterTextChanged { text ->
+            val input = text?.toString().orEmpty()
+            if (contextMenuOption in LEADING_ZERO_OPTIONS && input.length > 1 && input[0] == '0') {
+                val sanitized = input.trimStart('0').ifEmpty { "0" }
+                binding.detailsEditText2.setText(sanitized)
+                binding.detailsEditText2.setSelection(sanitized.length)
+                return@doAfterTextChanged
+            }
+            dialog.positiveButton.isEnabled =
+                binding.cardsStateSelectorLayout.error == null &&
+                userInputValue != null &&
+                userInputValue != 0
         }
 
         // Show soft keyboard
@@ -527,7 +715,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
                 STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
-                STUDY_TAGS -> res.getString(R.string.custom_study_tags)
+                STUDY_TAGS -> ""
                 null -> ""
             }
         }
@@ -620,6 +808,18 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         DueCardsOnly({ TR.customStudyDueCardsOnly() }, CramKind.CRAM_KIND_DUE),
         ReviewCardsRandom({ TR.customStudyAllReviewCardsInRandomOrder() }, CramKind.CRAM_KIND_REVIEW),
         AllCardsRandom({ TR.customStudyAllCardsInRandomOrderDont() }, CramKind.CRAM_KIND_ALL),
+        ;
+
+        /**
+         * Converts the [CustomStudyCardState] into a [SearchNode] used for card filtering.
+         */
+        fun toSearchNode(): SearchNode =
+            when (this) {
+                NewCardsOnly -> searchNode { cardState = SearchNode.CardState.CARD_STATE_NEW }
+                DueCardsOnly -> searchNode { cardState = SearchNode.CardState.CARD_STATE_DUE }
+                ReviewCardsRandom -> searchNode { cardState = SearchNode.CardState.CARD_STATE_REVIEW }
+                AllCardsRandom -> searchNode { parsableText = "" }
+            }
     }
 
     /**
@@ -744,6 +944,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
          */
         // This exists as `isInitialized` can't be checked in an instance of CustomStudyDialog
         private fun defaultsAreInitialized(): Boolean = ::deferredDefaults.isInitialized
+
+        private val LEADING_ZERO_OPTIONS = setOf(STUDY_TAGS, STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW)
 
         /**
          * Creates an instance of the Custom Study Dialog: a user can select a custom study type

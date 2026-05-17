@@ -232,6 +232,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                     ON_SELECTED_TAGS_KEY,
                     bundleOf(ON_SELECTED_TAGS__SELECTED_TAGS to selectedTags),
                 )
+                studyDialog.submitSubscreenData()
                 val customStudyDeck = col.decks.customStudySession
                 assertNotNull(customStudyDeck)
                 assertThat(col.decks.cardCount(customStudyDeck.id), equalTo(1))

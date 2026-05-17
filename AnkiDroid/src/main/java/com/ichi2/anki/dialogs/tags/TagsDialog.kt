@@ -105,12 +105,14 @@ class TagsDialog : AnalyticsDialogFragment {
             }
         val type = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java)
         val isCustomStudying = type != null && type == DialogType.CUSTOM_STUDY
+        val filterQuery = requireArguments().getString(ARG_FILTER_QUERY)
         viewModelFactory {
             initializer {
                 TagsDialogViewModel(
                     noteIds = noteIds,
                     checkedTags = checkedTags,
                     isCustomStudying = isCustomStudying,
+                    filterQuery = filterQuery,
                 )
             }
         }
@@ -142,6 +144,7 @@ class TagsDialog : AnalyticsDialogFragment {
         context: Context,
         type: DialogType,
         noteIds: List<NoteId> = emptyList(),
+        filterQuery: String? = null,
         checkedTags: ArrayList<String> = arrayListOf(),
     ): TagsDialog {
         // TODO: checkedTags is unbounded and could exceed the bundle size
@@ -150,6 +153,7 @@ class TagsDialog : AnalyticsDialogFragment {
             ARG_TAGS_FILE to file,
             ARG_DIALOG_TYPE to type,
             ARG_CHECKED_TAGS to checkedTags,
+            ARG_FILTER_QUERY to filterQuery,
         )
         return this
     }
@@ -180,10 +184,11 @@ class TagsDialog : AnalyticsDialogFragment {
         binding = DialogTagsBinding.inflate(layoutInflater)
 
         val positiveText =
-            if (type == DialogType.EDIT_TAGS) {
-                getString(R.string.dialog_confirm)
-            } else {
-                getString(R.string.select)
+            when (type) {
+                DialogType.EDIT_TAGS,
+                DialogType.CUSTOM_STUDY,
+                -> getString(R.string.dialog_confirm)
+                else -> getString(R.string.select)
             }
 
         val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
@@ -478,6 +483,7 @@ class TagsDialog : AnalyticsDialogFragment {
         const val ARG_TAGS_FILE = "tagsFile"
         private const val ARG_DIALOG_TYPE = "dialogType"
         private const val ARG_CHECKED_TAGS = "checkedTags"
+        private const val ARG_FILTER_QUERY = "filterQuery"
 
         /**
          * The filter that constrains the inputted tag.
