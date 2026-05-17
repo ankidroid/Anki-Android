@@ -136,6 +136,7 @@ open class AnkiDroidApp :
         ChangeManager.subscribe(this)
 
         initializeAcraCrashReporter()
+        initializeWidgetRepository()
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())

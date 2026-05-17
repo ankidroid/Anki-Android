@@ -17,7 +17,6 @@ package com.ichi2.widget
 import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.preferences.sharedPrefs
@@ -94,7 +93,7 @@ object WidgetStatus {
             return
         }
         val status = querySmallWidgetStatus()
-        MetaDB.storeSmallWidgetStatus(context, status)
+        WidgetStorage.storeSmallWidgetStatus(status)
         if (smallWidgetEnabled) {
             Timber.i("triggering small widget UI update")
             AnkiDroidWidgetSmall.UpdateService().doUpdate(context)
@@ -105,9 +104,9 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-    fun fetchSmall(context: Context): SmallWidgetStatus = MetaDB.getWidgetSmallStatus(context)
+    fun fetchSmall(): SmallWidgetStatus = WidgetStorage.getWidgetSmallStatus()
 
-    fun fetchDue(context: Context): Int = MetaDB.getNotificationStatus(context)
+    fun fetchDue(): Int = WidgetStorage.dueCardsCount()
 
     private suspend fun querySmallWidgetStatus(): SmallWidgetStatus =
         withCol {

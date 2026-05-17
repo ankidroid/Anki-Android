@@ -148,7 +148,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                 }
             } else {
                 // Compute the total number of cards due.
-                val (dueCardsCount, eta) = WidgetStatus.fetchSmall(context)
+                val (dueCardsCount, eta) = WidgetStatus.fetchSmall()
                 if (dueCardsCount == 0) {
                     updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
                     updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
