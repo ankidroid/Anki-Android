@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.CheckResult
+import androidx.collection.LruCache
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -148,6 +149,8 @@ class CardBrowserViewModel(
 
     // TODO: abstract so we can use a `Context` and `pref_display_filenames_in_browser_key`
     val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
+
+    private val browserRowCache = LruCache<CardOrNoteId, BrowserRow>(200)
 
     /** A job which ensures that parallel searches do not occur */
     var searchJob: Job? = null
@@ -565,6 +568,7 @@ class CardBrowserViewModel(
         if (!initCompleted) return
 
         Timber.d("onReinit: executing")
+        browserRowCache.evictAll()
 
         // we currently have no way to test whether setActiveBrowserColumns was called
         // so set it again. This needs to be done immediately to ensure that the RecyclerView
@@ -669,6 +673,7 @@ class CardBrowserViewModel(
                 tags.bulkRemove(noteIds, "marked")
             }
         }
+        browserRowCache.evictAll()
         flowOfCardStateChanged.emit(Unit)
     }
 
@@ -797,7 +802,10 @@ class CardBrowserViewModel(
      * @throws BackendException if the row is deleted
      */
     fun transformBrowserRow(id: CardOrNoteId): Pair<BrowserRow, Boolean> {
-        val row = CollectionManager.getBackend().browserRowForId(id.cardOrNoteId)
+        val row =
+            browserRowCache.get(id) ?: CollectionManager.getBackend().browserRowForId(id.cardOrNoteId).also {
+                browserRowCache.put(id, it)
+            }
         val isSelected = selectedRows.contains(id)
         return Pair(row, isSelected)
     }
@@ -1236,6 +1244,7 @@ class CardBrowserViewModel(
     suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> {
         val idsToChange = queryAllSelectedCardIds()
         undoableOp(this) { setUserFlagForCards(cids = idsToChange, flag = flag) }
+        browserRowCache.evictAll()
         flowOfCardStateChanged.emit(Unit)
         return idsToChange
     }
@@ -1330,8 +1339,11 @@ class CardBrowserViewModel(
 
     private fun refreshSearch() = launchSearchForCards()
 
+    fun clearCache() = browserRowCache.evictAll()
+
     private suspend fun clearCardsList() {
         cards.reset()
+        browserRowCache.evictAll()
         flowOfCardsUpdated.emit(Unit)
     }
 

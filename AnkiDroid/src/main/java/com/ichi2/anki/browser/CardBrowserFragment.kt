@@ -273,7 +273,6 @@ class CardBrowserFragment :
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         val layoutManager = LinearLayoutManager(requireContext())
         cardsListView.layoutManager = layoutManager
-        cardsListView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
 
         browserColumnHeadings = view.findViewById(R.id.browser_column_headings)
         toggleRowSelections =
@@ -804,10 +803,14 @@ class CardBrowserFragment :
     private fun setupFlows() {
         fun onIsTruncatedChanged(isTruncated: Boolean) = cardsAdapter.notifyDataSetChanged()
 
-        fun cardsUpdatedChanged(unit: Unit) = cardsAdapter.notifyDataSetChanged()
+        fun cardsUpdatedChanged(unit: Unit) {
+            activityViewModel.clearCache()
+            cardsAdapter.notifyDataSetChanged()
+        }
 
         fun onColumnsChanged(columnCollection: BrowserColumnCollection) {
             Timber.d("columns changed")
+            activityViewModel.clearCache()
             cardsAdapter.notifyDataSetChanged()
         }
 
@@ -849,6 +852,7 @@ class CardBrowserFragment :
         fun onSelectedRowsChanged(rows: Set<Any>) = cardsAdapter.notifyDataSetChanged()
 
         fun onCardsMarkedEvent(unit: Unit) {
+            activityViewModel.clearCache()
             cardsAdapter.notifyDataSetChanged()
         }
 
@@ -1055,6 +1059,7 @@ class CardBrowserFragment :
             changes.noteText ||
             changes.card
         ) {
+            activityViewModel.clearCache()
             cardsAdapter.notifyDataSetChanged()
         }
     }
