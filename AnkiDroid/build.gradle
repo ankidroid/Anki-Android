@@ -403,7 +403,7 @@ afterEvaluate {
     }
 }
 
-apply from: "./robolectricDownloader.gradle"
+apply from: "./robolectricDownloader.gradle.kts"
 apply from: "./jacoco.gradle.kts"
 apply from: "../lint.gradle"
 
@@ -510,7 +510,7 @@ dependencies {
     testImplementation libs.mockito.inline
     testImplementation libs.mockito.kotlin
     testImplementation libs.hamcrest
-    // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
+    // robolectricDownloader.gradle.kts *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation libs.robolectric
     testImplementation libs.androidx.test.core
     testImplementation libs.androidx.test.junit
