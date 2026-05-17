@@ -100,7 +100,7 @@ kotlinxSerializationJson = "1.11.0"
 ktlintGradlePlugin = "14.2.0"
 leakcanaryAndroid = "2.14"
 lint = '32.2.1'
-material = "1.13.0"
+material = "1.14.0"
 
 mockitoInline = "5.2.0"
 mockitoKotlin = "6.3.0"
