@@ -1292,6 +1292,13 @@ class CardBrowserFragment :
                     return true
                 }
             }
+            in KeyEvent.KEYCODE_1..KeyEvent.KEYCODE_7 -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Update flag")
+                    updateFlag(keyCode)
+                    return true
+                }
+            }
             KeyEvent.KEYCODE_ESCAPE -> {
                 Timber.i("ESC: Select none")
                 activityViewModel.selectNone()
@@ -1533,6 +1540,21 @@ class CardBrowserFragment :
                 activityViewModel.changeCardOrder(LegacySortType.fromCardBrowserLabelIndex(which))
             },
         )
+    }
+
+    private fun updateFlag(keyCode: Int) {
+        val flag =
+            when (keyCode) {
+                KeyEvent.KEYCODE_1 -> Flag.RED
+                KeyEvent.KEYCODE_2 -> Flag.ORANGE
+                KeyEvent.KEYCODE_3 -> Flag.GREEN
+                KeyEvent.KEYCODE_4 -> Flag.BLUE
+                KeyEvent.KEYCODE_5 -> Flag.PINK
+                KeyEvent.KEYCODE_6 -> Flag.TURQUOISE
+                KeyEvent.KEYCODE_7 -> Flag.PURPLE
+                else -> return
+            }
+        updateFlagForSelectedRows(flag)
     }
 
     fun updateFlagForSelectedRows(flag: Flag) =
