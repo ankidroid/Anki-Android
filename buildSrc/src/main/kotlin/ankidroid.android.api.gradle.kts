@@ -53,3 +53,7 @@ extensions.configure<KotlinAndroidProjectExtension> {
 
 // Shared project-wide lint configuration.
 apply(from = "${rootDir}/lint.gradle")
+
+dependencies {
+    "lintChecks"(project(":lint-rules"))
+}
