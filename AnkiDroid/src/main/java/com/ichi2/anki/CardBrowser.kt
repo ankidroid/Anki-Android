@@ -18,7 +18,6 @@
 
 package com.ichi2.anki
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -652,13 +651,6 @@ open class CardBrowser :
                     return true
                 }
             }
-            KeyEvent.KEYCODE_I -> {
-                if (event.isCtrlPressed && event.isShiftPressed) {
-                    Timber.i("Ctrl+Shift+I: Card info")
-                    displayCardInfo()
-                    return true
-                }
-            }
             KeyEvent.KEYCODE_M -> {
                 if (event.isCtrlPressed && event.isShiftPressed) {
                     Timber.i("Ctrl+Shift+M: Change Note Type")
@@ -741,15 +733,6 @@ open class CardBrowser :
             val cardIds = viewModel.queryAllSelectedCardIds()
             GradeNowDialog.showDialog(this@CardBrowser, cardIds)
         }
-
-    fun displayCardInfo() {
-        launchCatchingTask {
-            viewModel.queryCardInfoDestination()?.let { destination ->
-                val intent: Intent = destination.toIntent(this@CardBrowser)
-                startActivity(intent)
-            }
-        }
-    }
 
     fun addNoteFromCardBrowser() {
         onAddNoteActivityResult.launch(addNoteLauncher.toIntent(this))

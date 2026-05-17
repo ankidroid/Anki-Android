@@ -769,7 +769,7 @@ class CardBrowserFragment :
                             return true
                         }
                         R.id.action_view_card_info -> {
-                            requireCardBrowserActivity().displayCardInfo()
+                            displayCardInfo()
                             return true
                         }
                         R.id.action_grade_now -> {
@@ -1240,6 +1240,13 @@ class CardBrowserFragment :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_I -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+I: Card info")
+                    displayCardInfo()
+                    return true
+                }
+            }
             KeyEvent.KEYCODE_Z -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+Z: Undo")
@@ -1297,6 +1304,13 @@ class CardBrowserFragment :
     fun onUndo() =
         launchCatchingTask {
             undoAndShowSnackbar()
+        }
+
+    fun displayCardInfo() =
+        launchCatchingTask {
+            activityViewModel.queryCardInfoDestination()?.let { destination ->
+                startActivity(destination.toIntent(requireContext()))
+            }
         }
 
     /** All the notes of the selected cards will be marked
