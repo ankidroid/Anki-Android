@@ -146,7 +146,7 @@ class SetDueDateDialogTest : RobolectricTest() {
         action: SetDueDateDialog.() -> Unit,
     ) = runTest {
         val cardIds = List(cardCount) { addBasicNote().firstCard().id }
-        val dialog = SetDueDateDialog.newInstance(cardIds)
+        val dialog = SetDueDateDialog.newInstance(targetContext.externalCacheDir ?: targetContext.cacheDir, cardIds)
         launchFragment(
             themeResId = R.style.Base_Theme_Light,
             fragmentArgs = dialog.arguments,
