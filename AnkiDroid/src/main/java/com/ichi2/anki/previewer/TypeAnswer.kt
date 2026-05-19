@@ -17,6 +17,7 @@ package com.ichi2.anki.previewer
 
 import android.os.LocaleList
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.cardviewer.TypeAnswerModifiers
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Field
@@ -30,14 +31,22 @@ import org.jetbrains.annotations.VisibleForTesting
  *
  * @see [combining]
  * @see [imeHintLocales]
+ * @see [noSuggest]
  * */
 @NeedsTest("combining and non combining answers are properly parsed")
 @NeedsTest("cloze and non cloze 'type in the answer' cards are properly parsed")
+@NeedsTest("nosuggest modifier is parsed and composes with nc/cloze")
 class TypeAnswer private constructor(
     private val text: String,
     /** whether combining characters should be compared. Defined by the presence of the
      *   `nc:` specifier in the type answer tag */
     private val combining: Boolean,
+    /**
+     * Whether keyboard suggestions, swiping and autocorrect should be disabled (#10352).
+     *
+     * @see com.ichi2.anki.model.FieldFilters.NoSuggestFilter
+     */
+    val noSuggest: Boolean,
     private val field: Field,
     var expectedAnswer: String,
 ) {
@@ -75,40 +84,32 @@ class TypeAnswer private constructor(
             val match = typeAnsRe.find(text) ?: return null
             val rawField = match.groups[1]?.value ?: return null
 
-            var combining = true
-            val typeAnsFieldName =
-                if (rawField.startsWith("cloze:")) {
-                    rawField.split(":")[1]
-                } else if (rawField.startsWith("nc:")) {
-                    combining = false
-                    rawField.split(":")[1]
-                } else {
-                    rawField
-                }
+            val modifiers = TypeAnswerModifiers.parse(rawField)
             val fields = withCol { card.noteType(this).fields }
-            val typeAnswerField = fields.firstOrNull { it.name == typeAnsFieldName } ?: return null
-            val expectedAnswer = getExpectedTypeInAnswer(card, rawField = rawField, fieldName = typeAnsFieldName)
+            val typeAnswerField = fields.firstOrNull { it.name == modifiers.fieldName } ?: return null
+            val expectedAnswer = getExpectedTypeInAnswer(card, isCloze = modifiers.cloze, fieldName = modifiers.fieldName)
 
             return TypeAnswer(
                 text = text,
-                combining = combining,
+                combining = modifiers.combining,
+                noSuggest = modifiers.noSuggest,
                 field = typeAnswerField,
                 expectedAnswer = expectedAnswer,
             )
         }
 
         /**
-         * @param rawField the content (x) of a `{{type:x}}` placeholder
+         * @param isCloze whether the placeholder was a `cloze:` type filter
          * @param fieldName the name of the field in the card template
          */
         @NeedsTest("cloze type-in-answer are properly parsed")
         private suspend fun getExpectedTypeInAnswer(
             card: Card,
-            rawField: String,
+            isCloze: Boolean,
             fieldName: String,
         ): String {
             val expected = withCol { card.note(this@withCol).getItem(fieldName) }
-            return if (rawField.startsWith("cloze:")) {
+            return if (isCloze) {
                 val clozeIdx = card.ord + 1
                 withCol {
                     extractClozeForTyping(expected, clozeIdx)

@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.cardviewer
 
@@ -31,6 +17,8 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
+ * Handles 'Type the answer' for the old study screen
+ *
  * @param useInputTag use an `<input>` tag to allow for HTML styling
  * @param autoFocus Whether the user wants to focus "type in answer"
  */
@@ -43,6 +31,14 @@ class TypeAnswer(
         private set
 
     var combining: Boolean = true
+        private set
+
+    /**
+     * Whether keyboard suggestions, swiping and autocorrect should be disabled (#10352).
+     *
+     * @see com.ichi2.anki.model.FieldFilters.NoSuggestFilter
+     */
+    var noSuggest: Boolean = false
         private set
 
     /** What the learner actually typed (externally mutable) */
@@ -86,24 +82,18 @@ class TypeAnswer(
         res: Resources,
     ) {
         combining = true
+        noSuggest = false
         correct = null
         val q = card.question(col)
         val m = PATTERN.matcher(q)
-        var clozeIdx = 0
         if (!m.find()) {
             return
         }
-        var fldTag = m.group(1)!!
-        // if it's a cloze, extract data
-        if (fldTag.startsWith("cloze:")) {
-            // get field and cloze position
-            clozeIdx = card.ord + 1
-            fldTag = fldTag.split(":").toTypedArray()[1]
-        }
-        if (fldTag.startsWith("nc:")) {
-            combining = false
-            fldTag = fldTag.split(":").toTypedArray()[1]
-        }
+        val parsed = TypeAnswerModifiers.parse(m.group(1)!!)
+        combining = parsed.combining
+        noSuggest = parsed.noSuggest
+        val fldTag = parsed.fieldName
+        val clozeIdx = if (parsed.cloze) card.ord + 1 else 0
         // loop through fields for a match
         for (fld in card.noteType(col).fields) {
             val name = fld.name

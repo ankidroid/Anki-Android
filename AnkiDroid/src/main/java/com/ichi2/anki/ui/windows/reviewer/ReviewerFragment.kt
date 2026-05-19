@@ -19,6 +19,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -26,6 +27,7 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
@@ -67,6 +69,7 @@ import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.previewer.setFrameStyle
 import com.ichi2.anki.previewer.stdHtml
 import com.ichi2.anki.reviewer.BindingMap
@@ -271,6 +274,31 @@ class ReviewerFragment :
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
+            // Default `inputType` from the layout, restored when `{{nosuggest}}` is unused (#10352)
+            val defaultInputType = binding.typeAnswerEditText.inputType
+
+            /**
+             * Sync `inputType` and `imeHintLocales` on the answer `EditText` to match
+             * [typeInAnswer]. Returns `true` if anything changed (caller should `restartInput()`).
+             */
+            fun EditText.syncTypeAnswerProperties(typeInAnswer: TypeAnswer): Boolean {
+                // #10352: TYPE_NULL is used by 'Reword' to remove all suggestions. This works better
+                // than a password as the keyboard won't suggest to open the password manager
+                // other methods did not work for GBoard
+                val targetInputType =
+                    if (typeInAnswer.noSuggest) InputType.TYPE_NULL else defaultInputType
+                var changed = false
+                if (inputType != targetInputType) {
+                    inputType = targetInputType
+                    changed = true
+                }
+                if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                    imeHintLocales = typeInAnswer.imeHintLocales
+                    changed = true
+                }
+                return changed
+            }
+
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.typeAnswerFlow.collect { typeInAnswer ->
                     if (typeInAnswer == null) {
@@ -289,8 +317,7 @@ class ReviewerFragment :
 
                     binding.typeAnswerContainer.isVisible = true
                     binding.typeAnswerEditText.apply {
-                        if (imeHintLocales != typeInAnswer.imeHintLocales) {
-                            imeHintLocales = typeInAnswer.imeHintLocales
+                        if (syncTypeAnswerProperties(typeInAnswer)) {
                             context?.getSystemService<InputMethodManager>()?.restartInput(this)
                         }
                         if (autoFocusTypeAnswer) {
