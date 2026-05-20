@@ -174,12 +174,9 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
                 putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value)
                 deckId?.let { putExtra(NoteEditorFragment.EXTRA_DID, it) }
             }
-        is NoteEditorDestination.PassArguments -> {
-            val destination = this
-            Intent(context, NoteEditorActivity::class.java).apply {
-                putExtras(destination.arguments)
-                destination.action?.let { action = it }
-                setDataAndType(destination.data, destination.type)
+        is NoteEditorDestination.PassArguments ->
+            Intent(context, NoteEditorActivity::class.java).also { intent ->
+                intent.putExtras(arguments)
+                intent.action = action
             }
-        }
     }
