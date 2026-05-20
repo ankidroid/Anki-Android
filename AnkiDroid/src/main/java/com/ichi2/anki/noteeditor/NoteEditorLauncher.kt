@@ -80,21 +80,6 @@ sealed interface NoteEditorLauncher : Destination {
     }
 
     /**
-     * Allows to move from Instant note editor to standard note editor while keeping the text content
-     *
-     * @property sharedText The shared text content for the instant note.
-     */
-    data class AddInstantNote(
-        val sharedText: String,
-    ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle =
-            Bundle().apply {
-                putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.INSTANT_NOTE_EDITOR.value)
-                putString(Intent.EXTRA_TEXT, sharedText)
-            }
-    }
-
-    /**
      * Opens the NoteEditor for the current selection (card or note).
      * @property cardIds The selected card ID when editing a card, or the IDs of cards of the same note when editing a note.
      * @property animation The animation direction.
@@ -163,6 +148,11 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
             Intent(context, NoteEditorActivity::class.java).also { intent ->
                 intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.IMG_OCCLUSION.value)
                 intent.putExtra(NoteEditorFragment.EXTRA_IMG_OCCLUSION, imageUri)
+            }
+        is NoteEditorDestination.AddInstantNote ->
+            Intent(context, NoteEditorActivity::class.java).also { intent ->
+                intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.INSTANT_NOTE_EDITOR.value)
+                intent.putExtra(Intent.EXTRA_TEXT, sharedText)
             }
         is NoteEditorDestination.PassArguments ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->
