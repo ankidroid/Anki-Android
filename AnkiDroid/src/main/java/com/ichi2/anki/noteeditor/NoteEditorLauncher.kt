@@ -5,7 +5,6 @@ package com.ichi2.anki.noteeditor
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import com.ichi2.anki.AnkiActivity
@@ -45,20 +44,6 @@ sealed interface NoteEditorLauncher : Destination {
      * @return Bundle containing arguments specific to this configuration.
      */
     fun toBundle(): Bundle
-
-    /**
-     * Represents opening the NoteEditor with an image occlusion.
-     * @property imageUri The URI of the image to occlude.
-     */
-    data class ImageOcclusion(
-        val imageUri: Uri?,
-    ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle =
-            Bundle().apply {
-                putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.IMG_OCCLUSION.value)
-                putParcelable(NoteEditorFragment.EXTRA_IMG_OCCLUSION, imageUri)
-            }
-    }
 
     /**
      * Represents adding a note to the NoteEditor from the card browser.
@@ -173,6 +158,11 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
             Intent(context, NoteEditorActivity::class.java).apply {
                 putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value)
                 deckId?.let { putExtra(NoteEditorFragment.EXTRA_DID, it) }
+            }
+        is NoteEditorDestination.ImageOcclusion ->
+            Intent(context, NoteEditorActivity::class.java).also { intent ->
+                intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.IMG_OCCLUSION.value)
+                intent.putExtra(NoteEditorFragment.EXTRA_IMG_OCCLUSION, imageUri)
             }
         is NoteEditorDestination.PassArguments ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->

@@ -18,6 +18,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.addNextIntent
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
@@ -30,7 +31,6 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
@@ -275,12 +275,10 @@ class IntentHandler : AbstractIntentHandler() {
                 data.data
             }
 
-        val intentImageOcclusion = NoteEditorLauncher.ImageOcclusion(imageUri).toIntent(this)
-
         TaskStackBuilder
             .create(this)
             .addNextIntentWithParentStack(Intent(this, DeckPicker::class.java))
-            .addNextIntent(intentImageOcclusion)
+            .addNextIntent(NoteEditorDestination.ImageOcclusion(imageUri))
             .startActivities()
     }
 
