@@ -15,12 +15,12 @@
  */
 package com.ichi2.anki
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.platform.app.InstrumentationRegistry
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.toIntent
+import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
@@ -29,7 +29,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
 
-abstract class NoteEditorTest protected constructor() {
+abstract class NoteEditorTest protected constructor() : InstrumentedTest() {
     /*
      * Rules mean that we get a failure on API 25.
      * Even if we ignore the tests, the rules cause a failure.
@@ -51,9 +51,7 @@ abstract class NoteEditorTest protected constructor() {
         ).takeUnless { isInvalid }
 
     private val noteEditorIntent: Intent
-        get() {
-            return NoteEditorLauncher.AddNote().toIntent(targetContext)
-        }
+        get() = NoteEditorDestination.AddNote().toIntent()
 
     @Before
     fun before() {
@@ -77,6 +75,4 @@ abstract class NoteEditorTest protected constructor() {
 
     protected open val invalidSdks: List<Int>
         get() = ArrayList()
-    protected val targetContext: Context
-        get() = InstrumentationRegistry.getInstrumentation().targetContext
 }

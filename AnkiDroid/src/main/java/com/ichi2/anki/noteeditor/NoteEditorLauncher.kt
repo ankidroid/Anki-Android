@@ -61,20 +61,6 @@ sealed interface NoteEditorLauncher : Destination {
     }
 
     /**
-     * Represents adding a note to the NoteEditor within a specific deck (Optional).
-     * @property deckId The ID of the deck where the note should be added.
-     */
-    data class AddNote(
-        val deckId: DeckId? = null,
-    ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle =
-            Bundle().apply {
-                putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value)
-                deckId?.let { deckId -> putLong(NoteEditorFragment.EXTRA_DID, deckId) }
-            }
-    }
-
-    /**
      * Represents adding a note to the NoteEditor from the card browser.
      * @property searchTerms The current search terms from the card browser.
      * @property deckId The card browser's last deck, used as the deck for the new note.
@@ -183,6 +169,11 @@ sealed interface NoteEditorLauncher : Destination {
 
 fun NoteEditorDestination.toIntent(context: Context): Intent =
     when (this) {
+        is NoteEditorDestination.AddNote ->
+            Intent(context, NoteEditorActivity::class.java).apply {
+                putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value)
+                deckId?.let { putExtra(NoteEditorFragment.EXTRA_DID, it) }
+            }
         is NoteEditorDestination.PassArguments -> {
             val destination = this
             Intent(context, NoteEditorActivity::class.java).apply {
