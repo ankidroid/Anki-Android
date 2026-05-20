@@ -80,6 +80,7 @@ import com.ichi2.anki.android.menu.SearchBarMenuHost
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeNoteTypeResponse
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchResultMessage
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
@@ -106,6 +107,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
+import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
 import com.ichi2.anki.dialogs.GradeNowDialog
@@ -1074,6 +1076,13 @@ class CardBrowserFragment :
             sortChip?.scaleY = if (!direction.orderAsc) 1.0f else -1.0f
         }
 
+        fun onChangeNoteType(result: ChangeNoteTypeResponse) =
+            when (result) {
+                ChangeNoteTypeResponse.NoSelection -> Timber.w("change note type: no selection")
+                ChangeNoteTypeResponse.MixedSelection -> showSnackbar(R.string.different_note_types_selected)
+                is ChangeNoteTypeResponse.ChangeNoteType -> showDialogFragment(ChangeNoteTypeDialog.newInstance(result.noteIds))
+            }
+
         activityViewModel.reverseDirectionFlow.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -1094,6 +1103,7 @@ class CardBrowserFragment :
         searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
         searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
         activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
+        activityViewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
     }
 
     private fun setupFragmentResultListeners() {
@@ -1235,7 +1245,11 @@ class CardBrowserFragment :
                 }
             }
             KeyEvent.KEYCODE_M -> {
-                if (event.isCtrlPressed) {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+M: Change Note Type")
+                    activityViewModel.requestChangeNoteType()
+                    return true
+                } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+M: Search marked notes")
                     activityViewModel.searchForMarkedNotes()
                     return true
