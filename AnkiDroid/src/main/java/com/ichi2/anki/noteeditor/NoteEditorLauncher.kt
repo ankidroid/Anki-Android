@@ -12,6 +12,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
@@ -57,16 +58,6 @@ sealed interface NoteEditorLauncher : Destination {
                 putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.IMG_OCCLUSION.value)
                 putParcelable(NoteEditorFragment.EXTRA_IMG_OCCLUSION, imageUri)
             }
-    }
-
-    /**
-     * Represents opening the NoteEditor with custom arguments.
-     * @property arguments The bundle of arguments to pass.
-     */
-    data class PassArguments(
-        val arguments: Bundle,
-    ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle = arguments
     }
 
     /**
@@ -189,3 +180,15 @@ sealed interface NoteEditorLauncher : Destination {
             }
     }
 }
+
+fun NoteEditorDestination.toIntent(context: Context): Intent =
+    when (this) {
+        is NoteEditorDestination.PassArguments -> {
+            val destination = this
+            Intent(context, NoteEditorActivity::class.java).apply {
+                putExtras(destination.arguments)
+                destination.action?.let { action = it }
+                setDataAndType(destination.data, destination.type)
+            }
+        }
+    }

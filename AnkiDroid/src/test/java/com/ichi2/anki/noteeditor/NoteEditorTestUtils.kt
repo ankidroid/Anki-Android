@@ -9,6 +9,7 @@ import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.annotations.DuplicatedCode
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 
 /**
  * Hosts a [NoteEditorActivity] with the given launcher [arguments] and returns the
@@ -22,7 +23,7 @@ fun RobolectricTest.openNoteEditorWithArgs(
     val activity =
         startActivityNormallyOpenCollectionWithIntent(
             NoteEditorActivity::class.java,
-            NoteEditorLauncher.PassArguments(arguments).toIntent(targetContext, action),
+            NoteEditorDestination.PassArguments(arguments, action).toIntent(targetContext),
         )
     return activity.getNoteEditorFragment()
 }
