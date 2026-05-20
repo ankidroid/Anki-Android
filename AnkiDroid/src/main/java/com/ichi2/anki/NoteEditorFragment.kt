@@ -96,7 +96,6 @@ import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
@@ -2943,10 +2942,12 @@ class NoteEditorFragment :
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
 
-        fun newInstance(launcher: NoteEditorLauncher): NoteEditorFragment =
+        fun newInstance(args: Bundle): NoteEditorFragment =
             NoteEditorFragment().apply {
-                this.arguments = launcher.toBundle()
+                this.arguments = args
             }
+
+        fun newInstance(launcher: NoteEditorLauncher): NoteEditorFragment = newInstance(launcher.toBundle())
 
         fun shouldReplaceNewlines(): Boolean =
             AnkiDroidApp.instance
