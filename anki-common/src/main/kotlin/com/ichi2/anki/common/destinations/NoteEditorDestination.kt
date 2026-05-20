@@ -5,9 +5,18 @@ package com.ichi2.anki.common.destinations
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import com.ichi2.anki.libanki.DeckId
 
 /** Opens the Add Note/Note Editor screen. */
 sealed class NoteEditorDestination : Destination() {
+    /**
+     * Opens the Note Editor to add a new note.
+     * @property deckId Optional deck to pre-select for the new note.
+     */
+    data class AddNote(
+        val deckId: DeckId? = null,
+    ) : NoteEditorDestination()
+
     /**
      * Forwards an incoming intent's payload to the Note Editor.
      *

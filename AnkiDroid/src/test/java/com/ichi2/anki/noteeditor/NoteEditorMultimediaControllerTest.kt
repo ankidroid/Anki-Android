@@ -59,6 +59,6 @@ class NoteEditorMultimediaControllerTest : RobolectricTest() {
 
     private fun openNoteEditor(): NoteEditorFragment {
         ensureCollectionLoadIsSynchronous()
-        return openNoteEditorWithArgs(NoteEditorLauncher.AddNote().toBundle())
+        return openNoteEditorWithArgs(NoteEditorFragment.addNoteArgs())
     }
 }

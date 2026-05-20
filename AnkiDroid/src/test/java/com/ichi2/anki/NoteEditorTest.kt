@@ -23,6 +23,8 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.common.annotations.DuplicatedCode
+import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.ui.TransitionDirection.DEFAULT
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
@@ -197,7 +199,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
         enableNullCollection()
-        val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
+        val intent = NoteEditorDestination.AddNote().toIntent()
         ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -210,7 +212,7 @@ class NoteEditorTest : RobolectricTest() {
 
     @Test
     fun testHandleMultimediaActionsDisplaysBottomSheet() {
-        val intent = NoteEditorLauncher.AddNote().toIntent(targetContext)
+        val intent = NoteEditorDestination.AddNote().toIntent()
         ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.showMultimediaBottomSheet()
@@ -480,7 +482,7 @@ class NoteEditorTest : RobolectricTest() {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
                 NoteEditorActivity::class.java,
-                NoteEditorLauncher.AddNote(testDeckId1).toIntent(targetContext),
+                NoteEditorDestination.AddNote(testDeckId1).toIntent(),
             )
         val editor = activity.getNoteEditorFragment()
         val deckNameView = editor.view?.findViewById<TextView>(R.id.note_deck_name)
@@ -810,7 +812,7 @@ class NoteEditorTest : RobolectricTest() {
         val bundle =
             when (from) {
                 REVIEWER -> NoteEditorLauncher.AddNoteFromReviewer().toBundle()
-                DECK_LIST -> NoteEditorLauncher.AddNote().toBundle()
+                DECK_LIST -> NoteEditorFragment.addNoteArgs()
             }
         return openNoteEditorWithArgs(bundle)
     }
@@ -831,7 +833,7 @@ class NoteEditorTest : RobolectricTest() {
         val bundle =
             when (from) {
                 REVIEWER -> NoteEditorLauncher.EditSelection(listOf(n.firstCard().id), DEFAULT).toBundle()
-                DECK_LIST -> NoteEditorLauncher.AddNote().toBundle()
+                DECK_LIST -> NoteEditorFragment.addNoteArgs()
             }
         return openNoteEditorWithArgs(bundle)
     }

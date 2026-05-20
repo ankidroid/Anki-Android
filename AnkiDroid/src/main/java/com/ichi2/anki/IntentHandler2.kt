@@ -21,7 +21,6 @@ import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.showThemedToast
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import timber.log.Timber
 
 /**
@@ -43,7 +42,7 @@ class IntentHandler2 : AbstractIntentHandler() {
         if (intentExtras == null) {
             Timber.w("Intent unexpectedly has no extras. Notifying user, defaulting to add note.")
             showThemedToast(this, getString(R.string.something_wrong), false)
-            startActivity(NoteEditorLauncher.AddNote().toIntent(this))
+            navigate(NoteEditorDestination.AddNote())
             finish()
         } else {
             Timber.i("Opening Note Editor from intent")
