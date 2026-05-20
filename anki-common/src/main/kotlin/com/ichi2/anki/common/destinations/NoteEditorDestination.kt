@@ -3,6 +3,7 @@
 package com.ichi2.anki.common.destinations
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import com.ichi2.anki.libanki.DeckId
 
@@ -14,6 +15,15 @@ sealed class NoteEditorDestination : Destination() {
      */
     data class AddNote(
         val deckId: DeckId? = null,
+    ) : NoteEditorDestination()
+
+    /**
+     * Opens the Note Editor for image occlusion editing.
+     * @property imageUri The image to occlude. May be null if not yet known.
+     */
+    // TODO: `imageUri` should be non-null. Handle in IntentHandler.handleImageImport.
+    data class ImageOcclusion(
+        val imageUri: Uri?,
     ) : NoteEditorDestination()
 
     /**
