@@ -27,6 +27,15 @@ sealed class NoteEditorDestination : Destination() {
     ) : NoteEditorDestination()
 
     /**
+     * Continues editing in the standard Note Editor from the instant editor,
+     * carrying the in-progress text.
+     * @property sharedText The text to pre-populate.
+     */
+    data class AddInstantNote(
+        val sharedText: String,
+    ) : NoteEditorDestination()
+
+    /**
      * Forwards an incoming intent's payload to the Note Editor.
      *
      * Relays `ACTION_SEND` (or similar) intent to the Note Editor, preserving the

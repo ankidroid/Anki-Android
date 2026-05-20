@@ -43,6 +43,8 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CustomActionModeCallback
 import com.ichi2.anki.R
+import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.ActivityInstantNoteEditorBinding
@@ -54,7 +56,6 @@ import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.withProgress
@@ -191,8 +192,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
 
     private fun openNoteEditor() {
         val sharedText = clozeEditTextField.text.toString()
-        val noteEditorIntent = NoteEditorLauncher.AddInstantNote(sharedText).toIntent(this)
-        startActivity(noteEditorIntent)
+        navigate(NoteEditorDestination.AddInstantNote(sharedText))
         finish()
     }
 
