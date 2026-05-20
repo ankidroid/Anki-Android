@@ -2941,6 +2941,9 @@ class NoteEditorFragment :
 
         fun newInstance(launcher: NoteEditorLauncher): NoteEditorFragment = newInstance(launcher.toBundle())
 
+        /** Default fragment arguments for "add a new note from the deck picker." */
+        fun addNoteArgs(): Bundle = Bundle().apply { putInt(EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value) }
+
         fun shouldReplaceNewlines(): Boolean =
             AnkiDroidApp.instance
                 .sharedPrefs()
