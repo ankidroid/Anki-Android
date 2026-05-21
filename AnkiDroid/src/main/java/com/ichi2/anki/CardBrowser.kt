@@ -67,6 +67,8 @@ import com.ichi2.anki.browser.search.findNotes
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.ActivityCardBrowserBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -82,7 +84,6 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
@@ -393,7 +394,7 @@ open class CardBrowser :
         }
     }
 
-    private fun showSaveChangesDialog(launcher: NoteEditorLauncher) {
+    private fun showSaveChangesDialog(destination: NoteEditorDestination) {
         DiscardChangesDialog.showDialog(
             context = this,
             positiveButtonText = this.getString(R.string.save),
@@ -405,20 +406,19 @@ open class CardBrowser :
             positiveMethod = {
                 launchCatchingTask {
                     fragment?.saveNote()
-                    loadNoteEditorFragment(launcher)
+                    loadNoteEditorFragment(destination)
                 }
             },
             negativeMethod = {
-                loadNoteEditorFragment(launcher)
+                loadNoteEditorFragment(destination)
             },
             neutralMethod = {},
         )
     }
 
-    private fun loadNoteEditorFragment(launcher: NoteEditorLauncher) {
-        val noteEditorFragment = NoteEditorFragment.newInstance(launcher)
+    private fun loadNoteEditorFragment(destination: NoteEditorDestination) {
         supportFragmentManager.commit {
-            replace(R.id.note_editor_frame, noteEditorFragment)
+            replace(R.id.note_editor_frame, NoteEditorFragment.newInstance(destination))
         }
         // Invalidate options menu so that note editor menu will show
         invalidateOptionsMenu()
@@ -514,13 +514,13 @@ open class CardBrowser :
                     is NoteEditorCommand.LoadInPane -> {
                         binding.noteEditorFrame?.isVisible = true
                         if (fragment?.hasUnsavedChanges() == true) {
-                            showSaveChangesDialog(command.launcher)
+                            showSaveChangesDialog(command.destination)
                         } else {
-                            loadNoteEditorFragment(command.launcher)
+                            loadNoteEditorFragment(command.destination)
                         }
                     }
                     is NoteEditorCommand.LaunchActivity -> {
-                        startActivity(command.launcher.toIntent(this@CardBrowser))
+                        navigate(command.destination)
                     }
                     NoteEditorCommand.HidePane -> {
                         binding.noteEditorFrame?.isVisible = false
