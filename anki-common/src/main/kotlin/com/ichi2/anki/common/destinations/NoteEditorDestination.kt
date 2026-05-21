@@ -55,6 +55,30 @@ sealed class NoteEditorDestination : Destination() {
     ) : NoteEditorDestination()
 
     /**
+     * Opens the Note Editor to add a new note from the card browser, pre-populated
+     * with the search-query text and the most-recently-selected deck.
+     * @property searchTerms The current search query in the card browser.
+     * @property deckId The card browser's last deck, used as the deck for the new note.
+     */
+    data class AddNoteFromCardBrowser(
+        val searchTerms: String,
+        val deckId: DeckId?,
+    ) : NoteEditorDestination()
+
+    /**
+     * Opens the Note Editor to edit the note(s) associated with the given cards.
+     * @property cardIds Selected card id(s) — the first is the focused card when
+     * editing in card mode, the full list is used in note-edit mode.
+     * @property animation The animation direction for the transition.
+     * @property inCardBrowserActivity True if opened in-place inside the Card Browser.
+     */
+    data class EditSelection(
+        val cardIds: List<CardId>,
+        val animation: TransitionDirection,
+        val inCardBrowserActivity: Boolean = false,
+    ) : NoteEditorDestination()
+
+    /**
      * Opens the Note Editor pre-populated to copy an existing note into a new one.
      * @property deckId Target deck for the new note.
      * @property fieldsText Pre-filled field text (the source note's content).
