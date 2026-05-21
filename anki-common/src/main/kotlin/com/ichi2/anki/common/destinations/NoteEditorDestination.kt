@@ -5,6 +5,7 @@ package com.ichi2.anki.common.destinations
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
 
@@ -42,6 +43,15 @@ sealed class NoteEditorDestination : Destination() {
      */
     data class EditNoteFromPreviewer(
         val cardId: CardId,
+    ) : NoteEditorDestination()
+
+    /**
+     * Opens the Note Editor to add a new note from the reviewer.
+     * @property animation The animation direction to use when transitioning. Defaults
+     * to no specific animation.
+     */
+    data class AddNoteFromReviewer(
+        val animation: TransitionDirection? = null,
     ) : NoteEditorDestination()
 
     /**

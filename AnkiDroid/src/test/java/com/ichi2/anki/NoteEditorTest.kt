@@ -811,7 +811,7 @@ class NoteEditorTest : RobolectricTest() {
         ensureCollectionLoadIsSynchronous()
         val bundle =
             when (from) {
-                REVIEWER -> NoteEditorLauncher.AddNoteFromReviewer().toBundle()
+                REVIEWER -> NoteEditorDestination.AddNoteFromReviewer().toIntent().extras!!
                 DECK_LIST -> NoteEditorFragment.addNoteArgs()
             }
         return openNoteEditorWithArgs(bundle)

@@ -58,6 +58,8 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.CardInfoDestination
 import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.HandlerUtils.executeFunctionWithDelay
@@ -80,7 +82,6 @@ import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.isReco
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.setEditorStatus
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.pages.toIntent
@@ -787,11 +788,9 @@ open class Reviewer :
     }
 
     fun addNote(fromGesture: Gesture? = null) {
-        val animation = getAnimationTransitionFromGesture(fromGesture)
-        val inverseAnimation = animation.invert()
+        val inverseAnimation = getAnimationTransitionFromGesture(fromGesture).invert()
         Timber.i("launching 'add note'")
-        val intent = NoteEditorLauncher.AddNoteFromReviewer(inverseAnimation).toIntent(this)
-        addNoteLauncher.launch(intent)
+        addNoteLauncher.navigate(NoteEditorDestination.AddNoteFromReviewer(inverseAnimation))
     }
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")

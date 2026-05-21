@@ -66,20 +66,6 @@ sealed interface NoteEditorLauncher : Destination {
     }
 
     /**
-     * Represents adding a note to the NoteEditor from the reviewer.
-     * @property animation The animation direction to use when transitioning.
-     */
-    data class AddNoteFromReviewer(
-        val animation: TransitionDirection? = null,
-    ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle =
-            Bundle().apply {
-                putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.REVIEWER_ADD.value)
-                animation?.let { putParcelable(AnkiActivity.EXTRA_FINISH_ANIMATION, it as Parcelable) }
-            }
-    }
-
-    /**
      * Opens the NoteEditor for the current selection (card or note).
      * @property cardIds The selected card ID when editing a card, or the IDs of cards of the same note when editing a note.
      * @property animation The animation direction.
@@ -124,6 +110,11 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
             Intent(context, NoteEditorActivity::class.java).also { intent ->
                 intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.PREVIEWER_EDIT.value)
                 intent.putExtra(NoteEditorFragment.EXTRA_EDIT_FROM_CARD_ID, cardId)
+            }
+        is NoteEditorDestination.AddNoteFromReviewer ->
+            Intent(context, NoteEditorActivity::class.java).also { intent ->
+                intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.REVIEWER_ADD.value)
+                animation?.let { intent.putExtra(AnkiActivity.EXTRA_FINISH_ANIMATION, it as Parcelable) }
             }
         is NoteEditorDestination.CopyNote ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->
