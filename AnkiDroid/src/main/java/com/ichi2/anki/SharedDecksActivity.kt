@@ -17,8 +17,9 @@
 package com.ichi2.anki
 
 import android.app.DownloadManager
-import android.content.Context
+import android.graphics.Color.TRANSPARENT
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.CookieManager
@@ -94,7 +95,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             }
 
             /**
-             * Prevent the WebView from loading urls which arent needed for importing shared decks.
+             * Prevent the WebView from loading urls which aren't needed for importing shared decks.
              * This is to prevent potential misuse, such as bypassing content restrictions or
              * using the AnkiDroid WebView as a regular browser to bypass browser blocks,
              * which could lead to procrastination.
@@ -222,7 +223,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
 
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.loadUrl(resources.getString(R.string.shared_decks_url))
@@ -243,11 +244,24 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                         SHARED_DECKS_DOWNLOAD_FRAGMENT,
                     ).addToBackStack(null)
                 }
+                supportActionBar?.title = ""
+                binding.webviewToolbar.setBackgroundColor(TRANSPARENT)
             }
         }
 
         binding.webView.webViewClient = webViewClient
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                // Restore toolbar when returning to the webview
+                supportActionBar?.setTitle(R.string.download_deck)
+
+                val typedValue = TypedValue()
+                theme.resolveAttribute(R.attr.appBarColor, typedValue, true)
+                binding.webviewToolbar.setBackgroundColor(typedValue.data)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

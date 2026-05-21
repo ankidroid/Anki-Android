@@ -26,6 +26,10 @@ import android.database.Cursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Spannable
+import android.text.format.DateUtils
+import android.text.format.Formatter
+import android.text.style.RelativeSizeSpan
 import android.view.View
 import android.webkit.CookieManager
 import androidx.activity.OnBackPressedCallback
@@ -34,16 +38,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.text.buildSpannedString
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.databinding.FragmentSharedDecksDownloadBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.utils.DownloadSpeedCalculator
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.create
 import dev.androidbroadcast.vbpd.viewBinding
@@ -88,12 +95,15 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 showCancelConfirmationDialog()
             }
         }
+    private val speedCalculator = DownloadSpeedCalculator()
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
 
         const val DOWNLOAD_STARTED_PROGRESS_PERCENTAGE = "0"
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
+
+        private const val PERCENT_SYMBOL_RELATIVE_SIZE = 0.6f
 
         const val EXTRA_IS_SHARED_DOWNLOAD = "extra_is_shared_download"
 
@@ -144,6 +154,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, onBackPressedCallback)
+
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
 
@@ -170,10 +182,19 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             Timber.i("Try again button clicked, retry downloading of deck")
             downloadManager.remove(downloadId)
             downloadFile(fileToBeDownloaded)
+            binding.downloadProgressBar.visibility = View.VISIBLE
             binding.cancelDownloadButton.visibility = View.VISIBLE
             binding.tryDownloadAgainButton.visibility = View.GONE
             binding.openInWebBrowserButton.visibility = View.GONE
         }
+    }
+
+    override fun onDestroy() {
+        Timber.d("onDestroy")
+        stopDownloadProgressChecker()
+        unregisterReceiver()
+        removeCancelConfirmationDialog()
+        super.onDestroy()
     }
 
     /**
@@ -213,7 +234,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         onBackPressedCallback.isEnabled = isDownloadInProgress
         Timber.d("Download ID -> $downloadId")
         Timber.d("File name -> $fileName")
-        binding.downloadingTitle.text = getString(R.string.downloading_file, fileName)
+        binding.downloadingTitle.text = fileName
         startDownloadProgressChecker()
     }
 
@@ -325,7 +346,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
                 if (isVisible) {
                     // Setting these since progress checker can stop before progress is updated to represent 100%
-                    binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE)
+                    setPercentageText(getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE))
                     binding.downloadProgressBar.progress = DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE.toInt()
 
                     // Remove cancel button and show import deck button
@@ -396,9 +417,10 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
      */
     private fun startDownloadProgressChecker() {
         Timber.d("Starting download progress checker")
+        speedCalculator.reset()
         downloadProgressChecker.run()
         isProgressCheckerRunning = true
-        binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
+        setPercentageText(getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE))
         binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
     }
 
@@ -423,7 +445,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 downloadManager.query(query)
             } catch (_: IllegalArgumentException) {
                 // 19812: column local_filename is not allowed in queries
-                binding.downloadPercentageText.text = TR.syncDownloadingFromAnkiweb()
+                setPercentageText(TR.syncDownloadingFromAnkiweb())
                 binding.downloadProgressBar.progress = 0
                 return
             }
@@ -448,8 +470,21 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     // Show download progress percentage up to 1 decimal place.
                     "%.1f".format(downloadProgress)
                 }
-            binding.downloadPercentageText.text = getString(R.string.percentage, percentageValue)
+            setPercentageText(getString(R.string.percentage, percentageValue))
             binding.downloadProgressBar.progress = downloadProgress.toInt()
+
+            // Update MB data
+            if (totalBytes > 0) {
+                val downloadedStr = Formatter.formatFileSize(requireContext(), downloadedBytes)
+                val totalStr = Formatter.formatFileSize(requireContext(), totalBytes.toLong())
+                binding.downloadMbText.text =
+                    getString(R.string.progress_amount_bytes, downloadedStr, totalStr)
+            } else {
+                val downloadedStr = Formatter.formatFileSize(requireContext(), downloadedBytes)
+                binding.downloadMbText.text = downloadedStr
+            }
+
+            updateSpeedAndTimeLeft(downloadedBytes, totalBytes, TimeManager.time.intTimeMS())
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
             val columnIndexForReason = it.getColumnIndex(DownloadManager.COLUMN_REASON)
@@ -471,6 +506,45 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 binding.checkNetworkInfoText.visibility = View.VISIBLE
             } else {
                 binding.checkNetworkInfoText.visibility = View.GONE
+            }
+        }
+    }
+
+    /**
+     * Updates the UI with the calculated download speed and estimated time left.
+     *
+     * @param downloadedBytes The number of bytes downloaded so far.
+     * @param totalBytes The total size of the file being downloaded in bytes.
+     * @param currentTime The current system time in milliseconds.
+     */
+    private fun updateSpeedAndTimeLeft(
+        downloadedBytes: Long,
+        totalBytes: Int,
+        currentTime: Long,
+    ) {
+        val smoothedSpeed = speedCalculator.update(downloadedBytes, currentTime)
+        val bytesPerSecond = smoothedSpeed.toLong()
+
+        if (bytesPerSecond > 0) {
+            val speedStr = Formatter.formatFileSize(requireContext(), bytesPerSecond)
+            binding.downloadSpeedText.text = getString(R.string.download_speed_unit, speedStr)
+
+            if (totalBytes > 0) {
+                val bytesRemaining = totalBytes - downloadedBytes
+                val secondsRemaining = bytesRemaining / bytesPerSecond
+
+                binding.downloadTimeLeftText.text = DateUtils.formatElapsedTime(secondsRemaining)
+            } else {
+                binding.downloadTimeLeftText.text = getString(R.string.download_time_unknown)
+            }
+        } else {
+            if (downloadedBytes == 0L) {
+                binding.downloadSpeedText.text = getString(R.string.download_speed_unknown)
+                binding.downloadTimeLeftText.text = getString(R.string.download_time_unknown)
+            } else {
+                val zeroSize = Formatter.formatFileSize(requireContext(), 0)
+                binding.downloadSpeedText.text = getString(R.string.download_speed_unit, zeroSize)
+                binding.downloadTimeLeftText.text = getString(R.string.download_time_unknown)
             }
         }
     }
@@ -527,7 +601,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 binding.tryDownloadAgainButton.visibility = View.VISIBLE
                 binding.openInWebBrowserButton.visibility = View.VISIBLE
                 binding.cancelDownloadButton.visibility = View.GONE
-                binding.downloadPercentageText.text = getString(R.string.download_failed)
+                binding.downloadProgressBar.visibility = View.INVISIBLE
+                setPercentageText(getString(R.string.download_failed))
                 binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
             }
         }
@@ -538,6 +613,23 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
         // If the cancel confirmation dialog is being shown and the download is no longer in progress, then remove the dialog.
         removeCancelConfirmationDialog()
+    }
+
+    private fun setPercentageText(text: CharSequence) {
+        binding.downloadPercentageText.text =
+            buildSpannedString {
+                append(text)
+                var index = text.indexOf('%')
+                while (index != -1) {
+                    setSpan(
+                        RelativeSizeSpan(PERCENT_SYMBOL_RELATIVE_SIZE),
+                        index,
+                        index + 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
+                    )
+                    index = text.indexOf('%', index + 1)
+                }
+            }
     }
 
     private fun showCancelConfirmationDialog() {
@@ -563,5 +655,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     private fun removeCancelConfirmationDialog() {
         downloadCancelConfirmationDialog?.dismiss()
+        downloadCancelConfirmationDialog = null
     }
 }
