@@ -86,8 +86,10 @@ import com.ichi2.anki.common.android.animationEnabled
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.destinations.toBundle
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.HashUtil
@@ -136,7 +138,6 @@ import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
 import com.ichi2.anki.noteeditor.FieldState.Type
 import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.NoteEditorMultimediaController
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
@@ -2761,7 +2762,8 @@ class NoteEditorFragment :
                 this.arguments = args
             }
 
-        fun newInstance(launcher: NoteEditorLauncher): NoteEditorFragment = newInstance(launcher.toBundle())
+        fun newInstance(destination: NoteEditorDestination): NoteEditorFragment =
+            newInstance(with(DeferredNavigation) { destination.toBundle() })
 
         /** Default fragment arguments for "add a new note from the deck picker." */
         fun addNoteArgs(): Bundle = Bundle().apply { putInt(EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value) }

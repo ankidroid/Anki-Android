@@ -40,6 +40,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.CardInfoDestination
 import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
@@ -60,7 +61,6 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -156,14 +156,14 @@ class CardBrowserViewModel(
     val flowOfNoteEditorCommand = MutableSharedFlow<NoteEditorCommand>()
 
     sealed interface NoteEditorCommand {
-        /** Tablet pane: show pane and load the editor with [launcher]. */
+        /** Tablet pane: show pane and load the editor at [destination]. */
         data class LoadInPane(
-            val launcher: NoteEditorLauncher,
+            val destination: NoteEditorDestination,
         ) : NoteEditorCommand
 
-        /** Phone: launch the standalone NoteEditor activity with [launcher]. */
+        /** Phone: launch the standalone NoteEditor activity at [destination]. */
         data class LaunchActivity(
-            val launcher: NoteEditorLauncher,
+            val destination: NoteEditorDestination,
         ) : NoteEditorCommand
 
         /** Tablet pane: hide the pane (no row available). */
@@ -365,14 +365,14 @@ class CardBrowserViewModel(
         }
     }
 
-    /** Builds a [NoteEditorLauncher] to edit [row], or `null` if there's nothing to edit. */
-    suspend fun editNoteLauncher(row: CardOrNoteId): NoteEditorLauncher? {
+    /** Builds a destination to edit [row], or `null` if there's nothing to edit. */
+    suspend fun editNoteDestination(row: CardOrNoteId): NoteEditorDestination? {
         val cardIds = getCardIdsForNoteEditor(row)
         if (cardIds.isEmpty()) {
             Timber.w("EditSelection skipped: card list is empty")
             return null
         }
-        return NoteEditorLauncher.EditSelection(
+        return NoteEditorDestination.EditSelection(
             cardIds = cardIds,
             animation = TransitionDirection.DEFAULT,
             inCardBrowserActivity = isFragmented,
@@ -686,7 +686,7 @@ class CardBrowserViewModel(
                 // when in mutliselect, only deselecting should update the pane
                 if (wasSelected && isFragmented) {
                     paneRow = id
-                    editNoteLauncher(id)?.let { flowOfNoteEditorCommand.emit(NoteEditorCommand.LoadInPane(it)) }
+                    editNoteDestination(id)?.let { flowOfNoteEditorCommand.emit(NoteEditorCommand.LoadInPane(it)) }
                 }
             } else {
                 setNoteEditorRow(id)
@@ -730,9 +730,9 @@ class CardBrowserViewModel(
             } else {
                 endMultiSelectMode(SingleSelectCause.OpenNoteEditorActivity)
             }
-            val launcher = editNoteLauncher(row) ?: return@launch
+            val destination = editNoteDestination(row) ?: return@launch
             flowOfNoteEditorCommand.emit(
-                if (isFragmented) NoteEditorCommand.LoadInPane(launcher) else NoteEditorCommand.LaunchActivity(launcher),
+                if (isFragmented) NoteEditorCommand.LoadInPane(destination) else NoteEditorCommand.LaunchActivity(destination),
             )
         }
 
@@ -1546,7 +1546,7 @@ class CardBrowserViewModel(
 
     /** Builds the post-search trailing-pane command from current ViewModel state (tablet only). */
     private suspend fun NoteEditorCommand.Companion.fromCurrentSearchState(): NoteEditorCommand =
-        paneRow?.let { row -> editNoteLauncher(row) }?.let { NoteEditorCommand.LoadInPane(it) }
+        paneRow?.let { row -> editNoteDestination(row) }?.let { NoteEditorCommand.LoadInPane(it) }
             ?: NoteEditorCommand.HidePane
 
     companion object {
