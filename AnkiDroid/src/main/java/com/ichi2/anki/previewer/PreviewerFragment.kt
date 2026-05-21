@@ -37,6 +37,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.databinding.FragmentPreviewerBinding
 import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
 import com.ichi2.anki.reviewer.BindingMap
@@ -271,8 +272,7 @@ class PreviewerFragment :
 
     private fun editCard() {
         lifecycleScope.launch {
-            val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
-            startActivity(intent)
+            navigate(viewModel.getNoteEditorDestination())
         }
     }
 

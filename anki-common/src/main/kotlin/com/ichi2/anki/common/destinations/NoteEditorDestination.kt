@@ -5,6 +5,7 @@ package com.ichi2.anki.common.destinations
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
 
 /** Opens the Add Note/Note Editor screen. */
@@ -33,6 +34,14 @@ sealed class NoteEditorDestination : Destination() {
      */
     data class AddInstantNote(
         val sharedText: String,
+    ) : NoteEditorDestination()
+
+    /**
+     * Opens the Note Editor to edit the note belonging to a card shown in the previewer.
+     * @property cardId The card whose note should be edited.
+     */
+    data class EditNoteFromPreviewer(
+        val cardId: CardId,
     ) : NoteEditorDestination()
 
     /**
