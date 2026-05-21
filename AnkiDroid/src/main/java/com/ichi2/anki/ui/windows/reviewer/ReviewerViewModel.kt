@@ -33,7 +33,6 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.redoLabel
 import com.ichi2.anki.libanki.sched.CurrentQueueState
 import com.ichi2.anki.libanki.undoLabel
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
@@ -268,7 +267,7 @@ class ReviewerViewModel(
 
     private suspend fun emitAddNoteDestination() {
         Timber.i("Launching 'add note'")
-        destinationFlow.emit(NoteEditorLauncher.AddNoteFromReviewer())
+        navigateFlow.emit(NoteEditorDestination.AddNoteFromReviewer())
     }
 
     private suspend fun emitCardInfoDestination() {
