@@ -45,6 +45,18 @@ sealed class NoteEditorDestination : Destination() {
     ) : NoteEditorDestination()
 
     /**
+     * Opens the Note Editor pre-populated to copy an existing note into a new one.
+     * @property deckId Target deck for the new note.
+     * @property fieldsText Pre-filled field text (the source note's content).
+     * @property tags Optional tags to apply to the copied note.
+     */
+    data class CopyNote(
+        val deckId: DeckId,
+        val fieldsText: String,
+        val tags: List<String>? = null,
+    ) : NoteEditorDestination()
+
+    /**
      * Forwards an incoming intent's payload to the Note Editor.
      *
      * Relays `ACTION_SEND` (or similar) intent to the Note Editor, preserving the
