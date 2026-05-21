@@ -24,9 +24,9 @@ import com.ichi2.anki.asyncIO
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
@@ -173,7 +173,7 @@ class PreviewerViewModel(
         }
     }
 
-    suspend fun getNoteEditorDestination() = NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
+    suspend fun getNoteEditorDestination() = NoteEditorDestination.EditNoteFromPreviewer(currentCard.await().id)
 
     fun replayMedia() {
         launchCatchingIO {

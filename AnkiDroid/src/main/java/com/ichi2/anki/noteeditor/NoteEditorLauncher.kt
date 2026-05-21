@@ -103,20 +103,6 @@ sealed interface NoteEditorLauncher : Destination {
     }
 
     /**
-     * Represents editing a note in the NoteEditor from the previewer.
-     * @property cardId The ID of the card associated with the note to edit.
-     */
-    data class EditNoteFromPreviewer(
-        val cardId: CardId,
-    ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle =
-            Bundle().apply {
-                putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.PREVIEWER_EDIT.value)
-                putLong(NoteEditorFragment.EXTRA_EDIT_FROM_CARD_ID, cardId)
-            }
-    }
-
-    /**
      * Represents copying a note to the NoteEditor.
      * @property deckId The ID of the deck where the note should be copied.
      * @property fieldsText The text content of the fields to copy.
@@ -153,6 +139,11 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
             Intent(context, NoteEditorActivity::class.java).also { intent ->
                 intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.INSTANT_NOTE_EDITOR.value)
                 intent.putExtra(Intent.EXTRA_TEXT, sharedText)
+            }
+        is NoteEditorDestination.EditNoteFromPreviewer ->
+            Intent(context, NoteEditorActivity::class.java).also { intent ->
+                intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.PREVIEWER_EDIT.value)
+                intent.putExtra(NoteEditorFragment.EXTRA_EDIT_FROM_CARD_ID, cardId)
             }
         is NoteEditorDestination.PassArguments ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->
