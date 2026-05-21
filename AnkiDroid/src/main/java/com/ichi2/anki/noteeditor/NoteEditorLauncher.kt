@@ -101,26 +101,6 @@ sealed interface NoteEditorLauncher : Destination {
                 putBoolean(NoteEditorFragment.IN_CARD_BROWSER_ACTIVITY, inCardBrowserActivity)
             }
     }
-
-    /**
-     * Represents copying a note to the NoteEditor.
-     * @property deckId The ID of the deck where the note should be copied.
-     * @property fieldsText The text content of the fields to copy.
-     * @property tags Optional list of tags to assign to the copied note.
-     */
-    data class CopyNote(
-        val deckId: DeckId,
-        val fieldsText: String,
-        val tags: List<String>? = null,
-    ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle =
-            Bundle().apply {
-                putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.NOTEEDITOR.value)
-                putLong(NoteEditorFragment.EXTRA_DID, deckId)
-                putString(NoteEditorFragment.EXTRA_CONTENTS, fieldsText)
-                tags?.let { tags -> putStringArray(NoteEditorFragment.EXTRA_TAGS, tags.toTypedArray()) }
-            }
-    }
 }
 
 fun NoteEditorDestination.toIntent(context: Context): Intent =
@@ -144,6 +124,13 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
             Intent(context, NoteEditorActivity::class.java).also { intent ->
                 intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.PREVIEWER_EDIT.value)
                 intent.putExtra(NoteEditorFragment.EXTRA_EDIT_FROM_CARD_ID, cardId)
+            }
+        is NoteEditorDestination.CopyNote ->
+            Intent(context, NoteEditorActivity::class.java).also { intent ->
+                intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.NOTEEDITOR.value)
+                intent.putExtra(NoteEditorFragment.EXTRA_DID, deckId)
+                intent.putExtra(NoteEditorFragment.EXTRA_CONTENTS, fieldsText)
+                tags?.let { intent.putExtra(NoteEditorFragment.EXTRA_TAGS, it.toTypedArray()) }
             }
         is NoteEditorDestination.PassArguments ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->
