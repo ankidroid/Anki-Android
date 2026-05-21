@@ -4,6 +4,7 @@ package com.ichi2.anki.common.destinations
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.CheckResult
 import androidx.core.app.TaskStackBuilder
@@ -91,3 +92,23 @@ interface DeferredNavigation {
 @CheckResult
 context(_: DeferredNavigation)
 fun Destination.toIntent(): Intent = navigatorInstance.toIntent(this)
+
+/**
+ * Resolves the calling [Destination] its [Bundle] of extras.
+ *
+ * Rarely used for in-process fragment hosting (`Fragment.arguments`), or testing.
+ *
+ * For Activity launches, prefer [navigate]; for raw [Intent] callers (PendingIntent, TaskStackBuilder), use [toIntent].
+ *
+ * Requires [DeferredNavigation] opt-in.
+ *
+ * ```kt
+ * with(DeferredNavigation) { destination.toBundle() }
+ * ```
+ */
+@CheckResult
+context(_: DeferredNavigation)
+fun Destination.toBundle(): Bundle =
+    requireNotNull(navigatorInstance.toIntent(this).extras) {
+        "Destination $this produced an Intent with no extras"
+    }
