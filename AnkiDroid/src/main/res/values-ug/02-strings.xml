@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">يان تارتمىنى ئاچ</string>
@@ -189,7 +178,6 @@
     <string name="menu__deck_options" maxLength="28">دەستە تاللانما</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ئۆگىنىش تاللانما</string>
     <string name="select_tts" maxLength="28">تېكىستتىن تىلغا تىل تەڭشىكى</string>
-    <string name="custom_study" maxLength="28">ئىختىيارى ئۆگىنىش</string>
     <string name="dyn_deck_desc">بۇ ئادەتتىكى كۈنتەرتىپنىڭ سىرتىدىكى مەزمۇننى ئۆگىنىدىغان ئالاھىدە دەستە. كارتىنى تەكرارلىغاندىن كېيىن ئەسلىدىكى دەستەسىگە قايتۇرۇلىدۇ. ئەگەر دەستە تىزىمىدىن بۇ دەستە ئۆچۈرۈلسە، قېپقالغان كارتا دەسلەپكى دەستە ئورنىغا ئەسلىگە قايتۇرۇلىدۇ.</string>
     <string name="tag_editor_add_feedback">«%2$s» نى چېكىپ «%1$s» نى قوشۇش  جەزملىنىدۇ</string>
     <string name="tag_editor_add_feedback_existing">مەۋجۇت «%1$s» بەلگە تاللاندى</string>

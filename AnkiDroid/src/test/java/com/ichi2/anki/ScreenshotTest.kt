@@ -20,10 +20,16 @@ import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import com.github.takahirom.roborazzi.provideRoborazziContext
-import com.ichi2.anki.settings.Prefs
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
+import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.AppTheme
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.NightTheme
 import org.junit.Before
 import org.junit.experimental.categories.Category
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestParameterInjector
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.GraphicsMode
 import java.io.File
@@ -33,10 +39,21 @@ interface ScreenshotTestCategory
 /**
  * Base class for [roborazzi](https://github.com/takahirom/roborazzi) screenshot tests
  */
+@RunWith(RobolectricTestParameterInjector::class)
 @Category(ScreenshotTestCategory::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 abstract class ScreenshotTest : RobolectricTest() {
     var fileNamePrefix = ""
+
+    enum class ThemeConfig { LIGHT, PLAIN, DARK, BLACK }
+
+    enum class DeviceConfig { PHONE, TABLET, FOLDABLE, DESKTOP }
+
+    @TestParameter(valuesProvider = ThemeProvider::class)
+    lateinit var theme: ThemeConfig
+
+    @TestParameter(valuesProvider = DeviceProvider::class)
+    lateinit var device: DeviceConfig
 
     @Before
     open fun applyGlobalConfig() {
@@ -45,31 +62,49 @@ abstract class ScreenshotTest : RobolectricTest() {
     }
 
     protected open fun applyDeviceConfig() {
-        if (System.getProperty("screenshot.device") == "tablet") {
-            setTabletQualifiers()
-            fileNamePrefix += "tablet_"
-        } else {
-            setPhoneQualifiers()
+        when (device) {
+            DeviceConfig.PHONE -> setPhoneQualifiers()
+            DeviceConfig.TABLET -> {
+                setTabletQualifiers()
+                fileNamePrefix += "tablet_"
+            }
+            DeviceConfig.FOLDABLE -> {
+                setFoldableQualifiers()
+                fileNamePrefix += "foldable_"
+            }
+            DeviceConfig.DESKTOP -> {
+                setDesktopQualifiers()
+                fileNamePrefix += "desktop_"
+            }
         }
     }
 
     protected open fun applyThemeConfig() {
-        if (System.getProperty("screenshot.theme") == "dark") {
+        val isNightMode = theme == ThemeConfig.DARK || theme == ThemeConfig.BLACK
+        if (isNightMode) {
             RuntimeEnvironment.setQualifiers("+night")
-            Prefs.appTheme = AppTheme.NIGHT
-            fileNamePrefix += "dark_"
+        }
+        if (theme != ThemeConfig.LIGHT) {
+            fileNamePrefix += "${theme.name.lowercase()}_"
+        }
+        val prefs = PrefsRepository(targetContext)
+        prefs.appTheme = if (isNightMode) AppTheme.NIGHT else AppTheme.DAY
+        when (theme) {
+            ThemeConfig.LIGHT -> prefs.dayTheme = DayTheme.LIGHT
+            ThemeConfig.PLAIN -> prefs.dayTheme = DayTheme.PLAIN
+            ThemeConfig.DARK -> prefs.nightTheme = NightTheme.DARK
+            ThemeConfig.BLACK -> prefs.nightTheme = NightTheme.BLACK
         }
     }
 
-    /** Pixel-class phone in portrait, light theme. */
-    protected fun setPhoneQualifiers() {
-        RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumPhone)
-    }
+    /** Pixel-class phone in portrait */
+    protected fun setPhoneQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumPhone)
 
-    /** Required for [DeckPicker.fragmented] to be true. */
-    protected fun setTabletQualifiers() {
-        RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumTablet)
-    }
+    protected fun setTabletQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumTablet)
+
+    protected fun setFoldableQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.Pixel9ProFold)
+
+    protected fun setDesktopQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumDesktop)
 
     /**
      * Captures a screenshot to `build/outputs/roborazzi/<TestClass>/<name>.png`.
@@ -96,6 +131,28 @@ abstract class ScreenshotTest : RobolectricTest() {
                 File(diffDir, "${name}_actual.png").exists()
         if (diffWritten && baseline.isFile) {
             baseline.copyTo(File(diffDir, baseline.name), overwrite = true)
+        }
+    }
+
+    class ThemeProvider : TestParameterValuesProvider() {
+        override fun provideValues(context: Context?): List<ThemeConfig> {
+            val requestedTheme = System.getProperty("screenshot.theme") ?: "light"
+            val requestedThemes = requestedTheme.split(",").map { it.trim().lowercase() }
+            if ("all" in requestedThemes) {
+                return ThemeConfig.entries
+            }
+            return ThemeConfig.entries.filter { requestedThemes.contains(it.name.lowercase()) }
+        }
+    }
+
+    class DeviceProvider : TestParameterValuesProvider() {
+        override fun provideValues(context: Context?): List<DeviceConfig> {
+            val requestedDevice = System.getProperty("screenshot.device") ?: "phone"
+            val requestedDevices = requestedDevice.split(",").map { it.trim().lowercase() }
+            if ("all" in requestedDevices) {
+                return DeviceConfig.entries
+            }
+            return DeviceConfig.entries.filter { requestedDevices.contains(it.name.lowercase()) }
         }
     }
 }

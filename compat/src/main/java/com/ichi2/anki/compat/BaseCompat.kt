@@ -1,21 +1,9 @@
-/*
- * Copyright (c) 2017 Profpatsch <mail@profpatsch.de>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2017 Profpatsch <mail@profpatsch.de>
 
 package com.ichi2.anki.compat
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -30,6 +18,7 @@ import android.os.Environment
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.View
+import androidx.annotation.AnimRes
 import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import timber.log.Timber
@@ -50,6 +39,18 @@ open class BaseCompat : Compat {
     // Until API26, tooltips cannot be defined declaratively in layouts
     override fun setTooltipTextByContentDescription(view: View) {
         TooltipCompat.setTooltipText(view, view.contentDescription)
+    }
+
+    override fun overrideTransition(
+        activity: Activity,
+        @AnimRes enter: Int,
+        @AnimRes exit: Int,
+        open: Boolean,
+    ) {
+        activity.overridePendingTransition(
+            enter,
+            exit,
+        )
     }
 
     // Until API 26 just specify time, after that specify effect also

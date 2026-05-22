@@ -25,25 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <string name="youre_offline">ხაზგარეშე რეჟიმში ხართ</string>
     <string name="sync_error">შეცდომა სინქრონიზაციისას</string>
@@ -56,12 +44,10 @@
     <!-- MyAccount.kt -->
     <string name="username">ელფოსტის მისამართი</string>
     <string name="password">პაროლი</string>
-    <string name="log_in">ავტორიზაცია</string>
     <string name="sign_up_description">არ გაქვთ AnkiWeb-ის ანგარიში? უფასოა!</string>
     <string name="sign_up_not_affiliated">შენიშვნა: AnkiWeb არ თანამშრომლობს AnkiDroid-თან</string>
     <string name="sign_up">რეგისტრაცია</string>
     <string name="logged_as">შესული ხართ როგორც</string>
-    <string name="log_out">გასვლა</string>
     <string name="reset_password">პაროლის აღდგენა</string>
     <string name="lost_mail_instructions">დაგავიწყდათ ელფოსტა?</string>
     <string name="sign_in">შესვლა</string>

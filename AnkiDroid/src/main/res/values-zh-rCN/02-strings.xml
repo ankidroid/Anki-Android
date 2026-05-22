@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">打开侧栏</string>
@@ -186,7 +175,6 @@
     <string name="menu__deck_options" maxLength="28">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
     <string name="select_tts" maxLength="28">设置 TTS 语言</string>
-    <string name="custom_study" maxLength="28">自定义学习</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
     <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
     <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
@@ -349,7 +337,7 @@
     <string name="shared_decks_login_required">请登录以下载更多牌组</string>
     <string name="deck_description_field_hint">描述</string>
     <string name="deck_description_saved">描述已更新</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">转换为 Markdown 格式</string>
     <string name="help_button_content_description">打开 ‘%s’ 的帮助</string>
     <string name="failed_to_copy">复制失败</string>
     <plurals name="unbury_cards_feedback">
@@ -387,7 +375,7 @@
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">、</string>
     <!--Set up date-->
-    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
-    <string name="set_due_date_date_range">Date range</string>
+    <string name="set_due_date_day" comment="Used for setting due date">日期</string>
+    <string name="set_due_date_date_range">日期范围</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">已在进行中</string>
 </resources>

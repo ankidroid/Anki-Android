@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Άνοιγμα συρταριού</string>
@@ -189,7 +178,6 @@
     <string name="menu__deck_options" maxLength="28">Επιλογές τράπουλας</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Επιλογές μελέτης</string>
     <string name="select_tts" maxLength="28">Ορισμός γλώσσας TTS</string>
-    <string name="custom_study" maxLength="28">Προσαρμοσμένη μελέτη</string>
     <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
     <string name="tag_editor_add_feedback">Αγγίξτε το “%2$s” για να επιβεβαιώσετε την προσθήκη “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Επιλέχθηκε η υπάρχουσα ετικέτα “%1$s”</string>

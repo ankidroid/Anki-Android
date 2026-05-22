@@ -2049,7 +2049,7 @@ fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
     }
 }
 
-fun CardBrowser.clickRowAtPosition(pos: Int) = cardBrowserFragment.onTap(viewModel.cards[pos])
+fun CardBrowser.clickRowAtPosition(pos: Int) = viewModel.onTap(viewModel.cards[pos].toRowSelection())
 
 fun CardBrowser.longClickRowAtPosition(pos: Int) = viewModel.handleRowLongPress(viewModel.cards[pos].toRowSelection())
 

@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
@@ -28,13 +29,13 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.Info
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.FragmentAboutBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.Fsrs
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
@@ -48,7 +49,8 @@ import java.util.Locale
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
 class AboutFragment : Fragment(R.layout.fragment_about) {
-    private val binding by viewBinding(FragmentAboutBinding::bind)
+    @VisibleForTesting
+    val binding by viewBinding(FragmentAboutBinding::bind)
 
     override fun onViewCreated(
         view: View,

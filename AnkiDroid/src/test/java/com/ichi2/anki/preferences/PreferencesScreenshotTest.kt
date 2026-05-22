@@ -2,18 +2,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.preferences
 
+import androidx.preference.Preference
 import androidx.test.core.app.ActivityScenario
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.settings.Prefs
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class PreferencesScreenshotTest : ScreenshotTest() {
     init {
         Prefs.isNewStudyScreenEnabled = true
-        setPhoneQualifiers()
     }
 
     @Test
@@ -26,7 +25,20 @@ class PreferencesScreenshotTest : ScreenshotTest() {
                 .launch<PreferencesActivity>(
                     PreferencesActivity.getIntent(targetContext, fragmentClass),
                 ).use { scenario ->
-                    scenario.onActivity {
+                    scenario.onActivity { activity ->
+                        val mainFragment = activity!!.fragment as PreferencesFragment
+                        val settingsFragment = mainFragment.childFragmentManager.findFragmentById(R.id.settings_container)
+                        // Robolectric generates a different temporary path every time,
+                        // so avoid creating an unnecessary diff in the collection path pref summary
+                        (settingsFragment as? AdvancedSettingsFragment)?.apply {
+                            requirePreference<Preference>(CollectionHelper.PREF_COLLECTION_PATH).summaryProvider = {
+                                "/storage/emulated/0/AnkiDroid"
+                            }
+                        }
+                        (settingsFragment as? AboutFragment)?.apply {
+                            binding.buildDate.text = "May 18, 2026"
+                            binding.version.text = "2.24.0-screenshot"
+                        }
                         captureScreen(fragmentClass.simpleName!!)
                     }
                 }

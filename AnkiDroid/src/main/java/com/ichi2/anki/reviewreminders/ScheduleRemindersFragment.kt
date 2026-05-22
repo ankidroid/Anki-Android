@@ -24,14 +24,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.BundleCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -43,14 +40,14 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.canUserAccessDeck
 import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
 import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
@@ -60,20 +57,16 @@ import timber.log.Timber
 /**
  * Fragment for creating, viewing, editing, and deleting review reminders.
  */
-class ScheduleReminders :
+class ScheduleRemindersFragment :
     Fragment(R.layout.fragment_schedule_reminders),
-    DeckSelectionDialog.DeckSelectionListener,
     BaseSnackbarBuilderProvider {
     /**
      * Whether this fragment has been opened to edit all review reminders or just a specific deck's reminders.
      * @see ReviewReminderScope
      */
     private val scheduleRemindersScope: ReviewReminderScope by lazy {
-        BundleCompat.getParcelable(
-            requireArguments(),
-            EXTRAS_SCOPE_KEY,
-            ReviewReminderScope::class.java,
-        ) ?: ReviewReminderScope.Global
+        requireArguments().getParcelableCompat<ReviewReminderScope>(ARGS_SCOPE)
+            ?: ReviewReminderScope.Global
     }
 
     private val binding by viewBinding(FragmentScheduleRemindersBinding::bind)
@@ -187,21 +180,9 @@ class ScheduleReminders :
 
         // If the user creates or edits a review reminder, the dialog for doing so opens
         // Once their changes are complete, the dialog closes and this fragment is reloaded
-        // Hence, we check for any fragment results here and update the database accordingly
-        setFragmentResultListener(ADD_EDIT_DIALOG_RESULT_REQUEST_KEY) { _, bundle ->
-            val modeOfFinishedDialog =
-                BundleCompat.getParcelable(
-                    requireArguments(),
-                    ACTIVE_DIALOG_MODE_ARGUMENTS_KEY,
-                    AddEditReminderDialog.DialogMode::class.java,
-                ) ?: return@setFragmentResultListener
-            val newOrModifiedReminder =
-                BundleCompat.getParcelable(
-                    bundle,
-                    ADD_EDIT_DIALOG_RESULT_REQUEST_KEY,
-                    ReviewReminder::class.java,
-                )
-            Timber.d("Dialog result received with recent dialog mode: %s", modeOfFinishedDialog)
+        // Hence, we check for any fragment results and update the database accordingly
+        registerAddEditReminderHandler { newOrModifiedReminder, modeOfFinishedDialog ->
+            Timber.i("Received result from add/edit dialog: mode=%s reminder=%s", modeOfFinishedDialog, newOrModifiedReminder)
             handleAddEditDialogResult(newOrModifiedReminder, modeOfFinishedDialog)
         }
     }
@@ -433,8 +414,6 @@ class ScheduleReminders :
         Timber.d("Adding new review reminder")
         val dialogMode = AddEditReminderDialog.DialogMode.Add(scheduleRemindersScope)
         val dialog = AddEditReminderDialog.getInstance(dialogMode)
-        // Save the dialog mode so that we refer back to it once the dialog closes
-        requireArguments().putParcelable(ACTIVE_DIALOG_MODE_ARGUMENTS_KEY, dialogMode)
         showDialogFragment(dialog)
     }
 
@@ -446,29 +425,11 @@ class ScheduleReminders :
         Timber.d("Editing review reminder: %s", reminder.id)
         val dialogMode = AddEditReminderDialog.DialogMode.Edit(reminder)
         val dialog = AddEditReminderDialog.getInstance(dialogMode)
-        // Save the dialog mode so that we refer back to it once the dialog closes
-        requireArguments().putParcelable(ACTIVE_DIALOG_MODE_ARGUMENTS_KEY, dialogMode)
         showDialogFragment(dialog)
     }
 
     /**
-     * [AddEditReminderDialog] requires a [DeckSelectionDialog.DeckSelectionListener] to catch changes to
-     * the [DeckSelectionDialog]. However, [AddEditReminderDialog] is removed from the
-     * fragment stack when the [DeckSelectionDialog] appears, so we set [ScheduleReminders] as the listener
-     * and forward data to [AddEditReminderDialog] when a deck is selected.
-     */
-    override fun onDeckSelected(deck: SelectableDeck?) {
-        Timber.d("Deck selected in deck spinner: %s", deck)
-        setFragmentResult(
-            DECK_SELECTION_RESULT_REQUEST_KEY,
-            Bundle().apply {
-                putParcelable(DECK_SELECTION_RESULT_REQUEST_KEY, deck)
-            },
-        )
-    }
-
-    /**
-     * Trigger a RecyclerView UI update for ScheduleReminders.
+     * Trigger a RecyclerView UI update for this fragment.
      * If there are no reminders to display, show the "No Reminders" placeholder icon and text.
      */
     private fun triggerUIUpdate() {
@@ -490,27 +451,7 @@ class ScheduleReminders :
         /**
          * Arguments key for passing the [ReviewReminderScope] to open this fragment with.
          */
-        private const val EXTRAS_SCOPE_KEY = "scope"
-
-        /**
-         * Arguments key for storing the current or latest [AddEditReminderDialog] instance.
-         * We save this so we can pass [onDeckSelected] onward to the dialog
-         * and so we can determine what reminder has been recently edited.
-         */
-        private const val ACTIVE_DIALOG_MODE_ARGUMENTS_KEY = "active_dialog_mode"
-
-        /**
-         * Fragment result key for receiving the result of [AddEditReminderDialog].
-         * Public so [AddEditReminderDialog] can access it, too.
-         */
-        const val ADD_EDIT_DIALOG_RESULT_REQUEST_KEY = "add_edit_reminder_dialog_result_request_key"
-
-        /**
-         * Fragment result key for sending [AddEditReminderDialog] the result of the deck spinner selection event.
-         * Public so [AddEditReminderDialog] can access it, too.
-         * @see onDeckSelected
-         */
-        const val DECK_SELECTION_RESULT_REQUEST_KEY = "reminder_deck_selection_result_request_key"
+        private const val ARGS_SCOPE = "scope"
 
         /**
          * Wrapper for database access in this fragment.
@@ -523,9 +464,9 @@ class ScheduleReminders :
             }
 
         /**
-         * Creates an intent to start the ScheduleReminders fragment.
+         * Creates an intent to launch this fragment in a [SingleFragmentActivity].
          * @param context
-         * @param scope The editing scope of the ScheduleReminders fragment.
+         * @param scope The editing scope of this fragment.
          * @return The new intent.
          */
         fun getIntent(
@@ -535,12 +476,12 @@ class ScheduleReminders :
             SingleFragmentActivity
                 .getIntent(
                     context,
-                    ScheduleReminders::class,
+                    ScheduleRemindersFragment::class,
                     Bundle().apply {
-                        putParcelable(EXTRAS_SCOPE_KEY, scope)
+                        putParcelable(ARGS_SCOPE, scope)
                     },
                 ).apply {
-                    Timber.i("launching ScheduleReminders for %s scope", scope)
+                    Timber.i("launching ScheduleRemindersFragment for %s scope", scope)
                 }
     }
 }

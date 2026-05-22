@@ -94,6 +94,9 @@ object SentenceCase {
     context(_: Fragment)
     val checkMediaAction get() = TR.mediaCheckCheckMediaAction().toSentenceCase(R.string.sentence_check_media)
 
+    context(_: Context)
+    val customStudy get() = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study)
+
     context(_: Fragment)
     val customStudy get() = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study)
 
@@ -133,6 +136,93 @@ object SentenceCase {
 
     context(_: Fragment)
     val findAndReplace get() = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
+
+    context(_: Context)
+    val frontTemplate get() = TR.cardTemplatesFrontTemplate().toSentenceCase(R.string.sentence_front_template)
+
+    context(_: Context)
+    val backTemplate get() = TR.cardTemplatesBackTemplate().toSentenceCase(R.string.sentence_back_template)
+
+    context(_: Context)
+    val renameDeck get() = TR.actionsRenameDeck().toSentenceCase(R.string.sentence_rename_deck)
+
+    context(_: Context)
+    val deckOptions get() = TR.deckConfigTitle().toSentenceCase(R.string.sentence_deck_options)
+
+    context(_: Context)
+    val deleteDeck get() = TR.decksDeleteDeck().toSentenceCase(R.string.sentence_delete_deck)
+
+    context(_: Context)
+    val logIn get() = TR.syncLogInButton().toSentenceCase(R.string.sentence_log_in)
+
+    context(_: Fragment)
+    val logIn get() = TR.syncLogInButton().toSentenceCase(R.string.sentence_log_in)
+
+    context(_: Context)
+    val logOut get() = TR.syncLogOutButton().toSentenceCase(R.string.sentence_log_out)
+
+    context(_: Fragment)
+    val logOut get() = TR.syncLogOutButton().toSentenceCase(R.string.sentence_log_out)
+
+    context(_: Context)
+    val cardInfo get() = TR.actionsCardInfo().toSentenceCase(R.string.sentence_card_info)
+
+    context(_: Fragment)
+    val cardInfo get() = TR.actionsCardInfo().toSentenceCase(R.string.sentence_card_info)
+
+    context(_: Context)
+    val buryNote get() = TR.studyingBuryNote().toSentenceCase(R.string.sentence_bury_note)
+
+    context(_: Fragment)
+    val buryNote get() = TR.studyingBuryNote().toSentenceCase(R.string.sentence_bury_note)
+
+    context(_: Context)
+    val buryCard get() = TR.studyingBuryCard().toSentenceCase(R.string.sentence_bury_card)
+
+    context(_: Fragment)
+    val buryCard get() = TR.studyingBuryCard().toSentenceCase(R.string.sentence_bury_card)
+
+    context(_: Context)
+    val suspendNote get() = TR.studyingSuspendNote().toSentenceCase(R.string.sentence_suspend_note)
+
+    context(_: Fragment)
+    val suspendNote get() = TR.studyingSuspendNote().toSentenceCase(R.string.sentence_suspend_note)
+
+    context(_: Context)
+    val suspendCard get() = TR.actionsSuspendCard().toSentenceCase(R.string.sentence_suspend_card)
+
+    context(_: Fragment)
+    val suspendCard get() = TR.actionsSuspendCard().toSentenceCase(R.string.sentence_suspend_card)
+
+    context(_: Context)
+    val markNote get() = TR.studyingMarkNote().toSentenceCase(R.string.sentence_mark_note)
+
+    context(_: Fragment)
+    val markNote get() = TR.studyingMarkNote().toSentenceCase(R.string.sentence_mark_note)
+
+    context(_: Context)
+    val deleteNote get() = TR.studyingDeleteNote().toSentenceCase(R.string.sentence_delete_note)
+
+    context(_: Fragment)
+    val deleteNote get() = TR.studyingDeleteNote().toSentenceCase(R.string.sentence_delete_note)
+
+    context(_: Context)
+    val previousCardInfo get() = TR.actionsPreviousCardInfo().toSentenceCase(R.string.sentence_actions_previous_card_info)
+
+    context(_: Fragment)
+    val previousCardInfo get() = TR.actionsPreviousCardInfo().toSentenceCase(R.string.sentence_actions_previous_card_info)
+
+    context(_: Context)
+    val ankiWebAccount get() = TR.preferencesAccount().toSentenceCase(R.string.sentence_ankiweb_account)
+
+    context(_: Fragment)
+    val ankiWebAccount get() = TR.preferencesAccount().toSentenceCase(R.string.sentence_ankiweb_account)
+
+    context(_: Context)
+    val browserAppearance get() = TR.browsingBrowserAppearance().toSentenceCase(R.string.sentence_browser_appearance)
+
+    context(_: Fragment)
+    val browserAppearance get() = TR.browsingBrowserAppearance().toSentenceCase(R.string.sentence_browser_appearance)
 }
 
 /**

@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir gaveta</string>
@@ -189,7 +178,6 @@
     <string name="menu__deck_options" maxLength="28">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
     <string name="select_tts" maxLength="28">Definir idioma TTS</string>
-    <string name="custom_study" maxLength="28">Estudo personalizado</string>
     <string name="dyn_deck_desc">Esse é um baralho especial para estudar fora do planejamento normal. Os cards retornarão um a um para os baralhos originais após revisá-los. Ao apagar esse baralho os cards restantes retornarão automaticamente à seus baralhos originais.</string>
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
@@ -264,7 +252,7 @@
     <string name="note_editor_audio_too_large">O arquivo de áudio é muito grande, por favor insira o áudio manualmente</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Backup do Android em progresso. Por favor, tente novamente</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Por favor use o iManager para que AnkiDroid possa adicionar atalhos</string>
-    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Permitir \'Atalhos da tela inicial\' nas configurações do sistema para %s adicionar atalhos</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Sua tela de início não permite que AnkiDroid adicione atalhos</string>
     <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Iniciar frases em letra maíuscula</string>
@@ -393,7 +381,7 @@
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!--Set up date-->
-    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
-    <string name="set_due_date_date_range">Date range</string>
-    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <string name="set_due_date_day" comment="Used for setting due date">Dia</string>
+    <string name="set_due_date_date_range">Intervalo de datas</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Já em progresso</string>
 </resources>

@@ -91,14 +91,16 @@ import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -218,7 +220,6 @@ const val CALLER_KEY = "caller"
 @NeedsTest("19733")
 class NoteEditorFragment :
     Fragment(R.layout.fragment_note_editor),
-    DeckSelectionListener,
     TagsDialogListener,
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
@@ -437,19 +438,16 @@ class NoteEditorFragment :
             return@OnReceiveContentListener remaining
         }
 
-    private inner class NoteEditorActivityResultCallback(
+    private class NoteEditorActivityResultCallback(
         private val callback: (result: ActivityResult) -> Unit,
     ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             Timber.d("onActivityResult() with result: %s", result.resultCode)
-            if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
-                closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
-            }
             callback(result)
         }
     }
 
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
             return
         }
@@ -569,7 +567,7 @@ class NoteEditorFragment :
             )
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
-
+        registerDeckSelectedHandler(REQUEST_DECK_SELECTION_NOTE_EDITOR, ::onDeckSelected)
         try {
             setupEditor(getColUnsafe)
         } catch (ex: RuntimeException) {
@@ -868,7 +866,7 @@ class NoteEditorFragment :
         view?.findViewById<TextView>(R.id.note_deck_name)?.apply {
             text = col.decks.name(deckId)
             setOnClickListener {
-                startDeckSelection(all = false, filtered = false)
+                startDeckSelection(all = false, filtered = false, requestKey = REQUEST_DECK_SELECTION_NOTE_EDITOR)
             }
         }
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
@@ -1101,7 +1099,13 @@ class NoteEditorFragment :
                 }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
-                    launchCatchingTask { startDeckSelection(all = false, filtered = false) }
+                    launchCatchingTask {
+                        startDeckSelection(
+                            all = false,
+                            filtered = false,
+                            requestKey = REQUEST_DECK_SELECTION_NOTE_EDITOR,
+                        )
+                    }
                     return true
                 }
             KeyEvent.KEYCODE_L ->
@@ -2905,6 +2909,7 @@ class NoteEditorFragment :
         const val EXTRA_IMG_OCCLUSION = "image_uri"
         const val IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
         const val EXTRA_CARD_IDS = "EXTRA_CARD_IDS"
+        const val REQUEST_DECK_SELECTION_NOTE_EDITOR = "request_deck_selection_note_editor"
 
         // calling activity
         enum class NoteEditorCaller(

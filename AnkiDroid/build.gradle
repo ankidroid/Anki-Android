@@ -277,10 +277,21 @@ android {
                     if (project.hasProperty("screenshot")) {
                         includeTags "com.ichi2.anki.ScreenshotTestCategory"
 
-                        // ./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot -Ptheme=dark
-                        systemProperty "screenshot.theme", project.findProperty("theme") ?: "light"
-                        // ./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot -Pdevice=tablet
-                        systemProperty "screenshot.device", project.findProperty("device") ?: "phone"
+                        // ./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot -Ptheme=black -Pdevice=tablet,foldable
+                        def theme = project.findProperty("theme") ?: "light"
+                        def device = project.findProperty("device") ?: "phone"
+                        def validateInput = { Object input, List<String> validOptions ->
+                            def requested = input.toString().split(',').collect { it.trim().toLowerCase() }
+                            def invalid = requested - validOptions
+                            if (!invalid.isEmpty()) {
+                                throw new GradleException("Invalid param: '${invalid.join(', ')}'. Valid options: ${validOptions.join(', ')}.")
+                            }
+                        }
+                        validateInput(theme, ["light", "plain", "dark", "black", "all"])
+                        validateInput(device, ["phone", "tablet", "foldable", "desktop", "all"])
+
+                        systemProperty "screenshot.theme", theme
+                        systemProperty "screenshot.device", device
                     } else {
                         excludeTags "com.ichi2.anki.ScreenshotTestCategory"
                     }
@@ -510,6 +521,7 @@ dependencies {
     testImplementation libs.mockito.inline
     testImplementation libs.mockito.kotlin
     testImplementation libs.hamcrest
+    testImplementation libs.test.parameter.injector
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation libs.robolectric
     testImplementation libs.androidx.test.core

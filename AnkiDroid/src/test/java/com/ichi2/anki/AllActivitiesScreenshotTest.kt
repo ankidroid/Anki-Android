@@ -1,5 +1,5 @@
-// SPDX-FileCopyrightText: 2026 David Allison <davidallisongithub@gmail.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki
 
 import android.app.Activity
@@ -7,15 +7,15 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.content.edit
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.preferences.PreferencesActivity
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.testutils.ActivityList
@@ -26,8 +26,6 @@ import com.ichi2.utils.dp
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
 
 /**
  * Captures a baseline screenshot for every activity declared in the manifest.
@@ -38,30 +36,18 @@ import org.robolectric.ParameterizedRobolectricTestRunner
  *
  * TODO: Split each activity into its own per-class screenshot test
  */
-@RunWith(ParameterizedRobolectricTestRunner::class)
 class AllActivitiesScreenshotTest : ScreenshotTest() {
-    @ParameterizedRobolectricTestRunner.Parameter
-    @JvmField
-    var launcher: ActivityLaunchParam? = null
+    @TestParameter(valuesProvider = ActivityLauncherProvider::class)
+    lateinit var config: ActivityConfig
 
-    // Used for display and the screenshot filename (e.g. "DeckPicker" or "DeckPicker_edgeToEdge")
-    @ParameterizedRobolectricTestRunner.Parameter(1)
-    @JvmField
-    var displayName: String? = null
-
-    @ParameterizedRobolectricTestRunner.Parameter(2)
-    @JvmField
-    var configure: (Activity.() -> Unit)? = null
+    @TestParameter
+    var isEdgeToEdge: Boolean = false
 
     @Before
     override fun setUp() {
         // Same exclusions as ActivityStartupUnderBackupTest — onCreate fails standalone for these.
         notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
-        notYetHandled(
-            PreferencesActivity::class.java.simpleName,
-            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
-        )
         notYetHandled(
             SingleFragmentActivity::class.java.simpleName,
             "Implemented, but the test fails because the activity throws if a specific intent extra isn't set",
@@ -71,21 +57,9 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
         // Fragment-host activities: need a 'fragmentName' intent extra to render anything.
         // TODO: split these into per-class screenshot tests that pass a real fragment.
         notYetHandled(ConfigAwareSingleFragmentActivity::class.java.simpleName, "Needs 'fragmentName' intent extra")
-        notYetHandled(CardViewerActivity::class.java.simpleName, "Needs 'fragmentName' intent extra")
         notYetHandled(MultimediaActivity::class.java.simpleName, "Needs 'fragmentName' intent extra")
-        notYetHandled(AccountActivity::class.java.simpleName, "Needs 'fragmentName' intent extra")
-
-        // TODO: split into a per-class test that creates a real note type before launching.
-        notYetHandled(CardTemplateEditor::class.java.simpleName, "Needs a real note type in the collection")
 
         super.setUp()
-
-        // Setup for DeckPicker
-        ensureCollectionLoadIsSynchronous()
-        setIntroductionSlidesShown(true)
-        BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
-        // suppress the periodic 'backup your collection' prompt so the screenshot is just the activity
-        targetContext.sharedPrefs().edit { putBoolean("backupPromptDisabled", true) }
     }
 
     @After
@@ -95,37 +69,57 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
 
     @Test
     fun screenshot() {
+        val launcher = config.launcher
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
-                launcher!!.activity,
-                launcher!!.buildIntent(targetContext),
+                launcher.activity,
+                launcher.buildIntent(targetContext),
             )
-        configure!!(activity)
-        captureScreen(displayName!!)
+
+        if (isEdgeToEdge) {
+            activity.simulateEdgeToEdge()
+        }
+
+        val displayName = launcher.simpleName + if (isEdgeToEdge) "_edgeToEdge" else ""
+        captureScreen(displayName)
     }
 
     private fun notYetHandled(
         activityName: String,
         reason: String,
     ) {
-        if (launcher!!.simpleName == activityName) {
+        if (config.launcher.simpleName == activityName) {
             skipTest("$activityName $reason")
         }
     }
 
-    companion object {
-        private val regular: Activity.() -> Unit = {}
-        private val edgeToEdge: Activity.() -> Unit = { simulateEdgeToEdge() }
+    /** Wraps the launcher so JUnit formats the test name correctly */
+    class ActivityConfig(
+        val launcher: ActivityLaunchParam,
+    ) {
+        override fun toString(): String = launcher.simpleName
+    }
 
-        @ParameterizedRobolectricTestRunner.Parameters(name = "{1}")
-        @JvmStatic
-        fun initParameters(): Collection<Array<Any>> =
-            ActivityList.allActivitiesAndIntents().flatMap { launcher ->
-                listOf(
-                    arrayOf<Any>(launcher, launcher.simpleName, regular),
-                    arrayOf<Any>(launcher, "${launcher.simpleName}_edgeToEdge", edgeToEdge),
+    class ActivityLauncherProvider : TestParameterValuesProvider() {
+        override fun provideValues(context: Context?): List<ActivityConfig> {
+            val handled =
+                setOf(
+                    // AccountActivityScreenshotTest
+                    AccountActivity::class.java,
+                    // CardTemplateEditorScreenshotTest
+                    CardTemplateEditor::class.java,
+                    // DeckPickerScreenshotTest
+                    DeckPicker::class.java,
+                    // StudyScreenScreenshotTest, PreviewerScreenshotTest and TemplatePreviewerScreenshotTest
+                    CardViewerActivity::class.java,
+                    // PreferencesScreenshotTest
+                    PreferencesActivity::class.java,
                 )
-            }
+            return ActivityList
+                .allActivitiesAndIntents()
+                .filterNot { handled.contains(it.activity) }
+                .map { ActivityConfig(it) }
+        }
     }
 }
 

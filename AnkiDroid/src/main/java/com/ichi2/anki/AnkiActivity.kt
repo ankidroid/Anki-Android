@@ -28,6 +28,7 @@ import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.AttrRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -49,6 +50,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
@@ -64,6 +66,7 @@ import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
@@ -77,12 +80,15 @@ import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.SimpleMessageDialog
+import com.ichi2.anki.dialogs.handleExportReadyRequest
+import com.ichi2.anki.dialogs.viewmodel.ExportReadyViewModel
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.AnimUtils
 import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
@@ -92,6 +98,7 @@ import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -105,6 +112,8 @@ open class AnkiActivity(
 ) : AppCompatActivity(contentLayoutId ?: 0),
     ShortcutGroupProvider,
     AnkiActivityProvider {
+    val exportReadyViewModel by viewModels<ExportReadyViewModel>()
+
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
      *
@@ -159,6 +168,13 @@ open class AnkiActivity(
                 asText = bundle.getBoolean(ARG_SHARE_AS_TEXT, false),
             )
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                exportReadyViewModel.exportReadyDestination.filterNotNull().collect(::handleExportReadyRequest)
+            }
+        }
+
         if (savedInstanceState != null) {
             val restoredValue = savedInstanceState.getString(KEY_EXPORT_FILE_NAME) ?: return
             fileExportPath = restoredValue
@@ -284,10 +300,7 @@ open class AnkiActivity(
      *
      * @see .animationEnabled
      */
-    fun animationDisabled(): Boolean {
-        val preferences = this.sharedPrefs()
-        return preferences.getBoolean("safeDisplay", false)
-    }
+    fun animationDisabled(): Boolean = !AnimUtils.areAnimationsEnabled(this)
 
     /**
      * Whether animations should be displayed
@@ -335,7 +348,7 @@ open class AnkiActivity(
     ) {
         enableIntentAnimation(intent)
         super.startActivity(intent)
-        enableActivityAnimation(animation)
+        enableActivityAnimation(animation, open = true)
     }
 
     override fun finish() {
@@ -345,15 +358,19 @@ open class AnkiActivity(
     fun finishWithAnimation(animation: Direction) {
         Timber.i("finishWithAnimation %s", animation)
         super.finish()
-        enableActivityAnimation(animation)
+        enableActivityAnimation(animation, open = false)
     }
 
     private fun disableIntentAnimation(intent: Intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
     }
 
-    private fun disableActivityAnimation() {
-        ActivityTransitionAnimation.slide(this, NONE)
+    /**
+     * @param open when `true`, overrides the animation for entering this activity.
+     * When `false`, overrides the animation for closing this activity
+     */
+    private fun disableActivityAnimation(open: Boolean) {
+        ActivityTransitionAnimation.slide(this, NONE, open)
     }
 
     @KotlinCleanup("Maybe rename this? This only disables the animation conditionally")
@@ -363,11 +380,18 @@ open class AnkiActivity(
         }
     }
 
-    private fun enableActivityAnimation(animation: Direction) {
+    /**
+     * @param open when `true`, overrides the animation for entering this activity.
+     * When `false`, overrides the animation for closing this activity
+     */
+    private fun enableActivityAnimation(
+        animation: Direction,
+        open: Boolean,
+    ) {
         if (animationDisabled()) {
-            disableActivityAnimation()
+            disableActivityAnimation(open)
         } else {
-            ActivityTransitionAnimation.slide(this, animation)
+            ActivityTransitionAnimation.slide(this, animation, open)
         }
     }
 

@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">ಡ್ರಾಯರ್ ತೆರೆಯಿರಿ</string>
@@ -189,7 +178,6 @@
     <string name="menu__deck_options" maxLength="28">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ಅಧ್ಯಯನ ಆಯ್ಕೆಗಳು</string>
     <string name="select_tts" maxLength="28">TTS ಭಾಷೆಯನ್ನು ಹೊಂದಿಸಿ</string>
-    <string name="custom_study" maxLength="28">ಕಸ್ಟಮ್ ಅಧ್ಯಯನ</string>
     <string name="dyn_deck_desc">ಸಾಮಾನ್ಯ ವೇಳಾಪಟ್ಟಿಯ ಹೊರಗೆ ಅಧ್ಯಯನ ಮಾಡಲು ಇದು ವಿಶೇಷ ಡೆಕ್ ಆಗಿದೆ. ನೀವು ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ನಂತರ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗಳಿಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ. ಡೆಕ್ ಪಟ್ಟಿಯಿಂದ ಈ ಡೆಕ್ ಅನ್ನು ಅಳಿಸುವುದರಿಂದ ಉಳಿದ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ.</string>
     <string name="tag_editor_add_feedback">“%1$s” ಸೇರಿಸುವುದನ್ನು ಖಚಿತಪಡಿಸಲು “%2$s” ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="tag_editor_add_feedback_existing">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟ್ಯಾಗ್ “%1$s” ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>

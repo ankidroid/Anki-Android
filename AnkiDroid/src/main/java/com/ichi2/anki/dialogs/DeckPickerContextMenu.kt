@@ -16,12 +16,13 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -29,6 +30,7 @@ import com.ichi2.anki.compat.requireSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.utils.title
@@ -45,7 +47,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             .Builder(requireActivity())
             .title(text = requireArguments().getString(ARG_DECK_NAME))
             .setItems(
-                options.map { resources.getString(it.optionName) }.toTypedArray(),
+                options.map { it.label(requireContext()) }.toTypedArray(),
             ) { _, index: Int ->
                 parentFragmentManager.setDeckPickerContextMenuResult(
                     DeckPickerContextMenuResult(
@@ -62,23 +64,42 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             requireArguments().getBoolean(ARG_DECK_HAS_BURIED_IN_DECK),
         )
 
-    enum class DeckPickerContextMenuOption(
-        @StringRes val optionName: Int,
-    ) {
-        RENAME_DECK(R.string.rename_deck),
-        DECK_OPTIONS(R.string.menu__deck_options),
-        CUSTOM_STUDY(R.string.custom_study),
-        DELETE_DECK(R.string.contextmenu_deckpicker_delete_deck),
-        EXPORT_DECK(R.string.export_deck),
-        UNBURY(R.string.unbury),
-        CUSTOM_STUDY_REBUILD(R.string.rebuild_cram_label),
-        CUSTOM_STUDY_EMPTY(R.string.empty_cram_label),
-        CREATE_SUBDECK(R.string.create_subdeck),
-        CREATE_SHORTCUT(R.string.create_shortcut),
-        BROWSE_CARDS(R.string.browse_cards),
-        EDIT_DESCRIPTION(R.string.edit_deck_description),
-        ADD_CARD(R.string.menu_add),
-        SCHEDULE_REMINDERS(R.string.schedule_reminders_do_not_translate),
+    enum class DeckPickerContextMenuOption {
+        RENAME_DECK,
+        DECK_OPTIONS,
+        CUSTOM_STUDY,
+        DELETE_DECK,
+        EXPORT_DECK,
+        UNBURY,
+        CUSTOM_STUDY_REBUILD,
+        CUSTOM_STUDY_EMPTY,
+        CREATE_SUBDECK,
+        CREATE_SHORTCUT,
+        BROWSE_CARDS,
+        EDIT_DESCRIPTION,
+        ADD_CARD,
+        SCHEDULE_REMINDERS,
+        ;
+
+        fun label(context: Context): String =
+            with(context) {
+                when (this@DeckPickerContextMenuOption) {
+                    RENAME_DECK -> TR.sentenceCase.renameDeck
+                    DECK_OPTIONS -> TR.sentenceCase.deckOptions
+                    CUSTOM_STUDY -> TR.sentenceCase.customStudy
+                    DELETE_DECK -> TR.sentenceCase.deleteDeck
+                    EXPORT_DECK -> getString(R.string.export_deck)
+                    UNBURY -> TR.studyingUnbury()
+                    CUSTOM_STUDY_REBUILD -> TR.actionsRebuild()
+                    CUSTOM_STUDY_EMPTY -> getString(R.string.empty_cram_label)
+                    CREATE_SUBDECK -> getString(R.string.create_subdeck)
+                    CREATE_SHORTCUT -> getString(R.string.create_shortcut)
+                    BROWSE_CARDS -> getString(R.string.browse_cards)
+                    EDIT_DESCRIPTION -> getString(R.string.edit_deck_description)
+                    ADD_CARD -> TR.actionsAdd()
+                    SCHEDULE_REMINDERS -> getString(R.string.schedule_reminders_do_not_translate)
+                }
+            }
     }
 
     companion object {
