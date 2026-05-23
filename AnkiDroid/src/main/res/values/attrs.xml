@@ -231,4 +231,25 @@
     <!-- Reminder troubleshooting -->
     <attr name="reminderTroubleshootingOk" format="color"/>
     <attr name="reminderTroubleshootingWarning" format="color"/>
+
+    <!-- Anki Design System tokens -->
+    <attr name="adsBackground" format="color"/>
+    <attr name="adsSurface" format="color"/>
+    <attr name="adsSurfaceElevated" format="color"/>
+    <attr name="adsBorder" format="color"/>
+    <attr name="adsForeground" format="color"/>
+    <attr name="adsMutedForeground" format="color"/>
+    <attr name="adsAccent" format="color"/>
+    <attr name="adsAccentMuted" format="color"/>
+    <attr name="adsDestructive" format="color"/>
+    <attr name="adsDestructiveMuted" format="color"/>
+    <attr name="adsGoodColor" format="color"/>
+    <attr name="adsGoodMuted" format="color"/>
+    <attr name="adsHardColor" format="color"/>
+    <attr name="adsHardMuted" format="color"/>
+    <attr name="adsEasyColor" format="color"/>
+    <attr name="adsEasyMuted" format="color"/>
+    <attr name="adsPopupBackground" format="color"/>
+    <attr name="adsRipple" format="color"/>
+    <attr name="adsDeckRowSelected" format="reference"/>
 </resources>

@@ -2,27 +2,48 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <style name="Base.Theme.Light" parent="@style/Theme.Material3.Light.NoActionBar">
+        <!-- Anki Design System tokens -->
+        <item name="adsBackground">@color/ads_light_background</item>
+        <item name="adsSurface">@color/ads_light_surface</item>
+        <item name="adsSurfaceElevated">@color/ads_light_surface_elevated</item>
+        <item name="adsBorder">@color/ads_light_border</item>
+        <item name="adsForeground">@color/ads_light_foreground</item>
+        <item name="adsMutedForeground">@color/ads_light_muted_foreground</item>
+        <item name="adsAccent">@color/ads_light_accent</item>
+        <item name="adsAccentMuted">@color/ads_light_accent_muted</item>
+        <item name="adsDestructive">@color/ads_light_destructive</item>
+        <item name="adsDestructiveMuted">@color/ads_light_destructive_muted</item>
+        <item name="adsGoodColor">@color/ads_light_good</item>
+        <item name="adsGoodMuted">@color/ads_light_good_muted</item>
+        <item name="adsHardColor">@color/ads_light_hard</item>
+        <item name="adsHardMuted">@color/ads_light_hard_muted</item>
+        <item name="adsEasyColor">@color/ads_light_easy</item>
+        <item name="adsEasyMuted">@color/ads_light_easy_muted</item>
+        <item name="adsPopupBackground">@color/ads_light_popup</item>
+        <item name="adsRipple">@color/ads_light_ripple</item>
+        <item name="adsDeckRowSelected">@drawable/ads_ripple_deck_selected</item>
+
         <!-- Android colors -->
-        <item name="colorPrimary">@color/material_light_blue_500</item>
-        <item name="colorPrimaryDark">@color/material_light_blue_700</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="colorAccent">@color/material_blue_grey_700</item>
+        <item name="colorPrimary">@color/ads_light_accent</item>
+        <item name="colorPrimaryDark">@color/ads_light_accent</item>
+        <item name="colorSurface">@color/ads_light_surface</item>
+        <item name="colorOnSurface">@color/ads_light_foreground</item>
+        <item name="colorAccent">@color/ads_light_accent</item>
         <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
-        <item name="colorSecondaryContainer">#C1E7FF</item>
+        <item name="colorSecondaryContainer">@color/ads_light_accent_muted</item>
 
-        <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
-        <item name="colorSurfaceContainerHigh">#E4F5FD</item>
-        <item name="colorSurfaceContainer">#0F03A9F4</item>
-        <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
+        <item name="colorSurfaceContainerHighest">@color/ads_light_surface_elevated</item>
+        <item name="colorSurfaceContainerHigh">@color/ads_light_surface_elevated</item>
+        <item name="colorSurfaceContainer">@color/ads_light_surface</item>
+        <item name="colorSurfaceContainerLow">@color/ads_light_background</item>
 
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
-        <item name="android:colorBackground">@android:color/white</item>
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="preferenceCategoryTitleTextColor">@color/material_light_blue_800</item>
-        <item name="colorOnSurface">@color/black</item>
+        <item name="android:colorBackground">@color/ads_light_background</item>
+        <item name="android:windowBackground">@color/ads_light_background</item>
+        <item name="preferenceCategoryTitleTextColor">@color/ads_light_muted_foreground</item>
+        <item name="colorOnSurface">@color/ads_light_foreground</item>
         <!-- Widget colors -->
         <item name="widgetColorActivated">?attr/colorPrimary</item>
         <!-- Navigation drawer theme -->
@@ -33,30 +54,30 @@
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- Action bar styles -->
-        <item name="appBarColor">?attr/colorPrimary</item>
+        <item name="appBarColor">@color/ads_light_background</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionBarTextColor">@color/white</item>
+        <item name="actionBarTextColor">@color/ads_light_foreground</item>
         <item name="actionBarPopupTextColor">?android:attr/textColor</item>
         <item name="actionModeBackground">?attr/colorPrimary</item>
         <!-- Tab layout -->
-        <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
-        <item name="tabActiveIconColor">@color/white</item>
+        <item name="tabLayoutBackgroundColor">@color/ads_light_background</item>
+        <item name="tabActiveIconColor">@color/ads_light_accent</item>
         <!-- Deck list colors and divider -->
-        <item name="currentDeckBackground">@drawable/item_background_selected</item>
-        <item name="currentDeckBackgroundColor">#ececec</item>
-        <item name="focusedRowBackgroundColor">#ececec</item>
-        <item name="dynDeckColor">#2222bb</item>
+        <item name="currentDeckBackground">@drawable/ads_ripple_deck_selected</item>
+        <item name="currentDeckBackgroundColor">@color/ads_light_surface_elevated</item>
+        <item name="focusedRowBackgroundColor">@color/ads_light_surface_elevated</item>
+        <item name="dynDeckColor">@color/ads_light_accent</item>
         <item name="deckDivider">@drawable/divider</item>
         <item name="expandRef">@drawable/ic_chevron_right_black</item>
         <item name="collapseRef">@drawable/ic_expand_more_black</item>
         <!-- Count colors -->
-        <item name="newCountColor">@color/material_indigo_700</item>
-        <item name="learnCountColor">@color/material_red_700</item>
-        <item name="reviewCountColor">@color/material_green_800</item>
-        <item name="buryCountColor">@color/disabled_gray_light</item>
-        <item name="zeroCountColor">#1f000000</item>
+        <item name="newCountColor">@color/ads_light_accent</item>
+        <item name="learnCountColor">@color/ads_light_destructive</item>
+        <item name="reviewCountColor">@color/ads_light_good</item>
+        <item name="buryCountColor">@color/ads_light_muted_foreground</item>
+        <item name="zeroCountColor">@color/ads_light_border</item>
         <!-- Study Screen colors -->
         <item name="againButtonBackground">@color/material_red_700</item>
         <item name="hardButtonBackground">@color/material_blue_grey_700</item>
@@ -71,20 +92,20 @@
         <item name="easyButtonTextColor">@color/white</item>
 
         <item name="alternativeBackgroundColor">#f4f5f9</item>
-        <item name="againTextColor">@color/material_red_900</item>
-        <item name="hardTextColor">#B33800</item>
-        <item name="goodTextColor">@color/material_green_900</item>
-        <item name="easyTextColor">@color/material_light_blue_900</item>
-        <item name="againBackgroundColor">#ffFFCDD2</item>
-        <item name="hardBackgroundColor">#FFE0B2</item>
-        <item name="goodBackgroundColor">#C8E6C9</item>
-        <item name="easyBackgroundColor">@color/material_light_blue_100</item>
+        <item name="againTextColor">@color/ads_light_destructive</item>
+        <item name="hardTextColor">@color/ads_light_hard</item>
+        <item name="goodTextColor">@color/ads_light_good</item>
+        <item name="easyTextColor">@color/ads_light_easy</item>
+        <item name="againBackgroundColor">@color/ads_light_destructive_muted</item>
+        <item name="hardBackgroundColor">@color/ads_light_hard_muted</item>
+        <item name="goodBackgroundColor">@color/ads_light_good_muted</item>
+        <item name="easyBackgroundColor">@color/ads_light_easy_muted</item>
         <item name="againIconColor">?againTextColor</item>
         <item name="hardIconColor">?hardTextColor</item>
         <item name="goodIconColor">?goodTextColor</item>
         <item name="easyIconColor">?easyTextColor</item>
         <!-- Study Screen button drawables -->
-        <item name="showAnswerButtonBackground">@color/material_blue_700</item>
+        <item name="showAnswerButtonBackground">@color/ads_light_accent</item>
         <item name="showAnswerColor">@color/material_blue_grey_700</item>
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
@@ -112,8 +133,8 @@
         <item name="buttonRippleColor">#595959</item>
         <item name="buttonForegroundColor">#D6D7D7</item>
         <!-- FAB -->
-        <item name="fab_normal">@color/material_light_blue_700</item>
-        <item name="fab_pressed">@color/material_light_blue_900</item>
+        <item name="fab_normal">@color/ads_light_accent</item>
+        <item name="fab_pressed">@color/ads_light_accent</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <!-- Dialog styles -->
@@ -123,10 +144,11 @@
         <item name="textAllCaps">false</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
-        <item name="popupBackgroundColor">@android:color/white</item>
+        <item name="popupBackgroundColor">@color/ads_light_popup</item>
         <item name="overflowAndPopupMenuIconColor">#9e000000</item>
         <!-- StatusBar -->
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">@color/ads_light_background</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/semi_transparent_black</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
@@ -147,8 +169,8 @@
         <!-- Widget styles -->
         <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material3</item>
         <item name="sliderStyle">@style/SliderStyle</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.AnkiDroid</item>
-        <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Anki</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Anki.AlertDialog</item>
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/white</item>

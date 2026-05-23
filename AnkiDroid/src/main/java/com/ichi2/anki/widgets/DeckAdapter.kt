@@ -22,6 +22,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.content.withStyledAttributes
 import androidx.recyclerview.widget.DiffUtil
@@ -167,13 +168,10 @@ class DeckAdapter(
         binding.deckName.text = node.lastDeckNameComponent
         binding.deckName.setTextColor(if (node.filtered) deckNameDynColor else deckNameDefaultColor)
 
-        // Set the card counts and their colors
-        binding.deckNew.text = node.newCount.toString()
-        binding.deckNew.setTextColor(if (node.newCount == 0) zeroCountColor else newCountColor)
-        binding.deckLearn.text = node.lrnCount.toString()
-        binding.deckLearn.setTextColor(if (node.lrnCount == 0) zeroCountColor else learnCountColor)
-        binding.deckReview.text = node.revCount.toString()
-        binding.deckReview.setTextColor(if (node.revCount == 0) zeroCountColor else reviewCountColor)
+        // Set the card counts, colors, and chip backgrounds
+        setCountChip(binding.deckNew, node.newCount, newCountColor, zeroCountColor, R.drawable.ads_bg_chip_new)
+        setCountChip(binding.deckLearn, node.lrnCount, learnCountColor, zeroCountColor, R.drawable.ads_bg_chip_learn)
+        setCountChip(binding.deckReview, node.revCount, reviewCountColor, zeroCountColor, R.drawable.ads_bg_chip_review)
 
         holder.binding.deckLayout.setOnClickListener { onDeckSelected(node.did) }
         holder.binding.deckLayout.setOnLongClickListener {
@@ -192,6 +190,23 @@ class DeckAdapter(
             } else {
                 false
             }
+        }
+    }
+
+    private fun setCountChip(
+        view: TextView,
+        count: Int,
+        activeColor: Int,
+        zeroColor: Int,
+        activeBackground: Int,
+    ) {
+        view.text = count.toString()
+        if (count == 0) {
+            view.setTextColor(zeroColor)
+            view.setBackgroundResource(R.drawable.ads_bg_chip_zero)
+        } else {
+            view.setTextColor(activeColor)
+            view.setBackgroundResource(activeBackground)
         }
     }
 

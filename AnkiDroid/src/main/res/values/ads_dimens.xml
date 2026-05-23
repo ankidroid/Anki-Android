@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <!-- Spacing scale -->
+    <dimen name="ads_spacing_xs">4dp</dimen>
+    <dimen name="ads_spacing_sm">8dp</dimen>
+    <dimen name="ads_spacing_md">12dp</dimen>
+    <dimen name="ads_spacing_lg">16dp</dimen>
+    <dimen name="ads_spacing_xl">24dp</dimen>
+    <dimen name="ads_spacing_2xl">32dp</dimen>
+
+    <!-- Border radius -->
+    <dimen name="ads_radius_sm">8dp</dimen>
+    <dimen name="ads_radius_md">12dp</dimen>
+    <dimen name="ads_radius_lg">16dp</dimen>
+    <dimen name="ads_radius_full">999dp</dimen>
+
+    <!-- Component sizes -->
+    <dimen name="ads_button_height">48dp</dimen>
+    <dimen name="ads_button_height_sm">44dp</dimen>
+    <dimen name="ads_list_item_min_height">56dp</dimen>
+    <dimen name="ads_border_width">1dp</dimen>
+    <dimen name="ads_selected_border_width">3dp</dimen>
+    <dimen name="ads_chip_min_width">28dp</dimen>
+    <dimen name="ads_chip_height">24dp</dimen>
+    <dimen name="ads_toolbar_elevation">0dp</dimen>
+    <dimen name="ads_popup_corner_radius">12dp</dimen>
+    <dimen name="ads_dialog_corner_radius">12dp</dimen>
+</resources>

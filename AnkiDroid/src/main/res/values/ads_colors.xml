@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <!-- Anki Design System — dark palette (AMOLED-first, zinc-inspired) -->
+    <color name="ads_dark_background">#000000</color>
+    <color name="ads_dark_surface">#0a0a0a</color>
+    <color name="ads_dark_surface_elevated">#171717</color>
+    <color name="ads_dark_border">#27272a</color>
+    <color name="ads_dark_foreground">#fafafa</color>
+    <color name="ads_dark_muted_foreground">#a1a1aa</color>
+    <color name="ads_dark_accent">#3b82f6</color>
+    <color name="ads_dark_accent_muted">#1e3a5f</color>
+    <color name="ads_dark_destructive">#ef4444</color>
+    <color name="ads_dark_destructive_muted">#170e0e</color>
+    <color name="ads_dark_good">#22c55e</color>
+    <color name="ads_dark_good_muted">#0e1310</color>
+    <color name="ads_dark_hard">#f97316</color>
+    <color name="ads_dark_hard_muted">#19120c</color>
+    <color name="ads_dark_easy">#38bdf8</color>
+    <color name="ads_dark_easy_muted">#0c1317</color>
+    <color name="ads_dark_popup">#171717</color>
+    <color name="ads_dark_ripple">#33ffffff</color>
+
+    <!-- Anki Design System — light palette -->
+    <color name="ads_light_background">#ffffff</color>
+    <color name="ads_light_surface">#fafafa</color>
+    <color name="ads_light_surface_elevated">#f4f4f5</color>
+    <color name="ads_light_border">#e4e4e7</color>
+    <color name="ads_light_foreground">#09090b</color>
+    <color name="ads_light_muted_foreground">#71717a</color>
+    <color name="ads_light_accent">#2563eb</color>
+    <color name="ads_light_accent_muted">#dbeafe</color>
+    <color name="ads_light_destructive">#dc2626</color>
+    <color name="ads_light_destructive_muted">#fef2f2</color>
+    <color name="ads_light_good">#16a34a</color>
+    <color name="ads_light_good_muted">#dcfce7</color>
+    <color name="ads_light_hard">#ea580c</color>
+    <color name="ads_light_hard_muted">#ffedd5</color>
+    <color name="ads_light_easy">#0284c7</color>
+    <color name="ads_light_easy_muted">#e0f2fe</color>
+    <color name="ads_light_popup">#ffffff</color>
+    <color name="ads_light_ripple">#1f000000</color>
+</resources>

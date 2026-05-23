@@ -29,11 +29,11 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
-    <style name="AnswerButton" parent="Widget.Material3.Button.ElevatedButton">
+    <style name="AnswerButton" parent="Widget.Anki.Button.Answer">
         <item name="android:padding">0dp</item>
-        <item name="cornerRadius">@dimen/answer_button_corner_radius</item>
+        <item name="cornerRadius">@dimen/ads_radius_md</item>
         <item name="android:textSize">@dimen/reviewer_answer_button_textSize</item>
-        <item name="elevation">@dimen/study_screen_elevation</item>
+        <item name="elevation">0dp</item>
     </style>
 
     <!--  Material Design-style persistent footer button -->
@@ -107,13 +107,8 @@
         <item name="android:textColor">?attr/easyButtonTextColor</item>
     </style>
 
-    <!-- Action bar. Currently all action bar text is white in every theme. -->
-    <style name="ActionBarStyle" parent="Base.ThemeOverlay.AppCompat.ActionBar">
-        <!-- Colors: hamburger, title text, overflow icon -->
-        <item name="android:textColorPrimary">@color/white</item>
-        <!-- Colors: subtitle text -->
-        <item name="android:textColorSecondary">@color/white</item>
-        <!-- Overflow menu style -->
+    <!-- Action bar — uses ADS foreground colors -->
+    <style name="ActionBarStyle" parent="ThemeOverlay.Anki.ActionBar">
         <item name="popupTheme">@style/ActionBar.Popup</item>
     </style>
 
@@ -219,11 +214,7 @@
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
     </style>
 
-    <style name="ThemeOverlay.AnkiDroid.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="dialogCornerRadius">@dimen/m3_alert_dialog_corner_size</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/AnkiDroid.AlertDialog.Body.Text</item>
-        <item name="android:windowBackground">@drawable/material_dialog_background</item>
-    </style>
+    <style name="ThemeOverlay.AnkiDroid.AlertDialog" parent="ThemeOverlay.Anki.AlertDialog" />
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.FullScreen" parent="ThemeOverlay.AnkiDroid.AlertDialog">
         <item name="android:windowIsFloating">false</item>

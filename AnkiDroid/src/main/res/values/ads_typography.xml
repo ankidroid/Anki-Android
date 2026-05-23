@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+  <style name="TextAppearance.Anki.TitleLarge" parent="TextAppearance.Material3.TitleLarge" />
+  <style name="TextAppearance.Anki.TitleMedium" parent="TextAppearance.Material3.TitleMedium" />
+  <style name="TextAppearance.Anki.TitleSmall" parent="TextAppearance.Material3.TitleSmall" />
+  <style name="TextAppearance.Anki.BodyLarge" parent="TextAppearance.Material3.BodyLarge" />
+  <style name="TextAppearance.Anki.BodyMedium" parent="TextAppearance.Material3.BodyMedium" />
+  <style name="TextAppearance.Anki.BodySmall" parent="TextAppearance.Material3.BodySmall" />
+  <style name="TextAppearance.Anki.LabelLarge" parent="TextAppearance.Material3.LabelLarge" />
+  <style name="TextAppearance.Anki.LabelMedium" parent="TextAppearance.Material3.LabelMedium" />
+  <style name="TextAppearance.Anki.LabelSmall" parent="TextAppearance.Material3.LabelSmall" />
+
+  <style name="TextAppearance.Anki.DeckName" parent="TextAppearance.Anki.TitleMedium">
+    <item name="android:textStyle">normal</item>
+  </style>
+
+  <style name="TextAppearance.Anki.CountChip" parent="TextAppearance.Anki.LabelSmall">
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <style name="TextAppearance.Anki.AnswerButtonTime" parent="TextAppearance.Anki.BodySmall">
+    <item name="android:textColor">?attr/adsMutedForeground</item>
+  </style>
+
+  <style name="TextAppearance.Anki.AnswerButtonLabel" parent="TextAppearance.Anki.LabelLarge">
+    <item name="android:textStyle">bold</item>
+  </style>
+</resources>

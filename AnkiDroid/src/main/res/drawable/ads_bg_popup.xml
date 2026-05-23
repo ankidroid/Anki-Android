@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <corners android:radius="@dimen/ads_popup_corner_radius" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
     <solid android:color="?attr/adsPopupBackground" />
+    <corners android:radius="@dimen/ads_popup_corner_radius" />
     <stroke
         android:width="@dimen/ads_border_width"
         android:color="?attr/adsBorder" />

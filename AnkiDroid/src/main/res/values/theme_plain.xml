@@ -6,7 +6,7 @@
     <color name="theme_plain_accent">#607D8B</color>
     <color name="theme_plain_primary_text">#212121</color>
 
-    <style name="Base.Theme.Light.Plain">
+    <style name="Base.Theme.Light.Plain" parent="Theme_Light">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_plain_primary</item>
         <item name="colorPrimaryDark">@color/theme_plain_primary_dark</item>
@@ -72,7 +72,10 @@
         <item name="android:navigationBarColor">@color/semi_transparent_black</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
-        <item name="currentDeckBackground">@drawable/item_background_selected</item>
+        <item name="appBarColor">@color/ads_light_background</item>
+        <item name="fab_normal">@color/ads_light_accent</item>
+        <item name="fab_pressed">@color/ads_light_accent</item>
+        <item name="currentDeckBackground">@drawable/ads_ripple_deck_selected</item>
 
         <item name="snackbarButtonTextColor">#96bdce</item>
 

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <!-- Primary filled button -->
+    <style name="Widget.Anki.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/ads_button_height</item>
+        <item name="cornerRadius">@dimen/ads_radius_md</item>
+        <item name="backgroundTint">?attr/adsAccent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAppearance">@style/TextAppearance.Anki.LabelLarge</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!-- Outline button -->
+    <style name="Widget.Anki.Button.Outline" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/ads_button_height</item>
+        <item name="cornerRadius">@dimen/ads_radius_md</item>
+        <item name="strokeColor">?attr/adsBorder</item>
+        <item name="android:textColor">?attr/adsForeground</item>
+        <item name="android:textAppearance">@style/TextAppearance.Anki.LabelLarge</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!-- Ghost / text button -->
+    <style name="Widget.Anki.Button.Ghost" parent="Widget.Material3.Button.TextButton">
+        <item name="android:minHeight">@dimen/ads_button_height_sm</item>
+        <item name="cornerRadius">@dimen/ads_radius_sm</item>
+        <item name="android:textColor">?attr/adsForeground</item>
+        <item name="android:textAppearance">@style/TextAppearance.Anki.LabelLarge</item>
+        <item name="rippleColor">?attr/adsRipple</item>
+    </style>
+
+    <!-- Destructive button -->
+    <style name="Widget.Anki.Button.Destructive" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/ads_button_height</item>
+        <item name="cornerRadius">@dimen/ads_radius_md</item>
+        <item name="strokeColor">?attr/adsDestructive</item>
+        <item name="backgroundTint">?attr/adsDestructiveMuted</item>
+        <item name="android:textColor">?attr/adsDestructive</item>
+        <item name="android:textAppearance">@style/TextAppearance.Anki.LabelLarge</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!-- Answer buttons for reviewer -->
+    <style name="Widget.Anki.Button.Answer" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:padding">0dp</item>
+        <item name="android:minHeight">@dimen/ads_button_height</item>
+        <item name="cornerRadius">@dimen/ads_radius_md</item>
+        <item name="strokeColor">?attr/adsBorder</item>
+        <item name="strokeWidth">@dimen/ads_border_width</item>
+        <item name="android:textSize">@dimen/reviewer_answer_button_textSize</item>
+        <item name="elevation">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="Widget.Anki.Button.Answer.Again" parent="Widget.Anki.Button.Answer">
+        <item name="strokeColor">?attr/adsDestructive</item>
+        <item name="backgroundTint">?attr/adsDestructiveMuted</item>
+    </style>
+
+    <style name="Widget.Anki.Button.Answer.Hard" parent="Widget.Anki.Button.Answer">
+        <item name="strokeColor">?attr/adsHardColor</item>
+        <item name="backgroundTint">?attr/adsHardMuted</item>
+    </style>
+
+    <style name="Widget.Anki.Button.Answer.Good" parent="Widget.Anki.Button.Answer">
+        <item name="strokeColor">?attr/adsGoodColor</item>
+        <item name="backgroundTint">?attr/adsGoodMuted</item>
+    </style>
+
+    <style name="Widget.Anki.Button.Answer.Easy" parent="Widget.Anki.Button.Answer">
+        <item name="strokeColor">?attr/adsEasyColor</item>
+        <item name="backgroundTint">?attr/adsEasyMuted</item>
+    </style>
+
+  <style name="Widget.Anki.Button.ShowAnswer" parent="Widget.Anki.Button.Primary">
+        <item name="android:padding">0dp</item>
+        <item name="cornerRadius">@dimen/ads_radius_md</item>
+    </style>
+
+    <!-- FAB -->
+    <style name="Widget.Anki.ExtendedFab" parent="Widget.Material3.ExtendedFloatingActionButton.Primary">
+        <item name="backgroundTint">?attr/adsAccent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="iconTint">@color/white</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Anki.Fab</item>
+    </style>
+
+    <style name="Widget.Anki.ExtendedFab.Secondary" parent="Widget.Material3.ExtendedFloatingActionButton.Secondary">
+        <item name="backgroundTint">?attr/adsSurfaceElevated</item>
+        <item name="android:textColor">?attr/adsForeground</item>
+        <item name="iconTint">?attr/adsForeground</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Anki.Fab</item>
+    </style>
+
+    <style name="ShapeAppearance.Anki.Fab" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/ads_radius_lg</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="Widget.Anki.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?attr/adsBackground</item>
+        <item name="android:elevation">@dimen/ads_toolbar_elevation</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Anki.TitleLarge</item>
+        <item name="titleTextColor">?attr/adsForeground</item>
+        <item name="subtitleTextColor">?attr/adsMutedForeground</item>
+        <item name="navigationIconTint">?attr/adsForeground</item>
+    </style>
+
+    <style name="ThemeOverlay.Anki.ActionBar" parent="">
+        <item name="android:textColorPrimary">?attr/adsForeground</item>
+        <item name="android:textColorSecondary">?attr/adsMutedForeground</item>
+        <item name="colorControlNormal">?attr/adsForeground</item>
+    </style>
+
+    <!-- Navigation drawer -->
+    <style name="Widget.Anki.NavigationView" parent="Widget.Material3.NavigationView">
+        <item name="android:background">?attr/adsBackground</item>
+        <item name="itemIconTint">@color/ads_nav_item_color</item>
+        <item name="itemTextColor">@color/ads_nav_item_color</item>
+        <item name="itemShapeAppearance">@style/ShapeAppearance.Anki.NavItem</item>
+        <item name="itemShapeFillColor">@color/ads_nav_item_background</item>
+        <item name="itemHorizontalPadding">@dimen/ads_spacing_lg</item>
+        <item name="itemVerticalPadding">@dimen/ads_spacing_sm</item>
+    </style>
+
+    <style name="ShapeAppearance.Anki.NavItem" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/ads_radius_sm</item>
+    </style>
+
+    <!-- Dialogs & popups -->
+    <style name="ThemeOverlay.Anki.Popup" parent="">
+        <item name="android:popupBackground">@drawable/ads_bg_popup</item>
+    </style>
+
+    <style name="ThemeOverlay.Anki.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="dialogCornerRadius">@dimen/ads_dialog_corner_radius</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/AnkiDroid.AlertDialog.Body.Text</item>
+        <item name="android:windowBackground">@drawable/ads_bg_surface</item>
+    </style>
+
+    <!-- Preferences -->
+    <style name="PreferenceThemeOverlay.Anki" parent="PreferenceThemeOverlay.AnkiDroid">
+        <item name="preferenceCategoryTitleTextAppearance">@style/TextAppearance.Anki.LabelLarge</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/adsMutedForeground</item>
+    </style>
+
+    <!-- Count chips for deck picker -->
+    <style name="Widget.Anki.Chip.Count" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/ads_chip_height</item>
+        <item name="android:minWidth">@dimen/ads_chip_min_width</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal">@dimen/ads_spacing_sm</item>
+        <item name="android:textAppearance">@style/TextAppearance.Anki.CountChip</item>
+        <item name="android:background">@drawable/ads_bg_chip</item>
+    </style>
+</resources>

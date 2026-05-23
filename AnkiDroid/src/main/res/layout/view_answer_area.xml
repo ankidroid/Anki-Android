@@ -6,67 +6,71 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/show_answer_button"
-        style="@style/AnswerButton"
+        style="@style/Widget.Anki.Button.ShowAnswer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/ads_spacing_sm"
         android:text="@string/show_answer"
-        android:textSize="@dimen/reviewer_answer_button_textSize"
-        app:cornerRadius="12dp"
         android:textColor="@color/white"
-        tools:layout_height="48dp"
-        android:backgroundTint="?showAnswerButtonBackground" />
+        app:cornerRadius="@dimen/ads_radius_md"
+        tools:layout_height="48dp" />
 
     <LinearLayout
         android:id="@+id/answer_buttons_layout"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:minHeight="?minTouchTargetSize"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/ads_spacing_xs"
         android:visibility="invisible"
-        tools:layout_height="48dp"
-        >
+        tools:layout_height="48dp">
 
         <com.ichi2.anki.ui.windows.reviewer.AnswerButton
             android:id="@+id/again_button"
-            style="@style/AnswerButton"
+            style="@style/Widget.Anki.Button.Answer.Again"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/answer_button_margin_horizontal"
-            app:easeName="@string/ease_button_again"
+            android:layout_marginHorizontal="@dimen/ads_spacing_xs"
+            android:layout_weight="1"
             android:textColor="?againTextColor"
-            android:backgroundTint="?againBackgroundColor"
-            android:layout_weight="1" />
+            app:backgroundTint="?againBackgroundColor"
+            app:easeName="@string/ease_button_again"
+            app:strokeColor="?attr/adsDestructive" />
 
         <com.ichi2.anki.ui.windows.reviewer.AnswerButton
             android:id="@+id/hard_button"
-            style="@style/AnswerButton"
+            style="@style/Widget.Anki.Button.Answer.Hard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-            app:easeName="@string/ease_button_hard"
+            android:layout_marginHorizontal="@dimen/ads_spacing_xs"
+            android:layout_weight="1"
             android:textColor="?hardTextColor"
-            android:backgroundTint="?hardBackgroundColor"
-            android:layout_weight="1" />
+            app:backgroundTint="?hardBackgroundColor"
+            app:easeName="@string/ease_button_hard"
+            app:strokeColor="?attr/adsHardColor" />
 
         <com.ichi2.anki.ui.windows.reviewer.AnswerButton
             android:id="@+id/good_button"
-            style="@style/AnswerButton"
+            style="@style/Widget.Anki.Button.Answer.Good"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/answer_button_margin_horizontal"
-            app:easeName="@string/ease_button_good"
+            android:layout_marginHorizontal="@dimen/ads_spacing_xs"
+            android:layout_weight="1"
             android:textColor="?goodTextColor"
-            android:backgroundTint="?goodBackgroundColor"
-            android:layout_weight="1" />
+            app:backgroundTint="?goodBackgroundColor"
+            app:easeName="@string/ease_button_good"
+            app:strokeColor="?attr/adsGoodColor" />
 
         <com.ichi2.anki.ui.windows.reviewer.AnswerButton
             android:id="@+id/easy_button"
-            style="@style/AnswerButton"
+            style="@style/Widget.Anki.Button.Answer.Easy"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/answer_button_margin_horizontal"
-            app:easeName="@string/ease_button_easy"
+            android:layout_marginHorizontal="@dimen/ads_spacing_xs"
+            android:layout_weight="1"
             android:textColor="?easyTextColor"
-            android:backgroundTint="?easyBackgroundColor"
-            android:layout_weight="1" />
+            app:backgroundTint="?easyBackgroundColor"
+            app:easeName="@string/ease_button_easy"
+            app:strokeColor="?attr/adsEasyColor" />
     </LinearLayout>
 </merge>

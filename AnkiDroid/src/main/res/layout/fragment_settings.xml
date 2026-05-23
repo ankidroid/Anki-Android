@@ -24,11 +24,15 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                style="@style/Widget.Anki.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="?attr/adsBackground"
                 app:layout_collapseMode="pin"
                 app:navigationContentDescription="@string/abc_action_bar_up_description"
                 app:navigationIcon="?attr/homeAsUpIndicator"
+                app:titleTextAppearance="@style/TextAppearance.Anki.TitleLarge"
+                app:titleTextColor="?attr/adsForeground"
                 tools:title="@string/settings"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

@@ -3,21 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
+    style="@style/Widget.Anki.Toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
-    android:background="?attr/appBarColor"
+    android:background="?attr/adsBackground"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ActionBarStyle"
     app:navigationContentDescription="@string/abc_action_bar_up_description"
-    app:navigationIcon="?attr/homeAsUpIndicator">
+    app:navigationIcon="?attr/homeAsUpIndicator"
+    app:titleTextAppearance="@style/TextAppearance.Anki.TitleLarge"
+    app:titleTextColor="?attr/adsForeground">
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textAppearance="@style/TextAppearance.Anki.TitleLarge"
+        android:textColor="?attr/adsForeground"
         android:visibility="gone" />
 
     <Spinner
