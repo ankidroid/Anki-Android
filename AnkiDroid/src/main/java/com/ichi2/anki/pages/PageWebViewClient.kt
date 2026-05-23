@@ -20,11 +20,13 @@ import android.webkit.ValueCallback
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.isVisible
-import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
+import com.ichi2.anki.R
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.themes.Themes
 import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.toRGBHex
 import timber.log.Timber
@@ -77,11 +79,14 @@ open class PageWebViewClient : SafeWebViewClient() {
     ) {
         super.onPageStarted(view, url, favicon)
         view?.let { webView ->
-            val bgColor = MaterialColors.getColor(webView, android.R.attr.colorBackground).toRGBHex()
+            val bgColor = ThemeUtils.getThemeAttrColor(webView.context, R.attr.adsBackground).toRGBHex()
+            webView.setBackgroundColor(ThemeUtils.getThemeAttrColor(webView.context, R.attr.adsBackground))
             webView.evaluateAfterDOMContentLoaded(
-                """document.body.style.setProperty("background-color", "$bgColor", "important");
-                    console.log("Background color set");""",
+                """document.body.style.setProperty("background-color", "$bgColor", "important");""",
             )
+            if (Themes.isNightTheme) {
+                AnkiPageThemeInjector.applyNightModeOverrides(webView)
+            }
         }
     }
 
@@ -103,6 +108,9 @@ open class PageWebViewClient : SafeWebViewClient() {
     ) {
         super.onPageFinished(view, url)
         if (view == null) return
+        if (Themes.isNightTheme) {
+            AnkiPageThemeInjector.applyNightModeOverrides(view)
+        }
         onPageFinishedCallbacks.map { callback -> callback.onPageFinished(view) }
         /* webView is invisible by default to avoid flashes while
          * the page is loaded, and can be made visible again after it finishes loading */

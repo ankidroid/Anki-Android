@@ -2,8 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
     <!-- Anki Design System — dark palette (AMOLED-first, zinc-inspired) -->
     <color name="ads_dark_background">#000000</color>
-    <color name="ads_dark_surface">#0a0a0a</color>
-    <color name="ads_dark_surface_elevated">#171717</color>
+    <color name="ads_dark_surface">#050505</color>
+    <color name="ads_dark_surface_elevated">#0c0c0c</color>
     <color name="ads_dark_border">#27272a</color>
     <color name="ads_dark_foreground">#fafafa</color>
     <color name="ads_dark_muted_foreground">#a1a1aa</color>
@@ -17,7 +17,7 @@
     <color name="ads_dark_hard_muted">#19120c</color>
     <color name="ads_dark_easy">#38bdf8</color>
     <color name="ads_dark_easy_muted">#0c1317</color>
-    <color name="ads_dark_popup">#171717</color>
+    <color name="ads_dark_popup">#0c0c0c</color>
     <color name="ads_dark_ripple">#33ffffff</color>
 
     <!-- Anki Design System — light palette -->

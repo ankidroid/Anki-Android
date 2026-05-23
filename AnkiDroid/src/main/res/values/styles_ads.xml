@@ -147,6 +147,28 @@
         <item name="preferenceCategoryTitleTextColor">?attr/adsMutedForeground</item>
     </style>
 
+    <!-- Statistics / study overview cards -->
+    <style name="Widget.Anki.StatCard" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">?attr/adsBackground</item>
+        <item name="strokeColor">?attr/adsBorder</item>
+        <item name="strokeWidth">@dimen/ads_border_width</item>
+        <item name="cardCornerRadius">@dimen/ads_radius_md</item>
+        <item name="cardElevation">0dp</item>
+        <item name="contentPadding">@dimen/ads_spacing_md</item>
+    </style>
+
+    <style name="TextAppearance.Anki.StatLabel" parent="TextAppearance.Anki.LabelMedium">
+        <item name="android:textColor">?attr/adsMutedForeground</item>
+    </style>
+
+    <style name="TextAppearance.Anki.StatValue" parent="TextAppearance.Anki.TitleLarge">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Anki.StatBury" parent="TextAppearance.Anki.BodySmall">
+        <item name="android:textColor">?attr/adsMutedForeground</item>
+    </style>
+
     <!-- Count chips for deck picker -->
     <style name="Widget.Anki.Chip.Count" parent="">
         <item name="android:layout_width">wrap_content</item>

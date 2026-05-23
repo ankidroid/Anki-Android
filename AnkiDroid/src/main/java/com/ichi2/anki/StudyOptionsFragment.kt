@@ -29,7 +29,6 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
-import androidx.constraintlayout.widget.Group
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
@@ -75,7 +74,7 @@ class StudyOptionsFragment :
     ChangeManager.Subscriber,
     MenuProvider {
     private var currentContentView = CONTENT_STUDY_OPTIONS
-    private lateinit var deckInfoLayout: Group
+    private lateinit var deckInfoLayout: View
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
     private lateinit var textDeckDescription: TextView
