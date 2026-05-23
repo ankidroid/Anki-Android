@@ -138,6 +138,11 @@ class DeckPickerWidgetConfig :
         deckAdapter =
             WidgetConfigScreenAdapter { deck, position ->
                 deckAdapter.removeDeck(deck.deckId)
+                // Removal always frees at least one slot, so the FAB is going
+                // to be visible. Show it now (synchronously) so the snackbar
+                // anchors to it instead of the Save button while the async
+                // updateFabVisibility() is still in flight.
+                binding.fabWidgetDeckPicker.isVisible = true
                 showSnackbar(R.string.deck_removed_from_widget)
                 updateViewVisibility()
                 updateFabVisibility()
@@ -215,7 +220,15 @@ class DeckPickerWidgetConfig :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = binding.fabWidgetDeckPicker.takeIf { it.isVisible }
+        // Prefer the FAB so snackbars sit above it. Fall back to the Save button
+        // for the brief window after a removal where the FAB is being un-hidden
+        // asynchronously, so snackbars never overlap the bottom button row.
+        anchorView =
+            when {
+                binding.fabWidgetDeckPicker.isVisible -> binding.fabWidgetDeckPicker
+                binding.submitButton.isVisible -> binding.submitButton
+                else -> null
+            }
     }
 
     /**
