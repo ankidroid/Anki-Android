@@ -460,6 +460,7 @@ dependencies {
     implementation project(":libanki")
     implementation project(":vbpd")
     "baselineProfile" project(":baselineprofile")
+    implementation project(":widgets")
 
     implementation(libs.google.analytics.kt)
 
