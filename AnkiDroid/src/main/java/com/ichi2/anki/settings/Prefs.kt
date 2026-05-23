@@ -27,6 +27,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.settings.enums.AnswerButtonsPosition
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -345,6 +346,15 @@ open class PrefsRepository(
     val autoFocusTypeAnswer by booleanPref(R.string.type_in_answer_focus_key, true)
     val showAnswerFeedback by booleanPref(R.string.show_answer_feedback_key, defaultValue = true)
     var showAnswerButtons by booleanPref(R.string.show_answer_buttons_key, true)
+    private val _answerButtonsPosition by stringPref(R.string.answer_buttons_position_preference, "bottom")
+    val answerButtonsPosition: AnswerButtonsPosition
+        get() =
+            when (_answerButtonsPosition) {
+                "top" -> AnswerButtonsPosition.TOP
+                "bottom" -> AnswerButtonsPosition.BOTTOM
+                "none" -> AnswerButtonsPosition.NONE
+                else -> AnswerButtonsPosition.BOTTOM
+            }
     val keepScreenOn by booleanPref(R.string.keep_screen_on_preference, defaultValue = false)
     val hideHardAndEasyButtons by booleanPref(R.string.hide_hard_and_easy_key, defaultValue = false)
 

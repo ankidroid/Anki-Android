@@ -102,6 +102,15 @@
             android:icon="@drawable/ic_shelf_auto_hide"
             />
 
+        <ListPreference
+            android:defaultValue="bottom"
+            android:entries="@array/answer_buttons_position_labels"
+            android:entryValues="@array/answer_buttons_position"
+            android:icon="@drawable/ic_shelf_auto_hide"
+            android:key="@string/answer_buttons_position_key"
+            android:title="@string/answer_buttons_position"
+            app:useSimpleSummaryProvider="true"/>
+
         <SwitchPreferenceCompat
             android:key="@string/show_estimates_preference"
             android:icon="@drawable/ic_running_clock"

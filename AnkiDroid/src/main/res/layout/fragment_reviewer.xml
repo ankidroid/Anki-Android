@@ -82,6 +82,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.ichi2.anki.ui.windows.reviewer.AnswerAreaView
+            android:id="@+id/answer_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/reviewer_side_margin"/>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/web_view_container"
             style="@style/CardView.ViewerStyle"
@@ -187,11 +193,6 @@
                 android:elevation="2dp"
                 android:visibility="gone"
                 tools:layout="@layout/fragment_check_pronunciation" />
-
-            <com.ichi2.anki.ui.windows.reviewer.AnswerAreaView
-                android:id="@+id/answer_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </LinearLayout>
