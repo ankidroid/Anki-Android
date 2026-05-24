@@ -64,6 +64,7 @@ import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.ActivityCardTemplateEditorBinding
@@ -71,11 +72,11 @@ import com.ichi2.anki.databinding.FragmentCardTemplateEditorTemplateBinding
 import com.ichi2.anki.databinding.IncludeCardTemplateEditorMainBinding
 import com.ichi2.anki.databinding.IncludeCardTemplateEditorTopBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldMetadata
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.CardTemplates
 import com.ichi2.anki.libanki.Collection
@@ -1040,7 +1041,8 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
          * Setups the part of the menu that can be used either in template editor or in previewer fragment.
          */
         fun setupCommonMenu(menu: Menu) {
-            menu.findItem(R.id.action_restore_to_default).title = CollectionManager.TR.cardTemplatesRestoreToDefault()
+            menu.findItem(R.id.action_restore_to_default).title = TR.cardTemplatesRestoreToDefault()
+            menu.findItem(R.id.action_card_browser_appearance).title = TR.sentenceCase.browserAppearance
             if (noteTypeCreatesDynamicNumberOfNotes()) {
                 Timber.d("Editing cloze/occlusion note type, disabling add/delete card template and deck override functionality")
                 menu.findItem(R.id.action_add).isVisible = false
@@ -1258,13 +1260,11 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     return@launchCatchingTask
                 }
                 val name = getCurrentTemplateName(tempModel)
+                val title = getString(R.string.card_template_editor_deck_override)
                 val explanation = getString(R.string.deck_override_explanation, name)
                 // Anki Desktop allows Dynamic decks, have reported this as a bug:
                 // https://forums.ankiweb.net/t/minor-bug-deck-override-to-filtered-deck/1493
-                val decks = SelectableDeck.fromCollection(includeFiltered = false)
-                val title = getString(R.string.card_template_editor_deck_override)
-                val dialog = DeckSelectionDialog.newInstance(title = title, templateEditorMessage = explanation, decks = decks)
-                activity.showDialogFragment(dialog)
+                startDeckSelection(title = title, templateEditorMessage = explanation, allowAll = false, allowFiltered = false)
             }
 
         private fun getCurrentTemplateName(tempModel: CardTemplateNotetype): String =

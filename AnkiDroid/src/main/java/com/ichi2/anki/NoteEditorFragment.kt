@@ -91,19 +91,21 @@ import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.HashUtil
+import com.ichi2.anki.common.utils.android.digit
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.anki.exception.MediaSizeLimitExceededException
 import com.ichi2.anki.exception.toBytesShortString
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
@@ -123,18 +125,12 @@ import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.multimedia.MultimediaActionHandler
-import com.ichi2.anki.multimedia.MultimediaActivityExtra
 import com.ichi2.anki.multimedia.MultimediaBottomSheet
-import com.ichi2.anki.multimedia.MultimediaImageFragment
 import com.ichi2.anki.multimedia.MultimediaResult
 import com.ichi2.anki.multimedia.MultimediaResultContract
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
-import com.ichi2.anki.multimediacard.fields.EFieldType
-import com.ichi2.anki.multimediacard.fields.IField
-import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
@@ -142,6 +138,7 @@ import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
 import com.ichi2.anki.noteeditor.FieldState.Type
 import com.ichi2.anki.noteeditor.NoteEditorFragmentDelegate
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.noteeditor.NoteEditorMultimediaController
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
@@ -172,11 +169,8 @@ import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.hasMedia
 import com.ichi2.utils.ClipboardUtil.items
-import com.ichi2.utils.ContentResolverUtil
-import com.ichi2.utils.HashUtil
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.IntentUtil.resolveMimeType
-import com.ichi2.utils.KeyUtils
 import com.ichi2.utils.NoteFieldDecorator
 import com.ichi2.utils.TextViewUtil
 import com.ichi2.utils.configureView
@@ -184,12 +178,9 @@ import com.ichi2.utils.iconAttr
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
-import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
@@ -229,7 +220,6 @@ class NoteEditorFragment :
     private var isTagsEdited = false
     private var isFieldEdited = false
     private var addNoteJob = RunOnlyOnce(scope = lifecycleScope)
-    private var multimediaActionJob: Job? = null
 
     private val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
@@ -259,7 +249,7 @@ class NoteEditorFragment :
     var editorNote: Note? = null
         private set
 
-    private val multimediaViewModel: MultimediaViewModel by activityViewModels()
+    internal val multimediaViewModel: MultimediaViewModel by activityViewModels()
 
     private var currentImageOccPath: String? = null
 
@@ -287,9 +277,6 @@ class NoteEditorFragment :
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
-
-    // Use the same HTML if the same image is pasted multiple times.
-    private var pastedImageCache: HashMap<String, String> = HashMap()
 
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     @VisibleForTesting
@@ -331,15 +318,20 @@ class NoteEditorFragment :
             when (result) {
                 is MultimediaResult.Cancelled -> {
                     Timber.d("Multimedia result canceled")
-                    handleMultimediaActions(result.fieldIndex)
+                    multimediaController.handleActions(result.fieldIndex)
                 }
                 is MultimediaResult.Success -> {
                     Timber.d("Getting multimedia result")
-                    handleMultimediaResult(result)
+                    multimediaController.handleResult(result)
                 }
                 null -> Timber.d("Multimedia launcher returned no result")
             }
         }
+
+    @VisibleForTesting
+    internal val multimediaController: NoteEditorMultimediaController by lazy {
+        NoteEditorMultimediaController(this, multimediaFragmentLauncher)
+    }
 
     private val requestTemplateEditLauncher =
         registerForActivityResult(
@@ -426,7 +418,7 @@ class NoteEditorFragment :
                 lifecycleScope.launch {
                     try {
                         val pasteAsPng = shouldPasteAsPng()
-                        onPaste(view as EditText, uri, description, pasteAsPng)
+                        multimediaController.onPaste(view as EditText, uri, description, pasteAsPng)
                     } catch (e: Exception) {
                         Timber.w(e)
                         CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
@@ -524,8 +516,7 @@ class NoteEditorFragment :
             deckId = savedInstanceState.getLong("did")
             selectedTags = savedInstanceState.getStringArrayList("tags")
             reloadRequired = savedInstanceState.getBoolean(RELOAD_REQUIRED_EXTRA_KEY)
-            pastedImageCache =
-                savedInstanceState.getSerializableCompat<HashMap<String, String>>("imageCache")!!
+            multimediaController.onRestoreInstanceState(savedInstanceState)
             toggleStickyText =
                 savedInstanceState.getSerializableCompat<HashMap<Int, String?>>("toggleSticky")!!
             changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
@@ -604,91 +595,6 @@ class NoteEditorFragment :
      *
      * @param data the Intent containing the image information from the user's share action
      */
-    @NeedsTest("Test when the user directly passes image to the edit note field")
-    private suspend fun handleImageIntent(data: Intent) {
-        val imageUri =
-            if (data.action == Intent.ACTION_SEND) {
-                BundleCompat.getParcelable(requireArguments(), Intent.EXTRA_STREAM, Uri::class.java)
-            } else {
-                data.data
-            }
-
-        if (imageUri == null) {
-            Timber.d("NoteEditor:: Image Uri is null")
-            showSnackbar(R.string.something_wrong)
-            return
-        }
-
-        try {
-            requireContext().contentResolver.takePersistableUriPermission(imageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            Timber.d("Persisted URI permission for $imageUri")
-        } catch (e: SecurityException) {
-            Timber.w(e, "Unable to persist URI permission")
-        }
-
-        val cachedImagePath = copyUriToInternalCache(imageUri)
-        if (cachedImagePath == null) {
-            Timber.w("Failed to cache image")
-            showSnackbar(R.string.something_wrong)
-            return
-        }
-        val cachedUri = Uri.fromFile(File(requireContext().cacheDir, cachedImagePath))
-
-        val note = getCurrentMultimediaEditableNote()
-        if (note.isEmpty) {
-            Timber.w("Note is null, returning")
-            return
-        }
-        openMultimediaImageFragment(
-            fieldIndex = 0,
-            field = ImageField(),
-            multimediaNote = note,
-            imageUri = cachedUri,
-        )
-    }
-
-    /**
-     * Copies a given [Uri] to the app's internal cache directory.
-     *
-     * This is necessary because URIs provided by other apps (e.g., WhatsApp, gallery apps) via
-     * `Intent` are usually content URIs with temporary permissions that are only valid
-     * in the originating context (like an Activity). Once passed to other components (like Fragments),
-     * these permissions may be lost, resulting in a SecurityException.
-     *
-     * By caching the file in internal storage and referencing it via a file URI,
-     * we ensure persistent access to the image without relying on external content providers.
-     *
-     * @param uri The [Uri] pointing to the external image content.
-     * @return The name of the cached file, or `null` if the operation failed.
-     */
-    private fun copyUriToInternalCache(uri: Uri): String? {
-        return try {
-            val inputStream = requireContext().contentResolver.openInputStreamSafe(uri) ?: return null
-
-            val fileName = ContentResolverUtil.getFileName(requireContext().contentResolver, uri)
-            val cacheDir = requireContext().cacheDir
-            val destFile = File(cacheDir, fileName)
-
-            val canonicalCacheDir = cacheDir.canonicalFile
-            val canonicalDestFile = destFile.canonicalFile
-
-            if (!canonicalDestFile.path.startsWith(canonicalCacheDir.path)) {
-                Timber.w("Rejected path due to directory traversal risk: $fileName")
-                return null
-            }
-
-            destFile.outputStream().use { output ->
-                inputStream.copyTo(output)
-            }
-
-            Timber.d("copyUriToInternalCache() copied to ${destFile.absolutePath}")
-            destFile.name
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to copy URI to internal cache")
-            null
-        }
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         addInstanceStateToBundle(outState)
         super.onSaveInstanceState(outState)
@@ -702,7 +608,7 @@ class NoteEditorFragment :
         savedInstanceState.putBoolean(NOTE_CHANGED_EXTRA_KEY, changed)
         savedInstanceState.putBoolean(RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
         savedInstanceState.putIntegerArrayList("customViewIds", customViewIds)
-        savedInstanceState.putSerializable("imageCache", pastedImageCache)
+        multimediaController.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putSerializable("toggleSticky", toggleStickyText)
         if (selectedTags == null) {
             selectedTags = ArrayList(0)
@@ -865,7 +771,7 @@ class NoteEditorFragment :
         view?.findViewById<TextView>(R.id.note_deck_name)?.apply {
             text = col.decks.name(deckId)
             setOnClickListener {
-                startDeckSelection(all = false, filtered = false, requestKey = REQUEST_DECK_SELECTION_NOTE_EDITOR)
+                startDeckSelection(allowAll = false, allowFiltered = false, requestKey = REQUEST_DECK_SELECTION_NOTE_EDITOR)
             }
         }
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
@@ -913,7 +819,7 @@ class NoteEditorFragment :
             contents?.let { setEditFieldTexts(it) }
             tags?.let { setTags(it) }
             // If the activity was called to handle an image addition, launch a coroutine to process the image intent.
-            if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
+            if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { multimediaController.handleImageIntent(intent) }
         } else {
             // Intercept spinner clicks to launch ChangeNoteTypeDialog instead of spinner dropdown
             noteTypeSpinner!!.setOnTouchListener { _, event ->
@@ -1078,7 +984,6 @@ class NoteEditorFragment :
         textBox.setSelection(start + newStart, start + newEnd)
     }
 
-    @KotlinCleanup("convert KeyUtils to extension functions")
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         // We want to behave as onKeyUp and thus only react to ACTION_UP
         if (event.action != KeyEvent.ACTION_UP) return false
@@ -1100,8 +1005,8 @@ class NoteEditorFragment :
                 if (event.isCtrlPressed) {
                     launchCatchingTask {
                         startDeckSelection(
-                            all = false,
-                            filtered = false,
+                            allowAll = false,
+                            allowFiltered = false,
                             requestKey = REQUEST_DECK_SELECTION_NOTE_EDITOR,
                         )
                     }
@@ -1149,7 +1054,7 @@ class NoteEditorFragment :
 
         // 7573: Ctrl+Shift+[Num] to select a field
         if (event.isCtrlPressed && event.isShiftPressed) {
-            val digit = KeyUtils.getDigit(event) ?: return false
+            val digit = event.digit ?: return false
             // '0' is after '9' on the keyboard, so a user expects '10'
             val humanReadableDigit = if (digit == 0) 10 else digit
             // Subtract 1 to map to field index. '1' is the first field (index 0)
@@ -1860,12 +1765,20 @@ class NoteEditorFragment :
         insertStringInField(getFieldForTest(fieldIndex), newString)
     }
 
-    private suspend fun getCurrentMultimediaEditableNote(): MultimediaEditableNote {
+    internal suspend fun getCurrentMultimediaEditableNote(): MultimediaEditableNote {
         val note = NoteService.createEmptyNote(editorNote!!.notetype)
         val fields = currentFieldStrings.requireNoNulls()
         withCol { NoteService.updateMultimediaNoteFromFields(this@withCol, fields, editorNote!!.noteTypeId, note) }
 
         return note
+    }
+
+    /** Returns the edit-field [FieldEditText] at [index] if present. */
+    internal fun editFieldAt(index: Int): FieldEditText? = editFields?.getOrNull(index)
+
+    /** Records that a multimedia capture has modified the note. */
+    internal fun markMultimediaChanged() {
+        changed = true
     }
 
     /** Determines whether pasted images should be handled as PNG format. **/
@@ -1917,7 +1830,7 @@ class NoteEditorFragment :
             lifecycleScope.launch {
                 val pasteAsPng = shouldPasteAsPng()
                 newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
-                    onPaste(
+                    multimediaController.onPaste(
                         editText!!,
                         uri!!,
                         description!!,
@@ -1962,7 +1875,7 @@ class NoteEditorFragment :
             mediaButton.setBackgroundResource(R.drawable.ic_attachment)
             mediaButton.setOnClickListener {
                 showMultimediaBottomSheet()
-                handleMultimediaActions(i)
+                multimediaController.handleActions(i)
             }
             if (addNote) {
                 // toggle sticky button
@@ -2010,117 +1923,7 @@ class NoteEditorFragment :
         multimediaBottomSheet.show(parentFragmentManager, "MultimediaBottomSheet")
     }
 
-    /**
-     * Handles user interactions with the multimedia options for a specific field in a note.
-     *
-     * This method is called when the user interacts with a option that allows them to add multimedia
-     * content to a field in a note being edited. It presents a `MultimediaBottomSheet`
-     * fragment to the user, which provides options for selecting different multimedia types.
-     *
-     * @param fieldIndex the index of the field in the note where the multimedia content should be added
-     */
-    private fun handleMultimediaActions(fieldIndex: Int) {
-        // Cancel any existing subscription to avoid duplicate listeners
-        multimediaActionJob?.cancel()
-
-        // Based on the type of multimedia action received, perform the corresponding operation
-        multimediaActionJob =
-            lifecycleScope.launch {
-                val note: MultimediaEditableNote = getCurrentMultimediaEditableNote()
-                if (note.isEmpty) return@launch
-
-                multimediaViewModel.multimediaAction.first { action ->
-                    Timber.i("Selected multimedia action: %s", action)
-                    val handler = MultimediaActionHandler.forAction(action)
-                    val field = handler.createField().also { note.setField(fieldIndex, it) }
-                    val intent =
-                        handler.buildIntent(
-                            requireContext(),
-                            MultimediaActivityExtra(fieldIndex, field, note),
-                        )
-                    multimediaFragmentLauncher.launch(intent)
-                    true
-                }
-            }
-    }
-
-    private fun openMultimediaImageFragment(
-        fieldIndex: Int,
-        field: IField,
-        multimediaNote: IMultimediaEditableNote,
-        imageUri: Uri? = null,
-    ) {
-        val multimediaExtra = MultimediaActivityExtra(fieldIndex, field, multimediaNote, imageUri?.toString())
-
-        val imageIntent =
-            MultimediaImageFragment.getIntent(
-                requireContext(),
-                multimediaExtra,
-                MultimediaImageFragment.ImageOptions.GALLERY,
-            )
-
-        multimediaFragmentLauncher.launch(imageIntent)
-    }
-
-    private fun handleMultimediaResult(result: MultimediaResult.Success) {
-        val field = result.field
-        // Process successful result only if field has data
-        if (field.type != EFieldType.TEXT || field.mediaFile != null) {
-            performAddMedia(result.fieldIndex, field, skipSizeCheck = false)
-        } else {
-            Timber.i("field imagePath and audioPath are both null")
-        }
-    }
-
-    /**
-     * Adds a media file to a specific field within the currently edited multimedia note.
-     *
-     * @param index The index of the field within the note to update.
-     * @param field The `IField` object representing the media file and its details.
-     * @param skipSizeCheck Whether to bypass the AnkiWeb media size limit check.
-     */
-
-    private fun performAddMedia(
-        index: Int,
-        field: IField,
-        skipSizeCheck: Boolean,
-    ) {
-        launchCatchingTask {
-            // Import field media
-            // This goes before setting formattedValue to update
-            // media paths with the checksum when they have the same name
-            try {
-                withCol {
-                    NoteService.importMediaToDirectory(this, field, skipSizeCheck = skipSizeCheck)
-                }
-
-                // Update UI
-                val fieldEditText = editFields!![index]
-                // Completely replace text for text fields (because current text was passed in)
-                val formattedValue = field.formattedValue
-                if (field.type === EFieldType.TEXT) {
-                    fieldEditText.setText(formattedValue)
-                } else if (fieldEditText.text != null) {
-                    insertStringInField(fieldEditText, formattedValue)
-                }
-                changed = true
-            } catch (e: MediaSizeLimitExceededException) {
-                showLargeMediaFileWarning(
-                    e.fileName,
-                    e.fileSize,
-                    onForceAdd = {
-                        // Recursive call to bypass the size check if the user wants to add anyway
-                        performAddMedia(index, field, skipSizeCheck = true)
-                    },
-                )
-            } catch (oomError: OutOfMemoryError) {
-                // TODO: a 'retry' flow would be possible here
-                throw Exception(oomError)
-            }
-        }
-    }
-
-    private fun showLargeMediaFileWarning(
+    internal fun showLargeMediaFileWarning(
         fileName: String,
         fileSize: Long,
         onForceAdd: () -> Unit,
@@ -2138,25 +1941,6 @@ class NoteEditorFragment :
                 onForceAdd()
             }
         }
-    }
-
-    private fun onPaste(
-        editText: EditText,
-        uri: Uri,
-        description: ClipDescription,
-        pasteAsPng: Boolean,
-    ): Boolean {
-        val mediaTag =
-            MediaRegistration.onPaste(
-                requireContext(),
-                uri,
-                description,
-                pasteAsPng,
-                showError = { type -> showSnackbar(type.toHumanReadableString(requireContext())) },
-            ) ?: return false
-
-        insertStringInField(editText, mediaTag)
-        return true
     }
 
     @NeedsTest("If a field is sticky after synchronization, the toggleStickyButton should be activated.")

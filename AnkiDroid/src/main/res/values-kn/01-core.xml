@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks" maxLength="28" comment="Open the Deck Picker">ಡೆಕ್ಸ್</string>
@@ -98,20 +87,12 @@
     <string name="menu_add_note" maxLength="28">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ಖಾತೆಯನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
     <string name="menu_dismiss_note" maxLength="41">ಮರೆಮಾಡು / ಅಳಿಸಿ</string>
-    <string name="menu_bury_card" maxLength="28">ಕಾರ್ಡ್ ಹೂತುಹಾಕಿ</string>
-    <string name="menu_bury_note" maxLength="28">ಸೂಚನೆ ಹೂತುಹಾಕಿ</string>
-    <string name="menu_suspend_card" maxLength="28">ಕಾರ್ಡ್ ಅಮಾನತುಗೊಳಿಸಿ</string>
-    <string name="menu_suspend_note" maxLength="28">ಸೂಚನೆ ಅಮಾನತುಗೊಳಿಸಿ</string>
-    <string name="menu_bury" maxLength="28">ಹೂತುಹಾಕಿ</string>
-    <string name="menu_suspend" maxLength="28">ಅಮಾನತ್ತುಗೊಳಿಸು</string>
     <string name="menu_delete_note" maxLength="28">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
-    <string name="menu_flag" maxLength="41">ಧ್ವಜ</string>
     <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card" maxLength="28">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
     <string name="menu_edit_tags" maxLength="28">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
     <string name="menu_search" maxLength="28">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>
-    <string name="menu_mark_note" maxLength="28">ಟಿಪ್ಪಣಿ ಗುರುತಿಸಿ</string>
     <string name="menu_unmark_note">ಟಿಪ್ಪಣಿ ಗುರುತು</string>
     <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
@@ -163,8 +144,6 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ಬ್ರೌಸರ್ ನೋಟ</string>
     <!-- card Info -->
-    <string name="card_info_title" maxLength="28">ಕಾರ್ಡ್ ಮಾಹಿತಿ</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೇಟಾಬೇಸ್‌ಗೆ ಓದಿ ಮತ್ತು ಬರೆಯಿರಿ</string>
     <string name="read_write_permission_description">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟಿಪ್ಪಣಿಗಳು, ಕಾರ್ಡ್‌ಗಳು, ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳು ಮತ್ತು ಡೆಕ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಿ, ಹಾಗೆಯೇ ಹೊಸದನ್ನು ರಚಿಸಿ</string>

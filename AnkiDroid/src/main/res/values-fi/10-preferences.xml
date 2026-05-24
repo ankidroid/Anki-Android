@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Ei käytössä</string>
@@ -157,8 +146,6 @@
     <string name="select_locale_title">Valitse kieli</string>
     <string name="software_render" maxLength="41">Poista korttien laitteistokiihdytetty renderöinti käytöstä</string>
     <string name="software_render_summ">Laitteistokiihdytetty renderöinti on nopeampaa, mutta siinä voi esiintyä ongelmia, erityisesti Android 8/8.1 -käyttöjärjestelmässä. Jos et näe korttien kertauskäyttöliittymää kokonaan, kokeile tätä asetusta.</string>
-    <string name="safe_display" maxLength="41">Turvallinen näyttötila</string>
-    <string name="safe_display_summ">Poista kaikki animaatiot käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-ink-laitteet saattavat vaatia tätä.</string>
     <string name="disable_extended_text_ui" maxLength="41">Poista yhden kentän muokkaustila käytöstä</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Sallii \"Aukkotehtävä\" -valikon käytön, kun näyttö on vaakatilassa.</string>
@@ -172,6 +159,8 @@
     <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
     <string name="show_large_answer_buttons" maxLength="41">Näytä suuret vastauspainikkeet</string>
     <string name="show_large_answer_buttons_summ">Näytä vastauspainikkeet kahdella rivillä</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Näytä yläpalkki</string>
     <string name="show_top_bar_summary">Näytä korttien lukumäärät, vastausaika, lippu ja merkinnät yläpalkissa.</string>
     <string name="show_progress" maxLength="41">Näytä jäljelläoleva</string>

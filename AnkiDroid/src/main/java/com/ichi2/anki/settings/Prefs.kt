@@ -326,9 +326,9 @@ open class PrefsRepository(
      * when in reality notification permissions have not been requested for the device. This is most prominently
      * an issue for the review reminders feature, so to ensure the user is able to receive review reminder notifications after
      * a data restore / migration, a Snackbar noting that notification permissions are missing will be shown
-     * on the [com.ichi2.anki.reviewreminders.ScheduleReminders] fragment if notification permissions are not granted.
+     * on the [com.ichi2.anki.reviewreminders.ScheduleRemindersFragment] fragment if notification permissions are not granted.
      *
-     * @see com.ichi2.anki.reviewreminders.ScheduleReminders.checkForNotificationPermissions
+     * @see com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.checkForNotificationPermissions
      */
     var notificationsPermissionRequested by booleanPref(R.string.notifications_permission_requested_key, false)
 
@@ -381,6 +381,7 @@ open class PrefsRepository(
 
     val answerButtonsSize: Int by intPref(R.string.answer_button_size_preference, 100)
     val cardZoom: Int by intPref(R.string.card_zoom_preference, 100)
+    val removeAppAnimations by booleanPref(R.string.safe_display_key, defaultValue = false)
 
     // **************************************** Advanced **************************************** //
 
@@ -406,6 +407,9 @@ open class PrefsRepository(
 
     val devIsCardBrowserFragmented: Boolean
         get() = getBoolean(R.string.dev_card_browser_fragmented, false)
+
+    val devBottomNavEnabled: Boolean
+        get() = getBoolean(R.string.dev_bottom_nav_key, false)
 
     @set:VisibleForTesting
     var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)

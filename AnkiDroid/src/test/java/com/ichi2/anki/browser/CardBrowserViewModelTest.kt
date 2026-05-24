@@ -55,6 +55,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleS
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeNoteTypeResponse
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.STATE_MULTISELECT_VALUES
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
+import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
@@ -1440,6 +1441,184 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `onTap outside multi-select opens note editor`() =
+        runViewModelTest(notes = 2) {
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(1).toRowSelection()).join()
+                assertInstanceOf<CardBrowserViewModel.NoteEditorCommand.LaunchActivity>(
+                    awaitItem(),
+                    "phone tap launches a standalone NoteEditor activity",
+                )
+                assertThat("focusedRow set to tapped row", focusedRow, equalTo(getRowAtPosition(1)))
+                assertThat("not in multi-select after tap", isInMultiSelectMode, equalTo(false))
+            }
+        }
+
+    @Test
+    fun `onTap in multi-select toggles selection without emitting`() =
+        runViewModelTest(notes = 2) {
+            selectRowAtPosition(0)
+            assertThat("in multi-select before tap", isInMultiSelectMode, equalTo(true))
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(1).toRowSelection()).join()
+                expectNoEvents()
+                assertThat("tapped row is selected", getRowAtPosition(1) in selectedRows, equalTo(true))
+            }
+        }
+
+    @Test
+    fun `onTap deselects already-selected row in multi-select`() =
+        runViewModelTest(notes = 2) {
+            selectRowAtPosition(0)
+            selectRowAtPosition(1)
+            onTap(getRowAtPosition(0).toRowSelection()).join()
+            assertThat("tapped row no longer selected", getRowAtPosition(0) in selectedRows, equalTo(false))
+        }
+
+    @Test
+    fun `onTap deselect on phone does not emit selection event`() =
+        runViewModelTest(notes = 2, isFragmented = false) {
+            selectRowAtPosition(0)
+            selectRowAtPosition(1)
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(0).toRowSelection()).join()
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `onTap deselect on tablet emits selection event with focused id`() =
+        runViewModelTest(notes = 2, isFragmented = true) {
+            selectRowAtPosition(0)
+            selectRowAtPosition(1)
+            val deselectedId = getRowAtPosition(0)
+            flowOfNoteEditorCommand.test {
+                onTap(deselectedId.toRowSelection()).join()
+                assertInstanceOf<CardBrowserViewModel.NoteEditorCommand.LoadInPane>(
+                    awaitItem(),
+                    "tablet deselect loads the editor in the trailing pane",
+                )
+                assertThat("focusedRow points at deselected row", focusedRow, equalTo(deselectedId))
+            }
+        }
+
+    @Test
+    fun `onTap add-to-multi-select on tablet does not move focus`() =
+        runViewModelTest(notes = 3, isFragmented = true) {
+            // long-press row 1 to enter multi-select; focus and selection both land on row 1
+            handleRowLongPress(getRowAtPosition(1).toRowSelection()).join()
+            assertThat("initial focus on row 1", focusedRow, equalTo(getRowAtPosition(1)))
+
+            // tap row 2 to ADD it to the selection — focus must stay on row 1
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(2).toRowSelection()).join()
+                expectNoEvents() // no editor reload
+                assertThat("focus unchanged after add-to-multi-select", focusedRow, equalTo(getRowAtPosition(1)))
+                assertThat("row 2 was added to selection", getRowAtPosition(2) in selectedRows, equalTo(true))
+            }
+        }
+
+    @Test
+    fun `stale focusedRow falls back to first card after search`() =
+        runViewModelTest {
+            val deckOne = addDeck("One")
+            val deckTwo = addDeck("Two")
+            addNoteToDeck(deckOne)
+            addNoteToDeck(deckTwo)
+
+            setSelectedDeck(deckTwo)
+            searchJob?.join()
+            val deckTwoRow = cards.first()
+            handleRowLongPress(deckTwoRow.toRowSelection()).join()
+            assertThat("initial focus is on the deckTwo row", focusedRow, equalTo(deckTwoRow))
+
+            setSelectedDeck(deckOne)
+            searchJob?.join()
+            assertThat("focusedRow no longer points to filtered-out row", focusedRow, not(equalTo(deckTwoRow)))
+            assertThat("focusedRow falls back to first row of new search", focusedRow, equalTo(cards.first()))
+        }
+
+    @Test
+    fun `searchResultMessage - all decks selected, with rows`() =
+        runViewModelTest(notes = 3) {
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(SelectableDeck.AllDecks)
+                val completed = awaitSearchCompleted()
+                val card = completed.resultMessage as CardBrowserViewModel.SearchResultMessage.CardCount
+                assertThat("count", completed.rowCount, equalTo(3))
+                assertThat("cardsOrNotes", completed.cardsOrNotes, equalTo(CardsOrNotes.CARDS))
+                assertThat("no all-decks action when already on all decks", card.includeSearchAllDecksAction, equalTo(false))
+            }
+        }
+
+    @Test
+    fun `searchResultMessage - specific deck with cards has all-decks action`() =
+        runViewModelTest {
+            val deck = addDeck("Specific")
+            addNoteToDeck(deck)
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(deck)
+                val card = awaitSearchCompleted().resultMessage as CardBrowserViewModel.SearchResultMessage.CardCount
+                assertThat("includes all-decks action", card.includeSearchAllDecksAction, equalTo(true))
+            }
+        }
+
+    @Test
+    fun `searchResultMessage - specific deck with no cards`() =
+        runViewModelTest {
+            val deck = addDeck("Empty")
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(deck)
+                assertThat(
+                    "empty deck → no-cards-in-selected-deck",
+                    awaitSearchCompleted().resultMessage,
+                    equalTo(CardBrowserViewModel.SearchResultMessage.NoCardsInSelectedDeck),
+                )
+            }
+        }
+
+    @Test
+    fun `search completion - tablet with rows emits LoadInPane`() =
+        runViewModelTest(notes = 2, isFragmented = true) {
+            flowOfNoteEditorCommand.test {
+                launchSearchForCards()
+                searchJob?.join()
+                assertInstanceOf<CardBrowserViewModel.NoteEditorCommand.LoadInPane>(
+                    awaitItem(),
+                    "tablet with rows loads the editor in the trailing pane",
+                )
+            }
+        }
+
+    @Test
+    fun `search completion - tablet with empty deck emits HidePane`() =
+        runViewModelTest(isFragmented = true) {
+            val deck = addDeck("Empty")
+            flowOfNoteEditorCommand.test {
+                setSelectedDeck(deck)
+                searchJob?.join()
+                assertThat(
+                    "empty deck → trailing pane hidden",
+                    awaitItem(),
+                    equalTo(CardBrowserViewModel.NoteEditorCommand.HidePane),
+                )
+            }
+        }
+
+    @Test
+    fun `search completion - phone does not emit a NoteEditorCommand`() =
+        runViewModelTest(notes = 2, isFragmented = false) {
+            flowOfNoteEditorCommand.test {
+                launchSearchForCards()
+                searchJob?.join()
+                expectNoEvents()
+            }
+        }
+
+    @Test
     fun `multiselect toggle state is restored`() {
         val handle = SavedStateHandle()
         runViewModelTest(savedStateHandle = handle, notes = 1) {
@@ -1749,6 +1928,7 @@ class CardBrowserViewModelTest : JvmTest() {
         initMode: InitMode = InitMode.AUTOMATIC,
         savedStateHandle: SavedStateHandle = SavedStateHandle(),
         options: CardBrowserLaunchOptions? = null,
+        isFragmented: Boolean = false,
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         repeat(notes) {
@@ -1761,7 +1941,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 cacheDir = createTransientDirectory(),
                 options = options,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
+                isFragmented = isFragmented,
                 manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
                 savedStateHandle = savedStateHandle,
             )
@@ -1822,6 +2002,14 @@ class CardBrowserViewModelTest : JvmTest() {
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
     for (pos in positions) {
         selectRowAtPosition(pos)
+    }
+}
+
+/** Skip non-Completed [CardBrowserViewModel.SearchState] emissions and return the next [SearchState.Completed]. */
+private suspend fun TurbineTestContext<SearchState>.awaitSearchCompleted(): SearchState.Completed {
+    while (true) {
+        val item = awaitItem()
+        if (item is SearchState.Completed) return item
     }
 }
 

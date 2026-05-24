@@ -24,10 +24,10 @@ import android.content.Intent
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
-import androidx.core.os.BundleCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
@@ -36,7 +36,7 @@ import com.ichi2.anki.services.AlarmManagerService.Companion.WINDOW_LENGTH_MS
 import com.ichi2.anki.services.AlarmManagerService.Companion.getIntent
 import com.ichi2.anki.services.AlarmManagerService.Companion.scheduleAllEnabledReviewReminderNotifications
 import com.ichi2.anki.services.AlarmManagerService.Companion.unscheduleReviewReminderNotifications
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.utils.ext.getParcelableCompat
 import timber.log.Timber
 import java.util.Calendar
 import kotlin.time.Duration
@@ -361,11 +361,7 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
         // Get the request type
         val extras = intent.extras ?: return
         val reviewReminder =
-            BundleCompat.getParcelable(
-                extras,
-                EXTRA_REVIEW_REMINDER,
-                ReviewReminder::class.java,
-            ) ?: return
+            extras.getParcelableCompat<ReviewReminder>(EXTRA_REVIEW_REMINDER) ?: return
         // Dismiss the snoozed notification when the snooze button is clicked
         val manager = context.getSystemService<NotificationManager>()
         manager?.cancel(NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value)

@@ -26,6 +26,7 @@ import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.ActivityCardBrowserAppearanceBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.CardTemplate
@@ -139,7 +140,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
         discardChangesCallback.isEnabled = hasChanges()
 
         enableToolbar()
-        setTitle(R.string.card_template_browser_appearance_title)
+        title = TR.sentenceCase.browserAppearance
     }
 
     private fun answerHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat

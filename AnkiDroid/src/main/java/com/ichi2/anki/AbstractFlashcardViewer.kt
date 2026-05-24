@@ -111,6 +111,9 @@ import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
 import com.ichi2.anki.cardviewer.handledGamepadKeyUp
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.HashUtil.hashSetInit
+import com.ichi2.anki.common.utils.android.HandlerUtils.newHandler
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
@@ -161,8 +164,6 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.HandlerUtils.newHandler
-import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.Stopwatch
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -877,7 +878,14 @@ abstract class AbstractFlashcardViewer :
     // Set the content view to the one provided and initialize accessors.
     protected open fun initLayout() {
         topBarLayout = findViewById(R.id.top_bar)
-        cardFrame = findViewById(R.id.flashcard)
+        cardFrame =
+            findViewById<FrameLayout>(R.id.flashcard).apply {
+                // Force the WebView's container onto its own GPU texture so it isn't dropped from
+                // composition when the overlapping Whiteboard sibling invalidates each touch frame.
+                // Without this, Samsung WebView (since a recent update) hides the card mid-stroke
+                // until the next full hierarchy invalidation. (#19364)
+                setLayerType(View.LAYER_TYPE_HARDWARE, null)
+            }
         cardFrameParent = cardFrame!!.parent as ViewGroup
         touchLayer =
             findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(gestureListener) }
@@ -1499,7 +1507,7 @@ abstract class AbstractFlashcardViewer :
 
     @VisibleForTesting
     fun readCardTts(side: SingleCardSide) {
-        val tags = legacyGetTtsTags(getColUnsafe, currentCard!!, side, this)
+        val tags = legacyGetTtsTags(getColUnsafe, currentCard!!, side)
         tts.readCardText(getColUnsafe, tags, currentCard!!, side.toCardSide())
     }
 
@@ -1526,7 +1534,6 @@ abstract class AbstractFlashcardViewer :
         if (ttsInitialized) {
             tts.selectTts(
                 getColUnsafe,
-                this,
                 currentCard!!,
                 if (displayAnswer) CardSide.ANSWER else CardSide.QUESTION,
             )
@@ -2312,7 +2319,12 @@ abstract class AbstractFlashcardViewer :
         destroyWebView(webView)
         webView = null
         // inflate a new instance of mCardFrame
-        cardFrame = inflateNewView<FrameLayout>(R.id.flashcard)
+        cardFrame =
+            inflateNewView<FrameLayout>(R.id.flashcard).apply {
+                // 'recreateWebView' applies setRenderWorkaround so the hardware renderer remains
+                // disabled if a user requests it
+                setLayerType(View.LAYER_TYPE_HARDWARE, null)
+            }
         // Even with the above, I occasionally saw the above error. Manually trigger the GC.
         // I'll keep this line unless I see another crash, which would point to another underlying issue.
         System.gc()

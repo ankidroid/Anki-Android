@@ -1,22 +1,12 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-FileCopyrightText: 2023 lukstbit <52494258+lukstbit@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
 import anki.import_export.ExportLimit
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.dialogs.ExportReadyDialog
+import com.ichi2.anki.dialogs.viewmodel.ExportReadyViewModel.ExportReadyParams
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.exportAnkiPackage
 import com.ichi2.anki.libanki.exportCardsCsv
@@ -40,7 +30,7 @@ fun AnkiActivity.exportApkgPackage(
         withProgress(extractProgress = onProgress) {
             withCol { exportAnkiPackage(exportPath, withScheduling, withDeckConfigs, withMedia, limit, legacy) }
         }
-        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
+        exportReadyViewModel.registerExportReadyRequest(ExportReadyParams(exportPath))
     }
 }
 
@@ -58,7 +48,7 @@ fun AnkiActivity.exportCollectionPackage(
         withProgress(extractProgress = onProgress) {
             withCol { exportCollectionPackage(exportPath, withMedia, legacy) }
         }
-        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath))
+        exportReadyViewModel.registerExportReadyRequest(ExportReadyParams(exportPath))
     }
 }
 
@@ -90,7 +80,7 @@ fun AnkiActivity.exportSelectedNotes(
                 )
             }
         }
-        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath, asText = true))
+        exportReadyViewModel.registerExportReadyRequest(ExportReadyParams(exportPath, asText = true))
     }
 }
 
@@ -110,7 +100,7 @@ fun AnkiActivity.exportSelectedCards(
                 exportCardsCsv(exportPath, withHtml, limit)
             }
         }
-        showAsyncDialogFragment(ExportReadyDialog.newInstance(exportPath, asText = true))
+        exportReadyViewModel.registerExportReadyRequest(ExportReadyParams(exportPath, asText = true))
     }
 }
 

@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks" maxLength="28" comment="Open the Deck Picker">חפיסות</string>
@@ -105,20 +94,12 @@
     <string name="menu_add_note" maxLength="28">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note" maxLength="41">הסתרה / מחיקה</string>
-    <string name="menu_bury_card" maxLength="28">הטמן כרטיס</string>
-    <string name="menu_bury_note" maxLength="28">הטמן רשומה</string>
-    <string name="menu_suspend_card" maxLength="28">הקפא כרטיס</string>
-    <string name="menu_suspend_note" maxLength="28">הקפאת רשומה</string>
-    <string name="menu_bury" maxLength="28">הטמנה</string>
-    <string name="menu_suspend" maxLength="28">הקפאה</string>
     <string name="menu_delete_note" maxLength="28">מחיקת רשומה</string>
-    <string name="menu_flag" maxLength="41">דגל</string>
     <string name="rename_flag">שנה שמות דגלים</string>
     <string name="menu_flag_card" maxLength="28">דגל כרטיס</string>
     <string name="menu_edit_tags" maxLength="28">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_search" maxLength="28">חפש ב%1$s</string>
-    <string name="menu_mark_note" maxLength="28">סמן רשומה</string>
     <string name="menu_unmark_note">הסר סימון רשומה</string>
     <string name="menu_enable_voice_playback" maxLength="28">אפשר הפעלה קולית</string>
     <string name="menu_disable_voice_playback">השבת השמעה קולית</string>
@@ -174,8 +155,6 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
     <!-- card Info -->
-    <string name="card_info_title" maxLength="28">מידע על הכרטיס</string>
-    <string name="previous_card_info_title" maxLength="28">מידע על הכרטיס הקודם</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור למסד הנתונים של AnkiDroid</string>
     <string name="read_write_permission_description">לגשת להערות, כרטיס, סוגי רשומות וחפיסות וגם ליצור חדשים</string>
