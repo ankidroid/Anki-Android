@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.BrowserColumnCollection
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
@@ -137,6 +138,7 @@ object PreferenceUpgradeService {
                     yield(UpgradeThemes())
                     yield(UpgradeAnswerControls())
                     yield(RemoveDeveloperFindReplace())
+                    yield(ResetAnalyticsOptIn2())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -907,6 +909,15 @@ object PreferenceUpgradeService {
                     remove("browserFindReplace")
                 }
             }
+        }
+
+        /**
+         * Removes the legacy "analytics_opt_in" key so all users are re-prompted
+         * to opt in under the new GA4-backed analytics implementation, which
+         * stores the opt-in under [AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY].
+         */
+        internal class ResetAnalyticsOptIn2 : PreferenceUpgrade(29) {
+            override fun upgrade(preferences: SharedPreferences) = preferences.edit { remove("analytics_opt_in") }
         }
     }
 }
