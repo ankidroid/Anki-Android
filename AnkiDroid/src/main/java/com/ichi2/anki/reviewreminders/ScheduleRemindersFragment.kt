@@ -35,7 +35,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -54,6 +53,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
@@ -224,34 +224,8 @@ class ScheduleRemindersFragment :
             ToolbarType.INTERNAL_NON_COLLAPSIBLE -> setupInternalFragmentToolbar(isCollapsible = false)
         }
 
-        // Set up add button
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
-
-        // Troubleshoot snackbar: shown persistently when checks find a warning/error.
-        // Tapping "Fix" opens the full troubleshooting screen.
-        lifecycleScope.launch {
-            troubleshootingViewModel.state
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    val message =
-                        when (state.summaryStatus) {
-                            SummaryStatus.Ok, SummaryStatus.Warning -> {
-                                troubleshootingSnackbar?.dismiss()
-                                troubleshootingSnackbar = null
-                                return@collect
-                            }
-                            SummaryStatus.Error -> "Reminders are unavailable"
-                        }
-                    if (troubleshootingSnackbar?.isShown == true) {
-                        troubleshootingSnackbar?.setText(message)
-                        return@collect
-                    }
-                    troubleshootingSnackbar =
-                        showSnackbar(text = message, duration = Snackbar.LENGTH_INDEFINITE) {
-                            setAction("Fix") { openTroubleshootingScreen() }
-                        }
-                }
-        }
+        troubleshootingViewModel.state.launchCollectionInLifecycleScope(::setupTroubleshootingSnackbar)
 
         // Set up recycler view
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -279,6 +253,30 @@ class ScheduleRemindersFragment :
     override fun onDestroyView() {
         troubleshootingSnackbar?.dismiss()
         super.onDestroyView()
+    }
+
+    /**
+     * Sets up the troubleshooting snackbar which is shown persistently when checks find a warning/error.
+     * Tapping "Fix" opens the full troubleshooting screen.
+     */
+    private fun setupTroubleshootingSnackbar(state: ReminderTroubleshootingState) {
+        val message =
+            when (state.summaryStatus) {
+                SummaryStatus.Ok, SummaryStatus.Warning -> {
+                    troubleshootingSnackbar?.dismiss()
+                    troubleshootingSnackbar = null
+                    return
+                }
+                SummaryStatus.Error -> "Reminders are unavailable"
+            }
+        if (troubleshootingSnackbar?.isShown == true) {
+            troubleshootingSnackbar?.setText(message)
+            return
+        }
+        troubleshootingSnackbar =
+            showSnackbar(text = message, duration = Snackbar.LENGTH_INDEFINITE) {
+                setAction("Fix") { openTroubleshootingScreen() }
+            }
     }
 
     private fun setupExternalActivityToolbar() {
