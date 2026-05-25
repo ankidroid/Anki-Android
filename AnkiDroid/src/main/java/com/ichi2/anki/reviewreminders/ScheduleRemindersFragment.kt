@@ -192,34 +192,8 @@ class ScheduleRemindersFragment :
             ToolbarType.INTERNAL_NON_COLLAPSIBLE -> setupInternalFragmentToolbar(isCollapsible = false)
         }
 
-        // Set up add button
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
-
-        // Troubleshoot snackbar: shown persistently when checks find a warning/error.
-        // Tapping "Fix" opens the full troubleshooting screen.
-        lifecycleScope.launch {
-            troubleshootingViewModel.state
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    val message =
-                        when (state.summaryStatus) {
-                            SummaryStatus.Ok, SummaryStatus.Warning -> {
-                                troubleshootingSnackbar?.dismiss()
-                                troubleshootingSnackbar = null
-                                return@collect
-                            }
-                            SummaryStatus.Error -> "Reminders are unavailable"
-                        }
-                    if (troubleshootingSnackbar?.isShown == true) {
-                        troubleshootingSnackbar?.setText(message)
-                        return@collect
-                    }
-                    troubleshootingSnackbar =
-                        showSnackbar(text = message, duration = Snackbar.LENGTH_INDEFINITE) {
-                            setAction("Fix") { openTroubleshootingScreen() }
-                        }
-                }
-        }
+        lifecycleScope.launch { setupTroubleshootingSnackbar() }
 
         // Set up recycler view
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -247,6 +221,34 @@ class ScheduleRemindersFragment :
     override fun onDestroyView() {
         troubleshootingSnackbar?.dismiss()
         super.onDestroyView()
+    }
+
+    /**
+     * Sets up the troubleshooting snackbar which is shown persistently when checks find a warning/error.
+     * Tapping "Fix" opens the full troubleshooting screen.
+     */
+    private suspend fun setupTroubleshootingSnackbar() {
+        troubleshootingViewModel.state
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .collect { state ->
+                val message =
+                    when (state.summaryStatus) {
+                        SummaryStatus.Ok, SummaryStatus.Warning -> {
+                            troubleshootingSnackbar?.dismiss()
+                            troubleshootingSnackbar = null
+                            return@collect
+                        }
+                        SummaryStatus.Error -> "Reminders are unavailable"
+                    }
+                if (troubleshootingSnackbar?.isShown == true) {
+                    troubleshootingSnackbar?.setText(message)
+                    return@collect
+                }
+                troubleshootingSnackbar =
+                    showSnackbar(text = message, duration = Snackbar.LENGTH_INDEFINITE) {
+                        setAction("Fix") { openTroubleshootingScreen() }
+                    }
+            }
     }
 
     private fun setupExternalActivityToolbar() {
