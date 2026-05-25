@@ -77,6 +77,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
@@ -126,6 +127,13 @@ class ReviewerViewModel(
     val pageUpFlow = MutableSharedFlow<Unit>()
     val pageDownFlow = MutableSharedFlow<Unit>()
     val statesMutationEvalFlow = MutableSharedFlow<String>()
+
+    private val openNavigationDrawer = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    val openNavigationDrawerFlow = openNavigationDrawer.asSharedFlow()
+
+    fun onHamburgerClicked() {
+        openNavigationDrawer.tryEmit(Unit)
+    }
 
     override val server: AnkiServer = AnkiServer(this, repository.getServerPort()).also { it.start() }
     private val stateMutationKey = repository.generateStateMutationKey()

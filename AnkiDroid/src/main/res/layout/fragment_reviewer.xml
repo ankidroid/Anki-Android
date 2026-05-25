@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.ClosableDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:background="?attr/alternativeBackgroundColor"
+    android:focusableInTouchMode="true"
     tools:context=".ui.windows.reviewer.ReviewerFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/root_layout"
+    <LinearLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/alternativeBackgroundColor"
-        android:focusableInTouchMode="true">
-
-        <LinearLayout
-            android:id="@+id/main_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:clipChildren="false">
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:clipChildren="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tools_layout"
@@ -199,9 +194,11 @@
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
-        </LinearLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 
-    <include layout="@layout/include_navigation_drawer" />
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/navigation_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-</androidx.drawerlayout.widget.ClosableDrawerLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

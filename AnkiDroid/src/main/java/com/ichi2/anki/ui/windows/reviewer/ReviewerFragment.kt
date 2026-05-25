@@ -28,20 +28,18 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -51,7 +49,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
-import com.google.android.material.navigation.NavigationView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
@@ -68,9 +65,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
-import com.ichi2.anki.navigation.AppDestination
 import com.ichi2.anki.navigation.handleAppDestination
-import com.ichi2.anki.navigation.populateFromAppDestinations
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -89,6 +84,8 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.compose.AnkiTheme
+import com.ichi2.anki.ui.compose.AppNavigationDrawer
 import com.ichi2.anki.ui.windows.reviewer.audiorecord.CheckPronunciationFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.CollectionPreferences
@@ -174,7 +171,6 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupNavigationDrawer()
         setupBindings()
         setupImmersiveMode()
         setupTypeAnswer()
@@ -189,6 +185,7 @@ class ReviewerFragment :
         setupActions()
         setupWhiteboard()
         setupTimebox()
+        setupNavigationDrawer()
 
         viewModel.finishResultFlow.collectIn(lifecycleScope) { result ->
             requireActivity().run {
@@ -574,48 +571,22 @@ class ReviewerFragment :
     }
 
     private fun setupNavigationDrawer() {
-        val drawerLayout = binding.drawerLayout
-        val navigationView = drawerLayout.findViewById<NavigationView>(R.id.navdrawer_items_container)
+        binding.hamburgerButton.setOnClickListener { viewModel.onHamburgerClicked() }
 
-        navigationView.menu.populateFromAppDestinations()
-
-        binding.hamburgerButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-        navigationView.setNavigationItemSelectedListener { item ->
-            val dest = AppDestination.fromMenuId(item.itemId)
-            if (dest != null) {
-                drawerLayout.closeDrawer(GravityCompat.START)
-                (requireActivity() as? AnkiActivity)?.handleAppDestination(dest)
-            } else {
-                Timber.w("Unknown nav menu item: %d", item.itemId)
-            }
-            true
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(false) {
-                init {
-                    drawerLayout.addDrawerListener(
-                        object : DrawerLayout.SimpleDrawerListener() {
-                            override fun onDrawerOpened(drawerView: View) {
-                                isEnabled = true
-                            }
-
-                            override fun onDrawerClosed(drawerView: View) {
-                                isEnabled = false
-                            }
-                        },
-                    )
-                }
-
-                override fun handleOnBackPressed() {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                }
-            },
+        binding.navigationDrawer.setViewCompositionStrategy(
+            ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed,
         )
+        binding.navigationDrawer.setContent {
+            AnkiTheme {
+                AppNavigationDrawer(
+                    openRequests = viewModel.openNavigationDrawerFlow,
+                    selected = null,
+                    onDestinationClick = { dest ->
+                        (requireActivity() as? AnkiActivity)?.handleAppDestination(dest)
+                    },
+                )
+            }
+        }
     }
 
     private fun setupTimebox() {
