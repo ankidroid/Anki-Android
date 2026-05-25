@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file exists solely to provide a stable @XmlRes resource ID used as a routing key
+  ~ in the preference search infrastructure (HeaderFragment + getFragmentFromXmlRes).
+  ~ ScheduleRemindersFragment is not a PreferenceFragmentCompat, so there are no
+  ~ preferences to index here.
+  -->
+<PreferenceScreen />
