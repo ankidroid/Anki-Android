@@ -128,6 +128,9 @@ class StudyOptionsFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        if (!fragmented) {
+            requireAnkiActivity().setToolbarText(R.string.empty_string)
+        }
     }
 
     override fun onCreateMenu(
