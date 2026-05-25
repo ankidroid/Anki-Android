@@ -24,6 +24,8 @@ import androidx.core.text.parseAsHtml
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -33,13 +35,13 @@ import com.ichi2.anki.backend.stripHTMLScriptAndStyleTags
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CollectionMediaImageGetter
 import org.intellij.lang.annotations.Language
@@ -83,10 +85,7 @@ class StudyOptionsFragment :
                 Timber.i("StudyOptionsFragment:: start study button pressed")
                 val state = viewModel.state
                 if (state !is StudyOptionsState.Congrats) {
-                    parentFragmentManager.setFragmentResult(
-                        REQUEST_STUDY_OPTIONS_STUDY,
-                        Bundle(),
-                    )
+                    parentFragmentManager.setStudyOptionsStudyResult()
                 } else {
                     showCustomStudyContextMenu()
                 }
@@ -207,12 +206,7 @@ class StudyOptionsFragment :
             }
             R.id.action_schedule_reminders -> {
                 Timber.i("StudyOptionsFragment:: schedule reminders button pressed")
-                val intent =
-                    ScheduleRemindersFragment.getIntent(
-                        requireContext(),
-                        ReviewReminderScope.DeckSpecific(viewModel.selectedDeckId),
-                    )
-                startActivity(intent)
+                parentFragmentManager.setStudyOptionsAddEditReminderResult(viewModel.selectedDeckId)
                 return true
             }
             R.id.action_unbury -> {
@@ -425,7 +419,18 @@ class StudyOptionsFragment :
          * Identifier for a fragment result request to study(open the reviewer). Activities using
          * this fragment need to handle this request and initialize the study screen as they see fit.
          */
-        const val REQUEST_STUDY_OPTIONS_STUDY = "request_study_option_study"
+        private const val REQUEST_STUDY_OPTIONS_STUDY = "request_study_option_study"
+
+        /**
+         * Identifier for a fragment result request to open the review reminders screen for the selected deck.
+         * Activities using this fragment need to handle this request and open the review reminders screen as they see fit.
+         */
+        private const val REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS = "request_study_option_review_reminders"
+
+        /**
+         * Bundle key for the deck ID whose study options are being displayed, used when the review reminders screen is being opened.
+         */
+        private const val KEY_REVIEW_REMINDERS_DECK_ID = "review_reminders_deck_id"
 
         @VisibleForTesting
         fun formatDescription(
@@ -442,6 +447,32 @@ class StudyOptionsFragment :
             return withoutLinuxLineEndings.parseAsHtml(
                 flags = HtmlCompat.FROM_HTML_MODE_LEGACY,
                 imageGetter = imageGetter,
+            )
+        }
+
+        fun FragmentActivity.registerStudyOptionsStudyHandler(action: () -> Unit) {
+            setFragmentResultListener(REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->
+                Timber.i("Received fragment result from study options fragment to start studying")
+                action()
+            }
+        }
+
+        fun FragmentActivity.registerStudyOptionsAddEditReminderHandler(action: (did: DeckId) -> Unit) {
+            setFragmentResultListener(REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS) { _, bundle ->
+                Timber.i("Received fragment result from study options fragment for adding / editing review reminders")
+                val did = bundle.getLong(KEY_REVIEW_REMINDERS_DECK_ID)
+                action(did)
+            }
+        }
+
+        private fun FragmentManager.setStudyOptionsStudyResult() {
+            setFragmentResult(REQUEST_STUDY_OPTIONS_STUDY, Bundle())
+        }
+
+        private fun FragmentManager.setStudyOptionsAddEditReminderResult(did: DeckId) {
+            setFragmentResult(
+                REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS,
+                Bundle().apply { putLong(KEY_REVIEW_REMINDERS_DECK_ID, did) },
             )
         }
     }

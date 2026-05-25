@@ -60,6 +60,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -85,6 +86,8 @@ import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
 import com.ichi2.anki.InitialActivity.StartupFailure.StorageUndecided
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
+import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsAddEditReminderHandler
+import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsStudyHandler
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
@@ -156,7 +159,9 @@ import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -583,9 +588,14 @@ open class DeckPicker :
             handleContextMenuSelection(result.option, result.deckId)
         }
 
-        setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->
+        registerStudyOptionsStudyHandler {
             Timber.d("Opening study screen from DeckPicker's study options panel")
             openReviewer()
+        }
+
+        registerStudyOptionsAddEditReminderHandler { did: DeckId ->
+            Timber.d("Opening review reminders screen from DeckPicker's study options panel")
+            openScheduleReminders(did)
         }
 
         pullToSyncWrapper.configureView(
@@ -795,6 +805,7 @@ open class DeckPicker :
                 data = deckList.data,
                 hasSubDecks = deckList.hasSubDecks,
             )
+            tryShowStudyOptionsPanel()
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
@@ -981,8 +992,8 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.SCHEDULE_REMINDERS -> {
                 Timber.i("Scheduling review reminders for deck '%d'", deckId)
-                viewModel.scheduleReviewReminders(deckId)
                 dismissAllDialogFragments()
+                openScheduleReminders(deckId)
             }
         }
     }
@@ -1956,8 +1967,25 @@ open class DeckPicker :
      */
     private fun tryShowStudyOptionsPanel(): Boolean {
         val containerId = binding.studyoptionsFragment?.id ?: return false
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.commit {
             replace(containerId, StudyOptionsFragment())
+        }
+        return true
+    }
+
+    @NeedsTest("Instrumented tests for review reminders")
+    private fun tryShowScheduleRemindersPanel(deckId: DeckId): Boolean {
+        val sidePanel = binding.studyoptionsFragment ?: return false
+        if (!sidePanel.isVisible) return false
+        val newFragment =
+            ScheduleRemindersFragment.newInstance(
+                scope = ReviewReminderScope.DeckSpecific(deckId),
+                host = ScheduleRemindersFragment.FragmentHost.STUDY_OPTIONS_FRAGMENT,
+            )
+        supportFragmentManager.commit {
+            replace(sidePanel.id, newFragment)
+            addToBackStack(null)
         }
         return true
     }
@@ -1993,6 +2021,15 @@ open class DeckPicker :
         val intent = Intent()
         intent.setClass(this, StudyOptionsActivity::class.java)
         reviewLauncher.launch(intent)
+    }
+
+    @NeedsTest("Instrumented tests for review reminders")
+    private fun openScheduleReminders(deckId: DeckId) {
+        if (tryShowScheduleRemindersPanel(deckId)) return
+
+        // otherwise, we need to launch the activity
+        Timber.i("Opening Schedule Reminders")
+        viewModel.scheduleReviewReminders(deckId)
     }
 
     private fun openReviewerOrStudyOptions(selectionType: DeckSelectionType) {
