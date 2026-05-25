@@ -15,10 +15,6 @@
         app:navigationContentDescription="@string/abc_action_bar_up_description"
         app:title="Troubleshooting" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
