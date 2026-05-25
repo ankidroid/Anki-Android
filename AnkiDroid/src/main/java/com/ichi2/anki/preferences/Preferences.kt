@@ -33,7 +33,6 @@ import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.utils.FragmentFactoryUtils
@@ -108,26 +107,30 @@ class PreferencesFragment :
     }
 
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
-        if (result.key == getString(R.string.pref_review_reminders_screen_key)) {
-            Timber.i("Preferences:: edit review reminders button pressed")
-            val intent = ScheduleRemindersFragment.getIntent(requireContext(), ReviewReminderScope.Global)
-            startActivity(intent)
+        if (result.resourceFile == R.xml.preferences_review_reminders) {
+            // This is a special case because the review reminders settings screen is not a
+            // normal SettingsFragment, but is instead a custom fragment.
+            Timber.i("Preferences:: Opening review reminders settings from search result")
+            openPreferencesFragmentFromSearch(ScheduleRemindersFragment())
             return
         }
 
         val fragment = getFragmentFromXmlRes(result.resourceFile) ?: return
-
-        parentFragmentManager.popBackStack() // clear the search fragment from the backstack
-        childFragmentManager.commit {
-            replace(R.id.settings_container, fragment, fragment.javaClass.name)
-            setFadeTransition(this)
-            addToBackStack(fragment.javaClass.name)
-        }
+        openPreferencesFragmentFromSearch(fragment)
 
         if (fragment is ControlsSettingsFragment) {
             fragment.highlightPreference(result)
         } else {
             result.highlight(fragment as PreferenceFragmentCompat)
+        }
+    }
+
+    private fun openPreferencesFragmentFromSearch(fragment: Fragment) {
+        parentFragmentManager.popBackStack() // clear the search fragment from the backstack
+        childFragmentManager.commit {
+            replace(R.id.settings_container, fragment, fragment.javaClass.name)
+            setFadeTransition(this)
+            addToBackStack(fragment.javaClass.name)
         }
     }
 

@@ -74,6 +74,7 @@
 
     <!-- Review Reminders -->
     <com.ichi2.preferences.HeaderPreference
+        android:fragment="com.ichi2.anki.reviewreminders.ScheduleRemindersFragment"
         android:key="@string/pref_review_reminders_screen_key"
         android:title="Review reminders"
         android:icon="@drawable/ic_notifications"
