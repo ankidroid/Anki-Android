@@ -768,7 +768,7 @@ class NoteEditorFragment :
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            requireAnkiActivity().setToolbarTitle(R.string.menu_add)
+            requireAnkiActivity().setToolbarText(titleRes = R.string.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)

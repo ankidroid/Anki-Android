@@ -112,6 +112,9 @@ class StudyOptionsFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        if (!fragmented) {
+            requireAnkiActivity().setToolbarText(title = "")
+        }
         viewModel.flowOfState.launchCollectionInLifecycleScope(::rebuildUi)
         refreshInterface()
     }
