@@ -17,7 +17,6 @@
 package com.ichi2.anki.reviewreminders
 
 import android.app.Dialog
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.format.DateFormat
@@ -142,6 +141,28 @@ class AddEditReminderDialog : DialogFragment() {
         return dialog
     }
 
+    /**
+     * MaterialTimePicker loses its callbacks when it is redrawn upon device rotation due to a known issue:
+     *
+     * https://github.com/material-components/material-components-android/issues/4310
+     *
+     * Whenever this dialog is hosted inside an activity that does not have `android:configChanges="orientation"`
+     * set in the manifest (ex. PreferencesActivity), the activity will be destroyed and recreated upon rotation,
+     * causing the dialog to be redrawn and lose its callbacks. Hence, we must reattach them via onResume.
+     *
+     * @see onConfigurationChanged
+     */
+    override fun onResume() {
+        super.onResume()
+        val timePickerDialog = parentFragmentManager.findFragmentByTag(TIME_PICKER_TAG) as? MaterialTimePicker
+        timePickerDialog?.let {
+            it.clearOnPositiveButtonClickListeners()
+            it.addOnPositiveButtonClickListener {
+                viewModel.setTime(ReviewReminderTime(timePickerDialog.hour, timePickerDialog.minute))
+            }
+        }
+    }
+
     private fun setUpToolbar() {
         binding.addEditReminderToolbar.title =
             getString(
@@ -251,6 +272,13 @@ class AddEditReminderDialog : DialogFragment() {
     /**
      * Show the time picker dialog for selecting a time with a given hour and minute.
      * Does not automatically dismiss the old dialog.
+     *
+     * We must use `dialog.show` here (thus technically causing the MaterialTimePicker dialog to be rendered
+     * on top of the AddEditReminderDialog, rather than replacing it as is standard) and cannot use the
+     * standard [showDialogFragment] method. This is because there are certain actions that need to be performed
+     * if the screen rotates while the time picker dialog is open. See [onResume]. The standard methods remove the old
+     * dialog before showing the new one, meaning on-rotation actions would not be possible without layering the
+     * MaterialTimePicker dialog on top of the AddEditReminderDialog.
      */
     private fun showTimePickerDialog(
         hour: Int,
@@ -268,20 +296,6 @@ class AddEditReminderDialog : DialogFragment() {
             viewModel.setTime(ReviewReminderTime(dialog.hour, dialog.minute))
         }
         dialog.show(parentFragmentManager, TIME_PICKER_TAG)
-    }
-
-    /**
-     * For some reason, the TimePicker dialog does not automatically redraw itself properly when the device rotates.
-     * Thus, if the TimePicker dialog is active, we manually show a new copy and then dismiss the old one.
-     * We need to show the new one before dismissing the old one to ensure there is no annoying flicker.
-     */
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        val previousDialog = parentFragmentManager.findFragmentByTag(TIME_PICKER_TAG) as? MaterialTimePicker
-        previousDialog?.let {
-            showTimePickerDialog(it.hour, it.minute)
-            it.dismiss()
-        }
     }
 
     private fun onSubmit() {
