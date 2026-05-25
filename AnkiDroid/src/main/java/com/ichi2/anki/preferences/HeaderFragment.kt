@@ -18,12 +18,10 @@ import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.preferences.profiles.SwitchProfilesFragment
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.preferences.HeaderPreference
-import timber.log.Timber
 
 class HeaderFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
@@ -54,14 +52,6 @@ class HeaderFragment : SettingsFragment() {
 
         requirePreference<Preference>(R.string.pref_developer_options_screen_key)
             .isVisible = Prefs.isDeveloperOptionsEnabled
-
-        requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
-            .setOnPreferenceClickListener {
-                Timber.i("HeaderFragment:: edit review reminders button pressed")
-                val intent = ScheduleRemindersFragment.getIntent(requireContext(), ReviewReminderScope.Global)
-                startActivity(intent)
-                true
-            }
 
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key).isVisible = Prefs.newReviewRemindersEnabled
         requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key).isVisible = !Prefs.newReviewRemindersEnabled
@@ -112,11 +102,11 @@ class HeaderFragment : SettingsFragment() {
                     .addBreadcrumb(R.string.pref_cat_sync)
 
                 if (Prefs.newReviewRemindersEnabled) {
-                    searchConfiguration
-                        .indexItem()
+                    indexItem()
                         .withKey(activity.getString(R.string.pref_review_reminders_screen_key))
                         .withTitle("Review reminders")
-                        .withResId(R.xml.preference_headers)
+                        .withResId(R.xml.preferences_review_reminders)
+                        .withSummary("Notifications")
                 } else {
                     index(R.xml.preferences_notifications)
                 }
@@ -250,6 +240,7 @@ class HeaderFragment : SettingsFragment() {
                 is ReviewingSettingsFragment -> R.string.pref_reviewing_screen_key
                 is SyncSettingsFragment, is CustomSyncServerSettingsFragment -> R.string.pref_sync_screen_key
                 is NotificationsSettingsFragment -> R.string.pref_notifications_screen_key
+                is ScheduleRemindersFragment -> R.string.pref_review_reminders_screen_key
                 is AppearanceSettingsFragment, is CustomButtonsSettingsFragment -> R.string.pref_appearance_screen_key
                 is ControlsSettingsFragment -> R.string.pref_controls_screen_key
                 is AccessibilitySettingsFragment -> R.string.pref_accessibility_screen_key
