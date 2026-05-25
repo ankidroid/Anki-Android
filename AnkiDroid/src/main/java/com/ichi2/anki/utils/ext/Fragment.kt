@@ -68,12 +68,14 @@ val Fragment.isCompactWidth: Boolean
  */
 fun Fragment.onWindowFocusChanged(action: (hasFocus: Boolean) -> Unit) {
     val listener = OnWindowFocusChangeListener(action)
-    val viewTreeObserver = requireView().viewTreeObserver
-    viewTreeObserver.addOnWindowFocusChangeListener(listener)
+    requireView().viewTreeObserver.addOnWindowFocusChangeListener(listener)
     viewLifecycleOwner.lifecycle.addObserver(
         object : DefaultLifecycleObserver {
             override fun onDestroy(owner: LifecycleOwner) {
-                viewTreeObserver.removeOnWindowFocusChangeListener(listener)
+                view
+                    ?.viewTreeObserver
+                    ?.takeIf { it.isAlive }
+                    ?.removeOnWindowFocusChangeListener(listener)
             }
         },
     )
