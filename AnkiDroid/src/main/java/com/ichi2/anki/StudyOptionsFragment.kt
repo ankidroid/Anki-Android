@@ -49,8 +49,6 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -220,12 +218,12 @@ class StudyOptionsFragment :
             }
             R.id.action_schedule_reminders -> {
                 Timber.i("StudyOptionsFragment:: schedule reminders button pressed")
-                val intent =
-                    ScheduleRemindersFragment.getIntent(
-                        requireContext(),
-                        ReviewReminderScope.DeckSpecific(col!!.decks.current().id),
-                    )
-                startActivity(intent)
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS,
+                    bundleOf(
+                        KEY_REVIEW_REMINDERS_DECK_ID to col!!.decks.current().id,
+                    ),
+                )
                 return true
             }
             R.id.action_unbury -> {
@@ -544,6 +542,17 @@ class StudyOptionsFragment :
          * this fragment need to handle this request and initialize the study screen as they see fit.
          */
         const val REQUEST_STUDY_OPTIONS_STUDY = "request_study_option_study"
+
+        /**
+         * Identifier for a fragment result request to open the review reminders screen for the selected deck.
+         * Activities using this fragment need to handle this request and open the review reminders screen as they see fit.
+         */
+        const val REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS = "request_study_option_review_reminders"
+
+        /**
+         * Bundle key for the deck ID whose study options are being displayed, used when the review reminders screen is being opened.
+         */
+        const val KEY_REVIEW_REMINDERS_DECK_ID = "review_reminders_deck_id"
 
         /**
          * Constants for selecting which content view to display

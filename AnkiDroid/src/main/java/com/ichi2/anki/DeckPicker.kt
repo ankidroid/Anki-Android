@@ -64,6 +64,7 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -72,7 +73,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
-import anki.decks.deckId
 import anki.sync.SyncStatusResponse
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -155,7 +155,9 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -582,6 +584,12 @@ open class DeckPicker :
             openReviewer()
         }
 
+        setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS) { _, bundle ->
+            Timber.d("Opening review reminders screen from DeckPicker's study options panel")
+            val did = bundle.getLong(StudyOptionsFragment.KEY_REVIEW_REMINDERS_DECK_ID)
+            openScheduleReminders(did)
+        }
+
         pullToSyncWrapper.configureView(
             this,
             IMPORT_MIME_TYPES,
@@ -715,6 +723,7 @@ open class DeckPicker :
                 data = deckList.data,
                 hasSubDecks = deckList.hasSubDecks,
             )
+            tryShowStudyOptionsPanel()
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
@@ -898,8 +907,8 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.SCHEDULE_REMINDERS -> {
                 Timber.i("Scheduling review reminders for deck '%d'", deckId)
-                viewModel.scheduleReviewReminders(deckId)
                 dismissAllDialogFragments()
+                openScheduleReminders(deckId)
             }
         }
     }
@@ -1866,8 +1875,24 @@ open class DeckPicker :
      */
     private fun tryShowStudyOptionsPanel(): Boolean {
         val containerId = binding.studyoptionsFragment?.id ?: return false
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.commit {
             replace(containerId, StudyOptionsFragment())
+        }
+        return true
+    }
+
+    private fun tryShowScheduleRemindersPanel(deckId: DeckId): Boolean {
+        val sidePanel = binding.studyoptionsFragment ?: return false
+        if (!sidePanel.isVisible) return false
+        val newFragment =
+            ScheduleRemindersFragment.newInstance(
+                scope = ReviewReminderScope.DeckSpecific(deckId),
+                host = ScheduleRemindersFragment.FragmentHost.STUDY_OPTIONS_FRAGMENT,
+            )
+        supportFragmentManager.commit {
+            replace(sidePanel.id, newFragment)
+            addToBackStack(null)
         }
         return true
     }
@@ -1903,6 +1928,14 @@ open class DeckPicker :
         val intent = Intent()
         intent.setClass(this, StudyOptionsActivity::class.java)
         reviewLauncher.launch(intent)
+    }
+
+    private fun openScheduleReminders(deckId: DeckId) {
+        if (tryShowScheduleRemindersPanel(deckId)) return
+
+        // otherwise, we need to launch the activity
+        Timber.i("Opening Schedule Reminders")
+        viewModel.scheduleReviewReminders(deckId)
     }
 
     private fun openReviewerOrStudyOptions(selectionType: DeckSelectionType) {
