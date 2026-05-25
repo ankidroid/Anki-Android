@@ -32,7 +32,6 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.withCol
@@ -156,16 +155,7 @@ class ScheduleRemindersFragment :
         }
 
         // Set up recycler view
-        val layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                layoutManager.orientation,
-            ),
-        )
-
-        // Set up adapter, pass functionality to it
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter =
             ScheduleRemindersAdapter(
                 ::retrieveDeckNameFromID,
