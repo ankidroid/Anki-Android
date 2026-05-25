@@ -27,7 +27,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -48,6 +47,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.customView
@@ -372,7 +372,7 @@ class AddEditReminderDialog : DialogFragment() {
             dismiss()
         }
 
-        showDialogFragment(confirmationDialog)
+        parentFragmentManager.showDialogFragment(confirmationDialog)
     }
 
     private fun onDeckSelected(deck: SelectableDeck?) {
@@ -435,7 +435,7 @@ class AddEditReminderDialog : DialogFragment() {
         fun Fragment.registerAddEditReminderHandler(
             action: (newOrModifiedReminder: ReviewReminder?, modeOfFinishedDialog: DialogMode) -> Unit,
         ) {
-            setFragmentResultListener(REQUEST_ADD_EDIT_REMINDER) { _, bundle ->
+            childFragmentManager.setFragmentResultListener(REQUEST_ADD_EDIT_REMINDER, viewLifecycleOwner) { _, bundle ->
                 Timber.i("Received fragment result from add/edit dialog")
                 val modeOfFinishedDialog =
                     bundle.getParcelableCompat<DialogMode>(

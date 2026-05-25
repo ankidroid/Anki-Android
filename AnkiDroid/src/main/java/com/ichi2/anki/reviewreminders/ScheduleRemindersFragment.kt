@@ -55,7 +55,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.getParcelableCompat
-import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
@@ -572,7 +572,7 @@ class ScheduleRemindersFragment :
         Timber.d("Adding new review reminder")
         val dialogMode = AddEditReminderDialog.DialogMode.Add(scheduleRemindersScope)
         val dialog = AddEditReminderDialog.getInstance(dialogMode)
-        showDialogFragment(dialog)
+        childFragmentManager.showDialogFragment(dialog)
     }
 
     /**
@@ -583,7 +583,7 @@ class ScheduleRemindersFragment :
         Timber.d("Editing review reminder: %s", reminder.id)
         val dialogMode = AddEditReminderDialog.DialogMode.Edit(reminder)
         val dialog = AddEditReminderDialog.getInstance(dialogMode)
-        showDialogFragment(dialog)
+        childFragmentManager.showDialogFragment(dialog)
     }
 
     /**
