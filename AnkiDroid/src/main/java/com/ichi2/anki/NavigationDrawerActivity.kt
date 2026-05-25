@@ -48,14 +48,14 @@ import com.google.android.material.navigation.NavigationView
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.common.utils.android.HandlerUtils
-import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.libanki.CardId
+import com.ichi2.anki.navigation.AppDestination
+import com.ichi2.anki.navigation.handleAppDestination
+import com.ichi2.anki.navigation.populateFromAppDestinations
 import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
-import com.ichi2.utils.IntentUtil
 import timber.log.Timber
 
 abstract class NavigationDrawerActivity(
@@ -171,6 +171,7 @@ abstract class NavigationDrawerActivity(
         // Setup toolbar and hamburger
         navigationView = drawerLayout.findViewById(R.id.navdrawer_items_container)
         navigationView!!.setNavigationItemSelectedListener(this)
+        navigationView!!.menu.populateFromAppDestinations()
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -344,43 +345,21 @@ abstract class NavigationDrawerActivity(
          * This runnable will be executed in onDrawerClosed(...)
          * to make the animation more fluid on older devices.
          */
+        val dest = AppDestination.fromMenuId(item.itemId)
+        if (dest == null) {
+            Timber.w("Unknown nav menu item: %d", item.itemId)
+            closeDrawer()
+            return true
+        }
         pendingRunnable =
             Runnable {
-                // Take action if a different item selected
-                when (item.itemId) {
-                    R.id.nav_decks -> {
-                        Timber.i("Navigating to decks")
-                        val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
-                        // opening DeckPicker should use the instance on the back stack & clear back history
-                        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        startActivity(deckPicker)
-                    }
-
-                    R.id.nav_browser -> {
-                        Timber.i("Navigating to card browser")
-                        openCardBrowser()
-                    }
-
-                    R.id.nav_stats -> {
-                        Timber.i("Navigating to stats")
-                        openStatistics()
-                    }
-
-                    R.id.nav_settings -> {
-                        Timber.i("Navigating to settings")
-                        openSettings()
-                    }
-
-                    R.id.nav_help -> {
-                        Timber.i("Navigating to help")
-                        showDialogFragment(HelpDialog.newHelpInstance())
-                    }
-
-                    R.id.support_ankidroid -> {
-                        Timber.i("Navigating to support AnkiDroid")
-                        val canRateApp = IntentUtil.canOpenIntent(this, AnkiDroidApp.getMarketIntent(this))
-                        showDialogFragment(HelpDialog.newSupportInstance(canRateApp))
-                    }
+                Timber.i("Navigating to %s", dest)
+                when (dest) {
+                    // Legacy: Card Browser is opened with the currently-viewed card id as an extra
+                    AppDestination.Browser -> openCardBrowser()
+                    // Legacy: Settings is launched via preferencesLauncher so we can recreate() on return
+                    AppDestination.Settings -> openSettings()
+                    else -> handleAppDestination(dest)
                 }
             }
         closeDrawer()
