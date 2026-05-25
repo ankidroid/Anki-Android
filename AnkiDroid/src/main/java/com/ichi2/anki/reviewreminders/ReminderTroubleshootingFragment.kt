@@ -41,7 +41,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.setBackgroundTint
@@ -75,6 +77,20 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
 
     private val binding by viewBinding(FragmentReminderTroubleshootingBinding::bind)
 
+    /**
+     * [ScheduleRemindersFragment] can be hosted from multiple activities and must change its UI to accommodate its host
+     * Since this fragment is launched from [ScheduleRemindersFragment], it must also know its host to adjust its UI accordingly.
+     *
+     * @see ScheduleRemindersFragment.FragmentHost
+     */
+    private val host: ScheduleRemindersFragment.FragmentHost by lazy {
+        requireNotNull(
+            requireArguments().getParcelableCompat<ScheduleRemindersFragment.FragmentHost>(ARGS_HOST),
+        ) {
+            "Host cannot be null"
+        }
+    }
+
     internal val notificationPermissionLauncher: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             viewModel.refreshChecks()
@@ -86,13 +102,33 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+        // Set up root layout insets if the host of this fragment does not support edge-to-edge
+        binding.rootLayout.fitsSystemWindows = !host.supportsEdgeToEdge
+        when (host.toolbarType) {
+            ScheduleRemindersFragment.ToolbarType.EXTERNAL -> setupExternalActivityToolbar()
+            ScheduleRemindersFragment.ToolbarType.INTERNAL_COLLAPSIBLE,
+            ScheduleRemindersFragment.ToolbarType.INTERNAL_NON_COLLAPSIBLE,
+            -> setupInternalFragmentToolbar()
         }
 
         setupSummary()
         setupTroubleshootingChecks()
         setupSettingChangeDetector()
+    }
+
+    private fun setupExternalActivityToolbar() {
+        binding.troubleshootingToolbar.isVisible = false
+        requireAnkiActivity().apply {
+            // TODO: Move to string resources
+            setToolbarText(title = "Troubleshooting")
+            invalidateMenu()
+        }
+    }
+
+    private fun setupInternalFragmentToolbar() {
+        binding.troubleshootingToolbar.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setupSummary() {
@@ -148,6 +184,25 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
      */
     private fun setupSettingChangeDetector() {
         onWindowFocusChanged { hasFocus -> if (hasFocus) viewModel.refreshChecks() }
+    }
+
+    companion object {
+        /**
+         * Arguments key for specifying the host of this fragment.
+         */
+        private const val ARGS_HOST = "host"
+
+        fun newInstance(host: ScheduleRemindersFragment.FragmentHost): ReminderTroubleshootingFragment =
+            ReminderTroubleshootingFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putParcelable(ARGS_HOST, host)
+                    }
+                Timber.i(
+                    "Creating ReminderTroubleshootingFragment with host=%s",
+                    host,
+                )
+            }
     }
 }
 

@@ -468,7 +468,7 @@ class DeckPickerTest : RobolectricTest() {
 
             Prefs.newReviewRemindersEnabled = true
             val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
+            assertEquals("com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity", scheduleReminders.component!!.className)
             onBackPressedDispatcher.onBackPressed()
         }
 
