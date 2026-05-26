@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.browser
 
-import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -118,7 +117,6 @@ import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes.CARDS
-import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
@@ -1387,13 +1385,7 @@ class CardBrowserFragment :
         }
 
     fun changeDisplayOrder() {
-        showDialogFragment(
-            // TODO: move this into the ViewModel
-            CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
-                dialog.dismiss()
-                activityViewModel.changeCardOrder(LegacySortType.fromCardBrowserLabelIndex(which))
-            },
-        )
+        showDialogFragment(CardBrowserOrderDialog())
     }
 
     fun updateFlagForSelectedRows(flag: Flag) =
