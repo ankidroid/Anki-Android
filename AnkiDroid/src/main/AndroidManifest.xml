@@ -374,7 +374,7 @@
             android:name="com.ichi2.anki.Reviewer"
             android:exported="true"
             android:theme="@style/Theme_Dark.Launcher"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
             <intent-filter>
