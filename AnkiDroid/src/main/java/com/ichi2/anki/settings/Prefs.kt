@@ -240,6 +240,13 @@ open class PrefsRepository(
 
     val exitViaDoubleTapBack by booleanPref(R.string.exit_via_double_tap_back_key, false)
 
+    /**
+     * Whether to show side-by-side split panes on large screens.
+     * Applies to the note editor, card browser, and template editor.
+     * When false, all screens use a single-pane layout.
+     */
+    var showSplitView by booleanPref(R.string.show_split_view_key, defaultValue = true)
+
     // ****************************************** Sync ****************************************** //
 
     val isAutoSyncEnabled by booleanPref(R.string.automatic_sync_choice_key, false)

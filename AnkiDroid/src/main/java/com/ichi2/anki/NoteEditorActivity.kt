@@ -77,7 +77,7 @@ class NoteEditorActivity :
     private var refreshPreviewerJob: Job? = null
 
     val fragmented: Boolean
-        get() = previewerFrame?.isVisible == true
+        get() = Prefs.showSplitView && previewerFrame?.isVisible == true
 
     private lateinit var binding: ActivityNoteEditorBinding
 
@@ -94,6 +94,12 @@ class NoteEditorActivity :
         setContentView(binding.root)
 
         previewerFrame = binding.previewerFrame
+        // Hide the preview pane and divider when split view is disabled so the layout collapses
+        // to single-pane and the toolbar preview icon becomes available again.
+        if (previewerFrame != null && !Prefs.showSplitView) {
+            binding.previewerFrameLayout?.isVisible = false
+            binding.noteEditorResizingDivider?.isVisible = false
+        }
         Timber.i("Note Editor is in %s mode", if (fragmented) "split" else "single-pane")
 
         // TODO: specify how non-null but invalid extras are handled

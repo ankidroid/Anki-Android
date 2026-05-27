@@ -94,7 +94,7 @@ class DeckPickerTest : RobolectricTest() {
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<String> = listOf("normal", "xlarge")
+        fun initParameters(): Collection<String> = listOf("normal", "w1280dp")
     }
 
     @Before
@@ -537,7 +537,7 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun checkDisplayOfStudyOptionsOnTablet() {
-        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("w1280dp"))
         val deckPickerEx =
             super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java,

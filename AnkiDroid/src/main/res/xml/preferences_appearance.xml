@@ -128,6 +128,13 @@
             android:defaultValue="false"
             android:title="@string/show_deck_title"/>
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_layout">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/show_split_view_key"
+            android:summary="@string/show_split_view_summ"
+            android:title="@string/show_split_view" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
         <SwitchPreferenceCompat
             android:checked="false"
