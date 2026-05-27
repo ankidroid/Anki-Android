@@ -228,6 +228,9 @@ class CardBrowserViewModel(
      */
     val flowOfReverseDirection: MutableStateFlow<ReverseDirection?> = MutableStateFlow(null)
 
+    /** Emits each time the user changes the sort order, with data for a snackbar */
+    val flowOfSortTypeChanged = MutableSharedFlow<SortChangeNotification>()
+
     /**
      * A map from column backend key to backend column definition
      *
@@ -962,7 +965,29 @@ class CardBrowserViewModel(
                 }
             }
 
+            flowOfSortTypeChanged.emit(buildSortChangeNotification(sortType))
+
             launchSearchForCards()
+        }
+
+    private fun buildSortChangeNotification(sortType: SortType): SortChangeNotification =
+        when (sortType) {
+            is SortType.NoOrdering -> SortChangeNotification.NoOrdering
+            is SortType.CollectionOrdering -> {
+                val columnLabel =
+                    flowOfAllColumns.value[sortType.key.value]?.getLabel(cardsOrNotes)
+                        ?: sortType.key.value
+                val type =
+                    runCatching { CardBrowserColumn.fromColumnKey(sortType.key.value) }
+                        .getOrNull()
+                        ?.type(cardsOrNotes)
+                        ?: ColumnType.UNSPECIFIED
+                SortChangeNotification.CollectionOrdering(
+                    columnLabel = columnLabel,
+                    type = type,
+                    reverse = sortType.reverse,
+                )
+            }
         }
 
     /**
@@ -1779,3 +1804,22 @@ data class ColumnHeading(
     val label: String,
     val ankiColumnKey: String,
 ) : Parcelable
+
+/**
+ * Data needed to show a snackbar when the sort order is changed
+ */
+sealed interface SortChangeNotification {
+    /** [SortType.NoOrdering] was selected */
+    data object NoOrdering : SortChangeNotification
+
+    /**
+     * @param columnLabel The localized label for the column
+     * @param type The data type of the column. Used to explain the sort direction
+     * @param reverse Whether the sort is ascending/descending
+     */
+    data class CollectionOrdering(
+        val columnLabel: String,
+        val type: ColumnType,
+        val reverse: Boolean,
+    ) : SortChangeNotification
+}

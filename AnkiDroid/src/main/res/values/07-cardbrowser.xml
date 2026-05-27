@@ -90,6 +90,7 @@
     <!-- Sort Order -->
     <string name="card_browser_order_no_sorting_title" comment="Title of the 'no sorting' row in the Choose Display Order bottom sheet">No sorting</string>
     <string name="card_browser_order_no_sorting_subtitle" comment="Subtitle for the 'no sorting' row noting that no-sort is faster than sorted queries">Faster</string>
+    <string name="card_browser_order_snackbar_sort_by" comment="Snackbar shown after sort changes. %1$s is the column name (e.g. 'Card Type')">Sort by %1$s</string>
 
     <string name="card_browser_order_subtitle_text_ascending" comment="Sort direction subtitle for text columns when ascending (A before Z)">A–Z</string>
     <string name="card_browser_order_subtitle_text_descending" comment="Sort direction subtitle for text columns when descending (Z before A)">Z–A</string>
