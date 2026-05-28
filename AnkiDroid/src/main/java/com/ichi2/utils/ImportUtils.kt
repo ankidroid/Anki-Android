@@ -30,6 +30,7 @@ import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -336,7 +337,7 @@ object ImportUtils {
                             appendLine(DebugInfoService.getDebugInfo(activity))
                         }
 
-                    AnkiDroidApp.instance.copyToClipboard(stringToCopy)
+                    appContext.copyToClipboard(stringToCopy)
                 }
 
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
