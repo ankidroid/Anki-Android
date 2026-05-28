@@ -26,6 +26,7 @@ import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.InputStreamReader
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class PostRequestHandlerTest : RobolectricTest() {
@@ -38,6 +39,13 @@ class PostRequestHandlerTest : RobolectricTest() {
             containsInAnyOrder((collectionMethods + uiMethods).keys),
         )
     }
+
+    @Test
+    fun `saveCustomColours does not throw`() =
+        runTest {
+            // saveCustomColours is a FrontendService which is not implemented, but should not throw
+            assertNotNull(handleCollectionPostRequest("saveCustomColours", byteArrayOf()))
+        }
 
     /**
      * Auto-generated list of all typescript funcs created & packaged during backend build

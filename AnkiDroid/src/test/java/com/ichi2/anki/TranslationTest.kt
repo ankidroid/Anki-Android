@@ -26,7 +26,9 @@ class TranslationTest : RobolectricTest() {
     @Test
     fun `translatable strings do not duplicate GeneratedTranslations`() =
         runTest {
-            val backendStrings = getBackendNonArgStrings()
+            val backendStrings =
+                getBackendNonArgStrings()
+                    .filterNot { it.methodName in IGNORED_BACKEND_TRANSLATIONS }
             val backendByText = backendStrings.groupBy { it.text }
             val backendByTextLower = backendStrings.groupBy { it.text.lowercase() }
             val xmlStrings = getTranslatableXmlStrings()
@@ -355,6 +357,17 @@ class TranslationTest : RobolectricTest() {
                 "Manage note types", // R.string.model_browser_label
                 // TR.browsingManageNoteTypes()
                 // TR.qtMiscManageNoteTypes()
+            )
+
+        /**
+         * Backend translation method names (e.g. `TR.xx()`) excluded from the
+         * duplicate check as the strings are unrelated conceptually.
+         *
+         * Do not remove this set when empty.
+         */
+        private val IGNORED_BACKEND_TRANSLATIONS =
+            setOf(
+                "launcherOff", // "Off" - unrelated to R.string.full_screen_off
             )
     }
 }
