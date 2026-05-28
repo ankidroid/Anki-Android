@@ -1,7 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ SPDX-License-Identifier: GPL-3.0-or-later
-  ~ SPDX-FileCopyrightText: Copyright (c) 2026 Hari Srinivasan <harisrini21@gmail.com>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2026 Hari Srinivasan <harisrini21@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,28 +35,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginEnd="8dp"
             android:text="@string/save"
             android:visibility="gone"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:layout_marginEnd="14dp"/>
     </com.google.android.material.appbar.MaterialToolbar>
 
+    <!-- LOADING -->
     <LinearLayout
         android:id="@+id/change_note_type_loading_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingVertical="48dp"
         android:gravity="center"
-        android:visibility="visible"
         android:orientation="vertical"
-        tools:visibility="gone"
-        >
+        android:paddingVertical="48dp"
+        android:visibility="visible"
+        tools:visibility="gone">
+
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminate="true"
-            />
+            android:indeterminate="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,44 +68,232 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <!-- Note type selector -->
-        <LinearLayout
+        <!-- From & To & arrow -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="4dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp">
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/CardEditorModelText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:gravity="start|center_vertical"
-                android:textStyle="bold"
-                android:text="@string/CardEditorModel" />
-            <Spinner
-                android:id="@+id/dest_note_type_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="?minTouchTargetSize"
-                />
-        </LinearLayout>
+            android:padding="14dp">
 
+            <!-- From Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/from_card"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                app:cardCornerRadius="16dp"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintEnd_toStartOf="@+id/to_card"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:background="#f4f5f8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:id="@+id/from_label"
+                        android:text="@string/from_label"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#9C9CA8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/current_note_type"
+                        android:layout_marginTop="8dp"
+                        tools:text="Basic (and reversed card)"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- To Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/to_card"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="#2196F3"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/from_card"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardBackgroundColor="@color/white">
+
+                <FrameLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Spinner
+                        android:id="@+id/destNoteTypeSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="invisible" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:id="@+id/to_label"
+                            android:text="@string/to_label"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#2196F3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
+
+                        <ImageView
+                            android:id="@+id/to_dropdown_icon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/outline_arrow_forward_ios_24"
+                            android:rotation="90"
+                            app:tint="#2196F3" />
+
+                        <TextView
+                            android:id="@+id/selectedNoteType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/to_label"
+                            android:layout_marginTop="8dp"
+                            tools:text="Basic"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+                    </RelativeLayout>
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- arrow -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/center_arrow_container"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:layout_constraintTop_toTopOf="@+id/from_card"
+                app:layout_constraintBottom_toBottomOf="@+id/from_card"
+                app:layout_constraintStart_toEndOf="@+id/from_card"
+                app:layout_constraintEnd_toStartOf="@+id/to_card">
+
+                <ImageView
+                    android:background="@color/white"
+                    android:id="@+id/arrow_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/searchpreference_ic_arrow_right"
+                    android:padding="6dp"
+                    app:tint="#7A7A86"
+                    android:scaleType="centerInside"
+                    android:contentDescription="@string/change_direction_arrow"/>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Warning Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/warning_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="#FFF8E1"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/image_v"
+                    android:src="@drawable/ic_warning"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="10dp"
+                    app:tint="#E6A700" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/image_v"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="20dp">
+
+                    <TextView
+                        android:textColor="#8A6D1D"
+                        android:id="@+id/fields_warning_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        tools:text="2 fields will be removed" />
+
+                    <TextView
+                        android:id="@+id/cards_warning_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:textColor="#8A6D1D"
+                        tools:text="1 card will be removed" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- TabLayout -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/change_note_type_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:layout_marginHorizontal="14dp"
+            app:tabGravity="fill"
             app:tabMaxWidth="0dp"
-            app:tabGravity="fill"/>
+            android:background="@android:color/transparent"
+            app:tabBackground="@android:color/transparent"/>
 
+        <!-- ViewPager -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/change_note_type_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            />
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
+
 </LinearLayout>

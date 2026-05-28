@@ -21,7 +21,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ import android.widget.CheckedTextView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.annotation.CheckResult
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -55,10 +53,6 @@ import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
 import com.ichi2.anki.databinding.DialogFieldsBinding
 import com.ichi2.anki.databinding.DialogTemplatesBinding
 import com.ichi2.anki.databinding.ViewTabLayoutIconOnEndBinding
-import com.ichi2.anki.dialogs.ConversionType.CLOZE_TO_CLOZE
-import com.ichi2.anki.dialogs.ConversionType.CLOZE_TO_REGULAR
-import com.ichi2.anki.dialogs.ConversionType.REGULAR_TO_CLOZE
-import com.ichi2.anki.dialogs.ConversionType.REGULAR_TO_REGULAR
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NoteTypeId
@@ -71,8 +65,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.InitStatus
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.withProgress
-import com.ichi2.utils.LanguageUtil
-import com.ichi2.utils.boldList
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -110,7 +103,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = DialogChangeNoteTypeBinding.bind(view)
-
         binding.toolbar.title = TR.sentenceCase.changeNoteType
         binding.toolbar.setNavigationOnClickListener { dismiss() }
         binding.btnSave.setOnClickListener {
@@ -154,9 +146,76 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
 
     private fun setupChangeNoteTypeDialog(binding: DialogChangeNoteTypeBinding) {
         Timber.d("setting up dialog")
-        setupNoteTypeSpinner(binding)
+
+        // inital values for cards
+        binding.currentNoteType.text = viewModel.inputNoteType.name
+        binding.selectedNoteType.text = viewModel.outputNoteType.name
+
+        binding.toCard.setOnClickListener {
+            binding.destNoteTypeSpinner.performClick()
+        }
+
+        val defaultTextColor = binding.selectedNoteType.currentTextColor
+        setupNoteTypeSpinner(binding, defaultTextColor)
+
         setupViewPagerAndTabs(binding)
         bindSaveButtonState(binding)
+
+        setupWarningCard(binding)
+    }
+
+    private fun setupWarningCard(binding: DialogChangeNoteTypeBinding) {
+        lifecycleScope.launch {
+            combine(
+                viewModel.discardedFieldsFlow,
+                viewModel.discardedTemplatesFlow,
+            ) { fields, templates ->
+                fields to templates
+            }.collect { (fields, templates) ->
+                Timber.d("setupWARN fields=%s templates=%s", fields, templates)
+                updateWarningVisibility(binding, fields, templates)
+            }
+        }
+    }
+
+    fun updateWarningVisibility(
+        binding: DialogChangeNoteTypeBinding,
+        discardedFields: List<String>,
+        discardedTemplates: List<String>,
+    ) {
+        Timber.d("update discardedFields=%s", discardedFields)
+        Timber.d("updte discardedTemplates=%s", discardedTemplates)
+
+        val hasDiscardedItems = discardedFields.isNotEmpty() || discardedTemplates.isNotEmpty()
+
+        binding.warningCard.isVisible = hasDiscardedItems
+
+        if (hasDiscardedItems) {
+            binding.fieldsWarningText.isVisible = discardedFields.isNotEmpty()
+            binding.cardsWarningText.isVisible = discardedTemplates.isNotEmpty()
+
+            if (discardedFields.isNotEmpty()) {
+                val fieldsText =
+                    resources.getQuantityString(
+                        R.plurals.fields_will_be_removed,
+                        discardedFields.size,
+                        discardedFields.size,
+                    )
+
+                binding.fieldsWarningText.text = "$fieldsText will be removed."
+            }
+
+            if (discardedTemplates.isNotEmpty()) {
+                val cardsText =
+                    resources.getQuantityString(
+                        R.plurals.cards_will_be_removed,
+                        discardedTemplates.size,
+                        discardedTemplates.size,
+                    )
+
+                binding.cardsWarningText.text = "$cardsText will be removed."
+            }
+        }
     }
 
     private fun bindSaveButtonState(binding: DialogChangeNoteTypeBinding) {
@@ -167,16 +226,42 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         }
     }
 
-    private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
+    private fun setupNoteTypeSpinner(
+        binding: DialogChangeNoteTypeBinding,
+        defaultTextColor: Int,
+    ) {
         binding.destNoteTypeSpinner.apply {
             adapter = createNoteTypeAdapter()
 
-            val position = viewModel.availableNoteTypes.indexOfFirst { it.id == viewModel.outputNoteType.id }
-            setSelection(position, false)
+            post {
+                val position =
+                    viewModel.availableNoteTypes.indexOfFirst {
+                        it.id == viewModel.outputNoteType.id
+                    }
+
+                if (position >= 0) {
+                    setSelection(position, false)
+                }
+            }
 
             onItemSelectedListener =
                 BasicItemSelectedListener { position, id: NoteTypeId ->
-                    viewModel.setOutputNoteTypeId(id)
+
+                    val selectedNoteType = viewModel.availableNoteTypes[position]
+
+                    binding.selectedNoteType.text = selectedNoteType.name
+
+                    binding.selectedNoteType.setTextColor(
+                        if (selectedNoteType.isCloze) {
+                            MaterialColors.getColor(context, R.attr.clozeColor, Color.BLUE)
+                        } else {
+                            defaultTextColor
+                        },
+                    )
+
+                    if (viewModel.outputNoteType.id != id) {
+                        viewModel.setOutputNoteTypeId(id)
+                    }
                 }
         }
     }
@@ -367,25 +452,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                     createFieldSpinner()
                 }
             }
-
-            lifecycleScope.launch {
-                Timber.d("setupFlows: collecting discardedFieldsFlow")
-                viewModel.discardedFieldsFlow.collect { fields ->
-                    showDiscardedFieldsMessage(fields)
-                }
-            }
-        }
-
-        private fun showDiscardedFieldsMessage(discardedFields: List<String>) {
-            binding.fieldRemovalText.isVisible = discardedFields.isNotEmpty()
-            if (discardedFields.isEmpty()) {
-                return
-            }
-
-            binding.fieldRemovalText.text =
-                SpannableStringBuilder()
-                    .append(TR.changeNotetypeWillDiscardContent() + " ")
-                    .boldList(discardedFields, ", ")
         }
 
         /**
@@ -514,20 +580,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
             }
 
             lifecycleScope.launch {
-                viewModel.conversionTypeFlow.collect { type ->
-                    when (val layout = Layout.fromConversionType(type)) {
-                        is Layout.Standard -> {
-                            binding.clozeInfoLayout.isVisible = false
-                        }
-                        is Layout.WithWarning -> {
-                            binding.clozeInfoLayout.isVisible = true
-                            binding.clozeInfoText.text = getString(layout.warningRes)
-                        }
-                    }
-                }
-            }
-
-            lifecycleScope.launch {
                 viewModel.canChangeTemplatesFlow.collect { canChangeTemplates ->
                     binding.templatesContainer.isVisible = canChangeTemplates
                     binding.templatesHeaderLayout.isVisible = canChangeTemplates
@@ -536,63 +588,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                     }
                 }
             }
-
-            lifecycleScope.launch {
-                viewModel.discardedTemplatesFlow.collect { discarded ->
-                    if (viewModel.canChangeTemplatesFlow.value) {
-                        showDiscardedTemplatesMessage(discarded)
-                    }
-                }
-            }
-        }
-
-        /**
-         * Controls the layout and warning display for the template selection tab.
-         *
-         * - [Standard]: No warning shown, only template mapping spinners visible
-         * - [WithWarning]: Shows a warning message above the template mapping spinners
-         *
-         * The layout type is determined by the [ConversionType] between input and output note types.
-         */
-        sealed class Layout {
-            data object Standard : Layout()
-
-            data class WithWarning(
-                @StringRes val warningRes: Int,
-            ) : Layout()
-
-            companion object {
-                fun fromConversionType(conversionType: ConversionType): Layout =
-                    when (conversionType) {
-                        REGULAR_TO_REGULAR -> Standard
-                        CLOZE_TO_CLOZE, REGULAR_TO_CLOZE ->
-                            WithWarning(
-                                warningRes = R.string.card_numbers_unchanged,
-                            )
-                        // Improvement: we could detect this using the max ord of provided notes
-                        CLOZE_TO_REGULAR ->
-                            WithWarning(
-                                warningRes = R.string.extra_cloze_deletions_removed,
-                            )
-                    }
-            }
-        }
-
-        /**
-         * Show message listing discarded templates when not all templates are mapped to new ones
-         */
-        private fun showDiscardedTemplatesMessage(discardedTemplateNames: List<String>) {
-            val templateRemovalLabel = binding.templateRemovalText
-            templateRemovalLabel.isVisible = discardedTemplateNames.isNotEmpty()
-            if (discardedTemplateNames.isEmpty()) {
-                return
-            }
-
-            templateRemovalLabel.text =
-                SpannableStringBuilder()
-                    .append(TR.changeNotetypeWillDiscardCards())
-                    .append(" ")
-                    .boldList(discardedTemplateNames, LanguageUtil.getListSeparator(requireContext()))
         }
 
         private fun createTemplateSpinner() {

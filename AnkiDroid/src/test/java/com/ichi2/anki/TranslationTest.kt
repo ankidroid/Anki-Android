@@ -341,6 +341,7 @@ class TranslationTest : RobolectricTest() {
                 "Answer good", // R.string.answer_good | TR.deckConfigAnswerGood()
                 "Answer hard", // R.string.answer_hard | TR.deckConfigAnswerHard()
                 "Browser options", // R.string.browser_options_dialog_heading | TR.browsingBrowserOptions()
+                "Bury card", // R.string.menu_bury_card | TR.studyingBuryCard()
                 "Change deck", // R.string.card_browser_change_deck | TR.browsingChangeDeck()
                 "Copy debug info", // R.string.feedback_copy_debug
                 // TR.aboutCopyDebugInfo()
