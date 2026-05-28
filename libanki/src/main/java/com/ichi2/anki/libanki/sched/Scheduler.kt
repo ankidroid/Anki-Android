@@ -149,17 +149,17 @@ open class Scheduler(
         }
 
     /** Legacy path, used by tests. */
-    open fun answerCard(
-        card: Card,
-        rating: Rating,
-    ) {
-        val top = queuedCards.cardsList.first()
-        val answer = buildAnswer(card, top.states, rating)
-        col.backend.answerCard(answer)
-        numberOfAnswersRecorded += 1
-        // tests assume the card was mutated
-        card.load(col)
-    }
+open fun answerCard(
+    card: Card,
+    rating: Rating,
+) {
+    val states = col.backend.getSchedulingStates(card.id)
+    val answer = buildAnswer(card, states, rating)
+    col.backend.answerCard(answer)
+    numberOfAnswersRecorded += 1
+    // tests assume the card was mutated
+    card.load(col)
+}
 
     /** True if new state marks the card as a leech. */
     @LibAnkiAlias("state_is_leech")
