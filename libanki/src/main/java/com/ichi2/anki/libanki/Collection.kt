@@ -1493,6 +1493,9 @@ class Collection(
 
     @NotInPyLib
     fun evaluateParamsLegacyRaw(input: ByteArray): ByteArray = backend.evaluateParamsLegacyRaw(input = input)
+
+    @NotInPyLib
+    fun getCustomColoursRaw(input: ByteArray): ByteArray = backend.getCustomColoursRaw(input = input)
 }
 
 @NotInPyLib
