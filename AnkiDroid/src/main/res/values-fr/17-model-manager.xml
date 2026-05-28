@@ -35,10 +35,6 @@
     <string name="toast_empty_name">Vous devez entrer un nom</string>
     <string name="toast_duplicate_field">Le nom du champ est déjà utilisé</string>
     <!--Plurals-->
-    <plurals name="model_browser_types_available">
-        <item quantity="one">%d type de note disponible</item>
-        <item quantity="other">%d types de note disponibles</item>
-    </plurals>
     <plurals name="model_browser_of_type">
         <item quantity="one">%d note</item>
         <item quantity="other">%d notes</item>
@@ -60,8 +56,8 @@
     <string name="model_field_editor_changing">Mise à jour des champs</string>
     <string name="model_field_editor_sort_field">Trier par ce champ</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">Supprimer un type de carte</string>
+    <string name="add_card_type" maxLength="28">Ajouter un type de carte</string>
     <!--Warnings-->
     <string name="model_delete_warning">Voulez-vous vraiment effacer ce type de note ?</string>
     <!--

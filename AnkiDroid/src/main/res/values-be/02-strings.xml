@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Адкрыць панэль</string>
@@ -193,11 +182,12 @@
     <string name="menu__deck_options" maxLength="28">Параметры калоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>
     <string name="select_tts" maxLength="28">Прызначыць сінтэз маўлення</string>
-    <string name="custom_study" maxLength="28">Індывідуальнае навучанне</string>
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
     <string name="tag_already_exists">Метка ўжо існуе</string>
+    <string name="error_name_exists">Такая назва ўжо існуе</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
@@ -214,7 +204,6 @@
     <string name="remove_background_image">Вы сапраўды хочаце выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Аднавіць да прадвызначаных</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Рэжым гумкі актываваны</string>
     <string name="white_board_eraser_disabled">Рэжым гумкі дэактываваны</string>
@@ -345,7 +334,6 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Карткі</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Нататкі</string>
-    <string name="toggle_cards_notes">Пераключыць карткі/нататкі</string>
     <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
     <string name="browser_options_dialog_heading">Параметры браўзера</string>
     <string name="audio_saved">Запіс захаваны</string>
@@ -361,7 +349,7 @@
     <string name="shared_decks_login_required">Увайдзіце, каб спампаваць больш калод</string>
     <string name="deck_description_field_hint">Апісанне</string>
     <string name="deck_description_saved">Апісанне абноўлена</string>
-    <string name="format_deck_description_as_markdown">Фарматаваць як Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Адкрыць даведку для ‘%s’</string>
     <string name="failed_to_copy">Не ўдалося скапіяваць</string>
     <plurals name="unbury_cards_feedback">
@@ -401,8 +389,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Патрабуецца абнаўленне планіроўшчыка</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Такая назва ўжо існуе</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

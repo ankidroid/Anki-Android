@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Inaktiverad</string>
@@ -129,7 +118,6 @@
     <string name="tts_summ">Läser upp fråga och svar om ingen ljudfil ingår</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Hämta media vid synkronisering</string>
-    <string name="sync_account" maxLength="41">AnkiWeb-konto</string>
     <string name="sync_account_summ_logged_out">Ej inloggad</string>
     <string name="automatic_sync_choice" maxLength="41">Automatisk synkronering</string>
     <string name="automatic_sync_choice_summ">Synka automatiskt på app start/avstängning om den senaste synkningen var mer än 10        minuter sedan.</string>
@@ -157,8 +145,6 @@
     <string name="select_locale_title">Välj språk</string>
     <string name="software_render" maxLength="41">Inaktivera kort hårdvarurendering</string>
     <string name="software_render_summ">Hårdvarurendering är snabbare men kan få problem, särskilt på Android 8/8.1. Om du inte kan se delar av kortgranskningsgränssnittet, prova den här inställningen.</string>
-    <string name="safe_display" maxLength="41">Säkert visningsläge</string>
-    <string name="safe_display_summ">Stäng av alla animationer och använd en säkrare metod för att rita kort. E-bläckenheter kan kräva detta.</string>
     <string name="disable_extended_text_ui" maxLength="41">Inaktivera redigeringsläge för enfald</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Tillåter snabbmenyn ”Textlucka” i liggande läge.</string>
@@ -172,6 +158,8 @@
     <string name="show_estimates_summ">Visa nästa repetitionstid på svarsknapparna</string>
     <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Visa översta verktygsfältet</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Visa återstående</string>

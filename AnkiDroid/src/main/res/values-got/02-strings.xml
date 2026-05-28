@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
@@ -189,11 +178,12 @@
     <string name="menu__deck_options" maxLength="28">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌷𐌿𐌶𐌳𐌹𐍃 𐌺𐌰𐍂𐍄𐍉</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃 𐌼𐌰𐌷𐍄𐌴𐌹𐍃</string>
     <string name="select_tts" maxLength="28">𐌱𐍉𐌺𐍉-𐌳𐌿-𐍃𐍄𐌹𐌱𐌽𐌰𐌹 𐍂𐌰𐌶𐌳𐌰 𐌻𐌰𐌲𐌾𐌰𐌽</string>
-    <string name="custom_study" maxLength="28">𐌰𐌽𐌸𐌰𐍂𐌰 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐍃</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="tag_editor_add_feedback">\"%2$s\" 𐌰𐍄𐍄𐌴𐌺𐌰𐌽 𐌳𐌿 𐌲𐌰𐍄𐌿𐌻𐌲𐌾𐌰𐌽 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">𐍅𐌹𐍃𐌰𐌽𐌳𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 \"%1$s\" 𐌲𐌰𐍅𐌰𐌻𐌹𐌸</string>
     <string name="tag_already_exists">Tag already exists</string>
+    <string name="error_name_exists">Name already exists</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌳𐌰𐌹𐌻𐌾𐌰𐌽 apkg 𐍆𐌰𐌾𐌻</string>
@@ -210,7 +200,6 @@
     <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">𐌱𐌻𐌰𐌲𐌺</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">𐌰𐍆𐍈𐌰𐌹𐍂𐌱𐌰𐌽𐌳𐌹𐍃 𐌼𐍉𐌳𐌿𐍃 𐌹𐌽𐌻𐌰𐌲𐌹𐌸𐍃</string>
     <string name="white_board_eraser_disabled">𐌰𐍆𐍈𐌰𐌹𐍂𐌱𐌰𐌽𐌳𐌹𐍃 𐌼𐍉𐌳𐌿𐍃 𐌿𐌽𐌻𐌰𐌲𐌹𐌸𐍃</string>
@@ -337,7 +326,6 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">𐌺𐌰𐍂𐍄𐍉𐍃</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌱𐍂𐌰𐍅𐍃𐌰𐌹𐍂𐍃</string>
     <string name="audio_saved">𐌲𐌰𐌼𐌰𐌿𐌳𐌴𐌹𐌽 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹𐌳𐌰</string>
@@ -353,7 +341,7 @@
     <string name="shared_decks_login_required">𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌰𐍄𐌲𐌰𐌲𐌲 𐌳𐌿 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐍉𐌽𐌰</string>
     <string name="deck_description_field_hint">𐌲𐌰𐍃𐌺𐌴𐌹𐍂𐌴𐌹𐌽𐍃</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">𐌷𐌹𐌻𐍀𐌰 𐍆𐌰𐌿𐍂 \'%s\' 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <string name="failed_to_copy">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
     <plurals name="unbury_cards_feedback">
@@ -391,8 +379,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

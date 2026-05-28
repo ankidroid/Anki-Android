@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Uitgeschakeld</string>
@@ -129,7 +118,6 @@
     <string name="tts_summ">Vraag en antwoord voorlezen als er geen geluidsbestand is opgenomen</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Media downloaden</string>
-    <string name="sync_account" maxLength="41">AnkiWeb account</string>
     <string name="sync_account_summ_logged_out">Niet aangemeld</string>
     <string name="automatic_sync_choice" maxLength="41">Automatische synchronisatie</string>
     <string name="automatic_sync_choice_summ">Synchronizeer automatisch bij het starten en sluiten van de app indien de laatste synchronisatie meer dan 10 minuten geleden was.</string>
@@ -157,8 +145,6 @@
     <string name="select_locale_title">Taal selecteren</string>
     <string name="software_render" maxLength="41">Hardware render kaart uitschakelen</string>
     <string name="software_render_summ">Hardware render is sneller maar kan problemen hebben, met name op Android 8/8.1. Als u delen van de gebruikersinterface voor de beoordeling van de kaart niet kunt zien, probeer dan deze instelling.</string>
-    <string name="safe_display" maxLength="41">Veilige weergavemodus</string>
-    <string name="safe_display_summ">Alle animaties uitschakelen en veiligere methode gebruiken om kaarten te trekken. Dit kan nodig zijn voor sommige E-inkt-apparaten.</string>
     <string name="disable_extended_text_ui" maxLength="41">Bewerkingsmodus voor een enkel veld uitschakelen</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Laat het contextmenu \'Invuloefening\' toe in de landschapsmodus.</string>
@@ -172,6 +158,8 @@
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
     <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
     <string name="show_large_answer_buttons_summ">Toon antwoordknop in 2 rijen</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Toon bovenste balk</string>
     <string name="show_top_bar_summary">Toon aantal kaarten, vlag en markeer in de balk bovenaan</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>

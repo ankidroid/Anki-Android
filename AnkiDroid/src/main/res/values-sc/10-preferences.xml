@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Disabilitadu</string>
@@ -129,7 +118,6 @@
     <string name="tts_summ">Leghet sa pregunta e sa risposta si non b\'est unu documentu sonoru inclùdidu</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Recùpera sos mèdios cun sa sincronizatzione</string>
-    <string name="sync_account" maxLength="41">Contu de AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Non ses intradu</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronizatzione automàtica</string>
     <string name="automatic_sync_choice_summ">Sincroniza in manera automàtica a s\'allughidura/serrada de s\'aplicatzione si s\'ùrtima sincronizatzione est prus betza de 10 minutos.</string>
@@ -157,8 +145,6 @@
     <string name="select_locale_title">Seletziona sa limba</string>
     <string name="software_render" maxLength="41">Disabìlita su renderizadore fìsicu (hardware) de sas cartas</string>
     <string name="software_render_summ">Su renderizadore fìsicu (hardware) est prus lestru ma diat pòdere tènnere problemas, mescamente in Android 8/8.1. Si non resesses a bìdere cantos de s\'interfache de impreu proa custa impostatzione.</string>
-    <string name="safe_display" maxLength="41">Modalidade visualizatzione segura</string>
-    <string name="safe_display_summ">Disabìlita totu sas animatziones e imprea una manera prus segura de disinnare sas cartas. Diat podere èssere netzessàriu pro sos dispositivos a tinta digitale.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disabìlita sa modalidade de modìfica a campu sìngulu</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Permitet su menù de cuntestu \'Omissione (iscantzellamentu cloze)\' in sa modalidade orizontale</string>
@@ -172,6 +158,8 @@
     <string name="show_estimates_summ">Ammustra s\'iscadèntzia imbieniente in subra de sos butones de risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Ammustra sos butones de risposta mannos</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Ammustra sa barra superiore</string>
     <string name="show_top_bar_summary">Ammustra su nùmeru de cartas, tempus de risposta, sa bandera e su marcadore in s\'istanga de susu</string>
     <string name="show_progress" maxLength="41">Ammustra ite mancat</string>

@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.browser
 
-import android.content.DialogInterface
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -65,7 +65,6 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
@@ -79,7 +78,9 @@ import com.ichi2.anki.android.menu.SearchBarMenuHost
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeNoteTypeResponse
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
+import com.ichi2.anki.browser.CardBrowserViewModel.SearchResultMessage
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
@@ -100,28 +101,35 @@ import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
 import com.ichi2.anki.browser.search.iconRes
 import com.ichi2.anki.browser.search.savedFilters
+import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
+import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
+import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
+import com.ichi2.anki.dialogs.GradeNowDialog
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
+import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
 import com.ichi2.anki.dialogs.SimpleMessageDialog
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
+import com.ichi2.anki.formatCardCount
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes.CARDS
-import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.requireNavigationDrawerActivity
 import com.ichi2.anki.scheduling.ForgetCardsDialog
@@ -129,19 +137,16 @@ import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
-import com.ichi2.anki.utils.ext.getCurrentDialogFragment
+import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
-import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.hideKeyboard
-import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.TagsUtil.getUpdatedTags
@@ -194,6 +199,9 @@ class CardBrowserFragment :
 
     private var undoSnackbar: Snackbar? = null
 
+    /** The focused row, should only be used for efficient `notifyItemChanged` calls */
+    private var focusedRow: CardOrNoteId? = null
+
     // Dev option for Issue 18709
     private val useSearchView: Boolean
         get() = requireCardBrowserActivity().useSearchView
@@ -240,13 +248,22 @@ class CardBrowserFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Selected cards aren't restored on activity recreation,
-        // so it is necessary to dismiss the change deck dialog
-        getCurrentDialogFragment<DeckSelectionDialog>()?.let { dialogFragment ->
-            if (dialogFragment.requireArguments().getBoolean(CHANGE_DECK_KEY, false)) {
-                Timber.d("onCreate(): Change deck dialog dismissed")
-                dialogFragment.dismiss()
-            }
+        if (savedInstanceState != null) {
+            // Selected cards aren't restored on activity recreation,
+            // so it is necessary to dismiss the change deck dialog
+            (parentFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG) as? DeckSelectionDialog)?.dismiss()
+        }
+
+        // onSearchForDecks starts deck selection using childFragmentManager
+        childFragmentManager.setFragmentResultListener(DeckSelectionDialog.REQUEST_SELECT_DECK, this) { _, bundle ->
+            val selectedDeck = bundle.getParcelableCompat<SelectableDeck>(ARG_SELECTED_DECK)
+            require(selectedDeck is SelectableDeck.Deck) { "Expected non-null deck" }
+            activityViewModel.setSelectedDeck(selectedDeck)
+        }
+
+        registerDeckSelectedHandler(REQUEST_DECK_SELECTION_CHANGE_DECK) { selectedDeck ->
+            require(selectedDeck is SelectableDeck.Deck) { "Expected non-null deck" }
+            moveSelectedCardsToDeck(selectedDeck.deckId)
         }
 
         cardsListView =
@@ -261,7 +278,9 @@ class CardBrowserFragment :
             BrowserMultiColumnAdapter(
                 requireContext(),
                 activityViewModel,
-                onTap = ::onTap,
+                onTap = { rowId ->
+                    activityViewModel.onTap(rowId.toRowSelection())
+                },
                 onLongPress = { rowId ->
                     activityViewModel.handleRowLongPress(rowId.toRowSelection())
                 },
@@ -416,6 +435,8 @@ class CardBrowserFragment :
                     Timber.d("onCreateMenu()")
                     menuInflater.inflate(R.menu.card_browser, menu)
                     menu.findItem(R.id.action_search_by_flag).subMenu?.setupFlags()
+                    // note: this menu item is available with and without a selection of items
+                    menu.findItem(R.id.action_find_replace)?.title = TR.sentenceCase.findAndReplace
 
                     if (!useSearchView) {
                         searchItem = menu.findItem(R.id.action_search)
@@ -522,16 +543,16 @@ class CardBrowserFragment :
                             return true
                         }
                         R.id.action_list_my_searches -> {
-                            requireCardBrowserActivity().showSavedSearches()
+                            showSavedSearches()
                             return true
                         }
                         R.id.action_undo -> {
                             Timber.w("CardBrowser:: Undo pressed")
-                            requireCardBrowserActivity().onUndo()
+                            onUndo()
                             return true
                         }
                         R.id.action_preview_many -> {
-                            requireCardBrowserActivity().onPreview()
+                            onPreview()
                             return true
                         }
                         R.id.action_sort_by_size -> {
@@ -560,6 +581,10 @@ class CardBrowserFragment :
                         }
                         R.id.action_create_filtered_deck -> {
                             showFilteredDeckScreen()
+                            return true
+                        }
+                        R.id.action_find_replace -> {
+                            showFindAndReplaceDialog()
                             return true
                         }
                     }
@@ -593,12 +618,10 @@ class CardBrowserFragment :
 
                     menu.findItem(R.id.action_reschedule_cards).title = TR.sentenceCase.setDueDate
                     menu.findItem(R.id.action_grade_now).title = TR.sentenceCase.gradeNow
+                    menu.findItem(R.id.action_view_card_info).title = TR.sentenceCase.cardInfo
 
-                    val isFindReplaceEnabled = sharedPrefs().getBoolean(getString(R.string.pref_browser_find_replace), false)
-                    menu.findItem(R.id.action_find_replace).apply {
-                        isVisible = isFindReplaceEnabled
-                        title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
-                    }
+                    // note: this menu item is available with and without a selection of items
+                    menu.findItem(R.id.action_find_replace)?.title = TR.sentenceCase.findAndReplace
 
                     menu.findItem(R.id.action_undo).setupUndo()
 
@@ -736,24 +759,24 @@ class CardBrowserFragment :
                         }
                         R.id.action_undo -> {
                             Timber.w("CardBrowser:: Undo pressed")
-                            requireCardBrowserActivity().onUndo()
+                            onUndo()
                             return true
                         }
                         R.id.action_preview_many -> {
-                            requireCardBrowserActivity().onPreview()
+                            onPreview()
                             return true
                         }
                         R.id.action_edit_note -> {
-                            requireCardBrowserActivity().openNoteEditorForCurrentlySelectedNote()
+                            openNoteEditorForCurrentlySelectedRow()
                             return true
                         }
                         R.id.action_view_card_info -> {
-                            requireCardBrowserActivity().displayCardInfo()
+                            displayCardInfo()
                             return true
                         }
                         R.id.action_grade_now -> {
                             Timber.i("CardBrowser:: Grade now button pressed")
-                            requireCardBrowserActivity().openGradeNow()
+                            openGradeNow()
                             return true
                         }
                     }
@@ -838,14 +861,62 @@ class CardBrowserFragment :
             }
         }
 
+        fun onSearchCompleted(state: SearchState.Completed) {
+            val activity = requireCardBrowserActivity()
+
+            // #3592: show the number of cards found the number of cards is not visible in the menu
+            val isMenuSubtitleVisible = legacySearchView != null && legacySearchView!!.isIconified
+
+            fun showSnackbar(
+                message: String,
+                searchAllDecks: Boolean,
+            ) {
+                // Don't show a snackbar if the results are visible in the header.
+                // But do show the snackbar if an action is available
+                if (isMenuSubtitleVisible && !searchAllDecks) return
+
+                showSnackbar(message, Snackbar.LENGTH_SHORT) {
+                    if (!searchAllDecks) return@showSnackbar
+                    setAction(R.string.card_browser_search_all_decks) { activity.searchAllDecks() }
+                }
+            }
+
+            when (val result = state.resultMessage) {
+                is SearchResultMessage.CardCount ->
+                    showSnackbar(
+                        message = state.formatCardCount(resources),
+                        searchAllDecks = result.includeSearchAllDecksAction,
+                    )
+                SearchResultMessage.NoCardsInSelectedDeck ->
+                    showSnackbar(
+                        getString(R.string.card_browser_no_cards_in_deck, activity.selectedDeckNameForUi),
+                        searchAllDecks = true,
+                    )
+            }
+        }
+
         fun searchStateChanged(searchState: SearchState) {
             cardsAdapter.notifyDataSetChanged()
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
+            if (searchState is SearchState.Completed) {
+                onSearchCompleted(searchState)
+                invalidateMenu()
+            }
         }
 
         fun onSelectedRowsChanged(rows: Set<Any>) = cardsAdapter.notifyDataSetChanged()
 
+        fun onFocusedRowChanged(newFocused: CardOrNoteId?) {
+            val previous = focusedRow
+            focusedRow = newFocused
+            listOfNotNull(previous, newFocused)
+                .distinct()
+                .mapNotNull { activityViewModel.getPositionOfId(it) }
+                .forEach { cardsAdapter.notifyItemChanged(it) }
+        }
+
         fun onCardsMarkedEvent(unit: Unit) {
+            // PERF: Add a parameter to update only the affected rows
             cardsAdapter.notifyDataSetChanged()
         }
 
@@ -893,15 +964,8 @@ class CardBrowserFragment :
                 )
         }
 
-        fun onSearchForDecks(decks: List<SelectableDeck>) {
-            val dialog =
-                DeckSelectionDialog.newInstance(
-                    title = getString(R.string.search_deck),
-                    summaryMessage = null,
-                    keepRestoreDefaultButton = false,
-                    decks = decks,
-                )
-            showDialogFragmentImpl(childFragmentManager, dialog)
+        fun onSearchForDecks(unit: Unit) {
+            startDeckSelection(title = getString(R.string.search_deck), asChild = true, skipEmptyDefault = true)
         }
 
         fun advancedSearchChanged(inAdvancedSearch: Boolean) {
@@ -1006,9 +1070,23 @@ class CardBrowserFragment :
             sortChip?.scaleY = if (!direction.orderAsc) 1.0f else -1.0f
         }
 
+        fun onChangeNoteType(result: ChangeNoteTypeResponse) =
+            when (result) {
+                ChangeNoteTypeResponse.NoSelection -> Timber.w("change note type: no selection")
+                ChangeNoteTypeResponse.MixedSelection -> showSnackbar(R.string.different_note_types_selected)
+                is ChangeNoteTypeResponse.ChangeNoteType -> showDialogFragment(ChangeNoteTypeDialog.newInstance(result.noteIds))
+            }
+
+        fun onSaveSearchNamePrompt(searchTerms: String) {
+            Timber.i("opening 'save search' name input dialog")
+            val dialog = SaveBrowserSearchDialogFragment.newInstance(searchQuery = searchTerms)
+            showDialogFragment(dialog)
+        }
+
         activityViewModel.reverseDirectionFlow.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
+        activityViewModel.flowOfFocusedRow.launchCollectionInLifecycleScope(::onFocusedRowChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
         activityViewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         activityViewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
@@ -1025,6 +1103,8 @@ class CardBrowserFragment :
         searchViewModel.submittedSearchFlow.filterNotNull().launchCollectionInLifecycleScope(::onSearchSubmitted)
         searchViewModel.userMessageFlow.filterNotNull().launchCollectionInLifecycleScope(::onUserMessage)
         activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
+        activityViewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
+        activityViewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
     }
 
     private fun setupFragmentResultListeners() {
@@ -1064,6 +1144,17 @@ class CardBrowserFragment :
         // So we must ensure that all shortcuts uses a modifier.
         // A shortcut without modifier would be triggered while the user types, which is not what we want.
         when (keyCode) {
+            KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.KEYCODE_DEL -> {
+                if (legacySearchView?.isIconified == false) {
+                    Timber.i("Delete pressed - Search active, deleting character")
+                    // the search box is available and could potentially receive input so handle the
+                    // DEL as a simple text deletion and not as a keyboard shortcut
+                    return false
+                }
+                Timber.i("Delete pressed - Delete Selected Note")
+                deleteSelectedNotes()
+                return true
+            }
             KeyEvent.KEYCODE_A -> {
                 if (event.isCtrlPressed && event.isShiftPressed) {
                     Timber.i("Ctrl+Shift+A - Show edit tags dialog")
@@ -1076,10 +1167,27 @@ class CardBrowserFragment :
                 }
             }
             KeyEvent.KEYCODE_E -> {
+                // NOTE: Ctrl+E is 'Add Note', set in the Activity
                 if (event.isCtrlPressed && event.isShiftPressed) {
                     Timber.i("Ctrl+Shift+E: Export selected cards")
                     exportSelected()
                     return true
+                } else if (!event.isCtrlPressed) {
+                    if (legacySearchView?.isIconified == true) {
+                        // search box is not available so treat the event as a shortcut
+                        // Disable 'E' edit shortcut in split mode as the integrated NoteEditor
+                        // is already available in the split view, making the shortcut redundant
+                        if (activityViewModel.isFragmented) {
+                            Timber.i("E: Ignored in split mode")
+                            return true
+                        }
+                        Timber.i("E: Edit note")
+                        openNoteEditorForCurrentlySelectedRow()
+                        return true
+                    }
+                    Timber.i("E: Character added")
+                    // search box might be available and receiving input so treat this as usual text
+                    return false
                 }
             }
             KeyEvent.KEYCODE_D -> {
@@ -1133,8 +1241,15 @@ class CardBrowserFragment :
                     Timber.i("Ctrl+Shift+S: Reposition selected cards")
                     repositionSelectedCards()
                     return true
-                    // Ctrl+Alt+S / Ctrl+S in the activity take priority
-                } else if (!event.isCtrlPressed && event.isAltPressed) {
+                } else if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+S: Show saved searches")
+                    showSavedSearches()
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+S: Save search")
+                    activityViewModel.saveCurrentSearch()
+                    return true
+                } else if (event.isAltPressed) {
                     Timber.i("Alt+S: Show suspended cards")
                     activityViewModel.searchForSuspendedCards()
                     return true
@@ -1158,10 +1273,49 @@ class CardBrowserFragment :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_P -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+P - Preview")
+                    onPreview()
+                    return true
+                }
+            }
             KeyEvent.KEYCODE_M -> {
-                if (event.isCtrlPressed) {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+M: Change Note Type")
+                    activityViewModel.requestChangeNoteType()
+                    return true
+                } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+M: Search marked notes")
                     activityViewModel.searchForMarkedNotes()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_G -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+G - Grade Now")
+                    openGradeNow()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_I -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+I: Card info")
+                    displayCardInfo()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_Z -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+Z: Undo")
+                    onUndo()
+                    return true
+                }
+            }
+            in KeyEvent.KEYCODE_1..KeyEvent.KEYCODE_7 -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Update flag")
+                    updateFlag(keyCode)
                     return true
                 }
             }
@@ -1197,37 +1351,53 @@ class CardBrowserFragment :
         }
     }
 
-    // TODO: Move this to ViewModel and test
+    // TODO: This dialog should survive activity recreation
+    fun showChangeDeckDialog() {
+        if (!activityViewModel.hasSelectedAnyRows()) {
+            Timber.i("Not showing Change Deck - No Cards")
+            return
+        }
+        startDeckSelection(
+            title = getString(R.string.move_all_to_deck),
+            allowAll = false,
+            allowFiltered = false,
+            requestKey = REQUEST_DECK_SELECTION_CHANGE_DECK,
+        )
+    }
+
     @VisibleForTesting
-    fun onTap(id: CardOrNoteId) =
+    fun onUndo() =
         launchCatchingTask {
-            activityViewModel.focusedRow = id
-            if (activityViewModel.isInMultiSelectMode) {
-                val wasSelected = activityViewModel.selectedRows.contains(id)
-                activityViewModel.toggleRowSelection(id.toRowSelection())
-                // Load NoteEditor on trailing side if card is selected
-                if (wasSelected) {
-                    activityViewModel.currentCardId = id.toCardId(activityViewModel.cardsOrNotes)
-                    requireCardBrowserActivity().loadNoteEditorFragmentIfFragmented()
-                }
-            } else {
-                val cardId = activityViewModel.queryDataForCardEdit(id)
-                requireCardBrowserActivity().setNoteEditorCard(cardId)
+            undoAndShowSnackbar()
+        }
+
+    fun displayCardInfo() =
+        launchCatchingTask {
+            activityViewModel.queryCardInfoDestination()?.let { destination ->
+                startActivity(destination.toIntent(requireContext()))
             }
         }
 
-    // TODO: This dialog should survive activity recreation
-    fun showChangeDeckDialog() =
+    /**
+     * @see CardBrowserViewModel.openNoteEditorForCurrentlySelectedRow
+     */
+    @NeedsTest("note edits are saved")
+    @NeedsTest("I/O edits are saved")
+    fun openNoteEditorForCurrentlySelectedRow() {
+        if (!activityViewModel.openNoteEditorForCurrentlySelectedRow()) {
+            showSnackbar(R.string.no_note_to_edit)
+        }
+    }
+
+    fun openGradeNow() =
         launchCatchingTask {
-            if (!activityViewModel.hasSelectedAnyRows()) {
-                Timber.i("Not showing Change Deck - No Cards")
-                return@launchCatchingTask
-            }
-            val selectableDecks =
-                activityViewModel
-                    .getAvailableDecks()
-            val dialog = getChangeDeckDialog(selectableDecks)
-            showDialogFragment(dialog)
+            val cardIds = activityViewModel.queryAllSelectedCardIds()
+            GradeNowDialog.showDialog(requireAnkiActivity(), cardIds)
+        }
+
+    fun showSavedSearches() =
+        launchCatchingTask {
+            showDialogFragment(SavedBrowserSearchesDialogFragment.newInstance(activityViewModel.savedSearches()))
         }
 
     /** All the notes of the selected cards will be marked
@@ -1254,6 +1424,13 @@ class CardBrowserFragment :
                 }
             showUndoSnackbar(message)
         }
+
+    fun onPreview() {
+        launchCatchingTask {
+            val intent = activityViewModel.queryPreviewIntentData().toIntent(requireContext())
+            startActivity(intent)
+        }
+    }
 
     fun rescheduleSelectedCards() {
         if (!activityViewModel.hasSelectedAnyRows()) {
@@ -1335,7 +1512,12 @@ class CardBrowserFragment :
 
     fun exportSelected() {
         val (type, selectedIds) = activityViewModel.querySelectionExportData() ?: return
-        ExportDialogFragment.newInstance(type, selectedIds).show(parentFragmentManager, "exportDialog")
+        ExportDialogFragment
+            .newInstance(
+                requireContext().externalCacheDir ?: requireContext().cacheDir,
+                type,
+                selectedIds,
+            ).show(parentFragmentManager, "exportDialog")
     }
 
     fun showOptionsDialog() {
@@ -1382,21 +1564,27 @@ class CardBrowserFragment :
         }
 
     fun changeDisplayOrder() {
-        showDialogFragment(
-            // TODO: move this into the ViewModel
-            CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
-                dialog.dismiss()
-                activityViewModel.changeCardOrder(LegacySortType.fromCardBrowserLabelIndex(which))
-            },
-        )
+        showDialogFragment(CardBrowserOrderDialog())
+    }
+
+    private fun updateFlag(keyCode: Int) {
+        val flag =
+            when (keyCode) {
+                KeyEvent.KEYCODE_1 -> Flag.RED
+                KeyEvent.KEYCODE_2 -> Flag.ORANGE
+                KeyEvent.KEYCODE_3 -> Flag.GREEN
+                KeyEvent.KEYCODE_4 -> Flag.BLUE
+                KeyEvent.KEYCODE_5 -> Flag.PINK
+                KeyEvent.KEYCODE_6 -> Flag.TURQUOISE
+                KeyEvent.KEYCODE_7 -> Flag.PURPLE
+                else -> return
+            }
+        updateFlagForSelectedRows(flag)
     }
 
     fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {
-            // list of cards with updated flags
-            val updatedCardIds = withProgress { activityViewModel.updateSelectedCardsFlag(flag) }
-
-            ankiActivity.onCardsUpdated(updatedCardIds)
+            withProgress { activityViewModel.updateSelectedCardsFlag(flag) }
         }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -1468,27 +1656,6 @@ class CardBrowserFragment :
                 fragment.show(parentFragmentManager, FindAndReplaceDialogFragment.TAG)
             }
         }
-    }
-
-    @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
-    @VisibleForTesting
-    internal fun getChangeDeckDialog(selectableDecks: List<SelectableDeck>?): DeckSelectionDialog {
-        val dialog =
-            DeckSelectionDialog.newInstance(
-                getString(R.string.move_all_to_deck),
-                null,
-                false,
-                selectableDecks!!,
-            )
-        // Add change deck argument so the dialog can be dismissed
-        // after activity recreation, since the selected cards will be gone with it
-        dialog.requireArguments().putBoolean(CHANGE_DECK_KEY, true)
-        dialog.deckSelectionListener =
-            DeckSelectionListener { deck: SelectableDeck? ->
-                require(deck is SelectableDeck.Deck) { "Expected non-null deck" }
-                moveSelectedCardsToDeck(deck.deckId)
-            }
-        return dialog
     }
 
     /**
@@ -1611,7 +1778,7 @@ class CardBrowserFragment :
                 shortcut("Ctrl+Alt+R", Translations::browsingReschedule),
                 shortcut("DEL", R.string.delete_card_title),
                 shortcut("Ctrl+Alt+N", R.string.reset_card_dialog_title),
-                shortcut("Ctrl+Alt+T", R.string.toggle_cards_notes),
+                shortcut("Ctrl+Alt+T") { sentenceCase.toggleCardsNotes },
                 shortcut("Ctrl+T", R.string.card_browser_search_by_tag),
                 shortcut("Ctrl+Shift+S", Translations::actionsReposition),
                 shortcut("Ctrl+Alt+S", R.string.card_browser_list_my_searches),
@@ -1622,6 +1789,7 @@ class CardBrowserFragment :
                 shortcut("Ctrl+J", Translations::browsingToggleSuspend),
                 shortcut("Ctrl+Shift+I", Translations::actionsCardInfo),
                 shortcut("Ctrl+O", R.string.show_order_dialog),
+                shortcut("Ctrl+Shift+P", R.string.card_editor_preview_card),
                 shortcut("Ctrl+M", R.string.card_browser_show_marked),
                 shortcut("Esc", R.string.card_browser_select_none),
                 shortcut("Ctrl+1", R.string.gesture_flag_red),
@@ -1642,13 +1810,20 @@ class CardBrowserFragment :
 
     companion object {
         /**
-         * Argument key to add on change deck dialog,
-         * so it can be dismissed on activity recreation,
-         * since the cards are unselected when this happens
+         * Request key that identifies requests to select a deck for the browser note change decks
+         * dialog.
          */
-        private const val CHANGE_DECK_KEY = "CHANGE_DECK"
+        const val REQUEST_DECK_SELECTION_CHANGE_DECK = "request_deck_selection_change_deck"
     }
 }
+
+class PreviewerDestination(
+    val currentIndex: Int,
+    val idsFile: IdsFile,
+)
+
+@CheckResult
+fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, idsFile, currentIndex)
 
 /**
  * Updates the content of the [SearchView] to a provided fragment, retaining state.

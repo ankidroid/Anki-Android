@@ -18,6 +18,7 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
@@ -54,8 +55,6 @@ import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
 import com.ichi2.anki.databinding.DialogFieldsBinding
 import com.ichi2.anki.databinding.DialogTemplatesBinding
 import com.ichi2.anki.databinding.ViewTabLayoutIconOnEndBinding
-import com.ichi2.anki.dialogs.ChangeNoteTypeDialog.SelectTemplateFragment.Layout.Standard
-import com.ichi2.anki.dialogs.ChangeNoteTypeDialog.SelectTemplateFragment.Layout.WithWarning
 import com.ichi2.anki.dialogs.ConversionType.CLOZE_TO_CLOZE
 import com.ichi2.anki.dialogs.ConversionType.CLOZE_TO_REGULAR
 import com.ichi2.anki.dialogs.ConversionType.REGULAR_TO_CLOZE
@@ -70,6 +69,7 @@ import com.ichi2.anki.sync.launchCatchingRequiringOneWaySync
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.InitStatus
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.boldList
@@ -156,6 +156,15 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         Timber.d("setting up dialog")
         setupNoteTypeSpinner(binding)
         setupViewPagerAndTabs(binding)
+        bindSaveButtonState(binding)
+    }
+
+    private fun bindSaveButtonState(binding: DialogChangeNoteTypeBinding) {
+        // disabled by default until hasChangesFlow emits true
+        binding.btnSave.isEnabled = false
+        viewModel.hasChangesFlow.launchCollectionInLifecycleScope {
+            binding.btnSave.isEnabled = it
+        }
     }
 
     private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
@@ -172,6 +181,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         }
     }
 
+    // TODO: Properly handle spacing for spinner checkmarks. Issue not created yet.
     private fun createNoteTypeAdapter(): ArrayAdapter<DisplayNoteType> {
         val noteTypes = viewModel.availableNoteTypes.map { DisplayNoteType(it.name, it.isCloze) }
 
@@ -235,8 +245,9 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         val tabLayout = binding.changeNoteTypeTabLayout
         createTabMediator(tabLayout, viewPager).attach()
         // Explicitly set initial tab in ViewModel to match UI
+
+        viewPager.setCurrentItem(0, false)
         viewModel.selectTabByPosition(0)
-        tabLayout.selectTab(tabLayout.getTabAt(0))
     }
 
     private fun createTabMediator(
@@ -249,15 +260,41 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                 0 -> {
                     binding.tabIcon.setImageResource(R.drawable.ic_mode_edit_white)
                     binding.tabText.text = TR.changeNotetypeFields()
-                    tab.text = TR.changeNotetypeFields()
                 }
                 1 -> {
                     binding.tabIcon.setImageResource(R.drawable.ic_card_question)
                     binding.tabText.text = TR.changeNotetypeTemplates()
-                    tab.text = TR.changeNotetypeTemplates()
                 }
-                else -> throw IllegalStateException("invalid position: $position")
             }
+
+            val selectedColor =
+                MaterialColors.getColor(
+                    tabLayout,
+                    com.google.android.material.R.attr.colorPrimaryVariant,
+                )
+
+            val unselectedColor =
+                MaterialColors.getColor(
+                    tabLayout,
+                    com.google.android.material.R.attr.colorOnSurfaceVariant,
+                    Color.GRAY,
+                )
+
+            val colorStateList =
+                ColorStateList(
+                    arrayOf(
+                        intArrayOf(android.R.attr.state_selected),
+                        intArrayOf(),
+                    ),
+                    intArrayOf(
+                        selectedColor,
+                        unselectedColor,
+                    ),
+                )
+
+            binding.tabIcon.imageTintList = colorStateList
+            binding.tabText.setTextColor(colorStateList)
+
             tab.customView = binding.root
         }
 
@@ -380,7 +417,12 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                 Spinner(requireContext())
                     .apply {
                         layoutParams =
-                            LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f)
+                            LinearLayout
+                                .LayoutParams(
+                                    0,
+                                    WRAP_CONTENT,
+                                    1f,
+                                )
                     }.apply {
                         val fieldSpinnerOptions = inputFieldNames + TR.changeNotetypeNothing()
                         Timber.d("createTemplateSpinner: %d items + (nothing)", fieldSpinnerOptions.size - 1)
@@ -474,10 +516,10 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
             lifecycleScope.launch {
                 viewModel.conversionTypeFlow.collect { type ->
                     when (val layout = Layout.fromConversionType(type)) {
-                        is Standard -> {
+                        is Layout.Standard -> {
                             binding.clozeInfoLayout.isVisible = false
                         }
-                        is WithWarning -> {
+                        is Layout.WithWarning -> {
                             binding.clozeInfoLayout.isVisible = true
                             binding.clozeInfoText.text = getString(layout.warningRes)
                         }

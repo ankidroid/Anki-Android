@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otvori ladicu</string>
@@ -192,11 +181,12 @@
     <string name="menu__deck_options" maxLength="28">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Postavi TTS jezik</string>
-    <string name="custom_study" maxLength="28">Učenje po mjeri</string>
     <string name="dyn_deck_desc">Ovo je poseban špil za učenje izvan uobičajenog rasporeda. Kartice će automatski biti vraćene u njihov originalni špil nakon što ih ponovite. Brisanjem ovog špila iz popisa špilova će se sve preostale kartice vratiti u njihov originalni špil.</string>
     <string name="tag_editor_add_feedback">Pritisnite “%2$s” da potvrdite dodavanje “%1$s</string>
     <string name="tag_editor_add_feedback_existing">Odabrana postojeća oznaka “%1$s”</string>
     <string name="tag_already_exists">Tag already exists</string>
+    <string name="error_name_exists">Name already exists</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Greška pri dijeljenju apkg datoteke</string>
@@ -213,7 +203,6 @@
     <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Način rada gumice aktiviran</string>
     <string name="white_board_eraser_disabled">Način rada gumice deaktiviran</string>
@@ -342,7 +331,6 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartice</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Bilješke</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Skrati visinu svakog retka u pregledniku da se prikazuju samo prve 3 linije sadržaja</string>
     <string name="browser_options_dialog_heading">Postavke preglednika</string>
     <string name="audio_saved">Snimka spremljena</string>
@@ -358,7 +346,7 @@
     <string name="shared_decks_login_required">Prijavite se kako biste preuzeli još špilova</string>
     <string name="deck_description_field_hint">Opis</string>
     <string name="deck_description_saved">Opis ažuriran</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Otvori pomoć za ‘%s’</string>
     <string name="failed_to_copy">Greška u kopiranju</string>
     <plurals name="unbury_cards_feedback">
@@ -397,8 +385,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Potrebno ažurirati raspoređivač</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

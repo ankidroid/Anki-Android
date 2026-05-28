@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
@@ -77,7 +66,7 @@
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можна зберегти пошуковий запит без назви</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Така назва вже існує</string>
     <string name="card_browser_list_my_searches_successful_save">Пошук збережено</string>
-    <string name="card_browser_list_my_searches_successful_deleted">Search deleted</string>
+    <string name="card_browser_list_my_searches_successful_deleted">Пошук видалено</string>
     <string name="no_note_to_edit">Немає записів для редагування</string>
     <string name="card_browser_list_my_searches_remove_content">Видалити «%1$s»?</string>
     <string name="card_browser_change_display_order" maxLength="28">Сортувати за</string>
@@ -138,6 +127,6 @@
     <string name="save_changes_message">Будь ласка, спочатку збережіть ваші зміни</string>
     <string name="browser_find_replace_loading_fields">Пошук назв полів&#8230;</string>
     <!-- Search history -->
-    <string name="card_browser_see_more">See more</string>
-    <string name="card_browser_see_less">See less</string>
+    <string name="card_browser_see_more">Показати більше</string>
+    <string name="card_browser_see_less">Показати менше</string>
 </resources>

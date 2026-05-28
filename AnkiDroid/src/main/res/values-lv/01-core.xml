@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks" maxLength="28" comment="Open the Deck Picker">Kavas</string>
@@ -93,7 +82,6 @@
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Atsaukt līniju</string>
     <string name="move_all_to_deck">Pārvietot visu uz kavu</string>
-    <string name="unbury" maxLength="28">Atklāt</string>
     <string name="rename_deck" maxLength="28">Pārdēvēt kavu</string>
     <string name="create_shortcut">Izveidot saīsni</string>
     <string name="browse_cards">Pārlūkot kartītes</string>
@@ -102,20 +90,11 @@
     <string name="menu_add_note" maxLength="28">Pievienot piezīmi</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Vienādot kontu</string>
     <string name="menu_dismiss_note" maxLength="41">Paslēpt / izdzēst</string>
-    <string name="menu_bury_card" maxLength="28">Paslēpt kartīti</string>
-    <string name="menu_bury_note" maxLength="28">Paslēpt piezīmi</string>
-    <string name="menu_suspend_card" maxLength="28">Nolikt kartīti malā</string>
-    <string name="menu_suspend_note" maxLength="28">Nolikt piezīmi malā</string>
-    <string name="menu_bury" maxLength="28">Paslēpt</string>
-    <string name="menu_suspend" maxLength="28">Apturēt</string>
-    <string name="menu_delete_note" maxLength="28">Izdzēst piezīmi</string>
-    <string name="menu_flag" maxLength="41">Karogs</string>
     <string name="rename_flag">Pārdēvēt karogus</string>
     <string name="menu_flag_card" maxLength="28">Atzīmēt kartīti</string>
     <string name="menu_edit_tags" maxLength="28">Labot birkas</string>
     <string name="delete_note_message">Tiešām izdzēst šo piezīmi un visas tās kartītes?\n%s</string>
     <string name="menu_search" maxLength="28">Uzmeklēt %1$s</string>
-    <string name="menu_mark_note" maxLength="28">Atzīmēt piezīmi</string>
     <string name="menu_unmark_note">Noņemt piezīmes atzīmi</string>
     <string name="menu_enable_voice_playback" maxLength="28">Iespējot balss atskaņošanu</string>
     <string name="menu_disable_voice_playback">Atspējot balss atskaņošanu</string>
@@ -129,7 +108,6 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Lūgums piešķirt AnkiDroid atļauju \"Krātuve\", lai turpinātu</string>
     <string name="rebuild_filtered_deck">Pārveido pielāgoto kavu&#8230;</string>
-    <string name="rebuild_cram_label" maxLength="28">Pārveidot</string>
     <string name="empty_cram_label" maxLength="28">Tukšs</string>
     <string name="create_subdeck">Izveidot apakškavu</string>
     <string name="empty_filtered_deck">Iztukšo pielāgoto kavu</string>
@@ -150,10 +128,6 @@
     <string name="export_collection">Izgūt krājumu</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kartīšu veidi</string>
-    <string name="card_template_editor_front">Priekšpuses veidne</string>
-    <string name="card_template_editor_back">Aizmugures veidne</string>
-    <string name="card_template_editor_styling" maxLength="28">Izskata veidošana</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Kartīšu pārlūka izskats</string>
     <string name="card_template_editor_deck_override" maxLength="28">Kavas aizvietošana</string>
     <string name="card_template_editor_insert_field" maxLength="28">Ievietot lauku</string>
     <string name="card_template_editor_select_field">Atlasīt lauku</string>
@@ -170,11 +144,6 @@
     </plurals>
     <string name="card_template_editor_save_error">Nav iespējams saglabāt kartīšu veidnes izmaiņas: %s</string>
     <string name="template_for_current_card_deleted">Pašreizējās kartītes veids tika izdzēsts.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Pārlūka izskats</string>
-    <!-- card Info -->
-    <string name="card_info_title" maxLength="28">Kartītes apkopojums</string>
-    <string name="previous_card_info_title" maxLength="28">Previous card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lasīt un rakstīt AnkiDroid datubāzē</string>
     <string name="read_write_permission_description">Piekļūt esošajām piezīmēm, kartītēm, piezīmju veidiem un kavām, kā arī izveidot jaunas</string>

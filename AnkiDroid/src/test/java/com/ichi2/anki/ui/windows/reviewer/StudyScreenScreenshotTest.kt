@@ -16,107 +16,37 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import androidx.test.core.app.ActivityScenario
+import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.ToolbarPosition
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 
-@RunWith(ParameterizedRobolectricTestRunner::class)
-class StudyScreenScreenshotTest(
-    private val config: TestConfig,
-) : ScreenshotTest() {
-    init {
-        Prefs.isNewStudyScreenEnabled = true
-        Prefs.toolbarPosition = config.toolbarPosition
-        Prefs.showAnswerButtons = config.showAnswerButtons
-        Prefs.frameStyle = config.frameStyle
-        RuntimeEnvironment.setQualifiers(config.qualifier.toString())
-    }
-
+class StudyScreenScreenshotTest : ScreenshotTest() {
     @Test
-    fun captureScreenshot() {
+    fun captureScreenshot(
+        @TestParameter toolbarPosition: ToolbarPosition,
+        @TestParameter showAnswerButtons: Boolean,
+        @TestParameter frameStyle: FrameStyle,
+    ) {
+        Prefs.isNewStudyScreenEnabled = true
+        Prefs.toolbarPosition = toolbarPosition
+        Prefs.showAnswerButtons = showAnswerButtons
+        Prefs.frameStyle = frameStyle
+
+        val configName =
+            "bar=${toolbarPosition.name}_" +
+                "frame=${frameStyle.name}bttns=$showAnswerButtons"
+
         ActivityScenario
             .launch<CardViewerActivity>(
                 ReviewerFragment.getIntent(targetContext),
             ).use { scenario ->
                 scenario.onActivity {
-                    captureScreen(config.toString())
+                    captureScreen(configName)
                 }
             }
-    }
-
-    companion object {
-        @JvmStatic
-        @ParameterizedRobolectricTestRunner.Parameters(name = "{0}")
-        fun data(): Collection<Array<TestConfig>> {
-            // Comment out to isolate tests
-            val positions = ToolbarPosition.entries
-            // val positions = listOf(ToolbarPosition.TOP)
-
-            val buttonStates = listOf(true, false)
-            // val buttonStates = listOf(true)
-
-            val styles = FrameStyle.entries
-            // val styles = listOf(FrameStyle.BOX)
-
-            val devices =
-                listOf(
-                    Qualifier("Phone", 411, 914, "420dpi"),
-                    Qualifier("Tablet", 1280, 800, "xhdpi"),
-                )
-            // val devices = listOf(Qualifier("Phone", 411, 914, "420dpi"))
-
-            val configs = mutableListOf<Array<TestConfig>>()
-            for (pos in positions) {
-                for (btn in buttonStates) {
-                    for (style in styles) {
-                        for (dev in devices) {
-                            val config =
-                                TestConfig(
-                                    pos,
-                                    btn,
-                                    style,
-                                    dev,
-                                )
-                            configs.add(arrayOf(config))
-                        }
-                    }
-                }
-            }
-            return configs
-        }
-    }
-
-    /**
-     * Represents a single snapshot configuration.
-     * The toString() provides the name shown in the JUnit test results.
-     */
-    class TestConfig(
-        val toolbarPosition: ToolbarPosition,
-        val showAnswerButtons: Boolean,
-        val frameStyle: FrameStyle,
-        val qualifier: Qualifier,
-    ) {
-        override fun toString(): String =
-            "${qualifier.name}_toolbar=${toolbarPosition.name}_" +
-                "frameStyle=${frameStyle.name}_buttons=$showAnswerButtons"
-    }
-}
-
-data class Qualifier(
-    val name: String,
-    val widthDp: Int,
-    val heightDp: Int,
-    val dpi: String,
-    val nightMode: Boolean = false,
-) {
-    override fun toString(): String {
-        val nightString = if (nightMode) "night" else "notnight"
-        return "w${widthDp}dp-h${heightDp}dp-$nightString-$dpi"
     }
 }

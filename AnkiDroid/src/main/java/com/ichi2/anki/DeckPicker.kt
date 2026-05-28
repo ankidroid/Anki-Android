@@ -30,16 +30,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.database.SQLException
+import android.graphics.Color
 import android.graphics.PixelFormat
+import android.os.Build
 import android.os.Bundle
 import android.text.util.Linkify
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -60,8 +64,13 @@ import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.navigationBars
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -92,9 +101,13 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
@@ -160,6 +173,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
+import com.ichi2.anki.ui.BottomFadeFrameLayout
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
@@ -168,6 +182,7 @@ import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -186,7 +201,6 @@ import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
-import com.ichi2.utils.checkWebviewVersion
 import com.ichi2.utils.configureView
 import com.ichi2.utils.customView
 import com.ichi2.utils.dp
@@ -194,6 +208,7 @@ import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import com.ichi2.utils.showDialogIfWebViewOutdated
 import com.ichi2.utils.title
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -204,6 +219,8 @@ import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import java.io.File
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -214,7 +231,7 @@ import java.io.File
  *
  * Responsibilities:
  * * Setup/upgrades of the application: [handleStartup]
- * * Error handling [handleDbError] [handleDbLocked]
+ * * Error handling [handleDbLocked]
  * * Displaying a tree of decks, some of which may be collapsible: [deckListAdapter]
  *   * Allows users to study the decks
  *   * Displays deck progress
@@ -252,7 +269,9 @@ open class DeckPicker :
     @VisibleForTesting
     internal val deckPickerBinding: IncludeDeckPickerBinding
         get() = binding.deckPickerPane
-    private val floatingActionButtonBinding: IncludeFloatingAddButtonBinding
+
+    @VisibleForTesting
+    val floatingActionButtonBinding: IncludeFloatingAddButtonBinding
         get() = deckPickerBinding.floatingActionButton
 
     override var fragmented: Boolean
@@ -268,7 +287,8 @@ open class DeckPicker :
     private lateinit var deckListAdapter: DeckAdapter
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
-    private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
+    @VisibleForTesting
+    lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
 
     var activeSnackBar: Snackbar? = null
     private val activeSnackbarCallback =
@@ -404,9 +424,6 @@ open class DeckPicker :
             if (result.resultCode == RESULT_MEDIA_EJECTED) {
                 onSdCardNotMounted()
                 return
-            } else if (result.resultCode == RESULT_DB_ERROR) {
-                handleDbError()
-                return
             }
             callback(result)
         }
@@ -439,25 +456,18 @@ open class DeckPicker :
         }
     }
 
-    private fun showDeckPickerContextMenu(deckId: DeckId) =
-        launchCatchingTask {
-            viewModel.selectDeck(deckId).join()
-            val menu = DeckPickerContextMenu.newInstance(deckId)
-            CardBrowser.clearLastDeckId()
-            showDialogFragment(menu)
-        }
+    private suspend fun showDeckPickerContextMenu(deckId: DeckId) {
+        val menu = DeckPickerContextMenu.newInstance(deckId)
+        CardBrowser.clearLastDeckId()
+        showDialogFragment(menu)
+    }
 
-    private fun showDeckPickerRightClickContextMenu(
-        deckId: DeckId,
-        x: Float,
-        y: Float,
-    ) = launchCatchingTask {
-        viewModel.selectDeck(deckId).join()
+    private suspend fun showDeckPickerRightClickContextMenu(request: DeckPickerViewModel.RightClickMenuRequest) {
         DeckPickerMenuContentProvider.show(
             deckPicker = this@DeckPicker,
-            deckId = deckId,
-            x = x,
-            y = y,
+            deckId = request.deckId,
+            x = request.x,
+            y = request.y,
         )
     }
 
@@ -472,6 +482,11 @@ open class DeckPicker :
             return
         }
 
+        // match the status bar theme of the rest of the app
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = BottomFadeFrameLayout.navigationBarStyle(),
+        )
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
@@ -505,6 +520,7 @@ open class DeckPicker :
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer()
+        setupEdgeToEdge()
         title = resources.getString(R.string.app_name)
 
         deckPickerBinding.deckPickerContent.visibility = View.GONE
@@ -523,9 +539,9 @@ open class DeckPicker :
                     viewModel.toggleDeckExpand(deckId)
                     dismissAllDialogFragments()
                 },
-                onDeckContextRequested = ::showDeckPickerContextMenu,
+                onDeckContextRequested = { deckId -> viewModel.requestContextMenu(deckId) },
                 onDeckRightClick = { deckId, x, y ->
-                    showDeckPickerRightClickContextMenu(deckId, x, y)
+                    viewModel.requestRightClickContextMenu(deckId, x, y)
                     Timber.d("Right Click on deck recorded!! %d, %f %f", deckId, x, y)
                 },
             )
@@ -533,18 +549,7 @@ open class DeckPicker :
 
         lifecycleScope.launch { applyDeckPickerBackground() }
 
-        pullToSyncWrapper =
-            deckPickerBinding.pullToSyncWrapper.apply {
-                setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
-                setOnRefreshListener {
-                    Timber.i("Pull to Sync: Syncing")
-                    pullToSyncWrapper.isRefreshing = false
-                    sync()
-                }
-                viewTreeObserver.addOnScrollChangedListener {
-                    pullToSyncWrapper.isEnabled = decksLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
-                }
-            }
+        setupPullToSync()
         // Setup the FloatingActionButtons
         floatingActionMenu =
             DeckPickerFloatingActionMenu(this, binding, this).apply {
@@ -556,7 +561,7 @@ open class DeckPicker :
 
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        checkWebviewVersion(this)
+        with(this) { showDialogIfWebViewOutdated() }
 
         // If a review reminder deserialization error has recently occurred
         // (ex. on app boot, when the app opened, etc.), inform the user via a dialog
@@ -605,6 +610,78 @@ open class DeckPicker :
         onBackPressedDispatcher.addCallback(this, exitViaDoubleTapBackCallback())
         onBackPressedDispatcher.addCallback(this, closeFloatingActionBarBackPressCallback)
         super.setupBackPressedCallbacks()
+    }
+
+    override fun fitsSystemWindows(): Boolean = false
+
+    /** Applied edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge() {
+        fun setRecyclerViewBottomPaddingAbove(target: View) {
+            val recyclerView = deckPickerBinding.decks
+            if (recyclerView.height == 0 || target.height == 0) return
+            val bottom = recyclerView.locationInWindow().y + recyclerView.height
+            val topOfTarget = (target.layoutParams as? MarginLayoutParams)?.topMargin ?: 0
+            recyclerView.updatePadding(
+                bottom = (bottom - target.locationInWindow().y - topOfTarget).coerceAtLeast(0),
+            )
+        }
+
+        deckPickerBinding.decksFadeWrapper.setup(window)
+        deckPickerBinding.decksFadeWrapper.anchorView = deckPickerBinding.reviewSummaryTextView
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { toolbar, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            toolbar.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
+        }
+        // Bottom padding is used. wrap_content meant margin wasn't viable
+        ViewCompat.setOnApplyWindowInsetsListener(deckPickerBinding.root) { deckPickerInclude, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            // BottomFadeFrameLayout handles contrast for bottom nav; let the system draw
+            // its own scrim when the nav bar is on the side (no manual fade applies there)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val nav = insets.getInsets(navigationBars())
+                window.isNavigationBarContrastEnforced = nav.left > 0 || nav.right > 0
+            }
+            deckPickerInclude.updatePadding(
+                left = bars.left,
+                right = if (fragmented) 0 else bars.right,
+            )
+            deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = bars.bottom)
+
+            // hack for Roborazzi screenshot tests
+            val fabBottomOffset = if (isRobolectric) 12.dp.toPx(this) else -12.dp.toPx(this)
+            floatingActionButtonBinding.root.updatePadding(bottom = bars.bottom + fabBottomOffset)
+
+            setRecyclerViewBottomPaddingAbove(floatingActionButtonBinding.fabMain)
+            insets
+        }
+        floatingActionButtonBinding.fabMain.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
+            setRecyclerViewBottomPaddingAbove(v)
+        }
+        if (fragmented) {
+            val studyoptionsView = binding.studyoptionsFragment ?: return
+            ViewCompat.setOnApplyWindowInsetsListener(studyoptionsView) { studyOptions, insets ->
+                val bars = insets.getInsets(systemBars() or displayCutout())
+                studyOptions.updatePadding(right = bars.right, bottom = bars.bottom)
+                insets
+            }
+        }
+    }
+
+    private fun setupPullToSync() {
+        pullToSyncWrapper =
+            deckPickerBinding.pullToSyncWrapper.apply {
+                setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
+                setOnRefreshListener {
+                    Timber.i("Pull to Sync: Syncing")
+                    pullToSyncWrapper.isRefreshing = false
+                    sync()
+                }
+            }
+        // Only allow pull-to-sync when the deck list is scrolled to the top.
+        deckPickerBinding.decks.doOnScrolled { _, _ ->
+            pullToSyncWrapper.isEnabled = decksLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -656,7 +733,7 @@ open class DeckPicker :
             deckPickerBinding.reviewSummaryTextView.text = studiedToday
             // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
             deckPickerBinding.reviewSummaryTextView.doOnLayout { view ->
-                val layoutParams = floatingActionButtonBinding.fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                val layoutParams = floatingActionButtonBinding.fabLinearLayout.layoutParams as MarginLayoutParams
                 layoutParams.setMargins(0, 0, 0, view.height / 2)
                 floatingActionButtonBinding.fabLinearLayout.layoutParams = layoutParams
             }
@@ -783,6 +860,7 @@ open class DeckPicker :
         viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
         viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
+        viewModel.flowOfNavigate.launchCollectionInLifecycleScope { navigate(it) }
         viewModel.flowOfExportDeck.launchCollectionInLifecycleScope(::onExportDeck)
         viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
         viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
@@ -798,6 +876,8 @@ open class DeckPicker :
         viewModel.flowOfResizingDividerVisible.launchCollectionInLifecycleScope(::onResizingDividerVisibilityChanged)
         viewModel.flowOfDecksReloaded.launchCollectionInLifecycleScope(::onDecksReloaded)
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
+        viewModel.flowOfShowContextMenu.launchCollectionInLifecycleScope(::showDeckPickerContextMenu)
+        viewModel.flowOfShowRightClickContextMenu.launchCollectionInLifecycleScope(::showDeckPickerRightClickContextMenu)
     }
 
     private val onReceiveContentListener =
@@ -1028,6 +1108,7 @@ open class DeckPicker :
         menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
         menu.findItem(R.id.action_check_database)?.title = TR.sentenceCase.checkDatabase
         menu.findItem(R.id.action_check_media)?.title = TR.sentenceCase.checkMediaAction
+        menu.findItem(R.id.action_deck_delete)?.title = TR.sentenceCase.deleteDeck
         setupMediaSyncMenuItem(menu)
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
@@ -1410,10 +1491,8 @@ open class DeckPicker :
             }
         }
 
-        fun syncIntervalPassed(): Boolean {
-            val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
-            return TimeManager.time.intTimeMS() - Prefs.lastSyncTime > automaticSyncIntervalInMS
-        }
+        fun syncIntervalPassed(): Boolean =
+            (TimeManager.time.intTimeMS() - Prefs.lastSyncTime) > AUTOMATIC_SYNC_MINIMAL_INTERVAL.inWholeMilliseconds
 
         when {
             !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
@@ -1796,11 +1875,6 @@ open class DeckPicker :
         showMediaCheckDialog()
     }
 
-    open fun handleDbError() {
-        Timber.i("Displaying Database Error")
-        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
-    }
-
     open fun handleDbLocked() {
         Timber.i("Displaying Database Locked")
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
@@ -2148,7 +2222,7 @@ open class DeckPicker :
                     shortcut("C") { this.sentenceCase.checkDatabase },
                     shortcut("D", R.string.new_deck),
                     shortcut("F", R.string.new_dynamic_deck),
-                    if (fragmented) shortcut("DEL", R.string.contextmenu_deckpicker_delete_deck) else null,
+                    if (fragmented) shortcut("DEL") { this.sentenceCase.deleteDeck } else null,
                     if (fragmented) shortcut("Shift+DEL", R.string.delete_deck_without_confirmation) else null,
                     if (fragmented) shortcut("R", R.string.rename_deck) else null,
                     shortcut("P", R.string.open_settings),
@@ -2165,7 +2239,6 @@ open class DeckPicker :
          * Result codes from other activities
          */
         const val RESULT_MEDIA_EJECTED = 202
-        const val RESULT_DB_ERROR = 203
 
         /**
          * If passed into the intent, the user should have been logged in and DeckPicker
@@ -2181,9 +2254,12 @@ open class DeckPicker :
         @VisibleForTesting
         const val REQUEST_STORAGE_PERMISSION = 0
 
-        // For automatic syncing
-        // 10 minutes in milliseconds..
-        private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
+        /**
+         * Minimum delay between automatic syncs.
+         *
+         * Skips the automatic sync if this time has not elapsed.
+         */
+        private val AUTOMATIC_SYNC_MINIMAL_INTERVAL: Duration = 10.minutes
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
 
         private const val PREF_DECK_PICKER_PANE_WEIGHT = "deckPickerPaneWeight"

@@ -25,27 +25,15 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_warning">Cela peut prendre beaucoup de temps. Continuer?</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Supprimer le jeu de cartes</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Supprimer toutes les cartes dans %1$s? Elle contient %2$d carte</item>
@@ -263,7 +251,7 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Les numéros de carte ne changeront pas</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="extra_cloze_deletions_removed">Si vous passez à un type de note ordinaire et qu\'il y a plus de texte à trous que de modèles de cartes disponibles, toutes les cartes supplémentaires seront supprimées.</string>
     <string name="different_note_types_selected">Veuillez sélectionner des notes d\'un seul type de notes.</string>
     <string name="error_no_changes_to_save">Aucune modification à enregistrer</string>
     <string name="choose_color">Choisir une couleur</string>

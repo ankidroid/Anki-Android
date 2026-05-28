@@ -29,6 +29,7 @@ undoActionUndone()
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <string name="sentence_toggle_suspend">Toggle suspend</string>
     <string name="sentence_toggle_bury">Toggle bury</string>
+    <string name="sentence_toggle_cards_notes">Toggle cards/notes</string>
     <string name="sentence_set_due_date">Set due date</string>
     <string name="sentence_gesture_flag_red">Toggle red flag</string>
     <string name="sentence_gesture_flag_orange">Toggle orange flag</string>
@@ -61,4 +62,20 @@ undoActionUndone()
     <string name="sentence_restore_to_default">Restore to default</string>
     <string name="sentence_check_db">Check database</string>
     <string name="sentence_check_media">Check media</string>
+    <string name="sentence_front_template">Front template</string>
+    <string name="sentence_back_template">Back template</string>
+    <string name="sentence_rename_deck">Rename deck</string>
+    <string name="sentence_deck_options">Deck options</string>
+    <string name="sentence_delete_deck">Delete deck</string>
+    <string name="sentence_log_in">Log in</string>
+    <string name="sentence_log_out">Log out</string>
+    <string name="sentence_card_info">Card info</string>
+    <string name="sentence_bury_note">Bury note</string>
+    <string name="sentence_bury_card">Bury card</string>
+    <string name="sentence_suspend_note">Suspend note</string>
+    <string name="sentence_suspend_card">Suspend card</string>
+    <string name="sentence_mark_note">Mark note</string>
+    <string name="sentence_delete_note">Delete note</string>
+    <string name="sentence_ankiweb_account" maxLength="41">AnkiWeb account</string>
+    <string name="sentence_browser_appearance">Browser appearance</string>
 </resources>

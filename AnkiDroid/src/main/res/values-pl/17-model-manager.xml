@@ -35,12 +35,6 @@
     <string name="toast_empty_name">Musisz wprowadzić nazwę</string>
     <string name="toast_duplicate_field">Nazwa pola już zajęta</string>
     <!--Plurals-->
-    <plurals name="model_browser_types_available">
-        <item quantity="one">%d typ notatki dostępny</item>
-        <item quantity="few">%d typy notatek dostępne</item>
-        <item quantity="many">%d typów notatek dostępnych</item>
-        <item quantity="other">%d typów notatek dostępnych</item>
-    </plurals>
     <plurals name="model_browser_of_type">
         <item quantity="one">%d notatka</item>
         <item quantity="few">%d notatki</item>
@@ -64,8 +58,8 @@
     <string name="model_field_editor_changing">Aktualizowanie pól</string>
     <string name="model_field_editor_sort_field">Sortuj według tego pola</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">Usuń typ karty</string>
+    <string name="add_card_type" maxLength="28">Dodaj typ karty</string>
     <!--Warnings-->
     <string name="model_delete_warning">Czy na pewno chcesz usunąć ten typ notatki?</string>
     <!--

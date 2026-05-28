@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Desativado</string>
@@ -129,7 +118,6 @@
     <string name="tts_summ">Lê pergunta e resposta se nenhum arquivo de som estiver incluído</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Busca mídia durante a sincronização</string>
-    <string name="sync_account" maxLength="41">Conta AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Não está logado</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronização automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automaticamente ao iniciar/sair do aplicativo se a última sincronização foi há mais de 10 minutos.</string>
@@ -157,8 +145,6 @@
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="software_render" maxLength="41">Desativar render de hardware da placa</string>
     <string name="software_render_summ">Renderização de hardware é mais rápida, mas pode causar problemas, especificamente no Android 8/8.1. Se você não consegue ver partes da interface de revisão do cartão, tente essa configuração.</string>
-    <string name="safe_display" maxLength="41">Modo de exibição segura</string>
-    <string name="safe_display_summ">Desativar todas animações e utilizar método seguro para desenhar cards. Dispositivos E-ink podem exigir isso.</string>
     <string name="disable_extended_text_ui" maxLength="41">Desabilitar Modo de Edição de Campo Único</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Permitir \'Ocultar\' no menu de contexto quando em modo paisagem.</string>
@@ -172,6 +158,8 @@
     <string name="show_estimates_summ">Mostrar a próxima revisão acima dos botões de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
     <string name="show_large_answer_buttons_summ">Mostra o botão de respostas em 2 linhas.</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
     <string name="show_top_bar_summary">Mostrar contagem de cartas, bandeira e marcações na barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
@@ -222,7 +210,7 @@
         Se não for definido, o servidor AnkiWeb padrão será usado.
         <a href="%s">Saiba mais</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">URL de sincronização</string>
     <string name="custom_sync_certificate_title" maxLength="41">Certificado personalizado (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>
@@ -380,9 +368,9 @@
     <string name="new_study_screen_summ"><![CDATA[Nova tela de estudo aprimorada que substituirá a atual. Alguns recursos da tela antiga foram alterados ou removidos. Por favor, envie qualquer <a href="%1$s">sugestão</a> ou <a href="%2$s">relato de erro</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Mostre feedback da resposta</string>
     <string name="screen" maxLength="41">Tela</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Somente responder</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Virar e responder</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configurações</string>
-    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Configurações relacionadas</string>
 </resources>

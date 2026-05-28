@@ -46,6 +46,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.asyncCatching
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogSetDueDateBinding
 import com.ichi2.anki.databinding.FragmentSetDueDateRangeBinding
 import com.ichi2.anki.databinding.FragmentSetDueDateSingleBinding
@@ -55,7 +56,6 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.anki.servicelayer.getFSRSStatus
-import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnImeHidden
@@ -69,6 +69,7 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
+import com.ichi2.utils.titleWithHelpIcon
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.launch
@@ -140,18 +141,17 @@ class SetDueDateDialog : DialogFragment() {
         binding = DialogSetDueDateBinding.inflate(layoutInflater)
         return MaterialAlertDialogBuilder(requireContext())
             .create {
+                titleWithHelpIcon(
+                    text = TR.sentenceCase.setDueDate,
+                ) {
+                    openUrl(R.string.link_set_due_date_help)
+                }
                 title(text = TR.sentenceCase.setDueDate)
                 positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
                 negativeButton(R.string.dialog_cancel)
-                neutralButton(R.string.help)
                 setView(binding.root)
             }.apply {
                 show()
-
-                // This onClickListener stops the dialog from closing when the button is clicked.
-                getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener {
-                    openUrl(R.string.link_set_due_date_help)
-                }
 
                 lifecycleScope.launch {
                     viewModel.isValidFlow.collect { isValid -> positiveButton.isEnabled = isValid }
@@ -166,6 +166,7 @@ class SetDueDateDialog : DialogFragment() {
                         .first { it.position == position }
                         .let { selectedTab ->
                             tab.setIcon(selectedTab.icon)
+                            tab.setText(selectedTab.text)
                         }
                 }.attach()
                 binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))

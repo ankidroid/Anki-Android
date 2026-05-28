@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Devredışı</string>
@@ -129,7 +118,6 @@
     <string name="tts_summ">Ses dosyası bulunmuyorsa soruyu ve cevabı sesli okur</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Eşitlemede medyayı aktar</string>
-    <string name="sync_account" maxLength="41">AnkiWeb hesabı</string>
     <string name="sync_account_summ_logged_out">Giriş yapılmamış</string>
     <string name="automatic_sync_choice" maxLength="41">Otomatik eşleme</string>
     <string name="automatic_sync_choice_summ">Uygulama açılış/kapanışında son eşleme 10 dakikadan daha önce idiyse otomatik olarak eşle.</string>
@@ -157,8 +145,6 @@
     <string name="select_locale_title">Dil Seç</string>
     <string name="software_render" maxLength="41">Kart donanım renderını devredışı bırak</string>
     <string name="software_render_summ">Donanım renderı daha hızlıdır ama sorunları olabilir, özellikle de Android 8/8.1\'de. Kart çalışma kullanıcı arayüzünün bazı kısımlarını göremiyorsanız, bunu ayarı deneyin.</string>
-    <string name="safe_display" maxLength="41">Güvenli görüntü modu</string>
-    <string name="safe_display_summ">Bütün animasyonları devredışı bırak ve kartları çizmek için daha güvenli yöntem kullan. Bu e-mürekkepli cihazlar için gerekebilir.</string>
     <string name="disable_extended_text_ui" maxLength="41">Tek Alan Düzenleme Modunu Devredışı Bırak</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Yatay moddayken \"boşluk doldurma\" durum menüsüne izin ver</string>
@@ -172,6 +158,8 @@
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
     <string name="show_large_answer_buttons" maxLength="41">Büyük cevap düğmelerini göster</string>
     <string name="show_large_answer_buttons_summ">Cevap düğmesini 2 satırda göster</string>
+    <string name="remove_animations" maxLength="41">Animasyonları kaldır</string>
+    <string name="remove_animations_summary">Sistem ayarlarında animasyonlar kaldırılırsa da etkinleştirilir</string>
     <string name="show_top_bar" maxLength="41">Üst Çubuğu Göster</string>
     <string name="show_top_bar_summary">Kart sayılarını, cevap kronometresini, bayrağı ve işareti üst çubukta göster</string>
     <string name="show_progress" maxLength="41">Kalanı göster</string>

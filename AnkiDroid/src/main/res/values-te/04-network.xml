@@ -25,25 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <string name="youre_offline">మీరు ఆఫ్లైన్లో ఉన్నారు</string>
     <string name="sync_error">సమకాలీకరణ లోపం</string>
@@ -56,12 +44,10 @@
     <!-- MyAccount.kt -->
     <string name="username">ఇమెయిల్</string>
     <string name="password">పాస్వర్డ్</string>
-    <string name="log_in">లాగ్ ఇన్</string>
     <string name="sign_up_description">AnkiWeb ఖాతాను కలిగిలేదా? ఇది ఉచితం!</string>
     <string name="sign_up_not_affiliated">గమనిక: AnkiDroid AnkiWeb అనుబంధంగా లేదు</string>
     <string name="sign_up">చేరండి</string>
     <string name="logged_as">లాగా లాగిన్ అయ్యింది</string>
-    <string name="log_out">లాగ్ అవుట్</string>
     <string name="reset_password">పాస్వర్డ్ మార్చండి</string>
     <string name="lost_mail_instructions">ఇమెయిల్ మర్చిపోయారా?</string>
     <string name="sign_in">సైన్ ఇన్ చేయండి</string>

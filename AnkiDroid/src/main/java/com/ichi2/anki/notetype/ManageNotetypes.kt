@@ -20,6 +20,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,10 +31,12 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.behavior.HideViewOnScrollBehavior
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -45,6 +49,7 @@ import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
+import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.getInputTextLayout
@@ -58,7 +63,8 @@ import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 
 class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
-    private val binding by viewBinding(ActivityManageNoteTypesBinding::bind)
+    @VisibleForTesting
+    val binding by viewBinding(ActivityManageNoteTypesBinding::bind)
     val viewModel by viewModels<ManageNoteTypesViewModel>()
 
     private val notetypesAdapter: NoteTypesAdapter by lazy {
@@ -90,13 +96,18 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-
         super.onCreate(savedInstanceState)
-        enableToolbar().title = getString(R.string.model_browser_label)
+
+        setTransparentStatusBar()
+        enableToolbar()
         binding.noteTypesList.adapter = notetypesAdapter
-        binding.floatingActionButton.setOnClickListener {
-            val addNewNotesType = AddNewNotesType(this)
-            launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
+        binding.floatingActionButton.apply {
+            setOnClickListener {
+                val addNewNotesType = AddNewNotesType(this@ManageNotetypes)
+                launchCatchingTask { addNewNotesType.showAddNewNotetypeDialog() }
+            }
+            val params = (layoutParams as? CoordinatorLayout.LayoutParams)
+            (params?.behavior as? HideViewOnScrollBehavior<View>)?.setViewEdge(HideViewOnScrollBehavior.EDGE_BOTTOM)
         }
         binding.btnClearSelection.setOnClickListener { viewModel.clearSelection() }
 
@@ -151,7 +162,8 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         onBackPressedDispatcher.addCallback(this, backCallback)
     }
 
-    private fun bindState(state: ManageNoteTypesState) {
+    @VisibleForTesting
+    fun bindState(state: ManageNoteTypesState) {
         if (state.error != null) {
             if (state.error.isReportable) {
                 CrashReportService.sendExceptionReport(
@@ -174,12 +186,6 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         // send only the items that should be displayed
         notetypesAdapter.submitList(state.noteTypes.filter { it.shouldBeDisplayed })
         notetypesAdapter.isInMultiSelectMode = state.isInMultiSelectMode
-        supportActionBar?.subtitle =
-            resources.getQuantityString(
-                R.plurals.model_browser_types_available,
-                state.noteTypes.size,
-                state.noteTypes.size,
-            )
         if (state.searchQuery.isNotEmpty()) {
             val searchMenuItem =
                 findViewById<Toolbar>(R.id.toolbar).menu?.findItem(R.id.search_item)
@@ -208,6 +214,21 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         val searchView = searchItem?.actionView as? AccessibleSearchView
         searchView?.maxWidth = Integer.MAX_VALUE
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        // keep the same "lifted" background on the app bar while searching
+        searchItem.setOnActionExpandListener(
+            object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    binding.appBarLayout.isLiftOnScroll = false
+                    return true
+                }
+
+                override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    binding.appBarLayout.isLiftOnScroll = true
+                    return true
+                }
+            },
+        )
 
         searchView?.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {

@@ -25,24 +25,13 @@
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">अक्षम</string>
@@ -129,7 +118,6 @@
     <string name="tts_summ">कोई ध्वनि फ़ाइल शामिल है, तो प्रश्न और उत्तर बाहर पढ़ता है</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">मीडिया को सिंक पर लाएं</string>
-    <string name="sync_account" maxLength="41">AnkiWeb खाता</string>
     <string name="sync_account_summ_logged_out">लॉगिन नहीं हैं</string>
     <string name="automatic_sync_choice" maxLength="41">स्वचालित सिंक्रनाइज़ेशन</string>
     <string name="automatic_sync_choice_summ">यदि अंतिम सिंक्रनाइज़ेशन 10 मिनट पहले से अधिक था, तो अनुप्रयोग प्रारंभ/निकास पर स्वचालित रूप से सिंक्रनाइज़ करें ।</string>
@@ -157,8 +145,6 @@
     <string name="select_locale_title">भाषा चुनें</string>
     <string name="software_render" maxLength="41">कार्ड हार्डवेयर रेंडर अक्षम करें</string>
     <string name="software_render_summ">हार्डवेयर रेंडर तेज़ है लेकिन इसमें समस्याएँ हो सकती हैं, विशेष रूप से Android 8/8.1 पर।  यदि आप कार्ड समीक्षा उपयोगकर्ता इंटरफ़ेस के कुछ हिस्सों को नहीं देख पा रहे हैं, तो इस सेटिंग को आज़माएँ।</string>
-    <string name="safe_display" maxLength="41">सुरक्षित प्रदर्शन मोड</string>
-    <string name="safe_display_summ">सभी एनिमेशन अक्षम करें और कार्ड बनाने के लिए सुरक्षित विधि का उपयोग करें। ई-इंक उपकरणों को इसकी आवश्यकता हो सकती है।</string>
     <string name="disable_extended_text_ui" maxLength="41">एकल फ़ील्ड मोड अक्षम करें</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">लैंडस्केप मोड में होने पर \'क्लोज़ डिलीशन\' संदर्भ मेनू की अनुमति देता है।</string>
@@ -172,6 +158,8 @@
     <string name="show_estimates_summ">उत्तर बटंस पर अगली समीक्षा समय दिखाएं</string>
     <string name="show_large_answer_buttons" maxLength="41">बड़े उत्तर बटन दिखाएं</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">ऊपरी बार दिखाएं</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">शेष दिखाएं</string>
