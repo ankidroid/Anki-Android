@@ -984,26 +984,6 @@ class CardBrowserTest : RobolectricTest() {
         advanceRobolectricLooper()
     }
 
-    /** Returns an instance of [CardBrowser] containing [noteCount] notes */
-    private fun getBrowserWithNotes(
-        noteCount: Int,
-        reversed: Boolean = false,
-    ): CardBrowser {
-        ensureCollectionLoadIsSynchronous()
-        if (reversed) {
-            for (i in 0 until noteCount) {
-                addBasicAndReversedNote(i.toString(), "back")
-            }
-        } else {
-            for (i in 0 until noteCount) {
-                addBasicNote(i.toString(), "back")
-            }
-        }
-        return super.startRegularActivity<CardBrowser>(Intent()).also {
-            advanceRobolectricLooper() // may be a fix for flaky tests
-        }
-    }
-
     private val browserWithNoNewCards: CardBrowser
         get() = getBrowserWithNotes(0)
 
@@ -2145,3 +2125,30 @@ val CardBrowser.menu: Menu
 
 val CardBrowser.selectedDeckNameForUi: String
     get() = CollectionManager.getColUnsafe().decks.name(viewModel.lastDeckId!!)
+
+/** Returns an instance of [CardBrowser] containing [noteCount] notes */
+context(test: RobolectricTest)
+fun getBrowserWithNotes(
+    noteCount: Int,
+    reversed: Boolean = false,
+): CardBrowser {
+    test.ensureCollectionLoadIsSynchronous()
+    if (reversed) {
+        for (i in 0 until noteCount) {
+            test.addBasicAndReversedNote(i.toString(), "back")
+        }
+    } else {
+        for (i in 0 until noteCount) {
+            test.addBasicNote(i.toString(), "back")
+        }
+    }
+    return test.startRegularActivity<CardBrowser>(Intent()).also {
+        advanceRobolectricLooper() // may be a fix for flaky tests
+    }
+}
+
+context(test: RobolectricTest)
+fun withCardBrowser(
+    noteCount: Int,
+    block: (CardBrowser) -> Unit,
+) = block(getBrowserWithNotes(noteCount))
