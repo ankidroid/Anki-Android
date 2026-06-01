@@ -178,13 +178,13 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         }
     }
 
-    fun updateWarningVisibility(
+    private fun updateWarningVisibility(
         binding: DialogChangeNoteTypeBinding,
         discardedFields: List<String>,
         discardedTemplates: List<String>,
     ) {
         Timber.d("update discardedFields=%s", discardedFields)
-        Timber.d("updte discardedTemplates=%s", discardedTemplates)
+        Timber.d("update discardedTemplates=%s", discardedTemplates)
 
         val hasDiscardedItems = discardedFields.isNotEmpty() || discardedTemplates.isNotEmpty()
 
@@ -202,7 +202,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                         discardedFields.size,
                     )
 
-                binding.fieldsWarningText.text = "$fieldsText will be removed."
+                binding.fieldsWarningText.text = fieldsText
             }
 
             if (discardedTemplates.isNotEmpty()) {
@@ -213,7 +213,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                         discardedTemplates.size,
                     )
 
-                binding.cardsWarningText.text = "$cardsText will be removed."
+                binding.cardsWarningText.text = cardsText
             }
         }
     }
