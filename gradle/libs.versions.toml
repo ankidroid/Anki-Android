@@ -81,7 +81,6 @@ drawer = "1.0.3"
 espresso = '3.7.0'
 # https://github.com/criticalAY/google-analytics-kt
 googleAnalyticsKt = "1.2.1"
-mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
 imageCropper = "4.7.0"
 jacoco = "0.8.14"
@@ -164,7 +163,6 @@ commons-collections4 = { module = "org.apache.commons:commons-collections4", ver
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
 desugar-jdk-libs-nio = { module = "com.android.tools:desugar_jdk_libs_nio", version.ref = "desugar-jdk-libs-nio" }
 drakeet-drawer = { module = "com.drakeet.drawer:drawer", version.ref = "drawer" }
-mikehardy-google-analytics-java7 = { module = "net.mikehardy:google-analytics-java7", version.ref = "mikehardyGoogleAnalyticsJava7" }
 ankiBackend-backend = { module = "io.github.david-allison:anki-android-backend", version.ref = "ankiBackend" }
 ankiBackend-testing = { module = "io.github.david-allison:anki-android-backend-testing", version.ref = "ankiBackend" }
 java-semver = { module = "com.github.zafarkhaja:java-semver", version.ref = "javaSemver" }

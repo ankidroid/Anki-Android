@@ -30,7 +30,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsConstants.Actions
 import com.ichi2.anki.analytics.AnalyticsConstants.Category
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.databinding.DialogHelpBinding
 import com.ichi2.anki.databinding.FragmentHelpPageBinding
@@ -124,7 +124,7 @@ class HelpDialog : DialogFragment() {
         private const val PAGE_TAG = "HelpMenuPage"
 
         fun newHelpInstance(): HelpDialog {
-            UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_HELP_DIALOG)
+            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_HELP_DIALOG)
             return HelpDialog().apply {
                 arguments =
                     bundleOf(
@@ -135,7 +135,7 @@ class HelpDialog : DialogFragment() {
         }
 
         fun newPrivacyPolicyInstance(): HelpDialog {
-            UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_PRIVACY)
+            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_PRIVACY)
             val privacyId = mainHelpMenuItems.single { it.analyticsId == Actions.OPENED_PRIVACY }.id
             val privacyItems = childHelpMenuItems.filter { it.parentId == privacyId }
             return HelpDialog().apply {
@@ -151,9 +151,10 @@ class HelpDialog : DialogFragment() {
          * @param canRateApp a boolean that indicates if the system has an app to open to rate AnkiDroid
          */
         fun newSupportInstance(canRateApp: Boolean): HelpDialog {
-            UsageAnalytics.sendAnalyticsEvent(
-                Category.LINK_CLICKED,
-                Actions.OPENED_SUPPORT_ANKIDROID,
+            AnkiDroidUsageAnalytics.sendAnalyticsEvent(
+                category = Category.LINK_CLICKED,
+                action = Actions.OPENED_SUPPORT_ANKIDROID,
+                label = "Help",
             )
             val actualMenuItems = supportMenuItems.filterNot { it.action is Rate && !canRateApp }
             return HelpDialog().apply {
@@ -201,7 +202,7 @@ class HelpPageFragment : Fragment(R.layout.fragment_help_page) {
                 setCompoundDrawablesRelativeWithIntrinsicBoundsKt(start = menuItem.iconResId)
                 compoundDrawablePadding = 16.dp.toPx(requireContext())
                 setOnClickListener {
-                    UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, menuItem.analyticsId)
+                    AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, menuItem.analyticsId)
                     parentFragmentManager.setFragmentResult(
                         REQUEST_HELP_PAGE,
                         bundleOf(ARG_SELECTED_MENU_ITEM to menuItem),
