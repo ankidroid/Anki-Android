@@ -30,6 +30,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -48,6 +49,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
@@ -63,6 +65,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.navigation.handleAppDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -81,6 +84,8 @@ import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.compose.AnkiTheme
+import com.ichi2.anki.ui.compose.AppNavigationDrawer
 import com.ichi2.anki.ui.windows.reviewer.audiorecord.CheckPronunciationFragment
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
 import com.ichi2.anki.utils.CollectionPreferences
@@ -166,10 +171,6 @@ class ReviewerFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener {
-            requireActivity().finish()
-        }
-
         setupBindings()
         setupImmersiveMode()
         setupTypeAnswer()
@@ -184,6 +185,7 @@ class ReviewerFragment :
         setupActions()
         setupWhiteboard()
         setupTimebox()
+        setupNavigationDrawer()
 
         viewModel.finishResultFlow.collectIn(lifecycleScope) { result ->
             requireActivity().run {
@@ -565,6 +567,25 @@ class ReviewerFragment :
         }
         viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
             whiteboardFragment?.resetCanvas()
+        }
+    }
+
+    private fun setupNavigationDrawer() {
+        binding.hamburgerButton.setOnClickListener { viewModel.onHamburgerClicked() }
+
+        binding.navigationDrawer.setViewCompositionStrategy(
+            ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed,
+        )
+        binding.navigationDrawer.setContent {
+            AnkiTheme {
+                AppNavigationDrawer(
+                    openRequests = viewModel.openNavigationDrawerFlow,
+                    selected = null,
+                    onDestinationClick = { dest ->
+                        (requireActivity() as? AnkiActivity)?.handleAppDestination(dest)
+                    },
+                )
+            }
         }
     }
 

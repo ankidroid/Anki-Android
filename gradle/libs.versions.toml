@@ -69,6 +69,8 @@ autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 # https://github.com/skydoves/ColorPickerView/releases
 colorPickerView = "2.4.0"
+# https://developer.android.com/develop/ui/compose/bom/bom-mapping
+composeBom = "2026.05.01"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.5.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
@@ -187,6 +189,17 @@ slf4j-timber = { module = "com.arcao:slf4j-timber", version.ref = "slf4jTimber" 
 jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 
+# Jetpack Compose — versions resolved through the BOM, so individual libraries omit version refs
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-runtime = { module = "androidx.compose.runtime:runtime" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycleProcess" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycleProcess" }
+
 
 #testing libs
 androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
@@ -232,6 +245,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 
 ktlint-gradle-plugin = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradlePlugin" }

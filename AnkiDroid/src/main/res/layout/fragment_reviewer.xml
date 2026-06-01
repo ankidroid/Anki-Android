@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/alternativeBackgroundColor"
-    android:fitsSystemWindows="true"
     android:focusableInTouchMode="true"
     tools:context=".ui.windows.reviewer.ReviewerFragment">
 
@@ -16,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:fitsSystemWindows="true"
         android:clipChildren="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,13 +28,13 @@
             >
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/back_button"
+                android:id="@+id/hamburger_button"
                 style="?actionButtonStyle"
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="?actionBarSize"
                 android:layout_marginStart="4dp"
-                android:contentDescription="@string/abc_action_bar_up_description"
-                android:src="?attr/homeAsUpIndicator"
+                android:contentDescription="@string/drawer_open"
+                android:src="@drawable/ic_menu_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/back_button"
+                app:layout_constraintStart_toEndOf="@id/hamburger_button"
                 app:layout_constraintBottom_toTopOf="@id/timer"
                 />
 
@@ -55,7 +55,7 @@
                 android:id="@+id/timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/back_button"
+                app:layout_constraintStart_toEndOf="@id/hamburger_button"
                 app:layout_constraintEnd_toStartOf="@id/counts_barrier"
                 app:layout_constraintTop_toBottomOf="@id/study_counts"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -195,4 +195,10 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/navigation_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,6 +5,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.plugin.parcelize'
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.keeper)
     alias(libs.plugins.roborazzi)
     id 'idea'
@@ -61,6 +62,7 @@ android {
         aidl = true
         viewBinding = true
         resValues = true
+        compose = true
     }
 
     if (rootProject.testReleaseBuild) {
@@ -466,6 +468,15 @@ dependencies {
     implementation libs.kotlinx.serialization.json
     implementation libs.seismic
 
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.lifecycle.runtime.compose
+    debugImplementation libs.androidx.compose.ui.tooling
+
     debugImplementation libs.androidx.fragment.testing.manifest
 
     // Backend libraries
@@ -572,5 +583,10 @@ dependencies {
     // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
     // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors
     testFixturesImplementation libs.kotlinx.coroutines.core
+    // The Compose Compiler plugin is applied module-wide and runs its classpath check
+    // on every Kotlin compilation, including testFixtures — even though no fixtures call
+    // Compose. The runtime jar must be present for that check to pass.
+    testFixturesImplementation platform(libs.androidx.compose.bom)
+    testFixturesImplementation libs.androidx.compose.runtime
 
 }
