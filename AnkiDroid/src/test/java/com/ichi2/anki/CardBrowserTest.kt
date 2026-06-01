@@ -50,6 +50,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.search.BrowserRow
 import anki.search.BrowserRow.Color
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
@@ -553,9 +554,8 @@ class CardBrowserTest : RobolectricTest() {
 
             assertThat("The target deck should be selected", b.lastDeckId, equalTo(targetDid))
 
-            val addIntent = b.addNoteLauncher.toIntent(targetContext)
-            val bundle = addIntent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
-            IntentAssert.hasExtra(bundle, NoteEditorFragment.EXTRA_DID, targetDid)
+            val addIntent = b.cardBrowserFragment.addNoteLauncher.toIntent(targetContext)
+            IntentAssert.hasExtra(addIntent.extras, NoteEditorFragment.EXTRA_DID, targetDid)
         }
 
     /** 7420  */
@@ -567,9 +567,8 @@ class CardBrowserTest : RobolectricTest() {
 
         assertThat("The initial deck should be selected", b.lastDeckId, equalTo(initialDid))
 
-        val addIntent = b.addNoteLauncher.toIntent(targetContext)
-        val bundle = addIntent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
-        IntentAssert.hasExtra(bundle, NoteEditorFragment.EXTRA_DID, initialDid)
+        val addIntent = b.cardBrowserFragment.addNoteLauncher.toIntent(targetContext)
+        IntentAssert.hasExtra(addIntent.extras, NoteEditorFragment.EXTRA_DID, initialDid)
     }
 
     @Test
@@ -751,7 +750,7 @@ class CardBrowserTest : RobolectricTest() {
                 equalTo("2"),
             )
 
-            b.onUndo()
+            b.cardBrowserFragment.onUndo()
 
             assertThat(
                 "Position of checked card after undo should be reset",
@@ -881,7 +880,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat("Result should be empty", cardBrowser.viewModel.rowCount, equalTo(0))
 
             advanceRobolectricLooper()
-            cardBrowser.searchAllDecks()
+            cardBrowser.viewModel.setSelectedDeck(SelectableDeck.AllDecks)
             advanceRobolectricLooper()
             assertThat("Result should contain one card", cardBrowser.viewModel.rowCount, equalTo(1))
         }
@@ -894,7 +893,7 @@ class CardBrowserTest : RobolectricTest() {
             addBasicAndReversedNote("Hello", "Anki")
 
             browserWithNoNewCards.apply {
-                searchAllDecks()
+                viewModel.setSelectedDeck(SelectableDeck.AllDecks)
                 advanceRobolectricLooper()
                 with(viewModel) {
                     assertThat("Result should contain 4 cards", rowCount, equalTo(4))
@@ -2132,3 +2131,6 @@ suspend fun CardBrowser.selectAll() {
 
 val CardBrowser.menu: Menu
     get() = if (this.useSearchView) cardBrowserFragment.searchBar!!.menu else shadowOf(this).optionsMenu!!
+
+val CardBrowser.selectedDeckNameForUi: String
+    get() = CollectionManager.getColUnsafe().decks.name(viewModel.lastDeckId!!)

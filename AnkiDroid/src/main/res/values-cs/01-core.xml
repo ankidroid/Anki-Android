@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -93,7 +83,6 @@
     <string name="menu_add_note" maxLength="28">Přidat poznámku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizovat účet</string>
     <string name="menu_dismiss_note" maxLength="41">Skrýt / Vymazat</string>
-    <string name="menu_delete_note" maxLength="28">Odstranit poznámku</string>
     <string name="rename_flag">Přejmenovat příznaky</string>
     <string name="menu_flag_card" maxLength="28">Příznak</string>
     <string name="menu_edit_tags" maxLength="28">Upravit štítky</string>
@@ -103,7 +92,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">Povolit přehrávání hlasu</string>
     <string name="menu_disable_voice_playback">Zakázat přehrávání hlasu</string>
     <string name="menu_create_backup" maxLength="28">Vytvořit zálohu</string>
-    <string name="new_deck">Vytvořit balíček</string>
     <string name="new_dynamic_deck">Vytvořit filtrovaný balíček</string>
     <string name="directory_inaccessible">AnkiDroid adresář není přístupný</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -132,7 +120,6 @@
     <string name="export_collection">Exportovat kolekci</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typ karet</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Vzhled prohlížeče karet</string>
     <string name="card_template_editor_deck_override" maxLength="28">Přepsat balíček</string>
     <string name="card_template_editor_insert_field" maxLength="28">Vložit pole</string>
     <string name="card_template_editor_select_field">Vybrat pole</string>
@@ -151,9 +138,6 @@
     </plurals>
     <string name="card_template_editor_save_error">Změny šablony karty nelze uložit: %s</string>
     <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Vzhled prohlížeče</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">Čtení a zápis do AnkiDroid databáze</string>
     <string name="read_write_permission_description">spravovat stávající poznámky, karty, typy poznámek a balíčky, a také vytvářet nové</string>

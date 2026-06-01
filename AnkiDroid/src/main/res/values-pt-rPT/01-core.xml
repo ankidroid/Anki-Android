@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -87,7 +77,6 @@
     <string name="menu_add_note" maxLength="28">Adicionar nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Conta de sincronização</string>
     <string name="menu_dismiss_note" maxLength="41">Ocultar / Eliminar</string>
-    <string name="menu_delete_note" maxLength="28">Eliminar nota</string>
     <string name="rename_flag">Renomear bandeiras</string>
     <string name="menu_flag_card" maxLength="28">Sinalizar ficha</string>
     <string name="menu_edit_tags" maxLength="28">Editar etiquetas</string>
@@ -97,7 +86,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">Ativar reprodução de voz</string>
     <string name="menu_disable_voice_playback">Desativar reprodução de voz</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
-    <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho filtrado</string>
     <string name="directory_inaccessible">A diretoria AnkiDroid está inacessível</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -126,7 +114,6 @@
     <string name="export_collection">Exportar Colecção</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de ficha</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Aparência do explorador de fichas</string>
     <string name="card_template_editor_deck_override" maxLength="28">Baralho por defeito</string>
     <string name="card_template_editor_insert_field" maxLength="28">Inserir campo</string>
     <string name="card_template_editor_select_field">Selecionar campo</string>
@@ -141,9 +128,6 @@
     </plurals>
     <string name="card_template_editor_save_error">Incapaz de gravar alterações ao modelo das fichas: %s</string>
     <string name="template_for_current_card_deleted">O tipo de ficha da ficha atual foi eliminado.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Aparência do explorador</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>
     <string name="read_write_permission_description">aceder às notas, fichas, tipos de nota e baralhos existentes, bem como criar novos</string>

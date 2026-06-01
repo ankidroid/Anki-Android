@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -87,7 +77,6 @@
     <string name="menu_add_note" maxLength="28">Magdagdag ng tala</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">I-sync ang account</string>
     <string name="menu_dismiss_note" maxLength="41">Itago / burahin</string>
-    <string name="menu_delete_note" maxLength="28">Burahin ang tala</string>
     <string name="rename_flag">Pangalanan ulit ang mga flag</string>
     <string name="menu_flag_card" maxLength="28">Lagyan ng watawat ang card</string>
     <string name="menu_edit_tags" maxLength="28">Baguhin ang mga tag</string>
@@ -97,7 +86,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">Buksan ang voice playback</string>
     <string name="menu_disable_voice_playback">Ipatay ang voice playback</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
-    <string name="new_deck">Gumawa ng deck</string>
     <string name="new_dynamic_deck">Gumawa ng na-filter na deck</string>
     <string name="directory_inaccessible">Hindi mapuntahan ang AnkiDroid directory</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -126,7 +114,6 @@
     <string name="export_collection">I-export and koleksyon</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Uri ng mga kard</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Hitsura ng Card Browser</string>
     <string name="card_template_editor_deck_override" maxLength="28">I-override ang deck</string>
     <string name="card_template_editor_insert_field" maxLength="28">Maglagay ng patlang</string>
     <string name="card_template_editor_select_field">Pumili ng patlang</string>
@@ -141,9 +128,6 @@
     </plurals>
     <string name="card_template_editor_save_error">Hindi ma-i-save ang mga binago sa padron ng card: %s</string>
     <string name="template_for_current_card_deleted">Nabura ang uri ng card sa kasalukuyang card.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Hitsura ng Browser</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">Basahin at isulat sa database ng AnkiDroid</string>
     <string name="read_write_permission_description">i-access ang mga umiiral na tala, kard, mga uri ng tala, at mga deck, pati na rin ang gumawa ng mga bago</string>

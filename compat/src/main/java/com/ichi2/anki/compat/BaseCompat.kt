@@ -10,6 +10,9 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
@@ -18,6 +21,8 @@ import android.os.Environment
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.AnimRes
 import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -39,6 +44,14 @@ open class BaseCompat : Compat {
     // Until API26, tooltips cannot be defined declaratively in layouts
     override fun setTooltipTextByContentDescription(view: View) {
         TooltipCompat.setTooltipText(view, view.contentDescription)
+    }
+
+    // Until API36, `setFlags` is the recommended method to hide status controller
+    override fun hideStatusBar(window: Window) {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        )
     }
 
     override fun overrideTransition(
@@ -295,6 +308,10 @@ open class BaseCompat : Compat {
         context: Context,
         defaultValue: Boolean,
     ): Boolean = false
+
+    override fun setDstOutBlend(paint: Paint) {
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+    }
 }
 
 typealias CompatV24 = BaseCompat

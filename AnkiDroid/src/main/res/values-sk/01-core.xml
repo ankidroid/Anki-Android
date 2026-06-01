@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -93,7 +83,6 @@
     <string name="menu_add_note" maxLength="28">Pridať poznámku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizácia účtu</string>
     <string name="menu_dismiss_note" maxLength="41">Skryt / vymazať</string>
-    <string name="menu_delete_note" maxLength="28">Vymazať poznámku</string>
     <string name="rename_flag">Premenovať príznaky</string>
     <string name="menu_flag_card" maxLength="28">Červená vlajočka</string>
     <string name="menu_edit_tags" maxLength="28">Upraviť štítky</string>
@@ -103,7 +92,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
-    <string name="new_deck">Vytvoriť balíček</string>
     <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
     <string name="directory_inaccessible">Adresár AnkiDroid je neprístupný</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -132,7 +120,6 @@
     <string name="export_collection">Export collection</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typy kartičiek</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Vzhľad prehliadača kartičiek</string>
     <string name="card_template_editor_deck_override" maxLength="28">Prepísanie balíčka</string>
     <string name="card_template_editor_insert_field" maxLength="28">Vložiť pole</string>
     <string name="card_template_editor_select_field">Vybrať pole</string>
@@ -151,9 +138,6 @@
     </plurals>
     <string name="card_template_editor_save_error">Nepodarilo sa uložiť zmeny pre šablóny kartičiek: %s</string>
     <string name="template_for_current_card_deleted">Typ kartičky pre aktuálnu kartičku bol vymazaný.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Vzhľad prehliadača</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
     <string name="read_write_permission_description">prístup k existujúcim poznámkam, kartičkám, typom poznámok, balíčkom ako aj vytváranie nových</string>

@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -94,7 +84,6 @@
     <string name="menu_add_note" maxLength="28">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note" maxLength="41">הסתרה / מחיקה</string>
-    <string name="menu_delete_note" maxLength="28">מחיקת רשומה</string>
     <string name="rename_flag">שנה שמות דגלים</string>
     <string name="menu_flag_card" maxLength="28">דגל כרטיס</string>
     <string name="menu_edit_tags" maxLength="28">ערוך תגיות</string>
@@ -104,7 +93,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">אפשר הפעלה קולית</string>
     <string name="menu_disable_voice_playback">השבת השמעה קולית</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
-    <string name="new_deck">יצירת חפיסה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
     <string name="directory_inaccessible">הספרייה של AnkiDroid אינה נגישה</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -133,7 +121,6 @@
     <string name="export_collection">ייצא אוסף</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">סוגי כרטיסים</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">מראה דפדפן הקלפים</string>
     <string name="card_template_editor_deck_override" maxLength="28">שכתוב חפיסה</string>
     <string name="card_template_editor_insert_field" maxLength="28">הוסף שדה</string>
     <string name="card_template_editor_select_field">בחר שדה</string>
@@ -152,9 +139,6 @@
     </plurals>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הכרטיס: %s</string>
     <string name="template_for_current_card_deleted">התבנית של הכרטיס הנוכחי נמחקה.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור למסד הנתונים של AnkiDroid</string>
     <string name="read_write_permission_description">לגשת להערות, כרטיס, סוגי רשומות וחפיסות וגם ליצור חדשים</string>

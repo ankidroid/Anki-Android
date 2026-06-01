@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -84,7 +74,6 @@
     <string name="menu_add_note" maxLength="28">เพิ่มโน้ต</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">เชื่อมบัญชีผู้ใช้</string>
     <string name="menu_dismiss_note" maxLength="41">ซ่อน / ลบ</string>
-    <string name="menu_delete_note" maxLength="28">ลบโน้ต</string>
     <string name="rename_flag">ตั้งชื่อธง</string>
     <string name="menu_flag_card" maxLength="28">เครื่องหมายการ์ด</string>
     <string name="menu_edit_tags" maxLength="28">แก้ไขแท็ก</string>
@@ -94,7 +83,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">เปิดใช้งานการเล่นเสียง</string>
     <string name="menu_disable_voice_playback">ปิดการเล่นเสียง</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
-    <string name="new_deck">สร้างสำรับใหม่</string>
     <string name="new_dynamic_deck">สร้าง สำรับแบบกรอง</string>
     <string name="directory_inaccessible">เข้าถึงที่เก็บข้อมูล AnkiDroid ไม่ได้</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -123,7 +111,6 @@
     <string name="export_collection">ส่งออกคอลเลกชัน</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ชนิดบัตรคำ</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">ลักษณะตัวเรียกดูการ์ด</string>
     <string name="card_template_editor_deck_override" maxLength="28">การแทนที่ชุดการ์ด</string>
     <string name="card_template_editor_insert_field" maxLength="28">แทรกฟิลด์</string>
     <string name="card_template_editor_select_field">เลือกฟิลด์</string>
@@ -136,9 +123,6 @@
     </plurals>
     <string name="card_template_editor_save_error">ไม่สามารถบันทึกการแก้ไขรูปแบบของการ์ด: %s</string>
     <string name="template_for_current_card_deleted">ชนิดการ์ดสำหรับการ์ดปัจจุบันถูกลบแล้ว</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">ลักษณะตัวเรียกดู</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">อ่านและเขียน ลงใน ฐานข้อมูล AnkiDroid\"</string>
     <string name="read_write_permission_description">เข้าถึงโน้ต, การ์ด, ชนิดโน้ต และชุดการ์ดที่มีอยู่ รวมถึงสร้างรายการใหม่ๆ ได้</string>

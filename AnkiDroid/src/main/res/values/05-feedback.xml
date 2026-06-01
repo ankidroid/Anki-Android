@@ -7,6 +7,7 @@
   ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
   ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
   -->
+
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"/>
@@ -16,7 +17,6 @@
     <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>
     <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers…</string>
     <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers…</string>
-    <string name="feedback_copy_debug">Copy debug info</string>
     <string name="feedback_report">Report</string>
     <string name="feedback_report_automatically">Send error reports automatically</string>
     <string name="feedback_no_suitable_app_found">No suitable app found</string>

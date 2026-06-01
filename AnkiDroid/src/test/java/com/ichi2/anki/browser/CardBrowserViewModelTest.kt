@@ -22,10 +22,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Flag
-import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
@@ -80,6 +78,7 @@ import com.ichi2.anki.model.LegacySortType.NO_SORTING
 import com.ichi2.anki.model.LegacySortType.SORT_FIELD
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
@@ -287,9 +286,8 @@ class CardBrowserViewModelTest : JvmTest() {
 
             assertThat("All decks should be selected", hasSelectedAllDecks())
 
-            val addIntent = CardBrowser.createAddNoteLauncher(this).toIntent(mockIt())
-            val bundle = addIntent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
-            IntentAssert.doesNotHaveExtra(bundle, NoteEditorFragment.EXTRA_DID)
+            val addIntent = NoteEditorLauncher.AddNoteFromCardBrowser(this).toIntent(mockIt())
+            IntentAssert.doesNotHaveExtra(addIntent.extras, NoteEditorFragment.EXTRA_DID)
         }
 
     @Test
@@ -650,6 +648,40 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
     }
+
+    @Test
+    fun `refreshColumnsFromPrefs - reloads when SharedPreferences changed externally`() =
+        runViewModelTest {
+            flowOfActiveColumns.test {
+                ignoreEventsDuringViewModelInit()
+
+                // simulate another CardBrowser instance (e.g. one launched via the
+                // system PROCESS_TEXT context menu) saving a different column set
+                val externalColumns = listOf(QUESTION, ANSWER, DECK)
+                BrowserColumnCollection.save(
+                    sharedPrefs(),
+                    cardsOrNotes,
+                    BrowserColumnCollection(externalColumns),
+                )
+
+                refreshColumnsFromPrefs().join()
+
+                assertThat("flowOfActiveColumns emits external columns", awaitItem().columns, equalTo(externalColumns))
+                assertThat("activeColumns matches", activeColumns, equalTo(externalColumns))
+            }
+        }
+
+    @Test
+    fun `refreshColumnsFromPrefs - no event when SharedPreferences unchanged`() =
+        runViewModelTest {
+            flowOfActiveColumns.test {
+                ignoreEventsDuringViewModelInit()
+
+                refreshColumnsFromPrefs().join()
+
+                expectNoEvents()
+            }
+        }
 
     @Test
     fun `change card order to NO_SORTING is a no-op if done twice`() =

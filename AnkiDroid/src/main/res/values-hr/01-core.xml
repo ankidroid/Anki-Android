@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -90,7 +80,6 @@
     <string name="menu_add_note" maxLength="28">Dodaj bilješku</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkroniziraj račun</string>
     <string name="menu_dismiss_note" maxLength="41">Sakrij / izbriši</string>
-    <string name="menu_delete_note" maxLength="28">Izbriši bilješku</string>
     <string name="rename_flag">Preimenuj zastavice</string>
     <string name="menu_flag_card" maxLength="28">Označi kartu</string>
     <string name="menu_edit_tags" maxLength="28">Uredi oznake</string>
@@ -100,7 +89,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">Omogući reprodukciju glasa</string>
     <string name="menu_disable_voice_playback">Onemogući reprodukciju glasa</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
-    <string name="new_deck">Stvori skupinu</string>
     <string name="new_dynamic_deck">Stvori filtriranu skupinu</string>
     <string name="directory_inaccessible">AnkiDroid mapa nije dostupna</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -129,7 +117,6 @@
     <string name="export_collection">Izvezi kolekciju</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Vrste kartica</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Izgled preglednika karata</string>
     <string name="card_template_editor_deck_override" maxLength="28">Deck override</string>
     <string name="card_template_editor_insert_field" maxLength="28">Umetni polje</string>
     <string name="card_template_editor_select_field">Odaberi polje</string>
@@ -146,9 +133,6 @@
     </plurals>
     <string name="card_template_editor_save_error">Greška pri spremanju promjena u predlošku kartice: %s</string>
     <string name="template_for_current_card_deleted">Tip kartice za trenutnu karticu je obrisan.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Izgled preglednika</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">Čitanje i pisanje u AnkiDroid bazu podataka</string>
     <string name="read_write_permission_description">Pristupi postojećim bilješkama, karticama, tipovima kartica i špilovima, te kreiranju novih</string>

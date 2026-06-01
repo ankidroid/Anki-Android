@@ -40,6 +40,7 @@ import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -66,7 +67,6 @@ import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.LanguageUtil.withAppLocale
-import com.ichi2.utils.Permissions
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.DayRolloverAlarm
@@ -142,9 +142,6 @@ open class AnkiDroidApp :
         }
         instance = this
 
-        // Get preferences
-        val preferences = this.sharedPrefs()
-
         // Ensures any change is propagated to widgets
         ChangeManager.subscribe(this)
 
@@ -190,20 +187,10 @@ open class AnkiDroidApp :
 
         setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
 
-        CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(
-            this,
-            preferences.getBoolean(
-                getString(R.string.card_browser_external_context_menu_key),
-                false,
-            ),
-        )
-        AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(
-            this,
-            preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true),
-        )
-        setupNotificationChannels(applicationContext)
+        setupContextMenus()
 
-        makeBackendUsable(this)
+        setup("makeBackendUsable") { makeBackendUsable(this) }
+        setupNotifications()
 
         // Probe WebView availability before any other init touches it (#5794).
         if (!checkWebViewAvailable()) {
@@ -216,69 +203,13 @@ open class AnkiDroidApp :
 
         initializeAnkiDroidDirectory()
 
-        val context = this.withAppLocale()
-        if (Prefs.newReviewRemindersEnabled) {
-            Timber.i("Setting review reminder notifications if they have not already been set")
-            AlarmManagerService.scheduleAllNotifications(context)
-        } else {
-            // Register for notifications
-            Timber.i("AnkiDroidApp: Starting Services")
-            notifications.observeForever { NotificationService.triggerNotificationFor(context) }
-        }
-
         // listen for day rollover: time + timezone changes
         DayRolloverHandler.listenForRolloverEvents(this)
         DayRolloverAlarm.scheduleNext(this)
 
         restoreRecurringAlarms(this)
 
-        registerActivityLifecycleCallbacks(
-            object : ActivityLifecycleCallbacks {
-                override fun onActivityCreated(
-                    activity: Activity,
-                    savedInstanceState: Bundle?,
-                ) {
-                    Timber.i(
-                        "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
-                        savedInstanceState?.let { "${it.keySet().size} keys" },
-                    )
-                    (activity as? FragmentActivity)
-                        ?.supportFragmentManager
-                        ?.registerFragmentLifecycleCallbacks(
-                            FragmentLifecycleLogger(activity),
-                            true,
-                        )
-                }
-
-                override fun onActivityStarted(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onStart")
-                }
-
-                override fun onActivityResumed(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onResume")
-                }
-
-                override fun onActivityPaused(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onPause")
-                }
-
-                override fun onActivityStopped(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onStop")
-                }
-
-                override fun onActivitySaveInstanceState(
-                    activity: Activity,
-                    outState: Bundle,
-                ) {
-                    Timber.i("${activity::class.simpleName}::onSaveInstanceState")
-                }
-
-                override fun onActivityDestroyed(activity: Activity) {
-                    Timber.i("${activity::class.simpleName}::onDestroy")
-                }
-            },
-        )
-
+        setupLifecycleLogging()
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
@@ -311,48 +242,142 @@ open class AnkiDroidApp :
 
     /**
      * Manually initializes the collection directory and `.nomedia` if
-     * [Permissions.hasLegacyStorageAccessPermission] is set
+     * [hasLegacyStorageAccessPermission] is set
      *
      * On failure, sets [fatalInitializationError] to [storageError][FatalInitializationError.StorageError]
      *
      * In most cases the Anki Backend now creates the collection and [initializeAnkiDroidDirectory]
      *  is called on startup of the activity.
      */
-    private fun initializeAnkiDroidDirectory() {
-        // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
-        // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
-        //  is not considered to be a fatal error, unless the directory itself is not writable.
-        val ankiDroidDir =
-            try {
-                CollectionHelper.getCurrentAnkiDroidDirectory(this)
-            } catch (e: SystemStorageException) {
-                fatalInitializationError = FatalInitializationError.StorageError(e)
-                return
-            }
-
-        // TODO: This line is questionable, as it doesn't work on most post-scoped-storage
-        //  builds/Android versions, but we call initializeAnkiDroidDirectory later on startup
-        if (!Permissions.hasLegacyStorageAccessPermission(this)) return
-
-        try {
-            CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
-            return
-        } catch (e: StorageAccessException) {
-            Timber.e(e, "Could not initialize AnkiDroid directory")
-            try {
-                val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
-                if (SdCard.isMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
-                    // Don't send report if the user is using a custom directory as SD cards trip up here a lot
-                    sendExceptionReport(e, "AnkiDroidApp.onCreate")
+    private fun initializeAnkiDroidDirectory() =
+        setup("initializeAnkiDroidDirectory") {
+            // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
+            // TODO: For now, a null getExternalFilesDir, but a valid AnkiDroid Directory in prefs
+            //  is not considered to be a fatal error, unless the directory itself is not writable.
+            val ankiDroidDir =
+                try {
+                    CollectionHelper.getCurrentAnkiDroidDirectory(this)
+                } catch (e: SystemStorageException) {
+                    fatalInitializationError = FatalInitializationError.StorageError(e)
+                    return@setup
                 }
-            } catch (e: SystemStorageException) {
-                // The user can't write to the AnkiDroid directory (=> cant write to the collection)
-                // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
-                // => show the 'fatal storage error' screen
-                fatalInitializationError = FatalInitializationError.StorageError(e)
+
+            // TODO: This line is questionable, as it doesn't work on most post-scoped-storage
+            //  builds/Android versions, but we call initializeAnkiDroidDirectory later on startup
+            if (!hasLegacyStorageAccessPermission(this)) return@setup
+
+            try {
+                CollectionHelper.initializeAnkiDroidDirectory(ankiDroidDir)
+                return@setup
+            } catch (e: StorageAccessException) {
+                Timber.e(e, "Could not initialize AnkiDroid directory")
+                try {
+                    val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
+                    if (SdCard.isMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
+                        // Don't send report if the user is using a custom directory as SD cards trip up here a lot
+                        sendExceptionReport(e, "AnkiDroidApp.onCreate")
+                    }
+                } catch (e: SystemStorageException) {
+                    // The user can't write to the AnkiDroid directory (=> cant write to the collection)
+                    // AND getExternalFilesDir is null - file permissions are likely corrupted (Android 16 bug)
+                    // => show the 'fatal storage error' screen
+                    fatalInitializationError = FatalInitializationError.StorageError(e)
+                }
             }
         }
-    }
+
+    /**
+     * Sets up display of the context menus which appear when long pressing text on external apps,
+     * allowing it to be shared to this app.
+     *
+     * Example: 'Anki Card'
+     *
+     * @see Intent.ACTION_PROCESS_TEXT
+     */
+    private fun setupContextMenus() =
+        setup("setupContextMenus") {
+            val preferences = this.sharedPrefs()
+
+            // setup 'Card Browser'
+            CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(
+                this,
+                preferences.getBoolean(
+                    getString(R.string.card_browser_external_context_menu_key),
+                    false,
+                ),
+            )
+
+            // Setup 'Anki Card'
+            AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(
+                this,
+                preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true),
+            )
+        }
+
+    private fun setupNotifications() =
+        setup("setupNotifications") {
+            setupNotificationChannels(applicationContext)
+
+            val context = this.withAppLocale()
+            if (Prefs.newReviewRemindersEnabled) {
+                Timber.i("Setting review reminder notifications if they have not already been set")
+                AlarmManagerService.scheduleAllNotifications(context)
+            } else {
+                // Register for notifications
+                Timber.i("AnkiDroidApp: Starting Services")
+                notifications.observeForever { NotificationService.triggerNotificationFor(context) }
+            }
+        }
+
+    private fun setupLifecycleLogging() =
+        setup("setupLifecycleLogging") {
+            registerActivityLifecycleCallbacks(
+                object : ActivityLifecycleCallbacks {
+                    override fun onActivityCreated(
+                        activity: Activity,
+                        savedInstanceState: Bundle?,
+                    ) {
+                        Timber.i(
+                            "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
+                            savedInstanceState?.let { "${it.keySet().size} keys" },
+                        )
+                        (activity as? FragmentActivity)
+                            ?.supportFragmentManager
+                            ?.registerFragmentLifecycleCallbacks(
+                                FragmentLifecycleLogger(activity),
+                                true,
+                            )
+                    }
+
+                    override fun onActivityStarted(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onStart")
+                    }
+
+                    override fun onActivityResumed(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onResume")
+                    }
+
+                    override fun onActivityPaused(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onPause")
+                    }
+
+                    override fun onActivityStopped(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onStop")
+                    }
+
+                    override fun onActivitySaveInstanceState(
+                        activity: Activity,
+                        outState: Bundle,
+                    ) {
+                        Timber.i("${activity::class.simpleName}::onSaveInstanceState")
+                    }
+
+                    override fun onActivityDestroyed(activity: Activity) {
+                        Timber.i("${activity::class.simpleName}::onDestroy")
+                    }
+                },
+            )
+        }
 
     /**
      * @return the app version, OS version and device model, provided when syncing.

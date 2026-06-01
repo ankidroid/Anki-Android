@@ -6,22 +6,12 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
@@ -87,7 +77,6 @@
     <string name="menu_add_note" maxLength="28">𐌼𐌴𐌻𐌴𐌹𐌽 𐌱𐌹𐌰𐌹𐌺𐌰𐌽</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">𐌲𐌰𐌻𐌴𐌹𐌺 𐍂𐌰𐌷𐌽𐌴𐌹𐌽𐌰𐌹𐍃</string>
     <string name="menu_dismiss_note" maxLength="41">𐌰𐍆𐍆𐌹𐌻𐌷𐌰𐌽 / 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
-    <string name="menu_delete_note" maxLength="28">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <string name="rename_flag">𐍆𐌰𐌽𐌰𐌽𐍃 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <string name="menu_flag_card" maxLength="28">𐍆𐌰𐌽𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰</string>
     <string name="menu_edit_tags" maxLength="28">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
@@ -97,7 +86,6 @@
     <string name="menu_enable_voice_playback" maxLength="28">𐍃𐍄𐌹𐌱𐌽𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐍃𐍀𐌹𐌻𐍉𐌽 𐌲𐌰𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="menu_disable_voice_playback">𐍃𐍄𐌹𐌱𐌽𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐍃𐍀𐌹𐌻𐍉𐌽 𐌿𐌽𐌲𐌰𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
-    <string name="new_deck">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍃𐌺𐌰𐍀𐌾𐌰𐌽</string>
     <string name="new_dynamic_deck">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌼𐌹𐌸 𐍆𐌹𐌻𐍄𐍂𐌰 𐍃𐌺𐌰𐍀𐌾𐌰𐌽</string>
     <string name="directory_inaccessible">𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐍃𐍄𐌰𐌸 𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽 𐌼𐌰𐌷𐍄𐍃 𐌽𐌹𐍃𐍄</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -126,7 +114,6 @@
     <string name="export_collection">𐌿𐍄𐌱𐌰𐌹𐍂 𐌷𐌿𐌶𐌳</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">𐌺𐌰𐍂𐍄𐌰𐌷𐌰𐌹𐌳𐌾𐌿𐍃</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">𐍅𐌻𐌹𐍄𐍃 𐍃𐍉𐌺𐌾𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐍉</string>
     <string name="card_template_editor_deck_override" maxLength="28">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="card_template_editor_insert_field" maxLength="28">𐍅𐌰𐌹𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="card_template_editor_select_field">𐍅𐌰𐌹𐍂𐌸 𐍅𐌰𐌻𐌾𐌰𐌽</string>
@@ -141,9 +128,6 @@
     </plurals>
     <string name="card_template_editor_save_error">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽 𐌹𐌽𐌼𐌰𐌹𐌳𐌴𐌹𐌽𐌹𐌽𐍃 𐌺𐌰𐍂𐍄𐌰𐍆𐌰𐌿𐍂𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐌴: %s</string>
     <string name="template_for_current_card_deleted">𐌷𐌰𐌹𐌳𐌿𐍃 𐌺𐌰𐍂𐍄𐍉 𐌺𐌰𐍂𐍄𐌰𐌹 𐌰𐌽𐌳𐍅𐌰𐌹𐍂𐌸𐌰𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌹𐌸𐍃 𐌹𐍃𐍄.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">𐍅𐌻𐌹𐍄𐍃 𐌱𐍂𐌰𐍅𐍃𐌰𐌹𐍂𐍃</string>
-    <!-- card Info -->
     <!-- Permissions -->
     <string name="read_write_permission_label">𐌳𐌿 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌳𐌰𐍄𐌰𐌱𐌿𐍃𐌰 𐌰𐌽𐌰𐌺𐌿𐌽𐌽𐌰𐌽 𐌾𐌰𐌷 𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="read_write_permission_description">𐌰𐍄𐌲𐌰𐌲𐌲 𐌹𐌽 𐍅𐌹𐍃𐌰𐌽𐌳𐌴𐌹𐌽𐍃 𐌼𐌴𐌻𐌴𐌹𐌽𐌹𐌽𐍃, 𐌺𐌰𐍂𐍄𐍉𐍃, 𐌷𐌰𐌹𐌳𐌿𐌽𐍃 𐌼𐌴𐌻𐌴𐌹𐌽𐍉, 𐌾𐌰𐌷 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰, 𐌾𐌰𐌷 𐌽𐌹𐌿𐌾𐌰 𐍃𐌺𐌰𐍀𐌾𐌰𐌽</string>

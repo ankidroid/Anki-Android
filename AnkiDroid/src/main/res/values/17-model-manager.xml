@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
 <!-- This file contains strings related to the note types. Note type used to be called "model", hence the name of the file. -->
 <resources>
 
@@ -35,7 +37,6 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
 
     <!--Field Editing-->
-    <string name="model_field_editor_add" maxLength="28">Add field</string>
     <string name="model_field_editor_delete">Delete field</string>
     <string name="model_field_editor_rename">Rename field</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>

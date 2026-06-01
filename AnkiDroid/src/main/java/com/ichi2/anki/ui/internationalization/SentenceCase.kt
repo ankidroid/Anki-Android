@@ -223,6 +223,37 @@ object SentenceCase {
 
     context(_: Fragment)
     val browserAppearance get() = TR.browsingBrowserAppearance().toSentenceCase(R.string.sentence_browser_appearance)
+
+    // TR aboutCopyDebugInfo() is a duplicate
+    context(_: Context)
+    val copyDebugInfo get() = TR.errorsCopyDebugInfoButton().toSentenceCase(R.string.sentence_copy_debug_info)
+
+    context(_: Fragment)
+    val copyDebugInfo get() = TR.errorsCopyDebugInfoButton().toSentenceCase(R.string.sentence_copy_debug_info)
+
+    context(_: Context)
+    val addField get() = TR.fieldsAddField().toSentenceCase(R.string.sentence_add_field)
+
+    context(_: Context)
+    val allDecks get() = TR.exportingAllDecks().toSentenceCase(R.string.sentence_all_decks)
+
+    context(_: Fragment)
+    val allDecks get() = TR.exportingAllDecks().toSentenceCase(R.string.sentence_all_decks)
+
+    context(_: Fragment)
+    val browserOptions get() = TR.browsingBrowserOptions().toSentenceCase(R.string.sentence_browser_options)
+
+    context(_: Fragment)
+    val changeDeck get() = TR.browsingChangeDeck().toSentenceCase(R.string.sentence_change_deck)
+
+    context(_: Fragment)
+    val toggleMark get() = TR.browsingToggleMark().toSentenceCase(R.string.sentence_toggle_mark)
+
+    context(_: Context)
+    val createDeck get() = TR.decksCreateDeck().toSentenceCase(R.string.sentence_create_deck)
+
+    context(_: Fragment)
+    val createDeck get() = TR.decksCreateDeck().toSentenceCase(R.string.sentence_create_deck)
 }
 
 /**

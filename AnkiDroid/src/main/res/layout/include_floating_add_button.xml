@@ -22,7 +22,9 @@
             android:id="@+id/fabLinearLayout"
             android:layout_width="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="12dp"
             android:layout_height="wrap_content"
         >
 
@@ -66,8 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:icon="@drawable/ic_add_deck_filled"
-                android:text="@string/new_deck"
-                android:contentDescription="@string/new_deck"
+                tools:text="Create deck"
                 android:focusable="true"
                 android:clickable="true"
                 android:visibility="gone"

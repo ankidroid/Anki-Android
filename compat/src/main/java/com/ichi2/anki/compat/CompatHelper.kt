@@ -12,6 +12,8 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
 import android.content.pm.ResolveInfo
+import android.graphics.BlendMode
+import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyCharacterMap.deviceHasKey
@@ -41,6 +43,7 @@ class CompatHelper private constructor() {
             sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
             sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
             sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
+            sdkVersion >= Build.VERSION_CODES.R -> CompatV30()
             sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
             sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
             else -> BaseCompat()
@@ -210,3 +213,6 @@ inline fun <reified T : Serializable> Bundle.requireSerializableCompat(key: Stri
     requireNotNull(compat.getSerializable(this, key, T::class.java)) {
         "key: '$key' not found or null"
     }
+
+/** Configures this [Paint] to use [BlendMode.DST_OUT]. */
+fun Paint.setDstOutBlendCompat() = compat.setDstOutBlend(this)

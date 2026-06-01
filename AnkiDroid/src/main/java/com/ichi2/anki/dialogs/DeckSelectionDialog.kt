@@ -41,6 +41,7 @@ import androidx.recyclerview.widget.RecyclerView
 import anki.decks.deckTreeNode
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CardTemplateEditor
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
@@ -56,6 +57,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.withProgress
@@ -160,13 +162,24 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
      */
     private fun showSubDeckDialog(parentDeck: SelectableDeck.Deck) {
         val createDeckDialog =
-            CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentDeck.deckId)
+            CreateDeckDialog(
+                context = requireActivity(),
+                title = getString(R.string.create_subdeck),
+                deckDialogType = CreateDeckDialog.DeckDialogType.SUB_DECK,
+                parentId = parentDeck.deckId,
+            )
         createDeckDialog.onNewDeckCreated = { did: DeckId -> onNewDeckCreated(did) }
         createDeckDialog.showDialog()
     }
 
     private fun showDeckDialog() {
-        val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+        val createDeckDialog =
+            CreateDeckDialog(
+                context = requireActivity(),
+                title = TR.sentenceCase.createDeck,
+                deckDialogType = CreateDeckDialog.DeckDialogType.DECK,
+                parentId = null,
+            )
         createDeckDialog.onNewDeckCreated = { did: DeckId -> onNewDeckCreated(did) }
         createDeckDialog.showDialog()
     }
@@ -399,7 +412,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                             deckId = ALL_DECKS_ID
                             name = "all"
                         }
-                    allDecksList.add(DeckNode(newDeckNode, getString(R.string.card_browser_all_decks), null))
+                    allDecksList.add(DeckNode(newDeckNode, TR.sentenceCase.allDecks, null))
                 }
 
                 allDecksList.addAll(allDecksSet)

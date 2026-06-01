@@ -30,16 +30,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.database.SQLException
+import android.graphics.Color
 import android.graphics.PixelFormat
+import android.os.Build
 import android.os.Bundle
 import android.text.util.Linkify
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -60,8 +64,13 @@ import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.navigationBars
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -72,7 +81,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
-import anki.decks.deckId
 import anki.sync.SyncStatusResponse
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -93,10 +101,12 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
@@ -163,6 +173,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
+import com.ichi2.anki.ui.BottomFadeFrameLayout
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn
 import com.ichi2.anki.ui.animations.fadeOut
@@ -171,6 +182,7 @@ import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ShortcutUtils
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -257,7 +269,9 @@ open class DeckPicker :
     @VisibleForTesting
     internal val deckPickerBinding: IncludeDeckPickerBinding
         get() = binding.deckPickerPane
-    private val floatingActionButtonBinding: IncludeFloatingAddButtonBinding
+
+    @VisibleForTesting
+    val floatingActionButtonBinding: IncludeFloatingAddButtonBinding
         get() = deckPickerBinding.floatingActionButton
 
     override var fragmented: Boolean
@@ -468,6 +482,11 @@ open class DeckPicker :
             return
         }
 
+        // match the status bar theme of the rest of the app
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = BottomFadeFrameLayout.navigationBarStyle(),
+        )
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
@@ -501,6 +520,7 @@ open class DeckPicker :
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer()
+        setupEdgeToEdge()
         title = resources.getString(R.string.app_name)
 
         deckPickerBinding.deckPickerContent.visibility = View.GONE
@@ -529,18 +549,7 @@ open class DeckPicker :
 
         lifecycleScope.launch { applyDeckPickerBackground() }
 
-        pullToSyncWrapper =
-            deckPickerBinding.pullToSyncWrapper.apply {
-                setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
-                setOnRefreshListener {
-                    Timber.i("Pull to Sync: Syncing")
-                    pullToSyncWrapper.isRefreshing = false
-                    sync()
-                }
-                viewTreeObserver.addOnScrollChangedListener {
-                    pullToSyncWrapper.isEnabled = decksLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
-                }
-            }
+        setupPullToSync()
         // Setup the FloatingActionButtons
         floatingActionMenu =
             DeckPickerFloatingActionMenu(this, binding, this).apply {
@@ -603,6 +612,78 @@ open class DeckPicker :
         super.setupBackPressedCallbacks()
     }
 
+    override fun fitsSystemWindows(): Boolean = false
+
+    /** Applied edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge() {
+        fun setRecyclerViewBottomPaddingAbove(target: View) {
+            val recyclerView = deckPickerBinding.decks
+            if (recyclerView.height == 0 || target.height == 0) return
+            val bottom = recyclerView.locationInWindow().y + recyclerView.height
+            val topOfTarget = (target.layoutParams as? MarginLayoutParams)?.topMargin ?: 0
+            recyclerView.updatePadding(
+                bottom = (bottom - target.locationInWindow().y - topOfTarget).coerceAtLeast(0),
+            )
+        }
+
+        deckPickerBinding.decksFadeWrapper.setup(window)
+        deckPickerBinding.decksFadeWrapper.anchorView = deckPickerBinding.reviewSummaryTextView
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { toolbar, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            toolbar.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
+        }
+        // Bottom padding is used. wrap_content meant margin wasn't viable
+        ViewCompat.setOnApplyWindowInsetsListener(deckPickerBinding.root) { deckPickerInclude, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            // BottomFadeFrameLayout handles contrast for bottom nav; let the system draw
+            // its own scrim when the nav bar is on the side (no manual fade applies there)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val nav = insets.getInsets(navigationBars())
+                window.isNavigationBarContrastEnforced = nav.left > 0 || nav.right > 0
+            }
+            deckPickerInclude.updatePadding(
+                left = bars.left,
+                right = if (fragmented) 0 else bars.right,
+            )
+            deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = bars.bottom)
+
+            // hack for Roborazzi screenshot tests
+            val fabBottomOffset = if (isRobolectric) 12.dp.toPx(this) else -12.dp.toPx(this)
+            floatingActionButtonBinding.root.updatePadding(bottom = bars.bottom + fabBottomOffset)
+
+            setRecyclerViewBottomPaddingAbove(floatingActionButtonBinding.fabMain)
+            insets
+        }
+        floatingActionButtonBinding.fabMain.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
+            setRecyclerViewBottomPaddingAbove(v)
+        }
+        if (fragmented) {
+            val studyoptionsView = binding.studyoptionsFragment ?: return
+            ViewCompat.setOnApplyWindowInsetsListener(studyoptionsView) { studyOptions, insets ->
+                val bars = insets.getInsets(systemBars() or displayCutout())
+                studyOptions.updatePadding(right = bars.right, bottom = bars.bottom)
+                insets
+            }
+        }
+    }
+
+    private fun setupPullToSync() {
+        pullToSyncWrapper =
+            deckPickerBinding.pullToSyncWrapper.apply {
+                setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
+                setOnRefreshListener {
+                    Timber.i("Pull to Sync: Syncing")
+                    pullToSyncWrapper.isRefreshing = false
+                    sync()
+                }
+            }
+        // Only allow pull-to-sync when the deck list is scrolled to the top.
+        deckPickerBinding.decks.doOnScrolled { _, _ ->
+            pullToSyncWrapper.isEnabled = decksLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+        }
+    }
+
     @Suppress("UNUSED_PARAMETER")
     private fun setupFlows() {
         fun onDeckDeleted(result: DeckDeletionResult) {
@@ -652,7 +733,7 @@ open class DeckPicker :
             deckPickerBinding.reviewSummaryTextView.text = studiedToday
             // Adjust bottom margin of fabLinearLayout based on reviewSummaryTextView height
             deckPickerBinding.reviewSummaryTextView.doOnLayout { view ->
-                val layoutParams = floatingActionButtonBinding.fabLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                val layoutParams = floatingActionButtonBinding.fabLinearLayout.layoutParams as MarginLayoutParams
                 layoutParams.setMargins(0, 0, 0, view.height / 2)
                 floatingActionButtonBinding.fabLinearLayout.layoutParams = layoutParams
             }
@@ -2022,7 +2103,12 @@ open class DeckPicker :
         launchCatchingTask {
             val currentName = withCol { decks.name(did) }
             val createDeckDialog =
-                CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
+                CreateDeckDialog(
+                    context = this@DeckPicker,
+                    title = getString(R.string.rename_deck),
+                    deckDialogType = CreateDeckDialog.DeckDialogType.RENAME_DECK,
+                    parentId = null,
+                )
             createDeckDialog.deckName = currentName
             createDeckDialog.onNewDeckCreated = {
                 dismissAllDialogFragments()
@@ -2040,7 +2126,13 @@ open class DeckPicker :
      * @see CreateDeckDialog
      */
     fun showCreateDeckDialog() {
-        val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+        val createDeckDialog =
+            CreateDeckDialog(
+                context = this@DeckPicker,
+                title = TR.sentenceCase.createDeck,
+                deckDialogType = CreateDeckDialog.DeckDialogType.DECK,
+                parentId = null,
+            )
         createDeckDialog.onNewDeckCreated = {
             updateDeckList()
             invalidateOptionsMenu()
@@ -2092,7 +2184,13 @@ open class DeckPicker :
     }
 
     private fun createSubDeckDialog(did: DeckId) {
-        val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did)
+        val createDeckDialog =
+            CreateDeckDialog(
+                context = this@DeckPicker,
+                title = getString(R.string.create_subdeck),
+                deckDialogType = CreateDeckDialog.DeckDialogType.SUB_DECK,
+                parentId = did,
+            )
         createDeckDialog.onNewDeckCreated = {
             // a deck was created
             dismissAllDialogFragments()
@@ -2139,7 +2237,7 @@ open class DeckPicker :
                     shortcut("S", Translations::decksStudyDeck),
                     shortcut("T", R.string.open_statistics),
                     shortcut("C") { this.sentenceCase.checkDatabase },
-                    shortcut("D", R.string.new_deck),
+                    shortcut("D") { sentenceCase.createDeck },
                     shortcut("F", R.string.new_dynamic_deck),
                     if (fragmented) shortcut("DEL") { this.sentenceCase.deleteDeck } else null,
                     if (fragmented) shortcut("Shift+DEL", R.string.delete_deck_without_confirmation) else null,
