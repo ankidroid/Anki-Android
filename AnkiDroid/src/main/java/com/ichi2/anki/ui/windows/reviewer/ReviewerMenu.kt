@@ -22,9 +22,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuView
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.menu
 import com.ichi2.anki.utils.ext.removeSubMenu
@@ -56,7 +58,7 @@ fun ReviewerMenuView.setup(
                     markItem.setTitle(R.string.menu_unmark_note)
                 } else {
                     markItem.setPaddedIcon(context, R.drawable.ic_star_border_white)
-                    markItem.setTitle(R.string.menu_mark_note)
+                    markItem.title = with(context) { TR.sentenceCase.markNote }
                 }
             }
     }
@@ -84,16 +86,16 @@ fun ReviewerMenuView.setup(
         suspendFlow.collectLatestIn(lifecycle.coroutineScope) { canSuspendNote ->
             if (canSuspendNote) {
                 if (suspendItem.hasSubMenu()) return@collectLatestIn
-                suspendItem.setTitle(ViewerAction.SUSPEND_MENU.titleRes)
+                suspendItem.title = ViewerAction.SUSPEND_MENU.title(context)
                 val submenu =
                     SubMenuBuilder(context, suspendItem.menu, suspendItem).apply {
-                        add(Menu.NONE, ViewerAction.SUSPEND_NOTE.menuId, Menu.NONE, ViewerAction.SUSPEND_NOTE.titleRes)
-                        add(Menu.NONE, ViewerAction.SUSPEND_CARD.menuId, Menu.NONE, ViewerAction.SUSPEND_CARD.titleRes)
+                        add(Menu.NONE, ViewerAction.SUSPEND_NOTE.menuId, Menu.NONE, ViewerAction.SUSPEND_NOTE.title(context))
+                        add(Menu.NONE, ViewerAction.SUSPEND_CARD.menuId, Menu.NONE, ViewerAction.SUSPEND_CARD.title(context))
                     }
                 suspendItem.setSubMenu(submenu)
             } else {
                 suspendItem.removeSubMenu()
-                suspendItem.setTitle(ViewerAction.SUSPEND_CARD.titleRes)
+                suspendItem.title = ViewerAction.SUSPEND_CARD.title(context)
             }
         }
     }
@@ -103,16 +105,16 @@ fun ReviewerMenuView.setup(
         buryFlow.collectLatestIn(lifecycle.coroutineScope) { canBuryNote ->
             if (canBuryNote) {
                 if (buryItem.hasSubMenu()) return@collectLatestIn
-                buryItem.setTitle(ViewerAction.BURY_MENU.titleRes)
+                buryItem.title = ViewerAction.BURY_MENU.title(context)
                 val submenu =
                     SubMenuBuilder(context, buryItem.menu, buryItem).apply {
-                        add(Menu.NONE, ViewerAction.BURY_NOTE.menuId, Menu.NONE, ViewerAction.BURY_NOTE.titleRes)
-                        add(Menu.NONE, ViewerAction.BURY_CARD.menuId, Menu.NONE, ViewerAction.BURY_CARD.titleRes)
+                        add(Menu.NONE, ViewerAction.BURY_NOTE.menuId, Menu.NONE, ViewerAction.BURY_NOTE.title(context))
+                        add(Menu.NONE, ViewerAction.BURY_CARD.menuId, Menu.NONE, ViewerAction.BURY_CARD.title(context))
                     }
                 buryItem.setSubMenu(submenu)
             } else {
                 buryItem.removeSubMenu()
-                buryItem.setTitle(ViewerAction.BURY_CARD.titleRes)
+                buryItem.title = ViewerAction.BURY_CARD.title(context)
             }
         }
     }

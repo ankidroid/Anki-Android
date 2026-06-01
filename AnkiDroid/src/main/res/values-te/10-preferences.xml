@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">నిలిపివేయబడింది</string>
@@ -129,7 +108,6 @@
     <string name="tts_summ">ధ్వని ఫైల్ చేర్చబడకపోతే ప్రశ్న మరియు సమాధానాన్ని చదవండి</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">మీడియా సమకాలీకరణలో పొందండి</string>
-    <string name="sync_account" maxLength="41">AnkiWeb ఖాతా</string>
     <string name="sync_account_summ_logged_out">లాగిన్ చేయలేదు</string>
     <string name="automatic_sync_choice" maxLength="41">స్వయంచాలక సమకాలీకరణ</string>
     <string name="automatic_sync_choice_summ">గత సమకాలీకరణ 10         నిముషాల కంటే ఎక్కువగా ఉంటే అనువర్తనం ప్రారంభించండి / నిష్క్రమణలో స్వయంచాలకంగా సమకాలీకరించండి.</string>
@@ -157,8 +135,6 @@
     <string name="select_locale_title">భాషను ఎంచుకోండి</string>
     <string name="software_render" maxLength="41">హార్డ్‌వేర్ రెండర్ కార్డ్‌ను నిలిపివేయండి</string>
     <string name="software_render_summ">హార్డ్‌వేర్ రెండర్ వేగవంతమైనది కానీ సమస్యలు ఉండవచ్చు, ముఖ్యంగా Android 8/8.1లో. మీరు కార్డ్ రివ్యూ యూజర్ ఇంటర్‌ఫేస్ భాగాలను చూడలేకపోతే, ఈ సెట్టింగ్‌ని ప్రయత్నించండి.</string>
-    <string name="safe_display" maxLength="41">సురక్షిత ప్రదర్శన మోడ్</string>
-    <string name="safe_display_summ">అన్ని యానిమేషన్‌లను నిలిపివేయండి మరియు కార్డ్‌లను గీయడానికి సురక్షితమైన పద్ధతిని ఉపయోగించండి. ఇ-ఇంక్ పరికరాలకు ఇది అవసరం కావచ్చు.</string>
     <string name="disable_extended_text_ui" maxLength="41">సింగిల్-ఫీల్డ్ సవరణ మోడ్‌ను నిలిపివేయండి</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">ల్యాండ్‌స్కేప్ మోడ్‌లో ఉన్నప్పుడు \'క్లోజ్ డిలీట్\' కాంటెక్స్ట్ మెనుని ప్రారంభిస్తుంది.</string>
@@ -172,6 +148,8 @@
     <string name="show_estimates_summ">సమాధానం బటన్లపై తదుపరి సమీక్ష సమయం చూపించు</string>
     <string name="show_large_answer_buttons" maxLength="41">పెద్ద జవాబు బటన్‌లను చూపండి</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">ఎగువ పట్టీని చూపు</string>
     <string name="show_top_bar_summary">కార్డ్ గణనలను చూపండి, టైమర్‌కు సమాధానం ఇవ్వండి, ఫ్లాగ్ చేయండి మరియు ఎగువ బార్‌లో గుర్తు పెట్టండి</string>
     <string name="show_progress" maxLength="41">మిగిలిన చూపు</string>

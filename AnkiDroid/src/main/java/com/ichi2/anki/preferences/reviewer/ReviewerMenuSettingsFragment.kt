@@ -59,7 +59,7 @@ class ReviewerMenuSettingsFragment :
             listOf(ReviewerMenuSettingsRecyclerItem.DisplayType(displayType)) +
                 menuItems.getValue(displayType).map { ReviewerMenuSettingsRecyclerItem.Action(it) }
 
-        val recyclerViewItems = MenuDisplayType.entries.flatMap { section(it) }
+        val recyclerViewItems = MenuDisplayType.entries.flatMap { section(it) }.toMutableList()
 
         val callback = ReviewerMenuSettingsTouchHelperCallback(recyclerViewItems)
         callback.setOnClearViewListener(this)
@@ -107,7 +107,8 @@ class ReviewerMenuSettingsFragment :
             disabledActions = disabledActions,
         )
 
-        lifecycleScope.launch {
+        if (view == null) return
+        viewLifecycleOwner.lifecycleScope.launch {
             val menu = binding.reviewerMenuView
             menu.clear()
             menu.addActions(alwaysShowActions, menuOnlyActions)

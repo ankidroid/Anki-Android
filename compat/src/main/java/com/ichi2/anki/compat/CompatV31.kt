@@ -1,21 +1,10 @@
-/*
- *  Copyright (c) 2021 Mike Hardy <mike@mikehardy.net>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Mike Hardy <mike@mikehardy.net>
+
 package com.ichi2.anki.compat
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.media.MediaRecorder
 import android.os.VibrationEffect
 import android.os.VibratorManager
@@ -24,7 +13,7 @@ import kotlin.time.Duration
 
 /** Implementation of [Compat] for SDK level 31  */
 @RequiresApi(31)
-open class CompatV31 : CompatV29() {
+open class CompatV31 : CompatV30() {
     override fun vibrate(
         context: Context,
         duration: Duration,
@@ -37,4 +26,6 @@ open class CompatV31 : CompatV29() {
     }
 
     override fun getMediaRecorder(context: Context): MediaRecorder = MediaRecorder(context)
+
+    override val webpLossyFormat: Bitmap.CompressFormat = Bitmap.CompressFormat.WEBP_LOSSY
 }

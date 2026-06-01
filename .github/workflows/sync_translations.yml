@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 50
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
           ref: 'main'
@@ -45,7 +45,7 @@ jobs:
 
       - name: Calculate seconds passed
         id: calc_time
-        uses: actions/github-script@v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const lastRun = new Date(process.env.LATEST_RUN);
@@ -58,7 +58,7 @@ jobs:
         if: steps.calc_time.outputs.time_left > 0
         run: sleep ${{ steps.calc_time.outputs.time_left }}
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: 20
       
@@ -88,28 +88,22 @@ jobs:
           cd ./tools/localization
           yarn start update
         
-      - name: Commit changes
-        run: |
-          git add docs/marketing/localized_description AnkiDroid/src/main/res
-          git commit -am 'Updated strings from Crowdin'
-          git push --set-upstream origin +i18n_sync
-          echo "The results of the sync are on the i18n_sync branch, PR them from there for merge."
-          echo "https://github.com/ankidroid/Anki-Android/compare/i18n_sync?expand=1"
-
-      - name: Check if there are strings changes
+      - name: Check for changes and handle results
         id: tr_check
         run: |
-          git checkout i18n_sync
-          COMMITS_COUNT=`git rev-list --count HEAD ^main`
-          if [ "$COMMITS_COUNT" -gt 0 ]; then
-            echo "HAS_CHANGES=true" >> $GITHUB_OUTPUT
-          else
+          git add docs/marketing/localized_description AnkiDroid/src/main/res
+          if git diff --cached --quiet; then
             echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
+            echo "Translation Sync Result: No new translation found on Crowdin. No Pull Request necessary" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "HAS_CHANGES=true" >> $GITHUB_OUTPUT
+            git commit -m 'Updated strings from Crowdin'
+            git push --set-upstream origin +i18n_sync
           fi
 
       - name: Create PR for strings changes if needed
-        if: ${{ steps.tr_check.outputs.HAS_CHANGES }}
-        uses: actions/github-script@v9
+        if: steps.tr_check.outputs.HAS_CHANGES == 'true'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           github-token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
           script: |

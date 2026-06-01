@@ -39,12 +39,13 @@ import com.ichi2.anki.browser.toUserSpannable
 import com.ichi2.anki.databinding.FragmentStandardSearchBinding
 import com.ichi2.anki.databinding.ViewSavedSearchItemBinding
 import com.ichi2.anki.databinding.ViewSearchHistoryItemBinding
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.ManageSavedSearchAction
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
 import com.ichi2.anki.dialogs.registerSaveSearchHandler
 import com.ichi2.anki.dialogs.registerSavedSearchActionHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -52,6 +53,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -62,7 +64,6 @@ import timber.log.Timber
 
 class StandardSearchFragment :
     Fragment(R.layout.fragment_standard_search),
-    DeckSelectionDialog.DeckSelectionListener,
     TagsDialogListener {
     @VisibleForTesting
     val binding by viewBinding(FragmentStandardSearchBinding::bind)
@@ -100,6 +101,8 @@ class StandardSearchFragment :
 
         binding.toggleAdvancedSearch.setOnClickListener { viewModel.toggleAdvancedSearch() }
 
+        registerDeckSelectedHandler(action = ::onDeckSelected)
+
         setupChips()
         setupSearchHistory()
         setupSavedSearches()
@@ -108,18 +111,8 @@ class StandardSearchFragment :
     // TODO: multi-selection handling for all chips
     private fun setupChips() {
         binding.decksChip.setOnClickListener {
-            launchCatchingTask {
-                // TODO: see onDeckSelected
-                val decks = listOf(SelectableDeck.AllDecks) + SelectableDeck.fromCollection(includeFiltered = true)
-                val dialog =
-                    DeckSelectionDialog.newInstance(
-                        title = getString(R.string.search_deck),
-                        summaryMessage = null,
-                        keepRestoreDefaultButton = false,
-                        decks = decks,
-                    )
-                dialog.show(childFragmentManager, "selectDeck")
-            }
+            // TODO: see onDeckSelected
+            startDeckSelection(title = getString(R.string.search_deck), asChild = true, skipEmptyDefault = true)
         }
 
         binding.tagsChip.setOnClickListener {
@@ -153,7 +146,7 @@ class StandardSearchFragment :
             binding.cardStateChip.hasCheckedBackground = it.cardStates.any()
             binding.flagsChip.hasCheckedBackground = it.flags.any()
 
-            binding.decksChip.text = it.decks.firstOrNull()?.name ?: getString(R.string.card_browser_all_decks)
+            binding.decksChip.text = it.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
             binding.tagsChip.text = formatChipDescription(it.tags, emptyValue = "Tags")
             binding.cardStateChip.text = formatChipDescription(it.cardStates.map { it.label }, emptyValue = "Card state")
             binding.cardStateChip.chipIcon =
@@ -185,7 +178,7 @@ class StandardSearchFragment :
         }
     }
 
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    private fun onDeckSelected(deck: SelectableDeck?) {
         viewModel.setDecksFilter(deck?.toDeckNameIdList() ?: return)
     }
 

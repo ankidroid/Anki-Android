@@ -21,8 +21,10 @@ import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.utils.append
+import com.ichi2.anki.preferences.HeaderFragment
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrsFromXml
+import com.ichi2.anki.preferences.PreferenceTestUtils.resValue
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.settings.enums.PrefEnum
 import com.ichi2.testutils.EmptyApplication
@@ -53,14 +55,18 @@ import kotlin.test.assertEquals
 class PrefsRobolectricTest : RobolectricTest() {
     private fun getKeysAndDefaultValues(): MutableMap<String, Any?> {
         val sharedPrefsSpy = spy(SPMockBuilder().createSharedPreferences())
-        val mockResources = mockk<Resources>()
-        every { mockResources.getString(any()) } answers { invocation.args[0].toString() }
-        val prefs = PrefsRepository(sharedPrefsSpy, mockResources)
+        val prefs = PrefsRepository(sharedPrefsSpy, targetContext.resources)
 
         val keysAndDefaultValues: MutableMap<String, Any?> = mutableMapOf()
         doAnswer { invocation ->
             val key = invocation.arguments[0] as String
-            keysAndDefaultValues[key] = invocation.arguments[1]
+            val value = invocation.arguments[1]
+            keysAndDefaultValues[key] =
+                if (value is String) {
+                    value.resValue()
+                } else {
+                    value
+                }
             invocation.callRealMethod()
         }.run {
             whenever(sharedPrefsSpy).getBoolean(any(), any())
@@ -84,11 +90,12 @@ class PrefsRobolectricTest : RobolectricTest() {
             PreferenceTestUtils
                 .getAllPreferencesFragments(targetContext)
                 .asSequence()
+                .filter { it !is HeaderFragment }
                 .filterIsInstance<SettingsFragment>()
                 .map { it.preferenceResource }
                 .flatMap { getAttrsFromXml(targetContext, it, listOf("defaultValue", "key")) }
                 .filter { it["key"] != null }
-                .associate { PreferenceTestUtils.attrValueToString(it["key"]!!, targetContext) to it["defaultValue"] }
+                .associate { it["key"]!!.resValue() to it["defaultValue"]?.resValue().toString() }
 
         for ((key, defaultValue) in keysAndDefaultValues.entries) {
             if (key !in prefs || key in developerOptionsKeys) continue
@@ -105,7 +112,7 @@ class PrefsRobolectricTest : RobolectricTest() {
         val keys = mutableListOf<String>()
 
         doAnswer { invocation ->
-            val key = PreferenceTestUtils.attrValueToString("@${invocation.arguments[0]}", targetContext)
+            val key = "@${invocation.arguments[0]}".resValue()
             keys.append(key)
             invocation.callRealMethod()
         }.run {
@@ -148,7 +155,7 @@ class PrefsRobolectricTest : RobolectricTest() {
                 .flatMap { getAttrsFromXml(targetContext, it, listOf("key", "entryValues")) }
                 .filter { it["entryValues"] != null }
                 .associate {
-                    PreferenceTestUtils.attrValueToString(it["key"]!!, targetContext) to
+                    it["key"]!!.resValue() to
                         PreferenceTestUtils.attrToStringArray(it["entryValues"]!!, targetContext).toList()
                 }
 

@@ -50,7 +50,7 @@ import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ScheduleReminders
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -135,6 +135,9 @@ class StudyOptionsFragment :
         menuInflater: MenuInflater,
     ) {
         menuInflater.inflate(R.menu.study_options_fragment, menu)
+        menu.findItem(R.id.action_rebuild)?.title = TR.actionsRebuild()
+        menu.findItem(R.id.action_custom_study)?.title = TR.sentenceCase.customStudy
+        menu.findItem(R.id.action_unbury)?.title = TR.studyingUnbury()
     }
 
     override fun onResume() {
@@ -215,7 +218,7 @@ class StudyOptionsFragment :
             R.id.action_schedule_reminders -> {
                 Timber.i("StudyOptionsFragment:: schedule reminders button pressed")
                 val intent =
-                    ScheduleReminders.getIntent(
+                    ScheduleRemindersFragment.getIntent(
                         requireContext(),
                         ReviewReminderScope.DeckSpecific(col!!.decks.current().id),
                     )
@@ -327,7 +330,7 @@ class StudyOptionsFragment :
                 result.resultCode,
             )
             activity?.invalidateMenu()
-            if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+            if (result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
                 closeStudyOptions(result.resultCode)
                 return@registerForActivityResult
             }

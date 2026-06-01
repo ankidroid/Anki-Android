@@ -29,6 +29,9 @@ import androidx.core.content.IntentCompat
 import androidx.work.WorkManager
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
+import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
+import com.ichi2.anki.common.permissions.isExternalStorageManagerCompat
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
@@ -48,8 +51,6 @@ import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NetworkUtils
-import com.ichi2.utils.Permissions
-import com.ichi2.utils.Permissions.hasLegacyStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -88,12 +89,12 @@ class IntentHandler : AbstractIntentHandler() {
         when (launchType) {
             LaunchType.FILE_IMPORT ->
                 runIfStoragePermissions {
-                    handleFileImport(fileIntent, reloadIntent, action)
+                    handleFileImport(intent, reloadIntent, action)
                     finish()
                 }
             LaunchType.TEXT_IMPORT ->
                 runIfStoragePermissions {
-                    onSelectedCsvForImport(fileIntent)
+                    onSelectedCsvForImport(intent)
                     finish()
                 }
             LaunchType.IMAGE_IMPORT ->
@@ -127,15 +128,6 @@ class IntentHandler : AbstractIntentHandler() {
             failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }
-
-    private val fileIntent: Intent
-        get() {
-            return if (intent.action == Intent.ACTION_SEND) {
-                IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Intent::class.java) ?: intent
-            } else {
-                intent
-            }
-        }
 
     /**
      * Execute the runnable if one of the two following conditions are satisfied:
@@ -365,7 +357,7 @@ class IntentHandler : AbstractIntentHandler() {
             val granted =
                 !ScopedStorageService.isLegacyStorage(context) ||
                     hasLegacyStorageAccessPermission(context) ||
-                    Permissions.isExternalStorageManagerCompat()
+                    isExternalStorageManagerCompat()
 
             if (!granted && showToast) {
                 showThemedToast(context, context.getString(R.string.intent_handler_failed_no_storage_permission), false)

@@ -43,12 +43,12 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.LegacyNotifications
+import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ScheduleReminders
-import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
+import com.ichi2.anki.utils.AnimUtils
 import com.ichi2.anki.utils.isWindowCompact
-import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
@@ -123,7 +123,7 @@ class PreferencesFragment :
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         if (result.key == getString(R.string.pref_review_reminders_screen_key)) {
             Timber.i("Preferences:: edit review reminders button pressed")
-            val intent = ScheduleReminders.getIntent(requireContext(), ReviewReminderScope.Global)
+            val intent = ScheduleRemindersFragment.getIntent(requireContext(), ReviewReminderScope.Global)
             startActivity(intent)
             return
         }
@@ -166,7 +166,7 @@ class PreferencesFragment :
                     view.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.apply {
                         updateLayoutParams<AppBarLayout.LayoutParams> {
                             scrollFlags = 0
-                            val resId = Themes.getResFromAttr(requireContext(), android.R.attr.actionBarSize)
+                            val resId = getResFromAttr(requireContext(), android.R.attr.actionBarSize)
                             height = resources.getDimensionPixelSize(resId)
                         }
                         isTitleEnabled = false
@@ -209,7 +209,7 @@ class PreferencesFragment :
     }
 
     private fun setFadeTransition(fragmentTransaction: FragmentTransaction) {
-        if (!sharedPrefs().getBoolean("safeDisplay", false)) {
+        if (AnimUtils.areAnimationsEnabled(requireContext())) {
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         }
     }
@@ -252,7 +252,7 @@ class PreferencesActivity :
     companion object {
         fun getIntent(
             context: Context,
-            initialFragment: KClass<out SettingsFragment>? = null,
+            initialFragment: KClass<out Fragment>? = null,
         ): Intent {
             val arguments = bundleOf(INITIAL_FRAGMENT_EXTRA to initialFragment?.jvmName)
             return Intent(context, PreferencesActivity::class.java).apply {

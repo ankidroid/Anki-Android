@@ -38,13 +38,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.setBackgroundTint
-import com.ichi2.themes.Themes
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.dp
 import dev.androidbroadcast.vbpd.viewBinding
@@ -110,14 +110,14 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
                     SummaryStatus.Warning ->
                         Triple(
                             R.drawable.ic_warning_24,
-                            Themes.getColorFromAttr(context, R.attr.reminderTroubleshootingWarning),
+                            getColorFromAttr(context, R.attr.reminderTroubleshootingWarning),
                             "Reminders may not work correctly.",
                         )
 
                     SummaryStatus.Ok ->
                         Triple(
                             R.drawable.ic_check_circle_24,
-                            Themes.getColorFromAttr(context, R.attr.reminderTroubleshootingOk),
+                            getColorFromAttr(context, R.attr.reminderTroubleshootingOk),
                             "Your reminders should work as expected.",
                         )
                 }
@@ -155,17 +155,15 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
  * Shared factory for [ReminderTroubleshootingViewModel].
  *
  * Lives outside the ViewModel itself to keep the ViewModel free of `Context`. Both
- * [ScheduleReminders] and [ReminderTroubleshootingFragment] use this with
+ * [ScheduleRemindersFragment] and [ReminderTroubleshootingFragment] use this with
  * `by activityViewModels { … }` so they observe a single VM + repository instance.
  */
-internal fun reminderTroubleshootingViewModelFactory(context: Context): ViewModelProvider.Factory {
-    val appContext = context.applicationContext
-    return viewModelFactory {
+internal fun reminderTroubleshootingViewModelFactory(context: Context): ViewModelProvider.Factory =
+    viewModelFactory {
         initializer {
-            ReminderTroubleshootingViewModel(ReminderTroubleshootingRepository(appContext))
+            ReminderTroubleshootingViewModel(ReminderTroubleshootingRepository(context))
         }
     }
-}
 
 private class TroubleshootingChecksAdapter(
     private val getResolveAction: (TroubleshootingCheck) -> ResolveCheckAction?,
@@ -315,8 +313,8 @@ private fun CheckResult.iconRes(): Int =
 
 private fun CheckResult.tintColor(context: Context): Int =
     when (this) {
-        is CheckResult.Passed -> Themes.getColorFromAttr(context, R.attr.reminderTroubleshootingOk)
-        is CheckResult.Warning -> Themes.getColorFromAttr(context, R.attr.reminderTroubleshootingWarning)
+        is CheckResult.Passed -> getColorFromAttr(context, R.attr.reminderTroubleshootingOk)
+        is CheckResult.Warning -> getColorFromAttr(context, R.attr.reminderTroubleshootingWarning)
         is CheckResult.Failed -> context.getColor(android.R.color.holo_red_dark)
         is CheckResult.Loading -> context.getColor(android.R.color.darker_gray)
         is CheckResult.Unavailable -> context.getColor(android.R.color.darker_gray)

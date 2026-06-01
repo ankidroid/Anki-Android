@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks" maxLength="28" comment="Open the Deck Picker">Колоди</string>
@@ -96,7 +75,6 @@
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Скасувати штрих</string>
     <string name="move_all_to_deck">Перемістити все до колоди</string>
-    <string name="unbury" maxLength="28">Повернути</string>
     <string name="rename_deck" maxLength="28">Перейменувати колоду</string>
     <string name="create_shortcut">Створити значок</string>
     <string name="browse_cards">Переглянути картки</string>
@@ -105,25 +83,15 @@
     <string name="menu_add_note" maxLength="28">Додати запис</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронізувати обліковий запис</string>
     <string name="menu_dismiss_note" maxLength="41">Сховати / видалити</string>
-    <string name="menu_bury_card" maxLength="28">Відкласти картку</string>
-    <string name="menu_bury_note" maxLength="28">Відкласти запис</string>
-    <string name="menu_suspend_card" maxLength="28">Виключити картку</string>
-    <string name="menu_suspend_note" maxLength="28">Призупинити запис</string>
-    <string name="menu_bury" maxLength="28">Відкласти</string>
-    <string name="menu_suspend" maxLength="28">Призупинити</string>
-    <string name="menu_delete_note" maxLength="28">Видалити запис</string>
-    <string name="menu_flag" maxLength="41">Прапорець</string>
     <string name="rename_flag">Перейменувати прапорці</string>
     <string name="menu_flag_card" maxLength="28">Додати прапорець</string>
     <string name="menu_edit_tags" maxLength="28">Редагувати теги</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_search" maxLength="28">Пошук у %1$s</string>
-    <string name="menu_mark_note" maxLength="28">Позначити запис</string>
     <string name="menu_unmark_note">Зняти позначку запису</string>
     <string name="menu_enable_voice_playback" maxLength="28">Увімкнути запис голосу</string>
     <string name="menu_disable_voice_playback">Вимкнути запис голосу</string>
     <string name="menu_create_backup" maxLength="28">Створити резервну копію</string>
-    <string name="new_deck">Створити колоду</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
     <string name="directory_inaccessible">Тека AnkiDroid недоступна</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -132,7 +100,6 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Щоб продовжити, надайте AnkiDroid дозвіл на доступ до сховища</string>
     <string name="rebuild_filtered_deck">Перебудова фільтрованої колоди&#8230;</string>
-    <string name="rebuild_cram_label" maxLength="28">Перебудувати</string>
     <string name="empty_cram_label" maxLength="28">Спорожнити</string>
     <string name="create_subdeck">Створити підколоду</string>
     <string name="empty_filtered_deck">Очищення фільтрованої колоди&#8230;</string>
@@ -153,10 +120,6 @@
     <string name="export_collection">Експортувати колекцію</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типи карток</string>
-    <string name="card_template_editor_front">Шаблон передньої сторони</string>
-    <string name="card_template_editor_back">Шаблон задньої сторони</string>
-    <string name="card_template_editor_styling" maxLength="28">Стиль</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Вигляд переглядача карток</string>
     <string name="card_template_editor_deck_override" maxLength="28">Перевизначення колоди</string>
     <string name="card_template_editor_insert_field" maxLength="28">Вставити поле</string>
     <string name="card_template_editor_select_field">Виберіть поле</string>
@@ -175,11 +138,6 @@
     </plurals>
     <string name="card_template_editor_save_error">Не вдалося зберегти зміни шаблону картки: %s</string>
     <string name="template_for_current_card_deleted">Тип картки для поточної картки було видалено.</string>
-    <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Зовнішній вигляд переглядача</string>
-    <!-- card Info -->
-    <string name="card_info_title" maxLength="28">Дані картки</string>
-    <string name="previous_card_info_title" maxLength="28">Дані попередньої картки</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читати й записувати в базу даних AnkiDroid</string>
     <string name="read_write_permission_description">доступ до наявних карток, колод, записів та їх типів, а також створення нових</string>

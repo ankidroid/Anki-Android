@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+
 package com.ichi2.anki.compat
 
 import android.annotation.SuppressLint
@@ -24,6 +12,8 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
 import android.content.pm.ResolveInfo
+import android.graphics.BlendMode
+import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyCharacterMap.deviceHasKey
@@ -53,6 +43,7 @@ class CompatHelper private constructor() {
             sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
             sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
             sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
+            sdkVersion >= Build.VERSION_CODES.R -> CompatV30()
             sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
             sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
             else -> BaseCompat()
@@ -222,3 +213,6 @@ inline fun <reified T : Serializable> Bundle.requireSerializableCompat(key: Stri
     requireNotNull(compat.getSerializable(this, key, T::class.java)) {
         "key: '$key' not found or null"
     }
+
+/** Configures this [Paint] to use [BlendMode.DST_OUT]. */
+fun Paint.setDstOutBlendCompat() = compat.setDstOutBlend(this)

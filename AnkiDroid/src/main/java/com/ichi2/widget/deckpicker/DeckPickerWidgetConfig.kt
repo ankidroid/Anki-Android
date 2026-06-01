@@ -34,15 +34,16 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.ext.unregisterReceiverSilently
 import com.ichi2.anki.databinding.WidgetDeckPickerConfigBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.isDefaultDeckEmpty
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -65,7 +66,6 @@ import timber.log.Timber
  */
 class DeckPickerWidgetConfig :
     AnkiActivity(R.layout.widget_deck_picker_config),
-    DeckSelectionListener,
     BaseSnackbarBuilderProvider {
     private val binding by viewBinding(WidgetDeckPickerConfigBinding::bind)
 
@@ -102,14 +102,17 @@ class DeckPickerWidgetConfig :
             return
         }
 
-        // Check if the collection is empty before proceeding and if the collection is empty, show a toast instead of the configuration view.
+        registerDeckSelectedHandler(action = ::onDeckSelected)
+
+        // The widget can only be configured against an existing deck. If the collection has
+        // none, show the same message the widget itself displays and close the config screen.
         this.initTask =
             lifecycleScope.launch {
                 if (isCollectionEmpty()) {
                     Timber.w("Closing: Collection is empty")
                     showThemedToast(
                         this@DeckPickerWidgetConfig,
-                        R.string.app_not_initialized_new,
+                        R.string.empty_collection_state_in_widget,
                         false,
                     )
                     finish()
@@ -135,8 +138,13 @@ class DeckPickerWidgetConfig :
 
     private fun initializeUIComponents() {
         deckAdapter =
-            WidgetConfigScreenAdapter { deck, position ->
+            WidgetConfigScreenAdapter { deck, _ ->
                 deckAdapter.removeDeck(deck.deckId)
+                // Removal always frees at least one slot, so the FAB is going
+                // to be visible. Show it now (synchronously) so the snackbar
+                // anchors to it instead of the Save button while the async
+                // updateFabVisibility() is still in flight.
+                binding.fabWidgetDeckPicker.isVisible = true
                 showSnackbar(R.string.deck_removed_from_widget)
                 updateViewVisibility()
                 updateFabVisibility()
@@ -155,7 +163,13 @@ class DeckPickerWidgetConfig :
         setupDoneButton()
 
         binding.fabWidgetDeckPicker.setOnClickListener {
-            showDeckSelectionDialog()
+            // TODO previous code filtered the already selected decks, we guard against this for now
+            startDeckSelection(
+                title = getString(R.string.select_decks_title),
+                allowAll = false,
+                skipEmptyDefault = true,
+                allowMultipleSelection = true,
+            )
         }
 
         lifecycleScope.launch { updateViewWithSavedPreferences() }
@@ -214,7 +228,15 @@ class DeckPickerWidgetConfig :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = binding.fabWidgetDeckPicker.takeIf { it.isVisible }
+        // Prefer the FAB so snackbars sit above it. Fall back to the Save button
+        // for the brief window after a removal where the FAB is being un-hidden
+        // asynchronously, so snackbars never overlap the bottom button row.
+        anchorView =
+            when {
+                binding.fabWidgetDeckPicker.isVisible -> binding.fabWidgetDeckPicker
+                binding.submitButton.isVisible -> binding.submitButton
+                else -> null
+            }
     }
 
     /**
@@ -300,39 +322,18 @@ class DeckPickerWidgetConfig :
         }
     }
 
-    /** Displays the deck selection dialog, filtering out already-selected decks. */
-    private fun showDeckSelectionDialog() {
-        lifecycleScope.launch {
-            val decks = fetchDecks().filter { it.deckId !in deckAdapter.deckIds }
-            displayDeckSelectionDialog(decks)
-        }
-    }
-
     /** Returns the list of standard deck. */
     private suspend fun fetchDecks(): List<SelectableDeck.Deck> =
         withContext(Dispatchers.IO) {
             SelectableDeck.fromCollection(includeFiltered = true)
         }
 
-    /** Displays the deck selection dialog with the provided list of decks. */
-    private fun displayDeckSelectionDialog(decks: List<SelectableDeck>) {
-        val dialog =
-            DeckSelectionDialog.newInstance(
-                title = getString(R.string.select_decks_title),
-                summaryMessage = null,
-                keepRestoreDefaultButton = false,
-                decks = decks,
-                isMultiSelect = true,
-            )
-        dialog.show(supportFragmentManager, DECK_SELECTION_DIALOG_TAG)
-    }
-
     private fun dismissDeckSelectionDialog() {
         (supportFragmentManager.findFragmentByTag(DECK_SELECTION_DIALOG_TAG) as? DeckSelectionDialog)?.dismiss()
     }
 
     /** Called when a deck is selected from the deck selection dialog. */
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
             return
         }
