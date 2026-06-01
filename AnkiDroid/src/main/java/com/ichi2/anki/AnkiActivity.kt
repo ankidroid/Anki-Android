@@ -22,7 +22,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -676,7 +675,7 @@ open class AnkiActivity(
         @AttrRes attr: Int,
     ) {
         window.apply {
-            navigationBarColor = Themes.getColorFromAttr(this@AnkiActivity, attr)
+            navigationBarColor = getColorFromAttr(this@AnkiActivity, attr)
             withInsets { isAppearanceLightNavigationBars = Themes.currentTheme !is NightTheme }
         }
     }

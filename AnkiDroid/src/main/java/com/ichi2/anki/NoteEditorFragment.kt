@@ -159,6 +159,7 @@ import com.ichi2.anki.utils.RunOnlyOnce
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
@@ -533,9 +534,11 @@ class NoteEditorFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        requireAnkiActivity().windowInsetsController.isAppearanceLightStatusBars = false
+        withInsets {
+            isAppearanceLightStatusBars = false
+        }
         @Suppress("deprecation", "API35 properly handle edge-to-edge")
-        requireActivity().window.statusBarColor = getColorFromAttr(requireContext(), R.attr.appBarColor)
+        window.statusBarColor = getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
         // Set up toolbar
         toolbar = view.findViewById(R.id.editor_toolbar)
