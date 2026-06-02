@@ -535,6 +535,11 @@
                 />
         </receiver>
 
+        <!-- Copy Sync Error Message to Clipboard -->
+        <receiver
+            android:name="com.ichi2.anki.receiver.CopyToClipboardReceiver"
+            android:exported="false" />
+
         <!-- "Add Note" widget -->
         <receiver
             android:name="com.ichi2.widget.AddNoteWidget"

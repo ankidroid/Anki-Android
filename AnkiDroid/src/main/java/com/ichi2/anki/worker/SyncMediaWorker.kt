@@ -16,7 +16,9 @@
 package com.ichi2.anki.worker
 
 import android.app.Notification
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.core.app.NotificationCompat
@@ -37,9 +39,12 @@ import anki.sync.SyncAuth
 import anki.sync.syncAuth
 import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.anki.receiver.CopyToClipboardReceiver
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
 import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CancellationException
@@ -91,13 +96,18 @@ class SyncMediaWorker(
         } catch (throwable: Throwable) {
             Timber.w(throwable, "SyncMediaWorker failed")
             notify {
-                setContentTitle(CollectionManager.TR.syncMediaFailed())
+                setContentTitle(TR.syncMediaFailed())
                 throwable.localizedMessage?.let { message ->
                     setContentText(message)
                     setStyle(
                         NotificationCompat
                             .BigTextStyle()
                             .bigText(message),
+                    )
+                    addAction(
+                        R.drawable.baseline_content_copy_24,
+                        with(applicationContext) { TR.sentenceCase.copyToClipboard },
+                        getCopyToClipboardIntent(message),
                     )
                 }
             }
@@ -134,7 +144,7 @@ class SyncMediaWorker(
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
         val title = applicationContext.getString(R.string.syncing_media)
-        val cancelTitle = CollectionManager.TR.syncAbortButton()
+        val cancelTitle = TR.syncAbortButton()
         val notification =
             buildNotification {
                 setContentTitle(title)
@@ -148,6 +158,19 @@ class SyncMediaWorker(
         } else {
             ForegroundInfo(NotificationId.SYNC_MEDIA, notification)
         }
+    }
+
+    private fun getCopyToClipboardIntent(text: String): PendingIntent {
+        val intent =
+            Intent(applicationContext, CopyToClipboardReceiver::class.java).apply {
+                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, text)
+            }
+        return PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT,
+        )
     }
 
     private fun notify(notification: Notification) = notificationManager?.notify(NotificationId.SYNC_MEDIA, notification)
@@ -169,7 +192,7 @@ class SyncMediaWorker(
 
     private fun getProgressNotification(progress: CharSequence): Notification {
         val title = applicationContext.getString(R.string.syncing_media)
-        val cancelTitle = CollectionManager.TR.syncAbortButton()
+        val cancelTitle = TR.syncAbortButton()
 
         return buildNotification {
             setContentTitle(title)
