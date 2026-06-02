@@ -68,6 +68,7 @@ import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -2341,16 +2342,69 @@ class NoteEditorFragment :
 
     private fun displayAddToolbarDialog() {
         val v = layoutInflater.inflate(R.layout.dialog_note_editor_toolbar_add_custom_item, null)
-        toolbarDialog.show {
-            title(R.string.add_toolbar_item)
-            setView(v)
-            positiveButton(R.string.dialog_positive_create) {
-                val etIcon = v.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
-                val et = v.findViewById<EditText>(R.id.note_editor_toolbar_before)
-                val et2 = v.findViewById<EditText>(R.id.note_editor_toolbar_after)
-                addToolbarButton(etIcon.text.toString(), et.text.toString(), et2.text.toString())
+
+        val etIcon = v.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
+        val et = v.findViewById<EditText>(R.id.note_editor_toolbar_before)
+        val et2 = v.findViewById<EditText>(R.id.note_editor_toolbar_after)
+
+        val etIconLayout = v.findViewById<TextInputLayout>(R.id.note_editor_toolbar_item_icon_layout)
+        val etLayout = v.findViewById<TextInputLayout>(R.id.note_editor_toolbar_before_layout)
+        val et2Layout = v.findViewById<TextInputLayout>(R.id.note_editor_toolbar_after_layout)
+
+        val dialog =
+            toolbarDialog.show {
+                title(R.string.add_toolbar_item)
+                setView(v)
+                positiveButton(R.string.dialog_positive_create) {
+                    addToolbarButton(etIcon.text.toString(), et.text.toString(), et2.text.toString())
+                }
             }
-        }
+
+        val posButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        posButton.isEnabled = false
+
+        val textWatcher =
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {
+                    posButton.isEnabled =
+                        etIcon.text.toString().isNotEmpty() && (et.text.toString().isNotEmpty() || et2.text.toString().isNotEmpty())
+
+                    if (etIcon.text.toString().isNotEmpty()) {
+                        etIconLayout.isErrorEnabled = false
+                        etIconLayout.error = null
+                    } else {
+                        etIconLayout.error = getString(R.string.note_editor_toolbar_icon_requirement_error)
+                    }
+
+                    if ((et.text.toString().isNotEmpty() || et2.text.toString().isNotEmpty())) {
+                        etLayout.isErrorEnabled = false
+                        etLayout.error = null
+                        et2Layout.isErrorEnabled = false
+                        et2Layout.error = null
+                    } else {
+                        etLayout.error = " "
+                        et2Layout.error = getString(R.string.before_after_text_requirement_error)
+                    }
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {}
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {}
+            }
+
+        etIcon.addTextChangedListener(textWatcher)
+        et.addTextChangedListener(textWatcher)
+        et2.addTextChangedListener(textWatcher)
     }
 
     private fun displayEditToolbarDialog(currentButton: CustomToolbarButton) {

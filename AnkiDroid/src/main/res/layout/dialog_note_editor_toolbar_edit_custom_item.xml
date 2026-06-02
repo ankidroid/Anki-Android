@@ -71,8 +71,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_editor_toolbar_item_icon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/content_vertical_padding"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -85,8 +84,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_editor_toolbar_before"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/content_vertical_padding"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,8 +95,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_editor_toolbar_after"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/content_vertical_padding"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </LinearLayout>
