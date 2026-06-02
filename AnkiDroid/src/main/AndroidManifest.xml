@@ -492,7 +492,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
-            android:name=".SharedDecksActivity"
+            android:name=".shareddeck.SharedDecksActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/download_deck"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />

@@ -14,11 +14,13 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki
+package com.ichi2.anki.shareddeck
 
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.Color.TRANSPARENT
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.CookieManager
@@ -32,8 +34,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
+import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.FileNameAndExtension
@@ -222,7 +227,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
 
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.loadUrl(resources.getString(R.string.shared_decks_url))
@@ -243,11 +248,24 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                         SHARED_DECKS_DOWNLOAD_FRAGMENT,
                     ).addToBackStack(null)
                 }
+                supportActionBar?.title = ""
+                binding.webviewToolbar.setBackgroundColor(TRANSPARENT)
             }
         }
 
         binding.webView.webViewClient = webViewClient
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                // Restore toolbar when returning to the webview
+                supportActionBar?.setTitle(R.string.download_deck)
+
+                val typedValue = TypedValue()
+                theme.resolveAttribute(R.attr.appBarColor, typedValue, true)
+                binding.webviewToolbar.setBackgroundColor(typedValue.data)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

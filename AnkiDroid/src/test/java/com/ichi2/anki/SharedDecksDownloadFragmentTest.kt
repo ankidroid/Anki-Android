@@ -3,7 +3,8 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.SharedDecksDownloadFragment.Companion.getDeckPageUri
+import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment
+import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

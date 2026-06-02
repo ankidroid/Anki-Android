@@ -41,6 +41,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
