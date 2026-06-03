@@ -27,13 +27,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.copyToClipboard
 import timber.log.Timber
@@ -149,7 +149,7 @@ fun View.hideKeyboard() {
  */
 fun FragmentActivity.doOnImeHidden(block: () -> Unit) {
     val view = window.decorView
-    WindowInsetsControllerCompat(window, view).hide(WindowInsetsCompat.Type.ime())
+    withInsets { hide(WindowInsetsCompat.Type.ime()) }
 
     var blockHasRun = false
 
