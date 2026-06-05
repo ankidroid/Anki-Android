@@ -280,11 +280,9 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun handleImageUri() {
-        fun processExternalImage(uri: Uri): Uri? = internalizeUri(uri)?.let { Uri.fromFile(it) }
-
         if (imageUri != null) {
-            val internalUri = imageUri?.let { processExternalImage(it) }
-            handleSelectImageIntent(internalUri)
+            // a content:// or a file:// already in our cache; resolveUriToFile handles both
+            handleSelectImageIntent(imageUri)
         } else {
             handleSelectedImageOptions()
         }
@@ -597,12 +595,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         Timber.i("Loading non-SVG image using WebView")
 
         try {
-            val internalFile = internalizeUri(imageUri)?.takeIf { it.exists() }
+            // read our own cache file directly, internalize anything else
+            val internalFile = (cachedFileOrNull(imageUri) ?: internalizeUri(imageUri))?.takeIf { it.exists() }
             if (internalFile == null) {
-                Timber.w(
-                    "loadImage() unable to internalize image from Uri %s",
-                    imageUri,
-                )
+                Timber.w("loadImage() unable to resolve image from Uri %s", imageUri)
                 showSomethingWentWrong()
                 return
             }
@@ -671,9 +667,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private fun loadSvgFromUri(uri: Uri): String? =
         try {
-            context?.contentResolver?.openInputStreamSafe(uri)?.use { inputStream ->
-                inputStream.convertToString()
-            }
+            // our own cache file reads directly; openInputStreamSafe blocks /data
+            val inputStream =
+                cachedFileOrNull(uri)?.inputStream()
+                    ?: context?.contentResolver?.openInputStreamSafe(uri)
+            inputStream?.use { it.convertToString() }
         } catch (e: Exception) {
             Timber.w(e, "Error reading SVG from URI")
             null
