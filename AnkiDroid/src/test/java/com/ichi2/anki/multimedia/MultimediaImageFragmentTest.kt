@@ -45,6 +45,13 @@ class MultimediaImageFragmentTest : RobolectricTest() {
         }
 
     @Test
+    fun `file uri for a shared image staged in the cache is resolved`() =
+        withImageFragment {
+            val shared = File(targetContext.cacheDir, "PXL_20260527_043648181.jpg")
+            assertThat(resolveUriToFile(Uri.fromFile(shared)), notNullValue())
+        }
+
+    @Test
     fun `a picked file uri is not trusted`() {
         val intent = Intent().setData(Uri.fromFile(File("/storage/emulated/0/secret.txt")))
         assertThat(PickedImage(intent).trustedUri, nullValue())
