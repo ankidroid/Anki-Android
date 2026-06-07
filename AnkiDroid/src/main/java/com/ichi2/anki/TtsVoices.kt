@@ -157,40 +157,84 @@ object TtsVoices {
     }
 
     /**
-     * Populates [availableLocaleData] with the list of available TTS voices
+     * Populates [availableVoices] and [availableLocaleData] with the voices and locales available
+     * across every installed TTS engine (#18737), not just the user's default engine.
      */
     private suspend fun loadTtsVoicesData() {
-        val tts = createTts()
-        if (tts == null) {
+        // A default-engine instance is needed first to enumerate the installed engines
+        val probeTts = createTts()
+        if (probeTts == null) {
             Timber.e("Unable to build list of TTS Voices")
             availableVoices = emptySet()
             availableLocaleData = emptyList()
             return
         }
 
-        // Samsung TextToSpeech engine returns locales with a displayName of "GBR,DEFAULT"/"GBR,f00"
-        // so normalize them before displaying them to users
-        // sample of problematic data: language = "eng", region = "GBR", variant = "f00"
-        try {
-            // TODO: Handle multiple engines
-            val ttsEngine = tts.defaultEngine
-            availableVoices = tts.voices.map { it.toTtsVoice(ttsEngine) }.toSet()
-            availableLocaleData = tts.availableLanguages.map { it.normalize() }
-        } catch (_: Exception) {
-            availableVoices = emptySet()
-            availableLocaleData = emptyList()
-        } finally {
-            tts.shutdown()
+        val enginePackages =
+            try {
+                // `engines` lists every installed engine; include the default defensively
+                (probeTts.engines.map { it.name } + listOfNotNull(probeTts.defaultEngine)).distinct()
+            } catch (e: Exception) {
+                Timber.w(e, "unable to list TTS engines")
+                listOfNotNull(probeTts.defaultEngine)
+            } finally {
+                probeTts.shutdown()
+            }
+
+        val (voices, locales) = loadVoicesFromEngines(enginePackages) { engine -> createTts(engine) }
+        availableVoices = voices
+        availableLocaleData = locales
+    }
+
+    /**
+     * Loads the voices and locales available across the provided [enginePackages].
+     *
+     * Each engine is initialised independently so a single misbehaving engine cannot prevent the
+     * others from being listed.
+     *
+     * @param createTts builds a [TextToSpeech] bound to the provided engine package, or `null` on failure
+     * @return the union of all voices, and the union of all normalized locales, across [enginePackages]
+     */
+    internal suspend fun loadVoicesFromEngines(
+        enginePackages: List<String>,
+        createTts: suspend (engine: String) -> TextToSpeech?,
+    ): Pair<Set<AndroidTtsVoice>, List<Locale>> {
+        val voices = mutableSetOf<AndroidTtsVoice>()
+        val locales = mutableSetOf<Locale>()
+        for (engine in enginePackages) {
+            val tts = createTts(engine)
+            if (tts == null) {
+                Timber.w("Unable to initialize TTS engine: %s", engine)
+                continue
+            }
+            // Samsung TextToSpeech engine returns locales with a displayName of "GBR,DEFAULT"/"GBR,f00"
+            // so normalize them before displaying them to users
+            // sample of problematic data: language = "eng", region = "GBR", variant = "f00"
+            try {
+                tts.voices?.let { engineVoices ->
+                    voices += engineVoices.map { it.toTtsVoice(engine) }
+                }
+                tts.availableLanguages?.let { engineLocales ->
+                    locales += engineLocales.map { it.normalize() }
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "error reading voices from TTS engine: %s", engine)
+            } finally {
+                tts.shutdown()
+            }
         }
+        return voices to locales.toList()
     }
 
     /**
      * Creates a usable instance of a [TextToSpeech] as a `suspend` function
      *
+     * @param engine the package name of the TTS engine to use, or `null` to use the user's
+     * default engine
      * @return a usable [TextToSpeech] instance, or `null` if the [TextToSpeech.OnInitListener]
      * returns [TextToSpeech.ERROR]
      */
-    suspend fun createTts() =
+    suspend fun createTts(engine: String? = null) =
         suspendCancellableCoroutine { continuation ->
             var textToSpeech: TextToSpeech? = null
             continuation.invokeOnCancellation {
@@ -198,21 +242,30 @@ object TtsVoices {
                 textToSpeech?.stop()
                 textToSpeech?.shutdown()
             }
-            Timber.v("begin TTS creation")
-            textToSpeech =
-                // TextToSpeech retains the context. So we can't give it any context that
-                // may be expected to disappear, as it would cause a memory leak. Hence
-                // we pass it the application as context.
-                TextToSpeech(appContext) { status ->
+            Timber.v("begin TTS creation (engine: %s)", engine)
+            val onInit =
+                TextToSpeech.OnInitListener { status ->
                     if (status == TextToSpeech.SUCCESS) {
-                        Timber.v("TTS creation success")
-                        ttsEngine = textToSpeech?.defaultEngine
+                        Timber.v("TTS creation success (engine: %s)", engine)
+                        // `ttsEngine` tracks the user's default engine only
+                        if (engine == null) {
+                            ttsEngine = textToSpeech?.defaultEngine
+                        }
                         continuation.resume(textToSpeech)
                     } else {
-                        Timber.e("TTS creation failed. status: %d", status)
+                        Timber.e("TTS creation failed. status: %d (engine: %s)", status, engine)
                         textToSpeech?.shutdown()
                         continuation.resume(null)
                     }
+                }
+            // TextToSpeech retains the context. So we can't give it any context that
+            // may be expected to disappear, as it would cause a memory leak. Hence
+            // we pass it the application as context.
+            textToSpeech =
+                if (engine == null) {
+                    TextToSpeech(appContext, onInit)
+                } else {
+                    TextToSpeech(appContext, onInit, engine)
                 }
         }
 }
