@@ -2383,6 +2383,7 @@ class NoteEditorFragment :
                         et2Layout.error = null
                     } else {
                         etLayout.error = " "
+                        etLayout.setErrorTextAppearance(R.style.InvisibleErrorText)
                         et2Layout.error = getString(R.string.before_after_text_requirement_error)
                     }
                 }
