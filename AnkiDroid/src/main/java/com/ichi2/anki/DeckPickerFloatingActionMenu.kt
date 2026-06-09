@@ -70,12 +70,12 @@ class DeckPickerFloatingActionMenu(
             binding.fabMain.extend()
 
             with(binding) {
-                addSharedButton.animate().translationY(0f).duration = 100
-                addDeckButton.animate().translationY(0f).duration = 70
-                addFilteredDeckButton.animate().translationY(0f).duration = 100
-                addSharedButton.animate().alpha(1f).duration = 100
-                addDeckButton.animate().alpha(1f).duration = 70
-                addFilteredDeckButton.animate().alpha(1f).duration = 100
+                addSharedButton.animate().translationY(300f).duration = 150
+                addDeckButton.animate().translationY(200f).duration = 150
+                addFilteredDeckButton.animate().translationY(300f).duration = 150
+                addSharedButton.animate().alpha(1f).duration = 150
+                addDeckButton.animate().alpha(1f).duration = 150
+                addFilteredDeckButton.animate().alpha(1f).duration = 150
             }
         } else {
             // Show without animation
@@ -124,14 +124,14 @@ class DeckPickerFloatingActionMenu(
                 binding.fabMain.shrink()
 
                 with(binding) {
-                    addSharedButton.animate().alpha(0f).duration = 50
-                    addDeckButton.animate().alpha(0f).duration = 100
-                    addFilteredDeckButton.animate().alpha(0f).duration = 100
-                    addSharedButton.animate().translationY(400f).duration = 100
+                    addSharedButton.animate().alpha(0f).duration = 150
+                    addDeckButton.animate().alpha(0f).duration = 150
+                    addFilteredDeckButton.animate().alpha(0f).duration = 150
+                    addSharedButton.animate().translationY(300f).duration = 150
                     addDeckButton
                         .animate()
-                        .translationY(300f)
-                        .setDuration(50)
+                        .translationY(200f)
+                        .setDuration(150)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
@@ -151,8 +151,8 @@ class DeckPickerFloatingActionMenu(
                         )
                     addFilteredDeckButton
                         .animate()
-                        .translationY(400f)
-                        .setDuration(100)
+                        .translationY(300f)
+                        .setDuration(150)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
@@ -193,14 +193,14 @@ class DeckPickerFloatingActionMenu(
                 binding.fabMain.shrink()
 
                 with(binding) {
-                    addSharedButton.animate().alpha(0f).duration = 70
-                    addDeckButton.animate().alpha(0f).duration = 50
-                    addFilteredDeckButton.animate().alpha(0f).duration = 50
-                    addSharedButton.animate().translationY(600f).duration = 100
+                    addSharedButton.animate().alpha(0f).duration = 150
+                    addDeckButton.animate().alpha(0f).duration = 150
+                    addFilteredDeckButton.animate().alpha(0f).duration = 150
+                    addSharedButton.animate().translationY(300f).duration = 150
                     addDeckButton
                         .animate()
-                        .translationY(400f)
-                        .setDuration(50)
+                        .translationY(200f)
+                        .setDuration(150)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
@@ -220,8 +220,8 @@ class DeckPickerFloatingActionMenu(
                         )
                     addFilteredDeckButton
                         .animate()
-                        .translationY(600f)
-                        .setDuration(100)
+                        .translationY(300f)
+                        .setDuration(150)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
