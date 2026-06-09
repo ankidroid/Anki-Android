@@ -130,6 +130,16 @@ class Statistics : PageFragment(R.layout.page_statistics) {
         webViewLayout.evaluateJavascript(javascriptCode, null)
     }
 
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient =
+        super.onCreateWebViewClient(savedInstanceState).apply {
+            onPageFinishedCallbacks.add {
+                val deckName = binding.deckName.text.toString()
+                if (deckName.isNotEmpty()) {
+                    changeDeck(deckName)
+                }
+            }
+        }
+
     companion object {
         private const val KEY_DECK_NAME = "key_deck_name"
     }
