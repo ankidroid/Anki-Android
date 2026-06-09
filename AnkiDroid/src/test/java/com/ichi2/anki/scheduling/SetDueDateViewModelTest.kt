@@ -172,7 +172,7 @@ class SetDueDateViewModelTest : JvmTest() {
         testBody: suspend SetDueDateViewModel.() -> Unit,
     ) = runTest {
         val viewModel = SetDueDateViewModel()
-        viewModel.init(cardIds.toLongArray(), fsrsEnabled = fsrsEnabled)
+        viewModel.init(cardIds, fsrsEnabled = fsrsEnabled)
         testBody(viewModel)
     }
 }

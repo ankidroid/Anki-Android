@@ -17,6 +17,7 @@
 package com.ichi2.anki.scheduling
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.InputFilter
@@ -46,6 +47,8 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.asyncCatching
+import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.browser.removeSafely
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogSetDueDateBinding
 import com.ichi2.anki.databinding.FragmentSetDueDateRangeBinding
@@ -60,6 +63,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnImeHidden
 import com.ichi2.anki.utils.ext.requireBoolean
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.AndroidUiUtils
@@ -73,6 +77,8 @@ import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.File
+import java.io.FileNotFoundException
 import kotlin.math.min
 
 /**
@@ -97,14 +103,24 @@ class SetDueDateDialog : DialogFragment() {
     // used to determine if a rotation has taken place
     private var initialRotation: Int = 0
 
-    val cardIds: LongArray
-        get() = requireNotNull(requireArguments().getLongArray(ARG_CARD_IDS)) { ARG_CARD_IDS }
+    val cardIds: List<Long>
+        get() = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
 
     val fsrsEnabled: Boolean
         get() = requireArguments().requireBoolean(ARG_FSRS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val cardIds =
+            try {
+                this.cardIds
+            } catch (e: FileNotFoundException) {
+                Timber.w(e, "Failed to read cardIds")
+                showThemedToast(requireContext(), R.string.something_wrong, false)
+                dismiss()
+                return
+            }
+
         viewModel.init(cardIds, fsrsEnabled)
         Timber.d("Set due date dialog: %d card(s)", cardIds.size)
         this.initialRotation = getScreenRotation()
@@ -118,6 +134,16 @@ class SetDueDateDialog : DialogFragment() {
                 }
                 dismiss()
             }
+        }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+        if (arguments?.containsKey(ARG_IDS_FILE) == true) {
+            requireArguments()
+                .requireParcelable<IdsFile>(ARG_IDS_FILE)
+                .removeSafely("SetDueDateDialog")
         }
     }
 
@@ -240,25 +266,41 @@ class SetDueDateDialog : DialogFragment() {
     private fun launchUpdateDueDate(showError: Boolean = true) = requireAnkiActivity().updateDueDate(viewModel, showError)
 
     companion object {
-        const val ARG_CARD_IDS = "ARGS_CARD_IDS"
+        const val ARG_IDS_FILE = "ARGS_IDS_FILE"
         const val ARG_FSRS = "ARGS_FSRS"
         const val MAX_WIDTH_DP = 450f
 
         private const val RESULT_SUBMIT_DUE_DATE = "SubmitDueDate"
 
         @CheckResult
-        suspend fun newInstance(cardIds: List<CardId>) =
-            SetDueDateDialog().apply {
-                arguments =
-                    bundleOf(
-                        ARG_CARD_IDS to cardIds.toLongArray(),
-                        ARG_FSRS to (
-                            getFSRSStatus()
-                                ?: false.also { Timber.w("FSRS Status error") }
-                        ),
+        suspend fun newInstance(
+            cacheDir: File,
+            cardIds: List<CardId>,
+        ) = SetDueDateDialog().apply {
+            val idsFile = IdsFile(cacheDir, cardIds, "set-due-date")
+
+            arguments =
+                Bundle().apply {
+                    putSerializable(ARG_IDS_FILE, idsFile)
+
+                    putBoolean(
+                        ARG_FSRS,
+                        getFSRSStatus() ?: false.also {
+                            Timber.w("FSRS Status error")
+                        },
                     )
-                Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
-            }
+                }
+            Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
+        }
+
+        suspend fun newInstance(
+            fragment: Fragment,
+            cardIds: List<CardId>,
+        ) = newInstance(
+            fragment.requireContext().externalCacheDir
+                ?: fragment.requireContext().cacheDir,
+            cardIds,
+        )
     }
 
     class DueDateStateAdapter(

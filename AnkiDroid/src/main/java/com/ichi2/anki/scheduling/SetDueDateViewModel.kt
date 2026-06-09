@@ -133,7 +133,7 @@ class SetDueDateViewModel : ViewModel() {
     val currentInterval = MutableStateFlow<ReviewIntervalDays?>(null)
 
     fun init(
-        cardIds: LongArray,
+        cardIds: List<CardId>,
         fsrsEnabled: Boolean,
     ) {
         this.cardIds = cardIds.toList()
@@ -142,7 +142,7 @@ class SetDueDateViewModel : ViewModel() {
         initCurrentInterval(cardIds)
     }
 
-    private fun initCurrentInterval(cardIds: LongArray) {
+    private fun initCurrentInterval(cardIds: List<CardId>) {
         // Current interval cannot be shown if multiple cards are selected
         if (cardCount > 1) {
             return

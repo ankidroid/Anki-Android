@@ -611,7 +611,7 @@ class ReviewerFragment :
         }
 
         viewModel.setDueDateFlow.collectIn(lifecycleScope) { cardId ->
-            val dialogFragment = SetDueDateDialog.newInstance(listOf(cardId))
+            val dialogFragment = SetDueDateDialog.newInstance(this, listOf(cardId))
             showDialogFragment(dialogFragment)
         }
 
