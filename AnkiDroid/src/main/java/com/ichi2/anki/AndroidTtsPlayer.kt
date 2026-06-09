@@ -48,9 +48,10 @@ class AndroidTtsPlayer(
      * [TextToSpeech] instances keyed by engine package name (#18737).
      *
      * Lazily populated as voices from new engines are played ([getOrCreateTts]) and disposed of in
-     * [close]. An engine which failed to initialise is absent from the map.
+     * [close]. A present key means the engine was already attempted; a `null` value means it failed
+     * to initialise and is not retried for the rest of the session.
      */
-    private val ttsByEngine = HashMap<String, TextToSpeech>()
+    private val ttsByEngine = HashMap<String, TextToSpeech?>()
 
     /** Guards [ttsByEngine] against concurrent initialisation */
     private val ttsMutex = Mutex()
@@ -113,15 +114,19 @@ class AndroidTtsPlayer(
      */
     private suspend fun getOrCreateTts(engine: String): TextToSpeech? =
         ttsMutex.withLock {
-            ttsByEngine[engine] ?: run {
-                val tts = ttsFactory(engine)?.apply { setOnUtteranceProgressListener(utteranceProgressListener) }
-                if (tts == null) {
-                    Timber.w("Failed to initialize TTS engine: %s", engine)
-                } else {
-                    ttsByEngine[engine] = tts
-                }
-                tts
+            // A present key means the engine was already attempted; a null value means it failed
+            // to initialise and must not be retried again this session
+            if (ttsByEngine.containsKey(engine)) {
+                return@withLock ttsByEngine[engine]
             }
+
+            val tts = ttsFactory(engine)?.apply { setOnUtteranceProgressListener(utteranceProgressListener) }
+            if (tts == null) {
+                Timber.w("Failed to initialize TTS engine: %s", engine)
+            }
+            // cache the result, including a null failure, so a broken engine is not re-initialised
+            ttsByEngine[engine] = tts
+            tts
         }
 
     override suspend fun play(tag: TTSTag): TtsCompletionStatus {
@@ -214,9 +219,10 @@ class AndroidTtsPlayer(
     override fun close() {
         Timber.d("Disposing of TTS Engines")
         // snapshot to avoid concurrent modification if a playback is racing close()
+        // values may be null for engines that failed to initialise
         for (tts in ttsByEngine.values.toList()) {
-            tts.stop()
-            tts.shutdown()
+            tts?.stop()
+            tts?.shutdown()
         }
         ttsByEngine.clear()
         currentTts = null
