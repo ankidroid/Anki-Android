@@ -69,6 +69,34 @@ class AndroidTtsPlayerTest {
         verify(exactly = 1) { test.ttsA.speak(any(), any(), any(), any()) }
     }
 
+    @Test
+    fun `an engine that fails to initialise is not retried`() {
+        val factoryCalls = mutableListOf<String>()
+        val voice = AndroidTtsVoice(fakeVoice("voice-x", Locale.forLanguageTag("en-US")), ENGINE_FAILING)
+        val factory: suspend (String) -> TextToSpeech? = { engine ->
+            factoryCalls.add(engine)
+            null // this engine always fails to initialise
+        }
+        val player = AndroidTtsPlayer(listOf(voice), factory)
+        runBlocking { player.init(CoroutineScope(SupervisorJob() + Dispatchers.IO)) }
+
+        val tag =
+            TTSTag(
+                fieldText = "hello world",
+                lang = voice.lang,
+                voices = listOf(voice.name),
+                speed = null,
+                otherArgs = emptyList(),
+            )
+        val first = runBlocking { withTimeout(PLAYBACK_TIMEOUT_MS.milliseconds) { player.play(tag) } }
+        val second = runBlocking { withTimeout(PLAYBACK_TIMEOUT_MS.milliseconds) { player.play(tag) } }
+
+        assertThat("first playback fails", first.success, equalTo(false))
+        assertThat("second playback fails", second.success, equalTo(false))
+        // the failed engine is cached and not initialised a second time
+        assertThat(factoryCalls.count { it == ENGINE_FAILING }, equalTo(1))
+    }
+
     /** Builds a player backed by two engines, each owning a single voice */
     private fun playerTest(): PlayerTestFixture {
         val ttsA = fakeTts()
@@ -144,6 +172,7 @@ class AndroidTtsPlayerTest {
     companion object {
         private const val ENGINE_A = "com.example.engine.a"
         private const val ENGINE_B = "com.example.engine.b"
+        private const val ENGINE_FAILING = "com.example.engine.failing"
         private const val PLAYBACK_TIMEOUT_MS = 5_000L
     }
 }
