@@ -102,6 +102,8 @@ class AndroidTtsPlayer(
         this.scope = scope
         // Eagerly warm the default engine so the common case has no first-play latency.
         // Other engines are created lazily on first use.
+        // TODO(#18737): warming here blocks player readiness on TextToSpeech init; revisit so the
+        //  user does not wait (e.g. warm off the critical path, or make it fully lazy).
         TtsVoices.ttsEngine?.let { defaultEngine -> getOrCreateTts(defaultEngine) }
     }
 
