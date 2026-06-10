@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
     alias(libs.plugins.roborazzi)
-    id 'idea'
 }
 
 repositories {
@@ -23,12 +22,7 @@ keeper {
     }
 }
 
-idea {
-    module {
-        downloadJavadoc = System.getenv("CI") != "true"
-        downloadSources = System.getenv("CI") != "true"
-    }
-}
+// idea block removed
 
 def homePath = System.properties['user.home']
 /**
@@ -76,7 +70,7 @@ android {
         buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankiBackend.get()}\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash.get()}\""
-        buildConfigField "long", "BUILD_TIME", buildTimeMillis.get()
+        buildConfigField "long", "BUILD_TIME", buildTimeMillis.get() + "L"
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -156,7 +150,13 @@ android {
                 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
                 // #6009 Allow optional disabling of JaCoCo for general build (assembleDebug).
                 // jacocoDebug task was slow, hung, and wasn't required unless I wanted coverage
-                testCoverageEnabled = localProperties['enable_coverage'] != "false"
+                enableAndroidTestCoverage = localProperties['enable_coverage'] != "false"
+                // not profiled: optimization for build times
+                if (localProperties['enable_languages'] == "false") {
+                    android.defaultConfig.resConfigs "en"
+                }
+                // allow disabling leak canary
+                enableAndroidTestCoverage = localProperties['enable_coverage'] != "false"
                 // not profiled: optimization for build times
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
@@ -168,7 +168,7 @@ android {
                     buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "true"
                 }
             } else {
-                testCoverageEnabled true
+                enableAndroidTestCoverage = true
             }
 
             // make the icon red if in debug mode
@@ -176,7 +176,7 @@ android {
             resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
         }
         named('release') {
-            testCoverageEnabled = testReleaseBuild
+            enableAndroidTestCoverage = testReleaseBuild
             minifyEnabled System.getenv("MINIFY_ENABLED") ? System.getenv("MINIFY_ENABLED") != "false" : true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testProguardFile 'proguard-test-rules.pro'
@@ -202,10 +202,10 @@ android {
      * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
      * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
      */
-    flavorDimensions += "appStore"
+    flavorDimensions "appStore"
     productFlavors {
         create('play') {
-            getIsDefault().set(true)
+            isDefault = true
             dimension "appStore"
         }
         create('amazon') {
@@ -245,19 +245,16 @@ android {
                 // For each separate APK per architecture, set a unique version code as described here:
                 // https://developer.android.com/studio/build/configure-apk-splits.html
                 def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
-                def outputFile = output.outputFile
-                if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                    def abi = output.getFilter("ABI")
-                    if (abi != null) {  // null for the universal-debug, universal-release variants
-                        //  From: https://developer.android.com/studio/publish/versioning#appversioning
-                        //  "Warning: The greatest value Google Play allows for versionCode is 2100000000"
-                        //  AnkiDroid versionCodes have a budget 8 digits (through AnkiDroid 9)
-                        //  This style does ABI version code ranges with the 9th digit as 0-4.
-                        //  This consumes ~20% of the version range space, w/50 years of versioning at our major-version pace
-                        output.versionCodeOverride =
-                                // ex:  321200106 = 3 * 100000000 + 21200106
-                                versionCodes.get(abi) * 100000000 + defaultConfig.versionCode
-                    }
+                def abi = output.getFilter("ABI")
+                if (abi != null) {  // null for the universal-debug, universal-release variants
+                    //  From: https://developer.android.com/studio/publish/versioning#appversioning
+                    //  "Warning: The greatest value Google Play allows for versionCode is 2100000000"
+                    //  AnkiDroid versionCodes have a budget 8 digits (through AnkiDroid 9)
+                    //  This style does ABI version code ranges with the 9th digit as 0-4.
+                    //  This consumes ~20% of the version range space, w/50 years of versioning at our major-version pace
+                    output.versionCodeOverride =
+                            // ex:  321200106 = 3 * 100000000 + 21200106
+                            versionCodes.get(abi) * 100000000 + defaultConfig.versionCode
                 }
             }
         }
@@ -265,11 +262,6 @@ android {
 
     testOptions {
         animationsDisabled = true
-        kotlin {
-            compilerOptions {
-                freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
-            }
-        }
         unitTests {
             all { test ->
                 test.useJUnitPlatform {
@@ -321,7 +313,7 @@ android {
         coreLibraryDesugaringEnabled = true
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += ['META-INF/DEPENDENCIES']
         }
@@ -397,7 +389,7 @@ tasks.register('assertNonzeroAndroidTests') {
     }
 }
 afterEvaluate {
-    tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").configure {
+    tasks.matching { it.name == "connectedPlay${rootProject.androidTestVariantName}AndroidTest" }.configureEach {
         finalizedBy('assertNonzeroAndroidTests')
     }
 
@@ -406,7 +398,7 @@ afterEvaluate {
     // classes. This causes R8 to report "Missing class" errors for all app classes referenced from
     // androidTest code. Work around by adding the app classes as referenced (library) input.
     if (testReleaseBuild) {
-        tasks.named("minifyPlayReleaseAndroidTestWithR8").configure {
+        tasks.matching { it.name == "minifyPlayReleaseAndroidTestWithR8" }.configureEach {
             referencedClasses.from(
                 files("build/intermediates/compile_app_classes_jar/playRelease/bundlePlayReleaseClassesToCompileJar/classes.jar")
             )
