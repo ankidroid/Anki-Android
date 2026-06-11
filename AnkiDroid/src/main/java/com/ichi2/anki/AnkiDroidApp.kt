@@ -123,9 +123,6 @@ open class AnkiDroidApp :
 
         ApplicationContextInitializer.setInstance(this)
 
-        // Ensures any change is propagated to widgets
-        ChangeManager.subscribe(this)
-
         initializeAcraCrashReporter()
         initializeNavigator()
         val logType = LogType.value
@@ -173,6 +170,7 @@ open class AnkiDroidApp :
         setup("makeBackendUsable") { makeBackendUsable(this) }
         setupNotifications()
         setupAppLifecycleObserver()
+        setupBackendChangeManager()
 
         // Probe WebView availability before any other init touches it (#5794).
         if (!checkWebViewAvailable()) {
@@ -342,6 +340,20 @@ open class AnkiDroidApp :
                 .lifecycle
                 .addObserver(appLifecycleObserver)
         }
+
+    /**
+     * Ensures any changes in the backend are propagated to:
+     *
+     * - widgets
+     *
+     * @see opExecuted
+     * @see ChangeManager
+     */
+    private fun setupBackendChangeManager() {
+        setup("setupBackendChangeManager") {
+            ChangeManager.subscribe(this)
+        }
+    }
 
     private fun setupLifecycleLogging() =
         setup("setupLifecycleLogging") {
