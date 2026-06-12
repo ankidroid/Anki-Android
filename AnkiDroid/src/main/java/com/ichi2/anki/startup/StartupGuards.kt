@@ -11,17 +11,20 @@ import com.ichi2.anki.storage.StorageDecision
 import timber.log.Timber
 
 /**
- * Ensures storage is ready for use, finishes the activity is otherwise.
+ * Ensures storage is ready for use, finishes the activity and calls [redirectToMainEntryPoint]
+ * otherwise.
  *
- * - the user has decided where the collection is stored
- * - the app has permission to access
+ * - the user has decided where the collection is stored. ([ensureStorageIsConfigured])
+ * - the app has permission to access the collection. ([ensureStoragePermissions])
  *
  * This should be called AFTER a call to `super.`[onCreate][Activity.onCreate]
  *
  * @return `true`: activity may continue to start, `false`: [onCreate][Activity.onCreate]
  * should stop executing
  *
- * @throws SystemStorageException if `getExternalFilesDir` returns null
+ * @throws SystemStorageException if `getExternalFilesDir` returns `null`
+ *
+ * @see redirectToMainEntryPoint
  */
 fun Activity.ensureStorageIsReady(): Boolean {
     // The storage decision is checked first

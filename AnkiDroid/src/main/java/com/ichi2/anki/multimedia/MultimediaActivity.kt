@@ -32,6 +32,7 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.FragmentFactoryUtils
 import dev.androidbroadcast.vbpd.viewBinding
@@ -75,6 +76,9 @@ class MultimediaActivity :
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStorageIsReady()) {
+            return
+        }
         setTransparentStatusBar()
         setSupportActionBar(binding.toolbar)
 
