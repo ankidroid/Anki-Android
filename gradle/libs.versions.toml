@@ -114,7 +114,7 @@ mockk = "1.14.11"
 nanohttpd = "2.3.1"
 okhttp = "5.4.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.35.0"
+protobufKotlinLite = "4.35.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.16.1"
 # https://github.com/takahirom/roborazzi/releases
