@@ -11,6 +11,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.CsvImporterDestination
 import com.ichi2.anki.common.destinations.addNextIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment

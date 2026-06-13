@@ -17,7 +17,6 @@ import androidx.core.os.BundleCompat
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.BackupManager
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ConflictResolution
@@ -30,6 +29,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.backend.getDatabaseVersion
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP

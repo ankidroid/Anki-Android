@@ -2,7 +2,8 @@
 
 package com.ichi2.anki
 
-import com.ichi2.anki.storage.StorageDecision
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
 import org.junit.After

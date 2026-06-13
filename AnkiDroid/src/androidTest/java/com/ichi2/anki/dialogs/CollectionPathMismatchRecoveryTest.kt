@@ -12,11 +12,11 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.disableIntroductionSlide

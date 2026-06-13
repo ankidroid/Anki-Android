@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.dialogs.utils.ankiListView
 import com.ichi2.anki.dialogs.utils.message

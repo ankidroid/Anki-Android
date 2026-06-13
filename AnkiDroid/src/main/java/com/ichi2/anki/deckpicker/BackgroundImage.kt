@@ -21,9 +21,9 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.annotation.CheckResult
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.preferences.AppearanceSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
