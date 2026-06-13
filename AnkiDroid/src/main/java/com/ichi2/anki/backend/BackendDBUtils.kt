@@ -23,7 +23,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.libanki.DB
-import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import timber.log.Timber
 import java.io.File
@@ -74,13 +73,6 @@ fun getDatabaseVersion(
         db?.close()
     }
 }
-
-/**
- * Wrap a Rust backend connection (which provides an SQL interface).
- * Caller is responsible for opening&closing the database.
- */
-@CheckResult
-fun createDatabaseUsingRustBackend(backend: Backend): DB = DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
 
 /**
  * The default AnkiDroid SQLite database callback.
