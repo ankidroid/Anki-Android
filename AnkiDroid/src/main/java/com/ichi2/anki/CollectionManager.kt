@@ -18,6 +18,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.CollectionManager.withQueue
 import com.ichi2.anki.backend.createDatabaseUsingRustBackend
+import com.ichi2.anki.common.android.ApplicationContextInitializer
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.utils.android.Threads
@@ -280,7 +283,9 @@ object CollectionManager {
         // the decision is gated on the same preferences getCollectionDirectory() reads from
         val decision =
             CollectionHelper.storageDecisionTestOverride
-                ?: AnkiDroidApp.sharedPrefsOrNull()?.let { CollectionHelper.storageDecision(it) }
+                ?: ApplicationContextInitializer.instanceOrNull
+                    ?.sharedPrefs()
+                    ?.let { CollectionHelper.storageDecision(it) }
                 // test-only: in-memory test collections have no preferences and read no path
                 ?: if (isRunningAsUnitTest) {
                     StorageDecision.Decided
@@ -313,9 +318,7 @@ object CollectionManager {
         }
     }
 
-    fun getCollectionDirectory() =
-        // does not require appContext to be initialized
-        CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.sharedPrefs())
+    fun getCollectionDirectory() = CollectionHelper.getCurrentAnkiDroidDirectory(appContext.sharedPrefs())
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the
      * folder and the name of the collection file inside it. */
