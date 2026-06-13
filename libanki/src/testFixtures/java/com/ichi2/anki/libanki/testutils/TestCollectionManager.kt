@@ -135,5 +135,5 @@ open class InMemoryCollectionManager : TestCollectionManager {
  * Wrap a Rust backend connection (which provides an SQL interface).
  * Caller is responsible for opening&closing the database.
  */
-@DuplicatedCode("AnkiDroid:createDatabaseUsingRustBackend")
+@DuplicatedCode("anki-common:createDatabaseUsingRustBackend")
 fun createDatabaseUsingRustBackend(backend: Backend): DB = DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
