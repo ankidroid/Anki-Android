@@ -30,6 +30,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.permissions.hasAllPermissions
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.anki.exception.StorageAccessException
@@ -53,18 +54,21 @@ import timber.log.Timber
 object InitialActivity {
     @CheckResult
     fun getStartupFailureType(context: Context): StartupFailure? =
-        getStartupFailureType { CollectionHelper.isCurrentAnkiDroidDirAccessible(context) }
+        getStartupFailureType(context.sharedPrefs()) { CollectionHelper.isCurrentAnkiDroidDirAccessible(context) }
 
     /** Returns null on success  */
     @CheckResult
-    fun getStartupFailureType(initializeAnkiDroidDirectory: () -> Boolean): StartupFailure? {
+    fun getStartupFailureType(
+        preferences: SharedPreferences,
+        initializeAnkiDroidDirectory: () -> Boolean,
+    ): StartupFailure? {
         AnkiDroidApp.fatalError?.let {
             return StartupFailure.InitializationError(it)
         }
 
         // Opening the collection would throw a StorageNotConfiguredException, which is not worth
         // a crash report
-        if (CollectionHelper.storageDecision() != StorageDecision.Decided) {
+        if (CollectionHelper.storageDecision(preferences) != StorageDecision.Decided) {
             Timber.i("storage location is undecided")
             return StartupFailure.StorageUndecided
         }

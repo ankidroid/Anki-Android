@@ -20,6 +20,7 @@ import com.ichi2.anki.CollectionManager.withQueue
 import com.ichi2.anki.backend.createDatabaseUsingRustBackend
 import com.ichi2.anki.common.utils.android.Threads
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.Collection
@@ -272,9 +273,21 @@ object CollectionManager {
      * [StorageDecision.Decided] (user has not selected a storage location).
      * @throws SystemStorageException if startup failed to choose a default collection path
      * ([CollectionHelper.systemStorageFailure])
+     * @throws IllegalStateException if executed before `AnkiDroidApp.onCreate`
      */
     private fun ensureOpenInner() {
-        if (CollectionHelper.storageDecision() != StorageDecision.Decided) {
+        // the decision is gated on the same preferences getCollectionDirectory() reads from
+        val decision =
+            CollectionHelper.storageDecisionTestOverride
+                ?: AnkiDroidApp.sharedPrefsOrNull()?.let { CollectionHelper.storageDecision(it) }
+                // test-only: in-memory test collections have no preferences and read no path
+                ?: if (isRunningAsUnitTest) {
+                    StorageDecision.Decided
+                } else {
+                    // the app instance is unset: treat this as a bug.
+                    throw IllegalStateException("Collection accessed before AnkiDroidApp was initialized")
+                }
+        if (decision != StorageDecision.Decided) {
             // rethrow a recorded startup storage failure: an OS bug/SD card issue must not be
             // reported as the expected 'storage not configured' state
             throw CollectionHelper.systemStorageFailure ?: StorageNotConfiguredException()
