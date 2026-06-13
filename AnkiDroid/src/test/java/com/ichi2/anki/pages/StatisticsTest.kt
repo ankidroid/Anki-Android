@@ -28,8 +28,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
 import org.junit.jupiter.api.assertNotNull
@@ -43,7 +43,7 @@ class StatisticsTest : RobolectricTest() {
     fun `shows 'Default' deck when collection is empty`() =
         runTest {
             ActivityScenario
-                .launch<SingleFragmentActivity>(
+                .launch<ConfigAwareSingleFragmentActivity>(
                     StatisticsDestination().toIntent(
                         targetContext,
                     ),
@@ -62,7 +62,7 @@ class StatisticsTest : RobolectricTest() {
             withCol { decks.select(testDeck1) }
             addDeck(testDeckName2)
             ActivityScenario
-                .launch<SingleFragmentActivity>(
+                .launch<ConfigAwareSingleFragmentActivity>(
                     StatisticsDestination().toIntent(
                         targetContext,
                     ),
@@ -84,7 +84,7 @@ class StatisticsTest : RobolectricTest() {
             // the statistics screen doesn't allow the selection of 'All Decks' and filtered decks,
             // also 'Default' deck should be enabled no matter its status(empty/not empty)
             ActivityScenario
-                .launch<SingleFragmentActivity>(StatisticsDestination().toIntent(targetContext))
+                .launch<ConfigAwareSingleFragmentActivity>(StatisticsDestination().toIntent(targetContext))
                 .onActivity { activity ->
                     val statisticsFragment =
                         activity.supportFragmentManager.findFragmentById(R.id.fragment_container)

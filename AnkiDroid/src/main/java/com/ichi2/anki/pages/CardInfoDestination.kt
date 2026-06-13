@@ -19,10 +19,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.withoutUnicodeIsolation
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.Destination
 
 data class CardInfoDestination(
@@ -44,7 +44,7 @@ data class CardInfoDestination(
                 putString(CardInfoFragment.KEY_TITLE, cardInfoTitle)
                 putLong(CardInfoFragment.KEY_CARD_ID, cardId)
             }
-        return SingleFragmentActivity.getIntent(
+        return ConfigAwareSingleFragmentActivity.getIntent(
             context,
             fragmentClass = CardInfoFragment::class,
             arguments = arguments,
