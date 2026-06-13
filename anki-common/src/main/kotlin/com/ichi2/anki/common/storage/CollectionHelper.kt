@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
-package com.ichi2.anki
+package com.ichi2.anki.common.storage
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,7 +13,6 @@ import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.CollectionFiles
-import com.ichi2.anki.storage.StorageDecision
 import timber.log.Timber
 import java.io.File
 import java.io.IOException

@@ -22,11 +22,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.launchCatchingTask

@@ -6,11 +6,11 @@ import android.app.Activity
 import android.content.Intent
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
-import com.ichi2.anki.storage.StorageDecision
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith

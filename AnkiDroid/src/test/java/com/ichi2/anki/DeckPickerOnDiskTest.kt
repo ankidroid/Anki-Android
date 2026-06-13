@@ -22,6 +22,7 @@ import com.ichi2.anki.DeckPickerTest.CollectionType
 import com.ichi2.anki.DeckPickerTest.DeckPickerEx
 import com.ichi2.anki.backend.getDatabaseVersion
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.exception.UnknownDatabaseVersionException

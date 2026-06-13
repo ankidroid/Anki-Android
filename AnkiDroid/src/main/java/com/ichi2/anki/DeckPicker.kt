@@ -99,6 +99,7 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast

@@ -4,11 +4,11 @@ package com.ichi2.anki.startup
 
 import android.app.Activity
 import android.content.Intent
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.exception.SystemStorageException
-import com.ichi2.anki.storage.StorageDecision
 import timber.log.Timber
 
 /**
