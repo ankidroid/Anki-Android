@@ -20,6 +20,7 @@ import android.content.Context
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.utils.AssetHelper.guessMimeType
 import timber.log.Timber
 import java.io.ByteArrayInputStream

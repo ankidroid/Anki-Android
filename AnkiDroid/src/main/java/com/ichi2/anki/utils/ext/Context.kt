@@ -22,7 +22,7 @@ import android.graphics.BitmapFactory
 import android.util.AttributeSet
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.common.storage.CollectionHelper
 import java.io.File
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

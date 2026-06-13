@@ -24,11 +24,11 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper.getCurrentAnkiDroidDirectory
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.backend.DatabaseCorruption
+import com.ichi2.anki.common.storage.CollectionHelper.getCurrentAnkiDroidDirectory
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.Shared
 import com.ichi2.anki.testutil.discardPreliminaryViews
