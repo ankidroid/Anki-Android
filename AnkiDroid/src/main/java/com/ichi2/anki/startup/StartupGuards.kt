@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Intent
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.storage.StorageDecision
 import timber.log.Timber
@@ -45,7 +46,7 @@ fun Activity.ensureStorageIsReady(): Boolean {
  * @see redirectToMainEntryPoint
  */
 private fun Activity.ensureStorageIsConfigured(): Boolean {
-    if (CollectionHelper.storageDecision() == StorageDecision.Decided) {
+    if (CollectionHelper.storageDecision(sharedPrefs()) == StorageDecision.Decided) {
         return true
     }
     Timber.w("finishing activity. Storage is not configured")
