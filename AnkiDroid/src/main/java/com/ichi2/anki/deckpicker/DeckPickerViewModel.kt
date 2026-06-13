@@ -522,7 +522,7 @@ class DeckPickerViewModel :
         }
 
         Timber.d("handleStartup: Continuing after permission granted")
-        val failure = InitialActivity.getStartupFailureType(environment::initializeAnkiDroidFolder)
+        val failure = InitialActivity.getStartupFailureType(environment.preferences, environment::initializeAnkiDroidFolder)
         if (failure != null) {
             flowOfStartupResponse.value = StartupResponse.FatalError(failure)
             return
@@ -539,6 +539,9 @@ class DeckPickerViewModel :
         fun hasRequiredPermissions(): Boolean
 
         val requiredPermissions: PermissionSet
+
+        /** The preferences of the (profile) context the collection path is read from */
+        val preferences: SharedPreferences
 
         fun initializeAnkiDroidFolder(): Boolean
     }

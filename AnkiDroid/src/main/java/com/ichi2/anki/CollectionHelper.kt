@@ -139,13 +139,28 @@ object CollectionHelper {
     var systemStorageFailure: SystemStorageException? = null
 
     /**
-     * Whether the user has chosen where the collection is stored.
+     * Whether the location of the collection has been decided: [StorageDecision.Decided] once
+     * [PREF_COLLECTION_PATH] is set (or a [ankiDroidDirectoryOverride] is active), which mirrors
+     * when [getCurrentAnkiDroidDirectory] can return a directory rather than throwing.
      *
-     * TODO: real implementation based on whether [PREF_COLLECTION_PATH] is set.
-     *  TODO: What is a user revokes full storage?
-     *  This currently returns [StorageDecision.Decided], so callers that gate on it are no-ops.
+     * The user is not asked yet: until the dedicated setup flow exists (#19552), the 'decision'
+     * is made on their behalf during startup by
+     * [ensureCollectionPathSet][com.ichi2.anki.startup.ensureCollectionPathSet], so this is
+     * [StorageDecision.Decided] by the time the collection is opened.
+     *
+     * @param preferences the preferences the collection path will be read from: pass the same
+     * (profile) context's preferences as the [getCurrentAnkiDroidDirectory] call being gated
+     *
+     * TODO: What if a user revokes full storage?
      */
-    fun storageDecision(): StorageDecision = storageDecisionTestOverride ?: StorageDecision.Decided
+    fun storageDecision(preferences: SharedPreferences): StorageDecision {
+        storageDecisionTestOverride?.let { return it }
+        if (ankiDroidDirectoryOverride != null) return StorageDecision.Decided
+        // a recorded systemStorageFailure also leaves the path unset: startup has already
+        // surfaced it via AnkiDroidApp.fatalError, and reads rethrow it rather than
+        // reporting 'not configured'
+        return if (preferences.contains(PREF_COLLECTION_PATH)) StorageDecision.Decided else StorageDecision.Undecided
+    }
 
     /**
      * @return the absolute path to the AnkiDroid directory.

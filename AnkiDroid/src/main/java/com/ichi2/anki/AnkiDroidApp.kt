@@ -534,6 +534,13 @@ open class AnkiDroidApp :
          */
         fun sharedPrefs() = sharedPreferencesTestingOverride ?: instance.sharedPrefs()
 
+        /**
+         * [sharedPrefs], or `null` if unavailable: [instance] is not initialized when running
+         * under a test-only [Application] (e.g. `EmptyApplication`) or in pure JVM tests
+         */
+        fun sharedPrefsOrNull(): SharedPreferences? =
+            sharedPreferencesTestingOverride ?: if (isInitialized) instance.sharedPrefs() else null
+
         /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this  */
         @VisibleForTesting
         var sentExceptionReportHack = false
