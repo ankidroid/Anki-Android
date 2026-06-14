@@ -29,6 +29,8 @@ androidxActivity = "1.12.4"
 androidxAnnotation = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidxAppCompat = "1.7.1"
+# https://developer.android.com/jetpack/androidx/releases/benchmark
+androidxBenchmark = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidxBrowser = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
@@ -43,10 +45,14 @@ androidxExifinterface = "1.4.2"
 androidxFragmentKtx = "1.8.9"
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidxLifecycleProcess = "2.10.0"
+# https://developer.android.com/jetpack/androidx/releases/media
+androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
 androidxMedia3 = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
+# https://developer.android.com/jetpack/androidx/releases/profileinstaller
+androidxProfileinstaller = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
 androidxRecyclerview = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
@@ -141,6 +147,7 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
+androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidxBenchmark" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidxActivity" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycleProcess" }
@@ -148,6 +155,8 @@ androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "andr
 androidx-media3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreferenceKtx" }
+androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidxProfileinstaller" }
+androidx-media = { module = "androidx.media:media", version.ref = "androidxMedia" }
 androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidxTestUiAutomator" }
 androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "androidxWebkit" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidxViewpager2" }
@@ -224,6 +233,8 @@ test-parameter-injector = { module = "com.google.testparameterinjector:test-para
 
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidxBenchmark" }
 
 tripletPlay = { id = "com.github.triplet.play", version.ref = "triplet" }
 
