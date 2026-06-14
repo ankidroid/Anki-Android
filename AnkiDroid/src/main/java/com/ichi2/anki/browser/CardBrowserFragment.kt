@@ -1764,7 +1764,11 @@ class CardBrowserFragment :
 
     @VisibleForTesting
     val addNoteLauncher: NoteEditorLauncher
-        get() = NoteEditorLauncher.AddNoteFromCardBrowser(activityViewModel)
+        get() =
+            NoteEditorLauncher.AddNoteFromCardBrowser(
+                searchTerms = activityViewModel.searchTerms,
+                deckId = activityViewModel.lastDeckId,
+            )
 
     private fun addNote() {
         onAddNoteActivityResult.launch(addNoteLauncher.toIntent(requireContext()))
