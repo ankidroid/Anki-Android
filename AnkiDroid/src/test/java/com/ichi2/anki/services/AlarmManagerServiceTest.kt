@@ -21,20 +21,20 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
-import androidx.core.os.BundleCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.reviewreminders.ReviewReminder
+import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
-import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER
+import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER_ID
+import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER_SCOPE
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import io.mockk.every
 import io.mockk.mockk
@@ -49,6 +49,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Calendar
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
@@ -166,8 +167,10 @@ class AlarmManagerServiceTest : RobolectricTest() {
         verify(exactly = 1) {
             context.sendBroadcast(capture(slot))
         }
-        val firedReminder = slot.captured.extras!!.getParcelableCompat<ReviewReminder>(EXTRA_REVIEW_REMINDER)!!
-        assertThat(firedReminder, equalTo(reviewReminder))
+        val firedReminderId = slot.captured.extras!!.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID)!!
+        val firedReminderScope = slot.captured.extras!!.getParcelableCompat<ReviewReminderScope>(EXTRA_REVIEW_REMINDER_SCOPE)!!
+        assertThat(firedReminderId, equalTo(reviewReminder.id))
+        assertThat(firedReminderScope, equalTo(reviewReminder.scope))
     }
 
     @Test
@@ -246,37 +249,71 @@ class AlarmManagerServiceTest : RobolectricTest() {
                 }
             }
 
-            val expectedFiredReminders = reviewReminders.filter { it.enabled }.toSet()
+            val expectedFiredReminderIds = reviewReminders.filter { it.enabled }.map { it.id }.toSet()
             val capturedIntents = mutableListOf<Intent>()
-            verify(exactly = expectedFiredReminders.size) {
+            verify(exactly = expectedFiredReminderIds.size) {
                 context.sendBroadcast(capture(capturedIntents))
             }
-            val firedReminders =
+            val firedReminderIds =
                 capturedIntents
                     .map { intent ->
-                        intent.extras!!.getParcelableCompat<ReviewReminder>(EXTRA_REVIEW_REMINDER)!!
+                        intent.extras!!.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID)!!
                     }.toSet()
-            assertThat(firedReminders, equalTo(expectedFiredReminders))
+            assertThat(firedReminderIds, equalTo(expectedFiredReminderIds))
         }
 
     @Test
-    fun `onReceive schedules snoozed notification and cancels clicked notification`() {
-        val extras = mockk<Bundle>()
-        every { extras.getInt(any()) } returns 5
-        val intent = mockk<Intent>()
-        every { intent.extras } returns extras
-        mockkStatic(BundleCompat::class)
-        every { BundleCompat.getParcelable(extras, any(), ReviewReminder::class.java) } returns reviewReminder
+    fun `triggering schedules snoozed notification and cancels clicked notification`() =
+        runTest {
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
 
-        AlarmManagerService().onReceive(context, intent)
-        verify {
+            attemptSnooze(reviewReminder, 5.minutes)
+
+            verifyNotifSnoozed(5.minutes)
+            verifyPastNotifCleared(reviewReminder)
+        }
+
+    @Test
+    fun `triggering only clears past notif if review reminder is not in database`() =
+        runTest {
+            attemptSnooze(reviewReminder, 5.minutes)
+
+            verifyNoNotifSnoozed()
+            verifyPastNotifCleared(reviewReminder)
+        }
+
+    private suspend fun attemptSnooze(
+        reviewReminder: ReviewReminder,
+        delay: Duration,
+    ) {
+        AlarmManagerService.handleSnoozeReviewReminder(
+            context,
+            reviewReminder.id,
+            reviewReminder.scope,
+            snoozeIntervalInMinutes = delay.inWholeMinutes.toInt(),
+        )
+    }
+
+    private fun verifyNotifSnoozed(delay: Duration) {
+        verify(exactly = 1) {
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
-                mockTime.intTimeMS() + 5.minutes.inWholeMilliseconds,
+                mockTime.intTimeMS() + delay.inWholeMilliseconds,
                 AlarmManagerService.WINDOW_LENGTH_MS,
                 any(),
             )
         }
-        verify { notificationManager.cancel(NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value) }
+    }
+
+    private fun verifyNoNotifSnoozed() {
+        verify(exactly = 0) {
+            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, any(), any(), any())
+        }
+    }
+
+    private fun verifyPastNotifCleared(reviewReminder: ReviewReminder) {
+        verify(exactly = 1) {
+            notificationManager.cancel(NotificationService.REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value)
+        }
     }
 }

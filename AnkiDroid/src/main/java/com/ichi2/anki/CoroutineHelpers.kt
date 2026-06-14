@@ -624,6 +624,10 @@ private fun Activity.showError(
  * [AnkiBroadcastReceiver.goAsync] extends the lifetime of the `onReceiveBroadcast` method and tells
  * the OS not to kill the process prematurely.
  *
+ * Theoretically, an expedited Worker could also be used to run a suspending function from `onReceiveBroadcast`.
+ * However, AnkiDroid is only allotted a fixed number of expedited Worker calls per day
+ * and those expedited calls are also used by the sync service, so it's best to conserve them.
+ *
  * Do not call [AnkiBroadcastReceiver.goAsync] directly before calling this function.
  *
  * @param timeout Just in case the block hangs. Cannot exceed 8 seconds, because an ANR may occur if

@@ -225,7 +225,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             ReviewRemindersDatabase.insertReminder(reviewReminder)
 
             TimeManager.resetWith(today)
-            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminder)
+            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminder.id, reviewReminder.scope)
 
             assertThat(returnedReminder, notNullValue())
             assertThat(returnedReminder!!.latestNotifTime, not(equalTo(creationTime)))
@@ -245,7 +245,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 )
             ReviewRemindersDatabase.insertReminder(reviewReminder)
 
-            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminder)
+            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminder.id, reviewReminder.scope)
 
             assertThat(returnedReminder, nullValue())
             val storedReminder = ReviewRemindersDatabase.getRemindersForScope(scope1)[reviewReminder.id]!!
@@ -255,7 +255,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     @Test
     fun `retrieveRefreshedReminder with review reminder not found in database should fail gracefully`() =
         runTest {
-            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminderOne)
+            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminderOne.id, reviewReminderOne.scope)
             assertThat(returnedReminder, nullValue())
         }
 

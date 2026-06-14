@@ -395,27 +395,31 @@ object ReviewRemindersDatabase {
         }
 
     /**
-     * Given a [ReviewReminder] which is about to fire a notification, retrieves the latest up-to-date version
+     * Given the ID of a [ReviewReminder] which is about to fire a notification, atomically retrieves the latest up-to-date version
      * of that reminder from the database and performs validation and bookkeeping on it before returning it to the caller.
      * This is done in the database's scope so that we can re-use the [mutex] and hence be safe from
-     * race conditions.
+     * race conditions during the consecutive read and write.
      *
-     * @param reminder The reminder which will have a refreshed and validated copy returned.
+     * @param id The ID of the reminder which is about to fire a notification.
+     * @param scope The scope that the review reminder ID is stored within.
      *
-     * @return The [reminder] with its [ReviewReminder.latestNotifTime] updated, or null
+     * @return The retrieved reminder with its [ReviewReminder.latestNotifTime] updated, or null
      * if the notification has already been delivered or does not exist in the database.
      */
-    suspend fun retrieveRefreshedReminder(reminder: ReviewReminder): ReviewReminder? =
+    suspend fun retrieveRefreshedReminder(
+        id: ReviewReminderId,
+        scope: ReviewReminderScope,
+    ): ReviewReminder? =
         mutex.withLock {
             var reminderToReturn: ReviewReminder? = null
-            editRemindersForScope(reminder.scope) { reminders: ReviewReminderGroup ->
+            editRemindersForScope(scope) { reminders: ReviewReminderGroup ->
                 reminders.apply {
-                    val storedReminder = this[reminder.id]
+                    val storedReminder = this[id]
                     if (storedReminder == null) {
                         // The reminder should always be present as recurring notification alarms are unscheduled when
                         // a reminder is deleted, so this should never happen, but we fail gracefully just in case
                         Timber.e(
-                            "Returning null for retrieveRefreshedReminder for reminder ${reminder.id} because it was not found in the database.",
+                            "Returning null for retrieveRefreshedReminder for reminder $id because it was not found in the database.",
                         )
                         return@apply
                     }
@@ -423,7 +427,7 @@ object ReviewRemindersDatabase {
                     if (storedReminder.latestNotifDelivered()) {
                         // Do not proceed if the notification has already been delivered
                         Timber.i(
-                            "Returning null for retrieveRefreshedReminder for reminder ${storedReminder.id}: " +
+                            "Returning null for retrieveRefreshedReminder for reminder $id: " +
                                 "Latest already delivered at ${storedReminder.latestNotifTime}",
                         )
                         return@apply
@@ -431,7 +435,7 @@ object ReviewRemindersDatabase {
 
                     // Update and save this latest routine notification-firing attempt's timestamp
                     storedReminder.updateLatestNotifTime()
-                    this[reminder.id] = storedReminder
+                    this[id] = storedReminder
                     reminderToReturn = storedReminder
                 }
             }

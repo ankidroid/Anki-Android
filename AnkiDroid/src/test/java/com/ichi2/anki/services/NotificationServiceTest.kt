@@ -159,6 +159,33 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
+    fun `triggering with reminder which is not present in database should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
+    fun `triggering with reminder which is disabled should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, enabled = false)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
     fun `triggering with scheduled time in the future should not fire notification nor schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
@@ -308,6 +335,33 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
+    fun `triggering with snoozed notification not stored in database should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = (-1).minutes)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder, isRecurring = false)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
+    fun `triggering with snoozed notification which is disabled should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, enabled = false, scheduledTimeOffsetFromNow = (-1).minutes)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder, isRecurring = false)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
     fun `snooze actions of different notifications and different intervals should be different`() =
         runTest {
             val did1 = addDeck("Deck1").withNotes(count = 2)
@@ -343,7 +397,8 @@ class NotificationServiceTest : RobolectricTest() {
     ) {
         NotificationService.handleReviewReminderNotification(
             context,
-            reviewReminder,
+            reviewReminder.id,
+            reviewReminder.scope,
             isRecurringNotification = isRecurring,
         )
     }
@@ -356,6 +411,7 @@ class NotificationServiceTest : RobolectricTest() {
     private fun createTestReminder(
         deckId: DeckId? = null,
         thresholdInt: Int = 1,
+        enabled: Boolean = true,
         onlyNotifyIfNoReviews: Boolean = false,
         scheduledTimeOffsetFromNow: Duration = (-1).minutes,
     ): ReviewReminder {
@@ -370,6 +426,7 @@ class NotificationServiceTest : RobolectricTest() {
                 ),
             cardTriggerThreshold = ReviewReminderCardTriggerThreshold(thresholdInt),
             scope = if (deckId != null) DeckSpecific(deckId) else Global,
+            enabled = enabled,
             onlyNotifyIfNoReviews = onlyNotifyIfNoReviews,
         )
     }
