@@ -94,8 +94,8 @@ subprojects {
             }
 
             val androidComponentsExtension =
-                extensions.findByName("androidComponents") as AndroidComponentsExtensionImpl<*, *, *>
-            androidComponentsExtension.beforeVariants { builder ->
+                extensions.findByName("androidComponents") as? com.android.build.api.variant.AndroidComponentsExtension<*, *, *>
+            androidComponentsExtension?.beforeVariants { builder ->
                 if (testReleaseBuild && builder.name == "playRelease")
                 {
                     builder.optInToKeeper()
