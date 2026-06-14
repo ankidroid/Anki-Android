@@ -48,6 +48,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuHostHelper
 import androidx.core.view.MenuProvider
+import androidx.core.view.RoundedCornerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -143,6 +144,7 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
@@ -436,14 +438,21 @@ class CardBrowserFragment :
     }
 
     private fun applyContentInsets(root: View) {
+        val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
             val bars =
                 insets.getInsets(
                     WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
                 )
             v.updatePadding(left = bars.left, right = bars.right)
-            // RecyclerView uses clipToPadding=false so list scrolls under the navigation bar
-            cardsListView.updatePadding(bottom = bars.bottom)
+            // The bottom of the safe area is above the navigation bar and rounded display corners.
+            // When scrolled to the bottom of the scrollbar should be aligned with the last row.
+            val safeAreaBottom = maxOf(bars.bottom, insets.bottomRoundedCornerRadius)
+            // Due to clipToPadding=false, only the last row is affected
+            cardsListView.updatePadding(bottom = safeAreaBottom)
+            // The scrollbar track stays full-height (edge to edge); only the handle is kept above
+            // the safe-area boundary so it remains touchable and aligns with the last row.
+            browserScroller.handleBottomInset = safeAreaBottom
             insets
         }
     }
@@ -1897,6 +1906,16 @@ class PreviewerDestination(
 
 @CheckResult
 fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, idsFile, currentIndex)
+
+/**
+ * The radius, in pixels, of the larger of the two bottom corner radii.
+ */
+private val WindowInsetsCompat.bottomRoundedCornerRadius: Int
+    get() =
+        maxOf(
+            getRoundedCorner(RoundedCornerCompat.POSITION_BOTTOM_LEFT)?.radius ?: 0,
+            getRoundedCorner(RoundedCornerCompat.POSITION_BOTTOM_RIGHT)?.radius ?: 0,
+        )
 
 /**
  * Updates the content of the [SearchView] to a provided fragment, retaining state.
