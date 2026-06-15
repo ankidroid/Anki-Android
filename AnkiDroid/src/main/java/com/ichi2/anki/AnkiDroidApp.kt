@@ -51,12 +51,12 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
-import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.AlarmManagement
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
@@ -317,7 +317,7 @@ open class AnkiDroidApp :
             if (Prefs.newReviewRemindersEnabled) {
                 Timber.i("Setting review reminder notifications if they have not already been set")
                 applicationScope.launch {
-                    AlarmManagerService.scheduleAllNotifications(context)
+                    AlarmManagement.scheduleAllNotifications(context)
                 }
             } else {
                 // Register for notifications

@@ -35,6 +35,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.utils.AlarmManagement
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.restoreRecurringAlarms
 import timber.log.Timber
@@ -72,7 +73,7 @@ class BootService : AnkiBroadcastReceiver() {
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Executing Boot Service - Review reminders")
             runGloballyWithTimeout(SCHEDULE_NOTIFICATIONS_TIMEOUT) {
-                AlarmManagerService.scheduleAllNotifications(context)
+                AlarmManagement.scheduleAllNotifications(context)
             }
         } else {
             // There are cases where the app is installed, and we have access, but nothing exist yet
@@ -91,7 +92,7 @@ class BootService : AnkiBroadcastReceiver() {
         wasRun = true
     }
 
-    @LegacyNotifications("Will be moved to AlarmManagerService")
+    @LegacyNotifications("Will be moved to AlarmManagement")
     private fun catchAlarmManagerErrors(
         context: Context,
         runnable: Runnable,
