@@ -24,18 +24,25 @@ class DeckPickerFloatingActionMenu(
     homescreenBinding: ActivityHomescreenBinding,
     private val deckPicker: DeckPicker,
 ) {
+    // TODO: refactor this to decouple with Homescreen & DeckPicker
     private val binding: IncludeFloatingAddButtonBinding = homescreenBinding.deckPickerPane.floatingActionButton
 
+    /** Layout deck_picker.xml is attached here */
     private val linearLayout: LinearLayout = homescreenBinding.deckPickerPane.deckpickerView
     private val studyOptionsFrame: View? = homescreenBinding.studyoptionsFrame
 
+    // Colors values obtained from attributes
     private val fabNormalColor = MaterialColors.getColor(binding.fabMain, R.attr.fab_normal)
     private val fabPressedColor = MaterialColors.getColor(binding.fabMain, R.attr.fab_pressed)
 
+    // Add Note Drawable Icon
     private val addNoteIcon: Int = R.drawable.ic_add_note
+
+    // Add White Icon
     private val addWhiteIcon: Int = R.drawable.ic_add
 
     var isFABOpen = false
+
     var toggleListener: FloatingActionBarToggleListener? = null
 
     @Suppress("unused")
@@ -53,6 +60,7 @@ class DeckPickerFloatingActionMenu(
         setCreateDeckButtonLabel()
 
         if (deckPicker.animationEnabled()) {
+            // Show with animation
             binding.addSharedButton.visibility = View.VISIBLE
             binding.addDeckButton.visibility = View.VISIBLE
             binding.addFilteredDeckButton.visibility = View.VISIBLE
@@ -62,14 +70,15 @@ class DeckPickerFloatingActionMenu(
             binding.fabMain.extend()
 
             with(binding) {
-                addSharedButton.animate().translationY(0f).duration = 150
-                addDeckButton.animate().translationY(0f).duration = 150
-                addFilteredDeckButton.animate().translationY(0f).duration = 150
-                addSharedButton.animate().alpha(1f).duration = 150
-                addDeckButton.animate().alpha(1f).duration = 150
-                addFilteredDeckButton.animate().alpha(1f).duration = 150
+                addSharedButton.animate().translationY(0f).duration = 100
+                addDeckButton.animate().translationY(0f).duration = 70
+                addFilteredDeckButton.animate().translationY(0f).duration = 100
+                addSharedButton.animate().alpha(1f).duration = 100
+                addDeckButton.animate().alpha(1f).duration = 70
+                addFilteredDeckButton.animate().alpha(1f).duration = 100
             }
         } else {
+            // Show without animation
             binding.addSharedButton.visibility = View.VISIBLE
             binding.addDeckButton.visibility = View.VISIBLE
             binding.addFilteredDeckButton.visibility = View.VISIBLE
@@ -82,6 +91,7 @@ class DeckPickerFloatingActionMenu(
             binding.addFilteredDeckButton.translationY = 0f
             binding.fabMain.isExtended = true
 
+            // During without animation maintain the original color of FAB
             binding.fabMain.apply {
                 backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 setIconResource(addNoteIcon)
@@ -89,6 +99,16 @@ class DeckPickerFloatingActionMenu(
         }
     }
 
+    /**
+     * This function takes a parameter which decides if we want to apply the rise and shrink animation
+     * for FAB or not.
+     *
+     * Case 1: When the FAB is already opened and we close it by pressing the back button then we need to show
+     * the rise and shrink animation and get back to the FAB with `+` icon.
+     *
+     * Case 2: When the user opens the side navigation drawer (without touching the FAB). In that case we don't
+     * want to show any type of rise and shrink animation for the FAB so we put the value `false` for the parameter.
+     */
     fun closeFloatingActionMenu(applyRiseAndShrinkAnimation: Boolean) {
         toggleListener?.onBeginToggle(isOpening = false)
         if (applyRiseAndShrinkAnimation) {
@@ -97,19 +117,21 @@ class DeckPickerFloatingActionMenu(
             isFABOpen = false
             binding.fabBGLayout.visibility = View.GONE
             if (deckPicker.animationEnabled()) {
+                // Changes the background color of FAB to default
                 binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                // Close with animation
                 binding.fabMain.setIconResource(addWhiteIcon)
                 binding.fabMain.shrink()
 
                 with(binding) {
-                    addSharedButton.animate().alpha(0f).duration = 150
-                    addDeckButton.animate().alpha(0f).duration = 150
-                    addFilteredDeckButton.animate().alpha(0f).duration = 150
-                    addSharedButton.animate().translationY(0f).duration = 150
+                    addSharedButton.animate().alpha(0f).duration = 50
+                    addDeckButton.animate().alpha(0f).duration = 100
+                    addFilteredDeckButton.animate().alpha(0f).duration = 100
+                    addSharedButton.animate().translationY(400f).duration = 100
                     addDeckButton
                         .animate()
-                        .translationY(0f)
-                        .setDuration(150)
+                        .translationY(300f)
+                        .setDuration(50)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
@@ -129,8 +151,8 @@ class DeckPickerFloatingActionMenu(
                         )
                     addFilteredDeckButton
                         .animate()
-                        .translationY(0f)
-                        .setDuration(150)
+                        .translationY(400f)
+                        .setDuration(100)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
@@ -150,10 +172,12 @@ class DeckPickerFloatingActionMenu(
                         )
                 }
             } else {
+                // Close without animation
                 binding.addSharedButton.visibility = View.GONE
                 binding.addDeckButton.visibility = View.GONE
                 binding.addFilteredDeckButton.visibility = View.GONE
                 binding.fabMain.isExtended = false
+
                 binding.fabMain.setIconResource(addWhiteIcon)
             }
         } else {
@@ -162,19 +186,21 @@ class DeckPickerFloatingActionMenu(
             isFABOpen = false
             binding.fabBGLayout.visibility = View.GONE
             if (deckPicker.animationEnabled()) {
+                // Changes the background color of FAB to default
                 binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+                // Close with animation
                 binding.fabMain.setIconResource(addWhiteIcon)
                 binding.fabMain.shrink()
 
                 with(binding) {
-                    addSharedButton.animate().alpha(0f).duration = 150
-                    addDeckButton.animate().alpha(0f).duration = 150
-                    addFilteredDeckButton.animate().alpha(0f).duration = 150
-                    addSharedButton.animate().translationY(0f).duration = 150
+                    addSharedButton.animate().alpha(0f).duration = 70
+                    addDeckButton.animate().alpha(0f).duration = 50
+                    addFilteredDeckButton.animate().alpha(0f).duration = 50
+                    addSharedButton.animate().translationY(600f).duration = 100
                     addDeckButton
                         .animate()
-                        .translationY(0f)
-                        .setDuration(150)
+                        .translationY(400f)
+                        .setDuration(50)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
@@ -194,8 +220,8 @@ class DeckPickerFloatingActionMenu(
                         )
                     addFilteredDeckButton
                         .animate()
-                        .translationY(0f)
-                        .setDuration(150)
+                        .translationY(600f)
+                        .setDuration(100)
                         .setListener(
                             object : Animator.AnimatorListener {
                                 override fun onAnimationStart(animator: Animator) {}
@@ -215,10 +241,12 @@ class DeckPickerFloatingActionMenu(
                         )
                 }
             } else {
+                // Close without animation
                 binding.addSharedButton.visibility = View.GONE
                 binding.addDeckButton.visibility = View.GONE
                 binding.addFilteredDeckButton.visibility = View.GONE
                 binding.fabMain.isExtended = false
+
                 binding.fabMain.setIconResource(addWhiteIcon)
             }
         }
@@ -233,6 +261,7 @@ class DeckPickerFloatingActionMenu(
 
     fun hideFloatingActionButton() {
         if (binding.fabMain.isShown) {
+            // close the menu if it's open so the other menu items are hidden as well
             closeFloatingActionMenu(false)
             Timber.i("DeckPicker:: hideFloatingActionButton()")
             binding.fabMain.visibility = View.GONE
@@ -263,6 +292,8 @@ class DeckPickerFloatingActionMenu(
                 }
 
                 override fun onUnconfirmedSingleTap(e: MotionEvent?) {
+                    // we use an unconfirmed tap as we don't want any visual delay in tapping the +
+                    // and opening the menu.
                     if (!isFABOpen) {
                         showFloatingActionMenu()
                     } else {
@@ -272,6 +303,7 @@ class DeckPickerFloatingActionMenu(
             },
         )
 
+        // Enable keyboard activation for Enter/DPAD_CENTER/ESC keys
         binding.fabMain.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
@@ -308,6 +340,7 @@ class DeckPickerFloatingActionMenu(
         setCreateDeckButtonLabel()
         binding.addDeckButton.setOnClickListener(addDeckListener)
 
+        // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addDeckKeyListener =
             createActivationKeyListener("Add Deck button: ENTER key pressed") {
                 if (isFABOpen) {
@@ -325,6 +358,7 @@ class DeckPickerFloatingActionMenu(
             }
         binding.addFilteredDeckButton.setOnClickListener(addFilteredDeckListener)
 
+        // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addFilteredDeckKeyListener =
             createActivationKeyListener("Add Filtered Deck button: ENTER key pressed") {
                 if (isFABOpen) {
@@ -343,6 +377,7 @@ class DeckPickerFloatingActionMenu(
             }
         binding.addSharedButton.setOnClickListener(addSharedListener)
 
+        // Enable keyboard activation for Enter/DPAD_CENTER keys
         val addSharedKeyListener =
             createActivationKeyListener("Add Shared Deck button: ENTER key pressed") {
                 if (isFABOpen) {
@@ -351,7 +386,9 @@ class DeckPickerFloatingActionMenu(
                 }
             }
         binding.addSharedButton.setOnKeyListener(addSharedKeyListener)
-
+        // Mirrors the touch DoubleTapListener above: TalkBack and hardware keyboards activate via
+        // ACTION_CLICK -> performClick(), which bypasses the touch GestureDetector. Opening the menu
+        // must live here too, otherwise the FAB is inoperable when a screen reader is enabled.
         val fabMainClickListener =
             View.OnClickListener {
                 if (!isFABOpen) {
@@ -365,10 +402,17 @@ class DeckPickerFloatingActionMenu(
         binding.fabMain.setOnClickListener(fabMainClickListener)
     }
 
+    /**
+     * Closes the FAB menu and opens the [NoteEditorFragment]
+     * @see DeckPicker.addNote
+     */
     private fun addNote() {
         deckPicker.addNote()
     }
 
+    /**
+     * Sets the label of the 'Create deck' button from the backend translation.
+     */
     private fun setCreateDeckButtonLabel() {
         binding.addDeckButton.apply {
             text = with(context) { TR.sentenceCase.createDeck }
@@ -378,6 +422,7 @@ class DeckPickerFloatingActionMenu(
     }
 
     fun interface FloatingActionBarToggleListener {
+        /** Triggered when the drawer is starting to open/close */
         fun onBeginToggle(isOpening: Boolean)
     }
 }
