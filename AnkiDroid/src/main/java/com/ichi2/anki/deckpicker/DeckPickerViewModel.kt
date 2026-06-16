@@ -168,10 +168,12 @@ class DeckPickerViewModel :
             tree.onlyHasDefaultDeck() && noCards
         }.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue = null)
 
+    // Sum the top-level decks rather than the root, whose aggregate the backend
+    // caps at 9999 (issue #17605). See DeckNode.totalCardsDue.
     val flowOfCardsDue =
         combine(flowOfDeckDueTree, flowOfDeckListInInitialState) { tree, inInitialState ->
             if (tree == null || inInitialState != false) return@combine null
-            tree.newCount + tree.revCount + tree.lrnCount
+            tree.totalCardsDue()
         }
 
     /** "Studied N cards in 0 seconds today */
