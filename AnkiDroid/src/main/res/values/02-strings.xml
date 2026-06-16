@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-  ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
   ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
   ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
   ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
@@ -446,6 +446,9 @@ opening the system text to speech settings fails">Failed to open text to speech 
 
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example ', ' in 'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
+    <string name="from_label" comment="Label for source note type in change note type dialog">From</string>
+    <string name="to_label" comment="Label for destination note type in change note type dialog">To</string>
+    <string name="change_direction_arrow">Change direction</string>
 
     <!--Set up date-->
     <string name="set_due_date_day" comment="Used for setting due date">Day</string>

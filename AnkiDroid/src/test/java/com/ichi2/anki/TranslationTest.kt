@@ -338,6 +338,13 @@ class TranslationTest : RobolectricTest() {
                 "Answer buttons", // R.string.answer_buttons | TR.statisticsAnswerButtonsTitle()
                 "Answer good", // R.string.answer_good | TR.deckConfigAnswerGood()
                 "Answer hard", // R.string.answer_hard | TR.deckConfigAnswerHard()
+                "Browser options", // R.string.browser_options_dialog_heading | TR.browsingBrowserOptions()
+                "Bury card", // R.string.menu_bury_card | TR.studyingBuryCard()
+                "Change deck", // R.string.card_browser_change_deck | TR.browsingChangeDeck()
+                "Copy debug info", // R.string.feedback_copy_debug
+                // TR.aboutCopyDebugInfo()
+                // TR.errorsCopyDebugInfoButton()
+                "Create deck", // R.string.new_deck | TR.decksCreateDeck()
                 "Deck options", // R.string.menu__deck_options | TR.deckConfigTitle()
                 "Follow system", // R.string.theme_follow_system | TR.preferencesThemeFollowSystem()
                 "Manage note types", // R.string.model_browser_label

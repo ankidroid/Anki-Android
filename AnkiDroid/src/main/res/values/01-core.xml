@@ -70,6 +70,7 @@
     <string name="menu_add_note" maxLength="28">Add note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can't be found in AnkiDroid directly.">Sync account</string>
     <string name="menu_dismiss_note" maxLength="41" >Hide / delete</string>
+    <string name="menu_bury_card" maxLength="28" tools:ignore="UnusedResources">Bury card</string>
     <string name="rename_flag">Rename flags</string>
     <string name="menu_edit_tags" maxLength="28">Edit tags</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
@@ -187,4 +188,14 @@
 
     <!-- Multiple profile -->
     <string name="add_profile">Add profile</string>
+
+    <plurals name="fields_will_be_removed">
+        <item quantity="one">%d field will be removed.</item>
+        <item quantity="other">%d fields will be removed.</item>
+    </plurals>
+
+    <plurals name="cards_will_be_removed">
+        <item quantity="one">%d card will be removed.</item>
+        <item quantity="other">%d cards will be removed.</item>
+    </plurals>
 </resources>
