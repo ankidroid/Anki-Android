@@ -15,7 +15,6 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.Color
 import android.graphics.PixelFormat
@@ -26,6 +25,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -266,8 +266,8 @@ open class DeckPicker :
 
     override var fragmented: Boolean
         get() =
-            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK ==
-                Configuration.SCREENLAYOUT_SIZE_XLARGE
+            Prefs.showSplitView &&
+                resources.configuration.screenWidthDp >= 840
         set(_) = throw UnsupportedOperationException()
 
     // Short animation duration from system
@@ -499,6 +499,18 @@ open class DeckPicker :
         }
 
         setViewBinding(binding)
+        if (!fragmented) {
+            binding.studyoptionsFragment?.isVisible = false
+            binding.resizingDivider?.isVisible = false
+            // Ensure the deck picker pane fills the full width
+            deckPickerBinding.root.let { pane ->
+                (pane.layoutParams as? android.widget.LinearLayout.LayoutParams)?.let {
+                    it.width = ViewGroup.LayoutParams.MATCH_PARENT
+                    it.weight = 0f
+                    pane.layoutParams = it
+                }
+            }
+        }
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
         //  It seems that the original idea was for this to only run once, on app start.
@@ -760,7 +772,7 @@ open class DeckPicker :
         }
 
         fun onResizingDividerVisibilityChanged(isVisible: Boolean) {
-            binding.resizingDivider?.isVisible = isVisible
+            binding.resizingDivider?.isVisible = isVisible && fragmented
         }
 
         fun onCardsDueChanged(dueCount: Int?) {
@@ -1938,6 +1950,11 @@ open class DeckPicker :
      * @return whether the panel was shown
      */
     private fun tryShowStudyOptionsPanel(): Boolean {
+        if (!fragmented) {
+            binding.studyoptionsFragment?.isVisible = false
+            binding.resizingDivider?.isVisible = false
+            return false
+        }
         val containerId = binding.studyoptionsFragment?.id ?: return false
         supportFragmentManager.commit {
             replace(containerId, StudyOptionsFragment())

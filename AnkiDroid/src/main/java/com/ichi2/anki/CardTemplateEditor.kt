@@ -220,7 +220,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             tempNoteType = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
-        fragmented = binding.fragmentContainer?.isVisible == true
+        fragmented = Prefs.showSplitView && binding.fragmentContainer?.isVisible == true
 
         setNavigationBarColor(R.attr.alternativeBackgroundColor)
 
@@ -238,6 +238,9 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
             )
+        } else {
+            binding.fragmentContainer?.isVisible = false
+            binding.cardTemplateEditorResizingDivider?.isVisible = false
         }
 
         // Open TemplatePreviewerFragment if in fragmented mode

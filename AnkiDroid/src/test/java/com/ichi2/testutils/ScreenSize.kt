@@ -20,7 +20,7 @@ import org.robolectric.RuntimeEnvironment
 import timber.log.Timber
 
 /** [block] runs with a runtime qualifier emulating a split-pane display */
-fun withSplitPaneUi(block: () -> Unit) = withQualifier("sw700dp", block)
+fun withSplitPaneUi(block: () -> Unit) = withQualifier("w840dp", block)
 
 fun withQualifier(
     newQualifier: String,
@@ -38,7 +38,7 @@ fun withQualifier(
 }
 
 /** [block] runs with a runtime qualifier emulating a split-pane display */
-suspend fun withSplitPaneUiAsync(block: suspend () -> Unit) = withQualifierAsync("sw700dp", block)
+suspend fun withSplitPaneUiAsync(block: suspend () -> Unit) = withQualifierAsync("w840dp", block)
 
 suspend fun withQualifierAsync(
     newQualifier: String,

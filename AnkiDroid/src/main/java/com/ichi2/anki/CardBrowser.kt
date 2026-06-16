@@ -103,7 +103,7 @@ open class CardBrowser :
     }
 
     override var fragmented: Boolean
-        get() = viewModel.isFragmented
+        get() = Prefs.showSplitView && viewModel.isFragmented
         set(_) {
             throw UnsupportedOperationException()
         }
@@ -211,7 +211,8 @@ open class CardBrowser :
          */
         // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
         val fragmented =
-            Prefs.devIsCardBrowserFragmented &&
+            Prefs.showSplitView &&
+                Prefs.devIsCardBrowserFragmented &&
                 !useSearchView &&
                 binding.noteEditorFrame?.visibility == View.VISIBLE
         Timber.i("Using split Browser: %b", fragmented)
