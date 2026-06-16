@@ -17,7 +17,9 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 
@@ -32,4 +34,25 @@ abstract class AbstractIntentHandler : Activity() {
         disableXiaomiForceDarkMode(this)
         setContentView(R.layout.activity_progress_bar)
     }
+
+    fun requestPermissionsThenStartThroughDeckPicker(targetIntent: Intent) {
+        val ankiDroidFolder = selectAnkiDroidFolder(this)
+        val continueIntent =
+            DeckPicker.getIntentToStartAfterStartup(
+                this,
+                targetIntent.withoutTaskClearingFlags(),
+            )
+        startActivity(PermissionsActivity.getIntent(this, ankiDroidFolder.permissionSet, continueIntent))
+        finish()
+    }
+
+    fun hasCollectionStoragePermissions(): Boolean {
+        val ankiDroidFolder = selectAnkiDroidFolder(this)
+        return ankiDroidFolder.hasRequiredPermissions(this)
+    }
+
+    private fun Intent.withoutTaskClearingFlags(): Intent =
+        Intent(this).apply {
+            flags = flags and (Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK).inv()
+        }
 }

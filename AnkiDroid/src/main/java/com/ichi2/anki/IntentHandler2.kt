@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.content.Intent
 import android.os.Bundle
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
@@ -35,6 +36,11 @@ class IntentHandler2 : AbstractIntentHandler() {
         if (NoteEditorFragment.intentLaunchedWithImage(intent)) {
             Timber.i("Intent contained an image")
             intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.ADD_IMAGE.value)
+        }
+        if (!hasCollectionStoragePermissions()) {
+            Timber.i("No Storage Permission, postponing intent")
+            requestPermissionsThenStartThroughDeckPicker(Intent(intent).setClass(this, IntentHandler2::class.java))
+            return
         }
         if (intent.extras == null) {
             Timber.w("Intent unexpectedly has no extras. Notifying user, defaulting to add note.")

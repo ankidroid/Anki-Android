@@ -76,7 +76,7 @@ class IntentHandler : AbstractIntentHandler() {
         val action = intent.action
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
-        val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
+        val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(action) { runnable() } }
         val launchType = getLaunchType(intent)
         // TODO block the UI with some kind of ProgressDialog instead of cancelling the sync work
         if (requiresCollectionAccess(launchType)) {
@@ -138,16 +138,15 @@ class IntentHandler : AbstractIntentHandler() {
      */
     @NeedsTest("clicking a file in 'Files' to import")
     private fun performActionIfStorageAccessible(
-        reloadIntent: Intent,
         action: String?,
         block: () -> Unit,
     ) {
-        if (grantedStoragePermissions(this, showToast = true)) {
+        if (hasCollectionStoragePermissions()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             block()
         } else {
             Timber.i("No Storage Permission, cancelling intent '%s'", action)
-            launchDeckPickerIfNoOtherTasks(reloadIntent)
+            requestPermissionsThenStartThroughDeckPicker(Intent(intent).setClass(this, IntentHandler::class.java))
         }
     }
 

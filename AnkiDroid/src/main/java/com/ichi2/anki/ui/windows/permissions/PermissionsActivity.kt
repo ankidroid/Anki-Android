@@ -50,6 +50,7 @@ import timber.log.Timber
  */
 class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     private val binding by viewBinding(ActivityPermissionsBinding::bind)
+    private var continueIntent: Intent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -60,7 +61,11 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         Themes.setTheme(this)
         setTransparentStatusBar()
 
-        binding.continueButton.setOnClickListener { finish() }
+        continueIntent = IntentCompat.getParcelableExtra(intent, CONTINUE_INTENT_EXTRA, Intent::class.java)
+        binding.continueButton.setOnClickListener {
+            continueIntent?.let(::startActivity)
+            finish()
+        }
 
         // #20881: Activity should not be launchd without extras
         val permissionSet = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
@@ -93,13 +98,16 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
 
     companion object {
         const val PERMISSIONS_SET_EXTRA = "permissionsSet"
+        const val CONTINUE_INTENT_EXTRA = "continueIntent"
 
         fun getIntent(
             context: Context,
             permissionsSet: PermissionSet,
+            continueIntent: Intent? = null,
         ): Intent =
             Intent(context, PermissionsActivity::class.java).apply {
                 putExtra(PERMISSIONS_SET_EXTRA, permissionsSet as Parcelable)
+                putExtra(CONTINUE_INTENT_EXTRA, continueIntent)
             }
     }
 }

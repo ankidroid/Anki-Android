@@ -83,6 +83,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
@@ -680,7 +681,7 @@ open class AnkiActivity(
     }
 
     /**
-     * If storage permissions are not granted, shows a toast message and finishes the activity.
+     * If storage permissions are not granted, shows the permission screen and postpones activity startup.
      *
      * This should be called AFTER a call to `super.`[onCreate]
      *
@@ -690,13 +691,21 @@ open class AnkiActivity(
      * @throws SystemStorageException if `getExternalFilesDir` returns null
      */
     fun ensureStoragePermissions(): Boolean {
-        if (IntentHandler.grantedStoragePermissions(this, showToast = true)) {
+        val ankiDroidFolder = selectAnkiDroidFolder(this)
+        if (ankiDroidFolder.hasRequiredPermissions(this)) {
             return true
         }
-        Timber.w("finishing activity. No storage permission")
+        Timber.i("${this.javaClass.simpleName}: postponing startup code - permission screen shown")
+        val continueIntent = DeckPicker.getIntentToStartAfterStartup(this, intent.withoutTaskClearingFlags())
+        startActivity(PermissionsActivity.getIntent(this, ankiDroidFolder.permissionSet, continueIntent))
         finish()
         return false
     }
+
+    private fun Intent.withoutTaskClearingFlags(): Intent =
+        Intent(this).apply {
+            flags = flags and (Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK).inv()
+        }
 
     override val shortcuts
         get(): ShortcutGroup? = null

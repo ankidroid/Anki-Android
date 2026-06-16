@@ -52,6 +52,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -754,6 +755,7 @@ open class DeckPicker :
                     // Must stay here: clearing in ViewModel would break cold start (collector is only active at RESUMED).
                     viewModel.flowOfStartupResponse.value = null
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
+                    startPendingIntentAfterStartup()
 
                     if (tryShowStudyOptionsPanel()) {
                         ResizablePaneManager(
@@ -924,6 +926,31 @@ open class DeckPicker :
             }
 
         viewModel.handleStartup(environment = environment)
+    }
+
+    private fun startPendingIntentAfterStartup() {
+        if (!colIsOpenUnsafe()) {
+            return
+        }
+        startPendingIntent()
+    }
+
+    private fun startPendingIntentIfCollectionIsOpen() {
+        if (colIsOpenUnsafe()) {
+            startPendingIntent()
+        }
+    }
+
+    private fun startPendingIntent() {
+        val pendingIntent =
+            IntentCompat.getParcelableExtra(intent, START_AFTER_STARTUP_INTENT_EXTRA, Intent::class.java)
+                ?: return
+        intent.removeExtra(START_AFTER_STARTUP_INTENT_EXTRA)
+        try {
+            startActivity(pendingIntent)
+        } catch (e: SecurityException) {
+            Timber.w(e, "Unable to start pending intent after permissions")
+        }
     }
 
     @VisibleForTesting
@@ -1330,6 +1357,7 @@ open class DeckPicker :
         super.onResume()
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
+            startPendingIntentIfCollectionIsOpen()
         }
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
@@ -2174,6 +2202,7 @@ open class DeckPicker :
          * This is for the 'download existing collection from AnkiWeb' use case
          */
         const val INTENT_SYNC_FROM_LOGIN = "syncFromLogin"
+        private const val START_AFTER_STARTUP_INTENT_EXTRA = "startAfterStartupIntent"
 
         /**
          * Available options performed by other activities (request codes for onActivityResult())
@@ -2200,6 +2229,13 @@ open class DeckPicker :
                 putExtra(INTENT_SYNC_FROM_LOGIN, true)
             }
         }
+
+        fun getIntentToStartAfterStartup(
+            context: Context,
+            targetIntent: Intent,
+        ) = getIntent(context).apply {
+            putExtra(START_AFTER_STARTUP_INTENT_EXTRA, targetIntent)
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -2209,6 +2245,7 @@ open class DeckPicker :
             Timber.i("Sync requested from Login")
             this.syncOnResume = true
         }
+        startPendingIntentIfCollectionIsOpen()
     }
 
     override fun opExecuted(

@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki
 
+import android.Manifest.permission.INTERNET
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -52,7 +53,6 @@ import anki.search.BrowserRow
 import anki.search.BrowserRow.Color
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter.Companion.LINES_VISIBLE_WHEN_COLLAPSED
@@ -80,7 +80,6 @@ import com.ichi2.anki.browser.setColumn
 import com.ichi2.anki.browser.setSelectedDeck
 import com.ichi2.anki.browser.toRowSelection
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
@@ -99,6 +98,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Up
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN2_KEYS
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.IntentAssert
@@ -106,13 +106,9 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.getSharedPrefs
+import com.ichi2.testutils.withDeniedPermissions
 import com.ichi2.testutils.withSplitPaneUiAsync
 import com.ichi2.utils.LanguageUtil
-import io.mockk.every
-import io.mockk.mockkObject
-import io.mockk.mockkStatic
-import io.mockk.unmockkObject
-import io.mockk.unmockkStatic
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
@@ -472,24 +468,22 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        try {
-            mockkStatic(::isRunningAsUnitTest)
-            mockkObject(IntentHandler)
+    fun startupFromCardBrowserActionItemShouldOpenPermissionsActivityIfNoPermissions() =
+        runTest {
+            // Robolectric uses AppPrivateFolder here, so denying INTERNET simulates missing permission.
+            withDeniedPermissions(INTERNET) {
+                val browserController = Robolectric.buildActivity(CardBrowser::class.java).create()
+                val cardBrowser = browserController.get()
+                saveControllerForCleanup(browserController)
 
-            every { grantedStoragePermissions(any(), any()) } returns false
-            every { isRunningAsUnitTest } returns false
-
-            val browserController = Robolectric.buildActivity(CardBrowser::class.java).create()
-            val cardBrowser = browserController.get()
-            saveControllerForCleanup(browserController)
-
-            assertThat("Activity should be finishing", cardBrowser.isFinishing)
-        } finally {
-            unmockkStatic(::isRunningAsUnitTest)
-            unmockkObject(IntentHandler)
+                val intent = assertNotNull(shadowOf(cardBrowser).nextStartedActivity)
+                assertThat(
+                    intent.component?.className,
+                    equalTo(PermissionsActivity::class.java.name),
+                )
+                assertThat("Activity should be finishing", cardBrowser.isFinishing)
+            }
         }
-    }
 
     @Test
     fun tagWithBracketsDisplaysProperly() =
