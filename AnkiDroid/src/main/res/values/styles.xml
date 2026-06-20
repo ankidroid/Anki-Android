@@ -286,4 +286,8 @@
     <style name="ThemeOverlay.TextInputSelectionFix" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
         <item name="colorOnPrimaryContainer">?attr/editTextHighlightColor</item>
     </style>
+
+    <style name="InvisibleErrorText" parent="TextAppearance.Design.Error">
+        <item name="android:textSize">0sp</item>
+    </style>
 </resources>
