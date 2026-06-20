@@ -81,7 +81,7 @@ abstract class MultimediaFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireAnkiActivity().setToolbarTitle(title)
+        requireAnkiActivity().setToolbarText(title)
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")

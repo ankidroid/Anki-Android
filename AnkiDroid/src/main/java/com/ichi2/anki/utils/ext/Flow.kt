@@ -53,7 +53,12 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
         fragment.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             this@launchCollectionInLifecycleScope.collect {
                 if (isRobolectric) {
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    val lifecycle = fragment.lifecycle
+                    HandlerUtils.postOnNewHandler {
+                        if (lifecycle.currentState != Lifecycle.State.DESTROYED) {
+                            runBlocking { block(it) }
+                        }
+                    }
                 } else {
                     block(it)
                 }
@@ -71,7 +76,12 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
                     // hack: lifecycleScope/runOnUiThread do not handle our
                     // test dispatcher overriding both IO and Main
                     // in tests, waitForAsyncTasksToComplete may be required.
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    val lifecycle = activity.lifecycle
+                    HandlerUtils.postOnNewHandler {
+                        if (lifecycle.currentState != Lifecycle.State.DESTROYED) {
+                            runBlocking { block(it) }
+                        }
+                    }
                 } else {
                     block(it)
                 }
@@ -90,7 +100,12 @@ fun <T> StateFlow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit
                 if (lastValue == it) return@collect
                 lastValue = it
                 if (isRobolectric) {
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    val lifecycle = activity.lifecycle
+                    HandlerUtils.postOnNewHandler {
+                        if (lifecycle.currentState != Lifecycle.State.DESTROYED) {
+                            runBlocking { block(it) }
+                        }
+                    }
                 } else {
                     block(it)
                 }

@@ -41,6 +41,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
@@ -75,6 +76,16 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
 
     private val binding by viewBinding(FragmentReminderTroubleshootingBinding::bind)
 
+    /**
+     * This fragment is launched from [ScheduleRemindersFragment], which may be hosted within an activity that
+     * has its own toolbar. In that case, we should use it instead of a local toolbar.
+     *
+     * @see ScheduleRemindersFragment.FragmentHost
+     */
+    private val overrideExternalToolbar: Boolean by lazy {
+        arguments?.getBoolean(ARGS_OVERRIDE_EXTERNAL_TOOLBAR, false) ?: false
+    }
+
     internal val notificationPermissionLauncher: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             viewModel.refreshChecks()
@@ -86,13 +97,29 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+        when (overrideExternalToolbar) {
+            true -> setupExternalActivityToolbar()
+            false -> setupInternalFragmentToolbar()
         }
 
         setupSummary()
         setupTroubleshootingChecks()
         setupSettingChangeDetector()
+    }
+
+    private fun setupExternalActivityToolbar() {
+        binding.troubleshootingToolbar.isVisible = false
+        requireAnkiActivity().apply {
+            // TODO: Move to string resources
+            setToolbarText("Troubleshooting")
+            invalidateMenu()
+        }
+    }
+
+    private fun setupInternalFragmentToolbar() {
+        binding.troubleshootingToolbar.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setupSummary() {
@@ -148,6 +175,26 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
      */
     private fun setupSettingChangeDetector() {
         onWindowFocusChanged { hasFocus -> if (hasFocus) viewModel.refreshChecks() }
+    }
+
+    companion object {
+        /**
+         * Arguments key for specifying whether the activity toolbar should be overridden instead of
+         * using a local fragment toolbar.
+         */
+        private const val ARGS_OVERRIDE_EXTERNAL_TOOLBAR = "override_external_toolbar"
+
+        fun newInstance(overrideExternalToolbar: Boolean = false): ReminderTroubleshootingFragment =
+            ReminderTroubleshootingFragment().apply {
+                arguments =
+                    Bundle().apply {
+                        putBoolean(ARGS_OVERRIDE_EXTERNAL_TOOLBAR, overrideExternalToolbar)
+                    }
+                Timber.i(
+                    "Creating ReminderTroubleshootingFragment with overrideExternalToolbar=%b",
+                    overrideExternalToolbar,
+                )
+            }
     }
 }
 
