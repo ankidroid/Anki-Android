@@ -62,10 +62,20 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
     }
 }
 
+// Workaround a bug in overload resolution. Replace with the following when the compiler is fixed:
+//  state: Lifecycle.State = Lifecycle.State.STARTED
 context(activity: AnkiActivity)
 fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+    launchCollectionInLifecycleScope(Lifecycle.State.STARTED, block)
+}
+
+context(activity: AnkiActivity)
+fun <T> Flow<T>.launchCollectionInLifecycleScope(
+    state: Lifecycle.State,
+    block: suspend (T) -> Unit,
+) {
     activity.lifecycleScope.launch {
-        activity.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        activity.lifecycle.repeatOnLifecycle(state) {
             this@launchCollectionInLifecycleScope.collect {
                 if (isRobolectric) {
                     // hack: lifecycleScope/runOnUiThread do not handle our

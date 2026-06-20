@@ -6,7 +6,9 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.activityViewModels
 import com.ichi2.anki.R
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -15,12 +17,9 @@ import com.ichi2.utils.positiveButton
 import timber.log.Timber
 import java.net.URLDecoder
 
+@NeedsTest("integration test: ImportDialog => DeckPicker")
 class ImportDialog : AsyncDialogFragment() {
-    interface ImportDialogListener {
-        fun importAdd(importPath: String)
-
-        fun importReplace(importPath: String)
-    }
+    private val importViewModel: ImportViewModel by activityViewModels()
 
     private val dialogType: Type
         get() = Type.fromCode(requireArguments().getInt(IMPORT_DIALOG_TYPE_KEY))
@@ -39,7 +38,7 @@ class ImportDialog : AsyncDialogFragment() {
                     .setTitle(R.string.import_title)
                     .setMessage(res().getString(R.string.import_dialog_message_add, displayFileName))
                     .positiveButton(R.string.import_message_add) {
-                        (activity as ImportDialogListener).importAdd(packagePath)
+                        importViewModel.triggerImportAdd(packagePath)
                         activity?.dismissAllDialogFragments()
                     }.negativeButton(R.string.dialog_cancel)
                     .create()
@@ -49,7 +48,7 @@ class ImportDialog : AsyncDialogFragment() {
                     .setTitle(R.string.import_title)
                     .setMessage(res().getString(R.string.import_message_replace_confirm, displayFileName))
                     .positiveButton(R.string.dialog_positive_replace) {
-                        (activity as ImportDialogListener).importReplace(packagePath)
+                        importViewModel.triggerImportReplace(packagePath)
                         activity?.dismissAllDialogFragments()
                     }.negativeButton(R.string.dialog_cancel)
                     .create()
