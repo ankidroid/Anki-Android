@@ -43,7 +43,6 @@ import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
-import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -170,7 +169,7 @@ class ScheduleRemindersFragment :
             ScheduleRemindersAdapter(
                 ::retrieveDeckNameFromID,
                 ::retrieveCanUserAccessDeck,
-                ::toggleReminderEnabled,
+                ::toggleReminder,
                 ::editReminder,
             )
         binding.recyclerView.adapter = adapter
@@ -207,10 +206,8 @@ class ScheduleRemindersFragment :
         reminders =
             catchDatabaseExceptions {
                 when (val scope = scheduleRemindersScope) {
-                    is ReviewReminderScope.Global -> {
-                        ReviewRemindersDatabase.getAllAppWideReminders() + ReviewRemindersDatabase.getAllDeckSpecificReminders()
-                    }
-                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.getRemindersForDeck(scope.did)
+                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.getAllReminders()
+                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.getRemindersForScope(scope)
                 }
             } ?: ReviewReminderGroup()
         triggerUIUpdate()
@@ -258,25 +255,11 @@ class ScheduleRemindersFragment :
                     // meaning we need to delete the old reminder in the old deck, then add a new reminder to the new deck
                     val reminderToDelete = modeOfFinishedDialog.reminderToBeEdited
                     Timber.d("Deleting old reminder from database")
-                    when (reminderToDelete.scope) {
-                        is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(deleteReminder(reminderToDelete))
-                        is ReviewReminderScope.DeckSpecific ->
-                            ReviewRemindersDatabase.editRemindersForDeck(
-                                reminderToDelete.scope.did,
-                                deleteReminder(reminderToDelete),
-                            )
-                    }
+                    ReviewRemindersDatabase.deleteReminder(reminderToDelete)
                 }
                 newOrModifiedReminder?.let { reminder ->
                     Timber.d("Writing new or modified reminder to database")
-                    when (reminder.scope) {
-                        is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(upsertReminder(reminder))
-                        is ReviewReminderScope.DeckSpecific ->
-                            ReviewRemindersDatabase.editRemindersForDeck(
-                                reminder.scope.did,
-                                upsertReminder(reminder),
-                            )
-                    }
+                    ReviewRemindersDatabase.insertReminder(reminder)
                 }
             }
         }
@@ -312,16 +295,17 @@ class ScheduleRemindersFragment :
         modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
     ) {
         if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
-            AlarmManagerService.unscheduleReviewReminderNotifications(
+            ReviewReminderAlarmManager.unscheduleReviewReminderNotifications(
                 requireContext(),
                 modeOfFinishedDialog.reminderToBeEdited,
             )
         }
         newOrModifiedReminder?.let {
             if (it.enabled) {
-                AlarmManagerService.scheduleReviewReminderNotification(
+                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
                     requireContext(),
                     it,
+                    attemptImmediateNotification = false,
                 )
             }
         }
@@ -361,32 +345,30 @@ class ScheduleRemindersFragment :
      * Toggles whether a review reminder is enabled, i.e. whether its notifications will fire.
      * Saves this information immediately to the database and then updates the UI.
      */
-    private fun toggleReminderEnabled(
-        id: ReviewReminderId,
-        scope: ReviewReminderScope,
-    ) {
-        Timber.d("Toggling reminder enabled state: %s", id)
-        val reminder = reminders[id] ?: return
-        val newState = !reminder.enabled
+    private fun toggleReminder(reminder: ReviewReminder) {
+        Timber.d("Toggling reminder enabled state: %s", reminder.id)
 
         // Update database
         launchCatchingTask {
             catchDatabaseExceptions {
-                when (scope) {
-                    is ReviewReminderScope.Global -> ReviewRemindersDatabase.editAllAppWideReminders(toggleReminder(reminder))
-                    is ReviewReminderScope.DeckSpecific -> ReviewRemindersDatabase.editRemindersForDeck(scope.did, toggleReminder(reminder))
-                }
+                ReviewRemindersDatabase.toggleReminder(reminder)
             }
         }
 
         // Update UI
-        reminder.enabled = newState
+        reminders.toggleEnabled(reminder.id)
         triggerUIUpdate()
 
         // Update scheduled AlarmManager notifications
-        when (newState) {
-            true -> AlarmManagerService.scheduleReviewReminderNotification(requireContext(), reminder)
-            false -> AlarmManagerService.unscheduleReviewReminderNotifications(requireContext(), reminder)
+        val updatedReminder = reminders[reminder.id] ?: return
+        when (updatedReminder.enabled) {
+            true ->
+                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
+                    requireContext(),
+                    updatedReminder,
+                    attemptImmediateNotification = false,
+                )
+            false -> ReviewReminderAlarmManager.unscheduleReviewReminderNotifications(requireContext(), reminder)
         }
     }
 
