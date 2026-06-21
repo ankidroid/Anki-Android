@@ -57,6 +57,7 @@ import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
+import net.ankiweb.rsdroid.BackendException.BackendDbException
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import kotlin.math.ceil
@@ -502,9 +503,6 @@ open class Scheduler(
     @CheckResult
     fun repositionDefaults(): RepositionDefaultsResponse = col.backend.repositionDefaults()
 
-    @LibAnkiAlias("active_decks")
-    fun activeDecks(): List<DeckId> = col.db.queryLongList("SELECT id FROM active_decks")
-
     /**
      * @return Number of new card in current deck and its descendants. Capped at [REPORT_LIMIT]
      */
@@ -689,6 +687,20 @@ open class Scheduler(
     fun learnAheadSeconds(): Int = col.config.get("collapseTime") ?: 1200
 
     fun timeboxSecs(): Int = col.config.get("timeLim") ?: 0
+
+    /*
+     * Other legacy
+     * *******************
+     */
+
+    // called by col.decks.active(), which add-ons are using
+    @LibAnkiAlias("active_decks")
+    fun activeDecks(): List<DeckId> =
+        try {
+            col.db.queryLongList("SELECT id FROM active_decks")
+        } catch (_: BackendDbException) {
+            emptyList()
+        }
 }
 
 const val REPORT_LIMIT = 99999
