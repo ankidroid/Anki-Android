@@ -292,8 +292,8 @@ class TemplateManager {
      * Custom filters can check `filterName` to decide whether it should modify
      * `fieldText` or not before returning it
      */
-    abstract class FieldFilter {
-        abstract fun apply(
+    interface FieldFilter {
+        fun apply(
             fieldText: String,
             fieldName: String,
             filterName: String,

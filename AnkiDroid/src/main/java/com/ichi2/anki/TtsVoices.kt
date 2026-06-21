@@ -24,6 +24,8 @@ package com.ichi2.anki
 
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
+import com.ichi2.anki.TtsVoices.availableLocaleData
+import com.ichi2.anki.TtsVoices.availableLocales
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.i18n.normalize
@@ -220,7 +222,7 @@ object TtsVoices {
 /**
  * `{{tts-voices:}}` A filter which lists all available TTS Voices for the current engine
  */
-class TtsVoicesFieldFilter : TemplateManager.FieldFilter() {
+class TtsVoicesFieldFilter : TemplateManager.FieldFilter {
     // modified from libAnki: tts.py: on_tts_voices
     override fun apply(
         fieldText: String,

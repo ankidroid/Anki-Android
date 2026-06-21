@@ -1,23 +1,10 @@
-/*
- *  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.model
 
 import androidx.annotation.CheckResult
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.anki.libanki.TemplateManager
 
 // Classes relating to a chain of field filters: {{type:cloze:Front}}
 
@@ -34,7 +21,7 @@ import com.ichi2.anki.libanki.NotetypeJson
  * only be used to validate inserting new filters in the AnkiDroid editor.
  *
  * @see FieldFilter
- * @see com.ichi2.anki.libanki.TemplateManager.FieldFilter
+ * @see TemplateManager.FieldFilter
  */
 data class FilterContext(
     /**
@@ -69,6 +56,10 @@ data class FilterContext(
      * Applying more filters to these outputs would corrupt them.
      */
     val isTerminal: Boolean = false,
+    /**
+     * Whether the chain produces a `[[type:...]]` marker (via the `type:` field filter)
+     */
+    val producesTypeMarker: Boolean = false,
 )
 
 /**
@@ -133,6 +124,7 @@ object FieldFilters {
             HintFilter,
             TypeTheAnswerFilter,
             TypeTheAnswerNonCombiningFilter,
+            NoSuggestFilter,
             TextToSpeechFilter(),
             FuriganaFilter,
             KanaFilter,
@@ -240,7 +232,7 @@ object FieldFilters {
     object TypeTheAnswerFilter : FieldFilter {
         override val name: String = "type"
 
-        override fun updateContext(input: FilterContext) = input.copy(isTerminal = true)
+        override fun updateContext(input: FilterContext) = input.copy(isTerminal = true, producesTypeMarker = true)
     }
 
     /**
@@ -263,7 +255,49 @@ object FieldFilters {
     object TypeTheAnswerNonCombiningFilter : FieldFilter {
         override val name: String = "type:nc"
 
-        override fun updateContext(input: FilterContext) = input.copy(isTerminal = true)
+        override fun updateContext(input: FilterContext) = input.copy(isTerminal = true, producesTypeMarker = true)
+    }
+
+    /**
+     * `{{nosuggest:type:Field}}`: disables keyboard suggestions, swiping and autocorrect
+     *
+     * AnkiDroid-only.
+     *
+     * Converts the rendered `[[type:abc]]` to `[[type:nosuggest:abc]]`, which is then consumed
+     * by the `TypeAnswer` parser.
+     *
+     * See [#10352](https://github.com/ankidroid/Anki-Android/issues/10352).
+     * @see com.ichi2.anki.previewer.TypeAnswer.noSuggest
+     */
+    object NoSuggestFilter :
+        FieldFilter,
+        TemplateManager.FieldFilter {
+        override val name: String = "nosuggest"
+
+        /**
+         * May only be applied to `type:` or `type:nc` filter which are both terminal chains,
+         * therefore, do not check 'super.canApplyTo'
+         */
+        override fun canApplyTo(context: FilterContext): Boolean = context.producesTypeMarker
+
+        override fun updateContext(input: FilterContext): FilterContext = input
+
+        override fun apply(
+            fieldText: String,
+            fieldName: String,
+            filterName: String,
+            ctx: TemplateManager.TemplateRenderContext,
+        ): String {
+            if (filterName != name) return fieldText
+            if (!fieldText.contains("[[type:")) return fieldText
+            if (fieldText.contains("[[type:nosuggest:")) return fieldText
+            return fieldText.replace("[[type:", "[[type:nosuggest:")
+        }
+
+        /** Registers this filter as a runtime transformer with the [TemplateManager]. */
+        fun ensureApplied() {
+            TemplateManager.fieldFilters.putIfAbsent(name, this)
+        }
     }
 
     /**

@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.text.InputType
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.KeyEvent
@@ -58,6 +59,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.getSystemService
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
@@ -121,6 +123,7 @@ import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
 import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
@@ -235,6 +238,10 @@ abstract class AbstractFlashcardViewer :
     private var cardFrame: FrameLayout? = null
     private var touchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
+
+    /** Layout-provided default `inputType` for [answerField], captured once and used to restore
+     *  state when moving off a card that used `{{nosuggest:type:}}`. See issue #10352. */
+    private var defaultAnswerFieldInputType: Int? = null
     protected var flipCardLayout: FrameLayout? = null
     private var easeButtonsLayout: LinearLayout? = null
 
@@ -559,6 +566,7 @@ abstract class AbstractFlashcardViewer :
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         gestureDetectorImpl = LinkDetectingGestureDetector()
         TtsVoicesFieldFilter.ensureApplied()
+        NoSuggestFilter.ensureApplied()
     }
 
     override fun setupBackPressedCallbacks() {
@@ -726,6 +734,20 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun answerFieldIsFocused(): Boolean = answerField != null && answerField!!.isFocused
+
+    /**
+     * Apply or restore the `{{nosuggest:type:}}` flag set on [answerField].
+     */
+    private fun applyTypeAnswerSuggestionFlags(noSuggest: Boolean) {
+        val field = answerField ?: return
+        // see ReviewerFragment for why `TYPE_NULL` was selected
+        val targetInputType =
+            if (noSuggest) InputType.TYPE_NULL else (defaultAnswerFieldInputType ?: field.inputType)
+        if (field.inputType != targetInputType) {
+            field.inputType = targetInputType
+            getSystemService<InputMethodManager>()?.restartInput(field)
+        }
+    }
 
     val deckOptionsLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
@@ -968,7 +990,10 @@ abstract class AbstractFlashcardViewer :
             val params = flipCardLayout!!.layoutParams
             params.height = initialFlipCardHeight * 2
         }
-        answerField = findViewById(R.id.answer_field)
+        answerField =
+            findViewById<FixedEditText>(R.id.answer_field).also { answerField ->
+                defaultAnswerFieldInputType = answerField.inputType
+            }
         initControls()
 
         // Position answer buttons
@@ -1330,6 +1355,7 @@ abstract class AbstractFlashcardViewer :
             // Show text entry based on if the user wants to write the answer
             answerField?.visibility = View.VISIBLE
             answerField?.applyLanguageHint(typeAnswer?.languageHint)
+            applyTypeAnswerSuggestionFlags(typeAnswer?.noSuggest == true)
         } else {
             answerField?.visibility = View.GONE
         }
@@ -1974,6 +2000,7 @@ abstract class AbstractFlashcardViewer :
                 // Show text entry based on if the user wants to write the answer
                 answerField?.visibility = View.VISIBLE
                 answerField?.applyLanguageHint(typeAnswer?.languageHint)
+                applyTypeAnswerSuggestionFlags(typeAnswer?.noSuggest == true)
             } else {
                 answerField?.visibility = View.GONE
             }
