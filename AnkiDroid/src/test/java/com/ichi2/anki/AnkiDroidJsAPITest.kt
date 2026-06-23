@@ -20,7 +20,6 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
-import com.ichi2.anki.security.DangerousJsPermissionDeniedException
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.getString
@@ -34,7 +33,6 @@ import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
@@ -395,10 +393,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val jsApi = reviewer.jsApi
         waitForAsyncTasksToComplete()
 
-        // Pref off: denied, the call throws and the search does not run.
-        assertFailsWith<DangerousJsPermissionDeniedException> {
-            jsApi.searchCardWithCallback("foo")
-        }
+        // Pref off: denied, snackbar shown, returns success:false and search does not run.
+        assertThat(
+            getDataFromRequest("searchCardWithCallback", jsApi, "foo"),
+            equalTo(formatSuccessfulApiResult { put("value", false) }),
+        )
 
         // Pref on: runs the search without error.
         editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), true) }
@@ -442,11 +441,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             put("tag", "remote")
         }.toString()
 
-        // Pref off: denied, tag is not applied.
-        assertFailsWith<DangerousJsPermissionDeniedException> {
-            getDataFromRequest("addTagToNote", jsapi, params)
-        }
-        assertThat(col.getNote(targetNid).tags, equalTo(emptyList()))
+        // Pref off: denied, snackbar shown, returns success:false and tag is not applied.
+        assertThat(
+            getDataFromRequest("addTagToNote", jsapi, params),
+            equalTo(formatApiResult(false)),
+        )
 
         // Pref on: the tag is applied to the other note.
         editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), true) }
@@ -500,24 +499,19 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             }.toString().toByteArray()
         }
 
-        fun formatApiResult(res: Any): String {
-            return JSONObject().apply {
+        private inline fun formatSuccessfulApiResult(block: JSONObject.() -> Unit): String =
+            JSONObject().apply {
                 put("success", true)
-                when (res) {
-                    is Boolean -> {
-                        put("value", res)
-                    }
-                    is Int -> {
-                        put("value", res)
-                    }
-                    is Long -> {
-                        put("value", res)
-                    }
-                    else -> {
-                        put("value", res.toString())
-                    }
-                }
+                block()
             }.toString()
+
+        fun formatApiResult(res: Any): String {
+            return when (res) {
+                is Boolean -> formatSuccessfulApiResult { put("value", res) }
+                is Int -> formatSuccessfulApiResult { put("value", res) }
+                is Long -> formatSuccessfulApiResult { put("value", res) }
+                else -> formatSuccessfulApiResult { put("value", res.toString()) }
+            }
         }
 
         suspend fun getDataFromRequest(
