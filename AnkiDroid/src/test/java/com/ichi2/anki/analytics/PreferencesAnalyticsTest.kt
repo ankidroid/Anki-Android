@@ -70,7 +70,11 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         "syncAccount",
         "syncBaseUrl",
         "language",
-        "customSyncCertificate"
+        "customSyncCertificate",
+        // Security-sensitive settings (GHSL-2026-084)
+        "allow_dangerous_js_api",
+        // Security-sensitive settings (GHSL-2026-085)
+        "allowCardExternalLaunch"
     )
 
     @Test
