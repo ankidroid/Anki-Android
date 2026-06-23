@@ -81,7 +81,11 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         "advanced_statistics_enabled",
         "advanced_forecast_stats_compute_n_days",
         "advanced_forecast_stats_compute_precision",
-        "advanced_forecast_stats_mc_n_iterations"
+        "advanced_forecast_stats_mc_n_iterations",
+        // Security-sensitive settings (GHSL-2026-084)
+        "allow_dangerous_js_api",
+        // Security-sensitive settings (GHSL-2026-085)
+        "allowCardExternalLaunch"
     )
 
     @Test
