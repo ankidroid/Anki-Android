@@ -29,6 +29,11 @@ video {
 body.night_mode {
   color: white;
   background-color: black;
+  /* Make UA-painted system colors follow the dark theme: e.g. a <dialog>'s
+     default `Canvas` background, native form controls, scrollbars. Without
+     this they keep their light defaults even though the body is dark. Mirrors
+     desktop Anki, which sets `color-scheme: dark` on the night-mode root. */
+  color-scheme: dark;
 }
 
 body.ankidroid_dark_mode {
