@@ -43,10 +43,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
+import java.io.File
 
 class TemplatePreviewerViewModel(
+    cacheDir: File,
     savedStateHandle: SavedStateHandle,
-) : CardViewerViewModel(savedStateHandle) {
+) : CardViewerViewModel(cacheDir, savedStateHandle) {
     private val notetype: NotetypeJson
     private val fillEmpty: Boolean
     private val isCloze: Boolean
@@ -63,7 +65,7 @@ class TemplatePreviewerViewModel(
     private val templateNames: Deferred<List<String>>
     private val clozeOrds: Deferred<List<CardOrdinal>>?
     override var currentCard: Deferred<Card>
-    override val server = AnkiServer(this).also { it.start() }
+    override val server = AnkiServer(this, cacheDir).also { it.start() }
 
     /**
      * Ordered list of cards with empty fronts

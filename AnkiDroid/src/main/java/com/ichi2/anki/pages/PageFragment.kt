@@ -104,7 +104,9 @@ abstract class PageFragment(
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        server = AnkiServer(this).also { it.start() }
+        // Store the TLS keystore in the app cache directory: it is per-profile by design and can be
+        // regenerated if the OS clears it.
+        server = AnkiServer(this, requireContext().cacheDir).also { it.start() }
         webViewLayout = view.findViewById(R.id.webview_layout)
 
         minimumWebViewVersion?.let { minVersion ->

@@ -32,9 +32,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
@@ -100,7 +103,13 @@ class ReviewerFragment :
     DispatchKeyEventListener,
     TagsDialogListener,
     ShakeDetector.Listener {
-    override val viewModel: ReviewerViewModel by viewModels()
+    override val viewModel: ReviewerViewModel by viewModels {
+        viewModelFactory {
+            initializer {
+                ReviewerViewModel(requireContext().cacheDir, createSavedStateHandle())
+            }
+        }
+    }
     private val binding by viewBinding(FragmentReviewerBinding::bind)
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
