@@ -262,6 +262,7 @@ class TranslationTest : RobolectricTest() {
                 "Import", // R.string.menu_import | TR.actionsImport()
                 "Language", // R.string.language | TR.preferencesLanguage()
                 "Later", // R.string.button_backup_later | TR.schedulingUpdateLaterButton()
+                "Learn More", // R.string.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
                 "Learn ahead limit", // R.string.learn_cutoff | TR.preferencesLearnAheadLimit()
                 "Light", // R.string.day_theme_light | TR.preferencesThemeLight()
                 "Media", // R.string.media
@@ -352,7 +353,6 @@ class TranslationTest : RobolectricTest() {
                 "Answer buttons", // R.string.answer_buttons | TR.statisticsAnswerButtonsTitle()
                 "Follow system", // R.string.theme_follow_system | TR.preferencesThemeFollowSystem()
                 "Select all", // R.string.card_browser_select_all | TR.editingImageOcclusionSelectAll()
-                "Learn more", // R.string.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
                 "Show answer", // R.string.show_answer
                 // TR.studyingShowAnswer()
                 // TR.deckConfigQuestionActionShowAnswer()

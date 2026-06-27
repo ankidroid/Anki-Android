@@ -317,7 +317,7 @@
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
 
-    <string name="scoped_storage_learn_more">Learn more</string>
+    <string name="scoped_storage_learn_more">Learn More</string>
 
     <string name="search_card_js_api_no_results">Search returned no results</string>
 
