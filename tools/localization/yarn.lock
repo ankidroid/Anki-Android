@@ -1131,7 +1131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.6.0":
+"@types/node@npm:^25.6.2":
   version: 25.9.4
   resolution: "@types/node@npm:25.9.4"
   dependencies:
@@ -1172,7 +1172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^8.59.1":
+"@typescript-eslint/eslint-plugin@npm:^8.59.2":
   version: 8.62.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.62.0"
   dependencies:
@@ -1192,7 +1192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^8.59.1":
+"@typescript-eslint/parser@npm:^8.59.2":
   version: 8.62.0
   resolution: "@typescript-eslint/parser@npm:8.62.0"
   dependencies:
@@ -1535,9 +1535,9 @@ __metadata:
     "@eslint/eslintrc": "npm:^3.3.5"
     "@eslint/js": "npm:^10.0.1"
     "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^25.6.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8.59.1"
-    "@typescript-eslint/parser": "npm:^8.59.1"
+    "@types/node": "npm:^25.6.2"
+    "@typescript-eslint/eslint-plugin": "npm:^8.59.2"
+    "@typescript-eslint/parser": "npm:^8.59.2"
     axios: "npm:^1.16.0"
     dotenv: "npm:^17.4.2"
     eslint: "npm:^10.3.0"
@@ -1548,7 +1548,7 @@ __metadata:
     eslint-plugin-promise: "npm:^7.3.0"
     extract-zip: "npm:^2.0.1"
     globals: "npm:^17.6.0"
-    jest: "npm:^30.3.0"
+    jest: "npm:^30.4.2"
     prettier: "npm:^3.8.3"
     ts-jest: "npm:^29.4.9"
     ts-node: "npm:^10.9.2"
@@ -4149,7 +4149,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^30.3.0":
+"jest@npm:^30.4.2":
   version: 30.4.2
   resolution: "jest@npm:30.4.2"
   dependencies:
