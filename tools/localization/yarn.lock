@@ -381,7 +381,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@crowdin/crowdin-api-client@npm:^1.55.3":
+"@crowdin/crowdin-api-client@npm:^1.55.4":
   version: 1.56.0
   resolution: "@crowdin/crowdin-api-client@npm:1.56.0"
   dependencies:
@@ -1131,7 +1131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.9.1":
+"@types/node@npm:^25.9.2":
   version: 25.9.4
   resolution: "@types/node@npm:25.9.4"
   dependencies:
@@ -1531,14 +1531,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ankidroid-localization@workspace:."
   dependencies:
-    "@crowdin/crowdin-api-client": "npm:^1.55.3"
+    "@crowdin/crowdin-api-client": "npm:^1.55.4"
     "@eslint/eslintrc": "npm:^3.3.5"
     "@eslint/js": "npm:^10.0.1"
     "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^25.9.1"
+    "@types/node": "npm:^25.9.2"
     "@typescript-eslint/eslint-plugin": "npm:^8.60.1"
     "@typescript-eslint/parser": "npm:^8.60.1"
-    axios: "npm:^1.16.1"
+    axios: "npm:^1.17.0"
     dotenv: "npm:^17.4.2"
     eslint: "npm:^10.4.1"
     eslint-config-prettier: "npm:^10.1.8"
@@ -1757,7 +1757,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.16.1":
+"axios@npm:^1.17.0":
   version: 1.18.1
   resolution: "axios@npm:1.18.1"
   dependencies:
