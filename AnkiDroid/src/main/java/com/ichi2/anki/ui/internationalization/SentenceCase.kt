@@ -219,6 +219,9 @@ object SentenceCase {
     context(_: Context)
     val browserAppearance get() = TR.browsingBrowserAppearance().toSentenceCase(R.string.sentence_browser_appearance)
 
+    context(_: Context)
+    val themeFollowSystem get() = TR.preferencesThemeFollowSystem().toSentenceCase(R.string.sentence_follow_system)
+
     context(_: Fragment)
     val browserAppearance get() = TR.browsingBrowserAppearance().toSentenceCase(R.string.sentence_browser_appearance)
 
