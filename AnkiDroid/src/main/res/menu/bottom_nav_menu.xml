@@ -8,8 +8,7 @@
     tools:ignore="UnusedResources">
 <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_list_black"
-        android:title="@string/decks" />
+        android:icon="@drawable/ic_list_black" />
     <item
         android:id="@+id/nav_browser"
         android:icon="@drawable/ic_flashcard_black"

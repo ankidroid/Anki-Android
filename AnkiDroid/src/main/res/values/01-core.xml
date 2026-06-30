@@ -10,7 +10,6 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">Decks</string>
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Card browser</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">Settings</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Help</string>

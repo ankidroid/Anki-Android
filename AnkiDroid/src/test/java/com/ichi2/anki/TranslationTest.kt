@@ -206,9 +206,6 @@ class TranslationTest : RobolectricTest() {
                 // TR.aboutCopiedToClipboard()
                 // TR.errorsCopiedToClipboard()
                 "Dark", // R.string.night_theme_dark | TR.preferencesThemeDark()
-                "Decks", // R.string.decks
-                // TR.actionsDecks()
-                // TR.browsingSidebarDecks()
                 "Delete", // R.string.dialog_positive_delete
                 // TR.actionsDelete()
                 // TR.editingImageOcclusionDelete()
