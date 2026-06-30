@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.annotations.NeedsTest
 import timber.log.Timber
 
@@ -92,6 +93,7 @@ class BottomNavController(
      * Call once after the activity's content view is set up.
      */
     fun setup() {
+        bottomNavigationView.menu.findItem(R.id.nav_stats)?.title = TR.statisticsTitle()
         activity.onBackPressedDispatcher.addCallback(activity, backCallback)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
