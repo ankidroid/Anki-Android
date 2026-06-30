@@ -33,6 +33,8 @@ import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.AppTheme
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.CollectionPreferences
@@ -133,15 +135,25 @@ class AppearanceSettingsFragment : SettingsFragment() {
         val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
         val nightThemePref = requirePreference<ListPreference>(R.string.night_theme_key)
 
+        dayThemePref.entries = DayTheme.entries.map { it.label(requireContext()) }.toTypedArray()
+        dayThemePref.entryValues = DayTheme.entries.map { getString(it.entryResId) }.toTypedArray()
+        nightThemePref.entries = NightTheme.entries.map { it.label(requireContext()) }.toTypedArray()
+        nightThemePref.entryValues = NightTheme.entries.map { getString(it.entryResId) }.toTypedArray()
+
+        val appThemeEntries = AppTheme.entries.map { it.label(requireContext()) }.toMutableList()
+        val appThemeValues = AppTheme.entries.map { getString(it.entryResId) }.toMutableList()
+
         // Remove follow system options in android versions which do not have system dark mode
         // When minSdk reaches 29, the only necessary change is to remove this if-block
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             // Drop "Follow system" option (the first one)
-            appThemePref.entries = resources.getStringArray(R.array.app_theme_labels).drop(1).toTypedArray()
-            appThemePref.entryValues = resources.getStringArray(R.array.app_theme_values).drop(1).toTypedArray()
-            if (appTheme == AppTheme.FOLLOW_SYSTEM) {
-                appThemePref.value = getString(Themes.currentTheme.entryResId)
-            }
+            appThemeEntries.removeAt(0)
+            appThemeValues.removeAt(0)
+        }
+        appThemePref.entries = appThemeEntries.toTypedArray()
+        appThemePref.entryValues = appThemeValues.toTypedArray()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && appTheme == AppTheme.FOLLOW_SYSTEM) {
+            appThemePref.value = getString(Themes.currentTheme.entryResId)
         }
 
         appThemePref.setOnPreferenceChangeListener { newValue ->
