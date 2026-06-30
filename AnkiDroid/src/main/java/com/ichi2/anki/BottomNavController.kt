@@ -93,6 +93,7 @@ class BottomNavController(
      * Call once after the activity's content view is set up.
      */
     fun setup() {
+        bottomNavigationView.menu.findItem(R.id.nav_home)?.title = TR.actionsDecks()
         bottomNavigationView.menu.findItem(R.id.nav_stats)?.title = TR.statisticsTitle()
         activity.onBackPressedDispatcher.addCallback(activity, backCallback)
         bottomNavigationView.setOnItemSelectedListener { item ->

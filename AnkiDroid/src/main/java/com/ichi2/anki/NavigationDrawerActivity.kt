@@ -164,6 +164,7 @@ abstract class NavigationDrawerActivity(
         navigationView =
             drawerLayout.findViewById<NavigationView>(R.id.navdrawer_items_container).apply {
                 setNavigationItemSelectedListener(this@NavigationDrawerActivity)
+                menu.findItem(R.id.nav_decks)?.title = TR.actionsDecks()
                 menu.findItem(R.id.nav_stats)?.title = TR.statisticsTitle()
             }
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
