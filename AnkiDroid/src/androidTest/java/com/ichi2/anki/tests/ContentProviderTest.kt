@@ -2598,6 +2598,54 @@ class ContentProviderTest : InstrumentedTest() {
         }
     }
 
+    /**
+     * Check that set the flag in card works as expected
+     */
+    @Test
+    fun testSetFlagCard() {
+        val noteId = createdNotes.first().lastPathSegment!!.toLong()
+        val noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId.toString())
+        val noteCardsUri = Uri.withAppendedPath(noteUri, "cards")
+        val card = col.getNote(noteId).cards(col).single()
+        val noteCardUri = Uri.withAppendedPath(noteCardsUri, card.ord.toString())
+
+        val negativeValue =
+            ContentValues().apply {
+                put(FlashCardsContract.Card.FLAGS, -1)
+            }
+        val exception1 = assertThrows<IllegalArgumentException> { contentResolver.update(noteCardUri, negativeValue, null, null) }
+        assertEquals(exception1.message, "Flags value must be in the range from 0 to 7")
+
+        val tooLargeValue =
+            ContentValues().apply {
+                put(FlashCardsContract.Card.FLAGS, 8)
+            }
+        val exception2 = assertThrows<IllegalArgumentException> { contentResolver.update(noteCardUri, tooLargeValue, null, null) }
+        assertEquals(exception2.message, "Flags value must be in the range from 0 to 7")
+
+        val correctValue =
+            ContentValues().apply {
+                put(FlashCardsContract.Card.FLAGS, 4)
+            }
+        contentResolver.update(noteCardUri, correctValue, null, null)
+
+        val cursor =
+            checkNotNull(
+                contentResolver.query(
+                    noteCardUri,
+                    arrayOf(FlashCardsContract.Card.FLAGS),
+                    null,
+                    null,
+                    null,
+                ),
+            ) { "cursor from /notes/#/cards/#" }
+
+        cursor.use {
+            assertTrue(it.moveToFirst())
+            assertEquals(4, it.getInt(it.getColumnIndex(FlashCardsContract.Card.FLAGS)))
+        }
+    }
+
     // TODO: PERF: use TestChangeSubscriber once we've moved to testFixtures
     private class TestSubscriber : ChangeManager.Subscriber {
         var count = 0
