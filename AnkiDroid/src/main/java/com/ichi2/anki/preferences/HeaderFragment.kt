@@ -37,6 +37,9 @@ class HeaderFragment : SettingsFragment() {
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
             .title = TR.preferencesBackups()
 
+        requirePreference<HeaderPreference>(R.string.pref_appearance_screen_key)
+            .title = TR.preferencesAppearance()
+
         requirePreference<HeaderPreference>(R.string.pref_sync_screen_key).summary =
             HeaderPreference.buildHeaderSummary(
                 TR.sentenceCase.ankiWebAccount,
@@ -121,7 +124,7 @@ class HeaderFragment : SettingsFragment() {
                 index(R.xml.preferences_appearance)
                 if (!Prefs.isNewStudyScreenEnabled) {
                     index(R.xml.preferences_custom_buttons)
-                        .addBreadcrumb(R.string.pref_cat_appearance)
+                        .addBreadcrumb(TR.preferencesAppearance())
                 }
                 index(R.xml.preferences_controls)
                 index(R.xml.preferences_reviewer_controls)
@@ -178,7 +181,7 @@ class HeaderFragment : SettingsFragment() {
                         .withTitle(
                             TR.preferencesShowPlayButtonsOnCardsWith(),
                         ).withResId(R.xml.preferences_appearance)
-                        .addBreadcrumb(activity.getString(R.string.pref_cat_appearance))
+                        .addBreadcrumb(TR.preferencesAppearance())
                         .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
                 }
 

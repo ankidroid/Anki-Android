@@ -53,6 +53,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         get() = "prefs.appearance"
 
     override fun initSubscreen() {
+        preferenceScreen.title = TR.preferencesAppearance()
+
         // Configure background
         backgroundImage = requirePreference<Preference>("deckPickerBackground")
         backgroundImage!!.title = TR.sentenceCase.selectImage
