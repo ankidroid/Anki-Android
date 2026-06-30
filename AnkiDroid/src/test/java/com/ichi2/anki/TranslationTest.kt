@@ -298,7 +298,6 @@ class TranslationTest : RobolectricTest() {
                 // TR.customStudySelect()
                 // TR.editingImageOcclusionSelectTool()
                 "Show remaining card count", // R.string.show_progress_summ | TR.preferencesShowRemainingCardCount()
-                "Statistics", // R.string.statistics | TR.statisticsTitle()
                 "Study", // R.string.studyoptions_start | TR.decksStudy()
                 "Sync", // R.string.button_sync, R.string.pref_cat_sync
                 // TR.qtMiscSync()
