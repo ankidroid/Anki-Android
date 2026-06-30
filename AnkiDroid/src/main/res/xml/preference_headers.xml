@@ -84,7 +84,6 @@
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AppearanceSettingsFragment"
         android:key="@string/pref_appearance_screen_key"
-        android:title="@string/pref_cat_appearance"
         android:icon="@drawable/ic_color_lens_white_24dp"
         app:summaryEntries="@array/appearance_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
