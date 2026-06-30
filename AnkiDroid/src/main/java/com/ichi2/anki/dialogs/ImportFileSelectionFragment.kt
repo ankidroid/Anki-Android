@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -29,7 +30,7 @@ class ImportFileSelectionFragment : DialogFragment() {
         val entries = buildImportEntries()
         return AlertDialog
             .Builder(requireActivity())
-            .title(R.string.menu_import)
+            .title(text = TR.actionsImport())
             .setItems(
                 entries.map { requireActivity().getString(it.titleRes) }.toTypedArray(),
             ) { _, position ->

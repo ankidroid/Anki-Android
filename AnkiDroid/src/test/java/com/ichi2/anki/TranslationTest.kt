@@ -244,7 +244,6 @@ class TranslationTest : RobolectricTest() {
                 "Good", // R.string.ease_button_good | TR.studyingGood()
                 "Hard", // R.string.ease_button_hard | TR.studyingHard()
                 "Help", // R.string.help | TR.actionsHelp()
-                "Import", // R.string.menu_import | TR.actionsImport()
                 "Language", // R.string.language | TR.preferencesLanguage()
                 "Later", // R.string.button_backup_later | TR.schedulingUpdateLaterButton()
                 "Learn More", // R.string.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()

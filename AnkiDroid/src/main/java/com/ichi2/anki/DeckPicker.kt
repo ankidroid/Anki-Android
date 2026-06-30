@@ -1098,6 +1098,7 @@ open class DeckPicker :
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
 
         menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
+        menu.findItem(R.id.action_import)?.title = TR.actionsImport()
         menu.findItem(R.id.action_check_database)?.title = TR.sentenceCase.checkDatabase
         menu.findItem(R.id.action_check_media)?.title = TR.sentenceCase.checkMediaAction
         menu.findItem(R.id.action_empty_cards)?.title = TR.sentenceCase.emptyCards
@@ -2239,7 +2240,7 @@ open class DeckPicker :
                     shortcut("P", R.string.open_settings),
                     shortcut("M") { this.sentenceCase.checkMediaAction },
                     shortcut("Ctrl+E", R.string.export_collection),
-                    shortcut("Ctrl+Shift+I", R.string.menu_import),
+                    shortcut("Ctrl+Shift+I", Translations::actionsImport),
                     shortcut("Ctrl+Shift+N", R.string.model_browser_label),
                 ),
                 R.string.deck_picker_group,
