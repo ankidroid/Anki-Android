@@ -91,4 +91,5 @@ undoActionUndone()
     <string name="sentence_answer_again" maxLength="41">Answer again</string>
     <string name="sentence_answer_hard" maxLength="41">Answer hard</string>
     <string name="sentence_answer_good" maxLength="41">Answer good</string>
+    <string name="sentence_follow_system" maxLength="41">Follow system</string>
 </resources>
