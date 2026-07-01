@@ -908,6 +908,7 @@ open class DeckPicker :
                     // Set flowOfStartupResponse to null after handling so it isn't re-emitted on resume.
                     // Must stay here: clearing in ViewModel would break cold start (collector is only active at RESUMED).
                     viewModel.flowOfStartupResponse.value = null
+                    invalidateOptionsMenu()
                     showStartupScreensAndDialogs(sharedPrefs(), 0)
 
                     if (tryShowStudyOptionsPanel()) {
@@ -922,7 +923,13 @@ open class DeckPicker :
                         )
                     }
                 }
-                is StartupResponse.FatalError -> handleStartupFailure(response.failure)
+                is StartupResponse.FatalError -> {
+                    // the startup check is asynchronous, so the menu may already have been
+                    // built by the time a failure arrives; rebuild it so onCreateOptionsMenu
+                    // sees the error and blanks it
+                    invalidateOptionsMenu()
+                    handleStartupFailure(response.failure)
+                }
             }
         }
 
@@ -1500,6 +1507,7 @@ open class DeckPicker :
         if (navDrawerIsReady() && hasCollectionStoragePermissions()) {
             refreshState()
         }
+        viewModel.onScreenResumed()
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
 

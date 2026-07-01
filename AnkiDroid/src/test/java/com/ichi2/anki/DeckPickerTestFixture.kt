@@ -5,7 +5,10 @@ package com.ichi2.anki
 import android.content.Intent
 import androidx.core.content.edit
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperUntil
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
 import com.ichi2.testutils.BackupManagerTestUtilities
 
 // TODO: move to testFixtures once RobolectricTest is moved
@@ -33,3 +36,8 @@ fun withDeckPicker(
         }
     block(deckPicker)
 }
+
+fun DeckPickerViewModel.awaitStartup() =
+    advanceRobolectricLooperUntil {
+        startupJob?.isActive != true && flowOfStartupResponse.value !is StartupResponse.Success
+    }

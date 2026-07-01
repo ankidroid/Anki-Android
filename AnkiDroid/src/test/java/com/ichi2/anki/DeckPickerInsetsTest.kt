@@ -139,8 +139,10 @@ class DeckPickerInsetsTest : RobolectricTest() {
 
         controller.start().resume().visible()
         // advances the looper so the collection loads and the list appears
+        advanceRobolectricLooperUntil(lazyMessage = { "the deck list should be shown" }) {
+            deckPicker.deckPickerBinding.deckPickerContent.isVisible
+        }
         deckPicker.layoutForTest()
-        check(deckPicker.deckPickerBinding.deckPickerContent.isVisible) { "the deck list should be shown" }
         // one line at the test's layout width, so the resting position is the seeded one
         deckPicker.viewModel.flowOfStudiedTodayStats.value = "Studied 3 cards today"
         deckPicker.layoutForTest()
