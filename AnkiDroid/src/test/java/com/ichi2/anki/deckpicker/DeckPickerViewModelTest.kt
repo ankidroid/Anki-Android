@@ -23,18 +23,25 @@ import anki.card_rendering.EmptyCardsReport
 import anki.card_rendering.emptyCardsReport
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.testutils.ensureOpsExecuted
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.lessThan
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
+import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 
 /** Test of [DeckPickerViewModel] */
@@ -239,4 +246,55 @@ class DeckPickerViewModelTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun `handleStartup does not block while a hung sync holds the collection queue`() {
+        col
+        val queueHeld = CountDownLatch(1)
+        val releaseQueue = CountDownLatch(1)
+        // a sync against an unresponsive server runs `withCol { syncCollection(...) }`,
+        // holding the collection queue for the whole network call
+        val hungSync =
+            thread(name = "hung-sync") {
+                runBlocking {
+                    withCol {
+                        queueHeld.countDown()
+                        releaseQueue.await()
+                    }
+                }
+            }
+        try {
+            assertThat("sync is holding the collection queue", queueHeld.await(5, TimeUnit.SECONDS), equalTo(true))
+
+            // if handleStartup blocks on the queue, free it after a delay so the test fails with a message instead of hanging
+            thread(name = "watchdog") {
+                if (!releaseQueue.await(WATCHDOG_MS, TimeUnit.MILLISECONDS)) {
+                    releaseQueue.countDown()
+                }
+            }
+
+            val elapsedMillis = measureTimeMillis { viewModel.handleStartup(grantedPermissionsEnvironment) }
+
+            assertThat(
+                "handleStartup waited ${elapsedMillis}ms for the collection queue. On a device this ANRs when DeckPicker is recreated while a sync is stuck on an unresponsive server",
+                elapsedMillis,
+                lessThan(WATCHDOG_MS),
+            )
+        } finally {
+            releaseQueue.countDown()
+            hungSync.join()
+        }
+    }
+
+    private val grantedPermissionsEnvironment =
+        object : DeckPickerViewModel.AnkiDroidEnvironment {
+            override fun hasRequiredPermissions() = true
+
+            override val requiredPermissions: PermissionSet
+                get() = error("unused: permissions are granted")
+
+            override fun initializeAnkiDroidFolder() = true
+        }
 }
+
+private const val WATCHDOG_MS = 2000L
