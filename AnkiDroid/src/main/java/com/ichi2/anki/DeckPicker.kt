@@ -854,7 +854,13 @@ open class DeckPicker :
                         )
                     }
                 }
-                is StartupResponse.FatalError -> handleStartupFailure(response.failure)
+                is StartupResponse.FatalError -> {
+                    // the startup check is asynchronous, so the menu may already have been
+                    // built by the time a failure arrives; rebuild it so onCreateOptionsMenu
+                    // sees the error and blanks it
+                    invalidateOptionsMenu()
+                    handleStartupFailure(response.failure)
+                }
             }
         }
 
