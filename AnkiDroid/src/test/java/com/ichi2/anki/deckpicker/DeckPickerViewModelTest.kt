@@ -3,6 +3,7 @@
 package com.ichi2.anki.deckpicker
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.card_rendering.EmptyCardsReport
@@ -10,19 +11,30 @@ import anki.card_rendering.emptyCardsReport
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.StoragePermissionSet
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.DeleteDeckConfirmationRequest
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.observability.ensureOpsExecuted
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.lessThan
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 import kotlin.test.assertEquals
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.measureTime
 
 /** Test of [DeckPickerViewModel] */
 @RunWith(AndroidJUnit4::class)
@@ -288,4 +300,123 @@ class DeckPickerViewModelTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun `handleStartup does not block while a hung sync holds the collection queue`() {
+        col
+        val queueHeld = CountDownLatch(1)
+        val releaseQueue = CountDownLatch(1)
+        // a sync against an unresponsive server runs `withCol { syncCollection(...) }`,
+        // holding the collection queue for the whole network call
+        val hungSync =
+            thread(name = "hung-sync") {
+                runBlocking {
+                    withCol {
+                        queueHeld.countDown()
+                        releaseQueue.await()
+                    }
+                }
+            }
+        try {
+            // in-memory tests don't set a collection path, so force the storage gate open;
+            // otherwise getStartupFailureType returns StorageUndecided before reaching the
+            // getColUnsafe() call that waits on the collection queue
+            CollectionHelper.storageDecisionTestOverride = StorageDecision.Decided
+
+            assertThat("sync is holding the collection queue", queueHeld.await(5.seconds), equalTo(true))
+
+            // if handleStartup blocks on the queue, free it after a delay so the test fails with a message instead of hanging
+            thread(name = "watchdog") {
+                if (!releaseQueue.await(WATCHDOG_TIMEOUT)) {
+                    releaseQueue.countDown()
+                }
+            }
+
+            val elapsed = measureTime { viewModel.handleStartup(grantedPermissionsEnvironment) }
+
+            assertThat(
+                "handleStartup waited $elapsed for the collection queue. On a device this ANRs when DeckPicker is recreated while a sync is stuck on an unresponsive server",
+                elapsed,
+                lessThan(WATCHDOG_TIMEOUT),
+            )
+        } finally {
+            CollectionHelper.storageDecisionTestOverride = null
+            releaseQueue.countDown()
+            hungSync.join()
+        }
+    }
+
+    @Test
+    fun `startup loads the deck list once and skips earlier refreshes`() =
+        runTest {
+            col
+            CollectionHelper.storageDecisionTestOverride = StorageDecision.Decided
+            val releaseStartup = CountDownLatch(1)
+            try {
+                viewModel.flowOfDecksReloaded.test {
+                    viewModel.handleStartup(startupEnvironmentHeldUntil(releaseStartup))
+                    viewModel.updateDeckList().join()
+                    expectNoEvents()
+
+                    releaseStartup.countDown()
+                    advanceRobolectricLooperUntil { viewModel.startupJob?.isCompleted == true }
+                    awaitItem()
+                    expectNoEvents()
+                }
+            } finally {
+                CollectionHelper.storageDecisionTestOverride = null
+                releaseStartup.countDown()
+            }
+        }
+
+    @Test
+    fun `a refresh after the screen resumed reloads the deck list`() =
+        runTest {
+            col
+            CollectionHelper.storageDecisionTestOverride = StorageDecision.Decided
+            val releaseStartup = CountDownLatch(1)
+            try {
+                viewModel.flowOfDecksReloaded.test {
+                    viewModel.handleStartup(startupEnvironmentHeldUntil(releaseStartup))
+                    viewModel.onScreenResumed()
+
+                    releaseStartup.countDown()
+                    advanceRobolectricLooperUntil { viewModel.startupJob?.isCompleted == true }
+                    awaitItem()
+
+                    viewModel.updateDeckList().join()
+                    awaitItem()
+                }
+            } finally {
+                CollectionHelper.storageDecisionTestOverride = null
+                releaseStartup.countDown()
+            }
+        }
+
+    private fun startupEnvironmentHeldUntil(release: CountDownLatch) =
+        object : DeckPickerViewModel.AnkiDroidEnvironment by grantedPermissionsEnvironment {
+            override val preferences: SharedPreferences
+                get() {
+                    release.await(WATCHDOG_TIMEOUT)
+                    return grantedPermissionsEnvironment.preferences
+                }
+        }
+
+    private val grantedPermissionsEnvironment =
+        object : DeckPickerViewModel.AnkiDroidEnvironment {
+            override fun hasRequiredPermissions() = true
+
+            override val requiredPermissions: StoragePermissionSet
+                get() = error("unused: permissions are granted")
+
+            override val preferences: SharedPreferences
+                get() = getPreferences()
+
+            override fun initializeAnkiDroidFolder() = true
+        }
 }
+
+/** how long the watchdog lets a blocked [DeckPickerViewModel.handleStartup] hold the test before freeing the queue */
+private val WATCHDOG_TIMEOUT = 2.seconds
+
+private fun CountDownLatch.await(timeout: Duration): Boolean = await(timeout.inWholeMilliseconds, TimeUnit.MILLISECONDS)
