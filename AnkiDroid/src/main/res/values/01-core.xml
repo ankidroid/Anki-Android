@@ -183,5 +183,11 @@
     <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
 
     <!-- Multiple profile -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
     <string name="add_profile">Add profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
 </resources>
