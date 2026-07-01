@@ -17,5 +17,5 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <resources>
     <!--Fields-->
-    <string name="back_field_name" maxLength="28" comment="Name of the back field of a card">Back</string>
+    <string name="back_field_name" maxLength="28" comment="Name of the back field of a card">Ana e pasme</string>
 </resources>
