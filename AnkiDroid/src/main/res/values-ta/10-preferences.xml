@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ஒத்திசைவு</string>
     <string name="pref_cat_scheduling" maxLength="41">திட்டமிடல்</string>
     <string name="pref_cat_whiteboard" maxLength="41">வெள்ளை பலகை</string>
-    <string name="pref_cat_appearance" maxLength="41">தோற்றம்</string>
     <string name="pref_cat_themes" maxLength="41">தீம்கள்</string>
     <string name="pref_cat_gestures" maxLength="41">சைகைகள்</string>
     <string name="pref_cat_controls" maxLength="41">கட்டுப்பாடுகள்</string>

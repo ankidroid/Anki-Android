@@ -44,7 +44,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">المزامنة</string>
     <string name="pref_cat_scheduling" maxLength="41">جدولة</string>
     <string name="pref_cat_whiteboard" maxLength="41">السبورة</string>
-    <string name="pref_cat_appearance" maxLength="41">المظهر</string>
     <string name="pref_cat_themes" maxLength="41">السِمات</string>
     <string name="pref_cat_gestures" maxLength="41">الإيماءات</string>
     <string name="pref_cat_controls" maxLength="41">عناصر التحكم</string>

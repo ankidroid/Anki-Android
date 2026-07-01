@@ -39,7 +39,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">សមកាលកម្ម</string>
     <string name="pref_cat_scheduling" maxLength="41">កាលវិភាគ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ក្ដារខៀន</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_gestures" maxLength="41">កាយវិការ</string>
     <string name="pref_cat_controls" maxLength="41">ការបញ្ជា</string>

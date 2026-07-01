@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronizzazione</string>
     <string name="pref_cat_scheduling" maxLength="41">Pianificazione</string>
     <string name="pref_cat_whiteboard" maxLength="41">Lavagna</string>
-    <string name="pref_cat_appearance" maxLength="41">Aspetto</string>
     <string name="pref_cat_themes" maxLength="41">Temi</string>
     <string name="pref_cat_gestures" maxLength="41">Gesti</string>
     <string name="pref_cat_controls" maxLength="41">Controlli</string>

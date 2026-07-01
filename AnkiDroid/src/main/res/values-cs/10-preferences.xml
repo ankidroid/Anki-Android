@@ -42,7 +42,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronizace</string>
     <string name="pref_cat_scheduling" maxLength="41">Plánování</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tabule</string>
-    <string name="pref_cat_appearance" maxLength="41">Vzhled</string>
     <string name="pref_cat_themes" maxLength="41">Motivy vzhledu</string>
     <string name="pref_cat_gestures" maxLength="41">Gesta</string>
     <string name="pref_cat_controls" maxLength="41">Ovládání</string>

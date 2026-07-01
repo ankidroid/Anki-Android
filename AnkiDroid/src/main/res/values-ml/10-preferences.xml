@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">സമന്വയിപ്പിക്കുക</string>
     <string name="pref_cat_scheduling" maxLength="41">ഷെഡ്യൂളിംഗ്</string>
     <string name="pref_cat_whiteboard" maxLength="41">വൈറ്റ്ബോർഡ്</string>
-    <string name="pref_cat_appearance" maxLength="41">രൂപം</string>
     <string name="pref_cat_themes" maxLength="41">തീമുകൾ</string>
     <string name="pref_cat_gestures" maxLength="41">ആംഗ്യങ്ങൾ</string>
     <string name="pref_cat_controls" maxLength="41">നിയന്ത്രണങ്ങൾ</string>

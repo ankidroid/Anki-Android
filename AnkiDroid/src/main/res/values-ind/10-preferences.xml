@@ -39,7 +39,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinkronisasi</string>
     <string name="pref_cat_scheduling" maxLength="41">Penjadwalan</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_appearance" maxLength="41">Tampilan</string>
     <string name="pref_cat_themes" maxLength="41">Tema</string>
     <string name="pref_cat_gestures" maxLength="41">Gestur</string>
     <string name="pref_cat_controls" maxLength="41">Kontrol</string>

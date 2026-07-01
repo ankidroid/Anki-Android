@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Συγχρονισμός</string>
     <string name="pref_cat_scheduling" maxLength="41">Προγραμματισμός</string>
     <string name="pref_cat_whiteboard" maxLength="41">Πίνακας</string>
-    <string name="pref_cat_appearance" maxLength="41">Εμφάνιση</string>
     <string name="pref_cat_themes" maxLength="41">Θέματα</string>
     <string name="pref_cat_gestures" maxLength="41">Χειρονομίες</string>
     <string name="pref_cat_controls" maxLength="41">Στοιχεία ελέγχου</string>
