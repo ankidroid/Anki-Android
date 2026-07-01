@@ -20,12 +20,20 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
 /**
+ * Convenience typealias for the mutation functions passed to editors of [ReviewReminderGroup].
+ */
+typealias ReviewReminderGroupEditor = (ReviewReminderGroup) -> ReviewReminderGroup
+
+/**
  * A group of review reminders, all for the same [ReviewReminderScope],
  * persisted as a single JSON string in SharedPreferences.
  *
  * Essentially a wrapper around a HashMap of [ReviewReminderId] to [ReviewReminder],
  * explicitly defined to restrict what can be done with the interface and to eliminate the
  * need to verbosely type out "HashMap<ReviewReminderId, ReviewReminder>" everywhere.
+ *
+ * Edits to instances of this class are not automatically persisted to SharedPreferences;
+ * that functionality is provided by [ReviewRemindersDatabase].
  *
  * A HashMap is used to allow for O(1) access to individual reminders by [ReviewReminderId].
  */
@@ -39,9 +47,7 @@ class ReviewReminderGroup(
     /**
      * Manually construct a [ReviewReminderGroup] from key-value pairs.
      */
-    constructor(vararg pairs: Pair<ReviewReminderId, ReviewReminder>) : this(
-        buildMap { pairs.forEach { put(it.first, it.second) } },
-    )
+    constructor(vararg pairs: Pair<ReviewReminderId, ReviewReminder>) : this(hashMapOf(*pairs))
 
     /**
      * Merge multiple [ReviewReminderGroup]s into one.
@@ -87,8 +93,8 @@ class ReviewReminderGroup(
         underlyingMap.remove(id)
     }
 
-    fun forEach(action: (ReviewReminderId, ReviewReminder) -> Unit) {
-        underlyingMap.forEach { (id, reminder) -> action(id, reminder) }
+    fun forEach(action: (Pair<ReviewReminderId, ReviewReminder>) -> Unit) {
+        underlyingMap.forEach { (id, reminder) -> action(id to reminder) }
     }
 
     /**
@@ -112,8 +118,3 @@ class ReviewReminderGroup(
  * Convenience extension constructor for merging a list of [ReviewReminderGroup]s into one.
  */
 fun List<ReviewReminderGroup>.mergeAll() = ReviewReminderGroup(*this.toTypedArray())
-
-/**
- * Convenience typealias for the mutation functions passed to editors of [ReviewReminderGroup].
- */
-typealias ReviewReminderGroupEditor = (ReviewReminderGroup) -> ReviewReminderGroup
