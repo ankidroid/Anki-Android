@@ -7,6 +7,7 @@ import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.storage.StorageDecision
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 /**
@@ -21,6 +22,18 @@ class StorageDecisionGateTest : RobolectricTest() {
         CollectionHelper.storageDecisionTestOverride = StorageDecision.Undecided
         try {
             assertFailsWith<StorageNotConfiguredException> { CollectionManager.getColUnsafe() }
+        } finally {
+            CollectionHelper.storageDecisionTestOverride = null
+        }
+    }
+
+    /** No collection access should be attempted: a crash report would otherwise be generated */
+    @Test
+    fun `startup failure is StorageUndecided when storage is undecided`() {
+        CollectionHelper.storageDecisionTestOverride = StorageDecision.Undecided
+        try {
+            val failure = InitialActivity.getStartupFailureType { true }
+            assertEquals(InitialActivity.StartupFailure.StorageUndecided, failure)
         } finally {
             CollectionHelper.storageDecisionTestOverride = null
         }

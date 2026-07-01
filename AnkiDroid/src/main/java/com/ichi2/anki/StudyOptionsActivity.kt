@@ -29,6 +29,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Co
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.ui.RtlCompliantActionProvider
 import kotlinx.coroutines.launch
@@ -47,6 +48,9 @@ class StudyOptionsActivity :
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStorageIsReady()) {
+            return
+        }
         enableToolbar().apply { title = "" }
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()

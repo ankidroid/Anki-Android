@@ -37,6 +37,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.storage.AnkiDroidFolder
+import com.ichi2.anki.storage.StorageDecision
 import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
@@ -59,6 +60,13 @@ object InitialActivity {
     fun getStartupFailureType(initializeAnkiDroidDirectory: () -> Boolean): StartupFailure? {
         AnkiDroidApp.fatalError?.let {
             return StartupFailure.InitializationError(it)
+        }
+
+        // Opening the collection would throw a StorageNotConfiguredException, which is not worth
+        // a crash report
+        if (CollectionHelper.storageDecision() != StorageDecision.Decided) {
+            Timber.i("storage location is undecided")
+            return StartupFailure.StorageUndecided
         }
 
         val failure =
@@ -187,6 +195,13 @@ object InitialActivity {
         }
 
         data object DiskFull : StartupFailure()
+
+        /**
+         * The user has not yet decided where the collection is stored.
+         *
+         * @see CollectionHelper.storageDecision
+         */
+        data object StorageUndecided : StartupFailure()
     }
 }
 
