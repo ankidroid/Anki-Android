@@ -2623,6 +2623,9 @@ class ContentProviderTest : InstrumentedTest() {
         val exception2 = assertThrows<IllegalArgumentException> { contentResolver.update(noteCardUri, tooLargeValue, null, null) }
         assertEquals(exception2.message, "Flags value must be in the range from 0 to 7")
 
+        card.flags = 8
+        col.updateCard(card)
+
         val correctValue =
             ContentValues().apply {
                 put(FlashCardsContract.Card.FLAGS, 4)
@@ -2642,7 +2645,7 @@ class ContentProviderTest : InstrumentedTest() {
 
         cursor.use {
             assertTrue(it.moveToFirst())
-            assertEquals(4, it.getInt(it.getColumnIndex(FlashCardsContract.Card.FLAGS)))
+            assertEquals(12, it.getInt(it.getColumnIndex(FlashCardsContract.Card.FLAGS)))
         }
     }
 

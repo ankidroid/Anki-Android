@@ -561,7 +561,7 @@ class CardContentProvider : ContentProvider() {
                             }
 
                             Timber.d("CardContentProvider: flags update...")
-                            currentCard.flags = flags
+                            currentCard.setUserFlag(flags)
                             col.updateCard(currentCard)
                             updated++
                         }
