@@ -23,37 +23,37 @@
   ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
   -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
+    <string name="youre_offline">Ti je offline</string>
+    <string name="sync_error">Gabim në sinkronizim</string>
+    <string name="vague_error" comment="Network error dialog title">Gabim</string>
+    <string name="retry">Riprovo</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
+    <string name="connection_error_message">Ndodhi një gabim në rrjet</string>
+    <string name="not_logged_in_title">Logohu në AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="username">Adresa e E-Mailit</string>
+    <string name="password">Fjalkalimi</string>
+    <string name="sign_up_description">Nuk ke ende një llogari AnkiWeb? Është falas!</string>
+    <string name="sign_up_not_affiliated">Shënim: AnkiWeb nuk është e lidhur me AnkiDroid</string>
+    <string name="sign_up">Rregjistrohu</string>
+    <string name="logged_as">Loguar si</string>
+    <string name="reset_password">Ndrysho fjalëkalimin</string>
+    <string name="lost_mail_instructions">Ke harruar Email-in?</string>
+    <string name="sign_in">Duke u loguar</string>
     <!-- AndroidManifest.xml -->
-    <string name="sync_title">Synchronization</string>
+    <string name="sync_title">Sinkronizimi</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
+    <string name="sync_database_acknowledge">Koleksioni u sinkronizua</string>
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="sync_corrupt_database">Databaza jote është korruptuar. Ju lutem riparojeni atë para se të sinkronizoni përsëri. \n\nShiko %s për info rreth riparimit të databazës.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
+    <string name="sync_sanity_local">Lokale</string>
     <string name="sync_sanity_remote">Remote</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title" maxLength="41">Sinkronizim One-Way</string>
+    <string name="one_way_sync_confirmation">U këkrua sinkronizim \'One Way\'</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Sinkronizimi (one-way)</string>
+    <string name="sync_menu_title_no_account">Sinkronizo (logohu)</string>
 </resources>
