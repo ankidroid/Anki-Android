@@ -553,28 +553,38 @@ class CardContentProvider : ContentProvider() {
             NOTES_ID_CARDS -> throw UnsupportedOperationException("Not yet implemented")
             NOTES_ID_CARDS_ORD -> {
                 val currentCard = getCardFromUri(uri, col)
-                var isDeckUpdate = false
-                var did = Decks.NOT_FOUND_DECK_ID
                 // the key of the ContentValues contains the column name
                 // the value of the ContentValues contains the row value.
                 val valueSet = values!!.valueSet()
                 for ((key) in valueSet) {
-                    // Only updates on deck id is supported
-                    isDeckUpdate = key == FlashCardsContract.Card.DECK_ID
-                    did = values.getAsLong(key)
-                }
-                require(!col.decks.isFiltered(did)) { "Cards cannot be moved to a filtered deck" }
-                /* now update the card
-                 */
-                if (isDeckUpdate && did >= 0) {
-                    Timber.d("CardContentProvider: Moving card to other deck...")
-                    currentCard.did = did
-                    col.updateCard(currentCard)
+                    when (key) {
+                        FlashCardsContract.Card.DECK_ID -> {
+                            val did = values.getAsLong(key)
+                            require(!col.decks.isFiltered(did)) { "Cards cannot be moved to a filtered deck" }
 
-                    updated++
-                } else {
-                    // User tries an operation that is not (yet?) supported.
-                    throw IllegalArgumentException("Currently only updates of decks are supported")
+                            Timber.d("CardContentProvider: Moving card to other deck...")
+                            currentCard.did = did
+                            col.updateCard(currentCard)
+
+                            updated++
+                        }
+                        FlashCardsContract.Card.FLAGS -> {
+                            val flags = values.getAsInteger(key)
+
+                            if (flags == null || flags < 0 || flags > 7) {
+                                throw IllegalArgumentException("Flags value must be in the range from 0 to 7")
+                            }
+
+                            Timber.d("CardContentProvider: flags update...")
+                            currentCard.setUserFlag(flags)
+                            col.updateCard(currentCard)
+                            updated++
+                        }
+                        else -> {
+                            // User tries an operation that is not (yet?) supported.
+                            throw IllegalArgumentException("Currently only updates of decks and flags are supported")
+                        }
+                    }
                 }
             }
             NOTE_TYPES -> throw IllegalArgumentException("Cannot update models in bulk")
@@ -1238,6 +1248,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.FSRS_DESIRED_RETENTION -> rb.add(currentCard.fsrsDesiredRetention)
                 FlashCardsContract.Card.FSRS_DECAY -> rb.add(currentCard.decay)
                 FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS -> rb.add(currentCard.lastReviewTimeSecs)
+                FlashCardsContract.Card.FLAGS -> rb.add(currentCard.flags)
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }
