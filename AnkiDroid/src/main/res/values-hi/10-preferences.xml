@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">साथ साथ करना</string>
     <string name="pref_cat_scheduling" maxLength="41">निर्धारण</string>
     <string name="pref_cat_whiteboard" maxLength="41">श्वेतपट्ट</string>
-    <string name="pref_cat_appearance" maxLength="41">दिखावट</string>
     <string name="pref_cat_themes" maxLength="41">थीम</string>
     <string name="pref_cat_gestures" maxLength="41">इशारे</string>
     <string name="pref_cat_controls" maxLength="41">नियंत्रणे</string>

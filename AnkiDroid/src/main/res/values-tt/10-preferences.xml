@@ -39,7 +39,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронизация</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_gestures" maxLength="41">Ишарәләр</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>

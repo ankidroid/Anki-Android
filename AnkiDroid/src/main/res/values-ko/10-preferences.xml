@@ -39,7 +39,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">동기화</string>
     <string name="pref_cat_scheduling" maxLength="41">스케줄링</string>
     <string name="pref_cat_whiteboard" maxLength="41">화이트보드</string>
-    <string name="pref_cat_appearance" maxLength="41">외관</string>
     <string name="pref_cat_themes" maxLength="41">테마</string>
     <string name="pref_cat_gestures" maxLength="41">제스쳐</string>
     <string name="pref_cat_controls" maxLength="41">컨트롤</string>

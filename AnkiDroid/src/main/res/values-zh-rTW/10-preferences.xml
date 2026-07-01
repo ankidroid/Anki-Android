@@ -39,7 +39,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同步</string>
     <string name="pref_cat_scheduling" maxLength="41">計畫任務</string>
     <string name="pref_cat_whiteboard" maxLength="41">白板</string>
-    <string name="pref_cat_appearance" maxLength="41">外觀</string>
     <string name="pref_cat_themes" maxLength="41">佈景</string>
     <string name="pref_cat_gestures" maxLength="41">手勢</string>
     <string name="pref_cat_controls" maxLength="41">控制</string>

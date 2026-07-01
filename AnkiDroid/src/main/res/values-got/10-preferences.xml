@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">𐌲𐌰𐌻𐌴𐌹𐌺</string>
     <string name="pref_cat_scheduling" maxLength="41">𐌲𐌰𐍂𐌴𐌷𐍃𐌽𐍃</string>
     <string name="pref_cat_whiteboard" maxLength="41">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳</string>
-    <string name="pref_cat_appearance" maxLength="41">𐍅𐌻𐌹𐍄𐍃</string>
     <string name="pref_cat_themes" maxLength="41">𐌸𐌰𐌹𐌼𐍉𐍃</string>
     <string name="pref_cat_gestures" maxLength="41">𐍄𐌰𐌹𐌺𐌽𐌴𐌹𐍃</string>
     <string name="pref_cat_controls" maxLength="41">𐍃𐍄𐌹𐌿𐍂𐌹</string>
