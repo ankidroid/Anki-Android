@@ -113,7 +113,8 @@ open class AnkiDroidApp :
     }
 
     /**
-     * On application creation.
+     * On application creation, i.e. when the application process starts.
+     * This is called before any activities, services, or receivers are created.
      */
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
@@ -321,7 +322,9 @@ open class AnkiDroidApp :
             val context = this.withAppLocale()
             if (Prefs.newReviewRemindersEnabled) {
                 Timber.i("Setting review reminder notifications if they have not already been set")
-                AlarmManagerService.scheduleAllNotifications(context)
+                applicationScope.launch {
+                    AlarmManagerService.scheduleAllNotifications(context)
+                }
             } else {
                 // Register for notifications
                 Timber.i("AnkiDroidApp: Starting Services")
