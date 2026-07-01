@@ -26,7 +26,6 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -194,10 +193,24 @@ class DeckPickerViewModel :
     fun deleteDeck(did: DeckId) =
         viewModelScope.launch {
             val deckName = withCol { decks.getLegacy(did)!!.name }
-            val changes = undoableOp { decks.remove(listOf(did)) }
-            // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
-            // to match and avoid unnecessary scrolls in `renderPage()`.
-            focusedDeck = Consts.DEFAULT_DECK_ID
+            var nextDeckId = DEFAULT_DECK_ID
+            val changes =
+                undoableOp {
+                    val opChanges = decks.remove(listOf(did))
+                    // After deletion: decks.current() reverts to Default. Select the first
+                    // remaining non-Default deck (in deck-list order) so the fragmented study
+                    // panel shows a sensible deck rather than empty Default.
+                    // This must happen inside the collection lock so ChangeManager subscribers
+                    // that read decks.current() see the updated selection.
+                    nextDeckId = sched
+                        .deckDueTree()
+                        .children
+                        .firstOrNull { it.did != DEFAULT_DECK_ID }
+                        ?.did ?: DEFAULT_DECK_ID
+                    decks.select(nextDeckId)
+                    opChanges
+                }
+            focusedDeck = nextDeckId
 
             deckDeletedNotification.emit(
                 DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
