@@ -39,4 +39,5 @@ include(
     ":libanki",
     ":lint-rules",
     ":vbpd",
+    ":widgets",
 )
