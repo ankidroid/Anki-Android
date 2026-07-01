@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Համաժամեցում</string>
     <string name="pref_cat_scheduling" maxLength="41">Ծրագրում</string>
     <string name="pref_cat_whiteboard" maxLength="41">Գրատախտակ</string>
-    <string name="pref_cat_appearance" maxLength="41">Տեսք</string>
     <string name="pref_cat_themes" maxLength="41">Ոճեր</string>
     <string name="pref_cat_gestures" maxLength="41">Ժեստեր</string>
     <string name="pref_cat_controls" maxLength="41">Կառավարում</string>

@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">সিঙ্ক</string>
     <string name="pref_cat_scheduling" maxLength="41">সময়সূচি নির্ধারণ</string>
     <string name="pref_cat_whiteboard" maxLength="41">হোয়াইটবোর্ড</string>
-    <string name="pref_cat_appearance" maxLength="41">রূপ</string>
     <string name="pref_cat_themes" maxLength="41">থিম</string>
     <string name="pref_cat_gestures" maxLength="41">জেসচার</string>
     <string name="pref_cat_controls" maxLength="41">নিয়ন্ত্রণ</string>

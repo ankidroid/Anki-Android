@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">सिंक</string>
     <string name="pref_cat_scheduling" maxLength="41">शेड्युलिंग</string>
     <string name="pref_cat_whiteboard" maxLength="41">व्हाइटबोर्ड</string>
-    <string name="pref_cat_appearance" maxLength="41">व्हाइटबोर्ड</string>
     <string name="pref_cat_themes" maxLength="41">थीम्स</string>
     <string name="pref_cat_gestures" maxLength="41">जेश्चर</string>
     <string name="pref_cat_controls" maxLength="41">नियंत्रणे</string>

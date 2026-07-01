@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Samtempigo</string>
     <string name="pref_cat_scheduling" maxLength="41">Planado</string>
     <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
-    <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
     <string name="pref_cat_themes" maxLength="41">Haŭto</string>
     <string name="pref_cat_gestures" maxLength="41">Gestoj</string>
     <string name="pref_cat_controls" maxLength="41">Stiriloj</string>
