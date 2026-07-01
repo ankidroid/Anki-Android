@@ -30,5 +30,6 @@
         <attr name="colorSurfaceContainerLow" />
         <attr name="colorSurfaceContainerLowest" />
         <attr name="android:colorBackground" />
+        <attr name="fab_normal" />
     </declare-styleable>
 </resources>
