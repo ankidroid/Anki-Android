@@ -239,7 +239,6 @@ internal fun selectStoragePermissions(
 fun selectStoragePermissions(context: Context): PermissionSet {
     val canAccessLegacyStorage = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
     val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
-
     return selectStoragePermissions(
         canManageExternalStorage = Permissions.canManageExternalStorage(context),
         currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,

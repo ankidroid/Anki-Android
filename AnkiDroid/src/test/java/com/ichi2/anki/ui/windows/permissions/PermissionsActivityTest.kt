@@ -16,27 +16,41 @@
 package com.ichi2.anki.ui.windows.permissions
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.edit
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.ActivityAction
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowToast
+import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
+    @After
+    fun cleanUpStorage() {
+        AnkiDroidApp.sharedPrefs().edit {
+            remove(CollectionHelper.PREF_COLLECTION_PATH)
+        }
+    }
+
     @Test
     fun testActivityCantBeClosedByBackButton() {
         testActivity { activity ->
@@ -48,9 +62,35 @@ class PermissionsActivityTest : RobolectricTest() {
     @Test
     fun testOnClickingContinueActivityFinishes() {
         testActivity { activity ->
-            activity.setContinueButtonEnabled(true)
             activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
             assertThat("activity is finishing", activity.isFinishing)
+        }
+    }
+
+    @Test
+    fun testOnClickingContinueShowsDialogWhenStorageNotGranted() {
+        AnkiDroidApp.sharedPrefs().edit {
+            remove(CollectionHelper.PREF_COLLECTION_PATH)
+        }
+        testActivity { activity ->
+            activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
+            advanceRobolectricLooper()
+            val dialog = ShadowDialog.getLatestDialog()
+            assertThat("dialog is shown", dialog?.isShowing == true)
+        }
+    }
+
+    @Test
+    fun testCancelingDialogDoesNotFinish() {
+        AnkiDroidApp.sharedPrefs().edit {
+            remove(CollectionHelper.PREF_COLLECTION_PATH)
+        }
+        testActivity { activity ->
+            activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
+            advanceRobolectricLooper()
+            clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, false)
+            advanceRobolectricLooper()
+            assertThat("activity is NOT finishing", activity.isFinishing, equalTo(false))
         }
     }
 
@@ -61,6 +101,25 @@ class PermissionsActivityTest : RobolectricTest() {
             ShadowToast.getTextOfLatestToast(),
             equalTo(getResourceString(R.string.something_wrong)),
         )
+    }
+
+    @Test
+    fun testConfirmingDialogWritesCorrectPath() {
+        AnkiDroidApp.sharedPrefs().edit {
+            remove(CollectionHelper.PREF_COLLECTION_PATH)
+        }
+        testActivity { activity ->
+            activity.findViewById<AppCompatButton>(R.id.continue_button).performClick()
+            advanceRobolectricLooper()
+            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, false)
+            advanceRobolectricLooper()
+            val expectedPath = File(activity.getExternalFilesDir(null), "AnkiDroid").absolutePath
+            val actualPath =
+                AnkiDroidApp
+                    .sharedPrefs()
+                    .getString(CollectionHelper.PREF_COLLECTION_PATH, null)
+            assertThat("collection path is set to private dir", actualPath, equalTo(expectedPath))
+        }
     }
 
     @Test
