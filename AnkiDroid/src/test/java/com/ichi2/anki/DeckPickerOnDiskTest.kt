@@ -60,7 +60,7 @@ class DeckPickerOnDiskTest : RobolectricTest() {
                     DeckPickerEx::class.java,
                     Intent(),
                 )
-            advanceRobolectricLooper()
+            advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 1 }
             assertThat(
                 "Collection should now be open",
                 CollectionManager.isOpenUnsafe(),
