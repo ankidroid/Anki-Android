@@ -387,21 +387,33 @@ class DeckPickerViewModel :
      */
     // TODO: #17551 use tryWithCol, refresh via `ChangeManager` and collapse into one collection read.
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
-    fun updateDeckList(): Job =
-        viewModelScope.launch(Dispatchers.IO) {
-            // WARN: On a regular sync, this blocks until the sync completes
-            // On a full sync, the collection is closed
-            if (!CollectionManager.isOpenUnsafe()) {
-                return@launch
-            }
-            if (Build.FINGERPRINT != "robolectric") {
-                // uses user's desktop settings to determine whether a backup
-                // actually happens
-                launchCatchingIO { performBackupInBackground() }
-            }
-            Timber.d("updateDeckList")
-            reloadDeckCounts().join()
+    fun updateDeckList(): Job {
+        if (startupJob?.isActive == true) return Job().apply { complete() }
+        if (startupServesFirstRefresh) {
+            startupServesFirstRefresh = false
+            return Job().apply { complete() }
         }
+        return viewModelScope.launch(Dispatchers.IO) { loadDeckList() }
+    }
+
+    fun onScreenResumed() {
+        startupServesFirstRefresh = false
+    }
+
+    private suspend fun loadDeckList() {
+        // WARN: On a regular sync, this blocks until the sync completes
+        // On a full sync, the collection is closed
+        if (!CollectionManager.isOpenUnsafe()) {
+            return
+        }
+        if (Build.FINGERPRINT != "robolectric") {
+            // uses user's desktop settings to determine whether a backup
+            // actually happens
+            launchCatchingIO { performBackupInBackground() }
+        }
+        Timber.d("updateDeckList")
+        reloadDeckCounts().join()
+    }
 
     fun reloadDeckCounts(): Job {
         loadDeckCounts?.cancel()
@@ -539,6 +551,12 @@ class DeckPickerViewModel :
         data object Success : StartupResponse()
     }
 
+    /** The startup check launched by [handleStartup] */
+    var startupJob: Job? = null
+        private set
+
+    private var startupServesFirstRefresh = false
+
     /**
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
@@ -553,17 +571,28 @@ class DeckPickerViewModel :
         }
 
         Timber.d("handleStartup: Continuing after permission granted")
-        val failure = InitialActivity.getStartupFailureType(environment.preferences, environment::initializeAnkiDroidFolder)
-        if (failure != null) {
-            flowOfStartupResponse.value = StartupResponse.FatalError(failure)
-            return
-        }
+        startupServesFirstRefresh = true
+        startupJob =
+            viewModelScope.launch {
+                // opening the collection waits on the collection queue, which a sync stuck on an
+                // unresponsive server can hold for a long time. Waiting on the main thread here
+                // froze the DeckPicker when it was recreated
+                val failure =
+                    withContext(Dispatchers.IO) {
+                        InitialActivity.getStartupFailureType(environment.preferences, environment::initializeAnkiDroidFolder)
+                    }
+                if (failure != null) {
+                    flowOfStartupResponse.value = StartupResponse.FatalError(failure)
+                    return@launch
+                }
 
-        // successful startup
+                // successful startup
 
-        configureRenderingMode()
+                configureRenderingMode()
+                viewModelScope.launch(Dispatchers.IO) { loadDeckList() }
 
-        flowOfStartupResponse.value = StartupResponse.Success
+                flowOfStartupResponse.value = StartupResponse.Success
+            }
     }
 
     interface AnkiDroidEnvironment {

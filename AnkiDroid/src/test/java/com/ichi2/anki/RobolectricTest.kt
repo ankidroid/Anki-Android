@@ -336,6 +336,7 @@ open class RobolectricTest :
                     .visible()
             advanceRobolectricLooper()
             testClass.saveControllerForCleanup(controller)
+            (controller.get() as? DeckPicker)?.viewModel?.awaitStartup()
             return controller
         }
     }

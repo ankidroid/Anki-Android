@@ -52,10 +52,10 @@ class DeckPickerBackupTest : RobolectricTest() {
 
     private fun withBackupDeckPicker(block: suspend (DeckPicker) -> Unit) =
         runTest {
-            // Dispatch the IO continuation back to the test thread before updating the UI.
-            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
             lateinit var deckPicker: DeckPicker
             withDeckPicker(deckCount = 0, withCards = true) { deckPicker = it }
+            // Dispatch the IO continuation back to the test thread before updating the UI.
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
             block(deckPicker)
         }
 

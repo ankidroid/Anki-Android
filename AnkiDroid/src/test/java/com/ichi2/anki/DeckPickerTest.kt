@@ -40,6 +40,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.SyncIconState
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
@@ -787,7 +788,9 @@ class DeckPickerTest : RobolectricTest() {
     fun `restored study options fragment is pruned when recreated into single pane`() {
         assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
-            advanceRobolectricLooper()
+            lateinit var viewModel: DeckPickerViewModel
+            scenario.onActivity { viewModel = it.viewModel }
+            viewModel.awaitStartup()
             scenario.onActivity { deckPicker ->
                 assertThat(
                     "side panel fragment should be displayed on tablet",
@@ -1286,6 +1289,43 @@ class DeckPickerTest : RobolectricTest() {
             )
         }
 
+    @Test
+    fun `fatal error arriving after menu creation blanks the options menu`() =
+        deckPickerEx {
+            assertThat("menu was built normally on startup", lastCreateOptionsMenuResult, equalTo(true))
+
+            // a slow startup check delivers a fatal error once the menu already exists
+            viewModel.flowOfStartupResponse.value =
+                DeckPickerViewModel.StartupResponse.FatalError(InitialActivity.StartupFailure.DatabaseLocked)
+            advanceRobolectricLooper()
+            advanceRobolectricLooper()
+
+            assertThat("the failure was handled", databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_DB_LOCKED))
+            assertThat("the menu is rebuilt and blanked", lastCreateOptionsMenuResult, equalTo(false))
+        }
+
+    @Test
+    fun `success arriving after menu creation refreshes the options menu`() =
+        deckPickerEx {
+            CollectionManager.closeCollectionBlocking()
+            invalidateOptionsMenu()
+            advanceRobolectricLooper()
+            createMenuJob?.join()
+            assertThat("menu built while the collection was closed", viewModel.optionsMenuState, nullValue())
+
+            CollectionManager.getColUnsafe()
+            viewModel.flowOfStartupResponse.value = DeckPickerViewModel.StartupResponse.Success
+            advanceRobolectricLooper()
+            advanceRobolectricLooper()
+            createMenuJob?.join()
+
+            assertThat(
+                "the menu is rebuilt once startup succeeds",
+                viewModel.optionsMenuState?.syncIcon,
+                equalTo(SyncIconState.NotLoggedIn),
+            )
+        }
+
     /** Regression test for [#20712](https://github.com/ankidroid/Anki-Android/issues/20712) */
     @Test
     fun `SQLiteDatabaseCorruptException in runCatching shows database error dialog`() =
@@ -1357,6 +1397,11 @@ class DeckPickerTest : RobolectricTest() {
         var databaseErrorDialog: DatabaseErrorDialogType? = null
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
+
+        /** result of the last [onCreateOptionsMenu] call: false means the menu was blanked */
+        var lastCreateOptionsMenuResult: Boolean? = null
+
+        override fun onCreateOptionsMenu(menu: Menu): Boolean = super.onCreateOptionsMenu(menu).also { lastCreateOptionsMenuResult = it }
 
         override fun showDatabaseErrorDialog(
             errorDialogType: DatabaseErrorDialogType,
