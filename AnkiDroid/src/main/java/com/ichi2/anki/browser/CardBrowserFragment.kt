@@ -37,6 +37,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -302,7 +303,9 @@ class CardBrowserFragment :
         cardsListView =
             view.findViewById<RecyclerView>(R.id.card_browser_list).apply {
                 attachFastScroller(R.id.browser_scroller)
+                clipToPadding = false
             }
+        applyContentInsets(view)
         DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
             setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.browser_divider)!!)
             cardsListView.addItemDecoration(this)
@@ -422,6 +425,19 @@ class CardBrowserFragment :
         setupFragmentResultListeners()
 
         setupMenu()
+    }
+
+    private fun applyContentInsets(root: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.updatePadding(left = bars.left, right = bars.right)
+            // RecyclerView uses clipToPadding=false so list scrolls under the navigation bar
+            cardsListView.updatePadding(bottom = bars.bottom)
+            insets
+        }
     }
 
     private fun setupMenu() {
