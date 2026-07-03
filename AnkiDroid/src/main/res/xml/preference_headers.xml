@@ -137,6 +137,12 @@
         android:fragment="com.ichi2.anki.preferences.DeveloperOptionsFragment"
         app:isPreferenceVisible="false">
     </com.ichi2.preferences.HeaderPreference>
+    <com.ichi2.preferences.HeaderPreference
+        android:fragment="com.ichi2.anki.preferences.FmgeSettingsFragment"
+        android:key="fmge_settings_screen"
+        android:title="@string/fmge_settings_title"
+        android:icon="@drawable/ic_cards_star" />
+
     <!-- About -->
     <com.ichi2.preferences.HeaderPreference
         android:key="@string/about_screen_key"

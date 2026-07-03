@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/fmge_settings_title"
+    android:key="fmge_settings_screen">
+    <EditTextPreference
+        android:key="fmge_exam_date"
+        android:defaultValue="2027-01-09"
+        android:title="@string/fmge_exam_date"
+        android:summary="@string/fmge_exam_date_summary"
+        app:useSimpleSummaryProvider="true" />
+    <EditTextPreference
+        android:key="fmge_daily_new_card_goal"
+        android:defaultValue="100"
+        android:title="@string/fmge_daily_new_card_goal"
+        app:useSimpleSummaryProvider="true" />
+    <SwitchPreferenceCompat android:key="fmge_enable_dashboard" android:defaultValue="true" android:title="@string/fmge_enable_dashboard" />
+    <SwitchPreferenceCompat android:key="fmge_enable_countdown" android:defaultValue="true" android:title="@string/fmge_enable_countdown" />
+    <SwitchPreferenceCompat android:key="fmge_enable_high_yield" android:defaultValue="true" android:title="@string/fmge_enable_high_yield" />
+    <SwitchPreferenceCompat android:key="fmge_enable_weak_cards" android:defaultValue="true" android:title="@string/fmge_enable_weak_cards" />
+</PreferenceScreen>

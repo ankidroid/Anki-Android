@@ -47,6 +47,10 @@
     </item>
     <!-- Backend string TR.qtAccelCreateBackup() has an & in it -->
     <item
+        android:id="@+id/action_fmge_dashboard"
+        android:menuCategory="secondary"
+        android:title="@string/fmge_dashboard_title" />
+    <item
         android:id="@+id/action_create_backup"
         android:menuCategory="secondary"
         android:title="@string/menu_create_backup"

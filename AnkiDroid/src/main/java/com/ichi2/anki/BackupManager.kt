@@ -35,6 +35,7 @@ open class BackupManager {
     companion object {
         private const val MIN_FREE_SPACE = 10
         private const val BACKUP_SUFFIX = "backup"
+        private const val FMGE_BACKUP_ROOT = "AnkiFMGE"
         const val BROKEN_COLLECTIONS_SUFFIX = "broken"
         private val backupNameRegex: Regex by lazy {
             Regex("(?:collection|backup)-((\\d{4})-(\\d{2})-(\\d{2})-(\\d{2})[.-](\\d{2}))(?:\\.\\d{2})?.colpkg")
@@ -44,7 +45,8 @@ open class BackupManager {
         private val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm")
 
         fun getBackupDirectory(ankidroidDir: File): File {
-            val directory = File(ankidroidDir, BACKUP_SUFFIX)
+            val fmgeRoot = File(ankidroidDir.parentFile ?: ankidroidDir, FMGE_BACKUP_ROOT)
+            val directory = File(fmgeRoot, BACKUP_SUFFIX)
             if (!directory.isDirectory && !directory.mkdirs()) {
                 Timber.w("getBackupDirectory() mkdirs on %s failed", ankidroidDir)
             }

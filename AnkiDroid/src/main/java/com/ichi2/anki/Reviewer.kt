@@ -456,6 +456,19 @@ open class Reviewer :
                 Timber.i("Reviewer:: Tag button pressed")
                 showTagsDialog()
             }
+            R.id.action_toggle_high_yield -> {
+                Timber.i("Reviewer:: Toggle High Yield button pressed")
+                currentCard?.let { card ->
+                    launchCatchingTask {
+                        val enabled = withCol { FmgeAnalyticsRepository.toggleHighYield(this, card.id) }
+                        showThemedToast(
+                            this@Reviewer,
+                            if (enabled) R.string.fmge_high_yield_enabled else R.string.fmge_high_yield_disabled,
+                            false,
+                        )
+                    }
+                }
+            }
             R.id.action_edit -> {
                 Timber.i("Reviewer:: Edit note button pressed")
                 editCard()

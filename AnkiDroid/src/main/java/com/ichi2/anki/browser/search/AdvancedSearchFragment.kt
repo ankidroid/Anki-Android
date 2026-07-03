@@ -153,6 +153,13 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                     OptionData("Cards in learning for the first time", "is:learn -is:review"),
                 ),
             ),
+            TabData(
+                "FMGE",
+                listOf(
+                    OptionData("High Yield cards", "tag:HighYield"),
+                    OptionData("Weak Cards", "prop:lapses>=3"),
+                ),
+            ),
             // TODO: get flags using labels from backend
             TabData(
                 "Flags",

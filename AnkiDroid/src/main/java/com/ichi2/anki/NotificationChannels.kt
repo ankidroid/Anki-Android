@@ -81,7 +81,7 @@ enum class Channel(
     @StringRes val nameId: Int,
     val importance: Int,
 ) {
-    GENERAL("General Notifications", R.string.app_name, NotificationManagerCompat.IMPORTANCE_DEFAULT),
+    GENERAL("General Notifications", R.string.fmge_notification_channel, NotificationManagerCompat.IMPORTANCE_DEFAULT),
     SYNC("Synchronization", R.string.sync_title, NotificationManagerCompat.IMPORTANCE_LOW),
     REVIEW_REMINDERS("Review Reminders", R.string.review_reminders_do_not_translate, NotificationManagerCompat.IMPORTANCE_DEFAULT),
     ;

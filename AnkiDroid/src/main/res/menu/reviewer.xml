@@ -122,6 +122,11 @@
         tools:title="Previous card info"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_toggle_high_yield"
+        android:icon="@drawable/ic_star_border_white"
+        android:title="@string/fmge_toggle_high_yield"
+        ankidroid:showAsAction="never"/>
+    <item
         android:id="@+id/action_tag"
         android:icon="@drawable/ic_tag"
         android:title="@string/menu_edit_tags"

@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             app:navigationContentDescription="@string/abc_action_bar_up_description"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="@string/pref_cat_about_title"
+            app:title="@string/fmge_about_title"
             />
 
         <ScrollView
@@ -46,12 +46,18 @@
                     android:layout_height="96dp"
                     app:srcCompat="@drawable/ankidroid_logo" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/about_app_name"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ankidroid_txt"
-                    app:tint="?android:attr/textColor" />
+                    android:text="@string/fmge_about_title"
+                    android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fmge_about_summary"
+                    android:textAppearance="?attr/textAppearanceBodyMedium" />
 
                 <TextView
                     android:id="@+id/version"

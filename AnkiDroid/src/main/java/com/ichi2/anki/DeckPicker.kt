@@ -128,6 +128,8 @@ import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
+import com.ichi2.anki.fmge.FmgeAnalyticsRepository
+import com.ichi2.anki.fmge.FmgeDashboardActivity
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.FatalErrorDialog
@@ -792,6 +794,7 @@ open class DeckPicker :
                 data = deckList.data,
                 hasSubDecks = deckList.hasSubDecks,
             )
+            updateFmgeHomeDashboard()
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
@@ -1306,6 +1309,11 @@ open class DeckPicker :
                 showImportDialog()
                 return true
             }
+            R.id.action_fmge_dashboard -> {
+                Timber.i("DeckPicker:: FMGE dashboard button pressed")
+                startActivity(Intent(this, FmgeDashboardActivity::class.java))
+                return true
+            }
             R.id.action_check_database -> {
                 Timber.i("DeckPicker:: Check database button pressed")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK)
@@ -1360,6 +1368,23 @@ open class DeckPicker :
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun updateFmgeHomeDashboard() {
+        deckPickerBinding.fmgeHomeDashboard.setOnClickListener {
+            startActivity(Intent(this, FmgeDashboardActivity::class.java))
+        }
+        launchCatchingTask {
+            val data = withCol { FmgeAnalyticsRepository.dashboard(this, this@DeckPicker.sharedPrefs()) }
+            deckPickerBinding.fmgeHomeProgress.progress = data.progressPercent
+            deckPickerBinding.fmgeHomeSummary.text = getString(
+                R.string.fmge_home_dashboard_summary,
+                data.daysUntilExam,
+                data.dailyGoal,
+                data.progressPercent,
+                data.remainingCards,
+            )
         }
     }
 

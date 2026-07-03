@@ -451,5 +451,37 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="set_due_date_date_range">Date range</string>
 
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+
+    <string name="fmge_settings_title">FMGE Settings</string>
+    <string name="fmge_exam_date">Exam Date</string>
+    <string name="fmge_exam_date_summary">Use yyyy-MM-dd format; default is 2027-01-09</string>
+    <string name="fmge_daily_new_card_goal">Daily New Card Goal</string>
+    <string name="fmge_enable_dashboard">Enable Dashboard</string>
+    <string name="fmge_enable_countdown">Enable Countdown</string>
+    <string name="fmge_enable_high_yield">Enable High Yield</string>
+    <string name="fmge_enable_weak_cards">Enable Weak Cards</string>
+    <string name="fmge_notification_channel">Anki FMGE</string>
+    <string name="fmge_about_title">Anki FMGE</string>
+    <string name="fmge_about_summary">Based on AnkiDroid</string>
+
+    <string name="fmge_dashboard_title">FMGE Dashboard</string>
+    <string name="fmge_today_reviews_value">Today's Reviews: %1$d</string>
+    <string name="fmge_today_new_value">Today's New Cards: %1$d</string>
+    <string name="fmge_study_time_value">Today's Study Time: %1$d min</string>
+    <string name="fmge_remaining_cards_value">Remaining Cards: %1$d</string>
+    <string name="fmge_retention_value">Current Retention: %1$d%%</string>
+    <string name="fmge_exam_countdown_value">Exam Countdown: %1$d days</string>
+    <string name="fmge_estimated_completion_value">Estimated Completion Date: %1$s</string>
+    <string name="fmge_high_yield_value">High Yield Cards: %1$d</string>
+    <string name="fmge_weak_cards_value">Weak Cards: %1$d</string>
+    <string name="fmge_subject_analytics_title">Subject Analytics</string>
+    <string name="fmge_subject_analytics_value">%1$s
+Learning: %2$d • Review: %3$d • Mature: %4$d
+Retention: %5$d%% • Total Cards: %6$d
+Average Review Time: %7$d sec • Today's Reviews: %8$d</string>
+    <string name="fmge_home_dashboard_summary">Exam: %1$d days • Goal: %2$d • Progress: %3$d%% • Cards Remaining: %4$d</string>
+    <string name="fmge_toggle_high_yield">Toggle High Yield</string>
+    <string name="fmge_high_yield_enabled">High Yield enabled</string>
+    <string name="fmge_high_yield_disabled">High Yield disabled</string>
 </resources>
 

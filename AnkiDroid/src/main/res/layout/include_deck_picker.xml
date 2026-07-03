@@ -31,8 +31,40 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:id="@+id/fmge_home_dashboard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:background="?attr/colorSurface"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fmge_dashboard_title"
+                            android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+                        <ProgressBar
+                            android:id="@+id/fmge_home_progress"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:max="100" />
+
+                        <TextView
+                            android:id="@+id/fmge_home_summary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?attr/textAppearanceBodyMedium" />
+                    </LinearLayout>
+
                     <com.ichi2.anki.ui.BottomFadeFrameLayout
                         android:id="@+id/decks_fade_wrapper"
+                        android:layout_below="@id/fmge_home_dashboard"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 

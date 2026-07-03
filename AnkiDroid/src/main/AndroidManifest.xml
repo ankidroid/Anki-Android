@@ -107,6 +107,9 @@
             android:name="com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity"
             android:exported="true"/>
         <activity
+            android:name="com.ichi2.anki.fmge.FmgeDashboardActivity"
+            android:exported="false"/>
+        <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
