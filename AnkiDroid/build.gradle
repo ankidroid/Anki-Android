@@ -88,7 +88,7 @@ android {
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash.get()}\""
         buildConfigField "long", "BUILD_TIME", buildTimeMillis.get()
-        resValue "string", "app_name", "AnkiDroid"
+        resValue "string", "app_name", "Anki FMGE"
 
         // The version number is of the form:
         // <major>.<minor>.<maintenance>[dev|alpha<build>|beta<build>|]
