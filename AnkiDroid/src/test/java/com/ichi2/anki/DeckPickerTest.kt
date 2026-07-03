@@ -804,19 +804,6 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED))
         }
 
-    /**
-     * Emulates a null collection and a `BackendDbLockedException`
-     *
-     * @see enableNullCollection
-     */
-    private fun withNullCollection(block: () -> Unit) =
-        try {
-            enableNullCollection()
-            block()
-        } finally {
-            disableNullCollection()
-        }
-
     @Test
     fun `when INTERNET is denied, PermissionsActivity is shown`() =
         runTest {
