@@ -28,7 +28,7 @@
     <string name="add_tag" maxLength="28">Add tag</string>
     <string name="check_all_tags" maxLength="28">Check/uncheck all tags</string>
     <string name="filter_tags" maxLength="28">Filter tags</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
+    <string name="no_tags">You haven't added any tags yet</string>
     <string name="updated_version">Updated to version %s</string>
 
     <!-- Reviewer.kt (Study Screen) -->
@@ -94,16 +94,16 @@
     <string name="cardeditor_title_edit_card" maxLength="28">Edit note</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click 'Cards' and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
     <string name="save" maxLength="28">Save</string>
     <string name="close">Close</string>
     <string name="select">Select</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
+    <string name="field_remapping">%1$s (from "%2$s")</string>
     <string name="missing_note_type">No note type found</string>
-    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s (empty)</string>
+    <string name="card_previewer_empty_front_indicator" comment="Extra text appended onto a tab title in the card previewer so that the user can see at a glance whether a card has no front.">%1$s</string>
 
     <!-- Image cropper -->
     <string name="image_cropper_action_rotate" maxLength="28" comment="Action in image cropper screen">Rotate</string>
@@ -143,15 +143,15 @@
     <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
+    <string name="import_dialog_message_add">Add "%s" to collection? This may take a long time</string>
+    <string name="import_log_no_apkg">This isn't a valid Anki package file</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_error_not_apkg_extension">Filename "%s" doesn't have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
+    <string name="import_error_content_provider">The selected file couldn't be imported automatically by AnkiDroid. Please see the user manual for how to manually import Anki files: \n%s</string>
     <string name="import_error_copy_to_cache_title">Failed to cache file</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Try again with a different file selector.</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving…</string>
@@ -175,9 +175,9 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Set TTS language</string>
-    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+    <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck does not delete the cards themselves.</string>
+    <string name="tag_editor_add_feedback">Touch "%2$s" to confirm adding "%1$s"</string>
+    <string name="tag_editor_add_feedback_existing">Existing tag "%1$s" selected</string>
     <string name="tag_already_exists">Tag already exists</string>
     <string name="error_name_exists">Name already exists</string>
     <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
@@ -205,7 +205,7 @@
     <string comment="Progress amount e.g. '28 MB/141 MB'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
 
     <string name="media_file_size_warning_title">Media too large</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be added</string>
     <string name="media_file_size_add_anyway">Add anyway</string>
 
     <!-- Whiteboard save image message in the Study Screen -->
@@ -229,12 +229,12 @@
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
 
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load '%s'</string>
 
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Search decks</string>
     <string name="ankidroid_init_failed_webview_title">Fatal error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
 
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -267,7 +267,7 @@
 
 
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: 'AnkiDroid'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: 'AnkiDroid'">Allow 'Home screen shortcuts' in system settings to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
@@ -398,7 +398,7 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="deck_description_field_hint">Description</string>
     <string name="deck_description_saved">Description updated</string>
     <string name="format_deck_description_as_markdown">Format as Markdown</string>
-    <string name="help_button_content_description">Open help for ‘%s’</string>
+    <string name="help_button_content_description">Open help for '%s'</string>
 
     <string name="failed_to_copy">Failed to copy</string>
 
@@ -465,20 +465,22 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="fmge_about_summary">Based on AnkiDroid</string>
 
     <string name="fmge_dashboard_title">FMGE Dashboard</string>
-    <string name="fmge_today_reviews_value">Today's Reviews: %1$d</string>
-    <string name="fmge_today_new_value">Today's New Cards: %1$d</string>
-    <string name="fmge_study_time_value">Today's Study Time: %1$d min</string>
-    <string name="fmge_remaining_cards_value">Remaining Cards: %1$d</string>
-    <string name="fmge_retention_value">Current Retention: %1$d%%</string>
-    <string name="fmge_exam_countdown_value">Exam Countdown: %1$d days</string>
-    <string name="fmge_estimated_completion_value">Estimated Completion Date: %1$s</string>
-    <string name="fmge_high_yield_value">High Yield Cards: %1$d</string>
-    <string name="fmge_weak_cards_value">Weak Cards: %1$d</string>
+    <string name="fmge_today_reviews_value"><![CDATA[Today's Reviews: %1$d]]></string>
+    <string name="fmge_today_new_value"><![CDATA[Today's New Cards: %1$d]]></string>
+    <string name="fmge_study_time_value"><![CDATA[Today's Study Time: %1$d min]]></string>
+    <string name="fmge_remaining_cards_value"><![CDATA[Remaining Cards: %1$d]]></string>
+    <string name="fmge_retention_value"><![CDATA[Current Retention: %1$d%%]]></string>
+    <string name="fmge_exam_countdown_value"><![CDATA[Exam Countdown: %1$d days]]></string>
+    <string name="fmge_estimated_completion_value"><![CDATA[Estimated Completion Date: %1$s]]></string>
+    <string name="fmge_high_yield_value"><![CDATA[High Yield Cards: %1$d]]></string>
+    <string name="fmge_weak_cards_value"><![CDATA[Weak Cards: %1$d]]></string>
     <string name="fmge_subject_analytics_title">Subject Analytics</string>
-    <string name="fmge_subject_analytics_value">%1$s&#10;Learning: %2$d • Review: %3$d • Mature: %4$d&#10;Retention: %5$d%% • Total Cards: %6$d&#10;Average Review Time: %7$d sec • Today's Reviews: %8$d</string>
-    <string name="fmge_home_dashboard_summary">Exam: %1$d days • Goal: %2$d • Progress: %3$d%% • Cards Remaining: %4$d</string>
+    <string name="fmge_subject_analytics_value"><![CDATA[%1$s
+Learning: %2$d • Review: %3$d • Mature: %4$d
+Retention: %5$d%% • Total Cards: %6$d
+Average Review Time: %7$d sec • Today's Reviews: %8$d]]></string>
+    <string name="fmge_home_dashboard_summary"><![CDATA[Exam: %1$d days • Goal: %2$d • Progress: %3$d%% • Cards Remaining: %4$d]]></string>
     <string name="fmge_toggle_high_yield">Toggle High Yield</string>
     <string name="fmge_high_yield_enabled">High Yield enabled</string>
     <string name="fmge_high_yield_disabled">High Yield disabled</string>
 </resources>
-
