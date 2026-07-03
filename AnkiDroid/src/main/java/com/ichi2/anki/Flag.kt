@@ -87,15 +87,15 @@ enum class Flag(
 
     private fun defaultDisplayName(): String =
         when (this) {
-            NONE -> TR.browsingNoFlag()
-            RED -> TR.actionsFlagRed()
-            ORANGE -> TR.actionsFlagOrange()
-            GREEN -> TR.actionsFlagGreen()
-            BLUE -> TR.actionsFlagBlue()
-            PINK -> TR.actionsFlagPink()
-            TURQUOISE -> TR.actionsFlagTurquoise()
-            PURPLE -> TR.actionsFlagPurple()
-        }
+            NONE -> "None"
+            RED -> "Important"
+            ORANGE -> "Weak"
+            GREEN -> "Mastered"
+            BLUE -> "New"
+            PINK -> "Image"
+            TURQUOISE -> "Clinical"
+            PURPLE -> "Bookmark"
+        }    
 
     /**
      * Renames the flag
