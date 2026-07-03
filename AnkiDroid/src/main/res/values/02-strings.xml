@@ -475,10 +475,7 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string name="fmge_high_yield_value">High Yield Cards: %1$d</string>
     <string name="fmge_weak_cards_value">Weak Cards: %1$d</string>
     <string name="fmge_subject_analytics_title">Subject Analytics</string>
-    <string name="fmge_subject_analytics_value">%1$s
-Learning: %2$d • Review: %3$d • Mature: %4$d
-Retention: %5$d%% • Total Cards: %6$d
-Average Review Time: %7$d sec • Today's Reviews: %8$d</string>
+    <string name="fmge_subject_analytics_value">%1$s&#10;Learning: %2$d • Review: %3$d • Mature: %4$d&#10;Retention: %5$d%% • Total Cards: %6$d&#10;Average Review Time: %7$d sec • Today's Reviews: %8$d</string>
     <string name="fmge_home_dashboard_summary">Exam: %1$d days • Goal: %2$d • Progress: %3$d%% • Cards Remaining: %4$d</string>
     <string name="fmge_toggle_high_yield">Toggle High Yield</string>
     <string name="fmge_high_yield_enabled">High Yield enabled</string>
