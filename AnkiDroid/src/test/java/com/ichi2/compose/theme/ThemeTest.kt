@@ -84,4 +84,26 @@ class ThemeTest {
         // inverseSurface is not overridden by Theme_Dark, so it should come from the base
         assertEquals(darkDefaults.inverseSurface.toArgb(), scheme.inverseSurface.toArgb())
     }
+
+    @Test
+    fun `light theme bridges fab_normal to the fab container color`() {
+        val context = themed(R.style.Theme_Light)
+        val colors = context.toAnkiDroidColors(context.toMaterial3ColorScheme())
+        val expected = ContextCompat.getColor(appContext, CommonR.color.material_light_blue_700)
+        assertEquals(expected, colors.fabContainer.toArgb())
+    }
+
+    @Test
+    fun `black theme bridges its own fab_normal to the fab container color`() {
+        val context = themed(R.style.Theme_Dark_Black)
+        val colors = context.toAnkiDroidColors(context.toMaterial3ColorScheme())
+        assertEquals(0xFF303030.toInt(), colors.fabContainer.toArgb())
+    }
+
+    @Test
+    fun `fab content color follows the theme onPrimary`() {
+        val context = themed(R.style.Theme_Light)
+        val scheme = context.toMaterial3ColorScheme()
+        assertEquals(scheme.onPrimary.toArgb(), context.toAnkiDroidColors(scheme).onFab.toArgb())
+    }
 }
