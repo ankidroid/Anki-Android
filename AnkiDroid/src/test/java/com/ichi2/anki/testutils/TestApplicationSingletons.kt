@@ -4,6 +4,7 @@ package com.ichi2.anki.testutils
 
 import android.app.Application
 import com.ichi2.anki.common.android.Animations
+import com.ichi2.anki.initializeWidgetRepository
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.testutils.EmptyApplication
@@ -15,5 +16,6 @@ import com.ichi2.testutils.EmptyApplication
 context(_: Application)
 fun registerTestApplicationSingletons() {
     initializeNavigator()
+    initializeWidgetRepository()
     Animations.setPreferencesProvider { context -> PrefsRepository(context) }
 }

@@ -127,6 +127,7 @@ open class AnkiDroidApp :
 
         initializeAcraCrashReporter()
         initializeNavigator()
+        initializeWidgetRepository()
         Animations.setPreferencesProvider { context -> PrefsRepository(context) }
         val logType = LogType.value
         when (logType) {
