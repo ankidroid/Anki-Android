@@ -378,7 +378,7 @@ class NotificationService : AnkiBroadcastReceiver() {
                         PENDING_NOTIFICATIONS_ONLY.toString(),
                     )!!
                     .toInt()
-            val dueCardsCount = WidgetStatus.fetchDue(context)
+            val dueCardsCount = WidgetStatus.fetchDue()
             if (dueCardsCount >= minCardsDue) {
                 // Build basic notification
                 val cardsDueText =
