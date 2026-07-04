@@ -37,7 +37,7 @@ class ToggleableIncrementerNumberRangePreferenceCompat :
     constructor(context: Context) : super(context)
 
     init {
-        widgetLayoutResource = R.layout.preference_widget_switch
+        widgetLayoutResource = R.layout.preference_widget_switch_with_separator
     }
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
