@@ -54,7 +54,7 @@ class ToggleableIncrementerNumberRangePreferenceCompatTest {
     }
 
     @Test
-    fun `toggle off default value is 1 when min is 0`() {
+    fun `toggle on default value is 1 when min is 0`() {
         val min = 0
         val defaultValue = maxOf(1, min)
         assertThat(
@@ -65,7 +65,7 @@ class ToggleableIncrementerNumberRangePreferenceCompatTest {
     }
 
     @Test
-    fun `toggle off default value respects min when min is positive`() {
+    fun `toggle on default value respects min when min is positive`() {
         val min = 5
         val defaultValue = maxOf(1, min)
         assertThat(
