@@ -453,6 +453,9 @@ opening the system text to speech settings fails">Failed to open text to speech 
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 
     <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
     <string name="add_profile">Add profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>
 
