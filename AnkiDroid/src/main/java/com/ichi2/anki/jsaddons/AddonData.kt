@@ -70,23 +70,36 @@ data class DistInfo(
 )
 
 /**
+ * Result of validating a manifest ([AddonData]) as an AnkiDroid addon
+ */
+sealed interface AddonValidationResult {
+    /** The manifest maps to a usable [AddonModel] */
+    data class Valid(
+        val addonModel: AddonModel,
+    ) : AddonValidationResult
+
+    /** The manifest is not a valid AnkiDroid addon, for the reasons in [errors] */
+    data class Invalid(
+        val errors: List<String>,
+    ) : AddonValidationResult
+}
+
+/**
  * Check if npm package is valid or not by fields ankidroidJsApi, keywords (ankidroid-js-addon) and
  * addon_type (reviewer or note editor) in addonData
  *
- * For valid addon the error list will be empty,
- * for not valid addon the error list will contain the error related to the checks
- *
  * @param packageJsonPath package.json file path
- * @return Pair with addonModel and error list
+ * @return [AddonValidationResult.Valid] with the mapped model,
+ *   or [AddonValidationResult.Invalid] with the errors related to the failed checks
  */
 @Throws(IOException::class)
-fun getAddonModelFromJson(packageJsonPath: String): Pair<AddonModel?, List<String>> {
+fun getAddonModelFromJson(packageJsonPath: String): AddonValidationResult {
     val data = File(packageJsonPath).readBytes().decodeToString()
     return try {
         val json = Json { ignoreUnknownKeys = true }
         getAddonModelFromAddonData(json.decodeFromString(data))
     } catch (exc: SerializationException) {
-        return Pair(null, listOf("Unable to parse manifest: $exc"))
+        AddonValidationResult.Invalid(listOf("Unable to parse manifest: $exc"))
     }
 }
 
@@ -94,12 +107,10 @@ fun getAddonModelFromJson(packageJsonPath: String): Pair<AddonModel?, List<Strin
  * Get addonModel from addonData
  *
  * @param addonData
- * @return pair of valid addon model and errors list
+ * @return [AddonValidationResult.Valid] with the mapped model,
+ *   or [AddonValidationResult.Invalid] with the errors related to the failed checks
  */
-fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<String>> {
-    var errorStr: String
-    val errorList: MutableList<String> = ArrayList()
-
+fun getAddonModelFromAddonData(addonData: AddonData): AddonValidationResult {
     // either fields not present in package.json or failed to parse the fields
     if (addonData.name.isNullOrBlank() ||
         addonData.addonTitle.isNullOrBlank() ||
@@ -110,49 +121,46 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
         addonData.homepage.isNullOrBlank() ||
         addonData.keywords.isNullOrEmpty()
     ) {
-        errorStr = "Invalid addon package: fields in package.json are empty or null"
-        errorList.add(errorStr)
         // the checks below dereference these fields, so they cannot run safely
-        return Pair(null, errorList)
+        return AddonValidationResult.Invalid(listOf("Invalid addon package: fields in package.json are empty or null"))
     }
+
+    val errorList: MutableList<String> = ArrayList()
 
     // check if name is safe and valid
     if (!validateName(addonData.name)) {
-        errorStr = "Invalid addon package: package name failed validation"
-        errorList.add(errorStr)
+        errorList.add("Invalid addon package: package name failed validation")
     }
 
     if (addonData.addonType != REVIEWER_ADDON && addonData.addonType != NOTE_EDITOR_ADDON) {
-        errorStr = "Invalid addon package: ${addonData.addonType} is not valid addon type, " +
-            "package.json must have 'addonType' fields of 'reviewer' or 'note-editor'"
-        errorList.add(errorStr)
+        errorList.add(
+            "Invalid addon package: ${addonData.addonType} is not valid addon type, " +
+                "package.json must have 'addonType' fields of 'reviewer' or 'note-editor'",
+        )
     }
 
     // if addon type is note editor then it must have icon
     if (addonData.addonType == NOTE_EDITOR_ADDON && addonData.icon.isNullOrBlank()) {
-        errorStr = "Invalid addon package: note editor addon must have 'icon' fields in package.json"
-        errorList.add(errorStr)
+        errorList.add("Invalid addon package: note editor addon must have 'icon' fields in package.json")
     }
 
     // check if ankidroid-js-addon present or not in mapped addonData
     val jsAddonKeywordsPresent = addonData.keywords.any { it == ANKIDROID_JS_ADDON_KEYWORDS }
     if (!jsAddonKeywordsPresent) {
-        errorStr = "Invalid addon package: package.json does not have 'ankidroid-js-addon' in ${addonData.keywords} keywords"
-        errorList.add(errorStr)
+        errorList.add("Invalid addon package: package.json does not have 'ankidroid-js-addon' in ${addonData.keywords} keywords")
     }
 
     // Check supplied api and current api
     if (addonData.ankidroidJsApi != CURRENT_JS_API_VERSION) {
-        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must " +
-            "be equal to current js api version $CURRENT_JS_API_VERSION"
-        errorList.add(errorStr)
+        errorList.add(
+            "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must " +
+                "be equal to current js api version $CURRENT_JS_API_VERSION",
+        )
     }
 
-    val immutableList: List<String> = ArrayList(errorList)
-
-    // there are errors in package.json so return null and errors list
+    // there are errors in package.json so return the errors list
     if (errorList.isNotEmpty()) {
-        return Pair(null, immutableList)
+        return AddonValidationResult.Invalid(errorList)
     }
 
     val icon = if (addonData.addonType == NOTE_EDITOR_ADDON) addonData.icon!! else ""
@@ -175,7 +183,7 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
             dist = addonData.dist,
         )
 
-    return Pair(addonModel, immutableList)
+    return AddonValidationResult.Valid(addonModel)
 }
 
 /**
@@ -197,14 +205,13 @@ fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<
     val addonsData = json.decodeFromString<List<AddonData>>(urlData)
     val addonsModelList = mutableListOf<AddonModel>()
     for (addon in addonsData) {
-        val result = getAddonModelFromAddonData(addon)
-
-        if (result.first == null) {
-            Timber.i("Not a valid addon for AnkiDroid, the errors for the addon:\n %s", result.second)
-            errorList.addAll(result.second)
-            continue
+        when (val result = getAddonModelFromAddonData(addon)) {
+            is AddonValidationResult.Valid -> addonsModelList.add(result.addonModel)
+            is AddonValidationResult.Invalid -> {
+                Timber.i("Not a valid addon for AnkiDroid, the errors for the addon:\n %s", result.errors)
+                errorList.addAll(result.errors)
+            }
         }
-        addonsModelList.add(result.first!!)
     }
 
     return Pair(addonsModelList, errorList.toList())

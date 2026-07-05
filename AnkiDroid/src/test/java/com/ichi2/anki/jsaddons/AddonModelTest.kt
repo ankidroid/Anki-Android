@@ -37,6 +37,7 @@ import org.robolectric.Shadows.shadowOf
 import java.io.File
 import java.io.IOException
 import kotlin.collections.HashSet
+import kotlin.test.assertIs
 
 @RunWith(AndroidJUnit4::class)
 class AddonModelTest : RobolectricTest() {
@@ -62,13 +63,11 @@ class AddonModelTest : RobolectricTest() {
     @Test
     @Throws(IOException::class)
     fun isValidAnkiDroidAddonTest() {
-        // test addon is valid or not, for valid addon the result string will be empty
-        val result: Pair<AddonModel?, List<String>> = getAddonModelFromJson(validNpmPackageJson)
-        assertTrue(result.second.isEmpty())
-        assertTrue("package.json contains required fields", result.first != null)
+        // test addon is valid or not, for a valid addon the result is Valid
+        val result = getAddonModelFromJson(validNpmPackageJson)
+        val addon = assertIs<AddonValidationResult.Valid>(result, "package.json contains required fields").addonModel
 
         // needs to test these fields
-        val addon = result.first!!
         assertEquals(addon.name, "valid-ankidroid-js-addon-test")
         assertEquals(addon.addonTitle, "Valid AnkiDroid JS Addon")
         assertEquals(addon.version, "1.0.0")
@@ -83,12 +82,12 @@ class AddonModelTest : RobolectricTest() {
     @Test
     @Throws(IOException::class)
     fun notValidAnkiDroidAddonTest() {
-        // test addon is valid or not, for not valid addon the result string will not be empty
-        val result: Pair<AddonModel?, List<String>> = getAddonModelFromJson(notValidNpmPackageJson)
-        // assert that addon model is null i.e. the package.json not mapped to addon model
-        assertTrue("package.json not contains required fields", result.first == null)
+        // test addon is valid or not, for a not valid addon the result is Invalid
+        val result = getAddonModelFromJson(notValidNpmPackageJson)
+        // assert that the package.json was not mapped to an addon model
+        val errors = assertIs<AddonValidationResult.Invalid>(result, "package.json not contains required fields").errors
         // assert that error list contains error when the package.json not mapped to AddonModel
-        assertFalse(result.second.isEmpty())
+        assertFalse(errors.isEmpty())
     }
 
     @Test
@@ -99,8 +98,8 @@ class AddonModelTest : RobolectricTest() {
         var reviewerEnabledAddonSet = prefs.getStringSet(REVIEWER_ADDON, HashSet())
         assertEquals(0, reviewerEnabledAddonSet?.size)
 
-        val result: Pair<AddonModel?, List<String>> = getAddonModelFromJson(validNpmPackageJson)
-        val addonModel = result.first!!
+        val result = getAddonModelFromJson(validNpmPackageJson)
+        val addonModel = assertIs<AddonValidationResult.Valid>(result).addonModel
 
         // update the prefs make it enabled
         addonModel.updatePrefs(prefs, REVIEWER_ADDON, false)
@@ -172,22 +171,22 @@ class AddonModelTest : RobolectricTest() {
     @Test // the validator must report errors, never throw
     fun missingNameReturnsErrorTest() {
         val result = getAddonModelFromAddonData(addonData(name = null))
-        assertTrue("model is not built from an invalid manifest", result.first == null)
-        assertFalse("missing 'name' is reported as an error", result.second.isEmpty())
+        val errors = assertIs<AddonValidationResult.Invalid>(result, "model is not built from an invalid manifest").errors
+        assertFalse("missing 'name' is reported as an error", errors.isEmpty())
     }
 
     @Test // the validator must report errors, never throw
     fun missingKeywordsReturnsErrorTest() {
         val result = getAddonModelFromAddonData(addonData(keywords = null))
-        assertTrue("model is not built from an invalid manifest", result.first == null)
-        assertFalse("missing 'keywords' is reported as an error", result.second.isEmpty())
+        val errors = assertIs<AddonValidationResult.Invalid>(result, "model is not built from an invalid manifest").errors
+        assertFalse("missing 'keywords' is reported as an error", errors.isEmpty())
     }
 
-    @Test // 'version' is force-unwrapped during model construction, so it must be validated
+    @Test // 'version' is required during model construction, so it must be validated
     fun missingVersionReturnsErrorTest() {
         val result = getAddonModelFromAddonData(addonData(version = null))
-        assertTrue("model is not built from an invalid manifest", result.first == null)
-        assertFalse("missing 'version' is reported as an error", result.second.isEmpty())
+        val errors = assertIs<AddonValidationResult.Invalid>(result, "model is not built from an invalid manifest").errors
+        assertFalse("missing 'version' is reported as an error", errors.isEmpty())
     }
 
     @Test
@@ -195,16 +194,14 @@ class AddonModelTest : RobolectricTest() {
         // 'dist' is metadata added by the npm registry API; the package.json inside a
         // tarball does not contain it, so a locally installed addon must still validate
         val result = getAddonModelFromAddonData(addonData(dist = null))
-        assertTrue("no errors for a manifest without 'dist': ${result.second}", result.second.isEmpty())
-        assertTrue("model is built from a manifest without 'dist'", result.first != null)
+        assertIs<AddonValidationResult.Valid>(result, "model is built from a manifest without 'dist'")
     }
 
     @Test
     fun missingOptionalMetadataIsValidTest() {
         // description/author/license are commonly absent from real package.json files
         val result = getAddonModelFromAddonData(addonData(description = null, author = null, license = null))
-        assertTrue("no errors for a manifest without optional metadata: ${result.second}", result.second.isEmpty())
-        val addon = result.first!!
+        val addon = assertIs<AddonValidationResult.Valid>(result, "model is built from a manifest without optional metadata").addonModel
         assertEquals("", addon.description)
         assertEquals(emptyMap<String, String>(), addon.author)
         assertEquals("", addon.license)
