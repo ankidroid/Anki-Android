@@ -422,8 +422,12 @@ class TgzPackageExtract(
         }
     }
 
+    /**
+     * Recursively delete [addonsPackageDir], but only if it is inside an `addons` directory:
+     * a defence against deleting an arbitrary directory if a bad path is passed in
+     */
     private fun safeDeleteAddonsPackageDir(addonsPackageDir: AddonsPackageDir) {
-        if (addonsPackageDir.parent != "addons") {
+        if (addonsPackageDir.parentFile?.name != "addons") {
             return
         }
         addonsPackageDir.deleteRecursively()

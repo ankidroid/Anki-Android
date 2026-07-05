@@ -25,6 +25,7 @@ import io.mockk.every
 import io.mockk.spyk
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers.anExistingDirectory
 import org.hamcrest.io.FileMatchers.anExistingFile
@@ -167,6 +168,24 @@ class TgzPackageExtractTest : RobolectricTest() {
         assertFailsWith<IOException> {
             failingExtract.extractTarGzipToAddonFolder(File(tarballPath), addonDir)
         }
+    }
+
+    @Test
+    fun failedExtractionCleansUpPartialAddonTest() {
+        // an addon package dir inside the addons dir, as production lays it out
+        val addonsPackageDir = File(addonDir, "some-addon")
+
+        val failingExtract = spyk(addonPackage)
+        every { failingExtract.unTar(any(), any()) } answers {
+            // simulate a partial extraction before the failure
+            File(addonsPackageDir, "partial.js").writeText("")
+            throw IOException("simulated failure")
+        }
+
+        assertFailsWith<IOException> {
+            failingExtract.extractTarGzipToAddonFolder(File(tarballPath), addonsPackageDir)
+        }
+        assertThat(addonsPackageDir, not(anExistingDirectory()))
     }
 
     /**
