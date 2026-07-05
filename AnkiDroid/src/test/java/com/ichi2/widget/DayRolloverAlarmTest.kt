@@ -21,7 +21,7 @@ import android.content.Context
 import androidx.core.content.getSystemService
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.services.AlarmManagerService
+import com.ichi2.utils.AlarmManagement
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -59,7 +59,7 @@ class DayRolloverAlarmTest : RobolectricTest() {
                 alarmManager.setWindow(
                     AlarmManager.RTC_WAKEUP,
                     expectedCutoffMs,
-                    AlarmManagerService.WINDOW_LENGTH_MS,
+                    AlarmManagement.WINDOW_LENGTH_MS,
                     any(),
                 )
             }
