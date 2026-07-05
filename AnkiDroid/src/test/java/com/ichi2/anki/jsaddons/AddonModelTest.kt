@@ -19,8 +19,10 @@ package com.ichi2.anki.jsaddons
 import android.content.SharedPreferences
 import android.os.Looper.getMainLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.utils.FileOperation
 import junit.framework.TestCase.assertEquals
@@ -125,11 +127,86 @@ class AddonModelTest : RobolectricTest() {
         // first addon name and tgz download url
         val addon1 = result.first[0]
         assertEquals(addon1.name, "ankidroid-js-addon-progress-bar")
-        assertThat(addon1.dist.tarball, endsWith(".tgz"))
+        assertThat(addon1.dist!!.tarball, endsWith(".tgz"))
 
         // second addon name and tgz download url
         val addon2 = result.first[1]
         assertEquals(addon2.name, "valid-ankidroid-js-addon-test")
-        assertThat(addon2.dist.tarball, endsWith(".tgz"))
+        assertThat(addon2.dist!!.tarball, endsWith(".tgz"))
+    }
+
+    /**
+     * A valid manifest, with individual fields overridable so each test can knock one out
+     */
+    private fun addonData(
+        name: String? = "valid-ankidroid-js-addon-test",
+        addonTitle: String? = "Valid AnkiDroid JS Addon",
+        icon: String? = "",
+        version: String? = "1.0.0",
+        description: String? = "A test addon",
+        main: String? = "index.js",
+        ankidroidJsApi: String? = CURRENT_JS_API_VERSION,
+        addonType: String? = REVIEWER_ADDON,
+        keywords: List<String>? = listOf(ANKIDROID_JS_ADDON_KEYWORDS),
+        author: Map<String, String>? = mapOf("name" to "AnkiDroid"),
+        license: String? = "MIT",
+        homepage: String? = "https://example.com",
+        dist: DistInfo? = DistInfo("https://example.com/addon.tgz"),
+    ): AddonData =
+        AddonData(
+            name,
+            addonTitle,
+            icon,
+            version,
+            description,
+            main,
+            ankidroidJsApi,
+            addonType,
+            keywords,
+            author,
+            license,
+            homepage,
+            dist,
+        )
+
+    @Test // the validator must report errors, never throw
+    fun missingNameReturnsErrorTest() {
+        val result = getAddonModelFromAddonData(addonData(name = null))
+        assertTrue("model is not built from an invalid manifest", result.first == null)
+        assertFalse("missing 'name' is reported as an error", result.second.isEmpty())
+    }
+
+    @Test // the validator must report errors, never throw
+    fun missingKeywordsReturnsErrorTest() {
+        val result = getAddonModelFromAddonData(addonData(keywords = null))
+        assertTrue("model is not built from an invalid manifest", result.first == null)
+        assertFalse("missing 'keywords' is reported as an error", result.second.isEmpty())
+    }
+
+    @Test // 'version' is force-unwrapped during model construction, so it must be validated
+    fun missingVersionReturnsErrorTest() {
+        val result = getAddonModelFromAddonData(addonData(version = null))
+        assertTrue("model is not built from an invalid manifest", result.first == null)
+        assertFalse("missing 'version' is reported as an error", result.second.isEmpty())
+    }
+
+    @Test
+    fun missingDistIsValidTest() {
+        // 'dist' is metadata added by the npm registry API; the package.json inside a
+        // tarball does not contain it, so a locally installed addon must still validate
+        val result = getAddonModelFromAddonData(addonData(dist = null))
+        assertTrue("no errors for a manifest without 'dist': ${result.second}", result.second.isEmpty())
+        assertTrue("model is built from a manifest without 'dist'", result.first != null)
+    }
+
+    @Test
+    fun missingOptionalMetadataIsValidTest() {
+        // description/author/license are commonly absent from real package.json files
+        val result = getAddonModelFromAddonData(addonData(description = null, author = null, license = null))
+        assertTrue("no errors for a manifest without optional metadata: ${result.second}", result.second.isEmpty())
+        val addon = result.first!!
+        assertEquals("", addon.description)
+        assertEquals(emptyMap<String, String>(), addon.author)
+        assertEquals("", addon.license)
     }
 }
