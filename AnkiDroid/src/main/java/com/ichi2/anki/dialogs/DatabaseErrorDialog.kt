@@ -53,6 +53,8 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
+import com.ichi2.anki.startup.resetAnkiDroidDirectory
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.UiUtil.makeBold
@@ -166,7 +168,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 val shouldOfferResetToDefaultDirectory =
                     try {
                         val currentDir = CollectionHelper.getCurrentAnkiDroidDirectory(activity)
-                        val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
+                        val defaultDir = getDefaultAnkiDroidDirectory(activity)
                         currentDir.absolutePath != defaultDir.absolutePath
                     } catch (e: Throwable) {
                         Timber.w(e, "Failed to determine whether to offer reset-to-default directory option")
@@ -209,9 +211,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             }
                             ErrorHandlingEntries.RESET_TO_DEFAULT_DIRECTORY -> {
                                 try {
-                                    val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
+                                    val defaultDir = getDefaultAnkiDroidDirectory(activity)
                                     CollectionManager.closeCollectionBlocking()
-                                    CollectionHelper.resetAnkiDroidDirectory(activity, defaultDir)
+                                    resetAnkiDroidDirectory(activity, defaultDir)
                                     closeCollectionAndFinish()
                                 } catch (e: Throwable) {
                                     Timber.w(e, "Failed to reset AnkiDroid directory to default")
@@ -487,7 +489,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             dismissesDialog = false,
             { activity ->
                 Timber.i("Restoring from colpkg")
-                val newAnkiDroidDirectory = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
+                val newAnkiDroidDirectory = getDefaultAnkiDroidDirectory(activity)
                 activity.importColpkgListener = DatabaseRestorationListener(activity, newAnkiDroidDirectory)
 
                 activity.launchCatchingTask {
@@ -526,7 +528,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             fun displayCreateNewCollectionDialog(context: AnkiActivity) {
                 val directory =
                     try {
-                        CollectionHelper.getDefaultAnkiDroidDirectory(context)
+                        getDefaultAnkiDroidDirectory(context)
                     } catch (e: SystemStorageException) {
                         Timber.w(e, "failed to show 'Create new collection' dialog")
                         FatalErrorDialog.build(context, InitializationError(StorageError(e))).show()
@@ -543,7 +545,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             "DatabaseErrorDialog: Before Create New Collection",
                         )
                         CollectionManager.closeCollectionBlocking()
-                        CollectionHelper.resetAnkiDroidDirectory(context, directory)
+                        resetAnkiDroidDirectory(context, directory)
                         context.closeCollectionAndFinish()
                     }
                     negativeButton(R.string.dialog_cancel)
