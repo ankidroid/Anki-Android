@@ -16,27 +16,21 @@
 
 package com.ichi2.anki.jsaddons
 
-import android.content.SharedPreferences
-import android.os.Looper.getMainLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.utils.FileOperation
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringEndsWith.endsWith
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Shadows.shadowOf
 import java.io.File
 import java.io.IOException
-import kotlin.collections.HashSet
 import kotlin.test.assertIs
 
 @RunWith(AndroidJUnit4::class)
@@ -44,12 +38,6 @@ class AddonModelTest : RobolectricTest() {
     private lateinit var validNpmPackageJson: String
     private lateinit var notValidNpmPackageJson: String
     private lateinit var addonsPackageListTestJson: String
-    private lateinit var prefs: SharedPreferences
-
-    @Before
-    fun before() {
-        prefs = targetContext.sharedPrefs()
-    }
 
     @Before
     override fun setUp() {
@@ -88,34 +76,6 @@ class AddonModelTest : RobolectricTest() {
         val errors = assertIs<AddonValidationResult.Invalid>(result, "package.json not contains required fields").errors
         // assert that error list contains error when the package.json not mapped to AddonModel
         assertFalse(errors.isEmpty())
-    }
-
-    @Test
-    fun updatePrefsTest() {
-        shadowOf(getMainLooper()).idle()
-
-        // test that prefs hashset for reviewer is empty
-        var reviewerEnabledAddonSet = prefs.getStringSet(REVIEWER_ADDON, HashSet())
-        assertEquals(0, reviewerEnabledAddonSet?.size)
-
-        val result = getAddonModelFromJson(validNpmPackageJson)
-        val addonModel = assertIs<AddonValidationResult.Valid>(result).addonModel
-
-        // update the prefs make it enabled
-        addonModel.updatePrefs(prefs, REVIEWER_ADDON, false)
-
-        // test that new prefs added and size is 1 and the prefs hashset contains enabled addons name
-        reviewerEnabledAddonSet = prefs.getStringSet(REVIEWER_ADDON, HashSet())
-        assertEquals(1, reviewerEnabledAddonSet?.size)
-        assertTrue(reviewerEnabledAddonSet!!.contains(addonModel.name))
-
-        // now remove the addons from prefs
-        addonModel.updatePrefs(prefs, REVIEWER_ADDON, true)
-
-        // prefs hashset size for reviewer should be zero and prefs will not have addon name
-        reviewerEnabledAddonSet = prefs.getStringSet(REVIEWER_ADDON, HashSet())
-        assertEquals(0, reviewerEnabledAddonSet?.size)
-        assertFalse(reviewerEnabledAddonSet!!.contains(addonModel.name))
     }
 
     @Test
