@@ -75,20 +75,23 @@ sealed interface AddonValidationResult {
  * Check if npm package is valid or not by fields ankidroidJsApi, keywords (ankidroid-js-addon) and
  * addon_type (reviewer or note editor) in addonData
  *
- * @param packageJsonPath package.json file path
+ * Unreadable and unparseable files are reported as [AddonValidationResult.Invalid]: a caller
+ * listing an addons directory must not be aborted by one corrupt addon
+ *
+ * @param packageJson package.json file
  * @return [AddonValidationResult.Valid] with the mapped model,
  *   or [AddonValidationResult.Invalid] with the errors related to the failed checks
  */
-@Throws(IOException::class)
-fun getAddonModelFromJson(packageJsonPath: String): AddonValidationResult {
-    val data = File(packageJsonPath).readBytes().decodeToString()
-    return try {
+fun getAddonModelFromJson(packageJson: File): AddonValidationResult =
+    try {
+        val data = packageJson.readBytes().decodeToString()
         val json = Json { ignoreUnknownKeys = true }
         getAddonModelFromAddonData(json.decodeFromString(data))
     } catch (exc: SerializationException) {
         AddonValidationResult.Invalid(listOf("Unable to parse manifest: $exc"))
+    } catch (exc: IOException) {
+        AddonValidationResult.Invalid(listOf("Unable to read manifest: $exc"))
     }
-}
 
 /**
  * Get addonModel from addonData
