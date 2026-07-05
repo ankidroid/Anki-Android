@@ -21,6 +21,8 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.utils.FileOperation.Companion.getFileResource
+import io.mockk.every
+import io.mockk.spyk
 import junit.framework.TestCase.assertTrue
 import org.apache.commons.compress.archivers.ArchiveException
 import org.hamcrest.MatcherAssert.assertThat
@@ -150,6 +152,20 @@ class TgzPackageExtractTest : RobolectricTest() {
 
         assertFailsWith<IOException> {
             addonPackage.extractTarGzipToAddonFolder(File(tarballPath), addonsPackageDir)
+        }
+    }
+
+    /**
+     * Test that a failed extraction is reported to the caller
+     * instead of completing as if it had succeeded
+     */
+    @Test
+    fun unTarFailureIsReportedTest() {
+        val failingExtract = spyk(addonPackage)
+        every { failingExtract.unTar(any(), any()) } throws IOException("simulated failure")
+
+        assertFailsWith<IOException> {
+            failingExtract.extractTarGzipToAddonFolder(File(tarballPath), addonDir)
         }
     }
 

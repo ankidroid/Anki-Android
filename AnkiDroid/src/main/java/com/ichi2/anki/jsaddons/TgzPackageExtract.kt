@@ -154,9 +154,12 @@ class TgzPackageExtract(
         try {
             // If space available then unTar it
             unTar(tarTempFile, addonsPackageDir)
-        } catch (e: IOException) {
-            Timber.w("Failed to unTar file")
+        } catch (e: Exception) {
+            // ArchiveException/IllegalStateException from unTar need the same cleanup as
+            // IOException: without it, a failed extraction leaves a partial addon behind
+            Timber.w(e, "Failed to unTar file")
             safeDeleteAddonsPackageDir(addonsPackageDir)
+            throw e
         } finally {
             tarTempFile.delete()
         }
