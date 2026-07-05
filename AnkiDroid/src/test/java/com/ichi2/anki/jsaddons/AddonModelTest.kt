@@ -189,6 +189,13 @@ class AddonModelTest : RobolectricTest() {
         assertFalse("missing 'version' is reported as an error", errors.isEmpty())
     }
 
+    @Test // exercises the checks after the required-fields guard: their errors must be returned
+    fun invalidAddonTypeReturnsErrorTest() {
+        val result = getAddonModelFromAddonData(addonData(addonType = "invalid-type"))
+        val errors = assertIs<AddonValidationResult.Invalid>(result, "model is not built from an invalid manifest").errors
+        assertFalse("invalid 'addonType' is reported as an error", errors.isEmpty())
+    }
+
     @Test
     fun missingDistIsValidTest() {
         // 'dist' is metadata added by the npm registry API; the package.json inside a
