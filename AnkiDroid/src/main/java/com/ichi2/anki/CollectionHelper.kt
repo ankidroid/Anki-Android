@@ -258,11 +258,22 @@ object CollectionHelper {
     /**
      * Whether the user has chosen where the collection is stored.
      *
-     * TODO: real implementation based on whether [PREF_COLLECTION_PATH] is set.
-     *  TODO: What is a user revokes full storage?
-     *  This currently returns [StorageDecision.Decided], so callers that gate on it are no-ops.
+     * Falls back to [StorageDecision.Decided] when [AnkiDroidApp] is not yet initialized
+     * (e.g. some unit tests construct a [CollectionManager] without an app instance).
+     *
+     * TODO: What if a user revokes full storage?
      */
-    fun storageDecision(): StorageDecision = storageDecisionTestOverride ?: StorageDecision.Decided
+    fun storageDecision(): StorageDecision {
+        storageDecisionTestOverride?.let { return it }
+        if (!AnkiDroidApp.isInitialized) {
+            return StorageDecision.Decided
+        }
+        return if (AnkiDroidApp.sharedPrefs().contains(PREF_COLLECTION_PATH)) {
+            StorageDecision.Decided
+        } else {
+            StorageDecision.Undecided
+        }
+    }
 
     /**
      * @return the absolute path to the AnkiDroid directory.
@@ -324,6 +335,25 @@ object CollectionHelper {
     ) {
         Timber.d("resetting AnkiDroid directory to %s", directory)
         context.sharedPrefs().edit { putString(PREF_COLLECTION_PATH, directory.absolutePath) }
+    }
+
+    /**
+     * Sets the collection path to app-private storage, for users who opted out of
+     * [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE].
+     *
+     * @return `true` if the directory was created successfully, `false` otherwise
+     * @throws SystemStorageException if `getExternalFilesDir` returns null
+     */
+    fun setPrivateStoragePath(context: Context): Boolean {
+        val privateDir = File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid")
+        if (!privateDir.mkdirs() && !privateDir.exists()) {
+            Timber.w("Failed to create AnkiDroid directory: ${privateDir.absolutePath}")
+            return false
+        }
+        context.sharedPrefs().edit(commit = true) {
+            putString(PREF_COLLECTION_PATH, privateDir.absolutePath)
+        }
+        return true
     }
 
     /** Test-only override for [storageDecision]. @see ankiDroidDirectoryOverride */

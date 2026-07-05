@@ -157,7 +157,7 @@
     <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
 
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_screen_headline">AnkiDroid works better with these permissions</string>
     <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
     <string name="storage_access_title">Storage access</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>

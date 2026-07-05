@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:paddingVertical="12dp"
-            android:text="@string/dialog_continue"
+            android:text="@string/dialog_skip"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

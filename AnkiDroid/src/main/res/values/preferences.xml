@@ -270,4 +270,5 @@
 
     <!-- Onboarding -->
     <string name="internet_permission_requested_key">internetPermissionRequested</string>
+
 </resources>

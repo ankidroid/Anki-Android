@@ -11,9 +11,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 /**
- * Proves the storage-decision gate in [CollectionManager.ensureOpenInner] is wired up. In production
- * [CollectionHelper.storageDecision] always returns [com.ichi2.anki.storage.StorageDecision.Decided], so this never fires;
- * here we force [com.ichi2.anki.storage.StorageDecision.Undecided] via the test override.
+ * Proves the storage-decision gate in [CollectionManager.ensureOpenInner] is wired up.
+ * Uses the test override to force [com.ichi2.anki.storage.StorageDecision.Undecided],
+ * since [CollectionHelper.storageDecision] otherwise depends on real shared preferences.
  */
 @RunWith(AndroidJUnit4::class)
 class StorageDecisionGateTest : RobolectricTest() {
