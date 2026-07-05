@@ -40,6 +40,11 @@ import kotlin.jvm.Throws
  * @param name name of npm package, it unique for each package listed on npm
  * @param addonTitle  for showing in AnkiDroid
  * @param icon only required for note editor (single character recommended)
+ * @param description commonly absent from real package.json files; absence never invalidates the addon
+ * @param author commonly absent from real package.json files; absence never invalidates the addon
+ * @param license commonly absent from real package.json files; absence never invalidates the addon
+ * @param dist only exists in the npm registry API response, not in the package.json inside a tarball;
+ *   absence never invalidates the addon
  */
 
 @Serializable
@@ -99,6 +104,7 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     if (addonData.name.isNullOrBlank() ||
         addonData.addonTitle.isNullOrBlank() ||
         addonData.main.isNullOrBlank() ||
+        addonData.version.isNullOrBlank() ||
         addonData.ankidroidJsApi.isNullOrBlank() ||
         addonData.addonType.isNullOrBlank() ||
         addonData.homepage.isNullOrBlank() ||
@@ -106,10 +112,12 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     ) {
         errorStr = "Invalid addon package: fields in package.json are empty or null"
         errorList.add(errorStr)
+        // the checks below dereference these fields, so they cannot run safely
+        return Pair(null, errorList)
     }
 
     // check if name is safe and valid
-    if (!validateName(addonData.name!!)) {
+    if (!validateName(addonData.name)) {
         errorStr = "Invalid addon package: package name failed validation"
         errorList.add(errorStr)
     }
@@ -127,8 +135,8 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     }
 
     // check if ankidroid-js-addon present or not in mapped addonData
-    val jsAddonKeywordsPresent = addonData.keywords?.any { it == ANKIDROID_JS_ADDON_KEYWORDS }
-    if (!jsAddonKeywordsPresent!!) {
+    val jsAddonKeywordsPresent = addonData.keywords.any { it == ANKIDROID_JS_ADDON_KEYWORDS }
+    if (!jsAddonKeywordsPresent) {
         errorStr = "Invalid addon package: package.json does not have 'ankidroid-js-addon' in ${addonData.keywords} keywords"
         errorList.add(errorStr)
     }
@@ -153,18 +161,18 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     val addonModel =
         AddonModel(
             name = addonData.name,
-            addonTitle = addonData.addonTitle!!,
+            addonTitle = addonData.addonTitle,
             icon = icon,
-            version = addonData.version!!,
-            description = addonData.description!!,
-            main = addonData.main!!,
-            ankidroidJsApi = addonData.ankidroidJsApi!!,
-            addonType = addonData.addonType!!,
+            version = addonData.version,
+            description = addonData.description.orEmpty(),
+            main = addonData.main,
+            ankidroidJsApi = addonData.ankidroidJsApi,
+            addonType = addonData.addonType,
             keywords = addonData.keywords,
-            author = addonData.author!!,
-            license = addonData.license!!,
-            homepage = addonData.homepage!!,
-            dist = addonData.dist!!,
+            author = addonData.author ?: emptyMap(),
+            license = addonData.license.orEmpty(),
+            homepage = addonData.homepage,
+            dist = addonData.dist,
         )
 
     return Pair(addonModel, immutableList)

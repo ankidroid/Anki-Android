@@ -32,7 +32,8 @@ data class AddonModel(
     val author: Map<String, String>,
     val license: String,
     val homepage: String,
-    val dist: DistInfo,
+    /** Tarball location from the npm registry API; null for locally installed addons */
+    val dist: DistInfo?,
 ) {
     /**
      * Update preferences for addons with boolean remove, the preferences will be used to store the information about
