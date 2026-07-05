@@ -19,6 +19,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
+import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class TgzPackageExtractTest : RobolectricTest() {
@@ -122,6 +123,21 @@ class TgzPackageExtractTest : RobolectricTest() {
         // test if package.json extracted successfully
         val packageJsonPath = File(packagePath, "package.json")
         assertThat(packageJsonPath, anExistingFile())
+    }
+
+    /**
+     * Test that failure to create the addon directory is reported to the caller
+     * instead of being silently swallowed
+     */
+    @Test
+    fun extractionFailureIsReportedTest() {
+        // a regular file where the addon directory should go: directory creation must fail
+        val blocker = File(addonDir, "blocker").also { it.writeText("") }
+        val addonsPackageDir = File(blocker, "some-addon")
+
+        assertFailsWith<IOException> {
+            addonPackage.extractTarGzipToAddonFolder(File(tarballPath), addonsPackageDir)
+        }
     }
 
     /**
