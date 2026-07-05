@@ -30,6 +30,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.reviewreminders.ReviewReminder
+import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import com.ichi2.anki.reviewreminders.ReviewReminderCardTriggerThreshold
 import com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific
 import com.ichi2.anki.reviewreminders.ReviewReminderScope.Global
@@ -73,8 +74,8 @@ class NotificationServiceTest : RobolectricTest() {
         context = spyk(getApplicationContext())
         notificationManager = mockk(relaxed = true)
         every { context.getSystemService(Context.NOTIFICATION_SERVICE) } returns notificationManager
-        mockkObject(AlarmManagerService)
-        every { AlarmManagerService.scheduleReviewReminderNotification(any(), any(), any()) } returns Unit
+        mockkObject(ReviewReminderAlarmManager)
+        every { ReviewReminderAlarmManager.scheduleReviewReminderNotification(any(), any(), any()) } returns Unit
         Prefs.newReviewRemindersEnabled = true
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
@@ -452,12 +453,12 @@ class NotificationServiceTest : RobolectricTest() {
     }
 
     private fun verifyNextNotifNotScheduled() {
-        verify(exactly = 0) { AlarmManagerService.scheduleReviewReminderNotification(any(), any(), any()) }
+        verify(exactly = 0) { ReviewReminderAlarmManager.scheduleReviewReminderNotification(any(), any(), any()) }
     }
 
     private fun verifyNextNotifScheduled(reminder: ReviewReminder) {
         verify(exactly = 1) {
-            AlarmManagerService.scheduleReviewReminderNotification(
+            ReviewReminderAlarmManager.scheduleReviewReminderNotification(
                 context,
                 match { it.id == reminder.id },
                 attemptImmediateNotification = false,

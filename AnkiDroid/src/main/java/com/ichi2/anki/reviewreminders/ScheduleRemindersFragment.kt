@@ -47,7 +47,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
 import com.ichi2.anki.runCatching
-import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -482,14 +481,14 @@ class ScheduleRemindersFragment :
         modeOfFinishedDialog: AddEditReminderDialog.DialogMode,
     ) {
         if (modeOfFinishedDialog is AddEditReminderDialog.DialogMode.Edit) {
-            AlarmManagerService.unscheduleReviewReminderNotifications(
+            ReviewReminderAlarmManager.unscheduleReviewReminderNotifications(
                 requireContext(),
                 modeOfFinishedDialog.reminderToBeEdited,
             )
         }
         newOrModifiedReminder?.let {
             if (it.enabled) {
-                AlarmManagerService.scheduleReviewReminderNotification(
+                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
                     requireContext(),
                     it,
                     attemptImmediateNotification = false,
@@ -550,12 +549,12 @@ class ScheduleRemindersFragment :
         val updatedReminder = reminders[reminder.id] ?: return
         when (updatedReminder.enabled) {
             true ->
-                AlarmManagerService.scheduleReviewReminderNotification(
+                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
                     requireContext(),
                     updatedReminder,
                     attemptImmediateNotification = false,
                 )
-            false -> AlarmManagerService.unscheduleReviewReminderNotifications(requireContext(), reminder)
+            false -> ReviewReminderAlarmManager.unscheduleReviewReminderNotifications(requireContext(), reminder)
         }
     }
 
