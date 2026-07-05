@@ -11,12 +11,11 @@ import com.ichi2.anki.CollectionHelper.getCurrentAnkiDroidDirectory
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.isInstrumentationTest
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.CollectionFiles
-import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.storage.StorageDecision
-import com.ichi2.preferences.getOrSetString
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -81,7 +80,8 @@ object CollectionHelper {
 
     /**
      * Try to access the current AnkiDroid directory
-     * @return whether or not dir is accessible
+     * @return whether or not dir is accessible: `false` if inaccessible, not yet configured,
+     * or the system could not provide a storage location
      * @param context to get directory with
      */
     fun isCurrentAnkiDroidDirAccessible(context: Context): Boolean =
@@ -89,6 +89,12 @@ object CollectionHelper {
             initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory(context))
             true
         } catch (e: StorageAccessException) {
+            Timber.w(e)
+            false
+        } catch (e: StorageNotConfiguredException) {
+            Timber.w(e)
+            false
+        } catch (e: SystemStorageException) {
             Timber.w(e)
             false
         }
@@ -122,6 +128,17 @@ object CollectionHelper {
     var ankiDroidDirectoryOverride: File? = null
 
     /**
+     * Set when startup failed to choose a default collection path because Android could not
+     * provide a storage location ([SystemStorageException]: OS bug/SD card issue).
+     *
+     * Reads of an unset collection path rethrow this instead of [StorageNotConfiguredException],
+     * so the storage failure is not mistaken for the expected 'no collection path set' state.
+     */
+    // TODO: #19552 - consolidate with AnkiDroidApp.fatalError and StorageDecision (a dedicated
+    //  'storage unavailable' state) once the storage setup flow exists
+    var systemStorageFailure: SystemStorageException? = null
+
+    /**
      * Whether the user has chosen where the collection is stored.
      *
      * TODO: real implementation based on whether [PREF_COLLECTION_PATH] is set.
@@ -133,10 +150,13 @@ object CollectionHelper {
     /**
      * @return the absolute path to the AnkiDroid directory.
      *
-     * @throws SystemStorageException if `getExternalFilesDir` returns null
+     * @throws StorageNotConfiguredException if no collection path has been set
+     * ([PREF_COLLECTION_PATH] is unset): a default is chosen during startup by
+     * [ensureCollectionPathSet][com.ichi2.anki.startup.ensureCollectionPathSet]
+     * @throws SystemStorageException if startup failed to choose a default collection path
+     * ([systemStorageFailure])
      */
-    fun getCurrentAnkiDroidDirectory(context: Context): File =
-        getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
+    fun getCurrentAnkiDroidDirectory(context: Context): File = getCurrentAnkiDroidDirectory(context.sharedPrefs())
 
     fun getCollectionPaths(context: Context): CollectionFiles = CollectionFiles.FolderBasedCollection(getCurrentAnkiDroidDirectory(context))
 
@@ -144,38 +164,32 @@ object CollectionHelper {
     fun getMediaDirectory(context: Context) = getCollectionPaths(context).requireMediaFolder()
 
     /**
-     * An accessor which makes [Context] optional in the case that [PREF_COLLECTION_PATH] is set
-     *
      * @return the absolute path to the AnkiDroid directory.
+     *
+     * @throws StorageNotConfiguredException if no collection path has been set
+     * ([PREF_COLLECTION_PATH] is unset): a default is chosen during startup by
+     * [ensureCollectionPathSet][com.ichi2.anki.startup.ensureCollectionPathSet]
+     * @throws SystemStorageException if startup failed to choose a default collection path
+     * ([systemStorageFailure])
      */
-    // This uses a lambda as we typically depends on the `lateinit` appContext
-    // If we remove all Android references, we get a significant unit test speedup
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    internal fun getCurrentAnkiDroidDirectoryOptionalContext(
-        preferences: SharedPreferences,
-        context: () -> Context,
-    ): File =
-        if (isInstrumentationTest) {
+    fun getCurrentAnkiDroidDirectory(preferences: SharedPreferences): File {
+        val collectionDirectory = preferences.getString(PREF_COLLECTION_PATH, null)
+        return if (isInstrumentationTest) {
             // create an "androidTest" directory inside the current collection directory which contains the test data
             // "/AnkiDroid/androidTest" would be a new collection path
-            val currentCollectionDirectory =
-                preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                    getDefaultAnkiDroidDirectory(context()).absolutePath
-                }
-            File(
-                currentCollectionDirectory,
-                "androidTest",
-            )
+            File(collectionDirectory ?: throw collectionPathUnset(), "androidTest")
         } else {
             ankiDroidDirectoryOverride
-                ?: File(
-                    preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                        getDefaultAnkiDroidDirectory(
-                            context(),
-                        ).absolutePath
-                    },
-                )
+                ?: File(collectionDirectory ?: throw collectionPathUnset())
         }
+    }
+
+    /**
+     * The collection path is unset: either the expected pre-setup state
+     * ([StorageNotConfiguredException]) or startup failed to choose a default and the recorded
+     * [SystemStorageException] is rethrown.
+     */
+    private fun collectionPathUnset(): Exception = systemStorageFailure ?: StorageNotConfiguredException()
 
     /** Test-only override for [storageDecision]. @see ankiDroidDirectoryOverride */
     @VisibleForTesting

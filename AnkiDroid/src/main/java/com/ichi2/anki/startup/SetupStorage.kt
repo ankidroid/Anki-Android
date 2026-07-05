@@ -8,11 +8,38 @@ import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.selectAnkiDroidFolder
 import com.ichi2.anki.storage.AnkiDroidFolder
 import timber.log.Timber
 import java.io.File
+
+/**
+ * Ensures [CollectionHelper.PREF_COLLECTION_PATH] is set, choosing and persisting
+ * [getDefaultAnkiDroidDirectory] if it is unset.
+ *
+ * This decides the storage location on the user's behalf: until a storage setup flow exists
+ * (#19552), the user is not asked.
+ *
+ * @throws SystemStorageException if `getExternalFilesDir` returns null. The failure is recorded
+ * in [CollectionHelper.systemStorageFailure] so reads report it rather than
+ * [StorageNotConfiguredException]
+ */
+fun ensureCollectionPathSet(context: Context) {
+    val preferences = context.sharedPrefs()
+    if (preferences.contains(CollectionHelper.PREF_COLLECTION_PATH)) return
+    val defaultPath =
+        try {
+            getDefaultAnkiDroidDirectory(context).absolutePath
+        } catch (e: SystemStorageException) {
+            CollectionHelper.systemStorageFailure = e
+            throw e
+        }
+    Timber.i("collection path set to default")
+    Timber.d("default collection path: %s", defaultPath)
+    preferences.edit { putString(CollectionHelper.PREF_COLLECTION_PATH, defaultPath) }
+}
 
 /**
  * Get the absolute path to a directory that is suitable to be the default starting location
