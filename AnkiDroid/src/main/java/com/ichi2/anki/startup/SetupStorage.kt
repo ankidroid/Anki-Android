@@ -156,7 +156,7 @@ private fun legacyAnkiDroidDirectory(directoryName: String = "AnkiDroid"): File 
  *
  * @throws SystemStorageException if `getExternalFilesDir` returns null
  */
-private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String? {
+private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String {
     val externalFilesDir = context.getExternalFilesDir(null)
 
     // This value *may* be null but we strictly require it. This has caused NullPointerException
