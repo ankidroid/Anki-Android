@@ -35,16 +35,16 @@ import kotlin.test.assertIs
 
 @RunWith(AndroidJUnit4::class)
 class AddonModelTest : RobolectricTest() {
-    private lateinit var validNpmPackageJson: String
-    private lateinit var notValidNpmPackageJson: String
+    private lateinit var validNpmPackageJson: File
+    private lateinit var notValidNpmPackageJson: File
     private lateinit var addonsPackageListTestJson: String
 
     @Before
     override fun setUp() {
         super.setUp()
 
-        validNpmPackageJson = FileOperation.getFileResource("valid-ankidroid-js-addon-test.json")
-        notValidNpmPackageJson = FileOperation.getFileResource("not-valid-ankidroid-js-addon-test.json")
+        validNpmPackageJson = File(FileOperation.getFileResource("valid-ankidroid-js-addon-test.json"))
+        notValidNpmPackageJson = File(FileOperation.getFileResource("not-valid-ankidroid-js-addon-test.json"))
         addonsPackageListTestJson = FileOperation.getFileResource("test-js-addon.json")
     }
 
@@ -76,6 +76,15 @@ class AddonModelTest : RobolectricTest() {
         val errors = assertIs<AddonValidationResult.Invalid>(result, "package.json not contains required fields").errors
         // assert that error list contains error when the package.json not mapped to AddonModel
         assertFalse(errors.isEmpty())
+    }
+
+    @Test
+    fun unreadableManifestReturnsErrorTest() {
+        // a missing/unreadable package.json must be reported as Invalid, not thrown:
+        // one corrupt addon directory must not abort listing the other addons
+        val result = getAddonModelFromJson(File("/does/not/exist/package.json"))
+        val errors = assertIs<AddonValidationResult.Invalid>(result, "model is not built from an unreadable manifest").errors
+        assertFalse("unreadable manifest is reported as an error", errors.isEmpty())
     }
 
     @Test
