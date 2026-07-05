@@ -4,11 +4,13 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.exception.StorageNotConfiguredException
+import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.storage.StorageDecision
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertSame
 
 /**
  * Proves the storage-decision gate in [CollectionManager.ensureOpenInner] is wired up. In production
@@ -36,6 +38,24 @@ class StorageDecisionGateTest : RobolectricTest() {
             assertEquals(InitialActivity.StartupFailure.StorageUndecided, failure)
         } finally {
             CollectionHelper.storageDecisionTestOverride = null
+        }
+    }
+
+    /**
+     * A storage failure at startup ([SystemStorageException]: OS bug/SD card issue) must not
+     * masquerade as the expected 'storage not configured' state when opening the collection.
+     */
+    @Test
+    fun `opening the collection reports a recorded startup storage failure`() {
+        val failure = SystemStorageException.build("simulated getExternalFilesDir failure")
+        CollectionHelper.storageDecisionTestOverride = StorageDecision.Undecided
+        CollectionHelper.systemStorageFailure = failure
+        try {
+            val thrown = assertFailsWith<SystemStorageException> { CollectionManager.getColUnsafe() }
+            assertSame(failure, thrown)
+        } finally {
+            CollectionHelper.storageDecisionTestOverride = null
+            CollectionHelper.systemStorageFailure = null
         }
     }
 }

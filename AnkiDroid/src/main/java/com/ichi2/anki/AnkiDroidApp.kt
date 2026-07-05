@@ -57,6 +57,7 @@ import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.startup.ensureCollectionPathSet
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.utils.ExceptionUtil
@@ -259,6 +260,7 @@ open class AnkiDroidApp :
             //  is not considered to be a fatal error, unless the directory itself is not writable.
             val ankiDroidDir =
                 try {
+                    ensureCollectionPathSet(this)
                     CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 } catch (e: SystemStorageException) {
                     fatalInitializationError = FatalInitializationError.StorageError(e)
