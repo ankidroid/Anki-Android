@@ -19,8 +19,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.libanki.DB
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
@@ -40,7 +40,7 @@ class DBTest : InstrumentedTest() {
     @Test
     @Throws(Exception::class)
     fun testDBCorruption() {
-        val storagePath = CollectionHelper.getDefaultAnkiDroidDirectory(testContext)
+        val storagePath = getDefaultAnkiDroidDirectory(testContext)
         val illFatedDBFile = File(storagePath, "illFatedDB.anki2")
 
         // Make sure we have clean state to start with
