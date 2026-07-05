@@ -56,6 +56,9 @@ data class DistInfo(
     val tarball: String,
 )
 
+/** Parsing contract for package.json: unknown fields must never fail parsing */
+private val json = Json { ignoreUnknownKeys = true }
+
 /**
  * Result of validating a manifest ([AddonData]) as an AnkiDroid addon
  */
@@ -85,7 +88,6 @@ sealed interface AddonValidationResult {
 fun getAddonModelFromJson(packageJson: File): AddonValidationResult =
     try {
         val data = packageJson.readBytes().decodeToString()
-        val json = Json { ignoreUnknownKeys = true }
         getAddonModelFromAddonData(json.decodeFromString(data))
     } catch (exc: SerializationException) {
         AddonValidationResult.Invalid(listOf("Unable to parse manifest: $exc"))
@@ -191,7 +193,6 @@ fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<
             HttpFetcher.fetchThroughHttp(packageJsonUrl.toString())
         }
     val errorList: MutableList<String> = ArrayList()
-    val json = Json { ignoreUnknownKeys = true }
     val addonsData = json.decodeFromString<List<AddonData>>(urlData)
     val addonsModelList = mutableListOf<AddonModel>()
     for (addon in addonsData) {
