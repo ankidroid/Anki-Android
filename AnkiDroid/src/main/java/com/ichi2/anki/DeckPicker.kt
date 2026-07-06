@@ -99,6 +99,7 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -1002,6 +1003,9 @@ open class DeckPicker :
                 override val requiredPermissions: PermissionSet
                     get() = permissions
 
+                override val preferences: SharedPreferences
+                    get() = context.sharedPrefs()
+
                 override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(context)
             }
 
@@ -1035,9 +1039,16 @@ open class DeckPicker :
             is DiskFull -> displayNoStorageError()
             is DBError -> displayDatabaseFailure(CustomExceptionData.fromException(failure.exception))
             is StorageUndecided -> {
-                Timber.i("Displaying storage setup required")
-                // unreachable: storageDecision() cannot yet return Undecided outside tests
-                TODO("#19552 - replace with the storage setup flow.")
+                // unreachable: Undecided requires PREF_COLLECTION_PATH to be unset, which only
+                // happens if ensureCollectionPathSet failed at startup; getStartupFailureType
+                // then returns InitializationError (fatalError) before checking the decision
+                // TODO: #19552 - replace with the storage setup flow
+                Timber.w("storage setup flow (#19552) not implemented; showing load-failure options")
+                CrashReportService.sendExceptionReport(
+                    IllegalStateException("StorageUndecided reached without a startup failure"),
+                    "DeckPicker::handleStartupFailure",
+                )
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
             }
         }
     }

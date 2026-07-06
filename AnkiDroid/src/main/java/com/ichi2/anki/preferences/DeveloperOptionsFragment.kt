@@ -10,12 +10,12 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.launchCatchingTask

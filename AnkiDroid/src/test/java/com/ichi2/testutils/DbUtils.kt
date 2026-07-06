@@ -16,8 +16,8 @@
 package com.ichi2.testutils
 
 import android.content.Context
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.backend.createDatabaseUsingAndroidFramework
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.libanki.DB
 
 object DbUtils {

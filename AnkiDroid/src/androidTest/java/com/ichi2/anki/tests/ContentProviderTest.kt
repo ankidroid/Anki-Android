@@ -26,9 +26,10 @@ import android.net.Uri
 import anki.cards.FsrsMemoryState
 import anki.collection.OpChanges
 import anki.notetypes.StockNotetype
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.FlashCardsContract
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.emptyStringArray
@@ -49,7 +50,6 @@ import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.provider.pureAnswer
-import com.ichi2.anki.storage.StorageDecision
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.addNote

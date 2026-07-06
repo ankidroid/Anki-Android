@@ -18,6 +18,9 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
 import com.ichi2.anki.common.permissions.isExternalStorageManagerCompat
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
@@ -28,7 +31,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.storage.StorageDecision
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
@@ -134,7 +136,7 @@ class IntentHandler : AbstractIntentHandler() {
         action: String?,
         block: () -> Unit,
     ) {
-        if (CollectionHelper.storageDecision() != StorageDecision.Decided) {
+        if (CollectionHelper.storageDecision(sharedPrefs()) != StorageDecision.Decided) {
             // checked before permissions: the permissions required depend on the chosen folder
             Timber.i("Storage is not configured, cancelling intent '%s'", action)
             launchDeckPickerIfNoOtherTasks(reloadIntent)

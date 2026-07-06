@@ -17,7 +17,7 @@ package com.ichi2.testutils
 
 import android.content.Context
 import com.ichi2.anki.BackupManager.Companion.enoughDiscSpace
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.common.storage.CollectionHelper
 import org.junit.Assert.assertTrue
 import java.lang.IllegalStateException
 

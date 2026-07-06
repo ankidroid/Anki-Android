@@ -254,6 +254,18 @@ class DeckPickerTest : RobolectricTest() {
         )
     }
 
+    /** Until the storage setup flow exists (#19552), the user gets recovery options, not a crash */
+    @Test
+    fun `storage undecided shows load-failure options rather than crashing`() {
+        // don't call .onCreate
+        val deckPicker = Robolectric.buildActivity(DeckPickerEx::class.java, Intent()).get()
+        deckPicker.handleStartupFailure(InitialActivity.StartupFailure.StorageUndecided)
+        assertThat(
+            deckPicker.databaseErrorDialog,
+            equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED),
+        )
+    }
+
     @Test
     fun databaseLockedWithPermissionIntegrationTest() {
         AnkiDroidApp.sentExceptionReportHack = false

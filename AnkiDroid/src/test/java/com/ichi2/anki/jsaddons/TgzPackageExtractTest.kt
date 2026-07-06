@@ -17,8 +17,8 @@
 package com.ichi2.anki.jsaddons
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.testutils.ShadowStatFs
 import com.ichi2.utils.FileOperation.Companion.getFileResource
 import junit.framework.TestCase.assertTrue

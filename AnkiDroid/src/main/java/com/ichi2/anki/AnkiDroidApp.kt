@@ -36,6 +36,7 @@ import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -57,6 +58,8 @@ import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.startup.ensureCollectionPathSet
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
@@ -257,6 +260,7 @@ open class AnkiDroidApp :
             //  is not considered to be a fatal error, unless the directory itself is not writable.
             val ankiDroidDir =
                 try {
+                    ensureCollectionPathSet(this)
                     CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 } catch (e: SystemStorageException) {
                     fatalInitializationError = FatalInitializationError.StorageError(e)
@@ -273,7 +277,7 @@ open class AnkiDroidApp :
             } catch (e: StorageAccessException) {
                 Timber.e(e, "Could not initialize AnkiDroid directory")
                 try {
-                    val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
+                    val defaultDir = getDefaultAnkiDroidDirectory(this)
                     if (SdCard.isMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
                         // Don't send report if the user is using a custom directory as SD cards trip up here a lot
                         sendExceptionReport(e, "AnkiDroidApp.onCreate")
@@ -529,6 +533,13 @@ open class AnkiDroidApp :
          * This was added to avoid code churn
          */
         fun sharedPrefs() = sharedPreferencesTestingOverride ?: instance.sharedPrefs()
+
+        /**
+         * [sharedPrefs], or `null` if unavailable: [instance] is not initialized when running
+         * under a test-only [Application] (e.g. `EmptyApplication`) or in pure JVM tests
+         */
+        fun sharedPrefsOrNull(): SharedPreferences? =
+            sharedPreferencesTestingOverride ?: if (isInitialized) instance.sharedPrefs() else null
 
         /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this  */
         @VisibleForTesting
