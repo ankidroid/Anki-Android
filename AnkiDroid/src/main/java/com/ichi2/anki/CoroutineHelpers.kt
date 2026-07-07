@@ -114,7 +114,10 @@ fun CoroutineScope.launchCatching(
                     is BackendException, is InvalidSearchException -> exception.localizedMessage
                     else -> null
                 } ?: exception.toString()
-            errorMessageHandler.invoke(message)
+            // backend network errors may carry a dangling empty "Error details:" label; remove it.
+            // guarded to backend exceptions so the translations aren't queried when none are loaded
+            val displayMessage = if (exception is BackendException) stripEmptyErrorDetails(message) else message
+            errorMessageHandler.invoke(displayMessage)
         }
     }
 
@@ -201,7 +204,7 @@ suspend fun <T> FragmentActivity.runCatching(
             is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException -> {
                 // these exceptions do not generate worthwhile crash reports
                 Timber.i("Showing error dialog but not sending a crash report.")
-                showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
+                showError(stripEmptyErrorDetails(exc.localizedMessage!!), exc.toCrashReportData(this, reportException = false))
             }
             is BackendException -> {
                 Timber.e(exc, errorMessage)
@@ -265,6 +268,33 @@ fun Fragment.launchCatchingTask(
     lifecycle.coroutineScope.launch {
         requireActivity().runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
+
+/**
+ * Drops a trailing, empty "Error details:" label from a backend error [message].
+ *
+ * The backend tacks `network-details` (`Error details: { $details }`) onto network errors even when
+ * there's nothing to fill it in, leaving the label dangling. We read the label from [networkDetails]
+ * so this works in any language, and bail if a translation doesn't put the value last (there we
+ * can't tell an empty value from real text).
+ */
+@VisibleForTesting
+fun stripEmptyErrorDetails(
+    message: String,
+    networkDetails: (details: String) -> String = TR::networkDetails,
+): String {
+    // only safe when the value sits at the end of the label. if a translation wraps it (e.g.
+    // Lojban) we can't tell empty from real content, so leave it be
+    val emptyLabel = networkDetails("")
+    if (!networkDetails("_").startsWith(emptyLabel.trimEnd())) return message
+
+    val label = emptyLabel.trim()
+    if (label.isEmpty()) return message
+
+    val trimmed = message.trimEnd()
+    if (!trimmed.endsWith(label)) return message
+
+    return trimmed.removeSuffix(label).trimEnd()
+}
 
 /**
  * Displays an error dialog with title 'Error' and provided [message].
