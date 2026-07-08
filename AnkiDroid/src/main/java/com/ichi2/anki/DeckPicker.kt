@@ -2142,12 +2142,22 @@ open class DeckPicker :
                 deckDialogType = CreateDeckDialog.DeckDialogType.DECK,
                 parentId = null,
             )
-        createDeckDialog.onNewDeckCreated = {
-            updateDeckList()
-            invalidateOptionsMenu()
-        }
+        createDeckDialog.onNewDeckCreated = ::onDeckCreated
         createDeckDialog.showDialog()
     }
+
+    /**
+     * Handles a deck created from the deck picker: selects it so the toolbar and, on tablets, the
+     * [StudyOptionsFragment] panel follow the new deck instead of the previously current deck, which
+     * is often the hidden Default deck.
+     */
+    private fun onDeckCreated(deckId: DeckId) =
+        launchCatchingTask {
+            viewModel.selectDeck(deckId).join()
+            updateDeckList()
+            tryShowStudyOptionsPanel()
+            invalidateOptionsMenu()
+        }
 
     /**
      * Deletes the provided deck, child decks, and all cards inside.
@@ -2200,13 +2210,11 @@ open class DeckPicker :
                 deckDialogType = CreateDeckDialog.DeckDialogType.SUB_DECK,
                 parentId = did,
             )
-        createDeckDialog.onNewDeckCreated = {
+        createDeckDialog.onNewDeckCreated = { deckId ->
             // a deck was created
             dismissAllDialogFragments()
             deckListAdapter.notifyDataSetChanged()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-            invalidateOptionsMenu()
+            onDeckCreated(deckId)
         }
         createDeckDialog.showDialog()
     }

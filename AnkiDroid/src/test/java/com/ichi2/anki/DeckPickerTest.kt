@@ -30,6 +30,8 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.navigation.AnkiDroidNavigator
@@ -822,6 +824,23 @@ class DeckPickerTest : RobolectricTest() {
                     assertThat(extra.permissions, equalTo(listOf(INTERNET)))
                 }
             }
+        }
+
+    @Test
+    fun `creating a deck selects it`() =
+        deckPicker {
+            showCreateDeckDialog()
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            dialog.input = "My Deck"
+            dialog.performPositiveClick()
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+            val newDeckId = col.decks.byName("My Deck")!!.id
+            assertThat(
+                "the newly created deck should become the current deck",
+                col.decks.current().id,
+                equalTo(newDeckId),
+            )
         }
 
     enum class CollectionType(
