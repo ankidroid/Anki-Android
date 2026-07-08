@@ -56,7 +56,7 @@ androidxProfileinstaller = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
 androidxRecyclerview = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
-androidxSqlite = "2.6.2"
+androidxSqlite = "2.7.0"
 # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
 androidxSwipeRefreshLayout = "1.2.0"
 # https://developer.android.com/jetpack/androidx/releases/test
