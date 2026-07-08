@@ -1131,12 +1131,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.9.2":
-  version: 25.9.4
-  resolution: "@types/node@npm:25.9.4"
+"@types/node@npm:^26.1.0":
+  version: 26.1.0
+  resolution: "@types/node@npm:26.1.0"
   dependencies:
-    undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10c0/4b19670ef5dbefa836a2d4a9ed0b5ac6befbc0844bfdd12833234ff8fa68da1f65e6362d2ef87acf7e7da9d6ff649bf81c454d12e802b7e7fa9246a15c0edcf6
+    undici-types: "npm:~8.3.0"
+  checksum: 10c0/61c22ad1ef215e24138cb8b7368fb68bab9de4c123b3f23d411749b015ba1b7d22f878ad54add26a0b69068d7e07c04af665069d8571b6c6c3b9b2fb73b7bd91
   languageName: node
   linkType: hard
 
@@ -1535,7 +1535,7 @@ __metadata:
     "@eslint/eslintrc": "npm:^3.3.5"
     "@eslint/js": "npm:^10.0.1"
     "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^26.1.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.63.0"
     "@typescript-eslint/parser": "npm:^8.63.0"
     axios: "npm:^1.18.0"
@@ -5638,13 +5638,6 @@ __metadata:
     has-symbols: "npm:^1.1.0"
     which-boxed-primitive: "npm:^1.1.1"
   checksum: 10c0/7dbd35ab02b0e05fe07136c72cb9355091242455473ec15057c11430129bab38b7b3624019b8778d02a881c13de44d63cd02d122ee782fb519e1de7775b5b982
-  languageName: node
-  linkType: hard
-
-"undici-types@npm:>=7.24.0 <7.24.7":
-  version: 7.24.6
-  resolution: "undici-types@npm:7.24.6"
-  checksum: 10c0/d9cd8befb643ac904615c280a095ba4240531f6bb4a5e75a22a7483630ca8d3f1016d2ab6ace6ceda1f63b3a2db2fe037fafe121d6917a0187573aa548ff78ca
   languageName: node
   linkType: hard
 
