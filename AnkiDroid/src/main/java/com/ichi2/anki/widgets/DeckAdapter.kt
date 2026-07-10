@@ -88,6 +88,12 @@ class DeckAdapter(
             }
         }
 
+    /**
+     * Whether to highlight the selected deck. Usually true for fragmented (tablet) layouts
+     * where the deck contents are shown side-by-side, but false for phones.
+     */
+    var highlightSelected: Boolean = true
+
     class ViewHolder(
         val binding: ItemDeckBinding,
     ) : RecyclerView.ViewHolder(binding.root)
@@ -151,7 +157,7 @@ class DeckAdapter(
         }
         holder.binding.deckLayout.setBackgroundResource(rowCurrentDrawable)
         // set a different background color for the current selected deck
-        if (node.isSelected) {
+        if (node.isSelected && highlightSelected) {
             holder.binding.deckLayout.setBackgroundResource(rowCurrentDrawable)
             if (activityHasBackground) {
                 val background =
