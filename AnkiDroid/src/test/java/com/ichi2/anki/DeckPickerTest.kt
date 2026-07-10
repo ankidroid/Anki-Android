@@ -824,6 +824,161 @@ class DeckPickerTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `Deck deletion - child with previous sibling selects previous sibling`() =
+        runTest {
+            // Create parent deck with three children: A, B, C
+            val parent = addDeck("Parent")
+            val childA = addDeck("Parent::A")
+            val childB = addDeck("Parent::B")
+            val childC = addDeck("Parent::C")
+
+            val deckPicker =
+                startActivityNormallyOpenCollectionWithIntent(
+                    DeckPicker::class.java,
+                    Intent(),
+                )
+
+            // Delete child B - should select A (previous sibling)
+            deckPicker.viewModel.deleteDeck(childB).join()
+
+            assertThat("current deck should be A (previous sibling)", col.decks.current().id, equalTo(childA))
+        }
+
+    @Test
+    fun `Deck deletion - child with next sibling selects next sibling when no previous`() =
+        runTest {
+            // Create parent deck with two children: A, B
+            val parent = addDeck("Parent")
+            val childA = addDeck("Parent::A")
+            val childB = addDeck("Parent::B")
+
+            val deckPicker =
+                startActivityNormallyOpenCollectionWithIntent(
+                    DeckPicker::class.java,
+                    Intent(),
+                )
+
+            // Delete child A - should select B (next sibling, as there's no previous)
+            deckPicker.viewModel.deleteDeck(childA).join()
+
+            assertThat("current deck should be B (next sibling)", col.decks.current().id, equalTo(childB))
+        }
+
+    @Test
+    fun `Deck deletion - only child selects parent`() =
+        runTest {
+            // Create parent with only one child
+            val parent = addDeck("Parent")
+            val child = addDeck("Parent::OnlyChild")
+
+            val deckPicker =
+                startActivityNormallyOpenCollectionWithIntent(
+                    DeckPicker::class.java,
+                    Intent(),
+                )
+
+            // Delete the only child - should select parent
+            deckPicker.viewModel.deleteDeck(child).join()
+
+            assertThat("current deck should be parent", col.decks.current().id, equalTo(parent))
+        }
+
+    @Test
+    fun `Deck deletion - top-level deck with no siblings selects Default`() =
+        runTest {
+            // Add a top-level deck
+            val topDeck = addDeck("TopLevel")
+
+            val deckPicker =
+                startActivityNormallyOpenCollectionWithIntent(
+                    DeckPicker::class.java,
+                    Intent(),
+                )
+
+            // Delete the top-level deck - should select Default
+            deckPicker.viewModel.deleteDeck(topDeck).join()
+
+            assertThat("current deck should be Default", col.decks.current().id, equalTo(1L))
+        }
+
+    @Test
+    fun `Deck deletion - focusedDeck is updated correctly`() =
+        runTest {
+            // Create parent with children: A, B
+            val parent = addDeck("Parent")
+            val childA = addDeck("Parent::A")
+            val childB = addDeck("Parent::B")
+
+            val deckPicker =
+                startActivityNormallyOpenCollectionWithIntent(
+                    DeckPicker::class.java,
+                    Intent(),
+                )
+
+            // Set focus to child B
+            deckPicker.viewModel.focusedDeck = childB
+            assertThat("focused deck set correctly", deckPicker.viewModel.focusedDeck, equalTo(childB))
+
+            // Delete child B - should select A
+            deckPicker.viewModel.deleteDeck(childB).join()
+
+            assertThat("focused deck should be A after deletion", deckPicker.viewModel.focusedDeck, equalTo(childA))
+            assertThat("current deck should be A", col.decks.current().id, equalTo(childA))
+        }
+
+    @Test
+    fun `Deck deletion - ACTIVE_DECKS is set correctly`() =
+        runTest {
+            // Create a deck with cards
+            val deck = addDeck("TestDeck")
+            col.notetypes.byName("Basic")!!.did = deck
+            addBasicNote("front", "back")
+
+            val deckPicker =
+                startActivityNormallyOpenCollectionWithIntent(
+                    DeckPicker::class.java,
+                    Intent(),
+                )
+
+            // Verify the deck is in active decks
+            assertThat("deck should be active", col.decks.active().contains(deck), equalTo(true))
+
+            // Delete the deck
+            deckPicker.viewModel.deleteDeck(deck).join()
+
+            // Verify Default deck (1) is now active
+            assertThat("Default should be active", col.decks.active().contains(1L), equalTo(true))
+            assertThat("deleted deck should not be active", col.decks.active().contains(deck), equalTo(false))
+        }
+
+    @Test
+    fun `Deck deletion - undo brings the deck back`() =
+        runTest {
+            // Create parent with two children: A, B
+            val parent = addDeck("Parent")
+            val childA = addDeck("Parent::A", setAsSelected = true)
+            val childB = addDeck("Parent::B")
+
+            val deckPicker =
+                startActivityNormallyOpenCollectionWithIntent(
+                    DeckPicker::class.java,
+                    Intent(),
+                )
+
+            // Delete child A
+            deckPicker.viewModel.deleteDeck(childA).join()
+
+            assertThat("current deck should be B after deletion", col.decks.current().id, equalTo(childB))
+            assertThat("deck A should be deleted", col.decks.get(childA), nullValue())
+
+            // Undo the deletion
+            deckPicker.undoAndShowSnackbar()
+
+            assertThat("current deck should be A after undo", col.decks.current().id, equalTo(childA))
+            assertThat("deck A should be restored", col.decks.get(childA), notNullValue())
+        }
+
     enum class CollectionType(
         val assetFile: String,
         private val deckName: String,

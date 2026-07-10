@@ -26,7 +26,6 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -184,6 +183,34 @@ class DeckPickerViewModel :
     val flowOfOptionsMenuState = MutableStateFlow<OptionsMenuState?>(null)
 
     /**
+     * Calculates the next deck to select after deleting a deck.
+     *
+     * - If the deck has a previous sibling, select it
+     * - Otherwise, if it has a next sibling, select that
+     * - If it's the only child (no siblings), select the parent
+     * - If it's a top-level deck with no siblings, select Default
+     *
+     * @param did ID of the deck being deleted
+     * @return ID of the deck to select after deletion, or DEFAULT_DECK_ID as fallback
+     */
+    private fun calculateNextDeckAfterDeletion(did: DeckId): DeckId {
+        val tree = dueTree ?: return DEFAULT_DECK_ID
+
+        val node = tree.find(did) ?: return DEFAULT_DECK_ID
+        val parent = node.parent?.get() ?: tree
+
+        val siblings = parent.children
+        val currentIndex = siblings.indexOfFirst { it.did == did }
+
+        return when {
+            currentIndex > 0 -> siblings[currentIndex - 1].did // Previous sibling
+            currentIndex < siblings.size - 1 -> siblings[currentIndex + 1].did // Next sibling
+            parent != tree && parent.did != did -> parent.did // Parent (if not root)
+            else -> DEFAULT_DECK_ID // Fallback to Default
+        }
+    }
+
+    /**
      * Deletes the provided deck, child decks. and all cards inside.
      *
      * This is a slow operation and should be inside `withProgress`
@@ -193,14 +220,22 @@ class DeckPickerViewModel :
     @CheckResult // This is a slow operation and should be inside `withProgress`
     fun deleteDeck(did: DeckId) =
         viewModelScope.launch {
+            val nextDeckId = calculateNextDeckAfterDeletion(did)
             val deckName = withCol { decks.getLegacy(did)!!.name }
-            val changes = undoableOp { decks.remove(listOf(did)) }
-            // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
-            // to match and avoid unnecessary scrolls in `renderPage()`.
-            focusedDeck = Consts.DEFAULT_DECK_ID
+
+            val opResult =
+                undoableOp {
+                    val removeResult = decks.remove(listOf(did))
+                    // setCurrent must be called after remove to update current deck; result intentionally unused as undoableOp handles notification
+                    @Suppress("CheckResult")
+                    decks.setCurrent(nextDeckId)
+                    removeResult // Return OpChangesWithCount
+                }
+
+            focusedDeck = nextDeckId
 
             deckDeletedNotification.emit(
-                DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
+                DeckDeletionResult(deckName = deckName, cardsDeleted = opResult.count),
             )
         }
 
