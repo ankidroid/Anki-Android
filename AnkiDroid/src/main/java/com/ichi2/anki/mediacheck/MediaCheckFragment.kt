@@ -194,7 +194,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private fun deleteConfirmationDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckDeleteUnusedConfirm())
-            positiveButton(R.string.dialog_ok) { handleDeleteConfirmation() }
+            positiveButton(R.string.dialog_positive_delete) { handleDeleteConfirmation() }
             negativeButton(R.string.dialog_cancel)
         }
     }
