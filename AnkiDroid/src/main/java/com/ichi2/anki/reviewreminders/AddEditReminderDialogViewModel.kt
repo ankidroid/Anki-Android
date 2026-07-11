@@ -39,7 +39,7 @@ class AddEditReminderDialogViewModel(
      */
     private val dialogMode =
         requireNotNull(
-            savedStateHandle.get<AddEditReminderDialog.DialogMode>(AddEditReminderDialog.ARGS_DIALOG_MODE),
+            savedStateHandle.get<AddEditReminderDialog.DialogMode>(AddEditReminderDialog.ARG_DIALOG_MODE),
         ) { "dialogMode is required" }
 
     private val _time =

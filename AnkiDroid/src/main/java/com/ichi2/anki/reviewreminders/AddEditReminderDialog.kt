@@ -93,7 +93,7 @@ class AddEditReminderDialog : DialogFragment() {
      */
     private val dialogMode: DialogMode by lazy {
         requireNotNull(
-            requireArguments().getParcelableCompat<DialogMode>(ARGS_DIALOG_MODE),
+            requireArguments().getParcelableCompat<DialogMode>(ARG_DIALOG_MODE),
         ) {
             "Dialog mode cannot be null"
         }
@@ -378,7 +378,7 @@ class AddEditReminderDialog : DialogFragment() {
          *
          * @see DialogMode
          */
-        const val ARGS_DIALOG_MODE = "args_dialog_mode"
+        const val ARG_DIALOG_MODE = "arg_dialog_mode"
 
         /**
          * Fragment result key for receiving the result of a recently closed [AddEditReminderDialog].
@@ -427,7 +427,7 @@ class AddEditReminderDialog : DialogFragment() {
             AddEditReminderDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putParcelable(ARGS_DIALOG_MODE, dialogMode)
+                        putParcelable(ARG_DIALOG_MODE, dialogMode)
                     }
             }
     }

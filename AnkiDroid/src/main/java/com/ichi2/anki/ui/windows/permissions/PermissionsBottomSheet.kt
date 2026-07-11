@@ -68,7 +68,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         }
 
         val permissionSet =
-            requireNotNull(requireArguments().getParcelableCompat<PermissionSet>(PERMISSION_SET_ARGUMENT_KEY)) {
+            requireNotNull(requireArguments().getParcelableCompat<PermissionSet>(ARG_PERMISSION_SET)) {
                 "Permission set cannot be null"
             }
         val permissionsFragment =
@@ -91,7 +91,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         /**
          * Arguments key for the [PermissionSet] to launch this BottomSheet with.
          */
-        private const val PERMISSION_SET_ARGUMENT_KEY = "permission_set"
+        private const val ARG_PERMISSION_SET = "arg_permission_set"
 
         /**
          * Fragment result request key for dismissing this BottomSheet.
@@ -108,7 +108,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         ) {
             val bottomSheet =
                 PermissionsBottomSheet().apply {
-                    arguments = Bundle().apply { putParcelable(PERMISSION_SET_ARGUMENT_KEY, permissionsSet) }
+                    arguments = Bundle().apply { putParcelable(ARG_PERMISSION_SET, permissionsSet) }
                 }
             bottomSheet.show(fragmentManager, FRAGMENT_TAG)
         }

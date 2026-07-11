@@ -155,7 +155,7 @@ class ScheduleRemindersFragment :
      * @see ReviewReminderScope
      */
     private val scheduleRemindersScope: ReviewReminderScope by lazy {
-        (arguments ?: Bundle()).getParcelableCompat<ReviewReminderScope>(ARGS_SCOPE)
+        (arguments ?: Bundle()).getParcelableCompat<ReviewReminderScope>(ARG_SCOPE)
             ?: ReviewReminderScope.Global
     }
 
@@ -168,7 +168,7 @@ class ScheduleRemindersFragment :
      * @see FragmentHost
      */
     private val host: FragmentHost by lazy {
-        (arguments ?: Bundle()).getParcelableCompat<FragmentHost>(ARGS_HOST)
+        (arguments ?: Bundle()).getParcelableCompat<FragmentHost>(ARG_HOST)
             ?: FragmentHost.SETTINGS
     }
 
@@ -619,12 +619,12 @@ class ScheduleRemindersFragment :
         /**
          * Arguments key for passing the [ReviewReminderScope] to open this fragment with.
          */
-        private const val ARGS_SCOPE = "scope"
+        private const val ARG_SCOPE = "arg_scope"
 
         /**
          * Arguments key for passing information about the [FragmentHost] to this fragment.
          */
-        private const val ARGS_HOST = "host"
+        private const val ARG_HOST = "arg_host"
 
         /**
          * Wrapper for database access in this fragment.
@@ -655,8 +655,8 @@ class ScheduleRemindersFragment :
                     context,
                     ScheduleRemindersFragment::class,
                     Bundle().apply {
-                        putParcelable(ARGS_SCOPE, scope)
-                        putParcelable(ARGS_HOST, FragmentHost.STANDALONE_ACTIVITY)
+                        putParcelable(ARG_SCOPE, scope)
+                        putParcelable(ARG_HOST, FragmentHost.STANDALONE_ACTIVITY)
                     },
                 ).apply {
                     Timber.i("launching ScheduleRemindersFragment for %s scope", scope)
@@ -675,8 +675,8 @@ class ScheduleRemindersFragment :
             ScheduleRemindersFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putParcelable(ARGS_SCOPE, scope)
-                        putParcelable(ARGS_HOST, host)
+                        putParcelable(ARG_SCOPE, scope)
+                        putParcelable(ARG_HOST, host)
                     }
                 Timber.i(
                     "Creating ScheduleRemindersFragment for %s scope, host=%s",
