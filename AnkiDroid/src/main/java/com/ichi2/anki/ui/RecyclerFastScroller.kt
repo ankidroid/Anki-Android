@@ -106,10 +106,49 @@ class RecyclerFastScroller
 
         private var hideOverride = false
         private var adapter: RecyclerView.Adapter<*>? = null
+
+        private var cachedHandleHeight = 0
+        private var cachedHandleHeightItemCount = RecyclerView.NO_POSITION
+        private var cachedHandleHeightBarHeight = 0
+
+        private fun resetCachedHandleHeight() {
+            cachedHandleHeight = 0
+            cachedHandleHeightItemCount = RecyclerView.NO_POSITION
+            cachedHandleHeightBarHeight = 0
+        }
+
         private val adapterObserver: RecyclerView.AdapterDataObserver =
             object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() {
                     super.onChanged()
+                    resetCachedHandleHeight()
+                    requestLayout()
+                }
+
+                override fun onItemRangeChanged(
+                    positionStart: Int,
+                    itemCount: Int,
+                ) {
+                    super.onItemRangeChanged(positionStart, itemCount)
+                    resetCachedHandleHeight()
+                    requestLayout()
+                }
+
+                override fun onItemRangeInserted(
+                    positionStart: Int,
+                    itemCount: Int,
+                ) {
+                    super.onItemRangeInserted(positionStart, itemCount)
+                    resetCachedHandleHeight()
+                    requestLayout()
+                }
+
+                override fun onItemRangeRemoved(
+                    positionStart: Int,
+                    itemCount: Int,
+                ) {
+                    super.onItemRangeRemoved(positionStart, itemCount)
+                    resetCachedHandleHeight()
                     requestLayout()
                 }
             }
@@ -253,6 +292,7 @@ class RecyclerFastScroller
             this.adapter?.unregisterAdapterDataObserver(adapterObserver)
             adapter?.registerAdapterDataObserver(adapterObserver)
             this.adapter = adapter
+            resetCachedHandleHeight()
         }
 
         /**
@@ -405,22 +445,34 @@ class RecyclerFastScroller
             val barHeight = bar.height
             val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
 
-            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRange * barHeight).toInt()
-            if (calculatedHandleHeight < minScrollHandleHeight) {
-                calculatedHandleHeight = minScrollHandleHeight
-            }
-
-            if (calculatedHandleHeight >= barHeight) {
-                translationX = hiddenTranslationX.toFloat()
-                hideOverride = true
-                return
-            }
+            val calculatedHandleHeight = getCachedHandleHeight(barHeight, verticalScrollRange)
 
             hideOverride = false
 
             val y = ratio * (barHeight - calculatedHandleHeight)
 
             handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + calculatedHandleHeight)
+        }
+
+        private fun getCachedHandleHeight(
+            barHeight: Int,
+            verticalScrollRange: Int,
+        ): Int {
+            val itemCount = adapter?.itemCount ?: RecyclerView.NO_POSITION
+            if (itemCount != cachedHandleHeightItemCount || barHeight != cachedHandleHeightBarHeight) {
+                resetCachedHandleHeight()
+                cachedHandleHeightItemCount = itemCount
+                cachedHandleHeightBarHeight = barHeight
+            }
+
+            if (cachedHandleHeight == 0) {
+                cachedHandleHeight =
+                    (barHeight.toFloat() / verticalScrollRange * barHeight)
+                        .toInt()
+                        .coerceAtLeast(minScrollHandleHeight)
+            }
+
+            return cachedHandleHeight
         }
 
         companion object {
