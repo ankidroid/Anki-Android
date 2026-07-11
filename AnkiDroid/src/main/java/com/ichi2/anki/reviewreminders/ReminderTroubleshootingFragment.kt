@@ -85,7 +85,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
      */
     private val host: ScheduleRemindersFragment.FragmentHost by lazy {
         requireNotNull(
-            requireArguments().getParcelableCompat<ScheduleRemindersFragment.FragmentHost>(ARGS_HOST),
+            requireArguments().getParcelableCompat<ScheduleRemindersFragment.FragmentHost>(ARG_HOST),
         ) {
             "Host cannot be null"
         }
@@ -190,13 +190,13 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
         /**
          * Arguments key for specifying the host of this fragment.
          */
-        private const val ARGS_HOST = "host"
+        private const val ARG_HOST = "arg_host"
 
         fun newInstance(host: ScheduleRemindersFragment.FragmentHost): ReminderTroubleshootingFragment =
             ReminderTroubleshootingFragment().apply {
                 arguments =
                     Bundle().apply {
-                        putParcelable(ARGS_HOST, host)
+                        putParcelable(ARG_HOST, host)
                     }
                 Timber.i(
                     "Creating ReminderTroubleshootingFragment with host=%s",

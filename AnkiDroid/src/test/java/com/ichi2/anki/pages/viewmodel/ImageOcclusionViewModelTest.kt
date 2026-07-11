@@ -25,7 +25,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.testutils.AnkiTest
-import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.IO_ARGS_KEY
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.ARG_IMAGE_OCCLUSION
 import com.ichi2.anki.pages.viewmodel.NoteIdBuilder.Id
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.JvmTest
@@ -188,7 +188,7 @@ fun AnkiTest.withViewModel(
 ) = runTest {
     val savedStateHandle =
         SavedStateHandle().apply {
-            this[IO_ARGS_KEY] = args
+            this[ARG_IMAGE_OCCLUSION] = args
         }
 
     block(ImageOcclusionViewModel(savedStateHandle))

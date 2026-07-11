@@ -97,11 +97,11 @@ class TemplatePreviewerFragment :
     suspend fun getSafeClozeOrd(): CardOrdinal = viewModel.getSafeClozeOrd()
 
     companion object {
-        const val ARGS_KEY = "templatePreviewerArgs"
+        const val ARG_KEY = "arg_key"
 
         fun newInstance(arguments: TemplatePreviewerArguments): TemplatePreviewerFragment =
             TemplatePreviewerFragment().apply {
-                val args = Bundle().apply { putParcelable(ARGS_KEY, arguments) }
+                val args = Bundle().apply { putParcelable(ARG_KEY, arguments) }
                 this.arguments = args
             }
     }

@@ -33,7 +33,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
             setTitle(notificationTitle)
             setMessage(notificationMessage)
             setPositiveButton(R.string.dialog_ok) { _, _ ->
-                activity?.dismissSimpleMessageDialog(requireArguments().getBoolean(ARGS_RELOAD))
+                activity?.dismissSimpleMessageDialog(requireArguments().getBoolean(ARG_RELOAD))
             }
         }
     }
@@ -53,7 +53,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override val notificationTitle: String
         get() {
-            val title = requireArguments().getString(ARGS_TITLE)!!
+            val title = requireArguments().getString(ARG_TITLE)!!
             return if ("" != title) {
                 title
             } else {
@@ -63,21 +63,21 @@ class SimpleMessageDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String?
         get() {
-            return requireArguments().getString(ARGS_MESSAGE)
+            return requireArguments().getString(ARG_MESSAGE)
         }
 
     companion object {
         /** The title of the notification/dialog */
-        private const val ARGS_TITLE = "title"
+        private const val ARG_TITLE = "arg_title"
 
         /** The content of the notification/dialog */
-        private const val ARGS_MESSAGE = "message"
+        private const val ARG_MESSAGE = "arg_message"
 
         /**
          * If the calling activity should be reloaded when 'OK' is pressed.
          * @see dismissSimpleMessageDialog
          */
-        private const val ARGS_RELOAD = "reload"
+        private const val ARG_RELOAD = "arg_reload"
 
         fun newInstance(
             title: String,
@@ -86,9 +86,9 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         ): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()
-            args.putString(ARGS_TITLE, title)
-            args.putString(ARGS_MESSAGE, message)
-            args.putBoolean(ARGS_RELOAD, reload)
+            args.putString(ARG_TITLE, title)
+            args.putString(ARG_MESSAGE, message)
+            args.putBoolean(ARG_RELOAD, reload)
             f.arguments = args
             return f
         }
