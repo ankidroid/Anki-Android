@@ -1783,7 +1783,7 @@ open class DeckPicker :
             if (VersionUtils.isReleaseVersion) {
                 Timber.i("Displaying new features")
                 val infoIntent = Intent(this, Info::class.java)
-                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
+                infoIntent.putExtra(Info.EXTRA_TYPE, Info.TYPE_NEW_VERSION)
                 showNewVersionInfoLauncher.launch(infoIntent)
             } else {
                 Timber.i("Dev Build - not showing 'new features'")

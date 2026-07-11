@@ -207,10 +207,10 @@ class PreferencesFragment :
     /**
      * Starts the first settings fragment, which by default is [HeaderFragment].
      * The initial fragment may be overridden by putting the java class name
-     * of the fragment on an intent extra with the key [INITIAL_FRAGMENT_EXTRA]
+     * of the fragment on an intent extra with the key [EXTRA_INITIAL_FRAGMENT]
      */
     private fun loadInitialSubscreen() {
-        val fragmentClassName = arguments?.getString(INITIAL_FRAGMENT_EXTRA)
+        val fragmentClassName = arguments?.getString(EXTRA_INITIAL_FRAGMENT)
         val initialFragment =
             if (fragmentClassName == null) {
                 if (!settingsIsSplit) HeaderFragment() else GeneralSettingsFragment()
@@ -249,10 +249,10 @@ class PreferencesActivity :
             context: Context,
             initialFragment: KClass<out Fragment>? = null,
         ): Intent {
-            val arguments = Bundle().apply { putString(INITIAL_FRAGMENT_EXTRA, initialFragment?.jvmName) }
+            val arguments = Bundle().apply { putString(EXTRA_INITIAL_FRAGMENT, initialFragment?.jvmName) }
             return Intent(context, PreferencesActivity::class.java).apply {
-                putExtra(FRAGMENT_NAME_EXTRA, PreferencesFragment::class.jvmName)
-                putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+                putExtra(EXTRA_FRAGMENT_NAME, PreferencesFragment::class.jvmName)
+                putExtra(EXTRA_FRAGMENT_ARGS, arguments)
             }
         }
     }
@@ -262,7 +262,7 @@ class PreferencesActivity :
 @LegacyNotifications("Magic number which is no longer needed")
 const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
-const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
+const val EXTRA_INITIAL_FRAGMENT = "initial_fragment"
 
 /**
  * @return the [SettingsFragment] which uses the given [screen] resource.

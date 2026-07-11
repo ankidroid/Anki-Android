@@ -113,7 +113,7 @@ sealed interface NoteEditorLauncher : Destination {
         override fun toBundle(): Bundle =
             Bundle().apply {
                 putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.REVIEWER_ADD.value)
-                animation?.let { putParcelable(AnkiActivity.FINISH_ANIMATION_EXTRA, it as Parcelable) }
+                animation?.let { putParcelable(AnkiActivity.EXTRA_FINISH_ANIMATION, it as Parcelable) }
             }
     }
 
@@ -150,7 +150,7 @@ sealed interface NoteEditorLauncher : Destination {
                 putLong(NoteEditorFragment.EXTRA_CARD_ID, cardIds.first())
                 // To handle multi select and note edit
                 putLongArray(NoteEditorFragment.EXTRA_CARD_IDS, cardIds.toLongArray())
-                putParcelable(AnkiActivity.FINISH_ANIMATION_EXTRA, animation as Parcelable)
+                putParcelable(AnkiActivity.EXTRA_FINISH_ANIMATION, animation as Parcelable)
                 putBoolean(NoteEditorFragment.IN_CARD_BROWSER_ACTIVITY, inCardBrowserActivity)
             }
     }

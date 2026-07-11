@@ -16,7 +16,7 @@ import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
 import com.ichi2.anki.AbstractFlashcardViewer.Signal
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
-import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
+import com.ichi2.anki.AnkiActivity.Companion.EXTRA_FINISH_ANIMATION
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -216,13 +216,13 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 Bundle().apply {
                     putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.EDIT.value)
                     putLong(NoteEditorFragment.EXTRA_CARD_ID, viewer.currentCard!!.id)
-                    putParcelable(FINISH_ANIMATION_EXTRA, animation as Parcelable)
+                    putParcelable(EXTRA_FINISH_ANIMATION, animation as Parcelable)
                 }
             val noteEditor = openNoteEditorWithArgs(bundle)
             val actualInverseAnimation =
                 BundleCompat.getParcelable(
                     noteEditor.requireArguments(),
-                    FINISH_ANIMATION_EXTRA,
+                    EXTRA_FINISH_ANIMATION,
                     TransitionDirection::class.java,
                 )
             assertEquals(expectedInverseAnimation, actualInverseAnimation)
