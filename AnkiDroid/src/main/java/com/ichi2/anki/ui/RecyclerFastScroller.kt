@@ -436,17 +436,15 @@ class RecyclerFastScroller
             super.onLayout(changed, left, top, right, bottom)
             if (recyclerView == null) return
 
-            val scrollOffset = recyclerView!!.computeVerticalScrollOffset() + appBarLayoutOffset
             val verticalScrollRange = (
                 recyclerView!!.computeVerticalScrollRange() +
                     recyclerView!!.paddingBottom
             )
 
             val barHeight = bar.height
-            val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
+            val ratio = getScrollProportion()
 
             val calculatedHandleHeight = getCachedHandleHeight(barHeight, verticalScrollRange)
-
             hideOverride = false
 
             val y = ratio * (barHeight - calculatedHandleHeight)
@@ -473,6 +471,25 @@ class RecyclerFastScroller
             }
 
             return cachedHandleHeight
+        }
+
+        private fun getScrollProportion(): Float {
+            val recyclerView = recyclerView ?: return 0f
+            val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return 0f
+            val itemCount = adapter?.itemCount ?: return 0f
+
+            if (itemCount <= 1) return 0f
+            if (!recyclerView.canScrollVertically(-1)) return 0f
+            if (!recyclerView.canScrollVertically(1)) return 1f
+
+            val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+            if (firstVisiblePosition == RecyclerView.NO_POSITION) return 0f
+
+            val firstVisibleView = layoutManager.findViewByPosition(firstVisiblePosition) ?: return 0f
+            val hiddenHeight = (recyclerView.paddingTop - firstVisibleView.top).coerceAtLeast(0)
+            val firstItemFraction = hiddenHeight.toFloat() / firstVisibleView.height.coerceAtLeast(1)
+
+            return ((firstVisiblePosition + firstItemFraction) / (itemCount - 1)).coerceIn(0f, 1f)
         }
 
         companion object {
