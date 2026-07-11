@@ -133,7 +133,7 @@ class ReviewerTest : RobolectricTest() {
         val actualAnimation =
             BundleCompat.getParcelable(
                 intent.extras!!,
-                AnkiActivity.FINISH_ANIMATION_EXTRA,
+                AnkiActivity.EXTRA_FINISH_ANIMATION,
                 TransitionDirection::class.java,
             )
         val expectedAnimation =

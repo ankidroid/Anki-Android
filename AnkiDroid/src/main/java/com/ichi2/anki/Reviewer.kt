@@ -803,7 +803,7 @@ open class Reviewer :
         Timber.i("opening card info")
         val intent = CardInfoDestination(currentCard!!.id, EntryPoint.CURRENT_CARD_STUDY).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(FINISH_ANIMATION_EXTRA, animation.invert() as Parcelable)
+        intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
 
@@ -816,7 +816,7 @@ open class Reviewer :
         Timber.i("opening previous card info")
         val intent = CardInfoDestination(previousCardId!!, EntryPoint.PREVIOUS_CARD_STUDY).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(FINISH_ANIMATION_EXTRA, animation.invert() as Parcelable)
+        intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
 

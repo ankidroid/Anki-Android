@@ -843,7 +843,7 @@ open class AnkiActivity(
 
     companion object {
         /** Extra key to set the finish animation of an activity  */
-        const val FINISH_ANIMATION_EXTRA = "finishAnimation"
+        const val EXTRA_FINISH_ANIMATION = "finishAnimation"
 
         private const val SIMPLE_NOTIFICATION_ID = 0
         private const val KEY_EXPORT_FILE_NAME = "key_export_file_name"

@@ -110,7 +110,7 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         binding.openChangelog.setOnClickListener {
             val openChangelogIntent =
                 Intent(requireContext(), Info::class.java).apply {
-                    putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
+                    putExtra(Info.EXTRA_TYPE, Info.TYPE_NEW_VERSION)
                 }
             startActivity(openChangelogIntent)
         }

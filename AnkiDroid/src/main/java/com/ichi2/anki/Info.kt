@@ -50,7 +50,7 @@ class Info :
         }
         super.onCreate(savedInstanceState)
         val res = resources
-        val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)
+        val type = intent.getIntExtra(EXTRA_TYPE, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (type == TYPE_NEW_VERSION) {
             val prefs = this.baseContext.sharedPrefs()
@@ -184,7 +184,7 @@ class Info :
     }
 
     companion object {
-        const val TYPE_EXTRA = "infoType"
+        const val EXTRA_TYPE = "infoType"
         const val TYPE_NEW_VERSION = 2
     }
 }
