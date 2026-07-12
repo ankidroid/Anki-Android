@@ -126,6 +126,11 @@ class RecyclerFastScroller
             cachedHandleHeightBarHeight = 0
         }
 
+        /**
+         * Cached scroll metrics are tied to the current adapter contents and viewport size.
+         * They are reset when adapter data changes so the thumb can be recalculated for the
+         * new list, but stay stable during normal scrolling.
+         */
         private fun resetCachedScrollMetrics() {
             resetCachedHandleHeight()
             resetCachedVisibleItemCount()
