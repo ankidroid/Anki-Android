@@ -506,6 +506,11 @@ class RecyclerFastScroller
             return ((firstVisiblePosition + firstItemFraction) / scrollableItems).coerceIn(0f, 1f)
         }
 
+        /**
+         * Keeps the visible item count stable during scrolling. Recomputing it for every
+         * layout pass could change the thumb size as rows with different heights enter or
+         * leave the viewport.
+         */
         private fun getCachedVisibleItemCount(
             barHeight: Int,
             itemCount: Int,
@@ -528,6 +533,10 @@ class RecyclerFastScroller
             return cachedVisibleItemCount
         }
 
+        /**
+         * Calculates thumb height from the visible item count and total item count so the
+         * size remains stable while scrolling through rows with different heights.
+         */
         private fun getCachedHandleHeight(
             barHeight: Int,
             itemCount: Int,
