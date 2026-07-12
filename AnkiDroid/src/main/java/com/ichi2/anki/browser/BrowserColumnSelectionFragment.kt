@@ -41,6 +41,7 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -76,11 +77,9 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.dialog_browser_co
     private val onBackPressedDispatcher
         get() = (dialog as ComponentDialog).onBackPressedDispatcher
 
-    private val cardsOrNotes: CardsOrNotes
-        get() =
-            requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), ARG_MODE, CardsOrNotes::class.java),
-            )
+    private val cardsOrNotes: CardsOrNotes by lazy {
+        requireArguments().requireParcelable(ARG_MODE)
+    }
 
     private val discardChangesCallback =
         object : OnBackPressedCallback(enabled = false) {

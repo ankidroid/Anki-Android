@@ -36,6 +36,7 @@ import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SpecialField
 import com.ichi2.anki.model.SpecialFields
+import com.ichi2.anki.utils.ext.requireString
 import dev.androidbroadcast.vbpd.viewBinding
 import org.jetbrains.annotations.VisibleForTesting
 
@@ -47,11 +48,9 @@ import org.jetbrains.annotations.VisibleForTesting
  */
 class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
     private val viewModel by viewModels<InsertFieldDialogViewModel>()
-    private val requestKey
-        get() =
-            requireNotNull(requireArguments().getString(KEY_REQUEST_KEY)) {
-                KEY_REQUEST_KEY
-            }
+    private val requestKey: String by lazy {
+        requireArguments().requireString(KEY_REQUEST_KEY)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

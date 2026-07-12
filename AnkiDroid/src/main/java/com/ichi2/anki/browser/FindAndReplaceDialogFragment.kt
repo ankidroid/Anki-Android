@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
@@ -33,6 +32,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.customView
@@ -58,15 +58,9 @@ import timber.log.Timber
 class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     private lateinit var binding: FragmentFindReplaceBinding
 
-    private val idsFile: IdsFile
-        get() =
-            requireNotNull(
-                BundleCompat.getParcelable(
-                    requireArguments(),
-                    ARG_IDS,
-                    IdsFile::class.java,
-                ),
-            )
+    private val idsFile: IdsFile by lazy {
+        requireArguments().requireParcelable(ARG_IDS)
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = FragmentFindReplaceBinding.inflate(layoutInflater)

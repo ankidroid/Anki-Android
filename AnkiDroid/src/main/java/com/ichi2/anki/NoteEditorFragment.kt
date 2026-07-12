@@ -146,6 +146,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.RunOnlyOnce
+import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -640,7 +641,7 @@ class NoteEditorFragment :
                 return
             }
             NoteEditorCaller.EDIT -> {
-                val cardId = requireNotNull(requireArguments().getLong(EXTRA_CARD_ID)) { "EXTRA_CARD_ID" }
+                val cardId = requireArguments().requireLong(EXTRA_CARD_ID)
                 currentEditedCard = col.getCard(cardId)
                 editorNote = currentEditedCard!!.note(col)
                 addNote = false

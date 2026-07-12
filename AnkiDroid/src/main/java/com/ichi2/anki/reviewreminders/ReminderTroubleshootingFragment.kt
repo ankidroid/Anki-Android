@@ -43,9 +43,9 @@ import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.dp
@@ -84,11 +84,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
      * @see ScheduleRemindersFragment.FragmentHost
      */
     private val host: ScheduleRemindersFragment.FragmentHost by lazy {
-        requireNotNull(
-            requireArguments().getParcelableCompat<ScheduleRemindersFragment.FragmentHost>(ARG_HOST),
-        ) {
-            "Host cannot be null"
-        }
+        requireArguments().requireParcelable(ARG_HOST)
     }
 
     internal val notificationPermissionLauncher: ActivityResultLauncher<String> =

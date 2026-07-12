@@ -47,6 +47,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
@@ -92,11 +93,7 @@ class AddEditReminderDialog : DialogFragment() {
      * @see DialogMode
      */
     private val dialogMode: DialogMode by lazy {
-        requireNotNull(
-            requireArguments().getParcelableCompat<DialogMode>(ARG_DIALOG_MODE),
-        ) {
-            "Dialog mode cannot be null"
-        }
+        requireArguments().requireParcelable(ARG_DIALOG_MODE)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
