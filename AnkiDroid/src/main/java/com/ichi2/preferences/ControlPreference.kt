@@ -38,6 +38,7 @@ import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.GesturePicker
 import com.ichi2.ui.KeyPicker
@@ -233,10 +234,7 @@ open class ControlPreferenceDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val key =
-            requireNotNull(requireArguments().getString(SettingsFragment.PREF_DIALOG_KEY)) {
-                "ControlPreferenceDialogFragment must have a 'key' argument leading to its preference"
-            }
+        val key = requireArguments().requireString(SettingsFragment.PREF_DIALOG_KEY)
         preference = (targetFragment as PreferenceFragmentCompat).requirePreference(key)
     }
 

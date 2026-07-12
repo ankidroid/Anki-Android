@@ -41,6 +41,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
@@ -91,12 +92,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     @VisibleForTesting
     val viewModel: TagsDialogViewModel by viewModels {
-        val idsFile =
-            requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), ARG_TAGS_FILE, IdsFile::class.java),
-            ) {
-                "$ARG_TAGS_FILE is required"
-            }
+        val idsFile = requireArguments().requireParcelable<IdsFile>(ARG_TAGS_FILE)
         val noteIds = idsFile.getIds()
         val checkedTags =
             requireNotNull(requireArguments().getStringArrayList(ARG_CHECKED_TAGS)) {
@@ -157,12 +153,7 @@ class TagsDialog : AnalyticsDialogFragment {
         super.onCreate(savedInstanceState)
         resizeWhenSoftInputShown(requireActivity().window)
 
-        type =
-            requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java),
-            ) {
-                "$ARG_DIALOG_TYPE is required"
-            }
+        type = requireArguments().requireParcelable(ARG_DIALOG_TYPE)
         isCancelable = true
     }
 

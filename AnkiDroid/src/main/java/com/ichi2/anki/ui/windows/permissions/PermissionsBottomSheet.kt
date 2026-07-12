@@ -30,7 +30,7 @@ import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentPermissionsBottomSheetBinding
 import com.ichi2.anki.utils.ext.behavior
-import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.anki.utils.ext.requireParcelable
 import dev.androidbroadcast.vbpd.viewBinding
 
 /**
@@ -67,10 +67,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        val permissionSet =
-            requireNotNull(requireArguments().getParcelableCompat<PermissionSet>(ARG_PERMISSION_SET)) {
-                "Permission set cannot be null"
-            }
+        val permissionSet = requireArguments().requireParcelable<PermissionSet>(ARG_PERMISSION_SET)
         val permissionsFragment =
             requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
                 "invalid permissionsFragment"
