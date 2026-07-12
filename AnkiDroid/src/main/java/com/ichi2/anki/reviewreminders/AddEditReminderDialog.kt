@@ -311,8 +311,8 @@ class AddEditReminderDialog : DialogFragment() {
         setFragmentResult(
             REQUEST_ADD_EDIT_REMINDER,
             Bundle().apply {
-                putParcelable(KEY_REMINDER_MODE, dialogMode)
-                putParcelable(KEY_REMINDER_RESULT, reminderToBeReturned)
+                putParcelable(RESULT_MODE, dialogMode)
+                putParcelable(RESULT_REMINDER, reminderToBeReturned)
             },
         )
 
@@ -339,8 +339,8 @@ class AddEditReminderDialog : DialogFragment() {
                 REQUEST_ADD_EDIT_REMINDER,
                 Bundle().apply {
                     // dialogMode should always be DialogMode.Edit in this case since the delete button only exists in Edit mode
-                    putParcelable(KEY_REMINDER_MODE, dialogMode)
-                    putParcelable(KEY_REMINDER_RESULT, null)
+                    putParcelable(RESULT_MODE, dialogMode)
+                    putParcelable(RESULT_REMINDER, null)
                 },
             )
             dismiss()
@@ -388,12 +388,12 @@ class AddEditReminderDialog : DialogFragment() {
         /**
          * Fragment result bundle key for the [DialogMode] of a recently closed [AddEditReminderDialog].
          */
-        private const val KEY_REMINDER_MODE = "key_reminder_mode"
+        private const val RESULT_MODE = "result_mode"
 
         /**
          * Fragment result bundle key for the [ReviewReminder] result of a recently closed [AddEditReminderDialog].
          */
-        private const val KEY_REMINDER_RESULT = "key_reminder_result"
+        private const val RESULT_REMINDER = "result_reminder"
 
         /**
          * Unique fragment tag for the Material TimePicker shown for setting the time of a review reminder.
@@ -413,9 +413,9 @@ class AddEditReminderDialog : DialogFragment() {
                 Timber.i("Received fragment result from add/edit dialog")
                 val modeOfFinishedDialog =
                     bundle.getParcelableCompat<DialogMode>(
-                        KEY_REMINDER_MODE,
+                        RESULT_MODE,
                     ) ?: return@setFragmentResultListener
-                val newOrModifiedReminder = bundle.getParcelableCompat<ReviewReminder>(KEY_REMINDER_RESULT)
+                val newOrModifiedReminder = bundle.getParcelableCompat<ReviewReminder>(RESULT_REMINDER)
                 action(newOrModifiedReminder, modeOfFinishedDialog)
             }
         }

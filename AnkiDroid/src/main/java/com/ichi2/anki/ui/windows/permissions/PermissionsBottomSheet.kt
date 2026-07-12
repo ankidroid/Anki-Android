@@ -63,7 +63,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.closeButton.setOnClickListener { dismiss() }
-        childFragmentManager.setFragmentResultListener(DISMISS_RESULT_REQUEST_KEY, this) { _, _ ->
+        childFragmentManager.setFragmentResultListener(RESULT_DISMISS, this) { _, _ ->
             dismiss()
         }
 
@@ -97,7 +97,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
          * Fragment result request key for dismissing this BottomSheet.
          * Public so that child fragments can set it.
          */
-        const val DISMISS_RESULT_REQUEST_KEY = "permissions_bottom_sheet_dismiss"
+        const val RESULT_DISMISS = "result_dismiss"
 
         /**
          * Starts this BottomSheet with the provided [PermissionSet].
