@@ -430,7 +430,7 @@ class StudyOptionsFragment :
         /**
          * Bundle key for the deck ID whose study options are being displayed, used when the review reminders screen is being opened.
          */
-        private const val KEY_REVIEW_REMINDERS_DECK_ID = "review_reminders_deck_id"
+        private const val RESULT_REVIEW_REMINDERS_DECK_ID = "result_review_reminders_deck_id"
 
         @VisibleForTesting
         fun formatDescription(
@@ -460,7 +460,7 @@ class StudyOptionsFragment :
         fun FragmentActivity.registerStudyOptionsAddEditReminderHandler(action: (did: DeckId) -> Unit) {
             setFragmentResultListener(REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS) { _, bundle ->
                 Timber.i("Received fragment result from study options fragment for adding / editing review reminders")
-                val did = bundle.getLong(KEY_REVIEW_REMINDERS_DECK_ID)
+                val did = bundle.getLong(RESULT_REVIEW_REMINDERS_DECK_ID)
                 action(did)
             }
         }
@@ -472,7 +472,7 @@ class StudyOptionsFragment :
         private fun FragmentManager.setStudyOptionsAddEditReminderResult(did: DeckId) {
             setFragmentResult(
                 REQUEST_STUDY_OPTIONS_REVIEW_REMINDERS,
-                Bundle().apply { putLong(KEY_REVIEW_REMINDERS_DECK_ID, did) },
+                Bundle().apply { putLong(RESULT_REVIEW_REMINDERS_DECK_ID, did) },
             )
         }
     }
