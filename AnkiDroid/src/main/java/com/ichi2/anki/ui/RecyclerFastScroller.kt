@@ -488,6 +488,11 @@ class RecyclerFastScroller
             handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + calculatedHandleHeight)
         }
 
+        /**
+         * Calculates thumb position from adapter positions so the scroll progress remains
+         * stable when rows have different heights. The fractional offset within the first
+         * visible row keeps the thumb moving smoothly between adapter positions.
+         */
         private fun getScrollProportion(
             recyclerView: RecyclerView,
             layoutManager: LinearLayoutManager,
