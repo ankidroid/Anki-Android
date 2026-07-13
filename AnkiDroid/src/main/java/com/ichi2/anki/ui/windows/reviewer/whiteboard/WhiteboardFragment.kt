@@ -30,6 +30,7 @@ import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
 import com.ichi2.anki.android.back.doubleBackPressCallback
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
 import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.anki.databinding.FragmentWhiteboardBinding
@@ -350,7 +351,9 @@ class WhiteboardFragment :
 
         brushConfigPopup =
             PopupWindow(popupBrushBinding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        brushConfigPopup?.elevation = resources.getDimension(R.dimen.study_screen_elevation)
+
+        val resId = getResFromAttr(requireContext(), R.attr.studyScreenElevation)
+        brushConfigPopup?.elevation = resources.getDimensionPixelSize(resId).toFloat()
         brushConfigPopup?.setOnDismissListener {
             brushConfigPopup = null
         }
