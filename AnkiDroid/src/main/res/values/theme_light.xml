@@ -171,6 +171,8 @@
         <item name="reminderTroubleshootingWarning">@color/warning_orange</item>
 
 
+        <item name="badgeErrorColor">#f45000</item>
+        <item name="badgeWarningColor">#ff5e13</item>
         <item name="cardStrokeWidth">0dp</item>
         <item name="cardStrokeColor">@color/transparent</item>
     </style>
