@@ -9,6 +9,8 @@
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
         <item name="colorControlNormal">@color/black</item>
+        <item name="android:textColor">@color/text_color_eink</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_eink</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="preferenceCategoryTitleTextColor">@color/black</item>
