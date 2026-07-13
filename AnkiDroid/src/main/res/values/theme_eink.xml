@@ -107,6 +107,7 @@
         <item name="android:windowElevation">0dp</item>
         <item name="android:elevation">0dp</item>
         <item name="elevation">0dp</item>
+        <item name="appBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme_Light_Eink" parent="Base.Theme.Light.Eink"/>

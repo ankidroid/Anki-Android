@@ -9,6 +9,7 @@ import android.os.Parcelable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.Spanned
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -176,7 +177,8 @@ class TagsDialog : AnalyticsDialogFragment {
             " filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
     )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogTagsBinding.inflate(layoutInflater)
+        val builder = AlertDialog.Builder(requireActivity())
+        binding = DialogTagsBinding.inflate(LayoutInflater.from(builder.context))
 
         val positiveText =
             if (type == DialogType.EDIT_TAGS) {
@@ -205,8 +207,7 @@ class TagsDialog : AnalyticsDialogFragment {
         adjustToolbar(binding.root)
 
         val dialog =
-            AlertDialog
-                .Builder(requireActivity())
+            builder
                 .positiveButton(text = positiveText) { onPositiveButton() }
                 .negativeButton(R.string.dialog_cancel)
                 .customView(view = binding.root)
