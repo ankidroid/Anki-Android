@@ -63,6 +63,16 @@
         <item name="goodBackgroundColor">@color/white</item>
         <item name="easyBackgroundColor">@color/white</item>
 
+        <item name="againButtonRef">@drawable/footer_button_all_eink</item>
+        <item name="hardButtonRef">@drawable/footer_button_all_eink</item>
+        <item name="goodButtonRef">@drawable/footer_button_all_eink</item>
+        <item name="easyButtonRef">@drawable/footer_button_all_eink</item>
+
+        <item name="againButtonRippleRef">@drawable/footer_button_all_eink_ripple</item>
+        <item name="hardButtonRippleRef">@drawable/footer_button_all_eink_ripple</item>
+        <item name="goodButtonRippleRef">@drawable/footer_button_all_eink_ripple</item>
+        <item name="easyButtonRippleRef">@drawable/footer_button_all_eink_ripple</item>
+
         <item name="showAnswerButtonBackground">@color/black</item>
         <item name="showAnswerColor">@color/black</item>
 
