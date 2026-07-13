@@ -13,7 +13,7 @@
         app:srcCompat="@drawable/ic_sync"
         style="@android:style/Widget.ActionButton"
         android:tooltipText="@string/button_sync"
-        android:tint="@color/white"
+        android:tint="?attr/actionBarTextColor"
         tools:tint="?attr/colorControlNormal"
         android:contentDescription="@string/button_sync"
         android:focusable="true"
