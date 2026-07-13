@@ -77,6 +77,7 @@
     <string-array name="day_theme_labels">
         <item>@string/day_theme_light</item>
         <item>@string/day_theme_plain</item>
+        <item>@string/day_theme_eink</item>
     </string-array>
     <string-array name="night_theme_labels">
         <item>@string/night_theme_black</item>
@@ -178,6 +179,7 @@
     <string name="theme_follow_system_value">0</string>
     <string name="theme_day_scheme_value">1</string>
     <string name="theme_night_scheme_value">2</string>
+    <string name="theme_eink_scheme_value">3</string>
 
     <string name="theme_light_value">1</string>
     <string name="theme_plain_value">2</string>
@@ -192,6 +194,7 @@
     <string-array name="day_theme_values">
         <item>@string/theme_light_value</item>
         <item>@string/theme_plain_value</item>
+        <item>@string/theme_eink_scheme_value</item>
     </string-array>
     <string-array name="night_theme_values">
         <item>@string/theme_black_value</item>
