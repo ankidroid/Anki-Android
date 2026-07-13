@@ -246,6 +246,8 @@
 
     <style name="CardView.ViewerStyle" parent="Widget.Material3.CardView.Elevated">
         <item name="android:elevation">@dimen/study_screen_elevation</item>
+        <item name="strokeWidth">?attr/cardStrokeWidth</item>
+        <item name="strokeColor">?attr/cardStrokeColor</item>
     </style>
 
     <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">

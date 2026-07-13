@@ -177,6 +177,10 @@
         <!-- Reminder troubleshooting -->
         <item name="reminderTroubleshootingOk">@color/google_green_300</item>
         <item name="reminderTroubleshootingWarning">@color/google_yellow_300</item>
+
+
+        <item name="cardStrokeWidth">0dp</item>
+        <item name="cardStrokeColor">@color/transparent</item>
     </style>
 
     <style name="Theme_Dark" parent="Base.Theme.Dark"/>
