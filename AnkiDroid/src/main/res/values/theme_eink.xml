@@ -100,6 +100,7 @@
         <item name="badgeWarningColor">@color/black</item>
         <item name="widgetStrokeWidth">2dp</item>
         <item name="widgetStrokeColor">@color/black</item>
+        <item name="studyScreenElevation">0dp</item>
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Eink" parent="ThemeOverlay.AnkiDroid.AlertDialog">

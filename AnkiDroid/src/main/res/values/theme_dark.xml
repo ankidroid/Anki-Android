@@ -182,6 +182,7 @@
         <item name="badgeWarningColor">#ff5e13</item>
         <item name="widgetStrokeWidth">0dp</item>
         <item name="widgetStrokeColor">@color/transparent</item>
+        <item name="studyScreenElevation">0.8dp</item>
     </style>
 
     <style name="Theme_Dark" parent="Base.Theme.Dark"/>
