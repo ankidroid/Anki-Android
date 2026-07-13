@@ -87,6 +87,7 @@
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Eink" parent="ThemeOverlay.AnkiDroid.AlertDialog">
+        <item name="android:windowBackground">@drawable/bg_dialog_eink</item>
         <item name="android:windowElevation">0dp</item>
         <item name="android:elevation">0dp</item>
         <item name="elevation">0dp</item>

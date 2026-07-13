@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="24dp"
+    android:insetTop="16dp"
+    android:insetRight="24dp"
+    android:insetBottom="16dp">
+
+    <shape android:shape="rectangle">
+        <corners android:radius="@dimen/m3_alert_dialog_corner_size"/>
+        <solid android:color="@color/white"/>
+        <stroke android:width="2dp" android:color="@color/black"/>
+    </shape>
+
+</inset>
