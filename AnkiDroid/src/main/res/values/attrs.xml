@@ -231,6 +231,8 @@
     <attr name="reminderTroubleshootingWarning" format="color"/>
 
 
+    <attr name="badgeWarningColor" format="color"/>
+    <attr name="badgeErrorColor" format="color"/>
     <attr name="cardStrokeWidth" format="dimension"/>
     <attr name="cardStrokeColor" format="color"/>
 </resources>

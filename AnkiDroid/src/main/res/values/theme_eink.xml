@@ -85,6 +85,9 @@
         <item name="navDrawerItemColor">@color/black</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog.Eink</item>
 
+
+        <item name="badgeErrorColor">@color/black</item>
+        <item name="badgeWarningColor">@color/black</item>
         <item name="cardStrokeWidth">2dp</item>
         <item name="cardStrokeColor">@color/black</item>
     </style>
