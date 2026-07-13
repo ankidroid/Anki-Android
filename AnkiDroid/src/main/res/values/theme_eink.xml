@@ -30,6 +30,7 @@
         <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
         <item name="tabActiveIconColor">@color/white</item>
 
+        <item name="navDrawerImage">@drawable/nav_drawer_logo_eink</item>
         <item name="currentDeckBackgroundColor">#E0E0E0</item>
         <item name="focusedRowBackgroundColor">#E0E0E0</item>
         <item name="dynDeckColor">@color/black</item>
