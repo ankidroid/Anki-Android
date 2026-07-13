@@ -569,6 +569,8 @@ internal fun computeScrollProportion(
 
 fun RecyclerView.attachFastScroller(
     @IdRes id: Int,
-) = (parent as ViewGroup)
-    .findViewById<RecyclerFastScroller>(id)
-    .attachRecyclerView(this)
+) {
+    (parent as? ViewGroup)
+        ?.findViewById<RecyclerFastScroller>(id)
+        ?.attachRecyclerView(this)
+}
