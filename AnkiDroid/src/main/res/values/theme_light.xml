@@ -173,8 +173,8 @@
 
         <item name="badgeErrorColor">#f45000</item>
         <item name="badgeWarningColor">#ff5e13</item>
-        <item name="cardStrokeWidth">0dp</item>
-        <item name="cardStrokeColor">@color/transparent</item>
+        <item name="widgetStrokeWidth">0dp</item>
+        <item name="widgetStrokeColor">@color/transparent</item>
     </style>
 
     <style name="Theme_Light" parent="Base.Theme.Light"/>
