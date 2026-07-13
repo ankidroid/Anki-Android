@@ -229,4 +229,8 @@
     <!-- Reminder troubleshooting -->
     <attr name="reminderTroubleshootingOk" format="color"/>
     <attr name="reminderTroubleshootingWarning" format="color"/>
+
+
+    <attr name="cardStrokeWidth" format="dimension"/>
+    <attr name="cardStrokeColor" format="color"/>
 </resources>

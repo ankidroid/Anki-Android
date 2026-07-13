@@ -7,6 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="12dp"
     android:layout_marginVertical="4dp"
+    app:strokeWidth="?attr/cardStrokeWidth"
+    app:strokeColor="?attr/cardStrokeColor"
     style="@style/Widget.Material3.CardView.Elevated"
     tools:context=".preferences.reviewer.ReviewerMenuSettingsAdapter$ActionViewHolder"
     >

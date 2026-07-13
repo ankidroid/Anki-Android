@@ -84,6 +84,9 @@
         <item name="dialogBackground">@color/white</item>
         <item name="navDrawerItemColor">@color/black</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog.Eink</item>
+
+        <item name="cardStrokeWidth">2dp</item>
+        <item name="cardStrokeColor">@color/black</item>
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Eink" parent="ThemeOverlay.AnkiDroid.AlertDialog">
