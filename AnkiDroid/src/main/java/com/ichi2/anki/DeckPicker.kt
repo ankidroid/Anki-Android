@@ -1284,13 +1284,13 @@ open class DeckPicker :
             }
             SyncIconState.PendingChanges -> {
                 BadgeDrawableBuilder(this)
-                    .withColor(getColor(R.color.badge_warning))
+                    .withColorAttr(R.attr.badgeWarningColor)
                     .replaceBadge(provider)
             }
             SyncIconState.OneWay, SyncIconState.NotLoggedIn -> {
                 BadgeDrawableBuilder(this)
                     .withText('!')
-                    .withColor(getColor(R.color.badge_error))
+                    .withColorAttr(R.attr.badgeErrorColor)
                     .replaceBadge(provider)
             }
         }
