@@ -59,4 +59,66 @@ class RecyclerFastScrollerTest {
         // scrollRange == barHeight would be a zero divisor without the guard
         assertThat(computeScrollProportion(scrollOffset = 0, scrollRange = 1000, barHeight = 1000), lessThan(1.0001f))
     }
+
+    @Test
+    fun `scroll offset accumulates real pixel deltas`() {
+        assertThat(
+            computeScrollOffsetFromDelta(
+                currentOffset = 100,
+                dy = 25,
+                scrollablePixels = 1000,
+                canScrollUp = true,
+                canScrollDown = true,
+            ),
+            equalTo(125),
+        )
+    }
+
+    @Test
+    fun `scroll offset is clamped into the scrollable range`() {
+        assertThat(
+            computeScrollOffsetFromDelta(
+                currentOffset = 995,
+                dy = 20,
+                scrollablePixels = 1000,
+                canScrollUp = true,
+                canScrollDown = true,
+            ),
+            equalTo(1000),
+        )
+        assertThat(
+            computeScrollOffsetFromDelta(
+                currentOffset = 5,
+                dy = -20,
+                scrollablePixels = 1000,
+                canScrollUp = true,
+                canScrollDown = true,
+            ),
+            equalTo(0),
+        )
+    }
+
+    @Test
+    fun `scroll offset snaps to exact list edges`() {
+        assertThat(
+            computeScrollOffsetFromDelta(
+                currentOffset = 100,
+                dy = 25,
+                scrollablePixels = 1000,
+                canScrollUp = false,
+                canScrollDown = true,
+            ),
+            equalTo(0),
+        )
+        assertThat(
+            computeScrollOffsetFromDelta(
+                currentOffset = 100,
+                dy = 25,
+                scrollablePixels = 1000,
+                canScrollUp = true,
+                canScrollDown = false,
+            ),
+            equalTo(1000),
+        )
+    }
 }

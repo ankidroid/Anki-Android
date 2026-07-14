@@ -106,20 +106,27 @@ class RecyclerFastScroller
         private var hideOverride = false
         private var adapter: RecyclerView.Adapter<*>? = null
 
-        // Thumb height, cached so it keeps a steady size while scrolling rows of different
-        // heights. Only the size ever flickered, so only the size is frozen. 0 means "recompute
-        // on the next layout". Item count, bar height and width invalidate it (width because rows
-        // can rewrap and change the total scroll range).
+        // Thumb height and range, cached so the handle keeps a steady size and scale while
+        // scrolling rows of different heights. 0 means "recompute on the next layout". Item count,
+        // bar height and width invalidate it (width because rows can rewrap and change the total
+        // scroll range).
         private var cachedHandleHeight = 0
+        private var cachedScrollRange = 0
         private var cachedItemCount = RecyclerView.NO_POSITION
         private var cachedBarHeight = 0
         private var cachedWidth = 0
+        private var accumulatedScrollOffset = 0
+        private var scrollOffsetInitialized = false
+        private var isDraggingHandle = false
 
         private fun invalidateScrollMetrics() {
             cachedHandleHeight = 0
+            cachedScrollRange = 0
             cachedItemCount = RecyclerView.NO_POSITION
             cachedBarHeight = 0
             cachedWidth = 0
+            accumulatedScrollOffset = 0
+            scrollOffsetInitialized = false
         }
 
         private fun onAdapterDataChanged() {
@@ -274,6 +281,10 @@ class RecyclerFastScroller
                         dy: Int,
                     ) {
                         super.onScrolled(recyclerView, dx, dy)
+                        if (!isDraggingHandle) {
+                            val scrollablePixels = resolveScrollablePixels(recyclerView)
+                            updateAccumulatedScrollOffset(recyclerView, dy, scrollablePixels)
+                        }
                         this@RecyclerFastScroller.show(true)
                     }
                 },
@@ -377,6 +388,7 @@ class RecyclerFastScroller
 
                     // Force the handle to be selected since the user is touching the track (the parent container) and not the handle itself.
                     handle.isPressed = true
+                    isDraggingHandle = true
 
                     // The valid scroll area is (height-handle.height), since the position of the handle is defined by it's top edge, we subtract it.
                     val scrollableHeight = height - handle.height
@@ -387,6 +399,11 @@ class RecyclerFastScroller
                         ((event.y - handle.height / 2) / scrollableHeight.coerceAtLeast(1))
                             .coerceIn(0f, 1f)
                     pendingScrollProportion = scrollProportion
+                    recyclerView?.let {
+                        val scrollablePixels = resolveScrollablePixels(it)
+                        accumulatedScrollOffset = (scrollProportion * scrollablePixels).toInt().coerceIn(0, scrollablePixels)
+                        scrollOffsetInitialized = scrollablePixels > 0
+                    }
                     // Calculates the item index we want to go to by multiplying our ScrollProportion to the item count
                     // e.g. if we are going to 50% then 0.5*itemcount gives us the index we need.
                     // toInt prevents decimal values, and coerceIn here makes it so when we scroll all the way to the end, we don't get an out of bounds error.
@@ -414,6 +431,8 @@ class RecyclerFastScroller
                         recyclerView?.let { removeCallbacks(scrollTask) }
                         scrollTask.run()
                     }
+                    handle.isPressed = false
+                    isDraggingHandle = false
                     false
                 }
                 else -> super.onTouchEvent(event)
@@ -450,13 +469,17 @@ class RecyclerFastScroller
             }
             hideOverride = false
 
-            val scrollRange = recyclerView.computeVerticalScrollRange() + recyclerView.paddingBottom
+            val measuredScrollRange = recyclerView.computeVerticalScrollRange() + recyclerView.paddingBottom
+            val scrollRange = resolveScrollRange(itemCount, barHeight, recyclerView.width, measuredScrollRange)
             if (scrollRange <= barHeight) return
 
-            val handleHeight = resolveHandleHeight(itemCount, barHeight, recyclerView.width, scrollRange)
-            // Position is measured in pixels, so the thumb tracks the scroll smoothly even when
-            // rows have different heights. Only the size is frozen, since only the size flickered.
-            val ratio = computeScrollProportion(recyclerView.computeVerticalScrollOffset(), scrollRange, barHeight)
+            val scrollablePixels = scrollRange - barHeight
+            updateAccumulatedScrollOffset(recyclerView, dy = 0, scrollablePixels)
+
+            val handleHeight = resolveHandleHeight(barHeight, scrollRange)
+            // RecyclerView's scrollbar range is an estimate for variable-height rows, so keep it
+            // as a stable scale while the position follows real scroll deltas.
+            val ratio = computeScrollProportion(accumulatedScrollOffset, scrollRange, barHeight)
 
             val y = ratio * (barHeight - handleHeight)
             handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + handleHeight)
@@ -468,13 +491,57 @@ class RecyclerFastScroller
             hideOverride = true
         }
 
+        private fun resolveScrollablePixels(recyclerView: RecyclerView): Int {
+            val itemCount = recyclerView.adapter?.itemCount ?: return 0
+            val barHeight = bar.height
+            if (itemCount == 0 || barHeight == 0) return 0
+
+            val measuredScrollRange = recyclerView.computeVerticalScrollRange() + recyclerView.paddingBottom
+            val scrollRange = resolveScrollRange(itemCount, barHeight, recyclerView.width, measuredScrollRange)
+            return (scrollRange - barHeight).coerceAtLeast(0)
+        }
+
+        private fun updateAccumulatedScrollOffset(
+            recyclerView: RecyclerView,
+            dy: Int,
+            scrollablePixels: Int,
+        ) {
+            if (scrollablePixels <= 0) {
+                accumulatedScrollOffset = 0
+                scrollOffsetInitialized = false
+                return
+            }
+
+            if (!scrollOffsetInitialized) {
+                accumulatedScrollOffset = recyclerView.computeVerticalScrollOffset().coerceIn(0, scrollablePixels)
+                scrollOffsetInitialized = true
+                accumulatedScrollOffset =
+                    computeScrollOffsetFromDelta(
+                        currentOffset = accumulatedScrollOffset,
+                        dy = 0,
+                        scrollablePixels = scrollablePixels,
+                        canScrollUp = recyclerView.canScrollVertically(-1),
+                        canScrollDown = recyclerView.canScrollVertically(1),
+                    )
+                return
+            }
+
+            accumulatedScrollOffset =
+                computeScrollOffsetFromDelta(
+                    currentOffset = accumulatedScrollOffset,
+                    dy = dy,
+                    scrollablePixels = scrollablePixels,
+                    canScrollUp = recyclerView.canScrollVertically(-1),
+                    canScrollDown = recyclerView.canScrollVertically(1),
+                )
+        }
+
         /**
-         * Thumb height for the current list, computed once and cached. The scroll range is a live
-         * estimate that drifts while scrolling, and it is only the size that drifted, so we freeze
-         * the size and let the position stay live. Recomputed when the data, bar height or width
-         * change (see [invalidateScrollMetrics]).
+         * Scroll range for the current list, computed once and cached. RecyclerView estimates it
+         * from currently visible rows, so it can drift while scrolling variable-height rows.
+         * Recomputed when the data, bar height or width change (see [invalidateScrollMetrics]).
          */
-        private fun resolveHandleHeight(
+        private fun resolveScrollRange(
             itemCount: Int,
             barHeight: Int,
             width: Int,
@@ -482,15 +549,28 @@ class RecyclerFastScroller
         ): Int {
             if (itemCount != cachedItemCount || barHeight != cachedBarHeight || width != cachedWidth) {
                 cachedHandleHeight = 0
+                cachedScrollRange = 0
                 cachedItemCount = itemCount
                 cachedBarHeight = barHeight
                 cachedWidth = width
+                accumulatedScrollOffset = 0
+                scrollOffsetInitialized = false
             }
 
+            if (cachedScrollRange == 0) {
+                cachedScrollRange = scrollRange
+            }
+
+            return cachedScrollRange
+        }
+
+        private fun resolveHandleHeight(
+            barHeight: Int,
+            scrollRange: Int,
+        ): Int {
             if (cachedHandleHeight == 0) {
                 cachedHandleHeight = computeThumbHeight(barHeight, scrollRange, minScrollHandleHeight)
             }
-
             return cachedHandleHeight
         }
 
@@ -526,6 +606,22 @@ internal fun computeScrollProportion(
 ): Float {
     val scrollablePixels = (scrollRange - barHeight).coerceAtLeast(1)
     return (scrollOffset.toFloat() / scrollablePixels).coerceIn(0f, 1f)
+}
+
+@VisibleForTesting
+internal fun computeScrollOffsetFromDelta(
+    currentOffset: Int,
+    dy: Int,
+    scrollablePixels: Int,
+    canScrollUp: Boolean,
+    canScrollDown: Boolean,
+): Int {
+    if (scrollablePixels <= 0) return 0
+    return when {
+        !canScrollUp -> 0
+        !canScrollDown -> scrollablePixels
+        else -> (currentOffset + dy).coerceIn(0, scrollablePixels)
+    }
 }
 
 fun RecyclerView.attachFastScroller(
