@@ -84,6 +84,7 @@
         <item name="toolbarIconColor">@color/black</item>
         <item name="topBarColor">@color/white</item>
         <item name="overflowAndPopupMenuIconColor">@color/black</item>
+        <item name="incrementerButtonBackground">@color/black</item>
 
         <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
