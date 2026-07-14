@@ -101,6 +101,10 @@
         <item name="widgetStrokeWidth">2dp</item>
         <item name="widgetStrokeColor">@color/black</item>
         <item name="studyScreenElevation">0dp</item>
+
+        <item name="snackbarStyle">@style/SnackbarStyle.Eink</item>
+        <item name="snackbarTextViewStyle">@style/SnackbarTextStyle.Eink</item>
+        <item name="snackbarButtonStyle">@style/SnackbarButtonStyle.Eink</item>
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Eink" parent="ThemeOverlay.AnkiDroid.AlertDialog">
@@ -109,6 +113,22 @@
         <item name="android:elevation">0dp</item>
         <item name="elevation">0dp</item>
         <item name="appBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="SnackbarStyle.Eink" parent="Widget.Material3.Snackbar">
+        <item name="android:background">@drawable/bg_snackbar_eink</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:elevation">0dp</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="SnackbarTextStyle.Eink" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="SnackbarButtonStyle.Eink" parent="Widget.Material3.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Theme_Light_Eink" parent="Base.Theme.Light.Eink"/>
