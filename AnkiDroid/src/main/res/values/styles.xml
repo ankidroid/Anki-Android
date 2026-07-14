@@ -292,4 +292,10 @@
     <style name="ThemeOverlay.TextInputSelectionFix" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
         <item name="colorOnPrimaryContainer">?attr/editTextHighlightColor</item>
     </style>
+
+    <style name="Widget.AnkiDroid.WhiteboardToolbarCard.Eink" parent="Widget.Material3.CardView.Elevated">
+        <item name="strokeWidth">?attr/widgetStrokeWidth</item>
+        <item name="strokeColor">?attr/widgetStrokeColor</item>
+        <item name="cardElevation">0dp</item>
+    </style>
 </resources>

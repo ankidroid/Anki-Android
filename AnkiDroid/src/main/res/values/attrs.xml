@@ -236,4 +236,5 @@
     <attr name="widgetStrokeWidth" format="dimension"/>
     <attr name="widgetStrokeColor" format="color"/>
     <attr name="studyScreenElevation" format="dimension"/>
+    <attr name="whiteboardToolbarCardStyle" format="reference"/>
 </resources>

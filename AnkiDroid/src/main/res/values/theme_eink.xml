@@ -105,6 +105,7 @@
         <item name="snackbarStyle">@style/SnackbarStyle.Eink</item>
         <item name="snackbarTextViewStyle">@style/SnackbarTextStyle.Eink</item>
         <item name="snackbarButtonStyle">@style/SnackbarButtonStyle.Eink</item>
+        <item name="whiteboardToolbarCardStyle">@style/Widget.AnkiDroid.WhiteboardToolbarCard.Eink</item>
     </style>
 
     <style name="ThemeOverlay.AnkiDroid.AlertDialog.Eink" parent="ThemeOverlay.AnkiDroid.AlertDialog">
