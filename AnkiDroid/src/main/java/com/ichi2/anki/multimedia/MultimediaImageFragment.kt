@@ -64,8 +64,11 @@ import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -551,14 +554,23 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      * @param imageUri The URI of the SVG image.
      */
     private fun WebView.loadSvgImage(imageUri: Uri) {
-        val svgData = loadSvgFromUri(imageUri)
-        if (svgData != null) {
-            Timber.i("Selected image is an SVG.")
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val svgData = withContext(Dispatchers.IO) { loadSvgFromUri(imageUri) }
+                if (svgData != null) {
+                    Timber.i("Selected image is an SVG.")
 
-            loadDataWithBaseURL(null, svgData, SVG_IMAGE, "UTF-8", null)
-        } else {
-            Timber.w("Failed to load SVG from URI")
-            showErrorInWebView()
+                    loadDataWithBaseURL(null, svgData, SVG_IMAGE, "UTF-8", null)
+                } else {
+                    Timber.w("Failed to load SVG from URI")
+                    showErrorInWebView()
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Error loading SVG preview")
+                showErrorInWebView()
+            }
         }
     }
 
