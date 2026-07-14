@@ -15,7 +15,9 @@
  */
 package com.ichi2.anki.settings.enums
 
+import android.content.Context
 import androidx.annotation.StyleRes
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 
 sealed interface Theme : PrefEnum {
@@ -23,11 +25,13 @@ sealed interface Theme : PrefEnum {
     val styleResId: Int
 }
 
-/** [R.array.day_theme_values] */
+/** Values for the `day_theme` [ListPreference][androidx.preference.ListPreference]. */
 enum class DayTheme(
     override val entryResId: Int,
     override val styleResId: Int,
+    /** The label shown for this option in the preference's list. */
+    val label: Context.() -> String,
 ) : Theme {
-    LIGHT(R.string.theme_light_value, R.style.Theme_Light),
-    PLAIN(R.string.theme_plain_value, R.style.Theme_Light_Plain),
+    LIGHT(R.string.theme_light_value, R.style.Theme_Light, { TR.preferencesThemeLight() }),
+    PLAIN(R.string.theme_plain_value, R.style.Theme_Light_Plain, { getString(R.string.day_theme_plain) }),
 }
