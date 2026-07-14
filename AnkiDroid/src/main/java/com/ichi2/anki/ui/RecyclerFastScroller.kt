@@ -106,16 +106,17 @@ class RecyclerFastScroller
         private var hideOverride = false
         private var adapter: RecyclerView.Adapter<*>? = null
 
-        // Item count on screen, cached so the thumb keeps a steady size while scrolling rows of
-        // different heights. 0 means "recompute on the next layout". Item count, bar height and
-        // width are the keys that invalidate it (width matters because rows can rewrap).
-        private var cachedVisibleItemCount = 0
+        // Thumb height, cached so it keeps a steady size while scrolling rows of different
+        // heights. Only the size ever flickered, so only the size is frozen. 0 means "recompute
+        // on the next layout". Item count, bar height and width invalidate it (width because rows
+        // can rewrap and change the total scroll range).
+        private var cachedHandleHeight = 0
         private var cachedItemCount = RecyclerView.NO_POSITION
         private var cachedBarHeight = 0
         private var cachedWidth = 0
 
         private fun invalidateScrollMetrics() {
-            cachedVisibleItemCount = 0
+            cachedHandleHeight = 0
             cachedItemCount = RecyclerView.NO_POSITION
             cachedBarHeight = 0
             cachedWidth = 0
@@ -433,7 +434,6 @@ class RecyclerFastScroller
             // registered. Without it the cached thumb size never refreshes on a data change.
             if (recyclerView.adapter !== adapter) attachAdapter(recyclerView.adapter)
 
-            val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
             val itemCount = recyclerView.adapter?.itemCount ?: return
             if (itemCount == 0) {
                 hideThumb()
@@ -450,14 +450,13 @@ class RecyclerFastScroller
             }
             hideOverride = false
 
-            val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
-            val lastVisiblePosition = layoutManager.findLastVisibleItemPosition()
-            if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) return
+            val scrollRange = recyclerView.computeVerticalScrollRange() + recyclerView.paddingBottom
+            if (scrollRange <= barHeight) return
 
-            val visibleItemCount =
-                resolveVisibleItemCount(recyclerView, itemCount, barHeight, firstVisiblePosition, lastVisiblePosition)
-            val handleHeight = computeThumbHeight(barHeight, itemCount, visibleItemCount, minScrollHandleHeight)
-            val ratio = scrollProportion(recyclerView, layoutManager, itemCount, visibleItemCount, firstVisiblePosition)
+            val handleHeight = resolveHandleHeight(itemCount, barHeight, recyclerView.width, scrollRange)
+            // Position is measured in pixels, so the thumb tracks the scroll smoothly even when
+            // rows have different heights. Only the size is frozen, since only the size flickered.
+            val ratio = computeScrollProportion(recyclerView.computeVerticalScrollOffset(), scrollRange, barHeight)
 
             val y = ratio * (barHeight - handleHeight)
             handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + handleHeight)
@@ -470,65 +469,29 @@ class RecyclerFastScroller
         }
 
         /**
-         * Thumb position from adapter positions, so progress stays steady when rows differ in
-         * height. The fraction scrolled through the first visible row keeps it moving smoothly.
+         * Thumb height for the current list, computed once and cached. The scroll range is a live
+         * estimate that drifts while scrolling, and it is only the size that drifted, so we freeze
+         * the size and let the position stay live. Recomputed when the data, bar height or width
+         * change (see [invalidateScrollMetrics]).
          */
-        private fun scrollProportion(
-            recyclerView: RecyclerView,
-            layoutManager: LinearLayoutManager,
-            itemCount: Int,
-            visibleItemCount: Int,
-            firstVisiblePosition: Int,
-        ): Float {
-            if (!recyclerView.canScrollVertically(-1)) return 0f
-            if (!recyclerView.canScrollVertically(1)) return 1f
-
-            val firstVisibleView = layoutManager.findViewByPosition(firstVisiblePosition) ?: return 0f
-            val hiddenHeight = (recyclerView.paddingTop - firstVisibleView.top).coerceAtLeast(0)
-            val firstItemFraction = hiddenHeight.toFloat() / firstVisibleView.height.coerceAtLeast(1)
-
-            return computeScrollProportion(firstVisiblePosition, firstItemFraction, itemCount, visibleItemCount)
-        }
-
-        /**
-         * Items on screen, measured once and cached. Averaging the heights of the rows currently
-         * laid out is steadier than counting partly visible ones, and caching stops the thumb
-         * resizing as rows of different heights scroll past. The count is frozen per list, so on
-         * wildly varying rows the position can be slightly off near the very end. That is the
-         * price we pay for a thumb that does not resize while scrolling.
-         */
-        private fun resolveVisibleItemCount(
-            recyclerView: RecyclerView,
+        private fun resolveHandleHeight(
             itemCount: Int,
             barHeight: Int,
-            firstVisiblePosition: Int,
-            lastVisiblePosition: Int,
+            width: Int,
+            scrollRange: Int,
         ): Int {
-            val width = recyclerView.width
             if (itemCount != cachedItemCount || barHeight != cachedBarHeight || width != cachedWidth) {
-                cachedVisibleItemCount = 0
+                cachedHandleHeight = 0
                 cachedItemCount = itemCount
                 cachedBarHeight = barHeight
                 cachedWidth = width
             }
 
-            if (cachedVisibleItemCount == 0) {
-                val childCount = recyclerView.childCount
-                var totalChildHeight = 0
-                for (i in 0 until childCount) {
-                    totalChildHeight += recyclerView.getChildAt(i)?.height ?: 0
-                }
-                val averageChildHeight = if (childCount > 0) totalChildHeight / childCount else 0
-                val estimate =
-                    if (averageChildHeight > 0) {
-                        barHeight / averageChildHeight
-                    } else {
-                        lastVisiblePosition - firstVisiblePosition + 1
-                    }
-                cachedVisibleItemCount = estimate.coerceIn(1, itemCount)
+            if (cachedHandleHeight == 0) {
+                cachedHandleHeight = computeThumbHeight(barHeight, scrollRange, minScrollHandleHeight)
             }
 
-            return cachedVisibleItemCount
+            return cachedHandleHeight
         }
 
         companion object {
@@ -537,34 +500,32 @@ class RecyclerFastScroller
     }
 
 /**
- * Thumb height from the share of items on screen, clamped to a usable range. It does not depend
- * on scroll position, which is what stops the thumb from resizing while scrolling.
+ * Thumb height as the share of the content that fits on screen (bar height over the scroll
+ * range), clamped to a usable range. Independent of scroll position, so a cached value stays valid.
  */
 @VisibleForTesting
 internal fun computeThumbHeight(
     barHeight: Int,
-    itemCount: Int,
-    visibleItemCount: Int,
+    scrollRange: Int,
     minHandleHeight: Int,
 ): Int =
-    (barHeight.toFloat() * visibleItemCount / itemCount)
+    (barHeight.toFloat() * barHeight / scrollRange.coerceAtLeast(1))
         .toInt()
         .coerceAtLeast(minHandleHeight)
         .coerceAtMost(barHeight)
 
 /**
- * Scroll progress from 0f to 1f, built from the first visible position plus how far it has
- * scrolled out of view. Guards against a zero divisor when the list barely scrolls.
+ * Scroll progress from 0f to 1f, measured in pixels so the thumb tracks the scroll smoothly on
+ * rows of different heights. Guards against a zero divisor when the list barely scrolls.
  */
 @VisibleForTesting
 internal fun computeScrollProportion(
-    firstVisiblePosition: Int,
-    firstItemFraction: Float,
-    itemCount: Int,
-    visibleItemCount: Int,
+    scrollOffset: Int,
+    scrollRange: Int,
+    barHeight: Int,
 ): Float {
-    val scrollableItems = (itemCount - visibleItemCount).coerceAtLeast(1)
-    return ((firstVisiblePosition + firstItemFraction) / scrollableItems).coerceIn(0f, 1f)
+    val scrollablePixels = (scrollRange - barHeight).coerceAtLeast(1)
+    return (scrollOffset.toFloat() / scrollablePixels).coerceIn(0f, 1f)
 }
 
 fun RecyclerView.attachFastScroller(
