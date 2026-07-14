@@ -316,4 +316,10 @@
         <item name="iconTint">@color/sort_pill_content_color</item>
         <item name="backgroundTint">@color/sort_pill_background_color</item>
     </style>
+
+    <style name="Widget.AnkiDroid.WhiteboardToolbarCard.Eink" parent="Widget.Material3.CardView.Elevated">
+        <item name="strokeWidth">?attr/widgetStrokeWidth</item>
+        <item name="strokeColor">?attr/widgetStrokeColor</item>
+        <item name="cardElevation">0dp</item>
+    </style>
 </resources>
