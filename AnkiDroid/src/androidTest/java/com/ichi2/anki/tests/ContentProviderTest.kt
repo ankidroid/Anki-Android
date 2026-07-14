@@ -2599,9 +2599,6 @@ class ContentProviderTest : InstrumentedTest() {
         }
     }
 
-    /**
-     * Check that set the flag in card works as expected
-     */
     @Test
     fun testSetFlagCard() {
         val noteId = createdNotes.first().lastPathSegment!!.toLong()
@@ -2647,9 +2644,6 @@ class ContentProviderTest : InstrumentedTest() {
         }
     }
 
-    /**
-     * Check that setUserFlag change only first 3 bits of flags
-     */
     @Test
     fun testSetUserFlag() {
         val noteId = createdNotes.first().lastPathSegment!!.toLong()
@@ -2658,13 +2652,18 @@ class ContentProviderTest : InstrumentedTest() {
         val card = col.getNote(noteId).cards(col).single()
         val noteCardUri = Uri.withAppendedPath(noteCardsUri, card.ord.toString())
 
-        // set 8 (1000 in binary) manually
+        // Set 8 (1000 in binary) manually
         card.flags = 8
         col.updateCard(card)
 
-        // set 4 (100 in binary) using setUserFlag method
+        // Set 4 (100 in binary) using setUserFlag method
         card.setUserFlag(4)
         col.updateCard(card)
+
+        // If we override only first 3 bits, we won't affect fourth.
+        // Result will be 12 (1000 | 0100 = 1100 in binary).
+        val updatedCard = col.getNote(noteId).cards(col).single()
+        assertEquals(12, updatedCard.flags)
 
         val cursor =
             checkNotNull(
@@ -2677,12 +2676,7 @@ class ContentProviderTest : InstrumentedTest() {
                 ),
             ) { "cursor from /notes/#/cards/#" }
 
-        // If we override only first 3 bits, we won't affect fourth.
-        // Result will be 12 (1000 | 0100 = 1100 in binary).
-        val updatedCard = col.getNote(noteId).cards(col).single()
-        assertEquals(12, updatedCard.flags)
-
-        // But cursor should return only first 3 bits
+        // But cursor should return 4 (only first 3 bits)
         cursor.use {
             assertTrue(it.moveToFirst())
             assertEquals(4, it.getInt(it.getColumnIndex(FlashCardsContract.Card.FLAGS)))
