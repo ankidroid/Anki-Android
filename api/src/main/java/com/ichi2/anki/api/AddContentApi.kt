@@ -504,10 +504,10 @@ public class AddContentApi(
     /**
      * Set the flag using flag code for a given note
      * @param noteId the ID of the note to update
-     * @param rawFlag the flag code in the range from 0 to 7 to set
+     * @param rawFlag the flag code to set (should match a [Flag.code])
      * @return true if flag was updated, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
-     * @throws IllegalArgumentException if flag code not in the range from 0 to 7
+     * @throws IllegalArgumentException if flag code is not a valid [Flag.code]
      */
     public fun setFlagRaw(
         noteId: Long,
@@ -547,7 +547,7 @@ public class AddContentApi(
     /**
      * Set the flag for a given note
      * @param noteId the ID of the note to update
-     * @param flag the flag to set
+     * @param flag the flag to set (should match a [Flag])
      * @return true if flag was updated, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */

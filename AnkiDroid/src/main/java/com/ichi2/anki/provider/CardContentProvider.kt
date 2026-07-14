@@ -35,6 +35,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.FlashCardsContract
+import com.ichi2.anki.api.Flag
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -556,8 +557,8 @@ class CardContentProvider : ContentProvider() {
                         FlashCardsContract.Card.FLAGS -> {
                             val flags = values.getAsInteger(key)
 
-                            if (flags == null || flags < 0 || flags > 7) {
-                                throw IllegalArgumentException("Flags value must be in the range from 0 to 7")
+                            if (flags == null || flags < Flag.MIN_CODE || flags > Flag.MAX_CODE) {
+                                throw IllegalArgumentException("Flags value must be in the range from ${Flag.MIN_CODE} to ${Flag.MAX_CODE}")
                             }
 
                             Timber.d("CardContentProvider: flags update...")
@@ -1233,7 +1234,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.FSRS_DESIRED_RETENTION -> rb.add(currentCard.fsrsDesiredRetention)
                 FlashCardsContract.Card.FSRS_DECAY -> rb.add(currentCard.decay)
                 FlashCardsContract.Card.LAST_REVIEW_TIME_SECONDS -> rb.add(currentCard.lastReviewTimeSecs)
-                FlashCardsContract.Card.FLAGS -> rb.add(currentCard.flags)
+                FlashCardsContract.Card.FLAGS -> rb.add(currentCard.flags and 7) // return only 3 first bits
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }

@@ -27,6 +27,7 @@ import anki.cards.FsrsMemoryState
 import anki.collection.OpChanges
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.Flag
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -2611,24 +2612,21 @@ class ContentProviderTest : InstrumentedTest() {
 
         val negativeValue =
             ContentValues().apply {
-                put(FlashCardsContract.Card.FLAGS, -1)
+                put(FlashCardsContract.Card.FLAGS, Flag.MIN_CODE - 1)
             }
         val exception1 = assertThrows<IllegalArgumentException> { contentResolver.update(noteCardUri, negativeValue, null, null) }
-        assertEquals(exception1.message, "Flags value must be in the range from 0 to 7")
+        assertEquals(exception1.message, "Flags value must be in the range from ${Flag.MIN_CODE} to ${Flag.MAX_CODE}")
 
         val tooLargeValue =
             ContentValues().apply {
-                put(FlashCardsContract.Card.FLAGS, 8)
+                put(FlashCardsContract.Card.FLAGS, Flag.MAX_CODE + 1)
             }
         val exception2 = assertThrows<IllegalArgumentException> { contentResolver.update(noteCardUri, tooLargeValue, null, null) }
-        assertEquals(exception2.message, "Flags value must be in the range from 0 to 7")
-
-        card.flags = 8
-        col.updateCard(card)
+        assertEquals(exception2.message, "Flags value must be in the range from ${Flag.MIN_CODE} to ${Flag.MAX_CODE}")
 
         val correctValue =
             ContentValues().apply {
-                put(FlashCardsContract.Card.FLAGS, 4)
+                put(FlashCardsContract.Card.FLAGS, Flag.MAX_CODE)
             }
         contentResolver.update(noteCardUri, correctValue, null, null)
 
@@ -2645,7 +2643,49 @@ class ContentProviderTest : InstrumentedTest() {
 
         cursor.use {
             assertTrue(it.moveToFirst())
-            assertEquals(12, it.getInt(it.getColumnIndex(FlashCardsContract.Card.FLAGS)))
+            assertEquals(Flag.MAX_CODE, it.getInt(it.getColumnIndex(FlashCardsContract.Card.FLAGS)))
+        }
+    }
+
+    /**
+     * Check that setUserFlag change only first 3 bits of flags
+     */
+    @Test
+    fun testSetUserFlag() {
+        val noteId = createdNotes.first().lastPathSegment!!.toLong()
+        val noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId.toString())
+        val noteCardsUri = Uri.withAppendedPath(noteUri, "cards")
+        val card = col.getNote(noteId).cards(col).single()
+        val noteCardUri = Uri.withAppendedPath(noteCardsUri, card.ord.toString())
+
+        // set 8 (1000 in binary) manually
+        card.flags = 8
+        col.updateCard(card)
+
+        // set 4 (100 in binary) using setUserFlag method
+        card.setUserFlag(4)
+        col.updateCard(card)
+
+        val cursor =
+            checkNotNull(
+                contentResolver.query(
+                    noteCardUri,
+                    arrayOf(FlashCardsContract.Card.FLAGS),
+                    null,
+                    null,
+                    null,
+                ),
+            ) { "cursor from /notes/#/cards/#" }
+
+        // If we override only first 3 bits, we won't affect fourth.
+        // Result will be 12 (1000 | 0100 = 1100 in binary).
+        val updatedCard = col.getNote(noteId).cards(col).single()
+        assertEquals(12, updatedCard.flags)
+
+        // But cursor should return only first 3 bits
+        cursor.use {
+            assertTrue(it.moveToFirst())
+            assertEquals(4, it.getInt(it.getColumnIndex(FlashCardsContract.Card.FLAGS)))
         }
     }
 

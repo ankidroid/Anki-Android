@@ -18,4 +18,10 @@ public enum class Flag(
     PINK(5),
     TURQUOISE(6),
     PURPLE(7),
+    ;
+
+    public companion object {
+        public val MAX_CODE: Int = entries.maxOf { it.code }
+        public val MIN_CODE: Int = entries.minOf { it.code }
+    }
 }
