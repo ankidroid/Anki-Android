@@ -134,6 +134,9 @@ class RecyclerFastScroller
             requestLayout()
         }
 
+        // We cache scroll thumb params to make it smooth on variable-height rows,
+        // since RecyclerView's scrollbar range is only an estimate.
+        // We update the cached values when the adapter changes or the bar height/width changes.
         private val adapterObserver: RecyclerView.AdapterDataObserver =
             object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() = onAdapterDataChanged()
@@ -281,6 +284,8 @@ class RecyclerFastScroller
                         dy: Int,
                     ) {
                         super.onScrolled(recyclerView, dx, dy)
+                        // Track normal list scrolling from real pixel deltas. While the handle is being dragged,
+                        // the offset is set from the drag position instead, so do not apply RecyclerView's dy too.
                         if (!isDraggingHandle) {
                             val scrollablePixels = resolveScrollablePixels(recyclerView)
                             updateAccumulatedScrollOffset(recyclerView, dy, scrollablePixels)
@@ -617,6 +622,8 @@ internal fun computeScrollOffsetFromDelta(
     canScrollDown: Boolean,
 ): Int {
     if (scrollablePixels <= 0) return 0
+    // Snap to exact edges so small accumulated-delta drift cannot leave the thumb
+    // slightly away from the top or bottom.
     return when {
         !canScrollUp -> 0
         !canScrollDown -> scrollablePixels
