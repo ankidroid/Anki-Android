@@ -16,10 +16,12 @@
 
 package com.ichi2.anki.reviewreminders
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.format.DateFormat
+import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -96,21 +98,23 @@ class AddEditReminderDialog : DialogFragment() {
         requireArguments().requireParcelable(ARG_DIALOG_MODE)
     }
 
+    @SuppressLint("UseGetLayoutInflater")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
-        binding = DialogAddEditReminderBinding.inflate(layoutInflater)
+        val dialogBuilder = AlertDialog.Builder(requireActivity())
+        binding = DialogAddEditReminderBinding.inflate(LayoutInflater.from(dialogBuilder.context))
+
         Timber.d("dialog mode: %s", dialogMode.toString())
 
-        val dialogBuilder =
-            AlertDialog.Builder(requireActivity()).apply {
-                customView(binding.root)
-                positiveButton(R.string.dialog_ok)
-                neutralButton(R.string.dialog_cancel)
+        dialogBuilder.apply {
+            customView(binding.root)
+            positiveButton(R.string.dialog_ok)
+            neutralButton(R.string.dialog_cancel)
 
-                if (dialogMode is DialogMode.Edit) {
-                    negativeButton(R.string.dialog_positive_delete)
-                }
+            if (dialogMode is DialogMode.Edit) {
+                negativeButton(R.string.dialog_positive_delete)
             }
+        }
         val dialog = dialogBuilder.create()
 
         // We cannot create onClickListeners by directly using the lambda argument of positiveButton / negativeButton
