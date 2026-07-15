@@ -54,6 +54,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
@@ -117,7 +118,13 @@ class RecyclerFastScroller
         private var cachedWidth = 0
         private var accumulatedScrollOffset = 0
         private var scrollOffsetInitialized = false
+        private var scrollRangeCalibrated = false
+        private var canCalibrateScrollRange = false
         private var isDraggingHandle = false
+        private var handlePositionInitialized = false
+        private var wasAtBottom = false
+        private var isAnimatingHandleToBottom = false
+        private var handleAnimationTargetY = 0f
 
         private fun invalidateScrollMetrics() {
             cachedHandleHeight = 0
@@ -127,6 +134,11 @@ class RecyclerFastScroller
             cachedWidth = 0
             accumulatedScrollOffset = 0
             scrollOffsetInitialized = false
+            scrollRangeCalibrated = false
+            canCalibrateScrollRange = false
+            handlePositionInitialized = false
+            wasAtBottom = false
+            isAnimatingHandleToBottom = false
         }
 
         private fun onAdapterDataChanged() {
@@ -394,6 +406,7 @@ class RecyclerFastScroller
                     // Force the handle to be selected since the user is touching the track (the parent container) and not the handle itself.
                     handle.isPressed = true
                     isDraggingHandle = true
+                    canCalibrateScrollRange = false
 
                     // The valid scroll area is (height-handle.height), since the position of the handle is defined by it's top edge, we subtract it.
                     val scrollableHeight = height - handle.height
@@ -482,12 +495,56 @@ class RecyclerFastScroller
             updateAccumulatedScrollOffset(recyclerView, dy = 0, scrollablePixels)
 
             val handleHeight = resolveHandleHeight(barHeight, scrollRange)
-            // RecyclerView's scrollbar range is an estimate for variable-height rows, so keep it
-            // as a stable scale while the position follows real scroll deltas.
-            val ratio = computeScrollProportion(accumulatedScrollOffset, scrollRange, barHeight)
+            val isAtBottom = !recyclerView.canScrollVertically(1)
+            val ratio =
+                computeDisplayScrollProportion(
+                    scrollOffset = accumulatedScrollOffset,
+                    scrollRange = cachedScrollRange,
+                    barHeight = barHeight,
+                    canScrollDown = !isAtBottom,
+                    rangeCalibrated = scrollRangeCalibrated,
+                )
 
             val y = ratio * (barHeight - handleHeight)
-            handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + handleHeight)
+            val animateToBottom =
+                shouldAnimateHandleToBottom(
+                    wasAtBottom = wasAtBottom,
+                    isAtBottom = isAtBottom,
+                    isDraggingHandle = isDraggingHandle,
+                    handlePositionInitialized = handlePositionInitialized,
+                )
+            layoutHandle(y, handleHeight, animateToBottom)
+            wasAtBottom = isAtBottom
+        }
+
+        private fun layoutHandle(
+            targetY: Float,
+            handleHeight: Int,
+            animateToBottom: Boolean,
+        ) {
+            handle.layout(handle.left, 0, handle.right, handleHeight)
+
+            if (isAnimatingHandleToBottom && handleAnimationTargetY == targetY) return
+
+            if (!handlePositionInitialized || isDraggingHandle || !animateToBottom) {
+                handle.animate().cancel()
+                isAnimatingHandleToBottom = false
+                handle.translationY = targetY
+                handlePositionInitialized = true
+                return
+            }
+
+            if (handle.translationY == targetY) return
+            handle.animate().cancel()
+            isAnimatingHandleToBottom = true
+            handleAnimationTargetY = targetY
+            handle
+                .animate()
+                .translationY(targetY)
+                .setDuration(HANDLE_POSITION_ANIMATION_DURATION_MS)
+                .setInterpolator(LinearInterpolator())
+                .withEndAction { isAnimatingHandleToBottom = false }
+                .start()
         }
 
         // Slides the scroller off screen and stops show() bringing it back while nothing scrolls.
@@ -518,27 +575,24 @@ class RecyclerFastScroller
             }
 
             if (!scrollOffsetInitialized) {
-                accumulatedScrollOffset = recyclerView.computeVerticalScrollOffset().coerceIn(0, scrollablePixels)
+                accumulatedScrollOffset = recyclerView.computeVerticalScrollOffset().coerceAtLeast(0)
                 scrollOffsetInitialized = true
+            } else {
                 accumulatedScrollOffset =
                     computeScrollOffsetFromDelta(
                         currentOffset = accumulatedScrollOffset,
-                        dy = 0,
-                        scrollablePixels = scrollablePixels,
+                        dy = dy,
                         canScrollUp = recyclerView.canScrollVertically(-1),
-                        canScrollDown = recyclerView.canScrollVertically(1),
                     )
-                return
             }
 
-            accumulatedScrollOffset =
-                computeScrollOffsetFromDelta(
-                    currentOffset = accumulatedScrollOffset,
-                    dy = dy,
-                    scrollablePixels = scrollablePixels,
-                    canScrollUp = recyclerView.canScrollVertically(-1),
-                    canScrollDown = recyclerView.canScrollVertically(1),
-                )
+            if (!recyclerView.canScrollVertically(-1)) {
+                accumulatedScrollOffset = 0
+                canCalibrateScrollRange = !isDraggingHandle
+            } else if (!recyclerView.canScrollVertically(1) && canCalibrateScrollRange) {
+                cachedScrollRange = accumulatedScrollOffset + bar.height
+                scrollRangeCalibrated = true
+            }
         }
 
         /**
@@ -560,6 +614,11 @@ class RecyclerFastScroller
                 cachedWidth = width
                 accumulatedScrollOffset = 0
                 scrollOffsetInitialized = false
+                scrollRangeCalibrated = false
+                canCalibrateScrollRange = false
+                handlePositionInitialized = false
+                wasAtBottom = false
+                isAnimatingHandleToBottom = false
             }
 
             if (cachedScrollRange == 0) {
@@ -580,6 +639,7 @@ class RecyclerFastScroller
         }
 
         companion object {
+            private const val HANDLE_POSITION_ANIMATION_DURATION_MS = 100L
             private val DEFAULT_AUTO_HIDE_DELAY = 1500.milliseconds
         }
     }
@@ -617,19 +677,47 @@ internal fun computeScrollProportion(
 internal fun computeScrollOffsetFromDelta(
     currentOffset: Int,
     dy: Int,
-    scrollablePixels: Int,
     canScrollUp: Boolean,
-    canScrollDown: Boolean,
 ): Int {
-    if (scrollablePixels <= 0) return 0
-    // Snap to exact edges so small accumulated-delta drift cannot leave the thumb
-    // slightly away from the top or bottom.
-    return when {
-        !canScrollUp -> 0
-        !canScrollDown -> scrollablePixels
-        else -> (currentOffset + dy).coerceIn(0, scrollablePixels)
-    }
+    if (!canScrollUp) return 0
+    return (currentOffset + dy).coerceAtLeast(0)
 }
+
+/**
+ * Maps an uncalibrated range smoothly toward, but never onto, the end of the track. RecyclerView's
+ * first range estimate can be shorter than the real content, so a linear mapping would put the
+ * thumb at the bottom too early. Once a complete top-to-bottom scroll calibrates the range, the
+ * regular linear mapping is exact.
+ */
+@VisibleForTesting
+internal fun computeDisplayScrollProportion(
+    scrollOffset: Int,
+    scrollRange: Int,
+    barHeight: Int,
+    canScrollDown: Boolean,
+    rangeCalibrated: Boolean,
+): Float {
+    if (!canScrollDown) return 1f
+
+    val scrollablePixels = (scrollRange - barHeight).coerceAtLeast(1)
+    val rawProportion = (scrollOffset.toFloat() / scrollablePixels).coerceAtLeast(0f)
+    if (rangeCalibrated) return computeScrollProportion(scrollOffset, scrollRange, barHeight)
+    if (rawProportion <= END_APPROACH_THRESHOLD) return rawProportion
+
+    val tail = 1f - END_APPROACH_THRESHOLD
+    val excess = (rawProportion - END_APPROACH_THRESHOLD) / tail
+    return END_APPROACH_THRESHOLD + tail * excess / (1f + excess)
+}
+
+private const val END_APPROACH_THRESHOLD = 0.9f
+
+@VisibleForTesting
+internal fun shouldAnimateHandleToBottom(
+    wasAtBottom: Boolean,
+    isAtBottom: Boolean,
+    isDraggingHandle: Boolean,
+    handlePositionInitialized: Boolean,
+): Boolean = handlePositionInitialized && !isDraggingHandle && !wasAtBottom && isAtBottom
 
 fun RecyclerView.attachFastScroller(
     @IdRes id: Int,

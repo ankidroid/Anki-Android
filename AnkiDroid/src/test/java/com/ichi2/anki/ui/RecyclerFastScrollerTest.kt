@@ -5,6 +5,7 @@ package com.ichi2.anki.ui
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.closeTo
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.lessThan
 import org.junit.Test
 
@@ -66,59 +67,137 @@ class RecyclerFastScrollerTest {
             computeScrollOffsetFromDelta(
                 currentOffset = 100,
                 dy = 25,
-                scrollablePixels = 1000,
                 canScrollUp = true,
-                canScrollDown = true,
             ),
             equalTo(125),
         )
     }
 
     @Test
-    fun `scroll offset is clamped into the scrollable range`() {
+    fun `scroll offset can outgrow an estimate while the list can still scroll`() {
         assertThat(
             computeScrollOffsetFromDelta(
                 currentOffset = 995,
                 dy = 20,
-                scrollablePixels = 1000,
                 canScrollUp = true,
-                canScrollDown = true,
             ),
-            equalTo(1000),
+            equalTo(1015),
         )
+    }
+
+    @Test
+    fun `scroll offset is clamped at the start of the list`() {
         assertThat(
             computeScrollOffsetFromDelta(
                 currentOffset = 5,
                 dy = -20,
-                scrollablePixels = 1000,
                 canScrollUp = true,
-                canScrollDown = true,
             ),
             equalTo(0),
         )
     }
 
     @Test
-    fun `scroll offset snaps to exact list edges`() {
+    fun `thumb does not reach the end while the list can still scroll`() {
         assertThat(
-            computeScrollOffsetFromDelta(
-                currentOffset = 100,
-                dy = 25,
-                scrollablePixels = 1000,
-                canScrollUp = false,
+            computeDisplayScrollProportion(
+                scrollOffset = 3015,
+                scrollRange = 4000,
+                barHeight = 1000,
                 canScrollDown = true,
+                rangeCalibrated = false,
             ),
+            lessThan(1f),
+        )
+    }
+
+    @Test
+    fun `thumb continues moving smoothly after passing the estimated range`() {
+        val atEstimate =
+            computeDisplayScrollProportion(
+                scrollOffset = 3000,
+                scrollRange = 4000,
+                barHeight = 1000,
+                canScrollDown = true,
+                rangeCalibrated = false,
+            )
+        val pastEstimate =
+            computeDisplayScrollProportion(
+                scrollOffset = 4500,
+                scrollRange = 4000,
+                barHeight = 1000,
+                canScrollDown = true,
+                rangeCalibrated = false,
+            )
+
+        assertThat(pastEstimate, greaterThan(atEstimate))
+        assertThat(pastEstimate, lessThan(1f))
+    }
+
+    @Test
+    fun `thumb reaches the end only at the real list edge`() {
+        assertThat(
+            computeDisplayScrollProportion(
+                scrollOffset = 4500,
+                scrollRange = 4000,
+                barHeight = 1000,
+                canScrollDown = false,
+                rangeCalibrated = false,
+            ),
+            equalTo(1f),
+        )
+    }
+
+    @Test
+    fun `calibrated range uses linear pixel progress`() {
+        assertThat(
+            computeDisplayScrollProportion(
+                scrollOffset = 1500,
+                scrollRange = 4000,
+                barHeight = 1000,
+                canScrollDown = true,
+                rangeCalibrated = true,
+            ),
+            equalTo(0.5f),
+        )
+    }
+
+    @Test
+    fun `scroll offset snaps to the start of the list`() {
+        assertThat(
+            computeScrollOffsetFromDelta(currentOffset = 100, dy = 25, canScrollUp = false),
             equalTo(0),
         )
+    }
+
+    @Test
+    fun `handle animation is used only when normal scrolling reaches the bottom`() {
         assertThat(
-            computeScrollOffsetFromDelta(
-                currentOffset = 100,
-                dy = 25,
-                scrollablePixels = 1000,
-                canScrollUp = true,
-                canScrollDown = false,
+            shouldAnimateHandleToBottom(
+                wasAtBottom = false,
+                isAtBottom = true,
+                isDraggingHandle = false,
+                handlePositionInitialized = true,
             ),
-            equalTo(1000),
+            equalTo(true),
+        )
+        assertThat(
+            shouldAnimateHandleToBottom(
+                wasAtBottom = false,
+                isAtBottom = false,
+                isDraggingHandle = false,
+                handlePositionInitialized = true,
+            ),
+            equalTo(false),
+        )
+        assertThat(
+            shouldAnimateHandleToBottom(
+                wasAtBottom = false,
+                isAtBottom = true,
+                isDraggingHandle = true,
+                handlePositionInitialized = true,
+            ),
+            equalTo(false),
         )
     }
 }
