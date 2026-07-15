@@ -192,7 +192,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Serveur de synchronisation personnalisé</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilisé</string>
-    <string name="custom_sync_server_help2"><![CDATA[        En tant qu\'alternative à la synchronisation avec AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        En tant qu\'alternative à la synchronisation avec AnkiWeb,
         vous pouvez utiliser votre propre serveur pour la synchronisation.
         Si non défini, le serveur AnkiWeb par défaut sera utilisé à la place.
         <a href="%s">En savoir plus</a>
@@ -290,7 +291,8 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
         Pour plus de sécurité, veuillez synchroniser périodiquement votre collection, ou sauvegarder les exports de celles-ci.
         <br><br>
         Vous pouvez restaurer à partir d\'une sauvegarde et exporter votre collection depuis la liste des paquets.
-    ]]></string>
+    
+]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes entre les sauvegardes automatiques</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Sauvegardes quotidiennes à conserver</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Sauvegardes hebdomadaires à conserver</string>

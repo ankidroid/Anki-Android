@@ -69,7 +69,7 @@
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="webview_crash_unknown">Невідома помилка</string>
     <string name="webview_crash_unknwon_detailed">Викликано внутрішньою помилкою в WebView</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">Недостатньо пам\'яті</string>
     <string name="webview_crash_oom_details">WebView припинено системою. Зазвичай таке буває коли додаток використовує забагато пам\'яті, часто через великий розмір шрифтів та медіа.</string>
     <string name="webview_crash_nonfatal">Помилка WebView. Причина: %s</string>
     <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
@@ -159,7 +159,8 @@
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
     <string name="export_share_title">Надіслати пакет Anki використовуючи</string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
-    <string name="export_email_text"><![CDATA[        Привіт!
+    <string name="export_email_text"><![CDATA[
+        Привіт!
         <br/><br/>
         Це колода Anki надіслана з AnkiDroid[1].
         Спробуйте відкрити її за допомогою однієї з версій Anki[2] і насолоджуйтесь легким та ефективним навчанням!<br/><br/>
@@ -177,7 +178,7 @@
     <string name="tag_editor_add_feedback_existing">Обрано наявну позначку \"%1$s\"</string>
     <string name="tag_already_exists">Тег уже існує</string>
     <string name="error_name_exists">Назва вже існує</string>
-    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
+    <string name="warning_find_and_replace">Радимо зробити резервну копію колекції з DeckPicker перед тим як використати цю опцію!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
@@ -211,7 +212,7 @@
     <string name="valid_js_api_version">Неправильна версія API AnkiDroid JS. Зверніться до розробника %s або перегляньте вікі</string>
     <string name="update_js_api_version">Доступне оновлення JS API. Зверніться до розробника %s або перегляньте вікі</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Перегляд</string>
-    <string name="anki_js_error_code">(Error code: %d)</string>
+    <string name="anki_js_error_code">(Код помилки: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Скопійовано в буфер обміну</string>
     <string name="about_ankidroid_error_copy_debug_info">Помилка копіювання даних зневадження до буфера обміну</string>
@@ -219,7 +220,7 @@
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Шукати колоди</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
+    <string name="ankidroid_init_failed_webview_title">Критична помилка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid не може отримати доступ до сховища через помилку Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -270,7 +271,7 @@
     <string name="cancel_download">Скасувати завантаження</string>
     <string name="cancel_download_question_title">Скасувати завантаження?</string>
     <string name="downloading_file">Завантаження %s</string>
-    <string name="import_deck">Import deck</string>
+    <string name="import_deck">Імпортувати колоду</string>
     <string name="something_wrong">Щось пішло не так. Будь ласка, спробуйте ще раз</string>
     <string name="download_failed">Не вдалося завантажити</string>
     <string name="deck_download_progress_message">Ви можете використовувати інші додатки під час завантаження</string>
@@ -337,7 +338,7 @@
     <string name="shared_decks_login_required">Ввійдіть, будь ласка, до акаунту, щоб завантажити більше колод</string>
     <string name="deck_description_field_hint">Опис</string>
     <string name="deck_description_saved">Опис оновлено</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Форматувати як Markdown</string>
     <string name="help_button_content_description">Відкрити допомогу для ‘%s’</string>
     <string name="failed_to_copy">Не вдалося скопіювати</string>
     <plurals name="unbury_cards_feedback">
@@ -358,12 +359,12 @@
     <string name="orphan_note_message">Якщо видалити цей тип картки, деякі записи залишаться без карток.</string>
     <string name="voice_not_supported">Голос не підтримується. Спробуйте інший або встановіть голосовий рушій.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Вибір колоди</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Видалити колоду без підтвердження</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор записів</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Виберіть тип запису</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Редактор тегів</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Редактор шаблонів карток</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Редагувати шаблон передньої сторони</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Редагувати шаблон задньої сторони</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Редагувати стиль</string>
@@ -377,7 +378,7 @@
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!--Set up date-->
-    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_day" comment="Used for setting due date">День</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Уже в процесі</string>
 </resources>

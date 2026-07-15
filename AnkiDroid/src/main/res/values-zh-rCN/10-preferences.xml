@@ -190,7 +190,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自定义同步服务器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
-    <string name="custom_sync_server_help2"><![CDATA[        作为与AnkiWeb同步的替代方法，
+    <string name="custom_sync_server_help2"><![CDATA[
+        作为与AnkiWeb同步的替代方法，
         您可以使用自己的服务器进行同步。
         如果未设置，将使用默认AnkiWeb服务器。
         <a href="%s">了解更多</a>
@@ -275,11 +276,12 @@
     <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
     <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>
     <string name="disable_dev_options">禁用开发者选项</string>
-    <string name="dev_options_warning">启用开发者选项之前，您需要知晓这些选项很危险，可能会破坏应用程序或损坏您的集合。\n\n注意这些选项不适合大多数用户，因而没有被翻译，所以它们仍以英语显示。</string>
+    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid 定期备份您的集合。
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid 定期备份您的集合。
         在备份文件生成超过两天后，
         AnkiDroid 会开始删除一些备份释放磁盘空间。
         <br><br>

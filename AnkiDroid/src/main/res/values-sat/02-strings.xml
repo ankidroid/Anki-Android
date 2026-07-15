@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
     <string name="export_share_title">Anki ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱯᱮᱠᱮᱡ ᱢᱮ</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
-    <string name="export_email_text"><![CDATA[        ᱦᱤ!
+    <string name="export_email_text"><![CDATA[
+        ᱦᱤ!
         <br/><br/>
         ᱱᱚᱶᱟ ᱫᱚ ᱢᱤᱫ ᱟᱱᱠᱤ ᱯᱷᱞᱮᱥᱠᱟᱨᱰ ᱰᱮᱠ ᱠᱟᱱᱟ, ᱡᱟᱦᱟᱸ ᱫᱚ ᱟᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱠᱷᱚᱱ ᱦᱮᱡ ᱟᱠᱟᱱᱟ ᱾[᱑]
         Anki ᱨᱮᱱᱟᱜ ᱢᱤᱫᱴᱮᱱ ᱦᱟᱹᱴᱤᱧ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱱᱚᱶᱟ ᱮᱛᱦᱚᱵ ᱢᱮ[᱒] ᱟᱨ ᱟᱞᱜᱟ ᱟᱨ ᱠᱟᱹᱣᱰᱤᱟᱹᱨᱤ ᱛᱮ ᱥᱮᱪᱮᱫ ᱨᱮᱱᱟᱜ ᱥᱟᱨᱦᱟᱣ ᱮᱢ ᱢᱮ!<br/><br/>
