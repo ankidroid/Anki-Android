@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[
+        Hi!
         <br/><br/>
         This is an Anki flashcards deck sent from AnkiDroid[1].
         Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>

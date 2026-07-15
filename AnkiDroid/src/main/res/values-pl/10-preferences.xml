@@ -196,7 +196,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Własny serwer synchronizacji</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Brak</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Jako alternatywa dla synchronizacji z AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        Jako alternatywa dla synchronizacji z AnkiWeb,
         możesz użyć własnego serwera do synchronizacji.
         Jeśli nie jest ustawiony, zamiast tego zostanie użyty domyślny serwer AnkiWeb.
         <a href="%s">Dowiedz się więcej</a>
@@ -285,7 +286,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid okresowo wykonuje kopię zapasową twojej kolekcji.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid okresowo wykonuje kopię zapasową twojej kolekcji.
         Po utworzeniu kopii zapasowych starszych niż dwa dni
         AnkiDroid rozpocznie usuwanie niektórych z nich, aby zwolnić miejsce na dysku.
         <br><br>

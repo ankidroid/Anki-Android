@@ -192,7 +192,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ᱵᱟᱝ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱱᱟ</string>
-    <string name="custom_sync_server_help2"><![CDATA[        ᱮᱱᱠᱤ ᱣᱮᱵᱽ ᱥᱟᱶ ᱥᱤᱸᱠᱨᱚᱱᱤᱝ ᱨᱮᱱᱟᱜ ᱮᱞᱵᱟᱨᱴᱤᱵᱷ ᱞᱮᱠᱟᱛᱮ,
+    <string name="custom_sync_server_help2"><![CDATA[
+        ᱮᱱᱠᱤ ᱣᱮᱵᱽ ᱥᱟᱶ ᱥᱤᱸᱠᱨᱚᱱᱤᱝ ᱨᱮᱱᱟᱜ ᱮᱞᱵᱟᱨᱴᱤᱵᱷ ᱞᱮᱠᱟᱛᱮ,
         ᱟᱢ ᱥᱤᱸᱠᱨᱚᱱᱤᱡᱮᱥᱚᱱ ᱞᱟᱹᱜᱤᱫ ᱟᱢᱟᱜ ᱱᱤᱡᱮᱨᱟᱜ ᱥᱮᱵᱟ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮᱭᱟᱜ ᱟ.
         ᱡᱩᱫᱤ ᱵᱟᱝ ᱥᱚᱫᱚᱨ ᱟᱠᱟᱱᱟ, ᱮᱱᱠᱷᱟᱱ ᱰᱤᱯᱚᱞᱴ AnkiWeb ᱥᱟᱨᱵᱟᱨ ᱵᱮᱵᱷᱟᱨ ᱦᱩᱭᱩᱜᱼᱟ ᱾
         <a href="%s">ᱟᱨᱦᱚᱸ ᱵᱟᱰᱟᱭ ᱢᱮ</a>
@@ -281,7 +282,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        ᱮᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱫᱚ ᱚᱠᱛᱚ- ᱚᱠᱛᱚ ᱟᱢᱟᱜ ᱠᱚᱞᱮᱠᱥᱚᱱ ᱨᱮᱭᱟᱜ ᱵᱮᱠ- ᱟᱯ ᱠᱚ ᱮᱢᱟᱭᱟ ᱾
+    <string name="pref__backups_help__summary"><![CDATA[
+        ᱮᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱫᱚ ᱚᱠᱛᱚ- ᱚᱠᱛᱚ ᱟᱢᱟᱜ ᱠᱚᱞᱮᱠᱥᱚᱱ ᱨᱮᱭᱟᱜ ᱵᱮᱠ- ᱟᱯ ᱠᱚ ᱮᱢᱟᱭᱟ ᱾
         ᱡᱩᱫᱤ ᱵᱟᱨ ᱫᱤᱱ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱵᱟᱠᱤᱯᱷ ᱠᱚ ᱢᱮᱱᱟᱜᱼᱟ,
         ᱰᱤᱥᱠ ᱨᱮ ᱡᱟᱭᱜᱟ ᱵᱮᱵᱚᱦᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱮᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱫᱚ ᱚᱱᱟ ᱠᱚᱨᱮᱱᱟᱜ ᱠᱤᱪᱷᱩ ᱠᱚ ᱵᱚᱫᱚᱞ ᱮᱦᱚᱵᱟ ᱾
         <br><br>

@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki paketini saqlab boʻlmadi</string>
     <string name="export_share_title">Anki paketini quyidagi bilan yuboring</string>
     <string name="export_email_subject">AnkiDroid kartalarni eksport qildi: %s</string>
-    <string name="export_email_text"><![CDATA[        Salom!
+    <string name="export_email_text"><![CDATA[
+        Salom!
         <br/><br/>
         Bu Ankidroidʼdan[1] yuborilgan kartalar dastasi.
         Mavjud Anki distributivlaridan biri yordamida uni ochib koʻring[2] va oson va samarali o‘rganishdan bahramand boʻling!<br/><br/>

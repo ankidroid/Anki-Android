@@ -150,8 +150,8 @@
     <string name="show_estimates_summ">Показувати час наступного повторення над кнопками відповіді</string>
     <string name="show_large_answer_buttons" maxLength="41">Показувати великі кнопки відповідей</string>
     <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
-    <string name="remove_animations" maxLength="41">Remove animations</string>
-    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
+    <string name="remove_animations" maxLength="41">Вимкнути анімацію</string>
+    <string name="remove_animations_summary">Також активовано, якщо анімація вимкнута в системних налаштуваннях</string>
     <string name="show_top_bar" maxLength="41">Показувати верхню панель</string>
     <string name="show_top_bar_summary">Показувати кількість карток, таймер відповіді, прапорець і позначку у верхній панелі</string>
     <string name="show_progress" maxLength="41">Показувати ті, що залишилися</string>
@@ -258,10 +258,10 @@
     <string name="user_action_8" maxLength="28">Дія 8</string>
     <string name="user_action_9" maxLength="28">Дія 9</string>
     <string name="toggle_auto_advance" maxLength="28">Ввімкнути/вимкнути автоматичний перехід</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
-    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
-    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
+    <string name="enable_auto_advance" maxLength="28">Ввімкнути автоперехід</string>
+    <string name="disable_auto_advance" maxLength="28">Вимкнути автоперехід</string>
+    <string name="enable_voice_recording" maxLength="28">Ввімкнути запис голосу</string>
+    <string name="disable_voice_recording" maxLength="28">Вимкнути запис голосу</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону картки</string>
     <string name="card_side_question">Питання</string>
@@ -286,7 +286,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid periodically backs up your collection.
         Після створення резервних копій більше двох днів,
         AnkiDroid почне видаляти деякі з них, щоб звільнити місце на диску.
         <br><br>

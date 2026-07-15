@@ -197,7 +197,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Старонні сервер для сінхранізацыі</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не выкарыстоўваецца</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Замест сінхранізацыі з серверам AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        Замест сінхранізацыі з серверам AnkiWeb,
         вы можаце выкарыстоўваць старонні сервер.
         Калі не зададзена, то прадвызначана выкарыстоўваецца сервер AnkiWeb.
         <a href="%s">Даведацца больш</a>
@@ -286,7 +287,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid перыядычна робіць рэзервовыя копіі вашай калекцыі.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid перыядычна робіць рэзервовыя копіі вашай калекцыі.
         Праграма таксама выдаляе рэзервовыя копіі, якія старэйшыя за два дні, 
         каб вызваліць месца на дыску.
         <br><br>

@@ -193,7 +193,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronización personalizado</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilizado</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Como alternativa á sincronización con AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        Como alternativa á sincronización con AnkiWeb,
         podes usar o teu propio servidor.
         Se non se configura, usarase por defecto o servidor de AnkiWeb.
         <a href="%s">Máis información</a>
@@ -282,7 +283,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid crea copias de seguranza da túa colección periodicamente.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid crea copias de seguranza da túa colección periodicamente.
         Cando as copias teñan máis de dous días,
         AnkiDroid comezará a eliminar algunhas para liberar espazo no disco.
         <br><br>
