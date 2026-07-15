@@ -153,10 +153,8 @@ class RecyclerFastScroller
             object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() = onAdapterDataChanged()
 
-                override fun onItemRangeChanged(
-                    positionStart: Int,
-                    itemCount: Int,
-                ) = onAdapterDataChanged()
+                // Content-only row updates, such as focus or selection changes, intentionally use
+                // the default no-op callback so they cannot move or resize the scroll thumb.
 
                 override fun onItemRangeInserted(
                     positionStart: Int,
