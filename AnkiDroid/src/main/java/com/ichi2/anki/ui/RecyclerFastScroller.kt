@@ -746,7 +746,7 @@ internal fun computeDragTargetIndex(
     return proportion * lastFirstVisiblePosition.toDouble()
 }
 
-private const val END_APPROACH_THRESHOLD = 0.9f
+private const val END_APPROACH_THRESHOLD = 0.96f
 
 @VisibleForTesting
 internal fun shouldAnimateHandleToBottom(

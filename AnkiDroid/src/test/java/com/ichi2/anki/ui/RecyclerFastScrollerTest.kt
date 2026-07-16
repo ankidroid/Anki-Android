@@ -135,6 +135,21 @@ class RecyclerFastScrollerTest {
     }
 
     @Test
+    fun `thumb is close to the end before the real bottom is reached`() {
+        val atEstimatedEnd =
+            computeDisplayScrollProportion(
+                scrollOffset = 3000,
+                scrollRange = 4000,
+                barHeight = 1000,
+                canScrollDown = true,
+                rangeCalibrated = false,
+            )
+
+        assertThat(atEstimatedEnd, greaterThan(0.97f))
+        assertThat(atEstimatedEnd, lessThan(1f))
+    }
+
+    @Test
     fun `thumb reaches the end only at the real list edge`() {
         assertThat(
             computeDisplayScrollProportion(
