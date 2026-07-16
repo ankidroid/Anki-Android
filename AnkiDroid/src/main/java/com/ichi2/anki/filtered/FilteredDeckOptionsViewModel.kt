@@ -155,7 +155,13 @@ class FilteredDeckOptionsViewModel(
             buildBrowserQueryResult
                 .onFailure { throwable ->
                     updateCurrentState {
-                        currentState().copy(throwable = InvalidSearchException(cause = throwable))
+                        currentState().copy(
+                            throwable =
+                                InvalidSearchException(
+                                    cause = throwable,
+                                    message = throwable.localizedMessage,
+                                ),
+                        )
                     }
                 }.onSuccess {
                     updateCurrentState { currentState().copy(browserQuery = buildBrowserQueryResult.getOrThrow()) }

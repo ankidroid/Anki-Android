@@ -25,6 +25,7 @@ import anki.decks.filteredDeckForUpdate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.exception.InvalidSearchException
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -200,6 +201,21 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                 assertThat(currentState.browserQuery, equalTo("deck:A flag:1"))
                 clearSearchInBrowser()
                 assertNull((state.value as FilteredDeckOptions).browserQuery)
+            }
+        }
+
+    @Test
+    fun `invalid search in browser produces state with error`() =
+        runTest {
+            withViewModel {
+                onSearchChange(FilterIndex.First, "\"deck:A is:new")
+                onSearchInBrowser(FilterIndex.First)
+                val currentState = state.value
+                assertInstanceOf<FilteredDeckOptions>(currentState)
+                assertNotNull(currentState.throwable)
+                assertInstanceOf<InvalidSearchException>(currentState.throwable)
+                assertNull(currentState.browserQuery)
+                clearError()
             }
         }
 
