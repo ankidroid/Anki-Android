@@ -23,7 +23,6 @@ import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.withInsets
-import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.copyToClipboard
 import timber.log.Timber
 

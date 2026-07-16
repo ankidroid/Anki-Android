@@ -102,7 +102,6 @@ import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentNavigationBar
-import com.ichi2.utils.AdaptionUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
