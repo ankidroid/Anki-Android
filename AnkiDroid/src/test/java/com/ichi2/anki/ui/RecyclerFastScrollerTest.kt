@@ -200,4 +200,44 @@ class RecyclerFastScrollerTest {
             equalTo(false),
         )
     }
+
+    @Test
+    fun `dragged thumb follows the finger when the list reaches the bottom early`() {
+        assertThat(
+            computeHandleScrollProportion(
+                isDraggingHandle = true,
+                dragProportion = 0.9f,
+                scrollOffset = 4500,
+                scrollRange = 4000,
+                barHeight = 1000,
+                canScrollDown = false,
+                rangeCalibrated = false,
+            ),
+            equalTo(0.9f),
+        )
+    }
+
+    @Test
+    fun `drag target leaves room for the last visible screen`() {
+        assertThat(
+            computeDragTargetIndex(
+                scrollProportion = 0.9f,
+                itemCount = 211,
+                visibleItemCount = 11,
+            ),
+            closeTo(180.0, 0.0001),
+        )
+    }
+
+    @Test
+    fun `drag target reaches the last item only at the end of the track`() {
+        assertThat(
+            computeDragTargetIndex(
+                scrollProportion = 1f,
+                itemCount = 211,
+                visibleItemCount = 11,
+            ),
+            equalTo(210.0),
+        )
+    }
 }

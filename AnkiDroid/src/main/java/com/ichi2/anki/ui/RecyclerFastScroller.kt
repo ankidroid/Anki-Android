@@ -121,6 +121,7 @@ class RecyclerFastScroller
         private var scrollRangeCalibrated = false
         private var canCalibrateScrollRange = false
         private var isDraggingHandle = false
+        private var dragVisibleItemCount = 1
         private var handlePositionInitialized = false
         private var wasAtBottom = false
         private var isAnimatingHandleToBottom = false
@@ -380,7 +381,9 @@ class RecyclerFastScroller
 
                 try {
                     // Calculate the exact target including the decimal
-                    val (targetIndex, fraction) = (pendingScrollProportion.toDouble() * adapter.itemCount).wholeAndFraction()
+                    val (targetIndex, fraction) =
+                        computeDragTargetIndex(pendingScrollProportion, adapter.itemCount, dragVisibleItemCount)
+                            .wholeAndFraction()
                     // Estimate height using the first visible view, this is a heuristic
                     val estimatedHeight = recyclerView?.getChildAt(0)?.height ?: 0
 
@@ -405,6 +408,10 @@ class RecyclerFastScroller
                     handle.isPressed = true
                     isDraggingHandle = true
                     canCalibrateScrollRange = false
+                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        dragVisibleItemCount =
+                            (recyclerView?.childCount ?: 1).coerceIn(1, adapter.itemCount)
+                    }
 
                     // The valid scroll area is (height-handle.height), since the position of the handle is defined by it's top edge, we subtract it.
                     val scrollableHeight = height - handle.height
@@ -420,11 +427,10 @@ class RecyclerFastScroller
                         accumulatedScrollOffset = (scrollProportion * scrollablePixels).toInt().coerceIn(0, scrollablePixels)
                         scrollOffsetInitialized = scrollablePixels > 0
                     }
-                    // Calculates the item index we want to go to by multiplying our ScrollProportion to the item count
-                    // e.g. if we are going to 50% then 0.5*itemcount gives us the index we need.
-                    // toInt prevents decimal values, and coerceIn here makes it so when we scroll all the way to the end, we don't get an out of bounds error.
+                    // Leave room for the visible items so the list reaches its last screen only at
+                    // the end of the track.
                     val targetPosition =
-                        (scrollProportion * adapter.itemCount)
+                        computeDragTargetIndex(scrollProportion, adapter.itemCount, dragVisibleItemCount)
                             .toInt()
                             .coerceIn(0, adapter.itemCount - 1)
 
@@ -444,7 +450,7 @@ class RecyclerFastScroller
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handle.isSelected = false
                     if (recyclerView != null) {
-                        recyclerView?.let { removeCallbacks(scrollTask) }
+                        recyclerView?.removeCallbacks(scrollTask)
                         scrollTask.run()
                     }
                     handle.isPressed = false
@@ -495,7 +501,9 @@ class RecyclerFastScroller
             val handleHeight = resolveHandleHeight(barHeight, scrollRange)
             val isAtBottom = !recyclerView.canScrollVertically(1)
             val ratio =
-                computeDisplayScrollProportion(
+                computeHandleScrollProportion(
+                    isDraggingHandle = isDraggingHandle,
+                    dragProportion = pendingScrollProportion,
                     scrollOffset = accumulatedScrollOffset,
                     scrollRange = cachedScrollRange,
                     barHeight = barHeight,
@@ -705,6 +713,37 @@ internal fun computeDisplayScrollProportion(
     val tail = 1f - END_APPROACH_THRESHOLD
     val excess = (rawProportion - END_APPROACH_THRESHOLD) / tail
     return END_APPROACH_THRESHOLD + tail * excess / (1f + excess)
+}
+
+@VisibleForTesting
+internal fun computeHandleScrollProportion(
+    isDraggingHandle: Boolean,
+    dragProportion: Float,
+    scrollOffset: Int,
+    scrollRange: Int,
+    barHeight: Int,
+    canScrollDown: Boolean,
+    rangeCalibrated: Boolean,
+): Float =
+    if (isDraggingHandle) {
+        dragProportion.coerceIn(0f, 1f)
+    } else {
+        computeDisplayScrollProportion(scrollOffset, scrollRange, barHeight, canScrollDown, rangeCalibrated)
+    }
+
+@VisibleForTesting
+internal fun computeDragTargetIndex(
+    scrollProportion: Float,
+    itemCount: Int,
+    visibleItemCount: Int,
+): Double {
+    if (itemCount <= 0) return 0.0
+
+    val proportion = scrollProportion.coerceIn(0f, 1f)
+    if (proportion == 1f) return (itemCount - 1).toDouble()
+
+    val lastFirstVisiblePosition = itemCount - visibleItemCount.coerceIn(1, itemCount)
+    return proportion * lastFirstVisiblePosition.toDouble()
 }
 
 private const val END_APPROACH_THRESHOLD = 0.9f
