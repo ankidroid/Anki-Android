@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
+
 package com.ichi2.anki.ui.windows.reviewer
 
 import androidx.lifecycle.SavedStateHandle
@@ -30,6 +18,11 @@ import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.DeckOptionsEntry
+import com.ichi2.anki.common.destinations.StatisticsDestination
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
@@ -43,11 +36,7 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
-import com.ichi2.anki.pages.CardInfoDestination
-import com.ichi2.anki.pages.DeckOptionsDestination
-import com.ichi2.anki.pages.DeckOptionsEntry
 import com.ichi2.anki.pages.PostRequestUri
-import com.ichi2.anki.pages.StatisticsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.previewer.TypeAnswer
@@ -68,10 +57,8 @@ import com.ichi2.anki.ui.windows.reviewer.autoadvance.QuestionAction
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.answerCard
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
-import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.getLongOrNull
-import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
@@ -150,6 +137,7 @@ class ReviewerViewModel(
      */
     private var mutationSignal = CompletableDeferred(Unit)
 
+    val isAutoAdvanceEnabledFlow = MutableStateFlow(autoAdvance.isEnabled)
     val answerButtonsNextTimeFlow: MutableStateFlow<AnswerButtonsNextTime?> = MutableStateFlow(null)
     private val shouldShowNextTimes = asyncIO { repository.getShouldShowNextTimes() }
 
@@ -285,9 +273,9 @@ class ReviewerViewModel(
 
     private suspend fun emitCardInfoDestination() {
         val cardId = currentCard.await().id
-        val destination = CardInfoDestination(cardId, TR.currentCardStudy())
+        val destination = CardInfoDestination(cardId, EntryPoint.CURRENT_CARD_STUDY)
         Timber.i("Launching 'card info' for card %d", cardId)
-        destinationFlow.emit(destination)
+        navigateFlow.emit(destination)
     }
 
     private suspend fun emitPreviousCardInfoDestination() {
@@ -297,9 +285,9 @@ class ReviewerViewModel(
             actionFeedbackFlow.emit(TR.cardStatsNoCardClean())
             return
         }
-        val destination = CardInfoDestination(previousCardId, TR.previousCardStudy())
+        val destination = CardInfoDestination(previousCardId, EntryPoint.PREVIOUS_CARD_STUDY)
         Timber.i("Launching 'previous card info' for card %d", previousCardId)
-        destinationFlow.emit(destination)
+        navigateFlow.emit(destination)
     }
 
     @NeedsTest("verify that we show the proper deck option targets for the current card")
@@ -310,7 +298,7 @@ class ReviewerViewModel(
         val isFiltered = options.first { it.deckId == deckId }.isFiltered
         val destination = DeckOptionsDestination(deckId, isFiltered, options)
         Timber.i("Launching 'deck options' for deck %d", deckId)
-        destinationFlow.emit(destination)
+        navigateFlow.emit(destination)
     }
 
     /**
@@ -425,6 +413,7 @@ class ReviewerViewModel(
     private suspend fun toggleAutoAdvance() {
         Timber.v("ReviewerViewModel::toggleAutoAdvance")
         autoAdvance.isEnabled = !autoAdvance.isEnabled
+        isAutoAdvanceEnabledFlow.value = autoAdvance.isEnabled
         val message =
             if (autoAdvance.isEnabled) {
                 TR.actionsAutoAdvanceActivated()
@@ -762,7 +751,7 @@ class ReviewerViewModel(
                     ViewerAction.USER_ACTION_9 -> userAction(9)
                     ViewerAction.SUSPEND_MENU -> suspendCard()
                     ViewerAction.BURY_MENU -> buryCard()
-                    ViewerAction.STATISTICS -> destinationFlow.emit(StatisticsDestination())
+                    ViewerAction.STATISTICS -> navigateFlow.emit(StatisticsDestination)
                     ViewerAction.BROWSE -> emitBrowseDestination()
                     ViewerAction.PLAY_MEDIA -> replayMedia()
                     ViewerAction.FLAG_MENU -> {}

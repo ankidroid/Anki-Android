@@ -23,5 +23,5 @@
   ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
   -->
 <resources>
-    <string name="open_statistics" comment="Description of the shortcut that opens the statistics page">Open statistics</string>
+    <string name="open_statistics" comment="Description of the shortcut that opens the statistics page">Hap statistikat</string>
 </resources>

@@ -19,7 +19,6 @@ import android.widget.AdapterView
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import anki.scheduler.CustomStudyRequest.Cram.CramKind
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyCardState
 import com.ichi2.anki.libanki.Deck
 import com.ichi2.anki.libanki.DeckId
@@ -50,7 +49,6 @@ class CustomStudyViewModel(
      * This prevents the app from "forgetting" user's choice (e.g., Due Cards)
      * even if the tag selection screen is skipped.
      */
-    @NeedsTest("Verify that selectedCardStateIndex correctly maps to the corresponding CramKind")
     val selectedKind: CramKind
         get() =
             if (selectedCardStateIndex != AdapterView.INVALID_POSITION) {

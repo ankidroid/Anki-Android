@@ -1,19 +1,6 @@
-/*
- * Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>
- * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2012 Norbert Nagold <norbert.nagold@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki
 
@@ -81,7 +68,6 @@ import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller.Companion.fromValue
@@ -89,8 +75,12 @@ import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLon
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.common.android.animationEnabled
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.HashUtil
 import com.ichi2.anki.common.utils.android.digit
 import com.ichi2.anki.common.utils.android.getColorFromAttr
@@ -145,7 +135,6 @@ import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
@@ -154,8 +143,10 @@ import com.ichi2.anki.servicelayer.NoteService.convertToHtmlNewline
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.RunOnlyOnce
+import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
@@ -191,6 +182,7 @@ import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import com.ichi2.anki.common.android.R as CommonR
 
 const val CALLER_KEY = "caller"
 
@@ -514,11 +506,11 @@ class NoteEditorFragment :
             addNote = savedInstanceState.getBoolean("addNote")
             deckId = savedInstanceState.getLong("did")
             selectedTags = savedInstanceState.getStringArrayList("tags")
-            reloadRequired = savedInstanceState.getBoolean(RELOAD_REQUIRED_EXTRA_KEY)
+            reloadRequired = savedInstanceState.getBoolean(EXTRA_RELOAD_REQUIRED)
             multimediaController.onRestoreInstanceState(savedInstanceState)
             toggleStickyText =
                 savedInstanceState.getSerializableCompat<HashMap<Int, String?>>("toggleSticky")!!
-            changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
+            changed = savedInstanceState.getBoolean(EXTRA_NOTE_CHANGED)
         } else {
             caller = fromValue(requireArguments().getInt(EXTRA_CALLER, NoteEditorCaller.NO_CALLER.value))
             if (caller == NoteEditorCaller.NO_CALLER) {
@@ -538,7 +530,7 @@ class NoteEditorFragment :
             isAppearanceLightStatusBars = false
         }
         @Suppress("deprecation", "API35 properly handle edge-to-edge")
-        window.statusBarColor = getColorFromAttr(requireContext(), R.attr.appBarColor)
+        requireActivity().window.statusBarColor = getColorFromAttr(requireContext(), CommonR.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
         // Set up toolbar
         toolbar = view.findViewById(R.id.editor_toolbar)
@@ -605,8 +597,8 @@ class NoteEditorFragment :
         savedInstanceState.putInt(CALLER_KEY, caller.value)
         savedInstanceState.putBoolean("addNote", addNote)
         savedInstanceState.putLong("did", deckId)
-        savedInstanceState.putBoolean(NOTE_CHANGED_EXTRA_KEY, changed)
-        savedInstanceState.putBoolean(RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
+        savedInstanceState.putBoolean(EXTRA_NOTE_CHANGED, changed)
+        savedInstanceState.putBoolean(EXTRA_RELOAD_REQUIRED, reloadRequired)
         savedInstanceState.putIntegerArrayList("customViewIds", customViewIds)
         multimediaController.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putSerializable("toggleSticky", toggleStickyText)
@@ -651,7 +643,7 @@ class NoteEditorFragment :
                 return
             }
             NoteEditorCaller.EDIT -> {
-                val cardId = requireNotNull(requireArguments().getLong(EXTRA_CARD_ID)) { "EXTRA_CARD_ID" }
+                val cardId = requireArguments().requireLong(EXTRA_CARD_ID)
                 currentEditedCard = col.getCard(cardId)
                 editorNote = currentEditedCard!!.note(col)
                 addNote = false
@@ -779,7 +771,7 @@ class NoteEditorFragment :
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            requireAnkiActivity().setToolbarTitle(R.string.menu_add)
+            requireAnkiActivity().setToolbarText(titleRes = R.string.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -1651,10 +1643,10 @@ class NoteEditorFragment :
                 RESULT_CANCELED
             }
         if (reloadRequired) {
-            intent.putExtra(RELOAD_REQUIRED_EXTRA_KEY, true)
+            intent.putExtra(EXTRA_RELOAD_REQUIRED, true)
         }
         if (changed) {
-            intent.putExtra(NOTE_CHANGED_EXTRA_KEY, true)
+            intent.putExtra(EXTRA_NOTE_CHANGED, true)
         }
         closeNoteEditor(result, intent)
     }
@@ -1684,8 +1676,8 @@ class NoteEditorFragment :
             val animation =
                 BundleCompat.getParcelable(
                     requireArguments(),
-                    AnkiActivity.FINISH_ANIMATION_EXTRA,
-                    ActivityTransitionAnimation.Direction::class.java,
+                    AnkiActivity.EXTRA_FINISH_ANIMATION,
+                    TransitionDirection::class.java,
                 )
             if (animation != null) {
                 requireAnkiActivity().finishWithAnimation(animation)
@@ -1836,7 +1828,7 @@ class NoteEditorFragment :
                 MEDIA_MIME_TYPES,
                 DropHelper.Options
                     .Builder()
-                    .setHighlightColor(R.color.material_lime_green_A700)
+                    .setHighlightColor(CommonR.color.material_lime_green_A700)
                     .setHighlightCornerRadiusPx(0)
                     .addInnerEditTexts(newEditText)
                     .build(),
@@ -2407,7 +2399,7 @@ class NoteEditorFragment :
             ShortcutGroup(
                 listOf(
                     shortcut("Ctrl+ENTER") { getString(R.string.save) },
-                    shortcut("Ctrl+D") { getString(R.string.select_deck) },
+                    shortcut("Ctrl+D") { TR.sentenceCase.selectDeck },
                     shortcut("Ctrl+L") { getString(R.string.card_template_editor_group) },
                     shortcut("Ctrl+N") { getString(R.string.select_note_type) },
                     shortcut("Ctrl+Shift+T") { getString(R.string.tag_editor) },
@@ -2680,8 +2672,8 @@ class NoteEditorFragment :
         const val EXTRA_EDIT_FROM_CARD_ID = "editCid"
         const val ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD"
         const val ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND"
-        const val NOTE_CHANGED_EXTRA_KEY = "noteChanged"
-        const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
+        const val EXTRA_NOTE_CHANGED = "noteChanged"
+        const val EXTRA_RELOAD_REQUIRED = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
         const val IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
         const val EXTRA_CARD_IDS = "EXTRA_CARD_IDS"
@@ -2731,7 +2723,7 @@ class NoteEditorFragment :
         fun addNoteArgs(): Bundle = Bundle().apply { putInt(EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value) }
 
         fun shouldReplaceNewlines(): Boolean =
-            AnkiDroidApp.instance
+            appContext
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_NEWLINE_REPLACE, true)
 
@@ -2744,7 +2736,7 @@ class NoteEditorFragment :
         }
 
         private fun shouldHideToolbar(): Boolean =
-            !AnkiDroidApp.instance
+            !appContext
                 .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
     }

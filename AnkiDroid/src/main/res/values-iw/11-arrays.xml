@@ -30,8 +30,8 @@
     <string name="add_to_deck_decide_by_note_type">קבע לפי סוג הרשומה</string>
     <!-- theme labels -->
     <string name="theme_follow_system">בהתאם למערכת</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">יום</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">לילה</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">בהיר</string>
     <string name="day_theme_plain">פשוט</string>
@@ -47,10 +47,7 @@
     <string name="html_size_code_x_large">גדול מאוד</string>
     <string name="html_size_code_xx_large">הכי גדול</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">תשובת שוב</string>
-    <string name="answer_hard" maxLength="41">תשובת קשה</string>
-    <string name="answer_good" maxLength="41">תשובת טוב</string>
-    <string name="answer_easy" maxLength="41">תשובת קל</string>
+    <string name="answer_easy" comment="Match Anki\'s translations: deckConfigAnswerAgain" maxLength="41">תשובת קל</string>
     <string name="gesture_abort_learning" maxLength="41">סגירת מסך הלימוד</string>
     <string name="gesture_flag_red" maxLength="41">החלף את הדגל האדום</string>
     <string name="gesture_flag_orange" maxLength="41">החלף את הדגל הכתום</string>

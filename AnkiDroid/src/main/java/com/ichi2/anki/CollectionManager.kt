@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
 
 package com.ichi2.anki
 
@@ -31,13 +18,16 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.CollectionManager.withQueue
 import com.ichi2.anki.backend.createDatabaseUsingRustBackend
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.utils.android.Threads
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.CollectionFiles
 import com.ichi2.anki.libanki.LibAnki
 import com.ichi2.anki.libanki.Storage.collection
 import com.ichi2.anki.libanki.importCollectionPackage
-import com.ichi2.utils.Threads
+import com.ichi2.anki.storage.StorageDecision
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -46,9 +36,9 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.Translations
-import okio.withLock
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 object CollectionManager {
     /**
@@ -137,6 +127,9 @@ object CollectionManager {
      * Parallel calls to this function are guaranteed to be serialized, so you can be
      * sure the collection won't be closed or modified by another thread. This guarantee
      * does not hold if legacy code calls [getColUnsafe].
+     *
+     * @throws StorageNotConfiguredException If [CollectionHelper.storageDecision] is undecided
+     * (user has not selected a storage location).
      */
     suspend fun <T> withCol(
         @WorkerThread block: Collection.() -> T,
@@ -258,6 +251,9 @@ object CollectionManager {
      *
      * Automatically called by [withCol]. Can be called directly to ensure collection
      * is loaded at a certain point in time, or to ensure no errors occur.
+     *
+     * @throws StorageNotConfiguredException If [CollectionHelper.storageDecision] is undecided
+     * (user has not selected a storage location).
      */
     suspend fun ensureOpen() {
         withQueue {
@@ -265,8 +261,14 @@ object CollectionManager {
         }
     }
 
-    /** See [ensureOpen]. This must only be run inside the queue. */
+    /**
+     * See [ensureOpen]. This must only be run inside the queue.
+     *
+     * @throws StorageNotConfiguredException If [CollectionHelper.storageDecision] is not
+     * [StorageDecision.Decided] (user has not selected a storage location).
+     */
     private fun ensureOpenInner() {
+        if (CollectionHelper.storageDecision() != StorageDecision.Decided) throw StorageNotConfiguredException()
         ensureBackendInner()
         emulatedOpenFailure?.triggerFailure()
         if (collection == null || collection!!.dbClosed) {
@@ -288,8 +290,8 @@ object CollectionManager {
     }
 
     fun getCollectionDirectory() =
-        // Allow execution if AnkiDroidApp.instance is not initialized
-        CollectionHelper.getCurrentAnkiDroidDirectoryOptionalContext(AnkiDroidApp.sharedPrefs()) { AnkiDroidApp.instance }
+        // Allow execution if appContext is not initialized
+        CollectionHelper.getCurrentAnkiDroidDirectoryOptionalContext(AnkiDroidApp.sharedPrefs()) { appContext }
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the
      * folder and the name of the collection file inside it. */
@@ -325,6 +327,9 @@ object CollectionManager {
      * safe, as code in other threads could open or close
      * the collection while the reference is held. [withCol]
      * is a better alternative.
+     *
+     * @throws StorageNotConfiguredException If [CollectionHelper.storageDecision] is undecided
+     * (user has not selected a storage location).
      */
     fun getColUnsafe(): Collection =
         logUIHangs {

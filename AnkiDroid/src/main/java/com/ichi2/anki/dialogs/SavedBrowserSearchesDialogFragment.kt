@@ -1,25 +1,12 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
+
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardBrowser
@@ -64,10 +51,10 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
                     Timber.d("Saved search clicked: %s", searchName)
                     parentFragmentManager.setFragmentResult(
                         REQUEST_SAVED_SEARCH_ACTION,
-                        bundleOf(
-                            ARG_TYPE to TYPE_SEARCH_SELECTED,
-                            ARG_SAVED_SEARCH to searchName,
-                        ),
+                        Bundle().apply {
+                            putInt(ARG_TYPE, TYPE_SEARCH_SELECTED)
+                            putString(ARG_SAVED_SEARCH, searchName)
+                        },
                     )
                     dismiss()
                 },
@@ -90,10 +77,10 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
             positiveButton(android.R.string.ok) {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_SAVED_SEARCH_ACTION,
-                    bundleOf(
-                        ARG_TYPE to TYPE_SEARCH_REMOVED,
-                        ARG_SAVED_SEARCH to searchName,
-                    ),
+                    Bundle().apply {
+                        putInt(ARG_TYPE, TYPE_SEARCH_REMOVED)
+                        putString(ARG_SAVED_SEARCH, searchName)
+                    },
                 )
                 dialog?.dismiss() // Dismiss the root dialog
             }

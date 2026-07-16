@@ -1,22 +1,9 @@
-/* **************************************************************************************
- * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
- * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
- * Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>                               *
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
- * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>
+// SPDX-FileCopyrightText: Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2016 Mark Carter <mark@marcardar.com>
 
 // TODO: implement own menu? http://www.codeproject.com/Articles/173121/Android-Menus-My-Way
 package com.ichi2.anki
@@ -82,7 +69,6 @@ import anki.collection.OpChanges
 import anki.scheduler.CardAnswer.Rating
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -110,7 +96,13 @@ import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
 import com.ichi2.anki.cardviewer.handledGamepadKeyUp
+import com.ichi2.anki.common.android.animationDisabled
+import com.ichi2.anki.common.android.animationEnabled
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.HashUtil.hashSetInit
 import com.ichi2.anki.common.utils.android.HandlerUtils.newHandler
 import com.ichi2.anki.common.utils.android.getResFromAttr
@@ -139,9 +131,6 @@ import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.pages.PostRequestUri
-import com.ichi2.anki.preferences.AccessibilitySettingsFragment
-import com.ichi2.anki.preferences.PreferencesActivity
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
@@ -362,7 +351,7 @@ abstract class AbstractFlashcardViewer :
                The card could have been rescheduled, the deck could have changed, or a change of
                note type could have lead to the card being deleted */
             val reloadRequired =
-                result.data?.getBooleanExtra(NoteEditorFragment.RELOAD_REQUIRED_EXTRA_KEY, false) == true
+                result.data?.getBooleanExtra(NoteEditorFragment.EXTRA_RELOAD_REQUIRED, false) == true
             if (reloadRequired) {
                 performReload()
             }
@@ -1881,12 +1870,7 @@ abstract class AbstractFlashcardViewer :
             minimalClickSpeed + Reviewer.ACTION_SNACKBAR_TIME,
         ) {
             setAction(R.string.settings) {
-                val settingsIntent =
-                    PreferencesActivity.getIntent(
-                        this@AbstractFlashcardViewer,
-                        AccessibilitySettingsFragment::class,
-                    )
-                startActivity(settingsIntent)
+                navigate(PreferencesDestination.Accessibility)
             }
         }
     }
@@ -2773,15 +2757,15 @@ abstract class AbstractFlashcardViewer :
 
         /**
          * @return if [gesture] is a swipe, a transition to the same direction of the swipe
-         * else return [ActivityTransitionAnimation.Direction.FADE]
+         * else return [TransitionDirection.FADE]
          */
-        fun getAnimationTransitionFromGesture(gesture: Gesture?): ActivityTransitionAnimation.Direction =
+        fun getAnimationTransitionFromGesture(gesture: Gesture?): TransitionDirection =
             when (gesture) {
-                Gesture.SWIPE_UP -> ActivityTransitionAnimation.Direction.UP
-                Gesture.SWIPE_DOWN -> ActivityTransitionAnimation.Direction.DOWN
-                Gesture.SWIPE_RIGHT -> ActivityTransitionAnimation.Direction.RIGHT
-                Gesture.SWIPE_LEFT -> ActivityTransitionAnimation.Direction.LEFT
-                else -> ActivityTransitionAnimation.Direction.FADE
+                Gesture.SWIPE_UP -> TransitionDirection.UP
+                Gesture.SWIPE_DOWN -> TransitionDirection.DOWN
+                Gesture.SWIPE_RIGHT -> TransitionDirection.RIGHT
+                Gesture.SWIPE_LEFT -> TransitionDirection.LEFT
+                else -> TransitionDirection.FADE
             }
 
         fun Gesture?.toAnimationTransition() = getAnimationTransitionFromGesture(this)

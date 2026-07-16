@@ -45,3 +45,10 @@ fun showDialogFragmentImpl(
     newFragment.show(ft, DIALOG_FRAGMENT_TAG)
     manager.executePendingTransactions()
 }
+
+/**
+ * Convenience function for calling [showDialogFragmentImpl] with a certain [FragmentManager],
+ * as opposed to [com.ichi2.anki.utils.ext.showDialogFragment], which always calls it with the activity-level
+ * support fragment manager. This is useful when you want a dialog to be scoped to a fragment's lifecycle.
+ */
+fun FragmentManager.showDialogFragment(newFragment: DialogFragment) = showDialogFragmentImpl(this, newFragment)

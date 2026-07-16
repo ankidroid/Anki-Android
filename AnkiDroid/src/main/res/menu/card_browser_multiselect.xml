@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -18,7 +21,7 @@
     <item
         ankidroid:showAsAction="ifRoom"
         android:id="@+id/action_flag"
-        android:title="@string/menu_flag_card"
+        tools:title="Flag card"
         android:icon="@drawable/ic_flag_transparent">
       <menu>
           <!-- flags are dynamically added -->
@@ -46,30 +49,37 @@
 
     <item
         android:id="@+id/action_change_note_type"
+        android:icon="@drawable/ic_change_notetype"
         tools:title="Change note type"/>
 
     <item
         android:id="@+id/action_change_deck"
+        android:icon="@drawable/ic_change_deck"
         tools:title="Change deck"/>
 
     <item
         android:id="@+id/action_reposition_cards"
+        android:icon="@drawable/ic_reposition"
         android:title="@string/card_editor_reposition_card"/>
 
     <item
         android:id="@+id/action_reschedule_cards"
+        android:icon="@drawable/ic_reschedule"
         tools:title="Set due date" />
 
     <item
         android:id="@+id/action_edit_tags"
+        android:icon="@drawable/ic_tag"
         android:title="@string/menu_edit_tags"/>
 
     <item
         android:id="@+id/action_grade_now"
+        android:icon="@drawable/ic_grading"
         tools:title="Grade now" />
 
     <item
         android:id="@+id/action_reset_cards_progress"
+        android:icon="@drawable/ic_backup_restore"
         android:title="@string/card_editor_reset_card"/>
 
     <!-- TODO: ankidroid:showAsAction="ifRoom" once 'no hamburger' padding issues are resolved -->
@@ -81,12 +91,14 @@
 
     <item
         android:id="@+id/action_export_selected"
+        android:icon="@drawable/ic_export_notes"
         tools:title="Export cards"/>
 
 
     <item
         android:id="@+id/action_find_replace"
         app:showAsAction="never"
+        android:icon="@drawable/ic_find_replace"
         tools:title="Find and replace"
         />
 

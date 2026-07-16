@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
+
 package com.ichi2.anki
 
 import android.animation.Animator
@@ -25,6 +13,7 @@ import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.common.android.animationEnabled
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
 import com.ichi2.anki.ui.DoubleTapListener
@@ -68,6 +57,9 @@ class DeckPickerFloatingActionMenu(
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
+
+        setCreateDeckButtonLabel()
+
         if (deckPicker.animationEnabled()) {
             // Show with animation
             binding.addSharedButton.visibility = View.VISIBLE
@@ -321,6 +313,7 @@ class DeckPickerFloatingActionMenu(
                         if (!isFABOpen) {
                             showFloatingActionMenu()
                         } else {
+                            closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                             addNote()
                         }
                         return@setOnKeyListener true
@@ -345,10 +338,7 @@ class DeckPickerFloatingActionMenu(
                     deckPicker.showCreateDeckDialog()
                 }
             }
-        binding.addDeckButton.apply {
-            text = with(context) { TR.sentenceCase.createDeck }
-            contentDescription = text
-        }
+        setCreateDeckButtonLabel()
         binding.addDeckButton.setOnClickListener(addDeckListener)
 
         // Enable keyboard activation for Enter/DPAD_CENTER keys
@@ -397,25 +387,20 @@ class DeckPickerFloatingActionMenu(
                 }
             }
         binding.addSharedButton.setOnKeyListener(addSharedKeyListener)
-        val addNoteLabelListener =
+        // Mirrors the touch DoubleTapListener above: TalkBack and hardware keyboards activate via
+        // ACTION_CLICK -> performClick(), which bypasses the touch GestureDetector. Opening the menu
+        // must live here too, otherwise the FAB is inoperable when a screen reader is enabled.
+        val fabMainClickListener =
             View.OnClickListener {
-                if (isFABOpen) {
+                if (!isFABOpen) {
+                    showFloatingActionMenu()
+                } else {
                     closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
-                    Timber.d("configureFloatingActionsMenu::addNoteLabel::onClickListener - Adding Note")
+                    Timber.d("configureFloatingActionsMenu::fabMain::onClickListener - Adding Note")
                     addNote()
                 }
             }
-        binding.fabMain.setOnClickListener(addNoteLabelListener)
-
-        // Enable keyboard activation for Enter/DPAD_CENTER keys
-        binding.fabMain.setOnKeyListener(
-            createActivationKeyListener("Add Note label: ENTER key pressed") {
-                if (isFABOpen) {
-                    closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
-                    addNote()
-                }
-            },
-        )
+        binding.fabMain.setOnClickListener(fabMainClickListener)
     }
 
     /**
@@ -424,6 +409,17 @@ class DeckPickerFloatingActionMenu(
      */
     private fun addNote() {
         deckPicker.addNote()
+    }
+
+    /**
+     * Sets the label of the 'Create deck' button from the backend translation.
+     */
+    private fun setCreateDeckButtonLabel() {
+        binding.addDeckButton.apply {
+            text = with(context) { TR.sentenceCase.createDeck }
+            contentDescription = text
+            isExtended = true
+        }
     }
 
     fun interface FloatingActionBarToggleListener {

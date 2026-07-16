@@ -1,24 +1,11 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
+
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -65,10 +52,10 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
                 Timber.d("Saving user search: %s with given name %s", searchQuery, name)
                 setFragmentResult(
                     REQUEST_SAVE_SEARCH,
-                    bundleOf(
-                        ARG_SEARCH_QUERY to searchQuery,
-                        ARG_SEARCH_QUERY_NAME to name,
-                    ),
+                    Bundle().apply {
+                        putString(ARG_SEARCH_QUERY, searchQuery)
+                        putCharSequence(ARG_SEARCH_QUERY_NAME, name)
+                    },
                 )
                 dialog.dismiss()
             }
@@ -90,9 +77,9 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
         fun newInstance(searchQuery: String): SaveBrowserSearchDialogFragment =
             SaveBrowserSearchDialogFragment().apply {
                 arguments =
-                    bundleOf(
-                        ARG_SEARCH_QUERY to searchQuery,
-                    )
+                    Bundle().apply {
+                        putString(ARG_SEARCH_QUERY, searchQuery)
+                    }
             }
     }
 }

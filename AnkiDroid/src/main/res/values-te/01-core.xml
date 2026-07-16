@@ -24,9 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">డెక్లు</string>
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">చీటీల బ్రౌజర్</string>
-    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">గణాంకాలు</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">సెట్టింగులు</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">సహాయం</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
@@ -39,7 +37,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">విస్తరించు</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">కుదించు</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">దిగుమతి</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">సముదాయం ఖాళీ గా ఉంది</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">+ గుర్తు ని \nనొక్కి  చీటీ కూర్చు</string>
     <!-- Reviewer -->
@@ -69,7 +66,6 @@
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">స్ట్రోక్‌ను అన్డు చేయండి</string>
     <string name="move_all_to_deck">అన్నింటినీ డెక్‌కి తరలించండి</string>
-    <string name="rename_deck" maxLength="28">డెక్ పేరు మార్చండి</string>
     <string name="create_shortcut">షార్ట్ కట్ సృష్టించు</string>
     <string name="browse_cards">చీటీలను బ్రౌజ్ చేయండి</string>
     <string name="edit_deck_description" comment="edit the deck description">వివరణను సవరించండి</string>
@@ -78,7 +74,6 @@
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ఖాతాను సమకాలీకరించండి</string>
     <string name="menu_dismiss_note" maxLength="41">దాచు / తొలగించు</string>
     <string name="rename_flag">జెండాల పేరు మార్చండి</string>
-    <string name="menu_flag_card" maxLength="28">ఫ్లాగ్ కార్డ్</string>
     <string name="menu_edit_tags" maxLength="28">ట్యాగ్‌లను సవరించండి</string>
     <string name="delete_note_message">ఈ గమనికను మరియు దాని అన్ని కార్డ్లను నిజంగా తొలగించాలా?\n%s</string>
     <string name="menu_search" maxLength="28">లో చూడండి%1$s</string>

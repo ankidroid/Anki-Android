@@ -55,7 +55,7 @@ class PermissionsActivityTest : RobolectricTest() {
     }
 
     @Test
-    fun `error toast is shown if PERMISSIONS_SET_EXTRA is missing`() {
+    fun `error toast is shown if EXTRA_PERMISSIONS_SET is missing`() {
         testInvalidActivityFinishes()
         assertThat(
             ShadowToast.getTextOfLatestToast(),

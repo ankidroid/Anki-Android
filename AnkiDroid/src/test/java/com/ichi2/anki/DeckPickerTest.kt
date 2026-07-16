@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteDatabaseCorruptException
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
 import android.widget.TextView
@@ -19,6 +20,8 @@ import androidx.test.core.app.ActivityScenario
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -27,15 +30,17 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.navigation.AnkiDroidNavigator
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
-import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.PERMISSIONS_SET_EXTRA
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.EXTRA_PERMISSIONS_SET
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -463,7 +468,7 @@ class DeckPickerTest : RobolectricTest() {
 
             Prefs.newReviewRemindersEnabled = true
             val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
+            assertEquals("com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity", scheduleReminders.component!!.className)
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -681,6 +686,83 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
+    fun `FAB opens menu on accessibility click`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            assertThat("menu starts closed", floatingActionMenu.isFABOpen, equalTo(false))
+            // TalkBack activate a focused control, which routes to [View.performClick]
+            fab.performClick()
+            assertThat("FAB menu opens on click", floatingActionMenu.isFABOpen, equalTo(true))
+        }
+
+    @Test
+    fun `FAB menu opens on ENTER key`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+
+            assertThat("menu starts closed", floatingActionMenu.isFABOpen, equalTo(false))
+
+            fab.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+
+            assertThat("ENTER key opens the FAB menu", floatingActionMenu.isFABOpen, equalTo(true))
+        }
+
+    @Test
+    fun `FAB menu closes on ESCAPE key`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            floatingActionMenu.showFloatingActionMenu()
+            assertThat("menu is open", floatingActionMenu.isFABOpen, equalTo(true))
+
+            fab.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ESCAPE))
+
+            assertThat(
+                "ESCAPE key closes the FAB menu",
+                floatingActionMenu.isFABOpen,
+                equalTo(false),
+            )
+        }
+
+    @Test
+    fun `expanding the FAB menu shows the correct labels`() =
+        deckPicker {
+            floatingActionMenu.showFloatingActionMenu()
+            advanceRobolectricLooper()
+
+            val binding = floatingActionButtonBinding
+            assertThat(binding.fabMain.text.toString(), equalTo(getString(R.string.menu_add)))
+            assertThat(
+                binding.addSharedButton.text.toString(),
+                equalTo(getString(R.string.menu_get_shared_decks)),
+            )
+            assertThat(
+                binding.addFilteredDeckButton.text.toString(),
+                equalTo(getString(R.string.new_dynamic_deck)),
+            )
+            // 'Create deck' uses a backend string rather than an android:text resource
+            assertThat(
+                binding.addDeckButton.text.toString(),
+                equalTo(with(targetContext) { TR.sentenceCase.createDeck }),
+            )
+        }
+
+    @Test
+    fun `expanding the FAB menu re-extends the Create deck button`() =
+        deckPicker {
+            val addDeckButton = floatingActionButtonBinding.addDeckButton
+            addDeckButton.isExtended = false
+
+            floatingActionMenu.showFloatingActionMenu()
+            advanceRobolectricLooper()
+
+            assertTrue(!addDeckButton.text.isNullOrBlank(), "Create deck button must have a label")
+            assertTrue(
+                addDeckButton.isExtended,
+                "Create deck button must be extended so its label is visible",
+            )
+        }
+
+    @Test
     fun `On a new startup, the App Intro is displayed`() =
         deckPicker(skipIntroduction = false) {
             val nextIntent = Shadows.shadowOf(this).nextStartedActivity
@@ -724,19 +806,6 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED))
         }
 
-    /**
-     * Emulates a null collection and a `BackendDbLockedException`
-     *
-     * @see enableNullCollection
-     */
-    private fun withNullCollection(block: () -> Unit) =
-        try {
-            enableNullCollection()
-            block()
-        } finally {
-            disableNullCollection()
-        }
-
     @Test
     fun `when INTERNET is denied, PermissionsActivity is shown`() =
         runTest {
@@ -749,12 +818,29 @@ class DeckPickerTest : RobolectricTest() {
                         equalTo(PermissionsActivity::class.java.name),
                     )
 
-                    val extra = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
+                    val extra = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, PermissionSet::class.java)
 
                     assertNotNull(extra)
                     assertThat(extra.permissions, equalTo(listOf(INTERNET)))
                 }
             }
+        }
+
+    @Test
+    fun `creating a deck selects it`() =
+        deckPicker {
+            showCreateDeckDialog()
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            dialog.input = "My Deck"
+            dialog.performPositiveClick()
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+            val newDeckId = col.decks.byName("My Deck")!!.id
+            assertThat(
+                "the newly created deck should become the current deck",
+                col.decks.current().id,
+                equalTo(newDeckId),
+            )
         }
 
     enum class CollectionType(

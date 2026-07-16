@@ -21,11 +21,12 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.common.destinations.CsvImporterDestination
 import com.ichi2.anki.hideShowButtonCss
 import com.ichi2.utils.OLDEST_WORKING_WEBVIEW_VERSION
 import com.ichi2.utils.WebViewVersion
@@ -61,7 +62,7 @@ class CsvImporter : PageFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialToolbar>(R.id.toolbar)?.setTitle(R.string.menu_import)
+        view.findViewById<MaterialToolbar>(R.id.toolbar)?.title = TR.actionsImport()
     }
 
     inner class CsvImporterWebViewClient(
@@ -112,8 +113,11 @@ class CsvImporter : PageFragment() {
             context: Context,
             filePath: String,
         ): Intent {
-            val arguments = bundleOf(KEY_FILE_PATH to filePath)
+            val arguments = Bundle().apply { putString(KEY_FILE_PATH, filePath) }
             return SingleFragmentActivity.getIntent(context, fragmentClass = CsvImporter::class, arguments)
         }
     }
 }
+
+/** Builds the [Intent] that opens the CSV importer for this destination. */
+fun CsvImporterDestination.toIntent(context: Context): Intent = CsvImporter.getIntent(context, filePath)

@@ -1,24 +1,12 @@
-/*
- * Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
 
 package com.ichi2.anki
 
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.net.Uri
@@ -37,19 +25,22 @@ import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportData.Companion.throwIfDialogUnusable
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
-import com.ichi2.anki.CrashReportData.HelpAction
-import com.ichi2.anki.CrashReportData.HelpAction.AnkiBackendLink
-import com.ichi2.anki.CrashReportData.HelpAction.OpenDeckOptions
-import com.ichi2.anki.android.AnkiBroadcastReceiver
+import com.ichi2.anki.backend.DatabaseCorruption
+import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.libanki.exception.InvalidSearchException
-import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.pages.fromCurrentDeck
+import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.redirectToMainEntryPoint
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.create
 import com.ichi2.utils.message
@@ -201,6 +192,12 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.w(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
             }
+            is StorageNotConfiguredException -> {
+                // expected before first-run setup completes: no crash report
+                // edge case when 'ensureStorageIsReady' was insufficient
+                Timber.w(exc, errorMessage)
+                if (!isFinishing) redirectToMainEntryPoint()
+            }
             is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException -> {
                 // these exceptions do not generate worthwhile crash reports
                 Timber.i("Showing error dialog but not sending a crash report.")
@@ -213,7 +210,7 @@ suspend fun <T> FragmentActivity.runCatching(
             }
             is SQLiteDatabaseCorruptException -> {
                 Timber.e(exc, errorMessage)
-                DatabaseErrorDialog.databaseCorruptFlag = true
+                DatabaseCorruption.isDetected = true
                 if (callerTrace != null) Timber.e(callerTrace)
                 (this as? AnkiActivity)
                     ?.showDatabaseErrorDialog(
@@ -284,6 +281,8 @@ fun Context.showError(
 
     Timber.i("Error dialog displayed")
 
+    val helpAction = crashReportData?.helpAction?.takeIf { it.canExecute(this) }
+
     try {
         AlertDialog
             .Builder(this)
@@ -291,9 +290,7 @@ fun Context.showError(
                 title(R.string.vague_error)
                 message(text = message)
                 positiveButton(R.string.dialog_ok)
-                if (crashReportData?.helpAction != null) {
-                    neutralButton(R.string.help)
-                }
+                helpAction?.let { neutralButton(text = it.buttonText(this@showError)) }
                 if (crashReportData?.reportableException == true) {
                     Timber.w("sending crash report on close")
                     setOnDismissListener { crashReportData.sendCrashReport() }
@@ -303,10 +300,7 @@ fun Context.showError(
                 setOnShowListener {
                     neutralButton?.setOnClickListener {
                         lifecycle.coroutineScope.launch {
-                            val shouldDismiss = crashReportData!!.helpAction!!.execute(context = context)
-                            if (shouldDismiss) {
-                                dismiss()
-                            }
+                            if (helpAction!!.execute(this@showError)) dismiss()
                         }
                     }
                 }
@@ -320,25 +314,13 @@ fun Context.showError(
     }
 }
 
-/**
- * @return Whether the dialog should be dismissed
- */
-suspend fun HelpAction.execute(context: Context): Boolean {
+/** The dialog's [Context] is wrapped (e.g. ContextThemeWrapper); walk the chain to find the activity. */
+internal tailrec fun Context.findAnkiActivity(): AnkiActivity? =
     when (this) {
-        is AnkiBackendLink -> {
-            context.openUrl(this.link)
-            return false
-        }
-        OpenDeckOptions -> {
-            // if we're in the error dialog, we have no context of the deck which caused the exception
-            // assume it's the current deck
-            val openCurrentDeckOptions = DeckOptionsDestination.fromCurrentDeck()
-            context.startActivity(openCurrentDeckOptions.toIntent(context))
-            // dismiss the dialog - the user should have resolved the issue
-            return true
-        }
+        is AnkiActivity -> this
+        is ContextWrapper -> baseContext.findAnkiActivity()
+        else -> null
     }
-}
 
 /** In most cases, you'll want [AnkiActivity.withProgress]
  * instead. This lower-level routine can be used to integrate your own
@@ -623,6 +605,10 @@ private fun Activity.showError(
  * [AnkiBroadcastReceiver.goAsync] extends the lifetime of the `onReceiveBroadcast` method and tells
  * the OS not to kill the process prematurely.
  *
+ * Theoretically, an expedited Worker could also be used to run a suspending function from `onReceiveBroadcast`.
+ * However, AnkiDroid is only allotted a fixed number of expedited Worker calls per day
+ * and those expedited calls are also used by the sync service, so it's best to conserve them.
+ *
  * Do not call [AnkiBroadcastReceiver.goAsync] directly before calling this function.
  *
  * @param timeout Just in case the block hangs. Cannot exceed 8 seconds, because an ANR may occur if
@@ -681,6 +667,7 @@ data class CrashReportData(
     fun shouldReportException(): Boolean {
         if (!reportableException) return false
         if (exception.isInvalidFsrsParametersException()) return false
+        if (exception.isDeckNotFoundInLimitsMapException()) return false
         if (exception is BackendInvalidInputException && exception.message == "missing template") return false
         return true
     }
@@ -701,12 +688,50 @@ data class CrashReportData(
      * - Open the deck options
      */
     sealed class HelpAction {
+        /** Label for the 'help' button on the error dialog. Defaults to "Help". */
+        open fun buttonText(context: Context): CharSequence = context.getString(R.string.help)
+
+        /** `false` hides the help button. */
+        open fun canExecute(context: Context): Boolean = true
+
+        /** Perform the action. @return whether the error dialog should be dismissed. */
+        abstract suspend fun execute(context: Context): Boolean
+
         data class AnkiBackendLink(
             val link: Uri,
-        ) : HelpAction()
+        ) : HelpAction() {
+            override suspend fun execute(context: Context): Boolean {
+                context.openUrl(link)
+                return false
+            }
+        }
 
         /** Open the deck options for the current deck */
-        data object OpenDeckOptions : HelpAction()
+        data object OpenDeckOptions : HelpAction() {
+            override suspend fun execute(context: Context): Boolean {
+                // if we're in the error dialog, we have no context of the deck which caused the exception
+                // assume it's the current deck
+                val openCurrentDeckOptions = DeckOptionsDestination.fromCurrentDeck()
+                context.startActivity(openCurrentDeckOptions.toIntent(context))
+                // dismiss the dialog - the user should have resolved the issue
+                return true
+            }
+        }
+
+        /** Opens 'Check Database' */
+        data object OpenCheckDatabase : HelpAction() {
+            override fun buttonText(context: Context): CharSequence = with(context) { TR.sentenceCase.checkDatabase }
+
+            override fun canExecute(context: Context): Boolean = context.findAnkiActivity() != null
+
+            override suspend fun execute(context: Context): Boolean {
+                Timber.i("Opening 'Check Database'")
+                context.findAnkiActivity()!!.showDatabaseErrorDialog(
+                    errorDialogType = DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK,
+                )
+                return true
+            }
+        }
 
         companion object {
             fun from(e: Throwable): HelpAction? {
@@ -722,6 +747,7 @@ data class CrashReportData(
 
                 if (link != null) return AnkiBackendLink(link)
                 if (e.isInvalidFsrsParametersException()) return OpenDeckOptions
+                if (e.isDeckNotFoundInLimitsMapException()) return OpenCheckDatabase
 
                 return null
             }
@@ -770,5 +796,9 @@ data class CrashReportData(
             } catch (_: Throwable) {
                 false
             }
+
+        @VisibleForTesting
+        internal fun Throwable.isDeckNotFoundInLimitsMapException(): Boolean =
+            this is BackendInvalidInputException && message == "deck not found in limits map"
     }
 }

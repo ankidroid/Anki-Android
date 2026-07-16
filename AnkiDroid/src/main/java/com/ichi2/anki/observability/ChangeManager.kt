@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
 
 /*
  * With the Rust backend, operations that modify the collection return a description of changes (OpChanges).
@@ -39,9 +26,9 @@ import anki.collection.OpChangesWithId
 import anki.collection.opChanges
 import anki.import_export.ImportResponse
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.observability.ChangeManager.publish
 import com.ichi2.anki.observability.ChangeManager.toOpChanges
-import com.ichi2.anki.utils.ext.ifNotZero
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -202,6 +189,10 @@ object ChangeManager {
 
     fun notifySubscribersAllValuesChanged(handler: Any? = null) {
         notifySubscribers(ALL, handler)
+    }
+
+    fun publishAllValuesChanged(handler: Any? = null) {
+        publish(ALL, handler)
     }
 
     /**

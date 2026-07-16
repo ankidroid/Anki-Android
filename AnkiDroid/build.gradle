@@ -4,7 +4,9 @@ plugins {
     // TODO: migrate to .kts & replace the next 2 id lines with id("ankidroid.android.app")
     id 'com.android.application'
     id 'org.jetbrains.kotlin.plugin.parcelize'
+    alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.keeper)
     alias(libs.plugins.roborazzi)
     id 'idea'
@@ -21,6 +23,14 @@ keeper {
         // Silence missing definitions
         arguments.set(["--map-diagnostics:MissingDefinitionsDiagnostic", "error", "none"])
     }
+}
+
+baselineProfile {
+    // Write generated profiles to `src/main/baselineProfiles/` instead of the
+    // default per-variant `src/playRelease/generated/baselineProfiles/`. This
+    // ensures the profile is consumed by ALL variants (play, amazon, full) and
+    // ALL buildTypes (release, benchmark), not just `playRelease`.
+    mergeIntoMain = true
 }
 
 idea {
@@ -61,6 +71,7 @@ android {
         aidl = true
         viewBinding = true
         resValues = true
+        compose = true
     }
 
     if (rootProject.testReleaseBuild) {
@@ -100,9 +111,9 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22400300
+        versionCode=22500102
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
-        versionName="2.24.0"
+        versionName="2.25.0alpha2"
         minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
@@ -194,6 +205,13 @@ android {
 
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
+        }
+
+        create('benchmark') {
+            initWith release
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['release']
+            debuggable false
         }
     }
 
@@ -330,7 +348,7 @@ android {
 
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
-    track.set('beta')
+    track.set('alpha')
 
     // any time we bump minSdk we want Play Store to retain the old artifacts by version code,
     // so that they remain available for older devices
@@ -441,10 +459,22 @@ dependencies {
     implementation project(":compat")
     implementation project(":libanki")
     implementation project(":vbpd")
+    "baselineProfile" project(":baselineprofile")
 
     implementation(libs.google.analytics.kt)
 
     implementation libs.androidx.activity
+    // TODO: hoist the Compose enablement (kotlin.compose plugin, buildFeatures.compose,
+    // and the dependencies below) into a convention plugin under `buildSrc/` once the
+    // Kotlin-DSL migration of this build script lands
+    implementation libs.androidx.activity.compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.lifecycle.runtime.compose
+    debugImplementation libs.androidx.compose.ui.tooling
     implementation libs.androidx.annotation
     implementation libs.androidx.appcompat
     implementation libs.androidx.browser
@@ -454,6 +484,7 @@ dependencies {
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.lifecycle.process
     implementation libs.androidx.preference.ktx
+    implementation libs.androidx.profileinstaller
     implementation libs.androidx.recyclerview
     implementation libs.androidx.sqlite.framework
     implementation libs.androidx.swiperefreshlayout
@@ -472,6 +503,7 @@ dependencies {
 
     implementation libs.protobuf.kotlin.lite // This is required when loading from a file
 
+    // TODO: migrate to `addAnkiBackendDependencies(...)` when this is a gradle.kts file
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
         localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -513,6 +545,7 @@ dependencies {
     testImplementation testFixtures(project(":libanki"))
     testImplementation testFixtures(project(":common"))
     testImplementation testFixtures(project(":compat"))
+    testImplementation testFixtures(project(":anki-common"))
 
     // A path for a testing library which provide Parameterized Test
     testImplementation libs.junit.jupiter
@@ -572,5 +605,11 @@ dependencies {
     // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
     // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors
     testFixturesImplementation libs.kotlinx.coroutines.core
+    // The Kotlin Compose Compiler plugin attaches to every Kotlin compilation in the
+    // module including testFixtures, which has no @Composable code and refuses to
+    // run unless the Compose Runtime is on the classpath. compileOnly satisfies the
+    // plugin's version check without shipping the runtime in the testFixtures output.
+    testFixturesCompileOnly platform(libs.androidx.compose.bom)
+    testFixturesCompileOnly libs.androidx.compose.runtime
 
 }

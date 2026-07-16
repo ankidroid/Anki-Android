@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
@@ -26,12 +13,13 @@ import android.widget.SpinnerAdapter
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
+import androidx.core.net.toUri
 import androidx.core.view.children
 import androidx.core.view.get
 import androidx.core.view.size
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -50,7 +38,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.search.BrowserRow
 import anki.search.BrowserRow.Color
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
@@ -100,7 +87,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN2_KEYS
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
@@ -491,6 +478,30 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
+    /**
+     * Sending the `anki://x-callback-url/browser?search=` deep link searches in [CardBrowser].
+     */
+    @Test
+    fun browserDeepLinkOpensCardBrowserWithSearch() {
+        ensureCollectionLoadIsSynchronous()
+        addBasicNote("dog", "barks")
+        addBasicNote("cat", "meows")
+
+        val deepLink =
+            Intent(targetContext, CardBrowser::class.java).apply {
+                action = Intent.ACTION_VIEW
+                data = "anki://x-callback-url/browser?search=dog".toUri()
+            }
+
+        ActivityScenario.launch<CardBrowser>(deepLink).use { scenario ->
+            advanceRobolectricLooper()
+            scenario.onActivity { browser ->
+                assertThat("the deep link's search is applied", browser.viewModel.searchTerms, equalTo("dog"))
+                assertThat("only the matching note is shown", browser.viewModel.rowCount, equalTo(1))
+            }
+        }
+    }
+
     @Test
     fun tagWithBracketsDisplaysProperly() =
         runTest {
@@ -708,10 +719,10 @@ class CardBrowserTest : RobolectricTest() {
             // simulate the user using the ForgetCardsDialog to start the cards reset process
             b.supportFragmentManager.setFragmentResult(
                 ForgetCardsDialog.REQUEST_KEY_FORGET,
-                bundleOf(
-                    ForgetCardsDialog.ARG_RESTORE_ORIGINAL to true,
-                    ForgetCardsDialog.ARG_RESET_REPETITION to false,
-                ),
+                Bundle().apply {
+                    putBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL, true)
+                    putBoolean(ForgetCardsDialog.ARG_RESET_REPETITION, false)
+                },
             )
 
             assertThat(
@@ -1313,7 +1324,7 @@ class CardBrowserTest : RobolectricTest() {
             assertNotNull(fieldSelectorAdapter, "Fields adapter was not set")
             assertEquals(2, fieldSelectorAdapter.count)
             assertEquals(
-                TR.browsingAllFields().toSentenceCase(targetContext, R.string.sentence_all_fields),
+                with(targetContext) { TR.sentenceCase.allFields },
                 fieldSelectorAdapter.getItem(0),
             )
             assertEquals(TR.editingTags(), fieldSelectorAdapter.getItem(1))
@@ -1340,7 +1351,7 @@ class CardBrowserTest : RobolectricTest() {
             assertEquals(4, fieldSelectorAdapter.count)
             val defaultFields =
                 listOf(
-                    TR.browsingAllFields().toSentenceCase(targetContext, R.string.sentence_all_fields),
+                    with(targetContext) { TR.sentenceCase.allFields },
                     TR.editingTags(),
                 )
             assertEquals(defaultFields + listOf("Bfield0", "Bfield1"), fieldSelectorAdapter.getAdapterData())
@@ -1930,15 +1941,15 @@ class CardBrowserTest : RobolectricTest() {
     ) {
         supportFragmentManager.setFragmentResult(
             REQUEST_FIND_AND_REPLACE,
-            bundleOf(
-                ARG_SEARCH to search,
-                ARG_REPLACEMENT to replacement,
-                ARG_FIELD to field,
-                ARG_ONLY_SELECTED_NOTES to onlyInSelectedNotes,
+            Bundle().apply {
+                putString(ARG_SEARCH, search)
+                putString(ARG_REPLACEMENT, replacement)
+                putString(ARG_FIELD, field)
+                putBoolean(ARG_ONLY_SELECTED_NOTES, onlyInSelectedNotes)
                 // "Ignore case" checkbox text => when it's checked we pass false to the backend
-                ARG_MATCH_CASE to matchCase,
-                ARG_REGEX to regex,
-            ),
+                putBoolean(ARG_MATCH_CASE, matchCase)
+                putBoolean(ARG_REGEX, regex)
+            },
         )
     }
 

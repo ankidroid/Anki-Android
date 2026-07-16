@@ -32,13 +32,13 @@ import androidx.annotation.LayoutRes
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
-import com.ichi2.anki.preferences.sharedPrefs
 import timber.log.Timber
 import kotlin.math.sqrt
 
@@ -130,10 +130,10 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                                 if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
                                     Timber.d("mountReceiver - Action = Media Mounted")
                                     if (remounted) {
-                                        WidgetStatus.updateInBackground(AnkiDroidApp.instance)
+                                        WidgetStatus.updateInBackground(appContext)
                                         remounted = false
                                         if (mountReceiver != null) {
-                                            AnkiDroidApp.instance.unregisterReceiver(mountReceiver)
+                                            appContext.unregisterReceiver(mountReceiver)
                                         }
                                     } else {
                                         remounted = true
@@ -144,11 +144,11 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     val iFilter = IntentFilter()
                     iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED)
                     iFilter.addDataScheme("file")
-                    AnkiDroidApp.instance.registerReceiverCompat(mountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
+                    appContext.registerReceiverCompat(mountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
                 }
             } else {
                 // Compute the total number of cards due.
-                val (dueCardsCount, eta) = WidgetStatus.fetchSmall(context)
+                val (dueCardsCount, eta) = WidgetStatus.fetchSmall()
                 if (dueCardsCount == 0) {
                     updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.VISIBLE)
                     updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)

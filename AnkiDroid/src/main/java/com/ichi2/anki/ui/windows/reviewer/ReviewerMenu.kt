@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program. If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 Brayan Oliveira <69634269+brayandso@users.noreply.github.com>
+
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.view.Menu
@@ -115,6 +103,44 @@ fun ReviewerMenuView.setup(
             } else {
                 buryItem.removeSubMenu()
                 buryItem.title = ViewerAction.BURY_CARD.title(context)
+            }
+        }
+    }
+    findItem(ViewerAction.RECORD_VOICE.menuId)?.let { recordVoiceItem ->
+        val recordVoiceFlow = viewModel.voiceRecorderEnabledFlow.flowWithLifecycle(lifecycle)
+        recordVoiceFlow.collectLatestIn(lifecycle.coroutineScope) { isEnabled ->
+            if (isEnabled) {
+                recordVoiceItem.setPaddedIcon(context, R.drawable.ic_action_mic)
+                recordVoiceItem.setTitle(R.string.disable_voice_recording)
+            } else {
+                recordVoiceItem.setPaddedIcon(context, R.drawable.ic_mic_outlined)
+                recordVoiceItem.setTitle(R.string.enable_voice_recording)
+            }
+        }
+    }
+
+    findItem(ViewerAction.TOGGLE_WHITEBOARD.menuId)?.let { toggleWhiteboardItem ->
+        val toggleWhiteboardFlow = viewModel.whiteboardEnabledFlow.flowWithLifecycle(lifecycle)
+        toggleWhiteboardFlow.collectLatestIn(lifecycle.coroutineScope) { isEnabled ->
+            if (isEnabled) {
+                toggleWhiteboardItem.setPaddedIcon(context, R.drawable.ic_draw_filled)
+                toggleWhiteboardItem.setTitle(R.string.disable_whiteboard)
+            } else {
+                toggleWhiteboardItem.setPaddedIcon(context, R.drawable.ic_enable_whiteboard)
+                toggleWhiteboardItem.setTitle(R.string.enable_whiteboard)
+            }
+        }
+    }
+
+    findItem(ViewerAction.TOGGLE_AUTO_ADVANCE.menuId)?.let { autoAdvanceItem ->
+        val isAutoAdvancedEnabledFlow = viewModel.isAutoAdvanceEnabledFlow.flowWithLifecycle(lifecycle)
+        isAutoAdvancedEnabledFlow.collectLatestIn(lifecycle.coroutineScope) { isEnabled ->
+            if (isEnabled) {
+                autoAdvanceItem.setPaddedIcon(context, R.drawable.ic_fast_forward)
+                autoAdvanceItem.setTitle(R.string.disable_auto_advance)
+            } else {
+                autoAdvanceItem.setPaddedIcon(context, R.drawable.ic_fast_forward_outlined)
+                autoAdvanceItem.setTitle(R.string.enable_auto_advance)
             }
         }
     }

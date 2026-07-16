@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser
 
@@ -70,6 +56,7 @@ import com.google.android.material.search.SearchView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiActivityProvider
+import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.getColUnsafe
 import com.ichi2.anki.CollectionManager.withCol
@@ -106,6 +93,8 @@ import com.ichi2.anki.browser.search.iconRes
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
@@ -146,7 +135,6 @@ import com.ichi2.anki.undoAndShowSnackbar
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
-import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -158,6 +146,7 @@ import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
+import com.ichi2.utils.setPaddedIcon
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -219,8 +208,12 @@ class CardBrowserFragment :
     private var focusedRow: CardOrNoteId? = null
 
     // Dev option for Issue 18709
+    // The old layout's MenuProvider is coupled to the activity's toolbar, which causes
+    // menu bleeding when hosted in DeckPicker's bottom nav. The SearchView layout is
+    // self-contained and works in any host.
+    // TODO: decouple old layout via ContentHostFragment so this fallback isn't needed
     private val useSearchView: Boolean
-        get() = Prefs.devUsingCardBrowserSearchView
+        get() = Prefs.devUsingCardBrowserSearchView || activity !is CardBrowser
 
     /**
      * Returns the current deck name, "All Decks" if all decks are selected, or "Unknown"
@@ -519,7 +512,7 @@ class CardBrowserFragment :
                                         }
 
                                         override fun onQueryTextSubmit(query: String): Boolean {
-                                            vm.setQuery(query)
+                                            vm.setQuery(query, fromUserSearch = true)
                                             legacySearchView!!.clearFocus()
                                             return true
                                         }
@@ -665,11 +658,12 @@ class CardBrowserFragment :
 
                     menu.findItem(R.id.action_undo).setupUndo()
 
-                    menu.findItem(R.id.action_flag).isVisible = vm.hasSelectedAnyRows()
+                    menu.findItem(R.id.action_flag).apply {
+                        title = TR.sentenceCase.flagCard
+                        isVisible = vm.hasSelectedAnyRows()
+                    }
                     menu.findItem(R.id.action_suspend_card).apply {
                         title = TR.sentenceCase.toggleSuspend
-                        // TODO: I don't think this icon is necessary
-                        setIcon(R.drawable.ic_suspend)
                         isVisible = vm.hasSelectedAnyRows()
                     }
                     menu.findItem(R.id.action_toggle_bury).apply {
@@ -678,7 +672,7 @@ class CardBrowserFragment :
                     }
                     menu.findItem(R.id.action_mark_card).apply {
                         title = TR.sentenceCase.toggleMark
-                        setIcon(R.drawable.ic_star_border_white)
+                        setPaddedIcon(requireContext(), R.drawable.ic_star_border_white)
                         isVisible = vm.hasSelectedAnyRows()
                     }
                     menu.findItem(R.id.action_change_note_type).apply {
@@ -925,6 +919,8 @@ class CardBrowserFragment :
             }
 
             when (val result = state.resultMessage) {
+                // no message for browser open / deck change / order change: only user searches
+                null -> return
                 is SearchResultMessage.CardCount ->
                     showSnackbar(
                         message = state.formatCardCount(resources),
@@ -1045,7 +1041,7 @@ class CardBrowserFragment :
             launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
 
             Timber.i("relaying submitted search to activity")
-            activityViewModel.launchSearchForCards(value, forceRefresh = false)
+            activityViewModel.launchSearchForCards(value, forceRefresh = false, fromUserSearch = true)
         }
 
         fun onUserMessage(message: UserMessage) =
@@ -1420,7 +1416,7 @@ class CardBrowserFragment :
     fun displayCardInfo() =
         launchCatchingTask {
             activityViewModel.queryCardInfoDestination()?.let { destination ->
-                startActivity(destination.toIntent(requireContext()))
+                navigate(destination)
             }
         }
 
@@ -1761,7 +1757,11 @@ class CardBrowserFragment :
 
     @VisibleForTesting
     val addNoteLauncher: NoteEditorLauncher
-        get() = NoteEditorLauncher.AddNoteFromCardBrowser(activityViewModel)
+        get() =
+            NoteEditorLauncher.AddNoteFromCardBrowser(
+                searchTerms = activityViewModel.searchTerms,
+                deckId = activityViewModel.lastDeckId,
+            )
 
     private fun addNote() {
         onAddNoteActivityResult.launch(addNoteLauncher.toIntent(requireContext()))

@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki.dialogs
 
@@ -21,7 +8,6 @@ import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ConflictResolution
@@ -325,16 +311,16 @@ class SyncErrorDialog : AsyncDialogFragment() {
             dialogMessage: String?,
         ) = SyncErrorDialog().apply {
             arguments =
-                bundleOf(
-                    SYNC_ERROR_DIALOG_TYPE_KEY to dialogType.code,
-                    DIALOG_MESSAGE_KEY to dialogMessage,
-                )
+                Bundle().apply {
+                    putInt(SYNC_ERROR_DIALOG_TYPE_KEY, dialogType.code)
+                    putString(DIALOG_MESSAGE_KEY, dialogMessage)
+                }
         }
     }
 
     class SyncErrorDialogMessageHandler(
-        private val dialogType: Type,
-        private val dialogMessage: String?,
+        val dialogType: Type,
+        val dialogMessage: String?,
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // we may be called via any AnkiActivity but media check is a DeckPicker thing
@@ -347,10 +333,10 @@ class SyncErrorDialog : AsyncDialogFragment() {
             Message.obtain().apply {
                 what = this@SyncErrorDialogMessageHandler.what
                 data =
-                    bundleOf(
-                        SYNC_ERROR_DIALOG_TYPE_KEY to dialogType,
-                        DIALOG_MESSAGE_KEY to dialogMessage,
-                    )
+                    Bundle().apply {
+                        putInt(SYNC_ERROR_DIALOG_TYPE_KEY, dialogType.code)
+                        putString(DIALOG_MESSAGE_KEY, dialogMessage)
+                    }
             }
 
         companion object {

@@ -17,9 +17,9 @@
 package com.ichi2.anki.browser
 
 import android.content.Context
+import android.os.Bundle
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
-import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -35,7 +35,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NoteId
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -92,7 +92,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
             FragmentScenario
                 .launch(
                     fragmentClass = FindAndReplaceDialogFragment::class.java,
-                    fragmentArgs = bundleOf(FindAndReplaceDialogFragment.ARG_IDS to file),
+                    fragmentArgs = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) },
                     themeResId = R.style.Theme_Light,
                 ).use { scenario ->
                     scenario.onFragment { fragment ->
@@ -132,7 +132,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
         FragmentScenario
             .launch(
                 fragmentClass = FindAndReplaceDialogFragment::class.java,
-                fragmentArgs = bundleOf(FindAndReplaceDialogFragment.ARG_IDS to file),
+                fragmentArgs = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) },
                 themeResId = R.style.Theme_Light,
             ).use { scenario -> scenario.onFragment { fragment -> fragment.action() } }
     }
@@ -167,7 +167,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
 
     private fun Context.getDefaultTargets() =
         listOf(
-            TR.browsingAllFields().toSentenceCase(this, R.string.sentence_all_fields),
+            with(this) { TR.sentenceCase.allFields },
             TR.editingTags(),
         )
 }

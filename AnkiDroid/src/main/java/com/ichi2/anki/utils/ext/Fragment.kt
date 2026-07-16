@@ -24,7 +24,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.utils.showDialogFragmentImpl
 
 fun Fragment.sharedPrefs(): SharedPreferences = requireContext().sharedPrefs()
@@ -68,12 +68,14 @@ val Fragment.isCompactWidth: Boolean
  */
 fun Fragment.onWindowFocusChanged(action: (hasFocus: Boolean) -> Unit) {
     val listener = OnWindowFocusChangeListener(action)
-    val viewTreeObserver = requireView().viewTreeObserver
-    viewTreeObserver.addOnWindowFocusChangeListener(listener)
+    requireView().viewTreeObserver.addOnWindowFocusChangeListener(listener)
     viewLifecycleOwner.lifecycle.addObserver(
         object : DefaultLifecycleObserver {
             override fun onDestroy(owner: LifecycleOwner) {
-                viewTreeObserver.removeOnWindowFocusChangeListener(listener)
+                view
+                    ?.viewTreeObserver
+                    ?.takeIf { it.isAlive }
+                    ?.removeOnWindowFocusChangeListener(listener)
             }
         },
     )

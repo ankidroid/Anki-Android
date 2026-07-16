@@ -130,7 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renomear</string>
     <string name="checks_action" maxLength="28">Comprobar</string>
-    <string name="empty_cards" maxLength="28">Tarxetas baleiras</string>
     <string name="unknown_type_field_warning">Escribe a resposta: campo descoñecido %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Eliminando a baralla&#8230;</string>
     <string name="info_rate">Valora AnkiDroid</string>
@@ -154,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Fallo ao gardar o paquete Anki</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarxetas exportadas por AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Ola!
+    <string name="export_email_text"><![CDATA[
+        Ola!
         <br/><br/>
         Esta é unha baralla de tarxetas Anki enviada desde AnkiDroid[1].
         Tenta abrila usando unha das versións dispoñíbeis de Anki[2] e goza dunha aprendizaxe doada e eficiente!<br/><br/>
@@ -165,7 +165,6 @@
     <string name="export_choice_save_to">Gardar en</string>
     <string name="export_saving_exported_collection">Gardando ficheiro exportado&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opcións</string>
-    <string name="menu__deck_options" maxLength="28">Opcións da baralla</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcións de estudo</string>
     <string name="select_tts" maxLength="28">Definir idioma TTS</string>
     <string name="dyn_deck_desc">Esta é unha baralla especial para estudar fóra da programación normal. As tarxetas devolveranse ás súas barallas despois de revisalas. Eliminando esta baralla da listaxe devólvense as tarxetas restantes á súa baralla orixinal.</string>
@@ -185,7 +184,6 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Fondo</string>
-    <string name="choose_an_image" maxLength="41">Seleccionar imaxe</string>
     <string name="remove_wallpaper_image" maxLength="41">Retirar fondo</string>
     <string name="remove_background_image">Seguro que queres eliminar o fondo?</string>
     <!-- Card Template Browser Appearance -->
@@ -263,7 +261,7 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Descargar baralla</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Abrir no navegador</string>
-    <string name="try_again">Tentar de novo</string>
+    <string name="try_again">Téntao de novo</string>
     <string name="cancel_download">Cancelar descarga</string>
     <string name="cancel_download_question_title">Cancelar descarga?</string>
     <string name="downloading_file">Descargando %s</string>
@@ -352,7 +350,6 @@
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Selector de barallas</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Eliminar baralla sen confirmación</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor de notas</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Seleccionar baralla</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleccionar tipo de nota</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor de etiquetas</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor de modelos de tarxetas</string>

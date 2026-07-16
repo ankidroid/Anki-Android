@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.dialogs
 
@@ -26,13 +12,12 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.MimeTypeUtils
@@ -45,7 +30,7 @@ class ImportFileSelectionFragment : DialogFragment() {
         val entries = buildImportEntries()
         return AlertDialog
             .Builder(requireActivity())
-            .title(R.string.menu_import)
+            .title(text = TR.actionsImport())
             .setItems(
                 entries.map { requireActivity().getString(it.titleRes) }.toTypedArray(),
             ) { _, position ->
@@ -140,7 +125,7 @@ class ImportFileSelectionFragment : DialogFragment() {
 
         fun newInstance(options: ImportOptions) =
             ImportFileSelectionFragment().apply {
-                arguments = bundleOf(ARG_IMPORT_OPTIONS to options)
+                arguments = Bundle().apply { putParcelable(ARG_IMPORT_OPTIONS, options) }
             }
 
         /**

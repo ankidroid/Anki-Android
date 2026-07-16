@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
@@ -35,10 +38,11 @@
                 android:id="@+id/action_check_media"
                 android:menuCategory="secondary"
                 tools:title="Check media"/>
+            <!-- TR.actionsEmptyCards() -->
             <item
                 android:id="@+id/action_empty_cards"
                 android:menuCategory="secondary"
-                android:title="@string/empty_cards"/>
+                tools:title="Empty cards"/>
         </menu>
     </item>
     <!-- Backend string TR.qtAccelCreateBackup() has an & in it -->
@@ -57,8 +61,7 @@
         android:title="@string/model_browser_label"/>
     <item
         android:id="@+id/action_import"
-        android:menuCategory="secondary"
-        android:title="@string/menu_import"/>
+        android:menuCategory="secondary"/>
     <item
         android:id="@+id/action_export_collection"
         android:menuCategory="secondary" />

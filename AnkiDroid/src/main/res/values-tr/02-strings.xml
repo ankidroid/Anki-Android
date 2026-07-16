@@ -69,11 +69,11 @@
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="webview_crash_unknown">Bilinmeyen hata</string>
     <string name="webview_crash_unknwon_detailed">Bu, Web Görünümü\'ndeki dahili bir hatadan kaynaklandı</string>
-    <string name="webview_crash_oom">Yetersiz Bellek</string>
+    <string name="webview_crash_oom">Bellek doldu</string>
     <string name="webview_crash_oom_details">Web Görünümü sistem tarafından sonlandırıldı. Bu, genellikle büyük yazı tipleri veya ortamlar nedeniyle uygulamanın belleği bittiğinde meydana gelir.</string>
     <string name="webview_crash_nonfatal">WebView oluşturucusu çöktü. Neden: %s</string>
-    <string name="webview_crash_fatal">Kritik Hata: WebView oluşturucusu çöktü. Neden: %s</string>
-    <string name="webview_crash_loop_dialog_title">Sistem WebView Oluşturma Hatası</string>
+    <string name="webview_crash_fatal">Kritik hata: WebView rendererı çöktü. Sebep: %s</string>
+    <string name="webview_crash_loop_dialog_title">Sistem WebView render arızası</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">İptal etmek için kaydır</string>
     <string name="filter_by_flags" maxLength="41">Bayraklar</string>
@@ -130,7 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d içinden %1$d tanesi</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Yeniden adlandır</string>
     <string name="checks_action" maxLength="28">Kontrol et</string>
-    <string name="empty_cards" maxLength="28">Boş kartlar</string>
     <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Deste siliniyor&#8230;</string>
     <string name="info_rate">AnkiDroid\'e oy ver</string>
@@ -154,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_share_title">Anki paketini göndermek için kullan</string>
     <string name="export_email_subject">AnkiDroid\'den dışa aktarılan bilgi kartları: %s</string>
-    <string name="export_email_text"><![CDATA[        Selam!
+    <string name="export_email_text"><![CDATA[
+        Selam!
         <br/><br/>
         Bu, AnkiDroid\'den[1] gönderilmiş bir Anki bilgi kartı destesi.
         Mevcut Anki dağıtımlarından[2] biriyle açmayı deneyin ve kolay ve verimli öğrenmenin tadını çıkarın!<br/><br/>
@@ -165,7 +165,6 @@
     <string name="export_choice_save_to">Kaydet</string>
     <string name="export_saving_exported_collection">Dışarı aktarılan dosya kaydediliyor&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Seçenekler</string>
-    <string name="menu__deck_options" maxLength="28">Deste seçenekleri</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Çalışma seçenekleri</string>
     <string name="select_tts" maxLength="28">Metin okuma dilini ayarla</string>
     <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
@@ -185,7 +184,6 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Arkaplan</string>
-    <string name="choose_an_image" maxLength="41">Bir resim seç</string>
     <string name="remove_wallpaper_image" maxLength="41">Arkaplanı kaldır</string>
     <string name="remove_background_image">Arkaplanı kaldırmak istediğinize emin misiniz?</string>
     <!-- Card Template Browser Appearance -->
@@ -216,7 +214,7 @@
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Deste ara</string>
-    <string name="ankidroid_init_failed_webview_title">Kritik Hata</string>
+    <string name="ankidroid_init_failed_webview_title">Kritik hata</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid şu an ulaşılamayan System WebView\'a dayanır. Bu sistem güncelleme yüklerken olabilir. Lütfen birkaç dakika sonra tekrar deneyin.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid bir Android hatasından dolayı depolamaya erişemiyor.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -263,11 +261,11 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Deste indir</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Tarayıcıda aç</string>
-    <string name="try_again">Tekrar dene</string>
+    <string name="try_again">Yeniden dene</string>
     <string name="cancel_download">İndirmeyi iptal et</string>
     <string name="cancel_download_question_title">İndirmeyi iptal et?</string>
     <string name="downloading_file">%s Yükleniyor</string>
-    <string name="import_deck">Desteyi içeri aktar</string>
+    <string name="import_deck">Deste aktar</string>
     <string name="something_wrong">Bir şeyler ters gitti, lütfen tekrar deneyin</string>
     <string name="download_failed">İndirme başarısız</string>
     <string name="deck_download_progress_message">İndirme devam ederken diğer uygulamaları kullanabilirsiniz</string>
@@ -304,7 +302,7 @@
     <string name="intro_ankidroid_tagline_one">Daha az ders çalış</string>
     <string name="intro_ankidroid_tagline_two">Daha çok hatırla</string>
     <string name="intro_short_ankidroid_explanation">Anki\'nin kart zamanlayıcısı en zayıf anılarınızı güçlendirip en güçlülerinizi muhafaza ederek zaman kazandırır</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Başla</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Hemen başla</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb\'den senkronize et</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid henüz açılmadı. Lütfen AnkiDroid\'i açıp tekrar deneyin</string>
@@ -349,13 +347,12 @@
     <string name="orphan_note_message">Bu kart türünü silmek bazı notları kartsız bırakacak.</string>
     <string name="voice_not_supported">Seslendirme desteklenmiyor. Başka bir seslendirme motoru deneyin ya da bir tane yükleyin.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deste Seçici</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deste seçici</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Desteyi onay sormadan sil</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Not Düzenleyici</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Deste seç</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Not düzenleyici</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Not türü seç</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Etiket düzenleyici</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Kart Şablonu Düzenleyici</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Kart şablonu düzenleyici</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Ön şablonu düzenle</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Arka şablonu düzenle</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Stili düzenle</string>

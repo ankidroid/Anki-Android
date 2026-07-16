@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
 
 package com.ichi2.anki.dialogs
 
@@ -25,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.DialogFragment
@@ -50,6 +36,7 @@ import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SpecialField
 import com.ichi2.anki.model.SpecialFields
+import com.ichi2.anki.utils.ext.requireString
 import dev.androidbroadcast.vbpd.viewBinding
 import org.jetbrains.annotations.VisibleForTesting
 
@@ -61,11 +48,9 @@ import org.jetbrains.annotations.VisibleForTesting
  */
 class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
     private val viewModel by viewModels<InsertFieldDialogViewModel>()
-    private val requestKey
-        get() =
-            requireNotNull(requireArguments().getString(KEY_REQUEST_KEY)) {
-                KEY_REQUEST_KEY
-            }
+    private val requestKey: String by lazy {
+        requireArguments().requireString(KEY_REQUEST_KEY)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,7 +99,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
                 if (field == null) return@collect
                 parentFragmentManager.setFragmentResult(
                     requestKey,
-                    bundleOf(KEY_INSERTED_FIELD to field.renderToTemplateTag()),
+                    Bundle().apply { putString(KEY_INSERTED_FIELD, field.renderToTemplateTag()) },
                 )
                 dismiss()
             }
@@ -143,11 +128,11 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
         ): InsertFieldDialog =
             InsertFieldDialog().apply {
                 arguments =
-                    bundleOf(
-                        KEY_FIELD_ITEMS to ArrayList(fieldItems),
-                        KEY_INSERT_FIELD_METADATA to metadata,
-                        KEY_REQUEST_KEY to requestKey,
-                    )
+                    Bundle().apply {
+                        putStringArrayList(KEY_FIELD_ITEMS, ArrayList(fieldItems))
+                        putParcelable(KEY_INSERT_FIELD_METADATA, metadata)
+                        putString(KEY_REQUEST_KEY, requestKey)
+                    }
             }
     }
 

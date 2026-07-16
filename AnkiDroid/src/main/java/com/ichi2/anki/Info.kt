@@ -1,20 +1,7 @@
-/*
- * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
- * Copyright (c) 2015 Tim Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2015 Tim Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki
 
@@ -26,9 +13,9 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.ActivityInfoBinding
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.utils.IntentUtil.canOpenIntent
@@ -63,7 +50,7 @@ class Info :
         }
         super.onCreate(savedInstanceState)
         val res = resources
-        val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)
+        val type = intent.getIntExtra(EXTRA_TYPE, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (type == TYPE_NEW_VERSION) {
             val prefs = this.baseContext.sharedPrefs()
@@ -197,7 +184,7 @@ class Info :
     }
 
     companion object {
-        const val TYPE_EXTRA = "infoType"
+        const val EXTRA_TYPE = "infoType"
         const val TYPE_NEW_VERSION = 2
     }
 }

@@ -17,7 +17,6 @@
 package com.ichi2.anki.reviewreminders
 
 import android.app.Dialog
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.format.DateFormat
@@ -27,7 +26,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -49,7 +47,9 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.customView
@@ -93,11 +93,7 @@ class AddEditReminderDialog : DialogFragment() {
      * @see DialogMode
      */
     private val dialogMode: DialogMode by lazy {
-        requireNotNull(
-            requireArguments().getParcelableCompat<DialogMode>(ARGS_DIALOG_MODE),
-        ) {
-            "Dialog mode cannot be null"
-        }
+        requireArguments().requireParcelable(ARG_DIALOG_MODE)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -140,6 +136,28 @@ class AddEditReminderDialog : DialogFragment() {
 
         dialog.window?.let { resizeWhenSoftInputShown(it) }
         return dialog
+    }
+
+    /**
+     * MaterialTimePicker loses its callbacks when it is redrawn upon device rotation due to a known issue:
+     *
+     * https://github.com/material-components/material-components-android/issues/4310
+     *
+     * Whenever this dialog is hosted inside an activity that does not have `android:configChanges="orientation"`
+     * set in the manifest (ex. PreferencesActivity), the activity will be destroyed and recreated upon rotation,
+     * causing the dialog to be redrawn and lose its callbacks. Hence, we must reattach them via onResume.
+     *
+     * @see onConfigurationChanged
+     */
+    override fun onResume() {
+        super.onResume()
+        val timePickerDialog = parentFragmentManager.findFragmentByTag(TIME_PICKER_TAG) as? MaterialTimePicker
+        timePickerDialog?.let {
+            it.clearOnPositiveButtonClickListeners()
+            it.addOnPositiveButtonClickListener {
+                viewModel.setTime(ReviewReminderTime(timePickerDialog.hour, timePickerDialog.minute))
+            }
+        }
     }
 
     private fun setUpToolbar() {
@@ -251,6 +269,13 @@ class AddEditReminderDialog : DialogFragment() {
     /**
      * Show the time picker dialog for selecting a time with a given hour and minute.
      * Does not automatically dismiss the old dialog.
+     *
+     * We must use `dialog.show` here (thus technically causing the MaterialTimePicker dialog to be rendered
+     * on top of the AddEditReminderDialog, rather than replacing it as is standard) and cannot use the
+     * standard [showDialogFragment] method. This is because there are certain actions that need to be performed
+     * if the screen rotates while the time picker dialog is open. See [onResume]. The standard methods remove the old
+     * dialog before showing the new one, meaning on-rotation actions would not be possible without layering the
+     * MaterialTimePicker dialog on top of the AddEditReminderDialog.
      */
     private fun showTimePickerDialog(
         hour: Int,
@@ -270,20 +295,6 @@ class AddEditReminderDialog : DialogFragment() {
         dialog.show(parentFragmentManager, TIME_PICKER_TAG)
     }
 
-    /**
-     * For some reason, the TimePicker dialog does not automatically redraw itself properly when the device rotates.
-     * Thus, if the TimePicker dialog is active, we manually show a new copy and then dismiss the old one.
-     * We need to show the new one before dismissing the old one to ensure there is no annoying flicker.
-     */
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        val previousDialog = parentFragmentManager.findFragmentByTag(TIME_PICKER_TAG) as? MaterialTimePicker
-        previousDialog?.let {
-            showTimePickerDialog(it.hour, it.minute)
-            it.dismiss()
-        }
-    }
-
     private fun onSubmit() {
         Timber.i("Submitted dialog")
         // Do nothing if numerical fields are invalid
@@ -297,8 +308,8 @@ class AddEditReminderDialog : DialogFragment() {
         setFragmentResult(
             REQUEST_ADD_EDIT_REMINDER,
             Bundle().apply {
-                putParcelable(KEY_REMINDER_MODE, dialogMode)
-                putParcelable(KEY_REMINDER_RESULT, reminderToBeReturned)
+                putParcelable(RESULT_MODE, dialogMode)
+                putParcelable(RESULT_REMINDER, reminderToBeReturned)
             },
         )
 
@@ -325,14 +336,14 @@ class AddEditReminderDialog : DialogFragment() {
                 REQUEST_ADD_EDIT_REMINDER,
                 Bundle().apply {
                     // dialogMode should always be DialogMode.Edit in this case since the delete button only exists in Edit mode
-                    putParcelable(KEY_REMINDER_MODE, dialogMode)
-                    putParcelable(KEY_REMINDER_RESULT, null)
+                    putParcelable(RESULT_MODE, dialogMode)
+                    putParcelable(RESULT_REMINDER, null)
                 },
             )
             dismiss()
         }
 
-        showDialogFragment(confirmationDialog)
+        parentFragmentManager.showDialogFragment(confirmationDialog)
     }
 
     private fun onDeckSelected(deck: SelectableDeck?) {
@@ -364,7 +375,7 @@ class AddEditReminderDialog : DialogFragment() {
          *
          * @see DialogMode
          */
-        const val ARGS_DIALOG_MODE = "args_dialog_mode"
+        const val ARG_DIALOG_MODE = "arg_dialog_mode"
 
         /**
          * Fragment result key for receiving the result of a recently closed [AddEditReminderDialog].
@@ -374,12 +385,12 @@ class AddEditReminderDialog : DialogFragment() {
         /**
          * Fragment result bundle key for the [DialogMode] of a recently closed [AddEditReminderDialog].
          */
-        private const val KEY_REMINDER_MODE = "key_reminder_mode"
+        private const val RESULT_MODE = "result_mode"
 
         /**
          * Fragment result bundle key for the [ReviewReminder] result of a recently closed [AddEditReminderDialog].
          */
-        private const val KEY_REMINDER_RESULT = "key_reminder_result"
+        private const val RESULT_REMINDER = "result_reminder"
 
         /**
          * Unique fragment tag for the Material TimePicker shown for setting the time of a review reminder.
@@ -395,13 +406,13 @@ class AddEditReminderDialog : DialogFragment() {
         fun Fragment.registerAddEditReminderHandler(
             action: (newOrModifiedReminder: ReviewReminder?, modeOfFinishedDialog: DialogMode) -> Unit,
         ) {
-            setFragmentResultListener(REQUEST_ADD_EDIT_REMINDER) { _, bundle ->
+            childFragmentManager.setFragmentResultListener(REQUEST_ADD_EDIT_REMINDER, viewLifecycleOwner) { _, bundle ->
                 Timber.i("Received fragment result from add/edit dialog")
                 val modeOfFinishedDialog =
                     bundle.getParcelableCompat<DialogMode>(
-                        KEY_REMINDER_MODE,
+                        RESULT_MODE,
                     ) ?: return@setFragmentResultListener
-                val newOrModifiedReminder = bundle.getParcelableCompat<ReviewReminder>(KEY_REMINDER_RESULT)
+                val newOrModifiedReminder = bundle.getParcelableCompat<ReviewReminder>(RESULT_REMINDER)
                 action(newOrModifiedReminder, modeOfFinishedDialog)
             }
         }
@@ -413,7 +424,7 @@ class AddEditReminderDialog : DialogFragment() {
             AddEditReminderDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putParcelable(ARGS_DIALOG_MODE, dialogMode)
+                        putParcelable(ARG_DIALOG_MODE, dialogMode)
                     }
             }
     }

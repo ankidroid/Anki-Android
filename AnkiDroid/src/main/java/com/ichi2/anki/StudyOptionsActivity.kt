@@ -20,15 +20,22 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.MenuItemCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsAddEditReminderHandler
+import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsStudyHandler
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
+import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.undoAvailable
 import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.ui.RtlCompliantActionProvider
 import kotlinx.coroutines.launch
@@ -47,6 +54,9 @@ class StudyOptionsActivity :
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStorageIsReady()) {
+            return
+        }
         enableToolbar().apply { title = "" }
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
@@ -58,16 +68,30 @@ class StudyOptionsActivity :
                 CustomStudyAction.CUSTOM_STUDY_SESSION,
                 CustomStudyAction.EXTEND_STUDY_LIMITS,
                 ->
-                    currentFragment!!.refreshInterface()
+                    (currentFragment as? StudyOptionsFragment)?.refreshInterface()
             }
         }
-        setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->
-            Timber.d("Opening study screen from study options screen")
+        registerStudyOptionsStudyHandler {
+            Timber.i("Opening study screen from study options screen")
             val reviewer = Reviewer.getIntent(this)
             // go back to DeckPicker after studying when not in tablet mode
             reviewer.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
             startActivity(reviewer)
             finish()
+        }
+        registerStudyOptionsAddEditReminderHandler { did: DeckId ->
+            Timber.i("Opening review reminders screen from study options screen")
+            supportFragmentManager.commit {
+                replace(
+                    R.id.studyoptions_frame,
+                    ScheduleRemindersFragment.newInstance(
+                        scope = ReviewReminderScope.DeckSpecific(did),
+                        host = ScheduleRemindersFragment.FragmentHost.STUDY_OPTIONS_FRAME,
+                    ),
+                )
+                addToBackStack(null)
+            }
+            invalidateOptionsMenu()
         }
     }
 
@@ -78,8 +102,8 @@ class StudyOptionsActivity :
         }
     }
 
-    private val currentFragment: StudyOptionsFragment?
-        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_frame) as StudyOptionsFragment?
+    private val currentFragment: Fragment?
+        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_frame)
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_study_options, menu)
@@ -87,7 +111,7 @@ class StudyOptionsActivity :
         val undoActionProvider = MenuItemCompat.getActionProvider(undoMenuItem) as? RtlCompliantActionProvider
         // Set the proper click target for the undo button's ActionProvider
         undoActionProvider?.clickHandler = { _, menuItem -> onOptionsItemSelected(menuItem) }
-        undoMenuItem.isVisible = undoState.hasAction
+        undoMenuItem.isVisible = undoState.hasAction && (currentFragment is StudyOptionsFragment)
         undoMenuItem.title = undoState.label
         return true
     }
@@ -124,7 +148,7 @@ class StudyOptionsActivity :
         handler: Any?,
     ) {
         refreshUndoState()
-        currentFragment?.refreshInterface()
+        (currentFragment as? StudyOptionsFragment)?.refreshInterface()
     }
 
     private fun refreshUndoState() {

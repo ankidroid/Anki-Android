@@ -53,7 +53,7 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
         fragment.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             this@launchCollectionInLifecycleScope.collect {
                 if (isRobolectric) {
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    fragment.lifecycle.postOnNewHandlerIfAlive { block(it) }
                 } else {
                     block(it)
                 }
@@ -62,16 +62,23 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
     }
 }
 
+// Workaround a bug in overload resolution. Replace with the following when the compiler is fixed:
+//  state: Lifecycle.State = Lifecycle.State.STARTED
 context(activity: AnkiActivity)
 fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
+    launchCollectionInLifecycleScope(Lifecycle.State.STARTED, block)
+}
+
+context(activity: AnkiActivity)
+fun <T> Flow<T>.launchCollectionInLifecycleScope(
+    state: Lifecycle.State,
+    block: suspend (T) -> Unit,
+) {
     activity.lifecycleScope.launch {
-        activity.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        activity.lifecycle.repeatOnLifecycle(state) {
             this@launchCollectionInLifecycleScope.collect {
                 if (isRobolectric) {
-                    // hack: lifecycleScope/runOnUiThread do not handle our
-                    // test dispatcher overriding both IO and Main
-                    // in tests, waitForAsyncTasksToComplete may be required.
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    activity.lifecycle.postOnNewHandlerIfAlive { block(it) }
                 } else {
                     block(it)
                 }
@@ -90,11 +97,24 @@ fun <T> StateFlow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit
                 if (lastValue == it) return@collect
                 lastValue = it
                 if (isRobolectric) {
-                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                    activity.lifecycle.postOnNewHandlerIfAlive { block(it) }
                 } else {
                     block(it)
                 }
             }
+        }
+    }
+}
+
+/**
+ * Hack: lifecycleScope/runOnUiThread do not handle our test dispatcher overriding both IO and Main.
+ * In tests, waitForAsyncTasksToComplete may be required.
+ */
+private fun Lifecycle.postOnNewHandlerIfAlive(block: suspend () -> Unit) {
+    val lifecycle = this
+    HandlerUtils.postOnNewHandler {
+        if (lifecycle.currentState != Lifecycle.State.DESTROYED) {
+            runBlocking { block() }
         }
     }
 }

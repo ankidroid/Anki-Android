@@ -22,15 +22,16 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Message
 import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -338,7 +339,7 @@ object ImportUtils {
                             appendLine(DebugInfoService.getDebugInfo(activity))
                         }
 
-                    AnkiDroidApp.instance.copyToClipboard(stringToCopy)
+                    appContext.copyToClipboard(stringToCopy)
                 }
 
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
@@ -520,7 +521,7 @@ object ImportUtils {
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = bundleOf("importPath" to importPath)
+                data = Bundle().apply { putString("importPath", importPath) }
                 what = this@CollectionImportReplace.what
             }
 
@@ -543,7 +544,7 @@ object ImportUtils {
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = bundleOf("importPath" to importPath)
+                data = Bundle().apply { putString("importPath", importPath) }
                 what = this@CollectionImportAdd.what
             }
 

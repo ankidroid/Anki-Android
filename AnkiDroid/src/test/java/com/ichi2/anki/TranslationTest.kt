@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2026 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki
 
@@ -23,6 +9,7 @@ import com.ichi2.anki.TranslationTest.Companion.BASELINE_CASE_INSENSITIVE_DUPLIC
 import com.ichi2.anki.TranslationTest.Companion.BASELINE_DUPLICATES
 import com.ichi2.testutils.BackendTranslation
 import com.ichi2.testutils.XmlStringResource
+import com.ichi2.testutils.getAndroidManifestStringResourceNames
 import com.ichi2.testutils.getBackendNonArgStrings
 import com.ichi2.testutils.getTranslatableXmlStrings
 import org.junit.Test
@@ -44,9 +31,13 @@ class TranslationTest : RobolectricTest() {
             val backendByTextLower = backendStrings.groupBy { it.text.lowercase() }
             val xmlStrings = getTranslatableXmlStrings()
 
+            // strings referenced from AndroidManifest.xml cannot be converted to use the backend
+            val manifestStringsLower = ANDROID_MANIFEST_STRINGS.mapTo(mutableSetOf()) { it.lowercase() }
+
             val exactDuplicates =
                 xmlStrings
                     .filter { it.text !in BASELINE_DUPLICATES }
+                    .filter { it.text.lowercase() !in manifestStringsLower }
                     .filter { it.text in backendByText }
 
             if (exactDuplicates.isNotEmpty()) {
@@ -62,6 +53,7 @@ class TranslationTest : RobolectricTest() {
                 fail(
                     "${exactDuplicates.size} XML string(s) duplicate a backend translation.\n" +
                         "If caused by a backend update, add to BASELINE_DUPLICATES:\n$entries\n\n" +
+                        "If referenced from AndroidManifest.xml, add to ANDROID_MANIFEST_STRINGS.\n" +
                         "If manually added, use a string from `TR`.",
                 )
             }
@@ -72,6 +64,7 @@ class TranslationTest : RobolectricTest() {
                 xmlStrings
                     .filter { it.text !in BASELINE_DUPLICATES }
                     .filter { it.text.lowercase() !in caseInsensitiveBaseline }
+                    .filter { it.text.lowercase() !in manifestStringsLower }
                     .filter { it.text !in backendByText } // not an exact match
                     .filter { it.text.lowercase() in backendByTextLower }
 
@@ -88,6 +81,7 @@ class TranslationTest : RobolectricTest() {
                 fail(
                     "${caseInsensitiveDuplicates.size} XML string(s) case-insensitively duplicate a backend translation.\n" +
                         "If caused by a backend update, add to BASELINE_CASE_INSENSITIVE_DUPLICATES:\n$entries\n\n" +
+                        "If referenced from AndroidManifest.xml, add to ANDROID_MANIFEST_STRINGS.\n" +
                         "If caused by a manually added XML string, use TR instead of defining a new string resource.",
                 )
             }
@@ -100,7 +94,15 @@ class TranslationTest : RobolectricTest() {
                 BASELINE_CASE_INSENSITIVE_DUPLICATES.filter {
                     it.lowercase() !in xmlTextsLower || it.lowercase() !in backendByTextLower
                 }
-            if (unusedExact.isNotEmpty() || unusedCaseInsensitive.isNotEmpty()) {
+            val manifestXmlTextsLower =
+                xmlStrings
+                    .filter { it.name in getAndroidManifestStringResourceNames() }
+                    .mapTo(mutableSetOf()) { it.text.lowercase() }
+            val unusedManifest =
+                ANDROID_MANIFEST_STRINGS.filter {
+                    it.lowercase() !in manifestXmlTextsLower || it.lowercase() !in backendByTextLower
+                }
+            if (unusedExact.isNotEmpty() || unusedCaseInsensitive.isNotEmpty() || unusedManifest.isNotEmpty()) {
                 val details =
                     buildString {
                         if (unusedExact.isNotEmpty()) {
@@ -110,6 +112,10 @@ class TranslationTest : RobolectricTest() {
                         if (unusedCaseInsensitive.isNotEmpty()) {
                             appendLine("Unused BASELINE_CASE_INSENSITIVE_DUPLICATES (remove these):")
                             unusedCaseInsensitive.sorted().forEach { appendLine("  \"$it\"") }
+                        }
+                        if (unusedManifest.isNotEmpty()) {
+                            appendLine("Unused ANDROID_MANIFEST_STRINGS (remove these):")
+                            unusedManifest.sorted().forEach { appendLine("  \"$it\"") }
                         }
                     }
                 fail(details.trim())
@@ -179,7 +185,6 @@ class TranslationTest : RobolectricTest() {
                 // TR.preferencesAlways()
                 // TR.importingUpdateAlways()
                 "Answer", // R.string.card_side_answer | TR.browsingAnswer()
-                "Appearance", // R.string.pref_cat_appearance | TR.preferencesAppearance()
                 "Back", // R.string.back_field_name, R.string.previewer_back
                 // TR.notetypesBackField()
                 "Cancel", // R.string.dialog_cancel
@@ -201,9 +206,6 @@ class TranslationTest : RobolectricTest() {
                 // TR.aboutCopiedToClipboard()
                 // TR.errorsCopiedToClipboard()
                 "Dark", // R.string.night_theme_dark | TR.preferencesThemeDark()
-                "Decks", // R.string.decks
-                // TR.actionsDecks()
-                // TR.browsingSidebarDecks()
                 "Delete", // R.string.dialog_positive_delete
                 // TR.actionsDelete()
                 // TR.editingImageOcclusionDelete()
@@ -233,15 +235,12 @@ class TranslationTest : RobolectricTest() {
                 // TR.changeNotetypeFields()
                 "Flags", // R.string.filter_by_flags | TR.browsingSidebarFlags()
                 "Flip", // R.string.image_cropper_action_flip | TR.cardTemplatesFlip()
-                "Front", // R.string.front_field_name | TR.notetypesFrontField()
                 "General", // R.string.deck_conf_general, R.string.pref_cat_general
                 // TR.preferencesGeneral()
                 // TR.schedulingGeneral()
                 "Good", // R.string.ease_button_good | TR.studyingGood()
                 "Hard", // R.string.ease_button_hard | TR.studyingHard()
                 "Help", // R.string.help | TR.actionsHelp()
-                "Image Occlusion", // R.string.image_occlusion | TR.notetypesImageOcclusionName()
-                "Import", // R.string.menu_import | TR.actionsImport()
                 "Language", // R.string.language | TR.preferencesLanguage()
                 "Later", // R.string.button_backup_later | TR.schedulingUpdateLaterButton()
                 "Learn More", // R.string.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
@@ -268,7 +267,6 @@ class TranslationTest : RobolectricTest() {
                 // TR.actionsOptions()
                 // TR.notetypesOptions()
                 // TR.cardTemplatesPreviewSettings()
-                "Paste clipboard images as PNG", // R.string.paste_as_png | TR.preferencesPasteClipboardImagesAsPng()
                 "Preview", // R.string.card_editor_preview_card
                 // TR.actionsPreview()
                 // TR.cardTemplatesPreviewBox()
@@ -297,7 +295,6 @@ class TranslationTest : RobolectricTest() {
                 // TR.customStudySelect()
                 // TR.editingImageOcclusionSelectTool()
                 "Show remaining card count", // R.string.show_progress_summ | TR.preferencesShowRemainingCardCount()
-                "Statistics", // R.string.statistics | TR.statisticsTitle()
                 "Study", // R.string.studyoptions_start | TR.decksStudy()
                 "Sync", // R.string.button_sync, R.string.pref_cat_sync
                 // TR.qtMiscSync()
@@ -333,27 +330,31 @@ class TranslationTest : RobolectricTest() {
                 // "Check media",        // R.string.check_media
                 //                       // TR.mediaCheckCheckMediaAction()
                 //                       // TR.mediaCheckWindowTitle()
-                "Add note", // R.string.menu_add_note | TR.actionsAddNote()
-                "Answer again", // R.string.answer_again | TR.deckConfigAnswerAgain()
                 "Answer buttons", // R.string.answer_buttons | TR.statisticsAnswerButtonsTitle()
-                "Answer good", // R.string.answer_good | TR.deckConfigAnswerGood()
-                "Answer hard", // R.string.answer_hard | TR.deckConfigAnswerHard()
-                "Deck options", // R.string.menu__deck_options | TR.deckConfigTitle()
-                "Empty cards", // R.string.empty_cards
-                // TR.actionsEmptyCards()
-                // TR.emptyCardsWindowTitle()
-                "Flag card", // R.string.menu_flag_card | TR.studyingFlagCard()
                 "Follow system", // R.string.theme_follow_system | TR.preferencesThemeFollowSystem()
-                "Manage note types", // R.string.model_browser_label
-                // TR.browsingManageNoteTypes()
-                // TR.qtMiscManageNoteTypes()
-                "Rename deck", // R.string.rename_deck | TR.actionsRenameDeck()
                 "Select all", // R.string.card_browser_select_all | TR.editingImageOcclusionSelectAll()
-                "Select deck", // R.string.select_deck | TR.browsingSelectDeck()
-                "Select image", // R.string.choose_an_image | TR.notetypesIoSelectImage()
                 "Show answer", // R.string.show_answer
                 // TR.studyingShowAnswer()
                 // TR.deckConfigQuestionActionShowAnswer()
+            )
+
+        /**
+         * English string values which match a [GeneratedTranslations] value, but are referenced
+         * from `AndroidManifest.xml`.
+         *
+         * These cannot be converted until we extract the backend resources at build time/
+         *
+         *
+         * ept for reference, alternate framing of [getAndroidManifestStringResourceNames].
+         *
+         */
+        private val ANDROID_MANIFEST_STRINGS =
+            setOf(
+                "Add note", // R.string.menu_add_note | TR.actionsAddNote()
+                "Image Occlusion", // R.string.image_occlusion | TR.notetypesImageOcclusionName()
+                "Manage note types", // R.string.model_browser_label
+                // TR.browsingManageNoteTypes()
+                // TR.qtMiscManageNoteTypes()
             )
     }
 }

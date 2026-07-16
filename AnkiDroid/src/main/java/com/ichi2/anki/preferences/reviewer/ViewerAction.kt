@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
+
 package com.ichi2.anki.preferences.reviewer
 
 import android.content.Context
@@ -72,8 +60,8 @@ enum class ViewerAction(
     TAG(R.id.action_edit_tags, R.drawable.ic_tag, DISABLED),
     RESCHEDULE_NOTE(R.id.action_set_due_date, R.drawable.ic_reschedule, DISABLED),
     RESET_PROGRESS(R.id.action_reset_progress, R.drawable.ic_backup_restore, DISABLED),
-    TOGGLE_AUTO_ADVANCE(R.id.action_toggle_auto_advance, R.drawable.ic_fast_forward, DISABLED),
-    RECORD_VOICE(R.id.action_record_voice, R.drawable.ic_action_mic, DISABLED),
+    TOGGLE_AUTO_ADVANCE(R.id.action_toggle_auto_advance, R.drawable.ic_fast_forward_outlined, DISABLED),
+    RECORD_VOICE(R.id.action_record_voice, R.drawable.ic_mic_outlined, DISABLED),
     PLAY_MEDIA(R.id.action_replay_media, R.drawable.ic_play_circle_white, DISABLED),
     USER_ACTION_1(R.id.user_action_1, R.drawable.user_action_1, DISABLED),
     USER_ACTION_2(R.id.user_action_2, R.drawable.user_action_2, DISABLED),
@@ -271,7 +259,7 @@ enum class ViewerAction(
                 SUSPEND_MENU -> TR.studyingSuspend()
                 DELETE -> TR.sentenceCase.deleteNote
                 TOGGLE_WHITEBOARD -> getString(R.string.gesture_toggle_whiteboard)
-                DECK_OPTIONS -> getString(R.string.menu__deck_options)
+                DECK_OPTIONS -> TR.sentenceCase.deckOptions
                 CARD_INFO -> TR.sentenceCase.cardInfo
                 ADD_NOTE -> getString(R.string.menu_add_note)
                 TAG -> getString(R.string.menu_edit_tags)

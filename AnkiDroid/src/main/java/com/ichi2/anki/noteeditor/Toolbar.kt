@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.noteeditor
 
 import android.annotation.SuppressLint
@@ -47,11 +34,11 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.compat.CompatHelper
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
@@ -224,7 +211,7 @@ class Toolbar : FrameLayout {
         button.setPaddingRelative(twoDp, twoDp, twoDp, twoDp)
         // end apply style
         val shouldScroll =
-            AnkiDroidApp.instance
+            appContext
                 .sharedPrefs()
                 .getBoolean(NoteEditorFragment.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         if (shouldScroll) {

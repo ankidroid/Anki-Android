@@ -56,6 +56,7 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.withProgress
 import com.ichi2.themes.setTransparentBackground
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
@@ -113,7 +114,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
             return
         }
         super.onCreate(savedInstanceState)
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
         }
         setTransparentBackground()

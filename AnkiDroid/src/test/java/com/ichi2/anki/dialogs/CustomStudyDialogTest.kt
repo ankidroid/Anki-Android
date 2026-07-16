@@ -1,24 +1,12 @@
-/*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -28,6 +16,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CustomStudyDefaultsResponse
+import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.customStudyDefaultsResponse
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
@@ -36,6 +25,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
+import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS_KEY
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.dialogs.utils.performPositiveClick
@@ -230,7 +220,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                 // simulate tag selection
                 studyDialog.parentFragmentManager.setFragmentResult(
                     ON_SELECTED_TAGS_KEY,
-                    bundleOf(ON_SELECTED_TAGS__SELECTED_TAGS to selectedTags),
+                    Bundle().apply { putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, selectedTags) },
                 )
                 val customStudyDeck = col.decks.customStudySession
                 assertNotNull(customStudyDeck)
@@ -312,6 +302,25 @@ class CustomStudyDialogTest : RobolectricTest() {
                 .inRoot(isDialog())
                 .check(matches(isEnabled()))
         }
+    }
+
+    @Test
+    fun `selectedKind maps selected card state index to cram kind`() {
+        val viewModel = CustomStudyViewModel(SavedStateHandle())
+
+        CustomStudyDialog.CustomStudyCardState.entries.forEachIndexed { index, cardState ->
+            viewModel.selectedCardStateIndex = index
+            assertThat(viewModel.selectedKind, equalTo(cardState.kind))
+        }
+    }
+
+    @Test
+    fun `selectedKind defaults to new cards when no card state is selected`() {
+        val viewModel = CustomStudyViewModel(SavedStateHandle())
+
+        viewModel.selectedCardStateIndex = AdapterView.INVALID_POSITION
+
+        assertThat(viewModel.selectedKind, equalTo(CramKind.CRAM_KIND_NEW))
     }
 
     /**

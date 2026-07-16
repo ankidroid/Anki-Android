@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
+
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
@@ -55,6 +43,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.android.AnkiShakeDetector
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.databinding.FragmentReviewerBinding
@@ -63,7 +52,6 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
-import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
@@ -209,22 +197,22 @@ class ReviewerFragment :
         }
 
         viewModel.navigateFlow.collectIn(lifecycleScope) { destination ->
+            if (destination is DeckOptionsDestination && destination.options.size > 1) {
+                requireContext().showDeckOptionsSelectionDialog(destination.options) { selectedOption ->
+                    Timber.i("Deck options target selected: ${selectedOption.deckId}")
+                    navigate(
+                        destination.copy(
+                            deckId = selectedOption.deckId,
+                            isFiltered = selectedOption.isFiltered,
+                        ),
+                    )
+                }
+                return@collectIn
+            }
             navigate(destination)
         }
 
         viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
-            if (destination is DeckOptionsDestination && destination.options.size > 1) {
-                requireContext().showDeckOptionsSelectionDialog(destination.options) { selectedOption ->
-                    Timber.i("Deck options target selected: ${selectedOption.deckId}")
-                    val updatedDestination =
-                        destination.copy(
-                            deckId = selectedOption.deckId,
-                            isFiltered = selectedOption.isFiltered,
-                        )
-                    startActivity(updatedDestination.toIntent(requireContext()))
-                }
-                return@collectIn
-            }
             startActivity(destination.toIntent(requireContext()))
         }
 

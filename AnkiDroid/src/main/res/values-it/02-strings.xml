@@ -69,11 +69,11 @@
     <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
     <string name="webview_crash_unknown">Errore sconosciuto</string>
     <string name="webview_crash_unknwon_detailed">Questo è stato causato da un errore interno nella WebView</string>
-    <string name="webview_crash_oom">Memoria insufficiente</string>
+    <string name="webview_crash_oom">Out of memory</string>
     <string name="webview_crash_oom_details">La WebView è stata terminata dal sistema. Questo accade tipicamente quando l\'applicazione si esaurisce di memoria, spesso a causa di caratteri o supporti di grandi dimensioni.</string>
     <string name="webview_crash_nonfatal">Il renderer WebView si è bloccato. Causa: %s</string>
-    <string name="webview_crash_fatal">Errore fatale: il renderer WebView si è bloccato. Causa: %s</string>
-    <string name="webview_crash_loop_dialog_title">Errore di restituzione grafica del sistema WebView</string>
+    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
     <string name="webview_crash_loop_dialog_content">La WebView sistema non è riuscita a rendere la carta «%1$s».\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">Contrassegni</string>
@@ -130,7 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d di %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Rinomina</string>
     <string name="checks_action" maxLength="28">Verifica</string>
-    <string name="empty_cards" maxLength="28">Carte vuote</string>
     <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Eliminazione mazzo in corso&#8230;</string>
     <string name="info_rate">Valuta AnkiDroid</string>
@@ -165,7 +164,6 @@
     <string name="export_choice_save_to">Salva su</string>
     <string name="export_saving_exported_collection">Salvataggio del file esportato&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opzioni</string>
-    <string name="menu__deck_options" maxLength="28">Opzioni di mazzo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opzioni di studio</string>
     <string name="select_tts" maxLength="28">Imposta lingua TTS</string>
     <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
@@ -185,7 +183,6 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Sfondo</string>
-    <string name="choose_an_image" maxLength="41">Scegli un\'immagine</string>
     <string name="remove_wallpaper_image" maxLength="41">Rimuovi sfondo</string>
     <string name="remove_background_image">Sei sicuro di voler rimuovere lo sfondo?</string>
     <!-- Card Template Browser Appearance -->
@@ -208,7 +205,7 @@
     <string name="valid_js_api_version">Versione API JS AnkiDroid non valida. Contatta lo sviluppatore %s, o visualizza la wiki</string>
     <string name="update_js_api_version">Aggiornamento disponibile per API JS AnkiDroid. Contatta lo sviluppatore %s, o visualizza wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Visualizza</string>
-    <string name="anki_js_error_code">(Codice errore: %d)</string>
+    <string name="anki_js_error_code">(Error code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Copiato negli appunti</string>
     <string name="about_ankidroid_error_copy_debug_info">Errore nella copia delle informazioni di debug negli appunti</string>
@@ -216,7 +213,7 @@
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Cerca mazzi</string>
-    <string name="ankidroid_init_failed_webview_title">Errore Fatale</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basa sulla WebView di Sistema che non è disponibile. Questo può verificarsi se il sistema sta installando aggiornamenti. Sei pregato di riprovare tra qualche minuto.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid non può accedere all\'archivio a causa di un errore di Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -263,11 +260,11 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Scarica il mazzo</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Apri nel browser</string>
-    <string name="try_again">Riprova</string>
+    <string name="try_again">Try again</string>
     <string name="cancel_download">Annulla lo scaricamento</string>
     <string name="cancel_download_question_title">Annullare lo scaricamento?</string>
     <string name="downloading_file">Scaricamento di %s in corso</string>
-    <string name="import_deck">Importa il mazzo</string>
+    <string name="import_deck">Import deck</string>
     <string name="something_wrong">Qualcosa è andato storto, si prega di riprovare</string>
     <string name="download_failed">Scaricamento non riuscito</string>
     <string name="deck_download_progress_message">È possibile utilizzare altre applicazioni mentre lo scaricamento è in esecuzione</string>
@@ -304,7 +301,7 @@
     <string name="intro_ankidroid_tagline_one">Studia meno</string>
     <string name="intro_ankidroid_tagline_two">Memorizza di più</string>
     <string name="intro_short_ankidroid_explanation">L\'algoritmo delle carte di Anki ti fa risparmiare tempo focalizzandosi su ciò che ricordi meno e preservando ciò che già ricordi</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Per iniziare</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
     <string name="intro_sync_from_ankiweb">Sincronizza da AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid non è ancora inizializzato. Aprirlo e riprovare</string>
@@ -349,13 +346,12 @@
     <string name="orphan_note_message">L\'eliminazione di questo tipo di carta lascerà alcune note senza alcuna carta.</string>
     <string name="voice_not_supported">Voce non supportata. Scegli un\'altra voce o installa un motore vocale.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Selettore mazzi</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Elimina mazzo senza conferma</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor note</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Seleziona mazzo</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleziona tipo di nota</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor dei tag</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor template carte</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Modifica il modello frontale</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Modifica il modello posteriore</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifica stile</string>

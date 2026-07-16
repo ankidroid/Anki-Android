@@ -81,6 +81,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
@@ -89,7 +90,6 @@ import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
-import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 @Suppress("LeakingThis")
@@ -192,7 +192,7 @@ open class CardBrowser :
         }
         super.onCreate(savedInstanceState)
         binding = ActivityCardBrowserBinding.inflate(layoutInflater)
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
         }
 
@@ -613,7 +613,7 @@ open class CardBrowser :
     /**
      * Implementation of `by viewModels()` for use in [onCreate]
      *
-     * @see showedActivityFailedScreen - we may not have AnkiDroidApp.instance and therefore can't
+     * @see showedActivityFailedScreen - we may not have appContext and therefore can't
      * create the ViewModel
      *
      * @param fragmented True if `noteEditorFrame` is non-null (x-large displays)

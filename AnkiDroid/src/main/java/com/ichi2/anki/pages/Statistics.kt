@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
+
 package com.ichi2.anki.pages
 
 import android.os.Bundle
@@ -51,13 +39,14 @@ class Statistics : PageFragment(R.layout.page_statistics) {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Hide the back arrow when requested (e.g. hosted in bottom nav)
+        if (arguments?.getBoolean(ARG_HIDE_BACK_BUTTON) == true) {
+            binding.toolbar.navigationIcon = null
+        }
+
         binding.deckName.setOnClickListener {
             startDeckSelection(allowAll = false, allowFiltered = false, skipEmptyDefault = true)
         }
-        binding.appBar
-            .addLiftOnScrollListener { _, backgroundColor ->
-                activity?.window?.statusBarColor = backgroundColor
-            }
 
         binding.toolbar.apply {
             menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
@@ -131,6 +120,7 @@ class Statistics : PageFragment(R.layout.page_statistics) {
     }
 
     companion object {
+        const val ARG_HIDE_BACK_BUTTON = "hideBackButton"
         private const val KEY_DECK_NAME = "key_deck_name"
     }
 }

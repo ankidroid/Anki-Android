@@ -17,7 +17,6 @@ package com.ichi2.anki.previewer
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
@@ -98,11 +97,11 @@ class TemplatePreviewerFragment :
     suspend fun getSafeClozeOrd(): CardOrdinal = viewModel.getSafeClozeOrd()
 
     companion object {
-        const val ARGS_KEY = "templatePreviewerArgs"
+        const val ARG_KEY = "arg_key"
 
         fun newInstance(arguments: TemplatePreviewerArguments): TemplatePreviewerFragment =
             TemplatePreviewerFragment().apply {
-                val args = bundleOf(ARGS_KEY to arguments)
+                val args = Bundle().apply { putParcelable(ARG_KEY, arguments) }
                 this.arguments = args
             }
     }

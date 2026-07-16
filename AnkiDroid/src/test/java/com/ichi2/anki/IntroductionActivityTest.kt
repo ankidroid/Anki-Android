@@ -18,9 +18,9 @@ package com.ichi2.anki
 
 import android.Manifest.permission.INTERNET
 import android.content.Intent
-import androidx.core.os.bundleOf
+import android.os.Bundle
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.SingleFragmentActivity.Companion.FRAGMENT_NAME_EXTRA
+import com.ichi2.anki.SingleFragmentActivity.Companion.EXTRA_FRAGMENT_NAME
 import com.ichi2.anki.account.LoginFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.DeckPickerWithNewCollection
@@ -42,8 +42,8 @@ class IntroductionActivityTest : RobolectricTest() {
     @Test
     fun `Sync without storage permission opens PermissionsActivity`() =
         runTest {
-            // Robolectric runs at API 35 where selectAnkiDroidFolder returns AppPrivateFolder,
-            // whose required PermissionSet is just [INTERNET]. Denying INTERNET is the cheapest
+            // Robolectric runs at API 35 where selectStoragePermissions returns PermissionSet.APP_PRIVATE,
+            // which is just [INTERNET]. Denying INTERNET is the cheapest
             // way to make hasCollectionStoragePermissions() return false in this environment.
             withDeniedPermissions(INTERNET) {
                 val activity = startRegularActivity<IntroductionActivity>(Intent())
@@ -73,7 +73,7 @@ class IntroductionActivityTest : RobolectricTest() {
             )
             assertThat(
                 "hosted fragment is LoginFragment",
-                intent.getStringExtra(FRAGMENT_NAME_EXTRA),
+                intent.getStringExtra(EXTRA_FRAGMENT_NAME),
                 equalTo(LoginFragment::class.jvmName),
             )
         }
@@ -85,7 +85,7 @@ class IntroductionActivityTest : RobolectricTest() {
 
             activity.supportFragmentManager.setFragmentResult(
                 SetupCollectionFragment.FRAGMENT_KEY,
-                bundleOf(SetupCollectionFragment.RESULT_KEY to DeckPickerWithNewCollection),
+                Bundle().apply { putParcelable(SetupCollectionFragment.RESULT_KEY, DeckPickerWithNewCollection) },
             )
 
             val intent = assertNotNull(shadowOf(activity).nextStartedActivity)
@@ -108,7 +108,7 @@ class IntroductionActivityTest : RobolectricTest() {
     private fun IntroductionActivity.clickSync() {
         supportFragmentManager.setFragmentResult(
             SetupCollectionFragment.FRAGMENT_KEY,
-            bundleOf(SetupCollectionFragment.RESULT_KEY to SyncFromExistingAccount),
+            Bundle().apply { putParcelable(SetupCollectionFragment.RESULT_KEY, SyncFromExistingAccount) },
         )
     }
 }

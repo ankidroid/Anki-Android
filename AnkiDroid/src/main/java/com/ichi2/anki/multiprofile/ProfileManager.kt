@@ -1,24 +1,9 @@
-/*
- * Copyright (c) 2026 Ashish Yadav <mailtoashish693@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2026 Ashish Yadav <mailtoashish693@gmail.com>
 
 package com.ichi2.anki.multiprofile
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.webkit.CookieManager
@@ -27,11 +12,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionHelper.PREF_COLLECTION_PATH
-import com.ichi2.anki.CollectionHelper.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
@@ -405,7 +390,7 @@ class ProfileManager private constructor(
      * The default-location fallback used when the profile has never written `PREF_COLLECTION_PATH`.
      *
      * TODO: consolidate with the profile-creation path this should delegate to
-     * `CollectionHelper.getDefaultAnkiDroidDirectory(profileContext, directoryName = ...)`
+     * `getDefaultAnkiDroidDirectory(profileContext, directoryName = ...)`
      * that gives us legacy-storage handling and `SystemStorageException`-on-null for free, and keeps
      * the "where does a profile collection live" decision in a single place shared with
      * `ensureProfileCollectionPath`.

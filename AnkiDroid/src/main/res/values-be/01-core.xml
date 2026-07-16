@@ -24,9 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">Калоды</string>
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Аглядальнік картак</string>
-    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">Статыстыка</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">Налады</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Даведка</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
@@ -39,7 +37,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Разгарнуць</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Згарнуць</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Імпартаваць</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Калекцыя пустая</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
     <!-- Reviewer -->
@@ -68,14 +65,13 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Цяжка</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">Добра</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Лёгка</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' уключаны</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">«%s» уключаны</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Адрабіць</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Узнавіць</string>
     <!-- flashcard_portrait.xml -->
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in the Study Screen. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Адрабіць штрых</string>
     <string name="move_all_to_deck">Перамясціць усё ў калоду</string>
-    <string name="rename_deck" maxLength="28">Перайменаваць калоду</string>
     <string name="create_shortcut">Стварыць ярлык</string>
     <string name="browse_cards">Праглядзець карткі</string>
     <string name="edit_deck_description" comment="edit the deck description">Рэдагаваць апісанне</string>
@@ -84,7 +80,6 @@
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
     <string name="menu_dismiss_note" maxLength="41">Схаваць / выдаліць</string>
     <string name="rename_flag">Перайменаваць пазнакі</string>
-    <string name="menu_flag_card" maxLength="28">Пазначыць картку</string>
     <string name="menu_edit_tags" maxLength="28">Адрэдагаваць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
     <string name="menu_search" maxLength="28">Шукаць у %1$s</string>
@@ -107,13 +102,13 @@
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_congrats_finished">Віншуем! На сёння ўсе карткі вывучаны.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Калода скончана! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Калода завершана! %s</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Сінхранізаваць</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Вы сапраўды хочаце скасаваць сінхранізацыю?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Працягнуць сiнхранiзацыю</string>
-    <string name="sync_cancelled" tools:ignore="UnusedResources">Сiнхранiзацыя скасаваная</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Сінхранізацыя скасавана</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі&#8230;\nГэта можа заняць некаторы час.</string>
     <string name="syncing_media">Сінхранізацыя медыяфайлаў</string>
     <string name="export_deck" maxLength="28">Экспартаваць калоду</string>
@@ -179,11 +174,11 @@
     <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">Гэтыя дазволы неабходна ўручную адклікаць з налад</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Выдаліць уліковы запіс</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Імгненнае дабаўленне карткі</string>
+    <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Імгненнае дадаванне карткі</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Інтэрнэт</string>
     <string name="permission_access_summary">Абавязкова, каб праграма працавала</string>
-    <string name="permission_required_message">Дазвольце AnkiDroid атрымаць доступ ‘%s’, каб працягнуць</string>
+    <string name="permission_required_message">Дазвольце AnkiDroid атрымаць доступ «%s», каб працягнуць</string>
     <!-- Multiple profile -->
     <string name="add_profile">Дадаць профіль</string>
 </resources>

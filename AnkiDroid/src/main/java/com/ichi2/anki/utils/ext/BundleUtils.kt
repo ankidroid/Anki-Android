@@ -1,24 +1,10 @@
-/*
- Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
- Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Tarek Mohamed Abdalla <tarekkma@gmail.com>
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki.utils.ext
 
 import android.os.Bundle
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 
 /**
  * Retrieves a [Long] value from a [Bundle] using a key, returns null if not found
@@ -106,21 +92,6 @@ inline fun <reified T> Bundle.requireParcelable(key: String): T {
         "Parcelable in '$key' was null"
     }
 }
-
-/**
- * Returns a new [Bundle] with the given key/value pairs as elements.
- *
- * Convenience method, allowing a `null` pair to mean 'exclude from the bundle'
- *
- * ```kotlin
- * bundleOfNotNull(
- *     optional?.let { KEY to it }
- * )
- * ```
- *
- * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
- */
-fun bundleOfNotNull(vararg pairs: Pair<String, Any>?): Bundle = bundleOf(*pairs.mapNotNull { it }.toTypedArray())
 
 /**
  * Identical behavior with [BundleCompat.getParcelable] but simplifies the call sites which are

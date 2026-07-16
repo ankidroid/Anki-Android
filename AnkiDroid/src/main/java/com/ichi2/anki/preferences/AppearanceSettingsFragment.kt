@@ -24,6 +24,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
@@ -33,6 +34,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.updateCurrentTheme
@@ -51,8 +53,11 @@ class AppearanceSettingsFragment : SettingsFragment() {
         get() = "prefs.appearance"
 
     override fun initSubscreen() {
+        preferenceScreen.title = TR.preferencesAppearance()
+
         // Configure background
         backgroundImage = requirePreference<Preference>("deckPickerBackground")
+        backgroundImage!!.title = TR.sentenceCase.selectImage
         removeBackgroundPref = requirePreference<Preference>("removeWallPaper")
         backgroundImage!!.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
@@ -130,6 +135,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
         val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
         val nightThemePref = requirePreference<ListPreference>(R.string.night_theme_key)
 
+        dayThemePref.isEnabled = appTheme != AppTheme.NIGHT
+        nightThemePref.isEnabled = appTheme != AppTheme.DAY
+
         // Remove follow system options in android versions which do not have system dark mode
         // When minSdk reaches 29, the only necessary change is to remove this if-block
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
@@ -149,6 +157,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
                 if (previousThemeId != Themes.currentTheme.styleResId) {
                     ActivityCompat.recreate(requireActivity())
+                } else {
+                    dayThemePref.isEnabled = newValue != getString(AppTheme.NIGHT.entryResId)
+                    nightThemePref.isEnabled = newValue != getString(AppTheme.DAY.entryResId)
                 }
             }
         }

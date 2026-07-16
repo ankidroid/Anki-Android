@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.ui.internationalization
 
@@ -47,7 +33,7 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.toggleSuspend, equalTo("Toggle suspend"))
                     assertThat(TR.sentenceCase.toggleBury, equalTo("Toggle bury"))
                     assertThat(TR.sentenceCase.customStudy, equalTo("Custom study"))
-                    assertThat(TR.sentenceCase.emptyCards, equalTo("Empty cards"))
+                    assertThat(TR.sentenceCase.emptyCardsTitle, equalTo("Empty cards"))
                     assertThat(TR.sentenceCase.emptyTrash, equalTo("Empty trash"))
                     assertThat(TR.sentenceCase.restoreDeleted, equalTo("Restore deleted"))
                     assertThat(TR.sentenceCase.changeNoteType, equalTo("Change note type"))
@@ -55,6 +41,29 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.browserOptions, equalTo("Browser options"))
                     assertThat(TR.sentenceCase.changeDeck, equalTo("Change deck"))
                     assertThat(TR.sentenceCase.toggleMark, equalTo("Toggle mark"))
+                    assertThat(TR.sentenceCase.selectImage, equalTo("Select image"))
+                    assertThat(TR.sentenceCase.deckOptions, equalTo("Deck options"))
+                    assertThat(TR.sentenceCase.answerAgain, equalTo("Answer again"))
+                    assertThat(TR.sentenceCase.answerHard, equalTo("Answer hard"))
+                    assertThat(TR.sentenceCase.answerGood, equalTo("Answer good"))
+                    assertThat(TR.sentenceCase.selectiveStudy, equalTo("Selective study"))
+                    assertThat(TR.sentenceCase.chooseTags, equalTo("Choose tags"))
+                    assertThat(TR.sentenceCase.repositionNewCards, equalTo("Reposition new cards"))
+                    assertThat(TR.sentenceCase.allFields, equalTo("All fields"))
+                    assertThat(TR.sentenceCase.tagMissing, equalTo("Tag missing"))
+                    assertThat(TR.sentenceCase.checkMediaDeleteUnused, equalTo("Delete unused"))
+
+                    // input-taking accessors: a Title Case input only maps to the sentence form
+                    // if the correct sentence-case resource is wired
+                    assertThat(TR.sentenceCase.gestureToggleWhiteboard("Toggle Whiteboard"), equalTo("Toggle whiteboard"))
+                    assertThat(TR.sentenceCase.gestureFlagRed("Toggle Red Flag"), equalTo("Toggle red flag"))
+                    assertThat(TR.sentenceCase.gestureFlagOrange("Toggle Orange Flag"), equalTo("Toggle orange flag"))
+                    assertThat(TR.sentenceCase.gestureFlagGreen("Toggle Green Flag"), equalTo("Toggle green flag"))
+                    assertThat(TR.sentenceCase.gestureFlagBlue("Toggle Blue Flag"), equalTo("Toggle blue flag"))
+                    assertThat(TR.sentenceCase.gestureFlagPink("Toggle Pink Flag"), equalTo("Toggle pink flag"))
+                    assertThat(TR.sentenceCase.gestureFlagTurquoise("Toggle Turquoise Flag"), equalTo("Toggle turquoise flag"))
+                    assertThat(TR.sentenceCase.gestureFlagPurple("Toggle Purple Flag"), equalTo("Toggle purple flag"))
+                    assertThat(TR.sentenceCase.gestureFlagRemove("Remove Flag"), equalTo("Remove flag"))
                 }
             }.close()
 
@@ -68,6 +77,8 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.checkDatabase, equalTo("Check database"))
                     assertThat(TR.sentenceCase.checkMediaTitle, equalTo("Check media"))
                     assertThat(TR.sentenceCase.checkMediaAction, equalTo("Check media"))
+                    assertThat(TR.sentenceCase.emptyCards, equalTo("Empty cards"))
+                    assertThat(TR.sentenceCase.flagCard, equalTo("Flag card"))
                     assertThat(TR.sentenceCase.frontTemplate, equalTo("Front template"))
                     assertThat(TR.sentenceCase.backTemplate, equalTo("Back template"))
                     assertThat(TR.sentenceCase.renameDeck, equalTo("Rename deck"))
@@ -75,6 +86,7 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.deckOptions, equalTo("Deck options"))
                     assertThat(TR.sentenceCase.deleteDeck, equalTo("Delete deck"))
                     assertThat(TR.sentenceCase.createDeck, equalTo("Create deck"))
+                    assertThat(TR.sentenceCase.selectDeck, equalTo("Select deck"))
                     assertThat(TR.sentenceCase.logIn, equalTo("Log in"))
                     assertThat(TR.sentenceCase.logOut, equalTo("Log out"))
                     assertThat(TR.sentenceCase.cardInfo, equalTo("Card info"))
@@ -90,6 +102,10 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.copyDebugInfo, equalTo("Copy debug info"))
                     assertThat(TR.sentenceCase.addField, equalTo("Add field"))
                     assertThat(TR.sentenceCase.allDecks, equalTo("All decks"))
+                    assertThat(TR.sentenceCase.cardStatsCurrentCardStudy("Current Card (Study)"), equalTo("Current card (study)"))
+                    assertThat(TR.sentenceCase.cardStatsCurrentCardBrowse("Current Card (Browse)"), equalTo("Current card (browse)"))
+                    assertThat(TR.sentenceCase.cardStatsPreviousCardStudy("Previous Card (Study)"), equalTo("Previous card (study)"))
+                    assertThat(TR.sentenceCase.gradeNow, equalTo("Grade now"))
 
                     assertThat("syncMediaLogTitle", TR.syncMediaLogTitle(), equalTo("Media Sync Log"))
                     assertThat(TR.sentenceCase.mediaSyncLog, equalTo("Media sync log"))

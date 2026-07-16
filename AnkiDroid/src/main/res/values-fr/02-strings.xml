@@ -69,10 +69,10 @@
     <string name="leech_notification">Carte marquée « encombrante »</string>
     <string name="webview_crash_unknown">Erreur inconnue</string>
     <string name="webview_crash_unknwon_detailed">Erreur interne dans le système WebView</string>
-    <string name="webview_crash_oom">Mémoire insuffisante</string>
+    <string name="webview_crash_oom">Out of memory</string>
     <string name="webview_crash_oom_details">WebView a été arrêté par le système. Cela se produit généralement lorsque l\'application manque de mémoire, souvent en raison de la taille des polices ou des fichiers.</string>
     <string name="webview_crash_nonfatal">Plantage du moteur de rendu Webview. Cause : %s</string>
-    <string name="webview_crash_fatal">Erreur Fatale : Plantage du moteur de rendu Webview. Cause : %s</string>
+    <string name="webview_crash_fatal">Erreur fatale : Plantage du moteur de rendu WebView. Cause : %s</string>
     <string name="webview_crash_loop_dialog_title">Échec de rendu du système WebView</string>
     <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte « %1$s ».\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Glissez pour annuler</string>
@@ -130,7 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sur %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renommer</string>
     <string name="checks_action" maxLength="28">Vérifier</string>
-    <string name="empty_cards" maxLength="28">Cartes vides</string>
     <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Suppression du paquet&#8230;</string>
     <string name="info_rate">Noter AnkiDroid</string>
@@ -154,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du paquet Anki</string>
     <string name="export_share_title">Envoyer le paquet Anki ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s cartes</string>
-    <string name="export_email_text"><![CDATA[        Bonjour !
+    <string name="export_email_text"><![CDATA[
+        Bonjour !
         <br/><br/>
         Ceci est un jeu de cartes Anki envoyé depuis AnkiDroid[1].
         Essayez de l\'ouvrir en utilisant l\'une des distributions Anki disponibles[2] et profitez d\'un apprentissage facile et efficace !<br/><br/>
@@ -165,7 +165,6 @@
     <string name="export_choice_save_to">Enregistrer sous</string>
     <string name="export_saving_exported_collection">Enregistrement du fichier exporté&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
-    <string name="menu__deck_options" maxLength="28">Options du deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>
     <string name="select_tts" maxLength="28">Définir la langue de synthèse vocale</string>
     <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
@@ -185,7 +184,6 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Arrière-plan</string>
-    <string name="choose_an_image" maxLength="41">Sélectionner une image</string>
     <string name="remove_wallpaper_image" maxLength="41">Retirer le fond d\'écran</string>
     <string name="remove_background_image">Êtes-vous sûr de vouloir supprimer l\'arrière-plan ?</string>
     <!-- Card Template Browser Appearance -->
@@ -263,7 +261,7 @@
     <string name="percentage">%s %%</string>
     <string name="download_deck">Télécharger le paquet</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Ouvrir dans le navigateur web</string>
-    <string name="try_again">Réessayer</string>
+    <string name="try_again">Essayez à nouveau</string>
     <string name="cancel_download">Annuler le téléchargement</string>
     <string name="cancel_download_question_title">Annuler le téléchargement ?</string>
     <string name="downloading_file">Téléchargement de %s</string>
@@ -349,13 +347,12 @@
     <string name="orphan_note_message">Supprimer ce type de carte laissera certaines notes sans cartes.</string>
     <string name="voice_not_supported">Voix non prise en charge. Essayez une autre ou installez un moteur vocal.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Sélecteur de paquet</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Sélectionneur de paquet</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Supprimer le paquet sans confirmation</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Éditeur de notes</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Choisir le paquet</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Sélectionner le type de note</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Éditeur d\'étiquette</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Éditeur de modèle de carte</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Éditeur de modèles de cartes</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Modifier le modèle du recto</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Modifier le modèle verso</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifier le style</string>

@@ -22,7 +22,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -31,7 +30,7 @@ import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentPermissionsBottomSheetBinding
 import com.ichi2.anki.utils.ext.behavior
-import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.anki.utils.ext.requireParcelable
 import dev.androidbroadcast.vbpd.viewBinding
 
 /**
@@ -64,14 +63,11 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.closeButton.setOnClickListener { dismiss() }
-        childFragmentManager.setFragmentResultListener(DISMISS_RESULT_REQUEST_KEY, this) { _, _ ->
+        childFragmentManager.setFragmentResultListener(RESULT_DISMISS, this) { _, _ ->
             dismiss()
         }
 
-        val permissionSet =
-            requireNotNull(requireArguments().getParcelableCompat<PermissionSet>(PERMISSION_SET_ARGUMENT_KEY)) {
-                "Permission set cannot be null"
-            }
+        val permissionSet = requireArguments().requireParcelable<PermissionSet>(ARG_PERMISSION_SET)
         val permissionsFragment =
             requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
                 "invalid permissionsFragment"
@@ -92,13 +88,13 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         /**
          * Arguments key for the [PermissionSet] to launch this BottomSheet with.
          */
-        private const val PERMISSION_SET_ARGUMENT_KEY = "permission_set"
+        private const val ARG_PERMISSION_SET = "arg_permission_set"
 
         /**
          * Fragment result request key for dismissing this BottomSheet.
          * Public so that child fragments can set it.
          */
-        const val DISMISS_RESULT_REQUEST_KEY = "permissions_bottom_sheet_dismiss"
+        const val RESULT_DISMISS = "result_dismiss"
 
         /**
          * Starts this BottomSheet with the provided [PermissionSet].
@@ -109,7 +105,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         ) {
             val bottomSheet =
                 PermissionsBottomSheet().apply {
-                    arguments = bundleOf(PERMISSION_SET_ARGUMENT_KEY to permissionsSet)
+                    arguments = Bundle().apply { putParcelable(ARG_PERMISSION_SET, permissionsSet) }
                 }
             bottomSheet.show(fragmentManager, FRAGMENT_TAG)
         }

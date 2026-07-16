@@ -1,23 +1,10 @@
-/* **************************************************************************************
- * Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>                              *
- * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>                           *
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>                                   *
- * Copyright (c) 2009 Daniel Svard <daniel.svard@gmail.com>                             *
- * Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General Public License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General Public License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2009 Andrew Dubya <andrewdubya@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svard <daniel.svard@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
 
 // usage of 'this' in constructors when class is non-final - weak warning
 // should be OK as this is only non-final for tests
@@ -73,7 +60,9 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,16 +84,24 @@ import com.ichi2.anki.InitialActivity.StartupFailure.DirectoryNotAccessible
 import com.ichi2.anki.InitialActivity.StartupFailure.DiskFull
 import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
 import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
+import com.ichi2.anki.InitialActivity.StartupFailure.StorageUndecided
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
+import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsAddEditReminderHandler
+import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsStudyHandler
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.android.view.locationInWindow
+import com.ichi2.anki.common.android.AdaptionUtil
+import com.ichi2.anki.common.android.animationDisabled
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -139,9 +136,9 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
 import com.ichi2.anki.dialogs.EmptyCardsDialogFragment
 import com.ichi2.anki.dialogs.FatalErrorDialog
-import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
+import com.ichi2.anki.dialogs.ImportViewModel
 import com.ichi2.anki.dialogs.SchedulerUpgradeDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
@@ -161,11 +158,10 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
-import com.ichi2.anki.preferences.AdvancedSettingsFragment
-import com.ichi2.anki.preferences.PreferencesActivity
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -194,7 +190,6 @@ import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
-import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
@@ -221,6 +216,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -243,7 +239,7 @@ import kotlin.time.Duration.Companion.minutes
  *   * Blocks the UI and displays sync progress when syncing
  * * Displaying 'General' AnkiDroid options: backups, import, 'check media' etc...
  *   * General handler for error/global dialogs (search for 'as DeckPicker')
- *   * Such as import: [ImportDialogListener]
+ *   * Such as import: [ImportViewModel]
  * * A Floating Action Button [floatingActionMenu] allowing the user to quickly add notes/cards.
  * * A custom image as a background can be added: [applyDeckPickerBackground]
  */
@@ -254,7 +250,6 @@ import kotlin.time.Duration.Companion.minutes
 open class DeckPicker :
     NavigationDrawerActivity(),
     SyncErrorDialogListener,
-    ImportDialogListener,
     OnRequestPermissionsResultCallback,
     ChangeManager.Subscriber,
     ImportColpkgListener,
@@ -263,6 +258,8 @@ open class DeckPicker :
     CsvImportResultLauncherProvider,
     CollectionPermissionScreenLauncher {
     val viewModel: DeckPickerViewModel by viewModels()
+
+    private val importViewModel: ImportViewModel by viewModels()
 
     private lateinit var binding: ActivityHomescreenBinding
 
@@ -511,7 +508,7 @@ open class DeckPicker :
         setViewBinding(binding)
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
-        //  It seems that the original idea was for for this to only run once, on app start.
+        //  It seems that the original idea was for this to only run once, on app start.
         //  This method triggers backups, sync, and may re-show dialogs
         //  that may have been dismissed. Make this run only once?
         handleStartup()
@@ -520,6 +517,11 @@ open class DeckPicker :
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer()
+        if (Prefs.devBottomNavEnabled && !fragmented) {
+            disableDrawerSwipe()
+            disableDrawerIndicator()
+        }
+        setupBottomNavigation()
         setupEdgeToEdge()
         title = resources.getString(R.string.app_name)
 
@@ -586,9 +588,14 @@ open class DeckPicker :
             handleContextMenuSelection(result.option, result.deckId)
         }
 
-        setFragmentResultListener(StudyOptionsFragment.REQUEST_STUDY_OPTIONS_STUDY) { _, _ ->
+        registerStudyOptionsStudyHandler {
             Timber.d("Opening study screen from DeckPicker's study options panel")
             openReviewer()
+        }
+
+        registerStudyOptionsAddEditReminderHandler { did: DeckId ->
+            Timber.d("Opening review reminders screen from DeckPicker's study options panel")
+            openScheduleReminders(did)
         }
 
         pullToSyncWrapper.configureView(
@@ -596,7 +603,7 @@ open class DeckPicker :
             IMPORT_MIME_TYPES,
             DropHelper.Options
                 .Builder()
-                .setHighlightColor(R.color.material_lime_green_A700)
+                .setHighlightColor(CommonR.color.material_lime_green_A700)
                 .setHighlightCornerRadiusPx(0)
                 .build(),
             onReceiveContentListener,
@@ -650,7 +657,9 @@ open class DeckPicker :
 
             // hack for Roborazzi screenshot tests
             val fabBottomOffset = if (isRobolectric) 12.dp.toPx(this) else -12.dp.toPx(this)
-            floatingActionButtonBinding.root.updatePadding(bottom = bars.bottom + fabBottomOffset)
+            val bottomNavView = findViewById<View?>(R.id.bottom_navigation)
+            val bottomNavOffset = if (bottomNavView?.isVisible == true) BOTTOM_NAV_HEIGHT_DP.dp.toPx(this) else 0
+            floatingActionButtonBinding.root.updatePadding(bottom = bars.bottom + fabBottomOffset + bottomNavOffset)
 
             setRecyclerViewBottomPaddingAbove(floatingActionButtonBinding.fabMain)
             insets
@@ -796,6 +805,7 @@ open class DeckPicker :
                 data = deckList.data,
                 hasSubDecks = deckList.hasSubDecks,
             )
+            tryShowStudyOptionsPanel()
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
@@ -878,6 +888,9 @@ open class DeckPicker :
         viewModel.flowOfStartupResponse.filterNotNull().launchCollectionInLifecycleScope(::onStartupResponse)
         viewModel.flowOfShowContextMenu.launchCollectionInLifecycleScope(::showDeckPickerContextMenu)
         viewModel.flowOfShowRightClickContextMenu.launchCollectionInLifecycleScope(::showDeckPickerRightClickContextMenu)
+        // navigation should be done on RESUMED
+        importViewModel.importAddFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importAdd)
+        importViewModel.importReplaceFlow.launchCollectionInLifecycleScope(Lifecycle.State.RESUMED, ::importReplace)
     }
 
     private val onReceiveContentListener =
@@ -979,8 +992,8 @@ open class DeckPicker :
             }
             DeckPickerContextMenuOption.SCHEDULE_REMINDERS -> {
                 Timber.i("Scheduling review reminders for deck '%d'", deckId)
-                viewModel.scheduleReviewReminders(deckId)
                 dismissAllDialogFragments()
+                openScheduleReminders(deckId)
             }
         }
     }
@@ -989,16 +1002,16 @@ open class DeckPicker :
      * @see DeckPickerViewModel.handleStartup
      */
     private fun handleStartup() {
-        val context = AnkiDroidApp.instance
+        val context = appContext
 
         val environment: AnkiDroidEnvironment =
             object : AnkiDroidEnvironment {
-                private val folder = selectAnkiDroidFolder(context)
+                private val permissions = selectStoragePermissions(context)
 
-                override fun hasRequiredPermissions(): Boolean = folder.hasRequiredPermissions(context)
+                override fun hasRequiredPermissions(): Boolean = permissions.hasRequiredPermissions(context)
 
                 override val requiredPermissions: PermissionSet
-                    get() = folder.permissionSet
+                    get() = permissions
 
                 override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(context)
             }
@@ -1032,6 +1045,11 @@ open class DeckPicker :
             is StartupFailure.InitializationError -> FatalErrorDialog.build(this, failure).show()
             is DiskFull -> displayNoStorageError()
             is DBError -> displayDatabaseFailure(CustomExceptionData.fromException(failure.exception))
+            is StorageUndecided -> {
+                Timber.i("Displaying storage setup required")
+                // unreachable: storageDecision() cannot yet return Undecided outside tests
+                TODO("#19552 - replace with the storage setup flow.")
+            }
         }
     }
 
@@ -1055,8 +1073,7 @@ open class DeckPicker :
                 paddingEnd = 32.dp.toPx(this@DeckPicker),
             )
             positiveButton(R.string.open_settings) {
-                val settingsIntent = PreferencesActivity.getIntent(this@DeckPicker, AdvancedSettingsFragment::class)
-                requestPathUpdateLauncher.launch(settingsIntent)
+                requestPathUpdateLauncher.navigate(PreferencesDestination.Advanced)
             }
         }
     }
@@ -1106,8 +1123,11 @@ open class DeckPicker :
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
 
         menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
+        menu.findItem(R.id.action_import)?.title = TR.actionsImport()
         menu.findItem(R.id.action_check_database)?.title = TR.sentenceCase.checkDatabase
         menu.findItem(R.id.action_check_media)?.title = TR.sentenceCase.checkMediaAction
+        menu.findItem(R.id.action_empty_cards)?.title = TR.sentenceCase.emptyCards
+        menu.findItem(R.id.action_deck_rename)?.title = TR.sentenceCase.renameDeck
         menu.findItem(R.id.action_deck_delete)?.title = TR.sentenceCase.deleteDeck
         setupMediaSyncMenuItem(menu)
         // redraw menu synchronously to avoid flicker
@@ -1763,7 +1783,7 @@ open class DeckPicker :
             if (VersionUtils.isReleaseVersion) {
                 Timber.i("Displaying new features")
                 val infoIntent = Intent(this, Info::class.java)
-                infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
+                infoIntent.putExtra(Info.EXTRA_TYPE, Info.TYPE_NEW_VERSION)
                 showNewVersionInfoLauncher.launch(infoIntent)
             } else {
                 Timber.i("Dev Build - not showing 'new features'")
@@ -1927,13 +1947,13 @@ open class DeckPicker :
     }
 
     // Callback to import a file -- adding it to existing collection
-    override fun importAdd(importPath: String) {
+    fun importAdd(importPath: String) {
         Timber.d("importAdd() for file %s", importPath)
         startActivity(AnkiPackageImporterFragment.getIntent(this, importPath))
     }
 
     // Callback to import a file -- replacing the existing collection
-    override fun importReplace(importPath: String) {
+    fun importReplace(importPath: String) {
         Timber.d("importReplace() for file %s", importPath)
         importColpkg(importPath)
     }
@@ -1947,8 +1967,25 @@ open class DeckPicker :
      */
     private fun tryShowStudyOptionsPanel(): Boolean {
         val containerId = binding.studyoptionsFragment?.id ?: return false
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.commit {
             replace(containerId, StudyOptionsFragment())
+        }
+        return true
+    }
+
+    @NeedsTest("Instrumented tests for review reminders")
+    private fun tryShowScheduleRemindersPanel(deckId: DeckId): Boolean {
+        val sidePanel = binding.studyoptionsFragment ?: return false
+        if (!sidePanel.isVisible) return false
+        val newFragment =
+            ScheduleRemindersFragment.newInstance(
+                scope = ReviewReminderScope.DeckSpecific(deckId),
+                host = ScheduleRemindersFragment.FragmentHost.STUDY_OPTIONS_FRAGMENT,
+            )
+        supportFragmentManager.commit {
+            replace(sidePanel.id, newFragment)
+            addToBackStack(null)
         }
         return true
     }
@@ -1984,6 +2021,15 @@ open class DeckPicker :
         val intent = Intent()
         intent.setClass(this, StudyOptionsActivity::class.java)
         reviewLauncher.launch(intent)
+    }
+
+    @NeedsTest("Instrumented tests for review reminders")
+    private fun openScheduleReminders(deckId: DeckId) {
+        if (tryShowScheduleRemindersPanel(deckId)) return
+
+        // otherwise, we need to launch the activity
+        Timber.i("Opening Schedule Reminders")
+        viewModel.scheduleReviewReminders(deckId)
     }
 
     private fun openReviewerOrStudyOptions(selectionType: DeckSelectionType) {
@@ -2105,7 +2151,7 @@ open class DeckPicker :
             val createDeckDialog =
                 CreateDeckDialog(
                     context = this@DeckPicker,
-                    title = getString(R.string.rename_deck),
+                    title = TR.sentenceCase.renameDeck,
                     deckDialogType = CreateDeckDialog.DeckDialogType.RENAME_DECK,
                     parentId = null,
                 )
@@ -2133,12 +2179,22 @@ open class DeckPicker :
                 deckDialogType = CreateDeckDialog.DeckDialogType.DECK,
                 parentId = null,
             )
-        createDeckDialog.onNewDeckCreated = {
-            updateDeckList()
-            invalidateOptionsMenu()
-        }
+        createDeckDialog.onNewDeckCreated = ::onDeckCreated
         createDeckDialog.showDialog()
     }
+
+    /**
+     * Handles a deck created from the deck picker: selects it so the toolbar and, on tablets, the
+     * [StudyOptionsFragment] panel follow the new deck instead of the previously current deck, which
+     * is often the hidden Default deck.
+     */
+    private fun onDeckCreated(deckId: DeckId) =
+        launchCatchingTask {
+            viewModel.selectDeck(deckId).join()
+            updateDeckList()
+            tryShowStudyOptionsPanel()
+            invalidateOptionsMenu()
+        }
 
     /**
      * Deletes the provided deck, child decks, and all cards inside.
@@ -2191,13 +2247,11 @@ open class DeckPicker :
                 deckDialogType = CreateDeckDialog.DeckDialogType.SUB_DECK,
                 parentId = did,
             )
-        createDeckDialog.onNewDeckCreated = {
+        createDeckDialog.onNewDeckCreated = { deckId ->
             // a deck was created
             dismissAllDialogFragments()
             deckListAdapter.notifyDataSetChanged()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-            invalidateOptionsMenu()
+            onDeckCreated(deckId)
         }
         createDeckDialog.showDialog()
     }
@@ -2241,17 +2295,26 @@ open class DeckPicker :
                     shortcut("F", R.string.new_dynamic_deck),
                     if (fragmented) shortcut("DEL") { this.sentenceCase.deleteDeck } else null,
                     if (fragmented) shortcut("Shift+DEL", R.string.delete_deck_without_confirmation) else null,
-                    if (fragmented) shortcut("R", R.string.rename_deck) else null,
+                    if (fragmented) shortcut("R") { this.sentenceCase.renameDeck } else null,
                     shortcut("P", R.string.open_settings),
                     shortcut("M") { this.sentenceCase.checkMediaAction },
                     shortcut("Ctrl+E", R.string.export_collection),
-                    shortcut("Ctrl+Shift+I", R.string.menu_import),
+                    shortcut("Ctrl+Shift+I", Translations::actionsImport),
                     shortcut("Ctrl+Shift+N", R.string.model_browser_label),
                 ),
                 R.string.deck_picker_group,
             )
 
     companion object {
+        /**
+         * Material 3 BottomNavigationView content height in dp, *excluding* the system
+         * navigation-bar inset (that inset is added separately here via `bars.bottom`).
+         * Used to offset the FAB above the bar. The hosted-fragment container instead uses
+         * the bar's measured height, which already includes the inset so the two must not
+         * be swapped for one another.
+         */
+        private const val BOTTOM_NAV_HEIGHT_DP = 80
+
         /**
          * Result codes from other activities
          */

@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
+
 package com.ichi2.anki.browser
 
 import android.app.Dialog
@@ -21,7 +9,6 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
@@ -29,7 +16,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentRepositionCardBinding
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.create
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -75,7 +62,7 @@ class RepositionCardFragment : DialogFragment() {
             text = TR.browsingShiftPositionOfExistingCards()
             isChecked = requireArguments().getBoolean(ARG_SHIFT)
         }
-        val title = TR.browsingRepositionNewCards().toSentenceCase(R.string.sentence_reposition_new_cards)
+        val title = TR.sentenceCase.repositionNewCards
         val dialog =
             AlertDialog.Builder(requireContext()).create {
                 title(text = title)
@@ -88,12 +75,12 @@ class RepositionCardFragment : DialogFragment() {
                         binding.stepInputEditText.textAsIntOrNull() ?: return@positiveButton
                     setFragmentResult(
                         REQUEST_REPOSITION_NEW_CARDS,
-                        bundleOf(
-                            ARG_POSITION to position,
-                            ARG_STEP to step,
-                            ARG_RANDOM to binding.randomizeOrderCheck.isChecked,
-                            ARG_SHIFT to binding.shiftPositionCheck.isChecked,
-                        ),
+                        Bundle().apply {
+                            putInt(ARG_POSITION, position)
+                            putInt(ARG_STEP, step)
+                            putBoolean(ARG_RANDOM, binding.randomizeOrderCheck.isChecked)
+                            putBoolean(ARG_SHIFT, binding.shiftPositionCheck.isChecked)
+                        },
                     )
                 }
             }
@@ -150,12 +137,12 @@ class RepositionCardFragment : DialogFragment() {
             shift: Boolean,
         ) = RepositionCardFragment().apply {
             arguments =
-                bundleOf(
-                    ARG_QUEUE_TOP to queueTop,
-                    ARG_QUEUE_BOTTOM to queueBottom,
-                    ARG_RANDOM to random,
-                    ARG_SHIFT to shift,
-                )
+                Bundle().apply {
+                    putInt(ARG_QUEUE_TOP, queueTop)
+                    putInt(ARG_QUEUE_BOTTOM, queueBottom)
+                    putBoolean(ARG_RANDOM, random)
+                    putBoolean(ARG_SHIFT, shift)
+                }
         }
     }
 }

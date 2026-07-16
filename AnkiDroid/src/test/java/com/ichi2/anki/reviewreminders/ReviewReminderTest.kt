@@ -97,90 +97,90 @@ class ReviewReminderTest : RobolectricTest() {
     }
 
     @Test
-    fun `notification should immediately fire if there was no scheduled firing`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification not delivered if there was no scheduled firing`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 6.hours.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = (-1).minutes.inWholeMilliseconds.toInt(),
-            shouldImmediatelyFire = true,
+            latestNotifDelivered = false,
         )
     }
 
     @Test
-    fun `notification should not immediately fire if there was a scheduled firing`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification delivered if there was a scheduled firing`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 6.hours.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = 1.minutes.inWholeMilliseconds.toInt(),
-            shouldImmediatelyFire = false,
+            latestNotifDelivered = true,
         )
     }
 
     @Test
-    fun `notification should immediately fire if scheduled firing time is recent and there was no scheduled firing`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification not delivered if scheduled firing time is recent and there was no scheduled firing`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 2.minutes.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = (-1).minutes.inWholeMilliseconds.toInt(),
-            shouldImmediatelyFire = true,
+            latestNotifDelivered = false,
         )
     }
 
     @Test
-    fun `notification should not immediately fire if scheduled firing time is recent and there was a scheduled firing`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification delivered if scheduled firing time is recent and there was a scheduled firing`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 1.minutes.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = 0,
-            shouldImmediatelyFire = false,
+            latestNotifDelivered = true,
         )
     }
 
     @Test
-    fun `notification should immediately fire if latest firing was a long time ago`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification not delivered if latest firing was a long time ago`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 0,
             lastFiringOffsetFromWindowStartMs = (-2).days.inWholeMilliseconds.toInt(),
-            shouldImmediatelyFire = true,
+            latestNotifDelivered = false,
         )
     }
 
     @Test
-    fun `notification should immediately fire even if next window is approaching if there was no scheduled firing`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification not delivered even if next window is approaching if there was no scheduled firing`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = (-1).minutes.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = (-25).hours.inWholeMilliseconds.toInt(),
-            shouldImmediatelyFire = true,
+            latestNotifDelivered = false,
         )
     }
 
     @Test
-    fun `notification should not immediately fire if scheduled firing was just late`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification delivered if scheduled firing was just late`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 23.hours.inWholeMilliseconds.toInt(),
             lastFiringOffsetFromWindowStartMs = 22.hours.inWholeMilliseconds.toInt(),
-            shouldImmediatelyFire = false,
+            latestNotifDelivered = true,
         )
     }
 
     @Test
-    fun `notification should immediately fire if scheduled firing is now and latest firing was in the past`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification not delivered if scheduled firing is now and latest firing was in the past`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 0,
             lastFiringOffsetFromWindowStartMs = (-1).minutes.inWholeMilliseconds.toInt(),
-            shouldImmediatelyFire = true,
+            latestNotifDelivered = false,
         )
     }
 
     @Test
-    fun `notification should not immediately fire if scheduled firing is now and latest firing was just now`() {
-        shouldImmediatelyFireTest(
+    fun `latest notification delivered if scheduled firing is now and latest firing was just now`() {
+        latestNotifDeliveredTest(
             currentTimeOffsetFromWindowStartMs = 0,
             lastFiringOffsetFromWindowStartMs = 0,
-            shouldImmediatelyFire = false,
+            latestNotifDelivered = true,
         )
     }
 
-    private fun shouldImmediatelyFireTest(
+    private fun latestNotifDeliveredTest(
         currentTimeOffsetFromWindowStartMs: Int,
         lastFiringOffsetFromWindowStartMs: Int,
-        shouldImmediatelyFire: Boolean,
+        latestNotifDelivered: Boolean,
     ) {
         val reviewReminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(hour = 1, minute = 0))
 
@@ -202,7 +202,7 @@ class ReviewReminderTest : RobolectricTest() {
         }
         reviewReminder.latestNotifTime = lastFiring.timeInMillis
 
-        assertThat(reviewReminder.shouldImmediatelyFire(), equalTo(shouldImmediatelyFire))
+        assertThat(reviewReminder.latestNotifDelivered(), equalTo(latestNotifDelivered))
 
         TimeManager.reset()
     }

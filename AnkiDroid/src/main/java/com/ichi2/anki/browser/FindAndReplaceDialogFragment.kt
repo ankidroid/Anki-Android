@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
 
 package com.ichi2.anki.browser
 
@@ -24,8 +11,6 @@ import android.widget.ArrayAdapter
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
@@ -46,7 +31,8 @@ import com.ichi2.anki.databinding.FragmentFindReplaceBinding
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.customView
@@ -72,20 +58,14 @@ import timber.log.Timber
 class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
     private lateinit var binding: FragmentFindReplaceBinding
 
-    private val idsFile: IdsFile
-        get() =
-            requireNotNull(
-                BundleCompat.getParcelable(
-                    requireArguments(),
-                    ARG_IDS,
-                    IdsFile::class.java,
-                ),
-            )
+    private val idsFile: IdsFile by lazy {
+        requireArguments().requireParcelable(ARG_IDS)
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = FragmentFindReplaceBinding.inflate(layoutInflater)
         setupLabels()
-        val title = TR.browsingFindAndReplace().toSentenceCase(R.string.sentence_find_and_replace)
+        val title = TR.sentenceCase.findAndReplace
         return AlertDialog
             .Builder(requireContext())
             .show {
@@ -130,7 +110,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             binding.onlySelectedNotesCheckBox.isEnabled = noteIds.isNotEmpty()
             val fieldsNames =
                 buildList {
-                    add(TR.browsingAllFields().toSentenceCase(R.string.sentence_all_fields))
+                    add(TR.sentenceCase.allFields)
                     add(TR.editingTags())
                     addAll(withCol { fieldNamesForNoteIds(noteIds) })
                 }
@@ -166,15 +146,15 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
         Timber.i("Sending request to find and replace...")
         setFragmentResult(
             REQUEST_FIND_AND_REPLACE,
-            bundleOf(
-                ARG_SEARCH to search.toString(),
-                ARG_REPLACEMENT to replacement.toString(),
-                ARG_FIELD to selectedField,
-                ARG_ONLY_SELECTED_NOTES to onlyInSelectedNotes,
+            Bundle().apply {
+                putString(ARG_SEARCH, search.toString())
+                putString(ARG_REPLACEMENT, replacement.toString())
+                putString(ARG_FIELD, selectedField)
+                putBoolean(ARG_ONLY_SELECTED_NOTES, onlyInSelectedNotes)
                 // "Ignore case" checkbox text => when it's checked we pass false to the backend
-                ARG_MATCH_CASE to !ignoreCase,
-                ARG_REGEX to inputAsRegex,
-            ),
+                putBoolean(ARG_MATCH_CASE, !ignoreCase)
+                putBoolean(ARG_REGEX, inputAsRegex)
+            },
         )
     }
 

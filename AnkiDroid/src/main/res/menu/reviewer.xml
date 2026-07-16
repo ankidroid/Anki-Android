@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -60,7 +63,7 @@
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_flag"
-        android:title="@string/menu_flag_card"
+        tools:title="Flag card"
         android:icon="@drawable/ic_flag_transparent"
         ankidroid:showAsAction="always" >
         <menu>
@@ -201,7 +204,7 @@
     <item
         android:id="@+id/action_open_deck_options"
         android:icon="@drawable/ic_tune_white"
-        android:title="@string/menu__deck_options" />
+        tools:title="Deck options" />
     <item
         android:id="@+id/action_toggle_auto_advance"
         android:icon="@drawable/ic_fast_forward"

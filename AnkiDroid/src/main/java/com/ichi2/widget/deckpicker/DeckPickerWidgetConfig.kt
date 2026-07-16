@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
 
 package com.ichi2.widget.deckpicker
 
@@ -33,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.ext.unregisterReceiverSilently
 import com.ichi2.anki.databinding.WidgetDeckPickerConfigBinding
@@ -47,6 +34,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
@@ -88,7 +76,7 @@ class DeckPickerWidgetConfig :
 
         super.onCreate(savedInstanceState)
 
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
         }
 
@@ -138,7 +126,7 @@ class DeckPickerWidgetConfig :
 
     private fun initializeUIComponents() {
         deckAdapter =
-            WidgetConfigScreenAdapter { deck, _ ->
+            WidgetConfigScreenAdapter(lifecycleScope) { deck, _ ->
                 deckAdapter.removeDeck(deck.deckId)
                 // Removal always frees at least one slot, so the FAB is going
                 // to be visible. Show it now (synchronously) so the snackbar
