@@ -7,8 +7,10 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.speech.tts.Voice
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.dialogs.viewmodel.play
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer.TtsCompletionStatus
+import com.ichi2.anki.libanki.TtsVoiceMatch
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -22,6 +24,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Locale
@@ -30,6 +33,80 @@ import kotlin.time.Duration.Companion.milliseconds
 /** Test for [AndroidTtsPlayer] */
 @RunWith(AndroidJUnit4::class)
 class AndroidTtsPlayerTest {
+    @Test
+    fun `locale fallback prefers the first installed voice`() {
+        val unavailable = frenchVoice("unavailable", installed = false)
+        val first = frenchVoice("first")
+        val second = frenchVoice("second")
+        val player = AndroidTtsPlayer(listOf(unavailable, first, second))
+
+        assertThat(player.voiceForTag(frenchTag()), equalTo(TtsVoiceMatch(first, rank = -100)))
+    }
+
+    @Test
+    fun `locale fallback keeps the first unavailable voice when no matching voice is installed`() {
+        val first = frenchVoice("first", installed = false)
+        val second = frenchVoice("second", installed = false)
+        val english = AndroidTtsVoice(fakeVoice("english", Locale.US), ENGINE_A)
+        val player = AndroidTtsPlayer(listOf(first, english, second))
+
+        assertThat(player.voiceForTag(frenchTag()), equalTo(TtsVoiceMatch(first, rank = -100)))
+    }
+
+    @Test
+    fun `requested voice order takes precedence over availability`() {
+        val installed = frenchVoice("installed")
+        val unavailable = frenchVoice("unavailable", installed = false)
+        val player = AndroidTtsPlayer(listOf(installed, unavailable))
+        val tag = frenchTag("missing", unavailable.name, installed.name)
+
+        assertThat(player.voiceForTag(tag), equalTo(TtsVoiceMatch(unavailable, rank = -1)))
+    }
+
+    @Test
+    fun `unmatched requested voices fall back to an installed voice`() {
+        val unavailable = frenchVoice("unavailable", installed = false)
+        val installed = frenchVoice("installed")
+        val player = AndroidTtsPlayer(listOf(unavailable, installed))
+
+        assertThat(player.voiceForTag(frenchTag("missing")), equalTo(TtsVoiceMatch(installed, rank = -100)))
+    }
+
+    @Test
+    fun `no match when no voice shares the language`() {
+        val english = AndroidTtsVoice(fakeVoice("english", Locale.US), ENGINE_A)
+        val player = AndroidTtsPlayer(listOf(english))
+
+        assertThat(player.voiceForTag(frenchTag()), nullValue())
+    }
+
+    @Test
+    fun `no match when there are no voices`() {
+        val player = AndroidTtsPlayer(emptyList())
+
+        assertThat(player.voiceForTag(frenchTag()), nullValue())
+    }
+
+    @Test
+    fun `voice preview selects an unavailable voice so the engine can download it`() =
+        runBlocking {
+            val installed = frenchVoice("installed")
+            val unavailable = frenchVoice("unavailable", installed = false)
+            val tts = fakeTts()
+            val player = AndroidTtsPlayer(listOf(installed, unavailable)) { tts }
+            player.init(this)
+
+            try {
+                val result = withTimeout(PLAYBACK_TIMEOUT_MS.milliseconds) { player.play("bonjour", unavailable) }
+
+                assertThat(result.success, equalTo(true))
+                verify(exactly = 1) { tts.voice = unavailable.voice }
+                verify(exactly = 1) { tts.speak(any(), any(), any(), any()) }
+            } finally {
+                player.close()
+            }
+        }
+
     @Test
     fun `playback is routed to the engine which owns the voice`() {
         val test = playerTest()
@@ -97,6 +174,14 @@ class AndroidTtsPlayerTest {
         assertThat(factoryCalls.count { it == ENGINE_FAILING }, equalTo(1))
     }
 
+    private fun frenchVoice(
+        name: String,
+        installed: Boolean = true,
+    ) = AndroidTtsVoice(fakeVoice(name, Locale.FRANCE, installed), ENGINE_A)
+
+    private fun frenchTag(vararg voices: String) =
+        TTSTag(fieldText = "bonjour", lang = "fr_FR", voices = voices.toList(), speed = null, otherArgs = emptyList())
+
     /** Builds a player backed by two engines, each owning a single voice */
     private fun playerTest(): PlayerTestFixture {
         val ttsA = fakeTts()
@@ -162,11 +247,12 @@ class AndroidTtsPlayerTest {
     private fun fakeVoice(
         voiceName: String,
         voiceLocale: Locale,
+        installed: Boolean = true,
     ): Voice =
         mockk(relaxed = true) {
             every { name } returns voiceName
             every { locale } returns voiceLocale
-            every { features } returns emptySet()
+            every { features } returns if (installed) emptySet() else setOf(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)
         }
 
     companion object {
