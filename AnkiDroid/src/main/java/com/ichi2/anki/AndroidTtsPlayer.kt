@@ -93,7 +93,9 @@ class AndroidTtsPlayer(
         TtsVoices.ttsEngine?.let { defaultEngine -> getOrCreateTts(defaultEngine) }
     }
 
-    override fun getAvailableVoices(): List<TtsVoice> = this.voices
+    // Prefer installed voices for language fallback without changing the shared matcher.
+    // Keep uninstalled voices selectable: an explicit request can trigger their download.
+    override fun getAvailableVoices(): List<TtsVoice> = voices.sortedBy { it.unavailable() }
 
     /**
      * Returns a ready [TextToSpeech] bound to [engine], creating and caching one if necessary.
