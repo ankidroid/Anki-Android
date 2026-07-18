@@ -179,6 +179,9 @@ open class Reviewer :
     // Whiteboard
     var prefWhiteboard = false
 
+    /** Whether the card's question/answer text is currently hidden, e.g. for listening practice */
+    private var isCardTextHidden = false
+
     @get:CheckResult
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var whiteboard: Whiteboard? = null
@@ -513,6 +516,9 @@ open class Reviewer :
             R.id.action_toggle_whiteboard -> {
                 toggleWhiteboard()
             }
+            R.id.action_toggle_card_text -> {
+                toggleCardTextVisibility()
+            }
             R.id.action_open_deck_options -> {
                 Timber.i("Reviewer:: Opening deck options")
                 val i =
@@ -563,6 +569,26 @@ open class Reviewer :
             colorPalette.visibility = View.GONE
         }
         refreshActionBar()
+    }
+
+    /**
+     * Toggles whether the card's question/answer text is hidden, for listening practice.
+     * The currently loaded page is updated immediately via JS; [applyCardTextVisibility]
+     * ensures the hidden state carries over when the next card/side is loaded.
+     */
+    private fun toggleCardTextVisibility() {
+        isCardTextHidden = !isCardTextHidden
+        Timber.i("Reviewer:: Card text hidden state set to %b", isCardTextHidden)
+        val visibility = if (isCardTextHidden) "hidden" else "visible"
+        webViewClient?.eval(
+            "(function() { var qa = document.getElementById('qa'); if (qa) { qa.style.visibility = '$visibility'; } })();",
+        )
+        refreshActionBar()
+    }
+
+    override fun applyCardTextVisibility(content: String): String {
+        if (!isCardTextHidden) return content
+        return content.replace("</head>", "<style>#qa { visibility: hidden; }</style></head>")
     }
 
     public override fun toggleEraser() {
@@ -1005,6 +1031,15 @@ open class Reviewer :
             }
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
+        }
+        menu.findItem(R.id.action_toggle_card_text).apply {
+            if (isCardTextHidden) {
+                setTitle(R.string.show_card_text)
+                icon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_visibility_off)
+            } else {
+                setTitle(R.string.hide_card_text)
+                icon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_remove_red_eye_white)
+            }
         }
         if (colIsOpenUnsafe() && getColUnsafe.decks.isFiltered(parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false

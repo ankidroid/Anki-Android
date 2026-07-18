@@ -62,6 +62,11 @@
         android:icon="@drawable/ic_enable_whiteboard"
         ankidroid:showAsAction="never"/>
     <item
+        android:id="@+id/action_toggle_card_text"
+        android:title="@string/hide_card_text"
+        android:icon="@drawable/ic_remove_red_eye_white"
+        ankidroid:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_flag"
         tools:title="Flag card"
         android:icon="@drawable/ic_flag_transparent"

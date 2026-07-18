@@ -1550,13 +1550,20 @@ abstract class AbstractFlashcardViewer :
             card.settings.mediaPlaybackRequiresUserGesture = cardMediaPlayer.config?.autoplay != true
             card.loadDataWithBaseURL(
                 server.baseUrl(),
-                content,
+                applyCardTextVisibility(content),
                 "text/html",
                 null,
                 null,
             )
         }
     }
+
+    /**
+     * Hook allowing subclasses to alter the rendered card HTML before it is loaded into the
+     * WebView, e.g. to hide the question/answer text for listening practice. Called on every
+     * full page load, so a subclass hiding text here doesn't need to separately handle new cards.
+     */
+    protected open fun applyCardTextVisibility(content: String): String = content
 
     protected open fun unblockControls() {
         cardFrame!!.isEnabled = true

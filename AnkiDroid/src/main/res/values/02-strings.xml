@@ -60,6 +60,10 @@
     <string name="disable_eraser" maxLength="28">Disable eraser</string>
     <string name="hide_whiteboard" maxLength="28">Hide whiteboard</string>
     <string name="clear_whiteboard" maxLength="28">Clear whiteboard</string>
+    <string name="hide_card_text" comment="Title of the menu item that hides the card's question/answer text, e.g. for listening practice" maxLength="28"
+        >Hide text</string>
+    <string name="show_card_text" comment="Title of the menu item that reveals the card's question/answer text after it was hidden" maxLength="28"
+        >Show text</string>
     <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
     <string name="replay_media" maxLength="28">Replay media</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
