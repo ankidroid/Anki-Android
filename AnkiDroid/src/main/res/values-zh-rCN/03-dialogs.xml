@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">是否检查数据库？</string>
-    <string name="check_db_warning">这可能需要很长时间</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">删除牌组</string>
+    <string name="check_db_warning">这可能需要很长时间。继续吗？</string>
     <string name="delete_deck_title">删除该牌组？</string>
     <plurals name="delete_deck_message">
         <item quantity="other">删除 %1$s 中包含的 %2$d 张卡牌吗？</item>
@@ -81,8 +58,8 @@
     <string name="restore_backup_choose_another">选择另一个</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">添加</string>
+    <string name="restore">恢复</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">确认</string>
     <string name="dialog_no">否</string>
     <string name="dialog_yes">是</string>
@@ -103,8 +80,7 @@
     <string name="dialog_invalid_custom_certificate_title">解析证书时发生错误</string>
     <string name="dialog_updated_custom_certificate">证书已更新</string>
     <!-- Media checking -->
-    <string name="check_media_title">是否检查媒体？</string>
-    <string name="check_media_warning">如果集合中媒体文件较多，可能会需要较长的时间</string>
+    <string name="check_media_warning">对于大型媒体集合，这可能需要很长时间。继续吗？</string>
     <string name="check_media_message">正在检查媒体文件&#8230;</string>
     <string name="check_media_adding_missing_tag">正在添加标签&#8230;</string>
     <string name="check_media_tags_added">标签已添加</string>
@@ -127,8 +103,6 @@
     <string name="permission_denied">权限被拒绝</string>
     <string name="recording_permission_denied_message">麦克风权限是\"录制声音\"功能所必需的。请在应用程序设置中授予它。</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid 已升级</string>
-    <string name="integrity_check_startup_content">AnkiDroid 已升级。此升级可能修复了一些数据库问题，我们建议您现在开始检查数据库。</string>
     <string name="integrity_check_continue_anyway">仍要继续</string>
     <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n您当前有 %s 可用。</string>

@@ -19,6 +19,7 @@ package com.ichi2.anki.utils.ext
 import android.os.Parcel
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.utils.ext.ParcelableUtilsTest.UnderTest
 import com.ichi2.anki.utils.ext.ParcelableUtilsTest.UnderTest.Companion.write
 import com.ichi2.anki.utils.ext.ParcelableUtilsTest.UnderTest.User
@@ -28,12 +29,14 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.Serializable
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class ParcelableUtilsTest {
     @Test
     fun `serializableList - valid`() {

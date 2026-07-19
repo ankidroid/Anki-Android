@@ -19,12 +19,12 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.R
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.compat.CompatHelper
 import net.ankiweb.rsdroid.BackendFactory
 import java.util.Locale
 
@@ -329,7 +329,7 @@ object LanguageUtil {
     /** If locale is not provided, the current locale will be used. */
     fun setDefaultBackendLanguages(languageTag: String? = null) {
         val langCode =
-            languageTag ?: AnkiDroidApp.instance
+            languageTag ?: appContext
                 .sharedPrefs()
                 .getString("language", SYSTEM_LANGUAGE_TAG)!!
 
@@ -370,14 +370,9 @@ object LanguageUtil {
     ): String = requireContext().getStringByLocale(stringRes, locale, *formatArgs)
 
     /**
-     * This should always be called after Activity.onCreate()
-     * @return locale language tag of the app configured language
-     */
-    fun getCurrentLocaleTag(): String = AppCompatDelegate.getApplicationLocales().toLanguageTags()
-
-    /**
      * Returns the character to use when separating a list; `, ` in English
      * Uses ListFormatter on API 26+ to dynamically get the locale-specific separator
      */
-    fun getListSeparator(context: Context): String = CompatHelper.compat.getListSeparator(context)
+    fun getListSeparator(context: Context): String =
+        CompatHelper.compat.getListSeparator(context, context.getString(R.string.list_separator))
 }

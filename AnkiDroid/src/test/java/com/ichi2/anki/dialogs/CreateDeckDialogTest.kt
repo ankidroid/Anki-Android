@@ -1,22 +1,12 @@
-/*
- * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
- * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>
 
 package com.ichi2.anki.dialogs
 
+import android.app.Activity
+import android.content.ContextWrapper
+import android.os.Looper
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -39,6 +29,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
+import org.robolectric.shadows.ShadowToast
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
@@ -195,10 +187,10 @@ class CreateDeckDialogTest : RobolectricTest() {
             for (i in 0 until 10) {
                 val createDeckDialog =
                     CreateDeckDialog(
-                        deckPicker,
-                        R.string.new_deck,
-                        DeckDialogType.DECK,
-                        null,
+                        context = deckPicker,
+                        title = "Create deck",
+                        deckDialogType = DeckDialogType.DECK,
+                        parentId = null,
                     )
                 val did =
                     suspendCoroutine { coro ->
@@ -213,7 +205,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
                 updateSearchDecksIcon(deckPicker)
                 assertEquals(
-                    deckPicker.optionsMenuState?.searchIcon,
+                    deckPicker.viewModel.optionsMenuState?.searchIcon,
                     decksCount() >= 10,
                 )
 
@@ -225,7 +217,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                     assertEquals(deckCounter.get(), decksCount())
 
                     updateSearchDecksIcon(deckPicker)
-                    assertFalse(deckPicker.optionsMenuState?.searchIcon ?: true)
+                    assertFalse(deckPicker.viewModel.optionsMenuState?.searchIcon ?: true)
                 }
             }
         }
@@ -233,7 +225,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     private suspend fun updateSearchDecksIcon(deckPicker: DeckPicker) {
         // the icon update requires a call to refreshState() and subsequent menu
         // rebuild; access it directly instead so the test passes
-        deckPicker.updateMenuState()
+        deckPicker.viewModel.refreshMenuState()
     }
 
     @Test
@@ -241,14 +233,14 @@ class CreateDeckDialogTest : RobolectricTest() {
         runTest {
             val deckPicker =
                 suspendCoroutine { coro -> activityScenario.onActivity { coro.resume(it) } }
-            deckPicker.updateMenuState()
-            assertEquals(deckPicker.optionsMenuState!!.searchIcon, false)
+            deckPicker.viewModel.refreshMenuState()
+            assertEquals(deckPicker.viewModel.optionsMenuState!!.searchIcon, false)
             // a single top-level deck with lots of subdecks should turn the icon on
             withCol {
                 decks.id(deckTreeName(0, 10, "Deck"))
             }
-            deckPicker.updateMenuState()
-            assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
+            deckPicker.viewModel.refreshMenuState()
+            assertEquals(deckPicker.viewModel.optionsMenuState!!.searchIcon, true)
         }
 
     @Test
@@ -282,8 +274,151 @@ class CreateDeckDialogTest : RobolectricTest() {
         callback: (CreateDeckDialog.() -> Unit),
     ) {
         activityScenario.onActivity { activity: DeckPicker ->
-            val createDeckDialog = CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId)
+            val createDeckDialog =
+                CreateDeckDialog(
+                    context = activity,
+                    title = "Create deck",
+                    deckDialogType = deckDialogType,
+                    parentId = parentId,
+                )
             callback(createDeckDialog)
+        }
+    }
+
+    /*
+     * The next 8 testcases test every permutation of
+     * {createDeck, renameDeck}, {validName, invalidName}, [activityContext, nonActivityContext]
+     * Shadows.shadowOf(Looper.getMainLooper()).idle()
+     * is used to flush the queue and get the latest snackbar, since asking for it immediately fails the test
+     * as the display time is LENGTH_LONG
+     */
+    @Test
+    fun `createDeck with activity context shows snackbar for valid name`() {
+        ensureExecutionOfScenario(DeckDialogType.DECK) { dialog, assertionCalled ->
+            dialog.onNewDeckCreated = { _: DeckId -> assertionCalled() }
+            dialog.createDeck("Create Deck")
+
+            activityScenario.onActivity { activity ->
+                assertThat(
+                    "Snackbar should confirm deck creation for valid name",
+                    activity.latestSnackbarText(),
+                    equalTo(getResourceString(R.string.deck_created)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `createDeck with activity context shows snackbar for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.createDeck("   ")
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+            assertThat(
+                "Snackbar should show invalid name error for blank name",
+                activity.latestSnackbarText(),
+                equalTo(getResourceString(R.string.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `createDeck with non-activity context shows toast for valid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog =
+                CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.createDeck("Create Deck")
+
+            assertThat(
+                "Toast should confirm deck creation for valid name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(R.string.deck_created)),
+            )
+        }
+    }
+
+    @Test
+    fun `createDeck with non-activity context shows toast for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog =
+                CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.createDeck("   ")
+
+            assertThat(
+                "Toast should show invalid name error for blank name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(R.string.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `renameDeck with activity context shows snackbar for valid name`() {
+        ensureExecutionOfScenario(DeckDialogType.RENAME_DECK) { dialog, assertionCalled ->
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> assertionCalled() }
+            dialog.renameDeck("Rename Deck")
+
+            activityScenario.onActivity { activity ->
+                assertThat(
+                    "Snackbar should confirm rename for valid name",
+                    activity.latestSnackbarText(),
+                    equalTo(getResourceString(R.string.deck_renamed)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `renameDeck with activity context shows snackbar for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create deck", DeckDialogType.RENAME_DECK, null)
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.renameDeck("   ")
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+            assertThat(
+                "Snackbar should show invalid name error for blank name",
+                activity.latestSnackbarText(),
+                equalTo(getResourceString(R.string.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `renameDeck with non-activity context shows toast for valid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.RENAME_DECK, null)
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.renameDeck("Rename Deck")
+
+            assertThat(
+                "Toast should confirm rename for valid name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(R.string.deck_renamed)),
+            )
+        }
+    }
+
+    @Test
+    fun `renameDeck with non-activity context shows toast for invalid name`() {
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.RENAME_DECK, null)
+            dialog.deckName = "Old Deck"
+            dialog.onNewDeckCreated = { _: DeckId -> }
+            dialog.renameDeck("   ")
+
+            assertThat(
+                "Toast should show invalid name error for blank name",
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(getResourceString(R.string.invalid_deck_name)),
+            )
         }
     }
 
@@ -298,7 +433,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     ) {
         activityScenario.onActivity { activity: DeckPicker ->
             val assertionCalled = AtomicReference(false)
-            callback(CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId)) {
+            callback(CreateDeckDialog(activity, "Create deck", deckDialogType, parentId)) {
                 assertionCalled.set(true)
             }
             assertThat("no call to assertionCalled()", assertionCalled.get(), equalTo(true))
@@ -336,3 +471,7 @@ class CreateDeckDialogNonAndroidTest {
         assertLargerThanNine("suffix", "Deck 34", true)
     }
 }
+
+// Returns latest snackbar text
+private fun Activity.latestSnackbarText(): String? =
+    findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.text?.toString()

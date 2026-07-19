@@ -22,14 +22,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
-import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceManager.OnPreferenceTreeClickListener
+import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.databinding.FragmentSettingsBinding
 import com.ichi2.preferences.DialogFragmentProvider
+import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
 abstract class SettingsFragment :
@@ -42,14 +43,14 @@ abstract class SettingsFragment :
     @get:XmlRes
     abstract override val preferenceResource: Int
 
-    protected lateinit var binding: FragmentSettingsBinding
+    protected val binding by viewBinding(FragmentSettingsBinding::bind)
 
     abstract fun initSubscreen()
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         UsageAnalytics.sendAnalyticsEvent(
-            category = UsageAnalytics.Category.SETTING,
-            action = UsageAnalytics.Actions.TAPPED_SETTING,
+            category = AnalyticsConstants.Category.SETTING,
+            action = AnalyticsConstants.Actions.TAPPED_SETTING,
             label = preference.key,
         )
         return super.onPreferenceTreeClick(preference)
@@ -65,8 +66,8 @@ abstract class SettingsFragment :
         if (key != null) {
             val valueToReport = getPreferenceReportableValue(sharedPreferences.get(key))
             UsageAnalytics.sendAnalyticsEvent(
-                category = UsageAnalytics.Category.SETTING,
-                action = UsageAnalytics.Actions.CHANGED_SETTING,
+                category = AnalyticsConstants.Category.SETTING,
+                action = AnalyticsConstants.Actions.CHANGED_SETTING,
                 value = valueToReport,
                 label = key,
             )
@@ -81,7 +82,6 @@ abstract class SettingsFragment :
         FragmentSettingsBinding
             .inflate(inflater, container, false)
             .apply {
-                binding = this
                 listContainer.addView(super.onCreateView(inflater, container, savedInstanceState))
             }.root
 
@@ -117,7 +117,7 @@ abstract class SettingsFragment :
             (preference as? DialogFragmentProvider)?.makeDialogFragment()
                 ?: return super.onDisplayPreferenceDialog(preference)
         Timber.d("displaying custom preference: ${dialogFragment::class.simpleName}")
-        dialogFragment.arguments = bundleOf(PREF_DIALOG_KEY to preference.key)
+        dialogFragment.arguments = Bundle().apply { putString(PREF_DIALOG_KEY, preference.key) }
         dialogFragment.setTargetFragment(this, 0)
         dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
     }

@@ -6,33 +6,41 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Bundle
+import android.database.sqlite.SQLiteDatabaseCorruptException
+import android.view.KeyEvent
 import android.view.Menu
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
-import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
-import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
+import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.navigation.AnkiDroidNavigator
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
-import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.PERMISSIONS_SET_EXTRA
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.EXTRA_PERMISSIONS_SET
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -46,6 +54,7 @@ import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.testutils.withDeniedPermissions
 import com.ichi2.testutils.withWritePermissions
+import kotlinx.coroutines.flow.merge
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.containsString
@@ -77,6 +86,8 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
+
+typealias ContextMenuOption = DeckPickerContextMenuOption
 
 @KotlinCleanup("SPMockBuilder")
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -326,10 +337,10 @@ class DeckPickerTest : RobolectricTest() {
     fun doNotShowOptionsMenuWhenCollectionInaccessible() =
         withNullCollection {
             deckPicker {
-                updateMenuState()
+                viewModel.refreshMenuState()
                 assertThat(
                     "Options menu not displayed when collection is inaccessible",
-                    optionsMenuState,
+                    viewModel.optionsMenuState,
                     equalTo(null),
                 )
             }
@@ -339,10 +350,10 @@ class DeckPickerTest : RobolectricTest() {
     fun showOptionsMenuWhenCollectionAccessible() =
         withWritePermissions {
             deckPicker {
-                updateMenuState()
+                viewModel.refreshMenuState()
                 assertThat(
                     "Options menu displayed when collection is accessible",
-                    optionsMenuState,
+                    viewModel.optionsMenuState,
                     notNullValue(),
                 )
             }
@@ -383,15 +394,15 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker {
             val didA = addDeck("Deck 1")
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.RENAME_DECK, didA)
+            selectContextMenuOption(ContextMenuOption.RENAME_DECK, didA)
             assertDialogTitleEquals("Rename deck")
             dismissAllDialogFragments()
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SUBDECK, didA)
+            selectContextMenuOption(ContextMenuOption.CREATE_SUBDECK, didA)
             assertDialogTitleEquals("Create subdeck")
             dismissAllDialogFragments()
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY, didA)
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY, didA)
             assertDialogTitleEquals("Custom study")
             dismissAllDialogFragments()
 
@@ -402,17 +413,12 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     /** Simulates a selection in the context menu by setting the specific result in FragmentManager */
-    private fun FragmentManager.selectContextMenuOption(
+    private fun DeckPicker.selectContextMenuOption(
         option: DeckPickerContextMenuOption,
         deckId: DeckId,
-    ) {
-        val arguments =
-            Bundle().apply {
-                putLong(DeckPickerContextMenu.CONTEXT_MENU_DECK_ID, deckId)
-                putSerializable(DeckPickerContextMenu.CONTEXT_MENU_DECK_OPTION, option)
-            }
-        setFragmentResult(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, arguments)
-    }
+    ) = supportFragmentManager.setDeckPickerContextMenuResult(
+        DeckPickerContextMenuResult(deckId = deckId, option = option),
+    )
 
     private fun assertDialogTitleEquals(expectedTitle: String) {
         val actualTitle = (ShadowDialog.getLatestDialog() as AlertDialog).title
@@ -424,15 +430,19 @@ class DeckPickerTest : RobolectricTest() {
     fun `ContextMenu starts expected activities when specific options are selected`() =
         deckPicker {
             suspend fun DeckPicker.selectContextMenuOptionForActivity(
-                option: DeckPickerContextMenuOption,
+                option: ContextMenuOption,
                 deckId: DeckId,
             ): Intent {
-                var result: Destination? = null
-                viewModel.flowOfDestination.test(1.seconds) {
-                    supportFragmentManager.selectContextMenuOption(option, deckId)
+                var result: Any? = null
+                merge(viewModel.flowOfDestination, viewModel.flowOfNavigate).test(1.seconds) {
+                    selectContextMenuOption(option, deckId)
                     result = awaitItem()
                 }
-                return result!!.toIntent(this)
+                return when (val emitted = result!!) {
+                    is Destination -> emitted.toIntent(this)
+                    is com.ichi2.anki.common.destinations.Destination -> AnkiDroidNavigator.toIntent(emitted)
+                    else -> error("Unexpected destination type: $emitted")
+                }
             }
 
             val didA = addDeck("Deck 1")
@@ -458,7 +468,7 @@ class DeckPickerTest : RobolectricTest() {
 
             Prefs.newReviewRemindersEnabled = true
             val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
+            assertEquals("com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity", scheduleReminders.component!!.className)
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -466,7 +476,7 @@ class DeckPickerTest : RobolectricTest() {
     fun `ContextMenu deletes deck when selecting DELETE_DECK`() =
         deckPicker {
             val didA = addDeck("Deck 1")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.DELETE_DECK, didA)
+            selectContextMenuOption(ContextMenuOption.DELETE_DECK, didA)
             assertThat(getColUnsafe.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(didA)))
         }
 
@@ -474,7 +484,7 @@ class DeckPickerTest : RobolectricTest() {
     fun `ContextMenu creates deck shortcut when selecting CREATE_SHORTCUT`() =
         deckPicker {
             val didA = addDeck("Deck 1")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CREATE_SHORTCUT, didA)
+            selectContextMenuOption(ContextMenuOption.CREATE_SHORTCUT, didA)
             // Wait for the shortcut creation to complete
             ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
             assertEquals(
@@ -499,7 +509,7 @@ class DeckPickerTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(1, visibleDeckCount)
             assertTrue(getColUnsafe.sched.haveBuried(), "Deck should have buried cards")
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.UNBURY, deckId)
+            selectContextMenuOption(ContextMenuOption.UNBURY, deckId)
             kotlin.test.assertFalse(getColUnsafe.sched.haveBuried())
         }
 
@@ -516,11 +526,11 @@ class DeckPickerTest : RobolectricTest() {
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY, deckId) // Empty
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_EMPTY, deckId)
 
             assertTrue(allCardsInSameDeck(cardIds, 1))
 
-            supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD, deckId) // Rebuild
+            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_REBUILD, deckId)
 
             assertTrue(allCardsInSameDeck(cardIds, deckId))
         }
@@ -643,6 +653,116 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
+    fun `baseSnackbarBuilder has no anchor when FAB is hidden`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            fab.visibility = View.GONE
+
+            val snackbar = showSnackbar("test")
+
+            snackbar?.let { baseSnackbarBuilder.invoke(it) }
+
+            assertThat(
+                "anchorView must be null when FAB is not visible",
+                snackbar?.anchorView,
+                nullValue(),
+            )
+        }
+
+    @Test
+    fun `baseSnackbarBuilder anchors to FAB when visible`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            fab.visibility = View.VISIBLE
+
+            val snackbar = showSnackbar("test")
+            snackbar?.let { baseSnackbarBuilder.invoke(it) }
+
+            assertThat(
+                "anchorView is the FAB when visible",
+                snackbar?.anchorView,
+                equalTo(fab),
+            )
+        }
+
+    @Test
+    fun `FAB opens menu on accessibility click`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            assertThat("menu starts closed", floatingActionMenu.isFABOpen, equalTo(false))
+            // TalkBack activate a focused control, which routes to [View.performClick]
+            fab.performClick()
+            assertThat("FAB menu opens on click", floatingActionMenu.isFABOpen, equalTo(true))
+        }
+
+    @Test
+    fun `FAB menu opens on ENTER key`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+
+            assertThat("menu starts closed", floatingActionMenu.isFABOpen, equalTo(false))
+
+            fab.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+
+            assertThat("ENTER key opens the FAB menu", floatingActionMenu.isFABOpen, equalTo(true))
+        }
+
+    @Test
+    fun `FAB menu closes on ESCAPE key`() =
+        deckPicker {
+            val fab = findViewById<View>(R.id.fab_main)
+            floatingActionMenu.showFloatingActionMenu()
+            assertThat("menu is open", floatingActionMenu.isFABOpen, equalTo(true))
+
+            fab.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ESCAPE))
+
+            assertThat(
+                "ESCAPE key closes the FAB menu",
+                floatingActionMenu.isFABOpen,
+                equalTo(false),
+            )
+        }
+
+    @Test
+    fun `expanding the FAB menu shows the correct labels`() =
+        deckPicker {
+            floatingActionMenu.showFloatingActionMenu()
+            advanceRobolectricLooper()
+
+            val binding = floatingActionButtonBinding
+            assertThat(binding.fabMain.text.toString(), equalTo(getString(R.string.menu_add)))
+            assertThat(
+                binding.addSharedButton.text.toString(),
+                equalTo(getString(R.string.menu_get_shared_decks)),
+            )
+            assertThat(
+                binding.addFilteredDeckButton.text.toString(),
+                equalTo(getString(R.string.new_dynamic_deck)),
+            )
+            // 'Create deck' uses a backend string rather than an android:text resource
+            assertThat(
+                binding.addDeckButton.text.toString(),
+                equalTo(with(targetContext) { TR.sentenceCase.createDeck }),
+            )
+        }
+
+    @Test
+    fun `expanding the FAB menu re-extends the Create deck button`() =
+        deckPicker {
+            val addDeckButton = floatingActionButtonBinding.addDeckButton
+            addDeckButton.isExtended = false
+
+            floatingActionMenu.showFloatingActionMenu()
+            advanceRobolectricLooper()
+
+            assertTrue(!addDeckButton.text.isNullOrBlank(), "Create deck button must have a label")
+            assertTrue(
+                addDeckButton.isExtended,
+                "Create deck button must be extended so its label is visible",
+            )
+        }
+
+    @Test
     fun `On a new startup, the App Intro is displayed`() =
         deckPicker(skipIntroduction = false) {
             val nextIntent = Shadows.shadowOf(this).nextStartedActivity
@@ -678,17 +798,12 @@ class DeckPickerTest : RobolectricTest() {
             )
         }
 
-    /**
-     * Emulates a null collection and a `BackendDbLockedException`
-     *
-     * @see enableNullCollection
-     */
-    private fun withNullCollection(block: () -> Unit) =
-        try {
-            enableNullCollection()
-            block()
-        } finally {
-            disableNullCollection()
+    /** Regression test for [#20712](https://github.com/ankidroid/Anki-Android/issues/20712) */
+    @Test
+    fun `SQLiteDatabaseCorruptException in runCatching shows database error dialog`() =
+        deckPickerEx {
+            runCatching { throw SQLiteDatabaseCorruptException() }
+            assertThat(databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED))
         }
 
     @Test
@@ -703,12 +818,29 @@ class DeckPickerTest : RobolectricTest() {
                         equalTo(PermissionsActivity::class.java.name),
                     )
 
-                    val extra = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
+                    val extra = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, PermissionSet::class.java)
 
                     assertNotNull(extra)
                     assertThat(extra.permissions, equalTo(listOf(INTERNET)))
                 }
             }
+        }
+
+    @Test
+    fun `creating a deck selects it`() =
+        deckPicker {
+            showCreateDeckDialog()
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            dialog.input = "My Deck"
+            dialog.performPositiveClick()
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+            val newDeckId = col.decks.byName("My Deck")!!.id
+            assertThat(
+                "the newly created deck should become the current deck",
+                col.decks.current().id,
+                equalTo(newDeckId),
+            )
         }
 
     enum class CollectionType(

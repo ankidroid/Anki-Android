@@ -114,7 +114,13 @@
             android:title="@string/hide_hard_and_easy"
             android:icon="@drawable/ic_remove_done"
             android:dependency="@string/show_answer_buttons_key"
+            app:allowDividerBelow="false"
             />
     </PreferenceCategory>
+
+    <com.ichi2.preferences.RelatedSettingsPreference
+        app:relatedTitles="@array/study_screen_related_titles"
+        app:relatedFragments="@array/study_screen_related_fragments"
+        />
 
 </androidx.preference.PreferenceScreen>

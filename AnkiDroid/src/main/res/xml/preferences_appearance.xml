@@ -25,7 +25,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     xmlns:tools="http://schemas.android.com/tools"
-        android:title="@string/pref_cat_appearance"
         android:key="@string/pref_appearance_screen_key">
     <PreferenceCategory android:title="@string/pref_cat_themes" >
         <ListPreference
@@ -36,7 +35,6 @@
             android:title="@string/app_theme"
             android:icon="@drawable/ic_color_lens_white_24dp"
             app:useSimpleSummaryProvider="true"/>
-        <!--day and night theme label is ignored in search to avoid a duplicate entry and "theme" preference's entry-->
         <ListPreference
             android:defaultValue="@string/theme_light_value"
             android:entries="@array/day_theme_labels"
@@ -46,7 +44,7 @@
             android:title="@string/day_theme"
             android:icon="@drawable/ic_light_mode_24"
             app:useSimpleSummaryProvider="true"
-            search:ignore="true"/>
+            />
         <ListPreference
             android:defaultValue="@string/theme_black_value"
             android:entries="@array/night_theme_labels"
@@ -56,15 +54,15 @@
             android:title="@string/night_theme"
             android:icon="@drawable/ic_dark_mode_24"
             app:useSimpleSummaryProvider="true"
-            search:ignore="true"/>
+            />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
         <Preference
-            android:defaultValue="0"
+            android:defaultValue="false"
             android:key="@string/pref_deck_picker_background_key"
             android:shouldDisableView="true"
             android:icon="@drawable/wallpaper_icon"
-            android:title="@string/choose_an_image" />
+            tools:title="Select image" />
         <Preference
             android:key="@string/pref_remove_wallpaper_key"
             android:icon="@drawable/ic_delete_white"

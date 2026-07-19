@@ -20,8 +20,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateNotetype.ChangeType.ADD
 import com.ichi2.anki.CardTemplateNotetype.ChangeType.DELETE
 import com.ichi2.anki.CardTemplateNotetype.TemplateChange
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.libanki.NotetypeJson
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test

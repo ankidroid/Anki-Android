@@ -19,14 +19,25 @@ package com.ichi2.anki.preferences.profiles
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
+import com.ichi2.anki.databinding.FragmentSwitchProfilesBinding
+import com.ichi2.utils.ValidationResult
+import com.ichi2.utils.input
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
+import dev.androidbroadcast.vbpd.viewBinding
 
 /**
  * A [Fragment] that allows the user to switch between different profiles.
  */
 class SwitchProfilesFragment : Fragment(R.layout.fragment_switch_profiles) {
+    private val binding by viewBinding(FragmentSwitchProfilesBinding::bind)
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -39,5 +50,32 @@ class SwitchProfilesFragment : Fragment(R.layout.fragment_switch_profiles) {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
+
+        binding.addProfileFab.setOnClickListener {
+            showAddProfileDialog()
+        }
+    }
+
+    fun showAddProfileDialog() {
+        AlertDialog
+            .Builder(requireContext())
+            .show {
+                title(text = "Add profile")
+
+                positiveButton(R.string.dialog_add)
+                negativeButton(R.string.dialog_cancel)
+                setView(R.layout.dialog_generic_text_input)
+            }.input(
+                hint = "Profile name",
+                displayKeyboard = true,
+                validator = { text ->
+                    when {
+                        text.isNotBlank() -> ValidationResult.VALID
+                        else -> ValidationResult.REJECTED
+                    }
+                },
+            ) { _, _ ->
+                // TODO: handle profile creation
+            }
     }
 }

@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Desactivado</string>
@@ -61,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sincronización</string>
     <string name="pref_cat_scheduling" maxLength="41">Programación</string>
     <string name="pref_cat_whiteboard" maxLength="41">Encerado</string>
-    <string name="pref_cat_appearance" maxLength="41">Aparencia</string>
     <string name="pref_cat_themes" maxLength="41">Temas</string>
     <string name="pref_cat_gestures" maxLength="41">Xestos</string>
     <string name="pref_cat_controls" maxLength="41">Controis</string>
@@ -72,17 +50,17 @@
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Grosor do trazo</string>
     <string name="use_input_tag" maxLength="41">Escribir resposta na tarxeta</string>
-    <string name="use_input_tag_summ">Empregar unha caixa de texto dentro da tarxeta para escribir a resposta</string>
+    <string name="use_input_tag_summ">Emprega unha caixa de texto dentro da tarxeta para escribir a resposta</string>
     <string name="reset_languages" maxLength="41">Restabelecer idiomas</string>
     <string name="reset_languages_summ">Restabelecer as asignacións de idioma (para texto a voz e dicionarios) en tódalas barallas</string>
     <string name="reset_languages_question">Queres reiniciar todas as asignacións de idiomas?</string>
-    <string name="reset_confirmation">Restabelecéronse tódolos estados</string>
+    <string name="reset_confirmation">Restabelecéronse todos os estados</string>
     <string name="card_zoom" maxLength="41">Ampliar tarxeta</string>
     <string name="image_zoom" maxLength="41">Ampliar imaxe</string>
     <string name="button_size" maxLength="41">Tamaño dos botóns de resposta</string>
     <string name="card_browser_font_size" maxLength="41">Escalado do texto do explorador de tarxetas</string>
     <string name="card_browser_hide_media" maxLength="41">Amosar nomes dos ficheiros no explorador</string>
-    <string name="card_browser_hide_media_summary">Amosar ficheiros de audio nos campos pregunta/resposta no explorador de tarxetas</string>
+    <string name="card_browser_hide_media_summary">Amosar os nomes dos ficheiros de son nos campos de pregunta/resposta no explorador de tarxetas</string>
     <string name="col_path" maxLength="41">Directorio do AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Modo pantalla completa</string>
     <string name="full_screen_off">Desactivado</string>
@@ -129,7 +107,6 @@
     <string name="tts_summ">Ler en voz alta as preguntas e respostas se non existe ficheiro de son</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Obter multimedia ao sincronizar</string>
-    <string name="sync_account" maxLength="41">Conta AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Sen sesión iniciada</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronización automática</string>
     <string name="automatic_sync_choice_summ">Sincronizar automaticamente ao iniciar/saír da aplicación se pasaron máis de 10
@@ -157,12 +134,10 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz intermitente</string>
     <string name="select_locale_title">Seleccionar idioma</string>
     <string name="software_render" maxLength="41">Desactivar a representación por hardware das tarxetas</string>
-    <string name="software_render_summ">A representación por hardware é máis rápida pero pode dar problemas, especialmente en Android 8/8.1. Se non podes ver algunhas partes da interface de repaso das tarxetas, proba esta opción</string>
-    <string name="safe_display" maxLength="41">Modo de visualización segura</string>
-    <string name="safe_display_summ">Desactivar tódalas animacións e usa métodos máis seguros para debuxar as tarxetas. Os dispositivos de tinta electrónica (\"e-ink\") poden precisar esta opción</string>
+    <string name="software_render_summ">A representación por hardware é máis rápida pero pode dar problemas, especialmente en Android 8/8.1. Proba esta opción se non podes ver algunhas partes da interface de repaso das tarxetas.</string>
     <string name="disable_extended_text_ui" maxLength="41">Desactivar o modo de edición de campo único</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permite o menú contextual \"Preguntas aniñadas\" cando se está en modo horizontal</string>
+    <string name="disable_extended_text_ui_summ">Permite o menú contextual «Preguntas aniñadas» cando se está en modo horizontal.</string>
     <string name="vertical_centering" maxLength="41">Aliñar ao centro</string>
     <string name="vertical_centering_summ">Centrar o contido das tarxetas verticalmente</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tempo do dobre toque</string>
@@ -173,6 +148,8 @@
     <string name="show_estimates_summ">Amosar o próximo repaso nos botóns de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Amosar botóns de resposta grandes</string>
     <string name="show_large_answer_buttons_summ">Amosar botóns de resposta en dúas filas</string>
+    <string name="remove_animations" maxLength="41">Eliminar animacións</string>
+    <string name="remove_animations_summary">Tamén se activará ao eliminar as animacións na configuración do sistema</string>
     <string name="show_top_bar" maxLength="41">Amosar barra superior</string>
     <string name="show_top_bar_summary">Amosar contador de tarxetas, temporizador, bandeira e marca na barra superior</string>
     <string name="show_progress" maxLength="41">Amosar restantes</string>
@@ -200,7 +177,7 @@
     <string name="reset_settings_to_default">Restabelecer a configuración por defecto</string>
     <string name="reset">Restabelecer</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicacións API de terceiros</string>
-    <string name="thirdparty_apps_summary">Consulta unha lista de aplicacións que usan a API do AnkiDroid, como dicionarios ou ferramentas</string>
+    <string name="thirdparty_apps_summary">Consulta unha lista de aplicacións que usan a API do AnkiDroid, como dicionarios ou ferramentas.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Repasos</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">Previsualizacións</string>
     <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Alternar só reverso</string>
@@ -208,22 +185,21 @@
     <string name="pref_cat_reviewer" maxLength="41">Pantalla de estudo</string>
     <string name="show_deck_title" maxLength="41">Amosar o nome da baralla</string>
     <string name="accessibility" maxLength="41">Accesibilidade</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Pegar imaxes do portapapeis como PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Preme dúas veces atrás para volver/saír</string>
     <string name="exit_via_double_tap_back_summ">Para evitar saír accidentalmente da pantalla de estudo ou da aplicación</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Permitir tódolos ficheiros nas importacións multimedia</string>
+    <string name="media_import_allow_all_files" maxLength="41">Permitir todos os ficheiros nas importacións multimedia</string>
     <string name="media_import_allow_all_files_summ">Se o Android non recoñece un ficheiro multimedia</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronización personalizado</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilizado</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Como alternativa á sincronización con AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        Como alternativa á sincronización con AnkiWeb,
         podes usar o teu propio servidor.
         Se non se configura, usarase por defecto o servidor de AnkiWeb.
         <a href="%s">Máis información</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">URL de sincronización</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">URL para a sincronización</string>
     <string name="custom_sync_certificate_title" maxLength="41">Certificado raíz personalizado (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>
@@ -248,10 +224,10 @@
     <string name="analytics_dialog_title">Axuda a mellorar AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Compartir o uso das funcións</string>
     <string name="analytics_summ">Podes contribuír ao AnkiDroid axudando ao equipo de desenvolvedores a saber que funcións se usan máis</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Reemplazar os saltos de liña por HTML</string>
-    <string name="note_editor_replace_newlines_summ">No editor de notas, converte os casos de &lt;br&gt; en novas liñas ao editar unha tarxeta</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Substituír os saltos de liña por HTML</string>
+    <string name="note_editor_replace_newlines_summ">No editor de notas, converte os casos de &lt;br&gt; en novas liñas ao editar unha tarxeta.</string>
     <string name="type_in_answer_focus" maxLength="41">Resaltar \"escribe a resposta\"</string>
-    <string name="type_in_answer_focus_summ">Resaltar automaticamente o campo \"escribe a resposta\" na pantalla de estudo</string>
+    <string name="type_in_answer_focus_summ">Resaltar automaticamente o campo «escribe a resposta» na pantalla de estudo.</string>
     <!-- About -->
     <string name="open_changelog">Abrir historial de cambios</string>
     <string name="pref_cat_about_title" maxLength="41">Sobre</string>
@@ -279,6 +255,10 @@
     <string name="user_action_8" maxLength="28">Acción do usuario 8</string>
     <string name="user_action_9" maxLength="28">Acción do usuario 9</string>
     <string name="toggle_auto_advance" maxLength="28">Alternar avance automático</string>
+    <string name="enable_auto_advance" maxLength="28">Activar avance automático</string>
+    <string name="disable_auto_advance" maxLength="28">Desactivar avance automático</string>
+    <string name="enable_voice_recording" maxLength="28">Activar gravación de son</string>
+    <string name="disable_voice_recording" maxLength="28">Desactivar gravación de son</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seleccionar o lado da tarxeta</string>
     <string name="card_side_question">Pregunta</string>
@@ -303,14 +283,15 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid crea copias de seguranza da túa colección periodicamente.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid crea copias de seguranza da túa colección periodicamente.
         Cando as copias teñan máis de dous días,
         AnkiDroid comezará a eliminar algunhas para liberar espazo no disco.
         <br><br>
         Ten en conta que os ficheiros multimedia non se gardan nas copias de seguridade.
         Para garantir a seguridade dos teus datos, sincroniza a túa colección periodicamente ou exporta copias de seguridade.
         <br><br>
-        Podes restaurar dende unha copia e exportar a túa colección no menú da lista de barallas.    ]]></string>
+        Podes restaurar a túa colección dende unha copia de seguranza ou exportala no menú da lista de barallas.    ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutos entre copias automáticas</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Copias de seguranza diarias a manter</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Copias de seguranza semanais a manter</string>
@@ -344,7 +325,7 @@
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Eliminar todo</string>
     <string name="pref__delete_everything__summary">Eliminar colección, multimedia, copias de seguranza e configuracións</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Eliminar todo</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Tes a certeza de querer eliminar tódolos teus datos? Isto inclúe a túa colección, contidos multimedia, copias de seguranza e configuracións.\n\nNota: esta acción pechará a xanela</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Tes a certeza de querer eliminar todos os teus datos? Isto inclúe a túa colección, contidos multimedia, copias de seguranza e configuracións.\n\nNota: esta acción pechará a xanela.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Eliminar datos da aplicación</string>
     <string name="pref__delete_app_data__summary">Eliminar configuracións e outros datos</string>
@@ -384,4 +365,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Voltear e responder</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configuración</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Configuracións relacionadas</string>
 </resources>

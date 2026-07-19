@@ -19,14 +19,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.InternetPermissionFragmentBinding
+import com.ichi2.anki.databinding.FragmentInternetPermissionBinding
 
-class InternetPermissionFragment : PermissionsFragment(R.layout.internet_permission_fragment) {
+class InternetPermissionFragment : PermissionsFragment(R.layout.fragment_internet_permission) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) = InternetPermissionFragmentBinding
+    ) = FragmentInternetPermissionBinding
         .inflate(inflater, container, false)
         .apply { internetPermission.initializeInternetPermissionItem() }
         .root

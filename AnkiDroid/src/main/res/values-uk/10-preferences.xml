@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Вимкнено</string>
@@ -63,7 +42,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронізація</string>
     <string name="pref_cat_scheduling" maxLength="41">Планування</string>
     <string name="pref_cat_whiteboard" maxLength="41">Дошка</string>
-    <string name="pref_cat_appearance" maxLength="41">Зовнішній вигляд</string>
     <string name="pref_cat_themes" maxLength="41">Теми</string>
     <string name="pref_cat_gestures" maxLength="41">Жести</string>
     <string name="pref_cat_controls" maxLength="41">Керування</string>
@@ -131,7 +109,6 @@
     <string name="tts_summ">Читає питання та відповіді, якщо відсутній аудіофайл</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Завантажувати медіафайли</string>
-    <string name="sync_account" maxLength="41">Профіль AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Не ввійшли в систему</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронізація</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронізувати на старт / завершення роботи
@@ -160,8 +137,6 @@
     <string name="select_locale_title">Виберіть мову</string>
     <string name="software_render" maxLength="41">Вимкнути апаратний рендеринг карток</string>
     <string name="software_render_summ">Апаратний рендеринг буде швидшим, але матиме проблеми, зокрема на Android 8/8.1. Якщо Ви не бачите частини інтерфейсу карток, спробуйте це налаштування.</string>
-    <string name="safe_display" maxLength="41">Статичний режим екрану</string>
-    <string name="safe_display_summ">Вимкнути всю анімацію та використовувати безпечні методи для відображення карток. Це може бути потрібно для E-ink пристроїв</string>
     <string name="disable_extended_text_ui" maxLength="41">Вимкнути режим редагування одиничного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Включає контекстне меню «Завдання з пропусками» в альбомному (горизонтальному) режимі</string>
@@ -175,6 +150,8 @@
     <string name="show_estimates_summ">Показувати час наступного повторення над кнопками відповіді</string>
     <string name="show_large_answer_buttons" maxLength="41">Показувати великі кнопки відповідей</string>
     <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
+    <string name="remove_animations" maxLength="41">Вимкнути анімацію</string>
+    <string name="remove_animations_summary">Також активовано, якщо анімація вимкнута в системних налаштуваннях</string>
     <string name="show_top_bar" maxLength="41">Показувати верхню панель</string>
     <string name="show_top_bar_summary">Показувати кількість карток, таймер відповіді, прапорець і позначку у верхній панелі</string>
     <string name="show_progress" maxLength="41">Показувати ті, що залишилися</string>
@@ -212,8 +189,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Екран навчання</string>
     <string name="show_deck_title" maxLength="41">Показувати назву колоди</string>
     <string name="accessibility" maxLength="41">Доступність</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Вставити зображення у форматі PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Натиснeння \"Назад\" двічі, щоб повернутися/вийти</string>
     <string name="exit_via_double_tap_back_summ">Для уникнення випадкового виходу з екрану навчання або додатку</string>
     <!-- Allow all files in media imports -->
@@ -227,7 +202,7 @@
         Якщо нічого не вказано, буде використаний сервер AnkiWeb.
         <a href="%s">Дізнатися більше</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронізації</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Синхронізувати URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Власний кореневий сертифікат (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавіатура</string>
@@ -283,6 +258,10 @@
     <string name="user_action_8" maxLength="28">Дія 8</string>
     <string name="user_action_9" maxLength="28">Дія 9</string>
     <string name="toggle_auto_advance" maxLength="28">Ввімкнути/вимкнути автоматичний перехід</string>
+    <string name="enable_auto_advance" maxLength="28">Ввімкнути автоперехід</string>
+    <string name="disable_auto_advance" maxLength="28">Вимкнути автоперехід</string>
+    <string name="enable_voice_recording" maxLength="28">Ввімкнути запис голосу</string>
+    <string name="disable_voice_recording" maxLength="28">Вимкнути запис голосу</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону картки</string>
     <string name="card_side_question">Питання</string>
@@ -307,7 +286,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid periodically backs up your collection.
         Після створення резервних копій більше двох днів,
         AnkiDroid почне видаляти деякі з них, щоб звільнити місце на диску.
         <br><br>
@@ -387,8 +367,9 @@
     <string name="new_study_screen_summ"><![CDATA[Покращений екран навчання, який замінить теперішній. Деякі функції старого екрану були змінені або видалені. Будь ласка, надсилайте нам будь-які <a href="%1$s">відгуки</a> або <a href="%2$s">помилки</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Показувати фідбек відповіді</string>
     <string name="screen" maxLength="41">Екран</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Тільки відповідь</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Лише відповідь</string>
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Перевернути та відповісти</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Відкрити налаштування</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Пов\'язані налаштування</string>
 </resources>

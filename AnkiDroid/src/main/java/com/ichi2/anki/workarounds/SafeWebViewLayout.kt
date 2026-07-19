@@ -27,7 +27,7 @@ import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.runCatchingWithReport
+import com.ichi2.anki.common.crashreporting.runCatchingWithReport
 import timber.log.Timber
 
 open class SafeWebViewLayout :
@@ -217,6 +217,26 @@ open class SafeWebViewLayout :
     }
 }
 
+/**
+ * Listener for [SafeWebViewLayout.onRenderProcessGone], called after the internal [WebView] is
+ * replaced due to a render process crash or the system killing it to free memory.
+ *
+ * Any [Fragment] containing a [SafeWebViewLayout] **must** implement this interface. In debug builds,
+ * a missing implementation will throw at [SafeWebViewLayout.onAttachedToWindow()]
+ *
+ * @see SafeWebViewLayout.onRenderProcessGone
+ */
 fun interface OnWebViewRecreatedListener {
+    /**
+     * Reconfigures a [WebView] after [SafeWebViewLayout.onRenderProcessGone] has replaced
+     * the old instance. Implementations must reapply all clients, settings and content
+     * that were configured on the original [WebView], as [SafeWebViewLayout] only handles
+     * the structural replacement and cannot reapply app level configuration.
+     *
+     * To manually trigger this path, call `webViewLayout.loadUrl("chrome://crash")`.
+     * Automated testing requires an instrumented test; a unit test is not sufficient.
+     *
+     * @param webView the new [WebView], already attached to [SafeWebViewLayout]
+     */
     fun onWebViewRecreated(webView: WebView)
 }

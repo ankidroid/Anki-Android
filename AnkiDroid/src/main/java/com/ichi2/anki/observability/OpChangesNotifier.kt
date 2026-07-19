@@ -22,8 +22,15 @@ import com.ichi2.anki.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/** Wrap a routine that returns OpChanges* or similar undo info with this
- * to notify change subscribers of the changes. */
+/**
+ * Wraps a routine that returns OpChanges* or similar undo info,
+ * notifying [ChangeManager] subscribers of the changes.
+ *
+ * **[block] must return an OpChanges subtype as its last expression.**
+ * [T] is inferred from [block]'s return type. If the last expression returns `Unit`
+ * (e.g. a `Timber` call), [ChangeManager.notifySubscribers] throws
+ * "unhandled change type of class 'class kotlin.Unit'" at runtime.
+ */
 suspend fun <T : Any> undoableOp(
     handler: Any? = null,
     block: Collection.() -> T,

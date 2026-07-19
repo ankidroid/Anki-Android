@@ -6,44 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <string name="youre_offline">به شبکه متصل نیستيد</string>
     <string name="sync_error">خطا در همگام سازی</string>
@@ -56,12 +34,10 @@
     <!-- MyAccount.kt -->
     <string name="username">نشانی رایانامه</string>
     <string name="password">رمزعبور</string>
-    <string name="log_in">ورود به حساب کاربری</string>
     <string name="sign_up_description">آيا حساب كاربري در آنکی وب نداريد؟ حساب كاربري رايگان است!</string>
     <string name="sign_up_not_affiliated">توجه: AnkiWeb وابسته به AnkiDroid نیست</string>
     <string name="sign_up">ثبت نام</string>
     <string name="logged_as">ورود به حساب کاربری به عنوان</string>
-    <string name="log_out">خروج</string>
     <string name="reset_password">تنظیم مجدد گذرواژه</string>
     <string name="lost_mail_instructions">ایمیل خود را فراموش کردید؟</string>
     <string name="sign_in">ورود به سیستم</string>
@@ -77,7 +53,6 @@
     <string name="one_way_sync_title" maxLength="41">همگام‌سازی یک‌طرفه</string>
     <string name="one_way_sync_confirmation">درخواست همگام‌سازی یک‌طرفه شده است</string>
     <string name="full_sync_confirmation">تغییر درخواستی شما در هنگام همگام سازی بعدی مجموعه منجر به ارسال کامل پایگاه داده به سرور خواهد شد. اگر شما کارتهایی برای مرور دارید یا تغییرات دیگری که در دستگاه های دیگر دارید که با مجموعه اینجا همگام سازی نشده اند ،همه آنها با همگام سازی بعدی از دست خواهند رفت. ادامه می دهید؟</string>
-    <string name="full_sync_confirmation_upgrade">به خاطر یک اشکال در نسخه نصب شده قبلی AnkiDroid، توصیه می شود که برنامه را به اجبار همگام سازی کامل کنید.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">همگام‌سازی (یک‌طرفه)</string>
     <string name="sync_menu_title_no_account">همگام سازی کردن (ورود به حساب)</string>

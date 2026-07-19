@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Malfermi la tirmenuon</string>
@@ -90,11 +69,11 @@
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="webview_crash_unknown">Nekonata eraro</string>
     <string name="webview_crash_unknwon_detailed">Eraro kaŭzita pro interna eraro en WebView</string>
-    <string name="webview_crash_oom">Memormanko</string>
+    <string name="webview_crash_oom">Out of memory</string>
     <string name="webview_crash_oom_details">La komponanto WebView estis ĉesigita de la operaciumo. Tio ĉi kutime okazas kiam mankas memoro al la aplikaĵo, ofte pro grandaj tiparoj aŭ aŭdvidaĵoj.</string>
     <string name="webview_crash_nonfatal">Eraro pri WebView. Kaŭzo: %s</string>
-    <string name="webview_crash_fatal">Neriparebla eraro pri WebView. Kaŭzo: %s</string>
-    <string name="webview_crash_loop_dialog_title">Eraro bildigi per operaciuma WebView</string>
+    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
     <string name="webview_crash_loop_dialog_content">La operciuma komponanto WebView malsukcesis bildigi la karton “%1$s”.\n%2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Deŝovu por nuligi</string>
     <string name="filter_by_flags" maxLength="41">Flagoj</string>
@@ -151,9 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d el %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renomi</string>
     <string name="checks_action" maxLength="28">Kontroli</string>
-    <string name="check_db" maxLength="28">Kontroli datumbazon</string>
-    <string name="check_media" maxLength="28">Kontroli aŭdvidaĵojn</string>
-    <string name="empty_cards" maxLength="28">Malplenaj kartoj</string>
     <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Forigado de kartaro&#8230;</string>
     <string name="info_rate">Taksi AnkiDroid</string>
@@ -188,14 +164,14 @@
     <string name="export_choice_save_to">Konservi en</string>
     <string name="export_saving_exported_collection">Konservado de elportita dosiero&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Agordoj</string>
-    <string name="menu__deck_options" maxLength="28">Agordoj pri kartaro</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Agordoj pri lernado</string>
     <string name="select_tts" maxLength="28">Agordi lingvon por parolsintezilo</string>
-    <string name="custom_study" maxLength="28">Propra lernado</string>
     <string name="dyn_deck_desc">Tio ĉi estas speciala kartaro por lerni ekster la norma lern-plano. Kartoj aŭtomate revenos al originalaj kartaroj post ripeti ilin. Forigi tiun ĉi kartaron el la listo de kartaroj redonos ĉiujn restantajn kartojn al originalaj kartaroj.</string>
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
     <string name="tag_already_exists">Etikedo jam ekzistas</string>
+    <string name="error_name_exists">Nomo jam ekzistas</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
@@ -207,15 +183,17 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Fono</string>
-    <string name="choose_an_image" maxLength="41">Elekti bildon</string>
     <string name="remove_wallpaper_image" maxLength="41">Forigi fonon</string>
     <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restarigi implicitajn</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Reĝimo “forviŝilo” aktiva</string>
     <string name="white_board_eraser_disabled">Reĝimo “forviŝilo” malaktiva</string>
+    <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
+    <string name="media_file_size_warning_title">Media too large</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_add_anyway">Aldoni ĉiuokaze</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Malsukcesis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
@@ -227,7 +205,7 @@
     <string name="valid_js_api_version">Malĝusta versio de JS API AnkiDroid. Kontaktu la programiston %s aŭ legu la vikion</string>
     <string name="update_js_api_version">Disponebla ĝisdatigo por JS API AnkiDroid. Kontaktu la programiston %s aŭ legu la vikion</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Montri</string>
-    <string name="anki_js_error_code">(Erar-kodo: %d)</string>
+    <string name="anki_js_error_code">(Error code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Kopiis al dosierujo</string>
     <string name="about_ankidroid_error_copy_debug_info">Eraro okazis dum kopii senerarigajn informojn al tondujo</string>
@@ -235,7 +213,7 @@
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Serĉi en kartaroj</string>
-    <string name="ankidroid_init_failed_webview_title">Neriparebla eraro</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid necesas la komponanton System WebView, kiu estas nedisponebla. Tio ĉi povas okazi, kiam la operaciumo instalas ĝisdatigojn. Reprovu post kelkaj minutoj.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid ne povas aliri konservejon pro eraro rilata al Android.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -260,10 +238,14 @@
     <string name="note_editor_audio_too_large">La sonaĵo estas tro granda, enmetu la sonaĵon permane</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Restarigado de Android-sekurkopio. Reprovu</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Uzu iManager por permesi al AnkiDroid krei fenestraĵojn</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Via aplikaĵlanĉilo ne permesas al AnkiDroid krei fenestraĵojn</string>
     <string name="create_shortcut_error">Eraro dum krei fenestraĵon: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Majuskligi frazojn</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Rulumi en ilarstrio</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Atestilo</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -273,16 +255,16 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Enigu ĝustan retpoŝtan adreson</string>
     <string name="password_empty">Pasvorto estas postulata</string>
-    <string name="back_pressed_once">Frapetu denove por eliri</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Elŝuti kartaron</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Malfermi en retfoliumilo</string>
-    <string name="try_again">Reprovi</string>
+    <string name="try_again">Try again</string>
     <string name="cancel_download">Rezigni elŝuton</string>
     <string name="cancel_download_question_title">Ĉu rezigni elŝuton?</string>
     <string name="downloading_file">Elŝutado de %s</string>
-    <string name="import_deck">Enporti kartaron</string>
+    <string name="import_deck">Import deck</string>
     <string name="something_wrong">Problemo okazis, reprovu</string>
     <string name="download_failed">Elŝuto malsukcesis</string>
     <string name="deck_download_progress_message">Vi povas uzi aliajn aplikaĵojn kiam la dosiero(j) estas elŝutata(j)</string>
@@ -319,7 +301,7 @@
     <string name="intro_ankidroid_tagline_one">Lernu malpli</string>
     <string name="intro_ankidroid_tagline_two">Memoru pli</string>
     <string name="intro_short_ankidroid_explanation">Kart-planilo Anki ŝparas vian tempon per plifortigi viajn plej malfortajn memorojn kaj prizorgi viajn plej fortajn</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Komenci</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
     <string name="intro_sync_from_ankiweb">Samtempigi kun AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ankoraŭ ne estas preta. Remalfermu AnkiDroid kaj reprovu</string>
@@ -331,9 +313,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartoj</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notoj</string>
-    <string name="toggle_cards_notes">Baskuligi kartojn/notojn</string>
     <string name="truncate_content_help">Senpintigi alton de ĉiu vico de la foliumilo por montri nur 3 unuajn liniojn de enhavo</string>
-    <string name="browser_options_dialog_heading">Agordoj pri foliumilo</string>
     <string name="audio_saved">Sonaĵo konservita</string>
     <string name="deleting_selected_notes">Forigado de elektitaj notoj</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Frapetu voĉon por aŭskulti ĝin</string>
@@ -347,7 +327,7 @@
     <string name="shared_decks_login_required">Ensalutu por elŝuti pliajn kartarojn</string>
     <string name="deck_description_field_hint">Priskribo</string>
     <string name="deck_description_saved">Priskribo aktualigita</string>
-    <string name="format_deck_description_as_markdown">Aranĝi kiel Markdown</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Malfermi helpon pri “%s”</string>
     <string name="failed_to_copy">Malsukcesis kopii</string>
     <plurals name="unbury_cards_feedback">
@@ -366,13 +346,12 @@
     <string name="orphan_note_message">Forigi tiun ĉi kartotipon kaŭzos, ke kelkaj notoj havos neniun karton.</string>
     <string name="voice_not_supported">Voĉo ne estas subtenata. Elektu alian aŭ instalu parolsintezilon.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Kartar-elektilo</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Forigi kartaron senkonfirme</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Redaktilo de notoj</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Elekti kartaron</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Elekti nototipon</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Redaktilo de etikedoj</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Redaktilo de kart-ŝablonoj</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Redakti frontan ŝablonon</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Redakti dorsan ŝablonon</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Redakti stilon</string>
@@ -385,7 +364,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Necesas promocii planilon</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_date_range">Date range</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

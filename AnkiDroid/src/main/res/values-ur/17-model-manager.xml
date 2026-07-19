@@ -6,24 +6,15 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!-- This file contains strings related to the note types. Note type used to be called "model", hence the name of the file. -->
 <resources>
     <!--Menu Labels-->
@@ -35,10 +26,6 @@
     <string name="toast_empty_name">آپ نام ضرور درج کریں۔</string>
     <string name="toast_duplicate_field">فیلڈ کا نام پہلے ہی استعمال کیا گیا ہے</string>
     <!--Plurals-->
-    <plurals name="model_browser_types_available">
-        <item quantity="one">%d نوٹ کی قسم دستیاب ہے۔</item>
-        <item quantity="other">%d نوٹ کی اقسام دستیاب ہیں۔</item>
-    </plurals>
     <plurals name="model_browser_of_type">
         <item quantity="one">%d نوٹ</item>
         <item quantity="other">%d نوٹس</item>
@@ -48,17 +35,19 @@
     <string name="model_browser_template">کارڈز میں ترمیم کریں</string>
     <!--Rename-->
     <string name="rename_model">نوٹ کی قسم کا نام تبدیل کریں۔</string>
-    <string name="rename_card_type">Rename card type</string>
+    <string name="rename_card_type" maxLength="28">Rename card type</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">زبان کے اشارے کو %s پر سیٹ کریں۔</string>
     <!--Field Editing-->
-    <string name="model_field_editor_add" maxLength="28">فیلڈ شامل کریں</string>
     <string name="model_field_editor_delete">فیلڈ کو حذف کریں۔</string>
     <string name="model_field_editor_rename">فیلڈ کا نام تبدیل کریں۔</string>
     <string name="model_field_editor_language_hint">کی بورڈ کی زبان کا اشارہ سیٹ کریں</string>
     <string name="model_field_editor_reposition_menu">ریپوزیشن فیلڈ</string>
     <string name="model_field_editor_changing">فیلڈز کو اپ ڈیٹ کرنا</string>
     <string name="model_field_editor_sort_field">اس فیلڈ کے مطابق ترتیب دیں۔</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">کیا آپ واقعی اس نوٹ کی قسم کو حذف کرنا چاہتے ہیں؟</string>
     <!--

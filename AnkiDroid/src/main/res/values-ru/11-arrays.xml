@@ -6,39 +6,18 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+  -->
 <resources>
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
@@ -63,16 +42,13 @@
     <string name="html_size_code_xx_small">самый маленький</string>
     <string name="html_size_code_x_small">очень маленький</string>
     <string name="html_size_code_small">маленький</string>
-    <string name="html_size_code_medium">средний</string>
+    <string name="html_size_code_medium">Средний</string>
     <string name="html_size_code_large">большой</string>
     <string name="html_size_code_x_large">очень большой</string>
     <string name="html_size_code_xx_large">самый большой</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Ответить снова</string>
-    <string name="answer_hard" maxLength="41">Ответить «Трудно»</string>
-    <string name="answer_good" maxLength="41">Ответить «Хорошо»</string>
-    <string name="answer_easy" maxLength="41">Ответить «Легко»</string>
-    <string name="gesture_abort_learning" maxLength="41">Закрыть экран обучения</string>
+    <string name="answer_easy" comment="Match Anki\'s translations: deckConfigAnswerAgain" maxLength="41">Ответить «Легко»</string>
+    <string name="gesture_abort_learning" maxLength="41">Закрыть экран учёбы</string>
     <string name="gesture_flag_red" maxLength="41">Красный флажок</string>
     <string name="gesture_flag_orange" maxLength="41">Оранжевый флажок</string>
     <string name="gesture_flag_green" maxLength="41">Зелёный флажок</string>
@@ -86,7 +62,7 @@
     <string name="gesture_toggle_whiteboard" maxLength="41">Переключить доску</string>
     <string name="gesture_toggle_eraser" maxLength="41">Переключить ластик</string>
     <string name="gesture_show_hint" maxLength="41">Показать подсказку</string>
-    <string name="gesture_show_all_hints" maxLength="41">Показать все подсказки</string>
+    <string name="gesture_show_all_hints" maxLength="41">Показывать все подсказки</string>
     <string name="record_voice" maxLength="41">Записать голос</string>
     <string name="replay_voice" maxLength="41">Воспроизвести голос</string>
     <string name="save_voice" maxLength="41">Сохранить запись</string>

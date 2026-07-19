@@ -17,12 +17,12 @@
     <item
         android:id="@+id/action_deck_rename"
         android:icon="@drawable/ic_popup_menu_item_editor"
-        android:title="@string/rename_deck"
+        tools:title="Rename deck"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_deck_delete"
         android:icon="@drawable/ic_delete_white"
-        android:title="@string/contextmenu_deckpicker_delete_deck"
+        tools:title="Delete deck"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_undo"
@@ -35,20 +35,29 @@
         android:title="@string/checks_action"
         app:showAsAction="never">
         <menu>
+            <!-- TR.databaseCheckTitle() -->
             <item
                 android:id="@+id/action_check_database"
                 android:menuCategory="secondary"
-                android:title="@string/check_db"/>
+                tools:title="Check database"/>
+            <!-- TR.mediaCheckCheckMediaAction() -->
             <item
                 android:id="@+id/action_check_media"
                 android:menuCategory="secondary"
-                android:title="@string/check_media"/>
+                tools:title="Check media"/>
+            <!-- TR.actionsEmptyCards() -->
             <item
                 android:id="@+id/action_empty_cards"
                 android:menuCategory="secondary"
-                android:title="@string/empty_cards"/>
+                tools:title="Empty cards"/>
         </menu>
     </item>
+    <!-- Backend string TR.qtAccelCreateBackup() has an & in it -->
+    <item
+        android:id="@+id/action_create_backup"
+        android:menuCategory="secondary"
+        android:title="@string/menu_create_backup"
+        />
     <item
         android:id="@+id/action_restore_backup"
         android:menuCategory="secondary"
@@ -59,8 +68,7 @@
         android:title="@string/model_browser_label"/>
     <item
         android:id="@+id/action_import"
-        android:menuCategory="secondary"
-        android:title="@string/menu_import"/>
+        android:menuCategory="secondary"/>
     <item
         android:id="@+id/action_export_collection"
         android:menuCategory="secondary" />

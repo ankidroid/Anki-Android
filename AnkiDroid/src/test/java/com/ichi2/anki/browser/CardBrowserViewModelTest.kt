@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser
 
@@ -22,10 +8,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Flag
-import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
@@ -55,13 +39,16 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleS
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeNoteTypeResponse
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.STATE_MULTISELECT_VALUES
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
+import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_NONE
 import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
+import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
+import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
@@ -73,14 +60,15 @@ import com.ichi2.anki.libanki.QueueType.New
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.LegacySortType
+import com.ichi2.anki.model.LegacySortType.NO_SORTING
+import com.ichi2.anki.model.LegacySortType.SORT_FIELD
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.model.SortType.NO_SORTING
-import com.ichi2.anki.model.SortType.SORT_FIELD
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
@@ -284,9 +272,11 @@ class CardBrowserViewModelTest : JvmTest() {
 
             assertThat("All decks should be selected", hasSelectedAllDecks())
 
-            val addIntent = CardBrowser.createAddNoteLauncher(this).toIntent(mockIt())
-            val bundle = addIntent.getBundleExtra(NoteEditorActivity.FRAGMENT_ARGS_EXTRA)
-            IntentAssert.doesNotHaveExtra(bundle, NoteEditorFragment.EXTRA_DID)
+            val addIntent =
+                NoteEditorLauncher
+                    .AddNoteFromCardBrowser(searchTerms = searchTerms, deckId = lastDeckId)
+                    .toIntent(mockIt())
+            IntentAssert.doesNotHaveExtra(addIntent.extras, NoteEditorFragment.EXTRA_DID)
         }
 
     @Test
@@ -398,6 +388,77 @@ class CardBrowserViewModelTest : JvmTest() {
         runTest {
             viewModel(intent = DeepLink("Hello")).apply {
                 assertThat(searchTerms, equalTo("Hello"))
+            }
+        }
+
+    @Test
+    fun `EXTRA_DECK_ID intent opens the specified deck`() =
+        runTest {
+            val deckId = addDeck("New")
+            val savedState = SavedStateHandle(mapOf(CardBrowserViewModel.EXTRA_DECK_ID to deckId))
+            viewModel(savedStateHandle = savedState).apply {
+                assertThat("intent deck is selected", deckId, equalTo(this.deckId))
+            }
+        }
+
+    @Test
+    fun `EXTRA_DECK_ID intent persists deck to lastDeckIdRepository`() =
+        runTest {
+            val deckId = addDeck("New")
+            val savedState = SavedStateHandle(mapOf(CardBrowserViewModel.EXTRA_DECK_ID to deckId))
+            viewModel(savedStateHandle = savedState).apply {
+                assertThat("deck persisted for next launch", lastDeckId, equalTo(deckId))
+            }
+        }
+
+    @Test
+    fun `no EXTRA_DECK_ID falls back to lastDeckIdRepository`() =
+        runTest {
+            val deckId = addDeck("Persisted")
+            viewModel(lastDeckId = deckId).apply {
+                assertThat("repository value is used", deckId, equalTo(this.deckId))
+            }
+        }
+
+    @Test
+    fun `EXTRA_DECK_ID for unknown deck falls back to lastDeckIdRepository`() =
+        runTest {
+            val persisted = addDeck("Persisted")
+            val unknownDeckId: DeckId = 9_999_999_999L
+            val savedState = SavedStateHandle(mapOf(CardBrowserViewModel.EXTRA_DECK_ID to unknownDeckId))
+            viewModel(lastDeckId = persisted, savedStateHandle = savedState).apply {
+                assertThat("unknown intent deck is ignored", persisted, equalTo(this.deckId))
+            }
+        }
+
+    @Test
+    fun `user deck change survives process death`() =
+        runTest {
+            val intentDeckId = addDeck("From intent")
+            val userDeckId = addDeck("User selection")
+            val savedState = SavedStateHandle(mapOf(CardBrowserViewModel.EXTRA_DECK_ID to intentDeckId))
+
+            val persistentRepo =
+                object : LastDeckIdRepository {
+                    override var lastDeckId: DeckId? = null
+                }
+
+            // setup: initial launch + select new deck
+            viewModel(
+                savedStateHandle = savedState,
+                lastDeckIdRepository = persistentRepo,
+            ).apply {
+                assertThat("intent honored on first launch", deckId, equalTo(intentDeckId))
+                setSelectedDeck(SelectableDeck.Deck(deckId = userDeckId, name = "User selection"))
+                assertThat("user choice persisted to repository", persistentRepo.lastDeckId, equalTo(userDeckId))
+            }
+
+            // intent does not override user selection
+            viewModel(
+                savedStateHandle = savedState,
+                lastDeckIdRepository = persistentRepo,
+            ).apply {
+                assertThat("user choice survives recreation", deckId, equalTo(userDeckId))
             }
         }
 
@@ -578,6 +639,40 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `refreshColumnsFromPrefs - reloads when SharedPreferences changed externally`() =
+        runViewModelTest {
+            flowOfActiveColumns.test {
+                ignoreEventsDuringViewModelInit()
+
+                // simulate another CardBrowser instance (e.g. one launched via the
+                // system PROCESS_TEXT context menu) saving a different column set
+                val externalColumns = listOf(QUESTION, ANSWER, DECK)
+                BrowserColumnCollection.save(
+                    sharedPrefs(),
+                    cardsOrNotes,
+                    BrowserColumnCollection(externalColumns),
+                )
+
+                refreshColumnsFromPrefs().join()
+
+                assertThat("flowOfActiveColumns emits external columns", awaitItem().columns, equalTo(externalColumns))
+                assertThat("activeColumns matches", activeColumns, equalTo(externalColumns))
+            }
+        }
+
+    @Test
+    fun `refreshColumnsFromPrefs - no event when SharedPreferences unchanged`() =
+        runViewModelTest {
+            flowOfActiveColumns.test {
+                ignoreEventsDuringViewModelInit()
+
+                refreshColumnsFromPrefs().join()
+
+                expectNoEvents()
+            }
+        }
+
+    @Test
     fun `change card order to NO_SORTING is a no-op if done twice`() =
         runViewModelTest {
             flowOfSearchState.test {
@@ -610,17 +705,17 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("initial direction", !orderAsc)
 
                 // changing the order performs a search & changes order
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order changed", order, equalTo(SortType.EASE))
+                assertThat("order changed", order, equalTo(LegacySortType.EASE))
                 assertThat("changed direction is the default", !orderAsc)
 
                 waitForSearchResults()
 
                 // pressing 'ease' again changes direction
-                changeCardOrder(SortType.EASE)
+                changeCardOrder(LegacySortType.EASE)
                 expectMostRecentItem()
-                assertThat("order unchanged", order, equalTo(SortType.EASE))
+                assertThat("order unchanged", order, equalTo(LegacySortType.EASE))
                 assertThat("direction is changed", orderAsc)
             }
         }
@@ -1244,6 +1339,21 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `preview does not write to SharedPreferences - issue 19885`() =
+        runViewModelTest(notes = 1) {
+            // A crash/close here caused all columns to be visible.
+            sharedPrefs().edit { remove(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY) }
+
+            previewColumnHeadings(CardsOrNotes.CARDS)
+
+            assertThat(
+                "activeCols must not be written during preview",
+                sharedPrefs().contains(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY),
+                equalTo(false),
+            )
+        }
+
     @Suppress("SpellCheckingInspection") // German
     @Test
     fun `columns headings - language change`() =
@@ -1350,6 +1460,206 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("tap last row -> disable multiselect", isInMultiSelectMode, equalTo(false))
         }
     }
+
+    @Test
+    fun `onTap outside multi-select opens note editor`() =
+        runViewModelTest(notes = 2) {
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(1).toRowSelection()).join()
+                assertInstanceOf<CardBrowserViewModel.NoteEditorCommand.LaunchActivity>(
+                    awaitItem(),
+                    "phone tap launches a standalone NoteEditor activity",
+                )
+                assertThat("focusedRow set to tapped row", focusedRow, equalTo(getRowAtPosition(1)))
+                assertThat("not in multi-select after tap", isInMultiSelectMode, equalTo(false))
+            }
+        }
+
+    @Test
+    fun `onTap in multi-select toggles selection without emitting`() =
+        runViewModelTest(notes = 2) {
+            selectRowAtPosition(0)
+            assertThat("in multi-select before tap", isInMultiSelectMode, equalTo(true))
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(1).toRowSelection()).join()
+                expectNoEvents()
+                assertThat("tapped row is selected", getRowAtPosition(1) in selectedRows, equalTo(true))
+            }
+        }
+
+    @Test
+    fun `onTap deselects already-selected row in multi-select`() =
+        runViewModelTest(notes = 2) {
+            selectRowAtPosition(0)
+            selectRowAtPosition(1)
+            onTap(getRowAtPosition(0).toRowSelection()).join()
+            assertThat("tapped row no longer selected", getRowAtPosition(0) in selectedRows, equalTo(false))
+        }
+
+    @Test
+    fun `onTap deselect on phone does not emit selection event`() =
+        runViewModelTest(notes = 2, isFragmented = false) {
+            selectRowAtPosition(0)
+            selectRowAtPosition(1)
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(0).toRowSelection()).join()
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `onTap deselect on tablet emits selection event with focused id`() =
+        runViewModelTest(notes = 2, isFragmented = true) {
+            selectRowAtPosition(0)
+            selectRowAtPosition(1)
+            val deselectedId = getRowAtPosition(0)
+            flowOfNoteEditorCommand.test {
+                onTap(deselectedId.toRowSelection()).join()
+                assertInstanceOf<CardBrowserViewModel.NoteEditorCommand.LoadInPane>(
+                    awaitItem(),
+                    "tablet deselect loads the editor in the trailing pane",
+                )
+                assertThat("focusedRow points at deselected row", focusedRow, equalTo(deselectedId))
+            }
+        }
+
+    @Test
+    fun `onTap add-to-multi-select on tablet does not move focus`() =
+        runViewModelTest(notes = 3, isFragmented = true) {
+            // long-press row 1 to enter multi-select; focus and selection both land on row 1
+            handleRowLongPress(getRowAtPosition(1).toRowSelection()).join()
+            assertThat("initial focus on row 1", focusedRow, equalTo(getRowAtPosition(1)))
+
+            // tap row 2 to ADD it to the selection — focus must stay on row 1
+            flowOfNoteEditorCommand.test {
+                onTap(getRowAtPosition(2).toRowSelection()).join()
+                expectNoEvents() // no editor reload
+                assertThat("focus unchanged after add-to-multi-select", focusedRow, equalTo(getRowAtPosition(1)))
+                assertThat("row 2 was added to selection", getRowAtPosition(2) in selectedRows, equalTo(true))
+            }
+        }
+
+    @Test
+    fun `stale focusedRow falls back to first card after search`() =
+        runViewModelTest {
+            val deckOne = addDeck("One")
+            val deckTwo = addDeck("Two")
+            addNoteToDeck(deckOne)
+            addNoteToDeck(deckTwo)
+
+            setSelectedDeck(deckTwo)
+            searchJob?.join()
+            val deckTwoRow = cards.first()
+            handleRowLongPress(deckTwoRow.toRowSelection()).join()
+            assertThat("initial focus is on the deckTwo row", focusedRow, equalTo(deckTwoRow))
+
+            setSelectedDeck(deckOne)
+            searchJob?.join()
+            assertThat("focusedRow no longer points to filtered-out row", focusedRow, not(equalTo(deckTwoRow)))
+            assertThat("focusedRow falls back to first row of new search", focusedRow, equalTo(cards.first()))
+        }
+
+    @Test
+    fun `searchResultMessage - user search, all decks selected, with rows`() =
+        runViewModelTest(notes = 3) {
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(SelectableDeck.AllDecks)
+                awaitSearchCompleted()
+                setQuery("", fromUserSearch = true)
+                val completed = awaitSearchCompleted()
+                val card = completed.resultMessage as CardBrowserViewModel.SearchResultMessage.CardCount
+                assertThat("count", completed.rowCount, equalTo(3))
+                assertThat("cardsOrNotes", completed.cardsOrNotes, equalTo(CardsOrNotes.CARDS))
+                assertThat("no all-decks action when already on all decks", card.includeSearchAllDecksAction, equalTo(false))
+            }
+        }
+
+    @Test
+    fun `searchResultMessage - user search, specific deck with cards has all-decks action`() =
+        runViewModelTest {
+            val deck = addDeck("Specific")
+            addNoteToDeck(deck)
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(deck)
+                awaitSearchCompleted()
+                setQuery("", fromUserSearch = true)
+                val card = awaitSearchCompleted().resultMessage as CardBrowserViewModel.SearchResultMessage.CardCount
+                assertThat("includes all-decks action", card.includeSearchAllDecksAction, equalTo(true))
+            }
+        }
+
+    @Test
+    fun `searchResultMessage - user search, specific deck with no cards`() =
+        runViewModelTest {
+            val deck = addDeck("Empty")
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(deck)
+                awaitSearchCompleted()
+                setQuery("", fromUserSearch = true)
+                assertThat(
+                    "empty deck → no-cards-in-selected-deck",
+                    awaitSearchCompleted().resultMessage,
+                    equalTo(CardBrowserViewModel.SearchResultMessage.NoCardsInSelectedDeck),
+                )
+            }
+        }
+
+    @Test
+    fun `searchResultMessage - no message on deck change`() =
+        runViewModelTest {
+            val deck = addDeck("Specific")
+            addNoteToDeck(deck)
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(deck)
+                assertThat(
+                    "changing deck does not surface a result message",
+                    awaitSearchCompleted().resultMessage,
+                    nullValue(),
+                )
+            }
+        }
+
+    @Test
+    fun `search completion - tablet with rows emits LoadInPane`() =
+        runViewModelTest(notes = 2, isFragmented = true) {
+            flowOfNoteEditorCommand.test {
+                launchSearchForCards()
+                searchJob?.join()
+                assertInstanceOf<CardBrowserViewModel.NoteEditorCommand.LoadInPane>(
+                    awaitItem(),
+                    "tablet with rows loads the editor in the trailing pane",
+                )
+            }
+        }
+
+    @Test
+    fun `search completion - tablet with empty deck emits HidePane`() =
+        runViewModelTest(isFragmented = true) {
+            val deck = addDeck("Empty")
+            flowOfNoteEditorCommand.test {
+                setSelectedDeck(deck)
+                searchJob?.join()
+                assertThat(
+                    "empty deck → trailing pane hidden",
+                    awaitItem(),
+                    equalTo(CardBrowserViewModel.NoteEditorCommand.HidePane),
+                )
+            }
+        }
+
+    @Test
+    fun `search completion - phone does not emit a NoteEditorCommand`() =
+        runViewModelTest(notes = 2, isFragmented = false) {
+            flowOfNoteEditorCommand.test {
+                launchSearchForCards()
+                searchJob?.join()
+                expectNoEvents()
+            }
+        }
 
     @Test
     fun `multiselect toggle state is restored`() {
@@ -1499,12 +1809,34 @@ class CardBrowserViewModelTest : JvmTest() {
         runViewModelTest {
             filterByTags(listOf("être"), CardStateFilter.ALL_CARDS)
 
-            assertThat(searchTerms, equalTo("tag:être"))
+            assertThat(searchTerms, equalTo("(tag:être)"))
             assertThat("all tagged cards are returned", rowCount, equalTo(3))
 
             updateQueryText("tag:être hêllo")
             launchSearchForCards(tempSearchQuery!!)
             assertThat("input is unchanged", searchTerms, equalTo("tag:être hêllo"))
+        }
+    }
+
+    /**
+     * Regression test: parentheses are required until we fully use SearchRequest
+     *
+     * Otherwise, the 'AND' takes precedence over the 'OR':
+     *
+     * `tag:a OR tag:b a` is parsed as `tag:a OR (tag:b a)`
+     */
+    @Test
+    fun `single tag filter is parenthesized to preserve precedence`() {
+        addBasicNote().update { tags = mutableListOf("foo", "bar") }
+
+        runViewModelTest {
+            filterByTags(listOf("foo", "bar"), CardStateFilter.ALL_CARDS)
+
+            assertThat(
+                "single-tag filter wraps the tag clause so user-appended terms append safely",
+                searchTerms,
+                equalTo("(tag:foo OR tag:bar)"),
+            )
         }
     }
 
@@ -1528,6 +1860,67 @@ class CardBrowserViewModelTest : JvmTest() {
 
             assertThat("hello and hêllo are matched", rowCount, equalTo(2))
             assertThat("input is unchanged", searchTerms, equalTo("hello"))
+        }
+    }
+
+    @Test
+    fun `updating sort type launches search`() =
+        runViewModelTest {
+            flowOfSearchState.test {
+                expectNoEvents()
+
+                setSortType(SortType.NoOrdering)
+
+                expectMostRecentItem()
+            }
+        }
+
+    @Test
+    fun `updating sort type updates flows - no ordering`() =
+        runViewModelTest {
+            assertEquals(LegacySortType.SORT_FIELD, order)
+
+            setSortType(SortType.NoOrdering)
+
+            assertEquals(LegacySortType.NO_SORTING, order)
+        }
+
+    @Test
+    fun `updating sort type updates flows - known column`() =
+        runViewModelTest {
+            assertEquals(LegacySortType.SORT_FIELD, order)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
+
+            assertEquals(LegacySortType.DUE_TIME, order)
+        }
+
+    @Test
+    fun `updating sort type updates order`() =
+        runViewModelTest {
+            assertEquals(false, orderAsc)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardDue"), true))
+
+            assertEquals(true, orderAsc)
+        }
+
+    @Test
+    fun `sort type integration test`() {
+        val firstId = addBasicNote("a").firstCard().id
+        addBasicNote("b")
+        val lastId = addBasicNote("c").firstCard().id
+
+        runViewModelTest {
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true))
+
+            assertEquals(lastId, this.cards[0].cardOrNoteId)
+
+            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = false))
+
+            assertEquals(firstId, this.cards[0].cardOrNoteId)
         }
     }
 
@@ -1578,6 +1971,7 @@ class CardBrowserViewModelTest : JvmTest() {
         initMode: InitMode = InitMode.AUTOMATIC,
         savedStateHandle: SavedStateHandle = SavedStateHandle(),
         options: CardBrowserLaunchOptions? = null,
+        isFragmented: Boolean = false,
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         repeat(notes) {
@@ -1590,7 +1984,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 cacheDir = createTransientDirectory(),
                 options = options,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
-                isFragmented = false,
+                isFragmented = isFragmented,
                 manualInit = initMode == InitMode.MANUAL || initMode == InitMode.AUTOMATIC,
                 savedStateHandle = savedStateHandle,
             )
@@ -1610,12 +2004,12 @@ class CardBrowserViewModelTest : JvmTest() {
             lastDeckId: DeckId? = null,
             intent: CardBrowserLaunchOptions? = null,
             mode: CardsOrNotes = CardsOrNotes.CARDS,
-        ): CardBrowserViewModel {
-            val lastDeckIdRepository =
+            savedStateHandle: SavedStateHandle = SavedStateHandle(),
+            lastDeckIdRepository: LastDeckIdRepository =
                 object : LastDeckIdRepository {
                     override var lastDeckId: DeckId? = lastDeckId
-                }
-
+                },
+        ): CardBrowserViewModel {
             // default is CARDS, do nothing in this case
             if (mode == CardsOrNotes.NOTES) {
                 CollectionManager.withCol { mode.saveToCollection(this@withCol) }
@@ -1628,7 +2022,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 options = intent,
                 isFragmented = false,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
-                savedStateHandle = SavedStateHandle(),
+                savedStateHandle = savedStateHandle,
             ).apply {
                 invokeInitialSearch()
             }
@@ -1651,6 +2045,14 @@ class CardBrowserViewModelTest : JvmTest() {
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
     for (pos in positions) {
         selectRowAtPosition(pos)
+    }
+}
+
+/** Skip non-Completed [CardBrowserViewModel.SearchState] emissions and return the next [SearchState.Completed]. */
+private suspend fun TurbineTestContext<SearchState>.awaitSearchCompleted(): SearchState.Completed {
+    while (true) {
+        val item = awaitItem()
+        if (item is SearchState.Completed) return item
     }
 }
 

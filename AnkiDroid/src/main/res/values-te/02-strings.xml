@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">సొరుగు తెరవండి</string>
@@ -90,11 +69,11 @@
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
     <string name="webview_crash_unknown">గుర్తించలేని లోపం</string>
     <string name="webview_crash_unknwon_detailed">WebViewలో అంతర్గత లోపం కారణంగా ఇది జరిగింది</string>
-    <string name="webview_crash_oom">జ్ఞాపకశక్తి కోల్పోవడం</string>
+    <string name="webview_crash_oom">Out of memory</string>
     <string name="webview_crash_oom_details">సిస్టమ్ ద్వారా WebView నిలిపివేయబడింది. సాధారణంగా పెద్ద ఫాంట్‌లు లేదా మీడియా కారణంగా అప్లికేషన్ మెమరీ అయిపోయినప్పుడు ఇది జరుగుతుంది.</string>
     <string name="webview_crash_nonfatal">WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
-    <string name="webview_crash_fatal">ఘోరమైన లోపం: WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
-    <string name="webview_crash_loop_dialog_title">సిస్టమ్ WebView రెండరింగ్ వైఫల్యం</string>
+    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
     <string name="webview_crash_loop_dialog_content">\'%1$s\' కార్డ్‌ని రెండర్ చేయడంలో సిస్టమ్ WebView విఫలమైంది.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
     <string name="filter_by_flags" maxLength="41">జెండాలు</string>
@@ -151,9 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$dలో %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">పేరుమార్చు</string>
     <string name="checks_action" maxLength="28">తనిఖీ</string>
-    <string name="check_db" maxLength="28">డేటాబేస్ను తనిఖీ చేయండి</string>
-    <string name="check_media" maxLength="28">మీడియా తనిఖీ చేయండి</string>
-    <string name="empty_cards" maxLength="28">ఖాళీ కార్డులు</string>
     <string name="unknown_type_field_warning">సమాధానం టైప్: తెలియని ఫీల్డ్ %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">డెక్ను తొలగిస్తోంది&#8230;</string>
     <string name="info_rate">రేట్ AnkiDroid</string>
@@ -188,14 +164,14 @@
     <string name="export_choice_save_to">కు సేవ్ చేయండి</string>
     <string name="export_saving_exported_collection">ఎగుమతి చేసిన ఫైల్‌ను సేవ్ చేస్తోంది&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ఎంపికలు</string>
-    <string name="menu__deck_options" maxLength="28">డెక్ ఎంపికలు</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">అధ్యయన ఎంపికలు</string>
     <string name="select_tts" maxLength="28">TTS భాషను సెట్ చేయండి</string>
-    <string name="custom_study" maxLength="28">అనుకూల అధ్యయనం</string>
     <string name="dyn_deck_desc">సాధారణ షెడ్యూల్ అధ్యయనం కోసం ఇది ప్రత్యేక డెక్. స్వయంచాలకంగా కార్డ్లను వాటిని సమీక్షించి, దాని అసలు డెక్స్కు వాటిని స్వయంచాలకంగా పునరుద్ధరించండి. డెక్ జాబితా నుండి ఈ డెక్ను తొలగిస్తే మిగిలిన అన్ని కార్డులను వారి అసలు డెక్కు తిరిగి పంపుతుంది.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ని జోడించడాన్ని నిర్ధారించడానికి \"%2$s\" తాకండి</string>
     <string name="tag_editor_add_feedback_existing">ఇప్పటికే ఉన్న ట్యాగ్ \"%1$s\" ఎంచుకోబడింది</string>
     <string name="tag_already_exists">Tag already exists</string>
+    <string name="error_name_exists">Name already exists</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg ఫైల్ను భాగస్వామ్యం చేయడంలో లోపం</string>
@@ -207,15 +183,17 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">నేపథ్య</string>
-    <string name="choose_an_image" maxLength="41">చిత్రాన్ని ఎంచుకోండి</string>
     <string name="remove_wallpaper_image" maxLength="41">Remove background</string>
     <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">ఖాళీ</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Eraser mode activated</string>
     <string name="white_board_eraser_disabled">Eraser mode deactivated</string>
+    <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
+    <string name="media_file_size_warning_title">Media too large</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_add_anyway">Add anyway</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">వైట్‌బోర్డ్ చిత్రాన్ని సేవ్ చేయడంలో విఫలమైంది. %s</string>
     <string name="white_board_image_saved">వైట్‌బోర్డ్ చిత్రం %sకి సేవ్ చేయబడింది</string>
@@ -227,7 +205,7 @@
     <string name="valid_js_api_version">చెల్లని AnkiDroid JS API వెర్షన్. డెవలపర్ %sని సంప్రదించండి లేదా వికీని వీక్షించండి</string>
     <string name="update_js_api_version">AnkiDroid JS API అప్‌డేట్ అందుబాటులో ఉంది. డెవలపర్ %sని సంప్రదించండి లేదా వికీని వీక్షించండి</string>
     <string name="reviewer_invalid_api_version_visit_documentation">చూడండి</string>
-    <string name="anki_js_error_code">(లోపం కోడ్: %d)</string>
+    <string name="anki_js_error_code">(Error code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">క్లిప్‌బోర్డ్‌కి కాపీ చేయబడింది</string>
     <string name="about_ankidroid_error_copy_debug_info">డీబగ్ సమాచారాన్ని క్లిప్‌బోర్డ్‌కి కాపీ చేయడంలో లోపం</string>
@@ -235,7 +213,7 @@
     <string name="card_viewer_could_not_find_image">కార్డ్ కంటెంట్ లోపం: \'%s\'ని లోడ్ చేయడంలో విఫలమైంది</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">సెర్చ్ డెక్స్</string>
-    <string name="ankidroid_init_failed_webview_title">తీవ్రమైన లోపం</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid అందుబాటులో లేని సిస్టమ్ WebViewపై ఆధారపడుతుంది. సిస్టమ్ అప్‌డేట్‌లను ఇన్‌స్టాల్ చేస్తున్నప్పుడు ఇది జరగవచ్చు. దయచేసి కొన్ని నిమిషాల్లో మళ్లీ ప్రయత్నించండి.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -260,10 +238,14 @@
     <string name="note_editor_audio_too_large">ఆడియో ఫైల్ చాలా పెద్దది, దయచేసి ఆడియోను మాన్యువల్‌గా చొప్పించండి</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">సత్వరమార్గాలను జోడించడానికి AnkiDroidని అనుమతించడానికి మీరు iManagerని ఉపయోగించాల్సి రావచ్చు</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">మీ హోమ్ స్క్రీన్‌కి సత్వరమార్గాలను జోడించడానికి AnkiDroid మిమ్మల్ని అనుమతించదు</string>
     <string name="create_shortcut_error">సత్వరమార్గాన్ని జోడించడంలో లోపం: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">వాక్యాలను క్యాపిటలైజ్ చేయండి</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">స్క్రోల్ టూల్‌బార్</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Certificate</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -273,16 +255,16 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">చెల్లుబాటు అయ్యే ఇమెయిల్ను నమోదు చేయండి</string>
     <string name="password_empty">పాస్‌వర్డ్ అవసరం</string>
-    <string name="back_pressed_once">నిష్క్రమించడానికి మళ్లీ వెనుకకు నొక్కండి</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">డౌన్‌లోడ్ డెక్</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Open in browser</string>
-    <string name="try_again">మళ్లీ ప్రయత్నించండి</string>
+    <string name="try_again">Try again</string>
     <string name="cancel_download">డౌన్‌లోడ్ రద్దు చేయండి</string>
     <string name="cancel_download_question_title">డౌన్‌లోడ్ రద్దు చేయండి?</string>
     <string name="downloading_file">%sని డౌన్‌లోడ్ చేస్తోంది</string>
-    <string name="import_deck">దిగుమతి డెక్</string>
+    <string name="import_deck">Import deck</string>
     <string name="something_wrong">ఏదో తప్పు జరిగింది, దయచేసి మళ్లీ ప్రయత్నించండి</string>
     <string name="download_failed">డౌన్ లోడ్ విఫలం</string>
     <string name="deck_download_progress_message">డౌన్‌లోడ్ రన్ అవుతున్నప్పుడు మీరు ఇతర యాప్‌లను ఉపయోగించవచ్చు</string>
@@ -319,7 +301,7 @@
     <string name="intro_ankidroid_tagline_one">తక్కువ చదవండి</string>
     <string name="intro_ankidroid_tagline_two">మరింత గుర్తుంచుకో</string>
     <string name="intro_short_ankidroid_explanation">Anki కార్డ్ షెడ్యూలర్ మీ బలహీనమైన జ్ఞాపకాలను బలోపేతం చేయడం ద్వారా మరియు మీ బలమైన జ్ఞాపకాలను సంరక్షించడం ద్వారా సమయాన్ని ఆదా చేస్తుంది</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ప్రారంభించడానికి</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb నుండి సమకాలీకరించండి</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ఇంకా ప్రారంభించబడలేదు. దయచేసి AnkiDroidని తెరిచి, మళ్లీ ప్రయత్నించండి</string>
@@ -331,9 +313,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">కార్డులు</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">గమనికలు</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser options</string>
     <string name="audio_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
     <string name="deleting_selected_notes">ఎంచుకున్న గమనికలను తొలగిస్తోంది</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
@@ -347,7 +327,7 @@
     <string name="shared_decks_login_required">దయచేసి మరిన్ని డెక్‌లను డౌన్‌లోడ్ చేయడానికి లాగిన్ చేయండి</string>
     <string name="deck_description_field_hint">వివరణ</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">కాపీ చేయడంలో విఫలమైంది</string>
     <plurals name="unbury_cards_feedback">
@@ -366,13 +346,12 @@
     <string name="orphan_note_message">ఈ కార్డ్ రకాన్ని తొలగించడం వలన కొన్ని గమనికలు కార్డ్‌లు లేకుండా ఉంటాయి.</string>
     <string name="voice_not_supported">వాయిస్ మద్దతు లేదు. మరొకటి ప్రయత్నించండి లేదా వాయిస్ ఇంజిన్‌ని ఇన్‌స్టాల్ చేయండి.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">డెక్ పికర్</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">నిర్ధారణ లేకుండా డెక్‌ను తొలగించండి</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">గమనిక ఎడిటర్</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">డెక్ ఎంచుకోండి</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">గమనిక రకాన్ని ఎంచుకోండి</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ట్యాగ్ ఎడిటర్</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">కార్డ్ టెంప్లేట్ ఎడిటర్</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">ముందు టెంప్లేట్‌ని సవరించండి</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">తిరిగి టెంప్లేట్‌ని సవరించండి</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">స్టైలింగ్‌ని సవరించండి</string>
@@ -385,7 +364,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_date_range">Date range</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

@@ -18,17 +18,17 @@ package com.ichi2.anki
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.sqlite.db.SupportSQLiteOpenHelper
-import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.testing.SynchronousExecutor
@@ -39,6 +39,7 @@ import com.ichi2.anki.RobolectricTest.CollectionStorageMode.IN_MEMORY_NO_FOLDERS
 import com.ichi2.anki.RobolectricTest.CollectionStorageMode.IN_MEMORY_WITH_MEDIA
 import com.ichi2.anki.RobolectricTest.CollectionStorageMode.ON_DISK
 import com.ichi2.anki.common.annotations.UseContextParameter
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DialogHandler
@@ -52,7 +53,6 @@ import com.ichi2.anki.libanki.testutils.InMemoryCollectionManagerWithMediaFolder
 import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.ProductionCollectionManager
@@ -60,7 +60,6 @@ import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
 import com.ichi2.testutils.grantPermissions
-import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
@@ -149,7 +148,7 @@ open class RobolectricTest :
                 // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
                 .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$")
 
-        ChangeManager.clearSubscribers()
+        ChangeManager.resetForTesting()
 
         validateRunWithAnnotationPresent()
 
@@ -178,16 +177,6 @@ open class RobolectricTest :
         // https://github.com/ankidroid/Anki-Android/pull/19004#discussion_r2739833965
         grantPermissions(Manifest.permission.INTERNET)
     }
-
-    protected open fun useLegacyHelper(): Boolean = false
-
-    protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory =
-        if (getCollectionStorageMode() != ON_DISK) {
-            Timber.w("Using in-memory database for test. Collection should not be re-opened")
-            InMemorySQLiteOpenHelperFactory()
-        } else {
-            FrameworkSQLiteOpenHelperFactory()
-        }
 
     @After
     @CallSuper
@@ -285,7 +274,7 @@ open class RobolectricTest :
         }
 
         @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
-        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+        protected fun <T : Activity?> startActivityNormallyOpenCollectionWithIntent(
             testClass: RobolectricTest,
             clazz: Class<T>?,
             i: Intent?,
@@ -312,6 +301,8 @@ open class RobolectricTest :
 
     val targetContext: Context
         get() = ApplicationProvider.getApplicationContext()
+
+    val resources: Resources get() = targetContext.resources
 
     /**
      * Returns an instance of [SharedPreferences] using the test context
@@ -354,20 +345,34 @@ open class RobolectricTest :
         CollectionManager.emulatedOpenFailure = null
     }
 
+    /**
+     * Emulates a null collection and a `BackendDbLockedException` while [block] runs,
+     * restoring normal collection behavior afterwards.
+     *
+     * @see enableNullCollection
+     */
+    protected inline fun withNullCollection(block: () -> Unit) =
+        try {
+            enableNullCollection()
+            block()
+        } finally {
+            disableNullCollection()
+        }
+
     @Throws(JSONException::class)
     protected fun getCurrentDatabaseNoteTypeCopy(noteTypeName: String): NotetypeJson {
         val collectionModels = col.notetypes
         return collectionModels.byName(noteTypeName)!!.deepClone()
     }
 
-    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+    internal fun <T : Activity?> startActivityNormallyOpenCollectionWithIntent(
         clazz: Class<T>?,
         i: Intent?,
     ): T = startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(): T = startRegularActivity(null)
+    internal inline fun <reified T : Activity?> startRegularActivity(): T = startRegularActivity(null)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T =
+    internal inline fun <reified T : Activity?> startRegularActivity(i: Intent? = null): T =
         startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
 
     fun equalFirstField(

@@ -19,16 +19,17 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.FragmentScenario.Companion.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
@@ -103,18 +104,23 @@ class DeckPickerContextMenuTest {
     @Test
     fun `Shows standard options`() {
         launch(withArguments()).onFragment { fragment ->
-            fragment.assertOptionPresent(R.string.menu_add)
-            fragment.assertOptionPresent(R.string.browse_cards)
-            fragment.assertOptionPresent(R.string.rename_deck)
-            fragment.assertOptionPresent(R.string.menu__deck_options)
-            fragment.assertOptionPresent(R.string.export_deck)
-            fragment.assertOptionPresent(R.string.create_shortcut)
-            fragment.assertOptionPresent(R.string.contextmenu_deckpicker_delete_deck)
+            with(fragment.requireContext()) {
+                fragment.assertOptionPresent(R.string.menu_add)
+                fragment.assertOptionPresent(R.string.browse_cards)
+                fragment.assertOptionPresent(TR.sentenceCase.renameDeck)
+                fragment.assertOptionPresent(TR.sentenceCase.deckOptions)
+                fragment.assertOptionPresent(R.string.export_deck)
+                fragment.assertOptionPresent(R.string.create_shortcut)
+                fragment.assertOptionPresent(TR.sentenceCase.deleteDeck)
+            }
         }
     }
 
     private fun DeckPickerContextMenu.assertOptionPresent(optionStringRes: Int) {
-        val optionTitle = getString(optionStringRes)
+        assertOptionPresent(getString(optionStringRes))
+    }
+
+    private fun DeckPickerContextMenu.assertOptionPresent(optionTitle: String) {
         assertTrue(
             foundOptions().contains(optionTitle),
             "'$optionTitle' should be present",
@@ -129,7 +135,7 @@ class DeckPickerContextMenuTest {
             MatcherAssert.assertThat(
                 "'Delete deck' should be last item in the menu",
                 fragment.foundOptions().last(),
-                equalTo(fragment.getString(R.string.contextmenu_deckpicker_delete_deck)),
+                equalTo(with(fragment.requireContext()) { TR.sentenceCase.deleteDeck }),
             )
         }
     }
@@ -142,7 +148,7 @@ class DeckPickerContextMenuTest {
                 "'Empty' should be present when deck is dynamic",
             )
             assertTrue(
-                fragment.foundOptions().contains(fragment.getString(R.string.rebuild_cram_label)),
+                fragment.foundOptions().contains(TR.actionsRebuild()),
                 "'Rebuild' should be present when deck is dynamic",
             )
         }
@@ -162,7 +168,7 @@ class DeckPickerContextMenuTest {
     fun `Shows option to unbury if deck has buried cards`() {
         launch(withArguments(hasBuriedCards = true)).onFragment { fragment ->
             assertTrue(
-                fragment.foundOptions().contains(fragment.getString(R.string.unbury)),
+                fragment.foundOptions().contains(TR.studyingUnbury()),
                 "'Unbury' should be present when deck has buried cards",
             )
         }
@@ -187,10 +193,10 @@ class DeckPickerContextMenuTest {
         deckName: String = "Deck 1",
         isDynamic: Boolean = false,
         hasBuriedCards: Boolean = false,
-    ) = bundleOf(
-        DeckPickerContextMenu.ARG_DECK_ID to deckId,
-        DeckPickerContextMenu.ARG_DECK_NAME to deckName,
-        DeckPickerContextMenu.ARG_DECK_IS_DYN to isDynamic,
-        DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedCards,
-    )
+    ) = Bundle().apply {
+        putLong(DeckPickerContextMenu.ARG_DECK_ID, deckId)
+        putString(DeckPickerContextMenu.ARG_DECK_NAME, deckName)
+        putBoolean(DeckPickerContextMenu.ARG_DECK_IS_DYN, isDynamic)
+        putBoolean(DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK, hasBuriedCards)
+    }
 }

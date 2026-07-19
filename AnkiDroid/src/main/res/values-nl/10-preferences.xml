@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Uitgeschakeld</string>
@@ -61,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisatie</string>
     <string name="pref_cat_scheduling" maxLength="41">Plannen</string>
     <string name="pref_cat_whiteboard" maxLength="41">Schrijfbord</string>
-    <string name="pref_cat_appearance" maxLength="41">Opmaak</string>
     <string name="pref_cat_themes" maxLength="41">Thema\'s</string>
     <string name="pref_cat_gestures" maxLength="41">Gebaren</string>
     <string name="pref_cat_controls" maxLength="41">Besturing</string>
@@ -129,7 +107,6 @@
     <string name="tts_summ">Vraag en antwoord voorlezen als er geen geluidsbestand is opgenomen</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Media downloaden</string>
-    <string name="sync_account" maxLength="41">AnkiWeb account</string>
     <string name="sync_account_summ_logged_out">Niet aangemeld</string>
     <string name="automatic_sync_choice" maxLength="41">Automatische synchronisatie</string>
     <string name="automatic_sync_choice_summ">Synchronizeer automatisch bij het starten en sluiten van de app indien de laatste synchronisatie meer dan 10 minuten geleden was.</string>
@@ -157,8 +134,6 @@
     <string name="select_locale_title">Taal selecteren</string>
     <string name="software_render" maxLength="41">Hardware render kaart uitschakelen</string>
     <string name="software_render_summ">Hardware render is sneller maar kan problemen hebben, met name op Android 8/8.1. Als u delen van de gebruikersinterface voor de beoordeling van de kaart niet kunt zien, probeer dan deze instelling.</string>
-    <string name="safe_display" maxLength="41">Veilige weergavemodus</string>
-    <string name="safe_display_summ">Alle animaties uitschakelen en veiligere methode gebruiken om kaarten te trekken. Dit kan nodig zijn voor sommige E-inkt-apparaten.</string>
     <string name="disable_extended_text_ui" maxLength="41">Bewerkingsmodus voor een enkel veld uitschakelen</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Laat het contextmenu \'Invuloefening\' toe in de landschapsmodus.</string>
@@ -172,6 +147,8 @@
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
     <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
     <string name="show_large_answer_buttons_summ">Toon antwoordknop in 2 rijen</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Toon bovenste balk</string>
     <string name="show_top_bar_summary">Toon aantal kaarten, vlag en markeer in de balk bovenaan</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
@@ -207,8 +184,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Studiescherm</string>
     <string name="show_deck_title" maxLength="41">Settitel weergeven</string>
     <string name="accessibility" maxLength="41">Toegankelijkheid</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Druk twee keer op terug om terug te gaan</string>
     <string name="exit_via_double_tap_back_summ">Om te voorkomen dat je per ongeluk het studiescherm of de app verlaat</string>
     <!-- Allow all files in media imports -->
@@ -222,7 +197,7 @@
         Als dit niet is ingesteld, wordt in plaats daarvan de standaard AnkiWeb-server gebruikt.
         <a href="%s">Meer informatie</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">URL synchroniseren</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Aangepast root-certificaat (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Toetsenbord</string>
@@ -278,6 +253,10 @@
     <string name="user_action_8" maxLength="28">Gebruikersactie 8</string>
     <string name="user_action_9" maxLength="28">Gebruikersactie 9</string>
     <string name="toggle_auto_advance" maxLength="28">Automatische vooruitgang in-/uitschakelen</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecteer kaart zijde</string>
     <string name="card_side_question">Vraag</string>
@@ -384,4 +363,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Instellingen openen</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
 </resources>

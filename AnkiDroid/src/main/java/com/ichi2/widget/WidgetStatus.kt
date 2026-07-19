@@ -17,11 +17,11 @@ package com.ichi2.widget
 import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.utils.android.SdCard
+import com.ichi2.anki.common.utils.ext.allDecksCounts
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.utils.ext.allDecksCounts
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -88,12 +88,12 @@ object WidgetStatus {
         }
 
     suspend fun updateSmallWidgetStatus(context: Context) {
-        if (!AnkiDroidApp.isSdCardMounted) {
+        if (!SdCard.isMounted) {
             Timber.w("updateStatus failed: no SD Card")
             return
         }
         val status = querySmallWidgetStatus()
-        MetaDB.storeSmallWidgetStatus(context, status)
+        widgetRepository.storeSmallWidgetStatus(status)
         if (smallWidgetEnabled) {
             Timber.i("triggering small widget UI update")
             AnkiDroidWidgetSmall.UpdateService().doUpdate(context)
@@ -104,9 +104,9 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-    fun fetchSmall(context: Context): SmallWidgetStatus = MetaDB.getWidgetSmallStatus(context)
+    fun fetchSmall(): SmallWidgetStatus = widgetRepository.getWidgetSmallStatus()
 
-    fun fetchDue(context: Context): Int = MetaDB.getNotificationStatus(context)
+    fun fetchDue(): Int = widgetRepository.dueCardsCount()
 
     private suspend fun querySmallWidgetStatus(): SmallWidgetStatus =
         withCol {

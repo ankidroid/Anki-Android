@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
-~ Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto">
@@ -306,7 +296,7 @@
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|screenSize"
             android:parentActivityName=".DeckPicker"
             >
         </activity>
@@ -329,17 +319,22 @@
             android:name="com.ichi2.anki.CardBrowser"
             android:label="@string/card_browser"
             android:theme="@style/Theme_Dark.Launcher"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".DeckPicker"
-            >
-            <intent-filter android:label="@string/card_browser">
+            />
+        <!-- `anki://x-callback-url/browser` deep link. -->
+        <activity-alias
+            android:name="com.ichi2.anki.CardBrowserDeepLink"
+            android:label="@string/card_browser"
+            android:targetActivity="com.ichi2.anki.IntentHandler"
+            android:exported="true">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "anki://x-callback-url/browser” -->
                 <data android:scheme="anki" android:host="x-callback-url" android:path="/browser"/>
             </intent-filter>
-        </activity>
+        </activity-alias>
         <activity
             android:name=".notetype.ManageNotetypes"
             android:label="@string/model_browser_label"
@@ -488,7 +483,6 @@
         </activity>
         <activity
             android:name=".CardTemplateBrowserAppearanceEditor"
-            android:label="@string/card_template_browser_appearance_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
@@ -609,6 +603,16 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
+            </intent-filter>
+        </receiver>
+
+        <!-- #14372: Handles updates after the day rollover (04:00). -->
+        <receiver android:name="com.ichi2.widget.DayRolloverAlarm"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.ichi2.widget.ACTION_ROLLOVER" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>
         </receiver>
 

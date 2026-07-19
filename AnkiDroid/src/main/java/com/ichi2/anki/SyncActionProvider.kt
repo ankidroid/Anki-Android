@@ -24,7 +24,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.isVisible
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.ichi2.compat.setTooltipTextCompat
+import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.ui.RtlCompliantActionProvider.Companion.unwrapContext
 
 class SyncActionProvider(
@@ -46,7 +46,7 @@ class SyncActionProvider(
 
     override fun onCreateActionView(forItem: MenuItem): View {
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.sync_progress_layout, null)
+        val view = inflater.inflate(R.layout.view_sync_progress_layout, null)
 
         progressIndicator = view.findViewById(R.id.progress_indicator)
         syncButton =

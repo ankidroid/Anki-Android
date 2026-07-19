@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ankitects Pty Ltd <https://apps.ankiweb.net>
 
 package com.ichi2.anki.libanki.sched
 
@@ -153,9 +140,10 @@ open class Scheduler(
         card: Card,
         rating: Rating,
     ) {
-        val top = queuedCards.cardsList.first()
-        val answer = buildAnswer(card, top.states, rating)
-        col.backend.answerCard(answer)
+        val states = col.backend.getSchedulingStates(card.id)
+        col.backend.answerCard(
+            buildAnswer(card = card, states = states, rating = rating),
+        )
         numberOfAnswersRecorded += 1
         // tests assume the card was mutated
         card.load(col)

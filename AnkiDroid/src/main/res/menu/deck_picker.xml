@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
@@ -25,20 +28,29 @@
         android:title="@string/checks_action"
         ankidroid:showAsAction="never">
         <menu>
+            <!-- TR.databaseCheckTitle() -->
             <item
                 android:id="@+id/action_check_database"
                 android:menuCategory="secondary"
-                android:title="@string/check_db"/>
+                tools:title="Check database"/>
+            <!-- TR.mediaCheckCheckMediaAction() -->
             <item
                 android:id="@+id/action_check_media"
                 android:menuCategory="secondary"
-                android:title="@string/check_media"/>
+                tools:title="Check media"/>
+            <!-- TR.actionsEmptyCards() -->
             <item
                 android:id="@+id/action_empty_cards"
                 android:menuCategory="secondary"
-                android:title="@string/empty_cards"/>
+                tools:title="Empty cards"/>
         </menu>
     </item>
+    <!-- Backend string TR.qtAccelCreateBackup() has an & in it -->
+    <item
+        android:id="@+id/action_create_backup"
+        android:menuCategory="secondary"
+        android:title="@string/menu_create_backup"
+        />
     <item
         android:id="@+id/action_restore_backup"
         android:menuCategory="secondary"
@@ -49,8 +61,7 @@
         android:title="@string/model_browser_label"/>
     <item
         android:id="@+id/action_import"
-        android:menuCategory="secondary"
-        android:title="@string/menu_import"/>
+        android:menuCategory="secondary"/>
     <item
         android:id="@+id/action_export_collection"
         android:menuCategory="secondary" />

@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Vérifier la base de données ?</string>
-    <string name="check_db_warning">Cela peut prendre du temps</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Supprimer le jeu de cartes</string>
+    <string name="check_db_warning">Cela peut prendre beaucoup de temps. Continuer?</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Supprimer toutes les cartes dans %1$s? Elle contient %2$d carte</item>
@@ -83,14 +60,14 @@
     <string name="restore_backup_choose_another">En choisir un autre</string>
     <string name="dialog_cancel">Annuler</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Ajouter</string>
+    <string name="restore">Restaurer</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmer</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_yes">Oui</string>
     <string name="dialog_keep">Conserver</string>
     <string name="dialog_remove">Retirer</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Quitter</string>
     <string name="dialog_continue">Continuer</string>
     <string name="dialog_processing">Traitement&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Créer</string>
@@ -105,8 +82,7 @@
     <string name="dialog_invalid_custom_certificate_title">Erreur lors de l’analyse du certificat</string>
     <string name="dialog_updated_custom_certificate">Certificat mis à jour</string>
     <!-- Media checking -->
-    <string name="check_media_title">Vérifier les médias ?</string>
-    <string name="check_media_warning">Cela peut prendre longtemps avec les grandes collections de médias</string>
+    <string name="check_media_warning">Cela peut prendre beaucoup de temps avec les grandes collections de médias. Continuer?</string>
     <string name="check_media_message">Vérification des médias&#8230;</string>
     <string name="check_media_adding_missing_tag">Ajout d\'étiquettes&#8230;</string>
     <string name="check_media_tags_added">Étiquettes ajoutées</string>
@@ -130,8 +106,6 @@
     <string name="permission_denied">Permission refusée</string>
     <string name="recording_permission_denied_message">La permission pour utiliser le microphone est nécessaire à la fonction \"Enregistrer la voix\". Merci d\'accorder l\'autorisation dans les paramètres de l\'application.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid mis à jour</string>
-    <string name="integrity_check_startup_content">AnkiDroid a été mis à jour. Cette mise à jour inclut des corrections pour d\'éventuels problèmes de base de données, et nous vous conseillons d\'exécuter une vérification de la base de données immédiatement.</string>
     <string name="integrity_check_continue_anyway">Continuer quand même</string>
     <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVous avez actuellement %s libres.</string>
@@ -267,20 +241,20 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Les numéros de carte ne changeront pas</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="extra_cloze_deletions_removed">Si vous passez à un type de note ordinaire et qu\'il y a plus de texte à trous que de modèles de cartes disponibles, toutes les cartes supplémentaires seront supprimées.</string>
     <string name="different_note_types_selected">Veuillez sélectionner des notes d\'un seul type de notes.</string>
     <string name="error_no_changes_to_save">Aucune modification à enregistrer</string>
     <string name="choose_color">Choisir une couleur</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Champs</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Spécial</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_front_side_help">Contenu du template avant. L\'audio n\'est pas automatiquement lu</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Le jeu complet de la carte, y compris les decks parents%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Le jeu actuel de la carte, excluant les decks parents%s</string>
+    <string name="special_field_flag_help">Donne en sortie ‘%1$s’, où %2$s est le code du drapeau (%3$s\–%4$s\)</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Les tags de la note%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">L\'ID de la carte%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Le nom du modèle de carte%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Le nom du type de note%s</string>
 </resources>

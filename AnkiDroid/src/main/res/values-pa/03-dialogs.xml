@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">ਡੇਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ?</string>
-    <string name="check_db_warning">ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ਡੇਕ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="check_db_warning">This may take a long time. Proceed?</string>
     <string name="delete_deck_title">ਡੈੱਕ ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">ਕੀ %1$s ਦੇ ਸਾਰੇ ਕਾਰਡ ਮਿਟਾਉਣੇ ਹਨ? ਇਸ ਵਿੱਚ %2$d ਕਾਰਡ ਹਨ</item>
@@ -105,8 +82,7 @@
     <string name="dialog_invalid_custom_certificate_title">ਸਰਟੀਫਿਕੇਟ ਪਾਰਸ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <string name="dialog_updated_custom_certificate">ਸਰਟੀਫਿਕੇਟ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <!-- Media checking -->
-    <string name="check_media_title">ਕੀ ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰਨੀ ਹੈ?</string>
-    <string name="check_media_warning">ਵੱਡੇ ਮੀਡੀਆ ਸੰਗ੍ਰਹਿ ਦੇ ਨਾਲ ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Checking media&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
     <string name="check_media_tags_added">Tags added</string>
@@ -130,8 +106,6 @@
     <string name="permission_denied">Permission denied</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid ਅੱਪਗਰੇਡ ਕੀਤਾ ਗਿਆ</string>
-    <string name="integrity_check_startup_content">AnkiDroid ਨੂੰ ਅੱਪਗ੍ਰੇਡ ਕੀਤਾ ਗਿਆ ਹੈ। ਇਸ ਅੱਪਗਰੇਡ ਵਿੱਚ ਸੰਭਾਵਿਤ ਡਾਟਾਬੇਸ ਸਮੱਸਿਆਵਾਂ ਲਈ ਫਿਕਸ ਸ਼ਾਮਲ ਹਨ, ਅਤੇ ਅਸੀਂ ਸਿਫ਼ਾਰਿਸ਼ ਕਰਦੇ ਹਾਂ ਕਿ ਤੁਸੀਂ ਹੁਣੇ ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ।</string>
     <string name="integrity_check_continue_anyway">ਕਿਸੇ ਵੀ ਤਰ੍ਹਾਂ ਜਾਰੀ ਰੱਖੋ</string>
     <string name="integrity_check_insufficient_space">ਚੈੱਕ ਡੇਟਾਬੇਸ ਵੱਡੀ ਮਾਤਰਾ ਵਿੱਚ ਅਸਥਾਈ ਸਟੋਰੇਜ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ।\n\nਇਹ ਜ਼ੋਰਦਾਰ ਸਿਫ਼ਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ ਕਿ ਜਾਰੀ ਰੱਖਣ ਤੋਂ ਪਹਿਲਾਂ ਤੁਹਾਡੇ ਕੋਲ ਆਪਣੀ ਡਿਵਾਈਸ \'ਤੇ ਘੱਟੋ-ਘੱਟ %s ਖਾਲੀ ਥਾਂ ਹੈ।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nਤੁਹਾਡੇ ਕੋਲ ਇਸ ਵੇਲੇ %s ਮੁਫ਼ਤ ਹੈ।</string>

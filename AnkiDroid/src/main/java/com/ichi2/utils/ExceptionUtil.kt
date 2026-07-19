@@ -17,9 +17,9 @@ package com.ichi2.utils
 
 import android.content.Context
 import androidx.annotation.CheckResult
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.android.showThemedToast
 import java.io.PrintWriter
 import java.io.StringWriter
 

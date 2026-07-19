@@ -19,17 +19,20 @@ package com.ichi2.utils
 import android.widget.EditText
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.targetContext
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class EditTextUtilsTest : AndroidTest {
     @Test
     fun `textAsIntOrNull test`() {

@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.deckpicker
 
@@ -35,7 +21,8 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.PermissionSet
-import com.ichi2.anki.browser.BrowserDestination
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
@@ -50,7 +37,6 @@ import com.ichi2.anki.libanki.utils.extend
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.settings.Prefs
@@ -64,11 +50,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import timber.log.Timber
+import com.ichi2.anki.common.destinations.Destination as NavigateDestination
 
 /**
  * ViewModel for the [DeckPicker]
@@ -88,7 +76,7 @@ class DeckPickerViewModel :
         }
 
     /** User filter of the deck list. Shown as a search in the UI */
-    private val flowOfCurrentDeckFilter = MutableStateFlow("")
+    private val flowOfCurrentDeckFilter = MutableStateFlow(DeckFilters.create(""))
 
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
@@ -134,6 +122,7 @@ class DeckPickerViewModel :
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>(extraBufferCapacity = 1)
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
+    val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
     override val onError = MutableSharedFlow<String>(extraBufferCapacity = 1)
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
@@ -155,8 +144,6 @@ class DeckPickerViewModel :
     private var schedulerUpgradeDialogShownForVersion: Long? = null
 
     val flowOfPromptUserToUpdateScheduler = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
-
-    val flowOfUndoUpdated = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     val flowOfCollectionHasNoCards = MutableStateFlow(true)
 
@@ -192,6 +179,9 @@ class DeckPickerViewModel :
     // Otherwise, the progress indicator remains indefinitely. This replay=1 ensures that the collector will
     // receive the dismissal event even if it starts after the emission.
     val flowOfDecksReloaded = MutableSharedFlow<Unit>(extraBufferCapacity = 1, replay = 1)
+
+    // TODO: Use a sensible default rather than null
+    val flowOfOptionsMenuState = MutableStateFlow<OptionsMenuState?>(null)
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
@@ -275,10 +265,21 @@ class DeckPickerViewModel :
             flowOfDeckCountsChanged.emit(Unit)
         }
 
+    /**
+     * Marks [deckId] as the currently selected deck and updates the selection in the deck list.
+     */
+    fun selectDeck(deckId: DeckId) =
+        viewModelScope.launch {
+            // TODO: should we always reset the Card Browser default deck here?
+            withCol { decks.select(deckId) }
+            focusedDeck = deckId
+            flowOfRefreshDeckList.emit(Unit)
+        }
+
     fun browseCards(deckId: DeckId) =
         launchCatchingIO {
             withCol { decks.select(deckId) }
-            flowOfDestination.emit(BrowserDestination.ToDeck(deckId))
+            flowOfNavigate.emit(BrowserDestination.ToDeck(deckId))
         }
 
     fun addNote(
@@ -289,6 +290,31 @@ class DeckPickerViewModel :
             withCol { decks.select(deckId) }
         }
         flowOfDestination.emit(NoteEditorLauncher.AddNote(deckId))
+    }
+
+    val flowOfShowContextMenu = MutableSharedFlow<DeckId>(extraBufferCapacity = 1)
+
+    data class RightClickMenuRequest(
+        val deckId: DeckId,
+        val x: Float,
+        val y: Float,
+    )
+
+    val flowOfShowRightClickContextMenu = MutableSharedFlow<RightClickMenuRequest>(extraBufferCapacity = 1)
+
+    fun requestContextMenu(deckId: DeckId) =
+        viewModelScope.launch {
+            selectDeck(deckId).join()
+            flowOfShowContextMenu.emit(deckId)
+        }
+
+    fun requestRightClickContextMenu(
+        deckId: DeckId,
+        x: Float,
+        y: Float,
+    ) = viewModelScope.launch {
+        selectDeck(deckId).join()
+        flowOfShowRightClickContextMenu.emit(RightClickMenuRequest(deckId, x, y))
     }
 
     /**
@@ -308,7 +334,7 @@ class DeckPickerViewModel :
     ) = launchCatchingIO {
         // open cram options if filtered deck, otherwise open regular options
         val filtered = isFiltered ?: withCol { decks.isFiltered(deckId) }
-        flowOfDestination.emit(DeckOptionsDestination(deckId = deckId, isFiltered = filtered))
+        flowOfNavigate.emit(DeckOptionsDestination(deckId = deckId, isFiltered = filtered))
     }
 
     fun unburyDeck(deckId: DeckId) =
@@ -379,7 +405,7 @@ class DeckPickerViewModel :
                 // TODO: This is in the wrong place
                 // current deck may have changed
                 focusedDeck = withCol { decks.current().id }
-                flowOfUndoUpdated.emit(Unit)
+                refreshUndoMenuState()
 
                 flowOfDecksReloaded.emit(Unit)
             }
@@ -389,7 +415,7 @@ class DeckPickerViewModel :
 
     fun updateDeckFilter(filterText: String) {
         Timber.d("filter: %s", filterText)
-        flowOfCurrentDeckFilter.value = filterText
+        flowOfCurrentDeckFilter.value = DeckFilters.create(filterText)
     }
 
     fun toggleDeckExpand(deckId: DeckId) =
@@ -555,21 +581,45 @@ class DeckPickerViewModel :
     }
 
     /**
-     * Updates the menu state with current collection information
+     * Current state of the options menu, or `null` if the collection is inaccessible.
+     *
+     * Updated by [refreshMenuState] and [refreshUndoMenuState].
      */
-    suspend fun updateMenuState(): OptionsMenuState? =
+    val optionsMenuState: OptionsMenuState? get() = flowOfOptionsMenuState.value
+
+    /**
+     * Recomputes the full options menu state from the current collection.
+     */
+    suspend fun refreshMenuState() {
+        flowOfOptionsMenuState.value =
+            withOpenColOrNull {
+                val searchIcon = decks.count() >= 10
+                val undoLabel = undoLabel()
+                val undoAvailable = undoAvailable()
+                // besides checking for cards being available also consider if we have empty decks
+                val isColEmpty = isEmpty && decks.count() == 1
+                // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
+                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
+            }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
+                val syncIcon = fetchSyncIconState()
+                OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
+            }
+    }
+
+    /**
+     * Refreshes only the undo-related fields of the menu state, leaving the rest untouched.
+     *
+     * @see refreshMenuState
+     */
+    private suspend fun refreshUndoMenuState() {
         withOpenColOrNull {
-            val searchIcon = decks.count() >= 10
-            val undoLabel = undoLabel()
-            val undoAvailable = undoAvailable()
-            // besides checking for cards being available also consider if we have empty decks
-            val isColEmpty = isEmpty && decks.count() == 1
-            // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
-            OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
-        }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
-            val syncIcon = fetchSyncIconState()
-            OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
+            val newUndoLabel = undoLabel()
+            val newUndoAvailable = undoAvailable()
+            flowOfOptionsMenuState.update { current ->
+                current?.copy(undoLabel = newUndoLabel, undoAvailable = newUndoAvailable)
+            }
         }
+    }
 
     @SuppressLint("UseKtx")
     fun getPreviousVersion(

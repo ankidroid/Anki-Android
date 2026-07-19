@@ -1,17 +1,6 @@
-// noinspection MissingCopyrightHeader #8659
-// Copyright 2015 Google Inc. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright 2015 Google Inc. All Rights Reserved.
+
 package com.ichi2.compat.customtabs
 
 import android.content.Context
@@ -19,12 +8,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.browser.customtabs.CustomTabsService
 import androidx.core.net.toUri
-import com.ichi2.anki.runCatchingWithReport
-import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
-import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
-import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
-import com.ichi2.compat.GET_RESOLVED_FILTER
-import com.ichi2.compat.ResolveInfoFlagsCompat
+import com.ichi2.anki.common.crashreporting.runCatchingWithReport
+import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveServiceCompat
+import com.ichi2.anki.compat.GET_RESOLVED_FILTER_L
+import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 
 /**
@@ -123,7 +112,7 @@ object CustomTabsHelper {
             val handlers =
                 pm.queryIntentActivitiesCompat(
                     intent,
-                    ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER.toLong()),
+                    ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER_L),
                 )
             if (handlers.isEmpty()) {
                 return false

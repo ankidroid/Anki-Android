@@ -15,6 +15,7 @@ package com.ichi2.anki.export
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,6 @@ import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -33,12 +33,16 @@ import anki.generic.Empty
 import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import anki.notes.noteIds
-import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.browser.removeSafely
+import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.DialogExportOptionsBinding
 import com.ichi2.anki.exportApkgPackage
 import com.ichi2.anki.exportCollectionPackage
@@ -48,7 +52,8 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.ui.BasicItemSelectedListener
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.launch
@@ -60,6 +65,13 @@ import java.io.File
  */
 class ExportDialogFragment : DialogFragment() {
     private lateinit var binding: DialogExportOptionsBinding
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        if (arguments?.containsKey(ARG_IDS_FILE) == true) {
+            removeIdsFile()
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogExportOptionsBinding.inflate(requireActivity().layoutInflater, null, false)
@@ -86,7 +98,7 @@ class ExportDialogFragment : DialogFragment() {
             .Builder(requireActivity())
             .setView(binding.root)
             .negativeButton(R.string.dialog_cancel)
-            .positiveButton(R.string.dialog_ok) {
+            .positiveButton(text = TR.actionsExport()) {
                 val selectedIndex = binding.exportTypeSelector.selectedItemPosition
                 // just to be safe, if not exporting a collection and the decks spinner is not
                 // enabled(the user was really fast or fetching the decks is delayed for some
@@ -131,7 +143,7 @@ class ExportDialogFragment : DialogFragment() {
             val allDecks =
                 mutableListOf(
                     DeckNameId(
-                        requireActivity().getString(R.string.card_browser_all_decks),
+                        TR.sentenceCase.allDecks,
                         ALL_DECKS_ID,
                     ),
                 )
@@ -326,17 +338,15 @@ class ExportDialogFragment : DialogFragment() {
     private fun buildExportLimit(): ExportLimit =
         when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
             ExportType.Notes -> {
-                val selectedNotesIds =
-                    arguments?.getLongArray(ARG_EXPORTED_IDS)
-                        ?: error("Requested export for selected notes but no notes ids were passed in!")
-                exportLimit { noteIds = noteIds { this.noteIds.addAll(selectedNotesIds.toList()) } }
+                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
+
+                exportLimit { noteIds = noteIds { this.noteIds.addAll(ids) } }
             }
 
             ExportType.Cards -> {
-                val selectedCardIds =
-                    arguments?.getLongArray(ARG_EXPORTED_IDS)
-                        ?: error("Requested export for selected cards but no cards ids were passed in!")
-                exportLimit { cardIds = cardIds { this.cids.addAll(selectedCardIds.toList()) } }
+                val ids = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE).getIds()
+
+                exportLimit { cardIds = cardIds { this.cids.addAll(ids) } }
             }
             // notes/cards weren't selected so export the chosen decks
             null -> {
@@ -350,6 +360,13 @@ class ExportDialogFragment : DialogFragment() {
                 }
             }
         }
+
+    /** Attempt to delete the associated [IdsFile] and logs the result */
+    private fun removeIdsFile() {
+        val idsFile = requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE)
+
+        idsFile.removeSafely("ExportDialogFragment")
+    }
 
     private fun getExportRootFile() =
         File(requireActivity().externalCacheDir, "export").also {
@@ -419,7 +436,7 @@ class ExportDialogFragment : DialogFragment() {
     companion object {
         private const val ARG_DECK_ID = "arg_deck_id"
         private const val ARG_TYPE = "arg_type"
-        private const val ARG_EXPORTED_IDS = "arg_exported_ids"
+        private const val ARG_IDS_FILE = "arg_ids_file"
 
         /**
          * Create a new instance of this dialog without any initial constraints(for example when
@@ -432,20 +449,23 @@ class ExportDialogFragment : DialogFragment() {
          */
         fun newInstance(did: DeckId) =
             ExportDialogFragment().apply {
-                arguments = bundleOf(ARG_DECK_ID to did)
+                arguments = Bundle().apply { putLong(ARG_DECK_ID, did) }
             }
 
         /**
          * Create a new instance of this dialog targeting a selection of cards or notes for export.
          */
         fun newInstance(
+            cacheDir: File,
             type: ExportType,
             ids: List<Long>,
         ) = ExportDialogFragment().apply {
+            val idsFile = IdsFile(cacheDir, ids, "export")
+
             arguments =
                 Bundle().apply {
                     putSerializable(ARG_TYPE, type)
-                    putLongArray(ARG_EXPORTED_IDS, ids.toLongArray())
+                    putParcelable(ARG_IDS_FILE, idsFile)
                 }
         }
     }

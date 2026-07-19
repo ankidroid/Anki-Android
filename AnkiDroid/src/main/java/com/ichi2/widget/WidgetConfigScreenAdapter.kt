@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
 
 package com.ichi2.widget
 
@@ -32,14 +19,14 @@ import kotlinx.coroutines.withContext
 /**
  * Adapter class for displaying and managing a list of selectable decks in a RecyclerView.
  *
- * @property decks the list of selectable decks to display
+ * @property coroutineScope lifecycle-bound scope used for deck name lookups
  * @property onDeleteDeck a function to call when a deck is removed
  */
 class WidgetConfigScreenAdapter(
+    private val coroutineScope: CoroutineScope,
     private val onDeleteDeck: (SelectableDeck.Deck, Int) -> Unit,
 ) : RecyclerView.Adapter<WidgetConfigScreenAdapter.DeckViewHolder>() {
     private val decks: MutableList<SelectableDeck.Deck> = mutableListOf()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     // Property to get the list of deck IDs
     val deckIds: List<Long> get() = decks.map { it.deckId }

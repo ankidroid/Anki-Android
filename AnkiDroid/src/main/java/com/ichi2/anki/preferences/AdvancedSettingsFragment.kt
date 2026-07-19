@@ -27,13 +27,14 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
 import timber.log.Timber
 import java.io.File
@@ -67,7 +68,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                         setTitle(R.string.dialog_collection_path_not_dir)
                         setPositiveButton(R.string.dialog_ok) { _, _ -> }
                         setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
-                            text = CollectionHelper.getDefaultAnkiDroidDirectory(requireContext()).absolutePath
+                            text = getDefaultAnkiDroidDirectory(requireContext()).absolutePath
                         }
                     }
                     false

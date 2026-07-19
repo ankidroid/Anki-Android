@@ -28,12 +28,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ItemDeckBinding
 import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.libanki.DeckId
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * A [RecyclerView.Adapter] used to show the list of decks inside [com.ichi2.anki.DeckPicker].
@@ -112,7 +112,6 @@ class DeckAdapter(
      * Update the current selected deck so the adapter shows the proper backgrounds.
      * Calls [notifyDataSetChanged].
      */
-    @NeedsTest("18658: ensure a deck can be selected after this")
     fun updateSelectedDeck(deckId: DeckId) {
         submitList(
             this.currentList.map { it.withUpdatedDeckId(deckId) },
@@ -245,7 +244,7 @@ class DeckAdapter(
         reviewCountColor = ta.getColor(3, context.getColor(R.color.black))
         rowCurrentDrawable = ta.getResourceId(4, 0)
         deckNameDefaultColor = ta.getColor(5, context.getColor(R.color.black))
-        deckNameDynColor = ta.getColor(6, context.getColor(R.color.material_blue_A700))
+        deckNameDynColor = ta.getColor(6, context.getColor(CommonR.color.material_blue_A700))
         expandImage = ta.getDrawableOrThrow(7)
         expandImage.isAutoMirrored = true
         collapseImage = ta.getDrawableOrThrow(8)

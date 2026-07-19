@@ -28,7 +28,7 @@
                 style="@android:style/Widget.ActionButton"
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_undo_white"
+                android:src="@drawable/ic_undo_2"
                 android:contentDescription="@string/undo"
                 android:tooltipText="@string/undo"/>
 
@@ -37,7 +37,7 @@
                 style="@android:style/Widget.ActionButton"
                 android:layout_width="?minTouchTargetSize"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_redo"
+                android:src="@drawable/ic_redo_2"
                 android:contentDescription="@string/redo"
                 android:tooltipText="@string/redo"/>
 

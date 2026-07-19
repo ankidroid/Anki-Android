@@ -53,6 +53,13 @@ data class FilteredDeckOptions(
     val id: DeckId? = null,
     /** Name of the filtered deck, initial name with the following format: "Filtered deck HH:mm" */
     val name: String = "",
+    /** If not null, there's an error related to the text entered */
+    val nameInputError: FilteredNameInputError? = null,
+    /**
+     * String used as the title of the filtered options screen. Similar to [name], this will be the
+     * name we get when first loading the deck data and will not change for the lifetime of the screen.
+     */
+    val title: String = "",
     /**
      * Flag indicating if cards will be rescheduled based on the answers in this filtered deck. If
      * false the view will present options for custom delays.
@@ -95,13 +102,36 @@ data class FilteredDeckOptions(
 ) : Parcelable,
     FilteredDeckOptionsState
 
+/** True if the user is allowed to build/rebuild, false otherwise */
+val FilteredDeckOptions.isBuildingAllowed: Boolean
+    get() {
+        val hasNoInputErrors =
+            filter1State.error == null &&
+                !(isSecondFilterEnabled && filter2State?.error != null) &&
+                nameInputError == null
+        return !isBuildingBrowserSearch && hasNoInputErrors
+    }
+
 /** State for each filter (currently two with the second one being optional). */
 @Parcelize
 data class SearchTermState(
     val search: String = "",
     val limit: String = "100",
     val index: Int = 0,
+    /** If not null, there's an error related to the text entered */
+    val error: SearchInputError? = null,
 ) : Parcelable
+
+enum class SearchInputError {
+    Empty,
+    NotANumber,
+}
+
+/** Signals errors related to the filtered deck name */
+enum class FilteredNameInputError {
+    Empty,
+    AlreadyExists,
+}
 
 /** Type of custom delays the user can set. */
 enum class RescheduleDelay {

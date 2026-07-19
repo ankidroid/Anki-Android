@@ -20,6 +20,7 @@ package com.ichi2.anki.multimedia
 
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.utils.htmlEncode
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.libanki.AvRef
 import com.ichi2.anki.libanki.AvTag
 import com.ichi2.anki.libanki.Card
@@ -32,7 +33,6 @@ import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.anki.libanki.getFileUri
 import com.ichi2.anki.utils.CollectionPreferences
-import com.ichi2.compat.CompatHelper
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import java.io.File

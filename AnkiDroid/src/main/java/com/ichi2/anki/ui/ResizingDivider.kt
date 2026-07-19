@@ -21,7 +21,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.ResizingDividerInternalBinding
+import com.ichi2.anki.databinding.ViewResizingDividerInternalBinding
 
 /**
  * Custom component that represents a resizable divider used in multi-pane layouts.
@@ -36,7 +36,7 @@ class ResizingDivider
     ) : FrameLayout(context, attrs, defStyleAttr) {
         init {
             val layoutInflater = LayoutInflater.from(context)
-            ResizingDividerInternalBinding.inflate(layoutInflater, this)
+            ViewResizingDividerInternalBinding.inflate(layoutInflater, this)
 
             setBackgroundColor(context.getColor(R.color.idle_divider_color))
         }

@@ -16,20 +16,27 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.compat.requireSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
+import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.requireLong
+import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        super.onCreate(savedInstanceState)
         require(requireArguments().containsKey(ARG_DECK_ID)) { "Missing argument deck id" }
         require(requireArguments().containsKey(ARG_DECK_NAME)) { "Missing argument deck name" }
         require(requireArguments().containsKey(ARG_DECK_IS_DYN)) { "Missing argument deck is dynamic" }
@@ -39,13 +46,12 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             .Builder(requireActivity())
             .title(text = requireArguments().getString(ARG_DECK_NAME))
             .setItems(
-                options.map { resources.getString(it.optionName) }.toTypedArray(),
+                options.map { it.label(requireContext()) }.toTypedArray(),
             ) { _, index: Int ->
-                parentFragmentManager.setFragmentResult(
-                    REQUEST_KEY_CONTEXT_MENU,
-                    bundleOf(
-                        CONTEXT_MENU_DECK_ID to requireArguments().getLong(ARG_DECK_ID),
-                        CONTEXT_MENU_DECK_OPTION to options[index],
+                parentFragmentManager.setDeckPickerContextMenuResult(
+                    DeckPickerContextMenuResult(
+                        deckId = requireArguments().getLong(ARG_DECK_ID),
+                        option = options[index],
                     ),
                 )
             }.create()
@@ -57,29 +63,61 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             requireArguments().getBoolean(ARG_DECK_HAS_BURIED_IN_DECK),
         )
 
-    enum class DeckPickerContextMenuOption(
-        @StringRes val optionName: Int,
-    ) {
-        RENAME_DECK(R.string.rename_deck),
-        DECK_OPTIONS(R.string.menu__deck_options),
-        CUSTOM_STUDY(R.string.custom_study),
-        DELETE_DECK(R.string.contextmenu_deckpicker_delete_deck),
-        EXPORT_DECK(R.string.export_deck),
-        UNBURY(R.string.unbury),
-        CUSTOM_STUDY_REBUILD(R.string.rebuild_cram_label),
-        CUSTOM_STUDY_EMPTY(R.string.empty_cram_label),
-        CREATE_SUBDECK(R.string.create_subdeck),
-        CREATE_SHORTCUT(R.string.create_shortcut),
-        BROWSE_CARDS(R.string.browse_cards),
-        EDIT_DESCRIPTION(R.string.edit_deck_description),
-        ADD_CARD(R.string.menu_add),
-        SCHEDULE_REMINDERS(R.string.schedule_reminders_do_not_translate),
+    enum class DeckPickerContextMenuOption {
+        RENAME_DECK,
+        DECK_OPTIONS,
+        CUSTOM_STUDY,
+        DELETE_DECK,
+        EXPORT_DECK,
+        UNBURY,
+        CUSTOM_STUDY_REBUILD,
+        CUSTOM_STUDY_EMPTY,
+        CREATE_SUBDECK,
+        CREATE_SHORTCUT,
+        BROWSE_CARDS,
+        EDIT_DESCRIPTION,
+        ADD_CARD,
+        SCHEDULE_REMINDERS,
+        ;
+
+        fun label(context: Context): String =
+            with(context) {
+                when (this@DeckPickerContextMenuOption) {
+                    RENAME_DECK -> TR.sentenceCase.renameDeck
+                    DECK_OPTIONS -> TR.sentenceCase.deckOptions
+                    CUSTOM_STUDY -> TR.sentenceCase.customStudy
+                    DELETE_DECK -> TR.sentenceCase.deleteDeck
+                    EXPORT_DECK -> getString(R.string.export_deck)
+                    UNBURY -> TR.studyingUnbury()
+                    CUSTOM_STUDY_REBUILD -> TR.actionsRebuild()
+                    CUSTOM_STUDY_EMPTY -> getString(R.string.empty_cram_label)
+                    CREATE_SUBDECK -> getString(R.string.create_subdeck)
+                    CREATE_SHORTCUT -> getString(R.string.create_shortcut)
+                    BROWSE_CARDS -> getString(R.string.browse_cards)
+                    EDIT_DESCRIPTION -> getString(R.string.edit_deck_description)
+                    ADD_CARD -> TR.actionsAdd()
+                    SCHEDULE_REMINDERS -> getString(R.string.schedule_reminders_do_not_translate)
+                }
+            }
     }
 
     companion object {
-        const val REQUEST_KEY_CONTEXT_MENU = "request_key_context_menu"
-        const val CONTEXT_MENU_DECK_OPTION = "context_menu_deck_option"
-        const val CONTEXT_MENU_DECK_ID = "context_menu_deck_id"
+        /**
+         * Builds a [DeckPickerContextMenu] for [deckId], reading the deck's name and
+         * the dynamic / has-buried flags from the collection.
+         */
+        suspend fun newInstance(deckId: DeckId): DeckPickerContextMenu =
+            withCol {
+                DeckPickerContextMenu().apply {
+                    arguments =
+                        Bundle().apply {
+                            putLong(ARG_DECK_ID, deckId)
+                            putString(ARG_DECK_NAME, decks.name(deckId))
+                            putBoolean(ARG_DECK_IS_DYN, decks.isFiltered(deckId))
+                            putBoolean(ARG_DECK_HAS_BURIED_IN_DECK, sched.haveBuried())
+                        }
+                }
+            }
 
         @VisibleForTesting
         const val ARG_DECK_ID = "arg_deck_id"
@@ -92,21 +130,45 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
 
         @VisibleForTesting
         const val ARG_DECK_HAS_BURIED_IN_DECK = "arg_deck_has_buried_in_deck"
+    }
+}
 
-        fun newInstance(
-            id: DeckId,
-            name: String,
-            isDynamic: Boolean,
-            hasBuriedInDeck: Boolean,
-        ): DeckPickerContextMenu =
-            DeckPickerContextMenu().apply {
-                arguments =
-                    bundleOf(
-                        ARG_DECK_ID to id,
-                        ARG_DECK_NAME to name,
-                        ARG_DECK_IS_DYN to isDynamic,
-                        ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck,
-                    )
-            }
+/**
+ * Result delivered by the deck-picker context menus
+ *
+ * @see DeckPickerContextMenuOption
+ * @see DeckPickerContextMenu
+ * @see DeckPickerMenuContentProvider
+ */
+data class DeckPickerContextMenuResult(
+    val deckId: DeckId,
+    val option: DeckPickerContextMenuOption,
+) {
+    fun toBundle(): Bundle =
+        Bundle().apply {
+            putLong(ARG_DECK_ID, deckId)
+            putSerializable(ARG_OPTION, option)
+        }
+
+    companion object {
+        const val REQUEST_KEY = "request_key_deck_picker_context_menu"
+        private const val ARG_DECK_ID = "deck_id"
+        private const val ARG_OPTION = "option"
+
+        fun fromBundle(bundle: Bundle) =
+            DeckPickerContextMenuResult(
+                deckId = bundle.requireLong(ARG_DECK_ID),
+                option = bundle.requireSerializableCompat<DeckPickerContextMenuOption>(ARG_OPTION),
+            )
+    }
+}
+
+fun FragmentManager.setDeckPickerContextMenuResult(result: DeckPickerContextMenuResult) {
+    setFragmentResult(DeckPickerContextMenuResult.REQUEST_KEY, result.toBundle())
+}
+
+fun FragmentActivity.setDeckPickerContextMenuResultListener(listener: (DeckPickerContextMenuResult) -> Unit) {
+    setFragmentResultListener(DeckPickerContextMenuResult.REQUEST_KEY) { _, bundle ->
+        listener(DeckPickerContextMenuResult.fromBundle(bundle))
     }
 }

@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Đã tắt</string>
@@ -60,7 +39,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Đồng bộ</string>
     <string name="pref_cat_scheduling" maxLength="41">Đang lên lịch</string>
     <string name="pref_cat_whiteboard" maxLength="41">Bảng viết</string>
-    <string name="pref_cat_appearance" maxLength="41">Giao diện</string>
     <string name="pref_cat_themes" maxLength="41">Chủ đề</string>
     <string name="pref_cat_gestures" maxLength="41">Cử Chỉ/ Điều Hướng</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
@@ -128,7 +106,6 @@
     <string name="tts_summ">Đọc ra câu hỏi và câu trả lời nếu không có tập tin âm thanh nào được kèm theo</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Tìm nạp phương tiện truyền thông trên đồng bộ</string>
-    <string name="sync_account" maxLength="41">tài khoản AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Chưa đăng nhập</string>
     <string name="automatic_sync_choice" maxLength="41">Đồng bộ hóa tự động</string>
     <string name="automatic_sync_choice_summ">Đồng bộ hóa tự động khi khởi động / thoát ứng dụng nếu lần đồng bộ hóa cuối cùng nhiều hơn 10         phút trước.</string>
@@ -156,8 +133,6 @@
     <string name="select_locale_title">Chọn ngôn ngữ</string>
     <string name="software_render" maxLength="41">Tắt kết xuất phần cứng thẻ</string>
     <string name="software_render_summ">Kết xuất phần cứng nhanh hơn nhưng có thể gặp sự cố, cụ thể là trên Android 8 / 8.1. Nếu bạn không thể thấy các phần của giao diện người dùng xem xét thẻ, hãy thử cài đặt này.</string>
-    <string name="safe_display" maxLength="41">Chế độ an toàn màn hình</string>
-    <string name="safe_display_summ">Tắt tất cả hoạt ảnh và sử dụng phương pháp an toàn hơn để vẽ thẻ. Các thiết bị E-ink có thể yêu cầu điều này.</string>
     <string name="disable_extended_text_ui" maxLength="41">Tắt chế độ chỉnh sửa trường đơn</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Cho phép menu ngữ cảnh \'Đánh dấu Cloze\' khi ở chế độ ngang.</string>
@@ -171,6 +146,8 @@
     <string name="show_estimates_summ">Hiển thị thời gian đánh giá tiếp theo trên các nút trả lời</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Hiển thị nút trả lời thành 2 hàng</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Hiển thị thanh trên cùng</string>
     <string name="show_top_bar_summary">Hiển thị số lượng thẻ, đồng hồ đếm thời gian trả lời, cờ đánh dấu và dấu ở thanh trên cùng</string>
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>
@@ -205,8 +182,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Màn hình học tập</string>
     <string name="show_deck_title" maxLength="41">Hiển thị tiêu đề bộ thẻ</string>
     <string name="accessibility" maxLength="41">Trợ năng</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
     <string name="exit_via_double_tap_back_summ">Để tránh thoát khỏi màn hình học hoặc ứng dụng một cách vô tình</string>
     <!-- Allow all files in media imports -->
@@ -219,7 +194,7 @@
          bạn có thể sử dụng máy chủ của riêng mình để đồng bộ hóa.
          Nếu không được thiết lập, máy chủ AnkiWeb mặc định sẽ được sử dụng thay thế.
          <a href="%s">Tìm hiểu thêm</a>]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Đồng bộ hóa url</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Chứng chỉ gốc tùy chỉnh (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Bàn phím</string>
@@ -275,6 +250,10 @@
     <string name="user_action_8" maxLength="28">Thao tác người dùng 8</string>
     <string name="user_action_9" maxLength="28">Thao tác người dùng 9</string>
     <string name="toggle_auto_advance" maxLength="28">Chuyển đổi chuyển tiếp tự động</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>
@@ -380,4 +359,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Mở cài đặt</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
 </resources>

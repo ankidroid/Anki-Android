@@ -71,7 +71,7 @@ object AnalyticsConstantsTest {
 
     internal val analyticsConstantFields
         get() =
-            UsageAnalytics.Actions::class
+            AnalyticsConstants.Actions::class
                 .memberProperties
                 .filter { x -> x.javaField!!.getAnnotation(AnalyticsConstant::class.java) != null }
                 .also { list -> assertThat(list.size, not(equalTo(0))) }
@@ -101,7 +101,7 @@ object AnalyticsConstantsTest {
 
         fun getStringFromReflection(analyticsStringToBeChecked: String): String? {
             for (value in analyticsConstantFields) {
-                val reflectedValue = value.get(UsageAnalytics.Actions)
+                val reflectedValue = value.get(AnalyticsConstants.Actions)
                 if (reflectedValue == analyticsStringToBeChecked) {
                     return reflectedValue as String
                 }
@@ -166,7 +166,7 @@ object AnalyticsConstantsTest {
         }
 
         private fun getProperties() =
-            UsageAnalytics.Actions::class
+            AnalyticsConstants.Actions::class
                 .memberProperties
                 .mapNotNull { it.javaField }
                 .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }

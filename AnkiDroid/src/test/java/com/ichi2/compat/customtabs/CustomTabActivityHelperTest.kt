@@ -21,8 +21,8 @@ import android.content.pm.PackageManager
 import androidx.annotation.CheckResult
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.core.net.toUri
-import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
-import com.ichi2.compat.ResolveInfoFlagsCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before

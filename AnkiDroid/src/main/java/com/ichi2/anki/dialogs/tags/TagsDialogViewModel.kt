@@ -21,7 +21,7 @@ import com.ichi2.anki.asyncIO
 import com.ichi2.anki.libanki.NoteId
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * @param noteIds IDs of notes whose tags should bfe retrieved and marked as "checked"
@@ -40,8 +40,8 @@ class TagsDialogViewModel(
 ) : ViewModel() {
     val tags: Deferred<TagsList>
 
-    private val _initProgress = MutableStateFlow<InitProgress>(InitProgress.Processing)
-    val initProgress = _initProgress.asStateFlow()
+    val initProgress: StateFlow<InitProgress>
+        field = MutableStateFlow<InitProgress>(InitProgress.Processing)
 
     init {
         tags =
@@ -56,7 +56,7 @@ class TagsDialogViewModel(
                 noteIds.forEachIndexed { index, nid ->
                     // TODO: Lift up withCol{ } call out of loop. Performs `N` expensive db queries.
                     val noteTags = withCol { getNote(nid) }.tags
-                    _initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
+                    initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
                     val (checked, unchecked) = allTags.partition { noteTags.contains(it) }
                     allCheckedTags.addAll(checked)
                     uncheckedTags.addAll(unchecked)
@@ -65,7 +65,7 @@ class TagsDialogViewModel(
                 val extraCheckedTags = checkedTags.toSet()
                 allCheckedTags.addAll(extraCheckedTags)
                 uncheckedTags.removeAll(extraCheckedTags)
-                _initProgress.emit(InitProgress.Processing)
+                initProgress.emit(InitProgress.Processing)
                 if (isCustomStudying) {
                     TagsList(
                         allTags = allCheckedTags,
@@ -79,7 +79,7 @@ class TagsDialogViewModel(
                         uncheckedTags = uncheckedTags,
                     )
                 }.also {
-                    _initProgress.emit(InitProgress.Finished)
+                    initProgress.emit(InitProgress.Finished)
                 }
             }
     }

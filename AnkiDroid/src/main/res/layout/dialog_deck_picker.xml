@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
-
-  This program is free software; you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free Software
-  Foundation; either version 3 of the License, or (at your option) any later
-  version.
-
-  This program is distributed in the hope that it will be useful, but WITHOUT ANY
-  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-  PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along with
-  this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,22 +20,23 @@
         tools:menu="@menu/deck_picker_dialog_menu">
     </androidx.appcompat.widget.Toolbar>
 
-    <com.ichi2.ui.FixedTextView android:id="@+id/summary"
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/template_editor_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textSize="18sp"
         android:padding="8dp"
-        android:gravity="center"
         android:textIsSelectable="false"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
         android:layout_below="@id/toolbar"
         tools:text="optional summary for 'deck override' picker"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/decks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/summary"
+        android:layout_below="@id/template_editor_message"
         android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_deck_picker_dialog" />
 </RelativeLayout>

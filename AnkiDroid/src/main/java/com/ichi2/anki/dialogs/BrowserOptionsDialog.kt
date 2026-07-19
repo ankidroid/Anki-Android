@@ -19,7 +19,6 @@ package com.ichi2.anki.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
@@ -28,6 +27,7 @@ import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.databinding.DialogBrowserOptionsBinding
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -93,6 +93,8 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
         }
 
         binding.truncateCheckBox.isChecked = isTruncated
+        binding.toggleCardsNotesTitle.text = TR.sentenceCase.toggleCardsNotes
+        binding.flagTitle.text = TR.browsingFlag()
 
         binding.renameFlag.setOnClickListener {
             Timber.d("Rename flag clicked")
@@ -114,7 +116,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
 
         return MaterialAlertDialogBuilder(requireContext()).create {
             setView(binding.root)
-            setTitle(getString(R.string.browser_options_dialog_heading))
+            setTitle(TR.sentenceCase.browserOptions)
             positiveButton(R.string.save) { saveChanges() }
             negativeButton(R.string.dialog_cancel)
         }
@@ -137,10 +139,10 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
             Timber.i("BrowserOptionsDialog::newInstance")
             return BrowserOptionsDialog().apply {
                 arguments =
-                    bundleOf(
-                        CARDS_OR_NOTES_KEY to (cardsOrNotes == CardsOrNotes.CARDS),
-                        IS_TRUNCATED_KEY to isTruncated,
-                    )
+                    Bundle().apply {
+                        putBoolean(CARDS_OR_NOTES_KEY, cardsOrNotes == CardsOrNotes.CARDS)
+                        putBoolean(IS_TRUNCATED_KEY, isTruncated)
+                    }
             }
         }
     }

@@ -21,10 +21,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.NotificationsPermissionBinding
+import com.ichi2.anki.databinding.FragmentNotificationsPermissionBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
@@ -41,8 +40,8 @@ import timber.log.Timber
  *   Used for review reminder notifications.
  */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class NotificationsPermissionFragment : PermissionsFragment(R.layout.notifications_permission) {
-    private val binding by viewBinding(NotificationsPermissionBinding::bind)
+class NotificationsPermissionFragment : PermissionsFragment(R.layout.fragment_notifications_permission) {
+    private val binding by viewBinding(FragmentNotificationsPermissionBinding::bind)
 
     /**
      * Launches the OS dialog for requesting notification permissions.
@@ -57,7 +56,7 @@ class NotificationsPermissionFragment : PermissionsFragment(R.layout.notificatio
         // onResume is called after returning from both the OS settings and the OS permission request dialog
         if (Permissions.canPostNotifications(requireContext())) {
             // Post a fragment result to indicate that the bottom sheet can be dismissed
-            setFragmentResult(PermissionsBottomSheet.DISMISS_RESULT_REQUEST_KEY, bundleOf())
+            setFragmentResult(PermissionsBottomSheet.RESULT_DISMISS, Bundle())
         }
     }
 

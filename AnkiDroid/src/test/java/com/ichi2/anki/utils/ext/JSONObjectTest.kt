@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.utils.ext
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.common.utils.ext.getStringOrNull
 import com.ichi2.anki.common.utils.ext.jsonObjectIterable
 import com.ichi2.testutils.AndroidTest
@@ -28,6 +29,7 @@ import org.intellij.lang.annotations.Language
 import org.json.JSONException
 import org.json.JSONObject
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertFailsWith
@@ -36,6 +38,7 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class) // This is necessary, android and JVM differ on JSONObject.NULL
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class JSONObjectTest : AndroidTest {
     @Test
     fun `test getStringOrNull`() {

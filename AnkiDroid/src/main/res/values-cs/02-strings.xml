@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Otevřít menu</string>
@@ -54,7 +33,7 @@
     <string name="CardEditorModel">Typ poznámky:</string>
     <string name="CardEditorTags">Štítky: %1$s</string>
     <string name="CardEditorCards">Karty: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">Upravit okluze</string>
     <string name="paste_from_clipboard" maxLength="28">Vložit ze schránky</string>
     <string name="add_new_filter_tags">Přidat/Filtrovat štítky</string>
     <string name="add_tag" maxLength="28">Přidat štítek</string>
@@ -84,17 +63,17 @@
     <string name="disable_eraser" maxLength="28">Zakázat gumování</string>
     <string name="hide_whiteboard" maxLength="28">Skrýt tabuli</string>
     <string name="clear_whiteboard" maxLength="28">Smazat tabuli</string>
-    <string name="hide_toolbar" maxLength="28">Hide toolbar</string>
+    <string name="hide_toolbar" maxLength="28">Skrýt nástrojovou lištu</string>
     <string name="replay_media" maxLength="28">Přehrát multimédia</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
     <string name="webview_crash_unknown">Neznámá chyba</string>
     <string name="webview_crash_unknwon_detailed">To bylo způsobeno vnitřní chybou WebView</string>
-    <string name="webview_crash_oom">Nedostatek paměti</string>
+    <string name="webview_crash_oom">Out of memory</string>
     <string name="webview_crash_oom_details">WebView byl ukončen systémem. To se obvykle stává, když má aplikace nedostatek paměti, často kvůli velkému písmu nebo multimédiím.</string>
     <string name="webview_crash_nonfatal">Vykreslování WebView selhalo. Příčina: %s</string>
-    <string name="webview_crash_fatal">Kritická chyba: Vykreslování WebView selhalo. Příčina: %s</string>
-    <string name="webview_crash_loop_dialog_title">Selhání vykreslování systémového webView</string>
+    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
     <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Posunutím zrušíte</string>
     <string name="filter_by_flags" maxLength="41">Příznaky</string>
@@ -157,9 +136,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Přejmenovat</string>
     <string name="checks_action" maxLength="28">Zkontrolovat</string>
-    <string name="check_db" maxLength="28">Zkontrolovat databázi</string>
-    <string name="check_media" maxLength="28">Zkontrolovat multimédia</string>
-    <string name="empty_cards" maxLength="28">Prázdné karty</string>
     <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Odstraňuje se balíček&#8230;</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
@@ -194,14 +170,14 @@
     <string name="export_choice_save_to">Uložit do</string>
     <string name="export_saving_exported_collection">Ukládá se exportovaný soubor&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Možnosti</string>
-    <string name="menu__deck_options" maxLength="28">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
     <string name="select_tts" maxLength="28">Nastavit jazyk TTS</string>
-    <string name="custom_study" maxLength="28">Vlastní studium</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
-    <string name="tag_already_exists">Tag already exists</string>
+    <string name="tag_already_exists">Štítek již existuje</string>
+    <string name="error_name_exists">Název již existuje</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
@@ -213,15 +189,17 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Pozadí</string>
-    <string name="choose_an_image" maxLength="41">Vybrat obrázek</string>
     <string name="remove_wallpaper_image" maxLength="41">Odebrat pozadí</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Jste si jisti, že chcete odstranit pozadí?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Režim gumování povolen</string>
     <string name="white_board_eraser_disabled">Režim gumování zakázán</string>
+    <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
+    <string name="media_file_size_warning_title">Multimédium je příliš velké</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">Soubor \"%1$s\" (%2$s) překračuje limit AnkiWeb %3$s a nelze jej synchronizovat. Přesto přidat?</string>
+    <string name="media_file_size_add_anyway">Přesto přidat</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
     <string name="white_board_image_saved">Obrázek tabule uložen do %s</string>
@@ -233,7 +211,7 @@
     <string name="valid_js_api_version">Neplatná verze AnkiDroid JS API. Kontaktujte vývojáře %s, nebo se podívejte na wiki</string>
     <string name="update_js_api_version">Je dostupná aktualizace AnkiDroid JS API. Kontaktujte vývojáře %s, nebo se podívejte na wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Zobrazit</string>
-    <string name="anki_js_error_code">(Kód chyby: %d)</string>
+    <string name="anki_js_error_code">(Error code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Zkopírováno do schránky</string>
     <string name="about_ankidroid_error_copy_debug_info">Chyba při kopírování ladicích informací do schránky</string>
@@ -241,35 +219,39 @@
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Hledat balíčky</string>
-    <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid nemůže přistupovat k úložišti kvůli chybě Androidu.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Velikost písma</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobrazit nástrojovou lištu</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="format_insert_bold">Formátovat jako tučné</string>
+    <string name="format_insert_italic">Formát jako kurzíva</string>
+    <string name="format_insert_underline">Formát jako podtržené</string>
+    <string name="insert_horizontal_line">Vložit vodorovnou čáru</string>
+    <string name="insert_heading">Vložit nadpis</string>
+    <string name="format_font_size">Změnit velikost písma</string>
+    <string name="insert_mathjax">Vložit rovnici MathJax</string>
     <string name="note_editor_toolbar_icon">Text tlačítka</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
+    <string name="before_text">HTML před výběrem</string>
+    <string name="after_text">HTML za výběrem</string>
+    <string name="add_toolbar_item">Vytvořit položku nástrojové lišty</string>
+    <string name="edit_toolbar_item">Upravit položku nástrojové lišty</string>
     <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ji upravili nebo odstranili</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
     <string name="note_editor_image_too_large">Obrázek je příliš velký, vložte ho prosím ručně</string>
     <string name="note_editor_video_too_large">Video je příliš velké, vložte ho prosím ručně</string>
     <string name="note_editor_audio_too_large">Zvukový soubor je příliš velký, vložte ho prosím ručně</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Probíhá zálohování Androidu. Zkuste to prosím znovu</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Prosím použijte iManager, abyste povolili přidávání zástupců AnkiDroid</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
     <string name="create_shortcut_error">Chyba při přidávání zástupce: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Velká počáteční písmena</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Posouvat nástrojovou lištu</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Certifikát</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -284,11 +266,11 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Stáhnout balíček</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Otevřít v prohlížeči</string>
-    <string name="try_again">Zkusit znovu</string>
+    <string name="try_again">Try again</string>
     <string name="cancel_download">Zrušit stahování</string>
     <string name="cancel_download_question_title">Zrušit stahování?</string>
     <string name="downloading_file">Stahuje se %s</string>
-    <string name="import_deck">Importovat balíček</string>
+    <string name="import_deck">Import deck</string>
     <string name="something_wrong">Něco se pokazilo, zkuste to prosím znovu</string>
     <string name="download_failed">Stahování se nezdařilo</string>
     <string name="deck_download_progress_message">Během stahování můžete používat jiné aplikace</string>
@@ -329,7 +311,7 @@
     <string name="intro_ankidroid_tagline_one">Studujte méně</string>
     <string name="intro_ankidroid_tagline_two">Pamatujte si více</string>
     <string name="intro_short_ankidroid_explanation">Plánovač karet Anki šetří čas posílením vašich nejslabších vzpomínek a zachováním těch nejsilnějších</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Začínáme</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ještě není inicializován. Otevřete prosím AnkiDroid a zkuste to znovu</string>
@@ -341,9 +323,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karty</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Zkrátit výšku každého řádku prohlížeče, aby se zobrazily pouze první 3 řádky obsahu</string>
-    <string name="browser_options_dialog_heading">Možnosti prohlížeče</string>
     <string name="audio_saved">Nahrávka uložena</string>
     <string name="deleting_selected_notes">Mažou se vybrané poznámky</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Klepnutím na hlas poslechnout</string>
@@ -357,7 +337,7 @@
     <string name="shared_decks_login_required">Prosím přihlaste se, abyste mohli stáhnout více balíčků</string>
     <string name="deck_description_field_hint">Popisek</string>
     <string name="deck_description_saved">Popis aktualizován</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">Otevřít nápovědu pro „%s“</string>
     <string name="failed_to_copy">Kopírování se nezdařilo</string>
     <plurals name="unbury_cards_feedback">
@@ -374,17 +354,16 @@
     <string name="play_recording">Přehrát</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Další</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Typ karty nelze odstranit</string>
     <string name="orphan_note_message">Smazání tohoto typu karty zanechá některé poznámky bez jakýchkoliv karet.</string>
     <string name="voice_not_supported">Hlas není podporován. Zkuste jiný nebo nainstalujte hlasový modul.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Výběr balíčků</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Odstranit balíček bez potvrzení</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor poznámek</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Vybrat balíček</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Vybrat typ poznámky</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor štítků</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor šablon karet</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Upravit šablonu přední strany</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Upravit šablonu zadní strany</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Upravit formátování</string>
@@ -397,7 +376,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Je vyžadována aktualizace plánovače</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_date_range">Date range</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

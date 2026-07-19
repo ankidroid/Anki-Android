@@ -26,7 +26,7 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.core.content.ContentResolverCompat
 import androidx.core.net.toUri
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import timber.log.Timber

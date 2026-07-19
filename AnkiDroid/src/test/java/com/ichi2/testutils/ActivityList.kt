@@ -16,6 +16,7 @@
 package com.ichi2.testutils
 
 import android.app.Activity
+import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.CheckResult
@@ -91,7 +92,7 @@ object ActivityList {
             get(InstantNoteEditorActivity::class.java),
             get(MultimediaActivity::class.java),
             get(DeckPickerWidgetConfig::class.java),
-            get(CardAnalysisWidgetConfig::class.java),
+            get(CardAnalysisWidgetConfig::class.java) { intentForWidgetConfig() },
             get(AccountActivity::class.java),
         )
 
@@ -105,6 +106,8 @@ object ActivityList {
 
     private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("noteTypeId", 1L) }
 
+    private fun intentForWidgetConfig(): Intent = Intent().apply { putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1) }
+
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
         private var intentBuilder: Function<Context, Intent>,
@@ -113,7 +116,9 @@ object ActivityList {
 
         fun build(context: Context): ActivityController<out Activity> =
             Robolectric
-                .buildActivity(activity, intentBuilder.apply(context))
+                .buildActivity(activity, buildIntent(context))
+
+        fun buildIntent(context: Context): Intent = intentBuilder.apply(context)
 
         val className: String = activity.name
 

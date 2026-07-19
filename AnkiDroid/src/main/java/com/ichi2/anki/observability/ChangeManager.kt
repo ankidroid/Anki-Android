@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Ankitects Pty Ltd <http://apps.ankiweb.net>
 
 /*
  * With the Rust backend, operations that modify the collection return a description of changes (OpChanges).
@@ -38,8 +25,10 @@ import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.collection.opChanges
 import anki.import_export.ImportResponse
-import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.utils.ext.ifNotZero
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.ifNotZero
+import com.ichi2.anki.observability.ChangeManager.publish
+import com.ichi2.anki.observability.ChangeManager.toOpChanges
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -53,6 +42,10 @@ object ChangeManager {
          * Called after a backend method invoked via col.op() or col.opWithProgress()
          * has modified the collection. Subscriber should inspect the changes, and update
          * the UI if necessary.
+         *
+         * @param changes see [OpChanges].
+         * @param handler the initiator of the change. A subscriber may compare this against itself
+         * to detect changes it caused, and skip its default handling in favour of more specific updates.
          */
         fun opExecuted(
             changes: OpChanges,
@@ -64,6 +57,30 @@ object ChangeManager {
     private val subscribers = CopyOnWriteArrayList(mutableListOf<WeakReference<Subscriber>>())
 
     val subscriberCount get() = subscribers.size
+
+    /**
+     * Delivers changes to [subscribers][ChangeManager.subscribers] off the caller's thread.
+     *
+     * @see publish
+     */
+    private val publisher = OpChangesPublisher { changes, handler -> notifySubscribers(changes, handler) }
+
+    /**
+     * Notifies `subscribers` of `changes` without blocking the caller.
+     *
+     * Unlike `notifySubscribers`, the caller **does not** wait for subscribers to complete.
+     *
+     * This may be called from any thread.
+     *
+     * @param changes a raw/wrapped backend [OpChanges] response (see [ChangeManager.toOpChanges])
+     * @param handler the initiator of the change, or `null`. See [Subscriber.opExecuted]
+     */
+    fun <T : Any> publish(
+        changes: T,
+        handler: Any? = null,
+    ) {
+        publisher.publish(changes.toOpChanges(), handler)
+    }
 
     /**
      * Subscribes to changes.
@@ -139,7 +156,9 @@ object ChangeManager {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun clearSubscribers() {
+    @Synchronized
+    fun resetForTesting() {
+        publisher.reset()
         subscribers.size.ifNotZero { size -> Timber.d("clearing %d subscribers", size) }
         subscribers.clear()
     }
@@ -148,21 +167,32 @@ object ChangeManager {
         changes: T,
         initiator: Any?,
     ) {
-        val opChanges =
-            when (changes) {
-                is OpChanges -> changes
-                is OpChangesWithCount -> changes.changes
-                is OpChangesWithId -> changes.changes
-                is OpChangesAfterUndo -> changes.changes
-                is OpChangesOnly -> changes.changes
-                is ImportResponse -> changes.changes
-                else -> TODO("unhandled change type of class '${changes::class}'")
-            }
-        notifySubscribers(opChanges, initiator)
+        notifySubscribers(changes.toOpChanges(), initiator)
     }
+
+    /**
+     * Extracts an [OpChanges] from a backend response.
+     *
+     * @throws NotImplementedError if the receiver is not a backend OpChanges type.
+     */
+    // TODO: See if we can add a marker interface
+    private fun <T : Any> T.toOpChanges(): OpChanges =
+        when (this) {
+            is OpChanges -> this
+            is OpChangesWithCount -> changes
+            is OpChangesWithId -> changes
+            is OpChangesAfterUndo -> changes
+            is OpChangesOnly -> changes
+            is ImportResponse -> changes
+            else -> TODO("unhandled change type of class '${this::class}'")
+        }
 
     fun notifySubscribersAllValuesChanged(handler: Any? = null) {
         notifySubscribers(ALL, handler)
+    }
+
+    fun publishAllValuesChanged(handler: Any? = null) {
+        publish(ALL, handler)
     }
 
     /**

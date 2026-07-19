@@ -27,10 +27,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.exception.ManuallyReportedException
-import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.exception.ManuallyReportedException
+import com.ichi2.anki.common.utils.android.showThemedToast
 import timber.log.Timber
 
 typealias SnackbarBuilder = Snackbar.() -> Unit

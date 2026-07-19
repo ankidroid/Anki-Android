@@ -21,6 +21,7 @@ import android.view.View
 import android.widget.Chronometer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.testutils.EmptyApplication
@@ -30,6 +31,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.any
@@ -46,6 +48,7 @@ import timber.log.Timber
 // This is difficult to test as Chronometer.mStarted isn't visible
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class AnswerTimerTest : JvmTest() {
     private val chronometer = spy(Chronometer(ApplicationProvider.getApplicationContext()))
 

@@ -34,13 +34,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.util.TypedValueCompat
 import androidx.core.view.isVisible
 import com.ichi2.anki.R
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.USAGE_TOUCH
 import com.ichi2.anki.databinding.ViewAudioRecordBinding
-import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.USAGE_TOUCH
 import com.ichi2.utils.Permissions
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.time.Duration.Companion.milliseconds
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * A view that can serve as an audio recorder.
@@ -67,7 +68,7 @@ class AudioRecordView : ConstraintLayout {
     private var state = ViewState.IDLE
     private var stopTrackingAction = false
     private var chronometerBase: Long = 0
-    private val recordEnabledColor = context.getColor(R.color.material_red_600)
+    private val recordEnabledColor = context.getColor(CommonR.color.material_red_600)
     private val recordDisabledColor = ThemeUtils.getThemeAttrColor(context, R.attr.editTextDisabled)
 
     private var firstX = 0f
@@ -79,6 +80,9 @@ class AudioRecordView : ConstraintLayout {
     private val cancelOffset: Float
     private val cancelFadeOffset: Float
     private val lockOffset: Float
+
+    val isRecording: Boolean
+        get() = state == ViewState.RECORDING || state == ViewState.LOCKED
 
     private var recordingListener: RecordingListener? = null
 
@@ -293,6 +297,12 @@ class AudioRecordView : ConstraintLayout {
     fun setRecordDisplayVisibility(isVisible: Boolean) {
         binding.chronometer.isVisible = isVisible
         binding.recordingDisplayIcon.isVisible = isVisible
+    }
+
+    fun finishRecording() {
+        if (isRecording) {
+            stopRecording(RecordingBehavior.RELEASE)
+        }
     }
 
     private fun displayRunningRecord() {

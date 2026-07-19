@@ -35,15 +35,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -81,15 +81,15 @@ abstract class MultimediaFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireAnkiActivity().setToolbarTitle(title)
+        requireAnkiActivity().setToolbarText(title = title)
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
             @Suppress("USELESS_CAST")
             val multimediaActivityExtra =
-                arguments?.getSerializableCompat(
-                    MultimediaActivity.MULTIMEDIA_ARGS_EXTRA,
-                ) as? MultimediaActivityExtra
+                arguments?.getSerializableCompat<MultimediaActivityExtra>(
+                    MultimediaActivity.EXTRA_FRAGMENT_ARGS,
+                )
 
             if (multimediaActivityExtra != null) {
                 indexValue = multimediaActivityExtra.index
@@ -184,5 +184,26 @@ abstract class MultimediaFragment(
                 requireActivity().finish()
             }
         }
+    }
+
+    /**
+     * Finishes the activity with a [MultimediaResult.Cancelled] result when no media
+     * has been captured yet. Call from child-launcher cancel branches to propagate
+     * the cancellation without losing partial captures.
+     */
+    protected fun cancelIfEmpty() {
+        if (viewModel.currentMultimediaUri.value == null) {
+            setMultimediaResultAndFinish(MultimediaResult.Cancelled(indexValue))
+        }
+    }
+
+    /**
+     * Attaches the currently captured media to [field] and finishes the activity
+     * with a [MultimediaResult.Success]. Call from confirm/done actions.
+     */
+    protected fun finishWithMedia() {
+        field.mediaFile = viewModel.currentMultimediaPath.value
+        field.hasTemporaryMedia = true
+        setMultimediaResultAndFinish(MultimediaResult.Success(indexValue, field))
     }
 }

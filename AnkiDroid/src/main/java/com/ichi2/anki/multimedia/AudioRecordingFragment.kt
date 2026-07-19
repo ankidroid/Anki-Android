@@ -23,14 +23,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.databinding.FragmentAudioRecordingBinding
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.Permissions
@@ -107,16 +104,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
                 return@setOnClickListener
             }
 
-            field.mediaFile = viewModel.currentMultimediaPath.value
-            field.hasTemporaryMedia = true
-
-            val resultData =
-                Intent().apply {
-                    putExtra(MULTIMEDIA_RESULT, field)
-                    putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                }
-            requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-            requireActivity().finish()
+            finishWithMedia()
         }
     }
 

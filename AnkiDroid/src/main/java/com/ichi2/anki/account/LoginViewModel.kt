@@ -28,7 +28,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
@@ -38,37 +37,37 @@ import timber.log.Timber
  * validates input fields, and provides results for login operations.
  */
 class LoginViewModel : ViewModel() {
-    private val _loginButtonEnabled = MutableStateFlow(false)
-    val loginButtonEnabled: StateFlow<Boolean> = _loginButtonEnabled.asStateFlow()
+    val loginButtonEnabled: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    private val _userNameError = MutableStateFlow<LoginError?>(null)
-    val userNameError: StateFlow<LoginError?> = _userNameError.asStateFlow()
+    val userNameError: StateFlow<LoginError?>
+        field = MutableStateFlow<LoginError?>(null)
 
-    private val _passwordError = MutableStateFlow<LoginError?>(null)
-    val passwordError: StateFlow<LoginError?> = _passwordError.asStateFlow()
+    val passwordError: StateFlow<LoginError?>
+        field = MutableStateFlow<LoginError?>(null)
 
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
-    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
+    val loginState: StateFlow<LoginState>
+        field = MutableStateFlow<LoginState>(LoginState.Idle)
 
     fun onUserNameFocusChange(
         hasFocus: Boolean,
         userName: String,
     ) {
-        _userNameError.value = if (!hasFocus && userName.isEmpty()) LoginError.EMPTY_USERNAME else null
+        userNameError.value = if (!hasFocus && userName.isEmpty()) LoginError.EMPTY_USERNAME else null
     }
 
     fun onPasswordFocusChange(
         hasFocus: Boolean,
         password: String,
     ) {
-        _passwordError.value = if (!hasFocus && password.isEmpty()) LoginError.EMPTY_PASSWORD else null
+        passwordError.value = if (!hasFocus && password.isEmpty()) LoginError.EMPTY_PASSWORD else null
     }
 
     fun onTextChanged(
         userName: String,
         password: String,
     ) {
-        _loginButtonEnabled.value = userName.isNotEmpty() && password.isNotEmpty()
+        loginButtonEnabled.value = userName.isNotEmpty() && password.isNotEmpty()
     }
 
     /**
@@ -91,15 +90,15 @@ class LoginViewModel : ViewModel() {
                 val auth = syncLogin(username, password, endpoint)
                 Timber.i("Login success")
                 updateLogin(username, auth.hkey)
-                _loginState.value = LoginState.Success
+                loginState.value = LoginState.Success
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 Timber.i("Login auth failed")
                 updateLogin("", "")
-                _loginState.value = LoginState.Error(exc)
+                loginState.value = LoginState.Error(exc)
             } catch (exc: Exception) {
                 // do not log the error, can contain PII
                 Timber.w("Login error")
-                _loginState.value = LoginState.Error(exc)
+                loginState.value = LoginState.Error(exc)
             }
         }
     }

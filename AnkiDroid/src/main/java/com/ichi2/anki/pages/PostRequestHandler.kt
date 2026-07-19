@@ -63,6 +63,14 @@ interface PostRequestHandler {
 value class PostRequestUri(
     val uri: String,
 ) {
+    val ankidroidMethodName: String?
+        get() =
+            if (uri.startsWith(AnkiServer.ANKIDROID_PREFIX)) {
+                uri.substring(AnkiServer.ANKIDROID_PREFIX.length)
+            } else {
+                null
+            }
+
     val backendMethodName: String?
         get() =
             if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {

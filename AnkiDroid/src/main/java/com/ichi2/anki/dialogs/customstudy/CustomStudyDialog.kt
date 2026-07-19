@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki.dialogs.customstudy
 
@@ -38,7 +24,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -56,6 +41,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.FragmentCustomStudyBinding
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.Companion.deferredDefaults
@@ -72,10 +58,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.bundleOfNotNull
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -154,7 +138,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             val option = selectedSubDialog ?: return@setFragmentResultListener
             val selectedCardStateIndex = viewModel.selectedCardStateIndex
             if (selectedCardStateIndex == AdapterView.INVALID_POSITION) return@setFragmentResultListener
-            val kind = CustomStudyCardState.entries[selectedCardStateIndex].kind
+            val kind = viewModel.selectedKind
             val cardsAmount = userInputValue ?: 100 // the default value
             launchCustomStudy(option, cardsAmount, kind, tagsToInclude, emptyList())
         }
@@ -184,7 +168,6 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        super.onCreate(savedInstanceState)
         val option = selectedSubDialog
         return if (option == null || !defaultsAreInitialized()) {
             Timber.i("Showing Custom Study main menu")
@@ -279,7 +262,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         return AlertDialog
             .Builder(requireActivity())
-            .title(text = TR.actionsCustomStudy().toSentenceCase(R.string.sentence_custom_study))
+            .title(text = TR.sentenceCase.customStudy)
             .cancelable(true)
             .customView(customMenuView)
             .create()
@@ -415,7 +398,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                             }
                         // skip tag selection if there's no tags to select
                         if (nids.isEmpty()) {
-                            launchCustomStudy(contextMenuOption, n)
+                            launchCustomStudy(contextMenuOption, n, viewModel.selectedKind)
                             return@launchCatchingTask
                         }
                         if (isAdded) {
@@ -607,7 +590,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS -> CustomStudyAction.CUSTOM_STUDY_SESSION
             }
 
-        setFragmentResult(CustomStudyAction.REQUEST_KEY, bundleOf(CustomStudyAction.BUNDLE_KEY to action.ordinal))
+        setFragmentResult(CustomStudyAction.REQUEST_KEY, Bundle().apply { putInt(CustomStudyAction.BUNDLE_KEY, action.ordinal) })
 
         // save the default values (not in upstream)
         when (contextMenuOption) {
@@ -887,9 +870,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         fun createInstance(deckId: DeckId): CustomStudyDialog =
             CustomStudyDialog().apply {
                 arguments =
-                    bundleOfNotNull(
-                        CustomStudyViewModel.KEY_DID to deckId,
-                    )
+                    Bundle().apply {
+                        putLong(CustomStudyViewModel.KEY_DID, deckId)
+                    }
             }
 
         /**
@@ -904,10 +887,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         ): CustomStudyDialog =
             CustomStudyDialog().apply {
                 arguments =
-                    bundleOfNotNull(
-                        CustomStudyViewModel.KEY_DID to deckId,
-                        ARG_SUB_DIALOG_ID to contextMenuAttribute.ordinal,
-                    )
+                    Bundle().apply {
+                        putLong(CustomStudyViewModel.KEY_DID, deckId)
+                        putInt(ARG_SUB_DIALOG_ID, contextMenuAttribute.ordinal)
+                    }
             }
 
         /**

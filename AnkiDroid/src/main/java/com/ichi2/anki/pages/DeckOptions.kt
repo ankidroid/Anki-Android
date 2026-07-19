@@ -23,7 +23,6 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
@@ -31,11 +30,11 @@ import anki.collection.Progress
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.ProgressContext
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.updateDeckConfigsRaw
@@ -257,7 +256,11 @@ class DeckOptions : PageFragment() {
             context: Context,
             deckId: DeckId,
         ): Intent =
-            SingleFragmentActivity.getIntent(context, fragmentClass = DeckOptions::class, arguments = bundleOf(KEY_DECK_ID to deckId))
+            SingleFragmentActivity.getIntent(
+                context,
+                fragmentClass = DeckOptions::class,
+                arguments = Bundle().apply { putLong(KEY_DECK_ID, deckId) },
+            )
     }
 }
 

@@ -1,25 +1,12 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
+
 package com.ichi2.anki.dialogs.customstudy
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
@@ -32,7 +19,7 @@ import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelect
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Include
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -77,14 +64,10 @@ class TagLimitFragment : DialogFragment() {
             }
         binding.excludeLabel.text =
             TR.customStudySelectTagsToExclude()
-        val title =
-            TR
-                .customStudySelectiveStudy()
-                .toSentenceCase(R.string.sentence_selective_study)
         val dialog =
             AlertDialog
                 .Builder(requireContext())
-                .title(text = title)
+                .title(text = TR.sentenceCase.selectiveStudy)
                 .customView(binding.root)
                 .negativeButton(R.string.dialog_cancel)
                 .positiveButton(R.string.dialog_ok, null)
@@ -115,10 +98,10 @@ class TagLimitFragment : DialogFragment() {
                 // send the selection to the custom study dialog to setup the session
                 setFragmentResult(
                     REQUEST_CUSTOM_STUDY_TAGS,
-                    bundleOf(
-                        KEY_INCLUDED_TAGS to ArrayList(tagsToInclude),
-                        KEY_EXCLUDED_TAGS to ArrayList(tagsToExclude),
-                    ),
+                    Bundle().apply {
+                        putStringArrayList(KEY_INCLUDED_TAGS, ArrayList(tagsToInclude))
+                        putStringArrayList(KEY_EXCLUDED_TAGS, ArrayList(tagsToExclude))
+                    },
                 )
                 dismiss()
             }
@@ -157,7 +140,7 @@ class TagLimitFragment : DialogFragment() {
 
         fun newInstance(deckId: DeckId) =
             TagLimitFragment().apply {
-                arguments = bundleOf(ARG_DECK_ID to deckId)
+                arguments = Bundle().apply { putLong(ARG_DECK_ID, deckId) }
             }
     }
 }

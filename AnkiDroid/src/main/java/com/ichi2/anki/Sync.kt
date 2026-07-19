@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import anki.collection.Progress
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
@@ -30,7 +31,7 @@ import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChan
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.NetworkUtils
@@ -216,9 +217,11 @@ private suspend fun handleNormalSync(
 
 private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit =
     {
-        if (progress.hasFullSync()) {
-            text = title
-            amount = progress.fullSync.run { Pair(transferred, total) }
+        fun Progress.FullSync.toAmount() = ProgressContext.Amount(transferred.toLong(), total.toLong())
+
+        text = title
+        if (progress.hasFullSync() && progress.fullSync.total > 0) {
+            amount = progress.fullSync.toAmount()
         }
     }
 
@@ -229,6 +232,7 @@ private suspend fun handleDownload(
 ) {
     Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
+        progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync,
         manualCancelButton = R.string.dialog_cancel,
@@ -263,6 +267,7 @@ private suspend fun handleUpload(
 ) {
     Timber.i("Sync: Full collection upload requested")
     deckPicker.withProgress(
+        progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync,
         manualCancelButton = R.string.dialog_cancel,
@@ -310,7 +315,7 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
         withContext(Dispatchers.Main) {
             AlertDialog
                 .Builder(deckPicker)
-                .setTitle(TR.syncMediaLogTitle().toSentenceCase(deckPicker, R.string.sentence_sync_media_log))
+                .setTitle(with(deckPicker) { TR.sentenceCase.mediaSyncLog })
                 .setMessage("")
                 .setPositiveButton(R.string.dialog_continue) { _, _ ->
                     scope.cancel()

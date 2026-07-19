@@ -145,7 +145,9 @@ class DB(
     fun executeScript(sql: String) {
         val queries = sql.split(";")
         for (query in queries) {
-            database.execSQL(query)
+            if (query.isNotEmpty()) {
+                database.execSQL(query)
+            }
         }
     }
 

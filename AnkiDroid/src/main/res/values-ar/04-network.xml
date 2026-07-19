@@ -6,44 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <string name="youre_offline">أنت غير متصل بالإنترنت</string>
     <string name="sync_error">خطأ في المزامنة</string>
@@ -56,12 +34,10 @@
     <!-- MyAccount.kt -->
     <string name="username">عنوان البريد الإلكتروني</string>
     <string name="password">كلمة السر</string>
-    <string name="log_in">تسجيل الدخول</string>
     <string name="sign_up_description">ألا تملك حساب آنكي ويب؟ إنه مجاني!</string>
     <string name="sign_up_not_affiliated">ملاحظة: آنكي ويب غير تابع لآنكي درويد.</string>
     <string name="sign_up">التسجيل</string>
     <string name="logged_as">مسجل كـ</string>
-    <string name="log_out">تسجيل الخروج</string>
     <string name="reset_password">إعادة تعيين كلمة السر</string>
     <string name="lost_mail_instructions">هل نسيت بريدك الإلكتروني؟</string>
     <string name="sign_in">جار تسجيل الدخول</string>
@@ -77,7 +53,6 @@
     <string name="one_way_sync_title" maxLength="41">مزامنة باتجاه واحد</string>
     <string name="one_way_sync_confirmation">طُلبت مزامنة باتجاه واحد</string>
     <string name="full_sync_confirmation">يتطلب هذا التغيير رفعًا كاملًا لقاعدة البيانات عندما تُزامِن في المرة القادمة. إن كانت لديك مراجعات أو غيرها من التغييرات في جهاز آخر لم يُزامَن مع هذا الجهاز بعد، فإنك ستفقدها. هل تريد الاستمرار؟</string>
-    <string name="full_sync_confirmation_upgrade">نتيجة لعطل في إصدار آنكي درويد المثبت سابقًا، يُنصح بفرض مزامنة كاملة.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">مزامنة (باتجاه واحد)</string>
     <string name="sync_menu_title_no_account">مزامنة (تسجيل دخول)</string>

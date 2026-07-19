@@ -17,7 +17,7 @@
 package com.ichi2.anki.reviewer
 
 import android.view.MotionEvent
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 
 /**
  * A type of movement, typically a Joystick/Trigger on a gamepad

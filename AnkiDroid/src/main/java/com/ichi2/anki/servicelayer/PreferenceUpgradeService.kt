@@ -41,12 +41,13 @@ import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.utils.HashUtil.hashSetInit
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.preferences.reviewer.ViewerAction
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
@@ -55,10 +56,8 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.reviewer.ReviewerBinding.Companion.fromPreferenceString
-import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
 import java.util.Locale
-import kotlin.collections.ArrayList
 import kotlin.math.round
 
 private typealias VersionIdentifier = Int
@@ -137,6 +136,7 @@ object PreferenceUpgradeService {
                     yield(UpgradeToggleBacksideOnlyControl())
                     yield(UpgradeThemes())
                     yield(UpgradeAnswerControls())
+                    yield(RemoveDeveloperFindReplace())
                 }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -594,7 +594,7 @@ object PreferenceUpgradeService {
          * Universal Analytics to Google Analytics 4, we want analytics to STRICTLY be opt-in
          *
          * As we likely have inadvertent opt-ins, we stated that we would opt everyone out:
-         * https://ankidroid.org/docs/changelog.html#_version_2_16_5_20230906
+         * https://docs.ankidroid.org/changelog.html#_version_2_16_5_20230906
          *
          * We now use "analytics_opt_in"
          *
@@ -897,6 +897,14 @@ object PreferenceUpgradeService {
                 }
                 preferences.edit {
                     putString("binding_SHOW_ANSWER", showAnswerBindings.toPreferenceString())
+                }
+            }
+        }
+
+        internal class RemoveDeveloperFindReplace : PreferenceUpgrade(28) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit {
+                    remove("browserFindReplace")
                 }
             }
         }

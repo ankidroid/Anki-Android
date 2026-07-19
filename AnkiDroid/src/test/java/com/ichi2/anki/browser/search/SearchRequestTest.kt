@@ -17,6 +17,8 @@
 package com.ichi2.anki.browser.search
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.libanki.DeckNameId
@@ -28,6 +30,7 @@ import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertFailsWith
@@ -35,6 +38,7 @@ import kotlin.test.assertFailsWith
 /** Tests for [SearchRequest] */
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class SearchRequestTest : JvmTest() {
     @Test
     fun `search string generation - empty`() {
@@ -69,11 +73,12 @@ class SearchRequestTest : JvmTest() {
     }
 
     @Test
-    fun `search string generation - invalid query`() {
-        val invalidRequest = SearchRequest("and")
-        val searchStringResult = invalidRequest.toSearchString()
-        assertFailsWith<InvalidSearchException> { searchStringResult.getOrThrow() }
-    }
+    fun `search string generation - invalid query`() =
+        runTest {
+            val invalidRequest = SearchRequest("and")
+            val searchStringResult = invalidRequest.toSearchStringResult()
+            assertFailsWith<InvalidSearchException> { searchStringResult.getOrThrow() }
+        }
 
     /**
      * Returns a [SearchRequest] with all filters set
@@ -128,8 +133,6 @@ fun SearchRequest.toValidSearchString(): String =
         return this@toValidSearchString.toSearchString().getOrThrow().value
     }
 
-context(test: AnkiTest)
-fun SearchRequest.toSearchString(): Result<String> =
-    with(test.col) {
-        return this@toSearchString.toSearchString().map { it.value }
-    }
+suspend fun SearchRequest.toSearchString(): String? = withCol { toSearchString() }.getOrNull()?.value
+
+suspend fun SearchRequest.toSearchStringResult(): Result<SearchString> = withCol { toSearchString() }

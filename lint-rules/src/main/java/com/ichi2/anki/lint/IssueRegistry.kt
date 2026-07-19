@@ -1,19 +1,5 @@
-/*
- * Copyright (c) 2020 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-@file:Suppress("UnstableApiUsage")
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2020 lukstbit <52494258+lukstbit@users.noreply.github.com>
 
 package com.ichi2.anki.lint
 
@@ -22,7 +8,6 @@ import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 import com.android.tools.lint.detector.api.Issue
 import com.ichi2.anki.lint.rules.AvoidAlertDialogUsage
-import com.ichi2.anki.lint.rules.CopyrightHeaderExists
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage
 import com.ichi2.anki.lint.rules.DirectDateInstantiation
 import com.ichi2.anki.lint.rules.DirectGregorianInstantiation
@@ -36,6 +21,7 @@ import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
 import com.ichi2.anki.lint.rules.LayoutPrefixDetector
+import com.ichi2.anki.lint.rules.LicenseHeaderExists
 import com.ichi2.anki.lint.rules.LocaleRootDetector
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
 import com.ichi2.anki.lint.rules.OpenInputStreamSafeDetector
@@ -51,7 +37,6 @@ class IssueRegistry : IssueRegistry() {
             // Keep this list lexicographically ordered.
             return listOf(
                 LayoutPrefixDetector.ISSUE,
-                CopyrightHeaderExists.ISSUE,
                 DirectCalendarInstanceUsage.ISSUE,
                 DirectDateInstantiation.ISSUE,
                 DirectGregorianInstantiation.ISSUE,
@@ -62,6 +47,7 @@ class IssueRegistry : IssueRegistry() {
                 DuplicateCrowdInStrings.ISSUE,
                 HardcodedPreferenceKey.ISSUE,
                 JUnitNullAssertionDetector.ISSUE,
+                LicenseHeaderExists.ISSUE,
                 LocaleRootDetector.ISSUE,
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,

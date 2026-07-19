@@ -20,7 +20,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.ichi2.anki.R
-import com.ichi2.compat.setTooltipTextCompat
+import com.ichi2.anki.compat.setTooltipTextCompat
 
 /**
  * Same as androidx's SearchView, with an extra tooltip.

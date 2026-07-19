@@ -16,21 +16,22 @@
 package com.ichi2.anki.previewer
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.common.Flaky
-import com.ichi2.testutils.common.OS
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -65,7 +66,8 @@ class PreviewerViewModelTest : JvmTest() {
     }
 
     @Before
-    fun setup() {
+    override fun setUp() {
+        super.setUp()
         val cardIds =
             (0..3).flatMap {
                 val note = addBasicNote()
@@ -83,6 +85,12 @@ class PreviewerViewModelTest : JvmTest() {
         // the default implementation requires the Collection media directory,
         // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
         coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
+    }
+
+    @After
+    override fun tearDown() {
+        viewModel.viewModelScope.cancel()
+        super.tearDown()
     }
 
     @Test
@@ -103,7 +111,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL)
     fun `previous button`() =
         runTest {
             // Start at Index 1
@@ -122,7 +129,6 @@ class PreviewerViewModelTest : JvmTest() {
         }
 
     @Test
-    @Flaky(OS.ALL)
     fun `toggle back side only`() =
         runTest {
             assertFalse(viewModel.backSideOnly.value) // initial state should be false

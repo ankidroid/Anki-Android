@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">檢查資料庫？</string>
-    <string name="check_db_warning">這可能會花上好一段時間</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">刪除牌組</string>
+    <string name="check_db_warning">這可能會花比較久的時間。確定繼續執行？</string>
     <string name="delete_deck_title">刪除牌組？</string>
     <plurals name="delete_deck_message">
         <item quantity="other">刪除%1$s的所有卡片嗎？它包含%2$d張卡片。</item>
@@ -81,14 +58,14 @@
     <string name="restore_backup_choose_another">選擇其他時間</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">確定</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">新增</string>
+    <string name="restore">回復</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">否</string>
     <string name="dialog_yes">是</string>
     <string name="dialog_keep">保留</string>
     <string name="dialog_remove">移除</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">離開</string>
     <string name="dialog_continue">繼續</string>
     <string name="dialog_processing">處理中&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
@@ -103,8 +80,7 @@
     <string name="dialog_invalid_custom_certificate_title">證書解析錯誤</string>
     <string name="dialog_updated_custom_certificate">證書已更新</string>
     <!-- Media checking -->
-    <string name="check_media_title">檢查媒體嗎？</string>
-    <string name="check_media_warning">因爲大量的媒體集合，這可能會花上好一段時間</string>
+    <string name="check_media_warning">由於較大的媒體檔案，這可能會花比較久的時間。確定繼續？</string>
     <string name="check_media_message">正在檢查媒體&#8230;</string>
     <string name="check_media_adding_missing_tag">添加標籤&#8230;</string>
     <string name="check_media_tags_added">標籤已添加</string>
@@ -127,8 +103,6 @@
     <string name="permission_denied">權限被拒</string>
     <string name="recording_permission_denied_message">“錄音”功能需開啟麥克風，請在程式設定裏批准權限。</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid 已更新</string>
-    <string name="integrity_check_startup_content">AnkiDroid 已更新，此更新包含修復潛在的資料庫問題，而我們建議您現在執行檢查資料庫。</string>
     <string name="integrity_check_continue_anyway">仍要繼續</string>
     <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 閒置空間。</string>
@@ -248,16 +222,16 @@
     <string name="tts_error_dialog_change_button_text">變更引擎</string>
     <string name="tts_error_dialog_supported_voices_button_text">語音選項</string>
     <!-- import_cache_error_resolutions -->
-    <string name="import_error_resolution_try_again">Re-import the file</string>
-    <string name="import_error_resolution_free_up_space">Ensure there is sufficient free space on your device</string>
-    <string name="import_error_resolution_check_internet">Ensure you are connected to the internet</string>
+    <string name="import_error_resolution_try_again">重新匯入檔案</string>
+    <string name="import_error_resolution_free_up_space">確認你的裝置上有足夠的儲存空間</string>
+    <string name="import_error_resolution_check_internet">確認你是否已連上網際網路</string>
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
-    <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
+    <string name="import_error_resolution_select_file">用你的裝置上的檔案瀏覽器開啟檔案</string>
     <!-- Post-login dialog -->
-    <string name="login_successful">Login successful</string>
-    <string name="sync_now">Sync now?</string>
+    <string name="login_successful">登入成功</string>
+    <string name="sync_now">現在同步？</string>
     <!--Change Note Type Dialog Fragment-->
-    <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
+    <string name="card_numbers_unchanged">卡片數量將不會改變</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
     <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
     <string name="different_note_types_selected">Please select notes from only one notetype.</string>

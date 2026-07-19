@@ -24,7 +24,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
@@ -32,19 +31,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.slider.Slider
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.databinding.PreviewerBinding
+import com.ichi2.anki.databinding.FragmentPreviewerBinding
 import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.collectIn
+import com.ichi2.anki.utils.ext.setIconRes
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.performClickIfEnabled
@@ -53,13 +55,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PreviewerFragment :
-    CardViewerFragment(R.layout.previewer),
+    CardViewerFragment(R.layout.fragment_previewer),
     Toolbar.OnMenuItemClickListener,
     BaseSnackbarBuilderProvider,
     DispatchKeyEventListener,
     BindingProcessor<MappableBinding, PreviewerAction> {
     override val viewModel: PreviewerViewModel by viewModels()
-    private val binding by viewBinding(PreviewerBinding::bind)
+    private val binding by viewBinding(FragmentPreviewerBinding::bind)
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
     override val baseSnackbarBuilder: SnackbarBuilder
@@ -113,7 +115,7 @@ class PreviewerFragment :
                             setTitle(R.string.menu_unmark_note)
                         } else {
                             setIcon(R.drawable.ic_star_border_white)
-                            setTitle(R.string.menu_mark_note)
+                            title = TR.sentenceCase.markNote
                         }
                     }
                 }
@@ -201,6 +203,7 @@ class PreviewerFragment :
     }
 
     private fun setupFlagMenu(menu: Menu) {
+        menu.findItem(R.id.action_flag).title = TR.sentenceCase.flagCard
         val submenu = menu.findItem(R.id.action_flag).subMenu
         lifecycleScope.launch {
             for ((flag, name) in Flag.queryDisplayNames()) {
@@ -260,7 +263,7 @@ class PreviewerFragment :
                 setIcon(R.drawable.ic_card_answer)
                 setTitle(R.string.card_side_answer)
             } else {
-                setIcon(R.drawable.ic_card_question)
+                setIconRes(requireContext(), R.drawable.ic_card_question)
                 setTitle(R.string.card_side_both)
             }
         }
@@ -291,10 +294,10 @@ class PreviewerFragment :
             currentIndex: Int,
         ): Intent {
             val arguments =
-                bundleOf(
-                    CURRENT_INDEX_ARG to currentIndex,
-                    CARD_IDS_FILE_ARG to idsFile,
-                )
+                Bundle().apply {
+                    putInt(CURRENT_INDEX_ARG, currentIndex)
+                    putParcelable(CARD_IDS_FILE_ARG, idsFile)
+                }
             return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }
     }

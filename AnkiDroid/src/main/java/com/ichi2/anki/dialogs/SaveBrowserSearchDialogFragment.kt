@@ -1,25 +1,13 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
+
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CardBrowser
@@ -45,6 +33,7 @@ import timber.log.Timber
  */
 class SaveBrowserSearchDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // TODO: validation on duplicate name (case sensitive)
         val searchQuery =
             requireArguments().getString(ARG_SEARCH_QUERY) ?: error("Missing search query")
         return AlertDialog
@@ -63,10 +52,10 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
                 Timber.d("Saving user search: %s with given name %s", searchQuery, name)
                 setFragmentResult(
                     REQUEST_SAVE_SEARCH,
-                    bundleOf(
-                        ARG_SEARCH_QUERY to searchQuery,
-                        ARG_SEARCH_QUERY_NAME to name,
-                    ),
+                    Bundle().apply {
+                        putString(ARG_SEARCH_QUERY, searchQuery)
+                        putCharSequence(ARG_SEARCH_QUERY_NAME, name)
+                    },
                 )
                 dialog.dismiss()
             }
@@ -88,9 +77,9 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
         fun newInstance(searchQuery: String): SaveBrowserSearchDialogFragment =
             SaveBrowserSearchDialogFragment().apply {
                 arguments =
-                    bundleOf(
-                        ARG_SEARCH_QUERY to searchQuery,
-                    )
+                    Bundle().apply {
+                        putString(ARG_SEARCH_QUERY, searchQuery)
+                    }
             }
     }
 }
@@ -123,5 +112,34 @@ fun CardBrowser.registerSaveSearchHandler() {
             val saveStatus = viewModel.saveSearch(toSave)
             updateAfterUserSearchIsSaved(saveStatus)
         }
+    }
+}
+
+/**
+ * Registers a fragment result listener, [onSaveSearch] should handle creating the requested
+ * saved search
+ */
+fun Fragment.registerSaveSearchHandler(onSaveSearch: (SavedSearch) -> Unit) {
+    childFragmentManager.setFragmentResultListener(
+        SaveBrowserSearchDialogFragment.REQUEST_SAVE_SEARCH,
+        this,
+    ) { _, bundle ->
+        val savedSearchName =
+            bundle.getString(ARG_SEARCH_QUERY_NAME)
+        if (savedSearchName.isNullOrEmpty()) {
+            showSnackbar(
+                R.string.card_browser_list_my_searches_new_search_error_empty_name,
+                Snackbar.LENGTH_SHORT,
+            )
+            return@setFragmentResultListener
+        }
+
+        val savedSearch =
+            SavedSearch(
+                name = savedSearchName,
+                query = bundle.getString(ARG_SEARCH_QUERY) ?: return@setFragmentResultListener,
+            )
+
+        onSaveSearch(savedSearch)
     }
 }

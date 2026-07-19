@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-~ Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
+  -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/close_icon"
-        app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:titleTextAppearance="@style/TextAppearance.AnkiDroid.TopAppBar.Title"
         tools:title="Filtered deck 10:10"
         tools:menu="@menu/filtered_options">
 
@@ -157,23 +146,21 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/filter_cards_input_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            <TextView
+                android:id="@+id/filter_cards_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:hint="Cards selected by">
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                tools:text="Cards selected by"
+                />
 
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/filter_cards_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textFilter"
-                    app:dropDownBackgroundTint="?android:attr/colorBackground"
-                    tools:text="Random"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/filter_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                />
 
             <!-- Material3Fix after colorSurface* are fixed look into using one here -->
             <com.google.android.material.materialswitch.MaterialSwitch
@@ -231,24 +218,23 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/second_filter_cards_input_layout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            <TextView
+                android:id="@+id/second_filter_cards_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                tools:text="Cards selected by"
+                />
+
+            <Spinner
+                android:id="@+id/second_filter_cards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:layout_marginTop="4dp"
-                tools:hint="Cards selected by">
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/second_filter_cards_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textFilter"
-                    app:dropDownBackgroundTint="?android:attr/colorBackground"
-                    tools:text="Order due"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:minHeight="48dp"
+                />
 
             <com.ichi2.ui.FixedTextView
                 android:id="@+id/options_label"
@@ -360,5 +346,7 @@
         app:layout_constraintTop_toBottomOf="@id/scroll_view"
         app:flow_verticalBias="1.0"
         app:layout_goneMarginBottom="8dp"
+        android:visibility="gone"
+        tools:visibility="visible"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

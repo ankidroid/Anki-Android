@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Atspējots/a</string>
@@ -62,7 +41,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Vienādošana</string>
     <string name="pref_cat_scheduling" maxLength="41">Ieplānošana</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tāfele</string>
-    <string name="pref_cat_appearance" maxLength="41">Izskats</string>
     <string name="pref_cat_themes" maxLength="41">Izskati</string>
     <string name="pref_cat_gestures" maxLength="41">Kustības</string>
     <string name="pref_cat_controls" maxLength="41">Vadība</string>
@@ -130,7 +108,6 @@
     <string name="tts_summ">Nolasa jautājumu un atbildi, ja nav iekļauta skaņas datne</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Iegūt informācijas nesējus vienādošanas laikā</string>
-    <string name="sync_account" maxLength="41">AnkiWeb konts</string>
     <string name="sync_account_summ_logged_out">Nav veikta pieteikšanās</string>
     <string name="automatic_sync_choice" maxLength="41">Automātiska vienādošana</string>
     <string name="automatic_sync_choice_summ">Automātiski vienādot pēc lietotnes palaišanas vai pirms iziešanas no tās, ja pēdējā vienādošana bija
@@ -159,8 +136,6 @@
     <string name="select_locale_title">Atlasīt valodu</string>
     <string name="software_render" maxLength="41">Atspējot kartīšu aparatūras atveidotāju</string>
     <string name="software_render_summ">Aparatūras atveidotājs ir ātrāks, bet tam var būt sarežģījumi, it īpaši ar Android 8/8.1. Šis iestatījums jāmēģina, ja kartīšu nav redzamas atsevišķas kartīšu izskatīšanas saskarnes daļas.</string>
-    <string name="safe_display" maxLength="41">Drošs attēlošanas veids</string>
-    <string name="safe_display_summ">Atspējot visas animācijas un izmantot drošāku kartīšu attēlošanas veidu. Tas var būt nepieciešams e-tintes ierīcēs.</string>
     <string name="disable_extended_text_ui" maxLength="41">Atspējot viena lauka labošanu</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Ļauj \"Satura paslēpšana\" konteksta izvēlni, kad tiek izmantots guleniskais novietojums.</string>
@@ -174,6 +149,8 @@
     <string name="show_estimates_summ">Rādīt nākamās pārskatīšanas laiku uz atbilžu pogām</string>
     <string name="show_large_answer_buttons" maxLength="41">Rādīt lielas atbilžu pogas</string>
     <string name="show_large_answer_buttons_summ">Rādīt atbilžu pogas 2 rindās</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Rādīt augšējo joslu</string>
     <string name="show_top_bar_summary">Rādīt kartīšu skaitu, atbildes laika skaitītāju, karogu un iezīmi augšējā joslā</string>
     <string name="show_progress" maxLength="41">Rādīt atlikušās</string>
@@ -210,8 +187,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Apgūšanas ekrāns</string>
     <string name="show_deck_title" maxLength="41">Rādīt kavas virsrakstu</string>
     <string name="accessibility" maxLength="41">Pieejamība</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Ielīmēt starplitkuves attēlus kā PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Piespiest \"Atpakaļ\" divreiz, lai dotos atpakaļ / izietu</string>
     <string name="exit_via_double_tap_back_summ">Lai izvairītoes no nejaušas iziešanas no apgūšanas ekrāna vai lietotnes</string>
     <!-- Allow all files in media imports -->
@@ -225,7 +200,7 @@
         Ja nav iestatīts, tiks izmantots noklusējuma AnkiWeb serveris.
         <a href="%s">Uzzināt vairāk</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Vienādošanas URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Pielāgots saknes sertifikāts (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Tastatūra</string>
@@ -281,6 +256,10 @@
     <string name="user_action_8" maxLength="28">8. lietotāja darbība</string>
     <string name="user_action_9" maxLength="28">9. lietotāja darbība</string>
     <string name="toggle_auto_advance" maxLength="28">Pārslēgt automātisko virzīšanos</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Atlasīt kartītes pusi</string>
     <string name="card_side_question">Jautājums</string>
@@ -388,4 +367,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Atvērt iestatījumus</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
 </resources>

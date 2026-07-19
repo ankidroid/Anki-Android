@@ -69,7 +69,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
             toggleAllClozeDeletions(sentenceArray)
 
             assertEquals("all cloze deletions are removed", clozeDeletionCount, 0)
-            assertEquals("cloze number is reset if there are no clozes", currentClozeNumber, 1)
+            assertEquals("cloze number is reset if there are no clozes", currentClozeNumber.value, 1)
         }
 
     @Test
@@ -83,11 +83,11 @@ class InstantEditorViewModelTest : RobolectricTest() {
             // disable cloze on the first 2, leaving "this" as {{c3::
             toggleClozeDeletions(sentenceArray, 0, 1)
 
-            assertEquals("cloze number is 'Current Cloze Number + 1'", currentClozeNumber, 4)
+            assertEquals("cloze number is 'Current Cloze Number + 1'", currentClozeNumber.value, 4)
 
             // remove the remaining cloze all clozes
             toggleClozeDeletion(sentenceArray, 2)
-            assertEquals("cloze number is reset if all clozes are removed", currentClozeNumber, 1)
+            assertEquals("cloze number is reset if all clozes are removed", currentClozeNumber.value, 1)
         }
 
     @Test
@@ -265,13 +265,54 @@ class InstantEditorViewModelTest : RobolectricTest() {
             val text = "This is {{c1::first}} and {{c2::second}}"
             setClozeFieldText(text)
 
-            assertEquals(3, currentClozeNumber)
+            assertEquals(3, currentClozeNumber.value)
 
             toggleClozeMode() // switch to NO_INCREMENT mode
-            assertEquals(2, currentClozeNumber)
+            assertEquals(2, currentClozeNumber.value)
 
             toggleClozeMode() // switch back to INCREMENT mode
-            assertEquals(3, currentClozeNumber)
+            assertEquals(3, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `setClozeFieldText does not increment in NO_INCREMENT mode`() =
+        runViewModelTest {
+            toggleClozeMode() // switch to NO_INCREMENT mode
+
+            val text = "{{c1::first}} {{c2::second}}"
+            setClozeFieldText(text)
+
+            assertEquals(2, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `setClozeFieldText increments in INCREMENT mode`() =
+        runViewModelTest {
+            val text = "{{c1::first}} {{c2::second}}"
+            setClozeFieldText(text)
+
+            assertEquals(3, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `toggling cloze mode with no clozes keeps cloze number at 1`() =
+        runViewModelTest {
+            assertEquals(1, currentClozeNumber.value)
+
+            toggleClozeMode() // INCREMENT -> NO_INCREMENT
+            assertEquals(1, currentClozeNumber.value)
+
+            toggleClozeMode() // NO_INCREMENT -> INCREMENT
+            assertEquals(1, currentClozeNumber.value)
+        }
+
+    @Test
+    fun `toggling cloze mode multiple times with no clozes keeps cloze number at 1`() =
+        runViewModelTest {
+            repeat(5) {
+                toggleClozeMode()
+            }
+            assertEquals(1, currentClozeNumber.value)
         }
 
     private fun runViewModelTest(

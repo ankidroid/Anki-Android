@@ -18,18 +18,20 @@ package com.ichi2.anki
 
 import android.os.SystemClock
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.utils.HandlerUtils
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.closeTo
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTasks
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class HandlerUtilsTest {
     @Test
     fun checkHandlerFunctionExecution() {

@@ -26,11 +26,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
-import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.getInputTextLayout
@@ -38,7 +37,6 @@ import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
-import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import timber.log.Timber
 
@@ -49,10 +47,9 @@ import timber.log.Timber
  *
  * required property: [onNewDeckCreated]. Called on successful creation of a deck
  */
-@NeedsTest("Ensure a toast is shown on a successful action")
 class CreateDeckDialog(
     private val context: Context,
-    private val title: Int,
+    private val title: CharSequence,
     private val deckDialogType: DeckDialogType,
     private val parentId: DeckId?,
 ) {
@@ -91,7 +88,7 @@ class CreateDeckDialog(
             AlertDialog
                 .Builder(context)
                 .show {
-                    title(title)
+                    setTitle(title)
                     // Resource ID for the dialog's positive action button text.
                     // Uses "Rename" for rename deck dialogs and "Create" for all other deck-related dialogs.
                     val positiveButtonTextRes =

@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">データベースをチェックしますか？</string>
-    <string name="check_db_warning">これには長い時間がかかることがあります。</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">デッキを削除</string>
+    <string name="check_db_warning">これには長い時間がかかることがあります。続行しますか？</string>
     <string name="delete_deck_title">デッキを削除しますか？</string>
     <plurals name="delete_deck_message">
         <item quantity="other">「%1$s」内のすべてのカードを削除しますか？　%2$d枚のカードが含まれています</item>
@@ -81,7 +58,7 @@
     <string name="restore_backup_choose_another">他を選択</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">追加</string>
     <string name="restore">Restore</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">いいえ</string>
@@ -103,8 +80,7 @@
     <string name="dialog_invalid_custom_certificate_title">証明書の解析エラー</string>
     <string name="dialog_updated_custom_certificate">証明書が更新されました</string>
     <!-- Media checking -->
-    <string name="check_media_title">メディアをチェックしますか？</string>
-    <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
+    <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">メディアをチェックしています&#8230;</string>
     <string name="check_media_adding_missing_tag">タグを追加しています&#8230;</string>
     <string name="check_media_tags_added">タグを追加しました</string>
@@ -127,8 +103,6 @@
     <string name="permission_denied">権限が許可されていません</string>
     <string name="recording_permission_denied_message">「音声を録音」オプションを使用するにはマイクの権限が必要です。システムの、このアプリに関する設定画面でマイクの権限を許可してください。</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
-    <string name="integrity_check_startup_content">AnkiDroidをアップグレードしました。このアップグレードには、データベースに関する不具合の修正が含まれています。今すぐ「データベースをチェック」を実行することをおすすめします。</string>
     <string name="integrity_check_continue_anyway">続ける</string>
     <string name="integrity_check_insufficient_space">データベースのチェックには一時ファイル用のデータ領域が必要です。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域を確保してください。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n現在の空き容量は %s です。</string>
@@ -249,7 +223,7 @@
     <string name="tts_error_dialog_supported_voices_button_text">読み上げオプション</string>
     <!-- import_cache_error_resolutions -->
     <string name="import_error_resolution_try_again">もう一度ファイルをインポートしてください</string>
-    <string name="import_error_resolution_free_up_space">あなたのデバイスに十分な空きがあることを確認してください</string>
+    <string name="import_error_resolution_free_up_space">デバイスに十分な空き容量があることを確認してください</string>
     <string name="import_error_resolution_check_internet">インターネットに接続されていることを確認してください</string>
     <string name="import_error_resolution_copy_to_device">Copy the file to your device and try again with the local file</string>
     <string name="import_error_resolution_select_file">Open the file using your device’s file browser app</string>
@@ -264,15 +238,15 @@
     <string name="error_no_changes_to_save">保存する変更がありません</string>
     <string name="choose_color">色を選択</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">フィールド</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">特別ﾌｨｰﾙﾄﾞ</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_front_side_help">表面テンプレートの内容。この中の音声は自動的に再生されません。</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">このカードが所属するデッキ（親デッキも含む全体）%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">このカードが直に所属するデッキ（親デッキは含めない）%s</string>
+    <string name="special_field_flag_help">このカードのフラグの状態: %1$s（%2$s はフラグの状態を表す番号 %3$s\～%4$s\ の一つ）</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">ノートのタグ%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">カードのID%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">カードタイプの名前%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">ノートタイプの名前%s</string>
 </resources>

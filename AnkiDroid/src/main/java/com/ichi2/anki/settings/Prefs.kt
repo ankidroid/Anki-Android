@@ -25,8 +25,9 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
+import com.ichi2.anki.common.preferences.AnimationPreferences
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -45,7 +46,7 @@ object Prefs : PrefsRepository(AnkiDroidApp.sharedPrefs(), AnkiDroidApp.appResou
 open class PrefsRepository(
     val sharedPrefs: SharedPreferences,
     private val resources: Resources,
-) {
+) : AnimationPreferences {
     constructor(context: Context) : this(context.sharedPrefs(), context.resources)
 
     @VisibleForTesting
@@ -296,6 +297,14 @@ open class PrefsRepository(
      */
     var reminderNotifsRequestShown by booleanPref(R.string.reminder_notifs_request_shown_key, defaultValue = false)
 
+    /**
+     * A list of all recent deserialization errors that have occurred when trying to load review reminders from storage.
+     * For example, review reminders are deserialized and have their alarms scheduled when the device starts, but
+     * if the deserialization process fails and no valid migrations are available, the error can be put into this string
+     * so that the next time the user opens the app, an error dialog can be shown to inform them of the issue.
+     */
+    var reviewReminderDeserializationErrors by stringPref(R.string.review_reminder_deserialization_errors_key)
+
     // *************************************** Permissions ************************************** //
 
     // Flags for whether the system UI dialog for requesting certain permissions has been shown before.
@@ -318,9 +327,9 @@ open class PrefsRepository(
      * when in reality notification permissions have not been requested for the device. This is most prominently
      * an issue for the review reminders feature, so to ensure the user is able to receive review reminder notifications after
      * a data restore / migration, a Snackbar noting that notification permissions are missing will be shown
-     * on the [com.ichi2.anki.reviewreminders.ScheduleReminders] fragment if notification permissions are not granted.
+     * on the [com.ichi2.anki.reviewreminders.ScheduleRemindersFragment] fragment if notification permissions are not granted.
      *
-     * @see com.ichi2.anki.reviewreminders.ScheduleReminders.checkForNotificationPermissions
+     * @see com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.checkForNotificationPermissions
      */
     var notificationsPermissionRequested by booleanPref(R.string.notifications_permission_requested_key, false)
 
@@ -352,9 +361,9 @@ open class PrefsRepository(
 
     //region Appearance
 
-    val appTheme: AppTheme by enumPref(R.string.app_theme_key, AppTheme.FOLLOW_SYSTEM)
-    val dayTheme: DayTheme by enumPref(R.string.day_theme_key, DayTheme.LIGHT)
-    val nightTheme: NightTheme by enumPref(R.string.night_theme_key, NightTheme.DARK)
+    var appTheme: AppTheme by enumPref(R.string.app_theme_key, AppTheme.FOLLOW_SYSTEM)
+    var dayTheme: DayTheme by enumPref(R.string.day_theme_key, DayTheme.LIGHT)
+    var nightTheme: NightTheme by enumPref(R.string.night_theme_key, NightTheme.BLACK)
 
     //endregion
 
@@ -373,6 +382,7 @@ open class PrefsRepository(
 
     val answerButtonsSize: Int by intPref(R.string.answer_button_size_preference, 100)
     val cardZoom: Int by intPref(R.string.card_zoom_preference, 100)
+    override val removeAppAnimations by booleanPref(R.string.safe_display_key, defaultValue = false)
 
     // **************************************** Advanced **************************************** //
 
@@ -399,7 +409,11 @@ open class PrefsRepository(
     val devIsCardBrowserFragmented: Boolean
         get() = getBoolean(R.string.dev_card_browser_fragmented, false)
 
-    val devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
+    val devBottomNavEnabled: Boolean
+        get() = getBoolean(R.string.dev_bottom_nav_key, false)
+
+    @set:VisibleForTesting
+    var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
     val isWebDebugEnabled: Boolean
         get() = (getBoolean(R.string.html_javascript_debugging_key, false) || BuildConfig.DEBUG) && !isRunningAsUnitTest

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/front_edit"
         android:icon="@drawable/ic_card_question"
-        android:title="@string/front_field_name" />
+        tools:title="Front" />
     <item
         android:id="@+id/back_edit"
         android:icon="@drawable/ic_card_answer"
@@ -11,5 +14,5 @@
     <item
         android:id="@+id/styling_edit"
         android:icon="@drawable/ic_css"
-        android:title="@string/card_template_editor_styling" />
+        tools:title="Styling" />
 </menu>

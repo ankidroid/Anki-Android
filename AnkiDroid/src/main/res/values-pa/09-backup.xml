@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <string name="backup_deck_no_storage_left">ਬੈਕਅੱਪ ਸੁਰੱਖਿਅਤ ਨਹੀਂ ਕੀਤਾ ਗਿਆ। ਤੁਹਾਡੇ ਕੋਲ ਤੁਹਾਡੀ ਸਟੋਰੇਜ \'ਤੇ ਲੋੜੀਂਦੀ ਜਗ੍ਹਾ ਨਹੀਂ ਬਚੀ ਹੈ। ਬੈਕਅੱਪ ਡੂੰਘਾਈ ਨੂੰ ਘਟਾਓ ਜਾਂ ਕੁਝ ਹੋਰ ਫਾਈਲਾਂ ਨੂੰ ਹਟਾਓ।</string>
     <string name="storage_warning" comment="Consider keeping the unbreakable space after the digit">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
@@ -51,6 +30,7 @@
     <string name="backup_del_collection">ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾਓ ਅਤੇ ਇੱਕ ਨਵਾਂ ਬਣਾਓ</string>
     <string name="backup_del_collection_question">ਕੀ ਮੈਨੂੰ ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੀਦਾ ਹੈ ਅਤੇ ਇੱਕ ਨਵਾਂ ਬਣਾਉਣਾ ਚਾਹੀਦਾ ਹੈ? ਇਹ ਤੁਹਾਡੀ ਸਾਰੀ ਸਿੱਖਣ ਦੀ ਪ੍ਰਗਤੀ ਨੂੰ ਰੱਦ ਕਰ ਦੇਵੇਗਾ ਅਤੇ ਸਾਰੇ ਕਾਰਡ ਮਿਟਾ ਦੇਵੇਗਾ।</string>
     <string name="backup_one_way_sync_from_server">ਸਰਵਰ ਤੋਂ ਵਨ-ਵੇ ਸਿੰਕ</string>
+    <string name="backup_use_default_folder">Use default collection folder</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb ਤੋਂ ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਨੂੰ ਓਵਰਰਾਈਟ ਕਰਨਾ ਹੈ? ਇਹ ਤੁਹਾਡੇ ਆਖਰੀ ਸਮਕਾਲੀਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਹਾਡੀ ਸਾਰੀ ਸਿੱਖਣ ਦੀ ਪ੍ਰਗਤੀ ਅਤੇ ਸ਼ਾਮਲ ਕੀਤੀ ਜਾਣਕਾਰੀ ਨੂੰ ਛੱਡ ਦੇਵੇਗਾ।</string>
     <string name="error_handling_title">ਅਸ਼ੁੱਧੀ ਨੂੰ ਸੰਭਾਲਣਾ</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ਵਿਕਲਪ</string>

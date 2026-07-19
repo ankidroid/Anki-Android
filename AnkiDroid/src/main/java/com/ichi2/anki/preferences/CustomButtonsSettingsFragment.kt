@@ -1,25 +1,17 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
+
 package com.ichi2.anki.preferences
 
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.preference.ListPreference
 import androidx.preference.Preference
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -32,6 +24,8 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
         get() = "prefs.custom_buttons"
 
     override fun initSubscreen() {
+        setDynamicTitles()
+
         // Reset toolbar button customizations
         val resetCustomButtons = requirePreference<Preference>("reset_custom_buttons")
         resetCustomButtons.onPreferenceClickListener =
@@ -54,6 +48,17 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                 }
                 true
             }
+    }
+
+    private fun setDynamicTitles() {
+        findPreference<ListPreference>(getString(R.string.custom_button_flag_key))?.title = TR.browsingFlag()
+        findPreference<ListPreference>(getString(R.string.custom_button_card_info_key))?.title = TR.sentenceCase.cardInfo
+        findPreference<ListPreference>(getString(R.string.custom_button_bury_key))?.title = TR.studyingBury()
+        findPreference<ListPreference>(getString(R.string.custom_button_suspend_key))?.title = TR.studyingSuspend()
+        findPreference<ListPreference>(getString(R.string.custom_button_deck_options_key))?.title = TR.sentenceCase.deckOptions
+        findPreference<ListPreference>(getString(R.string.custom_button_mark_card_key))?.title = TR.sentenceCase.markNote
+        findPreference<ListPreference>(getString(R.string.custom_button_previous_card_info_key))?.title = TR.sentenceCase.previousCardInfo
+        findPreference<ListPreference>(getString(R.string.custom_button_delete_key))?.title = TR.sentenceCase.deleteNote
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

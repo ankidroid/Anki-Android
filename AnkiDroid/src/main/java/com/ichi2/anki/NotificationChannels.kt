@@ -17,6 +17,7 @@
 
 package com.ichi2.anki
 
+import android.app.NotificationChannel
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -51,14 +52,13 @@ fun setupNotificationChannels(context: Context) {
     for (channel in Channel.entries) {
         val id = channel.id
         val name = channel.getName(res)
-        val importance = NotificationManagerCompat.IMPORTANCE_DEFAULT
         Timber.i("Creating notification channel with id/name: %s/%s", id, name)
 
         // Vibration is enabled by default, but the user can turn it off from the system settings
         // Vibration will also not occur if the phone has been set to silent
         val notificationChannel =
             NotificationChannelCompat
-                .Builder(id, importance)
+                .Builder(id, channel.importance)
                 .setName(name)
                 .setShowBadge(true)
                 .setVibrationPattern(longArrayOf(0, 500))
@@ -74,14 +74,16 @@ fun setupNotificationChannels(context: Context) {
  *
  * @property id The unique identifier for the notification channel.
  * @property nameId The string resource ID for the localized channel name.
+ * @property importance The [importance][NotificationChannel.getImportance] of the channel.
  */
 enum class Channel(
     val id: String,
     @StringRes val nameId: Int,
+    val importance: Int,
 ) {
-    GENERAL("General Notifications", R.string.app_name),
-    SYNC("Synchronization", R.string.sync_title),
-    REVIEW_REMINDERS("Review Reminders", R.string.review_reminders_do_not_translate),
+    GENERAL("General Notifications", R.string.app_name, NotificationManagerCompat.IMPORTANCE_DEFAULT),
+    SYNC("Synchronization", R.string.sync_title, NotificationManagerCompat.IMPORTANCE_LOW),
+    REVIEW_REMINDERS("Review Reminders", R.string.review_reminders_do_not_translate, NotificationManagerCompat.IMPORTANCE_DEFAULT),
     ;
 
     fun getName(res: Resources) = res.getString(nameId)

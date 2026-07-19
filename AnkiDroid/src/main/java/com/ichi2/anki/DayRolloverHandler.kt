@@ -23,7 +23,6 @@
 
 package com.ichi2.anki
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_TIMEZONE_CHANGED
@@ -35,10 +34,15 @@ import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import anki.collection.OpChanges
 import anki.collection.opChanges
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
-import com.ichi2.anki.exception.ManuallyReportedException
+import com.ichi2.anki.common.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.coroutines.applicationScope
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.libanki.EpochSeconds
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
@@ -49,9 +53,14 @@ import timber.log.Timber
  * If so, notifies [ChangeManager] that [studyQueues][OpChanges.getStudyQueues] have changed
  *
  * HACK: This exists due to Android's complexities of scheduling an event at a given time.
- * It would be preferred to receive an event at the instant of rollover
+ * It would be preferred to receive an event at the instant of rollover.
+ *
+ * NOTE: this may not be registered in the manifest as it listens for [ACTION_TIME_TICK].
+ *
+ * @see DayRolloverAlarm for a Manifest-registered alternative (using AlarmManager.setWindow - less
+ * precise).
  */
-object DayRolloverHandler : BroadcastReceiver() {
+object DayRolloverHandler : AnkiBroadcastReceiver() {
     /** @see Scheduler.dayCutoff */
     private var lastCutoff: EpochSeconds? = null
 
@@ -67,15 +76,15 @@ object DayRolloverHandler : BroadcastReceiver() {
         register(IntentFilter(ACTION_TIMEZONE_CHANGED))
     }
 
-    override fun onReceive(
-        context: Context?,
-        intent: Intent?,
+    override fun onReceiveBroadcast(
+        context: Context,
+        intent: Intent,
     ) {
         // potential race condition if a timezone/tick change occur simultaneously
         // the outcome would be two calls to notifySubscribers, which is acceptable
-        Timber.v("received ${intent?.action}")
+        Timber.v("received ${intent.action}")
         // launch coroutine as we need access to `col.sched`
-        AnkiDroidApp.applicationScope.launchCatching(Dispatchers.IO, errorMessageHandler = { msg ->
+        applicationScope.launchCatching(Dispatchers.IO, errorMessageHandler = { msg ->
             CrashReportService.sendExceptionReport(
                 e = ManuallyReportedException(msg),
                 origin = "DayRolloverHandler::onReceive",
@@ -101,6 +110,8 @@ object DayRolloverHandler : BroadcastReceiver() {
         if (lastCutoff == currentCutoff) return
 
         Timber.i("day cutoff changed %d -> %d", lastCutoff, currentCutoff)
+        // Re-arm the wall-clock alarm whenever the cutoff changes
+        DayRolloverAlarm.scheduleNext(appContext)
         // we do not want to send a "study queues changes" message initially
         if (lastCutoff != null) {
             handleDayRollover()
@@ -116,7 +127,7 @@ object DayRolloverHandler : BroadcastReceiver() {
 
         Timber.i("day rollover: updating widgets")
         try {
-            WidgetStatus.updateInBackground(AnkiDroidApp.instance)
+            WidgetStatus.updateInBackground(appContext)
         } catch (e: Exception) {
             Timber.w(e, "failed to update widgets")
         }

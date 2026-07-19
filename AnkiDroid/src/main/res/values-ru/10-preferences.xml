@@ -6,51 +6,30 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d мин</item>
-        <item quantity="few">%d мин</item>
-        <item quantity="many">%d мин</item>
-        <item quantity="other">%d мин</item>
+        <item quantity="one">%d мин.</item>
+        <item quantity="few">%d мин.</item>
+        <item quantity="many">%d мин.</item>
+        <item quantity="other">%d мин.</item>
     </plurals>
     <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
@@ -63,7 +42,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхронизация</string>
     <string name="pref_cat_scheduling" maxLength="41">Расписание</string>
     <string name="pref_cat_whiteboard" maxLength="41">Доска</string>
-    <string name="pref_cat_appearance" maxLength="41">Внешний вид</string>
     <string name="pref_cat_themes" maxLength="41">Темы</string>
     <string name="pref_cat_gestures" maxLength="41">Жесты</string>
     <string name="pref_cat_controls" maxLength="41">Управление</string>
@@ -116,8 +94,8 @@
     <string name="gestures_corner_tap_top_left" maxLength="41">Касание вверху в левом углу</string>
     <string name="gestures_corner_tap_top_right" maxLength="41">Касание вверху в правом углу</string>
     <string name="gestures_corner_tap_middle_center" maxLength="41">Касание в центре экрана</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу в левом углу</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу в правом углу</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Касание внизу слева</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Касание внизу справа</string>
     <string name="gestures_two_finger_tap" maxLength="41">Касание двумя пальцами</string>
     <string name="gestures_three_finger_tap" maxLength="41">Касание тремя пальцами</string>
     <string name="gestures_four_finger_tap" maxLength="41">Касание четырьмя пальцами</string>
@@ -131,7 +109,6 @@
     <string name="tts_summ">Зачитывает вопрос и ответ, если нет прикреплённого аудиофайла</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Загружать медиафайлы</string>
-    <string name="sync_account" maxLength="41">Учётная запись AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Вы не вошли в учётную запись</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматическая синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматически синхронизирует при запуске и выходе, но не чаще, чем раз в 10 минут.</string>
@@ -159,8 +136,6 @@
     <string name="select_locale_title">Выберите язык</string>
     <string name="software_render" maxLength="41">Отключить аппаратную отрисовку</string>
     <string name="software_render_summ">Аппаратная отрисовка быстрее, но может вызывать проблемы (особенно на Android 8/8.1). Попробуйте отключить её если при повторении пропадают элементы интерфейса.</string>
-    <string name="safe_display" maxLength="41">Статический режим экрана</string>
-    <string name="safe_display_summ">Отключает всю анимацию и использует безопасную отрисовку. Может понадобиться для экранов на электронных чернилах</string>
     <string name="disable_extended_text_ui" maxLength="41">Отключить режим одного поля</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Включает контекстное меню «Тест с пропусками» в альбомном режиме</string>
@@ -174,6 +149,8 @@
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
     <string name="show_large_answer_buttons_summ">Показать кнопку ответа в 2 строки</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
     <string name="show_top_bar_summary">Показать счетчик карт, время ответа, флаг и отметку в верхней строке</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
@@ -201,7 +178,7 @@
     <string name="custom_buttons_setting_menu_only">Только меню</string>
     <string name="reset_custom_buttons" maxLength="41">Сбросить</string>
     <string name="reset_settings_to_default">Сброс настроек</string>
-    <string name="reset">Сброс</string>
+    <string name="reset">Сбросить</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">Просмотр</string>
@@ -211,8 +188,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Экран обучения</string>
     <string name="show_deck_title" maxLength="41">Показывать название колоды</string>
     <string name="accessibility" maxLength="41">Специальные возможности</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Вставлять изображения буфера как PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Нажмите «Назад» дважды, чтобы выйти</string>
     <string name="exit_via_double_tap_back_summ">Предотвращать случайный выход с экрана обучения или приложения</string>
     <!-- Allow all files in media imports -->
@@ -225,7 +200,7 @@
         Если не установлено, то будет использоваться AnkiWeb сервер по умолчанию.
         <a href="%s">Подробнее</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">URL для синхронизации</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Синхронизация URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Свой корневой сертификат (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Клавиатура</string>
@@ -281,6 +256,10 @@
     <string name="user_action_8" maxLength="28">Пользовательское действие 8</string>
     <string name="user_action_9" maxLength="28">Пользовательское действие 9</string>
     <string name="toggle_auto_advance" maxLength="28">Включить/выключить авто переход</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>
     <string name="card_side_question">Вопрос</string>
@@ -293,7 +272,7 @@
     <string name="bindings_already_bound">Уже назначено на «%s»</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Экспериментальная</string>
-    <string name="readtext_deprecation_warn">У AnkiDroid появился более совершенный механизм TTS, который совместим с другими клиентами Anki и содержит больше голосов и улучшения в воспроизведении языков.\n\nПожалуйста, обновитесь как можно скорее, так как эта настройка скоро будет удалена.</string>
+    <string name="readtext_deprecation_warn">У AnkiDroid появился более совершенный механизм синтеза речи, который совместим с другими клиентами Anki и содержит больше голосов и улучшения в воспроизведении языков.\n\nПожалуйста, обновитесь как можно скорее, так как эта настройка скоро будет удалена.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Пожалуйста, обновитесь до нового формата преобразования текста в речь</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage на экране обучения</string>
     <string name="pref_fixed_port_summary">Включить локальное хранилище JavaScript с помощью фиксированного порта сервера на экране обучения</string>
@@ -373,10 +352,10 @@
     <string name="hide_hard_and_easy" maxLength="41">Скрывать кнопки «Трудно» и «Легко»</string>
     <string name="reviewer_frame_style" maxLength="41">Стиль рамки</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Карточка</string>
-    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Квадратная</string>
+    <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Рамка</string>
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Наверх</string>
-    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Вниз</string>
-    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Удалить</string>
+    <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Внизу</string>
+    <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">Скрыть</string>
     <string name="toolbar" maxLength="41">Панель инструментов</string>
     <string name="toolbar_actions" maxLength="41">Действия на панели</string>
     <string name="toolbar_position" maxLength="28">Расположение панели</string>
@@ -388,4 +367,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Перевернуть и ответить</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Открыть настройки</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Связанные настройки</string>
 </resources>

@@ -1,19 +1,7 @@
-/*
- * Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
- * Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2014 Timothy Rae <perceptualchaos2@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2018 Mike Hardy <mike@mikehardy.net>
+
 package com.ichi2.anki
 
 import android.content.Context
@@ -63,18 +51,23 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.common.android.animationDisabled
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.getColorFromAttr
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.databinding.CardTemplateEditorBinding
-import com.ichi2.anki.databinding.CardTemplateEditorItemBinding
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.databinding.ActivityCardTemplateEditorBinding
+import com.ichi2.anki.databinding.FragmentCardTemplateEditorTemplateBinding
 import com.ichi2.anki.databinding.IncludeCardTemplateEditorMainBinding
 import com.ichi2.anki.databinding.IncludeCardTemplateEditorTopBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldMetadata
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.CardTemplates
 import com.ichi2.anki.libanki.Collection
@@ -89,7 +82,8 @@ import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.getStockNotetypeKinds
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.notetype.RenameCardTemplateDialog
+import com.ichi2.anki.notetype.CardTypeName
+import com.ichi2.anki.notetype.RenameCardTypeDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
@@ -97,14 +91,13 @@ import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.ResizablePaneManager
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.themes.Themes
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp
 import com.ichi2.utils.listItems
@@ -127,10 +120,8 @@ private typealias BackendCardTemplate = com.ichi2.anki.libanki.CardTemplate
  * Allows the user to view the template for the current note type
  */
 @KotlinCleanup("lateinit wherever possible")
-open class CardTemplateEditor :
-    AnkiActivity(R.layout.card_template_editor),
-    DeckSelectionListener {
-    private val binding by viewBinding(CardTemplateEditorBinding::bind)
+open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_editor) {
+    private val binding by viewBinding(ActivityCardTemplateEditorBinding::bind)
 
     @VisibleForTesting
     val topBinding: IncludeCardTemplateEditorTopBinding
@@ -194,6 +185,9 @@ open class CardTemplateEditor :
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStorageIsReady()) {
+            return
+        }
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get note type id
@@ -246,6 +240,8 @@ open class CardTemplateEditor :
             Timber.i("selected card index: %s", tab.position)
             loadTemplatePreviewerFragmentIfFragmented(tab.position)
         }
+
+        registerDeckSelectedHandler(action = ::onDeckSelected)
     }
 
     /**
@@ -365,6 +361,10 @@ open class CardTemplateEditor :
         return tempNoteType != null && tempNoteType!!.notetype.toString() != oldNoteType.toString()
     }
 
+    private fun enableDiscardChangesDialog() {
+        displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
+    }
+
     private fun showDiscardChangesDialog() =
         DiscardChangesDialog.showDialog(this) {
             Timber.i("TemplateEditor:: OK button pressed to confirm discard changes")
@@ -375,7 +375,7 @@ open class CardTemplateEditor :
         }
 
     /** When a deck is selected via Deck Override  */
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    fun onDeckSelected(deck: SelectableDeck?) {
         require(deck is SelectableDeck.Deck?)
         if (tempNoteType!!.notetype.isCloze) {
             Timber.w("Attempted to set deck for cloze note type")
@@ -407,6 +407,7 @@ open class CardTemplateEditor :
 
         // Deck Override can change from "on" <-> "off"
         invalidateOptionsMenu()
+        enableDiscardChangesDialog()
     }
 
     override fun onKeyUp(
@@ -536,9 +537,9 @@ open class CardTemplateEditor :
                 R.string.card_template_editor_group,
             )
 
-    class CardTemplateFragment : Fragment(R.layout.card_template_editor_item) {
+    class CardTemplateFragment : Fragment(R.layout.fragment_card_template_editor_template) {
         @VisibleForTesting
-        internal val binding by viewBinding(CardTemplateEditorItemBinding::bind)
+        internal val binding by viewBinding(FragmentCardTemplateEditorTemplateBinding::bind)
 
         private val refreshFragmentHandler = Handler(Looper.getMainLooper())
 
@@ -592,7 +593,7 @@ open class CardTemplateEditor :
             if (templateEditor.fragmented) {
                 // Set the background color of the main layout to match the previewer
                 binding.mainLayout.setBackgroundColor(
-                    Themes.getColorFromAttr(
+                    getColorFromAttr(
                         requireContext(),
                         R.attr.alternativeBackgroundColor,
                     ),
@@ -626,6 +627,13 @@ open class CardTemplateEditor :
 
                 binding.mainLayout.addView(cardView, 0)
             }
+
+            binding.bottomNavigation.menu
+                .findItem(R.id.front_edit)
+                .title = TR.notetypesFrontField()
+            binding.bottomNavigation.menu
+                .findItem(R.id.styling_edit)
+                .title = TR.cardTemplatesTemplateStyling()
 
             binding.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
                 val currentSelectedId = item.itemId
@@ -682,7 +690,7 @@ open class CardTemplateEditor :
                             }
                         refreshFragmentRunnable = updateRunnable
                         refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
-                        templateEditor.displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
+                        templateEditor.enableDiscardChangesDialog()
                     }
 
                     override fun beforeTextChanged(
@@ -834,11 +842,20 @@ open class CardTemplateEditor :
             val ordinal = templateEditor.ord
             val template = templateEditor.tempNoteType!!.getTemplate(ordinal)
 
-            RenameCardTemplateDialog.showInstance(
+            // obtain the current names (potentially unsaved)
+            val existingNames =
+                templateEditor.tempNoteType!!
+                    .notetype.templates
+                    .map { CardTypeName.fromString(it.name) }
+
+            RenameCardTypeDialog.showInstance(
                 requireContext(),
                 prefill = template.name,
+                currentName = CardTypeName.fromString(template.name),
+                existingNames = existingNames,
             ) { newName ->
-                template.name = newName
+                template.name = newName.value
+                templateEditor.enableDiscardChangesDialog()
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
@@ -1021,7 +1038,8 @@ open class CardTemplateEditor :
          * Setups the part of the menu that can be used either in template editor or in previewer fragment.
          */
         fun setupCommonMenu(menu: Menu) {
-            menu.findItem(R.id.action_restore_to_default).title = CollectionManager.TR.cardTemplatesRestoreToDefault()
+            menu.findItem(R.id.action_restore_to_default).title = TR.cardTemplatesRestoreToDefault()
+            menu.findItem(R.id.action_card_browser_appearance).title = TR.sentenceCase.browserAppearance
             if (noteTypeCreatesDynamicNumberOfNotes()) {
                 Timber.d("Editing cloze/occlusion note type, disabling add/delete card template and deck override functionality")
                 menu.findItem(R.id.action_add).isVisible = false
@@ -1126,7 +1144,7 @@ open class CardTemplateEditor :
 
                     fun askUser(kind: StockNotetype.Kind? = null) {
                         AlertDialog.Builder(requireContext()).show {
-                            setTitle(TR.cardTemplatesRestoreToDefault().toSentenceCase(R.string.sentence_restore_to_default))
+                            setTitle(TR.sentenceCase.restoreToDefault)
                             setMessage(TR.cardTemplatesRestoreToDefaultConfirmation())
                             setPositiveButton(R.string.restore) { _, _ ->
                                 launchCatchingTask {
@@ -1239,13 +1257,11 @@ open class CardTemplateEditor :
                     return@launchCatchingTask
                 }
                 val name = getCurrentTemplateName(tempModel)
+                val title = getString(R.string.card_template_editor_deck_override)
                 val explanation = getString(R.string.deck_override_explanation, name)
                 // Anki Desktop allows Dynamic decks, have reported this as a bug:
                 // https://forums.ankiweb.net/t/minor-bug-deck-override-to-filtered-deck/1493
-                val decks = SelectableDeck.fromCollection(includeFiltered = false)
-                val title = getString(R.string.card_template_editor_deck_override)
-                val dialog = DeckSelectionDialog.newInstance(title, explanation, true, decks)
-                activity.showDialogFragment(dialog)
+                startDeckSelection(title = title, templateEditorMessage = explanation, allowAll = false, allowFiltered = false)
             }
 
         private fun getCurrentTemplateName(tempModel: CardTemplateNotetype): String =
@@ -1258,7 +1274,7 @@ open class CardTemplateEditor :
             }
 
         private fun launchCardBrowserAppearance(currentTemplate: BackendCardTemplate) {
-            val context = AnkiDroidApp.instance.baseContext
+            val context = appContext
             val browserAppearanceIntent = CardTemplateBrowserAppearanceEditor.getIntentFromTemplate(context, currentTemplate)
             onCardBrowserAppearanceActivityResult.launch(browserAppearanceIntent)
         }
@@ -1334,6 +1350,7 @@ open class CardTemplateEditor :
             val currentTemplate = getCurrentTemplate()
             if (currentTemplate != null) {
                 result.applyTo(currentTemplate)
+                templateEditor.enableDiscardChangesDialog()
             }
         }
 
@@ -1361,7 +1378,11 @@ open class CardTemplateEditor :
                     numAffectedCards,
                     tmpl.jsonObject.optString("name"),
                 )
-            d.setArgs(msg)
+            d.setArgs(
+                title = getString(R.string.delete_card_type),
+                message = msg,
+                positiveButtonText = getString(R.string.dialog_positive_delete),
+            )
 
             val deleteCard = Runnable { deleteTemplate(tmpl, notetype) }
             val confirm = Runnable { executeWithSyncCheck(deleteCard) }
@@ -1387,7 +1408,11 @@ open class CardTemplateEditor :
                     ),
                     numAffectedCards,
                 )
-            d.setArgs(msg)
+            d.setArgs(
+                title = getString(R.string.add_card_type),
+                message = msg,
+                positiveButtonText = getString(R.string.menu_add),
+            )
 
             val addCard = Runnable { addNewTemplate(notetype) }
             val confirm = Runnable { executeWithSyncCheck(addCard) }
@@ -1411,6 +1436,7 @@ open class CardTemplateEditor :
             try {
                 templateEditor.getColUnsafe.modSchema(check = true)
                 schemaChangingAction.run()
+                templateEditor.enableDiscardChangesDialog()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -1420,6 +1446,7 @@ open class CardTemplateEditor :
                     Runnable {
                         templateEditor.getColUnsafe.modSchema(check = false)
                         schemaChangingAction.run()
+                        templateEditor.enableDiscardChangesDialog()
                         templateEditor.dismissAllDialogFragments()
                     }
                 val cancel = Runnable { templateEditor.dismissAllDialogFragments() }
@@ -1534,13 +1561,15 @@ open class CardTemplateEditor :
         ) {
             fun toMarkdown(context: Context) =
                 // backticks are not supported by old reddit
-                buildString {
-                    appendLine("**${context.getString(R.string.card_template_editor_front)}**\n")
-                    appendLine("```html\n$front\n```\n")
-                    appendLine("**${context.getString(R.string.card_template_editor_back)}**\n")
-                    appendLine("```html\n$back\n```\n")
-                    appendLine("**${context.getString(R.string.card_template_editor_styling)}**\n")
-                    append("```css\n$style\n```")
+                with(context) {
+                    buildString {
+                        appendLine("**${TR.sentenceCase.frontTemplate}**\n")
+                        appendLine("```html\n$front\n```\n")
+                        appendLine("**${TR.sentenceCase.backTemplate}**\n")
+                        appendLine("```html\n$back\n```\n")
+                        appendLine("**${TR.cardTemplatesTemplateStyling()}**\n")
+                        append("```css\n$style\n```")
+                    }
                 }
         }
 

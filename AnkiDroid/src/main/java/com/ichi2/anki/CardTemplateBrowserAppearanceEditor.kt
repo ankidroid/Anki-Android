@@ -26,10 +26,11 @@ import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.databinding.CardBrowserAppearanceBinding
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.databinding.ActivityCardBrowserAppearanceBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.CardTemplate
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -43,8 +44,8 @@ import timber.log.Timber
  * We do not allow the user to change fonts as Android only has a handful
  * We do not allow the user to change the font size as this can be done in the Appearance settings.
  */
-class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.card_browser_appearance) {
-    private val binding by viewBinding(CardBrowserAppearanceBinding::bind)
+class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_browser_appearance) {
+    private val binding by viewBinding(ActivityCardBrowserAppearanceBinding::bind)
 
     // start with the callback disabled as there aren't any changes yet
     private val discardChangesCallback =
@@ -117,7 +118,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.card_browser_a
 
     private fun showRestoreDefaultDialog() {
         AlertDialog.Builder(this).show {
-            setTitle(TR.cardTemplatesRestoreToDefault().toSentenceCase(R.string.sentence_restore_to_default))
+            setTitle(TR.sentenceCase.restoreToDefault)
             positiveButton(R.string.restore) {
                 restoreDefaultAndClose()
             }
@@ -139,7 +140,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.card_browser_a
         discardChangesCallback.isEnabled = hasChanges()
 
         enableToolbar()
-        setTitle(R.string.card_template_browser_appearance_title)
+        title = TR.sentenceCase.browserAppearance
     }
 
     private fun answerHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat

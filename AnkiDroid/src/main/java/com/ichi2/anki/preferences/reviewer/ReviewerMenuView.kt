@@ -31,8 +31,9 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.databinding.ViewReviewerMenuBinding
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.ext.setIconRes
 import com.ichi2.utils.increaseHorizontalPaddingOfMenuIcons
 import kotlinx.coroutines.launch
 
@@ -87,7 +88,7 @@ class ReviewerMenuView : LinearLayout {
         for (action in submenuActions) {
             val subMenu = findItem(action.parentMenu!!.menuId)?.subMenu ?: continue
             subMenu.add(Menu.NONE, action.menuId, Menu.NONE, action.title(context))?.apply {
-                action.drawableRes?.let { setIcon(it) }
+                action.drawableRes?.let { setIconRes(context, it) }
             }
         }
     }
@@ -114,7 +115,7 @@ class ReviewerMenuView : LinearLayout {
                     menu.add(Menu.NONE, action.menuId, Menu.NONE, title)
                 }
             with(menuItem) {
-                action.drawableRes?.let { setIcon(it) }
+                action.drawableRes?.let { setIconRes(context, it) }
                 setShowAsAction(menuActionType)
             }
         }

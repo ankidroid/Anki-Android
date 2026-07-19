@@ -1,12 +1,12 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     // Gradle plugin portal
     alias(libs.plugins.tripletPlay)
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
+    // TODO: migrate to .kts & replace the next 2 id lines with id("ankidroid.android.app")
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.plugin.parcelize'
+    alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.keeper)
     alias(libs.plugins.roborazzi)
     id 'idea'
@@ -25,6 +25,14 @@ keeper {
     }
 }
 
+baselineProfile {
+    // Write generated profiles to `src/main/baselineProfiles/` instead of the
+    // default per-variant `src/playRelease/generated/baselineProfiles/`. This
+    // ensures the profile is consumed by ALL variants (play, amazon, full) and
+    // ALL buildTypes (release, benchmark), not just `playRelease`.
+    mergeIntoMain = true
+}
+
 idea {
     module {
         downloadJavadoc = System.getenv("CI") != "true"
@@ -34,12 +42,24 @@ idea {
 
 def homePath = System.properties['user.home']
 /**
- * @return the current git hash
+ * Calculates the current git hash, invalidates configuration cache if changed
  * @example edf739d95bad7b370a6ed4398d46723f8219b3cd
  */
-static def gitCommitHash() {
-    "git rev-parse HEAD".execute().text.trim()
-}
+// https://docs.gradle.org/current/userguide/configuration_cache_requirements.html#config_cache:requirements:external_processes
+def gitCommitHash = providers.exec {
+    commandLine "git", "rev-parse", "HEAD"
+}.standardOutput.asText.map { it.trim() }
+
+/**
+ * Epoch millis of the build. Displayed on the 'About' screen.
+ *
+ * CI passes the real time via -PbuildTime=<epoch> # example: 1776422957
+ *
+ * A local build uses a stale value (captured in the configuration cache) so the configuration cache
+ * is not invalidated on every build.
+ */
+def buildTimeMillis = providers.gradleProperty("buildTime")
+    .orElse(providers.provider { System.currentTimeMillis().toString() })
 
 android {
     namespace = "com.ichi2.anki"
@@ -50,6 +70,8 @@ android {
         buildConfig = true
         aidl = true
         viewBinding = true
+        resValues = true
+        compose = true
     }
 
     if (rootProject.testReleaseBuild) {
@@ -64,8 +86,8 @@ android {
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"${libs.versions.ankiBackend.get()}\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
-        buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
-        buildConfigField "long", "BUILD_TIME", System.currentTimeMillis().toString()
+        buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash.get()}\""
+        buildConfigField "long", "BUILD_TIME", buildTimeMillis.get()
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -89,9 +111,9 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22400111
+        versionCode=22500102
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
-        versionName="2.24.0alpha11"
+        versionName="2.25.0alpha2"
         minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
@@ -99,6 +121,22 @@ android {
         testApplicationId = "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = 'com.ichi2.testutils.NewCollectionPathTestRunner'
+
+        // GA4 Measurement Protocol api_secret. Sourced from `local.properties`
+        // (ANALYTICS_API_KEY) or the ANALYTICS_API_KEY env var; falls back to
+        // a dummy value so contributor builds still compile.
+        //
+        // The dummy key is rejected by GA's ingest, so analytics requests from
+        // unsigned/local builds go nowhere this means `setDevMode()` (100%
+        // sampling) has no observable effect on a build without the real key.
+        Properties properties = new Properties()
+        def localPropsFile = project.rootProject.file("local.properties")
+        if (localPropsFile.exists()) {
+            properties.load(localPropsFile.newDataInputStream())
+        }
+
+        def apiKey = properties.getProperty("ANALYTICS_API_KEY") ?: System.getenv("ANALYTICS_API_KEY") ?: "DUMMY_API_XXX"
+        buildConfigField "String", "ANALYTICS_API_KEY", "\"${apiKey}\""
     }
     signingConfigs {
         release {
@@ -168,14 +206,19 @@ android {
             resValue 'color', 'anki_foreground_icon_color_0', "#FF29B6F6"
             resValue 'color', 'anki_foreground_icon_color_1', "#FF0288D1"
         }
+
+        create('benchmark') {
+            initWith release
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['release']
+            debuggable false
+        }
     }
 
     /**
      * Product Flavors are used for Amazon App Store and Google Play Store.
      * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
      * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
-     *
-     * This flavor block must stay in sync with the same block in testlib/build.gradle.kts
      */
     flavorDimensions += "appStore"
     productFlavors {
@@ -251,12 +294,43 @@ android {
                     // ./gradlew testFullDebugUnitTest -Pscreenshot
                     if (project.hasProperty("screenshot")) {
                         includeTags "com.ichi2.anki.ScreenshotTestCategory"
+
+                        // ./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot -Ptheme=black -Pdevice=tablet,foldable
+                        def theme = project.findProperty("theme") ?: "light"
+                        def device = project.findProperty("device") ?: "phone"
+                        def validateInput = { Object input, List<String> validOptions ->
+                            def requested = input.toString().split(',').collect { it.trim().toLowerCase() }
+                            def invalid = requested - validOptions
+                            if (!invalid.isEmpty()) {
+                                throw new GradleException("Invalid param: '${invalid.join(', ')}'. Valid options: ${validOptions.join(', ')}.")
+                            }
+                        }
+                        validateInput(theme, ["light", "plain", "dark", "black", "all"])
+                        validateInput(device, ["phone", "tablet", "foldable", "desktop", "all"])
+
+                        systemProperty "screenshot.theme", theme
+                        systemProperty "screenshot.device", device
                     } else {
                         excludeTags "com.ichi2.anki.ScreenshotTestCategory"
+                    }
+                    // Ensures that no EmptyApplication test relies on AnkiDroidApp
+                    //  by only running EmptyApplication tests
+                    // ./gradlew testFullDebugUnitTest -PemptyApplication
+                    if (project.hasProperty("emptyApplication")) {
+                        includeTags "com.ichi2.anki.EmptyApplicationCategory"
                     }
                 }
             }
         }
+    }
+
+    // https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures
+    // https://developer.android.com/build/releases/agp-7-2-0-release-notes#test-fixtures
+    // ⚠️ There was an in-IDE warning: "Kotlin is not configured" when editing the testFixtures
+    // files. I ended up ignoring the warning after the 'Configure' button in Android Studio
+    // added dependencies but didn't fix the issue.
+    testFixtures {
+        enable = true
     }
 
     compileOptions {
@@ -264,12 +338,6 @@ android {
         targetCompatibility JavaVersion.VERSION_17
         coreLibraryDesugaringEnabled = true
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
-
 
     packagingOptions {
         resources {
@@ -308,9 +376,15 @@ play {
 }
 
 // Install Git pre-commit hook for Ktlint
+// Resolve via git so worktrees (where `.git` is a file) are handled correctly.
+def gitHooksDir = providers.exec {
+    workingDir = rootProject.rootDir
+    commandLine "git", "rev-parse", "--git-path", "hooks"
+}.standardOutput.asText.map { rootProject.rootDir.toPath().resolve(it.trim()).toFile() }
+
 tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
-    into { new File(rootProject.rootDir, '.git/hooks') }
+    into gitHooksDir
     filePermissions {
         user {
             read = write = execute = true
@@ -320,21 +394,13 @@ tasks.register('installGitHook', Copy) {
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
-tasks.register('copyTestLibIntoAndroidTest', Copy) {
-    into new File(rootProject.rootDir, 'AnkiDroid/src/androidTest/java/com/ichi2/testutils')
-    from new File(rootProject.rootDir, 'testlib/src/main/java/com/ichi2/testutils')
-    into ('common') {
-        from 'common'
-    }
-}
-tasks.named('preBuild').configure { dependsOn('copyTestLibIntoAndroidTest') }
-tasks.named('runKtlintCheckOverAndroidTestSourceSet').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
-
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
+    // Resolve the directory at configuration time, which is Gradle Configuration Cache compatible
+    def resultsDir = layout.buildDirectory.dir("outputs/androidTest-results/connected/flavors/play")
     doLast {
         // androidTest currently creates one .xml file per emulator with aggregate results in this dir
-        File folder = file("./build/outputs/androidTest-results/connected/flavors/play")
+        File folder = resultsDir.get().asFile
         File[] listOfFiles = folder.listFiles({ d, f -> f ==~ /.*.xml/ } as FilenameFilter)
         for (File file : listOfFiles) {
             // The aggregate results file currently contains a line with this pattern holding test count
@@ -352,14 +418,22 @@ afterEvaluate {
     tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").configure {
         finalizedBy('assertNonzeroAndroidTests')
     }
-    tasks.named("packagePlay${rootProject.androidTestVariantName}AndroidTest").configure {
-        // Issue 17520 - ensures testlib is built
-        dependsOn(":testlib:assemblePlay${rootProject.androidTestVariantName}")
+
+    // AGP bug: when testFixtures is enabled on an application module, the androidTest R8 task's
+    // TESTED_CODE scope only includes the app's dependency artifacts, not the app's own compiled
+    // classes. This causes R8 to report "Missing class" errors for all app classes referenced from
+    // androidTest code. Work around by adding the app classes as referenced (library) input.
+    if (testReleaseBuild) {
+        tasks.named("minifyPlayReleaseAndroidTestWithR8").configure {
+            referencedClasses.from(
+                files("build/intermediates/compile_app_classes_jar/playRelease/bundlePlayReleaseClassesToCompileJar/classes.jar")
+            )
+        }
     }
 }
 
 apply from: "./robolectricDownloader.gradle"
-apply from: "./jacoco.gradle"
+apply from: "./jacoco.gradle.kts"
 apply from: "../lint.gradle"
 
 dependencies {
@@ -379,11 +453,29 @@ dependencies {
     annotationProcessor libs.auto.service
 
     // modules
+    implementation project(":anki-common")
     implementation project(":common")
+    implementation project(":common:android")
+    implementation project(":compat")
     implementation project(":libanki")
     implementation project(":vbpd")
+    "baselineProfile" project(":baselineprofile")
+    implementation project(":widgets")
+
+    implementation(libs.google.analytics.kt)
 
     implementation libs.androidx.activity
+    // TODO: hoist the Compose enablement (kotlin.compose plugin, buildFeatures.compose,
+    // and the dependencies below) into a convention plugin under `buildSrc/` once the
+    // Kotlin-DSL migration of this build script lands
+    implementation libs.androidx.activity.compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.lifecycle.runtime.compose
+    debugImplementation libs.androidx.compose.ui.tooling
     implementation libs.androidx.annotation
     implementation libs.androidx.appcompat
     implementation libs.androidx.browser
@@ -392,8 +484,8 @@ dependencies {
     implementation libs.androidx.exifinterface
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.lifecycle.process
-    implementation libs.androidx.media
     implementation libs.androidx.preference.ktx
+    implementation libs.androidx.profileinstaller
     implementation libs.androidx.recyclerview
     implementation libs.androidx.sqlite.framework
     implementation libs.androidx.swiperefreshlayout
@@ -412,6 +504,7 @@ dependencies {
 
     implementation libs.protobuf.kotlin.lite // This is required when loading from a file
 
+    // TODO: migrate to `addAnkiBackendDependencies(...)` when this is a gradle.kts file
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
         localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -450,8 +543,10 @@ dependencies {
     // build via AnkiDroidApp.
     implementation libs.leakcanary.android
 
-    testImplementation project(':testlib')
-    testImplementation project(":libanki:testutils")
+    testImplementation testFixtures(project(":libanki"))
+    testImplementation testFixtures(project(":common"))
+    testImplementation testFixtures(project(":compat"))
+    testImplementation testFixtures(project(":anki-common"))
 
     // A path for a testing library which provide Parameterized Test
     testImplementation libs.junit.jupiter
@@ -460,6 +555,7 @@ dependencies {
     testImplementation libs.mockito.inline
     testImplementation libs.mockito.kotlin
     testImplementation libs.hamcrest
+    testImplementation libs.test.parameter.injector
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation libs.robolectric
     testImplementation libs.androidx.test.core
@@ -485,10 +581,6 @@ dependencies {
     // for testing flows
     testImplementation libs.cashapp.turbine
 
-    // we should depend directly on the common testlib for androidTest, but we cannot
-    // until coverage-breaking issue is fixed https://issuetracker.google.com/issues/332746900
-    // androidTestImplementation project(':testlib')
-
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation(libs.androidx.espresso.contrib) {
@@ -505,4 +597,20 @@ dependencies {
     implementation libs.androidx.media3.exoplayer
     implementation libs.androidx.media3.exoplayer.dash
     implementation libs.androidx.media3.ui
+
+    // ---- testFixtures setup ----
+    testFixturesImplementation libs.kotlin.stdlib
+    testFixturesImplementation libs.jakewharton.timber
+    testFixturesImplementation libs.hamcrest
+    testFixturesImplementation libs.androidx.test.junit
+    // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
+    // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors
+    testFixturesImplementation libs.kotlinx.coroutines.core
+    // The Kotlin Compose Compiler plugin attaches to every Kotlin compilation in the
+    // module including testFixtures, which has no @Composable code and refuses to
+    // run unless the Compose Runtime is on the classpath. compileOnly satisfies the
+    // plugin's version check without shipping the runtime in the testFixtures output.
+    testFixturesCompileOnly platform(libs.androidx.compose.bom)
+    testFixturesCompileOnly libs.androidx.compose.runtime
+
 }

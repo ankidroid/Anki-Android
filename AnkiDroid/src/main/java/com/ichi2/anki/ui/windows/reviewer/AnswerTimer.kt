@@ -19,20 +19,20 @@ import android.os.SystemClock
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class AnswerTimer : DefaultLifecycleObserver {
-    private val _state = MutableStateFlow<AnswerTimerState>(AnswerTimerState.Hidden)
-    val state = _state.asStateFlow()
+    val state: StateFlow<AnswerTimerState>
+        field = MutableStateFlow<AnswerTimerState>(AnswerTimerState.Hidden)
 
     fun configureForCard(
         shouldShow: Boolean,
         limitMs: Int,
     ) {
         if (!shouldShow) {
-            _state.value = AnswerTimerState.Hidden
+            state.value = AnswerTimerState.Hidden
         } else {
-            _state.value =
+            state.value =
                 AnswerTimerState.Running(
                     baseTime = SystemClock.elapsedRealtime(),
                     limitMs = limitMs,
@@ -42,17 +42,18 @@ class AnswerTimer : DefaultLifecycleObserver {
 
     /** Permanently stops the timer. */
     fun stop() {
-        when (val currentState = _state.value) {
+        when (val currentState = state.value) {
             is AnswerTimerState.Running -> {
-                val elapsed = SystemClock.elapsedRealtime() - currentState.baseTime
-                _state.value =
+                val elapsed = (SystemClock.elapsedRealtime() - currentState.baseTime).coerceAtMost(currentState.limitMs.toLong())
+
+                state.value =
                     AnswerTimerState.Stopped(
                         elapsedTimeMs = elapsed,
                         limitMs = currentState.limitMs,
                     )
             }
             is AnswerTimerState.Paused -> {
-                _state.value =
+                state.value =
                     AnswerTimerState.Stopped(
                         elapsedTimeMs = currentState.elapsedTimeMs,
                         limitMs = currentState.limitMs,
@@ -64,14 +65,14 @@ class AnswerTimer : DefaultLifecycleObserver {
 
     /** Temporarily pauses the timer. */
     override fun onPause(owner: LifecycleOwner) {
-        val currentState = _state.value
+        val currentState = state.value
         if (currentState is AnswerTimerState.Running) {
             val rawElapsed = SystemClock.elapsedRealtime() - currentState.baseTime
             // If the timer has a limit and we've passed it, clamp the elapsed time
             // to the limit. This matches the UI behavior where the timer visually stops.
             val effectiveElapsed = rawElapsed.coerceAtMost(currentState.limitMs.toLong())
 
-            _state.value =
+            state.value =
                 AnswerTimerState.Paused(
                     elapsedTimeMs = effectiveElapsed,
                     limitMs = currentState.limitMs,
@@ -81,17 +82,17 @@ class AnswerTimer : DefaultLifecycleObserver {
 
     /** Resumes the timer if it was paused and the limit hasn't been exceeded. */
     override fun onResume(owner: LifecycleOwner) {
-        val currentState = _state.value
+        val currentState = state.value
         if (currentState is AnswerTimerState.Paused) {
             if (currentState.elapsedTimeMs < currentState.limitMs) {
-                _state.value =
+                state.value =
                     AnswerTimerState.Running(
                         baseTime = SystemClock.elapsedRealtime() - currentState.elapsedTimeMs,
                         limitMs = currentState.limitMs,
                     )
             } else {
                 // Limit reached while paused, permanently stop it.
-                _state.value =
+                state.value =
                     AnswerTimerState.Stopped(
                         elapsedTimeMs = currentState.elapsedTimeMs,
                         limitMs = currentState.limitMs,
@@ -101,6 +102,6 @@ class AnswerTimer : DefaultLifecycleObserver {
     }
 
     fun hide() {
-        _state.value = AnswerTimerState.Hidden
+        state.value = AnswerTimerState.Hidden
     }
 }

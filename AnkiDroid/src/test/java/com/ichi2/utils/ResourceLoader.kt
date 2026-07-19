@@ -18,7 +18,7 @@ package com.ichi2.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import org.junit.Assert.assertTrue
 import timber.log.Timber
 import java.io.File

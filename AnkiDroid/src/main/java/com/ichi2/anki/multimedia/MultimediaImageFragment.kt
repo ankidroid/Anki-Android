@@ -32,7 +32,6 @@ import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
@@ -43,10 +42,9 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DrawingFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.FragmentMultimediaImageBinding
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
-import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_LIMIT
 import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_SAVE_MAX_WIDTH
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
@@ -55,7 +53,6 @@ import com.ichi2.anki.multimedia.MultimediaUtils.createNewCacheImageFile
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.convertToString
 import com.ichi2.anki.utils.ext.toBase64Png
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.utils.BitmapUtil
@@ -67,8 +64,11 @@ import com.ichi2.utils.openInputStreamSafe
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -99,14 +99,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             hasStartedImageSelection = false
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
-                    if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData =
-                            Intent().apply {
-                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                            }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
-                    }
+                    cancelIfEmpty()
                 }
 
                 Activity.RESULT_OK -> {
@@ -131,14 +124,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
                     // If user didn't draw, return the indexValue as a result and finish the activity
-                    if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData =
-                            Intent().apply {
-                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                            }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
-                    }
+                    cancelIfEmpty()
                 }
 
                 Activity.RESULT_OK -> {
@@ -159,12 +145,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             hasStartedImageSelection = false
             when {
                 !isPictureTaken && viewModel.currentMultimediaUri.value == null -> {
-                    val resultData =
-                        Intent().apply {
-                            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                        }
-                    requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                    requireActivity().finish()
+                    cancelIfEmpty()
                 }
 
                 isPictureTaken -> {
@@ -343,16 +324,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun finishAddingImage() {
-        field.mediaFile = viewModel.currentMultimediaPath.value
-        field.hasTemporaryMedia = true
-
-        val resultData =
-            Intent().apply {
-                putExtra(MULTIMEDIA_RESULT, field)
-                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-            }
-        requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-        requireActivity().finish()
+        finishWithMedia()
     }
 
     private fun openGallery() {
@@ -582,14 +554,23 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      * @param imageUri The URI of the SVG image.
      */
     private fun WebView.loadSvgImage(imageUri: Uri) {
-        val svgData = loadSvgFromUri(imageUri)
-        if (svgData != null) {
-            Timber.i("Selected image is an SVG.")
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val svgData = withContext(Dispatchers.IO) { loadSvgFromUri(imageUri) }
+                if (svgData != null) {
+                    Timber.i("Selected image is an SVG.")
 
-            loadDataWithBaseURL(null, svgData, SVG_IMAGE, "UTF-8", null)
-        } else {
-            Timber.w("Failed to load SVG from URI")
-            showErrorInWebView()
+                    loadDataWithBaseURL(null, svgData, SVG_IMAGE, "UTF-8", null)
+                } else {
+                    Timber.w("Failed to load SVG from URI")
+                    showErrorInWebView()
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Error loading SVG preview")
+                showErrorInWebView()
+            }
         }
     }
 

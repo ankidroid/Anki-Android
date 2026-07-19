@@ -24,8 +24,10 @@ import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.SingleCardSide
-import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.HandlerUtils.postDelayedOnNewHandler
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.i18n.getIso3LanguageOrNull
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
@@ -35,7 +37,6 @@ import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
@@ -98,7 +99,6 @@ object ReadText {
      * @param qa   The card question or card answer
      */
     @SuppressLint("CheckResult")
-    @NeedsTest("ensure languages are sorted alphabetically in the dialog")
     fun selectTts(
         text: String?,
         did: DeckId,
@@ -407,12 +407,11 @@ fun legacyGetTtsTags(
     col: Collection,
     card: Card,
     cardSide: SingleCardSide,
-    context: Context,
 ): List<TTSTag> {
     val cardSideContent: String =
         when (cardSide) {
             SingleCardSide.FRONT -> card.question(col)
             SingleCardSide.BACK -> card.pureAnswer(col)
         }
-    return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
+    return TtsParser.getTextsToRead(cardSideContent, TR.cardTemplatesBlank())
 }

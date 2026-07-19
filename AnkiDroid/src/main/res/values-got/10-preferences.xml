@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">𐌿𐌽𐌲𐌰𐍄𐌰𐍅𐌹𐌸</string>
@@ -61,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">𐌲𐌰𐌻𐌴𐌹𐌺</string>
     <string name="pref_cat_scheduling" maxLength="41">𐌲𐌰𐍂𐌴𐌷𐍃𐌽𐍃</string>
     <string name="pref_cat_whiteboard" maxLength="41">𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳</string>
-    <string name="pref_cat_appearance" maxLength="41">𐍅𐌻𐌹𐍄𐍃</string>
     <string name="pref_cat_themes" maxLength="41">𐌸𐌰𐌹𐌼𐍉𐍃</string>
     <string name="pref_cat_gestures" maxLength="41">𐍄𐌰𐌹𐌺𐌽𐌴𐌹𐍃</string>
     <string name="pref_cat_controls" maxLength="41">𐍃𐍄𐌹𐌿𐍂𐌹</string>
@@ -129,7 +107,6 @@
     <string name="tts_summ">𐌿𐍃𐍃𐌹𐌲𐌲𐍅𐌹𐌸 𐌱𐌹𐌳𐌰 𐌾𐌰𐌷 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄 𐌾𐌰𐌱𐌰𐌹 𐌽𐌹 𐌷𐌰𐌱𐌰𐌹𐌸 𐌷𐌻𐌹𐌿𐌸𐌹𐍃 𐍆𐌰𐌾𐌻</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">𐌼𐌰𐌹𐌳𐌾𐌰 𐌽𐌹𐌼𐌰𐌽 𐌸𐌰𐌽𐌿𐌷 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌸</string>
-    <string name="sync_account" maxLength="41">𐌰𐌽𐌺𐌴𐌹𐍅𐌰𐌱𐌹 𐍂𐌰𐌷𐌽𐌴𐌹𐌽𐍃</string>
     <string name="sync_account_summ_logged_out">𐌽𐌹 𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽</string>
     <string name="automatic_sync_choice" maxLength="41">𐍃𐌹𐌻𐌱𐌰𐍄𐌰𐌿𐌾𐌰𐌽𐌳𐍉 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐍃</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
@@ -158,8 +135,6 @@
     <string name="select_locale_title">𐍂𐌰𐌶𐌳𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">𐌷𐌰𐍂𐌳𐌿𐍅𐌰𐍂𐍉𐍃 𐌰𐍄𐌰𐌿𐌲𐌾𐌰 𐍃𐍀𐍂𐌰𐌿𐍄𐌹𐌶𐌰 𐌹𐍃𐍄 𐌹𐌸 𐌼𐌰𐌲 𐌿𐌽𐍂𐌰𐌹𐌷𐍄𐌰𐌱𐌰 𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽, 𐌸𐌹𐍃𐌷𐌿𐌽 𐌰𐌽𐌰 𐌰𐌽𐌳𐍂𐌰𐌿𐌳 8/8.1. 𐌾𐌰𐌱𐌰𐌹 𐌽𐌹 𐌼𐌰𐌲𐍄 𐌳𐌰𐌹𐌻𐌹𐌽𐍃 𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽𐍄𐌰𐌹𐍂𐍆𐌰𐌺𐌹𐍉𐍃 𐌱𐍂𐌿𐌺𐌾𐌰𐌽𐌴 𐌰𐍆𐍄𐍂𐌰𐍃𐌹𐌿𐌽𐌰𐌹𐍃 𐌺𐌰𐍂𐍄𐍉, 𐌺𐌹𐌿𐍃𐌰𐌹 𐌸𐍉 𐌻𐌰𐌲𐌴𐌹𐌽.</string>
-    <string name="safe_display" maxLength="41">𐌼𐍉𐌳𐌿𐍃 𐌱𐌰𐌽𐌳𐍅𐌴𐌹𐌽𐌰𐌹𐍃 𐌸𐍅𐌰𐍃𐍄𐌹𐌸𐍉𐍃</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
@@ -173,6 +148,8 @@
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">𐌼𐌹𐌺𐌹𐌻𐍉𐍃 𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌴 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="show_large_answer_buttons_summ">𐌷𐌰𐌿𐌱𐌹𐌳𐌹𐌻𐍉𐌽𐍃 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌴 𐌹𐌽 𐍄𐍅𐌰𐌹𐌼 𐍅𐌹𐌺𐍉𐌼 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">𐌰𐌽𐍃 𐌰𐌿𐌷𐌿𐌼𐌹𐍃𐍄𐌰𐌽𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="show_top_bar_summary">𐌺𐌰𐍂𐍄𐍉 𐍂𐌰𐌸𐌾𐍉𐌽𐍃, 𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄𐌰𐌹𐍃 𐌸𐌴𐌹𐌷𐍃, 𐍆𐌰𐌽𐌰𐌽 𐌾𐌰𐌷 𐌱𐌰𐌽𐌳𐍅𐍉𐌽 𐌹𐌽 𐌰𐌽𐍃𐌰 𐌰𐌿𐌷𐌿𐌼𐌹𐍃𐍄𐌰𐌽𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="show_progress" maxLength="41">𐌱𐌹𐌻𐌴𐌹𐌱𐌰𐌽𐌳𐍉𐌽𐌰 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
@@ -208,8 +185,6 @@
     <string name="pref_cat_reviewer" maxLength="41">𐍃𐌺𐌰𐌹𐍂𐌼𐍃 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃</string>
     <string name="show_deck_title" maxLength="41">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃 𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌹 𐌱𐌰𐌽𐌳𐍅𐌾𐌰𐌽</string>
     <string name="accessibility" maxLength="41">𐌼𐌰𐌷𐍄𐍃 𐌳𐌿 𐌰𐍄𐌲𐌰𐌲𐌲𐌰𐌽</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">𐌸𐍂𐌿𐌺𐌴𐌹 𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌸𐌿𐌺 𐍄𐍅𐌰𐌹𐌼 𐍃𐌹𐌽𐌸𐌰𐌼 𐌳𐌿 𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌸𐌿𐌺/𐌰𐍆𐌻𐌴𐌹𐌸𐌰𐌽</string>
     <string name="exit_via_double_tap_back_summ">𐌴𐌹 𐌽𐌹 𐌰𐍆𐌻𐌴𐌹𐌸𐌰𐌹𐍃 𐌰𐍆 𐍃𐌺𐌰𐌹𐍂𐌼𐌰 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃 𐌸𐌰𐌿 𐌰𐍀𐍀 𐌽𐌹 𐌸𐌰𐍄𐌰 𐍅𐌹𐌻𐌾𐌰𐌽𐌳𐍃/𐍅𐌹𐌻𐌾𐌰𐌽𐌳𐌴𐌹</string>
     <!-- Allow all files in media imports -->
@@ -223,7 +198,7 @@
         If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">𐌲𐌰𐍅𐌹𐍃𐍃 𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐌰</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">𐌱𐍉𐌺𐌰𐌱𐌰𐌿𐍂𐌳</string>
@@ -280,6 +255,10 @@
     <string name="user_action_8" maxLength="28">𐍄𐌰𐌿𐌹 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃 8</string>
     <string name="user_action_9" maxLength="28">𐍄𐌰𐌿𐌹 𐌱𐍂𐌿𐌺𐌾𐌹𐌽𐍃 9</string>
     <string name="toggle_auto_advance" maxLength="28">Toggle auto advance</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">𐍆𐌴𐍂𐌰 𐌺𐌰𐍂𐍄𐍉𐍃 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="card_side_question">𐌱𐌹𐌳𐌰</string>
@@ -386,4 +365,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">𐌻𐌰𐌲𐌴𐌹𐌽𐌹𐌽𐍃 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
 </resources>

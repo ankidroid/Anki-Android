@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Abrir a gabeta</string>
@@ -151,9 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renomear</string>
     <string name="checks_action" maxLength="28">Comprobar</string>
-    <string name="check_db" maxLength="28">Comprobar base de datos</string>
-    <string name="check_media" maxLength="28">Comprobar multimedia</string>
-    <string name="empty_cards" maxLength="28">Tarxetas baleiras</string>
     <string name="unknown_type_field_warning">Escribe a resposta: campo descoñecido %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Eliminando a baralla&#8230;</string>
     <string name="info_rate">Valora AnkiDroid</string>
@@ -177,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Fallo ao gardar o paquete Anki</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarxetas exportadas por AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Ola!
+    <string name="export_email_text"><![CDATA[
+        Ola!
         <br/><br/>
         Esta é unha baralla de tarxetas Anki enviada desde AnkiDroid[1].
         Tenta abrila usando unha das versións dispoñíbeis de Anki[2] e goza dunha aprendizaxe doada e eficiente!<br/><br/>
@@ -188,14 +165,14 @@
     <string name="export_choice_save_to">Gardar en</string>
     <string name="export_saving_exported_collection">Gardando ficheiro exportado&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opcións</string>
-    <string name="menu__deck_options" maxLength="28">Opcións da baralla</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcións de estudo</string>
     <string name="select_tts" maxLength="28">Definir idioma TTS</string>
-    <string name="custom_study" maxLength="28">Estudo personalizado</string>
     <string name="dyn_deck_desc">Esta é unha baralla especial para estudar fóra da programación normal. As tarxetas devolveranse ás súas barallas despois de revisalas. Eliminando esta baralla da listaxe devólvense as tarxetas restantes á súa baralla orixinal.</string>
     <string name="tag_editor_add_feedback">Toca sobre \"%2$s\" para confirmar a adición de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
     <string name="tag_already_exists">Esta etiqueta xa existe</string>
+    <string name="error_name_exists">O nome xa existe</string>
+    <string name="warning_find_and_replace">Considera crear unha copia de seguranza dende o Selector de barallas antes de usar esta opción.</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Produciuse un erro ao compartir o ficheiro apkg</string>
@@ -207,15 +184,17 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Fondo</string>
-    <string name="choose_an_image" maxLength="41">Seleccionar imaxe</string>
     <string name="remove_wallpaper_image" maxLength="41">Retirar fondo</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Seguro que queres eliminar o fondo?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restaurar valores predefinidos</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Baleiro</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Modo borrador activado</string>
     <string name="white_board_eraser_disabled">Modo borrador desactivado</string>
+    <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
+    <string name="media_file_size_warning_title">O ficheiro multimedia é demasiado grande</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">O ficheiro «%1$s» (%2$s) supera o límite de %3$s da AnkiWeb e non pode ser sincronizado. Queres engadilo de todos xeitos?</string>
+    <string name="media_file_size_add_anyway">Engadir de todos xeitos</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Fallo ao gardar a imaxe do encerado. %s</string>
     <string name="white_board_image_saved">Imaxe do encerado gardada en %s</string>
@@ -257,13 +236,17 @@
     <string name="remove_toolbar_item">Eliminar elemento da barra de ferramentas?</string>
     <string name="note_editor_image_too_large">A imaxe é moi grande. Insire a imaxe manualmente</string>
     <string name="note_editor_video_too_large">O ficheiro de vídeo é moi grande. Insire o vídeo manualmente</string>
-    <string name="note_editor_audio_too_large">O ficheiro de audio é moi grande. Insire o audio manualmente</string>
+    <string name="note_editor_audio_too_large">O ficheiro de son é moi grande. Insire o son manualmente</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Copia de seguranza do Android en progreso. Téntao de novo</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Usa iManager para permitir que AnkiDroid engada atallos</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Permitir «Atallos na pantalla de inicio» nas configuracións do sistema para que %s poida engadir atallos</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">A túa pantalla de inicio non permite que AnkiDroid engada atallos</string>
     <string name="create_shortcut_error">Erro ao engadir atallo: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Comezar frases con maiúscula</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra ferramentas deslizábel</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Certificado</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -273,12 +256,12 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Insire un correo electrónico válido</string>
     <string name="password_empty">O contrasinal é obrigatorio</string>
-    <string name="back_pressed_once">Preme en atrás de novo para saír</string>
+    <string name="back_pressed_once">Volve atrás de novo para saír</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Descargar baralla</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Abrir no navegador</string>
-    <string name="try_again">Tentar de novo</string>
+    <string name="try_again">Téntao de novo</string>
     <string name="cancel_download">Cancelar descarga</string>
     <string name="cancel_download_question_title">Cancelar descarga?</string>
     <string name="downloading_file">Descargando %s</string>
@@ -331,9 +314,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Tarxetas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
-    <string name="toggle_cards_notes">Alternar tarxetas/notas</string>
     <string name="truncate_content_help">Fixa a altura de cada fila do Explorador para amosar unicamente as 3 primeiras liñas de contido</string>
-    <string name="browser_options_dialog_heading">Opcións do explorador</string>
     <string name="audio_saved">Gravación gardada</string>
     <string name="deleting_selected_notes">Eliminando as notas seleccionadas</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Preme nunha voz para escoitar</string>
@@ -369,7 +350,6 @@
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Selector de barallas</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Eliminar baralla sen confirmación</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Editor de notas</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Seleccionar baralla</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Seleccionar tipo de nota</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Editor de etiquetas</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Editor de modelos de tarxetas</string>
@@ -385,7 +365,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Cómpre actualizar o programador</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Día</string>
+    <string name="set_due_date_date_range">Intervalo de datas</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Xa en progreso</string>
 </resources>

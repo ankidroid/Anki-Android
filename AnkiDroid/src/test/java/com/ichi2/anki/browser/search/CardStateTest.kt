@@ -16,10 +16,12 @@
 
 package com.ichi2.anki.browser.search
 
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.EmptyApplication
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -28,6 +30,7 @@ import kotlin.test.assertEquals
 /** Test for [CardState] */
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class CardStateTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter(0)
     @JvmField

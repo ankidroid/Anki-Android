@@ -1,19 +1,6 @@
-/*
- * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
- * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>
 
 package com.ichi2.anki
 
@@ -61,7 +48,6 @@ import anki.frontend.SetSchedulingStatesRequest
 import anki.scheduler.CardAnswer.Rating
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
@@ -69,7 +55,14 @@ import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.CardInfoDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.android.HandlerUtils.executeFunctionWithDelay
+import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
@@ -89,9 +82,8 @@ import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.tempAu
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.PostRequestUri
-import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.reviewer.ActionButtons
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getTextColors
@@ -115,21 +107,18 @@ import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.cardStatsNoCardClean
-import com.ichi2.anki.utils.ext.currentCardStudy
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.anki.utils.ext.getLongOrNull
-import com.ichi2.anki.utils.ext.previousCardStudy
 import com.ichi2.anki.utils.ext.setUserFlagForCards
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.utils.remainingTime
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
-import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
-import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.cancelable
@@ -145,6 +134,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import kotlin.coroutines.resume
+import com.ichi2.anki.common.android.R as CommonR
 
 @Suppress("LeakingThis")
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
@@ -230,8 +220,11 @@ open class Reviewer :
             return
         }
         super.onCreate(savedInstanceState)
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
+        }
+        if (Prefs.devBottomNavEnabled) {
+            showBackIcon()
         }
         colorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
@@ -364,9 +357,9 @@ open class Reviewer :
 
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int =
         when (fullscreenMode) {
-            FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
-            FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
-            FullScreenMode.BUTTONS_AND_MENU -> R.layout.reviewer
+            FullScreenMode.BUTTONS_ONLY -> R.layout.activity_reviewer_fullscreen
+            FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.activity_reviewer_fullscreen_noanswers
+            FullScreenMode.BUTTONS_AND_MENU -> R.layout.activity_reviewer
         }
 
     public override fun fitsSystemWindows(): Boolean = !fullscreenMode.isFullScreenReview()
@@ -795,7 +788,7 @@ open class Reviewer :
 
     fun addNote(fromGesture: Gesture? = null) {
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        val inverseAnimation = getInverseTransition(animation)
+        val inverseAnimation = animation.invert()
         Timber.i("launching 'add note'")
         val intent = NoteEditorLauncher.AddNoteFromReviewer(inverseAnimation).toIntent(this)
         addNoteLauncher.launch(intent)
@@ -808,9 +801,9 @@ open class Reviewer :
             return
         }
         Timber.i("opening card info")
-        val intent = CardInfoDestination(currentCard!!.id, TR.currentCardStudy()).toIntent(this)
+        val intent = CardInfoDestination(currentCard!!.id, EntryPoint.CURRENT_CARD_STUDY).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
 
@@ -821,9 +814,9 @@ open class Reviewer :
             return
         }
         Timber.i("opening previous card info")
-        val intent = CardInfoDestination(previousCardId!!, TR.previousCardStudy()).toIntent(this)
+        val intent = CardInfoDestination(previousCardId!!, EntryPoint.PREVIOUS_CARD_STUDY).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        intent.putExtra(EXTRA_FINISH_ANIMATION, animation.invert() as Parcelable)
         startActivityWithAnimation(intent, animation)
     }
 
@@ -841,7 +834,7 @@ open class Reviewer :
         if (currentCard != null && isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
-            markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
+            markCardIcon.setTitle(TR.sentenceCase.markNote).setIcon(R.drawable.ic_star_border_white)
         }
         markCardIcon.iconAlpha = alpha
 
@@ -858,8 +851,25 @@ open class Reviewer :
         }
 
         // Anki Desktop Translations
-        menu.findItem(R.id.action_reschedule_card).title =
-            CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+        menu.findItem(R.id.action_flag)?.title = TR.sentenceCase.flagCard
+        menu.findItem(R.id.action_open_deck_options)?.title = TR.sentenceCase.deckOptions
+        menu.findItem(R.id.action_reschedule_card).title = TR.sentenceCase.setDueDate
+        menu.findItem(R.id.action_card_info)?.title = TR.sentenceCase.cardInfo
+        menu.findItem(R.id.action_previous_card_info)?.title = TR.sentenceCase.previousCardInfo
+        menu.findItem(R.id.action_delete)?.title = TR.sentenceCase.deleteNote
+        // top-level (visible=false in XML) items, shown when only the card-level action is available
+        menu.findItem(R.id.action_bury_card)?.title = TR.sentenceCase.buryCard
+        menu.findItem(R.id.action_suspend_card)?.title = TR.sentenceCase.suspendCard
+        menu.findItem(R.id.action_bury)?.let { buryItem ->
+            buryItem.title = TR.studyingBury()
+            buryItem.subMenu?.findItem(R.id.action_bury_card)?.title = TR.sentenceCase.buryCard
+            buryItem.subMenu?.findItem(R.id.action_bury_note)?.title = TR.sentenceCase.buryNote
+        }
+        menu.findItem(R.id.action_suspend)?.let { suspendItem ->
+            suspendItem.title = TR.studyingSuspend()
+            suspendItem.subMenu?.findItem(R.id.action_suspend_card)?.title = TR.sentenceCase.suspendCard
+            suspendItem.subMenu?.findItem(R.id.action_suspend_note)?.title = TR.sentenceCase.suspendNote
+        }
 
         // Undo button
         @DrawableRes val undoIconId: Int
@@ -1555,7 +1565,7 @@ open class Reviewer :
         // Show / hide the Action bar together with the status bar
         val prefs = a.sharedPrefs()
         val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = MaterialColors.getColor(a, R.attr.appBarColor, 0)
+        a.window.statusBarColor = MaterialColors.getColor(a, CommonR.attr.appBarColor, 0)
         val decorView = a.window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
             val toolbar = a.findViewById<View>(R.id.toolbar)

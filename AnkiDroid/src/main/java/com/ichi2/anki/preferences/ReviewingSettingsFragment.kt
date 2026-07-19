@@ -29,6 +29,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
+import com.ichi2.widget.DayRolloverAlarm
 import timber.log.Timber
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -87,5 +88,6 @@ suspend fun setDayOffset(
         setPreferences(newPrefs)
     }
     if (!Prefs.newReviewRemindersEnabled) scheduleNotification(TimeManager.time, context)
+    DayRolloverAlarm.scheduleNext(context)
     Timber.i("set day offset: '%d'", hours)
 }

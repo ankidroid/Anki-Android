@@ -1,31 +1,20 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
 
 package com.ichi2.anki.filtered
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import android.widget.Spinner
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -34,23 +23,26 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.materialswitch.MaterialSwitch
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.cancelable
+import com.ichi2.utils.configureIconsDirection
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
+import java.util.Locale.getDefault
 
 /**
  * Represents the screen where a filtered deck can be built or rebuilt after updating its properties.
@@ -61,6 +53,14 @@ import kotlinx.coroutines.launch
 class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_options) {
     private val binding by viewBinding(FragmentFilteredDeckOptionsBinding::bind)
     private val viewModel by viewModels<FilteredDeckOptionsViewModel>()
+    private val discardBackHandler =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                DiscardChangesDialog.showDialog(context = requireActivity()) {
+                    requireActivity().finish()
+                }
+            }
+        }
 
     override fun onViewCreated(
         view: View,
@@ -83,8 +83,20 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                 }
             }
         }
+        // backend allows at most 5 digits
+        binding.filterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
+        binding.secondFilterLimitInput.filters = arrayOf(InputFilter.LengthFilter(5))
         bindLabels()
         bindListeners()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            discardBackHandler,
+        )
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.hasUnsavedChanges.collect { status ->
+                discardBackHandler.isEnabled = status
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
@@ -127,7 +139,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                             }
                             if (state.browserQuery != null) {
                                 val browserSearchIntent = Intent(context, CardBrowser::class.java)
-                                browserSearchIntent.putExtra("search_query", state.browserQuery)
+                                browserSearchIntent.putExtra(CardBrowserViewModel.EXTRA_SEARCH_QUERY, state.browserQuery)
                                 startActivity(browserSearchIntent)
                                 viewModel.clearSearchInBrowser()
                             }
@@ -142,25 +154,39 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         val helpMenuItem: MenuItem? = binding.toolbar.menu.findItem(R.id.action_help)
         if (helpMenuItem == null) {
             binding.toolbar.inflateMenu(R.menu.filtered_options)
+            binding.toolbar.menu.configureIconsDirection(requireContext())
         }
     }
 
     private fun bindState(state: FilteredDeckOptions) {
         binding.loadingIndicator.isVisible = false
+        binding.btnShowExcludedCards.isVisible = true
         binding.scrollView.isVisible = true
-        binding.toolbar.title = state.name
+        // vs. desktop we don't use TR.actionsOptionsFor(name) because it doesn't fit (showing just
+        // the deck name is also done for the normal deck options screen so we are consistent)
+        binding.toolbar.title = state.title
         binding.deckNameInput.setTextIfChanged(state.name)
+        binding.deckNameInputLayout.error =
+            when (state.nameInputError) {
+                FilteredNameInputError.Empty -> getString(R.string.empty_cram_label)
+                FilteredNameInputError.AlreadyExists -> getString(R.string.error_name_exists)
+                null -> null
+            }
         binding.checkBoxAllowEmpty.setCheckedIfChanged(state.allowEmpty)
         binding.btnBuild.text = if (state.id == null) TR.decksBuild() else TR.actionsRebuild()
-        binding.btnBuild.isEnabled = !state.isBuildingBrowserSearch
+        binding.btnBuild.isEnabled = state.isBuildingAllowed
         binding.loadingIndicatorBuilding.isVisible = state.isBuildingBrowserSearch
         // setup filter#1
         val filter1State = state.filter1State
         binding.filterSearchInput.setTextIfChanged(filter1State.search)
         binding.filterLimitInput.setTextIfChanged(filter1State.limit)
         binding.filterLimitInputLayout.error =
-            if (filter1State.limit.toIntOrNull() == null) TR.errorsInvalidInputEmpty() else null
-        binding.filterCardsInput.setAdapterIfChanged(state.cardOptions, filter1State.index)
+            when (state.filter1State.error) {
+                SearchInputError.Empty -> getString(R.string.empty_cram_label)
+                SearchInputError.NotANumber -> TR.errorsInvalidInputEmpty()
+                null -> null
+            }
+        binding.filterCards.setAdapterIfNeeded(state.cardOptions, filter1State.index)
         // rescheduling (done here because in filter 2 setup we might exit early)
         binding.checkBoxReschedule.setCheckedIfChanged(state.shouldReschedule)
         binding.rescheduleDelayAgainInput.setTextIfChanged(state.delayAgain)
@@ -169,6 +195,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.rescheduleDelayHardLayout.setupRescheduleDelay(state, RescheduleDelay.Hard)
         binding.rescheduleDelayGoodInput.setTextIfChanged(state.delayGood)
         binding.rescheduleDelayGoodLayout.setupRescheduleDelay(state, RescheduleDelay.Good)
+        binding.rescheduleInfoLabel.isVisible = !state.shouldReschedule
 
         // setup filter#2
         if (binding.switchSecondFilter.isChecked != state.isSecondFilterEnabled) {
@@ -176,13 +203,18 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         }
         binding.secondFilterSearchContainer.isVisible = state.isSecondFilterEnabled
         binding.secondFilterLimitInputLayout.isVisible = state.isSecondFilterEnabled
-        binding.secondFilterCardsInputLayout.isVisible = state.isSecondFilterEnabled
+        binding.secondFilterCardsLabel.isVisible = state.isSecondFilterEnabled
+        binding.secondFilterCards.isVisible = state.isSecondFilterEnabled
         val filter2State = state.filter2State ?: return
         binding.secondFilterSearchInput.setTextIfChanged(filter2State.search)
         binding.secondFilterLimitInput.setTextIfChanged(filter2State.limit)
         binding.secondFilterLimitInputLayout.error =
-            if (filter2State.limit.toIntOrNull() == null) TR.errorsInvalidInputEmpty() else null
-        binding.secondFilterCardsInput.setAdapterIfChanged(state.cardOptions, filter2State.index)
+            when (state.filter2State.error) {
+                SearchInputError.Empty -> getString(R.string.empty_cram_label)
+                SearchInputError.NotANumber -> TR.errorsInvalidInputEmpty()
+                null -> null
+            }
+        binding.secondFilterCards.setAdapterIfNeeded(state.cardOptions, filter2State.index)
     }
 
     private fun TextInputLayout.setupRescheduleDelay(
@@ -212,10 +244,8 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.filterLimitInput.onTextChanged { text ->
             viewModel.onLimitChange(FilterIndex.First, text)
         }
-        binding.filterCardsInput.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                viewModel.onCardsOptionsChange(FilterIndex.First, position)
-            }
+        binding.filterCards.bindListener(FilterIndex.First)
+
         // filter#2
         binding.switchSecondFilter.onCheckedChanged(viewModel::onSecondFilterStatusChange)
         binding.secondFilterSearchInput.onTextChanged { text ->
@@ -227,10 +257,8 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.secondFilterLimitInput.onTextChanged { text ->
             viewModel.onLimitChange(FilterIndex.Second, text)
         }
-        binding.secondFilterCardsInput.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                viewModel.onCardsOptionsChange(FilterIndex.Second, position)
-            }
+        binding.secondFilterCards.bindListener(FilterIndex.Second)
+
         // reschedule
         binding.checkBoxReschedule.onCheckedChanged(viewModel::onRescheduleChange)
         binding.rescheduleDelayAgainInput.onTextChanged { text ->
@@ -273,12 +301,13 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         // first filter
         binding.filterSearchInputLayout.hint = TR.actionsSearch()
         binding.filterLimitInputLayout.hint = TR.decksLimitTo()
-        binding.filterCardsInputLayout.hint = TR.decksCardsSelectedBy()
+        binding.filterCardsLabel.text = TR.decksCardsSelectedBy().capitalize()
         // second filter
         binding.switchSecondFilter.text = TR.decksEnableSecondFilter()
         binding.secondFilterSearchInputLayout.hint = TR.actionsSearch()
         binding.secondFilterLimitInputLayout.hint = TR.decksLimitTo()
-        binding.secondFilterCardsInputLayout.hint = TR.decksCardsSelectedBy()
+        binding.secondFilterCardsLabel.text = TR.decksCardsSelectedBy().capitalize()
+
         // buttons
         binding.btnShowExcludedCards.text = TR.decksUnmovableCards()
         binding.checkBoxReschedule.text = TR.decksRescheduleCardsBasedOnMyAnswers()
@@ -300,10 +329,28 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         if (this.isChecked != newChecked) this.isChecked = newChecked
     }
 
-    /** Sets the adapter and selection for [MaterialAutoCompleteTextView] only if its items are different */
-    private fun MaterialAutoCompleteTextView.setAdapterIfChanged(
+    private fun Spinner.bindListener(index: FilterIndex) {
+        onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    adapterView: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    viewModel.onCardsOptionsChange(index, position)
+                }
+
+                override fun onNothingSelected(adapterView: AdapterView<*>?) {
+                    // do nothing
+                }
+            }
+    }
+
+    /** Sets the adapter and selection for cards [Spinner] only if options are available */
+    private fun Spinner.setAdapterIfNeeded(
         cardOptions: List<String>,
-        selectedIndex: Int,
+        selectedPosition: Int,
     ) {
         if (cardOptions.isNotEmpty()) {
             setAdapter(
@@ -313,9 +360,16 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                     cardOptions,
                 ),
             )
-            setText(cardOptions[selectedIndex], false)
+            setSelection(selectedPosition)
         }
     }
+
+    /**
+     * Needed because backend returns the string TR.decksCardsSelectedBy starting with a lowercase.
+     * This was the recommended replacement implementation for the now deprecated Kotlin
+     * capitalize() method.
+     */
+    private fun String.capitalize() = replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
 
     companion object {
         const val ARG_DECK_ID = "arg_deck_id"
@@ -338,11 +392,11 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                 context = context,
                 fragmentClass = FilteredDeckOptionsFragment::class,
                 arguments =
-                    bundleOf(
-                        ARG_DECK_ID to did,
-                        ARG_SEARCH to search,
-                        ARG_SEARCH_2 to search2,
-                    ),
+                    Bundle().apply {
+                        putLong(ARG_DECK_ID, did)
+                        putString(ARG_SEARCH, search)
+                        putString(ARG_SEARCH_2, search2)
+                    },
             )
     }
 }

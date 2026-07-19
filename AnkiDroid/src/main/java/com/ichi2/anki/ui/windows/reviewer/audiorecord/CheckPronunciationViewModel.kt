@@ -17,8 +17,7 @@ package com.ichi2.anki.ui.windows.reviewer.audiorecord
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.recorder.AudioRecorder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -27,7 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class CheckPronunciationViewModel(
-    private val audioRecorder: AudioRecorder = AudioRecorder(AnkiDroidApp.instance),
+    private val audioRecorder: AudioRecorder = AudioRecorder(appContext),
     private val audioPlayer: AudioPlayer = AudioPlayer(),
 ) : ViewModel() {
     init {
@@ -37,14 +36,14 @@ class CheckPronunciationViewModel(
         audioPlayer.onCompletion = {
             viewModelScope.launch {
                 playbackProgressFlow.emit(playbackProgressBarMaxFlow.value)
-                playIconFlow.emit(R.drawable.ic_play)
+                isPlayingFlow.emit(false)
             }
         }
     }
 
     val playbackProgressFlow = MutableStateFlow(0)
     val playbackProgressBarMaxFlow = MutableStateFlow(1)
-    val playIconFlow = MutableStateFlow(R.drawable.ic_play)
+    val isPlayingFlow = MutableStateFlow(false)
     val replayFlow = MutableSharedFlow<Unit>()
     val isPlaybackVisibleFlow = MutableStateFlow(false)
 
@@ -65,8 +64,18 @@ class CheckPronunciationViewModel(
         audioRecorder.stop()
         viewModelScope.launch {
             isPlaybackVisibleFlow.emit(true)
-            playIconFlow.emit(R.drawable.ic_play)
+            isPlayingFlow.emit(false)
             playbackProgressFlow.emit(0)
+        }
+    }
+
+    fun pausePlayback() {
+        if (isPlaying) {
+            progressBarUpdateJob?.cancel()
+            audioPlayer.pause()
+            viewModelScope.launch {
+                isPlayingFlow.emit(false)
+            }
         }
     }
 
@@ -78,8 +87,12 @@ class CheckPronunciationViewModel(
             viewModelScope.launch {
                 replayFlow.emit(Unit)
             }
+        } else if (audioPlayer.isPaused) {
+            viewModelScope.launch { isPlayingFlow.emit(true) }
+            audioPlayer.resume()
+            launchProgressBarUpdateJob()
         } else {
-            viewModelScope.launch { playIconFlow.emit(R.drawable.ic_replay) }
+            viewModelScope.launch { isPlayingFlow.emit(true) }
             playCurrentFile()
         }
     }
@@ -90,7 +103,7 @@ class CheckPronunciationViewModel(
         viewModelScope.launch {
             isPlaybackVisibleFlow.emit(false)
             playbackProgressFlow.emit(0)
-            playIconFlow.emit(R.drawable.ic_play)
+            isPlayingFlow.emit(false)
         }
     }
 

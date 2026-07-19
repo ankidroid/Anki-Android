@@ -17,10 +17,14 @@ package com.ichi2.anki.utils.ext
 
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnWindowFocusChangeListener
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.preferences.sharedPrefs
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.utils.showDialogFragmentImpl
 
 fun Fragment.sharedPrefs(): SharedPreferences = requireContext().sharedPrefs()
@@ -55,3 +59,24 @@ val Fragment.isCompactWidth: Boolean
         val currentWidthInDp = requireContext().resources.configuration.screenWidthDp
         return currentWidthInDp < COMPACT_WIDTH_DP_MAX
     }
+
+/**
+ * Registers a lifecycle-aware [ViewTreeObserver.OnWindowFocusChangeListener].
+ * The listener is automatically removed when the fragment's view is destroyed.
+ *
+ * Must be called after the view is created (e.g. in [Fragment.onViewCreated]).
+ */
+fun Fragment.onWindowFocusChanged(action: (hasFocus: Boolean) -> Unit) {
+    val listener = OnWindowFocusChangeListener(action)
+    requireView().viewTreeObserver.addOnWindowFocusChangeListener(listener)
+    viewLifecycleOwner.lifecycle.addObserver(
+        object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
+                view
+                    ?.viewTreeObserver
+                    ?.takeIf { it.isAlive }
+                    ?.removeOnWindowFocusChangeListener(listener)
+            }
+        },
+    )
+}

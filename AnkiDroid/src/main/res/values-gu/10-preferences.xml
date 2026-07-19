@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">અક્ષમ</string>
@@ -61,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">સુનિશ્ચિત</string>
     <string name="pref_cat_whiteboard" maxLength="41">વ્હાઇટબોર્ડ</string>
-    <string name="pref_cat_appearance" maxLength="41">દેખાવ</string>
     <string name="pref_cat_themes" maxLength="41">થીમ્સ</string>
     <string name="pref_cat_gestures" maxLength="41">હાવભાવ</string>
     <string name="pref_cat_controls" maxLength="41">નિયંત્રણો</string>
@@ -129,7 +107,6 @@
     <string name="tts_summ">જો કોઈ ધ્વનિ ફાઇલ શામેલ ન હોય તો પ્રશ્ન અને જવાબ વાંચે છે</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">સમન્વયન પર મીડિયા મેળવો</string>
-    <string name="sync_account" maxLength="41">AnkiWeb એકાઉન્ટ</string>
     <string name="sync_account_summ_logged_out">લૉગ ઇન નથી</string>
     <string name="automatic_sync_choice" maxLength="41">આપોઆપ સિંક્રનાઇઝેશન</string>
     <string name="automatic_sync_choice_summ">જો છેલ્લું સમન્વયન 10 થી વધુ હોય તો એપ્લિકેશન પ્રારંભ/બહાર નીકળવા પર આપમેળે સમન્વયિત થાય છે</string>
@@ -157,8 +134,6 @@
     <string name="select_locale_title">ભાષા પસંદ કરો</string>
     <string name="software_render" maxLength="41">કાર્ડ હાર્ડવેર રેન્ડરને અક્ષમ કરો</string>
     <string name="software_render_summ">હાર્ડવેર રેન્ડર ઝડપી છે પરંતુ ખાસ કરીને Android 8/8.1 પર સમસ્યાઓ આવી શકે છે. જો તમે કાર્ડ રિવ્યુ યુઝર ઈન્ટરફેસના ભાગો જોઈ શકતા નથી, તો આ સેટિંગ અજમાવી જુઓ.</string>
-    <string name="safe_display" maxLength="41">સેફ ડિસ્પ્લે મોડ</string>
-    <string name="safe_display_summ">તમામ એનિમેશન અક્ષમ કરો અને કાર્ડ દોરવા માટે સલામત પદ્ધતિનો ઉપયોગ કરો. ઇ-ઇંક ઉપકરણોને આની જરૂર પડી શકે છે.</string>
     <string name="disable_extended_text_ui" maxLength="41">સિંગલ-ફીલ્ડ એડિટ મોડને અક્ષમ કરો</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">જ્યારે લેન્ડસ્કેપ મોડમાં હોય ત્યારે સંદર્ભ મેનૂને \'કાઢી નાખવાનું બંધ\' કરવાની મંજૂરી આપે છે.</string>
@@ -172,6 +147,8 @@
     <string name="show_estimates_summ">જવાબ બટનો પર આગામી સમીક્ષા સમય બતાવો</string>
     <string name="show_large_answer_buttons" maxLength="41">મોટા જવાબ બટનો બતાવો</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="remove_animations" maxLength="41">Remove animations</string>
+    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
     <string name="show_top_bar" maxLength="41">ટોચની પટ્ટી બતાવો</string>
     <string name="show_top_bar_summary">ટોચના બારમાં કાર્ડની ગણતરી, જવાબ ટાઈમર, ધ્વજ અને આયકન બતાવો</string>
     <string name="show_progress" maxLength="41">બાકીના બતાવો</string>
@@ -207,8 +184,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">ડેક શીર્ષક બતાવો</string>
     <string name="accessibility" maxLength="41">સુલભતા</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">ક્લિપબોર્ડ છબીઓને PNG તરીકે પેસ્ટ કરો</string>
     <string name="exit_via_double_tap_back" maxLength="41">પાછા જવા/બહાર જવા માટે બે વાર પાછા દબાવો</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
@@ -222,7 +197,7 @@
         If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">url સમન્વયિત કરો</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">કસ્ટમ રૂટ સર્ટિફિકેટ (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">કીબોર્ડ</string>
@@ -278,6 +253,10 @@
     <string name="user_action_8" maxLength="28">વપરાશકર્તા ક્રિયા 8</string>
     <string name="user_action_9" maxLength="28">વપરાશકર્તા ક્રિયા 9</string>
     <string name="toggle_auto_advance" maxLength="28">ઑટો એડવાન્સ ટૉગલ કરો</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">કાર્ડ બાજુ પસંદ કરો</string>
     <string name="card_side_question">પ્રશ્ન</string>
@@ -384,4 +363,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
 </resources>

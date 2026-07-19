@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser
 
@@ -22,7 +8,6 @@ import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.createSavedStateHandle
@@ -33,14 +18,11 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
-import com.ichi2.anki.ALL_DECKS_ID
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.Flag
-import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_ALL
@@ -53,7 +35,12 @@ import com.ichi2.anki.browser.search.SavedSearches
 import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
+import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.CardInfoDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
@@ -71,15 +58,15 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.anki.model.LegacySortType
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
-import com.ichi2.anki.utils.ext.currentCardBrowse
 import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
@@ -159,6 +146,40 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
+    /**
+     * Commands to drive the note editor either in a fragment or a standalone activity
+     * @see NoteEditorCommand
+     */
+    val flowOfNoteEditorCommand = MutableSharedFlow<NoteEditorCommand>()
+
+    sealed interface NoteEditorCommand {
+        /** Tablet pane: show pane and load the editor with [launcher]. */
+        data class LoadInPane(
+            val launcher: NoteEditorLauncher,
+        ) : NoteEditorCommand
+
+        /** Phone: launch the standalone NoteEditor activity with [launcher]. */
+        data class LaunchActivity(
+            val launcher: NoteEditorLauncher,
+        ) : NoteEditorCommand
+
+        /** Tablet pane: hide the pane (no row available). */
+        data object HidePane : NoteEditorCommand
+
+        companion object
+    }
+
+    /** Result of a completed search, used to drive a snackbar in the UI */
+    sealed interface SearchResultMessage {
+        /** "X cards/notes shown | Search all decks" */
+        data class CardCount(
+            val includeSearchAllDecksAction: Boolean,
+        ) : SearchResultMessage
+
+        /** "No cards in deck X" message; always paired with a "search all decks" action. */
+        data object NoCardsInSelectedDeck : SearchResultMessage
+    }
+
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
     val flowOfFilterQuery = MutableSharedFlow<String>()
@@ -170,22 +191,17 @@ class CardBrowserViewModel(
     private val flowOfCardsOrNotes = MutableStateFlow(CARDS)
     val cardsOrNotes get() = flowOfCardsOrNotes.value
 
-    // card that was clicked (not marked)
-    var currentCardId: CardId? = null
-
     /**
-     * Computes and stores the current card ID used by the note editor.
+     * Ensures [focusedRow] points to a row in the current [cards] list, falling back to the
+     * first row when [focusedRow] no longer visible.
      */
-    suspend fun updateCurrentCardId(): CardId? {
-        currentCardId =
-            // Early return if no cards available
-            if (cards.isEmpty()) {
-                null
-            } else {
-                focusedRow?.toCardId(cardsOrNotes)
-                    ?: cards.firstOrNull()?.toCardId(cardsOrNotes)
+    private fun ensureFocusedRowValid() {
+        focusedRow =
+            when {
+                cards.isEmpty() -> null
+                focusedRow == null || focusedRow !in cards -> cards.first()
+                else -> focusedRow
             }
-        return currentCardId
     }
 
     var cardIdToBeScrolledTo: CardId? = null
@@ -193,10 +209,10 @@ class CardBrowserViewModel(
 
     val flowOfScrollRequest = MutableSharedFlow<RowSelection>()
 
-    private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
+    private val sortTypeFlow = MutableStateFlow(LegacySortType.NO_SORTING)
     val order get() = sortTypeFlow.value
 
-    private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
+    val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
     /**
@@ -278,8 +294,6 @@ class CardBrowserViewModel(
                 initialValue = SELECT_NONE,
             )
 
-    val cardSelectionEventFlow = MutableSharedFlow<Unit>()
-
     /**
      * If cards are marked or flagged
      */
@@ -294,15 +308,53 @@ class CardBrowserViewModel(
      */
     val flowOfSaveSearchNamePrompt = MutableSharedFlow<String>()
 
-    var focusedRow: CardOrNoteId? = null
-        set(value) {
-            if (!isFragmented) return
-            field = value
+    val flowOfFocusedRow: StateFlow<CardOrNoteId?>
+        field = MutableStateFlow<CardOrNoteId?>(null)
+    var focusedRow: CardOrNoteId?
+        get() = flowOfFocusedRow.value
+        private set(value) {
+            flowOfFocusedRow.value = value
         }
 
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
+
+    /**
+     * Returns the list of Card IDs that should be updated.
+     *
+     * In 'Notes' mode, this includes all cards of the current note (sibling cards).
+     * In 'Cards' mode, this returns only the selected cards.
+     */
+    suspend fun getCardIdsForNoteEditor(): List<CardId> {
+        val cardId = focusedRow?.toCardId(cardsOrNotes) ?: return emptyList()
+
+        return if (cardsOrNotes == NOTES) {
+            withCol {
+                getCard(cardId).note(this).cardIds(this)
+            }
+        } else {
+            if (isInMultiSelectMode) {
+                queryAllSelectedCardIds()
+            } else {
+                listOf(cardId)
+            }
+        }
+    }
+
+    /** Builds a [NoteEditorLauncher] for the current selection, or `null` if there's nothing to edit. */
+    suspend fun editNoteLauncher(): NoteEditorLauncher? {
+        val cardIds = getCardIdsForNoteEditor()
+        if (cardIds.isEmpty()) {
+            Timber.w("EditSelection skipped: card list is empty")
+            return null
+        }
+        return NoteEditorLauncher.EditSelection(
+            cardIds = cardIds,
+            animation = TransitionDirection.DEFAULT,
+            inCardBrowserActivity = isFragmented,
+        )
+    }
 
     fun requestChangeNoteType() =
         viewModelScope.launch {
@@ -340,7 +392,8 @@ class CardBrowserViewModel(
                 is SelectableDeck.Deck -> listOf(deck.toDeckNameId())
             }
 
-        searchRequestFlow.value = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
+        val updatedFilter = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
+        launchSearchForCards(updatedFilter, forceRefresh = false)
     }
 
     val searchRequestFlow = MutableStateFlow(SearchRequest(query = ""))
@@ -351,7 +404,6 @@ class CardBrowserViewModel(
             searchRequestFlow.value = searchRequestFlow.value.copy(query = value)
         }
 
-    // TODO: replace with flowOfDeckSelection
     val flowOfDeckId =
         searchRequestFlow.map {
             it.filters.decks
@@ -365,24 +417,23 @@ class CardBrowserViewModel(
                 .firstOrNull()
                 ?.id
 
-    val flowOfDeckSelection =
-        flowOfDeckId.map { did ->
-            when (did) {
-                ALL_DECKS_ID -> return@map SelectableDeck.AllDecks
-                null -> return@map SelectableDeck.AllDecks
-                else -> return@map SelectableDeck.Deck.fromId(did)
-            }
-        }
-
     suspend fun queryCardInfoDestination(): CardInfoDestination? {
         val firstSelectedCard = selectedRows.firstOrNull()?.toCardId(cardsOrNotes) ?: return null
-        return CardInfoDestination(firstSelectedCard, TR.currentCardBrowse())
+        return CardInfoDestination(firstSelectedCard, EntryPoint.CURRENT_CARD_BROWSE)
     }
 
-    suspend fun queryDataForCardEdit(id: CardOrNoteId): CardId? = id.toCardId(cardsOrNotes)
-
     private suspend fun getInitialDeck(): SelectableDeck {
-        // TODO: Handle the launch intent
+        suspend fun consumeIntentDeck(): SelectableDeck.Deck? {
+            if (savedStateHandle.get<Boolean>(STATE_LAUNCH_INTENT_CONSUMED) == true) return null
+            savedStateHandle[STATE_LAUNCH_INTENT_CONSUMED] = true
+            val deckId = savedStateHandle.get<Long>(EXTRA_DECK_ID) ?: return null
+            val name = withCol { decks.nameIfExists(deckId) } ?: return null
+            return SelectableDeck.Deck(deckId = deckId, name = name)
+        }
+
+        // Intent-supplied deck takes precedence, but only on the first launch
+        consumeIntentDeck()?.let { deck -> return deck }
+
         val lastDeckId = lastDeckId
         if (lastDeckId == ALL_DECKS_ID) {
             return SelectableDeck.AllDecks
@@ -425,7 +476,7 @@ class CardBrowserViewModel(
      * A search should be triggered if these properties change
      */
     private val searchRequested =
-        flowOf(flowOfCardsOrNotes, flowOfDeckId)
+        flowOf(flowOfCardsOrNotes)
             .flattenMerge()
 
     /**
@@ -464,6 +515,7 @@ class CardBrowserViewModel(
 
         performSearchFlow
             .onEach {
+                Timber.d("performSearchFlow -> launching search")
                 launchSearchForCards()
             }.launchIn(viewModelScope)
 
@@ -495,7 +547,7 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, prefs) }
+                sortTypeFlow.update { LegacySortType.fromCol(config, cardsOrNotes, prefs) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
@@ -535,9 +587,9 @@ class CardBrowserViewModel(
 
     @VisibleForTesting // far too complicated to mock setSavedStateProvider
     fun generateExpensiveSavedState() =
-        bundleOf(
-            STATE_MULTISELECT_VALUES to IdsFile(cacheDir, selectedRows.map { it.cardOrNoteId }, "multiselect-values"),
-        )
+        Bundle().apply {
+            putParcelable(STATE_MULTISELECT_VALUES, IdsFile(cacheDir, selectedRows.map { it.cardOrNoteId }, "multiselect-values"))
+        }
 
     /**
      * Called if `onCreate` is called again, which may be due to the collection being reopened
@@ -576,6 +628,18 @@ class CardBrowserViewModel(
         flowOfActiveColumns.update { columns }
     }
 
+    /**
+     * Reloads active columns from SharedPreferences if they differ from the in-memory copy.
+     */
+    fun refreshColumnsFromPrefs() =
+        viewModelScope.launch {
+            if (!initCompleted) return@launch
+            val stored = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
+            if (stored.columns == activeColumns) return@launch
+            Timber.d("refreshColumnsFromPrefs: columns changed externally, reloading")
+            updateActiveColumns(stored)
+        }
+
     @VisibleForTesting
     fun manualInit() {
         require(manualInit) { "'manualInit' should be true" }
@@ -583,10 +647,37 @@ class CardBrowserViewModel(
         Timber.d("manualInit")
     }
 
+    /**
+     * Handles a tap on a row.
+     *
+     * Outside multi-select: opens the note editor for the tapped row.
+     *
+     * In multi-select: toggles the row's selection.
+     *
+     * When deselecting a row in fragmented mode, the trailing pane is updated:
+     *
+     * - CARDS - selects another selected row
+     * - NOTES - selection is unchanged (bug?)
+     */
+    fun onTap(rowSelection: RowSelection) =
+        launchCatchingIO(errorMessageHandler = { /* only log */ }) {
+            val id = rowSelection.rowId
+            if (isInMultiSelectMode) {
+                val wasSelected = id in selectedRows
+                toggleRowSelection(rowSelection)
+                // when in mutliselect, only deselecting should cause a change in focus
+                if (wasSelected && isFragmented) {
+                    focusedRow = id
+                    editNoteLauncher()?.let { flowOfNoteEditorCommand.emit(NoteEditorCommand.LoadInPane(it)) }
+                }
+            } else {
+                setNoteEditorRow(id)
+            }
+        }
+
     fun handleRowLongPress(rowSelection: RowSelection) =
         viewModelScope.launch {
             val id = rowSelection.rowId
-            currentCardId = id.toCardId(cardsOrNotes)
             if (isInMultiSelectMode && lastSelectedId != null) {
                 selectRowsBetween(lastSelectedId!!, id)
             } else {
@@ -601,7 +692,6 @@ class CardBrowserViewModel(
     fun handleRightClick(rowSelection: RowSelection) {
         viewModelScope.launch {
             val id = rowSelection.rowId
-            currentCardId = id.toCardId(cardsOrNotes)
             if (isInMultiSelectMode && lastSelectedId != null) {
                 selectRowsBetween(lastSelectedId!!, id)
             } else {
@@ -612,19 +702,33 @@ class CardBrowserViewModel(
     }
 
     /**
-     * Opens the note editor for the given card.
+     * Opens the note editor for the given row.
      *
-     * @param cardId The ID of the card to open in the note editor.
-     * Passing `null` indicates that no card is selected and will close the note editor
+     * @param row The row to focus and open in the note editor.
+     * Passing `null` indicates that no row is selected and will close the note editor.
      */
-    fun setNoteEditorCard(cardId: CardId?) {
-        currentCardId = cardId
-        if (!isFragmented) {
-            endMultiSelectMode(SingleSelectCause.OpenNoteEditorActivity)
-        }
+    private fun setNoteEditorRow(row: CardOrNoteId?) =
         viewModelScope.launch {
-            cardSelectionEventFlow.emit(Unit)
+            focusedRow = row
+            if (!isFragmented) {
+                endMultiSelectMode(SingleSelectCause.OpenNoteEditorActivity)
+            }
+            val launcher = editNoteLauncher() ?: return@launch
+            flowOfNoteEditorCommand.emit(
+                if (isFragmented) NoteEditorCommand.LoadInPane(launcher) else NoteEditorCommand.LaunchActivity(launcher),
+            )
         }
+
+    /**
+     * Opens the note editor for the first selected row (if multi-selecting), else the first row.
+     *
+     * @return `false` if there are no rows to edit
+     */
+    fun openNoteEditorForCurrentlySelectedRow(): Boolean {
+        if (cards.isEmpty()) return false
+        val row = (if (isInMultiSelectMode) selectedRows.firstOrNull() else cards.firstOrNull()) ?: return false
+        setNoteEditorRow(row)
+        return true
     }
 
     /** Whether any rows are selected */
@@ -832,12 +936,30 @@ class CardBrowserViewModel(
         searchRequestFlow.value.filters.decks
             .isEmpty()
 
-    fun changeCardOrder(which: SortType) {
+    /**
+     * Updates the [SortType] and updates the search results
+     */
+    fun setSortType(sortType: SortType) =
+        viewModelScope.launch {
+            Timber.i("setting sort type: %s", sortType)
+
+            // Temporarily update legacy flows
+            sortTypeFlow.update { sortType.toLegacy() }
+            sortType.toLegacyReverse()?.let { newValue ->
+                reverseDirectionFlow.update { newValue }
+            }
+
+            sortType.save(cardsOrNotes)
+
+            launchSearchForCards()
+        }
+
+    fun changeCardOrder(which: LegacySortType) {
         val changeType =
             when {
                 which != order -> ChangeCardOrder.OrderChange(which)
                 // if the same element is selected again, reverse the order
-                which != SortType.NO_SORTING -> ChangeCardOrder.DirectionChange
+                which != LegacySortType.NO_SORTING -> ChangeCardOrder.DirectionChange
                 else -> null
             } ?: return
 
@@ -852,7 +974,7 @@ class CardBrowserViewModel(
             ChangeCardOrder.DirectionChange -> {
                 reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
                 cards.reverse()
-                viewModelScope.launch { flowOfSearchState.emit(SearchState.Completed) }
+                viewModelScope.launch { flowOfSearchState.emit(SearchState.Completed.fromCurrentState()) }
             }
         }
     }
@@ -1083,6 +1205,21 @@ class CardBrowserViewModel(
         launchSearchForCards()
     }
 
+    fun setQuery(
+        query: String,
+        forceRefresh: Boolean = true,
+        fromUserSearch: Boolean = false,
+    ) = viewModelScope.launch {
+        val newValue = searchRequestFlow.value.copy(query = query)
+        if (!forceRefresh && withCol { searchRequestFlow.value.toSearchString() == newValue.toSearchString() }) {
+            Timber.i("skipped duplicate search launch")
+            return@launch
+        }
+
+        searchRequestFlow.value = newValue
+        launchSearchForCards(fromUserSearch = fromUserSearch)
+    }
+
     /**
      * Searches for all marked notes and replaces the current search results with these marked notes.
      */
@@ -1127,7 +1264,9 @@ class CardBrowserViewModel(
                 ).toSearchString()
             }.getOrThrow()
 
-        setFilterQuery(searchString.value)
+        // until we use SearchRequest for everything, we need to use () to ensure the OR
+        // takes precedence over an 'AND'
+        setFilterQuery("(${searchString.value})")
     }
 
     /** Previewing */
@@ -1213,10 +1352,13 @@ class CardBrowserViewModel(
 
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
+     * @param fromUserSearch whether the user explicitly searched for something; controls whether a
+     * result message (snackbar) is surfaced. See [SearchState.Completed.resultMessage]
      */
     fun launchSearchForCards(
         searchRequest: SearchRequest,
         forceRefresh: Boolean,
+        fromUserSearch: Boolean = false,
     ) = viewModelScope.launch {
         Timber.d("launching search [new syntax]: '%s'", searchRequest)
 
@@ -1228,7 +1370,7 @@ class CardBrowserViewModel(
         }
 
         searchRequestFlow.value = searchRequest
-        launchSearchForCards()
+        launchSearchForCards(fromUserSearch = fromUserSearch)
     }
 
     /**
@@ -1238,7 +1380,10 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    fun launchSearchForCards(cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList()) {
+    fun launchSearchForCards(
+        cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList(),
+        fromUserSearch: Boolean = false,
+    ) {
         if (!initCompleted) return
 
         viewModelScope.launch {
@@ -1259,7 +1404,9 @@ class CardBrowserViewModel(
 
                     ensureActive()
                     this@CardBrowserViewModel.cards.replaceWith(cardsOrNotes, cards)
-                    flowOfSearchState.emit(SearchState.Completed)
+                    ensureFocusedRowValid()
+                    if (isFragmented) flowOfNoteEditorCommand.emit(NoteEditorCommand.fromCurrentSearchState())
+                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState(fromUserSearch))
                     selectUnvalidatedRowIds(cardOrNoteIdsToSelect)
                 }
 
@@ -1287,8 +1434,6 @@ class CardBrowserViewModel(
     }
 
     suspend fun queryCardIdAtPosition(index: Int): CardId = cards.queryCardIdsAt(index).first()
-
-    suspend fun querySelectedCardIdAtPosition(index: Int): CardId? = selectedRows.toList()[index].toCardId(cardsOrNotes)
 
     /**
      * Obtains two lists of column headings with preview data
@@ -1355,12 +1500,6 @@ class CardBrowserViewModel(
         updateActiveColumns(replacements, cardsOrNotes)
     }
 
-    // TODO: Do a selective update, and accept a noteId as parameter
-    fun onCurrentNoteEdited() {
-        Timber.i("Reloading search due to note edit")
-        launchSearchForCards()
-    }
-
     /** Opens the UI to save the current [tempSearchQuery] as a saved search */
     fun saveCurrentSearch() =
         viewModelScope.launch {
@@ -1374,7 +1513,45 @@ class CardBrowserViewModel(
 
     suspend fun getAvailableDecks(): List<SelectableDeck.Deck> = SelectableDeck.fromCollection(includeFiltered = false)
 
+    /**
+     * Builds a [SearchState.Completed] event reflecting the current ViewModel state.
+     *
+     * @param fromUserSearch whether this search was triggered by the user searching for something.
+     */
+    private fun SearchState.Completed.Companion.fromCurrentState(fromUserSearch: Boolean = false): SearchState.Completed =
+        SearchState.Completed(
+            rowCount = rowCount,
+            cardsOrNotes = cardsOrNotes,
+            resultMessage =
+                when {
+                    !fromUserSearch -> null
+                    // TODO: better message if rowCount == 0 AND hasSelectedAllDecks
+                    hasSelectedAllDecks() -> SearchResultMessage.CardCount(includeSearchAllDecksAction = false)
+                    rowCount == 0 -> SearchResultMessage.NoCardsInSelectedDeck
+                    else -> SearchResultMessage.CardCount(includeSearchAllDecksAction = true)
+                },
+        )
+
+    /** Builds the post-search trailing-pane command from current ViewModel state (tablet only). */
+    private suspend fun NoteEditorCommand.Companion.fromCurrentSearchState(): NoteEditorCommand =
+        editNoteLauncher()?.let { NoteEditorCommand.LoadInPane(it) } ?: NoteEditorCommand.HidePane
+
     companion object {
+        /** Intent extra carrying the [DeckId] the browser should open scoped to. */
+        const val EXTRA_DECK_ID = "deckId"
+
+        /** Intent extra carrying a [CardId] to auto-scroll to once the browser opens. */
+        const val EXTRA_CARD_ID_KEY = "cardId"
+
+        /** Intent extra (`String`) carrying the search to run. */
+        const val EXTRA_SEARCH_QUERY = "search_query"
+
+        /** Intent extra (`Boolean`) for whether [EXTRA_SEARCH_QUERY] should search all decks. */
+        const val EXTRA_ALL_DECKS = "all_decks"
+
+        /** Prevents one-shot extras from being re-applied after process death. */
+        private const val STATE_LAUNCH_INTENT_CONSUMED = "launchIntentConsumed"
+
         const val STATE_MULTISELECT = "multiselect"
         const val STATE_MULTISELECT_VALUES = "multiselect_values"
 
@@ -1433,7 +1610,7 @@ class CardBrowserViewModel(
 
     private sealed interface ChangeCardOrder {
         data class OrderChange(
-            val sortType: SortType,
+            val sortType: LegacySortType,
         ) : ChangeCardOrder
 
         data object DirectionChange : ChangeCardOrder
@@ -1481,7 +1658,19 @@ class CardBrowserViewModel(
         data object Searching : SearchState
 
         /** A search has been completed */
-        data object Completed : SearchState
+        data class Completed(
+            val rowCount: Int,
+            val cardsOrNotes: CardsOrNotes,
+            /**
+             * The message (snackbar) to surface for this search, or `null` if none should be shown.
+             *
+             * Only populated for explicit user searches; `null` for browser open, deck change and
+             * order/direction changes.
+             */
+            val resultMessage: SearchResultMessage?,
+        ) : SearchState {
+            companion object
+        }
 
         /**
          * A search error, for instance:
@@ -1549,6 +1738,21 @@ class IdsFile(
                 override fun newArray(size: Int): Array<IdsFile> = arrayOf()
             }
     }
+}
+
+/** Attempt to delete the associated [IdsFile] and logs the result */
+fun IdsFile.removeSafely(owner: String) {
+    runCatching { delete() }
+        .onFailure { throwable ->
+            Timber.w(
+                throwable,
+                "Exception when removing IdsFile of $owner",
+            )
+        }.onSuccess { status ->
+            Timber.i(
+                "$owner associated IdsFile was deleted: $status",
+            )
+        }
 }
 
 /**

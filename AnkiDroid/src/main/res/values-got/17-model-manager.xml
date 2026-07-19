@@ -6,24 +6,15 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!-- This file contains strings related to the note types. Note type used to be called "model", hence the name of the file. -->
 <resources>
     <!--Menu Labels-->
@@ -35,10 +26,6 @@
     <string name="toast_empty_name">𐌼𐌴𐌻𐌴𐌹 𐌽𐌰𐌼𐍉 𐌸𐌴𐌹𐌽</string>
     <string name="toast_duplicate_field">𐍅𐌰𐌹𐍂𐌸𐌹𐍃 𐌽𐌰𐌼𐍉 𐌾𐌿 𐌱𐍂𐌿𐌷𐍄 𐌹𐍃𐍄</string>
     <!--Plurals-->
-    <plurals name="model_browser_types_available">
-        <item quantity="one">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸𐍃 𐌹𐍃𐍄</item>
-        <item quantity="other">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸𐌴𐌹𐍃 𐍃𐌹𐌽𐌳</item>
-    </plurals>
     <plurals name="model_browser_of_type">
         <item quantity="one">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐍃</item>
         <item quantity="other">%d 𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃</item>
@@ -48,17 +35,19 @@
     <string name="model_browser_template">𐌺𐌰𐍂𐍄𐍉𐍃 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
     <!--Rename-->
     <string name="rename_model">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
-    <string name="rename_card_type">𐌺𐌹𐌽𐌸 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
+    <string name="rename_card_type" maxLength="28">𐌺𐌹𐌽𐌸 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">𐌷𐌹𐌻𐍀𐌰 𐍂𐌰𐌶𐌳𐍉𐍃 𐌻𐌰𐌲𐌾𐌰𐌽 𐌳𐌿 %s</string>
     <!--Field Editing-->
-    <string name="model_field_editor_add" maxLength="28">𐍅𐌰𐌹𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽</string>
     <string name="model_field_editor_delete">𐍅𐌰𐌹𐍂𐌸𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽</string>
     <string name="model_field_editor_rename">𐍅𐌰𐌹𐍂𐌸 𐌰𐍆𐍄𐍂𐌰𐌷𐌰𐌹𐍄𐌰𐌽</string>
     <string name="model_field_editor_language_hint">𐌱𐍉𐌺𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃 𐌷𐌹𐌻𐍀𐌰 𐍂𐌰𐌶𐌳𐍉 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_changing">𐌰𐍆𐍄𐍂𐌰𐌰𐌽𐌰𐌽𐌹𐌿𐌾𐌰𐌽𐌳𐌰 𐍅𐌰𐌹𐍂𐌸𐌰</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
+    <!-- Card type -->
+    <string name="delete_card_type" maxLength="28">Delete card type</string>
+    <string name="add_card_type" maxLength="28">Add card type</string>
     <!--Warnings-->
     <string name="model_delete_warning">𐌱𐌹 𐍃𐌿𐌽𐌾𐌰𐌹 𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌸𐌹𐌶𐌰𐌹 𐌺𐌹𐌽𐌸𐌰𐌹 𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽?</string>
     <!--

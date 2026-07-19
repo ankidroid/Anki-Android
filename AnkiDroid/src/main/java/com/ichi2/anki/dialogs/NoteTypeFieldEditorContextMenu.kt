@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.dialogs
 
@@ -8,7 +8,6 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -21,7 +20,6 @@ import timber.log.Timber
 class NoteTypeFieldEditorContextMenu : AnalyticsDialogFragment() {
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        super.onCreate(savedInstanceState)
         val availableItems = NoteTypeFieldEditorContextMenuAction.entries.sortedBy { it.order }
 
         return AlertDialog.Builder(requireActivity()).create {
@@ -50,7 +48,7 @@ class NoteTypeFieldEditorContextMenu : AnalyticsDialogFragment() {
 
         fun newInstance(label: String): NoteTypeFieldEditorContextMenu =
             NoteTypeFieldEditorContextMenu().apply {
-                arguments = bundleOf(KEY_LABEL to label)
+                arguments = Bundle().apply { putString(KEY_LABEL, label) }
             }
     }
 }

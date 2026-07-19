@@ -39,11 +39,11 @@ import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.darkenColor
+import com.ichi2.anki.common.utils.android.lightenColorAbsolute
 import com.ichi2.anki.common.utils.ext.replaceWith
-import com.ichi2.anki.databinding.BrowserColumnCellBinding
 import com.ichi2.anki.databinding.ItemCardBrowserBinding
-import com.ichi2.anki.utils.android.darkenColor
-import com.ichi2.anki.utils.android.lightenColorAbsolute
+import com.ichi2.anki.databinding.ViewBrowserColumnCellBinding
 import com.ichi2.themes.Themes
 import com.ichi2.utils.removeChildren
 import net.ankiweb.rsdroid.BackendException
@@ -93,7 +93,7 @@ class BrowserMultiColumnAdapter(
                 // recreate the columns and the dividers
                 columnViews.replaceWith(
                     (1..value).map { index ->
-                        BrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root
+                        ViewBrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root
                     },
                 )
 
@@ -169,10 +169,7 @@ class BrowserMultiColumnAdapter(
             require(pressedColor != color)
             val rippleDrawable =
                 RippleDrawable(
-                    ColorStateList(
-                        arrayOf(intArrayOf(android.R.attr.state_pressed)),
-                        intArrayOf(pressedColor),
-                    ),
+                    ColorStateList.valueOf(pressedColor),
                     color.toDrawable(),
                     null,
                 )
@@ -268,7 +265,7 @@ class BrowserMultiColumnAdapter(
             }
             holder.setIsSelected(isSelected)
             val rowColor =
-                if (viewModel.focusedRow == id) {
+                if (viewModel.isFragmented && viewModel.focusedRow == id) {
                     ThemeUtils.getThemeAttrColor(context, R.attr.focusedRowBackgroundColor)
                 } else {
                     backendColorToColor(row.color)

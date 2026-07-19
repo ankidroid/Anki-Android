@@ -16,10 +16,18 @@
 
 package com.ichi2.anki
 
+import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 
 fun DeckPicker.handleDatabaseCheck() {
+    fun Progress.DatabaseCheck.toAmount() =
+        if (stageTotal > 0) {
+            ProgressContext.Amount(stageCurrent.toLong(), stageTotal.toLong())
+        } else {
+            null
+        }
+
     launchCatchingTask {
         val problems =
             withProgress(
@@ -27,12 +35,7 @@ fun DeckPicker.handleDatabaseCheck() {
                     if (progress.hasDatabaseCheck()) {
                         progress.databaseCheck.let {
                             text = it.stage
-                            amount =
-                                if (it.stageTotal > 0) {
-                                    Pair(it.stageCurrent, it.stageTotal)
-                                } else {
-                                    null
-                                }
+                            amount = it.toAmount()
                         }
                     }
                 },

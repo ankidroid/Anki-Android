@@ -20,9 +20,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsVoices
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.show

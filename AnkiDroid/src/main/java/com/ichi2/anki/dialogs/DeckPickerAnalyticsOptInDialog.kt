@@ -36,7 +36,7 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
         return AlertDialog.Builder(requireActivity()).create {
             title(R.string.analytics_dialog_title)
             message(R.string.analytics_summ)
-            checkBoxPrompt(R.string.analytics_title, isCheckedDefault = true) {}
+            checkBoxPrompt(R.string.analytics_title, isCheckedDefault = false) {}
             positiveButton(R.string.dialog_continue) {
                 UsageAnalytics.isEnabled = (it as AlertDialog).getCheckBoxPrompt().isChecked
                 activity?.dismissAllDialogFragments()

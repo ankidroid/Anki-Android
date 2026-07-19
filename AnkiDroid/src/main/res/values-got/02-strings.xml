@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Open drawer</string>
@@ -90,11 +69,11 @@
     <string name="leech_notification">Card marked as leech</string>
     <string name="webview_crash_unknown">𐌿𐌽𐌺𐌿𐌽𐌸𐌰 𐌰𐌹𐍂𐌶𐌴𐌹</string>
     <string name="webview_crash_unknwon_detailed">𐌸𐌰𐍄𐌰 𐍅𐌰𐍂𐌸 𐌹𐌽 𐌰𐌹𐍂𐌶𐌴𐌹𐌽 𐌹𐌽𐌽𐌰𐌽𐌰 𐌹𐌽 𐍅𐌰𐌱𐌾𐌰𐍃𐌹𐌿𐌽𐌰𐌹</string>
-    <string name="webview_crash_oom">𐌿𐍄𐌰 𐌲𐌰𐌼𐌹𐌽𐌸𐌾𐌰</string>
+    <string name="webview_crash_oom">Out of memory</string>
     <string name="webview_crash_oom_details">𐍅𐌰𐌱𐌾𐌰𐍃𐌹𐌿𐌽𐍃 𐌿𐍃𐍄𐌰𐌿𐌷 𐍆𐍂𐌰𐌼 𐍃𐍅𐍃𐍄𐌴𐌼𐌰𐌹. 𐌸𐌰𐍄𐌰 𐌿𐍆𐍄𐌰 𐍅𐌰𐌹𐍂𐌸𐌹𐌸 𐌾𐌰𐌱𐌰𐌹 𐍃𐍉 𐌰𐍀𐍀𐌻𐌴𐌹𐌺𐌰𐍄𐍃𐌾𐍉 𐌽𐌹 𐌸𐌰𐌽𐌰𐍃𐌴𐌹𐌸𐍃 𐌷𐌰𐌱𐌰𐌹𐌸 𐌲𐌰𐌼𐌹𐌽𐌸𐌹, 𐌿𐍆𐍄𐌰 𐌹𐌽 𐍆𐌰𐌿𐌽𐍄𐌴 𐌼𐌹𐌺𐌹𐌻𐌰𐌹𐌶𐌴 𐌸𐌰𐌿 𐌼𐌰𐌹𐌳𐌾𐌴.</string>
     <string name="webview_crash_nonfatal">𐍅𐌰𐌱𐌾𐌰𐍃𐌹𐌿𐌽𐌰𐌹𐍃 𐌰𐍄𐌰𐌿𐌲𐌾𐍉 𐌱𐍂𐌰𐌺. 𐌲𐍂𐌿𐌽𐌳𐌿𐍃: %s</string>
-    <string name="webview_crash_fatal">𐌿𐍃𐍄𐌹𐌿𐌷𐌰𐌽𐌳𐌴𐌹 𐌰𐌹𐍂𐌶𐌴𐌹: 𐍅𐌰𐌱𐌾𐌰𐍃𐌹𐌿𐌽𐌰𐌹𐍃 𐌰𐍄𐌰𐌿𐌲𐌾𐍉 𐌱𐍂𐌰𐌺. 𐌲𐍂𐌿𐌽𐌳𐌿𐍃: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
+    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">𐍃𐌻𐌴𐌹𐌳𐌰𐌽 𐌳𐌿 𐍃𐍅𐌴𐌹𐌱𐌰𐌽</string>
     <string name="filter_by_flags" maxLength="41">𐍆𐌰𐌽𐌰𐌽𐍃</string>
@@ -151,9 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d 𐍆𐍂𐌰𐌼 %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">𐌽𐌹𐌿𐌾𐌰𐍄𐌰 𐌽𐌰𐌼𐍉 𐌲𐌹𐌱𐌰𐌽</string>
     <string name="checks_action" maxLength="28">𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽</string>
-    <string name="check_db" maxLength="28">𐌳𐌰𐍄𐌰𐌷𐌿𐌶𐌳 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽</string>
-    <string name="check_media" maxLength="28">𐌼𐌰𐌹𐌳𐌾𐌰 𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽</string>
-    <string name="empty_cards" maxLength="28">𐌺𐌰𐍂𐍄𐍉𐍃 𐌻𐌰𐌿𐍃𐍉𐍃</string>
     <string name="unknown_type_field_warning">𐌰𐌽𐌳𐌰𐌷𐌰𐍆𐍄 𐌼𐌴𐌻𐌾𐌰𐌽: 𐌿𐌽𐌺𐌿𐌽𐌸𐍃 𐍃𐍄𐌰𐌸𐍃 %s</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">𐍅𐌹𐌺𐍉 𐌿𐍃𐌽𐌹𐌼𐌰𐌳𐌰&#8230;</string>
     <string name="info_rate">𐍅𐌰𐌹𐍂𐌸 𐌳𐌿 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌲𐌹𐌱𐌰𐌽</string>
@@ -188,14 +164,14 @@
     <string name="export_choice_save_to">𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽 𐌳𐌿</string>
     <string name="export_saving_exported_collection">𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌳𐌰 𐌿𐍄𐌱𐌰𐌿𐍂𐌰𐌽 𐍆𐌰𐌾𐌻&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">𐌼𐌰𐌷𐍄𐌴𐌹𐍃</string>
-    <string name="menu__deck_options" maxLength="28">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌷𐌿𐌶𐌳𐌹𐍃 𐌺𐌰𐍂𐍄𐍉</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐌰𐌹𐍃 𐌼𐌰𐌷𐍄𐌴𐌹𐍃</string>
     <string name="select_tts" maxLength="28">𐌱𐍉𐌺𐍉-𐌳𐌿-𐍃𐍄𐌹𐌱𐌽𐌰𐌹 𐍂𐌰𐌶𐌳𐌰 𐌻𐌰𐌲𐌾𐌰𐌽</string>
-    <string name="custom_study" maxLength="28">𐌰𐌽𐌸𐌰𐍂𐌰 𐌻𐌰𐌹𐍃𐌴𐌹𐌽𐍃</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="tag_editor_add_feedback">\"%2$s\" 𐌰𐍄𐍄𐌴𐌺𐌰𐌽 𐌳𐌿 𐌲𐌰𐍄𐌿𐌻𐌲𐌾𐌰𐌽 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">𐍅𐌹𐍃𐌰𐌽𐌳𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳 \"%1$s\" 𐌲𐌰𐍅𐌰𐌻𐌹𐌸</string>
     <string name="tag_already_exists">Tag already exists</string>
+    <string name="error_name_exists">Name already exists</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌳𐌰𐌹𐌻𐌾𐌰𐌽 apkg 𐍆𐌰𐌾𐌻</string>
@@ -207,15 +183,17 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">𐌷𐌹𐌽𐌳𐌰𐍂𐌲𐍂𐌿𐌽𐌳𐌿𐍃</string>
-    <string name="choose_an_image" maxLength="41">𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="remove_wallpaper_image" maxLength="41">𐌷𐌹𐌽𐌳𐌰𐍂𐌲𐍂𐌿𐌽𐌳𐌿 𐌿𐍃𐌽𐌹𐌼𐌰𐌽</string>
     <string name="remove_background_image">Are you sure you wish to remove the background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">𐌱𐌻𐌰𐌲𐌺</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">𐌰𐍆𐍈𐌰𐌹𐍂𐌱𐌰𐌽𐌳𐌹𐍃 𐌼𐍉𐌳𐌿𐍃 𐌹𐌽𐌻𐌰𐌲𐌹𐌸𐍃</string>
     <string name="white_board_eraser_disabled">𐌰𐍆𐍈𐌰𐌹𐍂𐌱𐌰𐌽𐌳𐌹𐍃 𐌼𐍉𐌳𐌿𐍃 𐌿𐌽𐌻𐌰𐌲𐌹𐌸𐍃</string>
+    <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
+    <string name="media_file_size_warning_title">Media too large</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">The file \"%1$s\" (%2$s) exceeds the AnkiWeb limit of %3$s and cannot be synced. Add anyway?</string>
+    <string name="media_file_size_add_anyway">Add anyway</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽 𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃. %s</string>
     <string name="white_board_image_saved">𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐍈𐌴𐌹𐍄𐌰𐌱𐌰𐌿𐍂𐌳𐌹𐍃 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌽𐌰 𐌳𐌿 %s</string>
@@ -227,7 +205,7 @@
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">𐍃𐌰𐌹𐍈𐌰𐌽</string>
-    <string name="anki_js_error_code">(𐌺𐍉𐌳𐌿𐍃 𐌰𐌹𐍂𐌶𐌴𐌹𐌽𐍃: %d)</string>
+    <string name="anki_js_error_code">(Error code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌳𐌰 𐌳𐌿 𐌺𐍂𐌰𐌼𐍀𐌰𐌱𐌰𐌿𐍂𐌳𐌰</string>
     <string name="about_ankidroid_error_copy_debug_info">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽𐌳𐍉 𐌹𐌽𐍆𐌰𐌿𐍂𐌼𐌰𐍄𐍃𐌾𐍉𐌽 𐌱𐍉𐍄𐌴𐌹𐌽𐌰𐌹𐍃 𐌳𐌿 𐌺𐍂𐌰𐌼𐍀𐌰𐌱𐌰𐌿𐍂𐌳𐌰</string>
@@ -235,7 +213,7 @@
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐍃𐍉𐌺𐌾𐌰𐌽</string>
-    <string name="ankidroid_init_failed_webview_title">𐌿𐍃𐍄𐌹𐌿𐌷𐌰𐌽𐌳𐌴𐌹 𐌰𐌹𐍂𐌶𐌴𐌹</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">AnkiDroid cannot access storage due to an Android error.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -260,10 +238,14 @@
     <string name="note_editor_audio_too_large">𐌸𐌰𐍄𐌰 𐍆𐌰𐌾𐌻 𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌿𐍆𐌰𐍂𐌼𐌹𐌺𐌹𐌻 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽 𐌰𐍅𐌳𐌾𐍉𐌽 𐌷𐌰𐌽𐌳𐌿𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">𐌰𐌽𐌳𐍂𐌰𐌿𐌳 𐌱𐌰𐌹𐌺-𐌰𐍀 𐌹𐌽 𐍆𐍂𐌰𐌼𐌲𐌰𐌷𐍄𐌰𐌹. 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐍃𐍉𐌺𐌴𐌹 𐌰𐍆𐍄𐍂𐌰.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">𐌲𐌰𐍂𐌳𐌰𐍃𐌺𐌰𐌹𐍂𐌼𐍃 𐌸𐌴𐌹𐌽𐍃 𐌽𐌹 𐌰𐌽𐌳𐌻𐌴𐍄𐌹𐌸 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌹𐍅𐌹𐌲𐌰𐌽𐍃</string>
     <string name="create_shortcut_error">𐌰𐌹𐍂𐌶𐌴𐌹 𐍅𐌰𐍂𐌸 𐌱𐌹𐌰𐌿𐌺𐌰𐌽 𐌼𐌰𐌿𐍂𐌲𐌿𐍅𐌹𐌲: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Certificate</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -273,16 +255,16 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">𐌴-𐌼𐌴𐌻 𐍂𐌰𐌹𐌷𐍄 𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="password_empty">𐍂𐌿𐌽𐌰𐍅𐌰𐌿𐍂𐌳𐌹𐍃 𐌸𐌰𐌿𐍂𐍆𐍄 𐌹𐍃𐍄</string>
-    <string name="back_pressed_once">𐌸𐍂𐌿𐌺𐌴𐌹 𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌸𐌿𐌺 𐌰𐍆𐍄𐍂𐌰 𐌳𐌿 𐌰𐍆𐌻𐌴𐌹𐌸𐌰𐌽</string>
+    <string name="back_pressed_once">Go back again to exit</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌽</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">𐌿𐍃𐌻𐌿𐌺𐌰𐌽 𐌹𐌽 𐌱𐍂𐌰𐍅𐍃𐌰𐌹𐍂</string>
-    <string name="try_again">𐌰𐍆𐍄𐍂𐌰 𐍃𐍉𐌺𐌾𐌰𐌽</string>
+    <string name="try_again">Try again</string>
     <string name="cancel_download">Cancel download</string>
     <string name="cancel_download_question_title">Cancel download?</string>
     <string name="downloading_file">𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌳𐌰 %s</string>
-    <string name="import_deck">𐌷𐌿𐌶𐌳 𐌺𐌰𐍂𐍄𐍉 𐌹𐌽𐌽𐌰𐍄𐌱𐌰𐌹𐍂𐌰𐌽</string>
+    <string name="import_deck">Import deck</string>
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="download_failed">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌽</string>
     <string name="deck_download_progress_message">𐌼𐌰𐌲𐍄 𐌰𐌽𐌸𐌰𐍂𐌰𐌹𐌶𐌴 𐌰𐍀𐍀𐌴 𐌱𐍂𐌿𐌺𐌾𐌰𐌽 𐌼𐌹𐌸𐌸𐌰𐌽𐌴𐌹 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌳𐌰</string>
@@ -319,7 +301,7 @@
     <string name="intro_ankidroid_tagline_one">𐌻𐌰𐌹𐍃𐌴𐌹 𐌸𐌿𐌺 𐌼𐌹𐌽𐌽𐌹𐌶𐍉</string>
     <string name="intro_ankidroid_tagline_two">𐌼𐌰𐌹𐍃 𐌲𐌰𐌼𐌰𐌿𐌳𐌾𐌰𐌽</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">𐌳𐌿𐌲𐌹𐌽𐌽𐌰𐌽</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
     <string name="intro_sync_from_ankiweb">𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉 𐍆𐍂𐌰𐌼 𐌰𐌽𐌺𐌴𐌹𐍅𐌰𐌱𐌾𐌰</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
@@ -331,9 +313,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">𐌺𐌰𐍂𐍄𐍉𐍃</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">𐌼𐌴𐌻𐌴𐌹𐌽𐍉𐍃</string>
-    <string name="toggle_cards_notes">Toggle cards/notes</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">𐌼𐌰𐌷𐍄𐌴𐌹𐍃 𐌱𐍂𐌰𐍅𐍃𐌰𐌹𐍂𐍃</string>
     <string name="audio_saved">𐌲𐌰𐌼𐌰𐌿𐌳𐌴𐌹𐌽 𐌲𐌰𐍆𐌰𐍃𐍄𐌰𐌹𐌳𐌰</string>
     <string name="deleting_selected_notes">𐌲𐌰𐍅𐌰𐌻𐌹𐌳𐌰𐌹𐌼 𐌼𐌴𐌻𐌴𐌹𐌽𐌹𐌼 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽𐌳𐌰</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">𐍄𐌴𐌺 𐌰𐌽𐌰 𐍃𐍄𐌹𐌱𐌽𐌰𐌹 𐌳𐌿 𐌷𐌰𐌿𐍃𐌾𐌰𐌽</string>
@@ -347,7 +327,7 @@
     <string name="shared_decks_login_required">𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺, 𐌰𐍄𐌲𐌰𐌲𐌲 𐌳𐌿 𐌰𐍄𐌳𐍂𐌰𐌲𐌰𐌽 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌼𐌰𐌽𐌰𐌲𐌹𐌶𐍉𐌽𐌰</string>
     <string name="deck_description_field_hint">𐌲𐌰𐍃𐌺𐌴𐌹𐍂𐌴𐌹𐌽𐍃</string>
     <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as markdown</string>
+    <string name="format_deck_description_as_markdown">Format as Markdown</string>
     <string name="help_button_content_description">𐌷𐌹𐌻𐍀𐌰 𐍆𐌰𐌿𐍂 \'%s\' 𐌿𐍃𐌻𐌿𐌺𐌰𐌽</string>
     <string name="failed_to_copy">𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐌲𐌰𐌲𐌰𐌻𐌴𐌹𐌺𐍉𐌽</string>
     <plurals name="unbury_cards_feedback">
@@ -366,13 +346,12 @@
     <string name="orphan_note_message">𐌸𐌹𐌶𐌰𐌹 𐌺𐌹𐌽𐌸𐌰𐌹 𐌺𐌰𐍂𐍄𐍉 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐌱𐌹𐌻𐌴𐌹𐌸𐌹𐌸 𐍃𐌿𐌼𐌰𐌹𐌼 𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌹𐌽𐌿𐌷 𐌺𐌰𐍂𐍄𐍉𐍃 𐌰𐌻𐌻𐌹𐍃.</string>
     <string name="voice_not_supported">𐍃𐍄𐌹𐌱𐌽𐌰 𐌽𐌹 𐍃𐍄𐍉𐌳𐌹𐌳𐌰. 𐍃𐍉𐌺𐌴𐌹 𐌰𐌽𐌸𐌰𐍂 𐌸𐌰𐌿 𐌲𐌰𐍃𐌿𐌻𐌴𐌹 𐌰𐌹𐌽𐌳𐌶𐌹𐌽 𐍃𐍄𐌹𐌱𐌽𐍉𐍃.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">𐌽𐌹𐌼𐌰𐌽𐌳𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌰 𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽 𐌹𐌽𐌿𐌷 𐌲𐌰𐍄𐌿𐌻𐌲𐌴𐌹𐌽</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐍉 𐌼𐌴𐌻𐌴𐌹𐌽𐍉</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳 𐍅𐌰𐌻𐌾𐌰𐌽</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹𐍃 𐌺𐌹𐌽𐌸 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐍉 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌴</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">𐌺𐌰𐍂𐍄𐍉 𐍆𐌰𐌿𐍂𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐍉 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐍉</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">𐍃𐍄𐌴𐌹𐌻𐌰 𐌹𐌽𐌼𐌰𐌹𐌳𐌾𐌰𐌽</string>
@@ -385,7 +364,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
+    <string name="set_due_date_date_range">Date range</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
 </resources>

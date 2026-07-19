@@ -6,44 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <string name="youre_offline">ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿರುವಿರಿ</string>
     <string name="sync_error">ಸಿಂಕ್ ದೋಷ</string>
@@ -56,12 +34,10 @@
     <!-- MyAccount.kt -->
     <string name="username">ಇಮೇಲ್ ವಿಳಾಸ</string>
     <string name="password">ಗುಪ್ತಪದ</string>
-    <string name="log_in">ಲಾಗ್ ಇನ್ ಮಾಡಿ</string>
     <string name="sign_up_description">AnkiWeb ಖಾತೆಯನ್ನು ಹೊಂದಿಲ್ಲವೇ? ಇದು ಉಚಿತ!</string>
     <string name="sign_up_not_affiliated">ಗಮನಿಸಿ: AnkiWeb AnkiDroid ಜೊತೆಗೆ ಸಂಯೋಜಿತವಾಗಿಲ್ಲ</string>
     <string name="sign_up">ಸೈನ್ ಅಪ್ ಮಾಡಿ</string>
     <string name="logged_as">ಎಂದು ಲಾಗಿನ್ ಮಾಡಲಾಗಿದೆ</string>
-    <string name="log_out">ಲಾಗ್ ಔಟ್</string>
     <string name="reset_password">ಪಾಸ್ವರ್ಡ್ ಮರುಹೊಂದಿಸಿ</string>
     <string name="lost_mail_instructions">ಇಮೇಲ್ ಮರೆತಿರುವಿರಾ?</string>
     <string name="sign_in">ಸೈನ್ ಇನ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
@@ -77,7 +53,6 @@
     <string name="one_way_sync_title" maxLength="41">ಒನ್ ವೇ ಸಿಂಕ್</string>
     <string name="one_way_sync_confirmation">ಒಂದು ರೀತಿಯಲ್ಲಿ ಸಿಂಕ್ ಮಾಡಲು ವಿನಂತಿಸಲಾಗಿದೆ</string>
     <string name="full_sync_confirmation">ನೀವು ಮುಂದೆ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಿದಾಗ ವಿನಂತಿಸಿದ ಬದಲಾವಣೆಗೆ ಡೇಟಾಬೇಸ್‌ನ ಪೂರ್ಣ ಅಪ್‌ಲೋಡ್ ಅಗತ್ಯವಿರುತ್ತದೆ. ಇಲ್ಲಿ ಇನ್ನೂ ಸಿಂಕ್ ಮಾಡದಿರುವ ಮತ್ತೊಂದು ಸಾಧನದಲ್ಲಿ ವಿಮರ್ಶೆಗಳು ಅಥವಾ ಇತರ ಬದಲಾವಣೆಗಳಿಗಾಗಿ ನೀವು ಕಾಯುತ್ತಿದ್ದರೆ, ಅವುಗಳು ಕಳೆದುಹೋಗುತ್ತವೆ. ಮುಂದುವರಿಸುವುದೇ?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroid ನ ಹಿಂದೆ ಸ್ಥಾಪಿಸಲಾದ ಆವೃತ್ತಿಯಲ್ಲಿನ ದೋಷದಿಂದಾಗಿ, ಪೂರ್ಣ ಸಿಂಕ್ ಅನ್ನು ಒತ್ತಾಯಿಸಲು ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">ಸಿಂಕ್ (ಒನ್-ವೇ)</string>
     <string name="sync_menu_title_no_account">ಸಿಂಕ್ (ಲಾಗ್ ಇನ್)</string>

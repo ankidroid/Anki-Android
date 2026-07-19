@@ -6,43 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Tortmani ochish</string>
@@ -90,11 +69,11 @@
     <string name="leech_notification">Karta yopishqoq deb belgilandi</string>
     <string name="webview_crash_unknown">Nomaʼlum xatolik</string>
     <string name="webview_crash_unknwon_detailed">Bunga WebViewʼdagi ichki xatolik sabab boʻldi</string>
-    <string name="webview_crash_oom">Xotira yetarli emas</string>
+    <string name="webview_crash_oom">Out of memory</string>
     <string name="webview_crash_oom_details">WebView tizim tomonidan tugatildi. Bu, odatda, dasturning xotirasi tugashi bilan sodir bo\'ladi, ko\'pincha katta shriftlar yoki katta media fayllar tufayli.</string>
     <string name="webview_crash_nonfatal">WebView ishdan chiqdi. Sababi: %s</string>
-    <string name="webview_crash_fatal">Fatal xatolik: WebView ishdan chiqdi. Sababi: %s</string>
-    <string name="webview_crash_loop_dialog_title">Tizim WebView renderlashda xatolik</string>
+    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
     <string name="webview_crash_loop_dialog_content">Tizim WebView “%1$s” kartasini koʻrsata olmadi.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Bekor qilish uchun suring</string>
     <string name="filter_by_flags" maxLength="41">Bayroqlar</string>
@@ -151,9 +130,6 @@
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d dan %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Nomini oʻzgartirish</string>
     <string name="checks_action" maxLength="28">Tekshirish</string>
-    <string name="check_db" maxLength="28">Maʼlumotlar bazasini tekshirish</string>
-    <string name="check_media" maxLength="28">Media fayllarni tekshirish</string>
-    <string name="empty_cards" maxLength="28">Boʻsh kartalar</string>
     <string name="unknown_type_field_warning">Kiritish javobi: nomaʼlum %s maydoni</string>
     <string name="delete_deck" comment="Message on a progress bar starting a deck is being deleted.">Dasta oʻchirilmoqda&#8230;</string>
     <string name="info_rate">AnkiDroidʼga baho berish</string>
@@ -177,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki paketini saqlab boʻlmadi</string>
     <string name="export_share_title">Anki paketini quyidagi bilan yuboring</string>
     <string name="export_email_subject">AnkiDroid kartalarni eksport qildi: %s</string>
-    <string name="export_email_text"><![CDATA[        Salom!
+    <string name="export_email_text"><![CDATA[
+        Salom!
         <br/><br/>
         Bu Ankidroidʼdan[1] yuborilgan kartalar dastasi.
         Mavjud Anki distributivlaridan biri yordamida uni ochib koʻring[2] va oson va samarali o‘rganishdan bahramand boʻling!<br/><br/>
@@ -188,14 +165,14 @@
     <string name="export_choice_save_to">Saqlash</string>
     <string name="export_saving_exported_collection">Eksport qilingan fayl saqlanmoqda&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Parametrlar</string>
-    <string name="menu__deck_options" maxLength="28">Dasta parametrlari</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Oʻqish parametrlari</string>
     <string name="select_tts" maxLength="28">TTS tilini sozlash</string>
-    <string name="custom_study" maxLength="28">Maxsus oʻrganish</string>
     <string name="dyn_deck_desc">Bu odatiy kun tartibidan tashqarida oʻqish uchun maxsus dasta. Koʻrib chiqilganidan soʻng kartalar avtomatik ravishda oʻzining asl dastalariga qaytariladi. Ushbu dastani dastalar roʻyxatidan oʻchirib tashlasangiz, qolgan barcha kartalar oʻzining asl dastalariga qaytariladi.</string>
     <string name="tag_editor_add_feedback">“%1$s” qoʻshishni tasdiqlash uchun “%2$s” tugmasini bosing</string>
     <string name="tag_editor_add_feedback_existing">Mavjud boʻlgan “%1$s” tegi tanlandi</string>
     <string name="tag_already_exists">Teg allaqachon mavjud</string>
+    <string name="error_name_exists">Ushbu nom allaqachon mavjud</string>
+    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg faylni ulashishda xatolik yuz berdi</string>
@@ -207,15 +184,17 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title" maxLength="41">Orqa fon</string>
-    <string name="choose_an_image" maxLength="41">Rasm tanlash</string>
     <string name="remove_wallpaper_image" maxLength="41">Orqa fonni olib tashlash</string>
-    <string name="remove_background_image">Are you sure you wish to remove the background?</string>
+    <string name="remove_background_image">Rostan ham orqa fonni oʻchirmoqchimisiz?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Birlamchiga qaytarish</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Boʻshliq</string>
     <!-- Whiteboard eraser mode toggle message in Reviewer -->
     <string name="white_board_eraser_enabled">Oʻchirgʻich rejimi yoqildi</string>
     <string name="white_board_eraser_disabled">Oʻchirgʻich rejimi oʻchirildi</string>
+    <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
+    <string name="media_file_size_warning_title">Media fayl juda katta</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">\"%1$s\" (%2$s) fayli AnkiWebʼning %3$s limitidan oshadi va uni sinxronlab boʻlmaydi. Baribir qoʻshmoqchimisiz?</string>
+    <string name="media_file_size_add_anyway">Baribir qoʻshish</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Yozuv taxtasi rasmini saqlab boʻlmadi. %s</string>
     <string name="white_board_image_saved">Yozuv taxtasi rasmi %s ga saqlandi</string>
@@ -227,7 +206,7 @@
     <string name="valid_js_api_version">Yaroqsiz AnkiDroid JS API versiyasi. %s dasturchi bilan bogʻlaning yoki vikiga murojaat qiling</string>
     <string name="update_js_api_version">AnkiDroid JS API yangilanishi mavjud. %s dasturchi bilan bogʻlaning yoki vikiga murojaat qiling</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Koʻrish</string>
-    <string name="anki_js_error_code">(Xatolik kodi: %d)</string>
+    <string name="anki_js_error_code">(Error code: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Buferga nusxa olindi</string>
     <string name="about_ankidroid_error_copy_debug_info">Debag maʼlumotlarini buferga nusxa olishda xatolik yuz berdi</string>
@@ -235,7 +214,7 @@
     <string name="card_viewer_could_not_find_image">Karta tarkibida xatolik: “%s”ni yuklab boʻlmadi</string>
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Dastalarni qidirish</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal xatolik</string>
+    <string name="ankidroid_init_failed_webview_title">Fatal error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid hozirda mavjud boʻlmagan tizim WebViewʼga tayanadi. Bu tizim yangilanishlarni oʻrnatayotganda sodir boʻlishi mumkin. Bir necha daqiqadan soʻng qayta urinib koʻring.\n\n%s</string>
     <string name="ankidroid_init_failed_storage">Android xatoligi sababli AnkiDroid diskka ruxsati yoʻq.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -260,10 +239,14 @@
     <string name="note_editor_audio_too_large">Audio fayl juda katta, audio faylni qoʻlda kiriting</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android zaxiralashi amalga oshmoqda. Iltimos, qayta urinib koʻring</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidʼga yorliqlar qoʻshishga ruxsat berish uchun iManagerʼdan foydalanishingiz kerak boʻlishi mumkin</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Asosiy ekraningiz AnkiDroidʼga yorliqlar qoʻshishga ruxsat bermaydi</string>
     <string name="create_shortcut_error">Yorliq qoʻshishda xatolik: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Jumlalar bosh harf bilan</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Asboblar panelini aylantirish</string>
+    <!-- Dialog hints -->
+    <string name="dialog_hint_url">URL</string>
+    <string name="dialog_hint_certificate">Sertifikat</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -273,16 +256,16 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Yaroqli e-pochta manzilini kiriting</string>
     <string name="password_empty">Parol talab etiladi</string>
-    <string name="back_pressed_once">Chiqish uchun yana bir bor bosing</string>
+    <string name="back_pressed_once">Chiqish uchun yana orqaga qayting</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Dastani yuklab olish</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Brauzerda ochish</string>
-    <string name="try_again">Qayta urinish</string>
+    <string name="try_again">Try again</string>
     <string name="cancel_download">Yuklab olishni bekor qilish</string>
     <string name="cancel_download_question_title">Yuklab olishni bekor qilmoqchimisiz?</string>
     <string name="downloading_file">%s yuklab olinmoqda</string>
-    <string name="import_deck">Dastani import qilish</string>
+    <string name="import_deck">Import deck</string>
     <string name="something_wrong">Nimadir xato ketdi, iltimos, qayta urinib koʻring</string>
     <string name="download_failed">Yuklab olib boʻlmadi</string>
     <string name="deck_download_progress_message">Yuklab olish jarayonida boshqa ilovalardan foydalanishingiz mumkin</string>
@@ -319,7 +302,7 @@
     <string name="intro_ankidroid_tagline_one">Kamroq oʻqi</string>
     <string name="intro_ankidroid_tagline_two">Koʻproq eslab qol</string>
     <string name="intro_short_ankidroid_explanation">Anki karta rejalashtiruvchisi eng zaif xotiralaringizni mustahkamlab va eng kuchli xotiralaringizni saqlab qolish orqali vaqtni tejaydi</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Boshlash</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
     <string name="intro_sync_from_ankiweb">AnkiWebʼdan sinxronlash</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid hali ishga tushirilmagan. AnkiDroidʼni oching va qayta urinib koʻring</string>
@@ -331,9 +314,7 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartalar</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Qaydlar</string>
-    <string name="toggle_cards_notes">Karta/qaydlar almashtirish</string>
     <string name="truncate_content_help">Karta brauzerini har bir qator balandligini faqat dastlabki 3 ta tarkib qatorini koʻrsatish uchun qisqartirish</string>
-    <string name="browser_options_dialog_heading">Karta brauzeri parametrlari</string>
     <string name="audio_saved">Ovoz yozuvi saqlandi</string>
     <string name="deleting_selected_notes">Tanlangan qaydlar oʻchirilmoqda</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tinglash uchun ovozni tanlang</string>
@@ -366,13 +347,12 @@
     <string name="orphan_note_message">Ushbu karta turini oʻchirib tashlash baʼzi qaydlar kartasiz qolishiga olib keladi.</string>
     <string name="voice_not_supported">Ovoz qoʻllab-quvvatlanmaydi. Boshqasini sinab koʻring yoki ovoz dvijogini oʻrnating.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Dasta tanlagich</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Dastani tasdiqsiz oʻchirib tashlash</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Qayd muharriri</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Dastani tanlash</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Qayd turini tanlash</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Teg muharriri</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Karta shabloni muharriri</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Oldi shablonni tahrirlash</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Orqa shablonni tahrirlash</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Stilni tahrirlash</string>
@@ -385,7 +365,8 @@
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Rejalashtiruvchini yangilash kerak</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
-    <!-- Other errors -->
-    <!-- Similar to TR.qtMiscNameExists(): "Name exists." -->
-    <string name="error_name_exists">Name already exists</string>
+    <!--Set up date-->
+    <string name="set_due_date_day" comment="Used for setting due date">Kun</string>
+    <string name="set_due_date_date_range">Sana oralig\'i</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">Bajarilmoqda</string>
 </resources>

@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
+
 package com.ichi2.anki.preferences
 
 import android.content.res.Configuration
@@ -35,7 +23,7 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.preferences.ControlPreference
 import com.ichi2.preferences.ReviewerControlPreference
@@ -124,6 +112,7 @@ class ControlsSettingsFragment :
         setControlPreferencesDefaultValues(screen)
         setDynamicTitle()
         setupNewStudyScreenSettings()
+        setupAnswerCommands()
     }
 
     @NeedsTest("Only the tab elements are removed")
@@ -139,36 +128,72 @@ class ControlsSettingsFragment :
 
     private fun setDynamicTitle() {
         findPreference<ControlPreference>(getString(R.string.reschedule_command_key))?.let {
-            val preferenceTitle = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            val preferenceTitle = TR.sentenceCase.setDueDate
             it.title = preferenceTitle
             it.dialogTitle = preferenceTitle
         }
         findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
-            it.title = getString(R.string.gesture_toggle_whiteboard).toSentenceCase(R.string.sentence_gesture_toggle_whiteboard)
+            it.title = TR.sentenceCase.gestureToggleWhiteboard(getString(R.string.gesture_toggle_whiteboard))
         }
         findPreference<ControlPreference>(getString(R.string.flag_red_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_red).toSentenceCase(R.string.sentence_gesture_flag_red)
+            it.title = TR.sentenceCase.gestureFlagRed(getString(R.string.gesture_flag_red))
         }
         findPreference<ControlPreference>(getString(R.string.flag_orange_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_orange).toSentenceCase(R.string.sentence_gesture_flag_orange)
+            it.title = TR.sentenceCase.gestureFlagOrange(getString(R.string.gesture_flag_orange))
         }
         findPreference<ControlPreference>(getString(R.string.flag_green_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_green).toSentenceCase(R.string.sentence_gesture_flag_green)
+            it.title = TR.sentenceCase.gestureFlagGreen(getString(R.string.gesture_flag_green))
         }
         findPreference<ControlPreference>(getString(R.string.flag_blue_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_blue).toSentenceCase(R.string.sentence_gesture_flag_blue)
+            it.title = TR.sentenceCase.gestureFlagBlue(getString(R.string.gesture_flag_blue))
         }
         findPreference<ControlPreference>(getString(R.string.flag_pink_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_pink).toSentenceCase(R.string.sentence_gesture_flag_pink)
+            it.title = TR.sentenceCase.gestureFlagPink(getString(R.string.gesture_flag_pink))
         }
         findPreference<ControlPreference>(getString(R.string.flag_turquoise_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_turquoise).toSentenceCase(R.string.sentence_gesture_flag_turquoise)
+            it.title = TR.sentenceCase.gestureFlagTurquoise(getString(R.string.gesture_flag_turquoise))
         }
         findPreference<ControlPreference>(getString(R.string.flag_purple_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_purple).toSentenceCase(R.string.sentence_gesture_flag_purple)
+            it.title = TR.sentenceCase.gestureFlagPurple(getString(R.string.gesture_flag_purple))
         }
         findPreference<ControlPreference>(getString(R.string.remove_flag_command_key))?.let {
-            it.title = getString(R.string.gesture_flag_remove).toSentenceCase(R.string.sentence_gesture_flag_remove)
+            it.title = TR.sentenceCase.gestureFlagRemove(getString(R.string.gesture_flag_remove))
+        }
+        findPreference<ControlPreference>(getString(R.string.bury_card_command_key))?.let {
+            it.title = TR.sentenceCase.buryCard
+        }
+        findPreference<ControlPreference>(getString(R.string.suspend_card_command_key))?.let {
+            it.title = TR.sentenceCase.suspendCard
+        }
+        findPreference<ControlPreference>(getString(R.string.card_info_command_key))?.let {
+            it.title = TR.sentenceCase.cardInfo
+        }
+        findPreference<ControlPreference>(getString(R.string.bury_note_command_key))?.let {
+            it.title = TR.sentenceCase.buryNote
+        }
+        findPreference<ControlPreference>(getString(R.string.suspend_note_command_key))?.let {
+            it.title = TR.sentenceCase.suspendNote
+        }
+        findPreference<ControlPreference>(getString(R.string.mark_command_key))?.let {
+            it.title = TR.sentenceCase.markNote
+        }
+        findPreference<ControlPreference>(getString(R.string.previewer_mark_key))?.let {
+            it.title = TR.sentenceCase.markNote
+        }
+        findPreference<ControlPreference>(getString(R.string.previous_card_info_command_key))?.let {
+            it.title = TR.sentenceCase.previousCardInfo
+        }
+        findPreference<ControlPreference>(getString(R.string.delete_command_key))?.let {
+            it.title = TR.sentenceCase.deleteNote
+        }
+        findPreference<ControlPreference>(getString(R.string.answer_again_command_key))?.let {
+            it.title = TR.sentenceCase.answerAgain
+        }
+        findPreference<ControlPreference>(getString(R.string.answer_hard_command_key))?.let {
+            it.title = TR.sentenceCase.answerHard
+        }
+        findPreference<ControlPreference>(getString(R.string.answer_good_command_key))?.let {
+            it.title = TR.sentenceCase.answerGood
         }
     }
 

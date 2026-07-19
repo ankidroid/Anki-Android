@@ -33,11 +33,11 @@ class MultimediaViewModel : ViewModel() {
     private var prevMultimediaPath: File? = null
     private var prevMultimediaUri: Uri? = null
 
-    private val _currentMultimediaUri = MutableStateFlow<Uri?>(null)
-    val currentMultimediaUri: StateFlow<Uri?> get() = _currentMultimediaUri
+    val currentMultimediaUri: StateFlow<Uri?>
+        field = MutableStateFlow<Uri?>(null)
 
-    private val _currentMultimediaPath = MutableStateFlow<File?>(null)
-    val currentMultimediaPath: StateFlow<File?> get() = _currentMultimediaPath
+    val currentMultimediaPath: StateFlow<File?>
+        field = MutableStateFlow<File?>(null)
 
     var selectedMediaFileSize: Long = 0
 
@@ -56,8 +56,8 @@ class MultimediaViewModel : ViewModel() {
     }
 
     fun restoreMultimedia() {
-        _currentMultimediaUri.value = prevMultimediaUri
-        _currentMultimediaPath.value = prevMultimediaPath
+        currentMultimediaUri.value = prevMultimediaUri
+        currentMultimediaPath.value = prevMultimediaPath
     }
 
     fun updateMediaFileLength(length: Long) {
@@ -65,7 +65,7 @@ class MultimediaViewModel : ViewModel() {
     }
 
     fun updateCurrentMultimediaUri(uri: Uri?) {
-        _currentMultimediaUri.value = uri
+        currentMultimediaUri.value = uri
     }
 
     fun updateCurrentMultimediaPath(uri: String) {
@@ -73,6 +73,6 @@ class MultimediaViewModel : ViewModel() {
     }
 
     fun updateCurrentMultimediaPath(path: File?) {
-        _currentMultimediaPath.value = path
+        currentMultimediaPath.value = path
     }
 }

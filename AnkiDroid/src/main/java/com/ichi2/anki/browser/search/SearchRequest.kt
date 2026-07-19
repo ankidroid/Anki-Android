@@ -81,4 +81,6 @@ data class SearchRequest(
             SearchString.fromNodeList(nodeList, SearchJoiner.AND).getOrThrow()
         }
     }
+
+    companion object
 }

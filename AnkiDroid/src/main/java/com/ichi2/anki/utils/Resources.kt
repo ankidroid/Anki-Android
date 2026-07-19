@@ -21,8 +21,8 @@ import android.content.res.Resources
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentActivity
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
 
 /**
  * @param resId must be a [StringRes] or a [PluralsRes]

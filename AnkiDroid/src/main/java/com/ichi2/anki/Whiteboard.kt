@@ -1,21 +1,9 @@
-/*
- * Copyright (c) 2009 Andrew <andrewdubya@gmail.com>
- * Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
- * Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
- * Copyright (c) 2021 Nicolai Weitkemper <kontakt@nicolaiweitkemper.de>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2021 Nicolai Weitkemper <kontakt@nicolaiweitkemper.de>
+
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
@@ -40,20 +28,22 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.graphics.scale
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.showColorPickerDialog
-import com.ichi2.compat.CompatHelper
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import timber.log.Timber
 import java.io.FileNotFoundException
 import kotlin.math.abs
 import kotlin.math.max
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Whiteboard allowing the user to draw the card's answer on the touchscreen.
@@ -380,19 +370,19 @@ class Whiteboard(
                 penColor = Color.BLACK
             }
             R.id.pen_color_red -> {
-                val redPenColor = context.getColor(R.color.material_red_500)
+                val redPenColor = context.getColor(CommonR.color.material_red_500)
                 penColor = redPenColor
             }
             R.id.pen_color_green -> {
-                val greenPenColor = context.getColor(R.color.material_green_500)
+                val greenPenColor = context.getColor(CommonR.color.material_green_500)
                 penColor = greenPenColor
             }
             R.id.pen_color_blue -> {
-                val bluePenColor = context.getColor(R.color.material_blue_500)
+                val bluePenColor = context.getColor(CommonR.color.material_blue_500)
                 penColor = bluePenColor
             }
             R.id.pen_color_yellow -> {
-                val yellowPenColor = context.getColor(R.color.material_yellow_500)
+                val yellowPenColor = context.getColor(CommonR.color.material_yellow_500)
                 penColor = yellowPenColor
             }
             R.id.pen_color_custom -> {
@@ -585,7 +575,7 @@ class Whiteboard(
         }
 
         private val displayDimensions: Point
-            get() = getDisplayDimensions(AnkiDroidApp.instance.applicationContext)
+            get() = getDisplayDimensions(appContext)
     }
 
     init {

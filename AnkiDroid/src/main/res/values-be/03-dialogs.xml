@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Праверыць базу даных?</string>
-    <string name="check_db_warning">Гэта можа заняць шмат часу</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Выдаліць калоду</string>
+    <string name="check_db_warning">Гэта можа заняць шмат часу. Працягнуць?</string>
     <string name="delete_deck_title">Выдаліць калоду?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Выдаліць усе карткі ў %1$s? Папка змяшчае %2$d картку</item>
@@ -85,10 +62,10 @@
     <string name="restore_backup_title">Аднавіць з рэзервовай копіі?</string>
     <string name="restore_backup">Ваша калекцыя будзе заменена больш старой копіяй. Незахаваныя дасягненні будуць страчаныя.</string>
     <string name="restore_backup_choose_another">Выбраць іншую</string>
-    <string name="dialog_cancel">Адмяніць</string>
+    <string name="dialog_cancel">Скасаваць</string>
     <string name="dialog_ok">Добра</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Дадаць</string>
+    <string name="restore">Аднавіць</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Пацвердзіць</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_yes">Так</string>
@@ -107,10 +84,9 @@
     <string name="dialog_collection_path_not_dir">Азначаны шлях не з\'яўляецца дапушчальным каталогам</string>
     <string name="dialog_invalid_custom_certificate">Прыведзены тэкст не пераўтвараецца ў дапушчальны сертыфікат X509 з кадзіраваннем PEM</string>
     <string name="dialog_invalid_custom_certificate_title">Памылка разборкі сертыфіката</string>
-    <string name="dialog_updated_custom_certificate">Сертыфікат адноўлены</string>
+    <string name="dialog_updated_custom_certificate">Сертыфікат абноўлены</string>
     <!-- Media checking -->
-    <string name="check_media_title">Праверыць медыяфайлы?</string>
-    <string name="check_media_warning">Гэта можа заняць шмат часу ў тым выпадку, калі калекцыя медыяфайлаў надта вялікая</string>
+    <string name="check_media_warning">Гэта можа заняць шмат часу ў тым выпадку, калі калекцыя медыяфайлаў занадта вялікая. Працягнуць?</string>
     <string name="check_media_message">Праверка медыяфайлаў&#8230;</string>
     <string name="check_media_adding_missing_tag">Дадаванне тэгаў&#8230;</string>
     <string name="check_media_tags_added">Тэгі дададзены</string>
@@ -136,8 +112,6 @@
     <string name="permission_denied">У доступе адмоўлена</string>
     <string name="recording_permission_denied_message">Доступ да мікрафону патрэбны для \"Запісу голасу\". Дайце адпаведны доступ у наладах праграмы.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">Праграма AnkiDroid абноўленая</string>
-    <string name="integrity_check_startup_content">Праграма AnkiDroid абноўленая. Дадзенае абнаўленне змяшчае выпраўленні магчымых праблем з базай даных і мы раім вам запусціць яе праверку.</string>
     <string name="integrity_check_continue_anyway">Усё роўна працягнуць</string>
     <string name="integrity_check_insufficient_space">Праверка базы даных патрабуе вялікай колькасці часовага сховішча.\n\nВельмі пажадана мець прынамсі %s свабоднага месца на прыладзе для таго, каб паспяхова выканаць гэту аперацыю.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nУ цяперашні час у вас %s вольнага месца.</string>
@@ -224,7 +198,7 @@
     <string name="dismiss_backup_warning_title">Папярэджанне пра страту даных</string>
     <string name="dismiss_backup_warning_new_user">У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі будуць выдалены з вашай прылады</string>
     <string name="dismiss_backup_warning_upgrade">У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі стануць недаступны</string>
-    <string name="create_deck_numeric_hint">Калі ў вас ёсць праблемы з парадкам калод (напрыклад, ‘10’  калода стаіць перад ‘2’), замяніце ‘2’ на ‘02’</string>
+    <string name="create_deck_numeric_hint">Калі ў вас ёсць праблемы з парадкам калод (напрыклад, «10»  калода стаіць перад «2»), замяніце «2» на «02»</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задаць інтэрвал на тое ж самае значэнне</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
@@ -283,18 +257,18 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Нумары картак застануцца без змяненняў</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">Калі вы змяняеце тып нататкі на звычайную, і блізкіх выдаленняў больш, чым даступных шаблонаў картак, усе лішнія карткі будуць выдалены.</string>
+    <string name="extra_cloze_deletions_removed">Калі вы змяняеце тып нататкі на звычайны, а заданняў з пропускамі больш, чым даступных шаблонаў картак, то ўсе лішнія карткі будуць выдалены.</string>
     <string name="different_note_types_selected">Выберыце нататкі толькі аднаго тыпу.</string>
     <string name="error_no_changes_to_save">Адсутнічаюць змены для захавання</string>
     <string name="choose_color">Выберыце колер</string>
     <!-- Special Fields -->
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Палі</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Спецыяльныя</string>
-    <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">Змест пярэдняга шаблону. Аўдыё не прайграваецца аўтаматычна</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Калода картак цалкам, у тым ліку бацькоўскія калоды%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Бягучая калода картак, за выключэннем бацькоўскіх калод%s</string>
-    <string name="special_field_flag_help">Паказвае ‘%1$s’, дзе %2$s код сцяга (%3$s\–%4$s\)</string>
+    <string name="special_field_example_suffix"><![CDATA[: «<b>%1$s</b>»]]></string>
+    <string name="special_field_front_side_help">Змесціва пярэдняга шаблона. Аўдыя не будзе прайгравацца аўтаматычна</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Поўная калода картак, якая ўключае бацькоўскія калоды%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Бягучая калода картак, якая выключае бацькоўскія калоды%s</string>
+    <string name="special_field_flag_help">Выводзіць «%1$s», дзе %2$s код пазнакі (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Меткі нататкі%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Ідэнтыфікатар карткі%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Назва шаблону карткі%s</string>

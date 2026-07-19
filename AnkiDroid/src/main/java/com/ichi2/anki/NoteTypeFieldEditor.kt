@@ -33,8 +33,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.databinding.ActivityNoteTypeFieldEditorBinding
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
-import com.ichi2.anki.databinding.NoteTypeFieldEditorBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
@@ -47,6 +48,8 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -67,8 +70,8 @@ import timber.log.Timber
 import java.util.Locale
 
 @NeedsTest("perform one action, then another")
-class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
-    private val binding by viewBinding(NoteTypeFieldEditorBinding::bind)
+class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_editor) {
+    private val binding by viewBinding(ActivityNoteTypeFieldEditorBinding::bind)
 
     // Position of the current field selected
     private var currentPos = 0
@@ -95,7 +98,10 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.note_type_field_editor)
+        if (!ensureStorageIsReady()) {
+            return
+        }
+        setContentView(R.layout.activity_note_type_field_editor)
         enableToolbar()
         binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)
         startLoadingCollection()
@@ -147,6 +153,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
                 showDialogFragment(newInstance(fieldsLabels[position]))
                 currentPos = position
             }
+        binding.btnAdd.contentDescription = TR.sentenceCase.addField
         binding.btnAdd.setOnClickListener { addFieldDialog() }
     }
     // ----------------------------------------------------------------------------
@@ -195,7 +202,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.note_type_field_editor) {
             fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
                 customView(view = fieldNameInput, paddingStart = 64, paddingEnd = 64, paddingTop = 32)
-                title(R.string.model_field_editor_add)
+                title(text = TR.sentenceCase.addField)
                 positiveButton(R.string.menu_add) {
                     // Name is valid, now field is added
                     val fieldName = uniqueName(fieldNameInput)

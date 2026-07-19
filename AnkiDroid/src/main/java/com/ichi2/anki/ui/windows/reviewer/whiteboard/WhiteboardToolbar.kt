@@ -182,11 +182,17 @@ class WhiteboardToolbar : LinearLayout {
      */
     fun show() = dragHandler.show()
 
-    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean = dragHandler.onInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev)
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        val intercepted = dragHandler.onInterceptTouchEvent(ev)
+        return dragHandler.isHidden || intercepted || super.onInterceptTouchEvent(ev)
+    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = dragHandler.onTouchEvent(event) || super.onTouchEvent(event)
 
     private inner class DragHandler {
+        var isHidden = false
+            private set
+
         private var dragStartX = 0f
         private var dragStartY = 0f
         private var initialTranslationX = 0f
@@ -281,6 +287,7 @@ class WhiteboardToolbar : LinearLayout {
         }
 
         fun show() {
+            isHidden = false
             val animator = animate().setDuration(200.milliseconds).setInterpolator(DecelerateInterpolator())
 
             when (currentAlignment) {
@@ -293,6 +300,7 @@ class WhiteboardToolbar : LinearLayout {
         }
 
         fun hide() {
+            isHidden = true
             val animator = animate().setDuration(200.milliseconds).setInterpolator(DecelerateInterpolator())
             val maxTrans = maxTranslation
 

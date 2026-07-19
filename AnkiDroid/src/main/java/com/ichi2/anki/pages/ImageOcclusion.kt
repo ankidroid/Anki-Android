@@ -24,20 +24,19 @@ import android.webkit.WebView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
-import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
-import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.IO_ARGS_KEY
-import com.ichi2.anki.startDeckSelection
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.ARG_IMAGE_OCCLUSION
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import timber.log.Timber
 
@@ -57,15 +56,13 @@ import timber.log.Timber
  * @see ImageOcclusionViewModel
  * @see ImageOcclusion.getIntent
  */
-class ImageOcclusion :
-    PageFragment(R.layout.image_occlusion),
-    DeckSelectionDialog.DeckSelectionListener {
+class ImageOcclusion : PageFragment(R.layout.page_image_occlusion) {
     private val viewModel: ImageOcclusionViewModel by viewModels()
     private lateinit var deckNameView: TextView
 
     override val pagePath: String by lazy {
         val args =
-            BundleCompat.getParcelable(requireArguments(), IO_ARGS_KEY, ImageOcclusionArgs::class.java)
+            BundleCompat.getParcelable(requireArguments(), ARG_IMAGE_OCCLUSION, ImageOcclusionArgs::class.java)
                 ?: throw IllegalArgumentException("IO args were not setup correctly")
         val suffix =
             when (args) {
@@ -89,7 +86,7 @@ class ImageOcclusion :
         }
 
         deckNameView = view.findViewById(R.id.deck_name)
-        deckNameView.setOnClickListener { startDeckSelection(all = false, filtered = false, skipEmptyDefault = false) }
+        deckNameView.setOnClickListener { startDeckSelection(allowAll = false, allowFiltered = false) }
 
         @NeedsTest("#17393 verify that the added image occlusion cards are put in the correct deck")
         view.findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener {
@@ -99,7 +96,7 @@ class ImageOcclusion :
             }
             return@setOnMenuItemClickListener true
         }
-
+        registerDeckSelectedHandler(action = ::onDeckSelected)
         setupFlows()
     }
 
@@ -118,7 +115,7 @@ class ImageOcclusion :
             }
         }
 
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    private fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) return
         require(deck is SelectableDeck.Deck)
         viewModel.handleDeckSelection(deck.deckId)
@@ -154,7 +151,7 @@ class ImageOcclusion :
             context: Context,
             args: ImageOcclusionArgs,
         ): Intent {
-            val arguments = bundleOf(IO_ARGS_KEY to args)
+            val arguments = Bundle().apply { putParcelable(ARG_IMAGE_OCCLUSION, args) }
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
         }
     }

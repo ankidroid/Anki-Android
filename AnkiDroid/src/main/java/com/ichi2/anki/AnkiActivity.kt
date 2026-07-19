@@ -1,4 +1,5 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 @file:Suppress("LeakingThis") // fine - used as WeakReference
 
 package com.ichi2.anki
@@ -23,11 +24,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.WindowManager
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.AttrRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -49,50 +50,63 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.Direction
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
+import com.ichi2.anki.common.android.AdaptionUtil
+import com.ichi2.anki.common.android.AnkiBroadcastReceiver
+import com.ichi2.anki.common.android.animationDisabled
+import com.ichi2.anki.common.android.themes.disableXiaomiForceDarkMode
 import com.ichi2.anki.common.annotations.LegacyNotifications
+import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.ui.TransitionDirection
+import com.ichi2.anki.common.ui.TransitionDirection.DEFAULT
+import com.ichi2.anki.common.ui.TransitionDirection.NONE
+import com.ichi2.anki.common.utils.android.getColorFromAttr
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DialogHandler
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.ARG_SHARE_AS_TEXT
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
 import com.ichi2.anki.dialogs.SimpleMessageDialog
-import com.ichi2.anki.exception.SystemStorageException
+import com.ichi2.anki.dialogs.handleExportReadyRequest
+import com.ichi2.anki.dialogs.viewmodel.ExportReadyViewModel
 import com.ichi2.anki.libanki.Collection
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
-import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.themes.Themes
-import com.ichi2.utils.AdaptionUtil
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentBuilder
+import com.ichi2.anki.common.android.R as CommonR
 
 @UiThread
 open class AnkiActivity(
@@ -100,6 +114,8 @@ open class AnkiActivity(
 ) : AppCompatActivity(contentLayoutId ?: 0),
     ShortcutGroupProvider,
     AnkiActivityProvider {
+    val exportReadyViewModel by viewModels<ExportReadyViewModel>()
+
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
      *
@@ -125,22 +141,15 @@ open class AnkiActivity(
             }
         }
 
-    @Suppress("deprecation") // #9332: UI Visibility -> Insets
     override fun onCreate(savedInstanceState: Bundle?) {
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
         Themes.setTheme(this)
-        Themes.disableXiaomiForceDarkMode(this)
+        disableXiaomiForceDarkMode(this)
         super.onCreate(savedInstanceState)
-        // Disable the notifications bar if running under the test monkey.
-        if (AdaptionUtil.isUserATestClient) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            )
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            @Suppress("deprecation")
             window.navigationBarColor = getColor(R.color.transparent)
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
@@ -150,9 +159,17 @@ open class AnkiActivity(
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SHARE, this) { _, bundle ->
             shareFile(
-                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+                path = bundle.requireString(KEY_EXPORT_PATH),
+                asText = bundle.getBoolean(ARG_SHARE_AS_TEXT, false),
             )
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                exportReadyViewModel.exportReadyDestination.filterNotNull().collect(::handleExportReadyRequest)
+            }
+        }
+
         if (savedInstanceState != null) {
             val restoredValue = savedInstanceState.getString(KEY_EXPORT_FILE_NAME) ?: return
             fileExportPath = restoredValue
@@ -161,6 +178,14 @@ open class AnkiActivity(
 
     override fun onStart() {
         super.onStart()
+        // Disable the notifications bar if running under the test monkey.
+        // This is a work-around for an issue with the monkey feature of adb - when the
+        // monkey runs on a physical device, it can pull the status bar down, and escape the app
+        // under test.
+        if (AdaptionUtil.isUserATestClient && window != null) {
+            // Note: this is run in `onStart`, since it appears the decorView can be null in `onCreate`
+            CompatHelper.compat.hideStatusBar(window)
+        }
         customTabActivityHelper.bindCustomTabsService(this)
     }
 
@@ -189,22 +214,29 @@ open class AnkiActivity(
     }
 
     /**
-     * Sets the title of the toolbar (support action bar) for the activity.
+     * Sets the title (and possibly subtitle) of the toolbar (support action bar) for the activity.
      *
      * @param title The new title to be set for the toolbar.
+     * @param subtitle The new subtitle to be set for the toolbar. If `null`, the subtitle is removed.
      */
-    open fun setToolbarTitle(title: String) {
+    open fun setToolbarText(
+        title: String,
+        subtitle: String? = null,
+    ) {
         supportActionBar?.title = title
+        supportActionBar?.subtitle = subtitle
     }
 
     /**
-     * Sets the title of the toolbar (support action bar) for the activity.
+     * Sets the title (and possibly subtitle) of the toolbar (support action bar) for the activity.
      *
-     * @param title The new title to be set for the toolbar.
+     * @param titleRes The new title to be set for the toolbar.
+     * @param subtitleRes The new subtitle to be set for the toolbar. If `null`, the subtitle is removed.
      */
-    open fun setToolbarTitle(
+    open fun setToolbarText(
         @StringRes titleRes: Int,
-    ) = setToolbarTitle(getString(titleRes))
+        @StringRes subtitleRes: Int? = null,
+    ) = setToolbarText(getString(titleRes), subtitleRes?.let { getString(it) })
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -245,8 +277,8 @@ open class AnkiActivity(
             return
         }
         broadcastReceiver =
-            object : BroadcastReceiver() {
-                override fun onReceive(
+            object : AnkiBroadcastReceiver() {
+                override fun onReceiveBroadcast(
                     context: Context,
                     intent: Intent,
                 ) {
@@ -270,27 +302,6 @@ open class AnkiActivity(
         get() = CollectionManager.getColUnsafe()
 
     fun colIsOpenUnsafe(): Boolean = CollectionManager.isOpenUnsafe()
-
-    /**
-     * Whether animations should not be displayed
-     * This is used to improve the UX for e-ink devices
-     * Can be tested via Settings - Advanced - Safe display mode
-     *
-     * @see .animationEnabled
-     */
-    fun animationDisabled(): Boolean {
-        val preferences = this.sharedPrefs()
-        return preferences.getBoolean("safeDisplay", false)
-    }
-
-    /**
-     * Whether animations should be displayed
-     * This is used to improve the UX for e-ink devices
-     * Can be tested via Settings - Advanced - Safe display mode
-     *
-     * @see .animationDisabled
-     */
-    fun animationEnabled(): Boolean = !animationDisabled()
 
     override fun setContentView(view: View?) {
         if (animationDisabled()) {
@@ -325,29 +336,33 @@ open class AnkiActivity(
 
     fun startActivityWithAnimation(
         intent: Intent,
-        animation: Direction,
+        animation: TransitionDirection,
     ) {
         enableIntentAnimation(intent)
         super.startActivity(intent)
-        enableActivityAnimation(animation)
+        enableActivityAnimation(animation, open = true)
     }
 
     override fun finish() {
         finishWithAnimation(DEFAULT)
     }
 
-    fun finishWithAnimation(animation: Direction) {
+    fun finishWithAnimation(animation: TransitionDirection) {
         Timber.i("finishWithAnimation %s", animation)
         super.finish()
-        enableActivityAnimation(animation)
+        enableActivityAnimation(animation, open = false)
     }
 
     private fun disableIntentAnimation(intent: Intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
     }
 
-    private fun disableActivityAnimation() {
-        ActivityTransitionAnimation.slide(this, NONE)
+    /**
+     * @param open when `true`, overrides the animation for entering this activity.
+     * When `false`, overrides the animation for closing this activity
+     */
+    private fun disableActivityAnimation(open: Boolean) {
+        ActivityTransitionAnimation.slide(this, NONE, open)
     }
 
     @KotlinCleanup("Maybe rename this? This only disables the animation conditionally")
@@ -357,11 +372,18 @@ open class AnkiActivity(
         }
     }
 
-    private fun enableActivityAnimation(animation: Direction) {
+    /**
+     * @param open when `true`, overrides the animation for entering this activity.
+     * When `false`, overrides the animation for closing this activity
+     */
+    private fun enableActivityAnimation(
+        animation: TransitionDirection,
+        open: Boolean,
+    ) {
         if (animationDisabled()) {
-            disableActivityAnimation()
+            disableActivityAnimation(open)
         } else {
-            ActivityTransitionAnimation.slide(this, animation)
+            ActivityTransitionAnimation.slide(this, animation, open)
         }
     }
 
@@ -448,8 +470,8 @@ open class AnkiActivity(
             showSnackbar(getString(R.string.no_browser_msg, url.toString()))
             return
         }
-        val toolbarColor = MaterialColors.getColor(this, R.attr.appBarColor, 0)
-        val navBarColor = MaterialColors.getColor(this, R.attr.customTabNavBarColor, 0)
+        val toolbarColor = MaterialColors.getColor(this, CommonR.attr.appBarColor, 0)
+        val navBarColor = MaterialColors.getColor(this, CommonR.attr.customTabNavBarColor, 0)
         val colorSchemeParams =
             CustomTabColorSchemeParams
                 .Builder()
@@ -567,7 +589,7 @@ open class AnkiActivity(
                 ).setSmallIcon(R.drawable.ic_star_notify)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setColor(getColor(R.color.material_light_blue_500))
+                .setColor(getColor(CommonR.color.material_light_blue_500))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setTicker(ticker)
@@ -638,7 +660,7 @@ open class AnkiActivity(
     fun setNavigationBarColor(
         @AttrRes attr: Int,
     ) {
-        window.navigationBarColor = Themes.getColorFromAttr(this, attr)
+        window.navigationBarColor = getColorFromAttr(this, attr)
     }
 
     fun closeCollectionAndFinish() {
@@ -673,25 +695,6 @@ open class AnkiActivity(
         return listOfNotNull(shortcuts?.toShortcutGroup(this), generalShortcutGroup)
     }
 
-    /**
-     * If storage permissions are not granted, shows a toast message and finishes the activity.
-     *
-     * This should be called AFTER a call to `super.`[onCreate]
-     *
-     * @return `true`: activity may continue to start, `false`: [onCreate] should stop executing
-     * as storage permissions are mot granted
-     *
-     * @throws SystemStorageException if `getExternalFilesDir` returns null
-     */
-    fun ensureStoragePermissions(): Boolean {
-        if (IntentHandler.grantedStoragePermissions(this, showToast = true)) {
-            return true
-        }
-        Timber.w("finishing activity. No storage permission")
-        finish()
-        return false
-    }
-
     override val shortcuts
         get(): ShortcutGroup? = null
 
@@ -702,7 +705,11 @@ open class AnkiActivity(
         super.onSaveInstanceState(outState)
     }
 
-    private fun shareFile(path: String) {
+    @NeedsTest("#20993 verify that the proper mime type is used for the share intent")
+    private fun shareFile(
+        path: String,
+        asText: Boolean = false,
+    ) {
         // Make sure the file actually exists
         val attachment = File(path)
         if (!attachment.exists()) {
@@ -721,10 +728,12 @@ open class AnkiActivity(
                 showThemedToast(this, resources.getString(R.string.apk_share_error), false)
                 return
             }
+        val targetMimeType = if (asText) "text/plain" else "application/apkg"
+
         val sendIntent =
             ShareCompat
                 .IntentBuilder(this)
-                .setType("application/apkg")
+                .setType(targetMimeType)
                 .setStream(uri)
                 .setSubject(getString(R.string.export_email_subject, attachment.name))
                 .setHtmlText(
@@ -834,7 +843,7 @@ open class AnkiActivity(
 
     companion object {
         /** Extra key to set the finish animation of an activity  */
-        const val FINISH_ANIMATION_EXTRA = "finishAnimation"
+        const val EXTRA_FINISH_ANIMATION = "finishAnimation"
 
         private const val SIMPLE_NOTIFICATION_ID = 0
         private const val KEY_EXPORT_FILE_NAME = "key_export_file_name"

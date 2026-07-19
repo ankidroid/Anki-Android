@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2026 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2026 lukstbit <52494258+lukstbit@users.noreply.github.com>
 
 package com.ichi2.anki.lint.rules
 
@@ -36,9 +23,6 @@ class LayoutPrefixDetector : LayoutDetector() {
         document: Document,
     ) {
         val layoutFileName = context.file.name
-
-        // TODO: fix these and remove this check
-        if (layoutFileName in TEMPORARILY_IGNORED) return
 
         if (!ENFORCED_PREFIXES.any { prefix -> layoutFileName.startsWith(prefix) }) {
             context.report(
@@ -87,85 +71,12 @@ class LayoutPrefixDetector : LayoutDetector() {
                 "item_",
                 // layouts used by widgets
                 "widget_",
-            )
-
-        /**
-         * TODO Go over the entries in the list and fix. Some of the files require further
-         *  discussions on names conventions.
-         */
-        val TEMPORARILY_IGNORED =
-            listOf(
-                "about_layout.xml",
-                "add_edit_reminder_dialog.xml",
-                "alert_dialog_checkbox.xml",
-                "alert_dialog_title_with_help.xml",
-                "bottomsheet_multimedia.xml",
-                "browser_column_cell.xml",
-                "browser_column_heading.xml",
-                "browser_columns_selection.xml",
-                "card_browser_appearance.xml",
-                "card_browser_fragment.xml",
-                "card_browser_searchview_fragment.xml",
-                "card_template_editor.xml",
-                "card_template_editor_item.xml",
-                "change_note_type_dialog.xml",
-                "check_pronunciation_fragment.xml",
-                "colorpicker_flag_bubble.xml",
-                "control_preference.xml",
-                "controls_tab_layout.xml",
-                "deck_picker.xml",
-                "drawing_fragment.xml",
-                "extended_category.xml",
-                "feedback.xml",
-                "floating_add_button.xml",
-                "image_occlusion.xml",
-                "info.xml",
-                "internet_permission_fragment.xml",
-                "instant_editor_field_layout.xml",
-                "introduction_activity.xml",
-                "introduction_layout.xml",
-                "locale_selection_dialog.xml",
-                "my_account.xml",
-                "my_account_logged_in.xml",
-                "navdrawer_header.xml",
-                "navigation_drawer_layout.xml",
-                "navigation_drawer_layout_fullscreen.xml",
-                "note_editor_fragment.xml",
-                "note_editor_toolbar.xml",
-                "note_editor_toolbar_add_custom_item.xml",
-                "note_editor_toolbar_edit_custom_item.xml",
-                "note_type_field_editor.xml",
-                "notifications_permission.xml",
-                "page_fragment.xml",
-                "permissions_activity.xml",
-                "permissions_bottom_sheet.xml",
-                "popup_brush_options.xml",
-                "popup_eraser_options.xml",
-                "preference_material_switch_widget.xml",
-                "preference_slider.xml",
-                "preference_widget_switch_with_separator.xml",
-                "preference_widget_text.xml",
-                "preferences.xml",
-                "preferences_reviewer_menu.xml",
-                "previewer.xml",
-                "progress_bar.xml",
-                "rename_flag_layout.xml",
-                "resizing_divider_internal.xml",
-                "reviewer.xml",
-                "reviewer2.xml",
-                "reviewer_flashcard_fullscreen.xml",
-                "reviewer_fullscreen.xml",
-                "reviewer_fullscreen_noanswers.xml",
-                "set_due_date_range.xml",
-                "set_due_date_single.xml",
-                "single_fragment_activity.xml",
-                "spinner_dropdown_item_with_radio.xml",
-                "statistics.xml",
-                "studyoptions.xml",
-                "studyoptions_fragment.xml",
-                "sync_progress_layout.xml",
-                "tab_layout_icon_on_end.xml",
-                "template_previewer_container.xml",
+                // layouts used by preferences
+                "preference_",
+                // layouts used by Anki HTML pages
+                "page_",
+                // layouts used inside PopupWindow
+                "popup_",
             )
     }
 }

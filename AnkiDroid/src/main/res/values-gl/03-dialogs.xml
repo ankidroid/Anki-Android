@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Comprobar a base de datos?</string>
-    <string name="check_db_warning">Isto pode levar moito tempo</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Eliminar baralla</string>
+    <string name="check_db_warning">Isto pode levar moito tempo. Queres continuar?</string>
     <string name="delete_deck_title">Eliminar baralla?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Eliminar tódalas tarxetas en %1$s? Contén %2$d tarxeta</item>
@@ -83,8 +60,8 @@
     <string name="restore_backup_choose_another">Escoller outro</string>
     <string name="dialog_cancel">Cancelar</string>
     <string name="dialog_ok">Aceptar</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Engadir</string>
+    <string name="restore">Restaurar</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmar</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_yes">Si</string>
@@ -105,8 +82,7 @@
     <string name="dialog_invalid_custom_certificate_title">Erro na análise do certificado</string>
     <string name="dialog_updated_custom_certificate">Certificado actualizado</string>
     <!-- Media checking -->
-    <string name="check_media_title">Comprobar multimedia?</string>
-    <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes</string>
+    <string name="check_media_warning">Isto pode levar moito tempo con coleccións multimedia grandes. Queres continuar?</string>
     <string name="check_media_message">Verificando multimedia&#8230;</string>
     <string name="check_media_adding_missing_tag">Engadindo etiquetas&#8230;</string>
     <string name="check_media_tags_added">Etiquetas engadidas</string>
@@ -126,12 +102,10 @@
     <string name="multimedia_editor_audio_permission_refused">Non se puido obter permiso para usar o micrófono.</string>
     <string name="multimedia_editor_failed">Non se puido abrir o editor multimedia</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Denegouse o permiso para gravar audio</string>
+    <string name="multimedia_editor_audio_permission_denied">Denegouse o permiso para gravar son</string>
     <string name="permission_denied">Permiso denegado</string>
     <string name="recording_permission_denied_message">O permiso de micrófono é necesario para a funcionalidade de \"Gravar voz\". Concédeo nos axustes da aplicación.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid actualizado</string>
-    <string name="integrity_check_startup_content">AnkiDroid foi actualizado. Esta actualización inclúe correccións para posíbeis problemas na base de datos, polo que recomendamos que comprobes a base de datos agora.</string>
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Comprobar a base de datos usa unha gran cantidade de espazo temporal.\n\nRecoméndase que teñas polo menos %s de espazo libre no teu dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tes %s libre.</string>
@@ -161,7 +135,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Erro ao programar recordatorios</string>
     <string name="boot_service_too_many_notifications">Demasiados recordatorios programados. Algúns non aparecerán</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Establecer Idioma</string>
+    <string name="locale_selection_dialog_title_new">Estabelecer Idioma</string>
     <string name="locale_selection_dialog_summary">Algúns teclados multilingües, como GBoard, permiten cambiar o idioma mentres se edita o texto.\n\nSe o teu teclado non cambia o idioma, solicita a función \"setImeHintLocales\" ao fabricante.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Empregar o AnkiDroid</string>
@@ -218,7 +192,7 @@
     <string name="dismiss_backup_warning_upgrade">Debido aos cambios de privacidade do Android, perderás o acceso aos teus datos e as copias de seguranza automáticas se desinstalas a aplicación</string>
     <string name="create_deck_numeric_hint">Se tes problemas ao arranxar a baralla (por exemplo, \'10\' aparece antes que \'2\'), substitúe \'2\' por \'02\'</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Establecer intervalo ao mesmo valor</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Estabelecer intervalo ao mesmo valor</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
         <item quantity="one">Amosar tarxeta en</item>
         <item quantity="other">Amosar tarxetas en</item>

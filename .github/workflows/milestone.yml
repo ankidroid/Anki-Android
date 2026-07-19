@@ -13,14 +13,14 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-    - uses: actions/github-script@v8
+    - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
       with:
         script: |
           await github.rest.issues.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: ${{ github.event.pull_request.number }},
-            milestone: 74
+            milestone: 77
           });
 
           // graphql query to get referenced issues to merged pull request
@@ -51,7 +51,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue.number,
-              milestone: 74
+              milestone: 77
             });
           }
 

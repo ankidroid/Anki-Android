@@ -16,7 +16,7 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CrashReportService.sendExceptionReport
+import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith

@@ -1,35 +1,35 @@
-Memorize anything with AnkiDroid!
+هەموو شتێک بە ئانکیدرۆید لەبەربکە
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and macOS.
+ئەپڵیکەیشنی (ئانکیدرۆید) ڕێگەت پێدەدات زۆر بە کارایی فلاشکارتەکان فێرببیت، ئەویش لە ڕێگەی نیشاندانیان ڕێک پێش ئەوەی لەبیریان بکەیت. ئەم ئەپڵیکەیشنە بەتەواوی گونجاوە لەگەڵ نەرمەکاڵای (ئانکی) بۆ دووبارەکردنەوەی مەودادار کە بۆ سیستمەکانی وێندۆز و لینوکس و ماک بەردەستە، هەروەها تایبەتمەندی هاوکاتکردنی هەیە
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+هەموو جۆرە زانیارییەک بخوێنە، لە هەر شوێنێک و هەر کاتێک کە بتەوێت. کاتە بەتاڵەکانت بە باشی بەکاربهێنە، وەک کاتی ناو پاس، نۆرەی ناو مارکێتەکان یان هەر کاتێکی تری چاوەڕوانیکردن
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+دەستەی فلاشکارتی تایبەت بە خۆت دروست بکە، یان ئەو دەستە ئامادەکراوانە دابەزێنە کە بۆ زۆرێک لە زمان و بابەتەکان فەراهەم کراون (زیاتر لە ٦٠٠٠ دەستە بەردەستە)
 
-Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+دەتوانیت بابەتەکان لە ڕێگەی (ئانکی) وەشانی کۆمپیوتەر یان ڕاستەوخۆ لە ڕێگەی (ئانکیدرۆید)ـەوە زیاد بکەیت ئەم ئەپڵیکەیشنە تەنانەت پشتگیری زیادکردنی بابەتەکان بە شێوەی خۆکار لە فەرهەنگەکانەوە دەکات
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
+تایبەتمەندییە سەرەکییەکان
+ناوەڕۆکی فلاشکارتەکان: دەق، وێنە، دەنگ، LaTeX
 • spaced repetition (AI-optimized FSRS algorithm)
-• text-to-speech integration
-• more than 10,000 premade decks
+تایبەتمەندی گۆڕینی دەق بۆ دەنگ
+زیاتر لە ١٠,٠٠٠ دەستەی ئامادەکراو
 • progress widget
-• detailed statistics
+ئاماری ورد و تێروتەسەل
 • syncing with AnkiWeb
 • open source
 
 ★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
+نووسینی وەڵامەکان (ئارەزوومەندانە)
+تەختەی سپی
+دەستکاریکەر و زیادکەری کارتەکان
+وێبگەڕی کارتەکان
+شێوازی تایبەت بە تابلێت
 • import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
+زیادکردنی کارت لە ئەپڵیکەیشنەکانی ترەوە وەک فەرهەنگەکان
 • custom font support
 • full backup system
 • navigation by swipe, tap
-• customisable
+توانای دەستکاریکردن و ڕێکخستن بەپێی ئارەزوو
 • dynamic deck handling
 • night mode
 • 27 localisations

@@ -43,19 +43,20 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CustomActionModeCallback
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.ActivityInstantNoteEditorBinding
 import com.ichi2.anki.databinding.DialogInstantEditorBinding
-import com.ichi2.anki.databinding.InstantEditorFieldLayoutBinding
-import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.databinding.ViewInstantEditorFieldBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.dialogs.registerDeckSelectedHandler
+import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.anki.showThemedToast
-import com.ichi2.anki.startDeckSelection
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.withProgress
 import com.ichi2.themes.setTransparentBackground
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
@@ -77,9 +78,7 @@ import timber.log.Timber
  * Single instance Activity for instantly editing and adding cloze card/s without actually opening the app,
  * uses a custom dialog layout and a transparent activity theme to achieve the functionality.
  **/
-class InstantNoteEditorActivity :
-    AnkiActivity(R.layout.activity_instant_note_editor),
-    DeckSelectionDialog.DeckSelectionListener {
+class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_editor) {
     private val viewModel: InstantEditorViewModel by viewModels()
 
     /**
@@ -115,7 +114,7 @@ class InstantNoteEditorActivity :
             return
         }
         super.onCreate(savedInstanceState)
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
         }
         setTransparentBackground()
@@ -136,6 +135,8 @@ class InstantNoteEditorActivity :
 
         setupErrorListeners()
         prepareEditorDialog()
+
+        registerDeckSelectedHandler(action = ::onDeckSelected)
     }
 
     override fun onDestroy() {
@@ -222,7 +223,7 @@ class InstantNoteEditorActivity :
                 setCancelable(false)
                 setFinishOnTouchOutside(false)
                 dialogBinding.spinnerLayout.setOnClickListener {
-                    startDeckSelection(all = false, filtered = false)
+                    startDeckSelection(allowAll = false, allowFiltered = false, skipEmptyDefault = true)
                 }
                 dialogBinding.actionSaveNote.setOnClickListener {
                     Timber.d("Save note button pressed")
@@ -263,7 +264,7 @@ class InstantNoteEditorActivity :
         var clozeFieldsSet = false
 
         for (field in notetypeJson!!.fields) {
-            val fieldBinding = InstantEditorFieldLayoutBinding.inflate(LayoutInflater.from(context))
+            val fieldBinding = ViewInstantEditorFieldBinding.inflate(LayoutInflater.from(context))
 
             val name = field.name
             fieldBinding.editTextLayout.hint = name
@@ -510,10 +511,12 @@ class InstantNoteEditorActivity :
     private fun savingErrorDialog(message: String) {
         AlertDialog.Builder(this).show {
             message(text = message)
-            positiveButton(R.string.dialog_cancel) {
+            positiveButton(R.string.try_again) {
+                checkAndSave()
+            }
+            negativeButton(R.string.dialog_cancel) {
                 instantAlertDialog.dismiss()
             }
-            negativeButton(R.string.try_again)
         }
     }
 
@@ -539,7 +542,7 @@ class InstantNoteEditorActivity :
         }
     }
 
-    override fun onDeckSelected(deck: SelectableDeck?) {
+    private fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
             return
         }
@@ -574,7 +577,7 @@ class InstantNoteEditorActivity :
                     convertSelectedTextToCloze(
                         textBox,
                         selectedText,
-                        viewModel.currentClozeNumber,
+                        viewModel.currentClozeNumber.value,
                     )
 
                     mode.finish()

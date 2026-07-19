@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Перевірити базу даних?</string>
-    <string name="check_db_warning">Це може зайняти багато часу</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Видалити колоду</string>
+    <string name="check_db_warning">Це може тривати довго. Продовжити?</string>
     <string name="delete_deck_title">Видалити колоду?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Видалити всі картки в %1$s? Вона містить %2$d картку</item>
@@ -87,14 +64,14 @@
     <string name="restore_backup_choose_another">Вибрати інший</string>
     <string name="dialog_cancel">Скасувати</string>
     <string name="dialog_ok">Ок</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Додати</string>
+    <string name="restore">Відновити</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Підтвердити</string>
     <string name="dialog_no">Ні</string>
     <string name="dialog_yes">Так</string>
     <string name="dialog_keep">Залишити</string>
     <string name="dialog_remove">Видалити</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Вихід</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Вийти</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_processing">Обробка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
@@ -109,8 +86,7 @@
     <string name="dialog_invalid_custom_certificate_title">Помилка парсингу сертифікату</string>
     <string name="dialog_updated_custom_certificate">Сертифікат оновлено</string>
     <!-- Media checking -->
-    <string name="check_media_title">Перевірити медіафайли?</string>
-    <string name="check_media_warning">Процес може зайняти багато часу з великими колекціями медіафайлів</string>
+    <string name="check_media_warning">У випадку великих медіа-колекцій це може забрати багато часу. Продовжити?</string>
     <string name="check_media_message">Перевіряємо мультимедіа&#8230;</string>
     <string name="check_media_adding_missing_tag">Додавання тегів&#8230;</string>
     <string name="check_media_tags_added">Теги додано</string>
@@ -136,8 +112,6 @@
     <string name="permission_denied">Відмовлено у доступі</string>
     <string name="recording_permission_denied_message">Для функції \"Запис голосу\" потрібний доступ до мікрофона. Будь ласка, надайте його в налаштуваннях додатку.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid оновлено</string>
-    <string name="integrity_check_startup_content">AnkiDroid оновлено. Оновлення включає в себе виправлення можливих проблем з базою даних, і ми радимо Вам запустити перевірку бази даних.</string>
     <string name="integrity_check_continue_anyway">Все одно продовжити</string>
     <string name="integrity_check_insufficient_space">Перевірка бази даних використовує багато тимчасового сховища.\n\nНаполегливо рекомендується мати принаймні %s вільного місця на пристрої перед продовженням.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nЗараз %s вільного місця.</string>
@@ -286,17 +260,17 @@
     <string name="extra_cloze_deletions_removed">Якщо ви змінюєте тип запису на звичайний, а кількість пропусків Cloze більша, ніж кількість доступних шаблонів карток, то надлишкові картки будуть видалені.</string>
     <string name="different_note_types_selected">Будь ласка, виберіть записи лише одного типу.</string>
     <string name="error_no_changes_to_save">Немає змін для збереження</string>
-    <string name="choose_color">Обрати колір</string>
+    <string name="choose_color">Виберіть колір</string>
     <!-- Special Fields -->
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Поля</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Спеціально</string>
-    <string name="special_field_example_suffix"><![CDATA[<b>%1$s</b>]]></string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Спеціальні</string>
+    <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
     <string name="special_field_front_side_help">Вміст переднього шаблону. Аудіо не відтворюється автоматично</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Повна колода карти, включаючи батьківські колоди%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Поточна колода карти, без урахування батьківських колод%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Тег нотатку%s</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Повна колода картки, включаючи батьківські колоди%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Поточна колода картки, без урахування батьківських колод%s</string>
+    <string name="special_field_flag_help">Виводить ‘%1$s’, де %2$s це код прапорця (%3$s\–%4$s\)</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Теги запису%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">ID картки%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Ім\'я шаблону картки%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Назва типу нотатки%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Назва шаблону картки%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Назва типу запису%s</string>
 </resources>

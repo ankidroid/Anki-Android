@@ -6,44 +6,22 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources>
     <string name="youre_offline">Oflaynsiz</string>
     <string name="sync_error">Sinxronlash xatoligi</string>
@@ -56,12 +34,10 @@
     <!-- MyAccount.kt -->
     <string name="username">E-pochta manzili</string>
     <string name="password">Parol</string>
-    <string name="log_in">Kirish</string>
     <string name="sign_up_description">AnkiWeb akkauntingiz yoʻqmi? U bepul!</string>
     <string name="sign_up_not_affiliated">Eslatma: AnkiWeb AnkiDroid bilan bogʻliq emas</string>
     <string name="sign_up">Roʻyxatdan oʻtish</string>
     <string name="logged_as">Shu orqali tizimga kirgansiz</string>
-    <string name="log_out">Tizimdan chiqish</string>
     <string name="reset_password">Parolni tiklash</string>
     <string name="lost_mail_instructions">E-pochtangizni unutdingizmi?</string>
     <string name="sign_in">Tizimga kirilmoqda</string>
@@ -77,7 +53,6 @@
     <string name="one_way_sync_title" maxLength="41">Bir tomonlama sinxronlash</string>
     <string name="one_way_sync_confirmation">Bir tomonlama sinxronlash soʻraldi</string>
     <string name="full_sync_confirmation">Soʻralgan oʻzgartirish kolleksiyangizni keyingi sinxronlashda maʼlumotlar bazasini toʻliq yuklashni talab qiladi. Agar boshqa qurilmangizda takrorlashlar yoki boshqa oʻzgarishlar boʻlsa va bu qurilma bilan sinxronlanmagan boʻlsa, ular yoʻqoladi. Davom ettirilsinmi?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroidʼni oldingi oʻrnatilgan versiyasidagi xatolik tufayli majburiy toʻliq sinxronlash tavsiya etiladi.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_one_way_sync">Sinxronlash (bir tomonlama)</string>
     <string name="sync_menu_title_no_account">Sinxronlash (tizimga kirish)</string>

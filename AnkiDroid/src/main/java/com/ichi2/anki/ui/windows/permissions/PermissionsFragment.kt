@@ -19,20 +19,20 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
 import androidx.core.view.allViews
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.permissions.hasPermission
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
@@ -71,7 +71,10 @@ abstract class PermissionsFragment(
     override fun onResume() {
         super.onResume()
         permissionsItems.forEach { it.updateSwitchCheckedStatus() }
-        setFragmentResult(PERMISSIONS_FRAGMENT_RESULT_KEY, bundleOf(HAS_ALL_PERMISSIONS_KEY to hasAllPermissions()))
+        setFragmentResult(
+            PERMISSIONS_FRAGMENT_RESULT_KEY,
+            Bundle().apply { putBoolean(HAS_ALL_PERMISSIONS_KEY, hasAllPermissions()) },
+        )
     }
 
     /** Opens the Android 'MANAGE_ALL_FILES' page if the device provides this feature */
@@ -108,7 +111,7 @@ abstract class PermissionsFragment(
     @NeedsTest("Shows the permission item when INTERNET permission is denied")
     @NeedsTest("Hides the permission item when INTERNET permission is already granted")
     protected fun PermissionsItem.initializeInternetPermissionItem() {
-        if (Permissions.hasPermission(requireContext(), Manifest.permission.INTERNET)) {
+        if (hasPermission(requireContext(), Manifest.permission.INTERNET)) {
             // If internet permission is already granted (which is the case for most of devices), hide the permission item.
             this.isVisible = false
             return

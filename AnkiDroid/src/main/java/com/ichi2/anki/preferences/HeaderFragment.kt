@@ -1,18 +1,6 @@
-/*
- *  Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2022 Brayan Oliveira <brayandso.dev@gmail.com>
+
 package com.ichi2.anki.preferences
 
 import android.os.Bundle
@@ -26,16 +14,14 @@ import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.common.android.AdaptionUtil
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.preferences.profiles.SwitchProfilesFragment
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ScheduleReminders
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.preferences.HeaderPreference
-import com.ichi2.utils.AdaptionUtil
-import timber.log.Timber
 
 class HeaderFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
@@ -49,6 +35,15 @@ class HeaderFragment : SettingsFragment() {
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
             .title = TR.preferencesBackups()
 
+        requirePreference<HeaderPreference>(R.string.pref_appearance_screen_key)
+            .title = TR.preferencesAppearance()
+
+        requirePreference<HeaderPreference>(R.string.pref_sync_screen_key).summary =
+            HeaderPreference.buildHeaderSummary(
+                TR.sentenceCase.ankiWebAccount,
+                getString(R.string.automatic_sync_choice),
+            )
+
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
             if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
                 isVisible = false
@@ -57,14 +52,6 @@ class HeaderFragment : SettingsFragment() {
 
         requirePreference<Preference>(R.string.pref_developer_options_screen_key)
             .isVisible = Prefs.isDeveloperOptionsEnabled
-
-        requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key)
-            .setOnPreferenceClickListener {
-                Timber.i("HeaderFragment:: edit review reminders button pressed")
-                val intent = ScheduleReminders.getIntent(requireContext(), ReviewReminderScope.Global)
-                startActivity(intent)
-                true
-            }
 
         requirePreference<HeaderPreference>(R.string.pref_review_reminders_screen_key).isVisible = Prefs.newReviewRemindersEnabled
         requirePreference<HeaderPreference>(R.string.pref_notifications_screen_key).isVisible = !Prefs.newReviewRemindersEnabled
@@ -100,7 +87,7 @@ class HeaderFragment : SettingsFragment() {
             activity: AppCompatActivity,
             searchConfiguration: SearchConfiguration,
         ) {
-            val setDuePreferenceTitle = TR.actionsSetDueDate().toSentenceCase(activity, R.string.sentence_set_due_date)
+            val setDuePreferenceTitle = with(activity) { TR.sentenceCase.setDueDate }
             with(searchConfiguration) {
                 setActivity(activity)
                 setBreadcrumbsEnabled(true)
@@ -115,10 +102,11 @@ class HeaderFragment : SettingsFragment() {
                     .addBreadcrumb(R.string.pref_cat_sync)
 
                 if (Prefs.newReviewRemindersEnabled) {
-                    searchConfiguration
-                        .indexItem()
+                    indexItem()
                         .withKey(activity.getString(R.string.pref_review_reminders_screen_key))
                         .withTitle("Review reminders")
+                        .withResId(R.xml.preferences_review_reminders)
+                        .withSummary("Notifications")
                 } else {
                     index(R.xml.preferences_notifications)
                 }
@@ -126,7 +114,7 @@ class HeaderFragment : SettingsFragment() {
                 index(R.xml.preferences_appearance)
                 if (!Prefs.isNewStudyScreenEnabled) {
                     index(R.xml.preferences_custom_buttons)
-                        .addBreadcrumb(R.string.pref_cat_appearance)
+                        .addBreadcrumb(TR.preferencesAppearance())
                 }
                 index(R.xml.preferences_controls)
                 index(R.xml.preferences_reviewer_controls)
@@ -183,7 +171,7 @@ class HeaderFragment : SettingsFragment() {
                         .withTitle(
                             TR.preferencesShowPlayButtonsOnCardsWith(),
                         ).withResId(R.xml.preferences_appearance)
-                        .addBreadcrumb(activity.getString(R.string.pref_cat_appearance))
+                        .addBreadcrumb(TR.preferencesAppearance())
                         .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
                 }
 
@@ -252,6 +240,7 @@ class HeaderFragment : SettingsFragment() {
                 is ReviewingSettingsFragment -> R.string.pref_reviewing_screen_key
                 is SyncSettingsFragment, is CustomSyncServerSettingsFragment -> R.string.pref_sync_screen_key
                 is NotificationsSettingsFragment -> R.string.pref_notifications_screen_key
+                is ScheduleRemindersFragment -> R.string.pref_review_reminders_screen_key
                 is AppearanceSettingsFragment, is CustomButtonsSettingsFragment -> R.string.pref_appearance_screen_key
                 is ControlsSettingsFragment -> R.string.pref_controls_screen_key
                 is AccessibilitySettingsFragment -> R.string.pref_accessibility_screen_key

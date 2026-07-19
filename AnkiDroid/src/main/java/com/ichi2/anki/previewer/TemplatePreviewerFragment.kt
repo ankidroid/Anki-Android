@@ -17,7 +17,6 @@ package com.ichi2.anki.previewer
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
@@ -28,6 +27,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.fragment_template_previewer),
@@ -48,6 +48,15 @@ class TemplatePreviewerFragment :
         // binding must be set before super.onViewCreated
         // as super.onViewCreated depends on webViewLayout, which depends on the binding
         binding = FragmentTemplatePreviewerBinding.bind(view)
+
+        // The backing NotetypeFile may be missing after process death if the OS cleared
+        // its cache dir. Bail out before the ViewModel is constructed; the constructor
+        // would otherwise throw on `getNotetype()`.
+        if (!TemplatePreviewerArguments.isUsable(requireArguments())) {
+            Timber.w("Notetype file missing on previewer open; finishing")
+            requireActivity().finish()
+            return
+        }
 
         super.onViewCreated(view, savedInstanceState)
 
@@ -88,11 +97,11 @@ class TemplatePreviewerFragment :
     suspend fun getSafeClozeOrd(): CardOrdinal = viewModel.getSafeClozeOrd()
 
     companion object {
-        const val ARGS_KEY = "templatePreviewerArgs"
+        const val ARG_KEY = "arg_key"
 
         fun newInstance(arguments: TemplatePreviewerArguments): TemplatePreviewerFragment =
             TemplatePreviewerFragment().apply {
-                val args = bundleOf(ARGS_KEY to arguments)
+                val args = Bundle().apply { putParcelable(ARG_KEY, arguments) }
                 this.arguments = args
             }
     }

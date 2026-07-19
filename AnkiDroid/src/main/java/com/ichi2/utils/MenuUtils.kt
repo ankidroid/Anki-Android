@@ -114,3 +114,10 @@ fun Context.tintOverflowMenuIcons(
         }
     }
 }
+
+fun Menu.configureIconsDirection(context: Context) {
+    val direction = context.resources.configuration.layoutDirection
+    itemsRecursive().forEach { item ->
+        item.icon?.layoutDirection = direction
+    }
+}

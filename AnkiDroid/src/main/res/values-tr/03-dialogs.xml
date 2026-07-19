@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Veritabanını denetle?</string>
-    <string name="check_db_warning">Bu uzun sürebilir</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Desteyi sil</string>
+    <string name="check_db_warning">Bu uzun sürebilir. Devam etmek ister misin?</string>
     <string name="delete_deck_title">Deste silinsin mi?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var</item>
@@ -83,8 +60,8 @@
     <string name="restore_backup_choose_another">Başka seç</string>
     <string name="dialog_cancel">İptal</string>
     <string name="dialog_ok">Tamam</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Ekle</string>
+    <string name="restore">Geri yükle</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Onayla</string>
     <string name="dialog_no">Hayır</string>
     <string name="dialog_yes">Evet</string>
@@ -105,8 +82,7 @@
     <string name="dialog_invalid_custom_certificate_title">Sertifika çözümlemesinde hata</string>
     <string name="dialog_updated_custom_certificate">Sertifika güncellendi</string>
     <!-- Media checking -->
-    <string name="check_media_title">Medya kontrol edilsin mi?</string>
-    <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun sürebilir.</string>
+    <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun zaman alabilir. Devam edilsin mi?</string>
     <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
     <string name="check_media_adding_missing_tag">Etiketler ekleniyor&#8230;</string>
     <string name="check_media_tags_added">Etiketler eklendi</string>
@@ -130,8 +106,6 @@
     <string name="permission_denied">İzin reddedildi</string>
     <string name="recording_permission_denied_message">\"Ses kaydetme\" özelliği için mikrofon izni gereklidir. Lütfen uygulama ayarlarından erişim izni verin.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Güncellendi</string>
-    <string name="integrity_check_startup_content">AnkiDroid yükseltildi. Bu yükseltme, olası veritabanı sorunları için düzeltmeleri içerir ve veritabanını şimdi kontrol etmenizi öneririz.</string>
     <string name="integrity_check_continue_anyway">Yine de devam et</string>
     <string name="integrity_check_insufficient_space">Veritabanı Kontrolü büyük miktarda geçici depolama alanı kullanıyor.\n\nDevam etmeden önce cihazınızda en az %s boş alanın olması şiddetle önerilir.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var.</string>
@@ -267,20 +241,20 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Kart numaraları sabit kalacak</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="extra_cloze_deletions_removed">Normal bir not türüne geçilirse ve mevcut kart şablonlarından daha fazla cloze silme varsa, fazladan kartlar kaldırılacaktır.</string>
     <string name="different_note_types_selected">Lütfen sadece bir tür not seçin</string>
     <string name="error_no_changes_to_save">Kaydedilecek değişiklik yok</string>
     <string name="choose_color">Renk seç</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Alanlar</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Özel</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
-    <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">The current deck of the card, excluding parent decks%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
-    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">The tags of the note%s</string>
-    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
-    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
-    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <string name="special_field_front_side_help">Ön şablon içeriği. Ses otomatik olarak oynatılmıyor</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Bütün deste, üst desteler de dahil %s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Şu anki deste, üst desteler hariç%s</string>
+    <string name="special_field_flag_help">\'%1$s\' çıktısını verir, burada %2$s bayrak kodudur (%3$s\-%4$s\)</string>
+    <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Notun etiketleri%s</string>
+    <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Kartın ID\'si%s</string>
+    <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Kart şablonunun adı%s</string>
+    <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Not türünün adı%s</string>
 </resources>

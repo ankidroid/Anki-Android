@@ -41,16 +41,40 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.AlertDialogCheckboxBinding
-import com.ichi2.anki.databinding.AlertDialogTitleWithHelpBinding
+import com.ichi2.anki.common.utils.android.HandlerUtils.executeOnMainThread
+import com.ichi2.anki.common.utils.android.getResFromAttr
+import com.ichi2.anki.databinding.DialogAlertDialogCheckboxBinding
+import com.ichi2.anki.databinding.DialogAlertDialogTitleWithHelpBinding
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.DialogListviewMessageBinding
-import com.ichi2.themes.Themes
-import com.ichi2.utils.HandlerUtils.executeOnMainThread
 import timber.log.Timber
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
 typealias DialogInterfaceListener = (DialogInterface) -> Unit
+
+/**
+ * - [ValidationResult.VALID] - user may proceed
+ * - [ValidationResult.REJECTED] - user may not proceed (no error)
+ * - [ValidationResult.error] - `error` is displayed to the user
+ */
+@JvmInline
+value class ValidationResult private constructor(
+    val error: String?,
+) {
+    companion object {
+        /** The user may proceed */
+        val VALID = ValidationResult(null)
+
+        /**
+         * The user may not proceed; no error displayed
+         *
+         * Typically for 'obvious' issues, such as not changing a name
+         */
+        val REJECTED = ValidationResult("")
+
+        fun error(message: String) = ValidationResult(message)
+    }
+}
 
 fun DialogInterfaceListener.toClickListener(): OnClickListener = OnClickListener { dialog: DialogInterface, _ -> this(dialog) }
 
@@ -91,7 +115,7 @@ fun AlertDialog.Builder.message(
  */
 fun AlertDialog.Builder.iconAttr(
     @DrawableRes res: Int,
-): AlertDialog.Builder = this.setIcon(Themes.getResFromAttr(this.context, res))
+): AlertDialog.Builder = this.setIcon(getResFromAttr(this.context, res))
 
 fun AlertDialog.Builder.positiveButton(
     @StringRes stringRes: Int? = null,
@@ -208,7 +232,7 @@ fun AlertDialog.Builder.checkBoxPrompt(
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
-    val binding = AlertDialogCheckboxBinding.inflate(LayoutInflater.from(context))
+    val binding = DialogAlertDialogCheckboxBinding.inflate(LayoutInflater.from(context))
     val checkBox = binding.checkbox
 
     val checkBoxLabel = if (stringRes != null) context.getString(stringRes) else text
@@ -301,6 +325,7 @@ fun AlertDialog.Builder.customListAdapterWithDecoration(
  * @param maxLength if set, the user may not enter more than the supplied number of digits
  * @param inputType see [EditText.setInputType]
  * @param waitForPositiveButton MaterialDialog compat: if `false` [callback] is called on input
+ * @param validator see [ValidationResult]. Valid if `null`, an error is shown if non-null.
  * if `true` [callback] is called when [positiveButton] is pressed
  */
 fun AlertDialog.input(
@@ -311,6 +336,7 @@ fun AlertDialog.input(
     maxLength: Int? = null,
     displayKeyboard: Boolean = false,
     waitForPositiveButton: Boolean = true,
+    validator: ((String) -> ValidationResult)? = null,
     callback: (AlertDialog, CharSequence) -> Unit,
 ): AlertDialog {
     // Builder.setView() may not be called before show()
@@ -325,25 +351,33 @@ fun AlertDialog.input(
 
         inputType?.let { this.inputType = it }
 
-        if (!waitForPositiveButton) {
-            doOnTextChanged { text, _, _, _ ->
-                callback(this@input, text ?: "")
+        doOnTextChanged { text, _, _, _ ->
+            val input = text?.toString() ?: ""
+
+            // handle allowEmpty
+            if (!allowEmpty && input.isEmpty()) {
+                this@input.getInputTextLayout().error = null
+                this@input.positiveButton.isEnabled = false
+                return@doOnTextChanged
             }
-        } else {
-            positiveButton.setOnClickListener { callback(this@input, this.text.toString()) }
+
+            // handle validation errors
+            val validationError = validator?.invoke(input)
+            this@input.getInputTextLayout().error = validationError?.error
+            this@input.positiveButton.isEnabled = validationError?.error == null
+            if (validationError != null) return@doOnTextChanged
+
+            // no errors, see if we should fire the callback on every keypress
+            // TODO: this was used to perform additional validation, which should be moved to the
+            //  'validator' parameter,
+            if (!waitForPositiveButton) {
+                callback(this@input, input)
+            }
         }
 
-        if (!allowEmpty) {
-            // this is called after callback() so allowEmpty takes priority
-            doOnTextChanged { text, _, _, _ ->
-                if (waitForPositiveButton) {
-                    // this is the only validation filter we apply - toggle on or off
-                    this@input.positiveButton.isEnabled = !text.isNullOrEmpty()
-                } else if (text.isNullOrEmpty()) {
-                    // potentially other filters in `waitForPositiveButton`.
-                    // WARN: this could be buggy as it does not toggle the button back on
-                    this@input.positiveButton.isEnabled = false
-                }
+        if (waitForPositiveButton) {
+            positiveButton.setOnClickListener {
+                callback(this@input, this.text.toString())
             }
         }
 
@@ -465,7 +499,7 @@ fun AlertDialog.Builder.titleWithHelpIcon(
     onHelpClick: View.OnClickListener,
 ): AlertDialog.Builder {
     // setup the view for the dialog
-    val binding = AlertDialogTitleWithHelpBinding.inflate(LayoutInflater.from(context))
+    val binding = DialogAlertDialogTitleWithHelpBinding.inflate(LayoutInflater.from(context))
     setCustomTitle(binding.root)
 
     if (startIcon != null) {

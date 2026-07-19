@@ -18,9 +18,14 @@ package com.ichi2.anki.filtered
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.decks.Deck
+import anki.decks.DeckKt.FilteredKt.searchTerm
+import anki.decks.DeckKt.filtered
+import anki.decks.filteredDeckForUpdate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.exception.InvalidSearchException
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -36,6 +41,7 @@ import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertNull
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -198,6 +204,193 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `invalid search in browser produces state with error`() =
+        runTest {
+            withViewModel {
+                onSearchChange(FilterIndex.First, "\"deck:A is:new")
+                onSearchInBrowser(FilterIndex.First)
+                val currentState = state.value
+                assertInstanceOf<FilteredDeckOptions>(currentState)
+                assertNotNull(currentState.throwable)
+                assertInstanceOf<InvalidSearchException>(currentState.throwable)
+                assertNull(currentState.browserQuery)
+                clearError()
+            }
+        }
+
+    @Test
+    fun `invalid limit inputs produce expected state`() =
+        runTest {
+            withViewModel {
+                onLimitChange(FilterIndex.First, "1")
+                assertNull(current.filter1State.error)
+                onLimitChange(FilterIndex.First, "")
+                assertThat(current.filter1State.error, equalTo(SearchInputError.Empty))
+                onLimitChange(FilterIndex.First, "abc")
+                assertThat(current.filter1State.error, equalTo(SearchInputError.NotANumber))
+                onSecondFilterStatusChange(true)
+                onLimitChange(FilterIndex.Second, "1")
+                assertNull(current.filter2State?.error)
+                onLimitChange(FilterIndex.Second, "")
+                assertThat(current.filter2State?.error, equalTo(SearchInputError.Empty))
+                onLimitChange(FilterIndex.Second, "abc")
+                assertThat(current.filter2State?.error, equalTo(SearchInputError.NotANumber))
+            }
+        }
+
+    @Test
+    fun `invalid limit prevents building or rebuilding`() =
+        runTest {
+            withViewModel {
+                // first filter limit input has error
+                assertTrue(current.isBuildingAllowed)
+                onLimitChange(FilterIndex.First, "")
+                assertThat(current.filter1State.error, equalTo(SearchInputError.Empty))
+                assertFalse(current.isBuildingAllowed)
+                // enabling the second filter still disables building
+                onSecondFilterStatusChange(true)
+                assertFalse(current.isBuildingAllowed)
+                // error on a second filter limit error keeps the building disabled
+                onLimitChange(FilterIndex.Second, "")
+                assertThat(current.filter2State?.error, equalTo(SearchInputError.Empty))
+                assertFalse(current.isBuildingAllowed)
+                // fixing only first filter limit input still has the building disabled
+                onLimitChange(FilterIndex.First, "1")
+                assertNull(current.filter1State.error)
+                assertFalse(current.isBuildingAllowed)
+                // hiding the second filter(while having an error) enables building
+                onSecondFilterStatusChange(false)
+                assertTrue(current.isBuildingAllowed)
+                // enabling the second filter and fixing the limit error allows building
+                onSecondFilterStatusChange(true)
+                assertFalse(current.isBuildingAllowed)
+                onLimitChange(FilterIndex.Second, "1")
+                assertTrue(current.isBuildingAllowed)
+                // hiding the second filter still allows building(first filter is correct)
+                onSecondFilterStatusChange(false)
+                assertTrue(current.isBuildingAllowed)
+            }
+        }
+
+    @Test
+    fun `a deck without a second filter gets a new fresh filter state when second filter is enabled`() =
+        runTest {
+            addDeck("A", true)
+            addNoteToDeckA { flagCardForNote(this, Flag.RED) }
+            addNoteToDeckA { flagCardForNote(this, Flag.GREEN) }
+            // setup only the first filter
+            val data =
+                filteredDeckForUpdate {
+                    id = 0
+                    name = "filtered"
+                    config =
+                        filtered {
+                            searchTerms.add(
+                                searchTerm {
+                                    search = "flag:1"
+                                    limit = 5
+                                    order =
+                                        Deck.Filtered.SearchTerm.Order
+                                            .forNumber(1)
+                                },
+                            )
+                        }
+                }
+            val changes = withCol { sched.addOrUpdateFilteredDeck(data) }
+            withViewModel(changes.id) {
+                assertNull(current.filter2State)
+                onSecondFilterStatusChange(true)
+                assertNotNull(current.filter2State)
+            }
+        }
+
+    @Test
+    fun `invalid name produces expected state`() {
+        runTest {
+            addDeck("A")
+            withViewModel {
+                assertNull(current.nameInputError)
+
+                onDeckNameChange("")
+                assertThat(current.nameInputError, equalTo(FilteredNameInputError.Empty))
+                assertFalse(current.isBuildingAllowed)
+
+                onDeckNameChange("A")
+                assertThat(current.nameInputError, equalTo(FilteredNameInputError.AlreadyExists))
+                assertFalse(current.isBuildingAllowed)
+
+                onDeckNameChange("Filtered")
+                assertTrue(current.isBuildingAllowed)
+            }
+        }
+    }
+
+    @Test
+    fun `changing user input updates changed status`() =
+        runTest {
+            val testDid = createTestFilteredDeck()
+            withViewModel(did = testDid) {
+                assertThat(current.name, equalTo("Filtered"))
+                assertThat(current.filter1State.search, equalTo("flag:1"))
+                assertThat(current.filter1State.limit, equalTo("5"))
+                assertTrue(current.isSecondFilterEnabled)
+                assertThat(current.filter2State?.search, equalTo("flag:2"))
+                assertThat(current.filter2State?.limit, equalTo("5"))
+                assertFalse(hasUnsavedChanges.value)
+                // check status for name changes
+                onDeckNameChange("Not")
+                assertTrue(hasUnsavedChanges.value)
+                onDeckNameChange("Filtered")
+                assertFalse(hasUnsavedChanges.value)
+                // check status for filter 1 content changes
+                onSearchChange(FilterIndex.First, "flags:7")
+                assertTrue(hasUnsavedChanges.value)
+                onSearchChange(FilterIndex.First, "flag:1")
+                assertFalse(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.First, "100")
+                assertTrue(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.First, "5")
+                assertFalse(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.First, 10)
+                assertTrue(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.First, 1)
+                assertFalse(hasUnsavedChanges.value)
+                // check status if the second filter availability is changed
+                onSecondFilterStatusChange(false)
+                assertTrue(hasUnsavedChanges.value)
+                onSecondFilterStatusChange(true)
+                assertFalse(hasUnsavedChanges.value)
+                // check status for filter 2 content changes
+                onSearchChange(FilterIndex.Second, "flags:7")
+                assertTrue(hasUnsavedChanges.value)
+                onSearchChange(FilterIndex.Second, "flag:2")
+                assertFalse(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.Second, "100")
+                assertTrue(hasUnsavedChanges.value)
+                onLimitChange(FilterIndex.Second, "5")
+                assertFalse(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.Second, 10)
+                assertTrue(hasUnsavedChanges.value)
+                onCardsOptionsChange(FilterIndex.Second, 1)
+                assertFalse(hasUnsavedChanges.value)
+            }
+        }
+
+    @Test
+    fun `changed status is not updated for properties that are not observed`() =
+        runTest {
+            val testDid = createTestFilteredDeck()
+            withViewModel(did = testDid) {
+                assertFalse(current.allowEmpty)
+                assertTrue(current.shouldReschedule)
+                assertFalse(hasUnsavedChanges.value)
+                onAllowEmptyChange(true)
+                onRescheduleChange(false)
+                assertFalse(hasUnsavedChanges.value)
+            }
+        }
+
     /** Returns the current state as a [FilteredDeckOptions] or throw otherwise */
     private val FilteredDeckOptionsViewModel.current: FilteredDeckOptions
         get() = state.value as FilteredDeckOptions
@@ -225,6 +418,41 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
             moveToDeck("A", false)
             setup()
         }
+
+    /** Note: created filtered deck has the second filter enabled by default */
+    private suspend fun createTestFilteredDeck(): DeckId {
+        addDeck("A", true)
+        addNoteToDeckA { flagCardForNote(this, Flag.RED) }
+        addNoteToDeckA { flagCardForNote(this, Flag.GREEN) }
+        val data =
+            filteredDeckForUpdate {
+                id = 0
+                name = "Filtered"
+                config =
+                    filtered {
+                        reschedule = true
+                        searchTerms.add(
+                            searchTerm {
+                                search = "flag:1"
+                                limit = 5
+                                order =
+                                    Deck.Filtered.SearchTerm.Order
+                                        .forNumber(1)
+                            },
+                        )
+                        searchTerms.add(
+                            searchTerm {
+                                search = "flag:2"
+                                limit = 5
+                                order =
+                                    Deck.Filtered.SearchTerm.Order
+                                        .forNumber(1)
+                            },
+                        )
+                    }
+            }
+        return withCol { sched.addOrUpdateFilteredDeck(data) }.id
+    }
 
     companion object {
         private const val TEST_DECK_NAME = "TestFiltered"

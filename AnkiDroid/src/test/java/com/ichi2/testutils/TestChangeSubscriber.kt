@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.testutils
 
@@ -22,7 +8,7 @@ import timber.log.Timber
 import kotlin.test.fail
 
 /**
- * Ensures no calls to [ChangeManager.notifySubscribers] via [undoableOp]
+ * Asserts no calls to [ChangeManager.notifySubscribers] are made (typically via `undoableOp`)
  */
 suspend fun ensureNoOpsExecuted(block: suspend () -> Unit) {
     val subscription = ChangeCounter()
@@ -37,7 +23,7 @@ suspend fun ensureNoOpsExecuted(block: suspend () -> Unit) {
 }
 
 /**
- * Ensures no calls to [ChangeManager.notifySubscribers] via [undoableOp]
+ * Asserts [count] calls are made to [ChangeManager.notifySubscribers]
  */
 suspend fun ensureOpsExecuted(
     count: Int,
@@ -53,11 +39,11 @@ suspend fun ensureOpsExecuted(
         return
     }
 
-    fail("ChangeManager: expected $count calls; ${ChangeManager.subscriberCount} subscribers")
+    fail("ChangeManager: expected $count calls, got ${subscription.changeCount}; ${ChangeManager.subscriberCount} subscribers")
 }
 
 /**
- * Ensures that [ChangeManager.notifySubscribers] is called with [handler] as the handler
+ * Asserts that [ChangeManager.notifySubscribers] is called with [handler] as the handler
  */
 suspend fun ensureOpWithHandler(
     handler: Any,
@@ -74,7 +60,7 @@ suspend fun ensureOpWithHandler(
 }
 
 // used to ensure a strong reference to the subscription is held
-private class ChangeCounter : ChangeManager.Subscriber {
+internal class ChangeCounter : ChangeManager.Subscriber {
     private var changes = 0
     val changeCount get() = changes
     val hasChanges get() = changes > 0
@@ -98,4 +84,15 @@ private class ExtractOpHandler : ChangeManager.Subscriber {
     ) {
         this.handler = handler
     }
+}
+
+/**
+ * Produces a [ChangeCounter] which is subscribed to [ChangeManager].
+ *
+ * Query the result via [.changeCount][ChangeCounter.changeCount] or [.hasChanges][ChangeCounter.hasChanges]
+ */
+internal fun subscriberChangeCounter(): ChangeCounter {
+    val counter = ChangeCounter()
+    ChangeManager.subscribe(counter)
+    return counter
 }

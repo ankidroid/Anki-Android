@@ -19,12 +19,13 @@ package com.ichi2.anki.pages.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.testutils.AnkiTest
-import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.IO_ARGS_KEY
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.ARG_IMAGE_OCCLUSION
 import com.ichi2.anki.pages.viewmodel.NoteIdBuilder.Id
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.JvmTest
@@ -34,6 +35,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertInstanceOf
 import org.junit.jupiter.api.assertNull
@@ -48,6 +50,7 @@ import kotlin.test.assertNotNull
 // TODO: make this run with no Android dependencies
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
 class ImageOcclusionViewModelTest : JvmTest() {
     private var deckIdToSwitchTo by notNull<DeckId>()
 
@@ -185,7 +188,7 @@ fun AnkiTest.withViewModel(
 ) = runTest {
     val savedStateHandle =
         SavedStateHandle().apply {
-            this[IO_ARGS_KEY] = args
+            this[ARG_IMAGE_OCCLUSION] = args
         }
 
     block(ImageOcclusionViewModel(savedStateHandle))

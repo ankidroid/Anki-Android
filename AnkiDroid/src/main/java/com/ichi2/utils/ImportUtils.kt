@@ -22,25 +22,29 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.os.Message
 import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.coroutines.applicationScope
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
-import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.onSelectedCsvForImport
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -103,7 +107,6 @@ object ImportUtils {
     fun isFileAValidDeck(fileName: String): Boolean =
         FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg")
 
-    @NeedsTest("Verify that only valid text or data file MIME types return true")
     fun isValidTextOrDataFile(
         context: Context,
         uri: Uri,
@@ -327,7 +330,7 @@ object ImportUtils {
         ) {
             // Use applicationScope: IntentHandler calls this and does not have a lifecycleScope
             fun copyDebugInfo(debugInfo: String) =
-                AnkiDroidApp.applicationScope.launch {
+                applicationScope.launch {
                     Timber.i("copying debug info to clipboard")
                     val stringToCopy =
                         buildString {
@@ -336,7 +339,7 @@ object ImportUtils {
                             appendLine(DebugInfoService.getDebugInfo(activity))
                         }
 
-                    AnkiDroidApp.instance.copyToClipboard(stringToCopy)
+                    appContext.copyToClipboard(stringToCopy)
                 }
 
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
@@ -352,7 +355,7 @@ object ImportUtils {
                         }
                     }
                     if (failure.toDebugInfo() != null) {
-                        negativeButton(R.string.feedback_copy_debug)
+                        negativeButton(text = with(activity) { TR.sentenceCase.copyDebugInfo })
                     }
                 }
             // 'copy' should not close the dialog
@@ -518,7 +521,7 @@ object ImportUtils {
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = bundleOf("importPath" to importPath)
+                data = Bundle().apply { putString("importPath", importPath) }
                 what = this@CollectionImportReplace.what
             }
 
@@ -541,7 +544,7 @@ object ImportUtils {
 
         override fun toMessage(): Message =
             Message.obtain().apply {
-                data = bundleOf("importPath" to importPath)
+                data = Bundle().apply { putString("importPath", importPath) }
                 what = this@CollectionImportAdd.what
             }
 

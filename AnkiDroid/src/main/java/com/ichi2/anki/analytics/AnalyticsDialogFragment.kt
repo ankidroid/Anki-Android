@@ -16,9 +16,12 @@
 
 package com.ichi2.anki.analytics
 
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
 
-abstract class AnalyticsDialogFragment : DialogFragment() {
+abstract class AnalyticsDialogFragment(
+    @LayoutRes contentLayoutId: Int = 0,
+) : DialogFragment(contentLayoutId) {
     override fun onResume() {
         super.onResume()
         UsageAnalytics.sendAnalyticsScreenView(this)

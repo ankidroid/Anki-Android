@@ -27,7 +27,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.preference.DialogPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.R
-import com.ichi2.anki.databinding.ControlPreferenceBinding
+import com.ichi2.anki.databinding.DialogControlPreferenceBinding
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
@@ -38,6 +38,7 @@ import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.GesturePicker
 import com.ichi2.ui.KeyPicker
@@ -215,7 +216,7 @@ open class ControlPreference :
      *
      * @see getRelatedPreferences
      */
-    protected fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
+    protected open fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
         for (pref in getRelatedPreferences()) {
             val bindings = pref.getMappableBindings().map { it.binding }
             if (binding in bindings) {
@@ -226,22 +227,19 @@ open class ControlPreference :
     }
 }
 
-class ControlPreferenceDialogFragment : DialogFragment() {
-    private lateinit var preference: ControlPreference
+open class ControlPreferenceDialogFragment : DialogFragment() {
+    protected lateinit var preference: ControlPreference
 
     @Suppress("DEPRECATION") // targetFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val key =
-            requireNotNull(requireArguments().getString(SettingsFragment.PREF_DIALOG_KEY)) {
-                "ControlPreferenceDialogFragment must have a 'key' argument leading to its preference"
-            }
+        val key = requireArguments().requireString(SettingsFragment.PREF_DIALOG_KEY)
         preference = (targetFragment as PreferenceFragmentCompat).requirePreference(key)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = ControlPreferenceBinding.inflate(requireActivity().layoutInflater)
+        val binding = DialogControlPreferenceBinding.inflate(requireActivity().layoutInflater)
 
         setupAddBindingDialogs(binding)
         setupRemoveControlEntries(binding)
@@ -254,7 +252,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
         }
     }
 
-    private fun setupAddBindingDialogs(binding: ControlPreferenceBinding) {
+    private fun setupAddBindingDialogs(binding: DialogControlPreferenceBinding) {
         binding.addGesture.apply {
             setOnClickListener {
                 preference.showGesturePickerDialog()
@@ -274,7 +272,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
         }
     }
 
-    private fun setupRemoveControlEntries(binding: ControlPreferenceBinding) {
+    private fun setupRemoveControlEntries(binding: DialogControlPreferenceBinding) {
         val bindings = preference.getMappableBindings().toMutableList()
         if (bindings.isEmpty()) {
             binding.listView.isVisible = false
@@ -282,7 +280,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
         }
         val titles =
             bindings.map {
-                getString(R.string.binding_remove_binding, it.toDisplayString(requireContext()))
+                getString(R.string.binding_remove_binding, getDisplayString(it))
             }
         binding.listView.apply {
             adapter = ArrayAdapter(requireContext(), R.layout.item_control_preference, titles)
@@ -293,4 +291,7 @@ class ControlPreferenceDialogFragment : DialogFragment() {
             }
         }
     }
+
+    /** @return how a binding should be displayed to the user */
+    protected open fun getDisplayString(mappableBinding: MappableBinding): String = mappableBinding.toDisplayString(requireContext())
 }

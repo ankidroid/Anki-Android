@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
 
 package com.ichi2.anki.dialogs
 
@@ -21,7 +8,6 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.commitNow
 import com.google.android.material.loadingindicator.LoadingIndicator
@@ -65,10 +51,10 @@ class LoadingDialogFragment : DialogFragment() {
             cancellable: Boolean = true,
         ) = LoadingDialogFragment().apply {
             arguments =
-                bundleOf(
-                    KEY_MESSAGE to message,
-                    KEY_CANCELLABLE to cancellable,
-                )
+                Bundle().apply {
+                    putString(KEY_MESSAGE, message)
+                    putBoolean(KEY_CANCELLABLE, cancellable)
+                }
         }
     }
 }
@@ -110,7 +96,8 @@ fun AnkiActivity.showLoadingDialog(
     // parameters were requested for the new dialog fragment
     removeImmediately(fragment)
     val loadingDialog = LoadingDialogFragment.newInstance(message, cancellable)
-    loadingDialog.show(supportFragmentManager, LoadingDialogFragment.TAG)
+    // showNow() avoids a race condition - removal is synchronous
+    loadingDialog.showNow(supportFragmentManager, LoadingDialogFragment.TAG)
 }
 
 /** Synchronously removes the provided [LoadingDialogFragment] if valid(not null) */

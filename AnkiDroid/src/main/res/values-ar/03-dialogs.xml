@@ -6,47 +6,24 @@
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
- ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
- ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
- ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
- ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
- ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
- ~ This program is free software; you can redistribute it and/or modify it under 
- ~ the terms of the GNU General Public License as published by the Free Software 
- ~ Foundation; either version 3 of the License, or (at your option) any later 
- ~ version. 
- ~ 
- ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
- ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- ~ PARTICULAR PURPOSE. See the GNU General Public License for more details. 
- ~ 
- ~ You should have received a copy of the GNU General Public License along with 
- ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
+ ~ SPDX-License-Identifier: GPL-3.0-or-later
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+ ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
  -->
  
 <!--
-~ Copyright (c) 2009 Andrew <andrewdubya@gmail>
-~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
-~ Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
-~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
-~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
-~
-~ This program is free software; you can redistribute it and/or modify it under
-~ the terms of the GNU General Public License as published by the Free Software
-~ Foundation; either version 3 of the License, or (at your option) any later
-~ version.
-~
-~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
-~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-~ PARTICULAR PURPOSE. See the GNU General Public License for more details.
-~
-~ You should have received a copy of the GNU General Public License along with
-~ this program.  If not, see <http://www.gnu.org/licenses/>.
--->
+  ~ SPDX-License-Identifier: GPL-3.0-or-later
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Andrew <andrewdubya@gmail>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com>
+  ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
+  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">أتريد فحص قاعدة البيانات؟</string>
-    <string name="check_db_warning">قد يستغرق هذا وقتًا طويلاً</string>
-    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">حذف الرزمة</string>
+    <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا. أتود الاستمرار؟</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
     <plurals name="delete_deck_message">
         <item quantity="zero">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقات</item>
@@ -91,14 +68,14 @@
     <string name="restore_backup_choose_another">اختيار نسخة أخرى</string>
     <string name="dialog_cancel">إلغاء</string>
     <string name="dialog_ok">حسنًا</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">إضافة</string>
+    <string name="restore">استعادة</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">تأكيد</string>
     <string name="dialog_no">لا</string>
     <string name="dialog_yes">نعم</string>
     <string name="dialog_keep">إبقاء</string>
     <string name="dialog_remove">إزالة</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">خروج</string>
     <string name="dialog_continue">استمرار</string>
     <string name="dialog_processing">تجري المعالجة&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
@@ -113,8 +90,7 @@
     <string name="dialog_invalid_custom_certificate_title">حدث خطأ في تحليل الشهادة</string>
     <string name="dialog_updated_custom_certificate">تم تحديث الشهادة</string>
     <!-- Media checking -->
-    <string name="check_media_title">أتريد فحص الوسائط؟</string>
-    <string name="check_media_warning">قد يأخذ هذا وقتًا طويلًا لمجموعات الوسائط الكبيرة</string>
+    <string name="check_media_warning">قد يستغرق هذا وقتًا طويلًا مع مجموعات الوسائط الكبيرة. أتود الاستمرار؟</string>
     <string name="check_media_message">يتم فحص الوسائط&#8230;</string>
     <string name="check_media_adding_missing_tag">تجري إضافة الوسوم&#8230;</string>
     <string name="check_media_tags_added">أضيفت الوسوم</string>
@@ -142,8 +118,6 @@
     <string name="permission_denied">رُفِضَ الإذن</string>
     <string name="recording_permission_denied_message">إذن الميكروفون ضروري لميزة «تسجيل الصوت». امنحه من إعدادات التطبيق رجاءًا.</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">تم تحديث آنكي درويد</string>
-    <string name="integrity_check_startup_content">تم تحديث آنكي درويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
     <string name="integrity_check_continue_anyway">استمرار في كل حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
@@ -311,7 +285,7 @@
     <string name="special_field_front_side_help">محتوى القالب الأمامي. لا يُشغل الصوت تلقائيا</string>
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">رِزمة البطاقة كاملةً، بما في ذلك الرِزم الحاوية لها%s</string>
     <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">رِزمة البطاقة، ما عدا الرِزم الحاوية لها%s</string>
-    <string name="special_field_flag_help">Outputs ‘%1$s’, where %2$s is the flag code (%3$s\–%4$s\)</string>
+    <string name="special_field_flag_help">يُنتج «%1$s»، حيث إن %2$s هو رمز العلم (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">وسوم الملحوظة%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">معرف البطاقة%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">اسم قالب البطاقة%s</string>

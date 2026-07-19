@@ -1,18 +1,5 @@
-/*
- * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>
 
 package com.ichi2.anki.dialogs
 
@@ -27,12 +14,12 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DatabaseRestorationListener
 import com.ichi2.anki.DeckPicker
@@ -41,6 +28,8 @@ import com.ichi2.anki.InitialActivity.StartupFailure.InitializationError
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
 import com.ichi2.anki.R
 import com.ichi2.anki.ankiActivity
+import com.ichi2.anki.backend.DatabaseCorruption
+import com.ichi2.anki.backend.getDatabaseVersion
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP
@@ -64,6 +53,9 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
+import com.ichi2.anki.startup.resetAnkiDroidDirectory
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
@@ -151,8 +143,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_ERROR_HANDLING -> {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                val options = ArrayList<String>(7)
-                val values = ArrayList<ErrorHandlingEntries>(7)
+                val options = ArrayList<String>(8)
+                val values = ArrayList<ErrorHandlingEntries>(8)
                 if (!requireAnkiActivity().colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
@@ -171,11 +163,28 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     options.add(res.getString(R.string.backup_one_way_sync_from_server))
                     values.add(ErrorHandlingEntries.ONE_WAY)
                 }
+
+                val activity = requireActivity()
+                val shouldOfferResetToDefaultDirectory =
+                    try {
+                        val currentDir = CollectionHelper.getCurrentAnkiDroidDirectory(activity)
+                        val defaultDir = getDefaultAnkiDroidDirectory(activity)
+                        currentDir.absolutePath != defaultDir.absolutePath
+                    } catch (e: Throwable) {
+                        Timber.w(e, "Failed to determine whether to offer reset-to-default directory option")
+                        false
+                    }
+
+                if (shouldOfferResetToDefaultDirectory) {
+                    options.add(res.getString(R.string.backup_use_default_folder))
+                    values.add(ErrorHandlingEntries.RESET_TO_DEFAULT_DIRECTORY)
+                }
+
                 // delete old collection and build new one
                 options.add(res.getString(R.string.backup_del_collection))
                 values.add(ErrorHandlingEntries.NEW)
                 // copy stack trace and debug info
-                options.add(res.getString(R.string.feedback_copy_debug))
+                options.add(TR.sentenceCase.copyDebugInfo)
                 values.add(ErrorHandlingEntries.DEBUG_INFO)
 
                 alertDialog.show {
@@ -198,6 +207,18 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             }
                             ErrorHandlingEntries.ONE_WAY -> {
                                 showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
+                                return@listItems
+                            }
+                            ErrorHandlingEntries.RESET_TO_DEFAULT_DIRECTORY -> {
+                                try {
+                                    val defaultDir = getDefaultAnkiDroidDirectory(activity)
+                                    CollectionManager.closeCollectionBlocking()
+                                    resetAnkiDroidDirectory(activity, defaultDir)
+                                    closeCollectionAndFinish()
+                                } catch (e: Throwable) {
+                                    Timber.w(e, "Failed to reset AnkiDroid directory to default")
+                                    showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
+                                }
                                 return@listItems
                             }
                             ErrorHandlingEntries.NEW -> {
@@ -298,7 +319,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_CONFIRM_DATABASE_CHECK -> {
                 // Confirmation dialog for database check
                 alertDialog.show {
-                    title(R.string.check_db_title)
+                    title(text = TR.sentenceCase.checkDatabase)
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
                         requireDeckPicker().integrityCheck()
@@ -468,7 +489,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             dismissesDialog = false,
             { activity ->
                 Timber.i("Restoring from colpkg")
-                val newAnkiDroidDirectory = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
+                val newAnkiDroidDirectory = getDefaultAnkiDroidDirectory(activity)
                 activity.importColpkgListener = DatabaseRestorationListener(activity, newAnkiDroidDirectory)
 
                 activity.launchCatchingTask {
@@ -507,7 +528,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             fun displayCreateNewCollectionDialog(context: AnkiActivity) {
                 val directory =
                     try {
-                        CollectionHelper.getDefaultAnkiDroidDirectory(context)
+                        getDefaultAnkiDroidDirectory(context)
                     } catch (e: SystemStorageException) {
                         Timber.w(e, "failed to show 'Create new collection' dialog")
                         FatalErrorDialog.build(context, InitializationError(StorageError(e))).show()
@@ -524,7 +545,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             "DatabaseErrorDialog: Before Create New Collection",
                         )
                         CollectionManager.closeCollectionBlocking()
-                        CollectionHelper.resetAnkiDroidDirectory(context, directory)
+                        resetAnkiDroidDirectory(context, directory)
                         context.closeCollectionAndFinish()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -561,7 +582,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         get() =
             when (requireDialogType()) {
                 DIALOG_LOAD_FAILED ->
-                    if (databaseCorruptFlag) {
+                    if (DatabaseCorruption.isDetected) {
                         // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
                         // Show a specific message appropriate for the situation
                         res().getString(R.string.corrupt_db_message, res().getString(R.string.repair_deck))
@@ -581,7 +602,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 INCOMPATIBLE_DB_VERSION -> {
                     var databaseVersion = -1
                     try {
-                        databaseVersion = CollectionHelper.getDatabaseVersion(requireContext())
+                        databaseVersion = getDatabaseVersion(requireContext(), CollectionHelper.getCollectionPath(requireContext()))
                     } catch (e: Exception) {
                         Timber.w(e, "Failed to get database version, using -1")
                     }
@@ -608,7 +629,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 DIALOG_REPAIR_COLLECTION -> res().getString(R.string.dialog_positive_repair)
                 DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore)
                 DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
-                DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
+                DIALOG_CONFIRM_DATABASE_CHECK -> TR.sentenceCase.checkDatabase
                 DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
                 DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_one_way_sync_from_server)
                 DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)
@@ -624,10 +645,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     override val dialogHandlerMessage
         get() = ShowDatabaseErrorDialog(requireDialogType())
 
-    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), DIALOG_KEY, DatabaseErrorDialogType::class.java)!!
+    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG, DatabaseErrorDialogType::class.java)!!
 
     private val exceptionData: CustomExceptionData? by lazy {
-        BundleCompat.getParcelable(requireArguments(), EXCEPTION_KEY, CustomExceptionData::class.java)
+        BundleCompat.getParcelable(requireArguments(), ARG_EXCEPTION, CustomExceptionData::class.java)
     }
 
     @Parcelize
@@ -656,19 +677,16 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     companion object {
-        // public flag which lets us distinguish between inaccessible and corrupt database
-        var databaseCorruptFlag = false
-
         /**
          * Key for passing a CustomExceptionData object in a Bundle,
          * contains error message and stack trace.
          *
          * @see CustomExceptionData
          */
-        private const val EXCEPTION_KEY = "exception"
+        private const val ARG_EXCEPTION = "exception"
 
         // Key for the dialog type in the Bundle, indicating which dialog to show
-        private const val DIALOG_KEY = "dialog"
+        private const val ARG_DIALOG = "dialog"
 
         /**
          * A set of dialogs which deal with problems with the database when it can't load
@@ -682,8 +700,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         ): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()
-            args.putParcelable(DIALOG_KEY, dialogType)
-            exceptionData?.let { args.putParcelable(EXCEPTION_KEY, it) }
+            args.putParcelable(ARG_DIALOG, dialogType)
+            exceptionData?.let { args.putParcelable(ARG_EXCEPTION, it) }
             f.arguments = args
             return f
         }
@@ -704,14 +722,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             Message.obtain().apply {
                 what = this@ShowDatabaseErrorDialog.what
                 data =
-                    bundleOf(
-                        DIALOG_KEY to dialogType,
-                    )
+                    Bundle().apply {
+                        putParcelable(ARG_DIALOG, dialogType)
+                    }
             }
 
         companion object {
             fun fromMessage(message: Message): ShowDatabaseErrorDialog {
-                val dialogType = BundleCompat.getParcelable(message.data, DIALOG_KEY, DatabaseErrorDialogType::class.java)!!
+                val dialogType = BundleCompat.getParcelable(message.data, ARG_DIALOG, DatabaseErrorDialogType::class.java)!!
                 return ShowDatabaseErrorDialog(dialogType)
             }
         }
@@ -747,6 +765,7 @@ private enum class ErrorHandlingEntries {
     REPAIR,
     RESTORE,
     ONE_WAY,
+    RESET_TO_DEFAULT_DIRECTORY,
     NEW,
     DEBUG_INFO,
 }

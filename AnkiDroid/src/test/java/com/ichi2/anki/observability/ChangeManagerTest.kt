@@ -1,43 +1,31 @@
-/*
- Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+// SPDX-License-Identifier: GPL-3.0-or-later
 
- This program is free software; you can redistribute it and/or modify it under
- the terms of the GNU General Public License as published by the Free Software
- Foundation; either version 3 of the License, or (at your option) any later
- version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT ANY
- WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License along with
- this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.ichi2.anki.observability
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.collection.OpChanges
+import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.subscriberChangeCounter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
-import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.javaType
 import kotlin.reflect.jvm.isAccessible
 
-@RunWith(RobolectricTestRunner::class)
+// this cannot yet use `EmptyApplication` - `CrashReportService` dependency
+@RunWith(AndroidJUnit4::class)
 class ChangeManagerExceptionHandlingTest : JvmTest() {
-    @After
-    override fun tearDown() {
-        super.tearDown()
-        ChangeManager.clearSubscribers()
-    }
-
     @Test
     fun `all subscribers notified even if one throws exception`() {
         var firstCalled = false
@@ -106,4 +94,27 @@ class ChangeManagerTest {
             }
         }
     }
+}
+
+@RunWith(AndroidJUnit4::class)
+@Config(application = EmptyApplication::class)
+class ChangeManagerPublishTest : JvmTest() {
+    @Test
+    fun `publish notifies multiple subscribers asynchronously`() =
+        runTest {
+            // queue coroutine execution on Dispatchers.Main, to test 'not notified synchronously'
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+
+            val counter1 = subscriberChangeCounter()
+            val counter2 = subscriberChangeCounter()
+
+            ChangeManager.publishAllValuesChanged()
+
+            assertThat("not notified synchronously by publishAllValuesChanged", counter1.hasChanges, equalTo(false))
+
+            advanceUntilIdle()
+
+            assertThat("First subscriber should be notified", counter1.hasChanges, equalTo(true))
+            assertThat("Second subscriber should be notified", counter2.hasChanges, equalTo(true))
+        }
 }

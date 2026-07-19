@@ -20,11 +20,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.pm.PackageInfoCompat
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CrashReportService
-import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
-import com.ichi2.compat.PackageInfoFlagsCompat
+import com.ichi2.anki.common.android.ApplicationContextInitializer
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import timber.log.Timber
-import java.lang.NullPointerException
 
 /**
  * Created by Tim on 11/04/2015.
@@ -99,12 +99,11 @@ object VersionUtils {
 
     private val applicationInstance: Context?
         get() =
-            if (AnkiDroidApp.isInitialized) {
-                AnkiDroidApp.instance
-            } else {
-                Timber.w("AnkiDroid instance not set")
-                null
-            }
+            ApplicationContextInitializer.instanceOrNull
+                ?: run {
+                    Timber.w("AnkiDroid instance not set")
+                    null
+                }
 
     /**
      * Return whether the package version code is set to that for release version

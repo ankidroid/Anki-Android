@@ -36,15 +36,13 @@
              The placeholder is replaced by the preference value, and it must be only one placeholder.
              If the preference value is updated, the summary is automatically updated as well. -->
         <attr name="summaryFormat" format="string"/>
+        <!-- Floating label displayed on the dialog text field border. -->
+        <attr name="dialogHint" format="string|reference"/>
     </declare-styleable>
 
-    <declare-styleable name="NumberRangePreference">
-        <attr name="min"/>
-        <attr name="max"/>
-    </declare-styleable>
-
-    <declare-styleable name="StepsPreference">
-        <attr name="allowEmpty"/>
+    <declare-styleable name="RelatedSettingsPreference">
+        <attr name="relatedTitles" format="reference" />
+        <attr name="relatedFragments" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="NumberRangePreferenceCompat">
@@ -111,7 +109,7 @@
         <attr name="nextTime" format="string"/>
     </declare-styleable>
 
-    <attr name="appBarColor" format="color"/>
+    <!-- appBarColor and customTabNavBarColor are declared in :common:android (shared activity code resolves them) -->
     <attr name="widgetColorActivated" format="color"/>
     <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackground" format="reference"/>
@@ -195,10 +193,6 @@
     <!-- FAB -->
     <attr name="fab_normal" format="color"/> <!-- Also color of the Study button in StudyOptions -->
     <attr name="fab_pressed" format="color"/>
-    <attr name="fab_labelsTextColor" format="color">#fff</attr>
-    <attr name="fab_item_background" format="reference"/>
-    <!--Custom Tabs colors-->
-    <attr name="customTabNavBarColor" format="color"/>
     <!-- Popup menus' background color -->
     <attr name="popupBackgroundColor" format="reference"/>
     <attr name="overflowAndPopupMenuIconColor" format="color"/>
@@ -231,4 +225,8 @@
     <attr name="checkMediaListForeground" format="color" />
 
     <attr name="progressDialogButtonTextColor" format="color"/>
+
+    <!-- Reminder troubleshooting -->
+    <attr name="reminderTroubleshootingOk" format="color"/>
+    <attr name="reminderTroubleshootingWarning" format="color"/>
 </resources>
