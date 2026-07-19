@@ -149,8 +149,8 @@
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
     <string name="show_large_answer_buttons_summ">Показать кнопку ответа в 2 строки</string>
-    <string name="remove_animations" maxLength="41">Remove animations</string>
-    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
+    <string name="remove_animations" maxLength="41">Удалить анимации</string>
+    <string name="remove_animations_summary">Также включается, если анимация отключена в системных настройках</string>
     <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
     <string name="show_top_bar_summary">Показать счетчик карт, время ответа, флаг и отметку в верхней строке</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
@@ -196,7 +196,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Пользовательский сервер</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не используется</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Вместо синхронизации с AnkiWeb, вы можете использовать свой сервер для синхронизации.
+    <string name="custom_sync_server_help2"><![CDATA[
+        Вместо синхронизации с AnkiWeb, вы можете использовать свой сервер для синхронизации.
         Если не установлено, то будет использоваться AnkiWeb сервер по умолчанию.
         <a href="%s">Подробнее</a>
         ]]></string>
@@ -256,10 +257,10 @@
     <string name="user_action_8" maxLength="28">Пользовательское действие 8</string>
     <string name="user_action_9" maxLength="28">Пользовательское действие 9</string>
     <string name="toggle_auto_advance" maxLength="28">Включить/выключить авто переход</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
-    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
-    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
+    <string name="enable_auto_advance" maxLength="28">Включить авто. продвижение</string>
+    <string name="disable_auto_advance" maxLength="28">Отключить авто. продвижение</string>
+    <string name="enable_voice_recording" maxLength="28">Включить запись голоса</string>
+    <string name="disable_voice_recording" maxLength="28">Выключить запись голоса</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>
     <string name="card_side_question">Вопрос</string>
@@ -284,7 +285,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid периодически делает резервную копию вашей коллекции.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid периодически делает резервную копию вашей коллекции.
         AnkiDroid удаляет копии старше двух дней, чтобы освободить место на диске.
         <br><br>
         Заметьте, что медиафайлы не резервируются.

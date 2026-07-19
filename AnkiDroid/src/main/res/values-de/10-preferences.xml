@@ -192,7 +192,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Eigener Synchronisationsserver</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nicht in Gebrauch</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Als Alternative zur Synchronisierung mit AnkiWeb
+    <string name="custom_sync_server_help2"><![CDATA[
+        Als Alternative zur Synchronisierung mit AnkiWeb
         können Sie Ihren eigenen Server zur Synchronisierung verwenden.
         Falls nicht gesetzt, wird der Standard AnkiWeb Server verwendet.
         <a href="%s">Mehr erfahren</a>
@@ -234,7 +235,8 @@
     <string name="license">Lizenz</string>
     <string name="license_description"><![CDATA[AnkiDroid wird unter den <a href=\"%1$s\">GPL-3.0</a> und <a href=\"%2$s\">AGPL-3.0</a> Lizenzen veröffentlicht, wobei der Quellcode <a href=\"%3$s\">auf GitHub</a> verfügbar ist]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid verwendet auch Bibliotheken und Symbole von Drittanbietern, die unter verschiedenen Open-Source- <a href=\"%1$s\">-Lizenzen</a> lizenziert sind.]]></string>
-    <string name="donate_description"><![CDATA[Sie können AnkiDroid\s Entwicklung mit <a href=\"%1$s\">unterstützen</a>. Jede Spende schätzen wir zutiefst.]]></string>
+    <string name="donate_description"><![CDATA[Sie können AnkiDroid\s Entwicklung mit <a href=\"%1$s\">unterstützen</a>. Jede Spende schätzen wir zutiefst.
+]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Geste hinzufügen</string>
     <string name="binding_add_key">Schlüssel hinzufügen</string>
@@ -253,10 +255,10 @@
     <string name="user_action_8" maxLength="28">Benutzerdefinierte Aktion 8</string>
     <string name="user_action_9" maxLength="28">Benutzerdefinierte Aktion 9</string>
     <string name="toggle_auto_advance" maxLength="28">Automatisches Weiterblättern umschalten</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
-    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
-    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
+    <string name="enable_auto_advance" maxLength="28">Automatischen Seitenvorschub aktivieren</string>
+    <string name="disable_auto_advance" maxLength="28">Automatischen Vorlauf deaktivieren</string>
+    <string name="enable_voice_recording" maxLength="28">Sprachaufzeichnung aktivieren</string>
+    <string name="disable_voice_recording" maxLength="28">Sprachaufzeichnung deaktivieren</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>
     <string name="card_side_question">Frage</string>
