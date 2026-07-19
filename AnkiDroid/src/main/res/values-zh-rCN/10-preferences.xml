@@ -276,7 +276,7 @@
     <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
     <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>
     <string name="disable_dev_options">禁用开发者选项</string>
-    <string name="dev_options_warning">Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.</string>
+    <string name="dev_options_warning">在启用开发者选项之前，请进行确认。这些选项是危险的，可能会破坏应用程序或损坏您的卡片组。\n\n注意，这些选项不适合大多数用户，因此没有翻译，所以它们是英文。</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
