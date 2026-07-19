@@ -1877,6 +1877,11 @@ class PreviewerDestination(
     val idsFile: IdsFile,
 )
 
+/**
+ * Opening the editor from single-select does not change row rendering, so a full adapter refresh
+ * would unnecessarily invalidate the fast scroller's cached metrics. A refresh is still needed
+ * when leaving multi-select to remove the selection UI.
+ */
 internal fun shouldRefreshBrowserRows(modeChange: ChangeMultiSelectMode): Boolean {
     val singleSelectCause = modeChange as? SingleSelectCause ?: return true
     return singleSelectCause != SingleSelectCause.OpenNoteEditorActivity ||

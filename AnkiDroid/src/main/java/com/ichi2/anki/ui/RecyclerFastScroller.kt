@@ -416,8 +416,8 @@ class RecyclerFastScroller
                     // The valid scroll area is (height-handle.height), since the position of the handle is defined by it's top edge, we subtract it.
                     val scrollableHeight = height - handle.height
 
-                    // Subtract half the handle's height and divide by 2 so the handle centers below the user's finger instead of hanging above or below.
-                    // Divide by the scrollableHeight to make sure that the handle doesn't go off the screen and we use coerceAtLeast to prevent divide by 0 errors
+                    // Convert the finger's Y coordinate to track progress using the handle's center,
+                    // then clamp it so the handle cannot leave the track.
                     val scrollProportion =
                         ((event.y - handle.height / 2) / scrollableHeight.coerceAtLeast(1))
                             .coerceIn(0f, 1f)
@@ -523,6 +523,11 @@ class RecyclerFastScroller
             wasAtBottom = isAtBottom
         }
 
+        /**
+         * Applies handle positions immediately except for the final correction when normal scrolling
+         * reaches the real bottom. That correction is animated to avoid a visible jump; dragging always
+         * remains synchronous with the user's finger.
+         */
         private fun layoutHandle(
             targetY: Float,
             handleHeight: Int,
@@ -569,6 +574,11 @@ class RecyclerFastScroller
             return (scrollRange - barHeight).coerceAtLeast(0)
         }
 
+        /**
+         * Maintains a stable pixel offset from actual scroll deltas instead of repeatedly using
+         * RecyclerView's changing estimate. A normal scroll from the top enables calibration; when the
+         * real bottom is reached, the accumulated distance becomes the cached scroll range.
+         */
         private fun updateAccumulatedScrollOffset(
             recyclerView: RecyclerView,
             dy: Int,
@@ -715,6 +725,11 @@ internal fun computeDisplayScrollProportion(
     return END_APPROACH_THRESHOLD + tail * excess / (1f + excess)
 }
 
+/**
+ * Uses the finger's track position while dragging and the accumulated pixel offset otherwise.
+ * Keeping these sources separate prevents scroll callbacks caused by a drag from moving the
+ * handle away from the finger.
+ */
 @VisibleForTesting
 internal fun computeHandleScrollProportion(
     isDraggingHandle: Boolean,
@@ -731,6 +746,11 @@ internal fun computeHandleScrollProportion(
         computeDisplayScrollProportion(scrollOffset, scrollRange, barHeight, canScrollDown, rangeCalibrated)
     }
 
+/**
+ * Maps drag progress to a valid first visible adapter position. Reserving the visible rows keeps
+ * the last viewport aligned with the end of the track; the exact endpoint targets the final item
+ * so the LayoutManager can clamp the list to its real bottom.
+ */
 @VisibleForTesting
 internal fun computeDragTargetIndex(
     scrollProportion: Float,
@@ -746,6 +766,8 @@ internal fun computeDragTargetIndex(
     return proportion * lastFirstVisiblePosition.toDouble()
 }
 
+// Keep most of the track linear and reserve the final 4% for approaching an uncertain end smoothly.
+// 4% is heuristic that makes the thumb move smoothly on smartphone
 private const val END_APPROACH_THRESHOLD = 0.96f
 
 @VisibleForTesting
