@@ -31,6 +31,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ItemDeckBinding
 import com.ichi2.anki.deckpicker.DisplayDeckNode
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.utils.dp
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.RustCleanup
 import com.ichi2.anki.common.android.R as CommonR
@@ -70,8 +71,9 @@ class DeckAdapter(
     private var selectableItemBackground: Int = 0
     private val endPadding: Int = context.resources.getDimension(R.dimen.deck_picker_right_padding).toInt()
     private val startPadding: Int = context.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
-    private val startPaddingSmall: Int = context.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
-    private val nestedIndent = context.resources.getDimension(R.dimen.keyline_1).toInt()
+    val startPaddingSmall: Int = context.resources.getDimension(R.dimen.deck_picker_left_padding_small).toInt()
+    val nestedIndent = context.resources.getDimension(R.dimen.keyline_1).toInt()
+    val expanderWidth = 48.dp.toPx(context)
 
     // Flags
     private var hasSubdecks = false
@@ -87,6 +89,12 @@ class DeckAdapter(
                 notifyDataSetChanged()
             }
         }
+
+    /**
+     * Whether to highlight the selected deck. Usually true for fragmented (tablet) layouts
+     * where the deck contents are shown side-by-side, but false for phones.
+     */
+    var highlightSelected: Boolean = true
 
     class ViewHolder(
         val binding: ItemDeckBinding,
@@ -143,7 +151,6 @@ class DeckAdapter(
         if (node.canCollapse) {
             binding.deckExpander.setOnClickListener {
                 onDeckChildrenToggled(node.did)
-                notifyItemChanged(position) // Ensure UI updates
             }
         } else {
             binding.deckExpander.isClickable = false
@@ -151,7 +158,7 @@ class DeckAdapter(
         }
         holder.binding.deckLayout.setBackgroundResource(rowCurrentDrawable)
         // set a different background color for the current selected deck
-        if (node.isSelected) {
+        if (node.isSelected && highlightSelected) {
             holder.binding.deckLayout.setBackgroundResource(rowCurrentDrawable)
             if (activityHasBackground) {
                 val background =
@@ -202,6 +209,7 @@ class DeckAdapter(
     ) {
         // Apply the correct expand/collapse drawable
         if (node.canCollapse) {
+            expander.visibility = View.VISIBLE
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
             if (node.collapsed) {
                 expander.setImageDrawable(expandImage)
@@ -211,10 +219,12 @@ class DeckAdapter(
                 expander.contentDescription = expander.context.getString(R.string.collapse)
             }
         } else {
+            // Siblings must perfectly align their text with each other regardless of whether they have children.
+            // Using INVISIBLE instead of GONE maintains the identical 48dp width block that a chevron would take,
+            // ensuring the horizontal L-branch lines reach identically far and the deck text aligns seamlessly.
             expander.visibility = View.INVISIBLE
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         }
-        // Add some indenting for each nested level
         indent.minimumWidth = nestedIndent * node.depth
     }
 
@@ -267,4 +277,10 @@ private val deckNodeDiffCallback =
             oldItem: DisplayDeckNode,
             newItem: DisplayDeckNode,
         ): Boolean = oldItem == newItem
+
+        // We have to return a non-null payload to prevent cross-fading which resulted in the doubling of the chevron
+        override fun getChangePayload(
+            oldItem: DisplayDeckNode,
+            newItem: DisplayDeckNode,
+        ): Any = true
     }
