@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Looper
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.SavedStateHandle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -16,7 +15,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CustomStudyDefaultsResponse
-import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.customStudyDefaultsResponse
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
@@ -25,7 +23,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
-import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS_KEY
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.dialogs.utils.performPositiveClick
