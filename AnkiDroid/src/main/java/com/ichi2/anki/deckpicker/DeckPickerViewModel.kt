@@ -522,17 +522,25 @@ class DeckPickerViewModel :
         }
 
         Timber.d("handleStartup: Continuing after permission granted")
-        val failure = InitialActivity.getStartupFailureType(environment::initializeAnkiDroidFolder)
-        if (failure != null) {
-            flowOfStartupResponse.value = StartupResponse.FatalError(failure)
-            return
+        viewModelScope.launch {
+            // opening the collection waits on the collection queue, which a sync stuck on an
+            // unresponsive server can hold for a long time. Waiting on the main thread here
+            // froze the DeckPicker when it was recreated
+            val failure =
+                withContext(Dispatchers.IO) {
+                    InitialActivity.getStartupFailureType(environment::initializeAnkiDroidFolder)
+                }
+            if (failure != null) {
+                flowOfStartupResponse.value = StartupResponse.FatalError(failure)
+                return@launch
+            }
+
+            // successful startup
+
+            configureRenderingMode()
+
+            flowOfStartupResponse.value = StartupResponse.Success
         }
-
-        // successful startup
-
-        configureRenderingMode()
-
-        flowOfStartupResponse.value = StartupResponse.Success
     }
 
     interface AnkiDroidEnvironment {
