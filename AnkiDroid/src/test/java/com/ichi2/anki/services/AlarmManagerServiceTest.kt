@@ -77,6 +77,9 @@ class AlarmManagerServiceTest : RobolectricTest() {
         reviewReminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(20, 0))
         reviewReminder.latestNotifTime = mockTime.intTimeMS() // Ensure the reminder is ready to have its future instance scheduled
 
+        // Default Robolectric SDK is >= S; without permission, scheduleReminderAlarm uses setWindow.
+        every { alarmManager.canScheduleExactAlarms() } returns false
+
         TimeManager.resetWith(mockTime)
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
@@ -87,6 +90,26 @@ class AlarmManagerServiceTest : RobolectricTest() {
         unmockkAll()
         TimeManager.reset()
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
+    }
+
+    @Test
+    fun `scheduleReviewReminderNotifications calls setExactAndAllowWhileIdle when exact alarms allowed`() {
+        every { alarmManager.canScheduleExactAlarms() } returns true
+        val expectedSchedulingTime = mockTime.calendar().clone() as Calendar
+        expectedSchedulingTime.apply {
+            set(Calendar.HOUR_OF_DAY, 20)
+        }
+        AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = false)
+        verify {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                expectedSchedulingTime.timeInMillis,
+                any(),
+            )
+        }
+        verify(exactly = 0) {
+            alarmManager.setWindow(any(), any(), any(), any())
+        }
     }
 
     @Test

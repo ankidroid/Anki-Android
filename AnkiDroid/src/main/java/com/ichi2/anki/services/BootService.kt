@@ -33,6 +33,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
+import com.ichi2.anki.reviewreminders.LegacyNotificationMigrator
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.widget.DayRolloverAlarm
@@ -42,11 +43,12 @@ import java.util.Calendar
 import kotlin.time.Duration.Companion.seconds
 
 /**
- * BroadcastReceiver which listens to the Android system-level intent that fires when the device starts up.
- * Schedules notifications for review reminders.
+ * BroadcastReceiver which listens to system intents that require review-reminder (and widget)
+ * alarms to be (re)scheduled: boot completed, app update, and (via [DayRolloverAlarm]) time changes.
  *
- * Note that Android battery optimizations may potentially block us from receiving the [Intent.ACTION_BOOT_COMPLETED]
- * intent, which could cause review reminders to not be scheduled.
+ * Note that Android battery optimizations may potentially block us from receiving
+ * [Intent.ACTION_BOOT_COMPLETED], which could cause review reminders to not be scheduled until
+ * the next process start ([com.ichi2.anki.AnkiDroidApp] also schedules on launch).
  */
 @NeedsTest("Check on various Android versions that this can execute")
 class BootService : AnkiBroadcastReceiver() {
@@ -57,38 +59,52 @@ class BootService : AnkiBroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        if (!intent.action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-            Timber.w("BootService - unexpected action received, ignoring: %s", intent.action)
+        val action = intent.action
+        if (action !in SUPPORTED_ACTIONS) {
+            Timber.w("BootService - unexpected action received, ignoring: %s", action)
             return
         }
-        if (wasRun) {
-            Timber.d("BootService - Already run")
+        Timber.i("BootService received %s", action)
+
+        // Package replacement and boot must always reschedule; do not skip via wasRun for updates.
+        val isBoot = action == Intent.ACTION_BOOT_COMPLETED
+        if (isBoot && wasRun) {
+            Timber.d("BootService - Already run for this process")
             return
         }
-        if (runCatching { grantedStoragePermissions(context, showToast = false) }.getOrNull() != true) {
-            Timber.w("Boot Service did not execute - no permissions")
-            return
-        }
-        if (Prefs.newReviewRemindersEnabled) {
+
+        // Always migrate first so production traffic uses review reminders even if the
+        // developer kill-switch preference was previously persisted as false.
+        if (Prefs.newReviewRemindersEnabled || !Prefs.legacyNotificationsMigrated) {
             Timber.i("Executing Boot Service - Review reminders")
             runGloballyWithTimeout(SCHEDULE_NOTIFICATIONS_TIMEOUT) {
-                AlarmManagerService.scheduleAllNotifications(context)
+                LegacyNotificationMigrator.migrateIfNeeded(context)
+                if (Prefs.newReviewRemindersEnabled) {
+                    AlarmManagerService.scheduleAllNotifications(context)
+                }
             }
-        } else {
-            // There are cases where the app is installed, and we have access, but nothing exist yet
-            val col = getColSafe()
-            if (col == null) {
-                Timber.w("Boot Service did not execute - error loading collection")
-                return
+        }
+
+        if (!Prefs.newReviewRemindersEnabled) {
+            if (runCatching { grantedStoragePermissions(context, showToast = false) }.getOrNull() != true) {
+                Timber.w("Boot Service did not execute legacy path - no storage permissions")
+            } else {
+                val col = getColSafe()
+                if (col == null) {
+                    Timber.w("Boot Service did not execute - error loading collection")
+                } else {
+                    Timber.i("Executing Boot Service - Legacy notifications")
+                    catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
+                    failedToShowNotifications = false
+                }
             }
-            Timber.i("Executing Boot Service")
-            catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
-            failedToShowNotifications = false
         }
 
         restoreRecurringAlarms(context)
         DayRolloverAlarm.scheduleNext(context)
-        wasRun = true
+        if (isBoot) {
+            wasRun = true
+        }
     }
 
     @LegacyNotifications("Will be moved to AlarmManagerService")
@@ -139,9 +155,15 @@ class BootService : AnkiBroadcastReceiver() {
          */
         private val SCHEDULE_NOTIFICATIONS_TIMEOUT = 8.seconds
 
+        private val SUPPORTED_ACTIONS =
+            setOf(
+                Intent.ACTION_BOOT_COMPLETED,
+                Intent.ACTION_MY_PACKAGE_REPLACED,
+            )
+
         /**
          * This service is also run when the app is started (from [com.ichi2.anki.AnkiDroidApp],
-         * so we need to make sure that it isn't run twice.
+         * so we need to make sure that it isn't run twice for BOOT_COMPLETED in the same process.
          */
         private var wasRun = false
 
@@ -177,6 +199,10 @@ class BootService : AnkiBroadcastReceiver() {
                     false,
                 )
             if (notificationIntent != null) {
+                Timber.i(
+                    "Scheduling legacy repeating notification alarm at hour=%d",
+                    calendar.get(Calendar.HOUR_OF_DAY),
+                )
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,

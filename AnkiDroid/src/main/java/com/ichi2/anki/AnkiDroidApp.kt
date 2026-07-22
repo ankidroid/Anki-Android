@@ -53,6 +53,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
+import com.ichi2.anki.reviewreminders.LegacyNotificationMigrator
 import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
@@ -67,7 +68,9 @@ import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.restoreRecurringAlarms
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
@@ -322,15 +325,18 @@ open class AnkiDroidApp :
             setupNotificationChannels(applicationContext)
 
             val context = this.withAppLocale()
-            if (Prefs.newReviewRemindersEnabled) {
-                Timber.i("Setting review reminder notifications if they have not already been set")
-                applicationScope.launch {
+            applicationScope.launch(Dispatchers.IO) {
+                LegacyNotificationMigrator.migrateIfNeeded(context)
+                if (Prefs.newReviewRemindersEnabled) {
+                    Timber.i("Scheduling review reminder notifications")
                     AlarmManagerService.scheduleAllNotifications(context)
+                } else {
+                    Timber.i("AnkiDroidApp: Registering legacy notification LiveData observer")
+                    // LiveData.observeForever must run on the main thread.
+                    withContext(Dispatchers.Main) {
+                        notifications.observeForever { NotificationService.triggerNotificationFor(context) }
+                    }
                 }
-            } else {
-                // Register for notifications
-                Timber.i("AnkiDroidApp: Starting Services")
-                notifications.observeForever { NotificationService.triggerNotificationFor(context) }
             }
         }
 

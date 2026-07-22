@@ -37,6 +37,7 @@ import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.services.AlarmManagerService
+import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
@@ -64,7 +65,11 @@ class DayRolloverAlarm : AnkiBroadcastReceiver() {
                     runCatching { WidgetStatus.updateInBackground(context) }.onFailure { Timber.w(it) }
                     scheduleNextInternal(context)
                 }
-                ACTION_TIMEZONE_CHANGED, ACTION_TIME_CHANGED -> scheduleNextInternal(context)
+                ACTION_TIMEZONE_CHANGED, ACTION_TIME_CHANGED -> {
+                    Timber.i("Time/timezone changed: rescheduling day rollover and review reminders")
+                    scheduleNextInternal(context)
+                    rescheduleReviewReminders(context)
+                }
             }
         }
     }
@@ -120,6 +125,12 @@ class DayRolloverAlarm : AnkiBroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT,
                 false,
             )
+
+        private suspend fun rescheduleReviewReminders(context: Context) {
+            if (!Prefs.newReviewRemindersEnabled) return
+            Timber.i("Rescheduling review reminders after time/timezone change")
+            AlarmManagerService.scheduleAllNotifications(context)
+        }
     }
 }
 

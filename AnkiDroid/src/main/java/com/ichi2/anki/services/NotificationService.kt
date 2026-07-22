@@ -44,6 +44,7 @@ import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.remainingTime
+import com.ichi2.utils.Permissions
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -173,6 +174,14 @@ class NotificationService : AnkiBroadcastReceiver() {
             Timber.i("sendReviewReminderNotification for ${reviewReminder.id}")
             Timber.v("Review reminder: $reviewReminder")
 
+            if (!Permissions.canPostNotifications(context)) {
+                Timber.w(
+                    "Aborting notification for review reminder %d: POST_NOTIFICATIONS not granted",
+                    reviewReminder.id.value,
+                )
+                return
+            }
+
             if (reviewReminder.scope is ReviewReminderScope.DeckSpecific) {
                 val isDeckAccessible = canUserAccessDeck(reviewReminder.scope.did)
                 if (!isDeckAccessible) {
@@ -275,7 +284,11 @@ class NotificationService : AnkiBroadcastReceiver() {
 
             val manager = context.getSystemService<NotificationManager>()
             if (manager != null) {
-                Timber.i("Sending notification with ID ${reviewReminder.id.value}")
+                Timber.i(
+                    "Posting review reminder notification tag=%s id=%d",
+                    REVIEW_REMINDER_NOTIFICATION_TAG,
+                    reviewReminder.id.value,
+                )
                 manager.notify(REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value, builder.build())
             } else {
                 Timber.w("Failed to get NotificationManager system service, aborting review reminder notification")

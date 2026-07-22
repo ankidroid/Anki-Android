@@ -279,9 +279,18 @@ open class PrefsRepository(
     // ************************************** Review Reminders ********************************** //
 
     /**
-     * Whether to enable the new review reminders notification system.
+     * Whether to enable the review reminders notification system (replaces legacy due-card notifications).
+     *
+     * Default is `true`. Kept as a developer-options kill-switch while the legacy path is retained
+     * for emergency rollback; see [legacyNotificationsMigrated].
      */
-    var newReviewRemindersEnabled by booleanPref(R.string.pref_new_review_reminders, false)
+    var newReviewRemindersEnabled by booleanPref(R.string.pref_new_review_reminders, true)
+
+    /**
+     * Whether the one-time migration from legacy `minimumCardsDueForNotification` preferences
+     * into [com.ichi2.anki.reviewreminders.ReviewReminder]s has completed.
+     */
+    var legacyNotificationsMigrated by booleanPref(R.string.pref_legacy_notifications_migrated_key, false)
 
     /**
      * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.

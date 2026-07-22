@@ -112,9 +112,10 @@
             android:key="@string/dev_card_browser_search_view"
             android:defaultValue="false"/>
         <SwitchPreferenceCompat
-            android:title="Enable new notifications"
+            android:title="Review reminders (production)"
+            android:summary="Disable only to roll back to the legacy daily due-card notification"
             android:key="@string/pref_new_review_reminders"
-            android:defaultValue="false"/>
+            android:defaultValue="true"/>
         <SwitchPreferenceCompat
             android:title="Switch Profile option"
             android:key="@string/pref_enable_switch_profile_key"

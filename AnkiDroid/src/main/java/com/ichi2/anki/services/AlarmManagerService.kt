@@ -21,6 +21,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
@@ -36,7 +37,9 @@ import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import timber.log.Timber
 import java.util.Calendar
+import java.util.Date
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -169,15 +172,17 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
          * Queues a review reminder to have its notification fired at its specified time. Does not check
          * if the review reminder is enabled or not, the caller must handle this.
          *
-         * Note that this only schedules the next upcoming notification, using [AlarmManager.setWindow]
-         * rather than [AlarmManager.setRepeating]. This is because [AlarmManager.setRepeating] sometimes
-         * postpones alarm firings for long periods of time, with intervals as long as one hour observed
-         * in testing. In contrast, [AlarmManager.setWindow] permits us to specify a maximum allowable
-         * length of time the OS can delay the alarm for, leading to a better UX. Each time an alarm is fired,
-         * triggering [NotificationService.sendReviewReminderNotification], this method is called again to
-         * schedule the next upcoming notification. If for some reason the next day's alarm fails to be set by
-         * the current day's notification, we fall back to setting alarms whenever the application process is started: see
-         * [com.ichi2.anki.AnkiDroidApp]'s call to [scheduleAllEnabledReviewReminderNotifications].
+         * Note that this only schedules the next upcoming notification rather than using
+         * [AlarmManager.setRepeating]. Repeating alarms are heavily deferred under Doze
+         * (hour-scale delays observed in testing). Instead we use
+         * [AlarmManager.scheduleReminderAlarm], which prefers
+         * [AlarmManager.setExactAndAllowWhileIdle] when exact alarms are permitted and falls
+         * back to [AlarmManager.setWindow] with a 10-minute window. Each time an alarm fires,
+         * triggering [NotificationService.sendReviewReminderNotification], this method is called
+         * again to schedule the next upcoming notification. If for some reason the next day's alarm
+         * fails to be set by the current day's notification, we fall back to setting alarms whenever
+         * the application process is started: see [com.ichi2.anki.AnkiDroidApp]'s call to
+         * [scheduleAllEnabledReviewReminderNotifications].
          *
          * If an old version of this review reminder with the same review reminder ID has already had
          * its notifications scheduled, this will merely update the existing notifications. If, however,
@@ -237,13 +242,16 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
             }
 
             catchAlarmManagerExceptions(context) { alarmManager ->
-                alarmManager.setWindow(
-                    AlarmManager.RTC_WAKEUP,
-                    alarmTimestamp.timeInMillis,
-                    WINDOW_LENGTH_MS,
-                    pendingIntent,
+                alarmManager.scheduleReminderAlarm(
+                    triggerAtMillis = alarmTimestamp.timeInMillis,
+                    operation = pendingIntent,
                 )
-                Timber.d("Successfully scheduled review reminder notifications for ${reviewReminder.id}")
+                Timber.i(
+                    "Scheduled review reminder id=%d for %s (in %s)",
+                    reviewReminder.id.value,
+                    Date(alarmTimestamp.timeInMillis),
+                    (alarmTimestamp.timeInMillis - currentTimestamp.timeInMillis).milliseconds,
+                )
             }
         }
 
@@ -269,7 +277,7 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
             Timber.v("Pending intent for ${reviewReminder.id} is $pendingIntent")
             catchAlarmManagerExceptions(context) { alarmManager ->
                 alarmManager.cancel(pendingIntent)
-                Timber.d("Successfully unscheduled review reminder notifications for ${reviewReminder.id}")
+                Timber.i("Unscheduled review reminder notifications for id=%d", reviewReminder.id.value)
             }
         }
 
@@ -366,13 +374,15 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
             val alarmTimestamp = TimeManager.time.calendar()
             alarmTimestamp.add(Calendar.MINUTE, snoozeIntervalInMinutes)
             catchAlarmManagerExceptions(context) { alarmManager ->
-                alarmManager.setWindow(
-                    AlarmManager.RTC_WAKEUP,
-                    alarmTimestamp.timeInMillis,
-                    WINDOW_LENGTH_MS,
-                    pendingIntent,
+                alarmManager.scheduleReminderAlarm(
+                    triggerAtMillis = alarmTimestamp.timeInMillis,
+                    operation = pendingIntent,
                 )
-                Timber.d("Successfully scheduled snoozed review reminder notifications for ${reviewReminder.id}")
+                Timber.i(
+                    "Scheduled snooze for reminder id=%d in %d minutes",
+                    reviewReminder.id.value,
+                    snoozeIntervalInMinutes,
+                )
             }
         }
 
@@ -386,6 +396,40 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
             // currently, the only scheduled notifications supported by AnkiDroid are review reminder notifications
             scheduleAllEnabledReviewReminderNotifications(context)
         }
+
+        /**
+         * Schedules an alarm that wakes the device to fire a review reminder notification.
+         *
+         * Prefer [AlarmManager.setExactAndAllowWhileIdle] when exact alarms are allowed so Doze
+         * does not defer the reminder past the study window. Fall back to [AlarmManager.setWindow]
+         * (10-minute window) when exact alarms are unavailable — e.g. Android 12+ without
+         * [android.Manifest.permission.SCHEDULE_EXACT_ALARM] granted.
+         */
+        @VisibleForTesting
+        fun AlarmManager.scheduleReminderAlarm(
+            triggerAtMillis: Long,
+            operation: PendingIntent,
+        ) {
+            if (canUseExactAlarms()) {
+                setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, operation)
+                Timber.d("Used setExactAndAllowWhileIdle for reminder alarm")
+            } else {
+                setWindow(AlarmManager.RTC_WAKEUP, triggerAtMillis, WINDOW_LENGTH_MS, operation)
+                Timber.d("Used setWindow fallback for reminder alarm (exact alarms unavailable)")
+            }
+        }
+
+        /**
+         * Whether this process may schedule exact alarms.
+         * Pre-API 31: exact alarms do not require [android.Manifest.permission.SCHEDULE_EXACT_ALARM].
+         */
+        @VisibleForTesting
+        fun AlarmManager.canUseExactAlarms(): Boolean =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                canScheduleExactAlarms()
+            } else {
+                true
+            }
 
         /**
          * Method for getting an intent to snooze a review reminder for this service.

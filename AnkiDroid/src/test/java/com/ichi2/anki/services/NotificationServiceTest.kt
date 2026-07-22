@@ -36,6 +36,7 @@ import com.ichi2.anki.reviewreminders.ReviewReminderScope.Global
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.utils.Permissions
 import io.mockk.CapturingSlot
 import io.mockk.every
 import io.mockk.mockk
@@ -107,6 +108,25 @@ class NotificationServiceTest : RobolectricTest() {
             verifyNextNotifScheduled(reviewReminderAppWide)
             reviewReminderDeckSpecific.verifyLatestNotifTime(previousTime = deckSpecificCreationTime, shouldHaveUpdated = true)
             reviewReminderAppWide.verifyLatestNotifTime(previousTime = appWideCreationTime, shouldHaveUpdated = true)
+        }
+
+    @Test
+    fun `triggering without notification permission should not fire notification but schedule next`() =
+        runTest {
+            mockkObject(Permissions)
+            every { Permissions.canPostNotifications(any()) } returns false
+
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1)
+            val creationTime = reviewReminder.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+            verifyNextNotifScheduled(reviewReminder)
+            reviewReminder.verifyLatestNotifTime(previousTime = creationTime, shouldHaveUpdated = true)
         }
 
     @Test

@@ -111,8 +111,9 @@ sealed class TroubleshootingCheck {
      * A user can request [android.Manifest.permission.SCHEDULE_EXACT_ALARM] on API 31+
      * which allows scheduling of exact alarms.
      *
-     * TODO: We do not currently support this in the manifest, but we should do
-     * before launch
+     * Declared in the manifest; [com.ichi2.anki.services.AlarmManagerService] uses exact alarms
+     * when [android.app.AlarmManager.canScheduleExactAlarms] is true and falls back to
+     * [android.app.AlarmManager.setWindow] otherwise.
      *
      * https://developer.android.com/about/versions/14/changes/schedule-exact-alarms
      */
