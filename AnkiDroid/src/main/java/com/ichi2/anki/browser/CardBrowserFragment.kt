@@ -834,7 +834,7 @@ class CardBrowserFragment :
 
             // reorder 'preview' to appear before 'add'
             val preview = menu.findItem(R.id.action_preview_many)
-            if (activityViewModel.cards.size > 0) {
+            if (activityViewModel.cards.isNotEmpty()) {
                 preview?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             }
 
