@@ -19,14 +19,26 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
-import com.ichi2.anki.R
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.utils.postDelayed
 import kotlin.time.Duration.Companion.milliseconds
 
+/**
+ * Brief ease-rating indicator overlaid on the reviewer WebView.
+ *
+ * Uses [android.view.ViewPropertyAnimator] (RenderNode alpha) rather than legacy
+ * [android.view.animation.Animation]. Legacy [android.view.animation.AlphaAnimation] only affects
+ * how the view is drawn each frame and does not update the RenderNode alpha used by HWUI. When
+ * Frame style is Box ([com.ichi2.anki.previewer.setFrameStyle] clears elevation / rounded outline),
+ * that drawing-time alpha composites against Chromium's `backdrop-filter` layers while the next
+ * card loads, producing a dark smudge at the top edge (issue 21380). Elevated Card style isolates
+ * children in a separate compositing layer and hides the seam. Property animation participates in
+ * normal HWUI composition and avoids the artifact without permanent hardware layers or frame-style
+ * changes.
+ */
 class AnswerFeedbackView : AppCompatImageView {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -40,58 +52,72 @@ class AnswerFeedbackView : AppCompatImageView {
      * with a quick fade in, brief hold, then gentle fade out.
      */
     fun toggle() {
-        clearAnimation()
-
-        fadeOutRunnable?.let {
-            handler.removeCallbacks(it)
-            fadeOutRunnable = null
-        }
+        cancelPendingFeedback()
 
         if (!Animations.areAnimationsEnabled(context)) {
+            alpha = 1f
             visibility = VISIBLE
             fadeOutRunnable =
                 Runnable {
-                    visibility = GONE
-                    fadeOutRunnable = null
+                    hideFeedback()
                 }.also {
-                    handler.postDelayed(it, 800.milliseconds)
+                    handler.postDelayed(it, TOTAL_VISIBLE_DURATION)
                 }
             return
         }
 
-        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_in)
-        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_out)
+        alpha = 0f
+        animate()
+            .alpha(1f)
+            .setDuration(FADE_IN_MS)
+            .setInterpolator(FADE_IN_INTERPOLATOR)
+            .withStartAction { visibility = VISIBLE }
+            .withEndAction { scheduleFadeOut() }
+            .start()
+    }
 
-        fadeIn.setAnimationListener(
-            object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {
-                    visibility = VISIBLE
-                }
+    private fun scheduleFadeOut() {
+        fadeOutRunnable =
+            Runnable {
+                fadeOutRunnable = null
+                animate()
+                    .alpha(0f)
+                    .setDuration(FADE_OUT_MS)
+                    .setInterpolator(FADE_OUT_INTERPOLATOR)
+                    .withEndAction { hideFeedback() }
+                    .start()
+            }.also {
+                handler.postDelayed(it, HOLD_MS.milliseconds)
+            }
+    }
 
-                override fun onAnimationEnd(animation: Animation) {
-                    fadeOutRunnable =
-                        Runnable {
-                            startAnimation(fadeOut)
-                        }.also {
-                            handler.postDelayed(it, 400)
-                        }
-                }
+    private fun hideFeedback() {
+        visibility = GONE
+        // Reset so a later non-animated show, or a cancelled mid-fade, starts from a clean alpha.
+        alpha = 1f
+        fadeOutRunnable = null
+    }
 
-                override fun onAnimationRepeat(animation: Animation) {}
-            },
-        )
-        fadeOut.setAnimationListener(
-            object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {}
+    private fun cancelPendingFeedback() {
+        animate().cancel()
+        fadeOutRunnable?.let { handler.removeCallbacks(it) }
+        fadeOutRunnable = null
+    }
 
-                override fun onAnimationEnd(animation: Animation) {
-                    visibility = GONE
-                    fadeOutRunnable = null
-                }
+    override fun onDetachedFromWindow() {
+        cancelPendingFeedback()
+        super.onDetachedFromWindow()
+    }
 
-                override fun onAnimationRepeat(animation: Animation) {}
-            },
-        )
-        startAnimation(fadeIn)
+    companion object {
+        private const val FADE_IN_MS = 150L
+        private const val HOLD_MS = 400L
+        private const val FADE_OUT_MS = 250L
+
+        /** Matches prior fade-in + hold + fade-out when animations are disabled. */
+        private val TOTAL_VISIBLE_DURATION = (FADE_IN_MS + HOLD_MS + FADE_OUT_MS).milliseconds
+
+        private val FADE_IN_INTERPOLATOR = FastOutSlowInInterpolator()
+        private val FADE_OUT_INTERPOLATOR = FastOutLinearInInterpolator()
     }
 }
