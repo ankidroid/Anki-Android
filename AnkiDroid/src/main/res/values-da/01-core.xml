@@ -50,7 +50,7 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
         <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d dage %2$d time(r) tilbage</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Indtast svar</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Vis svar</string>
@@ -59,7 +59,7 @@
     <string name="ease_button_hard" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state finding the correct answer was hard.">Svær</string>
     <string name="ease_button_good" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state their answer was good.">God</string>
     <string name="ease_button_easy" maxLength="41" comment="In the reviewer, in the answer side. Label of the button that used by the user to state that finding the answer to the question was easy.">Let</string>
-    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' is enabled</string>
+    <string name="show_answer_hint_long_press" comment="In the reviewer, hint is shown when touching the show answer button and the user has the long-press accessibility setting enabled">\'%s\' er tilladt</string>
     <!-- General -->
     <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Fortryd</string>
     <string name="redo" maxLength="28" comment="Menu entry that allows to redo action that was just undone.">Gentag</string>
@@ -73,12 +73,12 @@
     <string name="menu_add_note" maxLength="28">Tilføj note</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkronisér konto</string>
     <string name="menu_dismiss_note" maxLength="41">Skjul / slet</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Omdøbe flags</string>
     <string name="menu_edit_tags" maxLength="28">Redigér tags</string>
     <string name="delete_note_message">Vil du virkelig slette denne note og alle dens kort?\n%s</string>
     <string name="menu_search" maxLength="28">Slå op i %1$s</string>
     <string name="menu_unmark_note">Afmarkér note</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Tillad lydspilling</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="menu_create_backup" maxLength="28">Create backup</string>
     <string name="new_dynamic_deck">Opret filtreret stak</string>
@@ -155,7 +155,7 @@
     <string name="storage_access_summary">Gemmer din samling på et sikkert sted, der ikke vil blive slettet, hvis appen er afinstalleret</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">Adgang til alle filer</string>
     <string name="image_occlusion">Billedblænding</string>
-    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>
+    <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Mikrofon</string>
     <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
     <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
     <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
@@ -170,5 +170,5 @@
     <string name="permission_access_summary">Required for the app to work</string>
     <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">Tilføj profil</string>
 </resources>

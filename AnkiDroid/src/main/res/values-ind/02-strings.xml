@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
     <string name="export_share_title">Kirim paket Anki menggunakan</string>
     <string name="export_email_subject">Flashcard AnkiDroid terekspor: %s</string>
-    <string name="export_email_text"><![CDATA[        Hai!
+    <string name="export_email_text"><![CDATA[
+        Hai!
         <br/><br/>
         Ini adalah dek flashcard Anki yang dikirim dari AnkiDroid[1].
         Coba buka menggunakan salah satu distribusi Anki[2] dan nikmati pembelajaran yang cepat dan efisien!<br/><br/>
