@@ -70,10 +70,6 @@ object Themes {
         }
     }
 
-    fun setLegacyActionBar(context: Context) {
-        context.setTheme(R.style.ThemeOverlay_LegacyActionBar)
-    }
-
     /**
      * Updates [currentTheme] value based on preferences.
      * If `Follow system` is selected, it's updated to the theme set

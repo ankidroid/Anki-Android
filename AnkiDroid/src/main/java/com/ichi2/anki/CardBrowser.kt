@@ -18,6 +18,7 @@
 
 package com.ichi2.anki
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -28,11 +29,16 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -190,6 +196,8 @@ open class CardBrowser :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
+        // match the status bar theme of the rest of the app
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         super.onCreate(savedInstanceState)
         binding = ActivityCardBrowserBinding.inflate(layoutInflater)
         if (!ensureStorageIsReady()) {
@@ -204,6 +212,7 @@ open class CardBrowser :
 
         setViewBinding(binding)
         initNavigationDrawer(findViewById(android.R.id.content))
+        applyToolbarInsets()
 
         /**
          * Check if noteEditorFrame is not null and if its visibility is set to VISIBLE.
@@ -367,6 +376,20 @@ open class CardBrowser :
     override fun setupBackPressedCallbacks() {
         onBackPressedDispatcher.addCallback(this, multiSelectOnBackPressedCallback)
         super.setupBackPressedCallbacks()
+    }
+
+    override fun fitsSystemWindows(): Boolean = false
+
+    private fun applyToolbarInsets() {
+        val container = findViewById<View>(R.id.toolbar_container) ?: return
+        ViewCompat.setOnApplyWindowInsetsListener(container) { view, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            view.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
+        }
     }
 
     private fun showSaveChangesDialog(launcher: NoteEditorLauncher) {

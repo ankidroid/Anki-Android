@@ -3,7 +3,6 @@
     android:id="@+id/card_item_browser"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
     xmlns:tools="http://schemas.android.com/tools">
 
     <CheckBox
