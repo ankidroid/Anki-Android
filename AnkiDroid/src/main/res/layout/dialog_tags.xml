@@ -64,13 +64,25 @@
     </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView android:id="@+id/tags_list"
-        android:scrollbars="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/options_group"
-        android:layout_below="@id/toolbar"
-        tools:listitem="@layout/item_tag" />
+        android:layout_below="@id/toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tags_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_tag" />
+
+        <com.ichi2.anki.ui.RecyclerFastScroller
+            android:id="@+id/tags_scroller"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"

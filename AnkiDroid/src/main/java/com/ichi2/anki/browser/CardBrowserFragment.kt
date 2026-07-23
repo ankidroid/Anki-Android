@@ -873,7 +873,9 @@ class CardBrowserFragment :
             toggleRowSelections.isVisible = inMultiSelect
 
             // update adapter to remove check boxes
-            cardsAdapter.notifyDataSetChanged()
+            if (shouldRefreshBrowserRows(modeChange)) {
+                cardsAdapter.notifyDataSetChanged()
+            }
             if (modeChange is SingleSelectCause.DeselectRow) {
                 cardsAdapter.notifyDataSetChanged()
                 autoScrollTo(modeChange.selection)
@@ -1874,6 +1876,17 @@ class PreviewerDestination(
     val currentIndex: Int,
     val idsFile: IdsFile,
 )
+
+/**
+ * Opening the editor from single-select does not change row rendering, so a full adapter refresh
+ * would unnecessarily invalidate the fast scroller's cached metrics. A refresh is still needed
+ * when leaving multi-select to remove the selection UI.
+ */
+internal fun shouldRefreshBrowserRows(modeChange: ChangeMultiSelectMode): Boolean {
+    val singleSelectCause = modeChange as? SingleSelectCause ?: return true
+    return singleSelectCause != SingleSelectCause.OpenNoteEditorActivity ||
+        !singleSelectCause.previouslySelectedRowIds.isNullOrEmpty()
+}
 
 @CheckResult
 fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, idsFile, currentIndex)
