@@ -502,6 +502,61 @@ public class AddContentApi(
     }
 
     /**
+     * Set the flag using flag code for a given note
+     * @param noteId the ID of the note to update
+     * @param rawFlag the flag code to set (should match a [Flag.code])
+     * @return true if flag was updated, otherwise false
+     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
+     * @throws IllegalArgumentException if flag code is not a valid [Flag.code]
+     */
+    public fun setFlagRaw(
+        noteId: Long,
+        rawFlag: Int,
+    ): Boolean {
+        val cardsUri =
+            Note.CONTENT_URI
+                .buildUpon()
+                .appendPath(noteId.toString())
+                .appendPath("cards")
+                .build()
+
+        val cardsQuery = resolver.query(cardsUri, null, null, null, null) ?: return false
+
+        val values =
+            ContentValues().apply {
+                put(Card.FLAGS, rawFlag)
+            }
+        var numRowsUpdated = 0
+
+        cardsQuery.use { cardsCursor ->
+            while (cardsCursor.moveToNext()) {
+                val cardUri =
+                    Note.CONTENT_URI
+                        .buildUpon()
+                        .appendPath(noteId.toString())
+                        .appendPath("cards")
+                        .appendPath(cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD)))
+                        .build()
+                numRowsUpdated += resolver.update(cardUri, values, null, null)
+            }
+        }
+
+        return numRowsUpdated > 0
+    }
+
+    /**
+     * Set the flag for a given note
+     * @param noteId the ID of the note to update
+     * @param flag the flag to set (should match a [Flag])
+     * @return true if flag was updated, otherwise false
+     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
+     */
+    public fun setFlag(
+        noteId: Long,
+        flag: Flag,
+    ): Boolean = setFlagRaw(noteId, flag.code)
+
+    /**
      * Get the name of the selected deck
      * @return deck name or null if there was a problem
      */
