@@ -87,6 +87,7 @@ import com.ichi2.anki.browser.search.CardStateBottomSheetFragment
 import com.ichi2.anki.browser.search.FlagsBottomSheetFragment
 import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
+import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
 import com.ichi2.anki.browser.search.iconRes
@@ -96,7 +97,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
-import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
@@ -1105,8 +1105,8 @@ class CardBrowserFragment :
             searchViewModel.syncState(search)
         }
 
-        fun reverseDirectionChanged(direction: ReverseDirection) {
-            sortChip?.scaleY = if (!direction.orderAsc) 1.0f else -1.0f
+        fun reverseDirectionChanged(reverse: ReverseDirection?) {
+            sortChip?.scaleY = if (reverse == false || reverse == null) 1.0f else -1.0f
         }
 
         fun onChangeNoteType(result: ChangeNoteTypeResponse) =
@@ -1122,7 +1122,23 @@ class CardBrowserFragment :
             showDialogFragment(dialog)
         }
 
-        activityViewModel.reverseDirectionFlow.launchCollectionInLifecycleScope(::reverseDirectionChanged)
+        /** Displays a snackbar: Sort by Card Type · A-Z*/
+        fun onSortTypeChanged(notification: SortChangeNotification) {
+            val (title, subtitle) =
+                when (notification) {
+                    is SortChangeNotification.NoOrdering ->
+                        getString(R.string.card_browser_order_no_sorting_title) to null
+                    is SortChangeNotification.CollectionOrdering -> {
+                        val subtitleRes = notification.type.humanReadableExplanation(descending = notification.reverse)
+                        getString(R.string.card_browser_order_snackbar_sort_by, notification.columnLabel) to
+                            subtitleRes?.let(::getString)
+                    }
+                }
+            val text = if (subtitle != null) "$title · $subtitle" else title
+            showSnackbar(text, Snackbar.LENGTH_SHORT)
+        }
+
+        activityViewModel.flowOfReverseDirection.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfFocusedRow.launchCollectionInLifecycleScope(::onFocusedRowChanged)
@@ -1144,6 +1160,7 @@ class CardBrowserFragment :
         activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
         activityViewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
         activityViewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
+        activityViewModel.flowOfSortTypeChanged.launchCollectionInLifecycleScope(::onSortTypeChanged)
     }
 
     private fun setupFragmentResultListeners() {
@@ -1605,9 +1622,12 @@ class CardBrowserFragment :
             }
         }
 
-    fun changeDisplayOrder() {
-        showDialogFragment(CardBrowserOrderDialog())
-    }
+    fun changeDisplayOrder() =
+        launchCatchingTask {
+            SortOrderBottomSheetFragment
+                .createInstance(cardsOrNotes = activityViewModel.cardsOrNotes)
+                .show(childFragmentManager)
+        }
 
     private fun updateFlag(keyCode: Int) {
         val flag =
