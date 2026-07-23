@@ -23,7 +23,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -47,6 +46,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -90,14 +90,18 @@ import com.ichi2.anki.dialogs.viewmodel.ExportReadyViewModel
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.windowInsetsControllerCompat
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.themes.Themes
+import com.ichi2.themes.setTransparentNavigationBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -129,6 +133,9 @@ open class AnkiActivity(
     val dialogHandler = DialogHandler(this)
     override val ankiActivity = this
 
+    val windowInsetsController: WindowInsetsControllerCompat
+        get() = windowInsetsControllerCompat
+
     private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
     private lateinit var fileExportPath: String
@@ -149,8 +156,7 @@ open class AnkiActivity(
         disableXiaomiForceDarkMode(this)
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            @Suppress("deprecation")
-            window.navigationBarColor = getColor(R.color.transparent)
+            setTransparentNavigationBar()
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
             saveExportFile(
@@ -655,12 +661,14 @@ open class AnkiActivity(
             activitySuperOnCreate = { state -> super.onCreate(state) },
         )
 
-    /** @see Window.setNavigationBarColor */
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(
         @AttrRes attr: Int,
     ) {
-        window.navigationBarColor = getColorFromAttr(this, attr)
+        window.apply {
+            navigationBarColor = getColorFromAttr(this@AnkiActivity, attr)
+            withInsets { isAppearanceLightNavigationBars = Themes.currentTheme !is NightTheme }
+        }
     }
 
     fun closeCollectionAndFinish() {

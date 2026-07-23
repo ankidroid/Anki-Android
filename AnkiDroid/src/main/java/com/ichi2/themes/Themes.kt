@@ -25,7 +25,6 @@ import android.util.TypedValue
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
@@ -34,7 +33,7 @@ import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.settings.enums.Theme
-import com.ichi2.themes.Themes.currentTheme
+import com.ichi2.anki.utils.ext.withInsets
 
 /**
  * Helper methods to configure things related to AnkiDroid's themes
@@ -103,9 +102,14 @@ object Themes {
 
 @Suppress("deprecation", "API35 properly handle edge-to-edge")
 fun FragmentActivity.setTransparentStatusBar() {
-    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
-        Themes.currentTheme !is NightTheme
+    withInsets { isAppearanceLightStatusBars = Themes.currentTheme !is NightTheme }
     window.statusBarColor = Color.TRANSPARENT
+}
+
+@Suppress("deprecation", "API35 properly handle edge-to-edge")
+fun FragmentActivity.setTransparentNavigationBar() {
+    withInsets { isAppearanceLightNavigationBars = Themes.currentTheme !is NightTheme }
+    window.navigationBarColor = Color.TRANSPARENT
 }
 
 fun FragmentActivity.setTransparentBackground() {

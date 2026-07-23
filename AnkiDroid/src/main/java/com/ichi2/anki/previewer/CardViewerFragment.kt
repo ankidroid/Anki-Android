@@ -40,6 +40,7 @@ import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
@@ -286,7 +287,7 @@ abstract class CardViewerFragment(
                 ),
             )
             // hide system bars
-            with(WindowInsetsControllerCompat(window, window.decorView)) {
+            with(requireAnkiActivity().windowInsetsController) {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 hide(WindowInsetsCompat.Type.systemBars())
             }
@@ -296,7 +297,7 @@ abstract class CardViewerFragment(
             val window = requireActivity().window
             (window.decorView as FrameLayout).removeView(paramView)
             // show system bars back
-            with(WindowInsetsControllerCompat(window, window.decorView)) {
+            with(requireAnkiActivity().windowInsetsController) {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                 show(WindowInsetsCompat.Type.systemBars())
             }
