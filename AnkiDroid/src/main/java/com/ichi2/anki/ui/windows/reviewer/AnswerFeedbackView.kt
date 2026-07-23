@@ -19,7 +19,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import com.ichi2.anki.R
@@ -36,11 +35,12 @@ class AnswerFeedbackView : AppCompatImageView {
     private val handler = Handler(Looper.getMainLooper())
 
     /**
-     * Shows the feedback for one second
-     * with a quick fade in, brief hold, then gentle fade out.
+     * Shows the feedback with a quick fade in, brief hold, then gentle fade out.
+     * uses ViewPropertyAnimator instead of legacy AlphaAnimation to avoid compositing
+     * artifacts with WebView backdrop-filter when Frame style "Box" removes card elevation.
      */
     fun toggle() {
-        clearAnimation()
+        animate().cancel()
 
         fadeOutRunnable?.let {
             handler.removeCallbacks(it)
@@ -59,39 +59,25 @@ class AnswerFeedbackView : AppCompatImageView {
             return
         }
 
-        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_in)
-        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_out)
+        alpha = 0f
+        visibility = VISIBLE
 
-        fadeIn.setAnimationListener(
-            object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {
-                    visibility = VISIBLE
-                }
-
-                override fun onAnimationEnd(animation: Animation) {
-                    fadeOutRunnable =
-                        Runnable {
-                            startAnimation(fadeOut)
-                        }.also {
-                            handler.postDelayed(it, 400)
-                        }
-                }
-
-                override fun onAnimationRepeat(animation: Animation) {}
-            },
-        )
-        fadeOut.setAnimationListener(
-            object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {}
-
-                override fun onAnimationEnd(animation: Animation) {
-                    visibility = GONE
-                    fadeOutRunnable = null
-                }
-
-                override fun onAnimationRepeat(animation: Animation) {}
-            },
-        )
-        startAnimation(fadeIn)
+        animate()
+            .alpha(1f)
+            .setDuration(150)
+            .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in))
+            .withEndAction {
+                fadeOutRunnable =
+                    Runnable {
+                        animate()
+                            .alpha(0f)
+                            .setDuration(250)
+                            .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_linear_in))
+                            .withEndAction {
+                                visibility = GONE
+                                fadeOutRunnable = null
+                            }.start()
+                    }.also { handler.postDelayed(it, 400.milliseconds) }
+            }.start()
     }
 }
