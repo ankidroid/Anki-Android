@@ -185,6 +185,7 @@ import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
@@ -546,8 +547,13 @@ open class DeckPicker :
                     viewModel.requestRightClickContextMenu(deckId, x, y)
                     Timber.d("Right Click on deck recorded!! %d, %f %f", deckId, x, y)
                 },
-            )
+            ).apply {
+                highlightSelected = fragmented
+            }
         deckPickerBinding.decks.adapter = deckListAdapter
+        if (Prefs.devBottomNavEnabled) {
+            deckPickerBinding.decks.addItemDecoration(DeckHierarchyLinesDecoration(this, deckListAdapter.expanderWidth.toFloat()))
+        }
 
         lifecycleScope.launch { applyDeckPickerBackground() }
 

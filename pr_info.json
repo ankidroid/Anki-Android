@@ -1,0 +1,196 @@
+{
+    "author": {
+        "id": "U_kgDOC5oJFw",
+        "is_bot": false,
+        "login": "ShaanNarendran",
+        "name": "Shaan Narendran"
+    },
+    "body": "\u003e [!NOTE]  \r\n\u003e Used Gemini 3.1 Pro to help write the code for the bit mask approach (horrible at math, so this was an experiment).  All comments are my own, tested completely with the emulator and with a very large deck.\r\n\u003c!--- Please fill the necessary details below --\u003e\r\n## Purpose / Description\r\nDraws hierarchy lines for the new deck picker redesign.\r\n\r\n## Fixes\r\n* For GSoC 2026: Redesign Deck Picker\r\n\r\n## Approach\r\nWe use a bit mask approach since looping through every row to draw all the lines is very inefficient, I've tried to comment it as much as possible with examples so that should explain the approach.\r\n\r\n## How Has This Been Tested?\r\n[Screen_recording_20260714_231431.webm](https://github.com/user-attachments/assets/5d0ee1f0-d843-4091-b057-4d1c6e72eeda)\r\n\r\n## Checklist\r\n_Please, go through these checks before submitting the PR._\r\n\r\n- [x] You have a descriptive commit message with a short title (first line, max 50 chars).\r\n- [x] You have commented your code, particularly in hard-to-understand areas\r\n- [x] You have performed a self-review of your own code\r\n- [ ] UI changes: include screenshots of all affected screens (in particular showing any new or changed strings)\r\n- [ ] UI Changes: You have tested your change using the [Google Accessibility Scanner](https://play.google.com/store/apps/details?id=com.google.android.apps.accessibility.auditor)\r\n\r\n\u003c!--- Uncomment this section ONLY if this PR introduces new resources (external libraries, icons etc)\r\n## Licenses\r\n_For each new external resource, add a row to the table below:_\r\n\r\n| Library | Description | License |\r\n| --- | --- | --- |\r\n| Sample Icon Library | Sample Description | [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt) |\r\n\r\n**Maintainers:**\r\n\r\n* [ ] Add the https://github.com/ankidroid/Anki-Android/labels/Licenses label\r\n* [ ] Update the [licenses](https://github.com/ankidroid/Anki-Android/wiki/Licences) wiki when merging\r\n---\u003e",
+    "comments": [
+        {
+            "author": { "login": "ShaanNarendran" },
+            "authorAssociation": "MEMBER",
+            "body": "\u003e Screenshot test would help\r\n\r\nDo I just have to add screenshots of the page into the PR?\r\n\r\n",
+            "createdAt": "2026-07-16T01:25:12Z",
+            "id": "IC_kwDOAHXAE88AAAABKUC28w",
+            "includesCreatedEdit": false,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4987074291",
+            "viewerDidAuthor": true
+        },
+        {
+            "author": { "login": "ZornHadNoChoice" },
+            "authorAssociation": "COLLABORATOR",
+            "body": "A few suggestions:\r\n\r\n- The lines shouldn't break when collapsing/expanding decks.\r\n- I think it'd look better if the \"tips\" were longer.\r\n- Maybe \"connect\" the lines to the arrows or put circles around the arrows.",
+            "createdAt": "2026-07-16T05:54:46Z",
+            "id": "IC_kwDOAHXAE88AAAABKVkNRA",
+            "includesCreatedEdit": false,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4988669252",
+            "viewerDidAuthor": false
+        },
+        {
+            "author": { "login": "BrayanDSO" },
+            "authorAssociation": "MEMBER",
+            "body": "\u003e Do I just have to add screenshots of the page into the PR?\r\n\r\nWe use the [Roborazzi](https://github.com/takahirom/roborazzi) library for automated screenshot unit tests. Check the inheritors of `ScreenshotTest` in AnkiDroid's repository for examples",
+            "createdAt": "2026-07-16T15:05:27Z",
+            "id": "IC_kwDOAHXAE88AAAABKaHpMA",
+            "includesCreatedEdit": false,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [{ "content": "THUMBS_UP", "users": { "totalCount": 1 } }],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4993444144",
+            "viewerDidAuthor": false
+        },
+        {
+            "author": { "login": "ShaanNarendran" },
+            "authorAssociation": "MEMBER",
+            "body": "\u003e A few suggestions:\r\n\u003e \r\n\u003e * The lines shouldn't break when collapsing/expanding decks.\r\n\r\nI'm not sure if this is possible without making it too inefficient for large decks, will try this out.\r\n\r\n\u003e * I think it'd look better if the \"tips\" were longer.\r\n\r\nI had a similar thought but I could never get it to look visually \"uncluttered\", can send some mocks once the rest of the code is perfected but I like what we have now.\r\n\r\n\r\n\u003e * Maybe \"connect\" the lines to the arrows or put circles around the arrows.\r\n\r\n@david-allison would love your thoughts here, do we go with lines connected to the chevron or not? \r\n\r\n\r\n\r\n",
+            "createdAt": "2026-07-16T17:09:40Z",
+            "id": "IC_kwDOAHXAE88AAAABKbOkfQ",
+            "includesCreatedEdit": true,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [{ "content": "THUMBS_UP", "users": { "totalCount": 1 } }],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4994606205",
+            "viewerDidAuthor": true
+        },
+        {
+            "author": { "login": "ZornHadNoChoice" },
+            "authorAssociation": "COLLABORATOR",
+            "body": "Nitpick: the horizontal tips overlap the vertical lines creating a darker color.",
+            "createdAt": "2026-07-16T17:38:18Z",
+            "id": "IC_kwDOAHXAE88AAAABKbdjBQ",
+            "includesCreatedEdit": false,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4994851589",
+            "viewerDidAuthor": false
+        },
+        {
+            "author": { "login": "ShaanNarendran" },
+            "authorAssociation": "MEMBER",
+            "body": "\u003e Nitpick: the horizontal tips overlap the vertical lines creating a darker color.\r\n\r\nI've tried a lot to avoid this but it's always come out wrong, may have to be a small quirk of the lines. It doesn't seem too noticeable to me, but ill still try and fix this while I finish the pr up tomorrow!",
+            "createdAt": "2026-07-16T17:40:17Z",
+            "id": "IC_kwDOAHXAE88AAAABKbejZg",
+            "includesCreatedEdit": false,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [{ "content": "THUMBS_UP", "users": { "totalCount": 1 } }],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4994868070",
+            "viewerDidAuthor": true
+        },
+        {
+            "author": { "login": "david-allison" },
+            "authorAssociation": "MEMBER",
+            "body": "Outside the transition states, looks great!\n\nPausing on the video provides unusual output\n\n![Screenshot_20260716-191337.png](https://github.com/user-attachments/assets/afaad304-2683-44ed-8786-65dbc4f52ef7)\n\nI'd go slowly through this and validate the animations are doing as you'd expect, both expansion and contraction of the decks, and drawing of the lines themselves\n",
+            "createdAt": "2026-07-16T18:15:18Z",
+            "id": "IC_kwDOAHXAE88AAAABKbxIGg",
+            "includesCreatedEdit": false,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [{ "content": "THUMBS_UP", "users": { "totalCount": 2 } }],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4995172378",
+            "viewerDidAuthor": false
+        },
+        {
+            "author": { "login": "david-allison" },
+            "authorAssociation": "MEMBER",
+            "body": "I'm happy with the lines not connected to the chevron, but I feel the \"dead zone\" should be a few pixels smaller, in my screenshot it's hard to see the the horizontal line towards \"blog\"",
+            "createdAt": "2026-07-16T18:16:09Z",
+            "id": "IC_kwDOAHXAE88AAAABKbxlXg",
+            "includesCreatedEdit": true,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [{ "content": "THUMBS_UP", "users": { "totalCount": 1 } }],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4995179870",
+            "viewerDidAuthor": false
+        },
+        {
+            "author": { "login": "sanjaysargam" },
+            "authorAssociation": "MEMBER",
+            "body": "\u003e \u003e Nitpick: the horizontal tips overlap the vertical lines creating a darker color.\r\n\u003e \r\n\u003e I've tried a lot to avoid this but it's always come out wrong, may have to be a small quirk of the lines. It doesn't seem too noticeable to me, but ill still try and fix this while I finish the pr up tomorrow!\r\n\r\n@ShaanNarendran try this : draw vertical lines as two segments with a gap at the horizontal tip position, or use a single Path that outlines the entire corner shape without overlap",
+            "createdAt": "2026-07-17T06:40:25Z",
+            "id": "IC_kwDOAHXAE88AAAABKgKOcg",
+            "includesCreatedEdit": false,
+            "isMinimized": false,
+            "minimizedReason": "",
+            "reactionGroups": [],
+            "url": "https://github.com/ankidroid/Anki-Android/pull/21373#issuecomment-4999777906",
+            "viewerDidAuthor": false
+        }
+    ],
+    "files": [
+        {
+            "additions": 5,
+            "changeType": "MODIFIED",
+            "deletions": 1,
+            "path": "AnkiDroid/src/main/java/com/ichi2/anki/DeckPicker.kt"
+        },
+        {
+            "additions": 18,
+            "changeType": "MODIFIED",
+            "deletions": 6,
+            "path": "AnkiDroid/src/main/java/com/ichi2/anki/widgets/DeckAdapter.kt"
+        },
+        {
+            "additions": 168,
+            "changeType": "ADDED",
+            "deletions": 0,
+            "path": "AnkiDroid/src/main/java/com/ichi2/anki/widgets/DeckHierarchyLinesDecoration.kt"
+        }
+    ],
+    "reviews": [
+        {
+            "author": { "login": "BrayanDSO" },
+            "authorAssociation": "MEMBER",
+            "body": "Screenshot tests would help",
+            "commit": { "oid": "9694199f6ad08e11519c1381a1c399f08f28598d" },
+            "id": "PRR_kwDOAHXAE88AAAABGKYm3w",
+            "includesCreatedEdit": false,
+            "reactionGroups": [],
+            "state": "CHANGES_REQUESTED",
+            "submittedAt": "2026-07-15T22:21:44Z"
+        },
+        {
+            "author": { "login": "ShaanNarendran" },
+            "authorAssociation": "MEMBER",
+            "body": "",
+            "commit": { "oid": "9694199f6ad08e11519c1381a1c399f08f28598d" },
+            "id": "PRR_kwDOAHXAE88AAAABGLZDZQ",
+            "includesCreatedEdit": false,
+            "reactionGroups": [],
+            "state": "COMMENTED",
+            "submittedAt": "2026-07-16T01:23:30Z"
+        },
+        {
+            "author": { "login": "ShaanNarendran" },
+            "authorAssociation": "MEMBER",
+            "body": "",
+            "commit": { "oid": "9694199f6ad08e11519c1381a1c399f08f28598d" },
+            "id": "PRR_kwDOAHXAE88AAAABGLZQEw",
+            "includesCreatedEdit": false,
+            "reactionGroups": [],
+            "state": "COMMENTED",
+            "submittedAt": "2026-07-16T01:23:56Z"
+        },
+        {
+            "author": { "login": "sanjaysargam" },
+            "authorAssociation": "MEMBER",
+            "body": "",
+            "commit": { "oid": "005f8864adfaf84631234c8ecf9de66030d8f693" },
+            "id": "PRR_kwDOAHXAE88AAAABGVIfIA",
+            "includesCreatedEdit": false,
+            "reactionGroups": [],
+            "state": "CHANGES_REQUESTED",
+            "submittedAt": "2026-07-17T07:13:57Z"
+        }
+    ],
+    "state": "OPEN",
+    "title": "feat(deck-picker): draw tree hierarchy branch lines"
+}
