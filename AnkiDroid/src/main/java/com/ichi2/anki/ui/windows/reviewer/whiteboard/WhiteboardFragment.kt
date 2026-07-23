@@ -8,6 +8,7 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -350,7 +351,15 @@ class WhiteboardFragment :
 
         brushConfigPopup =
             PopupWindow(popupBrushBinding.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-        brushConfigPopup?.elevation = resources.getDimension(R.dimen.study_screen_elevation)
+
+        val typedValue = TypedValue()
+        val hasAttr = requireContext().theme.resolveAttribute(R.attr.studyScreenElevation, typedValue, true)
+        brushConfigPopup?.elevation =
+            if (hasAttr) {
+                TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics).toFloat()
+            } else {
+                0f
+            }
         brushConfigPopup?.setOnDismissListener {
             brushConfigPopup = null
         }

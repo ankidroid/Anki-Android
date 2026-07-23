@@ -305,7 +305,7 @@ android {
                                 throw new GradleException("Invalid param: '${invalid.join(', ')}'. Valid options: ${validOptions.join(', ')}.")
                             }
                         }
-                        validateInput(theme, ["light", "plain", "dark", "black", "all"])
+                        validateInput(theme, ["light", "plain", "dark", "black", "eink", "all"])
                         validateInput(device, ["phone", "tablet", "foldable", "desktop", "all"])
 
                         systemProperty "screenshot.theme", theme

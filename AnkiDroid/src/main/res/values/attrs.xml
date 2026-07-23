@@ -229,4 +229,12 @@
     <!-- Reminder troubleshooting -->
     <attr name="reminderTroubleshootingOk" format="color"/>
     <attr name="reminderTroubleshootingWarning" format="color"/>
+
+
+    <attr name="badgeWarningColor" format="color"/>
+    <attr name="badgeErrorColor" format="color"/>
+    <attr name="widgetStrokeWidth" format="dimension"/>
+    <attr name="widgetStrokeColor" format="color"/>
+    <attr name="studyScreenElevation" format="dimension"/>
+    <attr name="whiteboardToolbarCardStyle" format="reference"/>
 </resources>

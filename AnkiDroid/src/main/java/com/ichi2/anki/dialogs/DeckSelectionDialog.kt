@@ -94,7 +94,8 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         isCancelable = true
-        binding = DialogDeckPickerBinding.inflate(LayoutInflater.from(context))
+        val builder = AlertDialog.Builder(requireActivity())
+        binding = DialogDeckPickerBinding.inflate(LayoutInflater.from(builder.context))
         binding.templateEditorMessage.isVisible = templateEditorMessage != null
         binding.templateEditorMessage.text = templateEditorMessage
         binding.decks.requestFocus()
@@ -105,7 +106,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         decksAdapter = DecksArrayAdapter(decks)
         binding.decks.adapter = decksAdapter
         setupMenu()
-        return AlertDialog.Builder(requireActivity()).create {
+        return builder.create {
             negativeButton(R.string.dialog_cancel)
             customView(view = binding.root)
             if (templateEditorMessage != null) {

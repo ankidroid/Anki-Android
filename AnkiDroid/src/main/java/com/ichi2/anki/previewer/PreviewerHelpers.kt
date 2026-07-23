@@ -96,5 +96,6 @@ fun MaterialCardView.setFrameStyle() {
         }
         cardElevation = 0F
         shapeAppearanceModel = ShapeAppearanceModel() // Remove corners
+        strokeWidth = 0
     }
 }

@@ -18,6 +18,7 @@ package com.ichi2.ui
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.SyncActionProvider
@@ -36,6 +37,11 @@ class BadgeDrawableBuilder(
 
     fun withColor(color: Int?): BadgeDrawableBuilder {
         this.color = color
+        return this
+    }
+
+    fun withColorAttr(attr: Int): BadgeDrawableBuilder {
+        this.color = ThemeUtils.getThemeAttrColor(context, attr)
         return this
     }
 

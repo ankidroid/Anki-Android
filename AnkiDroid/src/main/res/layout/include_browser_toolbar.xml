@@ -15,7 +15,7 @@
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
+        android:textColor="?attr/actionBarTextColor"
         android:textSize="20sp"
         android:visibility="gone" />
 
@@ -33,7 +33,7 @@
             android:gravity="center_vertical"
             android:drawableEnd="@drawable/id_arrow_drop_down"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:textColor="@color/white"
+            android:textColor="?attr/actionBarTextColor"
             android:maxLines="1"
             android:ellipsize="end"
             tools:text="Deck name here"
@@ -43,7 +43,7 @@
             android:id="@+id/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="?attr/actionBarTextColor"
             android:textAppearance="?attr/textAppearanceListItemSecondary"
             tools:text="2 cards shown"/>
     </LinearLayout>

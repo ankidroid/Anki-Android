@@ -30,4 +30,5 @@ enum class DayTheme(
 ) : Theme {
     LIGHT(R.string.theme_light_value, R.style.Theme_Light),
     PLAIN(R.string.theme_plain_value, R.style.Theme_Light_Plain),
+    EINK(R.string.theme_eink_scheme_value, R.style.Theme_Light_Eink),
 }

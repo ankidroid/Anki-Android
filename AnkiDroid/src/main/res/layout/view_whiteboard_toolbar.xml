@@ -12,7 +12,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/toolbar_card"
-        style="?attr/materialCardViewStyle"
+        style="?attr/whiteboardToolbarCardStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
