@@ -24,6 +24,7 @@ import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -56,6 +57,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.NonLeadingZeroInputFilter
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getIntOrNull
@@ -281,6 +283,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         binding.detailsText1.text = text1
         binding.detailsText2.text = text2
 
+        binding.detailsText2.isVisible = text2.isNotEmpty()
+
         binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
         binding.cardsStateSelector.apply {
             fun setAdapterAndSelection(
@@ -310,7 +314,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             setAdapterAndSelection(cardStates, viewModel.selectedCardStateIndex)
         }
         binding.detailsEditText2.apply {
+            filters += NonLeadingZeroInputFilter
+
             setText(defaultValue)
+
             // Give EditText focus and show keyboard
             setSelectAllOnFocus(true)
             requestFocus()
@@ -318,10 +325,28 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
             }
+
+            if (contextMenuOption == STUDY_FORGOT) {
+                binding.detailsEditText2Layout.suffixText =
+                    resources.getQuantityString(
+                        R.plurals.set_due_date_label_suffix,
+                        defaultValue.toIntOrNull() ?: 0,
+                    )
+                doOnTextChanged { text, _, _, _ ->
+                    val currentValue = text?.toString()?.toIntOrNull()
+                    binding.detailsEditText2Layout.suffixText =
+                        resources.getQuantityString(
+                            R.plurals.set_due_date_label_suffix,
+                            currentValue ?: 0,
+                        )
+                }
+            }
         }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
+            } else if (contextMenuOption == STUDY_FORGOT) {
+                getString(R.string.dialog_positive_create)
             } else {
                 getString(R.string.dialog_ok)
             }
