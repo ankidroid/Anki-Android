@@ -18,9 +18,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.os.Parcel
 import android.os.Parcelable
-import android.os.Parcelable.ClassLoaderCreator
 import android.util.AttributeSet
 import android.util.SparseArray
 import android.view.ActionMode
@@ -29,7 +27,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.os.ParcelCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.common.utils.android.getDensityAdjustedValue
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -37,6 +34,7 @@ import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.databinding.ViewCardMultimediaEditlineBinding
 import com.ichi2.ui.AnimationUtil.collapseView
 import com.ichi2.ui.AnimationUtil.expandView
+import kotlinx.parcelize.Parcelize
 import java.util.Locale
 
 @KotlinCleanup("replace _name with `field`")
@@ -146,102 +144,38 @@ class FieldEditLine : FrameLayout {
 
     // keeps platform defined nullability
     @Suppress("RedundantNullableReturnType")
-    public override fun onSaveInstanceState(): Parcelable? {
-        val state = super.onSaveInstanceState()
-        val savedState = SavedState(state)
-        savedState.childrenStates = SparseArray()
-        savedState.editTextId = binding.editText.id
-        savedState.toggleStickyId = binding.toggleSticky.id
-        savedState.mediaButtonId = binding.mediaButton.id
-        savedState.expandButtonId = binding.expandButton.id
-        for (i in 0 until childCount) {
-            getChildAt(i).saveHierarchyState(savedState.childrenStates)
-        }
-        savedState.expansionState = expansionState
-        return savedState
-    }
+    public override fun onSaveInstanceState(): Parcelable? =
+        SavedState(
+            state = super.onSaveInstanceState(),
+            name = _name,
+            content = binding.editText.text?.toString(),
+            ord = binding.editText.ord,
+            expansionState = expansionState,
+        )
 
     public override fun onRestoreInstanceState(state: Parcelable) {
         if (state !is SavedState) {
             super.onRestoreInstanceState(state)
             return
         }
-        val editTextId = binding.editText.id
-        val toggleStickyId = binding.toggleSticky.id
-        val mediaButtonId = binding.mediaButton.id
-        val expandButtonId = binding.expandButton.id
-        binding.editText.id = state.editTextId
-        binding.toggleSticky.id = state.toggleStickyId
-        binding.mediaButton.id = state.mediaButtonId
-        binding.expandButton.id = state.expandButtonId
         super.onRestoreInstanceState(state.superState)
-        for (i in 0 until childCount) {
-            getChildAt(i).restoreHierarchyState(state.childrenStates)
-        }
-        binding.editText.id = editTextId
-        binding.toggleSticky.id = toggleStickyId
-        binding.mediaButton.id = mediaButtonId
-        binding.expandButton.id = expandButtonId
+        name = state.name
+        setContent(state.content, replaceNewline = false)
+        binding.editText.ord = state.ord
         if (expansionState != state.expansionState) {
             toggleExpansionState()
         }
-        expansionState = state.expansionState ?: ExpansionState.EXPANDED
+        expansionState = state.expansionState
     }
 
-    @KotlinCleanup("convert to parcelable")
-    internal class SavedState : BaseSavedState {
-        var childrenStates: SparseArray<Parcelable>? = null
-        var editTextId = 0
-        var toggleStickyId = 0
-        var mediaButtonId = 0
-        var expandButtonId = 0
-        var expansionState: ExpansionState? = null
-
-        constructor(superState: Parcelable?) : super(superState)
-
-        override fun writeToParcel(
-            out: Parcel,
-            flags: Int,
-        ) {
-            super.writeToParcel(out, flags)
-            out.writeSparseArray(childrenStates)
-            out.writeInt(editTextId)
-            out.writeInt(toggleStickyId)
-            out.writeInt(mediaButtonId)
-            out.writeInt(expandButtonId)
-            out.writeSerializable(expansionState)
-        }
-
-        private constructor(source: Parcel, loader: ClassLoader) : super(source) {
-            childrenStates = ParcelCompat.readSparseArray(source, loader, Parcelable::class.java)
-            editTextId = source.readInt()
-            toggleStickyId = source.readInt()
-            mediaButtonId = source.readInt()
-            expandButtonId = source.readInt()
-            expansionState =
-                ParcelCompat.readSerializable(
-                    source,
-                    ExpansionState::class.java.classLoader,
-                    ExpansionState::class.java,
-                )
-        }
-
-        companion object {
-            @JvmField // required field that makes Parcelables from a Parcel
-            @Suppress("unused")
-            val CREATOR: Parcelable.Creator<SavedState> =
-                object : ClassLoaderCreator<SavedState> {
-                    override fun createFromParcel(
-                        source: Parcel,
-                        loader: ClassLoader,
-                    ): SavedState = SavedState(source, loader)
-
-                    override fun createFromParcel(source: Parcel): SavedState = throw IllegalStateException()
-
-                    override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
-                }
-        }
-    }
+    @Parcelize
+    internal class SavedState(
+        val state: Parcelable?,
+        val name: String?,
+        val content: String?,
+        val ord: Int,
+        val expansionState: ExpansionState,
+    ) : BaseSavedState(state)
 
     enum class ExpansionState {
         EXPANDED,
