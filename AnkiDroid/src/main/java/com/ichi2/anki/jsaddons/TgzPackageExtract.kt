@@ -36,7 +36,6 @@ package com.ichi2.anki.jsaddons
 import android.content.Context
 import android.text.format.Formatter
 import com.ichi2.anki.R
-import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.utils.FileUtil
 import org.apache.commons.compress.archivers.ArchiveException
@@ -135,9 +134,8 @@ class TgzPackageExtract(
         try {
             compat.createDirectories(addonsPackageDir)
         } catch (e: IOException) {
-            showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath), false)
             Timber.w(e)
-            return
+            throw IOException(context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath))
         }
 
         // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
@@ -156,9 +154,12 @@ class TgzPackageExtract(
         try {
             // If space available then unTar it
             unTar(tarTempFile, addonsPackageDir)
-        } catch (e: IOException) {
-            Timber.w("Failed to unTar file")
+        } catch (e: Exception) {
+            // ArchiveException/IllegalStateException from unTar need the same cleanup as
+            // IOException: without it, a failed extraction leaves a partial addon behind
+            Timber.w(e, "Failed to unTar file")
             safeDeleteAddonsPackageDir(addonsPackageDir)
+            throw e
         } finally {
             tarTempFile.delete()
         }
@@ -421,8 +422,12 @@ class TgzPackageExtract(
         }
     }
 
+    /**
+     * Recursively delete [addonsPackageDir], but only if it is inside an `addons` directory:
+     * a defence against deleting an arbitrary directory if a bad path is passed in
+     */
     private fun safeDeleteAddonsPackageDir(addonsPackageDir: AddonsPackageDir) {
-        if (addonsPackageDir.parent != "addons") {
+        if (addonsPackageDir.parentFile?.name != "addons") {
             return
         }
         addonsPackageDir.deleteRecursively()
