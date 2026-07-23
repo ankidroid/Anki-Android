@@ -526,7 +526,6 @@ dependencies {
     implementation libs.commons.compress
     implementation libs.commons.collections4 // SetUniqueList
     implementation libs.commons.io // FileUtils.contentEquals
-    implementation libs.mikehardy.google.analytics.java7
     implementation libs.okhttp
     implementation libs.slf4j.timber
     implementation libs.jakewharton.timber
