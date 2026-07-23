@@ -92,13 +92,11 @@ abstract class TtsPlayer : Closeable {
             rank -= 1
         }
 
-        // if no preferred voices match, we fall back on language
-        // with a rank of -100
-        for (avail in availVoices) {
-            if (avail.lang == tag.lang) {
-                return TtsVoiceMatch(voice = avail, rank = -100)
-            }
-        }
-        return null
+        // No requested voice matched, so fall back on the language with a rank of -100.
+        // Prefer one that's actually installed: Android lists voices flagged unavailable
+        // (KEY_FEATURE_NOT_INSTALLED) that fail on playback, so only use one as a last resort (#21372)
+        val langMatches = availVoices.filter { it.lang == tag.lang }
+        val fallbackVoice = langMatches.firstOrNull { !it.unavailable() } ?: langMatches.firstOrNull()
+        return fallbackVoice?.let { TtsVoiceMatch(voice = it, rank = -100) }
     }
 }
