@@ -37,6 +37,7 @@ import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.reviewreminders.ReviewReminder
+import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
@@ -48,7 +49,6 @@ import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
@@ -58,7 +58,7 @@ import com.ichi2.anki.common.android.R as CommonR
 /**
  * Performs the actual firing of review reminder notifications, both recurring ones and snoozed ones.
  * See [ReviewReminder] for the distinction between a "review reminder" and a "notification".
- * The scheduling of these notifications is handled by [AlarmManagerService].
+ * The scheduling of these notifications is handled by [ReviewReminderAlarmManager].
  *
  * This service can be triggered in one of two possible ways, depending on whether the notification
  * being fired is a recurring notification or a one-time snoozed notification. See [NotificationServiceAction].
@@ -138,7 +138,7 @@ class NotificationService : AnkiBroadcastReceiver() {
             if (isRecurringNotification) {
                 Timber.d("Scheduling next review reminder notification for review reminder $reviewReminderId")
                 // Because this scheduling is already the result of a notification, we do not trigger an immediate notification
-                AlarmManagerService.scheduleReviewReminderNotification(
+                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
                     context,
                     reminderForNotification,
                     attemptImmediateNotification = false,
@@ -253,8 +253,8 @@ class NotificationService : AnkiBroadcastReceiver() {
                     )
 
             // Create intents for snooze buttons
-            val fiveMinuteSnooze = getSnoozePendingIntent(context, reviewReminder.id, reviewReminder.scope, 5.minutes)
-            val oneHourSnooze = getSnoozePendingIntent(context, reviewReminder.id, reviewReminder.scope, 1.hours)
+            val fiveMinuteSnooze = SnoozeService.getPendingIntent(context, reviewReminder.id, reviewReminder.scope, 5.minutes)
+            val oneHourSnooze = SnoozeService.getPendingIntent(context, reviewReminder.id, reviewReminder.scope, 1.hours)
 
             val builder =
                 NotificationCompat
@@ -280,42 +280,6 @@ class NotificationService : AnkiBroadcastReceiver() {
             } else {
                 Timber.w("Failed to get NotificationManager system service, aborting review reminder notification")
             }
-        }
-
-        /**
-         * Gets the review reminder snoozing pending intent for the review reminder with the given ID.
-         * If this method is run twice for the same review reminder ID and snooze interval, it will return the same
-         * pending intent.
-         *
-         * @param context
-         * @param reviewReminderId the ID of the review reminder the snooze intent is for.
-         * @param reviewReminderScope The scope that the review reminder ID is stored within.
-         * @param snoozeInterval the amount of time before the review reminder fires again,
-         * used to create a unique pending intent for each snooze option.
-         */
-        private fun getSnoozePendingIntent(
-            context: Context,
-            reviewReminderId: ReviewReminderId,
-            reviewReminderScope: ReviewReminderScope,
-            snoozeInterval: Duration,
-        ): PendingIntent? {
-            val intent =
-                AlarmManagerService.getIntent(
-                    context,
-                    reviewReminderId,
-                    reviewReminderScope,
-                    snoozeInterval,
-                )
-            Timber.v(
-                "Created snooze intent with action ${intent.action} for review reminder ID $reviewReminderId",
-            )
-            return PendingIntentCompat.getBroadcast(
-                context,
-                reviewReminderId.value,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT,
-                false,
-            )
         }
 
         /**
@@ -448,7 +412,7 @@ class NotificationService : AnkiBroadcastReceiver() {
          * @param reviewReminderScope Scope to search for the review reminder ID in.
          * @param intentAction If this is [NotificationServiceAction.ScheduleRecurringNotifications],
          * this intent (once fired) will also schedule the next upcoming instance of the review reminder
-         * notification via [AlarmManagerService.scheduleReviewReminderNotification].
+         * notification via [ReviewReminderAlarmManager.scheduleReviewReminderNotification].
          *
          * @see NotificationServiceAction
          */
@@ -476,7 +440,7 @@ class NotificationService : AnkiBroadcastReceiver() {
      * instance of the review reminder notification. If the intent is instead [SnoozeNotification],
      * then we can be sure that the next instance has already been scheduled.
      *
-     * @see AlarmManagerService.getReviewReminderNotificationPendingIntent
+     * @see ReviewReminderAlarmManager.getReviewReminderNotificationPendingIntent
      * @see onReceiveBroadcast
      */
     sealed class NotificationServiceAction(
