@@ -24,7 +24,8 @@
         android:layout_marginRight="4dip"
         android:gravity="start"
         android:text=""
-        android:textSize="16sp" />
+        android:textStyle="bold"
+        />
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/details_text_2"
@@ -42,13 +43,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/details_edit_text_2_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        app:suffixTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/details_edit_text_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:inputType="number|numberSigned"
             tools:text="1"
             />
