@@ -7,6 +7,8 @@ updates:
   target-branch: dependency-updates
   labels:
   - "dependencies"
+  cooldown:
+    default-days: 3
 - package-ecosystem: gradle
   directory: "/"
   schedule:
@@ -16,6 +18,8 @@ updates:
   target-branch: dependency-updates
   labels:
   - "dependencies"
+  cooldown:
+    default-days: 3
   ignore:
   # Ignore all Rust backend updates, these are always done as manual pulls
   - dependency-name: ankiBackend
@@ -33,3 +37,5 @@ updates:
         - "patch"
   labels:
   - "dependencies"
+  cooldown:
+    default-days: 3
