@@ -281,7 +281,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid varmuuskopioi kokoelmasi säännöllisesti.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid varmuuskopioi kokoelmasi säännöllisesti.
         Kun varmuuskopiot ovat yli kaksi päivää vanhoja,
         AnkiDroid alkaa poistaa joitakin niistä vapauttaakseen levytilaa.
         <br><br>

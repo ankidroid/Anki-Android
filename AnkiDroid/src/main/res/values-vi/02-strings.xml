@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
     <string name="export_share_title">Gửi gói Anki đang dùng</string>
     <string name="export_email_subject">AnkiDroid đã kết xuất các thẻ ghi nhớ: %s</string>
-    <string name="export_email_text"><![CDATA[        Xin chào!
+    <string name="export_email_text"><![CDATA[
+        Xin chào!
         <br/><br/>
         Đây là bộ thẻ ghi nhớ Anki được gửi từ AnkiDroid[1].
         Hãy thử mở nó bằng một trong những bản phát hành Anki[2] và tận hưởng việc học dễ dàng và hiệu quả!<br/><br/>

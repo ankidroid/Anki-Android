@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Stoor Anki-pakket het misluk</string>
     <string name="export_share_title">Stuur Anki-pakket met behulp van</string>
     <string name="export_email_subject">AnkiDroid uitgevoerde flitskaarte: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[
+        Hi!
         <br/><br/>
         Dit is \'n Anki-flitskaarte-dek wat vanaf AnkiDroid gestuur is[1].
         Probeer om dit oop te maak met een van die beskikbare Anki-verspreidings[2] en geniet maklike en doeltreffende leer!<br/><br/>
