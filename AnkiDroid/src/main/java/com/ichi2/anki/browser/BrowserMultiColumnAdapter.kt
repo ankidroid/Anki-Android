@@ -25,6 +25,7 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
@@ -260,8 +261,16 @@ class BrowserMultiColumnAdapter(
                 )
             holder.numberOfColumns = row.cellsCount
 
+            val edgePadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, context.resources.displayMetrics).toInt()
+            val innerPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, context.resources.displayMetrics).toInt()
+
             for (i in 0 until row.cellsCount) {
-                holder.columnViews[i].text = renderColumn(i)
+                holder.columnViews[i].apply {
+                    text = renderColumn(i)
+                    val startPadding = if (i == 0) edgePadding else innerPadding
+                    val endPadding = if (i == row.cellsCount - 1) edgePadding else innerPadding
+                    setPaddingRelative(startPadding, paddingTop, endPadding, paddingBottom)
+                }
             }
             holder.setIsSelected(isSelected)
             val rowColor =
