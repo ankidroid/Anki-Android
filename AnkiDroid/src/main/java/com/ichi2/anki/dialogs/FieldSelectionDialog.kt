@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.core.os.BundleCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
@@ -50,10 +49,9 @@ class FieldSelectionDialog : DialogFragment() {
                 ARG_FIELD_NAMES
             }
 
-    val resultType get() =
-        requireNotNull(BundleCompat.getParcelable(requireArguments(), RESULT_TYPE, ResultType::class.java)) {
-            RESULT_TYPE
-        }
+    val resultType: ResultType by lazy {
+        requireArguments().requireParcelable(RESULT_TYPE)
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext()).create {

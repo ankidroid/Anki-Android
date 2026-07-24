@@ -21,6 +21,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
+import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.utils.create
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -32,11 +33,9 @@ import com.ichi2.utils.title
  * Create a new instance, call setArgs(...), setConfirm(), and setCancel() then show it via the fragment manager as usual.
  */
 class ConfirmationDialog : DialogFragment() {
-    private val message: String
-        get() =
-            requireNotNull(requireArguments().getString(ARG_MESSAGE)) {
-                ARG_MESSAGE
-            }
+    private val message: String by lazy {
+        requireArguments().requireString(ARG_MESSAGE)
+    }
 
     private val title: String
         get() =

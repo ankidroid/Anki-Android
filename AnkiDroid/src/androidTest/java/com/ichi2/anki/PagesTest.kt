@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 @file:Suppress("UnusedReceiverParameter")
 
@@ -23,11 +9,13 @@ import android.content.Intent
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.CardInfoDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.destinations.StatisticsDestination
 import com.ichi2.anki.libanki.Card
-import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptions
 import com.ichi2.anki.pages.PageFragment
-import com.ichi2.anki.pages.StatisticsDestination
+import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.tests.InstrumentedTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -83,18 +71,18 @@ class PagesTest : InstrumentedTest() {
     }
 }
 
-fun PagesTest.getStatistics(context: Context): Intent = StatisticsDestination().toIntent(context)
+fun PagesTest.getStatistics(context: Context): Intent = StatisticsDestination.toIntent(context)
 
 fun PagesTest.getCardInfo(context: Context): Intent =
     addNoteUsingBasicNoteType().firstCard(col).let { card ->
         this.card = card
-        CardInfoDestination(card.id, "Unused").toIntent(context)
+        CardInfoDestination(card.id, EntryPoint.CURRENT_CARD_STUDY).toIntent(context)
     }
 
 fun PagesTest.getCongratsPage(context: Context): Intent =
     addNoteUsingBasicNoteType().firstCard(col).let { card ->
         this.card = card
-        CardInfoDestination(card.id, "Unused").toIntent(context)
+        CardInfoDestination(card.id, EntryPoint.CURRENT_CARD_STUDY).toIntent(context)
     }
 
 fun PagesTest.getDeckOptions(context: Context): Intent =

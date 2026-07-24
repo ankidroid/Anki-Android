@@ -1,4 +1,12 @@
 <!--- Please fill the necessary details below -->
+
+<!---
+Uncomment this section if AI tools were used. New contributors may not use AI tools. See:
+https://github.com/ankidroid/Anki-Android/blob/main/AI_POLICY.md
+> [!NOTE]
+> Assisted-by: ___
+--->
+
 ## Purpose / Description
 _Describe the problem or feature and motivation_
 

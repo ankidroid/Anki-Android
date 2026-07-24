@@ -5,7 +5,10 @@ import com.ichi2.anki.gradle.GitHubActionsTestListener
 import com.ichi2.anki.gradle.TestSummaryService
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.buildconfiguration.tasks.UpdateDaemonJvm
 import org.gradle.internal.jvm.Jvm
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JvmVendorSpec
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import java.lang.management.ManagementFactory
@@ -18,11 +21,16 @@ plugins {
     // Use `id` to avoid classpath conflicts. Versions are pinned by buildSrc/.
     id("com.android.application") apply false
     id("com.android.library") apply false
+    id("com.android.test") apply false
     id("org.jetbrains.kotlin.android") apply false
     id("org.jetbrains.kotlin.plugin.parcelize") apply false
     id("org.jetbrains.kotlin.jvm") apply false
+    // Separate AndroidX artifact, not pinned by AGP version comes from the catalog.
+    alias(libs.plugins.androidx.baselineprofile) apply false
     // Serialization is a separate artifact, not pinned transitively by AGP.
     alias(libs.plugins.kotlin.serialization) apply false
+    // Compose Compiler plugin (required since Kotlin 2.0); applied per-module that opts in.
+    alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.ktlint.gradle.plugin) apply false
     alias(libs.plugins.keeper) apply false
 }
@@ -115,6 +123,7 @@ subprojects {
             // This workaround safely feeds the unsafe flag *only* to the IDE during Gradle sync,
             // while passing the standard, crash-free flag to the compiler during the actual build.
             val isInIdeaSync = System.getProperty("idea.sync.active").toBoolean()
+            val taskName = name
 
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
@@ -134,6 +143,14 @@ subprojects {
                 }
                 if (project.path != ":api") {
                     compilerArgs += "-Xcontext-parameters"
+                }
+                // Opt in to Material3 APIs marked experimental once at the module level
+                // (currently only :AnkiDroid uses Compose Material3). Avoids littering
+                // composables with @OptIn(ExperimentalMaterial3Api::class).
+                // Skipped for testFixtures since that source set only carries
+                // compose-runtime on compileOnly, not material3.
+                if (project.path == ":AnkiDroid" && !taskName.contains("TestFixtures")) {
+                    compilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
                 }
                 freeCompilerArgs = compilerArgs
             }
@@ -175,7 +192,7 @@ if (jvmVersion !in jvmVersionLowerBound..jvmVersionUpperBound && !aligningDaemon
             appendLine("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
         } else {
             appendLine("  The Gradle daemon is on an unsupported JVM (set by gradle/gradle-daemon-jvm.properties).")
-            appendLine("  Align it to a supported version: ./gradlew updateDaemonJvm --jvm-version=<version>")
+            appendLine("  Align it to the pinned daemon JVM: ./gradlew updateDaemonJvm")
         }
     }
     throw GradleException(message.trimEnd())
@@ -197,6 +214,14 @@ if (requestedJvm != null && requestedJvm != jvmVersion && !aligningDaemon) {
             git checkout gradle/gradle-daemon-jvm.properties
         """.trimIndent(),
     )
+}
+
+// Ensure `./gradlew updateDaemonJvm` uses consistent defaults.
+// overridable with: `--jvm-vendor`/`--jvm-version` if necessary.
+tasks.withType<UpdateDaemonJvm>().configureEach {
+    @Suppress("UnstableApiUsage") // JvmVendorSpec.JETBRAINS
+    vendor.convention(JvmVendorSpec.JETBRAINS)
+    languageVersion.convention(JavaLanguageVersion.of(21))
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // true when running on GitHub Actions

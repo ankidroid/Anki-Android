@@ -88,7 +88,7 @@ class ImageOcclusionViewModel(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     val args: ImageOcclusionArgs =
-        checkNotNull(savedStateHandle[IO_ARGS_KEY]) { "$IO_ARGS_KEY required" }
+        checkNotNull(savedStateHandle[ARG_IMAGE_OCCLUSION]) { "$ARG_IMAGE_OCCLUSION required" }
 
     private val originalDeckId: DeckId? = (args as? ImageOcclusionArgs.Add)?.originalDeckId
 
@@ -157,6 +157,6 @@ class ImageOcclusionViewModel(
     }
 
     companion object {
-        const val IO_ARGS_KEY = "IMAGE_OCCLUSION_ARGS"
+        const val ARG_IMAGE_OCCLUSION = "arg_image_occlusion"
     }
 }

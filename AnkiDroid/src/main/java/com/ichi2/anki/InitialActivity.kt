@@ -27,16 +27,18 @@ import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.core.content.edit
+import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.permissions.hasAllPermissions
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
-import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.storage.AnkiDroidFolder
+import com.ichi2.anki.storage.StorageDecision
 import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
@@ -52,13 +54,23 @@ import timber.log.Timber
 object InitialActivity {
     @CheckResult
     fun getStartupFailureType(context: Context): StartupFailure? =
-        getStartupFailureType { CollectionHelper.isCurrentAnkiDroidDirAccessible(context) }
+        getStartupFailureType(context.sharedPrefs()) { CollectionHelper.isCurrentAnkiDroidDirAccessible(context) }
 
     /** Returns null on success  */
     @CheckResult
-    fun getStartupFailureType(initializeAnkiDroidDirectory: () -> Boolean): StartupFailure? {
+    fun getStartupFailureType(
+        preferences: SharedPreferences,
+        initializeAnkiDroidDirectory: () -> Boolean,
+    ): StartupFailure? {
         AnkiDroidApp.fatalError?.let {
             return StartupFailure.InitializationError(it)
+        }
+
+        // Opening the collection would throw a StorageNotConfiguredException, which is not worth
+        // a crash report
+        if (CollectionHelper.storageDecision(preferences) != StorageDecision.Decided) {
+            Timber.i("storage location is undecided")
+            return StartupFailure.StorageUndecided
         }
 
         val failure =
@@ -76,7 +88,7 @@ object InitialActivity {
                 StartupFailure.DiskFull
             } catch (e: SQLiteDatabaseCorruptException) {
                 Timber.w(e)
-                DatabaseErrorDialog.databaseCorruptFlag = true
+                DatabaseCorruption.isDetected = true
                 StartupFailure.DBError(e)
             } catch (e: StorageAccessException) {
                 // Same handling as the fall through, but without the exception report
@@ -187,6 +199,13 @@ object InitialActivity {
         }
 
         data object DiskFull : StartupFailure()
+
+        /**
+         * The user has not yet decided where the collection is stored.
+         *
+         * @see CollectionHelper.storageDecision
+         */
+        data object StorageUndecided : StartupFailure()
     }
 }
 

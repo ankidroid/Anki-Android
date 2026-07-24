@@ -33,11 +33,13 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
+import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.restoreRecurringAlarms
 import timber.log.Timber
 import java.util.Calendar
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * BroadcastReceiver which listens to the Android system-level intent that fires when the device starts up.
@@ -69,7 +71,9 @@ class BootService : AnkiBroadcastReceiver() {
         }
         if (Prefs.newReviewRemindersEnabled) {
             Timber.i("Executing Boot Service - Review reminders")
-            AlarmManagerService.scheduleAllNotifications(context)
+            runGloballyWithTimeout(SCHEDULE_NOTIFICATIONS_TIMEOUT) {
+                AlarmManagerService.scheduleAllNotifications(context)
+            }
         } else {
             // There are cases where the app is installed, and we have access, but nothing exist yet
             val col = getColSafe()
@@ -128,6 +132,13 @@ class BootService : AnkiBroadcastReceiver() {
     }
 
     companion object {
+        /**
+         * Timeout for the process of scheduling all AnkiDroid notifications.
+         * Should be below 10 seconds as BroadcastReceivers may ANR when onReceive takes longer than 10 seconds.
+         * See [the docs](https://developer.android.com/reference/android/content/BroadcastReceiver#goAsync()).
+         */
+        private val SCHEDULE_NOTIFICATIONS_TIMEOUT = 8.seconds
+
         /**
          * This service is also run when the app is started (from [com.ichi2.anki.AnkiDroidApp],
          * so we need to make sure that it isn't run twice.

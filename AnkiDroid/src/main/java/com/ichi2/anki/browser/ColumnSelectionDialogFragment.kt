@@ -29,6 +29,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ItemColumnSelectionBinding
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.dp
 import com.ichi2.utils.setPaddingRelative
 import kotlinx.coroutines.launch
@@ -36,11 +37,9 @@ import timber.log.Timber
 
 class ColumnSelectionDialogFragment : DialogFragment() {
     private val viewModel: CardBrowserViewModel by activityViewModels()
-    private val columnToReplace: ColumnHeading
-        get() =
-            requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), SELECTED_COLUMN, ColumnHeading::class.java),
-            )
+    private val columnToReplace: ColumnHeading by lazy {
+        requireArguments().requireParcelable(SELECTED_COLUMN)
+    }
 
     private var availableColumns: List<ColumnWithSample> = emptyList()
 

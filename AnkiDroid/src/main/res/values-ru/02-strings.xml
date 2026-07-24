@@ -69,11 +69,11 @@
     <string name="leech_notification">Карточка помечена как приставучая</string>
     <string name="webview_crash_unknown">Неизвестная ошибка</string>
     <string name="webview_crash_unknwon_detailed">Вызвано внутренней ошибкой в WebView</string>
-    <string name="webview_crash_oom">Нехватка памяти</string>
+    <string name="webview_crash_oom">Не хватка памяти</string>
     <string name="webview_crash_oom_details">WebView был завершён системой. Это обычно происходит, когда у приложения заканчивается память, часто из-за больших шрифтов или медиафайлов.</string>
     <string name="webview_crash_nonfatal">Ошибка WebView. Причина: %s</string>
-    <string name="webview_crash_fatal">Критическая ошибка: WebView завершился. Причина: %s</string>
-    <string name="webview_crash_loop_dialog_title">Сбой системного WebView</string>
+    <string name="webview_crash_fatal">Фатальная ошибка: сбой рендерера WebView. Причина: %s</string>
+    <string name="webview_crash_loop_dialog_title">Ошибка отрисовки системного WebView</string>
     <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку «%1$s».\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Проведите для отмены</string>
     <string name="filter_by_flags" maxLength="41">Флажки</string>
@@ -159,7 +159,8 @@
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
     <string name="export_share_title">Отправить пакет Anki с помощью</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
-    <string name="export_email_text"><![CDATA[        Привет!
+    <string name="export_email_text"><![CDATA[
+        Привет!
         <br/><br/>
         Это колода карточек Anki, отправленная из приложения AnkiDroid[1].
         Её можно открыть в одной из совместимых с Anki программ[2] и наслаждаться легким и эффективным обучением!<br/><br/>
@@ -170,7 +171,6 @@
     <string name="export_choice_save_to">Сохранить в</string>
     <string name="export_saving_exported_collection">Экспортированный файл сохраняется&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Параметры</string>
-    <string name="menu__deck_options" maxLength="28">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
     <string name="select_tts" maxLength="28">Язык синтеза речи</string>
     <string name="dyn_deck_desc">Это специальная колода для зубрёжки не по расписанию. После просмотра карточки вернутся в свою колоду. Удаление этой колоды вернёт все оставшиеся карточки в их колоду.</string>
@@ -267,7 +267,7 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Скачать колоду</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Открыть в браузере</string>
-    <string name="try_again">Попробуйте ещё раз</string>
+    <string name="try_again">Попробовать снова</string>
     <string name="cancel_download">Отменить загрузку</string>
     <string name="cancel_download_question_title">Отменить загрузку?</string>
     <string name="downloading_file">Загружается %s</string>
@@ -338,7 +338,7 @@
     <string name="shared_decks_login_required">Пожалуйста, войдите, чтобы скачать больше колод</string>
     <string name="deck_description_field_hint">Описание</string>
     <string name="deck_description_saved">Описание обновлено</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Форматировать в Markdown</string>
     <string name="help_button_content_description">Открыть справку для ‘%s’</string>
     <string name="failed_to_copy">Не удалось скопировать</string>
     <plurals name="unbury_cards_feedback">
@@ -359,9 +359,9 @@
     <string name="orphan_note_message">Удаление этого типа карточек оставит некоторые записи без карточек.</string>
     <string name="voice_not_supported">Этот голос не поддерживается. Попробуйте другой или установите голосовой движок.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Выбор колоды</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Выбранные колоды</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Удалить колоду без подтверждения</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор записей</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор заметок</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Выбрать тип записи</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Редактор меток</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Редактор шаблонов карточек</string>
@@ -378,7 +378,7 @@
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!--Set up date-->
-    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
-    <string name="set_due_date_date_range">Date range</string>
+    <string name="set_due_date_day" comment="Used for setting due date">День</string>
+    <string name="set_due_date_date_range">Диапазон дат</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">уже выполняется</string>
 </resources>

@@ -20,7 +20,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -42,6 +41,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
@@ -92,12 +92,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     @VisibleForTesting
     val viewModel: TagsDialogViewModel by viewModels {
-        val idsFile =
-            requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), ARG_TAGS_FILE, IdsFile::class.java),
-            ) {
-                "$ARG_TAGS_FILE is required"
-            }
+        val idsFile = requireArguments().requireParcelable<IdsFile>(ARG_TAGS_FILE)
         val noteIds = idsFile.getIds()
         val checkedTags =
             requireNotNull(requireArguments().getStringArrayList(ARG_CHECKED_TAGS)) {
@@ -146,11 +141,11 @@ class TagsDialog : AnalyticsDialogFragment {
     ): TagsDialog {
         // TODO: checkedTags is unbounded and could exceed the bundle size
         val file = IdsFile(context.cacheDir, noteIds)
-        arguments = this.arguments ?: bundleOf(
-            ARG_TAGS_FILE to file,
-            ARG_DIALOG_TYPE to type,
-            ARG_CHECKED_TAGS to checkedTags,
-        )
+        arguments = this.arguments ?: Bundle().apply {
+            putParcelable(ARG_TAGS_FILE, file)
+            putParcelable(ARG_DIALOG_TYPE, type)
+            putStringArrayList(ARG_CHECKED_TAGS, checkedTags)
+        }
         return this
     }
 
@@ -158,12 +153,7 @@ class TagsDialog : AnalyticsDialogFragment {
         super.onCreate(savedInstanceState)
         resizeWhenSoftInputShown(requireActivity().window)
 
-        type =
-            requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java),
-            ) {
-                "$ARG_DIALOG_TYPE is required"
-            }
+        type = requireArguments().requireParcelable(ARG_DIALOG_TYPE)
         isCancelable = true
     }
 

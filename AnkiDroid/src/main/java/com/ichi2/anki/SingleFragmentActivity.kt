@@ -22,12 +22,12 @@ import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
-import com.ichi2.anki.SingleFragmentActivity.Companion.getIntent
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -61,7 +61,7 @@ open class SingleFragmentActivity :
         }
 
         super.onCreate(savedInstanceState)
-        if (!ensureStoragePermissions()) {
+        if (!ensureStorageIsReady()) {
             return
         }
         setTransparentStatusBar()
@@ -71,7 +71,7 @@ open class SingleFragmentActivity :
         if (savedInstanceState != null) {
             return
         }
-        val assignedFragment = intent.getStringExtra(FRAGMENT_NAME_EXTRA)
+        val assignedFragment = intent.getStringExtra(EXTRA_FRAGMENT_NAME)
         // One of the activities inheriting this activity is ManageSpaceActivity which is started
         // only by the system. When we encounter this activity we need to assign it here the fragment
         // it expects, which is ManageSpaceFragment
@@ -80,14 +80,14 @@ open class SingleFragmentActivity :
                 // the IDE updates this when moving ManageSpaceFragment
                 "com.ichi2.anki.ui.windows.managespace.ManageSpaceFragment"
             } else {
-                requireNotNull(assignedFragment) { "'$FRAGMENT_NAME_EXTRA' extra should be provided" }
+                requireNotNull(assignedFragment) { "'$EXTRA_FRAGMENT_NAME' extra should be provided" }
             }
 
         Timber.d("Creating fragment %s", fragmentClassName)
 
         val fragment =
             FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
-                arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
+                arguments = intent.getBundleExtra(EXTRA_FRAGMENT_ARGS)
             }
         supportFragmentManager.commit {
             replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
@@ -120,8 +120,8 @@ open class SingleFragmentActivity :
         get() = (fragment as? ShortcutGroupProvider)?.shortcuts
 
     companion object {
-        const val FRAGMENT_NAME_EXTRA = "fragmentName"
-        const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
+        const val EXTRA_FRAGMENT_NAME = "extra_fragment_name"
+        const val EXTRA_FRAGMENT_ARGS = "extra_fragment_args"
         const val FRAGMENT_TAG = "SingleFragmentActivityTag"
 
         fun getIntent(
@@ -131,8 +131,8 @@ open class SingleFragmentActivity :
             intentAction: String? = null,
         ): Intent =
             Intent(context, SingleFragmentActivity::class.java).apply {
-                putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
-                putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+                putExtra(EXTRA_FRAGMENT_NAME, fragmentClass.jvmName)
+                putExtra(EXTRA_FRAGMENT_ARGS, arguments)
                 action = intentAction
             }
     }

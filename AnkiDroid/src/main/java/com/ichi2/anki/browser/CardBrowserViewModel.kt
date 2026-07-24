@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser
 
@@ -32,7 +18,6 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
-import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
@@ -53,6 +38,9 @@ import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.CardInfoDestination
+import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
@@ -76,11 +64,9 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
-import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
-import com.ichi2.anki.utils.ext.currentCardBrowse
 import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
@@ -365,7 +351,7 @@ class CardBrowserViewModel(
         }
         return NoteEditorLauncher.EditSelection(
             cardIds = cardIds,
-            animation = ActivityTransitionAnimation.Direction.DEFAULT,
+            animation = TransitionDirection.DEFAULT,
             inCardBrowserActivity = isFragmented,
         )
     }
@@ -433,7 +419,7 @@ class CardBrowserViewModel(
 
     suspend fun queryCardInfoDestination(): CardInfoDestination? {
         val firstSelectedCard = selectedRows.firstOrNull()?.toCardId(cardsOrNotes) ?: return null
-        return CardInfoDestination(firstSelectedCard, TR.currentCardBrowse())
+        return CardInfoDestination(firstSelectedCard, EntryPoint.CURRENT_CARD_BROWSE)
     }
 
     private suspend fun getInitialDeck(): SelectableDeck {
@@ -1222,6 +1208,7 @@ class CardBrowserViewModel(
     fun setQuery(
         query: String,
         forceRefresh: Boolean = true,
+        fromUserSearch: Boolean = false,
     ) = viewModelScope.launch {
         val newValue = searchRequestFlow.value.copy(query = query)
         if (!forceRefresh && withCol { searchRequestFlow.value.toSearchString() == newValue.toSearchString() }) {
@@ -1230,7 +1217,7 @@ class CardBrowserViewModel(
         }
 
         searchRequestFlow.value = newValue
-        launchSearchForCards()
+        launchSearchForCards(fromUserSearch = fromUserSearch)
     }
 
     /**
@@ -1365,10 +1352,13 @@ class CardBrowserViewModel(
 
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
+     * @param fromUserSearch whether the user explicitly searched for something; controls whether a
+     * result message (snackbar) is surfaced. See [SearchState.Completed.resultMessage]
      */
     fun launchSearchForCards(
         searchRequest: SearchRequest,
         forceRefresh: Boolean,
+        fromUserSearch: Boolean = false,
     ) = viewModelScope.launch {
         Timber.d("launching search [new syntax]: '%s'", searchRequest)
 
@@ -1380,7 +1370,7 @@ class CardBrowserViewModel(
         }
 
         searchRequestFlow.value = searchRequest
-        launchSearchForCards()
+        launchSearchForCards(fromUserSearch = fromUserSearch)
     }
 
     /**
@@ -1390,7 +1380,10 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    fun launchSearchForCards(cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList()) {
+    fun launchSearchForCards(
+        cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList(),
+        fromUserSearch: Boolean = false,
+    ) {
         if (!initCompleted) return
 
         viewModelScope.launch {
@@ -1413,7 +1406,7 @@ class CardBrowserViewModel(
                     this@CardBrowserViewModel.cards.replaceWith(cardsOrNotes, cards)
                     ensureFocusedRowValid()
                     if (isFragmented) flowOfNoteEditorCommand.emit(NoteEditorCommand.fromCurrentSearchState())
-                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState())
+                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState(fromUserSearch))
                     selectUnvalidatedRowIds(cardOrNoteIdsToSelect)
                 }
 
@@ -1520,13 +1513,18 @@ class CardBrowserViewModel(
 
     suspend fun getAvailableDecks(): List<SelectableDeck.Deck> = SelectableDeck.fromCollection(includeFiltered = false)
 
-    /** Builds a [SearchState.Completed] event reflecting the current ViewModel state. */
-    private fun SearchState.Completed.Companion.fromCurrentState(): SearchState.Completed =
+    /**
+     * Builds a [SearchState.Completed] event reflecting the current ViewModel state.
+     *
+     * @param fromUserSearch whether this search was triggered by the user searching for something.
+     */
+    private fun SearchState.Completed.Companion.fromCurrentState(fromUserSearch: Boolean = false): SearchState.Completed =
         SearchState.Completed(
             rowCount = rowCount,
             cardsOrNotes = cardsOrNotes,
             resultMessage =
                 when {
+                    !fromUserSearch -> null
                     // TODO: better message if rowCount == 0 AND hasSelectedAllDecks
                     hasSelectedAllDecks() -> SearchResultMessage.CardCount(includeSearchAllDecksAction = false)
                     rowCount == 0 -> SearchResultMessage.NoCardsInSelectedDeck
@@ -1544,6 +1542,12 @@ class CardBrowserViewModel(
 
         /** Intent extra carrying a [CardId] to auto-scroll to once the browser opens. */
         const val EXTRA_CARD_ID_KEY = "cardId"
+
+        /** Intent extra (`String`) carrying the search to run. */
+        const val EXTRA_SEARCH_QUERY = "search_query"
+
+        /** Intent extra (`Boolean`) for whether [EXTRA_SEARCH_QUERY] should search all decks. */
+        const val EXTRA_ALL_DECKS = "all_decks"
 
         /** Prevents one-shot extras from being re-applied after process death. */
         private const val STATE_LAUNCH_INTENT_CONSUMED = "launchIntentConsumed"
@@ -1657,7 +1661,13 @@ class CardBrowserViewModel(
         data class Completed(
             val rowCount: Int,
             val cardsOrNotes: CardsOrNotes,
-            val resultMessage: SearchResultMessage,
+            /**
+             * The message (snackbar) to surface for this search, or `null` if none should be shown.
+             *
+             * Only populated for explicit user searches; `null` for browser open, deck change and
+             * order/direction changes.
+             */
+            val resultMessage: SearchResultMessage?,
         ) : SearchState {
             companion object
         }

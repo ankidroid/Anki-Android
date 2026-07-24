@@ -24,9 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">Desteler</string>
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Kart tarayıcısı</string>
-    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">İstatistikler</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">Ayarlar</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Yardım</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
@@ -39,7 +37,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Genişlet</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Daralt</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">İçeri aktar</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Bu koleksiyon boş</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">+ ikonuna tıklayarak kart eklemeye başlayın.</string>
     <!-- Reviewer -->
@@ -53,7 +50,7 @@
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
         <item quantity="one">%1$d gün %2$d saat kaldı</item>
-        <item quantity="other">%1$d gün %2$d saat kaldı</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">Yanıtı yaz</string>
     <string name="show_answer" maxLength="41" comment="When displaying the question side of a card. This is the label of a button that display the answer side.">Cevabı göster</string>

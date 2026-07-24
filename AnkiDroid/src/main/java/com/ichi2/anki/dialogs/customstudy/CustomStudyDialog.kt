@@ -21,7 +21,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -58,8 +57,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.ext.bundleOfNotNull
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -324,7 +321,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
-                TR.customStudyChooseTags().toSentenceCase(R.string.sentence_choose_tags)
+                TR.sentenceCase.chooseTags
             } else {
                 getString(R.string.dialog_ok)
             }
@@ -456,7 +453,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS -> CustomStudyAction.CUSTOM_STUDY_SESSION
             }
 
-        setFragmentResult(CustomStudyAction.REQUEST_KEY, bundleOf(CustomStudyAction.BUNDLE_KEY to action.ordinal))
+        setFragmentResult(CustomStudyAction.REQUEST_KEY, Bundle().apply { putInt(CustomStudyAction.BUNDLE_KEY, action.ordinal) })
 
         // save the default values (not in upstream)
         when (contextMenuOption) {
@@ -736,9 +733,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         fun createInstance(deckId: DeckId): CustomStudyDialog =
             CustomStudyDialog().apply {
                 arguments =
-                    bundleOfNotNull(
-                        CustomStudyViewModel.KEY_DID to deckId,
-                    )
+                    Bundle().apply {
+                        putLong(CustomStudyViewModel.KEY_DID, deckId)
+                    }
             }
 
         /**
@@ -753,10 +750,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         ): CustomStudyDialog =
             CustomStudyDialog().apply {
                 arguments =
-                    bundleOfNotNull(
-                        CustomStudyViewModel.KEY_DID to deckId,
-                        ARG_SUB_DIALOG_ID to contextMenuAttribute.ordinal,
-                    )
+                    Bundle().apply {
+                        putLong(CustomStudyViewModel.KEY_DID, deckId)
+                        putInt(ARG_SUB_DIALOG_ID, contextMenuAttribute.ordinal)
+                    }
             }
 
         /**

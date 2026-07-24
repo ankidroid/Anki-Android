@@ -19,6 +19,8 @@ package com.ichi2.anki.reviewreminders
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.time.MockTime
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.EpochMilliseconds
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -31,12 +33,16 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
 import org.hamcrest.TypeSafeMatcher
+import org.intellij.lang.annotations.Language
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.reflect.full.memberProperties
+import kotlin.time.Duration.Companion.days
 
 /**
  * If tests in this file have failed, it may be because you have updated [ReviewReminder]!
@@ -45,54 +51,62 @@ import kotlin.reflect.full.memberProperties
  */
 @RunWith(AndroidJUnit4::class)
 class ReviewRemindersDatabaseTest : RobolectricTest() {
+    companion object {
+        private val yesterday = MockTime(TimeManager.time.intTimeMS() - 1.days.inWholeMilliseconds)
+        private val today = MockTime(TimeManager.time.intTimeMS())
+    }
+
     private val did1 = 12345L
     private val did2 = 67890L
+    private val scope1 = ReviewReminderScope.DeckSpecific(did1)
+    private val scope2 = ReviewReminderScope.DeckSpecific(did2)
+    private val appScope = ReviewReminderScope.Global
 
     private val emptyReminderGroup = ReviewReminderGroup()
-    private val dummyDeckSpecificRemindersForDeckOne =
-        ReviewReminderGroup(
-            ReviewReminderId(0) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(9, 0),
-                    ReviewReminderCardTriggerThreshold(5),
-                    ReviewReminderScope.DeckSpecific(did1),
-                    false,
-                ),
-            ReviewReminderId(1) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(10, 30),
-                    ReviewReminderCardTriggerThreshold(10),
-                    ReviewReminderScope.DeckSpecific(did1),
-                ),
+    private val reviewReminderOne =
+        ReviewReminder.createReviewReminder(
+            ReviewReminderTime(9, 0),
+            ReviewReminderCardTriggerThreshold(5),
+            scope1,
+            false,
         )
-    private val dummyDeckSpecificRemindersForDeckTwo =
-        ReviewReminderGroup(
-            ReviewReminderId(2) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(10, 30),
-                    ReviewReminderCardTriggerThreshold(10),
-                    ReviewReminderScope.DeckSpecific(did2),
-                    true,
-                ),
-            ReviewReminderId(3) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(12, 30),
-                    ReviewReminderCardTriggerThreshold(20),
-                    ReviewReminderScope.DeckSpecific(did2),
-                ),
+    private val reviewReminderTwo =
+        ReviewReminder.createReviewReminder(
+            ReviewReminderTime(10, 30),
+            ReviewReminderCardTriggerThreshold(10),
+            scope1,
         )
-    private val dummyAppWideReminders =
-        ReviewReminderGroup(
-            ReviewReminderId(4) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(9, 0),
-                    ReviewReminderCardTriggerThreshold(5),
-                ),
-            ReviewReminderId(5) to
-                ReviewReminder.createReviewReminder(
-                    ReviewReminderTime(10, 30),
-                    ReviewReminderCardTriggerThreshold(10),
-                ),
+    private val reviewReminderThree =
+        ReviewReminder.createReviewReminder(
+            ReviewReminderTime(10, 30),
+            ReviewReminderCardTriggerThreshold(10),
+            scope2,
+            true,
+        )
+    private val reviewReminderFour =
+        ReviewReminder.createReviewReminder(
+            ReviewReminderTime(12, 30),
+            ReviewReminderCardTriggerThreshold(20),
+            scope2,
+        )
+    private val reviewReminderFive =
+        ReviewReminder.createReviewReminder(
+            ReviewReminderTime(9, 0),
+            ReviewReminderCardTriggerThreshold(5),
+        )
+    private val reviewReminderSix =
+        ReviewReminder.createReviewReminder(
+            ReviewReminderTime(10, 30),
+            ReviewReminderCardTriggerThreshold(10),
+        )
+    private val allTestReminders =
+        listOf(
+            reviewReminderOne,
+            reviewReminderTwo,
+            reviewReminderThree,
+            reviewReminderFour,
+            reviewReminderFive,
+            reviewReminderSix,
         )
 
     @Before
@@ -108,47 +122,142 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `getRemindersForDeck should return empty group when no reminders exist`() {
-        val reminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        assertThat(reminders, equalTo(emptyReminderGroup))
-    }
+    fun `getRemindersForScope should return empty group when no reminders exist`() =
+        runTest {
+            val deckSpecificReminders = ReviewRemindersDatabase.getRemindersForScope(scope1)
+            val appWideReminders = ReviewRemindersDatabase.getRemindersForScope(appScope)
+            assertThat(deckSpecificReminders, equalTo(emptyReminderGroup))
+            assertThat(appWideReminders, equalTo(emptyReminderGroup))
+        }
 
     @Test
-    fun `editRemindersForDeck and getRemindersForDeck should read and write reminders correctly`() {
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
-        val storedReminders = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        assertThat(storedReminders, equalTo(dummyDeckSpecificRemindersForDeckOne))
-    }
+    fun `getAllReminders should return empty group when no reminders exist`() =
+        runTest {
+            val reminders = ReviewRemindersDatabase.getAllReminders()
+            assertThat(reminders, equalTo(emptyReminderGroup))
+        }
 
     @Test
-    fun `getAllDeckSpecificReminders should return empty group when no reminders exist`() {
-        val reminders = ReviewRemindersDatabase.getAllDeckSpecificReminders()
-        assertThat(reminders, equalTo(emptyReminderGroup))
-    }
+    fun `insertReminder and getRemindersForScope should read and write reminders correctly`() =
+        runTest {
+            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
+            val remindersForDeckOne = ReviewRemindersDatabase.getRemindersForScope(scope1)
+            val remindersForDeckTwo = ReviewRemindersDatabase.getRemindersForScope(scope2)
+            val appWideReminders = ReviewRemindersDatabase.getRemindersForScope(ReviewReminderScope.Global)
+            assertThat(
+                remindersForDeckOne.getRemindersList().toSet(),
+                equalTo(setOf(reviewReminderOne, reviewReminderTwo)),
+            )
+            assertThat(
+                remindersForDeckTwo.getRemindersList().toSet(),
+                equalTo(setOf(reviewReminderThree, reviewReminderFour)),
+            )
+            assertThat(
+                appWideReminders.getRemindersList().toSet(),
+                equalTo(setOf(reviewReminderFive, reviewReminderSix)),
+            )
+        }
 
     @Test
-    fun `getAllDeckSpecificReminders should return all reminders across decks`() {
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
-        ReviewRemindersDatabase.editRemindersForDeck(did2) { dummyDeckSpecificRemindersForDeckTwo }
-        val allReminders = ReviewRemindersDatabase.getAllDeckSpecificReminders()
-        assertThat(
-            allReminders,
-            equalTo(dummyDeckSpecificRemindersForDeckOne + dummyDeckSpecificRemindersForDeckTwo),
-        )
-    }
+    fun `insertReminder and getAllReminders should read and write reminders correctly`() =
+        runTest {
+            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
+            val allReminders = ReviewRemindersDatabase.getAllReminders()
+            assertThat(
+                allReminders.getRemindersList().toSet(),
+                equalTo(allTestReminders.toSet()),
+            )
+        }
 
     @Test
-    fun `getAllAppWideReminders should return empty group when no reminders exist`() {
-        val reminders = ReviewRemindersDatabase.getAllAppWideReminders()
-        assertThat(reminders, equalTo(emptyReminderGroup))
-    }
+    fun `toggleReminder should toggle the enabled state of the correct reminder`() =
+        runTest {
+            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
+            ReviewRemindersDatabase.toggleReminder(reviewReminderOne)
+            ReviewRemindersDatabase.toggleReminder(reviewReminderFive)
+            val allReminders = ReviewRemindersDatabase.getAllReminders()
+
+            val expectedFlippedReminders = setOf(reviewReminderOne, reviewReminderFive)
+            allTestReminders.forEach { reminderBefore ->
+                val reminderAfter = allReminders[reminderBefore.id]!!
+                val shouldFlip = reminderBefore in expectedFlippedReminders
+                assertThat(
+                    reminderAfter.enabled,
+                    equalTo(if (shouldFlip) !reminderBefore.enabled else reminderBefore.enabled),
+                )
+            }
+        }
 
     @Test
-    fun `editAllAppWideReminders and getAllAppWideReminders should read and write reminders correctly`() {
-        ReviewRemindersDatabase.editAllAppWideReminders { dummyAppWideReminders }
-        val storedReminders = ReviewRemindersDatabase.getAllAppWideReminders()
-        assertThat(storedReminders, equalTo(dummyAppWideReminders))
-    }
+    fun `deleteReminder should delete the correct reminders`() =
+        runTest {
+            allTestReminders.forEach { reminder -> ReviewRemindersDatabase.insertReminder(reminder) }
+            ReviewRemindersDatabase.deleteReminder(reviewReminderTwo)
+            ReviewRemindersDatabase.deleteReminder(reviewReminderSix)
+            val remindersForDeckOne = ReviewRemindersDatabase.getRemindersForScope(scope1)
+            val remindersForDeckTwo = ReviewRemindersDatabase.getRemindersForScope(scope2)
+            val allReminders = ReviewRemindersDatabase.getAllReminders()
+            assertThat(
+                remindersForDeckOne.getRemindersList().toSet(),
+                equalTo(setOf(reviewReminderOne)),
+            )
+            assertThat(
+                remindersForDeckTwo.getRemindersList().toSet(),
+                equalTo(setOf(reviewReminderThree, reviewReminderFour)),
+            )
+            assertThat(
+                allReminders.getRemindersList().toSet(),
+                equalTo(setOf(reviewReminderOne, reviewReminderThree, reviewReminderFour, reviewReminderFive)),
+            )
+        }
+
+    @Test
+    fun `retrieveRefreshedReminder with latest notif not delivered should edit and return updated reminder`() =
+        runTest {
+            TimeManager.resetWith(yesterday)
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    time = ReviewReminderTime(9, 0),
+                    scope = scope1,
+                    cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
+                )
+            val creationTime = reviewReminder.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminder.id, reviewReminder.scope)
+
+            assertThat(returnedReminder, notNullValue())
+            assertThat(returnedReminder!!.latestNotifTime, not(equalTo(creationTime)))
+            val storedReminder = ReviewRemindersDatabase.getRemindersForScope(scope1)[reviewReminder.id]!!
+            assertThat(returnedReminder, equalTo(storedReminder))
+            TimeManager.reset()
+        }
+
+    @Test
+    fun `retrieveRefreshedReminder with latest notif delivered should return null and not edit reminder`() =
+        runTest {
+            val reviewReminder =
+                ReviewReminder.createReviewReminder(
+                    time = ReviewReminderTime(9, 0),
+                    scope = scope1,
+                    cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
+                )
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminder.id, reviewReminder.scope)
+
+            assertThat(returnedReminder, nullValue())
+            val storedReminder = ReviewRemindersDatabase.getRemindersForScope(scope1)[reviewReminder.id]!!
+            assertThat(storedReminder, equalTo(reviewReminder))
+        }
+
+    @Test
+    fun `retrieveRefreshedReminder with review reminder not found in database should fail gracefully`() =
+        runTest {
+            val returnedReminder = ReviewRemindersDatabase.retrieveRefreshedReminder(reviewReminderOne.id, reviewReminderOne.scope)
+            assertThat(returnedReminder, nullValue())
+        }
 
     /**
      * Helper function to test how the database handles corrupted JSON strings.
@@ -158,7 +267,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
      * @param expectedDeletedKeys the set of keys that should no longer be in SharedPreferences after the access
      * @param access a lambda that accesses either deck-specific or app-wide reminders, which should trigger the deletion of the corrupted keys
      */
-    private fun corruptedRemindersTest(
+    private suspend fun corruptedRemindersTest(
         corruptedValue: String,
         expectedDeletedKeys: Set<String>,
         inputKeys: Set<String> =
@@ -167,7 +276,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
                 ReviewRemindersDatabase.APP_WIDE_KEY,
             ),
-        access: () -> ReviewReminderGroup,
+        access: suspend () -> ReviewReminderGroup,
     ) {
         ReviewRemindersDatabase.remindersSharedPrefs.edit {
             inputKeys.forEach { key ->
@@ -181,155 +290,112 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `getRemindersForDeck should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() {
-        corruptedRemindersTest(
-            corruptedValue = "corrupted_and_invalid_json_string",
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1),
-        ) {
-            ReviewRemindersDatabase.getRemindersForDeck(did1)
+    fun `getRemindersForScope should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() =
+        runTest {
+            corruptedRemindersTest(
+                corruptedValue = "corrupted_and_invalid_json_string",
+                expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1),
+            ) {
+                ReviewRemindersDatabase.getRemindersForScope(scope1)
+            }
         }
-    }
 
     @Test
-    fun `getRemindersForDeck should delete reminders if JSON string is not a StoredReviewReminderGroup`() {
-        corruptedRemindersTest(
-            corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
-        ) {
-            ReviewRemindersDatabase.getRemindersForDeck(did2)
+    fun `getRemindersForScope should delete reminders if JSON string is not a StoredReviewReminderGroup`() =
+        runTest {
+            corruptedRemindersTest(
+                corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
+                expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
+            ) {
+                ReviewRemindersDatabase.getRemindersForScope(scope2)
+            }
         }
-    }
 
     @Test
-    fun `getRemindersForDeck should delete reminders if JSON string for review reminder is corrupted`() {
-        corruptedRemindersTest(
-            corruptedValue =
-                Json.encodeToString(
-                    ReviewRemindersDatabase.StoredReviewReminderGroup(
-                        ReviewRemindersDatabase.schemaVersion,
-                        "corrupted_and_invalid_json_string",
+    fun `getRemindersForScope should delete reminders if JSON string for review reminder is corrupted`() =
+        runTest {
+            corruptedRemindersTest(
+                corruptedValue =
+                    Json.encodeToString(
+                        ReviewRemindersDatabase.StoredReviewReminderGroup(
+                            ReviewRemindersDatabase.schemaVersion,
+                            "corrupted_and_invalid_json_string",
+                        ),
                     ),
-                ),
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1),
-        ) {
-            ReviewRemindersDatabase.getRemindersForDeck(did1)
+                expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
+            ) {
+                ReviewRemindersDatabase.getRemindersForScope(appScope)
+            }
         }
-    }
 
     @Test
-    fun `getAllAppWideReminders should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() {
-        corruptedRemindersTest(
-            corruptedValue = "corrupted_and_invalid_json_string",
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
-        ) {
-            ReviewRemindersDatabase.getAllAppWideReminders()
-        }
-    }
-
-    @Test
-    fun `getAllAppWideReminders should delete reminders if JSON string is not a StoredReviewReminderGroup`() {
-        corruptedRemindersTest(
-            corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
-        ) {
-            ReviewRemindersDatabase.getAllAppWideReminders()
-        }
-    }
-
-    @Test
-    fun `getAllAppWideReminders should delete reminders if JSON string for review reminder is corrupted`() {
-        corruptedRemindersTest(
-            corruptedValue =
-                Json.encodeToString(
-                    ReviewRemindersDatabase.StoredReviewReminderGroup(
-                        ReviewRemindersDatabase.schemaVersion,
-                        "corrupted_and_invalid_json_string",
+    fun `getAllReminders should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() =
+        runTest {
+            corruptedRemindersTest(
+                corruptedValue = "corrupted_and_invalid_json_string",
+                expectedDeletedKeys =
+                    setOf(
+                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
+                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
+                        ReviewRemindersDatabase.APP_WIDE_KEY,
                     ),
-                ),
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
-        ) {
-            ReviewRemindersDatabase.getAllAppWideReminders()
+            ) {
+                ReviewRemindersDatabase.getAllReminders()
+            }
         }
-    }
 
     @Test
-    fun `getAllDeckSpecificReminders should delete reminders if JSON string for StoredReviewReminderGroup is corrupted`() {
-        corruptedRemindersTest(
-            corruptedValue = "corrupted_and_invalid_json_string",
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
-        ) {
-            ReviewRemindersDatabase.getAllDeckSpecificReminders()
-        }
-    }
-
-    @Test
-    fun `getAllDeckSpecificReminders should delete reminders if JSON string is not a StoredReviewReminderGroup`() {
-        corruptedRemindersTest(
-            corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
-            expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
-        ) {
-            ReviewRemindersDatabase.getAllDeckSpecificReminders()
-        }
-    }
-
-    @Test
-    fun `getAllDeckSpecificReminders should delete reminders if JSON string for review reminder is corrupted`() {
-        corruptedRemindersTest(
-            corruptedValue =
-                Json.encodeToString(
-                    ReviewRemindersDatabase.StoredReviewReminderGroup(
-                        ReviewRemindersDatabase.schemaVersion,
-                        "corrupted_and_invalid_json_string",
+    fun `getAllReminders should delete reminders if JSON string is not a StoredReviewReminderGroup`() =
+        runTest {
+            corruptedRemindersTest(
+                corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
+                expectedDeletedKeys =
+                    setOf(
+                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
+                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
+                        ReviewRemindersDatabase.APP_WIDE_KEY,
                     ),
-                ),
-            expectedDeletedKeys =
-                setOf(
-                    ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
-                    ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
-                ),
-        ) {
-            ReviewRemindersDatabase.getAllDeckSpecificReminders()
+            ) {
+                ReviewRemindersDatabase.getAllReminders()
+            }
         }
-    }
 
     @Test
-    fun `editRemindersForDeck should delete SharedPreferences key if no reminders are returned`() {
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckOne }
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { ReviewReminderGroup() }
-        val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForDeck(did1)
-        assertThat(attemptedRetrieval, equalTo(emptyReminderGroup))
-        assertThat(
-            ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
-            not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
-        )
-    }
+    fun `getAllReminders should delete reminders if JSON string for review reminder is corrupted`() =
+        runTest {
+            corruptedRemindersTest(
+                corruptedValue =
+                    Json.encodeToString(
+                        ReviewRemindersDatabase.StoredReviewReminderGroup(
+                            ReviewRemindersDatabase.schemaVersion,
+                            "corrupted_and_invalid_json_string",
+                        ),
+                    ),
+                expectedDeletedKeys =
+                    setOf(
+                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
+                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
+                        ReviewRemindersDatabase.APP_WIDE_KEY,
+                    ),
+            ) {
+                ReviewRemindersDatabase.getAllReminders()
+            }
+        }
 
     @Test
-    fun `editAllAppWideReminders should delete SharedPreferences key if no reminders are returned`() {
-        ReviewRemindersDatabase.editAllAppWideReminders { dummyAppWideReminders }
-        ReviewRemindersDatabase.editAllAppWideReminders { ReviewReminderGroup() }
-        val attemptedRetrieval = ReviewRemindersDatabase.getAllAppWideReminders()
-        assertThat(attemptedRetrieval, equalTo(emptyReminderGroup))
-        assertThat(
-            ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
-            not(hasItem(ReviewRemindersDatabase.APP_WIDE_KEY)),
-        )
-    }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun `editAllAppWideReminders with deck specific reminders should throw IllegalArgumentException`() {
-        ReviewRemindersDatabase.editAllAppWideReminders { dummyDeckSpecificRemindersForDeckOne }
-    }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun `editRemindersForDeck with app wide reminders should throw IllegalArgumentException`() {
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyAppWideReminders }
-    }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun `editRemindersForDeck with reminders for different deck should throw IllegalArgumentException`() {
-        ReviewRemindersDatabase.editRemindersForDeck(did1) { dummyDeckSpecificRemindersForDeckTwo }
-    }
+    fun `deleteReminder should delete SharedPreferences key if no reminders are returned`() =
+        runTest {
+            ReviewRemindersDatabase.insertReminder(reviewReminderOne)
+            ReviewRemindersDatabase.insertReminder(reviewReminderTwo)
+            ReviewRemindersDatabase.deleteReminder(reviewReminderOne)
+            ReviewRemindersDatabase.deleteReminder(reviewReminderTwo)
+            val attemptedRetrieval = ReviewRemindersDatabase.getRemindersForScope(scope1)
+            assertThat(attemptedRetrieval, equalTo(emptyReminderGroup))
+            assertThat(
+                ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
+                not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
+            )
+        }
 
     /**
      * When review reminders are migrated to the new schema, the reminders' IDs and latestNotifTimes will be recreated from scratch.
@@ -410,6 +476,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
      */
     @Test
     fun `raw ReviewReminder string can be deserialized without throwing`() {
+        @Language("JSON")
         val rawString =
             """
             {
@@ -470,7 +537,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
      * the internal serialization API. Since this is a test-only function, this should be acceptable.
      */
     @OptIn(InternalSerializationApi::class)
-    private fun assertMigrationsWork(vararg testCases: MigrationTestCase) {
+    private suspend fun assertMigrationsWork(vararg testCases: MigrationTestCase) {
         // Group
         val groupedByScope =
             testCases.groupBy {
@@ -516,15 +583,15 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         groupedByScope.forEach { (did, casesInScope) ->
             val retrievedReminders =
                 if (did != null) {
-                    ReviewRemindersDatabase.getRemindersForDeck(did)
+                    ReviewRemindersDatabase.getRemindersForScope(ReviewReminderScope.DeckSpecific(did))
                 } else {
-                    ReviewRemindersDatabase.getAllAppWideReminders()
+                    ReviewRemindersDatabase.getRemindersForScope(ReviewReminderScope.Global)
                 }
 
             // We ignore ID because the migration process will generate new review reminders from scratch during the migration
             // ID is a private, inaccessible property
             // Instead, we only check that the ID matches the key in the map; all other properties can be compared normally
-            retrievedReminders.forEach { id, reminder ->
+            retrievedReminders.forEach { (id, reminder) ->
                 assertThat(id, equalTo(reminder.id))
             }
             assertThat(
@@ -543,200 +610,203 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     }
 
     @Test
-    fun `review reminder schema migration works`() {
-        // Save existing mocks
-        val savedOldReviewReminderSchemasForMigration = ReviewRemindersDatabase.oldReviewReminderSchemasForMigration
-        val savedSchemaVersion = ReviewRemindersDatabase.schemaVersion
-        // Inject mocks
-        ReviewRemindersDatabase.schemaVersion = ReviewReminderSchemaVersion(3)
-        ReviewRemindersDatabase.oldReviewReminderSchemasForMigration =
-            mapOf(
-                ReviewReminderSchemaVersion(1) to TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne::class,
-                ReviewReminderSchemaVersion(2) to TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo::class,
-                ReviewReminderSchemaVersion(3) to ReviewReminder::class,
+    fun `review reminder schema migration works`() =
+        runTest {
+            // Save existing mocks
+            val savedOldReviewReminderSchemasForMigration = ReviewRemindersDatabase.oldReviewReminderSchemasForMigration
+            val savedSchemaVersion = ReviewRemindersDatabase.schemaVersion
+            // Inject mocks
+            ReviewRemindersDatabase.schemaVersion = ReviewReminderSchemaVersion(3)
+            ReviewRemindersDatabase.oldReviewReminderSchemasForMigration =
+                mapOf(
+                    ReviewReminderSchemaVersion(1) to TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne::class,
+                    ReviewReminderSchemaVersion(2) to TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo::class,
+                    ReviewReminderSchemaVersion(3) to ReviewReminder::class,
+                )
+
+            assertMigrationsWork(
+                // To spice things up, some will be version one...
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(1),
+                    input =
+                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
+                            id = ReviewReminderId(0),
+                            hour = 9,
+                            minute = 0,
+                            cardTriggerThreshold = 5,
+                            did = did1,
+                            enabled = false,
+                        ),
+                    expectedOutput = reviewReminderOne,
+                ),
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(1),
+                    input =
+                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
+                            id = ReviewReminderId(1),
+                            hour = 10,
+                            minute = 30,
+                            cardTriggerThreshold = 10,
+                            did = did1,
+                        ),
+                    expectedOutput = reviewReminderTwo,
+                ),
+                // ...and some will be version two...
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(2),
+                    input =
+                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo(
+                            id = ReviewReminderId(2),
+                            time = TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(10, 30),
+                            snoozeAmount = 1,
+                            cardTriggerThreshold = 10,
+                            did = did2,
+                            enabled = true,
+                        ),
+                    expectedOutput = reviewReminderThree,
+                ),
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(2),
+                    input =
+                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo(
+                            id = ReviewReminderId(3),
+                            time = TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(12, 30),
+                            snoozeAmount = 1,
+                            cardTriggerThreshold = 20,
+                            did = did2,
+                        ),
+                    expectedOutput = reviewReminderFour,
+                ),
+                // ...and some will be app-wide for good measure
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(1),
+                    input =
+                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
+                            id = ReviewReminderId(4),
+                            hour = 9,
+                            minute = 0,
+                            cardTriggerThreshold = 5,
+                            did = -1L,
+                        ),
+                    expectedOutput = reviewReminderFive,
+                ),
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(1),
+                    input =
+                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
+                            id = ReviewReminderId(5),
+                            hour = 10,
+                            minute = 30,
+                            cardTriggerThreshold = 10,
+                            did = -1L,
+                        ),
+                    expectedOutput = reviewReminderSix,
+                ),
             )
 
-        assertMigrationsWork(
-            // To spice things up, some will be version one...
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(1),
-                input =
-                    TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                        id = ReviewReminderId(0),
-                        hour = 9,
-                        minute = 0,
-                        cardTriggerThreshold = 5,
-                        did = did1,
-                        enabled = false,
-                    ),
-                expectedOutput = dummyDeckSpecificRemindersForDeckOne[ReviewReminderId(0)]!!,
-            ),
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(1),
-                input =
-                    TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                        id = ReviewReminderId(1),
-                        hour = 10,
-                        minute = 30,
-                        cardTriggerThreshold = 10,
-                        did = did1,
-                    ),
-                expectedOutput = dummyDeckSpecificRemindersForDeckOne[ReviewReminderId(1)]!!,
-            ),
-            // ...and some will be version two...
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(2),
-                input =
-                    TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo(
-                        id = ReviewReminderId(2),
-                        time = TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(10, 30),
-                        snoozeAmount = 1,
-                        cardTriggerThreshold = 10,
-                        did = did2,
-                        enabled = true,
-                    ),
-                expectedOutput = dummyDeckSpecificRemindersForDeckTwo[ReviewReminderId(2)]!!,
-            ),
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(2),
-                input =
-                    TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo(
-                        id = ReviewReminderId(3),
-                        time = TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(12, 30),
-                        snoozeAmount = 1,
-                        cardTriggerThreshold = 20,
-                        did = did2,
-                    ),
-                expectedOutput = dummyDeckSpecificRemindersForDeckTwo[ReviewReminderId(3)]!!,
-            ),
-            // ...and some will be app-wide for good measure
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(1),
-                input =
-                    TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                        id = ReviewReminderId(4),
-                        hour = 9,
-                        minute = 0,
-                        cardTriggerThreshold = 5,
-                        did = -1L,
-                    ),
-                expectedOutput = dummyAppWideReminders[ReviewReminderId(4)]!!,
-            ),
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(1),
-                input =
-                    TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                        id = ReviewReminderId(5),
-                        hour = 10,
-                        minute = 30,
-                        cardTriggerThreshold = 10,
-                        did = -1L,
-                    ),
-                expectedOutput = dummyAppWideReminders[ReviewReminderId(5)]!!,
-            ),
-        )
-
-        // Reset mocks
-        ReviewRemindersDatabase.schemaVersion = savedSchemaVersion
-        ReviewRemindersDatabase.oldReviewReminderSchemasForMigration = savedOldReviewReminderSchemasForMigration
-    }
+            // Reset mocks
+            ReviewRemindersDatabase.schemaVersion = savedSchemaVersion
+            ReviewRemindersDatabase.oldReviewReminderSchemasForMigration = savedOldReviewReminderSchemasForMigration
+        }
 
     @Test
-    fun `review reminder v1 to v2 migration works`() {
-        assertMigrationsWork(
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(1),
-                input =
-                    ReviewReminderSchemaV1(
-                        id = ReviewReminderId(0),
-                        time = ReviewReminderTime(9, 0),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
-                        scope = ReviewReminderScope.DeckSpecific(did1),
-                        enabled = true,
-                        profileID = "",
-                    ),
-                expectedOutput =
-                    ReviewReminder.createReviewReminder(
-                        time = ReviewReminderTime(9, 0),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
-                        scope = ReviewReminderScope.DeckSpecific(did1),
-                        enabled = true,
-                        profileID = "",
-                        onlyNotifyIfNoReviews = false,
-                    ),
-            ),
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(1),
-                input =
-                    ReviewReminderSchemaV1(
-                        id = ReviewReminderId(1),
-                        time = ReviewReminderTime(10, 30),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
-                        scope = ReviewReminderScope.Global,
-                        enabled = false,
-                        profileID = "",
-                        onlyNotifyIfNoReviews = true,
-                    ),
-                expectedOutput =
-                    ReviewReminder.createReviewReminder(
-                        time = ReviewReminderTime(10, 30),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
-                        scope = ReviewReminderScope.Global,
-                        enabled = false,
-                        profileID = "",
-                        onlyNotifyIfNoReviews = true,
-                    ),
-            ),
-        )
-    }
+    fun `review reminder v1 to v2 migration works`() =
+        runTest {
+            assertMigrationsWork(
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(1),
+                    input =
+                        ReviewReminderSchemaV1(
+                            id = ReviewReminderId(0),
+                            time = ReviewReminderTime(9, 0),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
+                            scope = scope1,
+                            enabled = true,
+                            profileID = "",
+                        ),
+                    expectedOutput =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(9, 0),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
+                            scope = scope1,
+                            enabled = true,
+                            profileID = "",
+                            onlyNotifyIfNoReviews = false,
+                        ),
+                ),
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(1),
+                    input =
+                        ReviewReminderSchemaV1(
+                            id = ReviewReminderId(1),
+                            time = ReviewReminderTime(10, 30),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
+                            scope = ReviewReminderScope.Global,
+                            enabled = false,
+                            profileID = "",
+                            onlyNotifyIfNoReviews = true,
+                        ),
+                    expectedOutput =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(10, 30),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
+                            scope = ReviewReminderScope.Global,
+                            enabled = false,
+                            profileID = "",
+                            onlyNotifyIfNoReviews = true,
+                        ),
+                ),
+            )
+        }
 
     @Test
-    fun `review reminder v2 to v3 migration works`() {
-        assertMigrationsWork(
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(2),
-                input =
-                    ReviewReminderSchemaV2(
-                        id = ReviewReminderId(0),
-                        time = ReviewReminderTime(10, 30),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
-                        scope = ReviewReminderScope.Global,
-                        enabled = true,
-                        profileID = "",
-                        onlyNotifyIfNoReviews = false,
-                    ),
-                expectedOutput =
-                    ReviewReminder.createReviewReminder(
-                        time = ReviewReminderTime(10, 30),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
-                        scope = ReviewReminderScope.Global,
-                        enabled = true,
-                        profileID = "",
-                        onlyNotifyIfNoReviews = false,
-                    ),
-            ),
-            MigrationTestCase(
-                inputVersion = ReviewReminderSchemaVersion(2),
-                input =
-                    ReviewReminderSchemaV2(
-                        id = ReviewReminderId(1),
-                        time = ReviewReminderTime(12, 0),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(20),
-                        scope = ReviewReminderScope.DeckSpecific(did2),
-                        enabled = false,
-                        profileID = "",
-                        onlyNotifyIfNoReviews = true,
-                    ),
-                expectedOutput =
-                    ReviewReminder.createReviewReminder(
-                        time = ReviewReminderTime(12, 0),
-                        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(20),
-                        scope = ReviewReminderScope.DeckSpecific(did2),
-                        enabled = false,
-                        profileID = "",
-                        onlyNotifyIfNoReviews = true,
-                    ),
-            ),
-        )
-    }
+    fun `review reminder v2 to v3 migration works`() =
+        runTest {
+            assertMigrationsWork(
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(2),
+                    input =
+                        ReviewReminderSchemaV2(
+                            id = ReviewReminderId(0),
+                            time = ReviewReminderTime(10, 30),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
+                            scope = ReviewReminderScope.Global,
+                            enabled = true,
+                            profileID = "",
+                            onlyNotifyIfNoReviews = false,
+                        ),
+                    expectedOutput =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(10, 30),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
+                            scope = ReviewReminderScope.Global,
+                            enabled = true,
+                            profileID = "",
+                            onlyNotifyIfNoReviews = false,
+                        ),
+                ),
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(2),
+                    input =
+                        ReviewReminderSchemaV2(
+                            id = ReviewReminderId(1),
+                            time = ReviewReminderTime(12, 0),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(20),
+                            scope = scope2,
+                            enabled = false,
+                            profileID = "",
+                            onlyNotifyIfNoReviews = true,
+                        ),
+                    expectedOutput =
+                        ReviewReminder.createReviewReminder(
+                            time = ReviewReminderTime(12, 0),
+                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(20),
+                            scope = scope2,
+                            enabled = false,
+                            profileID = "",
+                            onlyNotifyIfNoReviews = true,
+                        ),
+                ),
+            )
+        }
 }

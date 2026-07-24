@@ -24,9 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">ᱰᱮᱠ ᱠᱚ</string>
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
-    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">ᱟᱸᱠᱲᱟ</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">ᱥᱟᱡᱟᱣᱠᱚ</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">ᱜᱚᱲᱚ</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
@@ -39,7 +37,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">ᱦᱚᱯᱚᱱ ᱢᱮ</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">ᱟᱭᱟᱛ</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
     <!-- Reviewer -->
@@ -83,7 +80,7 @@
     <string name="menu_unmark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
     <string name="menu_enable_voice_playback" maxLength="28">ᱥᱮᱨᱮᱧ ᱯᱷᱟᱭᱞᱟᱣ ᱮᱱᱮᱡ</string>
     <string name="menu_disable_voice_playback">ᱥᱮᱨᱮᱧ ᱯᱷᱟᱭᱞᱟᱣ ᱵᱚᱫᱚᱞ</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">ᱱᱟᱶᱟ ᱵᱮᱠᱚᱯ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -95,7 +92,7 @@
     <string name="empty_cram_label" maxLength="28">ᱵᱟ.ᱱᱩᱜᱼᱟ</string>
     <string name="create_subdeck">ᱥᱚᱵᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="empty_filtered_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱠᱷᱟᱹᱞᱤᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="empty_deck">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱛᱮᱦᱮᱸᱧ ᱞᱟᱹᱜᱤᱫ ᱟᱢ ᱯᱩᱨᱟᱹᱣ ᱦᱩᱭᱠᱮᱜᱼᱟᱢ ᱾</string>
@@ -159,10 +156,10 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">ᱡᱚᱛᱚ ᱯᱷᱤᱞ ᱠᱚ ᱥᱮᱴᱮᱨᱚᱜ</string>
     <string name="image_occlusion">ᱪᱤᱛᱟᱹᱨ ᱚᱠᱞᱩᱥᱚᱱ</string>
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">ᱢᱟᱭᱠᱨᱚᱯᱷᱚᱱ</string>
-    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">Allows you to add sounds to cards and enables voice playback while reviewing</string>
-    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">Enables background media syncing and allows you to create review reminders</string>
-    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">Required</string>
-    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">Optional</string>
+    <string name="microphone_permission_explanation" comment="Description explaining why AnkiDroid needs the microphone permission, shown on the permissions explanation screen.">ᱟᱢ ᱠᱟᱨᱰ ᱨᱮ ᱥᱟᱰᱮ ᱥᱮᱞᱮᱫ ᱨᱮᱭᱟᱜ ᱟᱱᱩᱢᱟᱛ ᱮᱢᱚᱜ ᱠᱟᱱᱟ ᱟᱨ ᱧᱮᱞ ᱫᱚᱦᱚ ᱚᱠᱛᱚ ᱨᱮ ᱟᱲᱟᱝ ᱯᱞᱮᱵᱮᱠ ᱠᱟᱹᱡᱽᱣᱟᱹ ᱮᱢᱚᱜ ᱠᱟᱱᱟ ᱾</string>
+    <string name="notifications_permission_explanation" comment="Description explaining why AnkiDroid needs the notification permission.">ᱵᱮᱠᱜᱨᱟᱣᱩᱱᱰ ᱢᱤᱰᱤᱭᱟ ᱥᱤᱝᱠᱤᱝ ᱮᱢ ᱪᱷᱚᱭ ᱢᱮ ᱟᱨ ᱟᱢ ᱫᱚ ᱧᱮᱞ ᱫᱚᱦᱲᱟ ᱫᱤᱥᱟᱹ ᱵᱮᱱᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮ ᱪᱷᱟᱹᱲ ᱢᱮᱭᱟ</string>
+    <string name="heading_required_permissions" comment="Heading for the section of required permissions that the app needs to function, shown in the permissions explanation screen.">ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
+    <string name="heading_optional_permissions" comment="Heading for the section of optional permissions that the app needs to function, shown in the permissions explanation screen.">ᱚᱯᱥᱚᱱᱟᱞ</string>
     <string name="manually_grant_permissions" comment="Pop-up message that is shown to the user when they want to grant an app permission that must be granted via the OS settings screen.">This permission must be manually granted from Settings</string>
     <string name="revoke_permissions" comment="Pop-up message that is shown to the user when they are revoking an app permission.">This permission must be manually revoked from Settings</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ᱮᱠᱟᱶᱩᱴ ᱦᱮᱡ ᱢᱮ</string>

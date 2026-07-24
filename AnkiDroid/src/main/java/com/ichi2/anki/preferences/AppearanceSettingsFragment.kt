@@ -53,6 +53,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         get() = "prefs.appearance"
 
     override fun initSubscreen() {
+        preferenceScreen.title = TR.preferencesAppearance()
+
         // Configure background
         backgroundImage = requirePreference<Preference>("deckPickerBackground")
         backgroundImage!!.title = TR.sentenceCase.selectImage
@@ -133,6 +135,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
         val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
         val nightThemePref = requirePreference<ListPreference>(R.string.night_theme_key)
 
+        dayThemePref.isEnabled = appTheme != AppTheme.NIGHT
+        nightThemePref.isEnabled = appTheme != AppTheme.DAY
+
         // Remove follow system options in android versions which do not have system dark mode
         // When minSdk reaches 29, the only necessary change is to remove this if-block
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
@@ -152,6 +157,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
                 if (previousThemeId != Themes.currentTheme.styleResId) {
                     ActivityCompat.recreate(requireActivity())
+                } else {
+                    dayThemePref.isEnabled = newValue != getString(AppTheme.NIGHT.entryResId)
+                    nightThemePref.isEnabled = newValue != getString(AppTheme.DAY.entryResId)
                 }
             }
         }

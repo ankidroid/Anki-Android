@@ -48,6 +48,7 @@ import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.setCompoundDrawablesRelativeWithIntrinsicBoundsKt
@@ -97,6 +98,9 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStorageIsReady()) {
+            return
+        }
         setContentView(R.layout.activity_note_type_field_editor)
         enableToolbar()
         binding.notetypeName.text = intent.getStringExtra(EXTRA_NOTETYPE_NAME)

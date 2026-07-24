@@ -36,7 +36,7 @@ import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel
-import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.IO_ARGS_KEY
+import com.ichi2.anki.pages.viewmodel.ImageOcclusionViewModel.Companion.ARG_IMAGE_OCCLUSION
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import timber.log.Timber
 
@@ -62,7 +62,7 @@ class ImageOcclusion : PageFragment(R.layout.page_image_occlusion) {
 
     override val pagePath: String by lazy {
         val args =
-            BundleCompat.getParcelable(requireArguments(), IO_ARGS_KEY, ImageOcclusionArgs::class.java)
+            BundleCompat.getParcelable(requireArguments(), ARG_IMAGE_OCCLUSION, ImageOcclusionArgs::class.java)
                 ?: throw IllegalArgumentException("IO args were not setup correctly")
         val suffix =
             when (args) {
@@ -151,7 +151,7 @@ class ImageOcclusion : PageFragment(R.layout.page_image_occlusion) {
             context: Context,
             args: ImageOcclusionArgs,
         ): Intent {
-            val arguments = Bundle().apply { putParcelable(IO_ARGS_KEY, args) }
+            val arguments = Bundle().apply { putParcelable(ARG_IMAGE_OCCLUSION, args) }
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
         }
     }

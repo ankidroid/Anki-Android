@@ -1,18 +1,4 @@
-/*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki.browser
 
@@ -59,6 +45,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ToggleSelectionState.SELECT_N
 import com.ichi2.anki.browser.RepositionCardsRequest.NoRepositionableCardsError
 import com.ichi2.anki.browser.RepositionCardsRequest.RepositionData
 import com.ichi2.anki.browser.search.SavedSearch
+import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.libanki.BrowserConfig
@@ -82,7 +69,6 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
@@ -286,7 +272,10 @@ class CardBrowserViewModelTest : JvmTest() {
 
             assertThat("All decks should be selected", hasSelectedAllDecks())
 
-            val addIntent = NoteEditorLauncher.AddNoteFromCardBrowser(this).toIntent(mockIt())
+            val addIntent =
+                NoteEditorLauncher
+                    .AddNoteFromCardBrowser(searchTerms = searchTerms, deckId = lastDeckId)
+                    .toIntent(mockIt())
             IntentAssert.doesNotHaveExtra(addIntent.extras, NoteEditorFragment.EXTRA_DID)
         }
 
@@ -1571,11 +1560,13 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `searchResultMessage - all decks selected, with rows`() =
+    fun `searchResultMessage - user search, all decks selected, with rows`() =
         runViewModelTest(notes = 3) {
             flowOfSearchState.test {
                 ignoreEventsDuringViewModelInit()
                 setSelectedDeck(SelectableDeck.AllDecks)
+                awaitSearchCompleted()
+                setQuery("", fromUserSearch = true)
                 val completed = awaitSearchCompleted()
                 val card = completed.resultMessage as CardBrowserViewModel.SearchResultMessage.CardCount
                 assertThat("count", completed.rowCount, equalTo(3))
@@ -1585,29 +1576,49 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `searchResultMessage - specific deck with cards has all-decks action`() =
+    fun `searchResultMessage - user search, specific deck with cards has all-decks action`() =
         runViewModelTest {
             val deck = addDeck("Specific")
             addNoteToDeck(deck)
             flowOfSearchState.test {
                 ignoreEventsDuringViewModelInit()
                 setSelectedDeck(deck)
+                awaitSearchCompleted()
+                setQuery("", fromUserSearch = true)
                 val card = awaitSearchCompleted().resultMessage as CardBrowserViewModel.SearchResultMessage.CardCount
                 assertThat("includes all-decks action", card.includeSearchAllDecksAction, equalTo(true))
             }
         }
 
     @Test
-    fun `searchResultMessage - specific deck with no cards`() =
+    fun `searchResultMessage - user search, specific deck with no cards`() =
         runViewModelTest {
             val deck = addDeck("Empty")
             flowOfSearchState.test {
                 ignoreEventsDuringViewModelInit()
                 setSelectedDeck(deck)
+                awaitSearchCompleted()
+                setQuery("", fromUserSearch = true)
                 assertThat(
                     "empty deck → no-cards-in-selected-deck",
                     awaitSearchCompleted().resultMessage,
                     equalTo(CardBrowserViewModel.SearchResultMessage.NoCardsInSelectedDeck),
+                )
+            }
+        }
+
+    @Test
+    fun `searchResultMessage - no message on deck change`() =
+        runViewModelTest {
+            val deck = addDeck("Specific")
+            addNoteToDeck(deck)
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                setSelectedDeck(deck)
+                assertThat(
+                    "changing deck does not surface a result message",
+                    awaitSearchCompleted().resultMessage,
+                    nullValue(),
                 )
             }
         }

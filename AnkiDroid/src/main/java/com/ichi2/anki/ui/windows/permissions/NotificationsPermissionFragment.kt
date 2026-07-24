@@ -56,7 +56,7 @@ class NotificationsPermissionFragment : PermissionsFragment(R.layout.fragment_no
         // onResume is called after returning from both the OS settings and the OS permission request dialog
         if (Permissions.canPostNotifications(requireContext())) {
             // Post a fragment result to indicate that the bottom sheet can be dismissed
-            setFragmentResult(PermissionsBottomSheet.DISMISS_RESULT_REQUEST_KEY, Bundle())
+            setFragmentResult(PermissionsBottomSheet.RESULT_DISMISS, Bundle())
         }
     }
 

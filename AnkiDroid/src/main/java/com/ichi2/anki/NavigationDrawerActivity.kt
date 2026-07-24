@@ -33,18 +33,22 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
+import com.ichi2.anki.common.android.animationEnabled
+import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.common.destinations.StatisticsDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.pages.StatisticsDestination
-import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.utils.IntentUtil
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 abstract class NavigationDrawerActivity(
     @LayoutRes contentLayoutId: Int? = null,
@@ -152,13 +156,17 @@ abstract class NavigationDrawerActivity(
         drawerLayout.setStatusBarBackgroundColor(
             MaterialColors.getColor(
                 this,
-                R.attr.appBarColor,
+                CommonR.attr.appBarColor,
                 0,
             ),
         )
         // Setup toolbar and hamburger
-        navigationView = drawerLayout.findViewById(R.id.navdrawer_items_container)
-        navigationView!!.setNavigationItemSelectedListener(this)
+        navigationView =
+            drawerLayout.findViewById<NavigationView>(R.id.navdrawer_items_container).apply {
+                setNavigationItemSelectedListener(this@NavigationDrawerActivity)
+                menu.findItem(R.id.nav_decks)?.title = TR.actionsDecks()
+                menu.findItem(R.id.nav_stats)?.title = TR.statisticsTitle()
+            }
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -388,22 +396,29 @@ abstract class NavigationDrawerActivity(
      */
     protected fun openStatistics() {
         Timber.i("launching statistics")
-        val intent =
-            StatisticsDestination().toIntent(this)
-        startActivity(intent)
+        navigate(StatisticsDestination)
     }
 
     /**
      * Opens AnkiDroid's Settings Screen.
      */
     protected fun openSettings() {
-        val intent = PreferencesActivity.getIntent(this)
-        preferencesLauncher.launch(intent)
+        preferencesLauncher.navigate(PreferencesDestination.Root)
     }
 
     // Override this to specify a specific card id
     protected open val currentCardId: CardId?
         get() = null
+
+    /**
+     * Hides the navigation drawer indicator (hamburger icon) and any back arrows
+     * from the toolbar. Used when bottom navigation is active.
+     */
+    protected fun disableDrawerIndicator() {
+        drawerToggle.isDrawerIndicatorEnabled = false
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        navButtonGoesBack = false
+    }
 
     protected fun showBackIcon() {
         drawerToggle.isDrawerIndicatorEnabled = false

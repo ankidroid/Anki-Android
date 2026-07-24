@@ -32,10 +32,12 @@ include(
     ":anki-common",
     ":api",
     ":AnkiDroid",
+    ":baselineprofile",
     ":common",
     ":common:android",
     ":compat",
     ":libanki",
     ":lint-rules",
     ":vbpd",
+    ":widgets",
 )

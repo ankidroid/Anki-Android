@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisation</string>
     <string name="pref_cat_scheduling" maxLength="41">Planification</string>
     <string name="pref_cat_whiteboard" maxLength="41">Tableau blanc</string>
-    <string name="pref_cat_appearance" maxLength="41">Affichage</string>
     <string name="pref_cat_themes" maxLength="41">Thèmes</string>
     <string name="pref_cat_gestures" maxLength="41">Gestes</string>
     <string name="pref_cat_controls" maxLength="41">Contrôles</string>
@@ -185,8 +184,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Écran de révision</string>
     <string name="show_deck_title" maxLength="41">Afficher le titre du deck</string>
     <string name="accessibility" maxLength="41">Accessibilité</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Coller les images du pressepapiers en PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Appuis double sur retour pour quitter</string>
     <string name="exit_via_double_tap_back_summ">Pour éviter de quitter accidentellement l\'écran de révision ou l\'application</string>
     <!-- Allow all files in media imports -->
@@ -195,7 +192,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Serveur de synchronisation personnalisé</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Non utilisé</string>
-    <string name="custom_sync_server_help2"><![CDATA[        En tant qu\'alternative à la synchronisation avec AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        En tant qu\'alternative à la synchronisation avec AnkiWeb,
         vous pouvez utiliser votre propre serveur pour la synchronisation.
         Si non défini, le serveur AnkiWeb par défaut sera utilisé à la place.
         <a href="%s">En savoir plus</a>
@@ -256,6 +254,10 @@
     <string name="user_action_8" maxLength="28">Action utilisateur 8</string>
     <string name="user_action_9" maxLength="28">Action utilisateur 9</string>
     <string name="toggle_auto_advance" maxLength="28">Activer/désactiver l\'avancement automatique</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Sélectionner le côté de la carte</string>
     <string name="card_side_question">Question</string>
@@ -289,7 +291,8 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
         Pour plus de sécurité, veuillez synchroniser périodiquement votre collection, ou sauvegarder les exports de celles-ci.
         <br><br>
         Vous pouvez restaurer à partir d\'une sauvegarde et exporter votre collection depuis la liste des paquets.
-    ]]></string>
+    
+]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes entre les sauvegardes automatiques</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Sauvegardes quotidiennes à conserver</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Sauvegardes hebdomadaires à conserver</string>

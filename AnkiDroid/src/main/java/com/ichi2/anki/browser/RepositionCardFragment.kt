@@ -1,18 +1,6 @@
-/*
- * Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2025 lukstbit <52494258+lukstbit@users.noreply.github.com>
+
 package com.ichi2.anki.browser
 
 import android.app.Dialog
@@ -28,7 +16,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentRepositionCardBinding
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.create
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -74,7 +62,7 @@ class RepositionCardFragment : DialogFragment() {
             text = TR.browsingShiftPositionOfExistingCards()
             isChecked = requireArguments().getBoolean(ARG_SHIFT)
         }
-        val title = TR.browsingRepositionNewCards().toSentenceCase(R.string.sentence_reposition_new_cards)
+        val title = TR.sentenceCase.repositionNewCards
         val dialog =
             AlertDialog.Builder(requireContext()).create {
                 title(text = title)

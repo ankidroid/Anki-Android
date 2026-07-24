@@ -81,14 +81,14 @@ abstract class MultimediaFragment(
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireAnkiActivity().setToolbarTitle(title)
+        requireAnkiActivity().setToolbarText(title = title)
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
             @Suppress("USELESS_CAST")
             val multimediaActivityExtra =
                 arguments?.getSerializableCompat<MultimediaActivityExtra>(
-                    MultimediaActivity.MULTIMEDIA_ARGS_EXTRA,
+                    MultimediaActivity.EXTRA_FRAGMENT_ARGS,
                 )
 
             if (multimediaActivityExtra != null) {

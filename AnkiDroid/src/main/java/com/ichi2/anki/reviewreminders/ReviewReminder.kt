@@ -161,6 +161,9 @@ sealed class ReviewReminderScope : Parcelable {
  * reminders with invalid IDs are never created. This class is annotated
  * with @ConsistentCopyVisibility to ensure copy() is private too and does not leak the constructor.
  *
+ * Edits to instances of this class are not automatically persisted to SharedPreferences;
+ * that functionality is provided by [ReviewRemindersDatabase].
+ *
  * About the old schema migration process:
  *
  * To any developer who changes this class in the future, note that these review reminders are stored
@@ -188,7 +191,7 @@ sealed class ReviewReminderScope : Parcelable {
  * multiple profiles might be active simultaneously.
  * @param latestNotifTime The time at which this review reminder last attempted to fire a routine daily (non-snooze)
  * notification, in epoch milliseconds, or the time at which it was created if no notification has ever been fired.
- * See [shouldImmediatelyFire].
+ * See [latestNotifDelivered].
  * @param onlyNotifyIfNoReviews If true, only notify the user if this scope has not been reviewed today yet.
  */
 @Serializable
@@ -239,11 +242,10 @@ data class ReviewReminder private constructor(
     }
 
     /**
-     * Checks if this review reminder has tried to fire a routine daily (non-snooze) notification in the time between
-     * its latest scheduled firing time and now. If not, this method returns true, indicating that a notification
-     * should be immediately fired for this review reminder.
+     * Checks if this review reminder has successfully attempted to deliver a routine daily (non-snooze)
+     * notification in the time between its latest scheduled firing time and now. If so, this method returns true.
      */
-    fun shouldImmediatelyFire(): Boolean {
+    fun latestNotifDelivered(): Boolean {
         val (hour, minute) = this.time
 
         val currentTimestamp = TimeManager.time.calendar()
@@ -257,7 +259,7 @@ data class ReviewReminder private constructor(
             }
         }
 
-        return latestNotifTime < latestScheduledTimestamp.timeInMillis
+        return latestNotifTime >= latestScheduledTimestamp.timeInMillis
     }
 
     /**

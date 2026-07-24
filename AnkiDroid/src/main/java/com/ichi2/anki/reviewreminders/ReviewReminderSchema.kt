@@ -115,6 +115,9 @@ data class ReviewReminderSchemaV2(
 /**
  * Schema migration settings for testing purposes.
  * Consult this as an example of how to save old schemas and define their [ReviewReminderSchema.migrate] methods.
+ * Also see the unit tests for [ReviewRemindersDatabase], where these classes are exercised.
+ * These classes cannot be moved directly to the test file because [ReviewReminderSchema] is a sealed interface,
+ * meaning all implementations of it must be within the same module.
  */
 object TestingReviewReminderMigrationSettings {
     /**

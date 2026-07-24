@@ -40,7 +40,6 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">ᱟᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="pref_cat_scheduling" maxLength="41">ᱡᱚᱡᱚᱱᱟ</string>
     <string name="pref_cat_whiteboard" maxLength="41">ᱯᱩᱸᱰᱯᱟᱴᱟ</string>
-    <string name="pref_cat_appearance" maxLength="41">ᱧᱮᱞᱚᱜ ᱠᱚ</string>
     <string name="pref_cat_themes" maxLength="41">ᱛᱷᱤᱢᱥ</string>
     <string name="pref_cat_gestures" maxLength="41">ᱪᱤᱱᱦᱟᱹ</string>
     <string name="pref_cat_controls" maxLength="41">ᱠᱳᱸᱴᱨᱳᱞ</string>
@@ -185,8 +184,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">ᱰᱮᱠ ᱨᱮᱱᱟᱜ ᱧᱩᱛᱩᱢ ᱧᱮᱞᱢᱮ</string>
     <string name="accessibility" maxLength="41">ᱥᱮᱴᱮᱨᱚᱜ</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">ᱠᱞᱤᱯᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱫᱚ PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">ᱨᱩᱣᱟᱹᱲ/ᱩᱴᱷᱟᱹᱣᱜ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱫᱷᱟᱣ ᱚᱛᱟᱭ ᱢᱮ</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
@@ -195,7 +192,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ᱵᱟᱝ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱱᱟ</string>
-    <string name="custom_sync_server_help2"><![CDATA[        ᱮᱱᱠᱤ ᱣᱮᱵᱽ ᱥᱟᱶ ᱥᱤᱸᱠᱨᱚᱱᱤᱝ ᱨᱮᱱᱟᱜ ᱮᱞᱵᱟᱨᱴᱤᱵᱷ ᱞᱮᱠᱟᱛᱮ,
+    <string name="custom_sync_server_help2"><![CDATA[
+        ᱮᱱᱠᱤ ᱣᱮᱵᱽ ᱥᱟᱶ ᱥᱤᱸᱠᱨᱚᱱᱤᱝ ᱨᱮᱱᱟᱜ ᱮᱞᱵᱟᱨᱴᱤᱵᱷ ᱞᱮᱠᱟᱛᱮ,
         ᱟᱢ ᱥᱤᱸᱠᱨᱚᱱᱤᱡᱮᱥᱚᱱ ᱞᱟᱹᱜᱤᱫ ᱟᱢᱟᱜ ᱱᱤᱡᱮᱨᱟᱜ ᱥᱮᱵᱟ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮᱭᱟᱜ ᱟ.
         ᱡᱩᱫᱤ ᱵᱟᱝ ᱥᱚᱫᱚᱨ ᱟᱠᱟᱱᱟ, ᱮᱱᱠᱷᱟᱱ ᱰᱤᱯᱚᱞᱴ AnkiWeb ᱥᱟᱨᱵᱟᱨ ᱵᱮᱵᱷᱟᱨ ᱦᱩᱭᱩᱜᱼᱟ ᱾
         <a href="%s">ᱟᱨᱦᱚᱸ ᱵᱟᱰᱟᱭ ᱢᱮ</a>
@@ -256,6 +254,10 @@
     <string name="user_action_8" maxLength="28">ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱠᱟᱹᱢᱤ 8</string>
     <string name="user_action_9" maxLength="28">ᱵᱮᱵᱷᱟᱨᱤᱭᱟᱹ ᱠᱟᱹᱢᱤ 9</string>
     <string name="toggle_auto_advance" maxLength="28">ᱚᱴᱚ ᱟᱵᱷᱟᱱᱥ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ᱠᱟᱰ ᱯᱟᱥᱴᱟ ᱪᱚᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="card_side_question">ᱠᱩᱠᱞᱤ</string>
@@ -280,7 +282,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        ᱮᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱫᱚ ᱚᱠᱛᱚ- ᱚᱠᱛᱚ ᱟᱢᱟᱜ ᱠᱚᱞᱮᱠᱥᱚᱱ ᱨᱮᱭᱟᱜ ᱵᱮᱠ- ᱟᱯ ᱠᱚ ᱮᱢᱟᱭᱟ ᱾
+    <string name="pref__backups_help__summary"><![CDATA[
+        ᱮᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱫᱚ ᱚᱠᱛᱚ- ᱚᱠᱛᱚ ᱟᱢᱟᱜ ᱠᱚᱞᱮᱠᱥᱚᱱ ᱨᱮᱭᱟᱜ ᱵᱮᱠ- ᱟᱯ ᱠᱚ ᱮᱢᱟᱭᱟ ᱾
         ᱡᱩᱫᱤ ᱵᱟᱨ ᱫᱤᱱ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱵᱟᱠᱤᱯᱷ ᱠᱚ ᱢᱮᱱᱟᱜᱼᱟ,
         ᱰᱤᱥᱠ ᱨᱮ ᱡᱟᱭᱜᱟ ᱵᱮᱵᱚᱦᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱮᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱫᱚ ᱚᱱᱟ ᱠᱚᱨᱮᱱᱟᱜ ᱠᱤᱪᱷᱩ ᱠᱚ ᱵᱚᱫᱚᱞ ᱮᱦᱚᱵᱟ ᱾
         <br><br>

@@ -345,6 +345,20 @@ open class RobolectricTest :
         CollectionManager.emulatedOpenFailure = null
     }
 
+    /**
+     * Emulates a null collection and a `BackendDbLockedException` while [block] runs,
+     * restoring normal collection behavior afterwards.
+     *
+     * @see enableNullCollection
+     */
+    protected inline fun withNullCollection(block: () -> Unit) =
+        try {
+            enableNullCollection()
+            block()
+        } finally {
+            disableNullCollection()
+        }
+
     @Throws(JSONException::class)
     protected fun getCurrentDatabaseNoteTypeCopy(noteTypeName: String): NotetypeJson {
         val collectionModels = col.notetypes

@@ -20,7 +20,7 @@ import android.Manifest.permission.INTERNET
 import android.content.Intent
 import android.os.Bundle
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.SingleFragmentActivity.Companion.FRAGMENT_NAME_EXTRA
+import com.ichi2.anki.SingleFragmentActivity.Companion.EXTRA_FRAGMENT_NAME
 import com.ichi2.anki.account.LoginFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.DeckPickerWithNewCollection
@@ -73,7 +73,7 @@ class IntroductionActivityTest : RobolectricTest() {
             )
             assertThat(
                 "hosted fragment is LoginFragment",
-                intent.getStringExtra(FRAGMENT_NAME_EXTRA),
+                intent.getStringExtra(EXTRA_FRAGMENT_NAME),
                 equalTo(LoginFragment::class.jvmName),
             )
         }

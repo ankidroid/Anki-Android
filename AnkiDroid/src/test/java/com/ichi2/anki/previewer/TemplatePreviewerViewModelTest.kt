@@ -37,7 +37,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
     val tempDirectory = TemporaryFolder()
 
     private fun createViewModel(arguments: TemplatePreviewerArguments): TemplatePreviewerViewModel {
-        val savedStateHandle = SavedStateHandle(mapOf(TemplatePreviewerFragment.ARGS_KEY to arguments))
+        val savedStateHandle = SavedStateHandle(mapOf(TemplatePreviewerFragment.ARG_KEY to arguments))
         val viewModel = TemplatePreviewerViewModel(savedStateHandle)
         return spyk(viewModel).apply {
             // the default implementation requires the Collection media directory,

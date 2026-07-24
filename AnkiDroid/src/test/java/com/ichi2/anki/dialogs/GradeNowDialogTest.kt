@@ -1,18 +1,5 @@
-/*
- *  Copyright (c) 2026 Bhaskar Patel <patel.bhaskar09@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2026 Bhaskar Patel <patel.bhaskar09@gmail.com>
 
 package com.ichi2.anki.dialogs
 
@@ -25,9 +12,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -40,10 +26,7 @@ class GradeNowDialogTest : RobolectricTest() {
         val cardId = addBasicNote().firstCard().id
         val cardBrowser = super.startRegularActivity<CardBrowser>()
 
-        val translatedTitle =
-            TR
-                .actionsGradeNow()
-                .toSentenceCase(cardBrowser, R.string.sentence_grade_now)
+        val translatedTitle = with(cardBrowser) { TR.sentenceCase.gradeNow }
 
         GradeNowDialog.showDialog(cardBrowser, listOf(cardId))
 
@@ -81,10 +64,7 @@ class GradeNowDialogTest : RobolectricTest() {
         val cardId = addBasicNote().firstCard().id
         val cardBrowser = super.startRegularActivity<CardBrowser>()
 
-        val translatedTitle =
-            TR
-                .actionsGradeNow()
-                .toSentenceCase(cardBrowser, R.string.sentence_grade_now)
+        val translatedTitle = with(cardBrowser) { TR.sentenceCase.gradeNow }
 
         GradeNowDialog.showDialog(cardBrowser, listOf(cardId))
 
@@ -99,10 +79,7 @@ class GradeNowDialogTest : RobolectricTest() {
     @Test
     fun dialogNotShownIfNoCardsSelected() {
         val cardBrowser = super.startRegularActivity<CardBrowser>()
-        val translatedTitle =
-            TR
-                .actionsGradeNow()
-                .toSentenceCase(cardBrowser, R.string.sentence_grade_now)
+        val translatedTitle = with(cardBrowser) { TR.sentenceCase.gradeNow }
 
         GradeNowDialog.showDialog(cardBrowser, emptyList())
 

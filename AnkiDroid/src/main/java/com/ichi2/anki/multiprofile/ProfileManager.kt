@@ -12,11 +12,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionHelper.PREF_COLLECTION_PATH
-import com.ichi2.anki.CollectionHelper.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
@@ -390,7 +390,7 @@ class ProfileManager private constructor(
      * The default-location fallback used when the profile has never written `PREF_COLLECTION_PATH`.
      *
      * TODO: consolidate with the profile-creation path this should delegate to
-     * `CollectionHelper.getDefaultAnkiDroidDirectory(profileContext, directoryName = ...)`
+     * `getDefaultAnkiDroidDirectory(profileContext, directoryName = ...)`
      * that gives us legacy-storage handling and `SystemStorageException`-on-null for free, and keeps
      * the "where does a profile collection live" decision in a single place shared with
      * `ensureProfileCollectionPath`.

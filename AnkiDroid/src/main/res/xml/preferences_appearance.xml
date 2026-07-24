@@ -25,7 +25,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     xmlns:tools="http://schemas.android.com/tools"
-        android:title="@string/pref_cat_appearance"
         android:key="@string/pref_appearance_screen_key">
     <PreferenceCategory android:title="@string/pref_cat_themes" >
         <ListPreference

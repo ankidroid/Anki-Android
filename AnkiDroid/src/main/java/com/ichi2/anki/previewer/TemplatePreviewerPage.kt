@@ -25,7 +25,7 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentTemplatePreviewerContainerBinding
-import com.ichi2.anki.previewer.TemplatePreviewerFragment.Companion.ARGS_KEY
+import com.ichi2.anki.previewer.TemplatePreviewerFragment.Companion.ARG_KEY
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
@@ -48,7 +48,7 @@ class TemplatePreviewerPage : Fragment(R.layout.fragment_template_previewer_cont
 
         val fragment: TemplatePreviewerFragment
         if (savedInstanceState == null) {
-            val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
+            val arguments = BundleCompat.getParcelable(requireArguments(), ARG_KEY, TemplatePreviewerArguments::class.java)!!
             fragment = TemplatePreviewerFragment.newInstance(arguments)
             childFragmentManager.commitNow {
                 replace(R.id.fragment_container, fragment)
@@ -87,7 +87,7 @@ class TemplatePreviewerPage : Fragment(R.layout.fragment_template_previewer_cont
             CardViewerActivity.getIntent(
                 context,
                 TemplatePreviewerPage::class,
-                Bundle().apply { putParcelable(ARGS_KEY, arguments) },
+                Bundle().apply { putParcelable(ARG_KEY, arguments) },
             )
     }
 }

@@ -43,8 +43,8 @@
     <string name="updated_version">更新到 %s 版本</string>
     <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">保存白板</string>
-    <string name="enable_stylus" maxLength="28">启用荧光笔模式</string>
-    <string name="disable_stylus">禁用荧光笔模式</string>
+    <string name="enable_stylus" maxLength="28">启用触控笔模式</string>
+    <string name="disable_stylus">禁用触控笔模式</string>
     <string name="eraser" maxLength="28">橡皮擦</string>
     <string name="add_brush" maxLength="28">添加笔刷</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">左</string>
@@ -54,7 +54,7 @@
     <string name="whiteboard_remove_brush_message">您确定要从您的调色板中删除此笔刷吗？</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">墨水</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">运笔</string>
-    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">光笔模式</string>
+    <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">触控笔模式</string>
     <string name="cannot_remove_last_brush_message">无法删除上一个笔刷</string>
     <string name="enable_whiteboard" maxLength="28">启用白板</string>
     <string name="disable_whiteboard">禁用白板</string>
@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">保存 apkg 文件失败</string>
     <string name="export_share_title">选择如何发送 apkg 文件</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
-    <string name="export_email_text"><![CDATA[        嗨！
+    <string name="export_email_text"><![CDATA[
+        嗨！
         <br/><br/>
         这是从 <br/>AnkiDroid[1] 发送的 Anki 记忆牌组。
         使用任一 Anki 客户端[2] 打开它，享受轻松高效的学习吧！<br/><br/>
@@ -161,7 +162,6 @@
     <string name="export_choice_save_to">保存至</string>
     <string name="export_saving_exported_collection">正在保存导出文件&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">选项</string>
-    <string name="menu__deck_options" maxLength="28">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
     <string name="select_tts" maxLength="28">设置 TTS 语言</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
@@ -258,7 +258,7 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">下载牌组</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">在浏览器中打开</string>
-    <string name="try_again">再试一次</string>
+    <string name="try_again">请重试</string>
     <string name="cancel_download">取消下载</string>
     <string name="cancel_download_question_title">是否取消下载？</string>
     <string name="downloading_file">正在下载 %s</string>

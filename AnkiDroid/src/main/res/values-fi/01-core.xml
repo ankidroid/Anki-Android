@@ -24,9 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">Pakat</string>
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">Korttiselain</string>
-    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">Tilastot</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">Asetukset</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">Ohje</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
@@ -39,7 +37,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">Laajenna</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">Pienennä</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">Tuo</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">Kokoelma on tyhjä</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">Aloita korttien lisääminen\nkäyttäen + kuvaketta</string>
     <!-- Reviewer -->
@@ -83,7 +80,7 @@
     <string name="menu_unmark_note">Poista merkintä</string>
     <string name="menu_enable_voice_playback" maxLength="28">Ota äänten toisto käyttöön</string>
     <string name="menu_disable_voice_playback">Poista äänten toisto käytöstä</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Tee varmuuskopio</string>
     <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
     <string name="directory_inaccessible">AnkiDroidin hakemisto ei ole käytettävissä</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -95,7 +92,7 @@
     <string name="empty_cram_label" maxLength="28">Tyhjä</string>
     <string name="create_subdeck">Luo johdannais pakka</string>
     <string name="empty_filtered_deck">Tyhjennetään suodatettu pakka&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Etsi pakka</string>
     <string name="empty_deck">Tämä pakka on tyhjä</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
     <string name="studyoptions_congrats_finished">Onnittelut! Homma hoidettu tämän päivän osalta.</string>
@@ -170,8 +167,8 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Pikakortti</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="permission_access_summary">Välttämätön Appin toimintaan</string>
+    <string name="permission_required_message">Lisää AnkiDroidille ‘%s’ oikeudet jatkaaksesi</string>
     <!-- Multiple profile -->
     <string name="add_profile">Lisää profiili</string>
 </resources>

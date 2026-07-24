@@ -24,6 +24,8 @@ import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TIME_HOUR
@@ -36,6 +38,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
@@ -117,12 +120,12 @@ class CongratsPage :
         viewModel.deckOptionsDestination
             .flowWithLifecycle(lifecycle)
             .onEach { destination ->
-                val intent = destination.toIntent(requireContext())
-                startActivity(intent, null)
+                navigate(destination)
             }.launchIn(lifecycleScope)
 
         with(view.findViewById<MaterialToolbar>(R.id.toolbar)) {
             inflateMenu(R.menu.congrats)
+            menu.findItem(R.id.action_open_deck_options)?.title = TR.sentenceCase.deckOptions
             setOnMenuItemClickListener { item ->
                 if (item.itemId == R.id.action_open_deck_options) {
                     viewModel.onDeckOptions()

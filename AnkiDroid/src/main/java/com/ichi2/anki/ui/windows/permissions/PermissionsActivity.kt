@@ -63,9 +63,9 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         binding.continueButton.setOnClickListener { finish() }
 
         // #20881: Activity should not be launchd without extras
-        val permissionSet = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
+        val permissionSet = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, PermissionSet::class.java)
         if (permissionSet == null) {
-            Timber.w("PERMISSIONS_SET_EXTRA not set; finishing")
+            Timber.w("EXTRA_PERMISSIONS_SET not set; finishing")
             showThemedToast(this, R.string.something_wrong, false)
             setResult(RESULT_CANCELED)
             finish()
@@ -92,14 +92,14 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
     }
 
     companion object {
-        const val PERMISSIONS_SET_EXTRA = "permissionsSet"
+        const val EXTRA_PERMISSIONS_SET = "permissionsSet"
 
         fun getIntent(
             context: Context,
             permissionsSet: PermissionSet,
         ): Intent =
             Intent(context, PermissionsActivity::class.java).apply {
-                putExtra(PERMISSIONS_SET_EXTRA, permissionsSet as Parcelable)
+                putExtra(EXTRA_PERMISSIONS_SET, permissionsSet as Parcelable)
             }
     }
 }

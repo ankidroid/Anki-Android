@@ -36,7 +36,6 @@ import com.ichi2.anki.reviewreminders.ReviewReminderScope.Global
 import com.ichi2.anki.reviewreminders.ReviewReminderTime
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.testutils.ext.storeReminders
 import io.mockk.CapturingSlot
 import io.mockk.every
 import io.mockk.mockk
@@ -52,13 +51,16 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.Calendar
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.minutes
 
 @RunWith(AndroidJUnit4::class)
 class NotificationServiceTest : RobolectricTest() {
     companion object {
-        private val yesterday = MockTime(TimeManager.time.intTimeMS() - 1.days.inWholeMilliseconds, step = 1000)
-        private val today = MockTime(TimeManager.time.intTimeMS(), step = 1000)
+        private val yesterday = MockTime(TimeManager.time.intTimeMS() - 1.days.inWholeMilliseconds)
+        private val today = MockTime(TimeManager.time.intTimeMS())
     }
 
     private lateinit var context: Context
@@ -67,12 +69,12 @@ class NotificationServiceTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        TimeManager.resetWith(today)
+        TimeManager.resetWith(yesterday)
         context = spyk(getApplicationContext())
         notificationManager = mockk(relaxed = true)
         every { context.getSystemService(Context.NOTIFICATION_SERVICE) } returns notificationManager
         mockkObject(AlarmManagerService)
-        every { AlarmManagerService.scheduleReviewReminderNotification(any(), any()) } returns Unit
+        every { AlarmManagerService.scheduleReviewReminderNotification(any(), any(), any()) } returns Unit
         Prefs.newReviewRemindersEnabled = true
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
@@ -81,6 +83,7 @@ class NotificationServiceTest : RobolectricTest() {
     override fun tearDown() {
         super.tearDown()
         unmockkAll()
+        TimeManager.reset()
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
 
@@ -92,10 +95,12 @@ class NotificationServiceTest : RobolectricTest() {
             val reviewReminderAppWide = createTestReminder(thresholdInt = 3)
             val deckSpecificCreationTime = reviewReminderDeckSpecific.latestNotifTime
             val appWideCreationTime = reviewReminderAppWide.latestNotifTime
-            ReviewRemindersDatabase.storeReminders(reviewReminderDeckSpecific, reviewReminderAppWide)
+            ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
+            ReviewRemindersDatabase.insertReminder(reviewReminderAppWide)
 
-            triggerDummyReminderNotification(reviewReminderDeckSpecific)
-            triggerDummyReminderNotification(reviewReminderAppWide)
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminderDeckSpecific)
+            attemptNotif(reviewReminderAppWide)
 
             verifyNoNotifsSent()
             verifyNextNotifScheduled(reviewReminderDeckSpecific)
@@ -108,10 +113,12 @@ class NotificationServiceTest : RobolectricTest() {
     fun `triggering with happy path for single deck should fire notification and schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
-            val reviewReminder = createAndSaveDummyDeckSpecificReminder(did1)
+            val reviewReminder = createTestReminder(deckId = did1)
             val creationTime = reviewReminder.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
 
-            triggerDummyReminderNotification(reviewReminder)
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
 
             verifyNotifSent(reviewReminder)
             verifyNextNotifScheduled(reviewReminder)
@@ -125,8 +132,10 @@ class NotificationServiceTest : RobolectricTest() {
             addDeck("Deck2").withNotes(count = 2)
             val reviewReminder = createTestReminder(thresholdInt = 4)
             val creationTime = reviewReminder.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
 
-            triggerDummyReminderNotification(reviewReminder)
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
 
             verifyNotifSent(reviewReminder)
             verifyNextNotifScheduled(reviewReminder)
@@ -139,8 +148,10 @@ class NotificationServiceTest : RobolectricTest() {
             val did1 = addDeck("Deck")
             val reviewReminder = createTestReminder(deckId = did1 + 1)
             val creationTime = reviewReminder.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
 
-            triggerDummyReminderNotification(reviewReminder)
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
 
             verifyNoNotifsSent()
             verifyNextNotifScheduled(reviewReminder)
@@ -148,88 +159,152 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
+    fun `triggering with reminder which is not present in database should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
+    fun `triggering with reminder which is disabled should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, enabled = false)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
+    fun `triggering with scheduled time in the future should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = 1.minutes)
+            val creationTime = reviewReminder.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            // Here, we do NOT resetWith(today) in order to test what happens if a notification is triggered before its scheduled time
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+            reviewReminder.verifyLatestNotifTime(previousTime = creationTime, shouldHaveUpdated = false)
+        }
+
+    @Test
+    fun `triggering with scheduled time equal to creation time should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = 0.minutes)
+            val creationTime = reviewReminder.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            // Here, we do NOT resetWith(today) in order to test what happens if a notification is scheduled at its creation time
+            attemptNotif(reviewReminder)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+            reviewReminder.verifyLatestNotifTime(previousTime = creationTime, shouldHaveUpdated = false)
+        }
+
+    @Test
     fun `triggering with reviews today and onlyNotifyIfNoReviews is true should not fire notification`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
-            col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
             val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = true)
-            ReviewRemindersDatabase.storeReminders(reviewReminderDeckSpecific, reviewReminderAppWide)
+            ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
+            ReviewRemindersDatabase.insertReminder(reviewReminderAppWide)
 
-            triggerDummyReminderNotification(reviewReminderDeckSpecific)
-            triggerDummyReminderNotification(reviewReminderAppWide)
+            TimeManager.resetWith(today)
+            col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
+            attemptNotif(reviewReminderDeckSpecific)
+            attemptNotif(reviewReminderAppWide)
 
             verifyNoNotifsSent()
         }
 
     @Test
-    fun `triggering with no reviews ever and onlyNotifyIfNoReviews is true should fire notification`() =
+    fun `triggering with reviews today and onlyNotifyIfNoReviews is false should fire notification`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNote()
+            val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = false)
+            val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = false)
+            ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
+            ReviewRemindersDatabase.insertReminder(reviewReminderAppWide)
+
+            TimeManager.resetWith(today)
+            col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
+            attemptNotif(reviewReminderDeckSpecific)
+            attemptNotif(reviewReminderAppWide)
+
+            verifyNotifSent(reviewReminderDeckSpecific)
+            verifyNotifSent(reviewReminderAppWide)
+        }
+
+    @Test
+    fun `triggering with no reviews ever should fire notification regardless of onlyNotifyIfNoReviews`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
             val reviewReminderDeckSpecific = createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
-            val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = true)
-            ReviewRemindersDatabase.storeReminders(reviewReminderDeckSpecific, reviewReminderAppWide)
+            val reviewReminderAppWide = createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = false)
+            ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
+            ReviewRemindersDatabase.insertReminder(reviewReminderAppWide)
 
-            triggerDummyReminderNotification(reviewReminderDeckSpecific)
-            triggerDummyReminderNotification(reviewReminderAppWide)
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminderDeckSpecific)
+            attemptNotif(reviewReminderAppWide)
 
             verifyNotifSent(reviewReminderDeckSpecific)
             verifyNotifSent(reviewReminderAppWide)
         }
 
     @Test
-    fun `triggering with review yesterday but none today and onlyNotifyIfNoReviews is true should fire notification`() =
+    fun `triggering with review yesterday but none today should fire notification regardless of onlyNotifyIfNoReviews`() =
         runTest {
-            TimeManager.resetWith(yesterday) // Wind back time and perform the review
             val did1 = addDeck("Deck", setAsSelected = true).withNote()
             col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
-            TimeManager.resetWith(today) // Reset time to present
 
             val reviewReminderDeckSpecific =
-                createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = true)
+                createTestReminder(deckId = did1, thresholdInt = 1, onlyNotifyIfNoReviews = false)
             val reviewReminderAppWide =
                 createTestReminder(thresholdInt = 1, onlyNotifyIfNoReviews = true)
-            ReviewRemindersDatabase.storeReminders(
-                reviewReminderDeckSpecific,
-                reviewReminderAppWide,
-            )
+            ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
+            ReviewRemindersDatabase.insertReminder(reviewReminderAppWide)
 
-            triggerDummyReminderNotification(reviewReminderDeckSpecific)
-            triggerDummyReminderNotification(reviewReminderAppWide)
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminderDeckSpecific)
+            attemptNotif(reviewReminderAppWide)
 
             verifyNotifSent(reviewReminderDeckSpecific)
             verifyNotifSent(reviewReminderAppWide)
-        }
-
-    @Test
-    fun `triggering with onlyNotifyIfNoReviews is false should always fire notification`() =
-        runTest {
-            val did1 = addDeck("Deck", setAsSelected = true).withNote()
-            val reviewReminderDeckSpecific = createAndSaveDummyDeckSpecificReminder(did1)
-            val reviewReminderAppWide = createAndSaveDummyAppWideReminder()
-
-            triggerDummyReminderNotification(reviewReminderDeckSpecific)
-            triggerDummyReminderNotification(reviewReminderAppWide)
-            col.sched.answerCard(col.sched.card!!, CardAnswer.Rating.GOOD)
-            triggerDummyReminderNotification(reviewReminderDeckSpecific)
-            triggerDummyReminderNotification(reviewReminderAppWide)
-
-            verifyNotifSent(reviewReminderDeckSpecific, times = 2)
-            verifyNotifSent(reviewReminderAppWide, times = 2)
         }
 
     @Test
     fun `triggering with blocked collection should not fire notification but schedule next`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
-            val reviewReminderDeckSpecific = createAndSaveDummyDeckSpecificReminder(did1)
-            val reviewReminderAppWide = createAndSaveDummyAppWideReminder()
+            val reviewReminderDeckSpecific = createTestReminder(deckId = did1)
+            val reviewReminderAppWide = createTestReminder()
             val deckSpecificCreationTime = reviewReminderDeckSpecific.latestNotifTime
             val appWideCreationTime = reviewReminderAppWide.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
+            ReviewRemindersDatabase.insertReminder(reviewReminderAppWide)
 
+            TimeManager.resetWith(today)
             CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED
-            triggerDummyReminderNotification(reviewReminderDeckSpecific)
-            triggerDummyReminderNotification(reviewReminderAppWide)
+            attemptNotif(reviewReminderDeckSpecific)
+            attemptNotif(reviewReminderAppWide)
 
             verifyNoNotifsSent()
             verifyNextNotifScheduled(reviewReminderDeckSpecific)
@@ -239,16 +314,18 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
-    fun `triggering with snoozed notification should fire notification but not schedule next`() =
+    fun `triggering with snoozed notification should fire notification but not schedule next regardless of recurring firing time`() =
         runTest {
             val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
-            val reviewReminderDeckSpecific = createAndSaveDummyDeckSpecificReminder(did1)
-            val reviewReminderAppWide = createAndSaveDummyAppWideReminder()
+            val reviewReminderDeckSpecific = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = (-1).minutes)
+            val reviewReminderAppWide = createTestReminder(scheduledTimeOffsetFromNow = 1.minutes)
             val deckSpecificCreationTime = reviewReminderDeckSpecific.latestNotifTime
             val appWideCreationTime = reviewReminderAppWide.latestNotifTime
+            ReviewRemindersDatabase.insertReminder(reviewReminderDeckSpecific)
+            ReviewRemindersDatabase.insertReminder(reviewReminderAppWide)
 
-            triggerDummyReminderNotification(reviewReminderDeckSpecific, isRecurring = false)
-            triggerDummyReminderNotification(reviewReminderAppWide, isRecurring = false)
+            attemptNotif(reviewReminderDeckSpecific, isRecurring = false)
+            attemptNotif(reviewReminderAppWide, isRecurring = false)
 
             verifyNotifSent(reviewReminderDeckSpecific)
             verifyNotifSent(reviewReminderAppWide)
@@ -258,19 +335,48 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
+    fun `triggering with snoozed notification not stored in database should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, scheduledTimeOffsetFromNow = (-1).minutes)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder, isRecurring = false)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
+    fun `triggering with snoozed notification which is disabled should not fire notification nor schedule next`() =
+        runTest {
+            val did1 = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did1, enabled = false, scheduledTimeOffsetFromNow = (-1).minutes)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder, isRecurring = false)
+
+            verifyNoNotifsSent()
+            verifyNextNotifNotScheduled()
+        }
+
+    @Test
     fun `snooze actions of different notifications and different intervals should be different`() =
         runTest {
             val did1 = addDeck("Deck1").withNotes(count = 2)
             val did2 = addDeck("Deck2").withNotes(count = 2)
             val reviewReminderOne = createTestReminder(deckId = did1, thresholdInt = 1)
             val reviewReminderTwo = createTestReminder(deckId = did2, thresholdInt = 1)
-            ReviewRemindersDatabase.storeReminders(reviewReminderOne, reviewReminderTwo)
+            ReviewRemindersDatabase.insertReminder(reviewReminderOne)
+            ReviewRemindersDatabase.insertReminder(reviewReminderTwo)
 
             val slotOne = slot<Notification>()
             val slotTwo = slot<Notification>()
 
-            triggerDummyReminderNotification(reviewReminderOne)
-            triggerDummyReminderNotification(reviewReminderTwo)
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminderOne)
+            attemptNotif(reviewReminderTwo)
 
             verifyNotifSent(reviewReminderOne, slot = slotOne)
             verifyNotifSent(reviewReminderTwo, slot = slotTwo)
@@ -285,42 +391,45 @@ class NotificationServiceTest : RobolectricTest() {
             assertThat(snoozeIntents.size, equalTo(4))
         }
 
-    private fun createAndSaveDummyDeckSpecificReminder(did: DeckId): ReviewReminder {
-        val reviewReminder = createTestReminder(deckId = did, thresholdInt = 1)
-        ReviewRemindersDatabase.storeReminders(reviewReminder)
-        return reviewReminder
-    }
-
-    private fun createAndSaveDummyAppWideReminder(): ReviewReminder {
-        val reviewReminder = createTestReminder(thresholdInt = 1)
-        ReviewRemindersDatabase.storeReminders(reviewReminder)
-        return reviewReminder
-    }
-
-    private suspend fun triggerDummyReminderNotification(
+    private suspend fun attemptNotif(
         reviewReminder: ReviewReminder,
         isRecurring: Boolean = true,
     ) {
         NotificationService.handleReviewReminderNotification(
             context,
-            reviewReminder,
+            reviewReminder.id,
+            reviewReminder.scope,
             isRecurringNotification = isRecurring,
         )
     }
 
     /**
      * Helper method for creating a review reminder to minimize verbosity in this file.
+     * The review reminder's scheduled time is initialized to be equal to [today] offset by
+     * [scheduledTimeOffsetFromNow].
      */
     private fun createTestReminder(
         deckId: DeckId? = null,
         thresholdInt: Int = 1,
+        enabled: Boolean = true,
         onlyNotifyIfNoReviews: Boolean = false,
-    ) = ReviewReminder.createReviewReminder(
-        time = ReviewReminderTime(hour = 12, minute = 0),
-        cardTriggerThreshold = ReviewReminderCardTriggerThreshold(thresholdInt),
-        scope = if (deckId != null) DeckSpecific(deckId) else Global,
-        onlyNotifyIfNoReviews = onlyNotifyIfNoReviews,
-    )
+        scheduledTimeOffsetFromNow: Duration = (-1).minutes,
+    ): ReviewReminder {
+        val scheduledTime = TimeManager.time.calendar().clone() as Calendar
+        scheduledTime.add(Calendar.MINUTE, scheduledTimeOffsetFromNow.inWholeMinutes.toInt())
+
+        return ReviewReminder.createReviewReminder(
+            time =
+                ReviewReminderTime(
+                    scheduledTime.get(Calendar.HOUR_OF_DAY),
+                    scheduledTime.get(Calendar.MINUTE),
+                ),
+            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(thresholdInt),
+            scope = if (deckId != null) DeckSpecific(deckId) else Global,
+            enabled = enabled,
+            onlyNotifyIfNoReviews = onlyNotifyIfNoReviews,
+        )
+    }
 
     private fun verifyNoNotifsSent() {
         verify(exactly = 0) { notificationManager.notify(any(), any(), any()) }
@@ -343,25 +452,28 @@ class NotificationServiceTest : RobolectricTest() {
     }
 
     private fun verifyNextNotifNotScheduled() {
-        verify(exactly = 0) { AlarmManagerService.scheduleReviewReminderNotification(any(), any()) }
+        verify(exactly = 0) { AlarmManagerService.scheduleReviewReminderNotification(any(), any(), any()) }
     }
 
     private fun verifyNextNotifScheduled(reminder: ReviewReminder) {
-        verify(
-            exactly = 1,
-        ) { AlarmManagerService.scheduleReviewReminderNotification(context, reminder) }
+        verify(exactly = 1) {
+            AlarmManagerService.scheduleReviewReminderNotification(
+                context,
+                match { it.id == reminder.id },
+                attemptImmediateNotification = false,
+            )
+        }
     }
 
-    private fun ReviewReminder.verifyLatestNotifTime(
+    private suspend fun ReviewReminder.verifyLatestNotifTime(
         previousTime: EpochMilliseconds,
         shouldHaveUpdated: Boolean,
     ) {
-        val storedReminderGroup =
-            when (scope) {
-                is DeckSpecific -> ReviewRemindersDatabase.getRemindersForDeck(scope.did)
-                is Global -> ReviewRemindersDatabase.getAllAppWideReminders()
-            }
-        val storedReminder = storedReminderGroup.getRemindersList().find { it.id == id }!!
+        val storedReminder =
+            ReviewRemindersDatabase
+                .getAllReminders()
+                .getRemindersList()
+                .find { it.id == id }!!
 
         if (shouldHaveUpdated) {
             assertThat(previousTime, not(equalTo(storedReminder.latestNotifTime)))

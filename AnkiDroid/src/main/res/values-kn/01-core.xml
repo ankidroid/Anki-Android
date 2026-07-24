@@ -24,9 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks" maxLength="28" comment="Open the Deck Picker">ಡೆಕ್ಸ್</string>
     <string name="card_browser" maxLength="28" comment="Title of the Card Browser, and button to open it.">ಕಾರ್ಡ್ ಬ್ರೌಸರ್</string>
-    <string name="statistics" maxLength="28" comment="Title of the Statistics page and button to open it.">ಅಂಕಿಅಂಶಗಳು</string>
     <string name="settings" maxLength="28" comment="Title of the Settings page, and button to open it.">ಸೆಟ್ಟಿಂಗ್‍ಗಳು</string>
     <string name="help" maxLength="28" comment="Title of the help menu and button to open it.">ಸಹಾಯ</string>
     <!-- The last entry "Support ankidroid" is in 03-dialogs.-->
@@ -39,7 +37,6 @@
     <!-- DeckPicker.kt -->
     <string name="expand" comment="In the deck picker: accessibility label of the buttons that display the subdecks of a deck.">ವಿಸ್ತರಿಸಿ</string>
     <string name="collapse" comment="In the deck picker: accessibility label of the buttons that hide the subdecks of a deck.">ಬೀಳಿಸಿ</string>
-    <string name="menu_import" comment="Title of the import page and the button to open it." maxLength="28">ಇಂಪೋರ್ಟ್</string>
     <string name="no_cards_placeholder_title" comment="Text shown the first time AnkiDroid is opened, to explain to the user why they can\'t yet review.">ಸಂಗ್ರಹ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="no_cards_placeholder_description" comment="Text shown the first time AnkiDroid is opened, to explain what should be their first action.">ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲು ಪ್ರಾರಂಭಿಸಿ \n  + ಐಕಾನ್ ಬಳಸಿ</string>
     <!-- Reviewer -->

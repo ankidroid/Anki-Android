@@ -30,6 +30,8 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.navigation.AnkiDroidNavigator
@@ -38,7 +40,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
-import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.PERMISSIONS_SET_EXTRA
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.EXTRA_PERMISSIONS_SET
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -254,6 +256,18 @@ class DeckPickerTest : RobolectricTest() {
         )
     }
 
+    /** Until the storage setup flow exists (#19552), the user gets recovery options, not a crash */
+    @Test
+    fun `storage undecided shows load-failure options rather than crashing`() {
+        // don't call .onCreate
+        val deckPicker = Robolectric.buildActivity(DeckPickerEx::class.java, Intent()).get()
+        deckPicker.handleStartupFailure(InitialActivity.StartupFailure.StorageUndecided)
+        assertThat(
+            deckPicker.databaseErrorDialog,
+            equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED),
+        )
+    }
+
     @Test
     fun databaseLockedWithPermissionIntegrationTest() {
         AnkiDroidApp.sentExceptionReportHack = false
@@ -466,7 +480,7 @@ class DeckPickerTest : RobolectricTest() {
 
             Prefs.newReviewRemindersEnabled = true
             val scheduleReminders = selectContextMenuOptionForActivity(DeckPickerContextMenuOption.SCHEDULE_REMINDERS, didA)
-            assertEquals("com.ichi2.anki.SingleFragmentActivity", scheduleReminders.component!!.className)
+            assertEquals("com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity", scheduleReminders.component!!.className)
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -804,19 +818,6 @@ class DeckPickerTest : RobolectricTest() {
             assertThat(databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED))
         }
 
-    /**
-     * Emulates a null collection and a `BackendDbLockedException`
-     *
-     * @see enableNullCollection
-     */
-    private fun withNullCollection(block: () -> Unit) =
-        try {
-            enableNullCollection()
-            block()
-        } finally {
-            disableNullCollection()
-        }
-
     @Test
     fun `when INTERNET is denied, PermissionsActivity is shown`() =
         runTest {
@@ -829,12 +830,29 @@ class DeckPickerTest : RobolectricTest() {
                         equalTo(PermissionsActivity::class.java.name),
                     )
 
-                    val extra = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java)
+                    val extra = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, PermissionSet::class.java)
 
                     assertNotNull(extra)
                     assertThat(extra.permissions, equalTo(listOf(INTERNET)))
                 }
             }
+        }
+
+    @Test
+    fun `creating a deck selects it`() =
+        deckPicker {
+            showCreateDeckDialog()
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            dialog.input = "My Deck"
+            dialog.performPositiveClick()
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
+
+            val newDeckId = col.decks.byName("My Deck")!!.id
+            assertThat(
+                "the newly created deck should become the current deck",
+                col.decks.current().id,
+                equalTo(newDeckId),
+            )
         }
 
     enum class CollectionType(

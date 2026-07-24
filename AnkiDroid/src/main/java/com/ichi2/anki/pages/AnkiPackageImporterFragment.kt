@@ -21,6 +21,7 @@ import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
@@ -54,7 +55,7 @@ class AnkiPackageImporterFragment : PageFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialToolbar>(R.id.toolbar)?.setTitle(R.string.menu_import)
+        view.findViewById<MaterialToolbar>(R.id.toolbar)?.title = TR.actionsImport()
     }
 
     class AnkiPackageImporterWebViewClient(

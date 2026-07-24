@@ -71,7 +71,7 @@ class TemplatePreviewerViewModel(
     internal val cardsWithEmptyFronts: Deferred<List<Boolean>>?
 
     init {
-        val arguments = savedStateHandle.require<TemplatePreviewerArguments>(TemplatePreviewerFragment.ARGS_KEY)
+        val arguments = savedStateHandle.require<TemplatePreviewerArguments>(TemplatePreviewerFragment.ARG_KEY)
         notetype = arguments.notetype
         fillEmpty = arguments.fillEmpty
         isCloze = notetype.isCloze
@@ -302,7 +302,7 @@ data class TemplatePreviewerArguments(
          */
         fun isUsable(bundle: Bundle): Boolean =
             BundleCompat
-                .getParcelable(bundle, TemplatePreviewerFragment.ARGS_KEY, TemplatePreviewerArguments::class.java)
+                .getParcelable(bundle, TemplatePreviewerFragment.ARG_KEY, TemplatePreviewerArguments::class.java)
                 ?.notetypeFile
                 ?.getNotetypeOrNull() != null
     }

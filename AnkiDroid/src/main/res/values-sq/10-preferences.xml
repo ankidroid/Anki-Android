@@ -24,23 +24,22 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="disabled">Disabled</string>
+    <string name="disabled">E çaktivizuar</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d minuta</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Asnjë rezultat</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">E Përgjithshme</string>
+    <string name="pref_cat_studying" maxLength="41">Duke studiuar</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sinkronizo</string>
+    <string name="pref_cat_scheduling" maxLength="41">Planifikimi</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
     <string name="pref_cat_themes" maxLength="41">Themes</string>
     <string name="pref_cat_gestures" maxLength="41">Gestures</string>
     <string name="pref_cat_controls" maxLength="41">Controls</string>
@@ -186,8 +185,6 @@
     <string name="pref_cat_reviewer" maxLength="41">Study Screen</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
-    <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
     <!-- Allow all files in media imports -->
@@ -257,6 +254,10 @@
     <string name="user_action_8" maxLength="28">User action 8</string>
     <string name="user_action_9" maxLength="28">User action 9</string>
     <string name="toggle_auto_advance" maxLength="28">Toggle auto advance</string>
+    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
+    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
+    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>

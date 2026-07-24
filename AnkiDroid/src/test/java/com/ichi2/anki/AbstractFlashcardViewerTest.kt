@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 package com.ichi2.anki
 
@@ -13,16 +13,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import anki.config.ConfigKey
 import anki.scheduler.CardAnswer.Rating
-import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
 import com.ichi2.anki.AbstractFlashcardViewer.Signal
 import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
-import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
+import com.ichi2.anki.AnkiActivity.Companion.EXTRA_FINISH_ANIMATION
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.createBasicTypingNoteType
 import com.ichi2.anki.libanki.testutils.ext.newNote
@@ -210,21 +209,21 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             val expectedAnimation =
                 AbstractFlashcardViewer.getAnimationTransitionFromGesture(gesture)
             val expectedInverseAnimation =
-                ActivityTransitionAnimation.getInverseTransition(expectedAnimation)
+                expectedAnimation.invert()
 
             val animation = gesture.toAnimationTransition().invert()
             val bundle =
                 Bundle().apply {
                     putInt(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.EDIT.value)
                     putLong(NoteEditorFragment.EXTRA_CARD_ID, viewer.currentCard!!.id)
-                    putParcelable(FINISH_ANIMATION_EXTRA, animation as Parcelable)
+                    putParcelable(EXTRA_FINISH_ANIMATION, animation as Parcelable)
                 }
             val noteEditor = openNoteEditorWithArgs(bundle)
             val actualInverseAnimation =
                 BundleCompat.getParcelable(
                     noteEditor.requireArguments(),
-                    FINISH_ANIMATION_EXTRA,
-                    Direction::class.java,
+                    EXTRA_FINISH_ANIMATION,
+                    TransitionDirection::class.java,
                 )
             assertEquals(expectedInverseAnimation, actualInverseAnimation)
         }

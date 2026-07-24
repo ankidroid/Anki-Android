@@ -20,10 +20,13 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.common.android.AdaptionUtil
+import com.ichi2.anki.common.android.Animations
 import com.ichi2.anki.common.android.ApplicationContextInitializer
 import com.ichi2.anki.common.android.getCurrentLocaleTag
 import com.ichi2.anki.common.android.withAppLocale
@@ -53,8 +56,10 @@ import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.startup.ensureCollectionPathSet
+import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
-import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
@@ -110,34 +115,23 @@ open class AnkiDroidApp :
     }
 
     /**
-     * On application creation.
+     * On application creation, i.e. when the application process starts.
+     * This is called before any activities, services, or receivers are created.
      */
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
         initAnkiBackend(debugTraceSqlCalls = false)
         super.onCreate()
-        val appLifecycleObserver = AppLifecycleObserver(applicationContext)
-
-        androidx.lifecycle.ProcessLifecycleOwner
-            .get()
-            .lifecycle
-            .addObserver(appLifecycleObserver)
-        if (isInitialized) {
-            Timber.i("onCreate() called multiple times")
-            // 5887 - fix crash.
-            if (instance.resources == null) {
-                Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?")
-                return
-            }
+        if (!setupAnkiDroidApp()) {
+            return
         }
-        instance = this
-        ApplicationContextInitializer.setInstance(this)
 
-        // Ensures any change is propagated to widgets
-        ChangeManager.subscribe(this)
+        ApplicationContextInitializer.setInstance(this)
 
         initializeAcraCrashReporter()
         initializeNavigator()
+        initializeWidgetRepository()
+        Animations.setPreferencesProvider { context -> PrefsRepository(context) }
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())
@@ -182,6 +176,8 @@ open class AnkiDroidApp :
 
         setup("makeBackendUsable") { makeBackendUsable(this) }
         setupNotifications()
+        setupAppLifecycleObserver()
+        setupBackendChangeManager()
 
         // Probe WebView availability before any other init touches it (#5794).
         if (!checkWebViewAvailable()) {
@@ -190,21 +186,15 @@ open class AnkiDroidApp :
 
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId()
-        LanguageUtil.setDefaultBackendLanguages()
-
-        initializeAnkiDroidDirectory()
-
-        // listen for day rollover: time + timezone changes
-        DayRolloverHandler.listenForRolloverEvents(this)
-        DayRolloverAlarm.scheduleNext(this)
+        val anki = AnkiContext.apply { setupAnkiBackend() }
+        with(anki) { initializeAnkiDroidDirectory() }
+        with(anki) { setupDayRollover() }
 
         restoreRecurringAlarms(this)
 
         setupLifecycleLogging()
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
-        TtsVoices.launchBuildLocalesJob()
-        // enable {{tts-voices:}} field filter
-        TtsVoicesFieldFilter.ensureApplied()
+        setupTextToSpeech()
     }
 
     /**
@@ -232,6 +222,28 @@ open class AnkiDroidApp :
     }
 
     /**
+     * Sets [isInitialized] to `true` ([instance] != null)
+     *
+     * [onCreate] can be called multiple times due to ACRA using a separate sender process
+     *
+     * @return false if `instance.resources` is unusable
+     */
+    private fun setupAnkiDroidApp(): Boolean {
+        return setup("setupAnkiDroidApp") {
+            if (isInitialized) {
+                Timber.i("onCreate() called multiple times")
+                // 5887 - fix crash.
+                if (instance.resources == null) {
+                    Timber.w("Skipping re-initialisation - no resources. Maybe uninstalling app?")
+                    return@setup false
+                }
+            }
+            instance = this
+            true
+        }
+    }
+
+    /**
      * Manually initializes the collection directory and `.nomedia` if
      * [hasLegacyStorageAccessPermission] is set
      *
@@ -240,6 +252,7 @@ open class AnkiDroidApp :
      * In most cases the Anki Backend now creates the collection and [initializeAnkiDroidDirectory]
      *  is called on startup of the activity.
      */
+    context(_: AnkiContext)
     private fun initializeAnkiDroidDirectory() =
         setup("initializeAnkiDroidDirectory") {
             // #13207: `getCurrentAnkiDroidDirectory` failing is an unconditional be a fatal error
@@ -247,6 +260,7 @@ open class AnkiDroidApp :
             //  is not considered to be a fatal error, unless the directory itself is not writable.
             val ankiDroidDir =
                 try {
+                    ensureCollectionPathSet(this)
                     CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 } catch (e: SystemStorageException) {
                     fatalInitializationError = FatalInitializationError.StorageError(e)
@@ -263,7 +277,7 @@ open class AnkiDroidApp :
             } catch (e: StorageAccessException) {
                 Timber.e(e, "Could not initialize AnkiDroid directory")
                 try {
-                    val defaultDir = CollectionHelper.getDefaultAnkiDroidDirectory(this)
+                    val defaultDir = getDefaultAnkiDroidDirectory(this)
                     if (SdCard.isMounted && CollectionHelper.getCurrentAnkiDroidDirectory(this) == defaultDir) {
                         // Don't send report if the user is using a custom directory as SD cards trip up here a lot
                         sendExceptionReport(e, "AnkiDroidApp.onCreate")
@@ -312,12 +326,50 @@ open class AnkiDroidApp :
             val context = this.withAppLocale()
             if (Prefs.newReviewRemindersEnabled) {
                 Timber.i("Setting review reminder notifications if they have not already been set")
-                AlarmManagerService.scheduleAllNotifications(context)
+                applicationScope.launch {
+                    AlarmManagerService.scheduleAllNotifications(context)
+                }
             } else {
                 // Register for notifications
                 Timber.i("AnkiDroidApp: Starting Services")
                 notifications.observeForever { NotificationService.triggerNotificationFor(context) }
             }
+        }
+
+    private fun setupAppLifecycleObserver() =
+        setup("setupAppLifecycleObserver") {
+            val appLifecycleObserver = AppLifecycleObserver(applicationContext)
+
+            ProcessLifecycleOwner
+                .get()
+                .lifecycle
+                .addObserver(appLifecycleObserver)
+        }
+
+    /**
+     * Ensures any changes in the backend are propagated to:
+     *
+     * - widgets
+     *
+     * @see opExecuted
+     * @see ChangeManager
+     */
+    private fun setupBackendChangeManager() =
+        setup("setupBackendChangeManager") {
+            ChangeManager.subscribe(this)
+        }
+
+    private fun setupAnkiBackend() =
+        setup("setupAnkiBackend") {
+            LanguageUtil.setDefaultBackendLanguages()
+        }
+
+    /** Listen for day rollover: time + timezone changes and refresh on the day cutoff. */
+    context(_: AnkiContext)
+    private fun setupDayRollover() =
+        setup("setupDayRollover") {
+            DayRolloverHandler.listenForRolloverEvents(this)
+            DayRolloverAlarm.scheduleNext(this)
         }
 
     private fun setupLifecycleLogging() =
@@ -369,6 +421,14 @@ open class AnkiDroidApp :
                 },
             )
         }
+
+    private fun setupTextToSpeech() {
+        setup("setupTextToSpeech") {
+            TtsVoices.launchBuildLocalesJob()
+            // enable {{tts-voices:}} field filter
+            TtsVoicesFieldFilter.ensureApplied()
+        }
+    }
 
     /**
      * @return the app version, OS version and device model, provided when syncing.
@@ -428,6 +488,16 @@ open class AnkiDroidApp :
         }
     }
 
+    /**
+     * Initialization for the Anki Backend has completed:
+     * - [initAnkiBackend] - platform environment variables/logging
+     * - [makeBackendUsable] - load rsdroid.so
+     * - [setupBackendChangeManager] - change manager is subscribed
+     * - [setupAnkiBackend] - i18n is set up
+     */
+
+    object AnkiContext
+
     companion object {
         /**
          * A [SharedPreferencesProvider] which does not require [onCreate] when run from tests
@@ -436,9 +506,6 @@ open class AnkiDroidApp :
          */
         val sharedPreferencesProvider get() = SharedPreferencesProvider { sharedPrefs() }
 
-        /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
-        @Suppress("ktlint:standard:property-naming")
-        var INSTRUMENTATION_TESTING = false
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 
         // Tag for logging messages.
@@ -466,6 +533,13 @@ open class AnkiDroidApp :
          * This was added to avoid code churn
          */
         fun sharedPrefs() = sharedPreferencesTestingOverride ?: instance.sharedPrefs()
+
+        /**
+         * [sharedPrefs], or `null` if unavailable: [instance] is not initialized when running
+         * under a test-only [Application] (e.g. `EmptyApplication`) or in pure JVM tests
+         */
+        fun sharedPrefsOrNull(): SharedPreferences? =
+            sharedPreferencesTestingOverride ?: if (isInitialized) instance.sharedPrefs() else null
 
         /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this  */
         @VisibleForTesting
