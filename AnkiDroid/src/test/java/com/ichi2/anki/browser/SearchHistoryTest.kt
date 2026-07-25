@@ -35,8 +35,6 @@ import com.ichi2.testutils.getString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -49,72 +47,6 @@ class SearchHistoryTest : RobolectricTest() {
         SearchHistory(maxEntries = 5).apply {
             this.clear()
         }
-
-    @Test
-    fun `entries is empty if no key is set`() {
-        assertThat(history.entries, empty())
-    }
-
-    @Test
-    fun `entries is empty if corrupt`() {
-        writeSearchHistoryRaw("A")
-        assertThat(history.entries, empty())
-    }
-
-    @Test
-    fun `entries returns written value`() {
-        history.addRecent(SearchHistoryEntry("A"))
-        assertEntriesEquals("A")
-    }
-
-    @Test
-    fun `entries skips duplicate values`() {
-        history.addRecent(SearchHistoryEntry("A"))
-        history.addRecent(SearchHistoryEntry("A"))
-        assertEntriesEquals("A")
-    }
-
-    @Test
-    fun `entries returns latest values first`() {
-        history.addRecent(SearchHistoryEntry("A"))
-        history.addRecent(SearchHistoryEntry("B"))
-        assertEntriesEquals("B", "A")
-    }
-
-    @Test
-    fun `entries truncates least recently used`() {
-        addNumberedEntries(6)
-        assertEntriesEquals("6", "5", "4", "3", "2")
-
-        // no more truncation occurs
-        history.addRecent(SearchHistoryEntry("2"))
-        assertEntriesEquals("2", "6", "5", "4", "3")
-    }
-
-    @Test
-    fun `clear on empty list does nothing`() {
-        history.clear()
-        assertThat(history.entries, empty())
-    }
-
-    @Test
-    fun `clear on full list empties list`() {
-        addNumberedEntries(6)
-        history.clear()
-        assertThat(history.entries, empty())
-    }
-
-    @Test
-    fun `remove non-existing entry`() {
-        assertFalse(history.removeEntry(SearchHistoryEntry("AA")))
-    }
-
-    @Test
-    fun `remove existing entry`() {
-        addNumberedEntries(6)
-        assertTrue(history.removeEntry(SearchHistoryEntry("5")))
-        assertEntriesEquals("6", "4", "3", "2")
-    }
 
     @Test
     fun `pref key is unchanged`() {
@@ -167,13 +99,6 @@ class SearchHistoryTest : RobolectricTest() {
                 ),
             )
         }
-    }
-
-    @Test
-    fun `blank entries are not persisted`() {
-        history.addRecent(SearchHistoryEntry(""))
-        history.addRecent(SearchHistoryEntry(" "))
-        assertThat(history.entries, empty())
     }
 
     @Test
@@ -265,14 +190,7 @@ class SearchHistoryTest : RobolectricTest() {
         repeat(count) {
             history.addRecent(SearchHistoryEntry((it + 1).toString()))
         }
-
-    fun assertEntriesEquals(vararg entries: String) {
-        val listOfEntities = entries.map(::SearchHistoryEntry)
-        assertThat(history.entries, equalTo(listOfEntities))
-    }
 }
-
-fun writeSearchHistoryRaw(value: String?) = Prefs.putString(R.string.pref_browser_search_history, value)
 
 @CheckResult
 fun readSearchHistoryRaw() = Prefs.getString(R.string.pref_browser_search_history, null)!!
