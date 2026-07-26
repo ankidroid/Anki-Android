@@ -96,6 +96,15 @@
                     android:textColor="?android:attr/textColorSecondary"
                     tools:ignore="HardcodedText" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/copy_debug_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/sentence_copy_debug_info"
+                    android:textColor="?attr/colorAccent"
+                    style="@style/Widget.Material3.Button.TextButton" />
+
             </LinearLayout>
         </LinearLayout>
 
