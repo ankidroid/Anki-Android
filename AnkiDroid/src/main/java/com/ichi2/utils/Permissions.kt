@@ -49,13 +49,6 @@ import timber.log.Timber
 import kotlin.reflect.KMutableProperty
 
 object Permissions {
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuPhotosAndVideosPermissions =
-        listOf(
-            Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.READ_MEDIA_VIDEO,
-        )
-
     /**
      * The name of the "post notification" permission on API where it's defined.
      */
@@ -171,9 +164,6 @@ object Permissions {
             }
         }
     }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
 
     val legacyStorageAccessStartupPermissions =
         listOf(
