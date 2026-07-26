@@ -36,6 +36,7 @@ import com.ichi2.anki.common.utils.ext.allDecksCounts
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
+import com.ichi2.anki.reviewreminders.ReminderLogger
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import com.ichi2.anki.reviewreminders.ReviewReminderId
@@ -121,16 +122,20 @@ class NotificationService : AnkiBroadcastReceiver() {
                     ReviewRemindersDatabase.getRemindersForScope(reviewReminderScope)[reviewReminderId]
                 }
             if (reminderForNotification == null) {
-                Timber.i(
+                ReminderLogger.skip(
                     "Aborting notification for review reminder $reviewReminderId (recurring: $isRecurringNotification) due to database validation failure.",
+                    "data-val-fail-$isRecurringNotification",
+                    reviewReminderId,
                 )
                 return
             }
             if (!reminderForNotification.enabled) {
                 // This should never happen for recurring notifications because disabling a reminder should cancel all of its notification alarms, but we check just in case
                 // It can happen for snoozed notifications if the user disables the reminder after snoozing it
-                Timber.i(
-                    "Aborting notification for review reminder $reviewReminderId (recurring: $isRecurringNotification) because it is not enabled.",
+                ReminderLogger.skip(
+                    "Aborting notification for review reminder $reviewReminderId (recurring: $isRecurringNotification) because the reminder is disabled.",
+                    "disabled-$isRecurringNotification",
+                    reviewReminderId,
                 )
                 return
             }
@@ -150,9 +155,19 @@ class NotificationService : AnkiBroadcastReceiver() {
                 sendReviewReminderNotification(context, reminderForNotification)
             } catch (e: BackendException) {
                 // This may occur if the collection is blocked, in which case we should fail gracefully
-                Timber.w(e, "Aborted review reminder notification due to backend exception")
+                ReminderLogger.warn(
+                    "Aborted review reminder notification due to backend exception",
+                    "backend-exception",
+                    reviewReminderId,
+                    e,
+                )
             } catch (e: CancellationException) {
-                Timber.w(e, "Aborted review reminder notification due to cancellation exception")
+                ReminderLogger.warn(
+                    "Aborted review reminder notification due to cancellation exception",
+                    "cancel-exception",
+                    reviewReminderId,
+                    e,
+                )
                 throw e // Rethrow to propagate to parent coroutine
             }
         }
@@ -170,20 +185,32 @@ class NotificationService : AnkiBroadcastReceiver() {
             context: Context,
             reviewReminder: ReviewReminder,
         ) {
-            Timber.i("sendReviewReminderNotification for ${reviewReminder.id}")
+            ReminderLogger.log(
+                "sendReviewReminderNotification for ${reviewReminder.id}",
+                "send-notif",
+                reviewReminder.id,
+            )
             Timber.v("Review reminder: $reviewReminder")
 
             if (reviewReminder.scope is ReviewReminderScope.DeckSpecific) {
                 val isDeckAccessible = canUserAccessDeck(reviewReminder.scope.did)
                 if (!isDeckAccessible) {
-                    Timber.i("Deck with ID ${reviewReminder.scope.did} not found, aborting")
+                    ReminderLogger.skip(
+                        "Deck with ID ${reviewReminder.scope.did} not found, aborting",
+                        "deck-not-found",
+                        reviewReminder.id,
+                    )
                     return
                 }
             }
 
             // Cancel if the user wants notifications to only fire if no reviews have been done today AND there has been a review today
             if (reviewReminder.onlyNotifyIfNoReviews && wasScopeReviewedToday(reviewReminder.scope)) {
-                Timber.i("Aborting notification due to onlyNotifyIfNoReviews")
+                ReminderLogger.skip(
+                    "Aborting notification due to onlyNotifyIfNoReviews",
+                    "only-if-no-review",
+                    reviewReminder.id,
+                )
                 return
             }
 
@@ -198,7 +225,11 @@ class NotificationService : AnkiBroadcastReceiver() {
                 }
             val dueCardsTotal = dueCardsCount.count()
             if (dueCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
-                Timber.i("Aborting notification due to threshold: $dueCardsTotal < ${reviewReminder.cardTriggerThreshold.threshold}")
+                ReminderLogger.skip(
+                    "Aborting notification due to cardTriggerThreshold (due: $dueCardsTotal, threshold: ${reviewReminder.cardTriggerThreshold.threshold})",
+                    "threshold-$dueCardsTotal-${reviewReminder.cardTriggerThreshold.threshold}",
+                    reviewReminder.id,
+                )
                 return
             }
 
@@ -275,10 +306,18 @@ class NotificationService : AnkiBroadcastReceiver() {
 
             val manager = context.getSystemService<NotificationManager>()
             if (manager != null) {
-                Timber.i("Sending notification with ID ${reviewReminder.id.value}")
+                ReminderLogger.log(
+                    "Firing notification with ID ${reviewReminder.id}",
+                    "fire",
+                    reviewReminder.id,
+                )
                 manager.notify(REVIEW_REMINDER_NOTIFICATION_TAG, reviewReminder.id.value, builder.build())
             } else {
-                Timber.w("Failed to get NotificationManager system service, aborting review reminder notification")
+                ReminderLogger.warn(
+                    "Failed to get NotificationManager system service, aborting review reminder notification",
+                    "no-manager",
+                    reviewReminder.id,
+                )
             }
         }
 
@@ -467,7 +506,7 @@ class NotificationService : AnkiBroadcastReceiver() {
         intent: Intent,
     ) {
         if (Prefs.newReviewRemindersEnabled) {
-            Timber.d("onReceiveBroadcast")
+            ReminderLogger.log("onReceiveBroadcast", "on-receive")
             val action = intent.action ?: return
             val extras = intent.extras ?: return
             val reviewReminderId =
