@@ -37,7 +37,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ichi2.anki.Channel
+import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
@@ -407,7 +407,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
             label = "Enable notification channel",
             logDescription = "opening app notification settings screen",
         ) {
-            fragment.openAppNotificationsSettingsScreen(highlightedChannel = Channel.REVIEW_REMINDERS)
+            fragment.openAppNotificationsSettingsScreen(highlightedChannel = NotificationChannel.REVIEW_REMINDERS)
         }
     }
 

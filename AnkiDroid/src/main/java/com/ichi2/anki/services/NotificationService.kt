@@ -23,10 +23,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
-import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.canUserAccessDeck
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
@@ -258,7 +258,7 @@ class NotificationService : AnkiBroadcastReceiver() {
 
             val builder =
                 NotificationCompat
-                    .Builder(context, Channel.REVIEW_REMINDERS.id)
+                    .Builder(context, NotificationChannel.REVIEW_REMINDERS.id)
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setSmallIcon(R.drawable.ic_star_notify)
                     .setColor(context.getColor(CommonR.color.material_light_blue_700))
@@ -394,7 +394,7 @@ class NotificationService : AnkiBroadcastReceiver() {
                     NotificationCompat
                         .Builder(
                             context,
-                            Channel.GENERAL.id,
+                            NotificationChannel.GENERAL.id,
                         ).setCategory(NotificationCompat.CATEGORY_REMINDER)
                         .setSmallIcon(R.drawable.ic_star_notify)
                         .setColor(context.getColor(CommonR.color.material_light_blue_700))

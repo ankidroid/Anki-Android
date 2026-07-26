@@ -32,7 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.ichi2.anki.Channel
+import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
@@ -276,7 +276,7 @@ object Permissions {
      * @param highlightedChannel The notification channel to highlight in the notifications settings screen,
      * to draw the user's attention.
      */
-    fun Fragment.openAppNotificationsSettingsScreen(highlightedChannel: Channel? = null) {
+    fun Fragment.openAppNotificationsSettingsScreen(highlightedChannel: NotificationChannel? = null) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Timber.i("launching ACTION_APP_NOTIFICATION_SETTINGS")
             startActivity(

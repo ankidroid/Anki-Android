@@ -35,8 +35,8 @@ import androidx.work.WorkerParameters
 import anki.sync.MediaSyncProgress
 import anki.sync.SyncAuth
 import anki.sync.syncAuth
-import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.notifications.NotificationId
@@ -153,7 +153,7 @@ class SyncMediaWorker(
 
     private fun buildNotification(block: NotificationCompat.Builder.() -> Unit): Notification =
         NotificationCompat
-            .Builder(applicationContext, Channel.SYNC.id)
+            .Builder(applicationContext, NotificationChannel.SYNC.id)
             .apply {
                 priority = NotificationCompat.PRIORITY_LOW
                 setSmallIcon(R.drawable.ic_star_notify)

@@ -477,12 +477,12 @@ class IntentHandler : AbstractIntentHandler() {
                                 remaining,
                                 remaining,
                             )
-                        deckPicker.showSimpleNotification(err, message, Channel.SYNC)
+                        deckPicker.showSimpleNotification(err, message, NotificationChannel.SYNC)
                     } else {
                         deckPicker.showSimpleNotification(
                             err,
                             res.getString(R.string.youre_offline),
-                            Channel.SYNC,
+                            NotificationChannel.SYNC,
                         )
                     }
                 }

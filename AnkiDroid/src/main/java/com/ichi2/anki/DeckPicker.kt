@@ -1847,7 +1847,7 @@ open class DeckPicker :
         message: String?,
     ) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
-        showAsyncDialogFragment(newFragment, Channel.SYNC)
+        showAsyncDialogFragment(newFragment, NotificationChannel.SYNC)
     }
 
     // Callback method to submit error report
