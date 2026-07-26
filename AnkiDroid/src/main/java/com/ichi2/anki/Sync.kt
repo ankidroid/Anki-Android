@@ -365,7 +365,7 @@ fun DeckPicker.showSyncLogMessage(
         showSimpleNotification(
             res.getString(R.string.app_name),
             res.getString(messageResource),
-            Channel.SYNC,
+            NotificationChannel.SYNC,
         )
     } else {
         if (syncMessage.isNullOrEmpty()) {

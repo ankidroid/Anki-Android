@@ -17,7 +17,6 @@
 
 package com.ichi2.anki
 
-import android.app.NotificationChannel
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -49,7 +48,7 @@ fun setupNotificationChannels(context: Context) {
     val res = context.resources
     val manager = NotificationManagerCompat.from(context)
 
-    for (channel in Channel.entries) {
+    for (channel in NotificationChannel.entries) {
         val id = channel.id
         val name = channel.getName(res)
         Timber.i("Creating notification channel with id/name: %s/%s", id, name)
@@ -74,9 +73,9 @@ fun setupNotificationChannels(context: Context) {
  *
  * @property id The unique identifier for the notification channel.
  * @property nameId The string resource ID for the localized channel name.
- * @property importance The [importance][NotificationChannel.getImportance] of the channel.
+ * @property importance The [importance][android.app.NotificationChannel.getImportance] of the channel.
  */
-enum class Channel(
+enum class NotificationChannel(
     val id: String,
     @StringRes val nameId: Int,
     val importance: Int,

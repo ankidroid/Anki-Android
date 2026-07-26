@@ -24,7 +24,7 @@ import android.content.Context
 import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.getSystemService
-import com.ichi2.anki.Channel
+import com.ichi2.anki.NotificationChannel
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
 
@@ -52,7 +52,7 @@ class ReminderTroubleshootingRepository(
     fun isNotificationChannelEnabled(): Boolean? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null
         val notificationManager = context.getSystemService<NotificationManager>() ?: return null
-        val channelTest = notificationManager.getNotificationChannel(Channel.REVIEW_REMINDERS.id)
+        val channelTest = notificationManager.getNotificationChannel(NotificationChannel.REVIEW_REMINDERS.id)
         return channelTest?.importance != NotificationManager.IMPORTANCE_NONE
     }
 
