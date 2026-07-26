@@ -107,7 +107,17 @@ object PreferenceTestUtils {
     fun attrToStringArray(
         value: String,
         context: Context,
-    ): Array<String> = context.resources.getStringArray(value.substring(1).toInt())
+    ): Array<String> {
+        if (!value.startsWith("@")) {
+            return arrayOf(value)
+        }
+        val resId = value.substring(1).toInt()
+        return if (context.resources.getResourceTypeName(resId) == "array") {
+            context.resources.getStringArray(resId)
+        } else {
+            arrayOf(context.getString(resId))
+        }
+    }
 
     fun getKeysFromXml(
         context: Context,

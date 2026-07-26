@@ -41,18 +41,27 @@ class RelatedSettingsPreference : Preference {
 
         links =
             context.usingStyledAttributes(attrs, R.styleable.RelatedSettingsPreference) {
-                val titles = getTextArray(R.styleable.RelatedSettingsPreference_relatedTitles)
-                val fragments = getTextArray(R.styleable.RelatedSettingsPreference_relatedFragments)
-                if (titles != null && fragments != null) {
-                    val size = minOf(titles.size, fragments.size)
-                    Array(size) { i ->
-                        RelatedSettingLink(
-                            title = titles[i].toString(),
-                            fragment = fragments[i].toString(),
-                        )
+                fun getValues(index: Int): Array<String> {
+                    val resId = getResourceId(index, 0)
+                    if (resId == 0) {
+                        return getString(index)?.let { arrayOf(it) } ?: emptyArray()
                     }
-                } else {
-                    emptyArray()
+                    return if (context.resources.getResourceTypeName(resId) == "array") {
+                        getTextArray(index)?.map { it.toString() }?.toTypedArray() ?: emptyArray()
+                    } else {
+                        arrayOf(getString(index) ?: "")
+                    }
+                }
+
+                val titles = getValues(R.styleable.RelatedSettingsPreference_relatedTitles)
+                val fragments = getValues(R.styleable.RelatedSettingsPreference_relatedFragments)
+
+                val size = minOf(titles.size, fragments.size)
+                Array(size) { i ->
+                    RelatedSettingLink(
+                        title = titles[i],
+                        fragment = fragments[i],
+                    )
                 }
             }
     }

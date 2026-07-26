@@ -41,8 +41,8 @@
     </declare-styleable>
 
     <declare-styleable name="RelatedSettingsPreference">
-        <attr name="relatedTitles" format="reference" />
-        <attr name="relatedFragments" format="reference" />
+        <attr name="relatedTitles" format="reference|string" />
+        <attr name="relatedFragments" format="reference|string" />
     </declare-styleable>
 
     <declare-styleable name="NumberRangePreferenceCompat">
