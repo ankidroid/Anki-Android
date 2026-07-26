@@ -56,6 +56,7 @@ import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.anki.withProgress
+import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -379,6 +380,10 @@ class ScheduleRemindersFragment :
                 when (menuItem.itemId) {
                     R.id.action_troubleshoot -> {
                         openTroubleshootingScreen()
+                        true
+                    }
+                    R.id.action_notification_settings -> {
+                        openAppNotificationsSettingsScreen()
                         true
                     }
                     else -> false

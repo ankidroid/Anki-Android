@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.ichi2.anki.Channel
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
@@ -112,7 +113,15 @@ object Permissions {
             permissionRequestedFlag.setter.call(true)
             permissionRequestLauncher.launch(permission)
         } else {
-            showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
+            when (permission) {
+                // Add overrides for opening specific settings subscreens here as needed
+                postNotification -> {
+                    showThemedToast(requireContext(), R.string.manually_grant_permissions, false)
+                    openAppNotificationsSettingsScreen()
+                }
+                // Else, default to opening the root page of the app settings screen
+                else -> showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
+            }
         }
     }
 
@@ -258,6 +267,27 @@ object Permissions {
                 Uri.fromParts("package", requireActivity().packageName, null),
             ),
         )
+    }
+
+    /**
+     * Opens the Android notifications settings for AnkiDroid if the device provides this feature.
+     * Otherwise, falls back to opening the generic app settings screen.
+     *
+     * @param highlightedChannel The notification channel to highlight in the notifications settings screen,
+     * to draw the user's attention.
+     */
+    fun Fragment.openAppNotificationsSettingsScreen(highlightedChannel: Channel? = null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Timber.i("launching ACTION_APP_NOTIFICATION_SETTINGS")
+            startActivity(
+                Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                    putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
+                    highlightedChannel?.let { putExtra(Settings.EXTRA_CHANNEL_ID, it.id) }
+                },
+            )
+        } else {
+            openAppSettingsScreen()
+        }
     }
 
     fun Fragment.showToastAndOpenAppSettingsScreen(
