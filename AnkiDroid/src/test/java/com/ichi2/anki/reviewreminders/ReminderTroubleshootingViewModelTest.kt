@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewreminders
 
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.DoNotDisturbOff
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.ExactAlarmPermission
+import com.ichi2.anki.reviewreminders.TroubleshootingCheck.NotificationChannelEnabled
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.NotificationPermission
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.PowerSavingModeOff
 import com.ichi2.anki.reviewreminders.TroubleshootingCheck.UnrestrictedOptimizationEnabled
@@ -54,6 +55,30 @@ class ReminderTroubleshootingViewModelTest {
         val viewModel = ReminderTroubleshootingViewModel(repo)
 
         assertThat(viewModel.notificationPermissionResult is CheckResult.Error, equalTo(true))
+    }
+
+    @Test
+    fun `notification channel passed when enabled`() {
+        val repo = mockRepository(notificationChannel = true)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.notificationChannelEnabledResult, equalTo(CheckResult.Passed))
+    }
+
+    @Test
+    fun `notification channel failed when disabled`() {
+        val repo = mockRepository(notificationChannel = false)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.notificationChannelEnabledResult, equalTo(CheckResult.Failed))
+    }
+
+    @Test
+    fun `notification channel unavailable when channels are unsupported`() {
+        val repo = mockRepository(notificationChannel = null)
+        val viewModel = ReminderTroubleshootingViewModel(repo)
+
+        assertThat(viewModel.notificationChannelEnabledResult, equalTo(CheckResult.Unavailable))
     }
 
     @Test
@@ -206,6 +231,18 @@ class ReminderTroubleshootingViewModelTest {
     }
 
     @Test
+    fun `summary status is Error when notification channel disabled`() =
+        withViewModel(notificationChannel = false) {
+            assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Error))
+        }
+
+    @Test
+    fun `summary status is Ok when notification channel unavailable`() =
+        withViewModel(notificationChannel = null) {
+            assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Ok))
+        }
+
+    @Test
     fun `summary status Error takes priority over other warnings`() =
         withViewModel(notificationPermission = false, doNotDisturb = false) {
             assertThat(state.value.summaryStatus, equalTo(SummaryStatus.Error))
@@ -220,17 +257,19 @@ class ReminderTroubleshootingViewModelTest {
             for (check in state.value.checks) {
                 when (check) {
                     is NotificationPermission -> count++
+                    is NotificationChannelEnabled -> count++
                     is DoNotDisturbOff -> count++
                     is UnrestrictedOptimizationEnabled -> count++
                     is PowerSavingModeOff -> count++
                     is ExactAlarmPermission -> count++
                 }
             }
-            assertThat(count, equalTo(5))
+            assertThat(count, equalTo(6))
         }
 
     private fun mockRepository(
         notificationPermission: Boolean = true,
+        notificationChannel: Boolean? = true,
         doNotDisturb: Boolean = true,
         batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
         powerSavingModeOff: Boolean = true,
@@ -238,6 +277,7 @@ class ReminderTroubleshootingViewModelTest {
     ): ReminderTroubleshootingRepository =
         mockk {
             every { isNotificationPermissionGranted() } returns notificationPermission
+            every { isNotificationChannelEnabled() } returns notificationChannel
             every { isDoNotDisturbOff() } returns doNotDisturb
             every { getBatteryOptimizationState() } returns batteryOptimization
             every { isPowerSavingModeOff() } returns powerSavingModeOff
@@ -246,19 +286,31 @@ class ReminderTroubleshootingViewModelTest {
 
     private fun withViewModel(
         notificationPermission: Boolean = true,
+        notificationChannel: Boolean? = true,
         doNotDisturb: Boolean = true,
         batteryOptimization: BatteryOptimizationState = BatteryOptimizationState.Unrestricted,
         powerSavingModeOff: Boolean = true,
         exactAlarmPermission: Boolean = true,
         block: ReminderTroubleshootingViewModel.() -> Unit,
     ) {
-        val repo = mockRepository(notificationPermission, doNotDisturb, batteryOptimization, powerSavingModeOff, exactAlarmPermission)
+        val repo =
+            mockRepository(
+                notificationPermission,
+                notificationChannel,
+                doNotDisturb,
+                batteryOptimization,
+                powerSavingModeOff,
+                exactAlarmPermission,
+            )
         ReminderTroubleshootingViewModel(repo).block()
     }
 }
 
 private val ReminderTroubleshootingViewModel.notificationPermissionResult: CheckResult
     get() = state.value.notificationPermission.result
+
+private val ReminderTroubleshootingViewModel.notificationChannelEnabledResult: CheckResult
+    get() = state.value.notificationChannelEnabled.result
 
 private val ReminderTroubleshootingViewModel.doNotDisturbResult: CheckResult
     get() = state.value.doNotDisturbOff.result
