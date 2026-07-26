@@ -10,4 +10,10 @@
         android:title="Troubleshoot"
         app:showAsAction="always"
         tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/action_notification_settings"
+        android:icon="@drawable/ic_settings_black"
+        android:title="Notification settings"
+        app:showAsAction="always"
+        tools:ignore="HardcodedText" />
 </menu>
