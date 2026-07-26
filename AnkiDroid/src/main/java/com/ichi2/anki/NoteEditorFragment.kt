@@ -140,6 +140,7 @@ import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.convertToHtmlNewline
+import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -154,6 +155,7 @@ import com.ichi2.anki.utils.openUrl
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
+import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
@@ -525,7 +527,8 @@ class NoteEditorFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
+            Themes.currentTheme == DayTheme.EINK
         @Suppress("deprecation", "API35 properly handle edge-to-edge")
         requireActivity().window.statusBarColor = getColorFromAttr(requireContext(), CommonR.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
