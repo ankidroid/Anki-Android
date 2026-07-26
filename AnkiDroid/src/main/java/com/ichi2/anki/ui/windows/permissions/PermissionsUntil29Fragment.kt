@@ -30,7 +30,7 @@ import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
  * Permissions screen for requesting permissions until API 29.
  *
  * Requested permissions:
- * 1. Storage access: [Permissions.legacyStorageAccessPermissions].
+ * 1. Storage access: [Permissions.legacyStorageAccessStartupPermissions].
  *   Used for saving the collection in a public directory
  *   which isn't deleted when the app is uninstalled
  */
