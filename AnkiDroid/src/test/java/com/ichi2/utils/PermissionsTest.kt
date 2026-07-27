@@ -33,6 +33,7 @@ import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
+import com.ichi2.utils.Permissions.openAppSettingsScreenForPermission
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import io.mockk.every
 import io.mockk.mockk
@@ -148,6 +149,26 @@ class PermissionsTest {
         setCanPermissionBeRequested(false)
         showBottomSheetShouldFail()
         verify(exactly = 2) { PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS) }
+    }
+
+    @Test
+    fun `openAppSettingsScreenForPermission opens the generic app settings screen for a null permission`() {
+        fragment.openAppSettingsScreenForPermission(null)
+        verifyOSSettingsWasOpened()
+    }
+
+    @Test
+    fun `openAppSettingsScreenForPermission opens the generic app settings screen for an unhandled permission`() {
+        fragment.openAppSettingsScreenForPermission(DUMMY_PERMISSION_STRING)
+        verifyOSSettingsWasOpened()
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
+    fun `openAppSettingsScreenForPermission for the notifications permission at API 33+ opens the notif settings screen`() {
+        fragment.openAppSettingsScreenForPermission(Permissions.notificationsPermission)
+        verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
     }
 
     private fun setPermissionsGranted(granted: Boolean) {

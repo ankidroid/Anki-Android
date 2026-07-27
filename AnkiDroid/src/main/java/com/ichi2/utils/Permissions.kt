@@ -99,15 +99,7 @@ object Permissions {
             permissionRequestedFlag.setter.call(true)
             permissionRequestLauncher.launch(permission)
         } else {
-            when {
-                // Add overrides for opening specific settings subscreens here as needed
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && permission == notificationsPermission -> {
-                    showThemedToast(requireContext(), R.string.manually_grant_permissions, false)
-                    openAppNotificationsSettingsScreen()
-                }
-                // Else, default to opening the root page of the app settings screen
-                else -> showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
-            }
+            showToastAndOpenAppSettingsScreenForPermission(permission, R.string.manually_grant_permissions)
         }
     }
 
@@ -273,15 +265,36 @@ object Permissions {
         }
     }
 
-    fun Fragment.showToastAndOpenAppSettingsScreen(
+    /**
+     * Opens the Android settings screen for a specific permission. Add more branches to the `when` statement as needed.
+     * If no branch matches, falls back to opening the generic app settings screen.
+     *
+     * @param permission The permission to open the settings screen for.
+     * Can be null to open the generic app settings screen.
+     */
+    fun Fragment.openAppSettingsScreenForPermission(permission: String?) {
+        when {
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && (permission == notificationsPermission) ->
+                openAppNotificationsSettingsScreen()
+
+            // Else, default to opening the root page of the app settings screen
+            else -> openAppSettingsScreen()
+        }
+    }
+
+    fun Fragment.showToastAndOpenAppSettingsScreenForPermission(
+        permission: String?,
         @StringRes message: Int,
     ) {
         showThemedToast(requireContext(), message, false)
-        openAppSettingsScreen()
+        openAppSettingsScreenForPermission(permission)
     }
 
-    fun Fragment.showToastAndOpenAppSettingsScreen(message: String) {
+    fun Fragment.showToastAndOpenAppSettingsScreenForPermission(
+        permission: String?,
+        message: String,
+    ) {
         showThemedToast(requireContext(), message, false)
-        openAppSettingsScreen()
+        openAppSettingsScreenForPermission(permission)
     }
 }
