@@ -364,6 +364,9 @@
         <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
     </string-array>
     <string name="post_notification_permission">android.permission.POST_NOTIFICATIONS</string>
+
+    <!-- See LEGACY_POST_NOTIFICATIONS. -->
+    <string name="legacy_post_notification_permission">NOTIFICATIONS_BEFORE_API_33_DUMMY_SENTINEL</string>
     <string name="record_audio_permission">android.permission.RECORD_AUDIO</string>
 
 

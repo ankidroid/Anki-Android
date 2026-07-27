@@ -31,6 +31,8 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.PermissionSet
+import com.ichi2.anki.R
+import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
 import com.ichi2.utils.Permissions.openAppSettingsScreenForPermission
@@ -169,6 +171,29 @@ class PermissionsTest {
     fun `openAppSettingsScreenForPermission for the notifications permission at API 33+ opens the notif settings screen`() {
         fragment.openAppSettingsScreenForPermission(Permissions.notificationsPermission)
         verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU, Build.VERSION_CODES.TIRAMISU - 1])
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    fun `openAppSettingsScreenForPermission for the legacy notifications sentinel opens the notif settings screen`() {
+        fragment.openAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS)
+        verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.O - 1])
+    fun `openAppSettingsScreenForPermission for the legacy notifications sentinel before API 26 opens the generic app settings screen`() {
+        fragment.openAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS)
+        verifyOSSettingsWasOpened()
+    }
+
+    @Test
+    fun `legacy_post_notification_permission resource matches the LEGACY_POST_NOTIFICATIONS constant`() {
+        assertThat(
+            context.getString(R.string.legacy_post_notification_permission),
+            equalTo(LEGACY_POST_NOTIFICATIONS),
+        )
     }
 
     private fun setPermissionsGranted(granted: Boolean) {

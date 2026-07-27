@@ -20,7 +20,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -28,14 +27,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
+import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.common.permissions.hasPermission
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -226,10 +226,6 @@ object Permissions {
             context.arePermissionsDefinedInAnkiDroidManifest(MANAGE_EXTERNAL_STORAGE)
     }
 
-    fun canPostNotifications(context: Context): Boolean =
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-
     /**
      * Opens the Android settings for AnkiDroid if the device provide this feature.
      * Lets a user grant any missing permissions which have been permanently denied.
@@ -269,12 +265,13 @@ object Permissions {
      * Opens the Android settings screen for a specific permission. Add more branches to the `when` statement as needed.
      * If no branch matches, falls back to opening the generic app settings screen.
      *
-     * @param permission The permission to open the settings screen for.
+     * @param permission The permission to open the settings screen for. Can be [LEGACY_POST_NOTIFICATIONS] for pre-API 33 notifications.
      * Can be null to open the generic app settings screen.
      */
     fun Fragment.openAppSettingsScreenForPermission(permission: String?) {
         when {
-            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && (permission == notificationsPermission) ->
+            ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && (permission == notificationsPermission)) ||
+                permission == LEGACY_POST_NOTIFICATIONS ->
                 openAppNotificationsSettingsScreen()
 
             // Else, default to opening the root page of the app settings screen

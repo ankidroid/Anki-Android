@@ -23,6 +23,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
+import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.databinding.FragmentNotificationsPermissionBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.Permissions
@@ -55,7 +56,7 @@ class NotificationsPermissionFragment : PermissionsFragment(R.layout.fragment_no
     override fun onResume() {
         super.onResume()
         // onResume is called after returning from both the OS settings and the OS permission request dialog
-        if (Permissions.canPostNotifications(requireContext())) {
+        if (canPostNotifications(requireContext())) {
             // Post a fragment result to indicate that the bottom sheet can be dismissed
             setFragmentResult(PermissionsBottomSheet.RESULT_DISMISS, Bundle())
         }
