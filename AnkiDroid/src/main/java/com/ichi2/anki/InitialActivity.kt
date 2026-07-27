@@ -2,7 +2,6 @@
 
 package com.ichi2.anki
 
-import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabaseCorruptException
@@ -210,7 +209,7 @@ enum class PermissionSet(
 
     /** Optional. */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    NOTIFICATIONS(listOf(Manifest.permission.POST_NOTIFICATIONS), NotificationsPermissionFragment::class.java),
+    NOTIFICATIONS(listOf(Permissions.notificationsPermission), NotificationsPermissionFragment::class.java),
     ;
 
     fun hasRequiredPermissions(context: Context): Boolean = hasAllPermissions(context, permissions)
