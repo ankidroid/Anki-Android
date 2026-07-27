@@ -116,33 +116,14 @@ subprojects {
         (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
          */
         tasks.withType(KotlinCompile::class.java).configureEach {
-            // We use `isInIdeaSync` to resolve a mismatch between Android Studio's code analyzer
-            // and the Kotlin 2.3 compiler regarding Explicit Backing Fields. The IDE requires
-            // the unsafe '-XXLanguage' flag to clear false syntax errors, but the actual compiler
-            // crashes if it receives this flag due to our strict 'warnings as errors'.
-            // This workaround safely feeds the unsafe flag *only* to the IDE during Gradle sync,
-            // while passing the standard, crash-free flag to the compiler during the actual build.
-            val isInIdeaSync = System.getProperty("idea.sync.active").toBoolean()
             val taskName = name
 
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
-                val compilerArgs = mutableListOf(
-                    // https://youtrack.jetbrains.com/issue/KT-73255
-                    // Apply @StringRes to both constructor params and generated properties
-                    "-Xannotation-default-target=param-property",
-                    "-Xexplicit-backing-fields"
-                )
-
-                if (isInIdeaSync) {
-                    compilerArgs += "-XXLanguage:+ExplicitBackingFields"
-                }
+                val compilerArgs = mutableListOf<String>()
 
                 if (project.path !in listOf(":anki-common", ":api", ":common", ":common:android")) {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
-                }
-                if (project.path != ":api") {
-                    compilerArgs += "-Xcontext-parameters"
                 }
                 // Opt in to Material3 APIs marked experimental once at the module level
                 // (currently only :AnkiDroid uses Compose Material3). Avoids littering
