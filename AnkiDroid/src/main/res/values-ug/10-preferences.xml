@@ -193,7 +193,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">ئىختىيارى قەدەمداش مۇلازىمېتىر</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ئىشلىتىلمىگەن</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
         <a href="%s">تەپسىلاتى</a>
@@ -278,11 +279,12 @@
     <string name="pref_cat_dev_options" maxLength="41">ئىجادكارلار تاللانمىسى</string>
     <string name="dev_options_enabled_pref" maxLength="41">ئىجادكارلار تاللانمىسىنى قوزغىتىدۇ</string>
     <string name="disable_dev_options">ئىجادكارلار تاللانمىسىنى چەكلەيدۇ</string>
-    <string name="dev_options_warning">ئىجادكارلار تاللانمىسىنىڭ قوزغىتىلغانلىقىغا كاپالەتلىك قىلىڭ. بۇ تاللانما خەتەرلىك ئەپ ياكى توپلامنى بۇزۇشى مۇمكىن.\n\nئەسكەرتىش بۇ تاللانما كۆپىنچە ئىشلەتكۈچىگە ماس كەلمەيدۇ، ئۇنىڭ ئۈستىگە تەرجىمە قىلىنمىغان شۇڭا ئىنگلىزچە.</string>
+    <string name="dev_options_warning">ئىجادكارلار تاللانمىسىنىڭ قوزغىتىلغانلىقىغا كاپالەتلىك قىلىڭ. بۇ تاللانما خەتەرلىك ئەپ ياكى توپلامنى بۇزۇشى مۇمكىن.\n\nئەسكەرتىش بۇ تاللانما كۆپىنچە ئىشلەتكۈچىگە ماس كەلمەيدۇ، ئۇنىڭ ئۈستىگە تەرجىمە ىلىنمىغان شۇڭا ئىنگلىزچە.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid توپلىمىڭىزنى قەرەللىك زاپاسلايدۇ.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid توپلىمىڭىزنى قەرەللىك زاپاسلايدۇ.
         زاپاس ئىككى كۈندىن ئاشقاندىن كېيىن،
         AnkiDroid ئۇلارنىڭ بىر قىسمىنى چىقىرىۋېتىپ دىسكا بوشلۇقىنى بىكارلايدۇ.
         <br><br>

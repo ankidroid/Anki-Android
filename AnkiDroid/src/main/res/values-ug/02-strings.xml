@@ -33,7 +33,7 @@
     <string name="CardEditorModel">تۈرى:</string>
     <string name="CardEditorTags">بەلگە: %1$s</string>
     <string name="CardEditorCards">كارتا: %1$s</string>
-    <string name="edit_occlusions">Edit occlusions</string>
+    <string name="edit_occlusions">ئۆتكەل تەھرىر</string>
     <string name="paste_from_clipboard" maxLength="28">چاپلاش تاختىسىدىن كۆچۈر</string>
     <string name="add_new_filter_tags">بەلگە قوش/سۈزگۈچ</string>
     <string name="add_tag" maxLength="28">بەلگە قوش</string>
@@ -69,18 +69,18 @@
     <string name="leech_notification">كارتىغا ئۇنتۇلغاق دەپ بەلگىسى قويۇلغان</string>
     <string name="webview_crash_unknown">يوچۇن خاتالىق</string>
     <string name="webview_crash_unknwon_detailed">بۇنى WebView دىكى ئىچكى خاتالىق كەلتۈرۈپ چىقارغان</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">ئەسلەك يېتىشمىدى</string>
     <string name="webview_crash_oom_details">WebView نى سىستېما توختاتقان. بۇ ئادەتتە چوڭ خەت نۇسخىسى ياكى ۋاسىتە سەۋەبىدىن ئەپ ئىجرا قىلىنىدىغان ئەسلەك يېتىشمىگەندە يۈز بېرىدۇ.</string>
     <string name="webview_crash_nonfatal">WebView ھاسىللىغۇچ يىمىرىلدى. سەۋەبى: %s</string>
-    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
+    <string name="webview_crash_fatal">ئېغىر خاتالىق: WebView ھاسىللىغۇچ يىمىرىلدى. سەۋەبى: %s</string>
+    <string name="webview_crash_loop_dialog_title">سىستېما WebView ھاسىللىيالمىدى</string>
     <string name="webview_crash_loop_dialog_content">سىستېما WebView دا «%1$s» كارتىنى ھاسىللىيالمىدى.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">سۈرۈلسە ۋاز كەچ</string>
     <string name="filter_by_flags" maxLength="41">بايراق</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
-    <string name="filtered_option_delay_hard">Delay for hard</string>
-    <string name="filtered_option_delay_good">Delay for good</string>
+    <string name="filtered_option_delay_again">يەنە كېچىكتۈر</string>
+    <string name="filtered_option_delay_hard">تەسلىكتىن كېچىكتۈر</string>
+    <string name="filtered_option_delay_good">ياخشى كېچىكتۈر</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">بەلگە تىزىمى ھاسىللاۋاتىدۇ&#8230;</string>
     <!-- Study options -->
@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki بولىقىنى ساقلىيالمىدى</string>
     <string name="export_share_title">Anki بولىقى يوللاش تاللىنىدۇ</string>
     <string name="export_email_subject">AnkiDroid چىقارغان كارتا: %s</string>
-    <string name="export_email_text"><![CDATA[        سالام!
+    <string name="export_email_text"><![CDATA[
+        سالام!
         <br/><br/>
         بۇ AnkiDroid[1] دىن ئەۋەتىلگەن Anki چاقماق كارتا دەستىسى.
         ئىشلەتكىلى بولىدىغان Anki تارقىتىلغان نەشرى[2]دىن بىرىنى ئىشلىتىپ ئېچىپ ئاسان ۋە ئۈنۈملۈك ئۆگىنىشتىن ھۇزۇرلىنىڭ! <br/><br/>
@@ -169,9 +170,9 @@
     <string name="dyn_deck_desc">بۇ ئادەتتىكى كۈنتەرتىپنىڭ سىرتىدىكى مەزمۇننى ئۆگىنىدىغان ئالاھىدە دەستە. كارتىنى تەكرارلىغاندىن كېيىن ئەسلىدىكى دەستەسىگە قايتۇرۇلىدۇ. ئەگەر دەستە تىزىمىدىن بۇ دەستە ئۆچۈرۈلسە، قېپقالغان كارتا دەسلەپكى دەستە ئورنىغا ئەسلىگە قايتۇرۇلىدۇ.</string>
     <string name="tag_editor_add_feedback">«%2$s» نى چېكىپ «%1$s» نى قوشۇش  جەزملىنىدۇ</string>
     <string name="tag_editor_add_feedback_existing">مەۋجۇت «%1$s» بەلگە تاللاندى</string>
-    <string name="tag_already_exists">Tag already exists</string>
-    <string name="error_name_exists">Name already exists</string>
-    <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
+    <string name="tag_already_exists">بەلگە مەۋجۇت</string>
+    <string name="error_name_exists">ئاتى مەۋجۇد</string>
+    <string name="warning_find_and_replace">بۇ تاللانمىنى ئىشلىتىشتىن ئىلگىرى دەستە تاللىغۇچتىكى توپلامنى زاپاسلاشنى ئويلىشىڭ!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ھۆججەتنى ھەمبەھىرلەش خاتالىقى</string>

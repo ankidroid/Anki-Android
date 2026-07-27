@@ -149,8 +149,8 @@
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
     <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
     <string name="show_large_answer_buttons_summ">Zobrazit tlačítka odpovědí ve dvou řadách</string>
-    <string name="remove_animations" maxLength="41">Remove animations</string>
-    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
+    <string name="remove_animations" maxLength="41">Odstranit animace</string>
+    <string name="remove_animations_summary">Také povoleno, pokud jsou animace odstraněny v nastavení systému</string>
     <string name="show_top_bar" maxLength="41">Zobrazit horní lištu</string>
     <string name="show_top_bar_summary">Zobrazit počty karet, čas odpovědi, příznak a označení v horní liště</string>
     <string name="show_progress" maxLength="41">Zobrazit zbývající</string>
@@ -196,12 +196,13 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Vlastní synchronizační server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nepoužívá se</string>
-    <string name="custom_sync_server_help2"><![CDATA[        Jako alternativu k synchronizaci s AnkiWeb
+    <string name="custom_sync_server_help2"><![CDATA[
+        Jako alternativu k synchronizaci s AnkiWeb
         můžete k synchronizaci použít vlastní server.
         Pokud není nastaven, bude místo toho použit výchozí AnkiWeb server.
         <a href="%s">Zjistit více</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">URL synchronizace</string>
     <string name="custom_sync_certificate_title" maxLength="41">Vlastní kořenový certifikát (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
@@ -257,8 +258,8 @@
     <string name="user_action_8" maxLength="28">Akce uživatele 8</string>
     <string name="user_action_9" maxLength="28">Akce uživatele 9</string>
     <string name="toggle_auto_advance" maxLength="28">Přepnout automatický posun</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_auto_advance" maxLength="28">Povolit automatický posun</string>
+    <string name="disable_auto_advance" maxLength="28">Zakázat automatický posun</string>
     <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
     <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->
@@ -368,5 +369,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Otevřít nastavení</string>
-    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">Související nastavení</string>
 </resources>
