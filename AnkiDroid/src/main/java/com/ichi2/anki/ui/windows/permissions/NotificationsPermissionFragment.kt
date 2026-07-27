@@ -26,6 +26,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentNotificationsPermissionBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.Permissions
+import com.ichi2.utils.Permissions.notificationsPermission
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -35,7 +36,7 @@ import timber.log.Timber
  * from the user. This permission only needs to be requested at or above API 33.
  *
  * Requested permissions:
- * 1. Notifications: [Permissions.postNotification].
+ * 1. Notifications: [Permissions.notificationsPermission].
  *   Used to view and cancel sync progress.
  *   Used for review reminder notifications.
  */
@@ -64,15 +65,13 @@ class NotificationsPermissionFragment : PermissionsFragment(R.layout.fragment_no
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        Permissions.postNotification?.let {
-            binding.notificationPermission.revokeIfGrantedOnClickElse {
-                requestPermissionThroughDialogOrSettings(
-                    activity = requireActivity(),
-                    permission = it,
-                    permissionRequestedFlag = Prefs::notificationsPermissionRequested,
-                    permissionRequestLauncher = notificationPermissionLauncher,
-                )
-            }
+        binding.notificationPermission.revokeIfGrantedOnClickElse {
+            requestPermissionThroughDialogOrSettings(
+                activity = requireActivity(),
+                permission = notificationsPermission,
+                permissionRequestedFlag = Prefs::notificationsPermissionRequested,
+                permissionRequestLauncher = notificationPermissionLauncher,
+            )
         }
     }
 }

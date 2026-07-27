@@ -49,15 +49,8 @@ import timber.log.Timber
 import kotlin.reflect.KMutableProperty
 
 object Permissions {
-    /**
-     * The name of the "post notification" permission on API where it's defined.
-     */
-    val postNotification =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.POST_NOTIFICATIONS
-        } else {
-            null
-        }
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    val notificationsPermission: String = Manifest.permission.POST_NOTIFICATIONS
 
     /**
      * Returns whether AnkiDroid is able to request a permission from the user.
@@ -106,9 +99,9 @@ object Permissions {
             permissionRequestedFlag.setter.call(true)
             permissionRequestLauncher.launch(permission)
         } else {
-            when (permission) {
+            when {
                 // Add overrides for opening specific settings subscreens here as needed
-                postNotification -> {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && permission == notificationsPermission -> {
                     showThemedToast(requireContext(), R.string.manually_grant_permissions, false)
                     openAppNotificationsSettingsScreen()
                 }
@@ -134,19 +127,19 @@ object Permissions {
         fragmentManager: FragmentManager,
         callback: () -> Unit,
     ) {
-        postNotification?.let { notificationPermission ->
-            if (
-                !canPostNotifications(context = activity) &&
-                canPermissionBeRequested(
-                    activity,
-                    notificationPermission,
-                    Prefs::notificationsPermissionRequested,
-                )
-            ) {
-                Timber.i("Showing notifications bottom sheet")
-                PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
-                callback()
-            }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+
+        if (
+            !canPostNotifications(context = activity) &&
+            canPermissionBeRequested(
+                activity,
+                notificationsPermission,
+                Prefs::notificationsPermissionRequested,
+            )
+        ) {
+            Timber.i("Showing notifications bottom sheet")
+            PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
+            callback()
         }
     }
 

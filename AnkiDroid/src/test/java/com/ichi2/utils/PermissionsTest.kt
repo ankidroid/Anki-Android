@@ -34,7 +34,6 @@ import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
-import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -65,6 +64,7 @@ class PermissionsTest {
         context = getApplicationContext()
         activity = mockk(relaxed = true)
         fragment = mockk(relaxed = true)
+        every { fragment.requireContext() } returns context
         fragmentManager = mockk(relaxed = true)
         permissionRequestLauncher = mockk(relaxed = true)
         permissionsSpy = spyk(Permissions)
@@ -100,7 +100,17 @@ class PermissionsTest {
     }
 
     @Test
-    fun `requestPermissionThroughDialogOrSettings requests permission if we can request it`() {
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
+    fun `requestPermissionThroughDialogOrSettings for notif permission opens notif settings screen if we can't request the permission`() {
+        Prefs.notificationsPermissionRequested = true // not first call
+        setCanPermissionBeRequested(false)
+        triggerPermissionRequest(permission = Permissions.notificationsPermission)
+        verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+    }
+
+    @Test
+    fun `requestPermissionThroughDialogOrSettings requests permission on subsequent calls if we can request it`() {
         Prefs.notificationsPermissionRequested = true // not first call
         setCanPermissionBeRequested(true)
         triggerPermissionRequest()
@@ -149,28 +159,28 @@ class PermissionsTest {
         every { ActivityCompat.shouldShowRequestPermissionRationale(any(), any()) } returns canBeRequested
     }
 
-    private fun triggerPermissionRequest() {
+    private fun triggerPermissionRequest(permission: String = DUMMY_PERMISSION_STRING) {
         fragment.requestPermissionThroughDialogOrSettings(
             activity,
-            DUMMY_PERMISSION_STRING,
+            permission,
             Prefs::notificationsPermissionRequested,
             permissionRequestLauncher,
         )
+        assertThat("requested flag should always be true after requesting", Prefs.notificationsPermissionRequested, equalTo(true))
     }
 
-    private fun verifyPermissionWasRequested() {
-        assertThat("requested flag should always be true after requesting", Prefs.notificationsPermissionRequested, equalTo(true))
-        verify(exactly = 1) { permissionRequestLauncher.launch(DUMMY_PERMISSION_STRING) }
-        verify(exactly = 0) { fragment.showToastAndOpenAppSettingsScreen(any<Int>()) }
+    private fun verifyPermissionWasRequested(permission: String = DUMMY_PERMISSION_STRING) {
+        verify(exactly = 1) { permissionRequestLauncher.launch(permission) }
+        // No settings screen should be opened if the permission could be requested directly
+        verify(exactly = 0) { fragment.startActivity(any()) }
     }
 
-    private fun verifyOSSettingsWasOpened() {
-        assertThat("requested flag should always be true after requesting", Prefs.notificationsPermissionRequested, equalTo(true))
-        verify(exactly = 0) { permissionRequestLauncher.launch(DUMMY_PERMISSION_STRING) }
+    private fun verifyOSSettingsWasOpened(openedActivityAction: String = Settings.ACTION_APPLICATION_DETAILS_SETTINGS) {
+        verify(exactly = 0) { permissionRequestLauncher.launch(any()) }
 
         val intentSlot = slot<Intent>()
         verify(exactly = 1) { fragment.startActivity(capture(intentSlot)) }
-        assertThat(intentSlot.captured.action, equalTo(Settings.ACTION_APPLICATION_DETAILS_SETTINGS))
+        assertThat(intentSlot.captured.action, equalTo(openedActivityAction))
     }
 
     private fun showBottomSheetShouldFail() {
