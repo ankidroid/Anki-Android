@@ -25,7 +25,7 @@ import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.getSystemService
 import com.ichi2.anki.NotificationChannel
-import com.ichi2.utils.Permissions
+import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
 
 /**
@@ -47,7 +47,7 @@ enum class BatteryOptimizationState {
 class ReminderTroubleshootingRepository(
     private val context: Context,
 ) {
-    fun isNotificationPermissionGranted(): Boolean = Permissions.canPostNotifications(context)
+    fun isNotificationPermissionGranted(): Boolean = canPostNotifications(context)
 
     fun isNotificationChannelEnabled(): Boolean? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null

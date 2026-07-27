@@ -31,11 +31,11 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelMediaSync
+import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.receiver.CopyToClipboardReceiver
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
-import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import net.ankiweb.rsdroid.Backend
@@ -47,7 +47,7 @@ class SyncMediaWorker(
 ) : CoroutineWorker(context, parameters) {
     private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
     private val notificationManager: NotificationManagerCompat? =
-        if (Permissions.canPostNotifications(context)) {
+        if (canPostNotifications(context)) {
             NotificationManagerCompat.from(context)
         } else {
             null
