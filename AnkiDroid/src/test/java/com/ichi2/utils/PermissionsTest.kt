@@ -35,6 +35,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
+import com.ichi2.utils.Permissions.attemptToEnableNotifications
 import com.ichi2.utils.Permissions.openAppSettingsScreenForPermission
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import io.mockk.every
@@ -118,6 +119,37 @@ class PermissionsTest {
         setCanPermissionBeRequested(true)
         triggerPermissionRequest()
         verifyPermissionWasRequested()
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
+    fun `attemptToEnableNotifications for API at 33+ requests the notifications permission`() {
+        Prefs.notificationsPermissionRequested = false
+        fragment.attemptToEnableNotifications(permissionRequestLauncher)
+        verifyPermissionWasRequested(permission = Permissions.notificationsPermission)
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
+    fun `attemptToEnableNotifications for API at 33+ opens notif settings screen if we can't request the permission`() {
+        Prefs.notificationsPermissionRequested = true // not first call
+        setCanPermissionBeRequested(false)
+        fragment.attemptToEnableNotifications(permissionRequestLauncher)
+        verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU - 1])
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O)
+    fun `attemptToEnableNotifications for API before 33 opens notif settings screen without requesting a permission`() {
+        fragment.attemptToEnableNotifications(permissionRequestLauncher)
+        // The notifications permission does not exist below API 33, so it should never be requested
+        verify(exactly = 0) { permissionRequestLauncher.launch(any()) }
+        // The OS request dialog should not have been opened
+        assertThat(Prefs.notificationsPermissionRequested, equalTo(false))
+        verifyOSSettingsWasOpened(openedActivityAction = Settings.ACTION_APP_NOTIFICATION_SETTINGS)
     }
 
     @Test

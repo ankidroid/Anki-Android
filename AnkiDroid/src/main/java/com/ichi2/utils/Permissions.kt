@@ -104,6 +104,24 @@ object Permissions {
     }
 
     /**
+     * At and above API 33, the formal notification permission exists and can be requested via the usual permission flow.
+     * Below API 33, the permission is implicitly granted, but the user can still disable notifications for the app in system settings.
+     * In that case, we open the system settings screen for the user to manually enable notifications.
+     */
+    fun Fragment.attemptToEnableNotifications(notificationPermissionLauncher: ActivityResultLauncher<String>) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionThroughDialogOrSettings(
+                activity = requireActivity(),
+                permission = notificationsPermission,
+                permissionRequestedFlag = Prefs::notificationsPermissionRequested,
+                permissionRequestLauncher = notificationPermissionLauncher,
+            )
+        } else {
+            showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, R.string.manually_grant_permissions)
+        }
+    }
+
+    /**
      * Shows the [com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment] in the [PermissionsBottomSheet]
      * if notification permissions have not been granted. Does nothing if the permission does not need to
      * be requested (i.e. API < 33), if the permission has already been granted,
