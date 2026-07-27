@@ -31,11 +31,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
 import com.ichi2.anki.common.permissions.hasPermission
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.utils.Permissions.openAppSettingsScreen
+import com.ichi2.utils.Permissions.openAppSettingsScreenForPermission
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
-import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
+import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreenForPermission
 import timber.log.Timber
 
 /**
@@ -62,7 +63,8 @@ abstract class PermissionsFragment(
                 Timber.i("Internet permission granted")
             } else {
                 Timber.i("Internet permission denied")
-                showToastAndOpenAppSettingsScreen(
+                showToastAndOpenAppSettingsScreenForPermission(
+                    Manifest.permission.INTERNET,
                     getString(R.string.permission_required_message, getString(R.string.internet_access_title)),
                 )
             }
@@ -93,7 +95,7 @@ abstract class PermissionsFragment(
             Timber.i("launching ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION")
             launch(intent)
         } else {
-            openAppSettingsScreen()
+            openAppSettingsScreenForPermission(MANAGE_EXTERNAL_STORAGE)
         }
     }
 
@@ -138,7 +140,7 @@ abstract class PermissionsFragment(
     protected fun PermissionsItem.revokeIfGrantedOnClickElse(callback: () -> Unit) {
         setOnPermissionsRequested { areAlreadyGranted ->
             if (areAlreadyGranted) {
-                showToastAndOpenAppSettingsScreen(R.string.revoke_permissions)
+                showToastAndOpenAppSettingsScreenForPermission(permissions.singleOrNull(), R.string.revoke_permissions)
             } else {
                 callback()
             }
