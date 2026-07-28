@@ -12,6 +12,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
 import com.ichi2.testutils.launchFragmentInContainer
 import com.ichi2.testutils.withFragment
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
@@ -63,8 +64,8 @@ class MultimediaImageFragmentTest : RobolectricTest() {
         assertThat(PickedImage(Intent().setData(content)).trustedUri, equalTo(content))
     }
 
-    private fun withImageFragment(block: MultimediaImageFragment.() -> Unit) =
+    private fun withImageFragment(block: suspend MultimediaImageFragment.() -> Unit) =
         launchFragmentInContainer<MultimediaImageFragment>(
             bundleOf(EXTRA_MEDIA_OPTIONS to MultimediaImageFragment.ImageOptions.GALLERY),
-        ).use { it.withFragment(block) }
+        ).use { it.withFragment { runBlocking { block() } } }
 }

@@ -386,24 +386,26 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             return
         }
 
-        val internalizedPick = internalizeUri(imageUri)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val internalizedPick = internalizeUri(imageUri)
 
-        if (internalizedPick == null) {
-            Timber.w(
-                "handleSelectImageIntent() unable to internalize image from Uri %s",
-                imageUri,
-            )
-            showSomethingWentWrong()
-            return
+            if (internalizedPick == null) {
+                Timber.w(
+                    "handleSelectImageIntent() unable to internalize image from Uri %s",
+                    imageUri,
+                )
+                showSomethingWentWrong()
+                return@launch
+            }
+
+            val drawImagePath = internalizedPick.absolutePath
+            Timber.i("handleDrawingResult() Decoded image: '%s'", drawImagePath)
+
+            previewImage(imageUri)
+            viewModel.updateCurrentMultimediaPath(drawImagePath)
+            viewModel.updateCurrentMultimediaUri(imageUri)
+            updateAndDisplayImageSize(drawImagePath)
         }
-
-        val drawImagePath = internalizedPick.absolutePath
-        Timber.i("handleDrawingResult() Decoded image: '%s'", drawImagePath)
-
-        previewImage(imageUri)
-        viewModel.updateCurrentMultimediaPath(drawImagePath)
-        viewModel.updateCurrentMultimediaUri(imageUri)
-        updateAndDisplayImageSize(drawImagePath)
     }
 
     private fun handleTakePictureResult(imageFile: File?) {
@@ -487,35 +489,37 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
         previewImage(imageUri)
 
-        val internalFile = resolveUriToFile(imageUri)
-        if (internalFile == null || !internalFile.exists()) {
-            showSomethingWentWrong()
-            return
+        viewLifecycleOwner.lifecycleScope.launch {
+            val internalFile = resolveUriToFile(imageUri)
+            if (internalFile == null || !internalFile.exists()) {
+                showSomethingWentWrong()
+                return@launch
+            }
+
+            // Update ViewModel with image data
+            val imagePath = internalFile.absolutePath
+
+            try {
+                // if that worked, the image was not too large / good format, update viewModel
+                viewModel.updateCurrentMultimediaUri(imageUri)
+                viewModel.updateCurrentMultimediaPath(imagePath)
+            } catch (e: Exception) {
+                Timber.w(e, "handleSelectImageIntent() unable to set image for preview")
+                // clear the image out of the preview so we may recover
+                showSomethingWentWrong()
+                return@launch
+            }
+            viewModel.selectedMediaFileSize = internalFile.length()
+
+            // Optionally update and display the image size
+            updateAndDisplayImageSize(imagePath)
         }
-
-        // Update ViewModel with image data
-        val imagePath = internalFile.absolutePath
-
-        try {
-            // if that worked, the image was not too large / good format, update viewModel
-            viewModel.updateCurrentMultimediaUri(imageUri)
-            viewModel.updateCurrentMultimediaPath(imagePath)
-        } catch (e: Exception) {
-            Timber.w(e, "handleSelectImageIntent() unable to set image for preview")
-            // clear the image out of the preview so we may recover
-            showSomethingWentWrong()
-            return
-        }
-        viewModel.selectedMediaFileSize = internalFile.length()
-
-        // Optionally update and display the image size
-        updateAndDisplayImageSize(imagePath)
     }
 
     /** Resolves [uri] to a local [File], internalizing content URIs but accepting file URIs only
      *  from our own cache. */
     @VisibleForTesting
-    internal fun resolveUriToFile(uri: Uri): File? =
+    internal suspend fun resolveUriToFile(uri: Uri): File? =
         when (uri.scheme) {
             ContentResolver.SCHEME_FILE -> cachedFileOrNull(uri)
             else -> internalizeUri(uri)
@@ -600,35 +604,39 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     private fun WebView.loadImage(imageUri: Uri) {
         Timber.i("Loading non-SVG image using WebView")
 
-        try {
-            // read our own cache file directly, internalize anything else
-            val internalFile = (cachedFileOrNull(imageUri) ?: internalizeUri(imageUri))?.takeIf { it.exists() }
-            if (internalFile == null) {
-                Timber.w("loadImage() unable to resolve image from Uri %s", imageUri)
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                // read our own cache file directly, internalize anything else
+                val internalFile = (cachedFileOrNull(imageUri) ?: internalizeUri(imageUri))?.takeIf { it.exists() }
+                if (internalFile == null) {
+                    Timber.w("loadImage() unable to resolve image from Uri %s", imageUri)
+                    showSomethingWentWrong()
+                    return@launch
+                }
+
+                val contentUri = getContentUriFromFile(internalFile)
+                if (contentUri == null) {
+                    Timber.w("Failed to get content URI for the image.")
+                    showSomethingWentWrong()
+                    return@launch
+                }
+
+                val htmlData =
+                    """
+                    <html>
+                        <body style="margin:0;padding:0;">
+                            <img src="$contentUri" style="width:100%;height:auto;" />
+                        </body>
+                    </html>
+                    """.trimIndent()
+
+                loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.e(e, "Error loading image in WebView")
                 showSomethingWentWrong()
-                return
             }
-
-            val contentUri = getContentUriFromFile(internalFile)
-            if (contentUri == null) {
-                Timber.w("Failed to get content URI for the image.")
-                showSomethingWentWrong()
-                return
-            }
-
-            val htmlData =
-                """
-                <html>
-                    <body style="margin:0;padding:0;">
-                        <img src="$contentUri" style="width:100%;height:auto;" />
-                    </body>
-                </html>
-                """.trimIndent()
-
-            loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
-        } catch (e: Exception) {
-            Timber.e(e, "Error loading image in WebView")
-            showSomethingWentWrong()
         }
     }
 
@@ -744,9 +752,9 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         return true
     }
 
-    private fun internalizeUri(uri: Uri): File? {
+    private suspend fun internalizeUri(uri: Uri): File? {
         val internalFile: File
-        val uriFileName = MultimediaUtils.getImageNameFromUri(requireContext(), uri)
+        val uriFileName = withContext(Dispatchers.IO) { MultimediaUtils.getImageNameFromUri(requireContext(), uri) }
 
         // Use the display name from the image info to create a new file with correct extension
         if (uriFileName == null) {
@@ -764,7 +772,9 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             }
         return try {
             val returnFile =
-                FileUtil.internalizeUri(uri, internalFile, requireActivity().contentResolver)
+                withContext(Dispatchers.IO) {
+                    FileUtil.internalizeUri(uri, internalFile, requireActivity().contentResolver)
+                }
             Timber.d("internalizeUri successful. Returning internalFile.")
             returnFile
         } catch (e: Exception) {
