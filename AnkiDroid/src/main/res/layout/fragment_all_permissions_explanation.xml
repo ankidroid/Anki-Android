@@ -51,6 +51,18 @@
         />
 
     <com.ichi2.anki.ui.windows.permissions.PermissionsItem
+        android:id="@+id/legacy_post_notification_permission_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:permissionTitle="@string/notification_pref"
+        app:permissionSummary="@string/notifications_permission_explanation"
+        app:permissionIcon="@drawable/ic_notifications"
+        app:permission="@string/legacy_post_notification_permission"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <com.ichi2.anki.ui.windows.permissions.PermissionsItem
         android:id="@+id/record_audio_permission_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

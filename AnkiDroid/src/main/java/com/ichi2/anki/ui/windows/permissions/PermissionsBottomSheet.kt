@@ -16,12 +16,10 @@
 
 package com.ichi2.anki.ui.windows.permissions
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -41,7 +39,6 @@ import dev.androidbroadcast.vbpd.viewBinding
  * should be used to request optional permissions from the user, and can be launched as the user gradually
  * encounters features that require permissions rather than being shoved in the face of every first-time user.
  */
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PermissionsBottomSheet : BottomSheetDialogFragment() {
     private val binding by viewBinding(FragmentPermissionsBottomSheetBinding::bind)
 
