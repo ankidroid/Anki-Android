@@ -6,12 +6,11 @@ package com.ichi2.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -69,8 +68,8 @@ class PermissionsTest {
         // No need to test the behaviour of the shouldShowRequestPermissionRationale system API,
         // as that's not our code, so we just mock its behaviour
         mockkStatic(ActivityCompat::class)
-        // Similarly with ContextCompat.checkSelfPermission
-        mockkStatic(ContextCompat::class)
+        // Similarly with NotificationManagerCompat.areNotificationsEnabled
+        mockkStatic(NotificationManagerCompat::class)
 
         Prefs.notificationsPermissionRequested = false
     }
@@ -230,8 +229,7 @@ class PermissionsTest {
     }
 
     private fun setPermissionsGranted(granted: Boolean) {
-        val permissionStatus = if (granted) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-        every { ContextCompat.checkSelfPermission(any(), any()) } returns permissionStatus
+        every { NotificationManagerCompat.from(any()).areNotificationsEnabled() } returns granted
     }
 
     private fun setCanPermissionBeRequested(canBeRequested: Boolean) {
