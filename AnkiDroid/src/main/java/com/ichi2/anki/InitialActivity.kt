@@ -28,6 +28,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.edit
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.common.permissions.hasAllPermissions
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.AnkiDroidFolder
@@ -40,6 +41,7 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
+import com.ichi2.anki.ui.windows.permissions.LegacyNotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsStartingAt30Fragment
@@ -221,9 +223,19 @@ enum class PermissionSet(
 
     APP_PRIVATE(Permissions.appPrivateStartupPermissions, InternetPermissionFragment::class.java),
 
-    /** Optional. */
+    /**
+     * Optional. For devices with API >= 33.
+     * @see NotificationsPermissionFragment
+     */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     NOTIFICATIONS(listOf(Permissions.notificationsPermission), NotificationsPermissionFragment::class.java),
+
+    /**
+     * Optional. For devices with API < 33.
+     * There is no formal permission to request, but it is possible for the user to manually disable notifications in Settings.
+     * If they want notifications, we need to direct the user to the OS settings via the [LegacyNotificationsPermissionFragment] so they can re-enable them.
+     */
+    LEGACY_NOTIFICATIONS(listOf(LEGACY_POST_NOTIFICATIONS), LegacyNotificationsPermissionFragment::class.java),
     ;
 
     fun hasRequiredPermissions(context: Context): Boolean = hasAllPermissions(context, permissions)

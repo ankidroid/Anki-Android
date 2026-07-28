@@ -221,6 +221,7 @@
     <string name="reminder_notifs_request_shown_key">reminderNotifsRequestShown</string>
     <string name="review_reminder_deserialization_errors_key">reviewReminderDeserializationErrors</string>
     <!-- Notifications -->
+    <string name="notifications_bottom_sheet_below_33">notificationsBottomSheetBelow33</string>
     <string name="notifications_permission_requested_key">notificationsPermissionRequested</string>
     <string name="record_audio_permission_requested_key">recordAudioPermissionRequested</string>
     <!-- Developer options -->

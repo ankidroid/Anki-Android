@@ -23,11 +23,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.ichi2.anki.R
+import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.databinding.FragmentAllPermissionsExplanationBinding
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.notificationsPermission
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
+import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreenForPermission
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
@@ -86,6 +88,14 @@ class AllPermissionsExplanationFragment : PermissionsFragment(R.layout.fragment_
                         permissionRequestedFlag = Prefs::notificationsPermissionRequested,
                         permissionRequestLauncher = permissionRequestLauncher,
                     )
+                }
+            }
+        } else {
+            binding.legacyPostNotificationPermissionItem.apply {
+                isVisible = true
+                // If it's already granted, offer to revoke it on click; otherwise, request it
+                revokeIfGrantedOnClickElse {
+                    showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, R.string.manually_grant_permissions)
                 }
             }
         }

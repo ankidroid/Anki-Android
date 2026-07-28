@@ -79,12 +79,14 @@ class PermissionsTest {
         mockkStatic(NotificationManagerCompat::class)
 
         Prefs.notificationsPermissionRequested = false
+        Prefs.notificationsBottomSheetShownBelowAPI33 = false
     }
 
     @After
     fun tearDown() {
         unmockkAll()
         Prefs.notificationsPermissionRequested = false
+        Prefs.notificationsBottomSheetShownBelowAPI33 = false
     }
 
     @Test
@@ -152,15 +154,7 @@ class PermissionsTest {
     }
 
     @Test
-    @Config(sdk = [Build.VERSION_CODES.TIRAMISU - 1])
-    fun `showNotificationsPermissionBottomSheetIfNeeded does nothing below API 33`() {
-        setPermissionsGranted(false)
-        setCanPermissionBeRequested(true)
-        showBottomSheetShouldFail()
-    }
-
-    @Test
-    @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU, Build.VERSION_CODES.TIRAMISU - 1])
     fun `showNotificationsPermissionBottomSheetIfNeeded does nothing if permission is granted`() {
         setPermissionsGranted(true)
         setCanPermissionBeRequested(true)
@@ -170,7 +164,7 @@ class PermissionsTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.TIRAMISU])
     @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
-    fun `showNotificationsPermissionBottomSheetIfNeeded works on first call and afterward only if system allows it`() {
+    fun `showNotificationsPermissionBottomSheetIfNeeded for API at 33+ works on first call and afterward only if system allows it`() {
         mockkObject(PermissionsBottomSheet)
 
         setPermissionsGranted(false)
@@ -182,6 +176,23 @@ class PermissionsTest {
         setCanPermissionBeRequested(false)
         showBottomSheetShouldFail()
         verify(exactly = 2) { PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS) }
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.TIRAMISU - 1])
+    fun `showNotificationsPermissionBottomSheetIfNeeded for API before 33 only works on first call if cannot send notifications`() {
+        mockkObject(PermissionsBottomSheet)
+
+        setPermissionsGranted(false)
+        setCanPermissionBeRequested(true)
+        showBottomSheetShouldSucceed()
+        assertThat(Prefs.notificationsBottomSheetShownBelowAPI33, equalTo(true))
+        showBottomSheetShouldFail()
+
+        setCanPermissionBeRequested(false)
+        showBottomSheetShouldFail()
+        verify(exactly = 1) { PermissionsBottomSheet.launch(fragmentManager, PermissionSet.LEGACY_NOTIFICATIONS) }
+        assertThat(Prefs.notificationsBottomSheetShownBelowAPI33, equalTo(true))
     }
 
     @Test

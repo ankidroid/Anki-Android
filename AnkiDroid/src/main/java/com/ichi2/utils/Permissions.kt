@@ -123,9 +123,15 @@ object Permissions {
 
     /**
      * Shows the [com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment] in the [PermissionsBottomSheet]
-     * if notification permissions have not been granted. Does nothing if the permission does not need to
-     * be requested (i.e. API < 33), if the permission has already been granted,
-     * or if the user has previously denied the permission and selected "Don't ask again".
+     * if notification permissions have not been granted.
+     *
+     * Does nothing if the permission has already been granted.
+     * Always shows the bottom sheet the first time it detects that the permission has not been granted.
+     * Does nothing on API 33+ if the user has previously denied the permission and selected "Don't ask again".
+     * Does nothing on API <33 if the user has seen the bottom sheet once before.
+     *
+     * Even though the explicit permission is exclusive to API 33+, this method is still useful for API <33 because the user can
+     * manually disable notifications for the app in system settings.
      *
      * @param activity Used for checking whether notification permissions have been granted, or if the user has clicked
      * "Don't ask again" on previous requests.
@@ -137,20 +143,32 @@ object Permissions {
         fragmentManager: FragmentManager,
         callback: () -> Unit,
     ) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (canPostNotifications(context = activity)) return
 
-        if (
-            !canPostNotifications(context = activity) &&
-            canPermissionBeRequested(
-                activity,
-                notificationsPermission,
-                Prefs::notificationsPermissionRequested,
-            )
-        ) {
-            Timber.i("Showing notifications bottom sheet")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val canRequest =
+                canPermissionBeRequested(
+                    activity,
+                    notificationsPermission,
+                    permissionRequestedFlag = Prefs::notificationsPermissionRequested,
+                )
+            if (!canRequest) {
+                Timber.i("Not showing notifications permissions bottom sheet: permission permanently denied")
+                return
+            }
+            Timber.i("Showing notifications permissions bottom sheet: API >= 33")
             PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
-            callback()
+        } else {
+            if (Prefs.notificationsBottomSheetShownBelowAPI33) {
+                Timber.i("Not showing notifications permissions bottom sheet: already attempted")
+                return
+            }
+            Timber.i("Showing notifications permissions bottom sheet: API < 33")
+            PermissionsBottomSheet.launch(fragmentManager, PermissionSet.LEGACY_NOTIFICATIONS)
+            Prefs.notificationsBottomSheetShownBelowAPI33 = true
         }
+
+        callback()
     }
 
     /**
