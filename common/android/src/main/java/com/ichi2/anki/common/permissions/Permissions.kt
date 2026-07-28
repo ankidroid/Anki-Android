@@ -4,10 +4,10 @@
 
 package com.ichi2.anki.common.permissions
 
-import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import timber.log.Timber
 
@@ -54,6 +54,4 @@ fun hasAllPermissions(
  */
 const val LEGACY_POST_NOTIFICATIONS: String = "NOTIFICATIONS_BEFORE_API_33_DUMMY_SENTINEL"
 
-fun canPostNotifications(context: Context): Boolean =
-    Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+fun canPostNotifications(context: Context): Boolean = NotificationManagerCompat.from(context).areNotificationsEnabled()
