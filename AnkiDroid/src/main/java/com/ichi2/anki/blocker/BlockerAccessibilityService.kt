@@ -5,15 +5,12 @@ package com.ichi2.anki.blocker
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import timber.log.Timber
 
@@ -55,17 +52,20 @@ class BlockerAccessibilityService : AccessibilityService() {
     private var lastUrlProbeUptimeMs = 0L
 
     /**
-     * Re-tunes only when a key this service depends on changed: AnkiDroid writes
-     * unrelated preferences often, and every [setServiceInfo] call causes the
-     * system to rebind the service.
+     * Re-reads the blocklist and re-applies the event filter. Called directly by the
+     * settings screens through [BlockerController] whenever the configuration changes.
+     *
+     * A `SharedPreferences` change listener was tried first and never fired on a
+     * Galaxy S25, leaving the service filtering on a stale blocklist — so newly
+     * blocked apps were silently ignored until the service happened to restart.
+     * An explicit call is deterministic and does not depend on the framework
+     * holding a listener that it only weakly references.
      */
-    private val prefsListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key in watchedPreferenceKeys()) {
-                applyServiceTuning()
-                rearmExpiryTimer()
-            }
-        }
+    fun onConfigChanged() {
+        Timber.i("Blocker: configuration changed")
+        applyServiceTuning()
+        rearmExpiryTimer()
+    }
 
     override fun onServiceConnected() {
         super.onServiceConnected()
@@ -74,14 +74,12 @@ class BlockerAccessibilityService : AccessibilityService() {
         ignoredPackages += BuildConfig.APPLICATION_ID
         ignoredPackages += SYSTEM_UI_PACKAGE
         resolveDefaultLauncher()?.let { ignoredPackages += it }
-        AnkiDroidApp.sharedPrefs().registerOnSharedPreferenceChangeListener(prefsListener)
         BlockerController.service = this
         applyServiceTuning()
         rearmExpiryTimer()
     }
 
     override fun onDestroy() {
-        AnkiDroidApp.sharedPrefs().unregisterOnSharedPreferenceChangeListener(prefsListener)
         handler.removeCallbacksAndMessages(null)
         BlockerController.service = null
         super.onDestroy()
@@ -180,7 +178,11 @@ class BlockerAccessibilityService : AccessibilityService() {
      * placeholder, since a null/empty filter would mean "all apps".
      */
     private fun applyServiceTuning() {
-        val info = serviceInfo ?: return
+        val info = serviceInfo
+        if (info == null) {
+            Timber.w("Blocker: serviceInfo unavailable, cannot apply filter")
+            return
+        }
         val blockedApps = BlockerPrefs.blockedApps
         val watchBrowsers = BlockerPrefs.isEnabled && BlockerPrefs.blockedDomains.isNotEmpty()
         info.eventTypes =
@@ -204,14 +206,6 @@ class BlockerAccessibilityService : AccessibilityService() {
             watchBrowsers,
         )
     }
-
-    private fun watchedPreferenceKeys(): Set<String> =
-        setOf(
-            getString(R.string.blocker_enabled_key),
-            getString(R.string.blocker_blocked_apps_key),
-            getString(R.string.blocker_blocked_domains_key),
-            getString(R.string.blocker_unlock_sessions_key),
-        )
 
     private fun resolveDefaultLauncher(): String? =
         packageManager

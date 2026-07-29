@@ -35,20 +35,35 @@ object BlockerPrefs {
         get() = prefs.getBoolean(key(R.string.blocker_disclosure_accepted_key), false)
         set(value) = prefs.edit { putBoolean(key(R.string.blocker_disclosure_accepted_key), value) }
 
-    /** Whether the blocker is on at all. */
+    /**
+     * Whether the blocker is on at all.
+     *
+     * Writing this, [blockedApps] or [blockedDomains] notifies the running service so
+     * it re-applies its event filter; otherwise the change has no effect until the
+     * service next restarts.
+     */
     var isEnabled: Boolean
         get() = prefs.getBoolean(key(R.string.blocker_enabled_key), false)
-        set(value) = prefs.edit { putBoolean(key(R.string.blocker_enabled_key), value) }
+        set(value) {
+            prefs.edit { putBoolean(key(R.string.blocker_enabled_key), value) }
+            BlockerController.notifyConfigChanged()
+        }
 
     /** Package names of the apps the blocker gates. */
     var blockedApps: Set<String>
         get() = prefs.getStringSet(key(R.string.blocker_blocked_apps_key), null) ?: emptySet()
-        set(value) = prefs.edit { putStringSet(key(R.string.blocker_blocked_apps_key), value) }
+        set(value) {
+            prefs.edit { putStringSet(key(R.string.blocker_blocked_apps_key), value) }
+            BlockerController.notifyConfigChanged()
+        }
 
     /** Website domains the blocker gates (bare hosts like `x.com`; subdomains match). */
     var blockedDomains: Set<String>
         get() = prefs.getStringSet(key(R.string.blocker_blocked_domains_key), null) ?: emptySet()
-        set(value) = prefs.edit { putStringSet(key(R.string.blocker_blocked_domains_key), value) }
+        set(value) {
+            prefs.edit { putStringSet(key(R.string.blocker_blocked_domains_key), value) }
+            BlockerController.notifyConfigChanged()
+        }
 
     /** How many unique cards must be rated Good/Easy to open a gate. */
     var cardsRequired: Int

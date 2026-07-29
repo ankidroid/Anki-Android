@@ -27,7 +27,12 @@ class BlockerSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         requirePreference<SwitchPreferenceCompat>(R.string.blocker_enabled_key).setOnPreferenceChangeListener { _, newValue ->
             if (newValue != true) {
-                view?.post { refreshSummaries() }
+                // The switch writes through the preference framework rather than
+                // BlockerPrefs, so the service has to be told separately.
+                view?.post {
+                    BlockerController.notifyConfigChanged()
+                    refreshSummaries()
+                }
                 return@setOnPreferenceChangeListener true
             }
             // The accessibility disclosure must be accepted before the feature turns on,
@@ -39,7 +44,10 @@ class BlockerSettingsFragment : SettingsFragment() {
             if (!BlockerStatus.isAccessibilityServiceEnabled(requireContext())) {
                 openAccessibilitySettings()
             }
-            view?.post { refreshSummaries() }
+            view?.post {
+                BlockerController.notifyConfigChanged()
+                refreshSummaries()
+            }
             true
         }
         requirePreference<Preference>(R.string.blocker_accessibility_status_key).setOnPreferenceClickListener {

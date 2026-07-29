@@ -36,6 +36,17 @@ object BlockerController {
     }
 
     /**
+     * Tells the running service that the blocklist or master toggle changed, so it
+     * re-applies its event filter. Must be called after any change to
+     * [BlockerPrefs.blockedApps], [BlockerPrefs.blockedDomains] or
+     * [BlockerPrefs.isEnabled] — without it the service keeps filtering on the
+     * configuration it read when it started, and new entries are ignored.
+     */
+    fun notifyConfigChanged() {
+        service?.onConfigChanged()
+    }
+
+    /**
      * The gate was dismissed without earning an unlock: route the user away from
      * the blocked target so the gate isn't simply bypassed. Blocked apps are left
      * for the home screen; blocked websites are backed off in the browser.
