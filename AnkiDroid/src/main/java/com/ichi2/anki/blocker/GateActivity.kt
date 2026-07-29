@@ -20,7 +20,9 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.startup.ensureStorageIsReady
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 
 /**
@@ -91,9 +93,22 @@ class GateActivity :
 
         lifecycleScope.launch {
             try {
-                previousDeckId = withCol { decks.selected() }
-                val prepared = PracticeDeckManager.prepareQueue(BlockerPrefs.gateDeckId)
+                // The collection may be held by a long operation such as a full sync.
+                // Waiting on it indefinitely would leave the user staring at an empty
+                // gate with no way in, so give up and let them through instead.
+                //
+                // The work runs as a separate job and we time out on awaiting it:
+                // `withCol` dispatches onto a single-threaded queue, and once queued
+                // there it cannot be cancelled, so a timeout wrapped directly around
+                // it would never fire. Awaiting a job is cancellable, so this does.
+                val prepareJob =
+                    async {
+                        previousDeckId = withCol { decks.selected() }
+                        PracticeDeckManager.prepareQueue(BlockerPrefs.gateDeckId)
+                    }
+                val prepared = withTimeoutOrNull(PREPARE_TIMEOUT_MS) { prepareJob.await() }
                 if (prepared == null) {
+                    prepareJob.cancel()
                     failOpen()
                     return@launch
                 }
@@ -236,6 +251,9 @@ class GateActivity :
 
     companion object {
         private const val EXTRA_TARGET = "target"
+
+        /** How long to wait for the collection before letting the user through. */
+        private const val PREPARE_TIMEOUT_MS = 10_000L
 
         fun getIntent(
             context: Context,
