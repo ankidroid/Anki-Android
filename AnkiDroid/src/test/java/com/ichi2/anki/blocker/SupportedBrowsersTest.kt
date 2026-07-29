@@ -33,6 +33,14 @@ class SupportedBrowsersTest {
     }
 
     @Test
+    fun `invisible bidi marks are stripped`() {
+        // Exactly what Samsung Internet's address bar reports on a Galaxy S25
+        assertThat(SupportedBrowsers.parseHost("‎example.com"), equalTo("example.com"))
+        assertThat(SupportedBrowsers.parseHost("‏x.com‎"), equalTo("x.com"))
+        assertThat(SupportedBrowsers.parseHost("‪https://www.X.com/home‬"), equalTo("x.com"))
+    }
+
+    @Test
     fun `ip hosts parse`() {
         assertThat(SupportedBrowsers.parseHost("192.168.0.1/admin"), equalTo("192.168.0.1"))
     }

@@ -71,6 +71,13 @@ object SupportedBrowsers {
      */
     fun parseHost(input: String?): String? {
         var text = input?.trim() ?: return null
+        // Some browsers wrap the address in bidirectional control characters — Samsung
+        // Internet prefixes it with U+200E — which are invisible but would stop the
+        // host from ever matching a blocklist entry.
+        text =
+            text
+                .filterNot { it.category == CharCategory.FORMAT || it.category == CharCategory.CONTROL }
+                .trim()
         if (text.isEmpty() || text.any(Char::isWhitespace)) return null
         text = text.removePrefix("https://").removePrefix("http://")
         text = text.substringBefore('/').substringBefore('?').substringBefore('#')
