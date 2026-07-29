@@ -124,5 +124,9 @@
             android:summary="Replaces the navigation drawer with a bottom nav bar"
             android:key="@string/dev_bottom_nav_key"
             android:defaultValue="false"/>
+        <Preference
+            android:title="Launch blocker gate"
+            android:summary="Opens the flashcard gate as if a blocked app was launched"
+            android:key="@string/pref_blocker_launch_gate_key"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>

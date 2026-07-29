@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2026 Tim Farrelly <timf34@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/blocker_settings_title"
+    android:key="@string/pref_blocker_screen_key">
+    <SwitchPreferenceCompat
+        android:key="@string/blocker_enabled_key"
+        android:title="@string/blocker_enabled_title"
+        android:defaultValue="false" />
+    <Preference
+        android:key="@string/blocker_accessibility_status_key"
+        android:title="@string/blocker_a11y_status_title"
+        android:summary="@string/blocker_a11y_status_off" />
+    <Preference
+        android:key="@string/blocker_blocked_apps_entry_key"
+        android:title="@string/blocker_blocked_apps_title" />
+    <Preference
+        android:key="@string/blocker_blocked_domains_entry_key"
+        android:title="@string/blocker_blocked_domains_title" />
+    <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+        android:key="@string/blocker_cards_required_key"
+        android:title="@string/blocker_cards_required_title"
+        android:defaultValue="1"
+        app:useSimpleSummaryProvider="true"
+        app:min="1"
+        app:max="3" />
+    <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+        android:key="@string/blocker_unlock_minutes_key"
+        android:title="@string/blocker_unlock_minutes_title"
+        android:defaultValue="5"
+        app:useSimpleSummaryProvider="true"
+        app:min="1"
+        app:max="240" />
+    <Preference
+        android:key="@string/blocker_gate_deck_entry_key"
+        android:title="@string/blocker_gate_deck_title"
+        android:summary="@string/blocker_gate_deck_current" />
+    <Preference
+        android:selectable="false"
+        android:summary="@string/blocker_pass_note" />
+</PreferenceScreen>

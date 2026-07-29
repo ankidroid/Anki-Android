@@ -72,6 +72,14 @@
         app:summaryEntries="@array/notifications_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
 
+    <!-- App blocker -->
+    <com.ichi2.preferences.HeaderPreference
+        android:fragment="com.ichi2.anki.blocker.BlockerSettingsFragment"
+        android:key="@string/pref_blocker_screen_key"
+        android:title="@string/blocker_settings_title"
+        android:summary="@string/blocker_settings_summary"
+        android:icon="@drawable/ic_baseline_lock_24" />
+
     <!-- Review Reminders -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.reviewreminders.ScheduleRemindersFragment"

@@ -111,6 +111,7 @@ class HeaderFragment : SettingsFragment() {
                     index(R.xml.preferences_notifications)
                 }
 
+                index(R.xml.preferences_blocker)
                 index(R.xml.preferences_appearance)
                 if (!Prefs.isNewStudyScreenEnabled) {
                     index(R.xml.preferences_custom_buttons)

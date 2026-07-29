@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Title of the flashcard gate screen shown when a blocked app is opened -->
+    <string name="blocker_gate_title">Unlock with flashcards</string>
+    <!-- Progress indicator inside the gate: how many cards were answered correctly so far -->
+    <string name="blocker_gate_progress">Answered %1$d of %2$d</string>
+    <!-- Toast shown when the gate is passed. %d is the number of minutes the unlock lasts -->
+    <string name="blocker_unlocked_toast">Unlocked for %d minutes</string>
+    <!-- Toast shown when the gate cannot show any cards and lets the user through -->
+    <string name="blocker_cards_unavailable">Cards unavailable — access allowed</string>
+    <!-- Name of the accessibility service shown in the system accessibility settings -->
+    <string name="blocker_a11y_label">AnkiDroid app blocker</string>
+    <!-- Description of the accessibility service shown in the system accessibility settings -->
+    <string name="blocker_a11y_description">Detects when a blocked app or website is opened so AnkiDroid can ask for flashcard answers first. AnkiDroid does not read or store the content of your screen.</string>
+
+    <!-- Settings screen -->
+    <!-- Title of the app blocker settings screen -->
+    <string name="blocker_settings_title" maxLength="41">App blocker</string>
+    <!-- Summary of the app blocker settings screen in the settings list -->
+    <string name="blocker_settings_summary">Answer flashcards to open blocked apps</string>
+    <!-- Master switch enabling the app blocker -->
+    <string name="blocker_enabled_title" maxLength="41">Enable app blocker</string>
+    <!-- Status row: title of the accessibility service state -->
+    <string name="blocker_a11y_status_title" maxLength="41">Accessibility service</string>
+    <!-- Status row summary when the accessibility service is running -->
+    <string name="blocker_a11y_status_on">Running</string>
+    <!-- Status row summary when the accessibility service is not enabled; tapping opens system settings -->
+    <string name="blocker_a11y_status_off">Not enabled — tap to enable in system settings</string>
+    <!-- Opens the list of apps to block -->
+    <string name="blocker_blocked_apps_title" maxLength="41">Blocked apps</string>
+    <!-- Opens the list of websites to block -->
+    <string name="blocker_blocked_domains_title" maxLength="41">Blocked websites</string>
+    <!-- Quantity summary for blocked apps/websites lists -->
+    <string name="blocker_blocked_count">%d blocked</string>
+    <!-- Setting: how many cards must be answered correctly to unlock -->
+    <string name="blocker_cards_required_title" maxLength="41">Cards to unlock</string>
+    <!-- Setting: how long an unlock lasts -->
+    <string name="blocker_unlock_minutes_title" maxLength="41">Unlock duration (minutes)</string>
+    <!-- Setting: which deck the gate takes cards from -->
+    <string name="blocker_gate_deck_title" maxLength="41">Deck to study from</string>
+    <!-- Summary for the deck setting when no deck was chosen yet -->
+    <string name="blocker_gate_deck_current">Currently selected deck</string>
+    <!-- Explains what counts as a correct answer, shown at the bottom of the blocker settings -->
+    <string name="blocker_pass_note">A pass is Good or Easy. Hard and Again do not count. When nothing is due, already-learned cards are practiced without changing their schedule.</string>
+    <!-- Title of the dialog shown before opening the system accessibility settings -->
+    <string name="blocker_disclosure_title">Accessibility permission needed</string>
+    <!-- Body of the disclosure dialog explaining why the accessibility service is needed -->
+    <string name="blocker_disclosure_message">To know when a blocked app or website is opened, AnkiDroid uses an accessibility service. It only checks which app is in front and, for browsers, the address bar — it does not read or store anything else on your screen.\n\nOn the next screen, enable “AnkiDroid app blocker”.</string>
+    <!-- Hint of the text field for adding a website to the blocklist -->
+    <string name="blocker_add_domain_hint">Website, e.g. x.com</string>
+    <!-- Error shown when the typed text is not a valid website -->
+    <string name="blocker_invalid_domain">Not a valid website address</string>
+    <!-- Shown when no websites have been blocked yet -->
+    <string name="blocker_no_domains">No blocked websites yet</string>
+</resources>

@@ -1,0 +1,59 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2026 Tim Farrelly <timf34@gmail.com>
+
+package com.ichi2.anki.blocker
+
+import android.content.Context
+import android.content.Intent
+import timber.log.Timber
+import kotlin.time.Duration.Companion.minutes
+
+/**
+ * In-process mediator between the blocker's detection side
+ * ([BlockerAccessibilityService]) and its gate side ([GateActivity]). Both run
+ * in the same process, so a singleton is sufficient — matching the codebase's
+ * convention of `object` singletons over DI.
+ */
+object BlockerController {
+    /** True while a [GateActivity] is on screen; prevents gate-on-gate storms. */
+    @Volatile
+    var isGateActive: Boolean = false
+
+    /** The live service instance, set while the accessibility service is bound. */
+    @Volatile
+    var service: BlockerAccessibilityService? = null
+
+    fun grantUnlock(target: BlockTarget) {
+        val minutes = BlockerPrefs.unlockMinutes
+        UnlockStore.grant(target, durationMs = minutes.minutes.inWholeMilliseconds)
+        Timber.i("Blocker: unlocked %s for %d minutes", target.key, minutes)
+        service?.onUnlockGranted()
+    }
+
+    /** Starts the post-gate cooldown; called whenever a gate leaves the screen. */
+    fun noteGateClosed() {
+        service?.engine?.noteGateClosed()
+    }
+
+    /**
+     * The gate was dismissed without earning an unlock: route the user away from
+     * the blocked target so the gate isn't simply bypassed. Blocked apps are left
+     * for the home screen; blocked websites are backed off in the browser.
+     */
+    fun onGateAbandoned(
+        context: Context,
+        target: BlockTarget,
+    ) {
+        Timber.i("Blocker: gate abandoned for %s", target.key)
+        val liveService = service
+        if (target is BlockTarget.Domain && liveService != null) {
+            liveService.performBackForAbandonedDomain()
+            return
+        }
+        val home =
+            Intent(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_HOME)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(home)
+    }
+}

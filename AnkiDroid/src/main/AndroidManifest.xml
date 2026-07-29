@@ -75,6 +75,11 @@
         <intent>
             <action android:name="android.speech.RecognitionService" />
         </intent>
+        <!-- App blocker: list launchable apps in the blocked-apps picker -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
     </queries>
 
     <!--
@@ -698,7 +703,32 @@
             </intent-filter>
         </activity>
 
+        <!--
+        App blocker gate: interception screen requiring flashcard answers before a
+        blocked app/site may be used. Single instance and out of recents so that
+        re-triggers route to the existing gate and it can't be resumed as a task.
+        -->
+        <activity
+            android:name="com.ichi2.anki.blocker.GateActivity"
+            android:exported="false"
+            android:label="@string/blocker_gate_title"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
 
+        <service
+            android:name="com.ichi2.anki.blocker.BlockerAccessibilityService"
+            android:exported="false"
+            android:label="@string/blocker_a11y_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/blocker_accessibility_config" />
+        </service>
 
         <provider
             android:name=".provider.CardContentProvider"

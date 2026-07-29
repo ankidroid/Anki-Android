@@ -14,6 +14,8 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.blocker.BlockTarget
+import com.ichi2.anki.blocker.GateActivity
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -179,6 +181,12 @@ class DeveloperOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_enable_switch_profile_key).setOnPreferenceChangeListener { _, _ ->
             ActivityCompat.recreate(requireActivity())
             true
+        }
+
+        // App blocker: open the gate as if a blocked app was launched
+        requirePreference<Preference>(R.string.pref_blocker_launch_gate_key).setOnPreferenceClickListener {
+            startActivity(GateActivity.getIntent(requireContext(), BlockTarget.App("com.ichi2.anki.blocker.debugtarget")))
+            false
         }
 
         setupWebDebugPreference()

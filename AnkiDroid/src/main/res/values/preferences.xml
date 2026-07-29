@@ -272,4 +272,19 @@
 
     <!-- Onboarding -->
     <string name="internet_permission_requested_key">internetPermissionRequested</string>
+
+    <!-- App blocker -->
+    <string name="pref_blocker_screen_key">blockerScreen</string>
+    <string name="blocker_enabled_key">blockerEnabled</string>
+    <string name="blocker_accessibility_status_key">blockerAccessibilityStatus</string>
+    <string name="blocker_blocked_apps_key">blockerBlockedApps</string>
+    <string name="blocker_blocked_apps_entry_key">blockerBlockedAppsEntry</string>
+    <string name="blocker_blocked_domains_key">blockerBlockedDomains</string>
+    <string name="blocker_blocked_domains_entry_key">blockerBlockedDomainsEntry</string>
+    <string name="blocker_cards_required_key">blockerCardsRequired</string>
+    <string name="blocker_unlock_minutes_key">blockerUnlockMinutes</string>
+    <string name="blocker_gate_deck_key">blockerGateDeckId</string>
+    <string name="blocker_gate_deck_entry_key">blockerGateDeckEntry</string>
+    <string name="blocker_unlock_sessions_key">blockerUnlockSessions</string>
+    <string name="pref_blocker_launch_gate_key">blockerDevLaunchGate</string>
 </resources>
