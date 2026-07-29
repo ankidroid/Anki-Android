@@ -47,6 +47,15 @@
     <string name="pref_cat_workarounds" maxLength="41">ಪರಿಹಾರೋಪಾಯಗಳು</string>
     <string name="pref_cat_plugins" maxLength="41">ಪ್ಲಗಿನ್‌ಗಳು</string>
     <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_security" maxLength="41">Security</string>
+    <!-- Card template JavaScript API permissions -->
+    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
+    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">ಸ್ಟ್ರೋಕ್ ಅಗಲ</string>
     <string name="use_input_tag" maxLength="41">ಕಾರ್ಡ್‌ನಲ್ಲಿ ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ</string>
@@ -229,11 +238,14 @@
     <string name="open_changelog">Open changelog</string>
     <string name="pref_cat_about_title" maxLength="41">ಸುಮಾರು</string>
     <string name="contributors_title">ಕೊಡುಗೆದಾರರು</string>
-    <string name="about_contributors_description"><![CDATA[ಇವರು ನಮ್ಮ ಅದ್ಭುತ <a href=\"%1$s\">ಕೊಡುಗೆದಾರರು</a>. ಪ್ರೋಗ್ರಾಮಿಂಗ್, ಅನುವಾದ, ದೇಣಿಗೆ ಮತ್ತು <a href=\"%2$s\">ಇನ್ನಷ್ಟು</a> ಮೂಲಕ ನೀವು AnkiDroid ಗೆ ಸಹಾಯ ಮಾಡಬಹುದು!]]></string>
+    <string name="about_contributors_description"><![CDATA[ಇವರು ನಮ್ಮ ಅದ್ಭುತ <a href=\"%1$s\">ಕೊಡುಗೆದಾರರು</a>. ಪ್ರೋಗ್ರಾಮಿಂಗ್, ಅನುವಾದ, ದೇಣಿಗೆ ಮತ್ತು <a href=\"%2$s\">ಇನ್ನಷ್ಟು</a> ಮೂಲಕ ನೀವು AnkiDroid ಗೆ ಸಹಾಯ ಮಾಡಬಹುದು!
+]]></string>
     <string name="license">ಪರವಾನಗಿ</string>
-    <string name="license_description"><![CDATA[AnkiDroid ಅನ್ನು <a href=\"%1$s\">GPL-3.0</a> ಮತ್ತು <a href=\"%2$s\">AGPL-3.0</a> ಪರವಾನಗಿಗಳ ಮೂಲ ಕೋಡ್ ಅಡಿಯಲ್ಲಿ ಬಿಡುಗಡೆ ಮಾಡಲಾಗಿದೆ < href=\"%3$s\">GitHub</a> ನಲ್ಲಿ ಲಭ್ಯವಿದೆ]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid ಅನ್ನು <a href=\"%1$s\">GPL-3.0</a> ಮತ್ತು <a href=\"%2$s\">AGPL-3.0</a> ಪರವಾನಗಿಗಳ ಮೂಲ ಕೋಡ್ ಅಡಿಯಲ್ಲಿ ಬಿಡುಗಡೆ ಮಾಡಲಾಗಿದೆ < href=\"%3$s\">GitHub</a> ನಲ್ಲಿ ಲಭ್ಯವಿದೆ
+]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
-    <string name="donate_description"><![CDATA[<a href=\"%1$s\">ದಾನ ಮಾಡುವ ಮೂಲಕ</a> ನೀವು AnkiDroid ಅಭಿವೃದ್ಧಿಯನ್ನು ಬೆಂಬಲಿಸಬಹುದು. ಯಾವುದೇ ಮೊತ್ತವನ್ನು ಆಳವಾಗಿ ಪ್ರಶಂಸಿಸಲಾಗುತ್ತದೆ.]]></string>
+    <string name="donate_description"><![CDATA[<a href=\"%1$s\">ದಾನ ಮಾಡುವ ಮೂಲಕ</a> ನೀವು AnkiDroid ಅಭಿವೃದ್ಧಿಯನ್ನು ಬೆಂಬಲಿಸಬಹುದು. ಯಾವುದೇ ಮೊತ್ತವನ್ನು ಆಳವಾಗಿ ಪ್ರಶಂಸಿಸಲಾಗುತ್ತದೆ.
+]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">ಗೆಸ್ಚರ್ ಸೇರಿಸಿ</string>
     <string name="binding_add_key">ಕೀ ಸೇರಿಸಿ</string>

@@ -47,6 +47,15 @@
     <string name="pref_cat_workarounds" maxLength="41">خىزمەت رايونى</string>
     <string name="pref_cat_plugins" maxLength="41">قىستۇرما</string>
     <string name="pref_cat_editing" maxLength="41">تەھرىرلەۋاتىدۇ</string>
+    <string name="pref_cat_security" maxLength="41">Security</string>
+    <!-- Card template JavaScript API permissions -->
+    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
+    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">سىزىق توملۇقى</string>
     <string name="use_input_tag" maxLength="41">كارتىغا جاۋاب كىرگۈزۈلىدۇ</string>
@@ -148,8 +157,8 @@
     <string name="show_estimates_summ">جاۋاب توپچىنىڭ ئۈستىدە كېيىنكى قېتىم تەكرارلايدىغان ۋاقىتنى كۆرسىتىدۇ</string>
     <string name="show_large_answer_buttons" maxLength="41">چوڭ جاۋاب توپچىنى كۆرسىتىدۇ</string>
     <string name="show_large_answer_buttons_summ">جاۋاب توپچىنى 2 قۇر كۆرسىتىدۇ</string>
-    <string name="remove_animations" maxLength="41">Remove animations</string>
-    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
+    <string name="remove_animations" maxLength="41">جانلاندۇرۇمنى چىقىرىۋەت</string>
+    <string name="remove_animations_summary">ئەگەر سىستېما تەڭشىكىدىن جانلاندۇرۇم چىقىرىۋېتىلگەن بولسىمۇ قوزغىتىدۇ</string>
     <string name="show_top_bar" maxLength="41">چوققا بالداقنى كۆرسەت</string>
     <string name="show_top_bar_summary">چوققا بالداقتا كارتا سانى، جاۋاب سانىغۇچ، بايراق ۋە بەلگىنى كۆرسىتىدۇ</string>
     <string name="show_progress" maxLength="41">قالغانلىرىنى كۆرسەت</string>
@@ -199,7 +208,7 @@
         If not set, the default AnkiWeb server will be used instead.
         <a href="%s">تەپسىلاتى</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">قەدەمداش تور ئادرېسى</string>
     <string name="custom_sync_certificate_title" maxLength="41">ئىختىيارى يىلتىز گۇۋاھنامىسى (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">ھەرپتاختا</string>
@@ -255,10 +264,10 @@
     <string name="user_action_8" maxLength="28">ئىشلەتكۈچىنىڭ 8-مەشغۇلاتى</string>
     <string name="user_action_9" maxLength="28">ئىشلەتكۈچىنىڭ 9-مەشغۇلاتى</string>
     <string name="toggle_auto_advance" maxLength="28">ئۆزلۈكىدىن ئىلگىرىلەشنى ئالماشتۇرىدۇ</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
-    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
-    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
+    <string name="enable_auto_advance" maxLength="28">ئۆزلۈكىدىن ئىلگىرىلەشنى قوزغات</string>
+    <string name="disable_auto_advance" maxLength="28">ئۆزلۈكىدىن ئىلگىرىلەشنى چەكلە</string>
+    <string name="enable_voice_recording" maxLength="28">ئاۋاز خاتىرىلەشنى قوزغات</string>
+    <string name="disable_voice_recording" maxLength="28">ئاۋاز خاتىرىلەشنى چەكلە</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">كارتا يۈزى تاللىنىدۇ</string>
     <string name="card_side_question">سوئال</string>
@@ -366,5 +375,5 @@
     <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">ئۆرۈ ۋە جاۋاب</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تەڭشەكنى ئاچ</string>
-    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">مۇناسىۋەتلىك تەڭشەك</string>
 </resources>

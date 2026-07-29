@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">અંકી પેકેજને સાચવવાનું નિષ્ફળ થયું</string>
     <string name="export_share_title">ઉપયોગ કરીને Anki પેકેજ મોકલો</string>
     <string name="export_email_subject">AnkiDroid એ નિકાસ કરેલા ફ્લેશકાર્ડ્સ: %s</string>
-    <string name="export_email_text"><![CDATA[        હાય!
+    <string name="export_email_text"><![CDATA[
+        હાય!
         <br/><br/>
         આ AnkiDroid[1] તરફથી મોકલવામાં આવેલ અંકી ફ્લેશકાર્ડ્સ ડેક છે.
         ઉપલબ્ધ અંકી વિતરણોમાંથી એકનો ઉપયોગ કરીને તેને ખોલવાનો પ્રયાસ કરો[2] અને સરળ અને કાર્યક્ષમ શિક્ષણનો આનંદ માણો!<br/><br/>

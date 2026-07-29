@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarjetas exportadas por AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        ¡Hola!
+    <string name="export_email_text"><![CDATA[
+        ¡Hola!
         <br/><br/>
         Esta es una baraja de cartas Anki enviada desde AnkiDroid[1].
         ¡Intenta abrirlo usando una de las distribuciones disponibles de Anki[2] y disfruta de un aprendizaje fácil y eficiente!<br/><br/>

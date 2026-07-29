@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki पैकेज सहेजना विफल रहा</string>
     <string name="export_share_title">Anki पैकेज का उपयोग करके भेजें</string>
     <string name="export_email_subject">AnkiDroid निर्यात किए गए स्पैनिश: %s</string>
-    <string name="export_email_text"><![CDATA[        नमस्ते!
+    <string name="export_email_text"><![CDATA[
+        नमस्ते!
         <br/><br/>
         यह AnkiDroid[1] से भेजा गया Anki फ़्लैशकार्ड डेक है।
         उपलब्ध Anki वितरणों में से किसी एक का उपयोग करके इसे खोलने का प्रयास करें[2] और आसान और कुशल सीखने का आनंद लें!<br/><br/>

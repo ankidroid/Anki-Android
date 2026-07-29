@@ -47,6 +47,15 @@
     <string name="pref_cat_workarounds" maxLength="41">वर्कराउंड्स</string>
     <string name="pref_cat_plugins" maxLength="41">प्लगइन</string>
     <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_security" maxLength="41">Security</string>
+    <!-- Card template JavaScript API permissions -->
+    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
+    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">स्ट्रोक रून्दी</string>
     <string name="use_input_tag" maxLength="41">कार्डमध्ये उत्तर टाइप करा</string>
@@ -233,7 +242,8 @@
     <string name="license">परवाना</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> आणि <a href=\"%2$s\">AGPL-3.0</a> परवान्याखाली रिलीझ केले आहे. स्रोत कोड <a href=\"%3$s\">GitHub</a> वर उपलब्ध आहे]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
-    <string name="donate_description"><![CDATA[तुम्ही <a href=\"%1$s\">दान</a> करून AnkiDroid च्या विकासाला समर्थन देऊ शकता. कोणतीही रक्कम खूप कौतुकास्पद आहे.]]></string>
+    <string name="donate_description"><![CDATA[तुम्ही <a href=\"%1$s\">दान</a> करून AnkiDroid च्या विकासाला समर्थन देऊ शकता. कोणतीही रक्कम खूप कौतुकास्पद आहे.
+]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">एक जेश्चर जोडा</string>
     <string name="binding_add_key">की जोडा</string>
