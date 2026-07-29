@@ -4,8 +4,10 @@
 
 package com.ichi2.anki.multimedia
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
@@ -26,6 +28,7 @@ class MultimediaImageFragmentTest : RobolectricTest() {
     @Test
     fun `file uri into app-private storage is rejected`() =
         withImageFragment {
+            @SuppressLint("SdCardPath")
             val collection = File("/data/data/com.ichi2.anki/files/AnkiDroid/collection.anki2")
             assertThat(resolveUriToFile(Uri.fromFile(collection)), nullValue())
         }
@@ -59,7 +62,7 @@ class MultimediaImageFragmentTest : RobolectricTest() {
 
     @Test
     fun `a picked content uri is trusted`() {
-        val content = Uri.parse("content://media/external/images/media/1")
+        val content = "content://media/external/images/media/1".toUri()
         assertThat(PickedImage(Intent().setData(content)).trustedUri, equalTo(content))
     }
 
