@@ -195,6 +195,32 @@ class GateActivity :
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        BlockerController.isGateActive = true
+    }
+
+    /**
+     * The flag must track whether a gate is actually on screen, not merely whether one
+     * exists: pressing home only stops this activity, and a stopped gate that still
+     * claimed to be active suppressed gating for every app until Android eventually
+     * destroyed it — sometimes minutes later.
+     *
+     * Leaving the gate without passing also closes it, so the next attempt to open the
+     * blocked app starts a fresh gate. The user has already navigated away, so they are
+     * not routed anywhere.
+     */
+    override fun onStop() {
+        super.onStop()
+        BlockerController.isGateActive = false
+        BlockerController.noteGateClosed()
+        if (state == GateState.PREPARING || state == GateState.RUNNING) {
+            Timber.i("Blocker: gate left without passing, closing it")
+            state = GateState.ABANDONED
+            finish()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         BlockerController.isGateActive = false

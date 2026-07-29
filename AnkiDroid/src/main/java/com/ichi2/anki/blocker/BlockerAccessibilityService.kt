@@ -49,6 +49,7 @@ class BlockerAccessibilityService : AccessibilityService() {
 
     private val handler = Handler(Looper.getMainLooper())
     private val expiryCheck = Runnable { onExpiryCheck() }
+    private val postGateRecheck = Runnable { onExpiryCheck() }
     private var lastUrlProbeUptimeMs = 0L
 
     /**
@@ -108,6 +109,18 @@ class BlockerAccessibilityService : AccessibilityService() {
 
     /** Called after an unlock is granted, to schedule the expiry re-check. */
     fun onUnlockGranted() = rearmExpiryTimer()
+
+    /**
+     * Re-checks the foreground app shortly after a gate closes without being passed.
+     *
+     * Window events arriving during the brief post-gate cooldown are ignored, so
+     * returning to the blocked app immediately — via recents, say — could otherwise
+     * slip through with no further event to trigger on.
+     */
+    fun schedulePostGateRecheck() {
+        handler.removeCallbacks(postGateRecheck)
+        handler.postDelayed(postGateRecheck, POST_GATE_RECHECK_MS)
+    }
 
     /**
      * Backs the browser off a blocked page after its gate was abandoned. Slightly
@@ -219,6 +232,9 @@ class BlockerAccessibilityService : AccessibilityService() {
         private const val SYSTEM_UI_PACKAGE = "com.android.systemui"
         private const val URL_PROBE_MIN_INTERVAL_MS = 500L
         private const val EXPIRY_SLACK_MS = 250L
+
+        /** Comfortably past [BlockerEngine.GATE_COOLDOWN_MS]. */
+        private const val POST_GATE_RECHECK_MS = 2_500L
         private const val BACK_AFTER_ABANDON_DELAY_MS = 300L
     }
 }

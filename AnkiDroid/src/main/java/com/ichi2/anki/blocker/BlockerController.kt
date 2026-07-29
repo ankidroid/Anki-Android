@@ -30,9 +30,14 @@ object BlockerController {
         service?.onUnlockGranted()
     }
 
-    /** Starts the post-gate cooldown; called whenever a gate leaves the screen. */
+    /**
+     * Called whenever a gate leaves the screen: starts the cooldown that stops the
+     * closing gate from re-triggering itself, and schedules a re-check so returning
+     * straight to the blocked app during that cooldown is still caught.
+     */
     fun noteGateClosed() {
         service?.engine?.noteGateClosed()
+        service?.schedulePostGateRecheck()
     }
 
     /**
