@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
     <string name="export_share_title">以&#8230;傳送Anki牌組包</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
-    <string name="export_email_text"><![CDATA[        你好！
+    <string name="export_email_text"><![CDATA[
+        你好！
         <br/><br/>
         這是從 AnkiDroid[1] 發送的 Anki 單字卡牌組。
         使用任一 Anki 用戶端[2] 開啟，享受輕鬆高效的學習吧！<br/><br/>

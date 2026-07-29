@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki தொகுப்பைச் சேமிக்க முடியவில்லை</string>
     <string name="export_share_title">பயன்படுத்தி Anki தொகுப்பை அனுப்பவும்</string>
     <string name="export_email_subject">AnkiDroid ஏற்றுமதி செய்யப்பட்ட ஃபிளாஷ் கார்டுகள்: %s</string>
-    <string name="export_email_text"><![CDATA[        ஹாய்!
+    <string name="export_email_text"><![CDATA[
+        ஹாய்!
         <br/><br/>
         இது AnkiDroid[1]ல் இருந்து அனுப்பப்பட்ட Anki flashcards டெக் ஆகும்.
         கிடைக்கக்கூடிய Anki விநியோகங்களில் ஒன்றைப் பயன்படுத்தி அதைத் திறக்க முயற்சிக்கவும்[2] மற்றும் எளிதான மற்றும் திறமையான கற்றலை அனுபவிக்கவும்!<br/><br/>

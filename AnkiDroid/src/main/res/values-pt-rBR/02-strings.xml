@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Arquivo Anki (.apkg) não pode ser salvo</string>
     <string name="export_share_title">Enviar pacote Anki usando</string>
     <string name="export_email_subject">AnkiDroid cards exportados: %s</string>
-    <string name="export_email_text"><![CDATA[        Olá!
+    <string name="export_email_text"><![CDATA[
+        Olá!
         <br/><br/>
         Esse é um baralho de flashcards do Anki, enviado do AnkiDroid[1].
         Tente abrir usando uma das versões disponíveis do Anki[2] e aproveite aprender de forma simples e eficiente!<br/><br/>

@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki ప్యాకేజీని సేవ్ చేయడంలో విఫలమైంది</string>
     <string name="export_share_title">ఉపయోగించి Anki ప్యాకేజీని పంపండి</string>
     <string name="export_email_subject">AnkiDroid ఫ్లాష్ కార్డ్స్ ఎగుమతి:%s</string>
-    <string name="export_email_text"><![CDATA[        హాయ్!
+    <string name="export_email_text"><![CDATA[
+        హాయ్!
         <br/><br/>
         ఇది AnkiDroid[1] నుండి పంపబడిన Anki ఫ్లాష్ కార్డ్స్ డెక్.
         అందుబాటులో ఉన్న Anki పంపిణీలలో ఒకదానిని ఉపయోగించి దీన్ని తెరవడానికి ప్రయత్నించండి[2] మరియు సులభమైన మరియు సమర్థవంతమైన అభ్యాసాన్ని ఆస్వాదించండి!<br/><br/>

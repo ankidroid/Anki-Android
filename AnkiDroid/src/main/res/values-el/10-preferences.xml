@@ -47,6 +47,15 @@
     <string name="pref_cat_workarounds" maxLength="41">Λύσεις</string>
     <string name="pref_cat_plugins" maxLength="41">Αρθρώματα</string>
     <string name="pref_cat_editing" maxLength="41">Επεξεργασία</string>
+    <string name="pref_cat_security" maxLength="41">Security</string>
+    <!-- Card template JavaScript API permissions -->
+    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
+    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
     <string name="use_input_tag" maxLength="41">Πληκτρολογήστε την απάντηση στην κάρτα</string>
@@ -193,7 +202,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Προσαρμοσμένος διακομιστής συγχρονισμού</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Δεν χρησιμοποιείται</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
+    <string name="custom_sync_server_help2"><![CDATA[
+        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
         <a href="%s">Learn more</a>

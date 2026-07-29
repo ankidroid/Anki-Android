@@ -47,6 +47,15 @@
     <string name="pref_cat_workarounds" maxLength="41">தீர்வுகள்</string>
     <string name="pref_cat_plugins" maxLength="41">செருகுநிரல்கள்</string>
     <string name="pref_cat_editing" maxLength="41">Editing</string>
+    <string name="pref_cat_security" maxLength="41">Security</string>
+    <!-- Card template JavaScript API permissions -->
+    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
+    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
+    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">ஸ்ட்ரோக் அகலம்</string>
     <string name="use_input_tag" maxLength="41">அட்டையில் பதிலை உள்ளிடவும்</string>
@@ -192,7 +201,8 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">தனிப்பயன் ஒத்திசைவு சேவையகம்</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">பயன்படுத்தப்படவில்லை</string>
-    <string name="custom_sync_server_help2"><![CDATA[        AnkiWeb உடன் ஒத்திசைப்பதற்கு மாற்றாக,
+    <string name="custom_sync_server_help2"><![CDATA[
+        AnkiWeb உடன் ஒத்திசைப்பதற்கு மாற்றாக,
         ஒத்திசைக்க உங்கள் சொந்த சேவையகத்தைப் பயன்படுத்தலாம்.
         அமைக்கப்படவில்லை என்றால், அதற்குப் பதிலாக இயல்புநிலை AnkiWeb சேவையகம் பயன்படுத்தப்படும்.
         <a href="%s">மேலும் அறிக</a>
@@ -281,7 +291,8 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid உங்கள் சேகரிப்பை அவ்வப்போது காப்புப் பிரதி எடுக்கும்.
+    <string name="pref__backups_help__summary"><![CDATA[
+        AnkiDroid உங்கள் சேகரிப்பை அவ்வப்போது காப்புப் பிரதி எடுக்கும்.
         காப்புப்பிரதிகள் இரண்டு நாட்களுக்கு மேல் பழமையான பிறகு,
         AnkiDroid வட்டு இடத்தை விடுவிக்க அவற்றில் சிலவற்றை அகற்றத் தொடங்கும்.
         <br><br>

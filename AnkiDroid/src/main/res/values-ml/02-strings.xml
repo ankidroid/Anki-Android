@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">അങ്കി പാക്കേജ് സംരക്ഷിക്കുന്നത് പരാജയപ്പെട്ടു</string>
     <string name="export_share_title">ഉപയോഗിച്ച് അങ്കി പാക്കേജ് അയയ്ക്കുക</string>
     <string name="export_email_subject">AnkiDroid എക്‌സ്‌പോർട്ടുചെയ്‌ത ഫ്ലാഷ് കാർഡുകൾ:%s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[
+        Hi!
         <br/><br/>
         This is an Anki flashcards deck sent from AnkiDroid[1].
         Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>

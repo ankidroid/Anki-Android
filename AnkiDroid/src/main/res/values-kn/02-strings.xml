@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">ಉಳಿಸಿ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ವಿಫಲವಾಗಿದೆ</string>
     <string name="export_share_title">ಬಳಸಿ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಕಳುಹಿಸಿ</string>
     <string name="export_email_subject">ಆಂಕಿಡ್ರಾಯ್ಡ್ ರಫ್ತು ಮಾಡಿದ ಫ್ಲ್ಯಾಷ್‌ಕಾರ್ಡ್‌ಗಳು:%s</string>
-    <string name="export_email_text"><![CDATA[        ನಮಸ್ತೆ!
+    <string name="export_email_text"><![CDATA[
+        ನಮಸ್ತೆ!
         <br/><br/>
         ಇದು AnkiDroid[1] ನಿಂದ ಕಳುಹಿಸಲಾದ ಅಂಕಿ ಫ್ಲಾಶ್‌ಕಾರ್ಡ್‌ಗಳ ಡೆಕ್ ಆಗಿದೆ.
         ಲಭ್ಯವಿರುವ ಅಂಕಿ ವಿತರಣೆಗಳಲ್ಲಿ[2] ಒಂದನ್ನು ಬಳಸಿಕೊಂಡು ಅದನ್ನು ತೆರೆಯಲು ಪ್ರಯತ್ನಿಸಿ ಮತ್ತು ಸುಲಭ ಮತ್ತು ಪರಿಣಾಮಕಾರಿ ಕಲಿಕೆಯನ್ನು ಆನಂದಿಸಿ!<br/><br/>
