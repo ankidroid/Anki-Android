@@ -27,6 +27,11 @@
         android:title="@string/blocker_a11y_status_title"
         android:summary="@string/blocker_a11y_status_off" />
     <Preference
+        android:key="@string/blocker_status_warning_key"
+        android:icon="@drawable/ic_warning"
+        android:selectable="false"
+        app:isPreferenceVisible="false" />
+    <Preference
         android:key="@string/blocker_blocked_apps_entry_key"
         android:title="@string/blocker_blocked_apps_title" />
     <Preference

@@ -75,6 +75,10 @@ class GateReviewHost(
                     if (fragment is ReviewerFragment) {
                         // The gate must not be escapable through the reviewer's own exit button
                         view.findViewById<View>(R.id.back_button)?.isVisible = false
+                        // The overflow menu navigates away to the note editor, card browser
+                        // and statistics. None of those grant access, but a gate should be
+                        // one thing only: answer the cards.
+                        view.findViewById<View>(R.id.reviewer_menu_view)?.isVisible = false
                     }
                 }
             },

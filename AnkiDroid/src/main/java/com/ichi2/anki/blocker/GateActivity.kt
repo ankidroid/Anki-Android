@@ -85,6 +85,8 @@ class GateActivity :
         progress = GateProgress(requiredCards)
         reviewHost = GateReviewHost(this, R.id.gate_fragment_container, this)
         reviewHost.install()
+        findViewById<TextView>(R.id.gate_target_label)?.text =
+            getString(R.string.blocker_gate_unlocking, target?.displayName(this).orEmpty())
         updateProgressChip()
 
         lifecycleScope.launch {

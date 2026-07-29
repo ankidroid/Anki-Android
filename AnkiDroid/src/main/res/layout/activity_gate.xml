@@ -9,17 +9,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/gate_progress_chip"
+    <LinearLayout
+        android:id="@+id/gate_banner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:layout_marginTop="8dp"
         android:background="?attr/colorSurfaceVariant"
         android:elevation="8dp"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="4dp"
-        android:textAppearance="?attr/textAppearanceLabelLarge"
-        tools:text="Answered 0 of 2" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="4dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/gate_target_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            tools:text="Unlock Instagram" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/gate_progress_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceLabelMedium"
+            tools:text="Answered 0 of 2" />
+
+    </LinearLayout>
 
 </FrameLayout>

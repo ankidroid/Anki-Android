@@ -20,12 +20,24 @@ import android.content.Context
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.ichi2.anki.blocker.BlockerStatus
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 
 class AppLifecycleObserver(
     private val context: Context,
 ) : DefaultLifecycleObserver {
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+        // Android revokes accessibility permission on force-stop/reinstall, which
+        // silently stops blocking; warn rather than fail quietly.
+        try {
+            BlockerStatus.refreshInactiveNotification(context)
+        } catch (e: Exception) {
+            Timber.w(e, "Blocker: could not refresh the inactive warning")
+        }
+    }
+
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
 

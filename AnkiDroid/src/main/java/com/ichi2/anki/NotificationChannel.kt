@@ -83,6 +83,7 @@ enum class NotificationChannel(
     GENERAL("General Notifications", R.string.app_name, NotificationManagerCompat.IMPORTANCE_DEFAULT),
     SYNC("Synchronization", R.string.sync_title, NotificationManagerCompat.IMPORTANCE_LOW),
     REVIEW_REMINDERS("Review Reminders", R.string.review_reminders_do_not_translate, NotificationManagerCompat.IMPORTANCE_DEFAULT),
+    BLOCKER("App Blocker", R.string.blocker_settings_title, NotificationManagerCompat.IMPORTANCE_DEFAULT),
     ;
 
     fun getName(res: Resources) = res.getString(nameId)

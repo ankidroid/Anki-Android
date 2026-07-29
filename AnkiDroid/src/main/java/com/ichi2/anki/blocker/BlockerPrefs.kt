@@ -27,6 +27,14 @@ object BlockerPrefs {
         @StringRes resId: Int,
     ): String = AnkiDroidApp.appResources.getString(resId)
 
+    /**
+     * Whether the user has read and accepted the accessibility disclosure. The
+     * blocker must not be enabled before this is true.
+     */
+    var hasAcceptedDisclosure: Boolean
+        get() = prefs.getBoolean(key(R.string.blocker_disclosure_accepted_key), false)
+        set(value) = prefs.edit { putBoolean(key(R.string.blocker_disclosure_accepted_key), value) }
+
     /** Whether the blocker is on at all. */
     var isEnabled: Boolean
         get() = prefs.getBoolean(key(R.string.blocker_enabled_key), false)

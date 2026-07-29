@@ -3,6 +3,10 @@
 
 package com.ichi2.anki.blocker
 
+import android.content.Context
+import android.content.pm.PackageManager
+import timber.log.Timber
+
 /**
  * Something the blocker can gate access to: an installed app or a website domain.
  *
@@ -23,6 +27,25 @@ sealed interface BlockTarget {
     ) : BlockTarget {
         override val key get() = "$DOMAIN_PREFIX$host"
     }
+
+    /**
+     * Name to show the user: an app's launcher label, or the domain itself.
+     * Falls back to the package name for an app that can't be resolved.
+     */
+    fun displayName(context: Context): String =
+        when (this) {
+            is Domain -> host
+            is App ->
+                try {
+                    context.packageManager
+                        .getApplicationInfo(packageName, 0)
+                        .loadLabel(context.packageManager)
+                        .toString()
+                } catch (e: PackageManager.NameNotFoundException) {
+                    Timber.w(e, "Blocker: no label for %s", packageName)
+                    packageName
+                }
+        }
 
     companion object {
         private const val APP_PREFIX = "app:"

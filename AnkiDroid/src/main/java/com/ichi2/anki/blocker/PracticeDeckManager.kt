@@ -10,7 +10,7 @@ import anki.decks.filteredDeckForUpdate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
-import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 
 /**
@@ -102,7 +102,10 @@ object PracticeDeckManager {
         val practiceDeckId =
             try {
                 undoableOp { sched.addOrUpdateFilteredDeck(update) }.id
-            } catch (e: BackendInvalidInputException) {
+            } catch (e: BackendException) {
+                // Most often BackendDeckIsFilteredException ("no cards matched"), when the
+                // deck is empty or everything in it is suspended or buried. Any backend
+                // failure here must fail open rather than trap the user behind a broken gate.
                 Timber.w(e, "Blocker: could not build practice deck from '%s'", sourceName)
                 return null
             }

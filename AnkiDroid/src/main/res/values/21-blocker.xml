@@ -4,6 +4,8 @@
     <string name="blocker_gate_title">Unlock with flashcards</string>
     <!-- Progress indicator inside the gate: how many cards were answered correctly so far -->
     <string name="blocker_gate_progress">Answered %1$d of %2$d</string>
+    <!-- Shown at the top of the gate. %s is the app or website being unlocked -->
+    <string name="blocker_gate_unlocking">Unlock %s</string>
     <!-- Toast shown when the gate is passed. %d is the number of minutes the unlock lasts -->
     <string name="blocker_unlocked_toast">Unlocked for %d minutes</string>
     <!-- Toast shown when the gate cannot show any cards and lets the user through -->
@@ -45,11 +47,21 @@
     <!-- Title of the dialog shown before opening the system accessibility settings -->
     <string name="blocker_disclosure_title">Accessibility permission needed</string>
     <!-- Body of the disclosure dialog explaining why the accessibility service is needed -->
-    <string name="blocker_disclosure_message">To know when a blocked app or website is opened, AnkiDroid uses an accessibility service. It only checks which app is in front and, for browsers, the address bar — it does not read or store anything else on your screen.\n\nOn the next screen, enable “AnkiDroid app blocker”.</string>
+    <string name="blocker_disclosure_message">To know when a blocked app or website is opened, AnkiDroid uses an accessibility service. It only checks which app is in front and, for browsers, the address bar. Nothing else on your screen is read, and none of it is stored or sent anywhere.\n\nOn the next screen, enable “AnkiDroid app blocker”. If your phone aggressively manages battery, also allow AnkiDroid to run unrestricted, or blocking may stop working in the background.</string>
+    <!-- Button confirming the user agrees to the accessibility disclosure -->
+    <string name="blocker_disclosure_accept">I agree</string>
     <!-- Hint of the text field for adding a website to the blocklist -->
     <string name="blocker_add_domain_hint">Website, e.g. x.com</string>
     <!-- Error shown when the typed text is not a valid website -->
     <string name="blocker_invalid_domain">Not a valid website address</string>
     <!-- Shown when no websites have been blocked yet -->
     <string name="blocker_no_domains">No blocked websites yet</string>
+    <!-- Title of the notification warning that blocking has stopped working -->
+    <string name="blocker_inactive_title">App blocker is not running</string>
+    <!-- Body of the notification warning that blocking has stopped working -->
+    <string name="blocker_inactive_message">Android turned off the accessibility permission, so blocked apps and websites are open right now. Tap to turn it back on.</string>
+    <!-- Warning shown in the blocker settings when the accessibility permission is missing -->
+    <string name="blocker_inactive_settings_warning">Blocking is paused. Tap “Accessibility service” above to turn the permission back on.</string>
+    <!-- Shown in blocker settings when the blocker is on but nothing has been blocked yet -->
+    <string name="blocker_nothing_blocked">Nothing is blocked yet. Choose the apps or websites you want to gate.</string>
 </resources>

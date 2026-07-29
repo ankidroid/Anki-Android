@@ -3,9 +3,6 @@
 
 package com.ichi2.anki.blocker
 
-import android.content.ComponentName
-import android.content.Intent
-import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
@@ -29,9 +26,20 @@ class BlockerSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         requirePreference<SwitchPreferenceCompat>(R.string.blocker_enabled_key).setOnPreferenceChangeListener { _, newValue ->
-            if (newValue == true && !isAccessibilityServiceEnabled()) {
-                showDisclosureDialog()
+            if (newValue != true) {
+                view?.post { refreshSummaries() }
+                return@setOnPreferenceChangeListener true
             }
+            // The accessibility disclosure must be accepted before the feature turns on,
+            // not after: consent has to be an affirmative action by the user.
+            if (!BlockerPrefs.hasAcceptedDisclosure) {
+                showDisclosureDialog()
+                return@setOnPreferenceChangeListener false
+            }
+            if (!BlockerStatus.isAccessibilityServiceEnabled(requireContext())) {
+                openAccessibilitySettings()
+            }
+            view?.post { refreshSummaries() }
             true
         }
         requirePreference<Preference>(R.string.blocker_accessibility_status_key).setOnPreferenceClickListener {
@@ -69,13 +77,29 @@ class BlockerSettingsFragment : SettingsFragment() {
     }
 
     private fun refreshSummaries() {
+        val context = requireContext()
+        val serviceEnabled = BlockerStatus.isAccessibilityServiceEnabled(context)
         requirePreference<Preference>(R.string.blocker_accessibility_status_key).setSummary(
-            if (isAccessibilityServiceEnabled()) R.string.blocker_a11y_status_on else R.string.blocker_a11y_status_off,
+            if (serviceEnabled) R.string.blocker_a11y_status_on else R.string.blocker_a11y_status_off,
         )
+        val blockedApps = BlockerPrefs.blockedApps.size
+        val blockedDomains = BlockerPrefs.blockedDomains.size
         requirePreference<Preference>(R.string.blocker_blocked_apps_entry_key).summary =
-            getString(R.string.blocker_blocked_count, BlockerPrefs.blockedApps.size)
+            getString(R.string.blocker_blocked_count, blockedApps)
         requirePreference<Preference>(R.string.blocker_blocked_domains_entry_key).summary =
-            getString(R.string.blocker_blocked_count, BlockerPrefs.blockedDomains.size)
+            getString(R.string.blocker_blocked_count, blockedDomains)
+        requirePreference<Preference>(R.string.blocker_status_warning_key).apply {
+            val warning =
+                when {
+                    !BlockerPrefs.isEnabled -> null
+                    !serviceEnabled -> getString(R.string.blocker_inactive_settings_warning)
+                    blockedApps == 0 && blockedDomains == 0 -> getString(R.string.blocker_nothing_blocked)
+                    else -> null
+                }
+            isVisible = warning != null
+            summary = warning
+        }
+        BlockerStatus.refreshInactiveNotification(context)
         launchCatchingTask {
             val deckName =
                 BlockerPrefs.gateDeckId
@@ -86,29 +110,29 @@ class BlockerSettingsFragment : SettingsFragment() {
         }
     }
 
-    private fun isAccessibilityServiceEnabled(): Boolean {
-        val context = requireContext()
-        val enabledServices =
-            Settings.Secure.getString(context.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-                ?: return false
-        val component = ComponentName(context, BlockerAccessibilityService::class.java)
-        return enabledServices
-            .split(':')
-            .mapNotNull(ComponentName::unflattenFromString)
-            .any { it == component }
-    }
-
     private fun showDisclosureDialog() {
         AlertDialog.Builder(requireContext()).show {
             setTitle(R.string.blocker_disclosure_title)
             setMessage(R.string.blocker_disclosure_message)
-            setPositiveButton(R.string.dialog_ok) { _, _ -> openAccessibilitySettings() }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            setCancelable(false)
+            setPositiveButton(R.string.blocker_disclosure_accept) { _, _ ->
+                Timber.i("Blocker: accessibility disclosure accepted")
+                BlockerPrefs.hasAcceptedDisclosure = true
+                BlockerPrefs.isEnabled = true
+                requirePreference<SwitchPreferenceCompat>(R.string.blocker_enabled_key).isChecked = true
+                refreshSummaries()
+                if (!BlockerStatus.isAccessibilityServiceEnabled(requireContext())) {
+                    openAccessibilitySettings()
+                }
+            }
+            setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                Timber.i("Blocker: accessibility disclosure declined")
+            }
         }
     }
 
     private fun openAccessibilitySettings() {
         Timber.i("Blocker: opening system accessibility settings")
-        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        startActivity(BlockerStatus.accessibilitySettingsIntent())
     }
 }
