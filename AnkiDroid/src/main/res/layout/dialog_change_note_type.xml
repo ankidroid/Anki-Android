@@ -74,7 +74,7 @@
                 android:layout_marginStart="8dp"
                 android:gravity="start|center_vertical"
                 android:textStyle="bold"
-                android:text="@string/CardEditorModel" />
+                tools:text="Basic → " />
             <Spinner
                 android:id="@+id/dest_note_type_spinner"
                 android:layout_width="match_parent"

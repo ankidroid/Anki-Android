@@ -167,6 +167,8 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
     }
 
     private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
+        binding.CardEditorModelText.text = "${viewModel.inputNoteType.name} \u2192 "
+
         binding.destNoteTypeSpinner.apply {
             adapter = createNoteTypeAdapter()
 
