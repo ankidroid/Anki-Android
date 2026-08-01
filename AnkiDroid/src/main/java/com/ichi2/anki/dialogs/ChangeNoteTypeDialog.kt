@@ -34,7 +34,9 @@ import android.widget.Spinner
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.text.BidiFormatter
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -50,6 +52,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
 import com.ichi2.anki.databinding.DialogFieldsBinding
 import com.ichi2.anki.databinding.DialogTemplatesBinding
@@ -94,6 +97,7 @@ import timber.log.Timber
  *
  * @see ChangeNoteTypeViewModel
  */
+@NeedsTest("Screenshot baseline for Change Note Type Dialog UI")
 class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note_type) {
     private val viewModel: ChangeNoteTypeViewModel by viewModels { defaultViewModelProviderFactory }
 
@@ -167,6 +171,8 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
     }
 
     private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
+        binding.CardEditorModelText.text = BidiFormatter.getInstance().unicodeWrap(viewModel.inputNoteType.name)
+
         binding.destNoteTypeSpinner.apply {
             adapter = createNoteTypeAdapter()
 
@@ -177,6 +183,10 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                 BasicItemSelectedListener { position, id: NoteTypeId ->
                     viewModel.setOutputNoteTypeId(id)
                 }
+        }
+
+        binding.toCard.setOnClickListener {
+            binding.destNoteTypeSpinner.performClick()
         }
     }
 
@@ -209,6 +219,12 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                 val noteType = getItem(position)!!
                 text = noteType.name
                 setTextColor(if (noteType.isCloze) clozeColor else defaultViewTextColor)
+                isSingleLine = false
+                ellipsize = null
+                updateLayoutParams {
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
+                }
+                setPaddingRelative(0, paddingTop, paddingEnd, paddingBottom)
             }
 
             override fun getDropDownView(
