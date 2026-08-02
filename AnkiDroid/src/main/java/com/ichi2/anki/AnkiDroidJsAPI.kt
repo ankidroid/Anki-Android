@@ -379,6 +379,10 @@ open class AnkiDroidJsAPI(
                 }
 
                 "isInFullscreen" -> convertToByteArray(apiContract, activity.isFullscreen)
+                "toggleFullscreen" -> {
+                    val result = if (activity is Reviewer) activity.toggleFullScreen() else false
+                    convertToByteArray(apiContract, result)
+                }
                 "isTopbarShown" -> convertToByteArray(apiContract, activity.prefShowTopbar)
                 "isInNightMode" -> convertToByteArray(apiContract, activity.isInNightMode)
                 "enableHorizontalScrollbar" -> {
