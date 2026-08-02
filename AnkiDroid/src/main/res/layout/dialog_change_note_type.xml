@@ -66,6 +66,7 @@
             android:paddingTop="4dp"
             android:paddingStart="24dp"
             android:paddingEnd="24dp">
+            <!-- Added locale text direction so the English text (e.g. "Basic") in RTL language is not treated as LTR string -->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/CardEditorModelText"
                 android:layout_width="wrap_content"
@@ -73,8 +74,9 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:gravity="start|center_vertical"
+                android:textDirection="locale"
                 android:textStyle="bold"
-                tools:text="Basic → " />
+                android:text="@string/CardEditorModel" /> <!--The change was made to visualize the layout. Reverted it back.-->
             <Spinner
                 android:id="@+id/dest_note_type_spinner"
                 android:layout_width="match_parent"
