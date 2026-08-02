@@ -46,7 +46,7 @@
     <string name="card_browser_show_marked" maxLength="28">Filtrovať označené</string>
     <string name="card_browser_show_suspended" maxLength="28">Filtrovať pozastavené</string>
     <string name="card_browser_search_by_tag" maxLength="28">Filtrovať podľa štítku</string>
-    <string name="card_browser_search_by_flag" maxLength="28">Filtrovať podľa vlajky</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtrovať podľa príznaku</string>
     <string name="card_browser_list_my_searches" maxLength="28">Moje vyhľadávania</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">Uložiť vyhľadávanie</string>
     <string name="card_browser_list_my_searches_title">Vybrať uložené vyhľadávanie</string>
