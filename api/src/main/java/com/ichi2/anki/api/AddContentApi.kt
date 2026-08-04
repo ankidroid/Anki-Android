@@ -583,9 +583,9 @@ public class AddContentApi(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.GET_META_DATA,
                     )
-                }
+                } ?: return ANKIDROID_NOT_INSTALLED
 
-            return if (info?.metaData != null &&
+            return if (info.metaData != null &&
                 info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)
             ) {
                 info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY)
@@ -788,6 +788,7 @@ public class AddContentApi(
         private const val TEST_TAG = "PREVIEW_NOTE"
         private const val PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec"
         private const val DEFAULT_PROVIDER_SPEC_VALUE = 1 // for when meta-data key does not exist
+        private const val ANKIDROID_NOT_INSTALLED = -1
         private val PROJECTION =
             arrayOf(
                 Note._ID,
