@@ -218,8 +218,10 @@ public class AddContentApi(
     /**
      * Get the number of notes that exist for the specified model ID
      * @param mid id of the model to be used
-     * @return number of notes that exist with that model ID or -1 if there was a problem
+     * @return number of notes that exist with that model ID, or 0 if the query failed
      */
+    // TODO: return null on failure once we can make a breaking change: 0 is ambiguous with a
+    //  model that genuinely has no notes
     public fun getNoteCount(mid: Long): Int = compat.queryNotes(mid)?.use { cursor -> cursor.count } ?: 0
 
     /**
