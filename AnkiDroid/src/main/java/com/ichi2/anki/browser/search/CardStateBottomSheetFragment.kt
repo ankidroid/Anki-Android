@@ -105,6 +105,7 @@ class CardStateBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment
         ) {
             val state = this.states[position]
             holder.binding.text.text = state.label
+            holder.binding.checkbox.contentDescription = state.label
             holder.binding.icon.setImageResource(state.iconRes)
             holder.binding.root.setOnClickListener { onItemClickedListener(state) }
             holder.binding.checkbox.apply {

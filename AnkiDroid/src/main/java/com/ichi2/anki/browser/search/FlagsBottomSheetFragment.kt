@@ -127,6 +127,7 @@ class FlagsBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment_bot
         ) {
             val model = this.states[position]
             holder.binding.text.text = model.label
+            holder.binding.checkbox.contentDescription = model.label
             holder.binding.icon.setImageResource(model.flag.drawableRes)
             // TODO: Long press to rename
             holder.binding.root.setOnClickListener { onItemClickedListener(model.flag) }
