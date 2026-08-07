@@ -80,7 +80,6 @@ class TagsArrayAdapter(
      * @param vh The reference to currently bound [ViewHolder]. A node bound with some [ViewHolder] must have [vh] nonnull.
      * @see onBindViewHolder for the binding
      */
-    @NeedsTest("Make sure that the data structure works properly.")
     data class TagTreeNode(
         val tag: String,
         val parent: TagTreeNode?,
