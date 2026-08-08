@@ -92,7 +92,7 @@
     <string name="empty_cram_label" maxLength="28">تخلیه</string>
     <string name="create_subdeck">ایجاد زیردسته</string>
     <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت فیلتر شده&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته کارت</string>
     <string name="empty_deck">این دسته خالی است</string>
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_congrats_finished">تبریک! امروز کارتان تمام شد.</string>
@@ -166,9 +166,9 @@
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">کارت فوری</string>
     <!-- Internet Permissions -->
-    <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="internet_access_title" comment="used for notifying user to unable internet access">اینترنت</string>
+    <string name="permission_access_summary">برای عملکرد برنامه ضروری است</string>
+    <string name="permission_required_message">لطفا برای ادامه، مجوز %s را به انکی‌دروید بدهید</string>
     <!-- Multiple profile -->
     <string name="add_profile">اضافه کردن پروفایل</string>
 </resources>

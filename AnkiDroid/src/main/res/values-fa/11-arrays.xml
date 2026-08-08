@@ -30,8 +30,8 @@
     <string name="add_to_deck_decide_by_note_type">تصمیم گیری براساس نوع یادداشت</string>
     <!-- theme labels -->
     <string name="theme_follow_system">پیروی از سیستم</string>
-    <string name="theme_day" comment="Day/Light theme color scheme">Day</string>
-    <string name="theme_night" comment="Night/Dark theme color scheme">Night</string>
+    <string name="theme_day" comment="Day/Light theme color scheme">روز</string>
+    <string name="theme_night" comment="Night/Dark theme color scheme">شب</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">روشن</string>
     <string name="day_theme_plain">ساده</string>
@@ -48,7 +48,7 @@
     <string name="html_size_code_xx_large">بسیار بزرگ</string>
     <!-- gestures_labels -->
     <string name="answer_easy" comment="Match Anki\'s translations: deckConfigAnswerAgain" maxLength="41">پاسخ آسان</string>
-    <string name="gesture_abort_learning" maxLength="41">Close study screen</string>
+    <string name="gesture_abort_learning" maxLength="41">بستن صفحه مطالعه</string>
     <string name="gesture_flag_red" maxLength="41">نمایش/مخفی‌کردن نشانهٔ قرمز</string>
     <string name="gesture_flag_orange" maxLength="41">نمایش/مخفی‌کردن نشانه‌ٔ نارنجی</string>
     <string name="gesture_flag_green" maxLength="41">نمایش/مخفی‌کردن نشانهٔ سبز</string>
@@ -60,7 +60,7 @@
     <string name="gesture_page_up" maxLength="41">بالا بردن صفحه</string>
     <string name="gesture_page_down" maxLength="41">پایین بردن صفحه</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">نمایش/مخفی‌کردن وایت‌برد</string>
-    <string name="gesture_toggle_eraser" maxLength="41">Toggle eraser</string>
+    <string name="gesture_toggle_eraser" maxLength="41">روشن/خاموش کردن پاک‌کن</string>
     <string name="gesture_show_hint" maxLength="41">نمایش راهنما</string>
     <string name="gesture_show_all_hints" maxLength="41">نمایش همهٔ راهنماها</string>
     <string name="record_voice" maxLength="41">ضبط صدا</string>
