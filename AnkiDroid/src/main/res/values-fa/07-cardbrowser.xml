@@ -48,7 +48,7 @@
     <string name="card_browser_list_my_searches_new_search_error_empty_name">شما نمی توانید جستجو را بدون نام ذخیره کنید</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">نام وجود دارد</string>
     <string name="card_browser_list_my_searches_successful_save">جستجو ذخیره شد.</string>
-    <string name="card_browser_list_my_searches_successful_deleted">Search deleted</string>
+    <string name="card_browser_list_my_searches_successful_deleted">جستجو حذف شد</string>
     <string name="no_note_to_edit">هیچ یادداشتی برای ویرایش ندلرید</string>
     <string name="card_browser_list_my_searches_remove_content">%1$s حذف شود؟</string>
     <string name="card_browser_change_display_order" maxLength="28">تغییر تنظیم صفحه نمایش</string>
@@ -103,6 +103,6 @@
     <string name="save_changes_message">ابتدا تغییرات خود را ذخیره کنید</string>
     <string name="browser_find_replace_loading_fields">بازیابی اسامی فیلد ها&#8230;</string>
     <!-- Search history -->
-    <string name="card_browser_see_more">See more</string>
-    <string name="card_browser_see_less">See less</string>
+    <string name="card_browser_see_more">مشاهدهٔ بیشتر</string>
+    <string name="card_browser_see_less">مشاهدهٔ کمتر</string>
 </resources>

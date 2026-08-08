@@ -47,9 +47,9 @@
     <string name="pref_cat_workarounds" maxLength="41">خىزمەت رايونى</string>
     <string name="pref_cat_plugins" maxLength="41">قىستۇرما</string>
     <string name="pref_cat_editing" maxLength="41">تەھرىرلەۋاتىدۇ</string>
-    <string name="pref_cat_security" maxLength="41">Security</string>
+    <string name="pref_cat_security" maxLength="41">بىخەتەرلىك</string>
     <!-- Card template JavaScript API permissions -->
-    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
+    <string name="allow_dangerous_js_api_title" maxLength="41">خەتەرلىك JavaScript API غا ئومۇمىيەت دائىرىسىدە يول قويىدۇ</string>
     <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
     <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->

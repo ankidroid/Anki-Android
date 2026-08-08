@@ -70,7 +70,7 @@
     <string name="menu_add_note" maxLength="28">노트 추가</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">계정 동기화</string>
     <string name="menu_dismiss_note" maxLength="41">숨김 / 삭제</string>
-    <string name="rename_flag">플래그 이름 변경하기</string>
+    <string name="rename_flag">플래그 이름 변경</string>
     <string name="menu_edit_tags" maxLength="28">태그 수정</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
     <string name="menu_search" maxLength="28">%1$s에서 찾아보기</string>
@@ -129,7 +129,7 @@
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">AnkiDroid의 컬렉션을 AnkiWeb의 컬렉션으로 덮어쓰시겠습니까?</string>
-    <string name="sync_conflict_local_confirm_new">AnkiDroid의 컬렉션을 AnkiWeb의 컬렉션으로 덮어쓰시겠습니까?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb의 컬렉션을 AnkiDroid의 컬렉션으로 덮어쓰시겠습니까?</string>
     <string name="sync_conflict_title_new">유지할 컬렉션 선택</string>
     <string name="sync_conflict_replace_title">컬렉션을 덮어쓰는 중&#8230;</string>
     <!-- Generic errors -->
@@ -162,7 +162,7 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">즉석 카드</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">인터넷</string>
-    <string name="permission_access_summary">Required for the app to work</string>
+    <string name="permission_access_summary">앱이 작동하려면 필요합니다</string>
     <string name="permission_required_message">계속하려면 AnkiDroid의 \'%s\' 권한을 허용해주세요</string>
     <!-- Multiple profile -->
     <string name="add_profile">프로필 추가</string>
