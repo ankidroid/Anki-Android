@@ -74,13 +74,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:gravity="start|center_vertical"
                 android:textDirection="locale"
                 android:textStyle="bold"
                 android:drawablePadding="8dp"
-                app:drawableEndCompat="@drawable/ic_chevron_right_black"
-                app:drawableTint="?android:attr/textColorPrimary" /> <!--Using ic_chevron_right which is vertically centred-->
+                app:drawableEndCompat="@drawable/ic_arrow_right_alt_24"
+                app:drawableTint="?android:attr/textColorPrimary" />
             <Spinner
                 android:id="@+id/dest_note_type_spinner"
                 android:layout_width="match_parent"
