@@ -94,7 +94,7 @@ class RecyclerFastScroller
         /**
          * Inset, in pixels, reserved at the bottom of the handle's travel.
          *
-         * For the navigation bar with edge to edge support.
+         * For rounded display corners with edge to edge support.
          *
          * The handle is constrained to `height - handleBottomInset`, so it stays touchable and its
          * bottom aligns with the list's last item at full scroll.
@@ -428,7 +428,7 @@ class RecyclerFastScroller
             val verticalScrollExtent = recyclerView!!.computeVerticalScrollExtent()
 
             // The track (bar) spans the full height, but the handle travels only the area above
-            // handleBottomInset so it stays clear of the navigation bar.
+            // handleBottomInset so it stays clear of the navigation bar / rounded corner.
             val fullBarHeight = bar.height
             val trackHeight = (fullBarHeight - handleBottomInset).coerceAtLeast(0)
             val maxScrollOffset = (verticalScrollRange - verticalScrollExtent).coerceAtLeast(1)
