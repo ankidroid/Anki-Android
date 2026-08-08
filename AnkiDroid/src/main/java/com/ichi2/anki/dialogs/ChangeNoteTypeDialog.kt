@@ -167,9 +167,8 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
     }
 
     private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
-        // Use a left arrow for RTL languages (like Arabic) and a right arrow for LTR
-        val arrow = if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL) "\u2190 " else "\u2192 "
-        binding.CardEditorModelText.text = "${viewModel.inputNoteType.name} $arrow"
+        // Using drawableEnd in XML instead of a unicode arrow for perfect vertical centering
+        binding.CardEditorModelText.text = viewModel.inputNoteType.name
 
         binding.destNoteTypeSpinner.apply {
             adapter = createNoteTypeAdapter()
