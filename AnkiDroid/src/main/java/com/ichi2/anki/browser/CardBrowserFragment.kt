@@ -134,6 +134,7 @@ import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
@@ -436,9 +437,9 @@ class CardBrowserFragment :
                     WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
                 )
             v.updatePadding(left = bars.left, right = bars.right)
-            // The bottom of the safe area is above the navigation bar.
+            // The bottom of the safe area is above the navigation bar and rounded display corners.
             // When scrolled to the bottom of the scrollbar should be aligned with the last row.
-            val safeAreaBottom = bars.bottom
+            val safeAreaBottom = maxOf(bars.bottom, insets.bottomCornerClearance(v))
             // Due to clipToPadding=false, only the last row is affected
             cardsListView.updatePadding(bottom = safeAreaBottom)
             // The scrollbar track stays full-height (edge to edge); only the handle is kept above

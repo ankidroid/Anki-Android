@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.RoundedCornerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -33,7 +34,7 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
 
     /**
      * When fully scrolled: the last row, the bottom of the scroll track and the bottom of the
-     * scroll handle all rest on the same line, above the navigation bar.
+     * scroll handle all rest on the same line, above the navigation bar/rounded corners.
      *
      * Screenshot counterpart of [CardBrowserInsetsTest]
      * `handle, track and last row rest on the same line when fully scrolled`, which asserts the
@@ -59,8 +60,8 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
     /**
      * Landscape with 3-button navigation: the navigation bar is a side inset and the camera
      * cutout is on the opposite side. The toolbar and content clear both sides, no bottom buffer
-     * is reserved (the navigation bar is a side inset) and the scroll track runs to the bottom
-     * edge. [CardBrowserInsetsTest] asserts the same geometry programmatically.
+     * is reserved (the side inset already clears the rounded corner) and the scroll track runs to
+     * the bottom edge. [CardBrowserInsetsTest] asserts the same geometry programmatically.
      */
     @Test
     fun cardBrowserLandscapeScrolledToBottom() {
@@ -78,6 +79,32 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
             advanceRobolectricLooper()
 
             captureScreen("landscape_scrolled_to_bottom")
+        }
+    }
+
+    /**
+     * Landscape with gesture navigation: no side inset, so when scrolled to the bottom, the
+     *  final row and scrollbar should rest above the corner, to allow interaction.
+     *
+     * Screenshot counterpart of [CardBrowserInsetsTest]
+     * `rounded display corners are cleared when larger than the navigation bar`.
+     */
+    @Test
+    fun cardBrowserLandscapeGestureNavigationScrolledToBottom() {
+        RuntimeEnvironment.setQualifiers("+land")
+        withCardBrowser(noteCount = 50) { browser ->
+            browser.simulateGestureNavigationBar()
+
+            val list = browser.findViewById<RecyclerView>(R.id.card_browser_list)
+            list.scrollToPosition(49)
+            while (list.canScrollVertically(1)) list.scrollBy(0, 50)
+            advanceRobolectricLooper()
+
+            // keep the auto-hiding fast scroller visible for the capture
+            browser.findViewById<RecyclerFastScroller>(R.id.browser_scroller).show(animate = false)
+            advanceRobolectricLooper()
+
+            captureScreen("landscape_gesture_scrolled_to_bottom")
         }
     }
 
@@ -114,8 +141,47 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
     }
 
     /**
+     * As [simulateNavigationBar], but for landscape with gesture navigation: a short bottom
+     * inset, with rounded display corners larger than it.
+     */
+    private fun CardBrowser.simulateGestureNavigationBar() {
+        val navBarHeight = 24.dp
+        val insets =
+            with(targetContext) {
+                WindowInsetsCompat
+                    .Builder()
+                    .setInsets(statusBars(), insetsOf(top = 24.dp))
+                    .setInsets(navigationBars(), insetsOf(bottom = navBarHeight))
+                    .apply {
+                        val radius = 34.dp.toPx(targetContext)
+                        // only the radius is read by the implementation; the center is unused
+                        setRoundedCorner(
+                            RoundedCornerCompat.POSITION_BOTTOM_LEFT,
+                            RoundedCornerCompat(RoundedCornerCompat.POSITION_BOTTOM_LEFT, radius, radius, radius),
+                        )
+                    }.build()
+            }
+        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+
+        val decor = window.decorView as ViewGroup
+        val navBarOverlay =
+            View(this).apply {
+                setBackgroundColor(0x80000000.toInt())
+            }
+        decor.addView(
+            navBarOverlay,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                navBarHeight.toPx(targetContext),
+                Gravity.BOTTOM,
+            ),
+        )
+    }
+
+    /**
      * As [simulateNavigationBar], but for landscape with 3-button navigation: the navigation bar
-     * is a side inset, with the camera cutout on the opposite side.
+     * is a side inset (wider than the rounded corner it clears), with the camera cutout on the
+     * opposite side.
      */
     private fun CardBrowser.simulateSideNavigationBar() {
         val navBarWidth = 48.dp
@@ -126,7 +192,14 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
                     .setInsets(statusBars(), insetsOf(top = 24.dp))
                     .setInsets(navigationBars(), insetsOf(right = navBarWidth))
                     .setInsets(displayCutout(), insetsOf(left = 32.dp))
-                    .build()
+                    .apply {
+                        val radius = 34.dp.toPx(targetContext)
+                        // only the radius is read by the implementation; the center is unused
+                        setRoundedCorner(
+                            RoundedCornerCompat.POSITION_BOTTOM_LEFT,
+                            RoundedCornerCompat(RoundedCornerCompat.POSITION_BOTTOM_LEFT, radius, radius, radius),
+                        )
+                    }.build()
             }
         ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
 

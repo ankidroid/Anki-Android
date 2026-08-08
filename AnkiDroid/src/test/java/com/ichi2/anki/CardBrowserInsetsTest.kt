@@ -4,6 +4,7 @@ package com.ichi2.anki
 
 import android.view.View
 import android.view.View.MeasureSpec
+import androidx.core.view.RoundedCornerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -28,8 +29,8 @@ import org.junit.runner.RunWith
  *
  * The list draws edge-to-edge under the navigation bar and the fast
  * scroller's track is full-height/edge-to-edge. Only the handle is held inside the safe area
- * (clearing the navigation bar), so at full scroll the handle's bottom lines up with the last
- * card's resting position.
+ * (clearing the navigation bar and rounded display corners), so at full scroll the handle's bottom
+ * lines up with the last card's resting position.
  */
 @RunWith(AndroidJUnit4::class)
 class CardBrowserInsetsTest : RobolectricTest() {
@@ -146,6 +147,25 @@ class CardBrowserInsetsTest : RobolectricTest() {
         }
 
     @Test
+    fun `rounded display corners are cleared when larger than the navigation bar`() =
+        withCardBrowser(noteCount = 1) { browser ->
+            val cornerRadius = 48.dp.toPx(targetContext)
+            browser.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+            browser.layoutForTest()
+
+            assertThat(
+                "the last card rests above the rounded corners",
+                browser.cardList.restingContentBottomToParent,
+                equalTo(cornerRadius),
+            )
+            assertThat(
+                "the handle is inset to the last card's resting line",
+                browser.fastScroller.handleBottomInset,
+                equalTo(cornerRadius),
+            )
+        }
+
+    @Test
     fun `toolbar is padded past a side navigation bar and cutout`() =
         withCardBrowser(noteCount = 1) { browser ->
             // landscape with 3-button navigation: the navigation bar is a side inset and the
@@ -163,6 +183,52 @@ class CardBrowserInsetsTest : RobolectricTest() {
                 "toolbar is padded past the side navigation bar",
                 toolbar.paddingRight,
                 equalTo(48.dp.toPx(targetContext)),
+            )
+        }
+
+    @Test
+    fun `a side navigation bar clearing the corner removes the bottom buffer`() =
+        withCardBrowser(noteCount = 50) { browser ->
+            // landscape with 3-button navigation: the bar is wider than the corner radius, so the
+            // scroll handle is already inboard of the corner arc and no vertical buffer is needed
+            browser.dispatchInsets(navBarRight = 48.dp, bottomCornerRadius = 34.dp)
+            browser.layoutForTest()
+
+            val fragmentRoot =
+                browser.supportFragmentManager
+                    .findFragmentById(R.id.card_browser_frame)!!
+                    .requireView()
+            assertThat(
+                "content is padded past the side navigation bar",
+                fragmentRoot.paddingRight,
+                equalTo(48.dp.toPx(targetContext)),
+            )
+            assertThat("no bottom buffer is reserved", browser.cardList.paddingBottom, equalTo(0))
+            assertThat("the handle may reach the parent's bottom", browser.fastScroller.handleBottomInset, equalTo(0))
+
+            browser.cardList.scrollToPosition(49)
+            browser.layoutForTest()
+            assertThat("list is fully scrolled", browser.cardList.canScrollVertically(1), equalTo(false))
+            assertThat(
+                "the track reaches the parent's bottom when fully scrolled",
+                browser.fastScroller.bar.bottom,
+                equalTo(browser.fastScroller.height),
+            )
+        }
+
+    @Test
+    fun `a partial side inset reduces the corner clearance by its width`() =
+        withCardBrowser(noteCount = 1) { browser ->
+            // a side inset narrower than the corner radius leaves the scroll handle inside the
+            // corner's horizontal extent, but part-way in: only the remainder of the radius is
+            // reserved (48dp radius - 24dp side inset)
+            browser.dispatchInsets(navBarRight = 24.dp, bottomCornerRadius = 48.dp)
+            browser.layoutForTest()
+
+            assertThat(
+                "the clearance is the corner radius less the side inset",
+                browser.fastScroller.handleBottomInset,
+                equalTo(24.dp.toPx(targetContext)),
             )
         }
 
@@ -188,6 +254,7 @@ class CardBrowserInsetsTest : RobolectricTest() {
         navBarBottom: Dp = 0.dp,
         navBarRight: Dp = 0.dp,
         cutoutLeft: Dp = 0.dp,
+        bottomCornerRadius: Dp = 0.dp,
     ) {
         val insets =
             with(targetContext) {
@@ -196,7 +263,16 @@ class CardBrowserInsetsTest : RobolectricTest() {
                     .setInsets(statusBars(), insetsOf(top = 24.dp))
                     .setInsets(navigationBars(), insetsOf(right = navBarRight, bottom = navBarBottom))
                     .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
-                    .build()
+                    .apply {
+                        val radius = bottomCornerRadius.toPx(targetContext)
+                        if (radius > 0) {
+                            // only the radius is read by the implementation; the center is unused
+                            setRoundedCorner(
+                                RoundedCornerCompat.POSITION_BOTTOM_LEFT,
+                                RoundedCornerCompat(RoundedCornerCompat.POSITION_BOTTOM_LEFT, radius, radius, radius),
+                            )
+                        }
+                    }.build()
             }
         ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
     }
