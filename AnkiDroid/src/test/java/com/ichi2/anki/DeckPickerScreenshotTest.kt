@@ -5,11 +5,20 @@ package com.ichi2.anki
 
 import android.content.Intent
 import androidx.core.content.edit
+import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.testutils.BackupManagerTestUtilities
+import kotlinx.coroutines.flow.first
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeSource
 
 /**
  * Screenshot tests for [DeckPicker]
@@ -29,8 +38,10 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
     }
 
     @After
-    fun tearDownBackup() {
+    override fun tearDown() {
+        super.tearDown()
         BackupManagerTestUtilities.reset()
+        Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), false) }
     }
 
     @Test
@@ -50,108 +61,145 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
         }
 
     @Test
-    fun hierarchy_lines() {
-        targetContext.sharedPrefs().edit { putBoolean("devBottomNav", true) }
+    fun hierarchy_lines() =
+        runTest {
+            enableBottomNavigation()
 
-        val root1 = addDeck("Math")
-        addDeck("Math::Algebra")
-        addDeck("Math::Algebra::Linear")
-        addDeck("Math::Geometry")
-        val root2 = addDeck("Science")
-        addDeck("Science::Physics")
-        addDeck("Science::Physics::Kinematics")
-        addDeck("Science::Chemistry")
+            val root1 = addDeck("Math")
+            val mathAlg = addDeck("Math::Algebra")
+            addDeck("Math::Algebra::Linear")
+            addDeck("Math::Geometry")
+            val root2 = addDeck("Science")
+            val sciPhys = addDeck("Science::Physics")
+            addDeck("Science::Physics::Kinematics")
+            addDeck("Science::Chemistry")
 
-        val deckPicker =
-            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).also {
-                RobolectricTest.advanceRobolectricLooper()
-            }
+            val deckPicker = startDeckPicker()
+            expandDecks(deckPicker, root1, root2, mathAlg, sciPhys)
 
-        // Expand root nodes to see children
-        deckPicker.viewModel.toggleDeckExpand(root1)
-        deckPicker.viewModel.toggleDeckExpand(root2)
-        RobolectricTest.advanceRobolectricLooper()
-
-        // Also expand Math::Algebra and Science::Physics to see deep nesting
-        deckPicker.viewModel.toggleDeckExpand(col.decks.id("Math::Algebra"))
-        deckPicker.viewModel.toggleDeckExpand(col.decks.id("Science::Physics"))
-        RobolectricTest.advanceRobolectricLooper()
-
-        captureScreen("hierarchy_lines")
-    }
-
-    @Test
-    fun hierarchy_lines_collapsed() {
-        targetContext.sharedPrefs().edit { putBoolean("devBottomNav", true) }
-
-        val root = addDeck("Math")
-        addDeck("Math::Algebra")
-        addDeck("Math::Algebra::Linear")
-        addDeck("Math::Geometry")
-        addDeck("Science::Physics::Kinematics")
-
-        val deckPicker =
-            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).also {
-                RobolectricTest.advanceRobolectricLooper()
-            }
-
-        // Expand Math to see Algebra and Geometry, but leave Algebra collapsed
-        deckPicker.viewModel.toggleDeckExpand(root)
-        RobolectricTest.advanceRobolectricLooper()
-
-        captureScreen("hierarchy_lines_collapsed")
-    }
-
-    @Test
-    fun hierarchy_lines_deep_nesting() {
-        targetContext.sharedPrefs().edit { putBoolean("devBottomNav", true) }
-
-        val root = addDeck("Level1")
-        addDeck("Level1::Level2")
-        addDeck("Level1::Level2::Level3")
-        addDeck("Level1::Level2::Level3::Level4")
-        addDeck("Level1::Level2::Level3::Level4::Level5")
-        addDeck("Level1::Level2::Level3::Level4::Level5::Level6")
-        addDeck("Level1::Level2::Level3::Level4::Level5::Level6::Level7")
-        addDeck("Level1::Level2::Sibling")
-        addDeck("Level1::Sibling")
-
-        val deckPicker =
-            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).also {
-                RobolectricTest.advanceRobolectricLooper()
-            }
-
-        // Expand all levels
-        for (i in 1..6) {
-            val name = (1..i).joinToString("::") { "Level$it" }
-            deckPicker.viewModel.toggleDeckExpand(col.decks.id(name))
+            captureScreen("hierarchy_lines")
         }
-        RobolectricTest.advanceRobolectricLooper()
-
-        captureScreen("hierarchy_lines_deep_nesting")
-    }
 
     @Test
-    fun hierarchy_lines_many_siblings() {
-        targetContext.sharedPrefs().edit { putBoolean("devBottomNav", true) }
+    fun hierarchy_lines_collapsed() =
+        runTest {
+            enableBottomNavigation()
 
-        val root = addDeck("Parent")
-        addDeck("Parent::Child1")
-        addDeck("Parent::Child2")
-        val child3 = addDeck("Parent::Child3")
-        addDeck("Parent::Child3::Subchild")
-        addDeck("Parent::Child4")
-        addDeck("Parent::Child5")
+            val root = addDeck("Math")
+            addDeck("Math::Algebra")
+            addDeck("Math::Algebra::Linear")
+            addDeck("Math::Geometry")
+            addDeck("Science::Physics::Kinematics")
 
-        val deckPicker =
-            startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).also {
-                RobolectricTest.advanceRobolectricLooper()
-            }
+            val deckPicker = startDeckPicker()
+            // Expand Math to see Algebra and Geometry, but leave Algebra collapsed
+            expandDecks(deckPicker, root)
 
-        deckPicker.viewModel.toggleDeckExpand(root)
-        deckPicker.viewModel.toggleDeckExpand(child3)
-        RobolectricTest.advanceRobolectricLooper()
+            captureScreen("hierarchy_lines_collapsed")
+        }
 
-        captureScreen("hierarchy_lines_many_siblings")
+    @Test
+    fun hierarchy_lines_deep_nesting() =
+        runTest {
+            enableBottomNavigation()
+
+            addDeck("Level1")
+            addDeck("Level1::Level2")
+            addDeck("Level1::Level2::Level3")
+            addDeck("Level1::Level2::Level3::Level4")
+            addDeck("Level1::Level2::Level3::Level4::Level5")
+            addDeck("Level1::Level2::Level3::Level4::Level5::Level6")
+            addDeck("Level1::Level2::Level3::Level4::Level5::Level6::Level7")
+            addDeck("Level1::Level2::Sibling")
+            addDeck("Level1::Sibling")
+
+            val deckPicker = startDeckPicker()
+            val expandedDecks =
+                (1..6).map { depth ->
+                    val name = (1..depth).joinToString("::") { "Level$it" }
+                    col.decks.id(name)
+                }
+            expandDecks(deckPicker, *expandedDecks.toLongArray())
+
+            captureScreen("hierarchy_lines_deep_nesting")
+        }
+
+    @Test
+    fun hierarchy_lines_many_siblings() =
+        runTest {
+            enableBottomNavigation()
+
+            val root = addDeck("Parent")
+            addDeck("Parent::Child1")
+            addDeck("Parent::Child2")
+            val child3 = addDeck("Parent::Child3")
+            addDeck("Parent::Child3::Subchild")
+            addDeck("Parent::Child4")
+            addDeck("Parent::Child5")
+
+            val deckPicker = startDeckPicker()
+            expandDecks(deckPicker, root, child3)
+
+            captureScreen("hierarchy_lines_many_siblings")
+        }
+
+    private fun enableBottomNavigation() {
+        Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), true) }
     }
+
+    private suspend fun startDeckPicker(): DeckPicker =
+        startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).also {
+            it.awaitDeckList()
+        }
+
+    private suspend fun DeckPicker.awaitDeckList() {
+        viewModel.flowOfDeckList.first { it.data.isNotEmpty() }
+        advanceRobolectricLooper()
+    }
+
+    private suspend fun expandDecks(
+        deckPicker: DeckPicker,
+        vararg deckIds: DeckId,
+    ) {
+        deckIds.forEach { deckPicker.viewModel.toggleDeckExpand(it).join() }
+        deckPicker.awaitDecksRenderedExpanded(*deckIds)
+    }
+
+    /**
+     * Waits until the deck list's [RecyclerView] has rendered [deckIds] as expanded.
+     */
+    private fun DeckPicker.awaitDecksRenderedExpanded(vararg deckIds: DeckId) {
+        val adapter = this.deckPickerBinding.decks.adapter as DeckAdapter
+        advanceRobolectricLooperUntil(
+            lazyMessage = {
+                "Decks ${deckIds.toList()} not rendered as expanded. Displayed: " +
+                    adapter.currentList.map { "${it.did}(collapsed=${it.collapsed})" }
+            },
+        ) {
+            deckIds.all { id -> adapter.currentList.any { it.did == id && !it.collapsed } }
+        }
+    }
+}
+
+/**
+ * Advances the main looper until [condition] holds, failing if [timeout] elapses first.
+ *
+ * @throws IllegalStateException [timeout] has elapsed without [condition] being true.
+ */
+private fun advanceRobolectricLooperUntil(
+    timeout: Duration = 10.seconds,
+    lazyMessage: () -> Any = { "condition not met after $timeout" },
+    condition: () -> Boolean,
+) {
+    val start = TimeSource.Monotonic.markNow()
+    while (!condition()) {
+        check(start.elapsedNow() < timeout, lazyMessage)
+        // a real sleep, so background threads finish and post to main
+        Thread.sleep(10)
+        // `advanceRobolectricLooper` only drains tasks already on the main looper,
+        // so it can return while a diff is still in flight (as it's on a different thread).
+        advanceRobolectricLooper()
+    }
+    // flush the work triggered by the condition becoming true (e.g. a layout pass)
+    advanceRobolectricLooper()
 }
