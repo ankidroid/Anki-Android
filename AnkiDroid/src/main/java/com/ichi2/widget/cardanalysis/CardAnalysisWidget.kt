@@ -11,13 +11,14 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
-import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.R
 import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.DeferredNavigation
+import com.ichi2.anki.common.destinations.ReviewDeckDestination
+import com.ichi2.anki.common.destinations.ReviewDeckDestination.NavigationType
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.DeckId
@@ -184,7 +185,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
             val intent =
                 if (!isEmptyDeck) {
-                    intentToReviewDeckFromShortcuts(context, deckData.deckId)
+                    with(DeferredNavigation) { ReviewDeckDestination(deckData.deckId, NavigationType.CLEAR_TOP).toIntent() }
                 } else {
                     with(DeferredNavigation) { DeckOptionsDestination.fromDeckId(deckData.deckId).toIntent() }
                 }
