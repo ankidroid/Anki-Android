@@ -103,8 +103,10 @@ open class SingleFragmentActivity :
             when (CustomStudyAction.fromBundle(bundle)) {
                 CustomStudyAction.CUSTOM_STUDY_SESSION,
                 CustomStudyAction.EXTEND_STUDY_LIMITS,
-                ->
-                    openStudyOptionsAndFinish()
+                -> {
+                    navigate(StudyOptionsDestination)
+                    finish()
+                }
             }
         }
     }
@@ -142,15 +144,6 @@ open class SingleFragmentActivity :
                 action = intentAction
             }
     }
-
-    // Begin - implementation of CustomStudyListener methods here for crash fix
-    // TODO - refactor https://github.com/ankidroid/Anki-Android/pull/17508#pullrequestreview-2465561993
-    private fun openStudyOptionsAndFinish() {
-        navigate(StudyOptionsDestination)
-        this.finish()
-    }
-
-    // END CustomStudyListener temporary implementation - should refactor out
 }
 
 interface DispatchKeyEventListener {
