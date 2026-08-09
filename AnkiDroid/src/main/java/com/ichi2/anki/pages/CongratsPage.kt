@@ -23,8 +23,8 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
-import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.SECONDS_PER_DAY
@@ -150,8 +150,7 @@ class CongratsPage :
         )
 
     private fun openStudyOptionsAndFinish() {
-        val intent = Intent(requireContext(), StudyOptionsActivity::class.java)
-        startActivity(intent, null)
+        navigate(StudyOptionsDestination)
         requireActivity().finish()
     }
 

@@ -100,6 +100,7 @@ import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
@@ -2037,9 +2038,7 @@ open class DeckPicker :
 
         // otherwise, we need to launch the activity
         Timber.i("Opening Study Options")
-        val intent = Intent()
-        intent.setClass(this, StudyOptionsActivity::class.java)
-        reviewLauncher.launch(intent)
+        reviewLauncher.navigate(StudyOptionsDestination)
     }
 
     @NeedsTest("Instrumented tests for review reminders")
