@@ -102,7 +102,6 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.ReviewDeckDestination
-import com.ichi2.anki.common.destinations.ReviewDeckDestination.NavigationType
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.destinations.toIntent
@@ -2149,7 +2148,7 @@ open class DeckPicker :
             ShortcutInfoCompat
                 .Builder(this, shortcutData.deckId.toString())
                 .setIntent(
-                    with(DeferredNavigation) { ReviewDeckDestination(shortcutData.deckId, NavigationType.CLEAR_TOP).toIntent() },
+                    with(DeferredNavigation) { ReviewDeckDestination.ExternalLaunch(shortcutData.deckId).toIntent() },
                 ).setIcon(IconCompat.createWithResource(this, R.mipmap.ic_launcher))
                 .setShortLabel(shortcutData.shortLabel)
                 .setLongLabel(shortcutData.longLabel)
@@ -2275,8 +2274,7 @@ open class DeckPicker :
 
     private fun openReviewer() {
         Timber.i("Opening Reviewer")
-        val intent = Reviewer.getIntent(this)
-        reviewLauncher.launch(intent)
+        reviewLauncher.navigate(ReviewDeckDestination.CurrentDeck)
     }
 
     private fun createSubDeckDialog(did: DeckId) {

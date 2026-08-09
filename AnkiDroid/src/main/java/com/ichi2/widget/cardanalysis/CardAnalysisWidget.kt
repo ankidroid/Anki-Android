@@ -18,7 +18,6 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.ReviewDeckDestination
-import com.ichi2.anki.common.destinations.ReviewDeckDestination.NavigationType
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.libanki.DeckId
@@ -185,7 +184,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
             val intent =
                 if (!isEmptyDeck) {
-                    with(DeferredNavigation) { ReviewDeckDestination(deckData.deckId, NavigationType.CLEAR_TOP).toIntent() }
+                    with(DeferredNavigation) { ReviewDeckDestination.ExternalLaunch(deckData.deckId).toIntent() }
                 } else {
                     with(DeferredNavigation) { DeckOptionsDestination.fromDeckId(deckData.deckId).toIntent() }
                 }

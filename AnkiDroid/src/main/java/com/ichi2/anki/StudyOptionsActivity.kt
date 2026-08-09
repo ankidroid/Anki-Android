@@ -29,6 +29,9 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsAddEditReminderHandler
 import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsStudyHandler
+import com.ichi2.anki.common.destinations.DeferredNavigation
+import com.ichi2.anki.common.destinations.ReviewDeckDestination
+import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.libanki.DeckId
@@ -80,7 +83,7 @@ class StudyOptionsActivity :
         }
         registerStudyOptionsStudyHandler {
             Timber.i("Opening study screen from study options screen")
-            val reviewer = Reviewer.getIntent(this)
+            val reviewer = with(DeferredNavigation) { ReviewDeckDestination.CurrentDeck.toIntent() }
             // go back to DeckPicker after studying when not in tablet mode
             reviewer.flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT
             startActivity(reviewer)

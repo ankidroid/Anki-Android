@@ -6,16 +6,22 @@ import android.content.Intent
 import com.ichi2.anki.libanki.DeckId
 
 /**
- * Opens the reviewer for [deckId]: either the legacy or the new reviewer, based on
+ * Opens the reviewer: either the legacy or the new reviewer, based on
  * `Prefs.isNewStudyScreenEnabled`.
  */
-data class ReviewDeckDestination(
-    val deckId: DeckId,
-    val navigationType: NavigationType,
-) : Destination() {
-    /** The task-stack behavior when opening the reviewer. */
-    enum class NavigationType {
-        /** @see Intent.FLAG_ACTIVITY_CLEAR_TOP */
-        CLEAR_TOP,
-    }
+sealed class ReviewDeckDestination : Destination() {
+    /**
+     * Opens the reviewer for the currently selected deck.
+     */
+    data object CurrentDeck : ReviewDeckDestination()
+
+    /**
+     * Opens the reviewer for [deckId] via the app's entry point, for entry points outside the
+     * app: widgets, shortcuts and reminders.
+     *
+     * @see Intent.FLAG_ACTIVITY_CLEAR_TOP
+     */
+    data class ExternalLaunch(
+        val deckId: DeckId,
+    ) : ReviewDeckDestination()
 }
