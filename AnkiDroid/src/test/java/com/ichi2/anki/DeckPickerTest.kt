@@ -775,6 +775,23 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
+    fun `bottom navigation has correct labels`() =
+        runTest {
+            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), true) }
+            try {
+                deckPicker {
+                    val bottomNav = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+                    val menu = bottomNav.menu
+                    assertThat(menu.findItem(R.id.nav_home)?.title.toString(), equalTo(CollectionManager.TR.actionsDecks()))
+                    assertThat(menu.findItem(R.id.nav_stats)?.title.toString(), equalTo(CollectionManager.TR.statisticsTitle()))
+                }
+            } finally {
+                Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), false) }
+            }
+        }
+
+    @Test
     fun `On a new startup, the App Intro is displayed`() =
         deckPicker(skipIntroduction = false) {
             val nextIntent = Shadows.shadowOf(this).nextStartedActivity
