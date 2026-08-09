@@ -15,7 +15,6 @@
 package com.ichi2.widget
 
 import android.content.Context
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -99,7 +98,7 @@ object WidgetStatus {
             AnkiDroidWidgetSmall.UpdateService().doUpdate(context)
         }
         if (!Prefs.newReviewRemindersEnabled) {
-            (context.applicationContext as AnkiDroidApp).scheduleNotification()
+            widgetNotificationScheduler.scheduleNotification()
         }
     }
 

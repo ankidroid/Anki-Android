@@ -66,6 +66,7 @@ import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.DayRolloverAlarm
+import com.ichi2.widget.WidgetNotificationScheduler
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.restoreRecurringAlarms
@@ -132,6 +133,7 @@ open class AnkiDroidApp :
         initializeAcraCrashReporter()
         initializeNavigator()
         initializeWidgetRepository()
+        WidgetNotificationScheduler.register { scheduleNotification() }
         Animations.setPreferencesProvider { context -> PrefsRepository(context) }
         val logType = LogType.value
         when (logType) {
