@@ -17,6 +17,7 @@ import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.test.core.app.ActivityScenario
+import androidx.test.filters.SdkSuppress
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
@@ -24,6 +25,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
@@ -438,6 +440,25 @@ class DeckPickerTest : RobolectricTest() {
         assertEquals(expectedTitle, actualTitle)
     }
 
+    private fun withBottomNavigationEnabled(action: () -> Unit) {
+        val preferences = Prefs.sharedPrefs
+        val key = Prefs.key(R.string.dev_bottom_nav_key)
+        val previousValue = if (preferences.contains(key)) preferences.getBoolean(key, false) else null
+        preferences.edit { putBoolean(key, true) }
+        try {
+            action()
+        } finally {
+            preferences.edit {
+                if (previousValue == null) remove(key) else putBoolean(key, previousValue)
+            }
+        }
+    }
+
+    private fun keyDownEvent(
+        keyCode: Int,
+        modifiers: Int,
+    ): KeyEvent = KeyEvent(0, 0, KeyEvent.ACTION_DOWN, keyCode, 0, modifiers)
+
     @Test
     fun `ContextMenu starts expected activities when specific options are selected`() =
         deckPicker {
@@ -776,18 +797,73 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun `bottom navigation has correct labels`() =
-        runTest {
+        withBottomNavigationEnabled {
             assumeTrue("Not running on tablet", qualifiers != "xlarge")
-            Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), true) }
-            try {
-                deckPicker {
-                    val bottomNav = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
-                    val menu = bottomNav.menu
-                    assertThat(menu.findItem(R.id.nav_home)?.title.toString(), equalTo(CollectionManager.TR.actionsDecks()))
-                    assertThat(menu.findItem(R.id.nav_stats)?.title.toString(), equalTo(CollectionManager.TR.statisticsTitle()))
+            deckPicker {
+                val menu = ActivityHomescreenBinding.bind(findViewById(R.id.root_layout)).bottomNavigation!!.menu
+                assertThat(menu.findItem(R.id.nav_home)?.title.toString(), equalTo("Decks"))
+                assertThat(menu.findItem(R.id.nav_browser)?.title.toString(), equalTo("Browse"))
+                assertThat(menu.findItem(R.id.nav_stats)?.title.toString(), equalTo("Statistics"))
+                assertThat(menu.findItem(R.id.nav_more)?.title.toString(), equalTo("More"))
+            }
+        }
+
+    @Test
+    fun `Alt number shortcuts navigate between bottom navigation destinations`() =
+        withBottomNavigationEnabled {
+            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            deckPicker {
+                val bottomNav = ActivityHomescreenBinding.bind(findViewById(R.id.root_layout)).bottomNavigation!!
+                val shortcuts =
+                    listOf(
+                        KeyEvent.KEYCODE_1 to BottomNavController.NavigationItem.HOME,
+                        KeyEvent.KEYCODE_2 to BottomNavController.NavigationItem.BROWSER,
+                        KeyEvent.KEYCODE_3 to BottomNavController.NavigationItem.STATS,
+                        KeyEvent.KEYCODE_4 to BottomNavController.NavigationItem.MORE,
+                    )
+
+                shortcuts.forEach { (keyCode, destination) ->
+                    val handled = dispatchKeyEvent(keyDownEvent(keyCode, KeyEvent.META_ALT_ON))
+
+                    assertThat("Alt shortcut is handled", handled, equalTo(true))
+                    assertThat(bottomNav.selectedItemId, equalTo(destination.id))
                 }
-            } finally {
-                Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), false) }
+            }
+        }
+
+    @Test
+    @SdkSuppress(minSdkVersion = 26)
+    fun `bottom navigation exposes a long title as a tooltip`() =
+        withBottomNavigationEnabled {
+            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            deckPicker {
+                val bottomNav = ActivityHomescreenBinding.bind(findViewById(R.id.root_layout)).bottomNavigation!!
+                val longTitle = "Statistikenübersicht"
+
+                bottomNav.menu.findItem(R.id.nav_stats).title = longTitle
+
+                assertThat(bottomNav.findViewById<View>(R.id.nav_stats).tooltipText.toString(), equalTo(longTitle))
+            }
+        }
+
+    @Test
+    fun `bottom navigation shortcuts are registered in keyboard shortcut help`() =
+        withBottomNavigationEnabled {
+            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            deckPicker {
+                val bottomNavigationShortcuts = shortcuts.shortcuts.filter { it.shortcut.startsWith("Alt+") }
+
+                assertThat(
+                    bottomNavigationShortcuts.associate { it.shortcut to it.label },
+                    equalTo(
+                        mapOf(
+                            "Alt+1" to "Deck picker",
+                            "Alt+2" to "Card Browser",
+                            "Alt+3" to "Open statistics",
+                            "Alt+4" to "More",
+                        ),
+                    ),
+                )
             }
         }
 

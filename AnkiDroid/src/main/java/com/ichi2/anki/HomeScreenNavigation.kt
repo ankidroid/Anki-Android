@@ -39,8 +39,7 @@ fun setupBottomNavigation() {
     val contentWrapper = deckPicker.findViewById<View>(R.id.deck_picker_content_wrapper)
     bottomNav.isVisible = true
 
-    bottomNav.menu.findItem(R.id.nav_home)?.title = CollectionManager.TR.actionsDecks()
-    bottomNav.menu.findItem(R.id.nav_stats)?.title = CollectionManager.TR.statisticsTitle()
+    NavigationItem.populateMenu(bottomNav, deckPicker)
 
     // Return to Home tab on back press when on a non-Home tab
     val bottomNavBackCallback =

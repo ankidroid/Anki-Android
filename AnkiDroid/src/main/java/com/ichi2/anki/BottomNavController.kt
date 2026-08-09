@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
+import android.content.Context
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -52,14 +54,32 @@ class BottomNavController(
         @IdRes val id: Int,
         /** Fragment tag used to find and reuse this destination's fragment across tab switches. */
         val tag: String,
+        @StringRes val shortcutLabel: Int,
     ) {
-        HOME(R.id.nav_home, "home"),
-        BROWSER(R.id.nav_browser, "browser"),
-        STATS(R.id.nav_stats, "stats"),
-        MORE(R.id.nav_more, "more"),
+        HOME(R.id.nav_home, "home", R.string.deck_picker_group),
+        BROWSER(R.id.nav_browser, "browser", R.string.card_browser_context_menu),
+        STATS(R.id.nav_stats, "stats", R.string.open_statistics),
+        MORE(R.id.nav_more, "more", R.string.bottom_nav_more),
         ;
 
+        fun title(context: Context): String =
+            when (this) {
+                HOME -> TR.actionsDecks()
+                BROWSER -> context.getString(R.string.bottom_nav_browse)
+                STATS -> TR.statisticsTitle()
+                MORE -> context.getString(R.string.bottom_nav_more)
+            }
+
         companion object {
+            fun populateMenu(
+                bottomNavigationView: BottomNavigationView,
+                context: Context,
+            ) {
+                entries.forEach { item ->
+                    bottomNavigationView.menu.findItem(item.id)?.title = item.title(context)
+                }
+            }
+
             fun fromId(
                 @IdRes id: Int,
             ): NavigationItem? =
@@ -93,8 +113,7 @@ class BottomNavController(
      * Call once after the activity's content view is set up.
      */
     fun setup() {
-        bottomNavigationView.menu.findItem(R.id.nav_home)?.title = TR.actionsDecks()
-        bottomNavigationView.menu.findItem(R.id.nav_stats)?.title = TR.statisticsTitle()
+        NavigationItem.populateMenu(bottomNavigationView, activity)
         activity.onBackPressedDispatcher.addCallback(activity, backCallback)
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

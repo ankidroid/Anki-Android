@@ -74,6 +74,7 @@ import anki.sync.SyncStatusResponse
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPickerFloatingActionMenu.FloatingActionBarToggleListener
@@ -1562,6 +1563,24 @@ open class DeckPicker :
         return false
     }
 
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (!Prefs.devBottomNavEnabled || fragmented || event.action != KeyEvent.ACTION_DOWN || !event.isAltPressed) {
+            return super.dispatchKeyEvent(event)
+        }
+
+        val bottomNavigation = binding.bottomNavigation ?: return super.dispatchKeyEvent(event)
+        val destination =
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_1 -> NavigationItem.HOME
+                KeyEvent.KEYCODE_2 -> NavigationItem.BROWSER
+                KeyEvent.KEYCODE_3 -> NavigationItem.STATS
+                KeyEvent.KEYCODE_4 -> NavigationItem.MORE
+                else -> return super.dispatchKeyEvent(event)
+            }
+        bottomNavigation.selectedItemId = destination.id
+        return true
+    }
+
     override fun onKeyUp(
         keyCode: Int,
         event: KeyEvent,
@@ -2300,10 +2319,19 @@ open class DeckPicker :
     }
 
     override val shortcuts
-        get() =
-            ShortcutGroup(
+        get(): ShortcutGroup {
+            fun bottomNavShortcut(
+                keys: String,
+                destination: NavigationItem,
+            ) = if (Prefs.devBottomNavEnabled && !fragmented) shortcut(keys, destination.shortcutLabel) else null
+
+            return ShortcutGroup(
                 listOfNotNull(
                     shortcut("A", R.string.menu_add_note),
+                    bottomNavShortcut("Alt+1", NavigationItem.HOME),
+                    bottomNavShortcut("Alt+2", NavigationItem.BROWSER),
+                    bottomNavShortcut("Alt+3", NavigationItem.STATS),
+                    bottomNavShortcut("Alt+4", NavigationItem.MORE),
                     shortcut("B", R.string.card_browser_context_menu),
                     shortcut("Y", R.string.pref_cat_sync),
                     shortcut("/", R.string.deck_conf_cram_search),
@@ -2323,6 +2351,7 @@ open class DeckPicker :
                 ),
                 R.string.deck_picker_group,
             )
+        }
 
     companion object {
         /**
