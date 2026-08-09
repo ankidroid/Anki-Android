@@ -32,7 +32,7 @@ interface Navigator {
         /**
          * Use during app startup to set the global [Navigator] instance.
          *
-         * Placed on the companion object, so calers may use `Navigator.register` to avoid
+         * Placed on the companion object, so callers may use `Navigator.register` to avoid
          * collisions with other top-level `register` functions.
          */
         fun register(navigator: Navigator) {
