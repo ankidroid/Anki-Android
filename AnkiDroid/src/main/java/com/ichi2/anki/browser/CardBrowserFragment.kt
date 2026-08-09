@@ -1072,6 +1072,11 @@ class CardBrowserFragment :
             Timber.d("syncing searchview state from chip updates")
             val filters = search.filters
 
+            // Handle default search text
+            if (search.query.isNotEmpty() && searchBar?.text.isNullOrEmpty()) {
+                launchCatchingTask { searchBar?.setText(search.toUserSpannable()) }
+            }
+
             decksChip?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
             decksChip?.hasCheckedBackground = filters.decks.any()
 
