@@ -505,19 +505,5 @@ class IntentHandler : AbstractIntentHandler() {
             context: Context,
             deckId: DeckId,
         ): Intent = Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
-
-        /**
-         * Returns an intent to review a specific deck.
-         * This does not states which reviewer to use, instead IntentHandler will choose whether to use the
-         * legacy or the new reviewer based on the "newReviewer" preference.
-         * It is expected to be used from widget, shortcut, reminders but not from ankidroid directly because of the CLEAR_TOP flag.
-         */
-        fun intentToReviewDeckFromShortcuts(
-            context: Context,
-            deckId: DeckId,
-        ) = Intent(context, IntentHandler::class.java).apply {
-            setAction(Intent.ACTION_VIEW)
-            putExtra(EXTRA_DECK_ID, deckId)
-        }
     }
 }
