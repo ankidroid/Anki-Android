@@ -32,7 +32,7 @@ object ApplicationContextInitializer {
     /**
      * The [appContext] if it has been initialized, or `null` if not.
      *
-     * Prefer this over checking initialization state explicitly it returns the
+     * Prefer this over checking initialization state explicitly, as it returns the
      * context (or null) in one read.
      */
     val instanceOrNull: Context?
