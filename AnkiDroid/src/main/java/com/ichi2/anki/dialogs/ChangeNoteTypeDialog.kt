@@ -34,6 +34,7 @@ import android.widget.Spinner
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.text.BidiFormatter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -167,8 +168,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
     }
 
     private fun setupNoteTypeSpinner(binding: DialogChangeNoteTypeBinding) {
-        // Using drawableEnd in XML instead of a unicode arrow for perfect vertical centering
-        binding.CardEditorModelText.text = viewModel.inputNoteType.name
+        binding.CardEditorModelText.text = BidiFormatter.getInstance().unicodeWrap(viewModel.inputNoteType.name)
 
         binding.destNoteTypeSpinner.apply {
             adapter = createNoteTypeAdapter()

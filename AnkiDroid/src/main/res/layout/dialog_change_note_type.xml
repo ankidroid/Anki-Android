@@ -66,8 +66,6 @@
             android:paddingTop="4dp"
             android:paddingStart="24dp"
             android:paddingEnd="24dp">
-            <!-- Added locale text direction so the English text (e.g. "Basic") in RTL language is not treated as LTR string -->
-            <!--Padding of 8dp for equal spacing from both the note types-->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/CardEditorModelText"
                 android:layout_width="wrap_content"
@@ -75,7 +73,6 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:gravity="start|center_vertical"
-                android:textDirection="locale"
                 android:textStyle="bold"
                 android:drawablePadding="8dp"
                 app:drawableEndCompat="@drawable/ic_arrow_right_alt_24"
