@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.reviewreminders
 
-import android.content.Intent
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -12,6 +11,8 @@ import com.google.android.material.appbar.AppBarLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.common.destinations.StudyOptionsDestination
+import com.ichi2.anki.common.destinations.launchActivity
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.PreferencesFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
@@ -94,26 +95,23 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
     @Test
     fun `study options frame host`() {
         val deckId = addDeck("Test Deck")
-        ActivityScenario
-            .launch<StudyOptionsActivity>(
-                Intent(targetContext, StudyOptionsActivity::class.java),
-            ).use { scenario ->
-                scenario.onActivity { activity ->
-                    commitScheduleRemindersAndCapture(
-                        fragmentManager = activity.supportFragmentManager,
-                        containerId = R.id.studyoptions_frame,
-                        host = FragmentHost.STUDY_OPTIONS_FRAME,
-                        scope = ReviewReminderScope.DeckSpecific(deckId),
-                        prefix = "studyOptionsFrameHost",
-                    )
-                    commitTroubleshootingAndCapture(
-                        fragmentManager = activity.supportFragmentManager,
-                        containerId = R.id.studyoptions_frame,
-                        host = FragmentHost.STUDY_OPTIONS_FRAME,
-                        prefix = "studyOptionsFrameHost",
-                    )
-                }
+        launchActivity<StudyOptionsActivity>(StudyOptionsDestination).use { scenario ->
+            scenario.onActivity { activity ->
+                commitScheduleRemindersAndCapture(
+                    fragmentManager = activity.supportFragmentManager,
+                    containerId = R.id.studyoptions_frame,
+                    host = FragmentHost.STUDY_OPTIONS_FRAME,
+                    scope = ReviewReminderScope.DeckSpecific(deckId),
+                    prefix = "studyOptionsFrameHost",
+                )
+                commitTroubleshootingAndCapture(
+                    fragmentManager = activity.supportFragmentManager,
+                    containerId = R.id.studyoptions_frame,
+                    host = FragmentHost.STUDY_OPTIONS_FRAME,
+                    prefix = "studyOptionsFrameHost",
+                )
             }
+        }
     }
 
     @Test

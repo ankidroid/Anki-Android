@@ -24,6 +24,8 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
+import com.ichi2.anki.common.destinations.StudyOptionsDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -144,11 +146,7 @@ open class SingleFragmentActivity :
     // Begin - implementation of CustomStudyListener methods here for crash fix
     // TODO - refactor https://github.com/ankidroid/Anki-Android/pull/17508#pullrequestreview-2465561993
     private fun openStudyOptionsAndFinish() {
-        val intent =
-            Intent(this, StudyOptionsActivity::class.java).apply {
-                putExtra("withDeckOptions", false)
-            }
-        startActivity(intent, null)
+        navigate(StudyOptionsDestination)
         this.finish()
     }
 
