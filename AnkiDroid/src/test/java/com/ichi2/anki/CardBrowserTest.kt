@@ -2035,6 +2035,7 @@ fun setCardBrowserFragmented(value: Boolean) = Prefs.putBoolean(R.string.dev_car
 fun setUsingSearchView(value: Boolean) = Prefs.putBoolean(R.string.dev_card_browser_search_view, value)
 
 private fun CardBrowser.rerenderAllCards() {
+    viewModel.clearCache()
     cardBrowserFragment.cardsAdapter.notifyDataSetChanged()
     advanceRobolectricLooper()
 }

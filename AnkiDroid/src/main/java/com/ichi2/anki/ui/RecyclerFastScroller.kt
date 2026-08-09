@@ -58,6 +58,7 @@ import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.GravityCompat
+import androidx.core.view.isEmpty
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -255,13 +256,42 @@ class RecyclerFastScroller
             this.adapter = adapter
         }
 
+        private fun updateHandlePosition() {
+            val rv = recyclerView ?: return
+            if (rv.isEmpty() || height <= 0) return
+
+            val verticalScrollRange = rv.computeVerticalScrollRange() + rv.paddingBottom
+            val scrollOffset = rv.computeVerticalScrollOffset() + appBarLayoutOffset
+            val barHeight = bar.height
+
+            if (verticalScrollRange <= 0 || barHeight <= 0) return
+
+            var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRange * barHeight).toInt()
+            if (calculatedHandleHeight < minScrollHandleHeight) {
+                calculatedHandleHeight = minScrollHandleHeight
+            }
+
+            if (calculatedHandleHeight >= barHeight) {
+                translationX = hiddenTranslationX.toFloat()
+                hideOverride = true
+                return
+            }
+
+            hideOverride = false
+
+            val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
+            val y = ratio * (barHeight - calculatedHandleHeight)
+
+            handle.translationY = y.coerceIn(0f, (barHeight - calculatedHandleHeight).toFloat())
+        }
+
         /**
          * Show the fast scroller and hide after delay
          *
          * @param animate whether to animate showing the scroller
          */
         fun show(animate: Boolean) {
-            requestLayout()
+            updateHandlePosition()
 
             post(
                 Runnable {
@@ -376,8 +406,9 @@ class RecyclerFastScroller
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handle.isSelected = false
-                    if (recyclerView != null) {
-                        recyclerView?.let { removeCallbacks(scrollTask) }
+                    handle.isPressed = false
+                    recyclerView?.apply {
+                        removeCallbacks(scrollTask)
                         scrollTask.run()
                     }
                     false
@@ -396,31 +427,21 @@ class RecyclerFastScroller
             super.onLayout(changed, left, top, right, bottom)
             if (recyclerView == null) return
 
-            val scrollOffset = recyclerView!!.computeVerticalScrollOffset() + appBarLayoutOffset
             val verticalScrollRange = (
                 recyclerView!!.computeVerticalScrollRange() +
                     recyclerView!!.paddingBottom
             )
 
             val barHeight = bar.height
-            val ratio = scrollOffset.toFloat() / (verticalScrollRange - barHeight)
+            if (verticalScrollRange <= 0 || barHeight <= 0) return
 
             var calculatedHandleHeight = (barHeight.toFloat() / verticalScrollRange * barHeight).toInt()
             if (calculatedHandleHeight < minScrollHandleHeight) {
                 calculatedHandleHeight = minScrollHandleHeight
             }
 
-            if (calculatedHandleHeight >= barHeight) {
-                translationX = hiddenTranslationX.toFloat()
-                hideOverride = true
-                return
-            }
-
-            hideOverride = false
-
-            val y = ratio * (barHeight - calculatedHandleHeight)
-
-            handle.layout(handle.left, y.toInt(), handle.right, y.toInt() + calculatedHandleHeight)
+            handle.layout(handle.left, 0, handle.right, calculatedHandleHeight)
+            updateHandlePosition()
         }
 
         companion object {

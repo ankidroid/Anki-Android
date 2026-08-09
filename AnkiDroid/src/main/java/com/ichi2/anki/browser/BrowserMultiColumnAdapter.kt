@@ -81,6 +81,12 @@ class BrowserMultiColumnAdapter(
 
         val columnViews = mutableListOf<TextView>()
 
+        private var currentColor: Int? = null
+        private var currentIsTruncated: Boolean? = null
+        private var currentIsSelected: Boolean? = null
+        private var currentInMultiSelect: Boolean? = null
+        private var currentIsDeleted: Boolean? = null
+
         var numberOfColumns: Int = 0
             set(value) {
                 if (field == value) return
@@ -142,10 +148,14 @@ class BrowserMultiColumnAdapter(
             } ?: false
 
         fun setInMultiSelect(inMultiSelect: Boolean) {
+            if (currentInMultiSelect == inMultiSelect) return
+            currentInMultiSelect = inMultiSelect
             binding.rowSelectedCheckBox.isVisible = inMultiSelect
         }
 
         fun setIsSelected(value: RowIsSelected) {
+            if (currentIsSelected == value) return
+            currentIsSelected = value
             binding.rowSelectedCheckBox.isChecked = value
         }
 
@@ -153,6 +163,9 @@ class BrowserMultiColumnAdapter(
         fun setColor(
             @ColorInt color: Int,
         ) {
+            if (currentColor == color) return
+            currentColor = color
+
             val nightMode = Themes.isNightTheme
             val pressedColor: Int
             val focusedColor: Int
@@ -186,10 +199,14 @@ class BrowserMultiColumnAdapter(
         }
 
         fun setIsTruncated(truncated: Boolean) {
+            if (currentIsTruncated == truncated) return
+            currentIsTruncated = truncated
             columnViews.forEach { it.setIsTruncated(truncated) }
         }
 
         fun setIsDeleted(isDeleted: Boolean) {
+            if (currentIsDeleted == isDeleted) return
+            currentIsDeleted = isDeleted
             columnViews.forEach { it.setStrikeThrough(isDeleted) }
         }
 
@@ -252,16 +269,22 @@ class BrowserMultiColumnAdapter(
         try {
             val (row, isSelected) = viewModel.transformBrowserRow(id)
 
-            // PERF: removeSounds only needs to be performed on QUESTION/ANSWER columns
-            fun renderColumn(columnIndex: Int): String =
-                removeSounds(
-                    input = row.getCells(columnIndex).text,
-                    showMediaFilenames = viewModel.showMediaFilenames,
-                )
             holder.numberOfColumns = row.cellsCount
 
+            val activeColumns = viewModel.activeColumns
             for (i in 0 until row.cellsCount) {
-                holder.columnViews[i].text = renderColumn(i)
+                val column = activeColumns.getOrNull(i)
+                val text = row.getCells(i).text
+                // PERF: removeSounds only needs to be performed on QUESTION/ANSWER columns
+                holder.columnViews[i].text =
+                    if (column == CardBrowserColumn.QUESTION || column == CardBrowserColumn.ANSWER) {
+                        removeSounds(
+                            input = text,
+                            showMediaFilenames = viewModel.showMediaFilenames,
+                        )
+                    } else {
+                        text
+                    }
             }
             holder.setIsSelected(isSelected)
             val rowColor =
@@ -273,7 +296,8 @@ class BrowserMultiColumnAdapter(
             holder.setColor(rowColor)
             holder.setIsDeleted(false)
         } catch (e: BackendException) {
-            holder.columnViews.forEach { it.text = e.localizedMessage }
+            holder.numberOfColumns = 1
+            holder.columnViews[0].text = e.localizedMessage
             // deleted rows cannot be selected
             holder.setColor(backendColorToColor(Color.UNRECOGNIZED))
             // deleted rows may not be selected
