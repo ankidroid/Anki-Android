@@ -39,7 +39,7 @@ class AcraAnalyticsInteraction : ReportInteraction {
     ): Boolean {
         // Send an analytics exception hit with a UUID to match
         Timber.e("ACRA handling crash, sending analytics exception report")
-        UsageAnalytics.sendAnalyticsEvent("ACRA Crash Handler", "UUID " + Installation.id(context))
+        AnkiDroidUsageAnalytics.sendAnalyticsEvent("ACRA Crash Handler", "UUID " + Installation.id(context))
         return true
     }
 }

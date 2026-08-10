@@ -12,7 +12,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.acraCoreConfigBuilder
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnalyticsExceptionHandler
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_ALWAYS
@@ -230,7 +231,7 @@ class ACRATest : InstrumentedTest() {
 
     @Test
     fun verifyExceptionHandlerChain() {
-        // contains assumptions about ordering in ACRA, ThrowableFilter and UsageAnalytics
+        // contains assumptions about ordering in ACRA, ThrowableFilter and AnalyticsExceptionHandler
         // making sure they are correct is vital though, so we will accept the need to change
         // this test if you re-order them
         var firstExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
@@ -238,19 +239,19 @@ class ACRATest : InstrumentedTest() {
         ThrowableFilterService.unInstallDefaultExceptionHandler()
         var secondExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
-            "Second handler is AnalyticsLoggingExceptionHandler",
-            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler,
+            "Second handler is AnalyticsExceptionHandler",
+            secondExceptionHandler is AnalyticsExceptionHandler,
         )
-        UsageAnalytics.unInstallDefaultExceptionHandler()
+        AnalyticsExceptionHandler.uninstall()
         var thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
             "Third handler is neither Analytics nor ThrowableFilter",
-            thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler &&
+            thirdExceptionHandler !is AnalyticsExceptionHandler &&
                 thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler,
         )
 
         // chain them again
-        UsageAnalytics.installDefaultExceptionHandler()
+        AnalyticsExceptionHandler.install(AnkiDroidUsageAnalytics::sendAnalyticsException)
         ThrowableFilterService.installDefaultExceptionHandler()
 
         // reinitialize things and make sure they came through correctly again
@@ -261,14 +262,14 @@ class ACRATest : InstrumentedTest() {
         secondExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Timber.i("Second handler is a %s", secondExceptionHandler)
         assertThat(
-            "Second handler is AnalyticsLoggingExceptionHandler",
-            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler,
+            "Second handler is AnalyticsExceptionHandler",
+            secondExceptionHandler is AnalyticsExceptionHandler,
         )
-        UsageAnalytics.unInstallDefaultExceptionHandler()
+        AnalyticsExceptionHandler.uninstall()
         thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
             "Third handler is neither Analytics nor ThrowableFilter",
-            thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler &&
+            thirdExceptionHandler !is AnalyticsExceptionHandler &&
                 thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler,
         )
     }
