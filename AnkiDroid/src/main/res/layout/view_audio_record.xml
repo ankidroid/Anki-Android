@@ -125,6 +125,7 @@
         style="@style/Widget.AnkiDroid.CardView.Recording"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:contentDescription="@string/record_voice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
