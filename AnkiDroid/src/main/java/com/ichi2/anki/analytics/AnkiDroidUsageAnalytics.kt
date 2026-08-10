@@ -21,6 +21,14 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.UUID
 
+/**
+ * Facade over the GA4 analytics library for AnkiDroid's opt-in usage analytics.
+ * Screen views, events and exceptions are routed through here, and every send
+ * function is a no-op unless the user has opted in.
+ *
+ * See `docs/analytics/README.md` for what is sent over the wire, the consent
+ * model, and answers to common reviewer questions.
+ */
 @NeedsTest("Add coverage for opt-in handling, client id persistence and event/exception sending")
 object AnkiDroidUsageAnalytics {
     const val ANALYTICS_OPTIN_KEY = "analytics_opt_in_v2"
