@@ -24,7 +24,6 @@ import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -317,7 +316,6 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             filters += NonLeadingZeroInputFilter
 
             setText(defaultValue)
-
             // Give EditText focus and show keyboard
             setSelectAllOnFocus(true)
             requestFocus()
@@ -332,7 +330,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                         R.plurals.set_due_date_label_suffix,
                         defaultValue.toIntOrNull() ?: 0,
                     )
-                doOnTextChanged { text, _, _, _ ->
+                doAfterTextChanged {
                     val currentValue = text?.toString()?.toIntOrNull()
                     binding.detailsEditText2Layout.suffixText =
                         resources.getQuantityString(
