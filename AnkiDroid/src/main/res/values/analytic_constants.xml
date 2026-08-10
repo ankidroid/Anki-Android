@@ -20,5 +20,4 @@
         GA4 quotas: https://support.google.com/analytics/answer/9267744
     -->
     <integer name="ga_sampleFrequency">10</integer>
-    <bool name="ga_anonymizeIp">true</bool>
 </resources>

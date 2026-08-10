@@ -24,6 +24,12 @@ The complete list of categories and actions lives in
 We never include card content, deck names, note fields, sync credentials, or
 file paths.
 
+Device details are no longer collected. The Universal Analytics implementation
+tagged every hit with OS version, brand, model, board and screen size; none of
+that is sent now. Crash reports still carry it via ACRA, which is where it is
+useful, and GA4 has no equivalent of UA's custom dimensions, so restoring it
+would mean modelling it as user properties rather than porting it across.
+
 `client_id` is a UUID generated and persisted once per install in a dedicated
 prefs file (`analyticsPrefs`); it is not tied to any Anki account and survives
 profile switches.
