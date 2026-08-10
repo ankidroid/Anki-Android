@@ -37,7 +37,6 @@ class PreferencesScreenshotTest : ScreenshotTest() {
                         }
                         (settingsFragment as? AboutFragment)?.apply {
                             binding.buildDate.text = "May 18, 2026"
-                            binding.version.text = "2.24.0-screenshot"
                         }
                         captureScreen(fragmentClass.simpleName!!)
                     }
