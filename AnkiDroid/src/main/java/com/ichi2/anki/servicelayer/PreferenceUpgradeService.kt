@@ -22,7 +22,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
-import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.BrowserColumnCollection
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
@@ -597,8 +596,6 @@ object PreferenceUpgradeService {
          * https://docs.ankidroid.org/changelog.html#_version_2_16_5_20230906
          *
          * We now use "analytics_opt_in"
-         *
-         * @see [UsageAnalytics.ANALYTICS_OPTIN_KEY]
          */
         internal class ResetAnalyticsOptIn : PreferenceUpgrade(17) {
             override fun upgrade(preferences: SharedPreferences) = preferences.edit { remove("analyticsOptIn") }

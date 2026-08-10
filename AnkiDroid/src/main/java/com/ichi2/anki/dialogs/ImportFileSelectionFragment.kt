@@ -17,7 +17,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsConstants
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.MimeTypeUtils
@@ -35,7 +35,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                 entries.map { requireActivity().getString(it.titleRes) }.toTypedArray(),
             ) { _, position ->
                 val entry = entries[position]
-                UsageAnalytics.sendAnalyticsEvent(
+                AnkiDroidUsageAnalytics.sendAnalyticsEvent(
                     AnalyticsConstants.Category.LINK_CLICKED,
                     entry.analyticsId,
                 )
