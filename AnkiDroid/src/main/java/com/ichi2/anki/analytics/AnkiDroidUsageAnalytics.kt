@@ -6,6 +6,7 @@ package com.ichi2.anki.analytics
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.criticalay.GoogleAnalytics
 import com.ichi2.anki.BuildConfig
@@ -96,9 +97,18 @@ object AnkiDroidUsageAnalytics {
         private set
 
     fun initialize(context: Context) {
-        analyticsContext = context.applicationContext as Application
-
         Timber.i("AnkiDroidUsageAnalytics:: initialize()")
+        configure(context)
+        AnalyticsExceptionHandler.install(this::sendAnalyticsException)
+    }
+
+    /**
+     * Reads the opt-in and builds the client. Split out of [initialize] so [reinitialize]
+     * can rebuild without touching the exception handler: re-installing would chain it on
+     * top of `ThrowableFilterService`, putting analytics ahead of the PII filter.
+     */
+    private fun configure(context: Context) {
+        analyticsContext = context.applicationContext as Application
 
         // Read opt-in before building the client so `enabled` reflects the
         // user's choice rather than the default.
@@ -118,8 +128,6 @@ object AnkiDroidUsageAnalytics {
         }
 
         initializePrefKeys(analyticsContext)
-
-        AnalyticsExceptionHandler.install(this::sendAnalyticsException)
     }
 
     private fun handlePreferences(context: Context) {
@@ -130,15 +138,22 @@ object AnkiDroidUsageAnalytics {
 
     fun reinitialize(context: Context) {
         Timber.i("reInitialize()")
-        AnalyticsExceptionHandler.uninstall()
+        serviceScope.launch { rebuild(context) }
+    }
 
-        serviceScope.launch {
-            runCatching { analytics?.flush() }.onFailure { e ->
-                Timber.w(e, "Failed to flush analytics")
-            }
-            analytics = null
-            initialize(context)
+    /**
+     * Flushes and rebuilds the client. Deliberately does not go through [initialize]:
+     * the exception handler reports through this singleton rather than the client, so
+     * it stays valid across a rebuild, and re-installing it would chain it above
+     * `ThrowableFilterService` and put analytics ahead of the PII filter.
+     */
+    @VisibleForTesting
+    internal suspend fun rebuild(context: Context) {
+        runCatching { analytics?.flush() }.onFailure { e ->
+            Timber.w(e, "Failed to flush analytics")
         }
+        analytics = null
+        configure(context)
     }
 
     /**
