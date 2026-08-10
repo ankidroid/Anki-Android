@@ -3,11 +3,16 @@
 
 package com.ichi2.anki.analytics
 
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.testutils.EmptyApplication
+import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
+import io.mockk.verify
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.sameInstance
@@ -39,6 +44,25 @@ class AnkiDroidUsageAnalyticsTest : RobolectricTest() {
     @Test
     fun `analytics is disabled by default`() {
         assertThat(getPreferences().getBoolean(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, false), equalTo(false))
+    }
+
+    @Test
+    fun `a preference write from elsewhere rebuilds the client`() {
+        withStubbedRebuild {
+            getPreferences().edit(commit = true) { putBoolean(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, true) }
+
+            assertThat(AnkiDroidUsageAnalytics.isEnabled, equalTo(true))
+            verify(exactly = 1) { AnkiDroidUsageAnalytics.reinitialize(any()) }
+        }
+    }
+
+    @Test
+    fun `a write that leaves the value unchanged does not rebuild the client`() {
+        withStubbedRebuild {
+            getPreferences().edit(commit = true) { putBoolean(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, false) }
+
+            verify(exactly = 0) { AnkiDroidUsageAnalytics.reinitialize(any()) }
+        }
     }
 
     /**
@@ -83,6 +107,25 @@ class AnkiDroidUsageAnalyticsTest : RobolectricTest() {
             throwable: Throwable,
         ) {
             next?.uncaughtException(thread, throwable)
+        }
+    }
+
+    /**
+     * Runs [block] with the analytics listener registered and `reinitialize` stubbed out:
+     * the real one rebuilds on [kotlinx.coroutines.Dispatchers.IO] and would outlive the test.
+     */
+    private fun withStubbedRebuild(block: () -> Unit) {
+        mockkObject(AnkiDroidUsageAnalytics)
+        every { AnkiDroidUsageAnalytics.reinitialize(any()) } returns Unit
+        try {
+            AnkiDroidUsageAnalytics.initialize(targetContext)
+            block()
+        } finally {
+            // clear the preference before unmocking, so the resulting change
+            // doesn't reach the real `reinitialize`
+            getPreferences().edit(commit = true) { remove(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY) }
+            unmockkObject(AnkiDroidUsageAnalytics)
+            AnalyticsExceptionHandler.uninstall()
         }
     }
 }

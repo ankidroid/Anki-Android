@@ -71,8 +71,18 @@ object AnkiDroidUsageAnalytics {
     private val sharedPrefsListener =
         SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
             if (key == ANALYTICS_OPTIN_KEY) {
-                optIn = prefs.getBoolean(key, false)
-                Timber.i("Setting analytics opt-in to: %b", optIn)
+                val newOptIn = prefs.getBoolean(key, false)
+                // [isEnabled] updates `optIn` before it writes, so an unchanged value
+                // means it's already handling this toggle: don't rebuild twice
+                if (newOptIn != optIn) {
+                    optIn = newOptIn
+                    Timber.i("Setting analytics opt-in to: %b", optIn)
+                    // the client's `enabled` flag is fixed when it's built, so writes
+                    // from elsewhere (the Settings switch) need a rebuild to take effect
+                    if (::analyticsContext.isInitialized) {
+                        reinitialize(analyticsContext)
+                    }
+                }
             }
         }
 
