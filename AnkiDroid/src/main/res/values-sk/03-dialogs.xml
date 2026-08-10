@@ -145,9 +145,9 @@
     <string name="locale_selection_dialog_summary">Niektoré multimediálne klávesnice, akými sú GBoard podporujú zmenu jazyka pri úprave textu\n\nProsím, vyžiadajte si od svojho výrobcu klávesnice prvok “setImeHintLocales”, ak vaša klávesnica nemení jazyk.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Používanie AnkiDroid-u</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid manual</string>
-    <string name="help_item_anki_manual">Anki manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_item_ankidroid_manual">Návod AnkiDroid</string>
+    <string name="help_item_anki_manual">Návod Anki</string>
+    <string name="help_item_ankidroid_faq">AnkiDroid časté otázky</string>
     <string name="help_title_get_help">Vyhľadať pomoc</string>
     <string name="help_item_mailing_list">Zoznam adries</string>
     <string name="help_item_reddit">Reddit</string>
