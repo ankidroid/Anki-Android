@@ -212,6 +212,11 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                 val noteType = getItem(position)!!
                 text = noteType.name
                 setTextColor(if (noteType.isCloze) clozeColor else defaultViewTextColor)
+                isSingleLine = false
+                ellipsize = null
+                layoutParams = layoutParams?.apply {
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
+                } ?: ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             }
 
             override fun getDropDownView(
