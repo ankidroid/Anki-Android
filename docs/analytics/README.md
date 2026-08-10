@@ -128,13 +128,14 @@ production property.
 
 ### Keeping dev traffic out of prod
 
-A signed dev build with the real `ANALYTICS_API_KEY` would hit our
-production GA4 property. Two reasonable options when we decide to address
-this:
+A signed dev build with the real `ANALYTICS_API_KEY` would otherwise hit our
+production GA4 property.
 
-- A separate GA4 property for the `debug` flavor (cleanest, needs another
-  secret).
-- Set `debug = true` on the library config in debug builds that routes to
-  GA's validation-only endpoint, which doesn't record.
+Debug builds pass `debug = BuildConfig.DEBUG` to the library, which sends hits
+to GA's validation endpoint (`/debug/mp/collect`) instead. That endpoint checks
+the payload and returns any problems with it, but records nothing, so
+development traffic can't reach the property.
 
-Not implemented yet.
+A separate GA4 property for debug builds would be cleaner still, since it would
+let us see the events rather than only validate them. It needs a second
+Measurement Protocol secret, so it's left for later.

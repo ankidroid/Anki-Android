@@ -133,7 +133,9 @@ object AnkiDroidUsageAnalytics {
                     appVersion = BuildConfig.VERSION_NAME
                     enabled = optIn
                     samplePercentage = getAnalyticsSamplePercentage(analyticsContext)
-                    debug = false
+                    // debug builds hit GA's validation endpoint, which checks the payload
+                    // but records nothing, keeping development traffic out of the property
+                    debug = BuildConfig.DEBUG
                 }
         }
 
