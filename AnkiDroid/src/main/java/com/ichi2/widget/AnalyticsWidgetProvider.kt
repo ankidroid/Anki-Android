@@ -22,12 +22,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import timber.log.Timber
 
 /**
  * AnalyticsWidgetProvider is an abstract base class for App Widgets that integrates
- * with UsageAnalytics to send analytics events when the widget is enabled, disabled,
+ * with AnkiDroidUsageAnalytics to send analytics events when the widget is enabled, disabled,
  * or updated.
  *
  * This class should always be used as the base class for App Widgets in this application.
@@ -49,7 +49,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         Timber.d("${this.javaClass.name}: Widget enabled")
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
+        AnkiDroidUsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
     }
 
     /**
@@ -61,7 +61,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Timber.d("${this.javaClass.name}: Widget disabled")
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
+        AnkiDroidUsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }
 
     @CallSuper
@@ -92,7 +92,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         }
         // Pass usageAnalytics to performUpdate
         Timber.d("${this.javaClass.name}: performUpdate")
-        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds), UsageAnalytics)
+        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds), AnkiDroidUsageAnalytics)
     }
 
     /**
@@ -105,13 +105,13 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
      * @param context The context in which the receiver is running.
      * @param appWidgetManager The AppWidgetManager instance to use for updating widgets.
      * @param appWidgetIds The app widget IDs to update.
-     * @param usageAnalytics The UsageAnalytics instance for logging analytics events.
+     * @param usageAnalytics The AnkiDroidUsageAnalytics instance for logging analytics events.
      */
 
     abstract fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: AppWidgetIds,
-        usageAnalytics: UsageAnalytics,
+        ankiDroidUsageAnalytics: AnkiDroidUsageAnalytics,
     )
 }

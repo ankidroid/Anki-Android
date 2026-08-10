@@ -24,6 +24,6 @@ abstract class AnalyticsDialogFragment(
 ) : DialogFragment(contentLayoutId) {
     override fun onResume() {
         super.onResume()
-        UsageAnalytics.sendAnalyticsScreenView(this)
+        AnkiDroidUsageAnalytics.sendAnalyticsScreenView(this)
     }
 }

@@ -25,7 +25,7 @@ import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.showError
@@ -46,7 +46,7 @@ class DialogHandler(
 
     override fun handleMessage(message: Message) {
         val msg = DialogHandlerMessage.fromMessage(message)
-        UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
+        AnkiDroidUsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
         Timber.i("Handling Message: %s", msg.analyticName)
         msg.handleAsyncMessage(activity.get() as AnkiActivity)
     }
