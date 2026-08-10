@@ -36,7 +36,7 @@ androidxBrowser = "1.10.0"
 # https://developer.android.com/jetpack/compose/bom/bom-mapping
 androidxComposeBillOfMaterials = "2026.06.01"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
-androidxConstraintlayout = "2.2.1"
+androidxConstraintlayout = "2.2.2"
 # https://developer.android.com/jetpack/androidx/releases/core
 androidxCoreKtx = "1.17.0"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
