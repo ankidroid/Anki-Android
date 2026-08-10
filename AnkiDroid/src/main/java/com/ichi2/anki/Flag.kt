@@ -144,6 +144,9 @@ enum class Flag(
     fun toSearchNode(): SearchNode = searchNode { flag = toSearchValue() }
 
     companion object {
+        val MAX_CODE: Int = entries.maxOf { it.code }
+        val MIN_CODE: Int = entries.minOf { it.code }
+
         fun fromCode(code: Int) = Flag.entries.first { it.code == code }
 
         /**
