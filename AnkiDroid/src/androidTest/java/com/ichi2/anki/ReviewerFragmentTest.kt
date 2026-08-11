@@ -21,8 +21,6 @@ import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.reviewDeckWithName
 import com.ichi2.anki.utils.ext.cardStateCustomizer
-import com.ichi2.testutils.common.Flaky
-import com.ichi2.testutils.common.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
@@ -49,11 +47,26 @@ class ReviewerFragmentTest : InstrumentedTest() {
     val retry = RetryRule(10)
 
     @Test
-    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
-    fun testCustomSchedulerWithCustomData() {
+    fun testCustomSchedulerWithCustomData() = testCustomSchedulerWithCustomData(schedulerDelayMs = 0)
+
+    /**
+     * Issue 17298: a card must not be answered until the custom scheduler has
+     * completed (statesMutated).
+     */
+    @Test
+    fun testCustomSchedulerWithCustomDataAndSlowScheduler() = testCustomSchedulerWithCustomData(schedulerDelayMs = 5000)
+
+    private fun testCustomSchedulerWithCustomData(schedulerDelayMs: Long) {
         setNewReviewer()
+        val delayJs =
+            if (schedulerDelayMs > 0) {
+                "await new Promise(resolve => setTimeout(resolve, $schedulerDelayMs));"
+            } else {
+                ""
+            }
         col.cardStateCustomizer =
             """
+            $delayJs
             states.good.normal.review.easeFactor = 3.0;
             states.good.normal.review.scheduledDays = 123;
             customData.good.c += 1;
@@ -91,7 +104,6 @@ class ReviewerFragmentTest : InstrumentedTest() {
     }
 
     @Test
-    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithRuntimeError() {
         setNewReviewer()
         // Issue 15035 - runtime errors weren't handled
