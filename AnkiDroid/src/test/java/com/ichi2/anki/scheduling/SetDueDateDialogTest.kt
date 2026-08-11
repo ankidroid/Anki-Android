@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.scheduling
 
+import android.os.Bundle
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
@@ -15,14 +16,24 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
+import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.positiveButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
+import kotlin.coroutines.coroutineContext
 
 @NeedsTest("set interval to same value visibility with FSRS")
 @RunWith(AndroidJUnit4::class)
@@ -127,12 +138,85 @@ class SetDueDateDialogTest : RobolectricTest() {
             assertThat(dateRangeEnd.text.toString(), equalTo("12345"))
         }
 
+    @Test
+    fun `card ids are readable after recreation`() =
+        runTest {
+            val cardIds = List(2) { addBasicNote().firstCard().id }
+            launchFragment<SetDueDateDialog>(
+                themeResId = R.style.Base_Theme_Light,
+                fragmentArgs = setDueDateArgs(cardIds),
+            ).use { scenario ->
+                advanceRobolectricLooper()
+                scenario.recreate()
+                advanceRobolectricLooper()
+                scenario.onFragment { fragment ->
+                    assertThat(fragment.cardIds, equalTo(cardIds))
+                }
+            }
+        }
+
+    @Test
+    fun `ids file is removed after the dialog is dismissed`() =
+        runTest {
+            val cardIds = List(2) { addBasicNote().firstCard().id }
+            val args = setDueDateArgs(cardIds)
+            val idsFile = args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE)
+
+            launchFragment<SetDueDateDialog>(
+                themeResId = R.style.Base_Theme_Light,
+                fragmentArgs = args,
+            ).use { scenario ->
+                advanceRobolectricLooper()
+                assertThat("kept while the dialog is open", idsFile.exists(), equalTo(true))
+                scenario.onFragment { it.dismiss() }
+                advanceRobolectricLooper()
+            }
+
+            assertThat("removed once dismissed", idsFile.exists(), equalTo(false))
+        }
+
+    @Test
+    fun `unreadable ids file does not crash`() =
+        runTest {
+            val cardIds = List(2) { addBasicNote().firstCard().id }
+            val args = setDueDateArgs(cardIds)
+            args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE).writeBytes(ByteArray(0))
+
+            launchFragment<SetDueDateDialog>(
+                themeResId = R.style.Base_Theme_Light,
+                fragmentArgs = args,
+            ).use {
+                advanceRobolectricLooper()
+            }
+        }
+
+    @Test
+    fun `cancelled caller leaves no ids file behind`() =
+        runTest {
+            val cardIds = List(2) { addBasicNote().firstCard().id }
+            val cacheDir = File(targetContext.cacheDir, "set-due-date-cancelled").also { it.mkdirs() }
+
+            CoroutineScope(coroutineContext + Job())
+                .async {
+                    coroutineContext.cancel()
+                    SetDueDateDialog.newInstance(cacheDir, cardIds)
+                }
+            advanceUntilIdle()
+
+            assertThat(cacheDir.listFiles()?.size, equalTo(0))
+        }
+
+    private suspend fun setDueDateArgs(cardIds: List<CardId>): Bundle =
+        SetDueDateDialog
+            .newInstance(targetContext.externalCacheDir ?: targetContext.cacheDir, cardIds)
+            .requireArguments()
+
     private fun testDialog(
         cardCount: Int = 1,
         action: SetDueDateDialog.() -> Unit,
     ) = runTest {
         val cardIds = List(cardCount) { addBasicNote().firstCard().id }
-        val dialog = SetDueDateDialog.newInstance(cardIds)
+        val dialog = SetDueDateDialog.newInstance(targetContext.externalCacheDir ?: targetContext.cacheDir, cardIds)
         launchFragment(
             themeResId = R.style.Base_Theme_Light,
             fragmentArgs = dialog.arguments,
