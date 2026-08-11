@@ -180,7 +180,6 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         }
     }
 
-    // TODO: Properly handle spacing for spinner checkmarks. Issue not created yet.
     private fun createNoteTypeAdapter(): ArrayAdapter<DisplayNoteType> {
         val noteTypes = viewModel.availableNoteTypes.map { DisplayNoteType(it.name, it.isCloze) }
 
