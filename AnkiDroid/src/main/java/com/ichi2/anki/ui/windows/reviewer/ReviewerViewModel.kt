@@ -444,6 +444,10 @@ class ReviewerViewModel(
                 isInputFocused = false
                 return byteArrayOf()
             }
+            "statesMutated" -> {
+                onStateMutationCallback()
+                return byteArrayOf()
+            }
         }
         return when (uri.backendMethodName) {
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
@@ -472,8 +476,12 @@ class ReviewerViewModel(
             return
         }
         mutationSignal = CompletableDeferred()
+        // https://github.com/ankitects/anki/commit/bd88c6d352dc7aeb4a674029eab7bdda2a821a78
         statesMutationEvalFlow.emit(
-            "anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js });",
+            """
+            anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js })
+                .finally(() => fetch("ankidroid/statesMutated", { method: "POST" }));
+            """,
         )
     }
 
