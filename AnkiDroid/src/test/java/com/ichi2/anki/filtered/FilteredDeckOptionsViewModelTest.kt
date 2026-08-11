@@ -391,9 +391,84 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `name validation still works after the screen is restored`() =
+        runTest {
+            addDeck("A")
+            withRestoredViewModel {
+                onDeckNameChange("A")
+                assertThat(current.nameInputError, equalTo(FilteredNameInputError.AlreadyExists))
+                assertFalse(current.isBuildingAllowed)
+            }
+        }
+
+    @Test
+    fun `changed status still works after the screen is restored`() =
+        runTest {
+            addDeck("A")
+            withRestoredViewModel {
+                assertFalse(hasUnsavedChanges.value)
+                onSearchChange(FilterIndex.First, "flag:3")
+                assertTrue(hasUnsavedChanges.value)
+            }
+        }
+
+    @Test
+    fun `changes made before the screen is restored are still reported`() =
+        runTest {
+            addDeck("A")
+            withRestoredViewModel(
+                beforeDestroy = { onSearchChange(FilterIndex.First, "flag:3") },
+            ) {
+                assertTrue(hasUnsavedChanges.value)
+            }
+        }
+
+    @Test
+    fun `reverting to the deck's own name is not a duplicate`() =
+        runTest {
+            val testDid = createTestFilteredDeck()
+            withViewModel(did = testDid) {
+                onDeckNameChange("Not")
+                onDeckNameChange("Filtered")
+                assertNull(current.nameInputError)
+                assertTrue(current.isBuildingAllowed)
+            }
+        }
+
     /** Returns the current state as a [FilteredDeckOptions] or throw otherwise */
     private val FilteredDeckOptionsViewModel.current: FilteredDeckOptions
         get() = state.value as FilteredDeckOptions
+
+    /**
+     * Builds a view model and invokes [beforeDestroy] on it, then discards it and builds a second
+     * one over the same [SavedStateHandle], simulating the view model being destroyed while its
+     * saved state survives.
+     */
+    private fun TestScope.withRestoredViewModel(
+        did: DeckId = 0,
+        beforeDestroy: FilteredDeckOptionsViewModel.() -> Unit = {},
+        action: FilteredDeckOptionsViewModel.() -> Unit,
+    ) {
+        val handle =
+            SavedStateHandle().apply {
+                set(FilteredDeckOptionsFragment.ARG_DECK_ID, did)
+                set(FilteredDeckOptionsFragment.ARG_SEARCH, null as String?)
+                set(FilteredDeckOptionsFragment.ARG_SEARCH_2, null as String?)
+            }
+        FilteredDeckOptionsViewModel(handle).apply {
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+            beforeDestroy()
+        }
+        advanceUntilIdle()
+        advanceRobolectricLooper()
+
+        val restoredViewModel = FilteredDeckOptionsViewModel(handle)
+        advanceUntilIdle()
+        advanceRobolectricLooper()
+        restoredViewModel.action()
+    }
 
     private fun TestScope.withViewModel(
         did: DeckId = 0,
