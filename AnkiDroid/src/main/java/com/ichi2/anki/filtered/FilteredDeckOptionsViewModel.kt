@@ -70,9 +70,14 @@ class FilteredDeckOptionsViewModel(
     init {
         viewModelScope.launch {
             Timber.i("Starting filtered deck options setup, deckId=$did")
+            // needed on both paths: name validation is done against this list
+            decksNames = withCol { safeGetDecksNames() }
             val previousState = savedStateHandle.get<FilteredDeckOptions>(ARG_DATA)
             if (previousState != null) {
+                initialState = savedStateHandle[ARG_INITIAL_DATA]
                 state.update { previousState }
+                // changes made before the view model was destroyed are still unsaved
+                hasUnsavedChanges.update { wasStateModified() }
                 return@launch
             }
             Timber.i("No previous stored state, querying the collection")
@@ -82,7 +87,6 @@ class FilteredDeckOptionsViewModel(
                     state.update { Initializing(throwable = throwable) }
                     return@launch
                 }
-            decksNames = withCol { safeGetDecksNames() }
             filteredDeckData
                 .asInitialState(
                     cardsOptions = cardsOptions,
@@ -90,6 +94,7 @@ class FilteredDeckOptionsViewModel(
                     defaultSearch2 = search2,
                 ).apply {
                     savedStateHandle[ARG_DATA] = this
+                    savedStateHandle[ARG_INITIAL_DATA] = this
                     initialState = this
                 }
             state.update { currentState() }
@@ -98,13 +103,16 @@ class FilteredDeckOptionsViewModel(
 
     fun onDeckNameChange(name: String) {
         Timber.i("Filtered deck name is changing")
+        val current = currentState()
         val error =
             when {
                 name.isBlank() -> FilteredNameInputError.Empty
+                // when editing a deck, its own name doesn't conflict with itself
+                current.id != null && name == current.title -> null
                 decksNames.contains(name) -> FilteredNameInputError.AlreadyExists
                 else -> null
             }
-        if (currentState().name == name) return
+        if (current.name == name) return
         updateCurrentState { copy(name = name, nameInputError = error) }
         hasUnsavedChanges.update { wasStateModified() }
     }
@@ -492,5 +500,11 @@ class FilteredDeckOptionsViewModel(
     companion object {
         /** Key used to store/retrieve our state in [SavedStateHandle]. */
         private const val ARG_DATA = "arg_data"
+
+        /**
+         * Key used to store/retrieve the state as it was first loaded in [SavedStateHandle]. Needed
+         * to detect unsaved changes after the view model is recreated.
+         */
+        private const val ARG_INITIAL_DATA = "arg_initial_data"
     }
 }
