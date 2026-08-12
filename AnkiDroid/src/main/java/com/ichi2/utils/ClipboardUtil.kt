@@ -92,12 +92,13 @@ object ClipboardUtil {
  * @param text the text that needs to be copied
  * @param successMessageId message that needs to be shown after successfully copying the text
  * @param failureMessageId message that needs to be shown in case failed to copy the text
+ * @return whether the text was copied to the clipboard
  */
 fun Context.copyToClipboard(
     text: String,
     @StringRes successMessageId: Int = R.string.about_ankidroid_successfully_copied_debug_info,
     @StringRes failureMessageId: Int = R.string.failed_to_copy,
-) {
+): Boolean {
     val copied = copyTextToClipboard(text)
     // in Android S_V2 and above, the system is guaranteed to show a message on a successful copy
     // so we don't need to do anything
@@ -105,7 +106,7 @@ fun Context.copyToClipboard(
 
     if (doesNotNeedToShowMessage) {
         Timber.v("successfully copied to clipboard & system informed user of copy")
-        return
+        return true
     }
 
     val confirmationMessage = if (copied) successMessageId else failureMessageId
@@ -115,6 +116,8 @@ fun Context.copyToClipboard(
     } else {
         showThemedToast(this, confirmationMessage, shortLength = true)
     }
+
+    return copied
 }
 
 /**
