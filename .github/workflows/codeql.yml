@@ -93,6 +93,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Retry - services.gradle.org occasionally returns a 503
+    - name: Gradle Dependency Download
+      if: matrix.build-mode == 'manual'
+      uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+      with:
+        timeout_minutes: 10
+        retry_wait_seconds: 60
+        max_attempts: 3
+        command: ./gradlew help --daemon
+
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
     # to set the build mode to "manual" for that language. Then modify this step
