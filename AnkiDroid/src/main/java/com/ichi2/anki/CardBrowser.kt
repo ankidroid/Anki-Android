@@ -500,10 +500,18 @@ open class CardBrowser :
                 when (command) {
                     is NoteEditorCommand.LoadInPane -> {
                         binding.noteEditorFrame?.isVisible = true
-                        if (fragment?.hasUnsavedChanges() == true) {
-                            showSaveChangesDialog(command.destination)
-                        } else {
-                            loadNoteEditorFragment(command.destination)
+                        val editor = fragment
+                        when {
+                            // Issue 19737: the pane already displays this selection. Refresh it in
+                            // place: recreating the fragment is expensive enough to ANR when
+                            // searches complete in quick succession. If there are unsaved
+                            // changes, keep them: this is a redundant refresh, not a navigation
+                            editor != null && editor.isEditingSameCards(command.destination) ->
+                                if (!editor.hasUnsavedChanges()) {
+                                    editor.reloadNoteFromCollection()
+                                }
+                            editor?.hasUnsavedChanges() == true -> showSaveChangesDialog(command.destination)
+                            else -> loadNoteEditorFragment(command.destination)
                         }
                     }
                     is NoteEditorCommand.LaunchActivity -> {
