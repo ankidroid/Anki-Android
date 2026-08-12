@@ -153,7 +153,7 @@ private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Lo
  *
  *     externalDirs:                /storage/emulated/0/Android/data/com.ichi2.anki
  *
- * There is a similar method [com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage],
+ * There is a similar method [com.ichi2.anki.common.storage.isLegacyStorage],
  * but it has a different purpose and behavior, and I am not sure if I understand it well.
  */
 @Suppress("DEPRECATION") // context.externalMediaDirs: see the doc for the method

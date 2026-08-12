@@ -21,9 +21,9 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
-import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.UsageAnalytics
+import com.ichi2.anki.common.storage.grantedStoragePermissions
 import timber.log.Timber
 
 /**
@@ -87,7 +87,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        if (runCatching { grantedStoragePermissions(context, showToast = false) }.getOrNull() != true) {
+        if (runCatching { grantedStoragePermissions(context) }.getOrNull() != true) {
             Timber.w("Opening widget ${this.javaClass.name} without storage access")
             return
         }
