@@ -10,7 +10,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.analytics.AnalyticsConstants.Actions
 import com.ichi2.anki.analytics.AnalyticsConstants.Category
-import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.databinding.FragmentMoreBinding
@@ -46,47 +46,47 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
 
         // Help section: each opens HelpDialog with the relevant sub-items
         binding.moreHelpManual.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_USING_ANKIDROID)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_USING_ANKIDROID)
             openHelpSection(R.string.help_title_using_ankidroid)
         }
         binding.moreHelpGetHelp.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_GET_HELP)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_GET_HELP)
             openHelpSection(R.string.help_title_get_help)
         }
         binding.moreHelpCommunity.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_COMMUNITY)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_COMMUNITY)
             openHelpSection(R.string.help_title_community)
         }
         binding.moreHelpPrivacy.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_PRIVACY)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_PRIVACY)
             openHelpSection(R.string.help_title_privacy)
         }
 
         // Support section: direct URL actions
         binding.moreSupportDonate.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_DONATE)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_DONATE)
             openUrl(getString(R.string.link_opencollective_donate))
         }
         binding.moreSupportTranslate.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_TRANSLATE)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_TRANSLATE)
             openUrl(getString(R.string.link_translation))
         }
         binding.moreSupportDevelop.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_DEVELOP)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_DEVELOP)
             openUrl(getString(R.string.link_ankidroid_development_guide))
         }
         binding.moreSupportRate.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_RATE)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_RATE)
             if (IntentUtil.canOpenIntent(requireContext(), marketIntent)) {
                 startActivity(marketIntent)
             }
         }
         binding.moreSupportOther.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_OTHER)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_OTHER)
             openUrl(getString(R.string.link_contribution))
         }
         binding.moreSupportFeedback.setOnClickListener {
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_SEND_FEEDBACK)
+            Analytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_SEND_FEEDBACK)
             openUrl(AnkiDroidApp.feedbackUrl)
         }
 

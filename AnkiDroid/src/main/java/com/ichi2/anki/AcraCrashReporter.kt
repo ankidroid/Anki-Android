@@ -13,7 +13,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
 import com.ichi2.anki.analytics.AnkiDroidCrashReportDialog
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
-import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics.sendAnalyticsException
+import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_ALWAYS
@@ -267,7 +267,7 @@ private object AcraCrashReporter : CrashReporter {
         onlyIfSilent: Boolean,
         context: Context,
     ) {
-        sendAnalyticsException(e, false)
+        Analytics.sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
         val reportMode =
             context
