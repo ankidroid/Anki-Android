@@ -19,7 +19,7 @@ import android.content.Context
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.R
-import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 
 class AddNoteWidget : AnalyticsWidgetProvider() {
@@ -27,7 +27,7 @@ class AddNoteWidget : AnalyticsWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: AppWidgetIds,
-        ankiDroidUsageAnalytics: AnkiDroidUsageAnalytics,
+        usageAnalytics: UsageAnalytics,
     ) {
         updateWidgets(context, appWidgetManager, appWidgetIds)
     }

@@ -22,8 +22,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
-import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.UsageAnalytics
 import timber.log.Timber
 
 /**
@@ -93,7 +93,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         }
         // Pass usageAnalytics to performUpdate
         Timber.d("${this.javaClass.name}: performUpdate")
-        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds), AnkiDroidUsageAnalytics)
+        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds), Analytics.instance)
     }
 
     /**
@@ -106,13 +106,13 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
      * @param context The context in which the receiver is running.
      * @param appWidgetManager The AppWidgetManager instance to use for updating widgets.
      * @param appWidgetIds The app widget IDs to update.
-     * @param ankiDroidUsageAnalytics The AnkiDroidUsageAnalytics instance for logging analytics events.
+     * @param usageAnalytics used to report widget events.
      */
 
     abstract fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: AppWidgetIds,
-        ankiDroidUsageAnalytics: AnkiDroidUsageAnalytics,
+        usageAnalytics: UsageAnalytics,
     )
 }

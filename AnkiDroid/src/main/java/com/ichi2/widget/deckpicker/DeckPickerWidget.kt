@@ -14,7 +14,7 @@ import android.widget.RemoteViews
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.R
-import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
@@ -239,7 +239,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: AppWidgetIds,
-        ankiDroidUsageAnalytics: AnkiDroidUsageAnalytics,
+        usageAnalytics: UsageAnalytics,
     ) {
         Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
 
