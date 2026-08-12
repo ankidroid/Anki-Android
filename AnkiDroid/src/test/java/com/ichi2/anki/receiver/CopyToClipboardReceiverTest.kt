@@ -11,6 +11,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
@@ -27,9 +28,9 @@ import org.robolectric.shadows.ShadowContextImpl
 class CopyToClipboardReceiverTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val clipboardManager
-        get() = context.getSystemService(ClipboardManager::class.java)!!
+        get() = context.requireSystemService<ClipboardManager>()
     private val notificationManager
-        get() = context.getSystemService(NotificationManager::class.java)!!
+        get() = context.requireSystemService<NotificationManager>()
 
     @Test
     fun `copies the error log to the clipboard and dismisses the notification`() {
