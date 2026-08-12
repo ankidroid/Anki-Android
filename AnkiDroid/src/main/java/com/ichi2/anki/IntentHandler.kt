@@ -16,11 +16,10 @@ import androidx.core.content.IntentCompat
 import androidx.work.WorkManager
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
-import com.ichi2.anki.common.permissions.hasLegacyStorageAccessPermission
-import com.ichi2.anki.common.permissions.isExternalStorageManagerCompat
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
+import com.ichi2.anki.common.storage.grantedStoragePermissions
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
@@ -29,7 +28,6 @@ import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
@@ -371,10 +369,7 @@ class IntentHandler : AbstractIntentHandler() {
             context: Context,
             showToast: Boolean,
         ): Boolean {
-            val granted =
-                !ScopedStorageService.isLegacyStorage(context) ||
-                    hasLegacyStorageAccessPermission(context) ||
-                    isExternalStorageManagerCompat()
+            val granted = grantedStoragePermissions(context)
 
             if (!granted && showToast) {
                 showThemedToast(context, context.getString(R.string.intent_handler_failed_no_storage_permission), false)
