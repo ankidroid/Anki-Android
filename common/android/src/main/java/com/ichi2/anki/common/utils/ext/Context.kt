@@ -5,6 +5,7 @@ package com.ichi2.anki.common.utils.ext
 
 import android.content.BroadcastReceiver
 import android.content.Context
+import androidx.core.content.ContextCompat
 import timber.log.Timber
 
 /**
@@ -21,3 +22,18 @@ fun Context.unregisterReceiverSilently(receiver: BroadcastReceiver) {
         Timber.d(e, "BroadcastReceiver was not previously registered")
     }
 }
+
+/**
+ * Returns the system service of type [T], for services which are always available
+ *
+ * ```
+ * val clipboardManager = context.requireSystemService<ClipboardManager>()
+ * ```
+ *
+ * @throws IllegalArgumentException if the service is unavailable
+ * @see ContextCompat.getSystemService
+ */
+inline fun <reified T : Any> Context.requireSystemService(): T =
+    requireNotNull(ContextCompat.getSystemService(this, T::class.java)) {
+        "system service unavailable: ${T::class.java.simpleName}"
+    }
