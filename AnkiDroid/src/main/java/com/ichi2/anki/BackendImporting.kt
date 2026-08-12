@@ -3,14 +3,14 @@
 
 package com.ichi2.anki
 
-import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesOnly
 import anki.import_export.ImportAnkiPackageRequest
 import anki.search.SearchNode
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.libanki.importCsvRaw
 import com.ichi2.anki.observability.undoableOp
 import kotlinx.coroutines.Dispatchers
@@ -60,11 +60,6 @@ val hideShowButtonCss =
  */
 suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
     val searchString = withCol { buildSearchString(listOf(SearchNode.parseFrom(input))) }
-    val starterIntent =
-        Intent(this, CardBrowser::class.java).apply {
-            putExtra(CardBrowserViewModel.EXTRA_SEARCH_QUERY, searchString)
-            putExtra(CardBrowserViewModel.EXTRA_ALL_DECKS, true)
-        }
-    startActivity(starterIntent)
+    navigate(BrowserDestination.Search(query = searchString, allDecks = true))
     return input
 }
