@@ -28,15 +28,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
- * @param dueCardsCount The number of due cards (new + lrn + rev)
- * @param eta The estimated time to review
- */
-data class SmallWidgetStatus(
-    val dueCardsCount: Int,
-    val eta: Int,
-)
-
-/**
  * The status of the widget.
  */
 object WidgetStatus {
