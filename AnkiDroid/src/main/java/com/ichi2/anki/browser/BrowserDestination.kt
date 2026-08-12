@@ -19,4 +19,9 @@ fun BrowserDestination.toIntent(context: Context): Intent =
                 putExtra(CardBrowserViewModel.EXTRA_DECK_ID, deckId)
                 putExtra(CardBrowserViewModel.EXTRA_CARD_ID_KEY, cardId)
             }
+        is BrowserDestination.Search ->
+            Intent(context, CardBrowser::class.java).apply {
+                putExtra(CardBrowserViewModel.EXTRA_SEARCH_QUERY, query)
+                putExtra(CardBrowserViewModel.EXTRA_ALL_DECKS, allDecks)
+            }
     }

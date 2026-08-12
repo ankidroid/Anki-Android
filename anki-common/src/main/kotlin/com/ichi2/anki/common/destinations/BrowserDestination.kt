@@ -21,4 +21,14 @@ sealed class BrowserDestination : Destination() {
         val deckId: DeckId,
         val cardId: CardId,
     ) : BrowserDestination()
+
+    /**
+     * Opens the Card Browser, searching for [query].
+     *
+     * @param allDecks if `true`, search all decks instead of the selected deck
+     */
+    data class Search(
+        val query: String,
+        val allDecks: Boolean,
+    ) : BrowserDestination()
 }
