@@ -21,8 +21,8 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createNoStorageList
 import com.ichi2.utils.cancelable

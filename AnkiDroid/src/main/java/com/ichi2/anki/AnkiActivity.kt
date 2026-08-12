@@ -55,7 +55,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
@@ -201,7 +201,7 @@ open class AnkiActivity(
 
     override fun onResume() {
         super.onResume()
-        UsageAnalytics.sendAnalyticsScreenView(this)
+        AnkiDroidUsageAnalytics.sendAnalyticsScreenView(this)
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(
             SIMPLE_NOTIFICATION_ID,
         )
@@ -516,13 +516,12 @@ open class AnkiActivity(
             }
 
     /**
-     * Calls [.showAsyncDialogFragment] internally, using the channel
-     * [Channel.GENERAL]
+     * Calls [.showAsyncDialogFragment] internally, using the channel [NotificationChannel.GENERAL]
      *
      * @param newFragment  the AsyncDialogFragment you want to show
      */
     open fun showAsyncDialogFragment(newFragment: AsyncDialogFragment) {
-        showAsyncDialogFragment(newFragment, Channel.GENERAL)
+        showAsyncDialogFragment(newFragment, NotificationChannel.GENERAL)
     }
 
     /**
@@ -531,11 +530,11 @@ open class AnkiActivity(
      * AsyncTask completed
      *
      * @param newFragment  the AsyncDialogFragment you want to show
-     * @param channel the Channel to use for the notification
+     * @param channel the [NotificationChannel] to use for the notification
      */
     fun showAsyncDialogFragment(
         newFragment: AsyncDialogFragment,
-        channel: Channel,
+        channel: NotificationChannel,
     ) {
         try {
             showDialogFragment(newFragment)
@@ -571,7 +570,7 @@ open class AnkiActivity(
     fun showSimpleNotification(
         title: String,
         message: String?,
-        channel: Channel,
+        channel: NotificationChannel,
     ) {
         // Use the title as the ticker unless the title is simply "AnkiDroid"
         val ticker: String? =

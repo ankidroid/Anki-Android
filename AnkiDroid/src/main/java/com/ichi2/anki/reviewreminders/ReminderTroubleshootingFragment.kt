@@ -37,6 +37,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
@@ -47,6 +48,7 @@ import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
+import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.dp
 import dev.androidbroadcast.vbpd.viewBinding
@@ -311,6 +313,7 @@ private class TroubleshootingChecksAdapter(
 private fun TroubleshootingCheck.title(): String =
     when (this) {
         is TroubleshootingCheck.NotificationPermission -> "Notification permission"
+        is TroubleshootingCheck.NotificationChannelEnabled -> "Notification channel"
         is TroubleshootingCheck.DoNotDisturbOff -> "Do not disturb"
         is TroubleshootingCheck.UnrestrictedOptimizationEnabled -> "Battery optimization"
         is TroubleshootingCheck.PowerSavingModeOff -> "Power saving mode"
@@ -321,6 +324,7 @@ private fun TroubleshootingCheck.title(): String =
 private fun TroubleshootingCheck.statusName(): String? =
     when (this) {
         is TroubleshootingCheck.NotificationPermission -> if (result == CheckResult.Passed) "Granted" else "Denied"
+        is TroubleshootingCheck.NotificationChannelEnabled -> if (result == CheckResult.Passed) "Enabled" else "Disabled"
         is TroubleshootingCheck.DoNotDisturbOff -> if (result == CheckResult.Passed) "Off" else "On"
         is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
             when (result) {
@@ -338,6 +342,8 @@ private fun TroubleshootingCheck.explanation(): String? =
     when (this) {
         // no need for an explanation: the 'grant permission' action should be sufficient
         is TroubleshootingCheck.NotificationPermission -> null
+        is TroubleshootingCheck.NotificationChannelEnabled ->
+            if (result.hasIssue) "The review reminder notification channel must be enabled" else null
         is TroubleshootingCheck.DoNotDisturbOff ->
             if (result.hasIssue) "Do Not Disturb may mute reminder notifications" else null
         is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
@@ -395,6 +401,16 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
         }
     }
 
+    fun requestReminderNotifChannelPermission(): ResolveCheckAction? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null
+        return ResolveCheckAction(
+            label = "Enable notification channel",
+            logDescription = "opening app notification settings screen",
+        ) {
+            fragment.openAppNotificationsSettingsScreen(highlightedChannel = NotificationChannel.REVIEW_REMINDERS)
+        }
+    }
+
     // Opens the full battery optimization list. The user must manually find the app.
     // For 'full' (non-Play) builds, ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS could be used
     // with the REQUEST_IGNORE_BATTERY_OPTIMIZATIONS manifest permission for a direct dialog,
@@ -422,6 +438,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
 
     return when (this) {
         is TroubleshootingCheck.NotificationPermission -> requestNotificationPermission()
+        is TroubleshootingCheck.NotificationChannelEnabled -> requestReminderNotifChannelPermission()
         is TroubleshootingCheck.DoNotDisturbOff -> null
         is TroubleshootingCheck.UnrestrictedOptimizationEnabled -> requestUnrestrictedBackgroundUsage()
         is TroubleshootingCheck.PowerSavingModeOff -> openBatterySaverSettings()

@@ -140,6 +140,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator
+import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.settings.Prefs
@@ -154,11 +155,14 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.Stopwatch
+import com.ichi2.utils.isBlockedCardScheme
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import com.ichi2.utils.stripDangerousPermissions
 import com.ichi2.utils.title
+import com.ichi2.utils.usesDangerousScheme
 import com.squareup.seismic.ShakeDetector
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
@@ -290,6 +294,8 @@ abstract class AbstractFlashcardViewer :
     @VisibleForTesting
     val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
+
+    private val appPermission by lazy { AppPermissions(this) { msg -> showSnackbar(msg) } }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
@@ -2539,6 +2545,15 @@ abstract class AbstractFlashcardViewer :
                 }
                 if (intent != null) {
                     Timber.i("Launching user-defined intent")
+                    if (!appPermission.checkCanLaunchExternalApps()) {
+                        Timber.w("launch blocked: canLaunchExternalApps")
+                        return true
+                    }
+                    intent.stripDangerousPermissions()
+                    if (intent.usesDangerousScheme()) {
+                        Timber.w("Blocked card-origin intent carrying dangerous data")
+                        return true
+                    }
                     if (packageManager.resolveActivityCompat(
                             intent,
                             ResolveInfoFlagsCompat.EMPTY,
@@ -2578,8 +2593,17 @@ abstract class AbstractFlashcardViewer :
                 Timber.w("Unable to parse intent uri: %s because: %s", url, t.message)
             }
             if (intent == null) {
+                val uri = url.toUri()
+                if (!appPermission.checkCanLaunchExternalApps()) {
+                    Timber.w("URL blocked: canLaunchExternalApps")
+                    return true
+                }
+                if (isBlockedCardScheme(uri.scheme)) {
+                    Timber.w("URL blocked")
+                    return true
+                }
                 Timber.d("Opening external link \"%s\" with an Intent", url)
-                intent = Intent(Intent.ACTION_VIEW, url.toUri())
+                intent = Intent(Intent.ACTION_VIEW, uri)
             } else {
                 Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent)
             }

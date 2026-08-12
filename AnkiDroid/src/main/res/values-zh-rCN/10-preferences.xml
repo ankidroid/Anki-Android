@@ -46,6 +46,15 @@
     <string name="pref_cat_workarounds" maxLength="41">调试选项</string>
     <string name="pref_cat_plugins" maxLength="41">插件</string>
     <string name="pref_cat_editing" maxLength="41">编辑</string>
+    <string name="pref_cat_security" maxLength="41">安全性</string>
+    <!-- Card template JavaScript API permissions -->
+    <string name="allow_dangerous_js_api_title" maxLength="41">全局允许危险的 JavaScript APIs</string>
+    <string name="allow_dangerous_js_api_summ">允许任何卡片或模板读取和修改其他卡片或您的Anki卡片组数据。\n除非您信任卡片组中的所有卡片和模板，否则请关闭。</string>
+    <string name="dangerous_js_api_denied_snackbar">安全性：不安全的 JavaScript 调用被阻止。\n如果您信任卡片组中所有的卡片和模板，可以在高级设置中解除屏蔽。</string>
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="41">允许卡片启动其他应用</string>
+    <string name="allow_card_external_launch_summ">卡片可以打开设备上的其他应用，触发潜在的不希望的操作。\n除非信任卡片组中的所有卡片和模板，否则请不要开启。</string>
+    <string name="card_external_launch_denied_snackbar">安全性：阻止了卡片启动另一个应用。\n如果您信任卡片组中的所有卡片和模板，可以在高级设置中解除屏蔽。</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
     <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>

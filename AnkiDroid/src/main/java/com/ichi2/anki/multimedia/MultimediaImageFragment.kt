@@ -31,6 +31,7 @@ import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -110,7 +111,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                         return@registerForActivityResult
                     }
 
-                    val selectedImage = getImageUri(data)
+                    val selectedImage = PickedImage(data).trustedUri
+                    if (selectedImage == null) {
+                        showSnackbar(getString(R.string.select_image_failed))
+                        return@registerForActivityResult
+                    }
                     handleSelectImageIntent(selectedImage)
                 }
             }
@@ -274,11 +279,9 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun handleImageUri() {
-        fun processExternalImage(uri: Uri): Uri? = internalizeUri(uri)?.let { Uri.fromFile(it) }
-
         if (imageUri != null) {
-            val internalUri = imageUri?.let { processExternalImage(it) }
-            handleSelectImageIntent(internalUri)
+            // a content:// or a file:// already in our cache; resolveUriToFile handles both
+            handleSelectImageIntent(imageUri)
         } else {
             handleSelectedImageOptions()
         }
@@ -509,19 +512,34 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         updateAndDisplayImageSize(imagePath)
     }
 
-    /**
-     * Resolves a [Uri] to a [File] on internal storage.
-     *
-     * If the URI is a content URI, it is internalized by copying its contents to internal storage.
-     * If the URI is already a file URI, it is directly converted to a [File] object.
-     *
-     * @param uri The URI to resolve.
-     * @return The corresponding [File], or `null` if the URI is invalid or unsupported.
-     */
-    private fun resolveUriToFile(uri: Uri): File? {
-        return when (uri.scheme) {
-            ContentResolver.SCHEME_FILE -> File(uri.path ?: return null)
+    /** Resolves [uri] to a local [File], internalizing content URIs but accepting file URIs only
+     *  from our own cache. */
+    @VisibleForTesting
+    internal fun resolveUriToFile(uri: Uri): File? =
+        when (uri.scheme) {
+            ContentResolver.SCHEME_FILE -> cachedFileOrNull(uri)
             else -> internalizeUri(uri)
+        }
+
+    /** The [File] for a `file://` [uri], but only when it's inside our own cache. A picked or shared
+     *  file:// is otherwise untrusted: we'd read it with our UID and attach it as media. */
+    private fun cachedFileOrNull(uri: Uri): File? {
+        val file = uri.path?.let(::File) ?: return null
+        if (!file.isInsideAppCache()) {
+            Timber.w("rejected file:// outside the cache")
+            return null
+        }
+        return file
+    }
+
+    /** Canonical-path check so a `..` in the URI can't climb out of the cache. */
+    private fun File.isInsideAppCache(): Boolean {
+        val cacheRoot = context?.cacheDir?.canonicalFile ?: return false
+        return try {
+            generateSequence(canonicalFile) { it.parentFile }.any { it == cacheRoot }
+        } catch (e: IOException) {
+            Timber.w(e, "isInsideAppCache() failed to canonicalize %s", this)
+            false
         }
     }
 
@@ -583,12 +601,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         Timber.i("Loading non-SVG image using WebView")
 
         try {
-            val internalFile = internalizeUri(imageUri)?.takeIf { it.exists() }
+            // read our own cache file directly, internalize anything else
+            val internalFile = (cachedFileOrNull(imageUri) ?: internalizeUri(imageUri))?.takeIf { it.exists() }
             if (internalFile == null) {
-                Timber.w(
-                    "loadImage() unable to internalize image from Uri %s",
-                    imageUri,
-                )
+                Timber.w("loadImage() unable to resolve image from Uri %s", imageUri)
                 showSomethingWentWrong()
                 return
             }
@@ -657,9 +673,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      */
     private fun loadSvgFromUri(uri: Uri): String? =
         try {
-            context?.contentResolver?.openInputStreamSafe(uri)?.use { inputStream ->
-                inputStream.convertToString()
-            }
+            // our own cache file reads directly; openInputStreamSafe blocks /data
+            val inputStream =
+                cachedFileOrNull(uri)?.inputStream()
+                    ?: context?.contentResolver?.openInputStreamSafe(uri)
+            inputStream?.use { it.convertToString() }
         } catch (e: Exception) {
             Timber.w(e, "Error reading SVG from URI")
             null
@@ -754,15 +772,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             showSomethingWentWrong()
             null
         }
-    }
-
-    private fun getImageUri(data: Intent): Uri? {
-        Timber.d("getImageUri for data %s", data)
-        val uri = data.data
-        if (uri == null) {
-            showSnackbar(getString(R.string.select_image_failed))
-        }
-        return uri
     }
 
     companion object {

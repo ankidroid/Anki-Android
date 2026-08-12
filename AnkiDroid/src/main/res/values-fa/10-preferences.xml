@@ -47,6 +47,15 @@
     <string name="pref_cat_workarounds" maxLength="41">راه‌حل‌ها</string>
     <string name="pref_cat_plugins" maxLength="41">افزونه‌ها</string>
     <string name="pref_cat_editing" maxLength="41">در حال ویرایش</string>
+    <string name="pref_cat_security" maxLength="41">امنیت</string>
+    <!-- Card template JavaScript API permissions -->
+    <string name="allow_dangerous_js_api_title" maxLength="41">مجوز عمومی برای APIهای خطرناک جاوااسکریپت</string>
+    <string name="allow_dangerous_js_api_summ">با فعال‌سازی این گزینه، هر کارت یا هر قالبی قادر خواهد بود کارت‌های دیگر و کل اطلاعات آرشیو انکی را مشاهده و دستکاری کند.\nتوصیه می‌شود این بخش غیرفعال بماند، مگر آنکه به تکتک کارت‌ها و قالب‌های موجود اطمینان صددرصدی داشته باشید.</string>
+    <string name="dangerous_js_api_denied_snackbar">اخطار ایمنی: کد خطرناک جاوااسکریپتمسدود شد.\nچنانچه به همهٔ محتویات و قالب‌های کالکشن خود اعتماد دارید، می‌توانید این گزینه را در تنظیمات پیشرفته فعال کنید.</string>
+    <!-- External-app launching from card content (intent: / android-app: URLs) -->
+    <string name="allow_card_external_launch_title" maxLength="41">مجوز بازکردن برنامه‌های دیگر توسط کارت‌ها</string>
+    <string name="allow_card_external_launch_summ">کارت‌ها می‌توانند برنامه‌های دیگر را روی دستگاه شما باز کنند که ممکن است به اجرای اقدامات ناخواسته منجر شود.\nاین گزینه را خاموش نگه دارید، مگر اینکه به تمام کارت‌ها و قالب‌های موجود در مجموعهٔ خود اعتماد کامل داشته باشید.</string>
+    <string name="card_external_launch_denied_snackbar">هشدار امنیتی: کارت از اجرای برنامهٔ دیگر مسدود شد.\nاگر به تمام کارت‌ها و قالب‌های مجموعهٔ خود اعتماد دارید، می‌توانید این محدودیت را در تنظیمات پیشرفته فعال کنید.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">کلفتی خط</string>
     <string name="use_input_tag" maxLength="41">پاسخ را در کارت بنویسید</string>
@@ -128,7 +137,7 @@
     <string name="notification_pref_title" maxLength="41">اطلاع بده موقعی که</string>
     <string name="never_notify">هرگز اطلاع نده</string>
     <string name="notify_when_pending">هشدارهای مشاهده نشده</string>
-    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">More than %d cards due</string>
+    <string name="notification_minimum_cards_due" comment="Consider keeping the unbreakable space after the digit">بیش از %d کارت در نوبت مرور</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">لرزش</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">چشمک زدن نور</string>
     <string name="select_locale_title">انتخاب زبان</string>
@@ -147,8 +156,8 @@
     <string name="show_estimates_summ">نمایش زمان مرور بعدی در بالای دکمه پاسخ</string>
     <string name="show_large_answer_buttons" maxLength="41">دکمه های بزرگ جواب نشان بده</string>
     <string name="show_large_answer_buttons_summ">نمایش دکمه پاسخ در ۲ ردیف</string>
-    <string name="remove_animations" maxLength="41">Remove animations</string>
-    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
+    <string name="remove_animations" maxLength="41">غیرفعال‌سازی انیمیشن‌ها</string>
+    <string name="remove_animations_summary">در صورت حذف انیمیشن‌ها در تنظیمات سیستم، این گزینه همچنین فعال می‌شود.</string>
     <string name="show_top_bar" maxLength="41">نمایش نوار بالا</string>
     <string name="show_top_bar_summary">نمایش تعداد کارت ها، ساعت شمار پاسخ، پرچم و علامت در نوار بالا</string>
     <string name="show_progress" maxLength="41">نمایش باقیمانده</string>
@@ -160,8 +169,8 @@
     <string name="time_limit" maxLength="41">محدوده زمانی جعبه زمان</string>
     <string name="day_offset_with_description" maxLength="41">شروع روز بعد</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d hour past midnight</item>
-        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d hours past midnight</item>
+        <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d ساعت پس از نیمه‌شب</item>
+        <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d ساعت پس از نیمه‌شب</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">روشن نگه‌داشتن صفحه</string>
     <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
@@ -179,13 +188,13 @@
     <string name="thirdparty_apps_summary">لیستی از برنامه‌هایی که از API انکی‌دروید استفاده می‌کنند، مانند دیکشنری‌ها و ابزارها را ببینید.</string>
     <string name="pref_controls_reviews_tab" maxLength="41" comment="Name of the tab to configure controls for the reviews screen">نظرات</string>
     <string name="pref_controls_previews_tab" maxLength="41" comment="Name of the tab to configure controls for the previews screen">پیش نمایش</string>
-    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">Toggle backside only</string>
+    <string name="toggle_backside_only" maxLength="41" comment="Control setting that toggles \'Backside only\' in the previews screen">فقط پشت کارت را تغییر بده</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">صفحه مطالعه</string>
     <string name="show_deck_title" maxLength="41">نمایش عنوان دسته کارت</string>
     <string name="accessibility" maxLength="41">قابلیت دسترسی</string>
     <string name="exit_via_double_tap_back" maxLength="41">دوبار عقب را بزنید که به عقب/خروج بروید</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the study screen or the app</string>
+    <string name="exit_via_double_tap_back_summ">جلوگیری از لمس اشتباهی دکمهٔ ترک صفحهٔ درسی یا اپ</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">وجود همه فایل ها در ورودی مدیا را مجاز کن</string>
     <string name="media_import_allow_all_files_summ">اگر Android یک فایل مدیا ای را نمی شناسد</string>
@@ -197,7 +206,7 @@
         اگر سرور شما تعریف نشده باشد سرور پیشفرض انکی‌وب، استفاده خواهد شد.
         <a href="%s">مطالعه بیشتر</a>
         ]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">آدرس همگام‌سازی</string>
     <string name="custom_sync_certificate_title" maxLength="41">گواهی ریشه سفارشی (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">کیبورد</string>
@@ -210,9 +219,9 @@
     <string name="misc" maxLength="41">سایر</string>
     <!-- Review reminders -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">افزودن یادآوری</string>
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">ایجاد یادآوری برای مرور</string>
+    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">ویرایش یادآور مرور</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">شما هیچ یادآوری برای مرور ندارید</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
     <!-- Deck configurations -->
@@ -225,7 +234,7 @@
     <string name="note_editor_replace_newlines" maxLength="41">خط های جدید را با HTML جایگذین کن</string>
     <string name="note_editor_replace_newlines_summ">در ویرایشگر یادداشت، همه &lt;br&gt; را به خط جدید تبدیل کن موقع ویرایش کارت</string>
     <string name="type_in_answer_focus" maxLength="41">روی ‘تایپ کردن در جای جواب’ تمرکز کن</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
+    <string name="type_in_answer_focus_summ">قرارگیری خودکار نشانگر روی فیلد «پاسخ را تایپ کنید» در صفحهٔ مطالعه</string>
     <!-- About -->
     <string name="open_changelog">Changelog را باز کن</string>
     <string name="pref_cat_about_title" maxLength="41">درباره ما</string>
@@ -233,7 +242,7 @@
     <string name="about_contributors_description"><![CDATA[این ها <a href=\"%1$s\">مشارکت کنندگان</a> عزیزمان هستند. شما هم می توانید با برنامه ریزی، ترجمه، کمک مالی و <a href=\"%2$s\">کارهای دیگر</a> به ما کمک کنید!]]></string>
     <string name="license">مجوّز</string>
     <string name="license_description"><![CDATA[AnkiDroid زیر مجوز های <a href=\"%1$s\">GPL-3.0</a> و <a href=\"%2$s\">AGPL-3.0</a> منتشر شده است و منبع کد های آن در <a href=\"%3$s\">GitHub</a> قابل دسترسی است]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
+    <string name="other_licenses"><![CDATA[انکی‌دروید همچنین از کتابخانه‌ها و آیکون‌های شخص ثالث استفاده می‌کند که تحت <a href=\"%1$s\">مجوزهای</a> متن‌باز متنوعی منتشر شده‌اند.]]></string>
     <string name="donate_description"><![CDATA[شما میتوانید توسعه AnkiDroid را همایت کنید با <a href=\"%1$s\">اهدای پول</a>. هر مقداری ما را بی نهایت خوشحال میکند.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">حرکت لمس اضافه کن</string>
@@ -242,7 +251,7 @@
     <string name="binding_add_axis">اضافه کردن اهرمک/تنظیم کننده حرکات</string>
     <string name="axis_picker_move_joystick">یک اهرمک/تنظیم کننده حرکات را حرکت دهید</string>
     <string name="user_actions" maxLength="41">اقدامات کاربر</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the study screen</string>
+    <string name="user_actions_summary" maxLength="41">فعال‌سازی کد جاوااسکریپت از صفحهٔ مطالعه</string>
     <string name="user_action_1" maxLength="28">اقدام کاربر 1</string>
     <string name="user_action_2" maxLength="28">اقدام کاربر 2</string>
     <string name="user_action_3" maxLength="28">اقدام کاربر 3</string>
@@ -253,10 +262,10 @@
     <string name="user_action_8" maxLength="28">اقدام کاربر 8</string>
     <string name="user_action_9" maxLength="28">اقدام کاربر 9</string>
     <string name="toggle_auto_advance" maxLength="28">تغییر وضعیت پیشروی خودکار</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
-    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
-    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
+    <string name="enable_auto_advance" maxLength="28">فعال‌سازی حرکت خودکار</string>
+    <string name="disable_auto_advance" maxLength="28">خاموش کردن حرکت خودکار</string>
+    <string name="enable_voice_recording" maxLength="28">فعال‌سازی ضبط صدا</string>
+    <string name="disable_voice_recording" maxLength="28">غیرفعال‌سازی ضبط صدا</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">طرف کارت را انتخاب کنید</string>
     <string name="card_side_question">سوال</string>
@@ -271,8 +280,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">آزمایشی</string>
     <string name="readtext_deprecation_warn">انکی‌دروید مکانیزم TTS بهتری را معرفی کرده که با سایر کلاینت‌های انکی سازگار است و شامل صداهای بیشتر و بهبودهای پخش زبان می‌باشد! \n\nلطفاً هر چه سریع‌تر ارتقا دهید، زیرا این تنظیم به زودی حذف خواهد شد</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">لطفاً به فرمت جدید تبدیل متن به گفتار ارتقا دهید</string>
-    <string name="pref_fixed_port_title" maxLength="41">localStorage in Study Screen</string>
-    <string name="pref_fixed_port_summary">Enables JavaScript localStorage by using a fixed server port in the Study Screen</string>
+    <string name="pref_fixed_port_title" maxLength="41">ذخیره‌ساز محلی در صفحهٔ مطالعه</string>
+    <string name="pref_fixed_port_summary">این گزینه از طریق یک پورت ثابت سرور در صفحهٔ مطالعه، قابلیت ذخیره ساز محلی جاوااسکریپت را فعال می‌کند</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">گزینه های توسعه دهنده</string>
     <string name="dev_options_enabled_pref" maxLength="41">فعال‌سازی گزینه های توسعه دهنده</string>
@@ -343,7 +352,7 @@
     <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">نوار پیمایش</string>
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">همه</string>
     <string name="ignore_display_cutout" maxLength="41">نادیده گرفتن بریدگی صفحه نمایش</string>
-    <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
+    <string name="show_answer_buttons" maxLength="41">نمایش دکمه‌های پاسخدهی</string>
     <string name="hide_hard_and_easy" maxLength="41">دکمه \"دشوار\" و \"آسان\" را پنهان کن</string>
     <string name="reviewer_frame_style" maxLength="41">طرح حاشیه</string>
     <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">کارت</string>
@@ -352,15 +361,15 @@
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">پایین</string>
     <string name="reviewer_toolbar_none" maxLength="41" comment="Setting to remove the toolbar from the study screen">هیچ‌کدام</string>
     <string name="toolbar" maxLength="41">نوار ابزار</string>
-    <string name="toolbar_actions" maxLength="41">Toolbar actions</string>
-    <string name="toolbar_position" maxLength="28">Toolbar position</string>
-    <string name="new_study_screen" maxLength="41">New study screen</string>
-    <string name="new_study_screen_summ"><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
-    <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
+    <string name="toolbar_actions" maxLength="41">فعالیت‌های نوار ابزار</string>
+    <string name="toolbar_position" maxLength="28">جایگاه مکان ابزار</string>
+    <string name="new_study_screen" maxLength="41">صفحهٔ جدید مطالعهٔ</string>
+    <string name="new_study_screen_summ"><![CDATA[صفحهٔ مطالعهٔ ارتقایافته که جانشین نسخهٔ کنونی می‌شود. برخی از ویژگی‌های صفحهٔ قدیمی تغییر کرده یا حذف شده‌اند. لطفاً هرگونه <a href="%1$s">بازخورد</a> یا <a href="%2$s">مشکل فنی</a> را گزارش دهید.]]></string>
+    <string name="show_answer_feedback" maxLength="41">نشان دادن پاسخ برای بازخورد</string>
     <string name="screen" maxLength="41">صفحه‌نمایش</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">منحصراً جواب</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">برگرداندن و جواب</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">تنظیمات را باز کنید</string>
-    <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
+    <string name="related_settings_title" comment="Title of the section for related settings">تنظیمات مرتبط</string>
 </resources>

@@ -15,6 +15,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.text.format.Formatter
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.utils.FileUtil
 import timber.log.Timber
 

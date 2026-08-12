@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-package com.ichi2.anki.storage
+package com.ichi2.anki.common.storage
 
 /**
  * Whether the user has chosen where AnkiDroid stores its collection.
  *
- * On a fresh install the location must be chosen explicitly (see [com.ichi2.anki.AnkiDroidFolder]); there is no
+ * On a fresh install the location must be chosen explicitly (see [AnkiDroidFolder]); there is no
  * silent default, and the collection must not be opened until a choice has been made.
  */
 sealed interface StorageDecision {

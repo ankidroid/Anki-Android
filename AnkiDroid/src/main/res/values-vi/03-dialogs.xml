@@ -23,7 +23,7 @@
   ~ SPDX-FileCopyrightText: Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com>
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_warning">This may take a long time. Proceed?</string>
+    <string name="check_db_warning">Việc này sẽ mất một lúc. Vẫn tiếp tục?</string>
     <string name="delete_deck_title">Xoá bộ thẻ?</string>
     <plurals name="delete_deck_message">
         <item quantity="other">Xoá tất cả thẻ trong %1$s? Bộ thẻ này đang chứa %2$d thẻ</item>
@@ -58,14 +58,14 @@
     <string name="restore_backup_choose_another">Chọn cái khác</string>
     <string name="dialog_cancel">Huỷ</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Add</string>
-    <string name="restore">Restore</string>
+    <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">Thêm</string>
+    <string name="restore">Quay lại</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Xác nhận</string>
     <string name="dialog_no">Không</string>
     <string name="dialog_yes">Đồng ý</string>
     <string name="dialog_keep">Giữ</string>
     <string name="dialog_remove">Loại bỏ</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Thoát</string>
     <string name="dialog_continue">Tiếp tục</string>
     <string name="dialog_processing">Đang xử lý&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Tạo</string>
@@ -100,7 +100,7 @@
     <string name="multimedia_editor_failed">Không mở được Trình chỉnh sửa Đa phương tiện</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Quyền ghi âm bị từ chối</string>
-    <string name="permission_denied">Permission denied</string>
+    <string name="permission_denied">Đã từ chối</string>
     <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Vẫn tiếp tục</string>

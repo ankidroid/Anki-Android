@@ -159,7 +159,8 @@
     <string name="export_save_apkg_unsuccessful">Išsaugoti „Anki“ paketo nepavyko</string>
     <string name="export_share_title">Siųsti \"Anki\" paketą naudojant</string>
     <string name="export_email_subject">Eksportuota „AnkiDroid“ kortelių: %s</string>
-    <string name="export_email_text"><![CDATA[        Sveiki!
+    <string name="export_email_text"><![CDATA[
+        Sveiki!
         <br/><br/>
         Tai "Anki" kortelių kaladė, atsiųsta iš "AnkiDroid"[1].
         Pabandykite jį atidaryti naudodami vieną iš turimų "Anki" distribucijų[2] ir mėgaukitės lengvu ir efektyviu mokymusi! <br/><br/>

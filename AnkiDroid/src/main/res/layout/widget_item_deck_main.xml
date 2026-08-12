@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
     android:theme="@style/Theme.Material3.DynamicColors.DayNight">
 
     <TextView
@@ -14,7 +15,6 @@
         android:height="48dp"
         android:paddingBottom="2dp"
         android:paddingEnd="12dp"
-        android:paddingStart="15dp"
         android:paddingTop="10dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="22sp"
@@ -32,6 +32,7 @@
         android:textColor="@color/flag_reviewer_blue"
         android:textSize="20sp"
         android:text=""
+        android:gravity="end"
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="50" />
@@ -45,6 +46,7 @@
         android:textColor="@color/material_red_A700"
         android:textSize="20sp"
         android:text=""
+        android:gravity="end"
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="50" />
@@ -54,10 +56,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingEnd="5dp"
         android:textColor="@color/flag_reviewer_green"
         android:textSize="20sp"
         android:text=""
+        android:gravity="end"
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="50" />

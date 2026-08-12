@@ -31,14 +31,15 @@ import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.permissions.hasAllPermissions
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.AnkiDroidFolder
+import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
-import com.ichi2.anki.storage.AnkiDroidFolder
-import com.ichi2.anki.storage.StorageDecision
 import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
@@ -231,7 +232,7 @@ enum class PermissionSet(
 
 /**
  * Returns the [PermissionSet] required to access the folder where AnkiDroid data is saved.
- * [com.ichi2.anki.storage.AnkiDroidFolder.PUBLIC] is preferred, as it reduces risk of data loss.
+ * [AnkiDroidFolder.PUBLIC] is preferred, as it reduces risk of data loss.
  * When impossible, we use the app-private directory.
  * See https://github.com/ankidroid/Anki-Android/issues/5304 for more context.
  */

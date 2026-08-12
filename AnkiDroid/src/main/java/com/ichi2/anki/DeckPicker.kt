@@ -89,7 +89,7 @@ import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShortcuts
 import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsAddEditReminderHandler
 import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsStudyHandler
 import com.ichi2.anki.account.AccountActivity
-import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
@@ -102,6 +102,7 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -185,6 +186,7 @@ import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
+import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
@@ -546,8 +548,15 @@ open class DeckPicker :
                     viewModel.requestRightClickContextMenu(deckId, x, y)
                     Timber.d("Right Click on deck recorded!! %d, %f %f", deckId, x, y)
                 },
-            )
+            ).apply {
+                highlightSelected = fragmented
+            }
         deckPickerBinding.decks.adapter = deckListAdapter
+        if (Prefs.devBottomNavEnabled) {
+            deckPickerBinding.decks.addItemDecoration(
+                DeckHierarchyLinesDecoration(this, deckListAdapter),
+            )
+        }
 
         lifecycleScope.launch { applyDeckPickerBackground() }
 
@@ -1758,7 +1767,7 @@ open class DeckPicker :
         } else if (skip < 2 && !InitialActivity.isLatestVersion(preferences)) {
             Timber.i("AnkiDroid is being updated and a collection already exists.")
             // The user might appreciate us now, see if they will help us get better?
-            if (!preferences.contains(UsageAnalytics.ANALYTICS_OPTIN_KEY)) {
+            if (!preferences.contains(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY)) {
                 displayAnalyticsOptInDialog()
             }
 
@@ -1847,7 +1856,7 @@ open class DeckPicker :
         message: String?,
     ) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
-        showAsyncDialogFragment(newFragment, Channel.SYNC)
+        showAsyncDialogFragment(newFragment, NotificationChannel.SYNC)
     }
 
     // Callback method to submit error report

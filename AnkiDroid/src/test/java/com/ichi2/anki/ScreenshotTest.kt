@@ -31,6 +31,7 @@ import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestParameterInjector
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.GraphicsMode
 import java.io.File
 
@@ -43,6 +44,14 @@ interface ScreenshotTestCategory
 @Category(ScreenshotTestCategory::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 abstract class ScreenshotTest : RobolectricTest() {
+    companion object {
+        /**
+         * Fixed `versionName` reported to screenshot tests, so screens which display
+         * the app version do not change on each release.
+         */
+        const val STABLE_VERSION_NAME = "X.Y.Z-screenshot"
+    }
+
     var fileNamePrefix = ""
 
     enum class ThemeConfig { LIGHT, PLAIN, DARK, BLACK }
@@ -57,8 +66,16 @@ abstract class ScreenshotTest : RobolectricTest() {
 
     @Before
     open fun applyGlobalConfig() {
+        stabilizeVersionName()
         applyDeviceConfig()
         applyThemeConfig()
+    }
+
+    /** Reports [STABLE_VERSION_NAME] as the `versionName` shown on-screen */
+    private fun stabilizeVersionName() {
+        shadowOf(targetContext.packageManager)
+            .getInternalMutablePackageInfo(targetContext.packageName)
+            .versionName = STABLE_VERSION_NAME
     }
 
     protected open fun applyDeviceConfig() {

@@ -40,6 +40,7 @@ import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
+import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
@@ -48,7 +49,10 @@ import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
+import com.ichi2.utils.isBlockedCardScheme
 import com.ichi2.utils.show
+import com.ichi2.utils.stripDangerousPermissions
+import com.ichi2.utils.usesDangerousScheme
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -59,6 +63,8 @@ abstract class CardViewerFragment(
     OnWebViewRecreatedListener {
     abstract val viewModel: CardViewerViewModel
     protected abstract val webViewLayout: SafeWebViewLayout
+
+    private val appPermission by lazy { AppPermissions(requireContext()) { showSnackbar(it) } }
 
     @CallSuper
     override fun onViewCreated(
@@ -222,6 +228,14 @@ abstract class CardViewerFragment(
                     }
                 }
                 else -> {
+                    if (isBlockedCardScheme(url.scheme)) {
+                        Timber.w("URL blocked")
+                        return true
+                    }
+                    if (!appPermission.checkCanLaunchExternalApps()) {
+                        Timber.w("URL blocked: canLaunchExternalApps")
+                        return true
+                    }
                     try {
                         openUrl(url)
                     } catch (_: Throwable) {
@@ -239,6 +253,15 @@ abstract class CardViewerFragment(
         ) {
             try {
                 val intent = Intent.parseUri(url.toString(), flags)
+                if (!appPermission.checkCanLaunchExternalApps()) {
+                    Timber.w("launch blocked: canLaunchExternalApps")
+                    return
+                }
+                intent.stripDangerousPermissions()
+                if (intent.usesDangerousScheme()) {
+                    Timber.w("Blocked card-origin intent carrying dangerous data")
+                    return
+                }
                 if (packageManager.resolveActivityCompat(intent) != null) {
                     startActivity(intent)
                 } else {

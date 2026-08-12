@@ -72,8 +72,8 @@
     <string name="webview_crash_oom">Недостатньо пам\'яті</string>
     <string name="webview_crash_oom_details">WebView припинено системою. Зазвичай таке буває коли додаток використовує забагато пам\'яті, часто через великий розмір шрифтів та медіа.</string>
     <string name="webview_crash_nonfatal">Помилка WebView. Причина: %s</string>
-    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
+    <string name="webview_crash_fatal">Критична помилка: збій рендерера WebView. Причина: %s</string>
+    <string name="webview_crash_loop_dialog_title">Збій рендерингу системного WebView</string>
     <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося показати картку \'%1$s\'.\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">Проведіть, щоб скасувати</string>
     <string name="filter_by_flags" maxLength="41">Прапорці</string>
@@ -245,7 +245,7 @@
     <string name="note_editor_audio_too_large">Аудіофайл завеликий, будь ласка, вставте аудіо вручну</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Виконується резервне копіювання Android. Будь ласка, спробуйте ще раз</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Використовуйте iManager, щоб дозволити AnkiDroid додавати ярлики</string>
-    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Дозвольте «ярлики на головному екрані» в системних налаштуваннях для %s, щоб додавати ярлики</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Надайте дозвіл для «ярликів на головному екрані» в системних налаштуваннях для %s</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш головний екран не дозволяє AnkiDroid додати ярлики</string>
     <string name="create_shortcut_error">Помилка при створенні ярлика: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Підняти регістр речень</string>
@@ -262,12 +262,12 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Введіть правильну адресу електронної пошти</string>
     <string name="password_empty">Поле «Пароль» обов\'язкове до заповнення</string>
-    <string name="back_pressed_once">Перейдіть «Назад» знову, щоб вийти</string>
+    <string name="back_pressed_once">Натисніть «Назад» ще раз, щоб вийти</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Завантажити колоду</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Відкрити в переглядачі карток</string>
-    <string name="try_again">Try again</string>
+    <string name="try_again">Спробувати знову</string>
     <string name="cancel_download">Скасувати завантаження</string>
     <string name="cancel_download_question_title">Скасувати завантаження?</string>
     <string name="downloading_file">Завантаження %s</string>
@@ -312,7 +312,7 @@
     <string name="intro_ankidroid_tagline_one">Вчіться менше</string>
     <string name="intro_ankidroid_tagline_two">Запам\'ятовуйте більше</string>
     <string name="intro_short_ankidroid_explanation">Планувальник карток Anki заощаджує час, посилюючи найслабші спогади й зберігаючи найсильніші.</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Розпочати</string>
     <string name="intro_sync_from_ankiweb">Синхронізувати з AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ще не ініціалізовано. Будь ласка, відкрийте AnkiDroid і спробуйте знову</string>
@@ -379,6 +379,6 @@
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!--Set up date-->
     <string name="set_due_date_day" comment="Used for setting due date">День</string>
-    <string name="set_due_date_date_range">Date range</string>
+    <string name="set_due_date_date_range">Діапазон дат</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Уже в процесі</string>
 </resources>

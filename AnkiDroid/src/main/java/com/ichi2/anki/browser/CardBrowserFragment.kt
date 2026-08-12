@@ -37,6 +37,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -87,6 +88,7 @@ import com.ichi2.anki.browser.search.CardStateBottomSheetFragment
 import com.ichi2.anki.browser.search.FlagsBottomSheetFragment
 import com.ichi2.anki.browser.search.SearchRequest
 import com.ichi2.anki.browser.search.SearchString
+import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
 import com.ichi2.anki.browser.search.iconRes
@@ -96,7 +98,6 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
-import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
@@ -129,9 +130,11 @@ import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.hasCheckedBackground
@@ -302,7 +305,9 @@ class CardBrowserFragment :
         cardsListView =
             view.findViewById<RecyclerView>(R.id.card_browser_list).apply {
                 attachFastScroller(R.id.browser_scroller)
+                clipToPadding = false
             }
+        applyContentInsets(view)
         DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
             setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.browser_divider)!!)
             cardsListView.addItemDecoration(this)
@@ -422,6 +427,26 @@ class CardBrowserFragment :
         setupFragmentResultListeners()
 
         setupMenu()
+    }
+
+    private fun applyContentInsets(root: View) {
+        val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
+        ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.updatePadding(left = bars.left, right = bars.right)
+            // The bottom of the safe area is above the navigation bar and rounded display corners.
+            // When scrolled to the bottom of the scrollbar should be aligned with the last row.
+            val safeAreaBottom = maxOf(bars.bottom, insets.bottomCornerClearance(v))
+            // Due to clipToPadding=false, only the last row is affected
+            cardsListView.updatePadding(bottom = safeAreaBottom)
+            // The scrollbar track stays full-height (edge to edge); only the handle is kept above
+            // the safe-area boundary so it remains touchable and aligns with the last row.
+            browserScroller.handleBottomInset = safeAreaBottom
+            insets
+        }
     }
 
     private fun setupMenu() {
@@ -1105,8 +1130,8 @@ class CardBrowserFragment :
             searchViewModel.syncState(search)
         }
 
-        fun reverseDirectionChanged(direction: ReverseDirection) {
-            sortChip?.scaleY = if (!direction.orderAsc) 1.0f else -1.0f
+        fun reverseDirectionChanged(reverse: ReverseDirection?) {
+            sortChip?.scaleY = if (reverse == false || reverse == null) 1.0f else -1.0f
         }
 
         fun onChangeNoteType(result: ChangeNoteTypeResponse) =
@@ -1122,7 +1147,23 @@ class CardBrowserFragment :
             showDialogFragment(dialog)
         }
 
-        activityViewModel.reverseDirectionFlow.launchCollectionInLifecycleScope(::reverseDirectionChanged)
+        /** Displays a snackbar: Sort by Card Type · A-Z*/
+        fun onSortTypeChanged(notification: SortChangeNotification) {
+            val (title, subtitle) =
+                when (notification) {
+                    is SortChangeNotification.NoOrdering ->
+                        getString(R.string.card_browser_order_no_sorting_title) to null
+                    is SortChangeNotification.CollectionOrdering -> {
+                        val subtitleRes = notification.type.humanReadableExplanation(descending = notification.reverse)
+                        getString(R.string.card_browser_order_snackbar_sort_by, notification.columnLabel) to
+                            subtitleRes?.let(::getString)
+                    }
+                }
+            val text = if (subtitle != null) "$title · $subtitle" else title
+            showSnackbar(text, Snackbar.LENGTH_SHORT)
+        }
+
+        activityViewModel.flowOfReverseDirection.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfFocusedRow.launchCollectionInLifecycleScope(::onFocusedRowChanged)
@@ -1144,6 +1185,7 @@ class CardBrowserFragment :
         activityViewModel.searchRequestFlow.launchCollectionInLifecycleScope(::onSearchRequestUpdated)
         activityViewModel.flowOfChangeNoteType.launchCollectionInLifecycleScope(::onChangeNoteType)
         activityViewModel.flowOfSaveSearchNamePrompt.launchCollectionInLifecycleScope(::onSaveSearchNamePrompt)
+        activityViewModel.flowOfSortTypeChanged.launchCollectionInLifecycleScope(::onSortTypeChanged)
     }
 
     private fun setupFragmentResultListeners() {
@@ -1488,7 +1530,7 @@ class CardBrowserFragment :
                 activityViewModel.selectedRows.size,
                 allCardIds.size,
             )
-            showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
+            showDialogFragment(SetDueDateDialog.newInstance(this@CardBrowserFragment, allCardIds))
         }
     }
 
@@ -1605,9 +1647,12 @@ class CardBrowserFragment :
             }
         }
 
-    fun changeDisplayOrder() {
-        showDialogFragment(CardBrowserOrderDialog())
-    }
+    fun changeDisplayOrder() =
+        launchCatchingTask {
+            SortOrderBottomSheetFragment
+                .createInstance(cardsOrNotes = activityViewModel.cardsOrNotes)
+                .show(childFragmentManager)
+        }
 
     private fun updateFlag(keyCode: Int) {
         val flag =

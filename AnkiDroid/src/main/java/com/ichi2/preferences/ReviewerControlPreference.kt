@@ -84,7 +84,6 @@ open class ReviewerControlPreference : ControlPreference {
                 it::class == ReviewerControlPreference::class
             } as List<ReviewerControlPreference>
 
-    @NeedsTest("Ensure correct preference is returned for side-specific binding")
     override fun getPreferenceAssignedTo(binding: Binding): ControlPreference? {
         val cardSide = side ?: return super.getPreferenceAssignedTo(binding)
         val reviewerBinding = ReviewerBinding(binding, cardSide)

@@ -218,8 +218,10 @@ public class AddContentApi(
     /**
      * Get the number of notes that exist for the specified model ID
      * @param mid id of the model to be used
-     * @return number of notes that exist with that model ID or -1 if there was a problem
+     * @return number of notes that exist with that model ID, or 0 if the query failed
      */
+    // TODO: return null on failure once we can make a breaking change: 0 is ambiguous with a
+    //  model that genuinely has no notes
     public fun getNoteCount(mid: Long): Int = compat.queryNotes(mid)?.use { cursor -> cursor.count } ?: 0
 
     /**
@@ -502,6 +504,61 @@ public class AddContentApi(
     }
 
     /**
+     * Set the flag using flag code for a given note
+     * @param noteId the ID of the note to update
+     * @param rawFlag the flag code to set (should match a [Flag.code])
+     * @return true if flag was updated, otherwise false
+     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
+     * @throws IllegalArgumentException if flag code is not a valid [Flag.code]
+     */
+    public fun setFlagRaw(
+        noteId: Long,
+        rawFlag: Int,
+    ): Boolean {
+        val cardsUri =
+            Note.CONTENT_URI
+                .buildUpon()
+                .appendPath(noteId.toString())
+                .appendPath("cards")
+                .build()
+
+        val cardsQuery = resolver.query(cardsUri, null, null, null, null) ?: return false
+
+        val values =
+            ContentValues().apply {
+                put(Card.FLAGS, rawFlag)
+            }
+        var numRowsUpdated = 0
+
+        cardsQuery.use { cardsCursor ->
+            while (cardsCursor.moveToNext()) {
+                val cardUri =
+                    Note.CONTENT_URI
+                        .buildUpon()
+                        .appendPath(noteId.toString())
+                        .appendPath("cards")
+                        .appendPath(cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_ORD)))
+                        .build()
+                numRowsUpdated += resolver.update(cardUri, values, null, null)
+            }
+        }
+
+        return numRowsUpdated > 0
+    }
+
+    /**
+     * Set the flag for a given note
+     * @param noteId the ID of the note to update
+     * @param flag the flag to set (should match a [Flag])
+     * @return true if flag was updated, otherwise false
+     * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
+     */
+    public fun setFlag(
+        noteId: Long,
+        flag: Flag,
+    ): Boolean = setFlagRaw(noteId, flag.code)
+
+    /**
      * Get the name of the selected deck
      * @return deck name or null if there was a problem
      */
@@ -583,9 +640,9 @@ public class AddContentApi(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.GET_META_DATA,
                     )
-                }
+                } ?: return ANKIDROID_NOT_INSTALLED
 
-            return if (info?.metaData != null &&
+            return if (info.metaData != null &&
                 info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)
             ) {
                 info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY)
@@ -788,6 +845,7 @@ public class AddContentApi(
         private const val TEST_TAG = "PREVIEW_NOTE"
         private const val PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec"
         private const val DEFAULT_PROVIDER_SPEC_VALUE = 1 // for when meta-data key does not exist
+        private const val ANKIDROID_NOT_INSTALLED = -1
         private val PROJECTION =
             arrayOf(
                 Note._ID,

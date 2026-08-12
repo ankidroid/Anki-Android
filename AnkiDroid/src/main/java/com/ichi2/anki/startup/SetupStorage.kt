@@ -6,12 +6,12 @@ import android.content.Context
 import android.os.Environment
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.AnkiDroidFolder
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.selectAnkiDroidFolder
-import com.ichi2.anki.storage.AnkiDroidFolder
 import timber.log.Timber
 import java.io.File
 
@@ -156,7 +156,7 @@ private fun legacyAnkiDroidDirectory(directoryName: String = "AnkiDroid"): File 
  *
  * @throws SystemStorageException if `getExternalFilesDir` returns null
  */
-private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String? {
+private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String {
     val externalFilesDir = context.getExternalFilesDir(null)
 
     // This value *may* be null but we strictly require it. This has caused NullPointerException

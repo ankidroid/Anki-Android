@@ -20,6 +20,7 @@ import android.content.Context
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.utils.AssetHelper.guessMimeType
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -61,6 +62,11 @@ class ViewerResourceHandler(
             }
 
             val file = File(mediaDir, path)
+            if (!file.canonicalPath.startsWith(mediaDir.canonicalPath + File.separator)) {
+                Timber.w("Path traversal attempt blocked")
+                Timber.d("Path: %s", path)
+                return null
+            }
             if (!file.exists()) {
                 return null
             }

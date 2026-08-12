@@ -20,15 +20,18 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.SUCCESS_KEY
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.testutils.ext.BASIC_NOTE_TYPE_NAME
 import com.ichi2.anki.libanki.testutils.ext.setFlag
+import com.ichi2.testutils.getString
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONArray
 import org.json.JSONObject
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,6 +40,12 @@ import kotlin.test.assertEquals
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+        editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), false) }
+    }
 
     @Test
     fun ankiGetNextTimeTest() =
@@ -380,6 +389,83 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         }
 
     @Test
+    fun ankiSearchCardWithCallbackRespectsQueryCollectionPermission() =
+        runTest {
+            addBasicNote("foo", "bar")
+            val reviewer: Reviewer = startReviewer()
+            val jsApi = reviewer.jsApi
+            advanceRobolectricLooper()
+
+            // Pref off: denied, snackbar shown, returns success:false and search does not run.
+            assertThat(
+                getDataFromRequest("searchCardWithCallback", jsApi, "foo"),
+                equalTo(formatSuccessfulApiResult { put(VALUE_KEY, false) }),
+            )
+
+            // Pref on: runs the search without error.
+            editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), true) }
+            jsApi.searchCardWithCallback("foo")
+            advanceRobolectricLooper()
+        }
+
+    @Test
+    fun addTagToCurrentNoteDoesNotRequirePermission() =
+        runTest {
+            addBasicNote("foo", "bar")
+            val reviewer: Reviewer = startReviewer()
+            val jsapi = reviewer.jsApi
+            advanceRobolectricLooper()
+
+            val currentNid = reviewer.currentCard!!.nid
+            val params =
+                JSONObject()
+                    .apply {
+                        put("noteId", currentNid)
+                        put("tag", "current")
+                    }.toString()
+
+            // Pref off: tagging the current note is allowed.
+            assertThat(
+                getDataFromRequest("addTagToNote", jsapi, params),
+                equalTo(formatApiResult(true)),
+            )
+            assertThat(col.getNote(currentNid).tags, equalTo(listOf("current")))
+        }
+
+    @Test
+    fun addTagToOtherNoteRequiresModifyTagsPermission() =
+        runTest {
+            addBasicNote("foo", "bar")
+            addBasicNote("baz", "bak")
+            val reviewer: Reviewer = startReviewer()
+            val jsapi = reviewer.jsApi
+            advanceRobolectricLooper()
+
+            val currentNid = reviewer.currentCard!!.nid
+            val targetNid = col.findNotes("").first { it != currentNid }
+            val params =
+                JSONObject()
+                    .apply {
+                        put("noteId", targetNid)
+                        put("tag", "remote")
+                    }.toString()
+
+            // Pref off: denied, snackbar shown, returns success:false and tag is not applied.
+            assertThat(
+                getDataFromRequest("addTagToNote", jsapi, params),
+                equalTo(formatApiResult(false)),
+            )
+
+            // Pref on: the tag is applied to the other note.
+            editPreferences { putBoolean(getString(R.string.pref_allow_dangerous_js_api), true) }
+            assertThat(
+                getDataFromRequest("addTagToNote", jsapi, params),
+                equalTo(formatApiResult(true)),
+            )
+            assertThat(col.getNote(targetNid).tags, equalTo(listOf("remote")))
+        }
+
+    @Test
     fun ankiResetProgressTest() =
         runTest {
             val n = addBasicNote("Front", "Back")
@@ -473,4 +559,8 @@ class AnkiDroidJsAPITest : RobolectricTest() {
                 .handleJsApiRequest(methodName, jsApiContract(apiData), false)
                 .decodeToString()
     }
+}
+
+suspend fun AnkiDroidJsAPI.searchCardWithCallback(value: String) {
+    handleJsApiRequest("searchCardWithCallback", jsApiContract(value), false).decodeToString()
 }

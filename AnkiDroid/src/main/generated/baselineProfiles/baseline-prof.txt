@@ -8366,8 +8366,8 @@ SPLcom/ichi2/anki/NoteEditorFragment$Companion$NoteEditorCaller;->getValue()I
 Lcom/ichi2/anki/NoteEditorFragment$Companion$NoteEditorCaller$Companion;
 SPLcom/ichi2/anki/NoteEditorFragment$Companion$NoteEditorCaller$Companion;-><init>()V
 SPLcom/ichi2/anki/NoteEditorFragment$Companion$NoteEditorCaller$Companion;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-Lcom/ichi2/anki/NotificationChannelsKt;
-SPLcom/ichi2/anki/NotificationChannelsKt;->setupNotificationChannels(Landroid/content/Context;)V
+Lcom/ichi2/anki/NotificationChannelKt;
+SPLcom/ichi2/anki/NotificationChannelKt;->setupNotificationChannels(Landroid/content/Context;)V
 Lcom/ichi2/anki/OnErrorListener;
 Lcom/ichi2/anki/OnPageFinishedCallback;
 Lcom/ichi2/anki/PermissionSet;

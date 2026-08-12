@@ -5,7 +5,7 @@
     <string name="pref_general_screen_key">generalScreen</string>
     <string name="deck_for_new_cards_key">useCurrent</string>
     <string name="pref_language_key">language</string>
-    <string name="analytics_opt_in_key">analytics_opt_in</string>
+    <string name="analytics_opt_in_key">analytics_opt_in_v2</string>
     <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
@@ -201,9 +201,11 @@
     <string name="media_import_allow_all_files_key">mediaImportAllowAllFiles</string>
     <string name="pref_cat_plugins_key">category_plugins</string>
     <string name="enable_api_key">providerEnabled</string>
+    <string name="pref_allow_card_external_launch_key">allowCardExternalLaunch</string>
     <string name="thirdparty_apps_key">thirdpartyapps_link</string>
     <string name="tts_key">tts</string>
     <string name="double_scrolling_gap_key">double_scrolling</string>
+    <string name="pref_allow_dangerous_js_api">allow_dangerous_js_api</string>
     <string name="html_javascript_debugging_key">html_javascript_debugging</string>
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>

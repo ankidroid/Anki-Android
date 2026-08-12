@@ -48,7 +48,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
     private val excludedPrefs: Set<String> =
         setOf(
             // Share feature usage: analytics are only reported if this is enabled :)
-            R.string.analytics_opt_in_key, // analytics_opt_in
+            R.string.analytics_opt_in_key, // analytics_opt_in_v2
             // Screens: don't have a value
             R.string.pref_general_screen_key, // generalScreen
             R.string.pref_reviewing_screen_key, // reviewingScreen
@@ -103,6 +103,10 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             R.string.ignore_display_cutout_key, // ignoreDisplayCutout
             R.string.reviewer_toolbar_position_key, // reviewerToolbarPosition
             R.string.answer_button_size_pref_key, // answerBtnSize
+            // Security-sensitive settings (GHSL-2026-084)
+            R.string.pref_allow_dangerous_js_api, // allow_dangerous_js_api
+            // Security-sensitive settings (GHSL-2026-085)
+            R.string.pref_allow_card_external_launch_key, // allowCardExternalLaunch
         ).toStringResourceSet()
 
     @Test

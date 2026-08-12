@@ -72,6 +72,14 @@ sealed class TroubleshootingCheck {
     ) : TroubleshootingCheck()
 
     /**
+     * Checks whether the notification channel for review reminders is enabled. Individual channels
+     * can be enabled or disabled by the user on certain operating systems at and above Oreo (API 26).
+     */
+    data class NotificationChannelEnabled(
+        override val result: CheckResult = CheckResult.Loading,
+    ) : TroubleshootingCheck()
+
+    /**
      * Checks whether Do Not Disturb is off.
      *
      * This is a [warning][CheckResult.Warning], not a failure, because DND may be
@@ -139,13 +147,18 @@ enum class SummaryStatus {
     /** Other checks have warnings or failures — reminders may not work correctly. */
     Warning,
 
-    /** Notification permission is denied or errored — reminders cannot work. */
+    /**
+     * The notification permission or the review reminders notification channel is
+     * denied/disabled or errored — reminders cannot work.
+     */
     Error,
 }
 
 data class ReminderTroubleshootingState(
     val notificationPermission: TroubleshootingCheck.NotificationPermission =
         TroubleshootingCheck.NotificationPermission(),
+    val notificationChannelEnabled: TroubleshootingCheck.NotificationChannelEnabled =
+        TroubleshootingCheck.NotificationChannelEnabled(),
     val doNotDisturbOff: TroubleshootingCheck.DoNotDisturbOff =
         TroubleshootingCheck.DoNotDisturbOff(),
     val batteryOptimizationDisabled: TroubleshootingCheck.UnrestrictedOptimizationEnabled =
@@ -159,6 +172,7 @@ data class ReminderTroubleshootingState(
         get() =
             listOf(
                 notificationPermission,
+                notificationChannelEnabled,
                 doNotDisturbOff,
                 batteryOptimizationDisabled,
                 powerSavingModeOff,
@@ -172,9 +186,10 @@ data class ReminderTroubleshootingState(
      */
     val summaryStatus: SummaryStatus
         get() {
-            // If the notification permission is defined, notifications cannot be shown.
-            val permissionCheck = notificationPermission.result
-            if (permissionCheck is CheckResult.Failed || permissionCheck is CheckResult.Error) {
+            // If the notification permission is denied, or the review reminders notification
+            // channel is disabled, notifications cannot be shown.
+            val blockingChecks = listOf(notificationPermission.result, notificationChannelEnabled.result)
+            if (blockingChecks.any { it is CheckResult.Failed || it is CheckResult.Error }) {
                 return SummaryStatus.Error
             }
 
@@ -203,6 +218,10 @@ class ReminderTroubleshootingViewModel(
                 notificationPermission =
                     state.value.notificationPermission.copy(
                         result = CheckResult.from(repository::isNotificationPermissionGranted, onFailure = CheckResult.Failed),
+                    ),
+                notificationChannelEnabled =
+                    state.value.notificationChannelEnabled.copy(
+                        result = CheckResult.from(repository::isNotificationChannelEnabled, onFailure = CheckResult.Failed),
                     ),
                 doNotDisturbOff =
                     state.value.doNotDisturbOff.copy(
