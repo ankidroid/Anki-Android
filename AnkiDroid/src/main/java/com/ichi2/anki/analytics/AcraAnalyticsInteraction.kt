@@ -18,6 +18,7 @@ package com.ichi2.anki.analytics
 
 import android.content.Context
 import com.google.auto.service.AutoService
+import com.ichi2.anki.common.analytics.Analytics
 import org.acra.config.CoreConfiguration
 import org.acra.interaction.ReportInteraction
 import org.acra.util.Installation
@@ -39,7 +40,7 @@ class AcraAnalyticsInteraction : ReportInteraction {
     ): Boolean {
         // Send an analytics exception hit with a UUID to match
         Timber.e("ACRA handling crash, sending analytics exception report")
-        AnkiDroidUsageAnalytics.sendAnalyticsEvent("ACRA Crash Handler", "UUID " + Installation.id(context))
+        Analytics.sendAnalyticsEvent("ACRA Crash Handler", "UUID " + Installation.id(context))
         return true
     }
 }

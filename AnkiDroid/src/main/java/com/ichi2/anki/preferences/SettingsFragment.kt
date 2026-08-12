@@ -28,6 +28,7 @@ import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceManager.OnPreferenceTreeClickListener
 import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.databinding.FragmentSettingsBinding
 import com.ichi2.preferences.DialogFragmentProvider
 import dev.androidbroadcast.vbpd.viewBinding
@@ -48,7 +49,7 @@ abstract class SettingsFragment :
     abstract fun initSubscreen()
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        AnkiDroidUsageAnalytics.sendAnalyticsEvent(
+        Analytics.sendAnalyticsEvent(
             category = AnalyticsConstants.Category.SETTING,
             action = AnalyticsConstants.Actions.TAPPED_SETTING,
             label = preference.key,
@@ -65,7 +66,7 @@ abstract class SettingsFragment :
         }
         if (key != null) {
             val valueToReport = getPreferenceReportableValue(sharedPreferences.get(key))
-            AnkiDroidUsageAnalytics.sendAnalyticsEvent(
+            Analytics.sendAnalyticsEvent(
                 category = AnalyticsConstants.Category.SETTING,
                 action = AnalyticsConstants.Actions.CHANGED_SETTING,
                 value = valueToReport,
@@ -101,7 +102,7 @@ abstract class SettingsFragment :
         savedInstanceState: Bundle?,
         rootKey: String?,
     ) {
-        AnkiDroidUsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
+        Analytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
         addPreferencesFromResource(preferenceResource)
         initSubscreen()
     }
@@ -142,7 +143,7 @@ abstract class SettingsFragment :
         /**
          * Converts a preference value to a numeric number that
          * can be reported to analytics, since analytics events only accept
-         * [Int] as value ([AnkiDroidUsageAnalytics.sendAnalyticsEvent]),
+         * [Int] as value ([Analytics.sendAnalyticsEvent]),
          * or null if it can't be converted.
          *
          * Boolean preferences will return 1 if true and 0 if false

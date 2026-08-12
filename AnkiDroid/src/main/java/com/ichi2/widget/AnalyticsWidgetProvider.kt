@@ -23,11 +23,12 @@ import android.content.Intent
 import androidx.annotation.CallSuper
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.analytics.Analytics
 import timber.log.Timber
 
 /**
  * AnalyticsWidgetProvider is an abstract base class for App Widgets that integrates
- * with AnkiDroidUsageAnalytics to send analytics events when the widget is enabled, disabled,
+ * with [Analytics] to send analytics events when the widget is enabled, disabled,
  * or updated.
  *
  * This class should always be used as the base class for App Widgets in this application.
@@ -49,7 +50,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         Timber.d("${this.javaClass.name}: Widget enabled")
-        AnkiDroidUsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
+        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
     }
 
     /**
@@ -61,7 +62,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Timber.d("${this.javaClass.name}: Widget disabled")
-        AnkiDroidUsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
+        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }
 
     @CallSuper
