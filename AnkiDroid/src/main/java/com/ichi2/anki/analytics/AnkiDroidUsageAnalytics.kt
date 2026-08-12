@@ -33,7 +33,7 @@ import java.util.UUID
  * model, and answers to common reviewer questions.
  */
 @NeedsTest("Add coverage for opt-in handling, client id persistence and event/exception sending")
-object AnkiDroidUsageAnalytics : UsageAnalytics {
+internal object AnkiDroidUsageAnalytics : UsageAnalytics {
     const val ANALYTICS_OPTIN_KEY = UsageAnalytics.ANALYTICS_OPTIN_KEY
     private const val ANALYTICS_CLIENT_ID = "googleAnalyticsClientId"
 

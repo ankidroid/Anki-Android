@@ -18,7 +18,8 @@
 import android.appwidget.AppWidgetManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
+import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.AppWidgetIds
 import io.mockk.every
@@ -35,14 +36,14 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        mockkObject(AnkiDroidUsageAnalytics)
-        every { AnkiDroidUsageAnalytics.sendAnalyticsEvent(any(), any()) } answers { }
+        mockkObject(Analytics)
+        every { Analytics.sendAnalyticsEvent(any(), any()) } answers { }
     }
 
     @After
     override fun tearDown() {
         super.tearDown()
-        unmockkObject(AnkiDroidUsageAnalytics)
+        unmockkObject(Analytics)
     }
 
     @Test
@@ -51,7 +52,7 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
 
         widgetProvider.onEnabled(targetContext)
 
-        verify { AnkiDroidUsageAnalytics.sendAnalyticsEvent("TestWidgetProvider", "enabled") }
+        verify { Analytics.sendAnalyticsEvent("TestWidgetProvider", "enabled") }
     }
 
     private class TestWidgetProvider : AnalyticsWidgetProvider() {
@@ -59,7 +60,7 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
             context: android.content.Context,
             appWidgetManager: AppWidgetManager,
             appWidgetIds: AppWidgetIds,
-            ankiDroidUsageAnalytics: AnkiDroidUsageAnalytics,
+            usageAnalytics: UsageAnalytics,
         ) {
             // Do nothing
         }
