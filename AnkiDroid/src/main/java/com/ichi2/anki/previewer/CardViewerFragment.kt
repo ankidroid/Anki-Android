@@ -44,6 +44,7 @@ import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.packageManager
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewClient
@@ -309,7 +310,7 @@ abstract class CardViewerFragment(
                 ),
             )
             // hide system bars
-            with(WindowInsetsControllerCompat(window, window.decorView)) {
+            withInsets {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 hide(WindowInsetsCompat.Type.systemBars())
             }
@@ -319,7 +320,7 @@ abstract class CardViewerFragment(
             val window = requireActivity().window
             (window.decorView as FrameLayout).removeView(paramView)
             // show system bars back
-            with(WindowInsetsControllerCompat(window, window.decorView)) {
+            withInsets {
                 systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                 show(WindowInsetsCompat.Type.systemBars())
             }
