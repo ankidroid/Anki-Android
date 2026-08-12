@@ -102,6 +102,12 @@ fun FragmentActivity.setTransparentStatusBar() {
     window.statusBarColor = Color.TRANSPARENT
 }
 
+@Suppress("deprecation", "API35 properly handle edge-to-edge")
+fun FragmentActivity.setTransparentNavigationBar() {
+    withInsets { isAppearanceLightNavigationBars = Themes.currentTheme !is NightTheme }
+    window.navigationBarColor = Color.TRANSPARENT
+}
+
 fun FragmentActivity.setTransparentBackground() {
     window.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 }

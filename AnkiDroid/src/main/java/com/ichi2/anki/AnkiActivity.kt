@@ -23,7 +23,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -46,6 +45,7 @@ import androidx.core.app.PendingIntentCompat
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -93,11 +93,13 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.themes.Themes
+import com.ichi2.themes.setTransparentNavigationBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -149,8 +151,7 @@ open class AnkiActivity(
         disableXiaomiForceDarkMode(this)
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            @Suppress("deprecation")
-            window.navigationBarColor = getColor(R.color.transparent)
+            setTransparentNavigationBar()
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
             saveExportFile(
@@ -654,12 +655,15 @@ open class AnkiActivity(
             activitySuperOnCreate = { state -> super.onCreate(state) },
         )
 
-    /** @see Window.setNavigationBarColor */
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(
         @AttrRes attr: Int,
     ) {
-        window.navigationBarColor = getColorFromAttr(this, attr)
+        val color = getColorFromAttr(this, attr)
+        window.navigationBarColor = color
+        // the light theme sets a dark navigation bar in the Reviewer (showAnswerColor)
+        // so a theme check isn't sufficient here
+        withInsets { isAppearanceLightNavigationBars = ColorUtils.calculateLuminance(color) > 0.5 }
     }
 
     fun closeCollectionAndFinish() {

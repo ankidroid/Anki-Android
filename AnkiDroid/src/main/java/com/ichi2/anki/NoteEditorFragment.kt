@@ -564,9 +564,7 @@ class NoteEditorFragment :
             closeCardEditorWithCheck()
         }
 
-        @Suppress("deprecation", "API35 properly handle edge-to-edge")
-        requireActivity().window.navigationBarColor =
-            getColorFromAttr(requireContext(), R.attr.toolbarBackgroundColor)
+        requireAnkiActivity().setNavigationBarColor(R.attr.toolbarBackgroundColor)
 
         // Register this fragment as a menu provider with the activity
         (requireActivity() as MenuHost).addMenuProvider(
