@@ -195,15 +195,18 @@ class CardBrowserViewModel(
     val cardsOrNotes get() = flowOfCardsOrNotes.value
 
     /**
-     * Ensures [focusedRow] points to a row in the current [cards] list, falling back to the
-     * first row when [focusedRow] no longer visible.
+     * Ensures [paneRow] points to a row in the current [cards] list, falling back to the
+     * first row when [paneRow] no longer visible.
+     *
+     * No-op on phones.
      */
-    private fun ensureFocusedRowValid() {
-        focusedRow =
+    private fun ensurePaneRowValid() {
+        paneRow =
             when {
+                !isFragmented -> null
                 cards.isEmpty() -> null
-                focusedRow == null || focusedRow !in cards -> cards.first()
-                else -> focusedRow
+                paneRow == null || paneRow !in cards -> cards.first()
+                else -> paneRow
             }
     }
 
@@ -318,12 +321,21 @@ class CardBrowserViewModel(
      */
     val flowOfSaveSearchNamePrompt = MutableSharedFlow<String>()
 
-    val flowOfFocusedRow: StateFlow<CardOrNoteId?>
+    /**
+     * The row whose note is loaded in the trailing pane ([isFragmented] mode only).
+     *
+     * `null` when the pane displays no row:
+     * * on phones.
+     * * when there are no search results.
+     *
+     * @see NoteEditorCommand
+     */
+    val flowOfPaneRow: StateFlow<CardOrNoteId?>
         field = MutableStateFlow<CardOrNoteId?>(null)
-    var focusedRow: CardOrNoteId?
-        get() = flowOfFocusedRow.value
+    var paneRow: CardOrNoteId?
+        get() = flowOfPaneRow.value
         private set(value) {
-            flowOfFocusedRow.value = value
+            flowOfPaneRow.value = value
         }
 
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
@@ -331,13 +343,14 @@ class CardBrowserViewModel(
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
 
     /**
-     * Returns the list of Card IDs that should be updated.
+     * Returns the list of Card IDs that should be updated when editing [row].
      *
-     * In 'Notes' mode, this includes all cards of the current note (sibling cards).
+     * In 'Notes' mode, this includes all cards of the row's note (sibling cards).
      * In 'Cards' mode, this returns only the selected cards.
      */
-    suspend fun getCardIdsForNoteEditor(): List<CardId> {
-        val cardId = focusedRow?.toCardId(cardsOrNotes) ?: return emptyList()
+    suspend fun getCardIdsForNoteEditor(row: CardOrNoteId): List<CardId> {
+        // a note row maps to no cards in a corrupted collection: see toCardId
+        val cardId = row.toCardId(cardsOrNotes) ?: return emptyList()
 
         return if (cardsOrNotes == NOTES) {
             withCol {
@@ -352,9 +365,9 @@ class CardBrowserViewModel(
         }
     }
 
-    /** Builds a [NoteEditorLauncher] for the current selection, or `null` if there's nothing to edit. */
-    suspend fun editNoteLauncher(): NoteEditorLauncher? {
-        val cardIds = getCardIdsForNoteEditor()
+    /** Builds a [NoteEditorLauncher] to edit [row], or `null` if there's nothing to edit. */
+    suspend fun editNoteLauncher(row: CardOrNoteId): NoteEditorLauncher? {
+        val cardIds = getCardIdsForNoteEditor(row)
         if (cardIds.isEmpty()) {
             Timber.w("EditSelection skipped: card list is empty")
             return null
@@ -670,10 +683,10 @@ class CardBrowserViewModel(
             if (isInMultiSelectMode) {
                 val wasSelected = id in selectedRows
                 toggleRowSelection(rowSelection)
-                // when in mutliselect, only deselecting should cause a change in focus
+                // when in mutliselect, only deselecting should update the pane
                 if (wasSelected && isFragmented) {
-                    focusedRow = id
-                    editNoteLauncher()?.let { flowOfNoteEditorCommand.emit(NoteEditorCommand.LoadInPane(it)) }
+                    paneRow = id
+                    editNoteLauncher(id)?.let { flowOfNoteEditorCommand.emit(NoteEditorCommand.LoadInPane(it)) }
                 }
             } else {
                 setNoteEditorRow(id)
@@ -688,7 +701,6 @@ class CardBrowserViewModel(
             } else {
                 toggleRowSelection(rowSelection)
             }
-            focusedRow = id
         }
 
     /**
@@ -702,23 +714,23 @@ class CardBrowserViewModel(
             } else {
                 toggleRowSelection(rowSelection)
             }
-            focusedRow = id
         }
     }
 
     /**
      * Opens the note editor for the given row.
      *
-     * @param row The row to focus and open in the note editor.
-     * Passing `null` indicates that no row is selected and will close the note editor.
+     * When [fragmented][isFragmented], [row] is loaded in the trailing pane and becomes the
+     * [paneRow], otherwise the standalone NoteEditor activity is launched.
      */
-    private fun setNoteEditorRow(row: CardOrNoteId?) =
+    private fun setNoteEditorRow(row: CardOrNoteId) =
         viewModelScope.launch {
-            focusedRow = row
-            if (!isFragmented) {
+            if (isFragmented) {
+                paneRow = row
+            } else {
                 endMultiSelectMode(SingleSelectCause.OpenNoteEditorActivity)
             }
-            val launcher = editNoteLauncher() ?: return@launch
+            val launcher = editNoteLauncher(row) ?: return@launch
             flowOfNoteEditorCommand.emit(
                 if (isFragmented) NoteEditorCommand.LoadInPane(launcher) else NoteEditorCommand.LaunchActivity(launcher),
             )
@@ -773,9 +785,9 @@ class CardBrowserViewModel(
     @NeedsTest("Deleting the focused row is properly handled;#18639")
     suspend fun deleteSelectedNotes(): Int {
         val cardIds = queryAllSelectedCardIds()
-        // reset focused row if that row is about to be deleted
-        if (focusedRow?.cardOrNoteId in cardIds) {
-            focusedRow = null
+        // reset the pane row if that row is about to be deleted
+        if (paneRow?.cardOrNoteId in cardIds) {
+            paneRow = null
         }
         return undoableOp(this@CardBrowserViewModel) { removeNotes(cardIds = cardIds) }
             .count
@@ -1404,7 +1416,7 @@ class CardBrowserViewModel(
 
                     ensureActive()
                     this@CardBrowserViewModel.cards.replaceWith(cardsOrNotes, cards)
-                    ensureFocusedRowValid()
+                    ensurePaneRowValid()
                     if (isFragmented) flowOfNoteEditorCommand.emit(NoteEditorCommand.fromCurrentSearchState())
                     flowOfSearchState.emit(SearchState.Completed.fromCurrentState(fromUserSearch))
                     selectUnvalidatedRowIds(cardOrNoteIdsToSelect)
@@ -1534,7 +1546,8 @@ class CardBrowserViewModel(
 
     /** Builds the post-search trailing-pane command from current ViewModel state (tablet only). */
     private suspend fun NoteEditorCommand.Companion.fromCurrentSearchState(): NoteEditorCommand =
-        editNoteLauncher()?.let { NoteEditorCommand.LoadInPane(it) } ?: NoteEditorCommand.HidePane
+        paneRow?.let { row -> editNoteLauncher(row) }?.let { NoteEditorCommand.LoadInPane(it) }
+            ?: NoteEditorCommand.HidePane
 
     companion object {
         /** Intent extra carrying the [DeckId] the browser should open scoped to. */

@@ -210,8 +210,8 @@ class CardBrowserFragment :
             }
         }
 
-    /** The focused row, should only be used for efficient `notifyItemChanged` calls */
-    private var focusedRow: CardOrNoteId? = null
+    /** The pane row, should only be used for efficient `notifyItemChanged` calls */
+    private var paneRow: CardOrNoteId? = null
 
     private val embeddedMultiSelectOnBackPressedCallback =
         object : OnBackPressedCallback(false) {
@@ -1046,10 +1046,10 @@ class CardBrowserFragment :
             cardsAdapter.notifyDataSetChanged()
         }
 
-        fun onFocusedRowChanged(newFocused: CardOrNoteId?) {
-            val previous = focusedRow
-            focusedRow = newFocused
-            listOfNotNull(previous, newFocused)
+        fun onPaneRowChanged(newPaneRow: CardOrNoteId?) {
+            val previous = paneRow
+            paneRow = newPaneRow
+            listOfNotNull(previous, newPaneRow)
                 .distinct()
                 .mapNotNull { activityViewModel.getPositionOfId(it) }
                 .forEach { cardsAdapter.notifyItemChanged(it) }
@@ -1243,7 +1243,7 @@ class CardBrowserFragment :
         activityViewModel.flowOfReverseDirection.launchCollectionInLifecycleScope(::reverseDirectionChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
-        activityViewModel.flowOfFocusedRow.launchCollectionInLifecycleScope(::onFocusedRowChanged)
+        activityViewModel.flowOfPaneRow.launchCollectionInLifecycleScope(::onPaneRowChanged)
         activityViewModel.flowOfActiveColumns.launchCollectionInLifecycleScope(::onColumnsChanged)
         activityViewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         activityViewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
