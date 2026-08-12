@@ -246,12 +246,26 @@ android {
      */
     def enableSeparateBuildPerCPUArchitecture = true
 
+    /**
+     * Restricts the build to a single CPU architecture, e.g. `-PabiFilter=arm64-v8a`.
+     * Allows F-Droid to build one APK per architecture without patching this file (#21399).
+     */
+    def abiFilter = providers.gradleProperty("abiFilter").getOrNull()
+    def supportedAbis = ["armeabi-v7a", "x86", "arm64-v8a", "x86_64"]
+    if (abiFilter != null && !supportedAbis.contains(abiFilter)) {
+        throw new GradleException("Unsupported -PabiFilter value '$abiFilter'. Expected one of: $supportedAbis")
+    }
+
     splits {
         abi {
             reset()
             enable = enableSeparateBuildPerCPUArchitecture
             //universalApk enableUniversalApk  // set in debug + release config blocks above
-            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            if (abiFilter != null) {
+                include abiFilter
+            } else {
+                include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            }
         }
     }
     // applicationVariants are e.g. debug, release
