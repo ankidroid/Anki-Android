@@ -11,6 +11,8 @@ import androidx.core.content.edit
 import com.criticalay.GoogleAnalytics
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
+import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -31,8 +33,8 @@ import java.util.UUID
  * model, and answers to common reviewer questions.
  */
 @NeedsTest("Add coverage for opt-in handling, client id persistence and event/exception sending")
-object AnkiDroidUsageAnalytics {
-    const val ANALYTICS_OPTIN_KEY = "analytics_opt_in_v2"
+object AnkiDroidUsageAnalytics : UsageAnalytics {
+    const val ANALYTICS_OPTIN_KEY = UsageAnalytics.ANALYTICS_OPTIN_KEY
     private const val ANALYTICS_CLIENT_ID = "googleAnalyticsClientId"
 
     /**
@@ -175,19 +177,19 @@ object AnkiDroidUsageAnalytics {
      * name (e.g. `DeckPicker`, not `com.ichi2.anki.DeckPicker`). Pass an
      * activity/fragment/`this` from the screen you want to record.
      */
-    fun sendAnalyticsScreenView(screen: Any) = sendAnalyticsScreenView(screen.javaClass.simpleName)
+    override fun sendAnalyticsScreenView(screen: Any) = sendAnalyticsScreenView(screen.javaClass.simpleName)
 
-    fun sendAnalyticsScreenView(screenName: String) {
+    override fun sendAnalyticsScreenView(screenName: String) {
         Timber.d("AnkiDroidUsageAnalytics: screenView($screenName)")
         if (!optIn) return
         analytics?.screenView(clientId)?.screenName(screenName)?.sendAsync()
     }
 
-    fun sendAnalyticsEvent(
+    override fun sendAnalyticsEvent(
         category: String,
         action: String,
-        value: Int? = null,
-        label: String? = null,
+        value: Int?,
+        label: String?,
     ) {
         Timber.d("AnkiDroidUsageAnalytics: event(category=$category action=$action)")
         if (!optIn) return
@@ -202,7 +204,7 @@ object AnkiDroidUsageAnalytics {
         event.sendAsync()
     }
 
-    fun sendAnalyticsException(
+    override fun sendAnalyticsException(
         t: Throwable,
         fatal: Boolean,
     ) {
@@ -281,4 +283,13 @@ object AnkiDroidUsageAnalytics {
         samplePercentage = AnalyticsSamplePercentage.Full
         reinitialize(context)
     }
+}
+
+/**
+ * Initializes GA4 analytics and wires it up as the global [Analytics] implementation.
+ */
+context(application: Application)
+fun initializeAnalytics() {
+    AnkiDroidUsageAnalytics.initialize(application)
+    Analytics.setAnalytics(AnkiDroidUsageAnalytics)
 }
