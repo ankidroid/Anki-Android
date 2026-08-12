@@ -11,6 +11,7 @@ configure<LibraryExtension> {
 }
 
 dependencies {
+    implementation(project(":common"))
     implementation(project(":libanki"))
 
     implementation(libs.androidx.annotation)
