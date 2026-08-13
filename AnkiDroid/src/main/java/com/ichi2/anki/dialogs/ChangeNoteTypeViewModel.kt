@@ -184,7 +184,7 @@ class ChangeNoteTypeViewModel(
     }
 
     /**
-     * Whether [updateTemplateMapping] can be called
+     * Whether template mapping applies to the current conversion
      *
      * Templates may only be updated if the input and output note type are non-cloze
      */
@@ -447,7 +447,11 @@ class ChangeNoteTypeViewModel(
         outputTemplateIndex: Int,
         mappedFrom: SelectedIndex,
     ) = viewModelScope.launch {
-        require(canChangeTemplatesFlow.value) { "changing templates was disabled" }
+        // a Spinner may deliver a selection the user didn't make
+        if (!canChangeTemplatesFlow.value) {
+            Timber.w("ignoring template mapping: changing templates is disabled")
+            return@launch
+        }
 
         Timber.d("Updating card mapping: %d -> %s", outputTemplateIndex, mappedFrom)
         val updatedValue = mappedFrom.toNullableInt()
