@@ -597,6 +597,8 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
         private fun createTemplateSpinner() {
             binding.templatesContainer.removeAllViews()
 
+            if (!viewModel.canChangeTemplates) return
+
             val inputTemplateNames = viewModel.inputNoteType.templatesNames
             val outputTemplateNames = viewModel.outputNoteType.templatesNames
 

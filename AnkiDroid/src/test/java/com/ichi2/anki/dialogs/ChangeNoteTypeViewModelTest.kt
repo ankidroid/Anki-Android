@@ -570,7 +570,9 @@ private suspend fun ChangeNoteTypeViewModel.setOutputNoteType(noteType: Notetype
 private fun ChangeNoteTypeViewModel.templateNameToIndex(name: String) =
     SelectedIndex.Index(this.outputNoteType.templatesNames.indexOf(name))
 
-private fun ChangeNoteTypeViewModel.canMapTemplates(): Boolean = canChangeTemplatesFlow.value
+/** [ChangeNoteTypeViewModel.canChangeTemplates], checking that [ChangeNoteTypeViewModel.canChangeTemplatesFlow] agrees */
+private fun ChangeNoteTypeViewModel.canMapTemplates(): Boolean =
+    canChangeTemplates.also { assertThat("canChangeTemplatesFlow agrees", canChangeTemplatesFlow.value, equalTo(it)) }
 
 /** Waits for the job, returning what it failed with, or `null` if it succeeded */
 private suspend fun Job.failureOrNull(): Throwable? {
