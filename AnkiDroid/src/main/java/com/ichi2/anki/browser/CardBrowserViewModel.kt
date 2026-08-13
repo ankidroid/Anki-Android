@@ -587,6 +587,7 @@ class CardBrowserViewModel(
     @VisibleForTesting // far too complicated to mock setSavedStateProvider
     fun generateExpensiveSavedState() =
         Bundle().apply {
+            if (selectedRows.isEmpty()) return@apply
             putParcelable(STATE_MULTISELECT_VALUES, IdsFile(cacheDir, selectedRows.map { it.cardOrNoteId }, "multiselect-values"))
         }
 

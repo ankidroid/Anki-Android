@@ -2,7 +2,9 @@
 
 package com.ichi2.anki.browser
 
+import android.os.Bundle
 import androidx.core.content.edit
+import androidx.core.os.BundleCompat
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.TurbineTestContext
@@ -80,6 +82,7 @@ import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
+import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.hasSize
@@ -1612,6 +1615,34 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `no multiselect state file is written for an empty selection`() =
+        runViewModelTest(notes = 1, initMode = InitMode.NO_DELAY) {
+            assertThat(
+                "no selection: no value is saved",
+                generateExpensiveSavedState().containsKey(STATE_MULTISELECT_VALUES),
+                equalTo(false),
+            )
+        }
+
+    @Test
+    fun `19572 - a deleted multiselect state file results in an empty selection`() {
+        val handle = SavedStateHandle()
+        runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
+            selectRowAtPosition(1)
+            // HACK: easiest way to add it to the bundle. This is called on destruction
+            handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
+        }
+
+        // the OS may clear the cache directory between saving state and restoring it
+        val file = handle.multiselectStateFile!!
+        assertThat("state file is deleted", file.delete(), equalTo(true))
+
+        runViewModelTest(savedStateHandle = handle, initMode = InitMode.NO_DELAY) {
+            assertThat("no rows are selected", selectedRows, empty())
+        }
+    }
+
+    @Test
     fun `change note type - no selection`() =
         runViewModelTest {
             flowOfChangeNoteType.test {
@@ -2127,6 +2158,12 @@ fun CardOrNoteId.toRowSelection() = RowSelection(rowId = this, topOffset = 0)
 
 private val SavedStateHandle.multiselectMode
     get() = get<ChangeMultiSelectMode>("multiselect")
+
+private val SavedStateHandle.multiselectStateFile: IdsFile?
+    get() =
+        get<Bundle>(CardBrowserViewModel.STATE_MULTISELECT_VALUES)?.let { bundle ->
+            BundleCompat.getParcelable(bundle, CardBrowserViewModel.STATE_MULTISELECT_VALUES, IdsFile::class.java)
+        }
 
 /**
  * Helper function to move a card to the review queue with review history.
