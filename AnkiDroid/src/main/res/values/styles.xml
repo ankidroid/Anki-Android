@@ -291,6 +291,7 @@
 
     <style name="InvisibleErrorText" parent="TextAppearance.Design.Error">
         <item name="android:textSize">0sp</item>
+    </style>
     <style name="Widget.AnkiDroid.SortPillButton" parent="Widget.Material3.Button.UnelevatedButton">
         <!-- wrap_content + 48dp min size so the pill grows with larger accessibility text scales -->
         <item name="android:layout_width">wrap_content</item>
