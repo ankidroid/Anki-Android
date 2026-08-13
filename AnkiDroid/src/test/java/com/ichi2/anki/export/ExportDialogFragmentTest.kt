@@ -27,10 +27,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.utils.ext.requireParcelable
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class ExportDialogFragmentTest : RobolectricTest() {
@@ -153,9 +156,33 @@ class ExportDialogFragmentTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `ids file is not removed on a configuration change`() {
+        val fragment =
+            ExportDialogFragment.newInstance(
+                cacheDir = targetContext.cacheDir,
+                type = ExportDialogFragment.ExportType.Notes,
+                ids = listOf(1L, 2L, 3L),
+            )
+        val idsFile = fragment.requireArguments().requireParcelable<IdsFile>(ARG_IDS_FILE)
+        assertTrue(idsFile.exists())
+
+        launchFragment<ExportDialogFragment>(
+            fragmentArgs = fragment.arguments,
+            themeResId = R.style.Theme_Light,
+        ).use { scenario ->
+            scenario.recreate()
+            assertTrue(idsFile.exists(), "ids file must survive a configuration change")
+        }
+    }
+
     /** Launches [ExportDialogFragment] and executes [action] on the fragment. */
     private fun onExportDialog(action: ExportDialogFragment.() -> Unit) =
         launchFragment<ExportDialogFragment>(
             themeResId = R.style.Theme_Light,
         ).use { scenario -> scenario.onFragment { action(it) } }
+
+    companion object {
+        private const val ARG_IDS_FILE = "arg_ids_file"
+    }
 }
