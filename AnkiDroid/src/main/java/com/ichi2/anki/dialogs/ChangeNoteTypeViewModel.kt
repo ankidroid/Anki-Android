@@ -173,6 +173,8 @@ class ChangeNoteTypeViewModel(
      * Whether template mapping applies to the current conversion
      *
      * Templates may only be updated if the input and output note type are non-cloze
+     *
+     * @see canChangeTemplates
      */
     val canChangeTemplatesFlow by lazy {
         conversionTypeFlow
@@ -264,6 +266,15 @@ class ChangeNoteTypeViewModel(
      */
     val outputNoteType
         get() = outputNoteTypeFlow.value
+
+    /**
+     * Whether template mapping applies to the current conversion: both note types must be regular
+     *
+     * Unlike [canChangeTemplatesFlow], this never lags behind [outputNoteType]
+     */
+    val canChangeTemplates: Boolean
+        get() =
+            ConversionType.fromNoteTypeChange(current = inputNoteType, new = outputNoteType) == ConversionType.REGULAR_TO_REGULAR
 
     init {
         delayedInit {
