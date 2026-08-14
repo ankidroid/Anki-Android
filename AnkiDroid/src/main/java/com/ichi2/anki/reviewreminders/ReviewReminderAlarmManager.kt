@@ -1,20 +1,7 @@
-/*
- *  Copyright (c) 2025 Eric Li <ericli3690@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2026 Eric Li <ericli3690@gmail.com>
 
-package com.ichi2.anki.services
+package com.ichi2.anki.reviewreminders
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -24,10 +11,7 @@ import androidx.core.content.getSystemService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
-import com.ichi2.anki.reviewreminders.ReviewReminder
-import com.ichi2.anki.reviewreminders.ReviewReminderId
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.services.NotificationService
 import com.ichi2.utils.AlarmManagement
 import timber.log.Timber
 import java.util.Calendar
@@ -38,10 +22,10 @@ import java.util.Calendar
  * Actual notification firing is handled by [NotificationService], which this object triggers
  * by dispatching [NotificationService.NotificationServiceAction.ScheduleRecurringNotifications] requests.
  *
- * Snoozing is handled by [SnoozeService], which calls
+ * Snoozing is handled by [com.ichi2.anki.services.SnoozeService], which calls
  * [scheduleSnoozedNotification] on this object after receiving a snooze broadcast.
  */
-object AlarmManagerService {
+object ReviewReminderAlarmManager {
     /**
      * Shows error messages if an error occurs when scheduling review reminders via AlarmManager.
      * This function wraps all calls to AlarmManager in this class.
@@ -252,7 +236,7 @@ object AlarmManagerService {
 
     /**
      * Schedules a one-time notification for a review reminder after a set amount of minutes.
-     * Used for snoozing functionality. Called by [SnoozeService].
+     * Used for snoozing functionality. Called by [com.ichi2.anki.services.SnoozeService].
      *
      * We could instead use WorkManager and enqueue a OneTimeWorkRequest with an initial delay of [snoozeIntervalInMinutes],
      * but WorkManager work is sometimes deferred for long periods of time by the OS.
