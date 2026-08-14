@@ -65,6 +65,9 @@ class MultimediaActivity :
     BaseSnackbarBuilderProvider {
     private val binding by viewBinding(ActivityMultimediaBinding::bind)
 
+    override val analyticsScreenName: String
+        get() = intent.getStringExtra(EXTRA_FRAGMENT_NAME)?.substringAfterLast('.') ?: super.analyticsScreenName
+
     private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
         get() = extras?.getSerializableCompat(EXTRA_FRAGMENT_ARGS)
 
