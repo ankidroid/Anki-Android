@@ -34,7 +34,7 @@ object AnkiDroidJsAPIConstants {
     const val ANKI_JS_ERROR_CODE_SEARCH_CARD: Int = 8
 
     // js api developer contact
-    const val CURRENT_JS_API_VERSION = "0.0.3"
+    const val CURRENT_JS_API_VERSION = "0.0.4"
     const val MINIMUM_JS_API_VERSION = "0.0.3"
 
     val flagCommands =
