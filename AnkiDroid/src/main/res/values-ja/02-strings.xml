@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">パッケージファイルの保存に失敗しました</string>
     <string name="export_share_title">Ankiパッケージを送信:</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
-    <string name="export_email_text"><![CDATA[        こんにちは！
+    <string name="export_email_text"><![CDATA[
+        こんにちは！
         <br/><br/>
         このメールには、AnkiDroid[1] から送信された、カードデッキのファイルが添付されています。
         Anki公式サイトで紹介されているソフトウェア・アプリケーション[2]のいずれかを使ってこのデッキを開き、簡単で効率的な学習をお楽しみください！<br/><br/>

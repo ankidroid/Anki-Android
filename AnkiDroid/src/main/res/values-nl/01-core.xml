@@ -77,7 +77,7 @@
     <string name="menu_edit_tags" maxLength="28">Tags bewerken</string>
     <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>
     <string name="menu_search" maxLength="28">Opzoeken in %1$s</string>
-    <string name="menu_unmark_note">Notitie onmarkeren</string>
+    <string name="menu_unmark_note">Markering verwijderen</string>
     <string name="menu_enable_voice_playback" maxLength="28">Spraakweergave inschakelen</string>
     <string name="menu_disable_voice_playback">Spraakweergave uitschakelen</string>
     <string name="menu_create_backup" maxLength="28">Back-up maken</string>
@@ -87,12 +87,12 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Gelieve AnkiDroid de \'Opslagtoestemming\' te verlenen om door te gaan.</string>
+    <string name="startup_no_storage_permission">Geef AnkiDroid alstublieft toestemming tot \'Opslag\' om door te gaan.</string>
     <string name="rebuild_filtered_deck">Gefilterde set wordt opnieuw opgebouwd&#8230;</string>
     <string name="empty_cram_label" maxLength="28">Leeg</string>
-    <string name="create_subdeck">Creëer subleerset</string>
+    <string name="create_subdeck">Maak subleerset</string>
     <string name="empty_filtered_deck">Gefilterde set wordt leeggemaakt&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Zoeken in leerset</string>
     <string name="empty_deck">Deze leerset is leeg</string>
     <string name="invalid_deck_name">Ongeldige setnaam</string>
     <string name="studyoptions_congrats_finished">Gefeliciteerd! Je bent klaar voor vandaag.</string>
@@ -168,7 +168,7 @@
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
     <string name="permission_access_summary">Vereist om de app te laten werken</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="permission_required_message">Geef alstublieft AnkiDroid toegang tot \'%s\' om door te gaan</string>
     <!-- Multiple profile -->
     <string name="add_profile">Voeg profiel toe</string>
 </resources>

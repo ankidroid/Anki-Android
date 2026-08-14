@@ -37,10 +37,10 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="few">Delete notes</item>
-        <item quantity="many">Delete notes</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Odstrániť poznámku</item>
+        <item quantity="few">Odstrániť poznámky</item>
+        <item quantity="many">Odstrániť poznámky</item>
+        <item quantity="other">Odstrániť poznámky</item>
     </plurals>
     <string name="delete_card_title">Vymazať poznámku?</string>
     <string name="card_browser_show_marked" maxLength="28">Filtrovať označené</string>
@@ -58,30 +58,30 @@
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Vymazať “%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Zmeniť poradie zobrazenia</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Hľadať</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Hľadať</string>
     <string name="card_browser_change_display_order_title">Zvoliť poradie zobrazenia</string>
     <string name="card_details_tags">Štítky</string>
-    <string name="manage_browser_column">Manage column</string>
+    <string name="manage_browser_column">Spravovať stĺpec</string>
     <string name="no_columns_available">No columns available</string>
     <string name="card_browser_select_all" maxLength="28">Vybrať všetko</string>
     <string name="card_browser_select_none" maxLength="28">Nevybrať nič</string>
     <string name="card_browser_no_cards_in_deck">Nenašli sa žiadne kartičky v baličku ‘%s’</string>
     <string name="card_browser_search_all_decks">Prehľadať všetky balíčky</string>
     <string name="card_browser_unknown_deck_name">Neznámy</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Skrátený obsah</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="few">Export cards</item>
-        <item quantity="many">Export cards</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Exportovať kartičku</item>
+        <item quantity="few">Exportovať kartičky</item>
+        <item quantity="many">Exportovať kartičky</item>
+        <item quantity="other">Exportovať kartičky</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="few">Export notes</item>
-        <item quantity="many">Export notes</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Importovať poznámku</item>
+        <item quantity="few">Importovať poznámky</item>
+        <item quantity="many">Importovať poznámky</item>
+        <item quantity="other">Importovať poznámky</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d vymazaná kartička</item>
@@ -93,10 +93,10 @@
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
     <!-- Manage columns dialog -->
-    <string name="browse_manage_columns_main_heading">Columns</string>
-    <string name="browse_manage_columns">Manage columns</string>
-    <string name="user_active_columns">Active</string>
-    <string name="user_potential_columns">Available</string>
+    <string name="browse_manage_columns_main_heading">Stĺpce</string>
+    <string name="browse_manage_columns">Spravovať stĺpce</string>
+    <string name="user_active_columns">Aktívne</string>
+    <string name="user_potential_columns">Dostupné</string>
     <string name="include_column">Include column</string>
     <string name="exclude_column">Exclude column</string>
     <string name="save_changes_message">Please save your changes first</string>

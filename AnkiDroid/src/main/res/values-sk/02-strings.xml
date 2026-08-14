@@ -322,9 +322,9 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Balíček bol vymazaný. Odstráňte skratku.</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kartičky</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Poznámky</string>
+    <string name="truncate_content_help">Skrátiť výšku každého riadka prehliadača, aby sa zobrazili iba prvé tri riadky obsahu</string>
     <string name="audio_saved">Recording saved</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Tap a voice to listen</string>
@@ -336,9 +336,9 @@
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Install</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Failed to open text to speech settings</string>
     <string name="shared_decks_login_required">Please log in to download more decks</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="deck_description_saved">Description updated</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="deck_description_field_hint">Popis</string>
+    <string name="deck_description_saved">Popis aktualizovaný</string>
+    <string name="format_deck_description_as_markdown">Formátovať ako Markdown</string>
     <string name="help_button_content_description">Open help for ‘%s’</string>
     <string name="failed_to_copy">Failed to copy</string>
     <plurals name="unbury_cards_feedback">

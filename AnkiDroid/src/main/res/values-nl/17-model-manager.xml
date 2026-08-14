@@ -46,8 +46,8 @@
     <string name="model_field_editor_changing">Velden bijwerken</string>
     <string name="model_field_editor_sort_field">Sorteren op dit veld</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">Verwijder kaarttype</string>
+    <string name="add_card_type" maxLength="28">Voeg kaarttype toe</string>
     <!--Warnings-->
     <string name="model_delete_warning">Weet u zeker dat u dit memotype wilt verwijderen?</string>
     <!--
