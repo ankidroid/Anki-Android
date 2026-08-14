@@ -35,6 +35,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.allDecksCounts
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.EpochMilliseconds
+import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.reviewreminders.ReviewReminder
 import com.ichi2.anki.reviewreminders.ReviewReminderId
@@ -190,11 +191,14 @@ class NotificationService : AnkiBroadcastReceiver() {
             val dueCardsCount =
                 when (reviewReminder.scope) {
                     is ReviewReminderScope.Global -> withCol { sched.allDecksCounts() }
-                    is ReviewReminderScope.DeckSpecific ->
-                        withCol {
-                            decks.select(reviewReminder.scope.did)
-                            sched.counts()
+                    is ReviewReminderScope.DeckSpecific -> {
+                        val deckNode = withCol { sched.deckDueTree().find(reviewReminder.scope.did) }
+                        if (deckNode == null) {
+                            Timber.e("Aborting notification: deck ${reviewReminder.scope.did} is not in the deck tree")
+                            return
                         }
+                        Counts(new = deckNode.newCount, lrn = deckNode.lrnCount, rev = deckNode.revCount)
+                    }
                 }
             val dueCardsTotal = dueCardsCount.count()
             if (dueCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {

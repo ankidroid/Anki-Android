@@ -391,6 +391,21 @@ class NotificationServiceTest : RobolectricTest() {
             assertThat(snoozeIntents.size, equalTo(4))
         }
 
+    @Test
+    fun `triggering a deck-specific reminder should not change the selected deck`() =
+        runTest {
+            val studiedDeck = addDeck("Studied", setAsSelected = true).withNotes(count = 2)
+            val reminderDeck = addDeck("Reminder").withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = reminderDeck)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNotifSent(reviewReminder)
+            assertThat(col.decks.selected(), equalTo(studiedDeck))
+        }
+
     private suspend fun attemptNotif(
         reviewReminder: ReviewReminder,
         isRecurring: Boolean = true,
