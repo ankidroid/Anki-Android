@@ -32,7 +32,6 @@ import androidx.annotation.CheckResult
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -45,6 +44,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncCatching
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.removeSafely
@@ -87,7 +87,7 @@ import kotlin.math.min
  *
  * @see SetDueDateViewModel
  */
-class SetDueDateDialog : DialogFragment() {
+class SetDueDateDialog : AnalyticsDialogFragment() {
     // We explicitly do not use calendar controls in this class
     // User feedback:
     // (1) Don't have to think about what today is in order to use it,
