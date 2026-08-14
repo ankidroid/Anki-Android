@@ -23,6 +23,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
+import com.ichi2.utils.AlarmManagement
 import timber.log.Timber
 import kotlin.time.Duration.Companion.minutes
 
@@ -31,14 +32,6 @@ import kotlin.time.Duration.Companion.minutes
  * This constant is used to trigger the widget update via a custom broadcast intent.
  */
 const val ACTION_UPDATE_WIDGET = "com.ichi2.widget.ACTION_UPDATE_WIDGET"
-
-/**
- * Provides the AlarmManager instance.
- *
- * @param context the context of the application
- * @return the AlarmManager instance
- */
-private fun alarmManager(context: Context): AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
 /**
  * Retrieves or creates a PendingIntent for the widget.
@@ -97,15 +90,16 @@ fun setRecurringAlarm(
 
     Timber.v("Creating a new recurring alarm PendingIntent for widget ID: $appWidgetId")
 
-    val alarmManager = alarmManager(context)
     val newPendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = true) ?: return
 
-    alarmManager.setRepeating(
-        AlarmManager.ELAPSED_REALTIME,
-        SystemClock.elapsedRealtime() + 1.minutes.inWholeMilliseconds,
-        1.minutes.inWholeMilliseconds,
-        newPendingIntent,
-    )
+    AlarmManagement.useAlarmManager(context) { alarmManager ->
+        alarmManager.setRepeating(
+            AlarmManager.ELAPSED_REALTIME,
+            SystemClock.elapsedRealtime() + 1.minutes.inWholeMilliseconds,
+            1.minutes.inWholeMilliseconds,
+            newPendingIntent,
+        )
+    }
 }
 
 /**
@@ -121,10 +115,11 @@ fun cancelRecurringAlarm(
     widgetClass: Class<out AnalyticsWidgetProvider>,
 ) {
     val pendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = true)
-    val alarmManager = alarmManager(context)
     Timber.d("Canceling recurring alarm for widget ID: $appWidgetId")
     if (pendingIntent != null) {
-        alarmManager.cancel(pendingIntent)
+        AlarmManagement.useAlarmManager(context) { alarmManager ->
+            alarmManager.cancel(pendingIntent)
+        }
     }
 }
 
@@ -158,21 +153,11 @@ fun restoreRecurringAlarms(context: Context) {
         Timber.d("Restoring %d alarms for %s", activeIds.size, widgetClass.simpleName)
 
         for (id in activeIds) {
-            try {
-                setRecurringAlarm(
-                    context,
-                    id,
-                    widgetClass,
-                )
-            } catch (e: SecurityException) {
-                Timber.w(
-                    e,
-                    "Failed to restore alarms for %s because system alarm limit reached",
-                    widgetClass.simpleName,
-                )
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to restore alarms for %s", widgetClass.simpleName)
-            }
+            setRecurringAlarm(
+                context,
+                id,
+                widgetClass,
+            )
         }
     }
 }
