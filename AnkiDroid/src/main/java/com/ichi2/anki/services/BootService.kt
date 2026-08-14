@@ -23,6 +23,7 @@ import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.widget.RECURRING_WIDGETS
+import com.ichi2.utils.AlarmManagement
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.restoreRecurringAlarms
 import timber.log.Timber
@@ -57,10 +58,13 @@ class BootService : AnkiBroadcastReceiver() {
             Timber.w("Boot Service did not execute - no permissions")
             return
         }
+        // In the future, if more notifications are added to AnkiDroid, AlarmManagement.scheduleAllNotifications
+        // should be extended to handle them, but since for now the only modernized notifications are review reminder
+        // notifications, we block this behind the review-reminder-specific feature flag.
         if (Prefs.newReviewRemindersEnabled) {
-            Timber.i("Executing Boot Service - Review reminders")
+            Timber.i("Setting notifications upon boot")
             runGloballyWithTimeout(SCHEDULE_NOTIFICATIONS_TIMEOUT) {
-                AlarmManagerService.scheduleAllNotifications(context)
+                AlarmManagement.scheduleAllNotifications(context)
             }
         } else {
             // There are cases where the app is installed, and we have access, but nothing exist yet
@@ -79,7 +83,7 @@ class BootService : AnkiBroadcastReceiver() {
         wasRun = true
     }
 
-    @LegacyNotifications("Will be moved to AlarmManagerService")
+    @LegacyNotifications("Will be moved to AlarmManagement")
     private fun catchAlarmManagerErrors(
         context: Context,
         runnable: Runnable,
