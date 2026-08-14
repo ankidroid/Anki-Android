@@ -26,7 +26,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +35,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.databinding.DialogEmptyCardsBinding
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchFailure
@@ -58,7 +58,7 @@ import timber.log.Timber
  * A dialog that searches for empty cards and presents the user with the option to delete them.
  * A user may 'keep notes', which retains the first card of each note, even if the note is empty.
  */
-class EmptyCardsDialogFragment : DialogFragment() {
+class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
     private val viewModel by viewModels<EmptyCardsViewModel>()
 
     private lateinit var binding: DialogEmptyCardsBinding
