@@ -529,7 +529,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         fun jsApiContract(data: String = ""): ByteArray =
             JSONObject()
                 .apply {
-                    put("version", "0.0.3")
+                    put("version", "0.0.4")
                     put("developer", "test@example.com")
                     put("data", data)
                 }.toString()
