@@ -37,7 +37,6 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
-import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.runCatching
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -50,6 +49,11 @@ import com.ichi2.anki.utils.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -167,6 +171,23 @@ class ScheduleRemindersFragment :
 
     private var troubleshootingSnackbar: Snackbar? = null
 
+    /**
+     * Whether there are any reminders currently being displayed in the UI.
+     * Kept in sync with [reminders] by [triggerUIUpdate].
+     */
+    private val flowOfHasReminders = MutableStateFlow(false)
+
+    /**
+     * Whether the troubleshooting snackbar should currently be visible.
+     * The snackbar is only relevant if the user actually has reminders which the troubleshooting problem could
+     * prevent from firing, so this depends on both [flowOfHasReminders] and the troubleshooting checks themselves.
+     */
+    private val flowOfShowTroubleshooting: StateFlow<Boolean> by lazy {
+        combine(troubleshootingViewModel.state, flowOfHasReminders) { state, hasReminders ->
+            hasReminders && state.summaryStatus == SummaryStatus.Error
+        }.stateIn(lifecycleScope, SharingStarted.Eagerly, initialValue = false)
+    }
+
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = binding.floatingActionButtonAdd
         // reposition if the anchor moves, e.g. when the window insets arrive after showing
@@ -208,7 +229,7 @@ class ScheduleRemindersFragment :
         setContentInsets()
 
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
-        troubleshootingViewModel.state.launchCollectionInLifecycleScope(::setupTroubleshootingSnackbar)
+        flowOfShowTroubleshooting.launchCollectionInLifecycleScope(::renderTroubleshootingSnackbar)
 
         // Set up recycler view
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -239,25 +260,18 @@ class ScheduleRemindersFragment :
     }
 
     /**
-     * Sets up the troubleshooting snackbar which is shown persistently when checks find a warning/error.
+     * Shows or hides the troubleshooting snackbar, which is visible persistently when checks find an error.
      * Tapping "Fix" opens the full troubleshooting screen.
      */
-    private fun setupTroubleshootingSnackbar(state: ReminderTroubleshootingState) {
-        val message =
-            when (state.summaryStatus) {
-                SummaryStatus.Ok, SummaryStatus.Warning -> {
-                    troubleshootingSnackbar?.dismiss()
-                    troubleshootingSnackbar = null
-                    return
-                }
-                SummaryStatus.Error -> "Reminders are unavailable"
-            }
-        if (troubleshootingSnackbar?.isShown == true) {
-            troubleshootingSnackbar?.setText(message)
+    private fun renderTroubleshootingSnackbar(show: Boolean) {
+        if (!show) {
+            troubleshootingSnackbar?.dismiss()
+            troubleshootingSnackbar = null
             return
         }
+        if (troubleshootingSnackbar?.isShown == true) return
         troubleshootingSnackbar =
-            showSnackbar(text = message, duration = Snackbar.LENGTH_INDEFINITE) {
+            showSnackbar(text = "Reminders are unavailable", duration = Snackbar.LENGTH_INDEFINITE) {
                 setAction("Fix") { openTroubleshootingScreen() }
             }
     }
@@ -439,6 +453,7 @@ class ScheduleRemindersFragment :
         updateUIForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
         updateAlarmsForAddEditDialog(newOrModifiedReminder, modeOfFinishedDialog)
         // Feedback
+        if (flowOfShowTroubleshooting.value) return // Don't override the troubleshooting snackbar, which is more important
         showSnackbar(
             when (modeOfFinishedDialog) {
                 is AddEditReminderDialog.DialogMode.Add -> "Successfully added new review reminder"
@@ -634,6 +649,7 @@ class ScheduleRemindersFragment :
                 .toList()
         adapter.submitList(listToDisplay)
         binding.noRemindersPlaceholder.isVisible = listToDisplay.isEmpty()
+        flowOfHasReminders.value = listToDisplay.isNotEmpty()
     }
 
     override fun onResume() {
