@@ -5,7 +5,7 @@ package com.ichi2.utils
 
 import android.app.AlarmManager
 import android.content.Context
-import com.ichi2.anki.services.AlarmManagerService
+import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import kotlin.time.Duration.Companion.minutes
 
 /**
@@ -27,6 +27,6 @@ object AlarmManagement {
      */
     suspend fun scheduleAllNotifications(context: Context) {
         // currently, the only scheduled notifications supported by AnkiDroid are review reminder notifications
-        AlarmManagerService.scheduleAllEnabledReviewReminderNotifications(context)
+        ReviewReminderAlarmManager.scheduleAllEnabledReviewReminderNotifications(context)
     }
 }

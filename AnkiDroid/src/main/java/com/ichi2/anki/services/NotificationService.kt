@@ -26,6 +26,7 @@ import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.reviewreminders.ReviewReminder
+import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
@@ -46,7 +47,7 @@ import com.ichi2.anki.common.android.R as CommonR
 /**
  * Performs the actual firing of review reminder notifications, both recurring ones and snoozed ones.
  * See [ReviewReminder] for the distinction between a "review reminder" and a "notification".
- * The scheduling of these notifications is handled by [AlarmManagerService].
+ * The scheduling of these notifications is handled by [ReviewReminderAlarmManager].
  *
  * This service can be triggered in one of two possible ways, depending on whether the notification
  * being fired is a recurring notification or a one-time snoozed notification. See [NotificationServiceAction].
@@ -126,7 +127,7 @@ class NotificationService : AnkiBroadcastReceiver() {
             if (isRecurringNotification) {
                 Timber.d("Scheduling next review reminder notification for review reminder $reviewReminderId")
                 // Because this scheduling is already the result of a notification, we do not trigger an immediate notification
-                AlarmManagerService.scheduleReviewReminderNotification(
+                ReviewReminderAlarmManager.scheduleReviewReminderNotification(
                     context,
                     reminderForNotification,
                     attemptImmediateNotification = false,
@@ -403,7 +404,7 @@ class NotificationService : AnkiBroadcastReceiver() {
          * @param reviewReminderScope Scope to search for the review reminder ID in.
          * @param intentAction If this is [NotificationServiceAction.ScheduleRecurringNotifications],
          * this intent (once fired) will also schedule the next upcoming instance of the review reminder
-         * notification via [AlarmManagerService.scheduleReviewReminderNotification].
+         * notification via [ReviewReminderAlarmManager.scheduleReviewReminderNotification].
          *
          * @see NotificationServiceAction
          */
@@ -431,7 +432,7 @@ class NotificationService : AnkiBroadcastReceiver() {
      * instance of the review reminder notification. If the intent is instead [SnoozeNotification],
      * then we can be sure that the next instance has already been scheduled.
      *
-     * @see AlarmManagerService.getReviewReminderNotificationPendingIntent
+     * @see ReviewReminderAlarmManager.getReviewReminderNotificationPendingIntent
      * @see onReceiveBroadcast
      */
     sealed class NotificationServiceAction(

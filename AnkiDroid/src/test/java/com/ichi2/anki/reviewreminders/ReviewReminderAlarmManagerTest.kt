@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright (c) 2025 Eric Li <ericli3690@gmail.com>
 
-package com.ichi2.anki.services
+package com.ichi2.anki.reviewreminders
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -14,11 +14,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.reviewreminders.ReviewReminder
-import com.ichi2.anki.reviewreminders.ReviewReminderId
-import com.ichi2.anki.reviewreminders.ReviewReminderScope
-import com.ichi2.anki.reviewreminders.ReviewReminderTime
-import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
 import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER_ID
 import com.ichi2.anki.services.NotificationService.Companion.EXTRA_REVIEW_REMINDER_SCOPE
 import com.ichi2.anki.utils.ext.getParcelableCompat
@@ -38,7 +33,7 @@ import org.junit.runner.RunWith
 import java.util.Calendar
 
 @RunWith(AndroidJUnit4::class)
-class AlarmManagerServiceTest : RobolectricTest() {
+class ReviewReminderAlarmManagerTest : RobolectricTest() {
     companion object {
         /**
          * Set the mock time to a consistent date and a specific time: noon in the local time zone (not UTC! this is required because
@@ -90,7 +85,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
         expectedSchedulingTime.apply {
             set(Calendar.HOUR_OF_DAY, 20)
         }
-        AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = true)
+        ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = true)
         verify {
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
@@ -110,7 +105,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
             set(Calendar.HOUR_OF_DAY, 3)
             add(Calendar.DAY_OF_YEAR, 1)
         }
-        AlarmManagerService.scheduleReviewReminderNotification(context, pastTimeReviewReminder, attemptImmediateNotification = false)
+        ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, pastTimeReviewReminder, attemptImmediateNotification = false)
         verify {
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
@@ -130,7 +125,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
             set(Calendar.HOUR_OF_DAY, 12)
             add(Calendar.DAY_OF_YEAR, 1)
         }
-        AlarmManagerService.scheduleReviewReminderNotification(
+        ReviewReminderAlarmManager.scheduleReviewReminderNotification(
             context,
             currentTimeReviewReminder,
             attemptImmediateNotification = true,
@@ -147,7 +142,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
 
     @Test
     fun `scheduleReviewReminderNotifications attempts immediate notification when flag is true`() {
-        AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = true)
+        ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = true)
 
         val slot = slot<Intent>()
         verify(exactly = 1) {
@@ -161,7 +156,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
 
     @Test
     fun `scheduleReviewReminderNotifications does not attempt immediate notification when flag is false`() {
-        AlarmManagerService.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = false)
+        ReviewReminderAlarmManager.scheduleReviewReminderNotification(context, reviewReminder, attemptImmediateNotification = false)
 
         verify(exactly = 0) {
             context.sendBroadcast(any())
@@ -182,7 +177,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
             )
         } returns pendingIntent
 
-        AlarmManagerService.unscheduleReviewReminderNotifications(context, reviewReminder)
+        ReviewReminderAlarmManager.unscheduleReviewReminderNotifications(context, reviewReminder)
         verify { alarmManager.cancel(pendingIntent) }
     }
 
@@ -211,7 +206,7 @@ class AlarmManagerServiceTest : RobolectricTest() {
                 )
             reviewReminders.forEach { ReviewRemindersDatabase.insertReminder(it) }
 
-            AlarmManagerService.scheduleAllEnabledReviewReminderNotifications(context)
+            ReviewReminderAlarmManager.scheduleAllEnabledReviewReminderNotifications(context)
 
             reviewReminders.forEach { reminder ->
                 val expectedSchedulingTime = mockTime.calendar().clone() as Calendar

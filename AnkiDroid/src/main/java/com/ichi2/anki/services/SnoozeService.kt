@@ -11,6 +11,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
+import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
@@ -24,10 +25,10 @@ import kotlin.time.Duration.Companion.seconds
  * BroadcastReceiver for handling snooze actions on review reminder notifications.
  * When a user taps a snooze button on a review reminder notification, this receiver is triggered.
  * It dismisses the current notification and schedules a one-time delayed notification via
- * [AlarmManagerService.scheduleSnoozedNotification].
+ * [ReviewReminderAlarmManager.scheduleSnoozedNotification].
  *
  * Snooze button intents are created by [NotificationService] using [getIntent].
- * The alarm scheduling logic lives in [AlarmManagerService].
+ * The alarm scheduling logic lives in [ReviewReminderAlarmManager].
  */
 class SnoozeService : AnkiBroadcastReceiver() {
     companion object {
@@ -87,7 +88,7 @@ class SnoozeService : AnkiBroadcastReceiver() {
                 )
                 return
             }
-            AlarmManagerService.scheduleSnoozedNotification(context, retrievedReminder, snoozeIntervalInMinutes)
+            ReviewReminderAlarmManager.scheduleSnoozedNotification(context, retrievedReminder, snoozeIntervalInMinutes)
         }
 
         /**
