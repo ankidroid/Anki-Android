@@ -29,6 +29,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsConstants.Actions
 import com.ichi2.anki.analytics.AnalyticsConstants.Category
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.databinding.DialogHelpBinding
@@ -48,7 +49,7 @@ import dev.androidbroadcast.vbpd.viewBinding
 /**
  * [DialogFragment] responsible for showing the help/support menus.
  */
-class HelpDialog : DialogFragment() {
+class HelpDialog : AnalyticsDialogFragment() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var actionsDispatcher: HelpItemActionsDispatcher
 

@@ -5,7 +5,6 @@ package com.ichi2.anki.scheduling
 import android.app.Dialog
 import android.os.Bundle
 import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResultListener
@@ -13,6 +12,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.databinding.DialogForgetCardsBinding
@@ -43,7 +43,7 @@ import timber.log.Timber
  * * https://docs.ankiweb.net/browsing.html#cards
  */
 @NeedsTest("all")
-class ForgetCardsDialog : DialogFragment() {
+class ForgetCardsDialog : AnalyticsDialogFragment() {
     /**
      * Resets cards back to their original positions in the new queue
      *
