@@ -267,7 +267,11 @@ private object AcraCrashReporter : CrashReporter {
         onlyIfSilent: Boolean,
         context: Context,
     ) {
-        Analytics.sendAnalyticsException(e, false)
+        // the same filter ACRA uses below: it exists to keep sync server messages and
+        // other PII out of reporting, and analytics is reporting too
+        if (!ThrowableFilterService.shouldDiscardThrowable(e)) {
+            Analytics.sendAnalyticsException(e, false)
+        }
         AnkiDroidApp.sentExceptionReportHack = true
         val reportMode =
             context
