@@ -76,7 +76,7 @@ autoServiceAnnotations = "1.1.1"
 # https://github.com/skydoves/ColorPickerView/releases
 colorPickerView = "2.4.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
-commonsCollections4 = "4.5.0"
+commonsCollections4 = "4.6.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
 commonsCompress = "1.28.0"
 # https://commons.apache.org/proper/commons-io/changes.html
