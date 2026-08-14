@@ -55,6 +55,10 @@ open class SingleFragmentActivity :
     override val baseSnackbarBuilder: SnackbarBuilder
         get() = (fragment as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder ?: { }
 
+    // the same host class serves every screen it shows, so report what it's showing
+    override val analyticsScreenName: String
+        get() = intent.getStringExtra(EXTRA_FRAGMENT_NAME)?.substringAfterLast('.') ?: super.analyticsScreenName
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return

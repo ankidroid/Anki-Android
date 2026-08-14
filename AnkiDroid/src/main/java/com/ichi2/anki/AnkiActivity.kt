@@ -199,9 +199,13 @@ open class AnkiActivity(
         broadcastReceiver?.let { unregisterReceiver(it) }
     }
 
+    /** Name this screen is reported under. Override where the class doesn't identify the screen. */
+    protected open val analyticsScreenName: String
+        get() = javaClass.simpleName
+
     override fun onResume() {
         super.onResume()
-        Analytics.sendAnalyticsScreenView(this)
+        Analytics.sendAnalyticsScreenView(analyticsScreenName)
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(
             SIMPLE_NOTIFICATION_ID,
         )
