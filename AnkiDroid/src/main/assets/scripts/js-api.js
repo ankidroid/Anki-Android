@@ -1,6 +1,6 @@
 /*
  * AnkiDroid JavaScript API
- * Version: 0.0.3
+ * Version: 0.0.4
  */
 
 /**
@@ -107,9 +107,6 @@ class AnkiDroidJS {
             }
 
             const responseData = await response.text();
-            if (endpoint.includes("nextTime") || endpoint.includes("deckName")) {
-                return responseData;
-            }
             return JSON.parse(responseData);
         } catch (error) {
             console.error("Request error:", error);
