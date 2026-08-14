@@ -26,7 +26,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import anki.cards.cardIds
 import anki.generic.Empty
@@ -37,6 +36,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.removeSafely
 import com.ichi2.anki.common.ALL_DECKS_ID
@@ -63,7 +63,7 @@ import java.io.File
  * Shows the possible options for exporting(collection, decks or notes/card selection).
  * Intended to replicate the desktop UI.
  */
-class ExportDialogFragment : DialogFragment() {
+class ExportDialogFragment : AnalyticsDialogFragment() {
     private lateinit var binding: DialogExportOptionsBinding
 
     override fun onDismiss(dialog: DialogInterface) {
