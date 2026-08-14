@@ -36,7 +36,7 @@ import com.ichi2.anki.launchCatching
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.services.AlarmManagerService
+import com.ichi2.utils.AlarmManagement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
@@ -93,7 +93,7 @@ class DayRolloverAlarm : AnkiBroadcastReceiver() {
             alarmManager.setWindowSafe(
                 type = AlarmManager.RTC_WAKEUP,
                 windowStartMillis = cutoffMs,
-                windowLengthMillis = AlarmManagerService.WINDOW_LENGTH_MS,
+                windowLengthMillis = AlarmManagement.WINDOW_LENGTH_MS,
                 operation = pendingIntent,
             )
         }

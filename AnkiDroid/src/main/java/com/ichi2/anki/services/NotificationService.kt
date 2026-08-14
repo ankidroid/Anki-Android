@@ -48,7 +48,6 @@ import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
@@ -253,8 +252,8 @@ class NotificationService : AnkiBroadcastReceiver() {
                     )
 
             // Create intents for snooze buttons
-            val fiveMinuteSnooze = getSnoozePendingIntent(context, reviewReminder.id, reviewReminder.scope, 5.minutes)
-            val oneHourSnooze = getSnoozePendingIntent(context, reviewReminder.id, reviewReminder.scope, 1.hours)
+            val fiveMinuteSnooze = SnoozeService.getPendingIntent(context, reviewReminder.id, reviewReminder.scope, 5.minutes)
+            val oneHourSnooze = SnoozeService.getPendingIntent(context, reviewReminder.id, reviewReminder.scope, 1.hours)
 
             val builder =
                 NotificationCompat
@@ -280,42 +279,6 @@ class NotificationService : AnkiBroadcastReceiver() {
             } else {
                 Timber.w("Failed to get NotificationManager system service, aborting review reminder notification")
             }
-        }
-
-        /**
-         * Gets the review reminder snoozing pending intent for the review reminder with the given ID.
-         * If this method is run twice for the same review reminder ID and snooze interval, it will return the same
-         * pending intent.
-         *
-         * @param context
-         * @param reviewReminderId the ID of the review reminder the snooze intent is for.
-         * @param reviewReminderScope The scope that the review reminder ID is stored within.
-         * @param snoozeInterval the amount of time before the review reminder fires again,
-         * used to create a unique pending intent for each snooze option.
-         */
-        private fun getSnoozePendingIntent(
-            context: Context,
-            reviewReminderId: ReviewReminderId,
-            reviewReminderScope: ReviewReminderScope,
-            snoozeInterval: Duration,
-        ): PendingIntent? {
-            val intent =
-                AlarmManagerService.getIntent(
-                    context,
-                    reviewReminderId,
-                    reviewReminderScope,
-                    snoozeInterval,
-                )
-            Timber.v(
-                "Created snooze intent with action ${intent.action} for review reminder ID $reviewReminderId",
-            )
-            return PendingIntentCompat.getBroadcast(
-                context,
-                reviewReminderId.value,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT,
-                false,
-            )
         }
 
         /**
