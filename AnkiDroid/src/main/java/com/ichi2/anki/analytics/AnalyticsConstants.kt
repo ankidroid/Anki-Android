@@ -25,7 +25,6 @@ import com.ichi2.anki.R
  */
 object AnalyticsConstants {
     object Category {
-        const val SYNC = "Sync"
         const val LINK_CLICKED = "LinkClicked"
         const val SETTING = "Setting"
     }
