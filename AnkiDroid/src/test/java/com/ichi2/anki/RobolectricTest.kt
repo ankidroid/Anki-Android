@@ -346,7 +346,7 @@ open class RobolectricTest :
     }
 
     /**
-     * Emulates a null collection and a `BackendDbLockedException` while [block] runs,
+     * Emulates a null collection and a `CollectionLockedException` while [block] runs,
      * restoring normal collection behavior afterwards.
      *
      * @see enableNullCollection
