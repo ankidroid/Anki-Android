@@ -30,7 +30,6 @@ import com.ichi2.anki.databinding.ActivityPermissionsBinding
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
 import com.ichi2.anki.utils.ext.setFragmentResultListener
-import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -57,7 +56,6 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         }
         super.onCreate(savedInstanceState)
         setViewBinding(binding)
-        Themes.setTheme(this)
         setTransparentStatusBar()
 
         binding.continueButton.setOnClickListener { finish() }
