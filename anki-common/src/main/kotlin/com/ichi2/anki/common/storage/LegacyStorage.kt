@@ -15,8 +15,7 @@ import java.io.File
  * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
  * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
  *
- * DEPRECATED. Use either [com.ichi2.anki.services.getMediaMigrationState], or
- *   [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
+ * DEPRECATED. Use either `getMediaMigrationState`, or `isInsideDirectoriesRemovedWithTheApp`.
  *
  * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
  *
@@ -49,7 +48,7 @@ fun isLegacyStorage(
 /**
  * @return `true` if [currentDirPath] is a Legacy Storage Directory.
  *
- * DEPRECATED. Use [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
+ * DEPRECATED. Use `isInsideDirectoriesRemovedWithTheApp`.
  *
  */
 fun isLegacyStorage(
