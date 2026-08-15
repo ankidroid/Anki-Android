@@ -117,6 +117,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     ManageNotetypes::class.java,
                     // PreferencesScreenshotTest
                     PreferencesActivity::class.java,
+                    // SharedDecksScreenshotTest
+                    SharedDecksActivity::class.java,
                 )
             return ActivityList
                 .allActivitiesAndIntents()
