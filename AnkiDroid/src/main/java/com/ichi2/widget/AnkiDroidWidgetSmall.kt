@@ -22,7 +22,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
-import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
@@ -41,7 +40,6 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: AppWidgetIds,
-        usageAnalytics: UsageAnalytics,
     ) {
         WidgetStatus.updateInBackground(context)
     }

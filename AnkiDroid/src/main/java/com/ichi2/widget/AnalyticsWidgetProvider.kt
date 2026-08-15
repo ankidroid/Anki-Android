@@ -10,7 +10,6 @@ import android.content.Intent
 import androidx.annotation.CallSuper
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent
-import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.storage.grantedStoragePermissions
 import timber.log.Timber
 
@@ -80,7 +79,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
             return
         }
         Timber.d("${this.javaClass.name}: performUpdate")
-        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds), Analytics.instance)
+        performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds))
     }
 
     /**
@@ -93,13 +92,11 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
      * @param context The context in which the receiver is running.
      * @param appWidgetManager The AppWidgetManager instance to use for updating widgets.
      * @param appWidgetIds The app widget IDs to update.
-     * @param usageAnalytics used to report widget events.
      */
 
     abstract fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: AppWidgetIds,
-        usageAnalytics: UsageAnalytics,
     )
 }
