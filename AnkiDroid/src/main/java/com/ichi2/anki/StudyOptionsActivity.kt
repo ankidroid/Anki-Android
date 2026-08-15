@@ -18,8 +18,10 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.core.view.MenuItemCompat
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
@@ -62,6 +64,7 @@ class StudyOptionsActivity :
             loadStudyOptionsFragment()
         }
         setResult(RESULT_OK)
+        addMenuProvider(menuProvider)
 
         setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             when (CustomStudyAction.fromBundle(bundle)) {
@@ -91,9 +94,48 @@ class StudyOptionsActivity :
                 )
                 addToBackStack(null)
             }
-            invalidateOptionsMenu()
+            invalidateMenu()
         }
     }
+
+    private val menuProvider: MenuProvider =
+        object : MenuProvider {
+            override fun onCreateMenu(
+                menu: Menu,
+                menuInflater: MenuInflater,
+            ) {
+                menuInflater.inflate(R.menu.activity_study_options, menu)
+                val undoMenuItem = menu.findItem(R.id.action_undo)
+                val undoActionProvider = MenuItemCompat.getActionProvider(undoMenuItem) as? RtlCompliantActionProvider
+                undoActionProvider?.clickHandler = { _, menuItem -> onMenuItemSelected(menuItem) }
+            }
+
+            override fun onPrepareMenu(menu: Menu) {
+                val undoMenuItem = menu.findItem(R.id.action_undo)
+                // TODO: Ideally, the undo button should be owned by StudyOptionsFragment or be provided by a unified UndoMenuProvider
+                // Checking the current fragment from the activity to decide whether the button should be visible is hacky; see #21339
+                undoMenuItem.isVisible = undoState.hasAction && (currentFragment is StudyOptionsFragment)
+                undoMenuItem.title = undoState.label
+            }
+
+            override fun onMenuItemSelected(item: MenuItem): Boolean =
+                when (item.itemId) {
+                    R.id.action_undo -> {
+                        Timber.i("Undoing last action from study options screen")
+                        launchCatchingTask {
+                            undoAndShowSnackbar()
+                            // TODO why are we going to the Reviewer from here? Desktop doesn't do this
+                            Reviewer
+                                .getIntent(this@StudyOptionsActivity)
+                                .apply { flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT }
+                                .also { startActivity(it) }
+                            finish()
+                        }
+                        true
+                    }
+                    else -> false
+                }
+        }
 
     private fun loadStudyOptionsFragment() {
         val currentFragment = StudyOptionsFragment()
@@ -104,39 +146,6 @@ class StudyOptionsActivity :
 
     private val currentFragment: Fragment?
         get() = supportFragmentManager.findFragmentById(R.id.studyoptions_frame)
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.activity_study_options, menu)
-        val undoMenuItem = menu.findItem(R.id.action_undo)
-        val undoActionProvider = MenuItemCompat.getActionProvider(undoMenuItem) as? RtlCompliantActionProvider
-        // Set the proper click target for the undo button's ActionProvider
-        undoActionProvider?.clickHandler = { _, menuItem -> onOptionsItemSelected(menuItem) }
-        undoMenuItem.isVisible = undoState.hasAction && (currentFragment is StudyOptionsFragment)
-        undoMenuItem.title = undoState.label
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            R.id.action_undo -> {
-                launchCatchingTask {
-                    undoAndShowSnackbar()
-                    // TODO why are we going to the Reviewer from here? Desktop doesn't do this
-                    Reviewer
-                        .getIntent(this@StudyOptionsActivity)
-                        .apply { flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT }
-                        .also { startActivity(it) }
-                    finish()
-                }
-                true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -162,7 +171,7 @@ class StudyOptionsActivity :
                 }
             if (undoState != newUndoState) {
                 undoState = newUndoState
-                invalidateOptionsMenu()
+                invalidateMenu()
             }
         }
     }
