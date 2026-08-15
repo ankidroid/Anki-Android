@@ -3,6 +3,7 @@ package com.ichi2.anki
 
 import android.Manifest.permission.INTERNET
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -38,6 +39,7 @@ import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.navigation.AnkiDroidNavigator
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -256,6 +258,30 @@ class DeckPickerTest : RobolectricTest() {
             deckPicker.databaseErrorDialog,
             equalTo(DatabaseErrorDialogType.DIALOG_DB_LOCKED),
         )
+    }
+
+    /**
+     * The 'Database Locked' dialog offers Settings, opened at the Advanced screen, where
+     * changing the 'AnkiDroid directory' resolves the conflict (#21051). Without it, the
+     * dialog's only button quits the app, contradicting the guidance in its own message.
+     */
+    @Test
+    fun `database locked dialog links to Advanced settings`() {
+        val deckPicker = startRegularActivity<DeckPicker>()
+        deckPicker.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
+        deckPicker.supportFragmentManager.executePendingTransactions()
+        advanceRobolectricLooper()
+
+        val settingsButton = (ShadowDialog.getLatestDialog() as AlertDialog).getButton(DialogInterface.BUTTON_NEUTRAL)
+        assertEquals("Settings", settingsButton.text.toString())
+
+        shadowOf(deckPicker).clearNextStartedActivities()
+        settingsButton.performClick()
+        advanceRobolectricLooper()
+
+        val settings = shadowOf(deckPicker).nextStartedActivity
+        assertNotNull(settings, "Advanced settings should be opened")
+        assertEquals(PreferencesActivity::class.qualifiedName, settings.component?.className)
     }
 
     /** Until the storage setup flow exists (#19552), the user gets recovery options, not a crash */
