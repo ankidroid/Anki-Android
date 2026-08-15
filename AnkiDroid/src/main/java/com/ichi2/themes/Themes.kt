@@ -27,6 +27,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
 import com.ichi2.anki.settings.PrefsRepository
@@ -35,6 +36,7 @@ import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.settings.enums.Theme
 import com.ichi2.themes.Themes.currentTheme
+import timber.log.Timber
 
 /**
  * Helper methods to configure things related to AnkiDroid's themes
@@ -55,6 +57,15 @@ object Themes {
         val tv = TypedValue()
         activity.theme.resolveAttribute(android.R.attr.windowBackground, tv, true)
         val hadLauncherSplash = tv.resourceId == R.drawable.launch_screen
+
+        // If the decor view already exists, `windowBackground` can no longer be updated by setTheme
+        // `hadLauncherSplash` is exempt: its window background is replaced below.
+        if (!hadLauncherSplash && activity.window.peekDecorView() != null) {
+            val message =
+                "Decor view was initialized before setTheme(): windowBackground is stale. " +
+                    "Move window access (e.g. enableEdgeToEdge()) after super.onCreate()"
+            if (BuildConfig.DEBUG) throw IllegalStateException(message) else Timber.w(message)
+        }
 
         setTheme(activity as Context)
 
