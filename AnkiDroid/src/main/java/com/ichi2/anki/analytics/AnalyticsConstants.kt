@@ -28,6 +28,7 @@ object AnalyticsConstants {
         const val LINK_CLICKED = "LinkClicked"
         const val SETTING = "Setting"
         const val ACRA_CRASH_HANDLER = "ACRA Crash Handler"
+        const val WIDGET = "Widget"
     }
 
     /**

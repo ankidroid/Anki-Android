@@ -38,7 +38,11 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         Timber.d("${this.javaClass.name}: Widget enabled")
-        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, AnalyticsConstants.Actions.WIDGET_ENABLED)
+        Analytics.sendAnalyticsEvent(
+            category = AnalyticsConstants.Category.WIDGET,
+            action = AnalyticsConstants.Actions.WIDGET_ENABLED,
+            label = this.javaClass.simpleName,
+        )
     }
 
     /**
@@ -50,7 +54,11 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Timber.d("${this.javaClass.name}: Widget disabled")
-        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, AnalyticsConstants.Actions.WIDGET_DISABLED)
+        Analytics.sendAnalyticsEvent(
+            category = AnalyticsConstants.Category.WIDGET,
+            action = AnalyticsConstants.Actions.WIDGET_DISABLED,
+            label = this.javaClass.simpleName,
+        )
     }
 
     @CallSuper
