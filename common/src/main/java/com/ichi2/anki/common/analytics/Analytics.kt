@@ -14,16 +14,8 @@ package com.ichi2.anki.common.analytics
  * @see Analytics
  */
 interface UsageAnalytics {
-    /**
-     * @param category groups related events; use a constant so reporting stays consistent
-     * @param action what the user did
-     */
-    fun sendAnalyticsEvent(
-        category: String,
-        action: String,
-        value: Int? = null,
-        label: String? = null,
-    )
+    /** Reports [event]. */
+    fun send(event: AnalyticsEvent)
 
     /** Records a screen view named after [screen]'s class. */
     fun sendAnalyticsScreenView(screen: Any) {
@@ -49,7 +41,7 @@ interface UsageAnalytics {
  * Sends analytics through whichever [UsageAnalytics] was registered at startup.
  *
  * ```
- * Analytics.sendAnalyticsEvent("Widget", "enabled")
+ * Analytics.send(AnalyticsEvent.WidgetEnabled("AddNoteWidget"))
  * ```
  */
 object Analytics {
@@ -59,12 +51,7 @@ object Analytics {
      * safe: throwing would hide the crash we were reporting.
      */
     private object Unregistered : UsageAnalytics {
-        override fun sendAnalyticsEvent(
-            category: String,
-            action: String,
-            value: Int?,
-            label: String?,
-        ) = Unit
+        override fun send(event: AnalyticsEvent) = Unit
 
         override fun sendAnalyticsScreenView(screenName: String) = Unit
 
@@ -81,12 +68,7 @@ object Analytics {
         instance = analytics
     }
 
-    fun sendAnalyticsEvent(
-        category: String,
-        action: String,
-        value: Int? = null,
-        label: String? = null,
-    ) = instance.sendAnalyticsEvent(category, action, value, label)
+    fun send(event: AnalyticsEvent) = instance.send(event)
 
     fun sendAnalyticsScreenView(screen: Any) = instance.sendAnalyticsScreenView(screen)
 

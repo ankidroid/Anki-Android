@@ -15,7 +15,7 @@ import org.junit.Test
 class AnalyticsTest {
     @Test
     fun `sending an event without an implementation does nothing`() {
-        Analytics.sendAnalyticsEvent("category", "action")
+        Analytics.send(AnalyticsEvent.SettingTapped("key"))
     }
 
     @Test

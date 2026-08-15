@@ -16,8 +16,9 @@ import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
-import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
+import com.ichi2.anki.common.analytics.LinkAction
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.MimeTypeUtils
@@ -35,10 +36,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                 entries.map { requireActivity().getString(it.titleRes) }.toTypedArray(),
             ) { _, position ->
                 val entry = entries[position]
-                Analytics.sendAnalyticsEvent(
-                    AnalyticsConstants.Category.LINK_CLICKED,
-                    entry.analyticsId,
-                )
+                Analytics.send(LinkClicked(entry.analyticsId))
                 openImportFilePicker(
                     activity = requireAnkiActivity(),
                     fileType = entry.type,
@@ -60,7 +58,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                     add(
                         ImportEntry(
                             R.string.import_deck_package,
-                            AnalyticsConstants.Actions.IMPORT_APKG_FILE,
+                            LinkAction.IMPORT_APKG_FILE,
                             ImportFileType.APKG,
                         ),
                     )
@@ -69,7 +67,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                     add(
                         ImportEntry(
                             R.string.import_collection_package,
-                            AnalyticsConstants.Actions.IMPORT_COLPKG_FILE,
+                            LinkAction.IMPORT_COLPKG_FILE,
                             ImportFileType.COLPKG,
                         ),
                     )
@@ -78,7 +76,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                     add(
                         ImportEntry(
                             R.string.import_csv,
-                            AnalyticsConstants.Actions.IMPORT_CSV_FILE,
+                            LinkAction.IMPORT_CSV_FILE,
                             ImportFileType.CSV,
                             multiple = false,
                             mimeType = "*/*",
@@ -92,7 +90,7 @@ class ImportFileSelectionFragment : DialogFragment() {
 
     private class ImportEntry(
         @StringRes val titleRes: Int,
-        val analyticsId: String,
+        val analyticsId: LinkAction,
         val type: ImportFileType,
         val multiple: Boolean = false,
         val mimeType: String = "*/*",
