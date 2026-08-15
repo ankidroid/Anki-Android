@@ -43,7 +43,6 @@ import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.anki.dialogs.help.HelpDialog
-import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.utils.IntentUtil
@@ -384,11 +383,7 @@ abstract class NavigationDrawerActivity(
     }
 
     protected fun openCardBrowser() {
-        val intent = Intent(this@NavigationDrawerActivity, CardBrowser::class.java)
-        if (currentCardId != null) {
-            intent.putExtra("currentCard", currentCardId)
-        }
-        startActivity(intent)
+        startActivity(Intent(this@NavigationDrawerActivity, CardBrowser::class.java))
     }
 
     /**
@@ -405,10 +400,6 @@ abstract class NavigationDrawerActivity(
     protected fun openSettings() {
         preferencesLauncher.navigate(PreferencesDestination.Root)
     }
-
-    // Override this to specify a specific card id
-    protected open val currentCardId: CardId?
-        get() = null
 
     /**
      * Hides the navigation drawer indicator (hamburger icon) and any back arrows
