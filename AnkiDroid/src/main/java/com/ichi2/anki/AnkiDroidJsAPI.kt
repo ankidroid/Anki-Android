@@ -382,7 +382,6 @@ open class AnkiDroidJsAPI(
                 "searchCard" -> {
                     val intent =
                         Intent(context, CardBrowser::class.java).apply {
-                            putExtra("currentCard", currentCard.id)
                             putExtra("search_query", apiParams)
                         }
                     activity.startActivity(intent)

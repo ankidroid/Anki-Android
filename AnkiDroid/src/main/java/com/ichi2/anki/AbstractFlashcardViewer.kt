@@ -708,7 +708,7 @@ abstract class AbstractFlashcardViewer :
         return super.onKeyUp(keyCode, event)
     }
 
-    public override val currentCardId: CardId? get() = currentCard?.id
+    open val currentCardId: CardId? get() = currentCard?.id
 
     private fun processHardwareButtonScroll(
         keyCode: Int,
