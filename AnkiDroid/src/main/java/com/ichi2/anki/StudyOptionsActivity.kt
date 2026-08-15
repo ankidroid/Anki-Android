@@ -4,12 +4,18 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +26,7 @@ import com.ichi2.anki.StudyOptionsFragment.Companion.registerStudyOptionsStudyHa
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.ReviewDeckDestination
 import com.ichi2.anki.common.destinations.toIntent
+import com.ichi2.anki.databinding.ActivityStudyOptionsBinding
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction.Companion.REQUEST_KEY
 import com.ichi2.anki.libanki.DeckId
@@ -31,6 +38,7 @@ import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.ui.RtlCompliantActionProvider
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -40,6 +48,8 @@ import timber.log.Timber
 class StudyOptionsActivity :
     AnkiActivity(R.layout.activity_study_options),
     ChangeManager.Subscriber {
+    private val binding by viewBinding(ActivityStudyOptionsBinding::bind)
+
     private var undoState = UndoState()
 
     init {
@@ -51,10 +61,12 @@ class StudyOptionsActivity :
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         if (!ensureStorageIsReady()) {
             return
         }
         enableToolbar().apply { title = "" }
+        setupEdgeToEdge()
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
         }
@@ -125,6 +137,28 @@ class StudyOptionsActivity :
                     else -> false
                 }
         }
+
+    /** Applies edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge() {
+        // systemBars (not just statusBars) so a landscape 3-button navigation bar,
+        // which is a side inset, is also cleared
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { view, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            view.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.studyoptionsFrame) { view, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            view.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
+            insets
+        }
+    }
 
     private fun loadStudyOptionsFragment() {
         val currentFragment = StudyOptionsFragment()

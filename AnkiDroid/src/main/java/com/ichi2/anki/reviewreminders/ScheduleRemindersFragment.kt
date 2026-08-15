@@ -88,7 +88,7 @@ class ScheduleRemindersFragment :
      * Possible hosts of this fragment. Certain stylistic changes need to be made based on where this
      * fragment is opened from / nested within.
      *
-     * TODO: Implement edge-to-edge for Settings, StudyOptionsActivity, and ConfigAwareSingleFragmentActivity.
+     * TODO: Implement edge-to-edge for Settings and ConfigAwareSingleFragmentActivity.
      * Then, remove the supportsEdgeToEdge property below and test this fragment's UI behavior 1) on both small and wide screens,
      * 2) with all app display themes, and 3) from all possible locations this fragment can be opened from. In particular,
      * make sure there is no weird clipping of the collapsible toolbar content scrim when this fragment is opened from the Settings screen upon scrolling.
@@ -132,7 +132,7 @@ class ScheduleRemindersFragment :
         STUDY_OPTIONS_FRAME(
             containerId = R.id.studyoptions_frame,
             toolbarType = ToolbarType.EXTERNAL,
-            supportsEdgeToEdge = false,
+            supportsEdgeToEdge = true,
         ),
 
         /**
