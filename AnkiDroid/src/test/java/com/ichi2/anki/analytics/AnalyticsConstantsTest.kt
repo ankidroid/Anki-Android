@@ -67,6 +67,8 @@ object AnalyticsConstantsTest {
         listOfConstantFields.add("Import CSV")
         listOfConstantFields.add("Tapped setting")
         listOfConstantFields.add("Changed setting")
+        listOfConstantFields.add("enabled")
+        listOfConstantFields.add("disabled")
     }
 
     internal val analyticsConstantFields
