@@ -40,7 +40,7 @@ class AcraAnalyticsInteraction : ReportInteraction {
     ): Boolean {
         // Send an analytics exception hit with a UUID to match
         Timber.e("ACRA handling crash, sending analytics exception report")
-        Analytics.sendAnalyticsEvent("ACRA Crash Handler", "UUID " + Installation.id(context))
+        Analytics.sendAnalyticsEvent(AnalyticsConstants.Category.ACRA_CRASH_HANDLER, "UUID " + Installation.id(context))
         return true
     }
 }

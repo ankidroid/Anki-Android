@@ -27,6 +27,7 @@ object AnalyticsConstants {
     object Category {
         const val LINK_CLICKED = "LinkClicked"
         const val SETTING = "Setting"
+        const val ACRA_CRASH_HANDLER = "ACRA Crash Handler"
     }
 
     /**
@@ -128,6 +129,13 @@ object AnalyticsConstants {
 
         @AnalyticsConstant
         val CHANGED_SETTING = "Changed setting"
+
+        // Analytics actions used by home screen widgets
+        @AnalyticsConstant
+        val WIDGET_ENABLED = "enabled"
+
+        @AnalyticsConstant
+        val WIDGET_DISABLED = "disabled"
     }
 
     @VisibleForTesting

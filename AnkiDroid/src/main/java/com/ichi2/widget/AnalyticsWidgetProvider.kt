@@ -21,6 +21,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
+import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.storage.grantedStoragePermissions
@@ -50,7 +51,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         Timber.d("${this.javaClass.name}: Widget enabled")
-        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
+        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, AnalyticsConstants.Actions.WIDGET_ENABLED)
     }
 
     /**
@@ -62,7 +63,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Timber.d("${this.javaClass.name}: Widget disabled")
-        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
+        Analytics.sendAnalyticsEvent(this.javaClass.simpleName, AnalyticsConstants.Actions.WIDGET_DISABLED)
     }
 
     @CallSuper
