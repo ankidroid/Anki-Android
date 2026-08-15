@@ -489,8 +489,7 @@
         <activity
             android:name=".SharedDecksActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/download_deck"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+            android:label="@string/download_deck" />
 
         <activity android:name=".IntroductionActivity"
             android:exported="false"

@@ -34,6 +34,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
@@ -144,6 +147,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setupEdgeToEdge(view)
 
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
@@ -174,6 +178,23 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             binding.cancelDownloadButton.visibility = View.VISIBLE
             binding.tryDownloadAgainButton.visibility = View.GONE
             binding.openInWebBrowserButton.visibility = View.GONE
+        }
+    }
+
+    /** Applies edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge(view: View) {
+        // systemBars (not just statusBars) so a landscape 3-button navigation bar,
+        // which is a side inset, is also cleared
+        ViewCompat.setOnApplyWindowInsetsListener(view) { root, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            // top inset on the root only: the strip behind the status bar shows the
+            // root's app bar color, while the other sides keep the content background
+            root.updatePadding(top = bars.top)
+            binding.downloadContent.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
+            insets
         }
     }
 
