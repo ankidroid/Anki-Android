@@ -12,6 +12,7 @@ import com.criticalay.GoogleAnalytics
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsEvent
 import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -185,23 +186,18 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
         analytics?.screenView(clientId)?.screenName(screenName)?.sendAsync()
     }
 
-    override fun sendAnalyticsEvent(
-        category: String,
-        action: String,
-        value: Int?,
-        label: String?,
-    ) {
-        Timber.d("AnkiDroidUsageAnalytics: event(category=$category action=$action)")
+    override fun send(event: AnalyticsEvent) {
+        Timber.d("AnkiDroidUsageAnalytics: event(category=${event.category} action=${event.action})")
         if (!optIn) return
         val analytics = analytics ?: return
-        val event =
+        val builder =
             analytics
                 .event(clientId)
-                .category(category)
-                .action(action)
-        label?.let { event.label(it) }
-        value?.let { event.value(it) }
-        event.sendAsync()
+                .category(event.category)
+                .action(event.action)
+        event.label?.let { builder.label(it) }
+        event.value?.let { builder.value(it) }
+        builder.sendAsync()
     }
 
     override fun sendAnalyticsException(
