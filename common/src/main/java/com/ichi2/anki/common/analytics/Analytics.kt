@@ -61,8 +61,7 @@ object Analytics {
         ) = Unit
     }
 
-    var instance: UsageAnalytics = Unregistered
-        private set
+    private var instance: UsageAnalytics = Unregistered
 
     fun setAnalytics(analytics: UsageAnalytics) {
         instance = analytics
