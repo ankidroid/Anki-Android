@@ -196,9 +196,8 @@ open class CardBrowser :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        // match the status bar theme of the rest of the app
-        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         binding = ActivityCardBrowserBinding.inflate(layoutInflater)
         if (!ensureStorageIsReady()) {
             return
