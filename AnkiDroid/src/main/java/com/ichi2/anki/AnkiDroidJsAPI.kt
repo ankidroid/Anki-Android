@@ -4,6 +4,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.lifecycleScope
 import anki.scheduler.CardAnswer.Rating
 import com.github.zafarkhaja.semver.Version
@@ -134,6 +135,7 @@ open class AnkiDroidJsAPI(
         errorCode: Int,
         apiDevContact: String,
     ) {
+        if (!reportedApiMessages.add("error$errorCode/$apiDevContact")) return
         val errorMsg: String = context.getString(CommonString.anki_js_error_code, errorCode)
         val snackbarMsg: String = context.getString(CommonString.api_version_developer_contact, apiDevContact, errorMsg)
 
@@ -145,6 +147,18 @@ open class AnkiDroidJsAPI(
         }
     }
 
+    /** Keys of messages already shown: a card sends a request for each API call it makes */
+    @VisibleForTesting
+    val reportedApiMessages = mutableSetOf<String>()
+
+    private fun showSnackbarOnce(
+        key: String,
+        message: String,
+    ) {
+        if (!reportedApiMessages.add(key)) return
+        activity.runOnUiThread { activity.showSnackbar(message) }
+    }
+
     /**
      * Supplied api version must be equal to current api version to call mark card, toggle flag functions etc.
      */
@@ -154,9 +168,7 @@ open class AnkiDroidJsAPI(
     ): Boolean {
         try {
             if (apiDevContact.isEmpty() || apiVer.isEmpty()) {
-                activity.runOnUiThread {
-                    activity.showSnackbar(context.getString(CommonString.invalid_json_data, ""))
-                }
+                showSnackbarOnce("$apiVer/$apiDevContact", context.getString(CommonString.invalid_json_data, ""))
                 return false
             }
             val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION)
@@ -172,15 +184,11 @@ open class AnkiDroidJsAPI(
                     true
                 }
                 versionSupplied.isLowerThan(versionCurrent) -> {
-                    activity.runOnUiThread {
-                        activity.showSnackbar(context.getString(CommonString.update_js_api_version, apiDevContact))
-                    }
+                    showSnackbarOnce("$apiVer/$apiDevContact", context.getString(CommonString.update_js_api_version, apiDevContact))
                     versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION))
                 }
                 else -> {
-                    activity.runOnUiThread {
-                        activity.showSnackbar(context.getString(CommonString.valid_js_api_version, apiDevContact))
-                    }
+                    showSnackbarOnce("$apiVer/$apiDevContact", context.getString(CommonString.valid_js_api_version, apiDevContact))
                     false
                 }
             }
