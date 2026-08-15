@@ -2,11 +2,14 @@
 
 package com.ichi2.anki
 
+import android.content.DialogInterface
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageNotConfiguredException
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.containsString
@@ -15,6 +18,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -69,6 +73,31 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
 
                 assertThat(message, containsString("Advanced settings"))
             }
+        }
+
+    /**
+     * The locked-collection dialog offers Settings, opened at the Advanced screen, where
+     * changing the 'AnkiDroid directory' resolves the conflict
+     */
+    @Test
+    fun `a locked collection error links to Advanced settings`() =
+        withLockedCollection {
+            throwOnShowError = false
+            val activity = Robolectric.buildActivity(FragmentActivity::class.java).create().get()
+            activity.setTheme(R.style.Theme_Light)
+
+            activity.launchCatchingTask { withCol { } }
+            advanceRobolectricLooper()
+
+            val helpButton = (ShadowDialog.getLatestDialog() as AlertDialog).getButton(DialogInterface.BUTTON_NEUTRAL)
+            assertEquals("Settings", helpButton.text.toString())
+
+            helpButton.performClick()
+            advanceRobolectricLooper()
+
+            val settings = shadowOf(activity).nextStartedActivity
+            assertNotNull(settings, "Advanced settings should be opened")
+            assertEquals(PreferencesActivity::class.qualifiedName, settings.component?.className)
         }
 
     /** Emulates #21051: another AnkiDroid install holds the collection lock */
