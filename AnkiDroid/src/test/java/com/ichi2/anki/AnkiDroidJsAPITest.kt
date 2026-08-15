@@ -525,11 +525,31 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `outdated api version is only reported once`() =
+        runTest {
+            addBasicNote("Front", "Back")
+
+            val reviewer: Reviewer = startReviewer()
+            advanceRobolectricLooper()
+
+            val jsapi = reviewer.jsApi
+            val outdated = jsApiContract(version = AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION)
+
+            repeat(3) { jsapi.handleJsApiRequest("deckName", outdated, false) }
+
+            // a card issues many requests: the warning must not be repeated for each one
+            assertThat(jsapi.reportedApiMessages.size, equalTo(1))
+        }
+
     companion object {
-        fun jsApiContract(data: String = ""): ByteArray =
+        fun jsApiContract(
+            data: String = "",
+            version: String = AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION,
+        ): ByteArray =
             JSONObject()
                 .apply {
-                    put("version", "0.0.4")
+                    put("version", version)
                     put("developer", "test@example.com")
                     put("data", data)
                 }.toString()
