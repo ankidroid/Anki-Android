@@ -485,13 +485,11 @@ open class DeckPicker :
             return
         }
 
-        // match the status bar theme of the rest of the app
+        super.onCreate(savedInstanceState)
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
             navigationBarStyle = BottomFadeFrameLayout.navigationBarStyle(),
         )
-        // Then set theme and content view
-        super.onCreate(savedInstanceState)
 
         binding = ActivityHomescreenBinding.inflate(layoutInflater)
 
