@@ -51,6 +51,10 @@ class StudyOptionsActivity :
     ChangeManager.Subscriber {
     private var undoState = UndoState()
 
+    init {
+        ChangeManager.subscribe(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -151,7 +155,6 @@ class StudyOptionsActivity :
         handler: Any?,
     ) {
         refreshUndoState()
-        (currentFragment as? StudyOptionsFragment)?.refreshInterface()
     }
 
     private fun refreshUndoState() {
