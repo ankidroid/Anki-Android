@@ -4,7 +4,13 @@ package com.ichi2.anki
 
 import androidx.fragment.app.FragmentActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageNotConfiguredException
+import com.ichi2.testutils.BackendEmulatingOpenConflict
+import kotlinx.coroutines.test.runTest
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -32,6 +38,49 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
             val redirect = shadowOf(activity).nextStartedActivity
             assertNotNull(redirect, "the main entry point should be opened")
             assertEquals(IntentHandler::class.qualifiedName, redirect.component?.className)
+        }
+    }
+
+    /**
+     * #21051: the collection lock is normally held by a second AnkiDroid install sharing the
+     * AnkiDroid folder. The backend's 'Anki already open' text doesn't explain this on Android,
+     * where the other app is invisible: [CollectionLockedException] carries guidance naming the
+     * likely cause instead.
+     */
+    @Test
+    fun `launchCatchingTask explains a locked collection`() =
+        withLockedCollection {
+            throwOnShowError = false
+            val controller = Robolectric.buildActivity(FragmentActivity::class.java).also(::saveControllerForCleanup)
+            val activity = controller.create().get()
+            activity.setTheme(R.style.Theme_Light)
+
+            activity.launchCatchingTask { withCol { } }
+            advanceRobolectricLooper()
+
+            assertThat(getAlertDialogText(true), containsString("Advanced settings"))
+        }
+
+    /** See `launchCatchingTask explains a locked collection`: the ViewModel error funnel */
+    @Test
+    fun `launchCatching explains a locked collection`() =
+        withLockedCollection {
+            runTest {
+                var message: String? = null
+
+                launchCatching(errorMessageHandler = { message = it }) { withCol { } }.join()
+
+                assertThat(message, containsString("Advanced settings"))
+            }
+        }
+
+    /** Emulates #21051: another AnkiDroid install holds the collection lock */
+    private fun withLockedCollection(block: () -> Unit) {
+        BackendEmulatingOpenConflict.enable()
+        try {
+            block()
+        } finally {
+            BackendEmulatingOpenConflict.disable()
         }
     }
 }

@@ -3,9 +3,9 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.CollectionFiles
-import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
@@ -51,8 +51,8 @@ class CollectionStorageModeTest(
     fun `test access respects collection opening failures`() =
         runTest {
             withNullCollection {
-                assertThat(runCatching { col }.exceptionOrNull(), instanceOf(BackendDbLockedException::class.java))
-                assertThat(runCatching { withCol { this } }.exceptionOrNull(), instanceOf(BackendDbLockedException::class.java))
+                assertThat(runCatching { col }.exceptionOrNull(), instanceOf(CollectionLockedException::class.java))
+                assertThat(runCatching { withCol { this } }.exceptionOrNull(), instanceOf(CollectionLockedException::class.java))
             }
         }
 

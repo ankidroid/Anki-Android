@@ -7,6 +7,7 @@ import androidx.test.filters.MediumTest
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.observability.ensureOpsExecuted
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelAndJoin
@@ -14,7 +15,6 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
-import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
@@ -167,7 +167,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
 
                 assertThat(loadedState.visibleNodes, equalTo(previousTags))
                 assertThat(loadedState.isWorking, equalTo(false))
-                assertThat(loadedState.error, instanceOf(BackendDbLockedException::class.java))
+                assertThat(loadedState.error, instanceOf(CollectionLockedException::class.java))
 
                 withQueuedCollectionAccess {
                     val retry = removeTag("science")
@@ -188,7 +188,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
             val viewModel = withLockedCollection { ManageTagsViewModel() }
             val failure = viewModel.state.value
             assertThat(failure, instanceOf(ManageTagsState.Error::class.java))
-            assertThat((failure as ManageTagsState.Error).error, instanceOf(BackendDbLockedException::class.java))
+            assertThat((failure as ManageTagsState.Error).error, instanceOf(CollectionLockedException::class.java))
 
             viewModel.filter("hist")
             assertThat(viewModel.searchQuery.value, equalTo("hist"))
@@ -508,7 +508,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
                 withLockedCollection {
                     refreshTags().join()
                 }
-                assertThat(loadedState.error, instanceOf(BackendDbLockedException::class.java))
+                assertThat(loadedState.error, instanceOf(CollectionLockedException::class.java))
                 assertThat(pendingMessages.value, equalTo(pending))
 
                 refreshTags().join()
