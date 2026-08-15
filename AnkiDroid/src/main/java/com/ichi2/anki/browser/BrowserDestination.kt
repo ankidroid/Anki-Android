@@ -10,6 +10,7 @@ import com.ichi2.anki.common.destinations.BrowserDestination
 /** Builds the [Intent] that launches [CardBrowser] for this destination. */
 fun BrowserDestination.toIntent(context: Context): Intent =
     when (this) {
+        is BrowserDestination.Open -> Intent(context, CardBrowser::class.java)
         is BrowserDestination.ToDeck ->
             Intent(context, CardBrowser::class.java).apply {
                 putExtra(CardBrowserViewModel.EXTRA_DECK_ID, deckId)
