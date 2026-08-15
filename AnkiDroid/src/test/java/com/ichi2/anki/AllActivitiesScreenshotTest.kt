@@ -119,6 +119,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     PreferencesActivity::class.java,
                     // SharedDecksScreenshotTest
                     SharedDecksActivity::class.java,
+                    // StudyOptionsScreenshotTest
+                    StudyOptionsActivity::class.java,
                 )
             return ActivityList
                 .allActivitiesAndIntents()
