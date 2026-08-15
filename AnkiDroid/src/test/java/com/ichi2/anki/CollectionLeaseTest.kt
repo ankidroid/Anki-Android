@@ -8,6 +8,7 @@ import com.ichi2.anki.CollectionManager.tryWithCol
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withColExclusive
 import com.ichi2.anki.CollectionManager.withLeaseForTest
+import com.ichi2.anki.exception.CollectionLockedException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +20,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import net.ankiweb.rsdroid.Backend
-import net.ankiweb.rsdroid.BackendException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
@@ -395,7 +395,7 @@ class CollectionLeaseTest : RobolectricTest() {
         runTest {
             CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED
             try {
-                assertFailsWith<BackendException.BackendDbException.BackendDbLockedException> {
+                assertFailsWith<CollectionLockedException> {
                     withColExclusive(CollectionOperation.SYNC) { error("collection could not open") }
                 }
                 assertThat(collectionLease, nullValue())

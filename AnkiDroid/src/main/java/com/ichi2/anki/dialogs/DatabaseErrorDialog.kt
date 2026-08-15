@@ -585,7 +585,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(CommonString.check_db_warning)
                 DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(CommonString.restore_backup)
                 DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(CommonString.backup_full_sync_from_server_question)
-                DIALOG_DB_LOCKED -> res().getString(CommonString.database_locked_summary)
+                DIALOG_DB_LOCKED -> res().getString(CommonString.database_locked_summary_new, res().getString(CommonString.col_path))
                 INCOMPATIBLE_DB_VERSION -> {
                     var databaseVersion = -1
                     try {

@@ -5,8 +5,8 @@ package com.ichi2.anki
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.exception.CollectionLockedException
 import net.ankiweb.rsdroid.BackendException
-import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import net.ankiweb.rsdroid.BackendException.BackendImportException
 import net.ankiweb.rsdroid.exceptions.BackendIoException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
@@ -66,7 +66,7 @@ class CollectionManagerImportTest : RobolectricTest() {
                 val failure = assertFailsWith<BackendImportException> { CollectionManager.importColpkg(backup.path) }
 
                 assertEquals(expectedMessage, failure.localizedMessage)
-                assertIs<BackendDbLockedException>(failure.suppressed.single())
+                assertIs<CollectionLockedException>(failure.suppressed.single())
             } finally {
                 CollectionManager.emulatedOpenFailure = null
             }
