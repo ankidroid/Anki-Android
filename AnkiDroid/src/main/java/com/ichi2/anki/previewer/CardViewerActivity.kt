@@ -30,8 +30,8 @@ import kotlin.reflect.jvm.jvmName
  */
 class CardViewerActivity : SingleFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
     }
 
     companion object {
