@@ -79,6 +79,32 @@ object AnalyticsConstantsTest {
                 .filter { x -> x.javaField!!.getAnnotation(AnalyticsConstant::class.java) != null }
                 .also { list -> assertThat(list.size, not(equalTo(0))) }
 
+    /**
+     * [AnalyticsConstants.Category] is not covered by the reflection above, which is how an
+     * unused category survived unnoticed. Pinning the values catches a rename, and the count
+     * catches one being added or dropped without a deliberate decision.
+     */
+    class AnalyticsCategoryTest {
+        private val expectedCategories =
+            listOf(
+                "LinkClicked",
+                "Setting",
+                "ACRA Crash Handler",
+                "Widget",
+            )
+
+        @Test
+        fun `category constants are neither renamed nor dropped`() {
+            val actual =
+                AnalyticsConstants.Category::class
+                    .memberProperties
+                    // const val compiles to a static getter, so it takes no receiver
+                    .map { it.getter.call() as String }
+
+            assertThat(actual.sorted(), equalTo(expectedCategories.sorted()))
+        }
+    }
+
     @RunWith(Parameterized::class)
     class AnalyticsConstantsFieldValuesTest(
         private val analyticsString: String,
