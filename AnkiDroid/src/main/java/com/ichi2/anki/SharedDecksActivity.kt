@@ -18,9 +18,11 @@ package com.ichi2.anki
 
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup.MarginLayoutParams
 import android.webkit.CookieManager
 import android.webkit.URLUtil
 import android.webkit.WebResourceError
@@ -29,7 +31,13 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
@@ -218,7 +226,14 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         }
 
         super.onCreate(savedInstanceState)
+        // after super.onCreate: enableEdgeToEdge accesses window.decorView, which resolves
+        // the window background before Themes.setTheme has applied the user's theme,
+        // and the wrong background is visible behind the WebView while a page loads
+        //
+        // statusBarStyle matches the status bar theme of the rest of the app
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         setTitle(R.string.download_deck)
+        setupEdgeToEdge()
 
         binding.webviewToolbar.setTitleTextColor(getColor(R.color.white))
         setSupportActionBar(binding.webviewToolbar)
@@ -252,6 +267,36 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
         binding.webView.webViewClient = webViewClient
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
+    }
+
+    /** Applies edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge() {
+        // systemBars (not just statusBars) so a landscape 3-button navigation bar,
+        // which is a side inset, is also cleared
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { view, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            view.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
+        }
+        // margins rather than padding: WebView does not support padding
+        // ime() so the page (e.g. AnkiWeb's search/login) is not covered by the keyboard
+        ViewCompat.setOnApplyWindowInsetsListener(binding.webView) { view, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or
+                        WindowInsetsCompat.Type.displayCutout() or
+                        WindowInsetsCompat.Type.ime(),
+                )
+            view.updateLayoutParams<MarginLayoutParams> {
+                leftMargin = bars.left
+                rightMargin = bars.right
+                bottomMargin = bars.bottom
+            }
+            insets
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
