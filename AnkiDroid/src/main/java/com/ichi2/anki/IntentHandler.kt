@@ -16,6 +16,8 @@ import androidx.core.content.IntentCompat
 import androidx.work.WorkManager
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
@@ -154,13 +156,15 @@ class IntentHandler : AbstractIntentHandler() {
      */
     private fun handleBrowserIntent(intent: Intent) {
         Timber.i("Handling intent to open the Card Browser")
-        val browserIntent =
-            Intent(this, CardBrowser::class.java).apply {
-                action = Intent.ACTION_VIEW
-                data = intent.data
+        val search = intent.data?.getQueryParameter("search")
+        val destination =
+            if (search != null) {
+                BrowserDestination.Search(query = search, allDecks = false)
+            } else {
+                BrowserDestination.Open
             }
         // 'back' should close this activity.
-        startActivity(browserIntent)
+        navigate(destination)
         finish()
     }
 
