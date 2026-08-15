@@ -8,6 +8,9 @@ import com.ichi2.anki.libanki.DeckId
 /** Opens the Card Browser. */
 // TODO: A number of destination are undefined - grep for CardBrowser::class (#20558)
 sealed class BrowserDestination : Destination() {
+    /** Opens the Card Browser on the selected deck. */
+    data object Open : BrowserDestination()
+
     /** Opens the Card Browser scoped to [deckId]. */
     data class ToDeck(
         val deckId: DeckId,
