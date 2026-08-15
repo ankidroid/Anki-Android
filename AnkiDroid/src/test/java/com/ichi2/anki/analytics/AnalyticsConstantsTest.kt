@@ -67,6 +67,7 @@ object AnalyticsConstantsTest {
         listOfConstantFields.add("Import CSV")
         listOfConstantFields.add("Tapped setting")
         listOfConstantFields.add("Changed setting")
+        listOfConstantFields.add("Crash reported")
         listOfConstantFields.add("enabled")
         listOfConstantFields.add("disabled")
     }

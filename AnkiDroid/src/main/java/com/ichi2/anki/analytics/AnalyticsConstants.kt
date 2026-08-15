@@ -130,6 +130,9 @@ object AnalyticsConstants {
         @AnalyticsConstant
         val CHANGED_SETTING = "Changed setting"
 
+        @AnalyticsConstant
+        val CRASH_REPORTED = "Crash reported"
+
         // Analytics actions used by home screen widgets
         @AnalyticsConstant
         val WIDGET_ENABLED = "enabled"
