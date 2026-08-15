@@ -6,6 +6,7 @@ package com.ichi2.anki.analytics
 import android.content.Context
 import com.google.auto.service.AutoService
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsEvent
 import org.acra.config.CoreConfiguration
 import org.acra.interaction.ReportInteraction
 import org.acra.util.Installation
@@ -27,13 +28,9 @@ class AcraAnalyticsInteraction : ReportInteraction {
     ): Boolean {
         // Send an analytics exception hit with a UUID to match
         Timber.e("ACRA handling crash, sending analytics exception report")
-        Analytics.sendAnalyticsEvent(
-            category = AnalyticsConstants.Category.ACRA_CRASH_HANDLER,
-            action = AnalyticsConstants.Actions.CRASH_REPORTED,
-            // the install id identifies the matching ACRA report; it belongs in the label,
-            // where a value per install is expected, rather than in the action
-            label = Installation.id(context),
-        )
+        // the install id identifies the matching ACRA report; CrashReported carries
+        // it as the label, so it stays out of the action
+        Analytics.send(AnalyticsEvent.CrashReported(installId = Installation.id(context)))
         return true
     }
 }

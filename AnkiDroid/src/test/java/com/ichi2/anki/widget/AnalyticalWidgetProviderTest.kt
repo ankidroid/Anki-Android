@@ -4,8 +4,8 @@
 import android.appwidget.AppWidgetManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsEvent
 import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.AppWidgetIds
@@ -24,7 +24,7 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         mockkObject(Analytics)
-        every { Analytics.sendAnalyticsEvent(any(), any(), any(), any()) } answers { }
+        every { Analytics.send(any()) } answers { }
     }
 
     @After
@@ -40,11 +40,7 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
         widgetProvider.onEnabled(targetContext)
 
         verify {
-            Analytics.sendAnalyticsEvent(
-                category = AnalyticsConstants.Category.WIDGET,
-                action = AnalyticsConstants.Actions.WIDGET_ENABLED,
-                label = "TestWidgetProvider",
-            )
+            Analytics.send(AnalyticsEvent.WidgetEnabled("TestWidgetProvider"))
         }
     }
 

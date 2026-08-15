@@ -8,8 +8,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
-import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsEvent
 import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.storage.grantedStoragePermissions
 import timber.log.Timber
@@ -38,11 +38,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         Timber.d("${this.javaClass.name}: Widget enabled")
-        Analytics.sendAnalyticsEvent(
-            category = AnalyticsConstants.Category.WIDGET,
-            action = AnalyticsConstants.Actions.WIDGET_ENABLED,
-            label = this.javaClass.simpleName,
-        )
+        Analytics.send(AnalyticsEvent.WidgetEnabled(this.javaClass.simpleName))
     }
 
     /**
@@ -54,11 +50,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Timber.d("${this.javaClass.name}: Widget disabled")
-        Analytics.sendAnalyticsEvent(
-            category = AnalyticsConstants.Category.WIDGET,
-            action = AnalyticsConstants.Actions.WIDGET_DISABLED,
-            label = this.javaClass.simpleName,
-        )
+        Analytics.send(AnalyticsEvent.WidgetDisabled(this.javaClass.simpleName))
     }
 
     @CallSuper
@@ -87,7 +79,6 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
             Timber.w("Opening widget ${this.javaClass.name} without storage access")
             return
         }
-        // Pass usageAnalytics to performUpdate
         Timber.d("${this.javaClass.name}: performUpdate")
         performUpdate(context, appWidgetManager, AppWidgetIds(appWidgetIds), Analytics.instance)
     }
