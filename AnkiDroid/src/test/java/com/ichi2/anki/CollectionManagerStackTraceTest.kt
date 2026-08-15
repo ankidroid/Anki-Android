@@ -4,12 +4,14 @@ package com.ichi2.anki
 
 import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.exception.CollectionLockedException
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowBuild
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -23,8 +25,9 @@ class CollectionManagerStackTraceTest : RobolectricTest() {
             try {
                 CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED
 
-                val failure = assertFailsWith<BackendDbLockedException> { requestCollection() }
+                val failure = assertFailsWith<CollectionLockedException> { requestCollection() }
 
+                assertIs<BackendDbLockedException>(failure.cause)
                 assertFalse(failure.stackTrace.any { it.methodName == "requestCollection" })
                 val caller = failure.suppressed.single()
                 assertTrue(caller.stackTrace.any { it.methodName == "requestCollection" })
