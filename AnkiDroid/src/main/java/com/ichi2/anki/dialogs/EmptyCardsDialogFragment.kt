@@ -5,8 +5,6 @@ package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.Insets
@@ -36,7 +34,8 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.databinding.DialogEmptyCardsBinding
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchFailure
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchResult
@@ -165,7 +164,7 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
         AnkiNidTag.parseFromReport(spannableReport).forEach { tag ->
             // make nid clickable
             spannableReport.setSpan(
-                BrowserSearchByNidSpan(requireContext(), tag.nid),
+                BrowserSearchByNidSpan(requireActivity(), tag.nid),
                 tag.matchedNid.range.first,
                 tag.matchedNid.range.last + 1,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
@@ -236,14 +235,11 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
      * @see CardBrowser
      */
     private class BrowserSearchByNidSpan(
-        val context: Context,
+        val activity: Activity,
         val nid: NoteId,
     ) : ClickableSpan() {
         override fun onClick(widget: View) {
-            val browserSearchIntent = Intent(context, CardBrowser::class.java)
-            browserSearchIntent.putExtra(CardBrowserViewModel.EXTRA_SEARCH_QUERY, "nid:$nid")
-            browserSearchIntent.putExtra(CardBrowserViewModel.EXTRA_ALL_DECKS, true)
-            context.startActivity(browserSearchIntent)
+            with(activity) { navigate(BrowserDestination.Search(query = "nid:$nid", allDecks = true)) }
         }
     }
 
