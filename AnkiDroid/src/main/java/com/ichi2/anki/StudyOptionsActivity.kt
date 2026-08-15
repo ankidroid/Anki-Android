@@ -124,12 +124,6 @@ class StudyOptionsActivity :
                         Timber.i("Undoing last action from study options screen")
                         launchCatchingTask {
                             undoAndShowSnackbar()
-                            // TODO why are we going to the Reviewer from here? Desktop doesn't do this
-                            Reviewer
-                                .getIntent(this@StudyOptionsActivity)
-                                .apply { flags = Intent.FLAG_ACTIVITY_FORWARD_RESULT }
-                                .also { startActivity(it) }
-                            finish()
                         }
                         true
                     }
