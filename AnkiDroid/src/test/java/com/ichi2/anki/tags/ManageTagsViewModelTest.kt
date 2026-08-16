@@ -19,7 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
-import com.ichi2.testutils.ensureOpsExecuted
+import com.ichi2.anki.observability.ensureOpsExecuted
 import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder

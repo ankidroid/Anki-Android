@@ -2,30 +2,38 @@
 
 package com.ichi2.anki.observability
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import android.app.Activity
+import android.content.Context
 import anki.collection.OpChanges
-import com.ichi2.testutils.EmptyApplication
-import com.ichi2.testutils.JvmTest
-import com.ichi2.testutils.subscriberChangeCounter
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.robolectric.annotation.Config
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.javaType
 import kotlin.reflect.jvm.isAccessible
 
-// this cannot yet use `EmptyApplication` - `CrashReportService` dependency
-@RunWith(AndroidJUnit4::class)
-class ChangeManagerExceptionHandlingTest : JvmTest() {
+class ChangeManagerExceptionHandlingTest {
+    @Before
+    fun setUp() {
+        ChangeManager.resetForTesting()
+        // an exception in a subscriber is sent to the crash reporting service
+        CrashReportService.setReporter(NoOpCrashReporter)
+    }
+
     @Test
     fun `all subscribers notified even if one throws exception`() {
         var firstCalled = false
@@ -96,9 +104,17 @@ class ChangeManagerTest {
     }
 }
 
-@RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class)
-class ChangeManagerPublishTest : JvmTest() {
+class ChangeManagerPublishTest {
+    @Before
+    fun setUp() {
+        ChangeManager.resetForTesting()
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun `publish notifies multiple subscribers asynchronously`() =
         runTest {
@@ -117,4 +133,60 @@ class ChangeManagerPublishTest : JvmTest() {
             assertThat("First subscriber should be notified", counter1.hasChanges, equalTo(true))
             assertThat("Second subscriber should be notified", counter2.hasChanges, equalTo(true))
         }
+}
+
+/**
+ * Produces a [ChangeCounter] which is subscribed to [ChangeManager].
+ *
+ * Query the result via [.hasChanges][ChangeCounter.hasChanges]
+ */
+private fun subscriberChangeCounter(): ChangeCounter {
+    val counter = ChangeCounter()
+    ChangeManager.subscribe(counter)
+    return counter
+}
+
+/** A [CrashReporter] which ignores all reports */
+private object NoOpCrashReporter : CrashReporter {
+    override fun sendExceptionReport(
+        message: String?,
+        origin: String?,
+    ) {
+    }
+
+    override fun sendExceptionReport(
+        e: Throwable,
+        origin: String?,
+        additionalInfo: String?,
+        onlyIfSilent: Boolean,
+    ) {
+    }
+
+    override fun sendExceptionReport(
+        e: Throwable,
+        origin: String?,
+        additionalInfo: String?,
+        onlyIfSilent: Boolean,
+        context: Context,
+    ) {
+    }
+
+    override fun onPreferenceChanged(
+        ctx: Context,
+        newValue: String,
+    ) {
+    }
+
+    override fun deleteLimiterData(context: Context) {
+    }
+
+    override fun setReportingMode(value: String) {
+    }
+
+    override fun isEnabled(
+        context: Context,
+        defaultValue: Boolean,
+    ): Boolean = false
+
+    override fun sendReport(activity: Activity): Boolean = false
 }
