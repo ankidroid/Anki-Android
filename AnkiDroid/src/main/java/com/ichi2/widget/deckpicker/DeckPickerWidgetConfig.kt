@@ -9,10 +9,18 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +43,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.utils.dp
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
@@ -79,7 +88,19 @@ class DeckPickerWidgetConfig :
         if (!ensureStorageIsReady()) {
             return
         }
-
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.content) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout())
+            binding.content.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                updateMargins(
+                    left = constraints.left,
+                    right = constraints.right,
+                    bottom = constraints.bottom + 16.dp.toPx(this@DeckPickerWidgetConfig),
+                    top = constraints.top + 16.dp.toPx(this@DeckPickerWidgetConfig),
+                )
+            }
+            WindowInsetsCompat.CONSUMED
+        }
         deckPickerWidgetPreferences = DeckPickerWidgetPreferences(this)
 
         appWidgetId = intent.getAppWidgetId()
