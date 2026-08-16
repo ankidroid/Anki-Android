@@ -268,7 +268,7 @@ enum class StoragePermissionSet(
         get() =
             when (this) {
                 LEGACY_ACCESS -> StoragePolicy.Fixed(AnkiDroidFolder.PUBLIC)
-                EXTERNAL_MANAGER -> StoragePolicy.Fixed(AnkiDroidFolder.PUBLIC)
+                EXTERNAL_MANAGER -> StoragePolicy.UserChoosesOnPermissionScreen
                 APP_PRIVATE -> StoragePolicy.Fixed(AnkiDroidFolder.APP_PRIVATE)
             }
 

@@ -21,6 +21,7 @@ import org.robolectric.annotation.Config
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -101,7 +102,6 @@ class SetupStorageTest : RobolectricTest() {
         assertEquals("/a/custom/path", collectionPath)
     }
 
-    // The permission screen is mandatory on Android 10 and below: the folder is fixed
     @Test
     @Config(sdk = [Build.VERSION_CODES.Q])
     fun `Android 10 - public storage is persisted before permissions are granted`() {
@@ -122,15 +122,14 @@ class SetupStorageTest : RobolectricTest() {
         assertEquals(publicCollectionPath, collectionPath)
     }
 
-    // TODO: 13574 - the decision is deferred to the user: the screen may be skipped
     @Test
     @Config(sdk = [Build.VERSION_CODES.R])
-    fun `full build - public storage is persisted before 'All files access' is granted`() {
+    fun `full build - storage decision is deferred before 'All files access' is granted`() {
         prefs.edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
 
         withManageExternalStorageInManifest { maybeSetDefaultCollectionPath(targetContext) }
 
-        assertEquals(publicCollectionPath, collectionPath)
+        assertNull(collectionPath, "the storage decision should be deferred to the user")
     }
 
     @Test
