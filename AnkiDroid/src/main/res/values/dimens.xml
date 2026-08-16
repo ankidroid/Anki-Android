@@ -11,6 +11,7 @@
 
     <!-- Match 56dp default ActionBar height on portrait orientation -->
     <dimen name="nav_drawer_margin_offset">-8dp</dimen>
+    <dimen name="nav_drawer_width">280dp</dimen>
 
     <!-- Material design dialogs -->
     <dimen name="dialog_frame_margin">24dp</dimen>
