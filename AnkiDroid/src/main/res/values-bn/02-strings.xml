@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">আনকি প্যাকেজ সেভ করা ব্যর্থ</string>
     <string name="export_share_title">Anki প্যাকেজ পাঠান:</string>
     <string name="export_email_subject">AnkiDroid এর রপ্তানি করা ফ্ল্যাশকার্ড: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[
+        Hi!
         <br/><br/>
         This is an Anki flashcards deck sent from AnkiDroid[1].
         Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>

@@ -68,6 +68,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">退出</string>
     <string name="dialog_continue">继续</string>
     <string name="dialog_processing">处理中&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">创建</string>
     <string name="dialog_positive_delete" maxLength="28">删除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -101,7 +102,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">录音权限被拒绝</string>
     <string name="permission_denied">权限被拒绝</string>
-    <string name="recording_permission_denied_message">麦克风权限是\"录制声音\"功能所必需的。请在应用程序设置中授予它。</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">仍要继续</string>
     <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>

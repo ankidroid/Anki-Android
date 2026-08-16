@@ -281,6 +281,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Expérimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid a introduit un meilleur mécanisme de synthèse vocale qui est compatible avec d\'autres clients Anki et inclut plus de voix et des améliorations à la lecture de la langue !\n\nVeuillez mettre à jour dès que possible, car ce paramètre sera bientôt supprimé</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Veuillez mettre à jour vers le nouveau format de synthèse vocale</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage dans l\'écran de révision</string>
     <string name="pref_fixed_port_summary">Active JavaScript localStorage en utilisant un serveur port fixé dans l\'écran de révision</string>
     <!-- Developer options -->

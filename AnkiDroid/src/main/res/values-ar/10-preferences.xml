@@ -289,6 +289,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">تجريبي</string>
     <string name="readtext_deprecation_warn">يوفر آنكي درويد الآن طريقة جديدة لتحويل النص إلى كلام متوافقة مع برامج آنكي الأخرى وتتضمن أصوات أكثر وتحسينات للتشغيل!\n\nيرجى التحديث بأسرع وقت ممكن لأن هذا الخيار سَيُزال قريبًا</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">يرجى التحديث إلى الصيغة الجديدة لتحويل النص إلى كلام</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">الذاكرة المحلية في شاشة الدراسة</string>
     <string name="pref_fixed_port_summary">يفعل JavaScript localStorage باستخدام  مرفأ خادم ثابت في شاشة الدراسة</string>
     <!-- Developer options -->

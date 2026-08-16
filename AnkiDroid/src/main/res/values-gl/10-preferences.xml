@@ -282,6 +282,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid introduciu un sistema de texto a voz (TTS) mellorado, compatíbel con outros clientes de Anki e que inclúe máis voces e melloras na reprodución de idiomas!\n\nActualiza canto antes, xa que esta opción antiga será eliminada en breve</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Actualiza ao novo formato de texto a voz</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage na pantalla de estudo</string>
     <string name="pref_fixed_port_summary">Permite o uso de JavaScript localStorage empregando un porto de servidor fixo na pantalla de estudo</string>
     <!-- Developer options -->

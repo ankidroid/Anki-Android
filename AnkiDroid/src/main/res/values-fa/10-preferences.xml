@@ -280,6 +280,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">آزمایشی</string>
     <string name="readtext_deprecation_warn">انکی‌دروید مکانیزم TTS بهتری را معرفی کرده که با سایر کلاینت‌های انکی سازگار است و شامل صداهای بیشتر و بهبودهای پخش زبان می‌باشد! \n\nلطفاً هر چه سریع‌تر ارتقا دهید، زیرا این تنظیم به زودی حذف خواهد شد</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">لطفاً به فرمت جدید تبدیل متن به گفتار ارتقا دهید</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">ذخیره‌ساز محلی در صفحهٔ مطالعه</string>
     <string name="pref_fixed_port_summary">این گزینه از طریق یک پورت ثابت سرور در صفحهٔ مطالعه، قابلیت ذخیره ساز محلی جاوااسکریپت را فعال می‌کند</string>
     <!-- Developer options -->

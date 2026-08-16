@@ -70,6 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">కొనసాగండి</string>
     <string name="dialog_processing">ప్రాసెస్ చేస్తోంది&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">సృష్టించు</string>
     <string name="dialog_positive_delete" maxLength="28">తొలగించు</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -104,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ఆడియో రికార్డింగ్ అనుమతి నిరాకరించబడింది</string>
     <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">ఏమైనా కొనసాగించండి</string>
     <string name="integrity_check_insufficient_space">డేటాబేస్ పెద్ద మొత్తంలో తాత్కాలిక నిల్వను ఉపయోగిస్తుంది. ఇన్‌స్టాల్ చేసే ముందు మీ పరికరంలో కనీసం %s ఖాళీ స్థలం ఉండాలని గట్టిగా సిఫార్సు చేయబడింది.</string>

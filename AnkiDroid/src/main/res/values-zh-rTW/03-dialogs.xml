@@ -68,6 +68,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">離開</string>
     <string name="dialog_continue">繼續</string>
     <string name="dialog_processing">處理中&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
     <string name="dialog_positive_delete" maxLength="28">刪除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -101,7 +102,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音訊錄製權限被拒絕</string>
     <string name="permission_denied">權限被拒</string>
-    <string name="recording_permission_denied_message">“錄音”功能需開啟麥克風，請在程式設定裏批准權限。</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">仍要繼續</string>
     <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>

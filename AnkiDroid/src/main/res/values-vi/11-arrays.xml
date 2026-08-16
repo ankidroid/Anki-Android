@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">Sáng</string>
     <string name="day_theme_plain">Đơn giản</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Đen</string>
     <string name="night_theme_dark">Tối</string>

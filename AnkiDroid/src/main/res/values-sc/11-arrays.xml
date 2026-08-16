@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">Craru</string>
     <string name="day_theme_plain">Simpre</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Iscuru</string>
     <string name="night_theme_dark">Nieddu</string>

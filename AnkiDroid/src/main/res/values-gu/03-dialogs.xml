@@ -70,6 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">ચાલુ રાખો</string>
     <string name="dialog_processing">પ્રક્રિયા&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">બનાવો</string>
     <string name="dialog_positive_delete" maxLength="28">કાઢી નાખો</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -104,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ઑડિયો રેકોર્ડિંગની પરવાનગી નકારી</string>
     <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">કોઈપણ રીતે ચાલુ રાખો</string>
     <string name="integrity_check_insufficient_space">ચેક ડેટાબેઝ મોટી માત્રામાં અસ્થાયી સ્ટોરેજનો ઉપયોગ કરે છે.\n\nતેની ભારપૂર્વક ભલામણ કરવામાં આવે છે કે ચાલુ રાખતા પહેલા તમારી પાસે તમારા ઉપકરણ પર ઓછામાં ઓછી %s ખાલી જગ્યા હોય.</string>

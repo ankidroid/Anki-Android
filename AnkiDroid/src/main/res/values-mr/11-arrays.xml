@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">प्रकाश</string>
     <string name="day_theme_plain">साधा</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">काळा</string>
     <string name="night_theme_dark">गडद</string>

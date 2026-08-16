@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">Terang</string>
     <string name="day_theme_plain">Biasa</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Hitam</string>
     <string name="night_theme_dark">Gelap</string>

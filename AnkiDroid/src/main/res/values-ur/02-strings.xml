@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">انکی پیکج کو کامیابی کے ساتھ محفوظ کر لیا</string>
     <string name="export_share_title">کا استعمال کرتے ہوئے Anki پیکج بھیجیں</string>
     <string name="export_email_subject">AnkiDroid نے برآمد شدہ فلیش کارڈز: %s</string>
-    <string name="export_email_text"><![CDATA[        ہائے!
+    <string name="export_email_text"><![CDATA[
+        ہائے!
         <br/><br/>
         یہ AnkiDroid[1] سے بھیجا گیا انکی فلیش کارڈز ڈیک ہے۔
         دستیاب Anki تقسیم[2] میں سے ایک کا استعمال کرتے ہوئے اسے کھولنے کی کوشش کریں اور آسان اور موثر سیکھنے سے لطف اندوز ہوں!<br/><br/>
