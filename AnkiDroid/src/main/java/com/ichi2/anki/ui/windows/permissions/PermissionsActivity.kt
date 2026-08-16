@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.activity.addCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
@@ -30,7 +31,6 @@ import com.ichi2.anki.databinding.ActivityPermissionsBinding
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
 import com.ichi2.anki.utils.ext.setFragmentResultListener
-import com.ichi2.themes.setTransparentStatusBar
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
@@ -55,8 +55,8 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setViewBinding(binding)
-        setTransparentStatusBar()
 
         binding.continueButton.setOnClickListener { finish() }
 
