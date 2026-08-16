@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
 import com.ichi2.anki.databinding.FragmentPermissionsStartingAt30Binding
@@ -29,7 +30,8 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.fragment_pe
             ActivityResultContracts.StartActivityForResult(),
         ) {
             if (hasAllPermissions()) {
-                requireActivity().finish()
+                // the activity records the storage decision and finishes
+                setFragmentResult(PermissionsActivity.RESULT_COMPLETE, Bundle())
             }
         }
 
