@@ -50,6 +50,6 @@ class AccountActivity : SingleFragmentActivity() {
                     Bundle().apply {
                         putBoolean(START_FROM_DECKPICKER, forResult)
                     },
-            )
+            ).setClass(context, AccountActivity::class.java)
     }
 }
