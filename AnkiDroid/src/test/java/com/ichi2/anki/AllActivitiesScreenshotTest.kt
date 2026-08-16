@@ -121,6 +121,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     SharedDecksActivity::class.java,
                     // StudyOptionsScreenshotTest
                     StudyOptionsActivity::class.java,
+                    // InfoScreenshotTest
+                    Info::class.java,
                 )
             return ActivityList
                 .allActivitiesAndIntents()
