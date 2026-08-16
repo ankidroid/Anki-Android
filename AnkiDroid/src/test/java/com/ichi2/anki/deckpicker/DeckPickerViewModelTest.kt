@@ -5,13 +5,16 @@ package com.ichi2.anki.deckpicker
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.card_rendering.EmptyCardsReport
 import anki.card_rendering.emptyCardsReport
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StoragePermissionSet
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.DeleteDeckConfirmationRequest
@@ -20,6 +23,9 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.observability.ensureOpsExecuted
+import com.ichi2.testutils.publicCollectionPath
+import com.ichi2.testutils.withAllFilesAccess
+import com.ichi2.testutils.withManageExternalStorageInManifest
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
@@ -208,6 +214,64 @@ class DeckPickerViewModelTest : RobolectricTest() {
             assertThat("col undo status", col.undoStatus().undo, equalTo("Empty"))
         }
     }
+
+    @Test // Issue 13574: the storage decision may be deferred until permissions are granted
+    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
+    fun `startup decides a collection path once permissions are granted`() =
+        runTest {
+            targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
+
+            withManageExternalStorageInManifest {
+                withAllFilesAccess {
+                    viewModel.handleStartup(externalManagerEnvironment())
+                    advanceRobolectricLooperUntil { viewModel.startupJob?.isCompleted == true }
+                }
+            }
+
+            assertEquals(publicCollectionPath, targetContext.sharedPrefs().getString(CollectionHelper.PREF_COLLECTION_PATH, null))
+            assertEquals(DeckPickerViewModel.StartupResponse.Success, viewModel.flowOfStartupResponse.value)
+        }
+
+    @Test // Issue 13574: the storage decision must not be made before the user grants or skips
+    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
+    fun `startup requests permissions without deciding a collection path`() {
+        targetContext.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
+
+        withManageExternalStorageInManifest { viewModel.handleStartup(externalManagerEnvironment()) }
+
+        assertEquals(
+            DeckPickerViewModel.StartupResponse.RequestPermissions(StoragePermissionSet.EXTERNAL_MANAGER),
+            viewModel.flowOfStartupResponse.value,
+        )
+        assertThat(
+            "no collection path is decided before permissions are granted",
+            !targetContext.sharedPrefs().contains(CollectionHelper.PREF_COLLECTION_PATH),
+        )
+    }
+
+    /**
+     * `DeckPicker`'s environment on a build declaring `MANAGE_EXTERNAL_STORAGE`, on Android 11+.
+     *
+     * Not `@Config(sdk = R)`: startup opens the backend, which is unavailable in Robolectric's
+     * per-SDK sandbox. The default SDK satisfies `EXTERNAL_MANAGER`'s API requirement.
+     */
+    @SuppressLint("NewApi") // EXTERNAL_MANAGER requires R: Robolectric runs at API 35
+    private fun externalManagerEnvironment() =
+        object : DeckPickerViewModel.AnkiDroidEnvironment {
+            override val requiredPermissions = StoragePermissionSet.EXTERNAL_MANAGER
+
+            override fun hasRequiredPermissions() = requiredPermissions.hasRequiredPermissions(targetContext)
+
+            override val preferences: SharedPreferences
+                get() = targetContext.sharedPrefs()
+
+            override fun decideStorageIfUndecided() {
+                check(hasRequiredPermissions()) { "the storage decision requires granted permissions" }
+                InitialActivity.decideStorageIfUndecided(targetContext)
+            }
+
+            override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(targetContext)
+        }
 
     /**
      * Creates a note with 3 cards, all empty
@@ -411,6 +475,8 @@ class DeckPickerViewModelTest : RobolectricTest() {
 
             override val preferences: SharedPreferences
                 get() = getPreferences()
+
+            override fun decideStorageIfUndecided() = Unit
 
             override fun initializeAnkiDroidFolder() = true
         }
