@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.SingleFragmentActivity.Companion.EXTRA_FRAGMENT_NAME
+import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.account.LoginFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.DeckPickerWithNewCollection
@@ -67,9 +68,9 @@ class IntroductionActivityTest : RobolectricTest() {
 
             val intent = assertNotNull(shadowOf(activity).nextStartedActivity)
             assertThat(
-                "host activity is SingleFragmentActivity",
+                "host activity is AccountActivity",
                 intent.component?.shortClassName,
-                equalTo(SingleFragmentActivity::class.java.name),
+                equalTo(AccountActivity::class.java.name),
             )
             assertThat(
                 "hosted fragment is LoginFragment",
