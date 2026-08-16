@@ -17,7 +17,23 @@ data class DeckOptionsDestination(
     val isFiltered: Boolean,
     val options: List<DeckOptionsEntry> = emptyList(),
 ) : Destination() {
-    companion object
+    companion object {
+        suspend fun fromDeckId(deckId: DeckId): DeckOptionsDestination =
+            DeckOptionsDestination(
+                deckId = deckId,
+                isFiltered = withCol { decks.isFiltered(deckId) },
+            )
+
+        @CheckResult
+        suspend fun fromCurrentDeck(): DeckOptionsDestination =
+            withCol {
+                val deckId = decks.getCurrentId()
+                DeckOptionsDestination(
+                    deckId = deckId,
+                    isFiltered = decks.isFiltered(deckId),
+                )
+            }
+    }
 }
 
 /**
@@ -29,19 +45,3 @@ data class DeckOptionsEntry(
     val name: String?,
     val isFiltered: Boolean,
 )
-
-suspend fun DeckOptionsDestination.Companion.fromDeckId(deckId: DeckId): DeckOptionsDestination =
-    DeckOptionsDestination(
-        deckId = deckId,
-        isFiltered = withCol { decks.isFiltered(deckId) },
-    )
-
-@CheckResult
-suspend fun DeckOptionsDestination.Companion.fromCurrentDeck(): DeckOptionsDestination =
-    withCol {
-        val deckId = decks.getCurrentId()
-        DeckOptionsDestination(
-            deckId = deckId,
-            isFiltered = decks.isFiltered(deckId),
-        )
-    }
