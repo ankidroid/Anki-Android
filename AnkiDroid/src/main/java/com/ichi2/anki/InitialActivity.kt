@@ -246,6 +246,10 @@ fun selectStoragePermissions(context: Context): PermissionSet {
     val canAccessLegacyStorage = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
     val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
 
+    if (CollectionHelper.isAppPrivateStorage(context) && !InitialActivity.wasFreshInstall(context.sharedPrefs())) {
+        return PermissionSet.APP_PRIVATE
+    }
+
     return selectStoragePermissions(
         canManageExternalStorage = Permissions.canManageExternalStorage(context),
         currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,
