@@ -22,7 +22,6 @@ import android.content.pm.PackageManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
@@ -38,6 +37,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.preferences.ExternalDirectorySelectionPreference
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.show
@@ -73,7 +73,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
         removeUnnecessaryAdvancedPrefs()
 
         // Check that input is valid before committing change in the collection path
-        requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
+        requirePreference<ExternalDirectorySelectionPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
             setOnPreferenceChangeListener { _, newValue: Any? ->
                 val newPath = newValue as String
                 try {
@@ -92,7 +92,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                         setTitle(R.string.dialog_collection_path_not_dir)
                         setPositiveButton(R.string.dialog_ok) { _, _ -> }
                         setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
-                            text = getDefaultAnkiDroidDirectory(requireContext()).absolutePath
+                            value = getDefaultAnkiDroidDirectory(requireContext()).absolutePath
                         }
                     }
                     false
