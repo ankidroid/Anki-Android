@@ -107,6 +107,8 @@ fun ensureCollectionPathSet(context: Context) {
  * @param directoryName  The leaf folder name to use at the end of the returned path.
  *                       Defaults to `"AnkiDroid"` (the historical default-profile folder name).
  *                       Callers wanting a profile-specific layout can pass e.g. the profile id.
+ * @param folder  The storage location to return the default directory for.
+ *                Defaults to [selectAnkiDroidFolder].
  * @return Absolute Path to the default location starting location for the AnkiDroid directory
  *
  * @throws SystemStorageException if `getExternalFilesDir` returns null
@@ -116,14 +118,12 @@ fun ensureCollectionPathSet(context: Context) {
 fun getDefaultAnkiDroidDirectory(
     context: Context,
     directoryName: String = "AnkiDroid",
-): File {
-    val legacyStorage = selectAnkiDroidFolder(context) != AnkiDroidFolder.APP_PRIVATE
-    return if (legacyStorage) {
-        legacyAnkiDroidDirectory(directoryName)
-    } else {
-        File(getAppSpecificExternalAnkiDroidDirectory(context), directoryName)
+    folder: AnkiDroidFolder = selectAnkiDroidFolder(context),
+): File =
+    when (folder) {
+        AnkiDroidFolder.PUBLIC -> legacyAnkiDroidDirectory(directoryName)
+        AnkiDroidFolder.APP_PRIVATE -> File(getAppSpecificExternalAnkiDroidDirectory(context), directoryName)
     }
-}
 
 /**
  * Returns the absolute path to the AnkiDroid directory under the primary/shared external storage directory.
