@@ -2,6 +2,8 @@
 
 package com.ichi2.anki.common.destinations
 
+import androidx.annotation.CheckResult
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.DeckId
 
 /**
@@ -26,3 +28,19 @@ data class DeckOptionsEntry(
     val name: String?,
     val isFiltered: Boolean,
 )
+
+suspend fun DeckOptionsDestination.Companion.fromDeckId(deckId: DeckId): DeckOptionsDestination =
+    DeckOptionsDestination(
+        deckId = deckId,
+        isFiltered = withCol { decks.isFiltered(deckId) },
+    )
+
+@CheckResult
+suspend fun DeckOptionsDestination.Companion.fromCurrentDeck(): DeckOptionsDestination =
+    withCol {
+        val deckId = decks.getCurrentId()
+        DeckOptionsDestination(
+            deckId = deckId,
+            isFiltered = decks.isFiltered(deckId),
+        )
+    }
