@@ -22,7 +22,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
 import androidx.core.os.BundleCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updateMargins
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
@@ -77,7 +84,13 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
         if (!ensureStorageIsReady()) {
             return
         }
-
+        enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.content) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout())
+            val params = binding.content.layoutParams as ViewGroup.MarginLayoutParams
+            params.updateMargins(left = constraints.left, right = constraints.right, bottom = constraints.bottom)
+            WindowInsetsCompat.CONSUMED
+        }
         preferences = CardAnalysisWidgetPreferences(this)
         appWidgetId = intent.getAppWidgetId()
         if (appWidgetId == INVALID_APPWIDGET_ID) {
