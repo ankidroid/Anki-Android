@@ -8,8 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,64 +16,81 @@
         android:layout_centerVertical="true"
         android:orientation="vertical" >
 
-        <include layout="@layout/include_toolbar" />
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/appBarColor">
 
-        <RelativeLayout
+            <include layout="@layout/include_toolbar" />
+        </FrameLayout>
+
+        <!-- Everything below the app bar: insets are applied here so the app bar's
+             background can still span the full width -->
+        <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fadingEdge="vertical"
-            android:gravity="center">
-            <WebView
-                android:id="@+id/web_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" />
-            <!-- progress bar -->
-            <LinearLayout
-                android:id="@+id/progress_bar_layout"
+            android:orientation="vertical">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-                <ProgressBar
-                    android:id="@+id/progress_bar"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fadingEdge="vertical"
+                android:gravity="center">
+                <WebView
+                    android:id="@+id/web_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </ProgressBar>
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" />
+                <!-- progress bar -->
+                <LinearLayout
+                    android:id="@+id/progress_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+                    </ProgressBar>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:paddingTop="6dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/left_button"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/right_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
             </LinearLayout>
-        </RelativeLayout>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:id="@+id/buttons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:paddingTop="6dp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/left_button"
-                android:layout_width="0dp"
-                android:layout_marginEnd="8dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/right_button"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:id="@+id/donate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="@string/help_item_support_opencollective_donate" />
         </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/donate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:text="@string/help_item_support_opencollective_donate" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
