@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseArray
+import android.view.View
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
@@ -118,6 +119,31 @@ class NoteEditorTest : RobolectricTest() {
             sizeInBytes,
             lessThan(256 * 1024),
         )
+    }
+
+    @Test
+    fun cursorSelectionIsRetainedAcrossViewStateRestore() {
+        val editor =
+            getNoteEditorAdding(NoteType.BASIC)
+                .withFirstField("hello world")
+                .build()
+        val editText = editor.getFieldForTest(0)
+        editText.setSelection(2, 5)
+
+        var lineView: View = editText
+        while (lineView !is FieldEditLine) {
+            lineView = lineView.parent as View
+        }
+        val viewState = SparseArray<Parcelable>()
+        lineView.saveHierarchyState(viewState)
+
+        // restore into a fresh line, as happens after a configuration change
+        val restored = FieldEditLine(editor.requireContext())
+        restored.id = lineView.id
+        restored.restoreHierarchyState(viewState)
+
+        assertThat(restored.binding.editText.selectionStart, equalTo(2))
+        assertThat(restored.binding.editText.selectionEnd, equalTo(5))
     }
 
     @Test

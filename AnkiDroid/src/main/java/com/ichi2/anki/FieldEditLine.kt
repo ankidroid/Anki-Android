@@ -151,6 +151,8 @@ class FieldEditLine : FrameLayout {
             content = binding.editText.text?.toString(),
             ord = binding.editText.ord,
             expansionState = expansionState,
+            selectionStart = binding.editText.selectionStart,
+            selectionEnd = binding.editText.selectionEnd,
         )
 
     public override fun onRestoreInstanceState(state: Parcelable) {
@@ -161,6 +163,11 @@ class FieldEditLine : FrameLayout {
         super.onRestoreInstanceState(state.superState)
         name = state.name
         setContent(state.content, replaceNewline = false)
+        // put the cursor/selection back where it was, ignoring stale out of range values
+        val textLength = binding.editText.text?.length ?: 0
+        if (state.selectionStart in 0..textLength && state.selectionEnd in 0..textLength) {
+            binding.editText.setSelection(state.selectionStart, state.selectionEnd)
+        }
         binding.editText.ord = state.ord
         if (expansionState != state.expansionState) {
             toggleExpansionState()
@@ -175,6 +182,8 @@ class FieldEditLine : FrameLayout {
         val content: String?,
         val ord: Int,
         val expansionState: ExpansionState,
+        val selectionStart: Int,
+        val selectionEnd: Int,
     ) : BaseSavedState(state)
 
     enum class ExpansionState {
