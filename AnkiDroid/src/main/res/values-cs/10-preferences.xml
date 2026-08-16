@@ -285,6 +285,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimentální</string>
     <string name="readtext_deprecation_warn">AnkiDroid zavedl lepší TTS mechanismus, který je kompatibilní s ostatními klienty Anki a obsahuje více hlasů a vylepšení přehrávání!\n\nPřejděte prosím co nejdříve na nové TTS, protože toto nastavení bude brzy odstraněno</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Přejděte prosím na nový formát převodu textu na řeč</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage na obrazovce učení</string>
     <string name="pref_fixed_port_summary">Povolí JavaScript localStorage pomocí fixního portu serveru na obrazovce učení</string>
     <!-- Developer options -->

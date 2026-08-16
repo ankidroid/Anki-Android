@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">Šviesi</string>
     <string name="day_theme_plain">Paprastas</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Juodas</string>
     <string name="night_theme_dark">Tamsi</string>

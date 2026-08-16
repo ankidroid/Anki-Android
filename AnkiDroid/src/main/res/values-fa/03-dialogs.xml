@@ -70,6 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">خروج</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_processing">در حال پردازش&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
     <string name="dialog_positive_delete" maxLength="28">حذف</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -104,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
     <string name="permission_denied">مجوز رد شد.</string>
-    <string name="recording_permission_denied_message">مجوز میکروفون برای قابلیت «ضبط صدا» ضروری است. لطفاً آن را در تنظیمات برنامه فعال کنید.</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>

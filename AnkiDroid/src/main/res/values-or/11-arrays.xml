@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">ହାଲୁକା</string>
     <string name="day_theme_plain">ସାଧା</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">କଳା</string>
     <string name="night_theme_dark">ଗାଢ଼</string>

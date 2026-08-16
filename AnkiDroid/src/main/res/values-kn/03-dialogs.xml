@@ -70,6 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
     <string name="dialog_continue">ಮುಂದುವರಿಸಿ</string>
     <string name="dialog_processing">ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ರಚಿಸಿ</string>
     <string name="dialog_positive_delete" maxLength="28">ಅಳಿಸಿ</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -104,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ಆಡಿಯೋ ರೆಕಾರ್ಡಿಂಗ್ ಅನುಮತಿಯನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
     <string name="permission_denied">Permission denied</string>
-    <string name="recording_permission_denied_message">Microphone permission is necessary for the “Record voice” feature. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">ಹೇಗಾದರೂ ಮುಂದುವರಿಸಿ</string>
     <string name="integrity_check_insufficient_space">ಡೇಟಾಬೇಸ್ ಹೆಚ್ಚಿನ ಪ್ರಮಾಣದ ತಾತ್ಕಾಲಿಕ ಸಂಗ್ರಹಣೆಯನ್ನು ಬಳಸುತ್ತದೆ ಎಂಬುದನ್ನು ಪರಿಶೀಲಿಸಿ.\n\nಮುಂದುವರಿಯುವ ಮೊದಲು ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಕನಿಷ್ಠ %s ಸ್ಥಳಾವಕಾಶವನ್ನು ನೀವು ಹೊಂದಿರಬೇಕೆಂದು ಬಲವಾಗಿ ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ.</string>

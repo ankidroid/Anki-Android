@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">ライトブルー</string>
     <string name="day_theme_plain">プレーン</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">ブラック</string>
     <string name="night_theme_dark">ダークグレー</string>

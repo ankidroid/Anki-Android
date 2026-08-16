@@ -280,6 +280,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kokeellinen</string>
     <string name="readtext_deprecation_warn">AnkiDroid on ottanut käyttöön paremman TTS-mekanismin, joka on yhteensopiva muiden Anki-ohjelmien kanssa ja sisältää enemmän ääniä ja parannuksia kielentoistoon!\n\nPäivitä mahdollisimman pian, sillä tämä asetus poistetaan pian.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Päivitä uuteen tekstistä puheeksi -formaattiin</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">Käytä localStoragea opiskelunäkymässä</string>
     <string name="pref_fixed_port_summary">Ottaa JavaScriptin localStoragen käyttöön kiinteällä palvelinportilla opiskelunäkymässä</string>
     <!-- Developer options -->

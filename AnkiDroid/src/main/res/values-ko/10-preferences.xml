@@ -278,6 +278,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">실험적</string>
     <string name="readtext_deprecation_warn">AnkiDroid에 더 향상된 TTS(음성 합성) 기능이 도입되었습니다! 이제 다른 Anki 클라이언트와도 호환되며, 더 다양한 음성과 언어 재생 품질이 개선되었습니다.\n\n이 설정은 곧 제거될 예정이니, 가능한 빨리 앱을 업그레이드해 주세요.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">새로운 TTS 포맷을 위해 업데이트 해주세요.</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">학습 화면 로컬 스토리지</string>
     <string name="pref_fixed_port_summary">학습 화면에서 고정된 서버 포트를 사용하여 자바스크립트 로컬 스토리지를 활성화합니다.</string>
     <!-- Developer options -->

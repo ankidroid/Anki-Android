@@ -280,6 +280,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Tajribaviy</string>
     <string name="readtext_deprecation_warn">AnkiDroid boshqa Anki mijozlari bilan mos tushadigan va koʻproq ovozlar va tilni ijro etish uchun takomillashtirishlarni oʻz ichiga olgan yaxshiroq nutq sintezatori mexanizmini taqdim etdi!\n\nImkon qadar tezroq yangilang, chunki bu sozlama tez orada oʻchiriladi.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Iltimos, yangi nutq sintezatori formatiga yangilang</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">Oʻrganish ekranida localStorage</string>
     <string name="pref_fixed_port_summary">Oʻrganish ekranida belgilangan server portidan foydalangan JavaScript localStorage funksiyasini yoqadi</string>
     <!-- Developer options -->

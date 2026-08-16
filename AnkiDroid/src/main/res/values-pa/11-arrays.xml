@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">ਰੋਸ਼ਨੀ</string>
     <string name="day_theme_plain">ਸਧਾਰਨ</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">ਕਾਲਾ</string>
     <string name="night_theme_dark">ਹਨੇਰਾ</string>

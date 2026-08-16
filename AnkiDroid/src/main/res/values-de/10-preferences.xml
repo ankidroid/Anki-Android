@@ -282,6 +282,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimentell</string>
     <string name="readtext_deprecation_warn">AnkiDroid hat einen besseren TTS-Mechanismus eingeführt, der mit anderen Anki-Clients kompatibel ist und mehr Stimmen und Verbesserungen bei der Sprachwiedergabe enthält!\n\nBitte aktualisieren Sie so bald wie möglich, da diese Einstellung bald entfernt wird</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Bitte upgraden Sie auf das neue Text-zu-Sprache-Format</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage im Lernbildschirm</string>
     <string name="pref_fixed_port_summary">Aktiviert JavaScript localStorage durch Verwendung eines festen Server-Ports im Lernbildschirm</string>
     <!-- Developer options -->

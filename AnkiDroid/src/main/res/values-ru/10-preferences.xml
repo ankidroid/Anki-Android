@@ -284,6 +284,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Экспериментальная</string>
     <string name="readtext_deprecation_warn">У AnkiDroid появился более совершенный механизм синтеза речи, который совместим с другими клиентами Anki и содержит больше голосов и улучшения в воспроизведении языков.\n\nПожалуйста, обновитесь как можно скорее, так как эта настройка скоро будет удалена.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Пожалуйста, обновитесь до нового формата преобразования текста в речь</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage на экране обучения</string>
     <string name="pref_fixed_port_summary">Включить локальное хранилище JavaScript с помощью фиксированного порта сервера на экране обучения</string>
     <!-- Developer options -->

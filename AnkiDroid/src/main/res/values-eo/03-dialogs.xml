@@ -70,6 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Eliri</string>
     <string name="dialog_continue">Pluigi</string>
     <string name="dialog_processing">Traktado&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Krei</string>
     <string name="dialog_positive_delete" maxLength="28">Forigi</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -104,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permeso al registri sonon rifuzita</string>
     <string name="permission_denied">Pemeso rifuzita</string>
-    <string name="recording_permission_denied_message">La permeso por aliri mikrofonon estas necesa por la eblo “Registri voĉon”. Donu la permeson en agordoj pri la aplikaĵo.</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
     <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ ol pluigi.</string>

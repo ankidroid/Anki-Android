@@ -280,6 +280,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Deneysel</string>
     <string name="readtext_deprecation_warn">AnkiDroid diğer Anki istemcileriyle uyumlu, daha fazla ses ve dil seslendirmesine geliştirmeler içeren daha iyi bir metin okuma mekanizması getirdi!\n\nLütfen mümkün olan en yakın zamanda yeni sisteme geçin, çünkü bu ayar yakında kaldırılacak.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Lütfen yeni metin okuma formatına geçin</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
+    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
     <string name="pref_fixed_port_title" maxLength="41">Çalışma Ekranında localStorage</string>
     <string name="pref_fixed_port_summary">Çalışma Ekranında sabit bir sunucu portu kullanarak JavaScript localStorage açar</string>
     <!-- Developer options -->

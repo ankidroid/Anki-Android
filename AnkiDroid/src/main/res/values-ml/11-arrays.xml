@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">വെളിച്ചം</string>
     <string name="day_theme_plain">പ്ലെയിൻ</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">കറുപ്പ്</string>
     <string name="night_theme_dark">ഇരുട്ട്</string>

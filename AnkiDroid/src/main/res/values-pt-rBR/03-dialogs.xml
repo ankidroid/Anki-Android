@@ -70,6 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Sair</string>
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_processing">Processando&#8230;</string>
+    <string name="dialog_allow">Allow</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Criar</string>
     <string name="dialog_positive_delete" maxLength="28">Excluir</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -104,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permissão de gravação de áudio negada</string>
     <string name="permission_denied">Permissão negada</string>
-    <string name="recording_permission_denied_message">A permissão do microfone é necessária para o recurso \"Gravar voz\". Por favor, conceda a permissão nas configurações do aplicativo.</string>
+    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Continuar assim mesmo</string>
     <string name="integrity_check_insufficient_space">Verificar a Base de Dados usa uma grande quantidade de armazenamento temporário.\n\nÉ altamente recomendável que você tenha pelo menos %s espaço livre no seu dispositivo antes de continuar.</string>

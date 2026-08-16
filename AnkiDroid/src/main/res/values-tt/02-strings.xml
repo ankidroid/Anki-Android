@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">Anki пакеты саклана алмады</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid экспортланган кәртләр: %s</string>
-    <string name="export_email_text"><![CDATA[        Сәлам!
+    <string name="export_email_text"><![CDATA[
+        Сәлам!
         <br/><br/>
         Бу - AnkiDroid кушымтасыннан җибәрелгән Anki кәртләр колодасы[1].
         Аны ачыр өчен,  Anki кушымтасын көйләгез[2] һәм җиңел һәм уңышлы итеп өйрәнегез!

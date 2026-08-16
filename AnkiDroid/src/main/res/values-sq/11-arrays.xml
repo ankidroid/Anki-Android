@@ -35,6 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">E ndriçuar</string>
     <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_eink">E-Ink</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Black</string>
     <string name="night_theme_dark">Dark</string>
