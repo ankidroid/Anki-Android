@@ -22,7 +22,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -32,7 +34,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updateMargins
+import androidx.core.view.updateMarginsRelative
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -52,6 +61,7 @@ import com.ichi2.anki.sync.userAcceptsSchemaChange
 import com.ichi2.anki.utils.Destination
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.ui.AccessibleSearchView
+import com.ichi2.utils.dp
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.input
@@ -62,6 +72,7 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
     @VisibleForTesting
@@ -101,7 +112,8 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         if (!ensureStorageIsReady()) {
             return
         }
-
+        enableEdgeToEdge()
+        applyInsets()
         setTransparentStatusBar()
         enableToolbar()
         binding.noteTypesList.adapter = notetypesAdapter
@@ -164,6 +176,27 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             }
         }
         onBackPressedDispatcher.addCallback(this, backCallback)
+    }
+
+    private fun applyInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout())
+            Timber.d("Applying insets: $constraints")
+            binding.appBarLayout.updatePadding(left = constraints.left, top = constraints.top, right = constraints.right)
+            binding.noteTypesList.updatePadding(left = constraints.left, right = constraints.right, bottom = constraints.bottom)
+            val fabLayoutParams = binding.floatingActionButton.layoutParams as ViewGroup.MarginLayoutParams
+            // also applies the 32dp bottom/end margin to not sit right on top of navigation bar
+            fabLayoutParams.updateMarginsRelative(
+                bottom = constraints.bottom + 32.dp.toPx(this),
+                end = constraints.right + 32.dp.toPx(this),
+            )
+            // needed otherwise the updated relative margins are not seen
+            binding.floatingActionButton.layoutParams = fabLayoutParams
+            val selectionToolbarParams = binding.selectionToolbar.layoutParams as ViewGroup.MarginLayoutParams
+            // also applies the 32dp bottom margin to not sit right on top of navigation bar
+            selectionToolbarParams.updateMargins(bottom = constraints.bottom + 32.dp.toPx(this))
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     @VisibleForTesting
