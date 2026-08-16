@@ -133,6 +133,12 @@
             android:defaultValue="false"
             android:key="@string/pref_display_filenames_in_browser_key"
             android:title="@string/card_browser_hide_media"
-            android:summary="@string/card_browser_hide_media_summary"/>
+            android:summary="@string/card_browser_hide_media_summary"
+            app:allowDividerBelow="false"/>
     </PreferenceCategory>
+
+    <com.ichi2.preferences.RelatedSettingsPreference
+        app:relatedTitles="@string/accessibility"
+        app:relatedFragments="com.ichi2.anki.preferences.AccessibilitySettingsFragment"
+        />
 </PreferenceScreen>

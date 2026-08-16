@@ -144,7 +144,7 @@
             android:layout_gravity="center"
             android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_warning"
-            android:drawableTint="@color/badge_error"
+            android:drawableTint="?badgeErrorColor"
             android:gravity="start|center"
             android:visibility="invisible" />
 
