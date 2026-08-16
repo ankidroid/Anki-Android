@@ -31,12 +31,12 @@ import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.fromCurrentDeck
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.libanki.exception.InvalidSearchException
-import com.ichi2.anki.pages.fromCurrentDeck
 import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.redirectToMainEntryPoint
