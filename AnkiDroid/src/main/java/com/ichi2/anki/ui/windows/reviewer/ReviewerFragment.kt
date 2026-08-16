@@ -77,6 +77,8 @@ import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.ext.windowInsetsControllerCompat
+import com.ichi2.anki.utils.ext.withInsets
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
 import com.ichi2.utils.dp
@@ -246,12 +248,11 @@ class ReviewerFragment :
                 }
                 false
             }
-            setOnFocusChangeListener { editTextView, hasFocus ->
-                val insetsController = WindowInsetsControllerCompat(window, editTextView)
+            setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
-                    insetsController.show(WindowInsetsCompat.Type.ime())
+                    windowInsetsControllerCompat.show(WindowInsetsCompat.Type.ime())
                 } else {
-                    insetsController.hide(WindowInsetsCompat.Type.ime())
+                    windowInsetsControllerCompat.hide(WindowInsetsCompat.Type.ime())
                 }
             }
         }
@@ -370,10 +371,9 @@ class ReviewerFragment :
                 binding.answerArea.setNextTimes(times)
             }
 
-        val insetsController = WindowInsetsControllerCompat(window, binding.rootLayout)
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { isAnswerShown ->
             if (isAnswerShown) {
-                insetsController.hide(WindowInsetsCompat.Type.ime())
+                withInsets { hide(WindowInsetsCompat.Type.ime()) }
             }
             binding.answerArea.setAnswerState(isAnswerShown)
         }
@@ -413,8 +413,7 @@ class ReviewerFragment :
                 HideSystemBars.ALL -> WindowInsetsCompat.Type.systemBars()
             }
 
-        val window = requireActivity().window
-        with(WindowInsetsControllerCompat(window, window.decorView)) {
+        withInsets {
             hide(barsToHide)
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
@@ -742,7 +741,7 @@ class ReviewerFragment :
                         HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.statusBars()
                         HideSystemBars.ALL, HideSystemBars.NONE -> return
                     }
-                with(WindowInsetsControllerCompat(window, window.decorView)) {
+                withInsets {
                     show(barsToShowBack)
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
