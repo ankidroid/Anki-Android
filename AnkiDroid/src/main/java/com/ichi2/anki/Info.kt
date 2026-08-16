@@ -6,6 +6,7 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
@@ -13,11 +14,18 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updatePadding
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.ActivityInfoBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
@@ -49,6 +57,7 @@ class Info :
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         val res = resources
         val type = intent.getIntExtra(EXTRA_TYPE, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
@@ -58,6 +67,7 @@ class Info :
         }
         setViewBinding(binding)
         enableToolbar()
+        applyInsets()
         binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
         title = "$appName v$pkgVersionName"
         binding.webView.webChromeClient =
@@ -164,6 +174,27 @@ class Info :
             else -> finish()
         }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    /**
+     * Applies edge-to-edge insets.
+     *
+     * The app bar's background spans the full width and draws behind the status bar; only its
+     * content is inset. Everything below it is held inside the safe area.
+     */
+    private fun applyInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            // the toolbar's parent: padding on the Toolbar counts towards its minHeight,
+            // which would shrink the app bar's content below actionBarSize
+            binding.toolbarContainer.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            binding.content.updatePadding(
+                left = bars.left,
+                right = bars.right,
+                bottom = maxOf(bars.bottom, insets.bottomCornerClearance(binding.content)),
+            )
+            insets
+        }
     }
 
     private fun close() {
