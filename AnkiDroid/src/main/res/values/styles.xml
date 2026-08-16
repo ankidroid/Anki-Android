@@ -12,9 +12,7 @@
 
     <!-- Nav drawer style to set width specified by Material Design specification -->
     <style name="NavDrawer">
-        <item name="android:layout_width">280dp</item>
         <item name="android:layout_marginRight">@dimen/nav_drawer_margin_offset</item>
-        <item name="android:maxWidth">280dp</item>
     </style>
 
     <style name="OverflowMenuStyle" parent="Widget.Material3.PopupMenu.Overflow">
