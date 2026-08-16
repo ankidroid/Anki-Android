@@ -76,7 +76,6 @@ object ActivityList {
             // Likely has unhandled intents
             get(Reviewer::class.java),
             get(PreferencesActivity::class.java),
-            // Info has unhandled intents
             get(Info::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
