@@ -35,7 +35,6 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.StorageNotConfiguredException
-import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.redirectToMainEntryPoint
@@ -71,8 +70,6 @@ import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -84,38 +81,6 @@ var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 /** Whether [showError] should throw an exception on failure */
 @VisibleForTesting
 var throwOnShowError = false
-
-/**
- * Runs a suspend function that catches any uncaught errors and reports them to the user.
- * Errors from the backend contain localized text that is often suitable to show to the user as-is.
- * Other errors should ideally be handled in the block.
- *
- * @param context Coroutine context passed to [launch]
- * @param errorMessageHandler Called after an exception is caught and logged, input is either
- * `Exception.localizedMessage` or `Exception.toString()`
- * @param block code to execute inside [launch]
- */
-fun CoroutineScope.launchCatching(
-    context: CoroutineContext = EmptyCoroutineContext,
-    errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit,
-): Job =
-    launch(context) {
-        try {
-            block()
-        } catch (cancellationException: CancellationException) {
-            // CancellationException should be re-thrown to propagate it to the parent coroutine
-            throw cancellationException
-        } catch (exception: Exception) {
-            Timber.w(exception)
-            val message =
-                when (exception) {
-                    is BackendException, is InvalidSearchException -> exception.localizedMessage
-                    else -> null
-                } ?: exception.toString()
-            errorMessageHandler.invoke(message)
-        }
-    }
 
 interface OnErrorListener {
     val onError: MutableSharedFlow<String>
