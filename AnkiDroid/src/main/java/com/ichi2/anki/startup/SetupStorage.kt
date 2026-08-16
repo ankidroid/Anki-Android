@@ -34,7 +34,6 @@ fun maybeSetDefaultCollectionPath(context: Context) {
     if (preferences.contains(CollectionHelper.PREF_COLLECTION_PATH)) return
     val folder = selectStoragePermissions(context).folderToPersist(context)
     if (folder == null) {
-        // unreachable until 13574 is fixed.
         Timber.i("deferring the storage decision to the user")
         return
     }

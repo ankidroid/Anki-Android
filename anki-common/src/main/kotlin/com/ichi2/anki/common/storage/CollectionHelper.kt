@@ -140,9 +140,10 @@ object CollectionHelper {
      * [PREF_COLLECTION_PATH] is set (or a [ankiDroidDirectoryOverride] is active), which mirrors
      * when [getCurrentAnkiDroidDirectory] can return a directory rather than throwing.
      *
-     * The user is not asked yet: until the dedicated setup flow exists (#19552), the 'decision'
-     * is made on their behalf during startup by `maybeSetDefaultCollectionPath` (app module), so this
-     * is [StorageDecision.Decided] by the time the collection is opened.
+     * Startup (`maybeSetDefaultCollectionPath`, app module) decides on the user's behalf according to the
+     * storage policy. If the policy defers the choice, the decision stays undecided. Completing
+     * the permission screen after granting storage access selects public storage
+     * (Issue 13574).
      *
      * @param preferences the preferences the collection path will be read from: pass the same
      * (profile) context's preferences as the [getCurrentAnkiDroidDirectory] call being gated
