@@ -16,7 +16,6 @@
 package com.ichi2.anki.preferences
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
@@ -28,8 +27,9 @@ import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.Info
 import com.ichi2.anki.R
+import com.ichi2.anki.common.destinations.ChangelogDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.FragmentAboutBinding
 import com.ichi2.anki.launchCatchingTask
@@ -108,8 +108,7 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         }
 
         binding.openChangelog.setOnClickListener {
-            val openChangelogIntent = Intent(requireContext(), Info::class.java)
-            startActivity(openChangelogIntent)
+            navigate(ChangelogDestination)
         }
 
         binding.copyDebugInfo.text = TR.sentenceCase.copyDebugInfo

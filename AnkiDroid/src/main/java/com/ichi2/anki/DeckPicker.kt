@@ -98,6 +98,7 @@ import com.ichi2.anki.common.android.animationDisabled
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.destinations.ChangelogDestination
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.ReviewDeckDestination
@@ -1845,8 +1846,7 @@ open class DeckPicker :
             // There the "lastVersion" is set, so that this code is not reached again
             if (VersionUtils.isReleaseVersion) {
                 Timber.i("Displaying new features")
-                val infoIntent = Intent(this, Info::class.java)
-                showNewVersionInfoLauncher.launch(infoIntent)
+                showNewVersionInfoLauncher.navigate(ChangelogDestination)
             } else {
                 Timber.i("Dev Build - not showing 'new features'")
                 // Don't show new features dialog for development builds
