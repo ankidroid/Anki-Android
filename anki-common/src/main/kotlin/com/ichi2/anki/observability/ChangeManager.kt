@@ -163,7 +163,7 @@ object ChangeManager {
         subscribers.clear()
     }
 
-    internal fun <T : Any> notifySubscribers(
+    fun <T : Any> notifySubscribers(
         changes: T,
         initiator: Any?,
     ) {
@@ -199,7 +199,7 @@ object ChangeManager {
      * An OpChanges that ensures that all data should be considered as potentially changed.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal val ALL =
+    val ALL =
         opChanges {
             card = true
             note = true
