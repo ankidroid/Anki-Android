@@ -30,7 +30,17 @@ dependencies {
     implementation(libs.jakewharton.timber)
     implementation(libs.kotlinx.coroutines.core)
 
+    testImplementation(testFixtures(project(":anki-common")))
+    testImplementation(libs.hamcrest)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.platform.launcher)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.kotlin.reflect)
+    testImplementation(libs.kotlinx.coroutines.test)
+
     testFixturesImplementation(project(":common:android"))
     testFixturesImplementation(libs.androidx.core.ktx)
     testFixturesImplementation(libs.androidx.test.core)
+    testFixturesImplementation(libs.jakewharton.timber)
+    testFixturesImplementation(libs.kotlin.test)
 }
