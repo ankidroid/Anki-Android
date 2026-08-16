@@ -58,10 +58,8 @@ class Info :
         }
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
-        val res = resources
         // If the page crashes, we do not want to display it again (#7135 maybe)
-        val prefs = this.baseContext.sharedPrefs()
-        InitialActivity.setUpgradedToLatestVersion(prefs)
+        InitialActivity.setUpgradedToLatestVersion(sharedPrefs())
         setViewBinding(binding)
         enableToolbar()
         applyInsets()
@@ -111,7 +109,7 @@ class Info :
         binding.webView.settings.allowContentAccess = true
         setRenderWorkaround(this)
         binding.rightButton.run {
-            text = res.getString(R.string.dialog_continue)
+            text = getString(R.string.dialog_continue)
             setOnClickListener { close() }
         }
         val background = backgroundColor.toRGBHex()
@@ -191,7 +189,7 @@ class Info :
 
     private fun close() {
         setResult(RESULT_OK)
-        finishWithAnimation()
+        finish()
     }
 
     private fun canOpenMarketUri(): Boolean =
@@ -201,8 +199,4 @@ class Info :
             Timber.w(e)
             false
         }
-
-    private fun finishWithAnimation() {
-        finish()
-    }
 }
