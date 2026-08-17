@@ -71,7 +71,7 @@ object AppLoadedFromBackupWorkaround {
 
         // fixes: java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
         // on Importer
-        Themes.setTheme(this)
+        Themes.setTheme(this, savedInstanceState)
         // Avoids a SuperNotCalledException
         activitySuperOnCreate(savedInstanceState)
         // Process.killProcess is a hard kill. I suspect that some Android OSes leave has the app in

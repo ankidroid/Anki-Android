@@ -21,6 +21,7 @@ package com.ichi2.themes
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.os.Bundle
 import android.util.TypedValue
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.content.res.AppCompatResources
@@ -53,14 +54,23 @@ object Themes {
         context.setTheme(currentTheme.styleResId)
     }
 
-    fun setTheme(activity: Activity) {
+    /**
+     * @param savedInstanceState the bundle provided to [Activity.onCreate]
+     */
+    fun setTheme(
+        activity: Activity,
+        savedInstanceState: Bundle?,
+    ) {
         val tv = TypedValue()
         activity.theme.resolveAttribute(android.R.attr.windowBackground, tv, true)
         val hadLauncherSplash = tv.resourceId == R.drawable.launch_screen
 
         // If the decor view already exists, `windowBackground` can no longer be updated by setTheme
         // `hadLauncherSplash` is exempt: its window background is replaced below.
-        if (!hadLauncherSplash && activity.window.peekDecorView() != null) {
+        // Exclude recreation: the decor view can exist before `onCreate`, but the framework
+        // refreshes `windowBackground`.
+        val isRecreation = savedInstanceState != null
+        if (!isRecreation && !hadLauncherSplash && activity.window.peekDecorView() != null) {
             val message =
                 "Decor view was initialized before setTheme(): windowBackground is stale. " +
                     "Move window access (e.g. enableEdgeToEdge()) after super.onCreate()"

@@ -28,7 +28,7 @@ import com.ichi2.themes.Themes
 abstract class AbstractIntentHandler : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Themes.setTheme(this)
+        Themes.setTheme(this, savedInstanceState)
         disableXiaomiForceDarkMode(this)
         setContentView(R.layout.activity_progress_bar)
     }
