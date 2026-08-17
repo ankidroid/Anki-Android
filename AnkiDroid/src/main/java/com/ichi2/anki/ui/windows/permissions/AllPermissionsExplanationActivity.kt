@@ -18,11 +18,15 @@ package com.ichi2.anki.ui.windows.permissions
 
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.themes.setTransparentStatusBar
 
 /**
  * When the user opens the Android settings app and navigates to AnkiDroid's permissions,
@@ -39,11 +43,23 @@ class AllPermissionsExplanationActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_all_permissions_explanation)
-        setTransparentStatusBar()
+        setupEdgeToEdge()
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, AllPermissionsExplanationFragment())
+        }
+    }
+
+    /** Applies edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge() {
+        // systemBars (not just statusBars) so a landscape 3-button navigation bar,
+        // which is a side inset, is also cleared
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { view, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, top = bars.top, right = bars.right, bottom = bars.bottom)
+            insets
         }
     }
 }
