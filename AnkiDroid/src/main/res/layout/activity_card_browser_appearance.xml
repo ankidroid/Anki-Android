@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/include_toolbar" />
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/appBarColor">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/appBarColor"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ActionBarStyle"
+            app:popupTheme="@style/ActionBar.Popup"
+            app:navigationContentDescription="@string/abc_action_bar_up_description"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            tools:title="Browser appearance"
+            />
+    </FrameLayout>
 
     <ScrollView
+        android:id="@+id/content_scroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
