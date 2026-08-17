@@ -62,6 +62,17 @@ class ThemesTest : RobolectricTest() {
         assertThat((decorBackground as ColorDrawable).color, equalTo(tv.data))
     }
 
+    /**
+     * When an activity is relaunched (e.g. after a day/night theme change), the framework may
+     * preserve the window: the decor view already exists before `super.onCreate`, and the
+     * framework refreshes its `windowBackground` itself, so [Themes.setTheme] should not fail
+     * (issue 21548).
+     */
+    @Test
+    fun `recreated activity with an existing decor view does not fail - issue 21548`() {
+        Robolectric.buildActivity(EarlyDecorViewInitActivity::class.java).create(Bundle())
+    }
+
     /** simulates e.g. an [androidx.activity.enableEdgeToEdge] call before `super.onCreate` */
     class EarlyDecorViewInitActivity : AnkiActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {

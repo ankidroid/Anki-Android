@@ -145,7 +145,7 @@ open class AnkiActivity(
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
-        Themes.setTheme(this)
+        Themes.setTheme(this, savedInstanceState)
         disableXiaomiForceDarkMode(this)
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
