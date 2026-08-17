@@ -18,6 +18,7 @@ import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.previewer.CardViewerActivity
+import com.ichi2.anki.ui.windows.permissions.AllPermissionsExplanationActivity
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
@@ -106,6 +107,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                 setOf(
                     // AccountActivityScreenshotTest
                     AccountActivity::class.java,
+                    // AllPermissionsExplanationScreenshotTest
+                    AllPermissionsExplanationActivity::class.java,
                     // CardTemplateEditorScreenshotTest
                     CardTemplateEditor::class.java,
                     // DeckPickerScreenshotTest
