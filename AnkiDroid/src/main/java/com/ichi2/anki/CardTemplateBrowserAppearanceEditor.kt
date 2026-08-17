@@ -17,13 +17,21 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -60,6 +68,20 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { view, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = constraints.left, right = constraints.right, top = constraints.top)
+            // don't mark as CONSUMED, it breaks the insets for the next view on lower API versions
+            insets
+        }
+        // handle the content, adds the ime in the constraints so the user can also scroll the
+        // content while keyboard is on
+        ViewCompat.setOnApplyWindowInsetsListener(binding.contentScroller) { view, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
+            view.updatePadding(left = constraints.left, right = constraints.right, bottom = constraints.bottom)
+            insets
+        }
         val bundle = savedInstanceState ?: intent.extras
         if (bundle == null) {
             showThemedToast(this, getString(R.string.something_wrong), true)
