@@ -63,29 +63,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="4dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp">
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/CardEditorModelText"
+            android:baselineAligned="false"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <!-- FROM Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:gravity="start|center_vertical"
-                android:textDirection="locale"
-                android:textStyle="bold"
-                android:drawablePadding="8dp"
-                app:drawableEndCompat="@drawable/ic_arrow_right_alt_24"
-                app:drawableTint="?android:attr/textColorPrimary" />
-            <Spinner
-                android:id="@+id/dest_note_type_spinner"
+                app:cardBackgroundColor="#D6D7D7"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="12dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sentence_from"
+                        android:textAllCaps="true"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textAppearance="?attr/textAppearanceLabelSmall"
+                        android:layout_marginBottom="8dp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/CardEditorModelText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textDirection="locale"
+                        android:textStyle="bold"
+                        android:textAppearance="?attr/textAppearanceBodyLarge" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Center Arrow -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_right_alt_24"
+                    app:tint="?android:attr/textColorSecondary"
+                    android:importantForAccessibility="no" />
+            </FrameLayout>
+
+            <!-- TO Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="?minTouchTargetSize"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                />
+                app:cardBackgroundColor="@android:color/transparent"
+                app:strokeColor="?attr/colorPrimary"
+                app:strokeWidth="2dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sentence_to"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/colorPrimary"
+                        android:textAppearance="?attr/textAppearanceLabelSmall"
+                        android:layout_marginBottom="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/dest_note_type_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:minHeight="0dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
