@@ -33,17 +33,6 @@ sustainable, general questions should be asked in public channels [#ankidroid-de
 clear, specific, and actionable. Repeated questions, direct messages to mentors, or requests for
 individual evaluation or proposal feedback may be ignored. Your ability to communicate clearly and work independently is an important part of how proposals are evaluated.
 
-## AI Policy
-
-> [!CAUTION]
-> Using AI tools as a new contributor will result in moderator action.
-
-New contributors **may not** use any AI tools to produce contributions for AnkiDroid. This includes 
- code, documentation, and GitHub comments (including spelling and grammar corrections).
-
-See our [AI policy](AI_POLICY.md) for when these restrictions are lifted from your account, and why 
- they exist.
-
 ## Selecting an issue [[GitHub Search](https://github.com/ankidroid/Anki-Android/issues?q=is%3Aissue%20state%3Aopen)]
 
 If you are starting out with open source, we recommend starting with: [#13282: Fix Android Studio Warnings](<https://github.com/ankidroid/Anki-Android/issues/13282>).

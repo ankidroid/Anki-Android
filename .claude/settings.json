@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git push origin main*)",
+      "Bash(git push origin HEAD:main*)",
+      "Bash(git push origin HEAD:refs/heads/main*)",
+      "Bash(git push -f origin main*)",
+      "Bash(git push --force origin main*)",
+      "Bash(git push --force-with-lease origin main*)",
+      "Bash(gh pr merge*)"
+    ]
+  }
+}

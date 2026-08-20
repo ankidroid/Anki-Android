@@ -1,0 +1,37 @@
+name: ✨ Feature / Task
+description: A scoped feature or task, sized to hand to a coding agent
+type: "Feature"
+labels: ["Needs Triage"]
+
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What should be built or changed?
+      description: A concise description of the feature or task
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why?
+      description: The problem this solves or the goal it serves
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How to tell the task is done (bullet list is fine)
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: (Optional) Relevant files, prior art, or constraints
+      placeholder: File paths, related PRs/issues, design notes
+    validations:
+      required: false
