@@ -4,18 +4,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            layout="@layout/include_toolbar"
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/appBarColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/appBarColor"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ActionBarStyle"
+                app:popupTheme="@style/ActionBar.Popup"
+                app:navigationContentDescription="@string/abc_action_bar_up_description"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                tools:title="Manage fields"
+                />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/notetype_name"
@@ -27,7 +43,7 @@
             android:paddingVertical="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_container"
             tools:text="Basic"
             />
 
