@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.testutils.insetsOf
 import com.ichi2.utils.dp
 import org.junit.Test
@@ -74,6 +75,49 @@ class ReviewerScreenshotTest : ScreenshotTest() {
         }
     }
 
+    /** 'Hide the system bars', immersive mode active: only the camera cutout insets the content */
+    @Test
+    fun fullscreenBarsHidden() {
+        setFullscreenMode(FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            reviewer.simulateHiddenBarsWithCutout()
+            captureScreen("fullscreen_bars_hidden")
+        }
+    }
+
+    /** 'Hide the system bars', after the user swipes the bars back into view */
+    @Test
+    fun fullscreenBarsRevealed() {
+        setFullscreenMode(FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            reviewer.simulateRevealedSystemBars()
+            captureScreen("fullscreen_bars_revealed")
+        }
+    }
+
+    /** #14201: 'Hide the system bars' with the answer buttons at the top */
+    @Test
+    fun fullscreenAnswerButtonsAtTop() {
+        setFullscreenMode(FullScreenMode.BUTTONS_ONLY)
+        targetContext.sharedPrefs().edit { putString("answerButtonPosition", "top") }
+        withReviewer { reviewer ->
+            reviewer.simulateHiddenBarsWithCutout()
+            captureScreen("fullscreen_answer_buttons_top")
+        }
+    }
+
+    /** 'Hide the system bars and answer buttons', after the user swipes the bars into view */
+    @Test
+    fun fullscreenAllGoneBarsRevealed() {
+        setFullscreenMode(FullScreenMode.FULLSCREEN_ALL_GONE)
+        withReviewer { reviewer ->
+            reviewer.simulateRevealedSystemBars()
+            captureScreen("fullscreen_all_gone_bars_revealed")
+        }
+    }
+
+    private fun setFullscreenMode(mode: FullScreenMode) = FullScreenMode.setPreference(targetContext.sharedPrefs(), mode)
+
     private fun withReviewer(block: (Reviewer) -> Unit) {
         addBasicNote("Hello", "World")
         val reviewer = ReviewerTest.startReviewer(this)
@@ -116,6 +160,80 @@ class ReviewerScreenshotTest : ScreenshotTest() {
         ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
 
         val decor = window.decorView as ViewGroup
+        val navBarOverlay =
+            View(this).apply {
+                setBackgroundColor(overlayColor)
+            }
+        decor.addView(
+            navBarOverlay,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                navBarHeight.toPx(targetContext),
+                Gravity.BOTTOM,
+            ),
+        )
+    }
+
+    /**
+     * Immersive mode with the bars hidden: their insets are zero, but the camera cutout still
+     * insets the content. A translucent band marks where the camera sits.
+     */
+    private fun Reviewer.simulateHiddenBarsWithCutout() {
+        val cutoutHeight = 32.dp
+        val insets =
+            with(targetContext) {
+                WindowInsetsCompat
+                    .Builder()
+                    .setInsets(displayCutout(), insetsOf(top = cutoutHeight))
+                    .build()
+            }
+        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+
+        val decor = window.decorView as ViewGroup
+        val cutoutOverlay =
+            View(this).apply {
+                setBackgroundColor(overlayColor)
+            }
+        decor.addView(
+            cutoutOverlay,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                cutoutHeight.toPx(targetContext),
+                Gravity.TOP,
+            ),
+        )
+    }
+
+    /**
+     * Immersive mode after the user swipes the system bars back into view: they overlay the
+     * content. Translucent bands mark the status and navigation bars.
+     */
+    private fun Reviewer.simulateRevealedSystemBars() {
+        val statusBarHeight = 24.dp
+        val navBarHeight = 48.dp
+        val insets =
+            with(targetContext) {
+                WindowInsetsCompat
+                    .Builder()
+                    .setInsets(statusBars(), insetsOf(top = statusBarHeight))
+                    .setInsets(navigationBars(), insetsOf(bottom = navBarHeight))
+                    .build()
+            }
+        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+
+        val decor = window.decorView as ViewGroup
+        val statusBarOverlay =
+            View(this).apply {
+                setBackgroundColor(overlayColor)
+            }
+        decor.addView(
+            statusBarOverlay,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                statusBarHeight.toPx(targetContext),
+                Gravity.TOP,
+            ),
+        )
         val navBarOverlay =
             View(this).apply {
                 setBackgroundColor(overlayColor)
