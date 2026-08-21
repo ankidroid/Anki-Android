@@ -88,21 +88,17 @@ class ScheduleRemindersFragment :
      * Possible hosts of this fragment. Certain stylistic changes need to be made based on where this
      * fragment is opened from / nested within.
      *
-     * TODO: Implement edge-to-edge for Settings and ConfigAwareSingleFragmentActivity.
-     * Then, remove the supportsEdgeToEdge property below and test this fragment's UI behavior 1) on both small and wide screens,
-     * 2) with all app display themes, and 3) from all possible locations this fragment can be opened from. In particular,
-     * make sure there is no weird clipping of the collapsible toolbar content scrim when this fragment is opened from the Settings screen upon scrolling.
+     * This fragment applies the system bar insets to its own views. Hosts which instead apply the
+     * insets to this fragment's container ([STUDY_OPTIONS_FRAGMENT] and [STUDY_OPTIONS_FRAME])
+     * consume them, so that they are not applied a second time here.
      *
      * @param containerId The XML ID of the container in which this fragment is hosted.
      * @param toolbarType The type of toolbar to display for this fragment.
-     * @param supportsEdgeToEdge Whether the host of this fragment currently supports edge-to-edge rendering.
-     * The legacy fitsSystemWindows property is deprecated and should be migrated away from.
      */
     @Parcelize
     enum class FragmentHost(
         @IdRes val containerId: Int,
         val toolbarType: ToolbarType,
-        val supportsEdgeToEdge: Boolean,
     ) : Parcelable {
         /**
          * App-wide review reminders editing screen accessed via Settings.
@@ -111,7 +107,6 @@ class ScheduleRemindersFragment :
         SETTINGS(
             containerId = R.id.settings_container,
             toolbarType = ToolbarType.INTERNAL_COLLAPSIBLE,
-            supportsEdgeToEdge = false,
         ),
 
         /**
@@ -121,7 +116,6 @@ class ScheduleRemindersFragment :
         STUDY_OPTIONS_FRAGMENT(
             containerId = R.id.studyoptions_fragment,
             toolbarType = ToolbarType.INTERNAL_NON_COLLAPSIBLE,
-            supportsEdgeToEdge = true,
         ),
 
         /**
@@ -132,7 +126,6 @@ class ScheduleRemindersFragment :
         STUDY_OPTIONS_FRAME(
             containerId = R.id.studyoptions_frame,
             toolbarType = ToolbarType.EXTERNAL,
-            supportsEdgeToEdge = true,
         ),
 
         /**
@@ -143,7 +136,6 @@ class ScheduleRemindersFragment :
         STANDALONE_ACTIVITY(
             containerId = R.id.fragment_container,
             toolbarType = ToolbarType.INTERNAL_NON_COLLAPSIBLE,
-            supportsEdgeToEdge = false,
         ),
     }
 
@@ -207,22 +199,14 @@ class ScheduleRemindersFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set up root layout insets if the host of this fragment does not support edge-to-edge
-        if (host.supportsEdgeToEdge) {
-            binding.rootLayout.fitsSystemWindows = false // No need for legacy insets behavior
-        } else {
-            binding.rootLayout.fitsSystemWindows = true // Legacy insets behavior to avoid overlapping the status bar
-            if (host.toolbarType == ToolbarType.INTERNAL_NON_COLLAPSIBLE) {
-                // The legacy behavior is broken for the non-collapsible toolbar, also implement a manual workaround for it
-                setNonCollapsibleToolbarInsets()
-            }
-        }
-
         // Set up toolbar
         when (host.toolbarType) {
             ToolbarType.EXTERNAL -> setupExternalActivityToolbar()
             ToolbarType.INTERNAL_COLLAPSIBLE -> setupInternalFragmentToolbar(isCollapsible = true)
-            ToolbarType.INTERNAL_NON_COLLAPSIBLE -> setupInternalFragmentToolbar(isCollapsible = false)
+            ToolbarType.INTERNAL_NON_COLLAPSIBLE -> {
+                setNonCollapsibleToolbarInsets()
+                setupInternalFragmentToolbar(isCollapsible = false)
+            }
         }
 
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
@@ -329,26 +313,15 @@ class ScheduleRemindersFragment :
     }
 
     /**
-     * The collapsible and non-collapsible toolbar are both located within the appbar.
-     * At most one is visible at a time (both are hidden if an external toolbar is being used).
-     * They must be nested within the same appbar because having more than one appbar causes issues with where
-     * the second one is rendered on the screen. If edge-to-edge is not implemented for the [FragmentHost] of this fragment
-     * yet, this fragment's layout and appbar has the fitsSystemWindows attribute set to ensure its
-     * child toolbar is rendered below the status bar.
+     * Replace the root CoordinatorLayout's inset handling.
      *
-     * However, because the collapsible toolbar is before the non-collapsible toolbar in the layout file,
-     * it consumes the fitsSystemWindows inset first and does not pass any to the non-collapsible toolbar.
-     * Hence, we manually set the insets of the non-collapsible toolbar when it is visible
-     * via the modern setOnApplyWindowInsetsListener API. We cannot use this API for both the
-     * collapsible and non-collapsible toolbars and then omit fitsSystemWindows on the appbar. This is
-     * because doing so causes UI glitches within the status bar when the collapsible toolbar transitions
-     * between its expanded and collapsed states.
-     *
-     * This should only be used for the non-collapsible toolbar if edge-to-edge is not implemented on the host yet.
+     * No-op in [FragmentHost.STUDY_OPTIONS_FRAGMENT] and [FragmentHost.STUDY_OPTIONS_FRAME]
      */
     private fun setNonCollapsibleToolbarInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
             val bars = insets.getInsets(statusBars() or displayCutout())
+            // the collapsible toolbar (first in the shared appbar) consumes the insets
+            // so apply them manually
             binding.appbar.updatePadding(left = bars.left, top = bars.top, right = bars.right)
             insets
         }
