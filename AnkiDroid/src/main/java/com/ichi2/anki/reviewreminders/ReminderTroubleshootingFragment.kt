@@ -100,8 +100,6 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set up root layout insets if the host of this fragment does not support edge-to-edge
-        binding.rootLayout.fitsSystemWindows = !host.supportsEdgeToEdge
         when (host.toolbarType) {
             ScheduleRemindersFragment.ToolbarType.EXTERNAL -> setupExternalActivityToolbar()
             ScheduleRemindersFragment.ToolbarType.INTERNAL_COLLAPSIBLE,
