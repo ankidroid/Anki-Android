@@ -35,7 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">Claro</string>
     <string name="day_theme_plain">Simple</string>
-    <string name="day_theme_eink">E-Ink</string>
+    <string name="day_theme_eink">Tinta electrónica (e-Ink)</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Negro</string>
     <string name="night_theme_dark">Escuro</string>
