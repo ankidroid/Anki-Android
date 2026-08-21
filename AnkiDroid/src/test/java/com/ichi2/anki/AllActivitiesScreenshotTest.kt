@@ -120,6 +120,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     MultimediaActivity::class.java,
                     // PreferencesScreenshotTest
                     PreferencesActivity::class.java,
+                    // ReviewerScreenshotTest
+                    Reviewer::class.java,
                     // SharedDecksScreenshotTest
                     SharedDecksActivity::class.java,
                     // StudyOptionsScreenshotTest
