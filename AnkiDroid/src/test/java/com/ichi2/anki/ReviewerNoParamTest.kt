@@ -257,9 +257,10 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
-    fun normalReviewerFitsSystemWindows() {
+    fun normalReviewerDoesNotFitSystemWindows() {
+        // edge-to-edge: insets are applied manually, see Reviewer.setupEdgeToEdge()
         val reviewer = startReviewer()
-        assertThat(reviewer.fitsSystemWindows(), equalTo(true))
+        assertThat(reviewer.fitsSystemWindows(), equalTo(false))
     }
 
     @Test
