@@ -280,7 +280,7 @@
     <string name="home" maxLength="28">Domov</string>
     <!-- Study Screen actions
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Karta zahrabaná.</string>
+    <string name="card_buried">Kartička zahrabaná.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d card suspended.</item>
         <item quantity="few">%d cards suspended.</item>

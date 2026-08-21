@@ -193,7 +193,7 @@
     <string name="white_board_eraser_disabled">Modo borrador desactivado</string>
     <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
     <string name="media_file_size_warning_title">O ficheiro multimedia é demasiado grande</string>
-    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">O ficheiro «%1$s» (%2$s) supera o límite de %3$s da AnkiWeb e non pode ser sincronizado. Queres engadilo de todos xeitos?</string>
+    <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">O ficheiro «%1$s» (%2$s) supera o límite de %3$s de AnkiWeb e non pode ser sincronizado. Queres engadilo de todos xeitos?</string>
     <string name="media_file_size_add_anyway">Engadir de todos xeitos</string>
     <!-- Whiteboard save image message in the Study Screen -->
     <string name="white_board_image_save_failed">Fallo ao gardar a imaxe do encerado. %s</string>

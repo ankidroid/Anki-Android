@@ -134,7 +134,7 @@
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">Queres substituír a túa colección de AnkiDroid pola túa colección de AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Queres substituír a túa colección de AnkiDroid pola túa colección de AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Queres substituír a túa colección de AnkiWeb pola túa colección de AnkiDroid?</string>
     <string name="sync_conflict_title_new">Selecciona que colección manter</string>
     <string name="sync_conflict_replace_title">Substituír colección</string>
     <!-- Generic errors -->

@@ -35,7 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">亮色</string>
     <string name="day_theme_plain">平淡</string>
-    <string name="day_theme_eink">E-Ink</string>
+    <string name="day_theme_eink">电子墨水</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">黑色</string>
     <string name="night_theme_dark">深色</string>

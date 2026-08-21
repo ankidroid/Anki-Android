@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Falha ao guardar pacote Anki</string>
     <string name="export_share_title">Enviar pacote Anki utilizando</string>
     <string name="export_email_subject">Fichas exportadas pelo AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Olá!
+    <string name="export_email_text"><![CDATA[
+        Olá!
         <br/><br/>
         Isto é um baralho de fichas enviado a partir do AnkiDroid[1].
         Tente abri-lo utilizando uma das aplicações Anki[2] e disfrute duma aprendizagem fácil e eficiente!<br/><br/>
