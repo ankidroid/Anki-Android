@@ -384,6 +384,7 @@ open class Reviewer :
         val answerButtonsPosition =
             sharedPrefs().getString(getString(R.string.answer_buttons_position_preference), "bottom")
         val answerButtonsAtBottom = answerButtonsPosition == "bottom"
+        val immersive = fullscreenMode.isFullScreenReview()
         enableEdgeToEdge(
             // the status bar sits over the app bar, which is dark in every theme except E-Ink
             statusBarStyle =
@@ -392,13 +393,21 @@ open class Reviewer :
                 },
             navigationBarStyle =
                 if (answerButtonsAtBottom) {
-                    // The answer area is `showAnswerColor` (dark) in every theme
+                    // The answer area is `showAnswerColor` (dark) in every theme.
                     SystemBarStyle.dark(Color.TRANSPARENT)
+                } else if (immersive) {
+                    // use a translucent scrim if there are no answer buttons
+                    // auto() draws nothing over gesture navigation, so use dark/light.
+                    if (Themes.isNightTheme) {
+                        SystemBarStyle.dark(EDGE_TO_EDGE_DARK_SCRIM)
+                    } else {
+                        SystemBarStyle.light(EDGE_TO_EDGE_LIGHT_SCRIM, EDGE_TO_EDGE_DARK_SCRIM)
+                    }
                 } else {
                     // the navigation bar sits over an empty window-background strip below the
                     // card. The dark scrim is only used below API 26, where light navigation
-                    // icons are unsupported (androidx.activity.EdgeToEdge.DefaultDarkScrim)
-                    SystemBarStyle.auto(Color.TRANSPARENT, Color.argb(0x80, 0x1b, 0x1b, 0x1b)) {
+                    // icons are unsupported
+                    SystemBarStyle.auto(Color.TRANSPARENT, EDGE_TO_EDGE_DARK_SCRIM) {
                         Themes.isNightTheme
                     }
                 },
@@ -413,6 +422,16 @@ open class Reviewer :
         val bottomBarsAndKeyboard: (WindowInsetsCompat) -> Int = {
             it.getInsets(systemBars() or displayCutout() or ime()).bottom
         }
+        // Stable insets: the buttons stay clear of the navigation bar's region even while
+        // the bars are hidden - the gesture area is still active, by the display's rounded
+        // corners - keeping the pre-#9332 LAYOUT_STABLE placement, and unmoving when the
+        // bars are transiently revealed into that gap
+        val stableBottomBarsAndKeyboard: (WindowInsetsCompat) -> Int = {
+            maxOf(
+                it.getInsetsIgnoringVisibility(systemBars() or displayCutout()).bottom,
+                it.getInsets(ime()).bottom,
+            )
+        }
 
         // Exactly one view is bottom-most and absorbs the bottom inset:
         // 'bottom' => the answer area.
@@ -421,7 +440,12 @@ open class Reviewer :
         val cardBottom = if (answerButtonsPosition == "top") bottomBars else zero
         val bottomAreaBottom = if (answerButtonsPosition == "none") bottomBarsAndKeyboard else zero
         val whiteboardPaletteBottom = if (answerButtonsAtBottom) zero else bottomBars
-        val answerAreaBottom = if (answerButtonsAtBottom) bottomBarsAndKeyboard else zero
+        val answerAreaBottom =
+            when {
+                !answerButtonsAtBottom -> zero
+                immersive -> stableBottomBarsAndKeyboard
+                else -> bottomBarsAndKeyboard
+            }
 
         /**
          * Pads [view]'s content past the side insets and, per [top] and [bottom], those
@@ -499,8 +523,9 @@ open class Reviewer :
             // pre-edge-to-edge setNavigationBarColor(R.attr.showAnswerColor)
             answerArea.setBackgroundColor(MaterialColors.getColor(this, R.attr.showAnswerColor, 0))
         }
-        // In immersive review the hidden bars report zero insets, so the buttons sit
-        // flush with the bottom edge of the screen
+        // The bottom inset is painted showAnswerColor by the background, extending the
+        // answer area's color underneath the navigation bar - or, in immersive review,
+        // down to the screen edge
         clearInsets(answerArea, bottom = answerAreaBottom)
 
         syncControlsWithSystemBars()
@@ -1948,6 +1973,11 @@ open class Reviewer :
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
         private const val TRANSPARENCY = 0.90f
+
+        // the default scrims of androidx.activity.EdgeToEdge, which it keeps private.
+        // These are lazy for unit tests
+        private val EDGE_TO_EDGE_LIGHT_SCRIM by lazy { Color.argb(0xe6, 0xff, 0xff, 0xff) }
+        private val EDGE_TO_EDGE_DARK_SCRIM by lazy { Color.argb(0x80, 0x1b, 0x1b, 0x1b) }
 
         /** Default (500ms) time for action snackbars, such as undo, bury and suspend */
         const val ACTION_SNACKBAR_TIME = 500
