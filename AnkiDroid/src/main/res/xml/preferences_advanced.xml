@@ -22,14 +22,12 @@
 
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_advanced"
     android:key="@string/pref_advanced_screen_key">
-        <EditTextPreference
+        <com.ichi2.preferences.ExternalDirectorySelectionPreference
             android:defaultValue="/sdcard/AnkiDroid"
             android:key="@string/pref_ankidroid_directory_key"
-            android:title="@string/col_path"
-            app:useSimpleSummaryProvider="true"/>
+            android:title="@string/col_path"/>
         <Preference
             android:summary="@string/reset_languages_summ"
             android:title="@string/reset_languages"
