@@ -11,7 +11,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
 import org.junit.Test
 import org.junit.runner.RunWith
-import androidx.appcompat.R as AppCompatR
 
 /**
  * [Themes.setTheme] applies the user's theme in `onCreate`, so activities should not set
@@ -40,8 +39,6 @@ class ManifestThemeTest : RobolectricTest() {
             "com.ichi2.anki.analytics.AnkiDroidCrashReportDialog" to android.R.style.Theme_DeviceDefault_Dialog,
             // transparent window: the editor is displayed as a dialog over the caller
             "com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity" to R.style.Theme_AppCompat_Transparent_NoActionBar,
-            // TODO: remove alongside edge-to-edge support (issue 21507)
-            "com.ichi2.anki.IntroductionActivity" to AppCompatR.style.Theme_AppCompat_NoActionBar,
         )
 
     @Test
