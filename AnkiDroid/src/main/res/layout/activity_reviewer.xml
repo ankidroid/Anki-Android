@@ -12,13 +12,23 @@
         android:id="@+id/front_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/include_toolbar"/>
+        <!-- The container allows edge-to-edge padding without it being absorbed
+             by the Toolbar's minHeight, so the app bar keeps its full height -->
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="?attr/appBarColor">
+
+            <include layout="@layout/include_toolbar"/>
+        </FrameLayout>
 
         <include
             layout="@layout/include_reviewer_topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar" />
+            android:layout_below="@id/toolbar_container" />
 
         <include
             layout="@layout/include_reviewer_mic_tool_bar"

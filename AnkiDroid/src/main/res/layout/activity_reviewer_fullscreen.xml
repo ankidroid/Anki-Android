@@ -31,12 +31,11 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     </RelativeLayout>
     <!-- Controls that are overlaid over the main content when the user interrupts immersive mode -->
     <FrameLayout
+        android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
-        <include layout="@layout/include_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"/>
+
+        <include layout="@layout/include_toolbar"/>
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
