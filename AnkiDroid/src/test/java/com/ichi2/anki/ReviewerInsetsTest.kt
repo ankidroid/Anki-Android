@@ -298,6 +298,28 @@ class ReviewerInsetsTest : RobolectricTest() {
     }
 
     @Test
+    fun `immersive review - hide everything - the top inset is not applied twice`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.FULLSCREEN_ALL_GONE)
+        withReviewer { reviewer ->
+            reviewer.dispatchInsets(cutoutTop = 32.dp, barsVisible = false)
+            // relayout: the card is positioned below the mic toolbar layer
+            advanceRobolectricLooper()
+
+            assertThat(
+                "the empty mic toolbar layer must not gain phantom height from the top inset: " +
+                    "the card is laid out below it, so any height here doubles the gap",
+                reviewer.micLayer.height,
+                equalTo(0),
+            )
+            assertThat(
+                "the card content starts exactly one cutout-height from the window top",
+                reviewer.cardContainer.topInWindow + reviewer.cardContainer.paddingTop,
+                equalTo(32.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
     fun `immersive review - hidden top bar - the card clears the camera cutout`() {
         FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
         targetContext.sharedPrefs().edit { putBoolean("showTopbar", false) }
@@ -345,6 +367,12 @@ class ReviewerInsetsTest : RobolectricTest() {
 
     private val Reviewer.cardContainer: View
         get() = findViewById(R.id.flashcard)
+
+    private val Reviewer.micLayer: View
+        get() = findViewById(R.id.mic_tool_bar_layer)
+
+    private val View.topInWindow: Int
+        get() = IntArray(2).also { getLocationInWindow(it) }[1]
 
     private val Reviewer.bottomArea: View
         get() = findViewById(R.id.bottom_area_layout)

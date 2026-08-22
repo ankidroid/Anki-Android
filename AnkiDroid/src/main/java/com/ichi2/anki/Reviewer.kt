@@ -499,7 +499,10 @@ open class Reviewer :
                 FullScreenMode.BUTTONS_AND_MENU -> false
             }
         val contentTop = if (contentAtWindowTop) topBars else null
-        clearInsets(micToolBarLayer, top = contentTop)
+        // side insets only. The card is laid out below this (usually empty) wrap_content
+        // layer and clears the top inset itself: top padding here would give the layer
+        // phantom height, doubling the gap above the card
+        clearInsets(micToolBarLayer)
         // the card and its overlays reach the bottom of the screen when the answer buttons
         // are shown above them
         clearInsets(findViewById(R.id.flashcard), top = contentTop, bottom = cardBottom)
