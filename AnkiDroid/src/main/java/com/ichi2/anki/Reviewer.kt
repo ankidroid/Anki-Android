@@ -13,6 +13,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Rect
+import android.graphics.Region
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -26,7 +28,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.SubMenu
+import android.view.TouchDelegate
 import android.view.View
+import android.view.ViewGroup
+import android.view.accessibility.AccessibilityNodeInfo.TouchDelegateInfo
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -39,6 +44,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.IntDef
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
@@ -535,7 +541,7 @@ open class Reviewer :
             clearInsets(answerField, basePadding = answerField.paddingLeft)
         }
 
-        val answerArea = findViewById<View>(R.id.answer_options_layout)
+        val answerArea = findViewById<ViewGroup>(R.id.answer_options_layout)
         answerArea.setBackgroundColor(MaterialColors.getColor(this, R.attr.showAnswerColor, 0))
         // The bottom inset is painted showAnswerColor by the background, extending the
         // answer area's color underneath the navigation bar - or, in immersive review,
@@ -543,6 +549,7 @@ open class Reviewer :
         val answerAreaBottomHeld =
             if (immersive) resetInsetsWhenFadeEnds(answerArea, answerAreaBottom) else answerAreaBottom
         clearInsets(answerArea, bottom = answerAreaBottomHeld)
+        extendAnswerButtonsIntoInsets(answerArea)
 
         syncControlsWithSystemBars()
     }
@@ -593,6 +600,79 @@ open class Reviewer :
             }
         }
     }
+
+    /**
+     * Allows a user to tap the inset below 'show answer' to flip or answer a card.
+     * The inset is the same color as 'show answer', so it looks to be an extension
+     * of the button.
+     */
+    private fun extendAnswerButtonsIntoInsets(answerArea: ViewGroup) {
+        val buttons =
+            listOf(
+                R.id.flashcard_layout_flip,
+                R.id.flashcard_layout_ease1,
+                R.id.flashcard_layout_ease2,
+                R.id.flashcard_layout_ease3,
+                R.id.flashcard_layout_ease4,
+            ).map { answerArea.findViewById<View>(it) }
+        answerArea.touchDelegate = AnswerBandTouchDelegate(answerArea, buttons)
+    }
+
+    /** Routes a touch below a button to the button itself. */
+    private class AnswerBandTouchDelegate(
+        private val answerArea: ViewGroup,
+        private val buttons: List<View>,
+    ) : TouchDelegate(Rect(), answerArea) {
+        /** The button's delegate which took the current gesture's DOWN */
+        private var active: TouchDelegate? = null
+
+        /** The button hovered by explore by touch, via its band */
+        private var hovered: ButtonBandDelegate? = null
+
+        /** A delegate per shown button, bounded by the button and its bands as laid out now */
+        private fun bandDelegates(): List<ButtonBandDelegate> =
+            buttons.filter { it.isShown }.map { ButtonBandDelegate(answerArea.touchBoundsOf(it), it) }
+
+        override fun onTouchEvent(event: MotionEvent): Boolean {
+            if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                // bounds are read at the DOWN, so a layout pass mid-gesture cannot stale them
+                active = bandDelegates().firstOrNull { it.takes(event) }
+                return active != null
+            }
+            return active?.takes(event) ?: false
+        }
+
+        /** Handle talkback events: the area below the buttons delegates to the buttons. */
+        @RequiresApi(Build.VERSION_CODES.Q)
+        override fun onTouchExplorationHoverEvent(event: MotionEvent): Boolean {
+            val target =
+                if (event.actionMasked == MotionEvent.ACTION_HOVER_EXIT) {
+                    null
+                } else {
+                    bandDelegates().firstOrNull { it.bounds.contains(event.x.toInt(), event.y.toInt()) }
+                }
+            if (target?.button === hovered?.button) return target?.hovers(event, event.action) ?: false
+            // the finger crossed onto, off, or between bands: switch the buttons' hover
+            hovered?.hovers(event, MotionEvent.ACTION_HOVER_EXIT)
+            hovered = target
+            return target?.hovers(event, MotionEvent.ACTION_HOVER_ENTER) ?: false
+        }
+
+        /** The bands' regions: [View] forwards explore by touch inside them to [onTouchExplorationHoverEvent] */
+        @RequiresApi(Build.VERSION_CODES.Q)
+        override fun getTouchDelegateInfo(): TouchDelegateInfo {
+            val bands = bandDelegates()
+            // TouchDelegateInfo rejects an empty map: with no button shown there are no bands
+            if (bands.isEmpty()) return super.getTouchDelegateInfo()
+            return TouchDelegateInfo(bands.associate { Region(it.bounds) to it.button })
+        }
+    }
+
+    /** A button's [TouchDelegate], keeping [bounds] and [button] for [AnswerBandTouchDelegate] */
+    private class ButtonBandDelegate(
+        val bounds: Rect,
+        val button: View,
+    ) : TouchDelegate(bounds, button)
 
     /**
      * Immersive review: fades the overlaid controls in and out with the system bars
@@ -2074,4 +2154,52 @@ open class Reviewer :
         val gesture = (binding.binding as? Binding.GestureInput)?.gesture
         return executeCommand(action, gesture)
     }
+}
+
+/** Runs [block] on a copy of this event, recycled afterwards */
+private inline fun <T> MotionEvent.withCopy(block: (MotionEvent) -> T): T {
+    val copy = MotionEvent.obtain(this)
+    try {
+        return block(copy)
+    } finally {
+        copy.recycle()
+    }
+}
+
+/**
+ * Offers [event] to the delegate, which takes it if its bounds contain the touch.
+ * Given a copy: [TouchDelegate.onTouchEvent] rewrites the event's location to its view
+ *
+ * @return whether the delegate's view handled [event]: `false` if the touch is outside its bounds
+ */
+private fun TouchDelegate.takes(event: MotionEvent): Boolean = event.withCopy { onTouchEvent(it) }
+
+/**
+ * Explore by touch: forwards [event] to the delegate's view as [action], hovering it
+ *
+ * @return whether the delegate's view handled the hover
+ */
+@RequiresApi(Build.VERSION_CODES.Q)
+private fun TouchDelegate.hovers(
+    event: MotionEvent,
+    action: Int,
+): Boolean =
+    event.withCopy { copy ->
+        copy.action = action
+        onTouchExplorationHoverEvent(copy)
+    }
+
+/**
+ * [button]'s bounds, including insets:
+ * * the inset area under the button (if touching the bottom; not the top row of large answer buttons)
+ * * the sides of the button if it's at the far left/right of the answer area
+ */
+private fun ViewGroup.touchBoundsOf(button: View): Rect {
+    val bounds = Rect()
+    button.getDrawingRect(bounds)
+    offsetDescendantRectToMyCoords(button, bounds)
+    if (bounds.left <= paddingLeft) bounds.left = 0
+    if (bounds.right >= width - paddingRight) bounds.right = width
+    if (bounds.bottom >= height - paddingBottom) bounds.bottom = height
+    return bounds
 }
