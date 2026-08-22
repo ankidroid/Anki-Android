@@ -1389,7 +1389,7 @@ class CardBrowserViewModelTest : JvmTest() {
                     awaitItem(),
                     "phone tap launches a standalone NoteEditor activity",
                 )
-                assertThat("focusedRow set to tapped row", focusedRow, equalTo(getRowAtPosition(1)))
+                assertThat("phone: no pane -> no pane row", paneRow, nullValue())
                 assertThat("not in multi-select after tap", isInMultiSelectMode, equalTo(false))
             }
         }
@@ -1427,7 +1427,7 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `onTap deselect on tablet emits selection event with focused id`() =
+    fun `onTap deselect on tablet reloads the pane with the deselected row`() =
         runViewModelTest(notes = 2, isFragmented = true) {
             selectRowAtPosition(0)
             selectRowAtPosition(1)
@@ -1438,29 +1438,30 @@ class CardBrowserViewModelTest : JvmTest() {
                     awaitItem(),
                     "tablet deselect loads the editor in the trailing pane",
                 )
-                assertThat("focusedRow points at deselected row", focusedRow, equalTo(deselectedId))
+                assertThat("paneRow points at deselected row", paneRow, equalTo(deselectedId))
             }
         }
 
     @Test
-    fun `onTap add-to-multi-select on tablet does not move focus`() =
+    fun `onTap add-to-multi-select on tablet does not move the pane row`() =
         runViewModelTest(notes = 3, isFragmented = true) {
-            // long-press row 1 to enter multi-select; focus and selection both land on row 1
+            // open row 1 in the pane, then long-press it to enter multi-select
+            onTap(getRowAtPosition(1).toRowSelection()).join()
             handleRowLongPress(getRowAtPosition(1).toRowSelection()).join()
-            assertThat("initial focus on row 1", focusedRow, equalTo(getRowAtPosition(1)))
+            assertThat("pane shows row 1", paneRow, equalTo(getRowAtPosition(1)))
 
-            // tap row 2 to ADD it to the selection — focus must stay on row 1
+            // tap row 2 to ADD it to the selection - the pane must not change
             flowOfNoteEditorCommand.test {
                 onTap(getRowAtPosition(2).toRowSelection()).join()
                 expectNoEvents() // no editor reload
-                assertThat("focus unchanged after add-to-multi-select", focusedRow, equalTo(getRowAtPosition(1)))
+                assertThat("pane unchanged after add-to-multi-select", paneRow, equalTo(getRowAtPosition(1)))
                 assertThat("row 2 was added to selection", getRowAtPosition(2) in selectedRows, equalTo(true))
             }
         }
 
     @Test
-    fun `stale focusedRow falls back to first card after search`() =
-        runViewModelTest {
+    fun `stale paneRow falls back to first card after search`() =
+        runViewModelTest(isFragmented = true) {
             val deckOne = addDeck("One")
             val deckTwo = addDeck("Two")
             addNoteToDeck(deckOne)
@@ -1469,13 +1470,49 @@ class CardBrowserViewModelTest : JvmTest() {
             setSelectedDeck(deckTwo)
             searchJob?.join()
             val deckTwoRow = cards.first()
-            handleRowLongPress(deckTwoRow.toRowSelection()).join()
-            assertThat("initial focus is on the deckTwo row", focusedRow, equalTo(deckTwoRow))
+            onTap(deckTwoRow.toRowSelection()).join()
+            assertThat("pane shows the deckTwo row", paneRow, equalTo(deckTwoRow))
 
             setSelectedDeck(deckOne)
             searchJob?.join()
-            assertThat("focusedRow no longer points to filtered-out row", focusedRow, not(equalTo(deckTwoRow)))
-            assertThat("focusedRow falls back to first row of new search", focusedRow, equalTo(cards.first()))
+            assertThat("paneRow no longer points to filtered-out row", paneRow, not(equalTo(deckTwoRow)))
+            assertThat("paneRow falls back to first row of new search", paneRow, equalTo(cards.first()))
+        }
+
+    @Test
+    fun `pane row is unused on phones`() =
+        runViewModelTest(notes = 2, isFragmented = false) {
+            searchJob?.join()
+            assertThat("phone: no pane -> no pane row after search", paneRow, nullValue())
+
+            onTap(getRowAtPosition(1).toRowSelection()).join()
+            assertThat("phone: no pane -> no pane row after tap", paneRow, nullValue())
+        }
+
+    @Test
+    fun `long press does not change the pane row`() =
+        runViewModelTest(notes = 2, isFragmented = true) {
+            onTap(getRowAtPosition(0).toRowSelection()).join()
+            assertThat("pane shows the tapped row", paneRow, equalTo(getRowAtPosition(0)))
+
+            handleRowLongPress(getRowAtPosition(1).toRowSelection()).join()
+            assertThat("row 1 is selected", getRowAtPosition(1) in selectedRows, equalTo(true))
+            assertThat("pane still shows the opened row", paneRow, equalTo(getRowAtPosition(0)))
+        }
+
+    @Test
+    fun `deleting the pane row falls back to the first remaining row`() =
+        runViewModelTest(notes = 2, isFragmented = true) {
+            searchJob?.join()
+            val toDelete = getRowAtPosition(1)
+            // open row 1 in the pane, then long-press it to select it
+            onTap(toDelete.toRowSelection()).join()
+            handleRowLongPress(toDelete.toRowSelection()).join()
+
+            deleteSelectedNotes()
+            searchJob?.join()
+            assertThat("deleted row is no longer displayed", toDelete !in cards, equalTo(true))
+            assertThat("pane falls back to the first remaining row", paneRow, equalTo(cards.first()))
         }
 
     @Test
