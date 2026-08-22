@@ -26,4 +26,6 @@ import com.ichi2.anki.SingleFragmentActivity
  * @see ManageSpaceFragment
  * @see SingleFragmentActivity.onCreate
  */
-class ManageSpaceActivity : SingleFragmentActivity()
+class ManageSpaceActivity : SingleFragmentActivity() {
+    override val supportsEdgeToEdge = true
+}
