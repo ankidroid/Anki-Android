@@ -37,13 +37,15 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller
 import com.ichi2.anki.common.android.animationEnabled
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.StatisticsDestination
 import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.anki.dialogs.help.HelpDialog
-import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.utils.IntentUtil
@@ -384,11 +386,7 @@ abstract class NavigationDrawerActivity(
     }
 
     protected fun openCardBrowser() {
-        val intent = Intent(this@NavigationDrawerActivity, CardBrowser::class.java)
-        if (currentCardId != null) {
-            intent.putExtra("currentCard", currentCardId)
-        }
-        startActivity(intent)
+        navigate(BrowserDestination.Open)
     }
 
     /**
@@ -405,10 +403,6 @@ abstract class NavigationDrawerActivity(
     protected fun openSettings() {
         preferencesLauncher.navigate(PreferencesDestination.Root)
     }
-
-    // Override this to specify a specific card id
-    protected open val currentCardId: CardId?
-        get() = null
 
     /**
      * Hides the navigation drawer indicator (hamburger icon) and any back arrows
@@ -523,7 +517,7 @@ abstract class NavigationDrawerActivity(
                     .build()
 
             // CardBrowser Shortcut
-            val intentCardBrowser = Intent(context, CardBrowser::class.java)
+            val intentCardBrowser = with(DeferredNavigation) { BrowserDestination.Open.toIntent() }
             intentCardBrowser.action = Intent.ACTION_VIEW
             intentCardBrowser.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             val cardBrowserShortcut =

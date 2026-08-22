@@ -18,7 +18,6 @@
 package com.ichi2.anki
 
 import android.content.Context
-import android.content.Intent
 import androidx.lifecycle.lifecycleScope
 import anki.scheduler.CardAnswer.Rating
 import com.github.zafarkhaja.semver.Version
@@ -36,6 +35,8 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.BrowserDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.ext.stringIterable
 import com.ichi2.anki.libanki.Card
@@ -380,12 +381,7 @@ open class AnkiDroidJsAPI(
 
                 "ttsStop" -> convertToByteArray(apiContract, talker.stop())
                 "searchCard" -> {
-                    val intent =
-                        Intent(context, CardBrowser::class.java).apply {
-                            putExtra("currentCard", currentCard.id)
-                            putExtra("search_query", apiParams)
-                        }
-                    activity.startActivity(intent)
+                    with(activity) { navigate(BrowserDestination.Search(query = apiParams, allDecks = false)) }
                     convertToByteArray(apiContract, true)
                 }
 
