@@ -66,6 +66,9 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.model.cardBrowserNoSorting
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.observability.ensureNoOpsExecuted
+import com.ichi2.anki.observability.ensureOpWithHandler
+import com.ichi2.anki.observability.ensureOpsExecuted
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
@@ -73,9 +76,6 @@ import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.createTransientDirectory
-import com.ichi2.testutils.ensureNoOpsExecuted
-import com.ichi2.testutils.ensureOpWithHandler
-import com.ichi2.testutils.ensureOpsExecuted
 import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.flow.first
