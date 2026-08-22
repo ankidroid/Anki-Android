@@ -4,6 +4,7 @@ package com.ichi2.anki.reviewreminders
 
 import android.app.Activity
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.marginRight
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -125,18 +127,38 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
         }
 
     @Test
+    fun `standalone host - the window renders into a display cutout`() =
+        withStandaloneScheduleReminders { activity, _ ->
+            assertThat(
+                "the window renders into the cutout instead of being letterboxed",
+                activity.window.attributes.layoutInDisplayCutoutMode,
+                equalTo(WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES),
+            )
+        }
+
+    @Test
     fun `standalone host - troubleshooting content clears the system bars`() =
         withStandaloneTroubleshooting { activity, binding ->
             activity.dispatchInsets(navBarBottom = navigationBarSize)
 
             assertThat(
-                "content is pushed clear of the status bar",
-                binding.root.paddingTop,
+                "the toolbar is pushed clear of the status bar: a margin keeps the icon and title aligned",
+                binding.troubleshootingToolbar.marginTop,
                 equalTo(statusBarHeight.toPx(targetContext)),
             )
             assertThat(
-                "content clears the navigation bar",
+                "the root is not padded: scrolling content renders underneath the bottom bar",
                 binding.root.paddingBottom,
+                equalTo(0),
+            )
+            assertThat(
+                "the scroll view is not clipped: content renders into its padding while scrolling",
+                binding.scrollView.clipToPadding,
+                equalTo(false),
+            )
+            assertThat(
+                "the end of the scrolled content clears the navigation bar",
+                binding.scrollView.paddingBottom,
                 equalTo(navigationBarSize.toPx(targetContext)),
             )
         }
@@ -202,12 +224,12 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
 
             assertThat(
                 "the fragment does not apply the top inset again",
-                binding.root.paddingTop,
+                binding.troubleshootingToolbar.marginTop,
                 equalTo(0),
             )
             assertThat(
                 "the fragment does not apply the bottom inset again",
-                binding.root.paddingBottom,
+                binding.scrollView.paddingBottom,
                 equalTo(0),
             )
         }
