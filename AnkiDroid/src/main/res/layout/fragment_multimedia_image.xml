@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toTopOf="@id/image_file_size"
             style="@style/CardView.ViewerStyle" >
 
-            <WebView
+            <com.ichi2.anki.workarounds.SafeWebViewLayout
                 android:id="@+id/multimedia_web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
