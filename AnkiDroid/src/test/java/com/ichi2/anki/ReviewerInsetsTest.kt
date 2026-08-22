@@ -349,6 +349,12 @@ class ReviewerInsetsTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertThat("the toolbar returns with the bars", reviewer.toolbarContainer.visibility, equalTo(View.VISIBLE))
             assertThat("the answer area returns with the bars", reviewer.answerArea.visibility, equalTo(View.VISIBLE))
+            assertThat(
+                "the overlaid app bar fades in fully opaque: a translucent overlay is tinted " +
+                    "by the content behind it, splitting the status bar and app bar colors",
+                reviewer.toolbarContainer.alpha,
+                equalTo(1.0f),
+            )
 
             reviewer.dispatchInsets(barsVisible = false)
             advanceRobolectricLooper()

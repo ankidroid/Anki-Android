@@ -1763,7 +1763,7 @@ open class Reviewer :
         view.visibility = View.VISIBLE
         view
             .animate()
-            .alpha(TRANSPARENCY)
+            .alpha(1f)
             .setDuration(ANIMATION_DURATION.toLong())
             .setListener(null)
     }
@@ -1975,7 +1975,6 @@ open class Reviewer :
 
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
-        private const val TRANSPARENCY = 0.90f
 
         // the default scrims of androidx.activity.EdgeToEdge, which it keeps private.
         // These are lazy for unit tests
