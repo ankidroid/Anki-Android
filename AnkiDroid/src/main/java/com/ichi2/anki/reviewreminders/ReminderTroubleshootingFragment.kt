@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.reviewreminders
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -43,13 +42,12 @@ import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
 import com.ichi2.anki.requireAnkiActivity
-import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
+import com.ichi2.utils.Permissions.attemptToEnableNotifications
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
-import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.dp
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -386,20 +384,13 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
     val context = fragment.requireContext()
 
     // TODO: move labels to string resources
-    fun requestNotificationPermission(): ResolveCheckAction? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return null
-        return ResolveCheckAction(
+    fun requestNotificationPermission(): ResolveCheckAction? =
+        ResolveCheckAction(
             label = "Grant permission",
             logDescription = "requesting POST_NOTIFICATIONS via system dialog or app settings",
         ) {
-            fragment.requestPermissionThroughDialogOrSettings(
-                activity = fragment.requireActivity(),
-                permission = Manifest.permission.POST_NOTIFICATIONS,
-                permissionRequestedFlag = Prefs::notificationsPermissionRequested,
-                permissionRequestLauncher = fragment.notificationPermissionLauncher,
-            )
+            fragment.attemptToEnableNotifications(fragment.notificationPermissionLauncher)
         }
-    }
 
     fun requestReminderNotifChannelPermission(): ResolveCheckAction? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null
