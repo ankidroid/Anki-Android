@@ -214,6 +214,45 @@ class ReviewerInsetsTest : RobolectricTest() {
     }
 
     @Test
+    fun `immersive review - the answer area's background spans a side cutout like the counts bar`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            // landscape with a camera notch: the cutout is a side inset; the bars are hidden
+            reviewer.dispatchInsets(cutoutLeft = 32.dp, barsVisible = false)
+
+            assertThat(
+                "the answer area itself is padded past the cutout, so its background spans the full width",
+                reviewer.answerArea.paddingLeft,
+                equalTo(32.dp.toPx(targetContext)),
+            )
+            assertThat(
+                "the bottom area no longer insets the answer area, whose background reaches the screen edge",
+                reviewer.bottomArea.paddingLeft,
+                equalTo(0),
+            )
+        }
+    }
+
+    @Test
+    fun `the type-answer field is padded past a side navigation bar and cutout`() =
+        withReviewer { reviewer ->
+            val baseLeft = reviewer.typeAnswerField.paddingLeft
+            val baseRight = reviewer.typeAnswerField.paddingRight
+            reviewer.dispatchInsets(navBarRight = 48.dp, cutoutLeft = 32.dp)
+
+            assertThat(
+                "the field keeps its own padding in addition to the cutout inset",
+                reviewer.typeAnswerField.paddingLeft,
+                equalTo(baseLeft + 32.dp.toPx(targetContext)),
+            )
+            assertThat(
+                "the field keeps its own padding in addition to the navigation bar inset",
+                reviewer.typeAnswerField.paddingRight,
+                equalTo(baseRight + 48.dp.toPx(targetContext)),
+            )
+        }
+
+    @Test
     fun `immersive review - hide everything - the card clears the camera cutout`() {
         FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.FULLSCREEN_ALL_GONE)
         withReviewer { reviewer ->
@@ -279,6 +318,9 @@ class ReviewerInsetsTest : RobolectricTest() {
 
     private val Reviewer.bottomArea: View
         get() = findViewById(R.id.bottom_area_layout)
+
+    private val Reviewer.typeAnswerField: View
+        get() = findViewById(R.id.answer_field)
 
     private val Reviewer.answerArea: View
         get() = findViewById(R.id.answer_options_layout)
