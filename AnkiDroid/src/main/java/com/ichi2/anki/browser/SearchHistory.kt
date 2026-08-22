@@ -23,13 +23,11 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.settings.PrefsStore
 import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlinx.serialization.json.Json
-import timber.log.Timber
 
 private typealias Tag = String
 
@@ -39,61 +37,14 @@ private typealias Tag = String
  * Displayed in most recently used order.
  */
 class SearchHistory(
-    private val prefs: PrefsRepository = Prefs,
-    private val maxEntries: Int = MAX_ENTRIES,
-) {
-    /**
-     * The user's past searches in the Card Browser.
-     * Displayed in most recently used order.
-     */
-    var entries: List<SearchHistoryEntry>
-        get() {
-            val jsonString = prefs.getString(R.string.pref_browser_search_history, "[]") ?: "[]"
-            return runCatching {
-                Json.decodeFromString<List<SearchHistoryEntry>>(jsonString)
-            }.getOrElse { emptyList() }
-        }
-        private set(value) {
-            Timber.i("updating history entries: %d values", value.size)
-            val json = Json.encodeToString(value)
-            prefs.putString(R.string.pref_browser_search_history, json)
-        }
-
-    /**
-     * Adds the provided entry to the head of the list. Returns the updated list.
-     *
-     * If the entry already exists, it will be moved to the head.
-     */
-    fun addRecent(entry: SearchHistoryEntry): List<SearchHistoryEntry> {
-        val updatedEntries = entries.toMutableList()
-        if (entry.isSearchEmpty()) {
-            Timber.d("skipping updating history with no search")
-            return updatedEntries
-        }
-        updatedEntries.remove(entry)
-        updatedEntries.add(0, entry)
-        return updatedEntries.take(maxEntries).also {
-            this.entries = it.toMutableList()
-            Timber.d("updated history with '%s'", entry)
-        }
-    }
-
-    /**
-     * Removes [entry] from [entries]. Returning whether the element was contained in the collection.
-     */
-    fun removeEntry(entry: SearchHistoryEntry): Boolean {
-        val newEntries = entries.toMutableList()
-        Timber.d("removing entry '%s'", entry)
-        return newEntries.remove(entry).also {
-            this.entries = newEntries
-        }
-    }
-
-    fun clear() {
-        Timber.i("clearing all entries")
-        this.entries = listOf()
-    }
-
+    prefs: PrefsRepository = Prefs,
+    maxEntries: Int = MAX_ENTRIES,
+) : PrefsStore<SearchHistory.SearchHistoryEntry>(
+        keyResId = R.string.pref_browser_search_history,
+        entrySerializer = SearchHistoryEntry.serializer(),
+        maxEntries = maxEntries,
+        prefs = prefs,
+    ) {
     /**
      * An entry in the history of the card browser.
      * This is user-supplied, so may contain PII.
@@ -101,11 +52,10 @@ class SearchHistory(
      * Contains the minimal values needed for persistent serialization:
      * Deck IDs are stored, rather than deck names. See [deckIds]
      *
+     * !! When updating this, consider equality in PrefsStore.addRecent
+     *
      * @see SearchHistory
      */
-    // !! When updating this, consider equality in addRecent
-    // TODO: opt-in may no longer be needed in kotlinx-serialization 1.10.0
-    @OptIn(ExperimentalSerializationApi::class)
     @Serializable
     data class SearchHistoryEntry(
         @SerialName("q")

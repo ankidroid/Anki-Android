@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.ellipsize
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showError
@@ -418,17 +419,21 @@ object ReviewRemindersDatabase {
                     if (storedReminder == null) {
                         // The reminder should always be present as recurring notification alarms are unscheduled when
                         // a reminder is deleted, so this should never happen, but we fail gracefully just in case
-                        Timber.e(
+                        ReminderLogger.error(
                             "Returning null for retrieveRefreshedReminder for reminder $id because it was not found in the database.",
+                            "retrieve-not-found",
+                            id,
                         )
                         return@apply
                     }
 
                     if (storedReminder.latestNotifDelivered()) {
                         // Do not proceed if the notification has already been delivered
-                        Timber.i(
+                        ReminderLogger.skip(
                             "Returning null for retrieveRefreshedReminder for reminder $id: " +
                                 "Latest already delivered at ${storedReminder.latestNotifTime}",
+                            "retrieve-delivered-${TimeManager.time.calendar().timeInMillis - storedReminder.latestNotifTime}",
+                            id,
                         )
                         return@apply
                     }
@@ -462,4 +467,9 @@ object ReviewRemindersDatabase {
             Prefs.reviewReminderDeserializationErrors = ""
         }
     }
+
+    /**
+     * For in-app debug info functionality.
+     */
+    fun dumpContentsToString(): String = remindersSharedPrefs.all.entries.joinToString("\n") { "${it.key} -> ${it.value}" }
 }

@@ -79,6 +79,18 @@ class CardBrowserSearchViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `blank searches are not added to history`() =
+        withViewModel {
+            searchHistoryListFlow.test {
+                submitSearch("")
+                submitSearch(" ")
+                submitSearch("Hello")
+
+                assertThat(expectMostRecentItem(), equalTo(listOf(SearchHistoryEntry("Hello"))))
+            }
+        }
+
+    @Test
     fun `search closed after submit`() =
         withViewModel {
             closeSearchViewFlow.test {

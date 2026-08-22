@@ -50,6 +50,7 @@ import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
+import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -112,6 +113,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
         setupSummary()
         setupTroubleshootingChecks()
         setupSettingChangeDetector()
+        setupDebugButton()
     }
 
     private fun setupExternalActivityToolbar() {
@@ -184,11 +186,27 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
         onWindowFocusChanged { hasFocus -> if (hasFocus) viewModel.refreshChecks() }
     }
 
+    private fun setupDebugButton() {
+        binding.copyDebugInfo.setOnClickListener {
+            val debugInfo = ReminderLogger.entries.joinToString("\n") + "\n\n" + ReviewRemindersDatabase.dumpContentsToString()
+            requireContext().copyToClipboard(
+                debugInfo.take(MAX_DEBUG_CHARS),
+                failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
+            )
+        }
+    }
+
     companion object {
         /**
          * Arguments key for specifying the host of this fragment.
          */
         private const val ARG_HOST = "arg_host"
+
+        /**
+         * Maximum number of characters in the text copied to the clipboard when the user taps the "Copy debug info" button,
+         * so that nothing too large is copied to the clipboard.
+         */
+        private const val MAX_DEBUG_CHARS = 100_000
 
         fun newInstance(host: ScheduleRemindersFragment.FragmentHost): ReminderTroubleshootingFragment =
             ReminderTroubleshootingFragment().apply {

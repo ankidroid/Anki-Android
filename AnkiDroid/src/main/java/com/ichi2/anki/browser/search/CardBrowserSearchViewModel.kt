@@ -250,7 +250,14 @@ class CardBrowserSearchViewModel(
     fun submitCurrentSearch(searchToSubmit: SearchRequest) =
         viewModelScope.launch {
             Timber.i("submitting search")
-            val updatedEntries = searchHistoryManager.addRecent(searchToSubmit.toHistoryEntry())
+            val entry = searchToSubmit.toHistoryEntry()
+            val updatedEntries =
+                if (entry == null) {
+                    Timber.d("skipping updating history with no search")
+                    searchHistoryManager.entries
+                } else {
+                    searchHistoryManager.addRecent(entry)
+                }
             searchHistoryFlow.value = SearchHistoryItems.Loading(updatedEntries)
             closeSearchViewFlow.emit(Unit)
             submittedSearchFlow.emit(searchToSubmit)
@@ -396,7 +403,8 @@ class CardBrowserSearchViewModel(
     }
 }
 
-private fun SearchRequest.toHistoryEntry() =
+/** The entry to store in [SearchHistory], or `null` if there is no search to store */
+private fun SearchRequest.toHistoryEntry(): SearchHistoryEntry? =
     SearchHistoryEntry(
         query = this.query.trim(),
         deckIds = this.filters.decks.map { it.id },
@@ -404,7 +412,7 @@ private fun SearchRequest.toHistoryEntry() =
         tags = this.filters.tags,
         noteTypes = this.filters.noteTypes.map { it.id },
         cardStates = this.filters.cardStates,
-    )
+    ).takeUnless { it.isSearchEmpty() }
 
 @VisibleForTesting
 suspend fun SearchFilters.Companion.from(entry: SearchHistoryEntry): SearchFilters? {
