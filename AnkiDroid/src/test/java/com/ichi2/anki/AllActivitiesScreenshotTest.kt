@@ -111,6 +111,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     CardTemplateEditor::class.java,
                     // DeckPickerScreenshotTest
                     DeckPicker::class.java,
+                    // IntroductionScreenshotTest
+                    IntroductionActivity::class.java,
                     // StudyScreenScreenshotTest, PreviewerScreenshotTest and TemplatePreviewerScreenshotTest
                     CardViewerActivity::class.java,
                     // ManageNotetypesScreenshotTest,
