@@ -37,6 +37,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.annotation.IntDef
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -52,6 +53,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isGone
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
@@ -107,7 +109,6 @@ import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.CardMarker
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
-import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.reviewer.ReviewerUi
@@ -145,7 +146,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import kotlin.coroutines.resume
-import com.ichi2.anki.common.android.R as CommonR
 
 @Suppress("LeakingThis")
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
@@ -158,6 +158,9 @@ open class Reviewer :
     private var hasDrawerSwipeConflicts = false
     private var showWhiteboard = true
     private var prefFullscreenReview = false
+
+    /** Immersive review: whether the system bars are currently swiped back into view */
+    private var immersiveBarsVisible = true
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
     private var isEraserMode = false
@@ -378,11 +381,6 @@ open class Reviewer :
      * Enables edge-to-edge and applies insets so no content is occluded by the system bars.
      */
     private fun setupEdgeToEdge() {
-        if (fullscreenMode.isFullScreenReview()) {
-            // TODO: awaiting follow-up commit for edge to edge support
-            return
-        }
-
         val answerButtonsPosition =
             sharedPrefs().getString(getString(R.string.answer_buttons_position_preference), "bottom")
         val answerButtonsAtBottom = answerButtonsPosition == "bottom"
@@ -410,6 +408,7 @@ open class Reviewer :
         fun WindowInsetsCompat.bars() = getInsets(systemBars() or displayCutout())
 
         val zero: (WindowInsetsCompat) -> Int = { 0 }
+        val topBars: (WindowInsetsCompat) -> Int = { it.bars().top }
         val bottomBars: (WindowInsetsCompat) -> Int = { it.bars().bottom }
         val bottomBarsAndKeyboard: (WindowInsetsCompat) -> Int = {
             it.getInsets(systemBars() or displayCutout() or ime()).bottom
@@ -424,18 +423,20 @@ open class Reviewer :
         val whiteboardPaletteBottom = if (answerButtonsAtBottom) zero else bottomBars
 
         /**
-         * Pads [view]'s content past the side insets and, per [bottom], the bottom inset;
-         * `null` leaves the bottom padding untouched.
+         * Pads [view]'s content past the side insets and, per [top] and [bottom], those
+         * insets; `null` leaves that padding untouched.
          */
         fun clearInsets(
             view: View,
             basePadding: Int = 0,
+            top: ((WindowInsetsCompat) -> Int)? = null,
             bottom: ((WindowInsetsCompat) -> Int)? = null,
         ) {
             ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                 val bars = insets.bars()
                 v.updatePadding(
                     left = basePadding + bars.left,
+                    top = top?.invoke(insets) ?: v.paddingTop,
                     right = basePadding + bars.right,
                     bottom = bottom?.invoke(insets) ?: v.paddingBottom,
                 )
@@ -455,21 +456,35 @@ open class Reviewer :
             }
             insets
         }
-        clearInsets(findViewById(R.id.top_bar), basePadding = resources.getDimensionPixelSize(R.dimen.side_margin))
-        clearInsets(micToolBarLayer)
+        findViewById<View>(R.id.top_bar).also { topBar ->
+            // in BUTTONS_ONLY, the counts bar sits at the top of the window
+            val baseTopPadding = topBar.paddingTop
+            val topBarTop: (WindowInsetsCompat) -> Int = { baseTopPadding + it.bars().top }
+            clearInsets(
+                topBar,
+                basePadding = resources.getDimensionPixelSize(R.dimen.side_margin),
+                top = if (fullscreenMode == FullScreenMode.BUTTONS_ONLY) topBarTop else null,
+            )
+        }
+
+        val contentAtWindowTop =
+            when (fullscreenMode) {
+                FullScreenMode.FULLSCREEN_ALL_GONE -> true
+                FullScreenMode.BUTTONS_ONLY -> !prefShowTopbar
+                FullScreenMode.BUTTONS_AND_MENU -> false
+            }
+        val contentTop = if (contentAtWindowTop) topBars else null
+        clearInsets(micToolBarLayer, top = contentTop)
         // the card and its overlays reach the bottom of the screen when the answer buttons
         // are shown above them
-        clearInsets(findViewById(R.id.flashcard), bottom = cardBottom)
-        clearInsets(findViewById(R.id.touch_layer), bottom = cardBottom)
-        clearInsets(findViewById(R.id.whiteboard), bottom = cardBottom)
+        clearInsets(findViewById(R.id.flashcard), top = contentTop, bottom = cardBottom)
+        clearInsets(findViewById(R.id.touch_layer), top = contentTop, bottom = cardBottom)
+        clearInsets(findViewById(R.id.whiteboard), top = contentTop, bottom = cardBottom)
 
         clearInsets(colorPalette, bottom = whiteboardPaletteBottom)
         clearInsets(findViewById(R.id.bottom_area_layout), bottom = bottomAreaBottom)
 
         val answerArea = findViewById<View>(R.id.answer_options_layout)
-        // the shared answer-buttons layout enables android:fitsSystemWindows for the
-        // fullscreen modes: here, insets are handled manually
-        answerArea.fitsSystemWindows = false
         if (answerButtonsAtBottom) {
             // extends the answer area's color underneath the navigation bar, replacing the
             // pre-edge-to-edge setNavigationBarColor(R.attr.showAnswerColor)
@@ -478,6 +493,36 @@ open class Reviewer :
                 area.updatePadding(bottom = bottomBarsAndKeyboard(insets))
                 insets
             }
+        }
+
+        syncControlsWithSystemBars()
+    }
+
+    /**
+     * Immersive review: fades the overlaid controls in and out with the system bars
+     */
+    private fun syncControlsWithSystemBars() {
+        if (fullscreenMode == FullScreenMode.BUTTONS_AND_MENU) return
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { _, insets ->
+            val visible = insets.isVisible(navigationBars())
+            if (visible == immersiveBarsVisible) return@setOnApplyWindowInsetsListener insets
+
+            immersiveBarsVisible = visible
+            Timber.d("System bar visibility change. Visible: %b", visible)
+
+            fun toggleWithAnimation(
+                @IdRes id: Int,
+            ) {
+                val view = findViewById<View>(id)
+                if (visible) showViewWithAnimation(view) else hideViewWithAnimation(view)
+            }
+
+            toggleWithAnimation(R.id.toolbar_container)
+            if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
+                toggleWithAnimation(R.id.top_bar)
+                toggleWithAnimation(R.id.answer_options_layout)
+            }
+            insets
         }
     }
 
@@ -513,7 +558,7 @@ open class Reviewer :
 
         // Set full screen/immersive mode if needed
         if (prefFullscreenReview) {
-            setFullScreen(this)
+            hideSystemBars()
         }
         setRenderWorkaround(this)
     }
@@ -1617,7 +1662,7 @@ open class Reviewer :
     }
 
     override fun onSingleTap(): Boolean {
-        if (prefFullscreenReview && isImmersiveSystemUiVisible(this)) {
+        if (prefFullscreenReview && immersiveBarsVisible) {
             delayedHide(INITIAL_HIDE_DELAY)
             return true
         }
@@ -1625,7 +1670,7 @@ open class Reviewer :
     }
 
     override fun onFling() {
-        if (prefFullscreenReview && isImmersiveSystemUiVisible(this)) {
+        if (prefFullscreenReview && immersiveBarsVisible) {
             delayedHide(INITIAL_HIDE_DELAY)
         }
     }
@@ -1646,7 +1691,7 @@ open class Reviewer :
         object : Handler(getDefaultLooper()) {
             override fun handleMessage(msg: Message) {
                 if (prefFullscreenReview) {
-                    setFullScreen(this@Reviewer)
+                    hideSystemBars()
                 }
             }
         }
@@ -1666,46 +1711,14 @@ open class Reviewer :
         }
     }
 
-    @Suppress("deprecation") // #9332: UI Visibility -> Insets
-    private fun setFullScreen(a: AbstractFlashcardViewer) {
-        // Set appropriate flags to enable Sticky Immersive mode.
-        a.window.decorView.systemUiVisibility = (
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE // | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // temporarily disabled due to #5245
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_LOW_PROFILE
-                or View.SYSTEM_UI_FLAG_IMMERSIVE
-        )
-        // Show / hide the Action bar together with the status bar
-        val prefs = a.sharedPrefs()
-        val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = MaterialColors.getColor(a, CommonR.attr.appBarColor, 0)
-        val decorView = a.window.decorView
-        decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
-            val toolbar = a.findViewById<View>(R.id.toolbar)
-            val answerButtons = a.findViewById<View>(R.id.answer_options_layout)
-            val topbar = a.findViewById<View>(R.id.top_bar)
-            if (toolbar == null || topbar == null || answerButtons == null) {
-                return@setOnSystemUiVisibilityChangeListener
-            }
-            // Note that system bars will only be "visible" if none of the
-            // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
-            val visible = flags and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
-            Timber.d("System UI visibility change. Visible: %b", visible)
-            if (visible) {
-                showViewWithAnimation(toolbar)
-                if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
-                    showViewWithAnimation(topbar)
-                    showViewWithAnimation(answerButtons)
-                }
-            } else {
-                hideViewWithAnimation(toolbar)
-                if (fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE) {
-                    hideViewWithAnimation(topbar)
-                    hideViewWithAnimation(answerButtons)
-                }
-            }
+    /** Hides the system bars for immersive review; see [syncControlsWithSystemBars] */
+    private fun hideSystemBars() {
+        Timber.d("hideSystemBars")
+        with(WindowInsetsControllerCompat(window, window.decorView)) {
+            // the bars return on swipe and stay until the next delayedHide, rather than
+            // showing transiently (BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE)
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
+            hide(systemBars())
         }
     }
 
@@ -1732,11 +1745,6 @@ open class Reviewer :
                 },
             )
     }
-
-    @Suppress("deprecation") // #9332: UI Visibility -> Insets
-    private fun isImmersiveSystemUiVisible(
-        activity: AnkiActivity,
-    ): Boolean = activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
 
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
@@ -1815,10 +1823,7 @@ open class Reviewer :
             if (!whiteboard.isCurrentlyDrawing &&
                 (
                     !showWhiteboard ||
-                        (
-                            prefFullscreenReview &&
-                                isImmersiveSystemUiVisible(this@Reviewer)
-                        )
+                        (prefFullscreenReview && immersiveBarsVisible)
                 )
             ) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended

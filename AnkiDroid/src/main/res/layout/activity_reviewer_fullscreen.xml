@@ -34,7 +34,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:background="?attr/appBarColor">
 
         <include layout="@layout/include_toolbar"/>
     </FrameLayout>
