@@ -1191,6 +1191,30 @@ class NoteEditorFragment :
 
     private fun collectionHasLoaded(): Boolean = allNoteTypeIds != null
 
+    /**
+     * Whether this fragment is editing the cards which [launcher] targets.
+     */
+    fun isEditingSameCards(launcher: NoteEditorLauncher): Boolean {
+        if (launcher !is NoteEditorLauncher.EditSelection) return false
+        if (arguments?.getInt(EXTRA_CALLER) != NoteEditorCaller.EDIT.value) return false
+        return cardIdsFromArguments?.asList() == launcher.cardIds
+    }
+
+    /**
+     * Reloads the current note from the collection and rebuilds the fields, e.g. after the
+     * note was updated by another component (find & replace in the Card Browser).
+     *
+     * Unsaved edits are discarded: check [hasUnsavedChanges] before calling.
+     */
+    fun reloadNoteFromCollection() {
+        Timber.i("reloadNoteFromCollection()")
+        val cardId = currentEditedCard?.id ?: return
+        currentEditedCard = getColUnsafe.getCard(cardId)
+        // reset so setNote() reloads the tags of the note
+        selectedTags = null
+        setNote(currentEditedCard!!.note(getColUnsafe), FieldChangeType.refresh(shouldReplaceNewlines()))
+    }
+
     // ----------------------------------------------------------------------------
     // SAVE NOTE METHODS
     // ----------------------------------------------------------------------------
