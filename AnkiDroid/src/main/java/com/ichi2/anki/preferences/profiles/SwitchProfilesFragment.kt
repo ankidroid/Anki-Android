@@ -18,64 +18,48 @@
 package com.ichi2.anki.preferences.profiles
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.R
-import com.ichi2.anki.databinding.FragmentSwitchProfilesBinding
-import com.ichi2.utils.ValidationResult
-import com.ichi2.utils.input
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
-import com.ichi2.utils.title
-import dev.androidbroadcast.vbpd.viewBinding
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ichi2.compose.theme.AnkiDroidTheme
 
 /**
- * A [Fragment] that allows the user to switch between different profiles.
+ * Lets the user switch between profiles.
+ *
+ * Thin host for the Compose [SwitchProfilesScreen]. Stays a Fragment because
+ * preference_headers.xml launches it by class name.
  */
-class SwitchProfilesFragment : Fragment(R.layout.fragment_switch_profiles) {
-    private val binding by viewBinding(FragmentSwitchProfilesBinding::bind)
+class SwitchProfilesFragment : Fragment() {
+    private val viewModel: SwitchProfilesViewModel by viewModels()
 
-    override fun onViewCreated(
-        view: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
-        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
-            setTitle("Switch profile")
-            setNavigationOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+    ): View =
+        ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AnkiDroidTheme {
+                    val profiles by viewModel.profiles.collectAsStateWithLifecycle()
+                    val isAddProfileDialogVisible by viewModel.isAddProfileDialogVisible.collectAsStateWithLifecycle()
+                    SwitchProfilesScreen(
+                        profiles = profiles,
+                        isAddProfileDialogVisible = isAddProfileDialogVisible,
+                        onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
+                        onAddProfileClick = viewModel::showAddProfileDialog,
+                        onAddProfileConfirm = viewModel::addProfile,
+                        onAddProfileDismiss = viewModel::dismissAddProfileDialog,
+                        onEditProfile = viewModel::editProfile,
+                        onDeleteProfile = viewModel::deleteProfile,
+                    )
+                }
             }
         }
-
-        binding.addProfileFab.setOnClickListener {
-            showAddProfileDialog()
-        }
-    }
-
-    fun showAddProfileDialog() {
-        AlertDialog
-            .Builder(requireContext())
-            .show {
-                title(text = "Add profile")
-
-                positiveButton(R.string.dialog_add)
-                negativeButton(R.string.dialog_cancel)
-                setView(R.layout.dialog_generic_text_input)
-            }.input(
-                hint = "Profile name",
-                displayKeyboard = true,
-                validator = { text ->
-                    when {
-                        text.isNotBlank() -> ValidationResult.VALID
-                        else -> ValidationResult.REJECTED
-                    }
-                },
-            ) { _, _ ->
-                // TODO: handle profile creation
-            }
-    }
 }

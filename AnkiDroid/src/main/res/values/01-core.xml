@@ -182,6 +182,4 @@
     <string name="permission_access_summary">Required for the app to work</string>
     <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
 
-    <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
 </resources>
