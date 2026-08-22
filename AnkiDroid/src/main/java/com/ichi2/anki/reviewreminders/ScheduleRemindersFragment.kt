@@ -24,12 +24,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -52,6 +54,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
+import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.showDialogFragment
@@ -177,6 +180,8 @@ class ScheduleRemindersFragment :
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = binding.floatingActionButtonAdd
+        // reposition if the anchor moves, e.g. when the window insets arrive after showing
+        isAnchorViewLayoutListenerEnabled = true
     }
 
     /**
@@ -208,6 +213,7 @@ class ScheduleRemindersFragment :
                 setupInternalFragmentToolbar(isCollapsible = false)
             }
         }
+        setContentInsets()
 
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
         troubleshootingViewModel.state.launchCollectionInLifecycleScope(::setupTroubleshootingSnackbar)
@@ -319,11 +325,37 @@ class ScheduleRemindersFragment :
      */
     private fun setNonCollapsibleToolbarInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
-            val bars = insets.getInsets(statusBars() or displayCutout())
+            val bars = insets.getInsets(systemBars() or displayCutout())
             // the collapsible toolbar (first in the shared appbar) consumes the insets
             // so apply them manually
             binding.appbar.updatePadding(left = bars.left, top = bars.top, right = bars.right)
             insets
+        }
+    }
+
+    /**
+     * Keeps the list, the 'no reminders' placeholder and the 'add reminder' button clear of the
+     * navigation bar and any display cutout.
+     *
+     * These listeners are no-ops in hosts which apply the insets to this fragment's container
+     * and consume them.
+     */
+    private fun setContentInsets() {
+        binding.recyclerView.doOnApplyWindowInsets { view, insets, initial ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, right = bars.right, bottom = initial.padding.bottom + bars.bottom)
+        }
+        binding.noRemindersPlaceholder.doOnApplyWindowInsets { view, insets, _ ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, right = bars.right)
+        }
+        binding.floatingActionButtonAdd.doOnApplyWindowInsets { view, insets, initial ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = initial.margins.left + bars.left
+                rightMargin = initial.margins.right + bars.right
+                bottomMargin = initial.margins.bottom + bars.bottom
+            }
         }
     }
 

@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
+import androidx.core.view.marginRight
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -59,6 +61,12 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
     /** The size of the simulated navigation bar: its height, or its width when on the side of the screen */
     private val navigationBarSize = 48.dp
 
+    /** The 'add reminder' button's margin, from the layout XML */
+    private val fabMargin = 16.dp
+
+    /** The list's bottom padding, from the layout XML: lets content scroll clear of the 'add reminder' button */
+    private val listBottomPadding = 84.dp
+
     @Test
     fun `standalone host - toolbar content clears the status bar and cutout`() =
         withStandaloneScheduleReminders { activity, binding ->
@@ -73,6 +81,46 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 "toolbar content clears the cutout",
                 binding.appbar.paddingLeft,
                 equalTo(32.dp.toPx(targetContext)),
+            )
+        }
+
+    @Test
+    fun `standalone host - button and list content clear the navigation bar`() =
+        withStandaloneScheduleReminders { activity, binding ->
+            activity.dispatchInsets(navBarBottom = navigationBarSize)
+
+            assertThat(
+                "the 'add reminder' button rests above the navigation bar",
+                binding.floatingActionButtonAdd.marginBottom,
+                equalTo((fabMargin + navigationBarSize).toPx(targetContext)),
+            )
+            assertThat(
+                "scrolled list content clears the navigation bar",
+                binding.recyclerView.paddingBottom,
+                equalTo((listBottomPadding + navigationBarSize).toPx(targetContext)),
+            )
+        }
+
+    @Test
+    fun `standalone host - content clears a side navigation bar`() =
+        withStandaloneScheduleReminders { activity, binding ->
+            // landscape with 3-button navigation: the navigation bar is a side inset
+            activity.dispatchInsets(navBarRight = navigationBarSize)
+
+            assertThat(
+                "toolbar content clears the side navigation bar",
+                binding.appbar.paddingRight,
+                equalTo(navigationBarSize.toPx(targetContext)),
+            )
+            assertThat(
+                "list content clears the side navigation bar",
+                binding.recyclerView.paddingRight,
+                equalTo(navigationBarSize.toPx(targetContext)),
+            )
+            assertThat(
+                "the 'add reminder' button clears the side navigation bar",
+                binding.floatingActionButtonAdd.marginRight,
+                equalTo((fabMargin + navigationBarSize).toPx(targetContext)),
             )
         }
 
@@ -96,7 +144,7 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
     @Test
     fun `settings host - collapsible toolbar clears the status bar`() =
         withSettingsScheduleReminders { activity, binding ->
-            activity.dispatchInsets()
+            activity.dispatchInsets(navBarBottom = navigationBarSize)
 
             assertThat(
                 "the root does not pad itself; the app bar handles the inset",
@@ -107,6 +155,11 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 "the collapsible toolbar is pushed clear of the status bar",
                 binding.toolbar.top,
                 equalTo(statusBarHeight.toPx(targetContext)),
+            )
+            assertThat(
+                "the 'add reminder' button rests above the navigation bar",
+                binding.floatingActionButtonAdd.marginBottom,
+                equalTo((fabMargin + navigationBarSize).toPx(targetContext)),
             )
         }
 
@@ -134,6 +187,11 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 "the toolbar is provided by the host",
                 binding.appbar.isVisible,
                 equalTo(false),
+            )
+            assertThat(
+                "the fragment does not move the 'add reminder' button again",
+                binding.floatingActionButtonAdd.marginBottom,
+                equalTo(fabMargin.toPx(targetContext)),
             )
         }
 
@@ -175,6 +233,11 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 "the panel toolbar is not pushed down by the status bar",
                 binding.nonCollapsibleToolbar.top,
                 equalTo(0),
+            )
+            assertThat(
+                "the fragment does not move the 'add reminder' button again",
+                binding.floatingActionButtonAdd.marginBottom,
+                equalTo(fabMargin.toPx(targetContext)),
             )
         }
 
