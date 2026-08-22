@@ -18,6 +18,7 @@ import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.previewer.CardViewerActivity
+import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.AllPermissionsExplanationActivity
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.testutils.ActivityList
@@ -129,6 +130,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     SharedDecksActivity::class.java,
                     // StudyOptionsScreenshotTest
                     StudyOptionsActivity::class.java,
+                    // ManageSpaceScreenshotTest
+                    ManageSpaceActivity::class.java,
                     // InfoScreenshotTest
                     Info::class.java,
                 )
