@@ -2,6 +2,7 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
@@ -82,6 +83,21 @@ class ReviewerScreenshotTest : ScreenshotTest() {
         withReviewer { reviewer ->
             reviewer.simulateHiddenBarsWithCutout()
             captureScreen("fullscreen_bars_hidden")
+        }
+    }
+
+    /**
+     * 'Hide the system bars' in landscape with a camera notch: the cutout is a side inset.
+     * The counts bar and the answer area clear it the same way: content inset, with their
+     * backgrounds spanning the full width.
+     */
+    @Test
+    fun fullscreenLandscape() {
+        setFullscreenMode(FullScreenMode.BUTTONS_ONLY)
+        RuntimeEnvironment.setQualifiers("+land")
+        withReviewer { reviewer ->
+            reviewer.simulateHiddenBarsWithSideCutout()
+            captureScreen("fullscreen_landscape")
         }
     }
 
@@ -200,6 +216,37 @@ class ReviewerScreenshotTest : ScreenshotTest() {
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 cutoutHeight.toPx(targetContext),
                 Gravity.TOP,
+            ),
+        )
+    }
+
+    /** As [simulateHiddenBarsWithCutout], but landscape: the camera notch is a side inset. */
+    private fun Reviewer.simulateHiddenBarsWithSideCutout() {
+        val cutoutWidth = 32.dp
+        val insets =
+            with(targetContext) {
+                WindowInsetsCompat
+                    .Builder()
+                    .setInsets(displayCutout(), insetsOf(left = cutoutWidth))
+                    .setVisible(statusBars() or navigationBars(), false)
+                    .build()
+            }
+        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+        // let the overlaid controls finish fading out with the bars
+        advanceRobolectricLooper()
+
+        val decor = window.decorView as ViewGroup
+        val cutoutOverlay =
+            View(this).apply {
+                setBackgroundColor(overlayColor)
+            }
+        decor.addView(
+            cutoutOverlay,
+            FrameLayout.LayoutParams(
+                cutoutWidth.toPx(targetContext),
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                @SuppressLint("RtlHardcoded")
+                Gravity.LEFT,
             ),
         )
     }
