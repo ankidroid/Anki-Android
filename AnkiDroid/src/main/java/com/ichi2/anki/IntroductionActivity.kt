@@ -5,7 +5,10 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
@@ -58,6 +61,7 @@ class IntroductionActivity :
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
 
         setFragmentResultListener(FRAGMENT_KEY) { _, bundle ->
             val option =
