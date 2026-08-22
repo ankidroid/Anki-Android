@@ -52,6 +52,7 @@ import androidx.core.util.component2
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
@@ -705,7 +706,9 @@ open class DeckPicker :
             ViewCompat.setOnApplyWindowInsetsListener(studyoptionsView) { studyOptions, insets ->
                 val bars = insets.getInsets(systemBars() or displayCutout())
                 studyOptions.updatePadding(right = bars.right, bottom = bars.bottom)
-                insets
+                // insets are applied by padding. CONSUMED means hosted fragments don't apply them
+                // again (e.g. ScheduleRemindersFragment).
+                WindowInsetsCompat.CONSUMED
             }
         }
     }
