@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -22,7 +23,9 @@ import androidx.test.filters.SdkSuppress
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -441,11 +444,17 @@ class DeckPickerTest : RobolectricTest() {
         assertEquals(expectedTitle, actualTitle)
     }
 
-    private fun withBottomNavigationEnabled(action: () -> Unit) {
+    private fun withBottomNavigationEnabled(action: () -> Unit) = withBooleanPreference(R.string.dev_bottom_nav_key, true, action)
+
+    private fun withBooleanPreference(
+        keyResource: Int,
+        value: Boolean,
+        action: () -> Unit,
+    ) {
         val preferences = Prefs.sharedPrefs
-        val key = Prefs.key(R.string.dev_bottom_nav_key)
+        val key = Prefs.key(keyResource)
         val previousValue = if (preferences.contains(key)) preferences.getBoolean(key, false) else null
-        preferences.edit { putBoolean(key, true) }
+        preferences.edit { putBoolean(key, value) }
         try {
             action()
         } finally {
@@ -844,6 +853,24 @@ class DeckPickerTest : RobolectricTest() {
                 bottomNav.menu.findItem(R.id.nav_stats).title = longTitle
 
                 assertThat(bottomNav.findViewById<View>(R.id.nav_stats).tooltipText.toString(), equalTo(longTitle))
+            }
+        }
+
+    @Test
+    fun `bottom navigation supports the public card browser`() =
+        withBottomNavigationEnabled {
+            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+                assumeTrue("Not running on tablet", qualifiers != "xlarge")
+                deckPicker {
+                    findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId =
+                        BottomNavController.NavigationItem.BROWSER.id
+                    supportFragmentManager.executePendingTransactions()
+
+                    val browser = supportFragmentManager.findFragmentByTag("browser") as CardBrowserFragment
+                    val browserToolbar = browser.requireView().findViewById<Toolbar>(R.id.toolbar)
+                    assertThat(browser.legacySearchView, notNullValue())
+                    assertThat(browserToolbar.menu.findItem(R.id.action_search), notNullValue())
+                }
             }
         }
 
