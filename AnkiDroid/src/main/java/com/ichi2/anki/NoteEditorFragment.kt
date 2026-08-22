@@ -352,7 +352,8 @@ class NoteEditorFragment :
                 closeNoteEditor()
             } else {
                 Timber.d("onActivityResult() template edit return, in add mode, just re-display")
-                updateCards(editorNote!!.notetype)
+                // the fields may have changed, so rebuild them
+                refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
             }
         } else {
             Timber.d("onActivityResult() template edit return - current card exists")
@@ -362,7 +363,8 @@ class NoteEditorFragment :
             // make sure the card's note is available going forward
             currentEditedCard!!.note(getColUnsafe)
             editorNote = currentEditedCard!!.note // update the NoteEditor's working note reference
-            updateCards(editorNote!!.notetype)
+            // the fields may have changed, so rebuild them
+            setNote(editorNote, FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
         }
     }
 
