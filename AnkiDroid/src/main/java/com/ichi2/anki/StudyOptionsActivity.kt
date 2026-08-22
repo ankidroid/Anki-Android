@@ -156,7 +156,9 @@ class StudyOptionsActivity :
                     WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
                 )
             view.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
-            insets
+            // insets are applied by padding. CONSUMED means hosted fragments don't apply them
+            // again (e.g. ScheduleRemindersFragment).
+            WindowInsetsCompat.CONSUMED
         }
     }
 
