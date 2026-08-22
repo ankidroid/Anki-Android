@@ -58,7 +58,6 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
         // Fragment-host activities: need a 'fragmentName' intent extra to render anything.
         // TODO: split these into per-class screenshot tests that pass a real fragment.
         notYetHandled(ConfigAwareSingleFragmentActivity::class.java.simpleName, "Needs 'fragmentName' intent extra")
-        notYetHandled(MultimediaActivity::class.java.simpleName, "Needs 'fragmentName' intent extra")
 
         super.setUp()
     }
@@ -115,6 +114,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     CardViewerActivity::class.java,
                     // ManageNotetypesScreenshotTest,
                     ManageNotetypes::class.java,
+                    // MultimediaScreenshotTest
+                    MultimediaActivity::class.java,
                     // PreferencesScreenshotTest
                     PreferencesActivity::class.java,
                     // SharedDecksScreenshotTest
