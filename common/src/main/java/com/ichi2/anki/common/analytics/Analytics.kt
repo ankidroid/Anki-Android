@@ -15,15 +15,11 @@ package com.ichi2.anki.common.analytics
  */
 interface UsageAnalytics {
     /**
-     * @param category groups related events; use a constant so reporting stays consistent
-     * @param action what the user did
+     * Reports [event]. [AnalyticsEvent] is deliberately the only way in: there is
+     * no string-based overload, so the category and action of every hit are fixed
+     * at the event's declaration and runtime data can only reach the label or value.
      */
-    fun sendAnalyticsEvent(
-        category: String,
-        action: String,
-        value: Int? = null,
-        label: String? = null,
-    )
+    fun send(event: AnalyticsEvent)
 
     /** Records a screen view named after [screen]'s class. */
     fun sendAnalyticsScreenView(screen: Any) {
@@ -49,7 +45,7 @@ interface UsageAnalytics {
  * Sends analytics through whichever [UsageAnalytics] was registered at startup.
  *
  * ```
- * Analytics.sendAnalyticsEvent("Widget", "enabled")
+ * Analytics.send(AnalyticsEvent.WidgetEnabled("AddNoteWidget"))
  * ```
  */
 object Analytics {
@@ -59,12 +55,7 @@ object Analytics {
      * safe: throwing would hide the crash we were reporting.
      */
     private object Unregistered : UsageAnalytics {
-        override fun sendAnalyticsEvent(
-            category: String,
-            action: String,
-            value: Int?,
-            label: String?,
-        ) = Unit
+        override fun send(event: AnalyticsEvent) = Unit
 
         override fun sendAnalyticsScreenView(screenName: String) = Unit
 
@@ -74,19 +65,13 @@ object Analytics {
         ) = Unit
     }
 
-    var instance: UsageAnalytics = Unregistered
-        private set
+    private var instance: UsageAnalytics = Unregistered
 
     fun setAnalytics(analytics: UsageAnalytics) {
         instance = analytics
     }
 
-    fun sendAnalyticsEvent(
-        category: String,
-        action: String,
-        value: Int? = null,
-        label: String? = null,
-    ) = instance.sendAnalyticsEvent(category, action, value, label)
+    fun send(event: AnalyticsEvent) = instance.send(event)
 
     fun sendAnalyticsScreenView(screen: Any) = instance.sendAnalyticsScreenView(screen)
 

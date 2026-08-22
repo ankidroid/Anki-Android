@@ -16,11 +16,11 @@ Of the six hit types the library supports, AnkiDroid uses three:
 | Used by AnkiDroid | Sent from |
 |---|---|
 | `screen_view` | `AnkiDroidUsageAnalytics.sendAnalyticsScreenView(...)` |
-| `event`       | `AnkiDroidUsageAnalytics.sendAnalyticsEvent(...)` |
+| `event`       | `AnkiDroidUsageAnalytics.send(AnalyticsEvent)` |
 | `exception`   | `AnkiDroidUsageAnalytics.sendAnalyticsException(...)` (truncated to 150 chars) |
 
-The complete list of categories and actions lives in
-[`AnalyticsConstants.kt`](../../AnkiDroid/src/main/java/com/ichi2/anki/analytics/AnalyticsConstants.kt).
+The complete list of events, with their categories and actions, lives in
+[`AnalyticsEvent.kt`](../../common/src/main/java/com/ichi2/anki/common/analytics/AnalyticsEvent.kt).
 We never include card content, deck names, note fields, sync credentials, or
 file paths.
 

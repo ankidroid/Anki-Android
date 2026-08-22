@@ -16,6 +16,7 @@ package com.ichi2.anki.dialogs.help
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.ichi2.anki.common.analytics.LinkAction
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -32,7 +33,7 @@ data class HelpItem(
      * The icon associated with this menu item.
      */
     @DrawableRes val iconResId: Int,
-    val analyticsId: String,
+    val analyticsId: LinkAction,
     /**
      * Unique(per menu) identifier for this menu item.
      */
