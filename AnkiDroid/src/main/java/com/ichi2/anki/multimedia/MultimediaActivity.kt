@@ -5,7 +5,13 @@ package com.ichi2.anki.multimedia
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.button.MaterialButton
@@ -16,10 +22,11 @@ import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.anki.databinding.ActivityMultimediaBinding
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.startup.ensureStorageIsReady
-import com.ichi2.themes.setTransparentStatusBar
+import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -65,10 +72,16 @@ class MultimediaActivity :
             return
         }
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge(
+            statusBarStyle =
+                SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) {
+                    Themes.currentTheme is NightTheme
+                },
+        )
         if (!ensureStorageIsReady()) {
             return
         }
-        setTransparentStatusBar()
+        setupEdgeToEdge()
         setSupportActionBar(binding.toolbar)
 
         // avoid recreating the fragment on configuration changes
@@ -97,6 +110,21 @@ class MultimediaActivity :
         binding.toolbar.setNavigationOnClickListener {
             Timber.d("MultimediaActivity:: Back pressed")
             onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    /**
+     * Applies edge-to-edge insets for the app bar. The hosted fragment insets its own root,
+     * see [MultimediaFragment].
+     */
+    private fun setupEdgeToEdge() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.appBar) { view, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            view.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
         }
     }
 
