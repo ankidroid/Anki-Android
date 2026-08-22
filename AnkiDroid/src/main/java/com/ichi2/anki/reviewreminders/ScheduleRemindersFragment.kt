@@ -18,6 +18,7 @@ package com.ichi2.anki.reviewreminders
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.Menu
@@ -25,7 +26,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -36,7 +40,9 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -48,6 +54,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.Companion.registerAddEditReminderHandler
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.runCatching
 import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -214,6 +221,7 @@ class ScheduleRemindersFragment :
             }
         }
         setContentInsets()
+        renderEdgeToEdge(host)
 
         binding.floatingActionButtonAdd.setOnClickListener { addReminder() }
         troubleshootingViewModel.state.launchCollectionInLifecycleScope(::setupTroubleshootingSnackbar)
@@ -695,4 +703,47 @@ class ScheduleRemindersFragment :
                 )
             }
     }
+}
+
+/**
+ * TODO: remove once all [FragmentHost]s are edge-to-edge.
+ *
+ * Renders the host window into a display cutout, removing a black bar.
+ *
+ * @see WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+ *
+ * Needed even on API 35+: the app opts out of edge-to-edge enforcement
+ * (`windowOptOutEdgeToEdgeEnforcement`), so these windows letterbox the cutout on every
+ * API level.
+ */
+internal fun Fragment.renderEdgeToEdge(host: FragmentHost) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return
+    // these hosts call `enableEdgeToEdge`
+    if (host == FragmentHost.STUDY_OPTIONS_FRAGMENT || host == FragmentHost.STUDY_OPTIONS_FRAME) return
+    val window = requireActivity().window
+
+    viewLifecycleOwner.lifecycle.addObserver(
+        object : DefaultLifecycleObserver {
+            // resume/pause rather than view creation/destruction: when this fragment is replaced
+            // by one which also renders into the cutout, the new fragment's view is created
+            // before the old fragment restores the mode, but it is resumed afterwards
+            override fun onResume(owner: LifecycleOwner) {
+                window.setLayoutInDisplayCutoutMode(
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES,
+                )
+            }
+
+            override fun onPause(owner: LifecycleOwner) {
+                window.setLayoutInDisplayCutoutMode(
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT,
+                )
+            }
+        },
+    )
+}
+
+@RequiresApi(Build.VERSION_CODES.P)
+private fun Window.setLayoutInDisplayCutoutMode(mode: Int) {
+    if (attributes.layoutInDisplayCutoutMode == mode) return
+    attributes = attributes.also { it.layoutInDisplayCutoutMode = mode }
 }

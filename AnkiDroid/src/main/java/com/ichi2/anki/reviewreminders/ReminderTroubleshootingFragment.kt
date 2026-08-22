@@ -28,7 +28,11 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -44,6 +48,7 @@ import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.onWindowFocusChanged
 import com.ichi2.anki.utils.ext.requireParcelable
@@ -110,6 +115,32 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
         setupSummary()
         setupTroubleshootingChecks()
         setupSettingChangeDetector()
+        setupContentInsets()
+        renderEdgeToEdge(host)
+    }
+
+    /**
+     * Keeps the toolbar and the end of the scrolled content clear of the system bars and any
+     * display cutout.
+     *
+     * The content renders underneath the bottom bar while scrolling.
+     *
+     * These listeners are no-ops in hosts which apply the insets to this fragment's container
+     * and consume them.
+     */
+    private fun setupContentInsets() {
+        binding.troubleshootingToolbar.doOnApplyWindowInsets { view, insets, initial ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, right = bars.right)
+            // Margin must be used to align the icon and the title.
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = initial.margins.top + bars.top
+            }
+        }
+        binding.scrollView.doOnApplyWindowInsets { view, insets, initial ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, right = bars.right, bottom = initial.padding.bottom + bars.bottom)
+        }
     }
 
     private fun setupExternalActivityToolbar() {
