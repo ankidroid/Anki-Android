@@ -155,21 +155,113 @@ class ReviewerInsetsTest : RobolectricTest() {
         }
 
     @Test
-    fun `fullscreen review keeps the legacy fitsSystemWindows handling`() {
+    fun `immersive review - the counts bar clears the camera cutout`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            val baseTopPadding = reviewer.countsBar.paddingTop
+            // bars hidden: only the camera cutout insets the content
+            reviewer.dispatchInsets(cutoutTop = 32.dp, barsVisible = false)
+
+            assertThat(
+                "the counts bar sits at the top of the window and clears the cutout",
+                reviewer.countsBar.paddingTop,
+                equalTo(baseTopPadding + 32.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
+    fun `immersive review - revealed bars lift the answer buttons above the navigation bar`() {
         FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
         withReviewer { reviewer ->
             reviewer.dispatchInsets(navBarBottom = 48.dp)
 
             assertThat(
-                "the answer area is padded by android:fitsSystemWindows, not by a listener",
+                "the answer area rests above the revealed navigation bar",
                 reviewer.answerArea.paddingBottom,
                 equalTo(48.dp.toPx(targetContext)),
             )
             assertThat(
-                "fitsSystemWindows also applies the top inset",
+                "no spurious top inset on the answer area (previously applied by fitsSystemWindows)",
                 reviewer.answerArea.paddingTop,
+                equalTo(0),
+            )
+            assertThat(
+                "the overlaid toolbar is pushed clear of the revealed status bar",
+                reviewer.toolbarContainer.paddingTop,
                 equalTo(24.dp.toPx(targetContext)),
             )
+        }
+    }
+
+    @Test
+    fun `immersive review - no stripe with the answer buttons at the top - issue 14201`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        withReviewer(answerButtonsPosition = "top") { reviewer ->
+            reviewer.dispatchInsets(navBarBottom = 48.dp)
+
+            assertThat(
+                "the answer area is at the top: the navigation bar inset (the 'stripe') no longer pads it",
+                reviewer.answerArea.paddingBottom,
+                equalTo(0),
+            )
+            assertThat(
+                "the card is the bottom-most element and clears the navigation bar",
+                reviewer.cardContainer.paddingBottom,
+                equalTo(48.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
+    fun `immersive review - hide everything - the card clears the camera cutout`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.FULLSCREEN_ALL_GONE)
+        withReviewer { reviewer ->
+            // FULLSCREEN_ALL_GONE lays the card out at the top of the window
+            reviewer.dispatchInsets(cutoutTop = 32.dp, barsVisible = false)
+
+            assertThat(
+                "the card clears the cutout",
+                reviewer.cardContainer.paddingTop,
+                equalTo(32.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
+    fun `immersive review - hidden top bar - the card clears the camera cutout`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        targetContext.sharedPrefs().edit { putBoolean("showTopbar", false) }
+        withReviewer { reviewer ->
+            // with 'Show top bar' disabled, the card is laid out at the top of the window
+            reviewer.dispatchInsets(cutoutTop = 32.dp, barsVisible = false)
+
+            assertThat(
+                "the card clears the cutout",
+                reviewer.cardContainer.paddingTop,
+                equalTo(32.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
+    fun `immersive review - controls fade out and back in with the bars`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.FULLSCREEN_ALL_GONE)
+        withReviewer { reviewer ->
+            // the startup hideSystemBars() has already faded the controls out with the bars
+            advanceRobolectricLooper()
+            assertThat("the toolbar is hidden with the bars", reviewer.toolbarContainer.visibility, equalTo(View.GONE))
+            assertThat("the answer area is hidden with the bars", reviewer.answerArea.visibility, equalTo(View.GONE))
+
+            // the user swipes the bars back into view
+            reviewer.dispatchInsets(navBarBottom = 48.dp, barsVisible = true)
+            advanceRobolectricLooper()
+            assertThat("the toolbar returns with the bars", reviewer.toolbarContainer.visibility, equalTo(View.VISIBLE))
+            assertThat("the answer area returns with the bars", reviewer.answerArea.visibility, equalTo(View.VISIBLE))
+
+            reviewer.dispatchInsets(barsVisible = false)
+            advanceRobolectricLooper()
+            assertThat("the toolbar fades back out", reviewer.toolbarContainer.visibility, equalTo(View.GONE))
         }
     }
 
@@ -196,16 +288,19 @@ class ReviewerInsetsTest : RobolectricTest() {
         navBarBottom: Dp = 0.dp,
         navBarRight: Dp = 0.dp,
         cutoutLeft: Dp = 0.dp,
+        cutoutTop: Dp = 0.dp,
         imeBottom: Dp = 0.dp,
+        barsVisible: Boolean = true,
     ) {
         val insets =
             with(targetContext) {
                 WindowInsetsCompat
                     .Builder()
-                    .setInsets(statusBars(), insetsOf(top = 24.dp))
+                    .setInsets(statusBars(), insetsOf(top = if (barsVisible) 24.dp else 0.dp))
                     .setInsets(navigationBars(), insetsOf(right = navBarRight, bottom = navBarBottom))
-                    .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
+                    .setInsets(displayCutout(), insetsOf(left = cutoutLeft, top = cutoutTop))
                     .setInsets(ime(), insetsOf(bottom = imeBottom))
+                    .setVisible(statusBars() or navigationBars(), barsVisible)
                     .build()
             }
         ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
