@@ -24,11 +24,18 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
-            <include layout="@layout/include_toolbar"/>
+            <FrameLayout
+                android:id="@+id/toolbar_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+                <include layout="@layout/include_toolbar"/>
+            </FrameLayout>
             <include layout="@layout/include_reviewer_topbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/toolbar"/>
+                android:layout_below="@id/toolbar_container"/>
             <include
                 layout="@layout/include_reviewer_whiteboard_editor"
                 android:layout_width="wrap_content"
