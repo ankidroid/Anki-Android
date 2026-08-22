@@ -19,11 +19,27 @@ package com.ichi2.anki.account
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.isLoggedIn
+import com.ichi2.themes.Themes
 
+/**
+ * Hosts the AnkiWeb account screens: [LoginFragment] or [LoggedInFragment].
+ *
+ * Its own activity so edge-to-edge applies to these screens alone. Each fragment insets its own root.
+ */
 class AccountActivity : SingleFragmentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { Themes.isNightTheme },
+        )
+    }
+
     companion object {
         /** Sees if we want to go back to the DeckPicker after login*/
         const val START_FROM_DECKPICKER = "START_FOR_RESULT"

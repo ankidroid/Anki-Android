@@ -5,22 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <!-- padding goes here, not on the Toolbar, where minHeight would absorb it -->
+        <FrameLayout
+            android:id="@+id/toolbar_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:navigationContentDescription="@string/abc_action_bar_up_description"
-            android:navigationIcon="?attr/homeAsUpIndicator"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:navigationContentDescription="@string/abc_action_bar_up_description"
+                android:navigationIcon="?attr/homeAsUpIndicator"/>
+        </FrameLayout>
         <ScrollView
+            android:id="@+id/account_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
+            android:clipToPadding="false"
             android:fillViewport="true"
             android:layout_weight="1">
 

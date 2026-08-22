@@ -25,7 +25,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -37,6 +40,7 @@ import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.isCompactWidth
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -60,6 +64,7 @@ class LoggedInFragment : Fragment(R.layout.fragment_my_account_logged_in) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setupEdgeToEdge(view)
 
         val toolbar: MaterialToolbar = view.findViewById(R.id.toolbar)
         val activity = requireActivity() as AppCompatActivity
@@ -84,6 +89,25 @@ class LoggedInFragment : Fragment(R.layout.fragment_my_account_logged_in) {
         view.findViewById<Button>(R.id.remove_account_button).setOnClickListener { openRemoveAccountScreen() }
 
         loggedInLogo = view.findViewById(R.id.login_logo)
+    }
+
+    /** Applies edge-to-edge insets for the screen */
+    private fun setupEdgeToEdge(view: View) {
+        val toolbarContainer = view.findViewById<View>(R.id.toolbar_container)
+        val content = view.findViewById<View>(R.id.account_content)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            toolbarContainer.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            content.updatePadding(
+                left = bars.left,
+                right = bars.right,
+                bottom = maxOf(bars.bottom, insets.bottomCornerClearance(content)),
+            )
+            insets
+        }
     }
 
     private fun openAnkiDroidPrivacyPolicy() {

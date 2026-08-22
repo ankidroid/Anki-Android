@@ -21,11 +21,15 @@ import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.annotation.CallSuper
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
@@ -83,6 +87,7 @@ class RemoveAccountFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        setupEdgeToEdge(view)
         webViewLayout = view.findViewById(R.id.webview_layout)
         setupWebView()
         view.findViewById<MaterialToolbar?>(R.id.toolbar)?.apply {
@@ -90,6 +95,29 @@ class RemoveAccountFragment :
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
+        }
+    }
+
+    /** Applied here, not in `fragment_page.xml`: that layout is shared with [PageFragment] */
+    private fun setupEdgeToEdge(view: View) {
+        val webViewContainer = view.findViewById<View>(R.id.webview_container)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { root, insets ->
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                )
+            val withKeyboard =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() or
+                        WindowInsetsCompat.Type.displayCutout() or
+                        WindowInsetsCompat.Type.ime(),
+                )
+            // the toolbar's parent: the Toolbar's style sets its own horizontal padding
+            root.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            webViewContainer.updatePadding(
+                bottom = maxOf(withKeyboard.bottom, insets.bottomCornerClearance(webViewContainer)),
+            )
+            insets
         }
     }
 
