@@ -5,8 +5,11 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -21,6 +24,7 @@ import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.utils.ext.setFragmentResultListener
+import com.ichi2.themes.Themes
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -45,6 +49,9 @@ open class SingleFragmentActivity :
     override val baseSnackbarBuilder: SnackbarBuilder
         get() = (fragment as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder ?: { }
 
+    /** Whether this host is ported to edge to edge (17334) */
+    open val supportsEdgeToEdge: Boolean get() = false
+
     // the same host class serves every screen it shows, so report what it's showing
     override val analyticsScreenName: String
         get() = intent.getStringExtra(EXTRA_FRAGMENT_NAME)?.substringAfterLast('.') ?: super.analyticsScreenName
@@ -58,7 +65,11 @@ open class SingleFragmentActivity :
         if (!ensureStorageIsReady()) {
             return
         }
-        setTransparentStatusBar()
+        if (supportsEdgeToEdge) {
+            enableEdgeToEdge(statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { Themes.isNightTheme })
+        } else {
+            setTransparentStatusBar()
+        }
 
         // avoid recreating the fragment on configuration changes
         // the fragment should handle state restoration
