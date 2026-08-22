@@ -243,8 +243,15 @@ internal fun selectStoragePermissions(
 }
 
 fun selectStoragePermissions(context: Context): PermissionSet {
+    // `false`: the collection is app-private, so it can be accessed without storage permissions
+    // `null`: no collection path is set
+    val currentFolderIsLegacy = isLegacyStorage(context, setCollectionPath = false)
+    if (currentFolderIsLegacy == false) {
+        return PermissionSet.APP_PRIVATE
+    }
+
     val canAccessLegacyStorage = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
-    val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
+    val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && currentFolderIsLegacy == true
 
     return selectStoragePermissions(
         canManageExternalStorage = Permissions.canManageExternalStorage(context),
