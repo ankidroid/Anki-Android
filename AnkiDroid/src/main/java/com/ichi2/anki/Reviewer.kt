@@ -421,6 +421,7 @@ open class Reviewer :
         val cardBottom = if (answerButtonsPosition == "top") bottomBars else zero
         val bottomAreaBottom = if (answerButtonsPosition == "none") bottomBarsAndKeyboard else zero
         val whiteboardPaletteBottom = if (answerButtonsAtBottom) zero else bottomBars
+        val answerAreaBottom = if (answerButtonsAtBottom) bottomBarsAndKeyboard else zero
 
         /**
          * Pads [view]'s content past the side insets and, per [top] and [bottom], those
@@ -482,18 +483,25 @@ open class Reviewer :
         clearInsets(findViewById(R.id.whiteboard), top = contentTop, bottom = cardBottom)
 
         clearInsets(colorPalette, bottom = whiteboardPaletteBottom)
-        clearInsets(findViewById(R.id.bottom_area_layout), bottom = bottomAreaBottom)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.bottom_area_layout)) { bottomArea, insets ->
+            bottomArea.updatePadding(bottom = bottomAreaBottom(insets))
+            insets
+        }
+
+        findViewById<View>(R.id.answer_field).also { answerField ->
+            clearInsets(answerField, basePadding = answerField.paddingLeft)
+        }
 
         val answerArea = findViewById<View>(R.id.answer_options_layout)
         if (answerButtonsAtBottom) {
             // extends the answer area's color underneath the navigation bar, replacing the
             // pre-edge-to-edge setNavigationBarColor(R.attr.showAnswerColor)
             answerArea.setBackgroundColor(MaterialColors.getColor(this, R.attr.showAnswerColor, 0))
-            ViewCompat.setOnApplyWindowInsetsListener(answerArea) { area, insets ->
-                area.updatePadding(bottom = bottomBarsAndKeyboard(insets))
-                insets
-            }
         }
+        // In immersive review the hidden bars report zero insets, so the buttons sit
+        // flush with the bottom edge of the screen
+        clearInsets(answerArea, bottom = answerAreaBottom)
 
         syncControlsWithSystemBars()
     }
