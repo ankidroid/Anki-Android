@@ -3,10 +3,14 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Build
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsAnimation
+import androidx.annotation.IdRes
 import androidx.core.content.edit
 import androidx.core.view.marginBottom
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -463,6 +467,143 @@ class ReviewerInsetsTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `taps on the answer area's inset band press the button above it`() =
+        withReviewer { reviewer ->
+            reviewer.dispatchInsets(navBarBottom = 48.dp)
+            advanceRobolectricLooper()
+
+            assertThat("the card starts on the question side", reviewer.isDisplayingAnswer, equalTo(false))
+            // tap the showAnswerColor band painted below 'Show answer'
+            reviewer.tapBottomBand(below = R.id.flashcard_layout_flip)
+            advanceRobolectricLooper()
+            assertThat(
+                "a tap on the band below 'Show answer' flips the card",
+                reviewer.isDisplayingAnswer,
+                equalTo(true),
+            )
+
+            // the ease buttons replace the flip button; the band under 'Good' answers Good
+            reviewer.tapBottomBand(below = R.id.flashcard_layout_ease3)
+            advanceRobolectricLooper()
+            assertThat(
+                "a tap on the band below an ease button answers the card",
+                reviewer.isDisplayingAnswer,
+                equalTo(false),
+            )
+            assertThat("the card was answered 'Good'", lastAnsweredEase(), equalTo(REVLOG_EASE_GOOD))
+        }
+
+    @Test
+    fun `taps on the answer area's side band press the outer button beside it`() =
+        withReviewer { reviewer ->
+            reviewer.dispatchInsets(navBarBottom = 48.dp, cutoutLeft = 24.dp)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "the answer area clears the cutout",
+                reviewer.answerArea.paddingLeft,
+                equalTo(24.dp.toPx(targetContext)),
+            )
+            // tap inside the cutout strip, level with 'Show answer'
+            reviewer.answerArea.tap(x = 1f, y = 1f)
+            advanceRobolectricLooper()
+            assertThat(
+                "a tap on the band beside 'Show answer' flips the card",
+                reviewer.isDisplayingAnswer,
+                equalTo(true),
+            )
+        }
+
+    @Test
+    fun `answer buttons at the top - taps on the side band press the outer button beside it`() =
+        withReviewer(answerButtonsPosition = "top") { reviewer ->
+            reviewer.dispatchInsets(cutoutLeft = 24.dp)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "the answer area clears the cutout",
+                reviewer.answerArea.paddingLeft,
+                equalTo(24.dp.toPx(targetContext)),
+            )
+            reviewer.answerArea.tap(x = 1f, y = 1f)
+            advanceRobolectricLooper()
+            assertThat(
+                "a tap on the band beside 'Show answer' flips the card",
+                reviewer.isDisplayingAnswer,
+                equalTo(true),
+            )
+        }
+
+    @Test
+    fun `large answer buttons - the band below a bottom-row button presses only that button`() {
+        // large answer buttons are laid out in two rows: Hard and Easy above Again and Good
+        targetContext.sharedPrefs().edit { putBoolean("showLargeAnswerButtons", true) }
+        withReviewer { reviewer ->
+            reviewer.dispatchInsets(navBarBottom = 48.dp)
+            advanceRobolectricLooper()
+            reviewer.tapBottomBand(below = R.id.flashcard_layout_flip)
+            advanceRobolectricLooper()
+            assertThat("the ease buttons are shown", reviewer.isDisplayingAnswer, equalTo(true))
+
+            val hardBounds = reviewer.boundsInAnswerArea(R.id.flashcard_layout_ease2)
+            val againBounds = reviewer.boundsInAnswerArea(R.id.flashcard_layout_ease1)
+            assertThat("'Hard' is laid out above 'Again'", hardBounds.bottom, equalTo(againBounds.top))
+
+            // press, without releasing, the band below 'Again'
+            reviewer.answerArea.touch(MotionEvent.ACTION_DOWN, x = againBounds.exactCenterX(), y = reviewer.answerArea.height - 1f)
+            // inside a CoordinatorLayout, a press is only confirmed after the tap timeout
+            advanceRobolectricLooper()
+            assertThat(
+                "the band presses 'Again'",
+                reviewer.findViewById<View>(R.id.flashcard_layout_ease1).isPressed,
+                equalTo(true),
+            )
+            assertThat(
+                "the band leaves 'Hard', above 'Again', alone",
+                reviewer.findViewById<View>(R.id.flashcard_layout_ease2).isPressed,
+                equalTo(false),
+            )
+        }
+    }
+
+    /** The ease recorded for the most recent answer */
+    private fun lastAnsweredEase(): Long = col.db.queryLongScalar("select ease from revlog order by id desc limit 1")
+
+    /** The bounds of [button], in the answer area's coordinates */
+    private fun Reviewer.boundsInAnswerArea(
+        @IdRes button: Int,
+    ): Rect {
+        val view = findViewById<View>(button)
+        return Rect().also {
+            view.getDrawingRect(it)
+            answerArea.offsetDescendantRectToMyCoords(view, it)
+        }
+    }
+
+    /** Taps the showAnswerColor band painted [below] a button */
+    private fun Reviewer.tapBottomBand(
+        @IdRes below: Int,
+    ) = answerArea.tap(x = boundsInAnswerArea(below).exactCenterX(), y = answerArea.height - 1f)
+
+    private fun View.tap(
+        x: Float,
+        y: Float,
+    ) {
+        touch(MotionEvent.ACTION_DOWN, x, y)
+        touch(MotionEvent.ACTION_UP, x, y)
+    }
+
+    private fun View.touch(
+        action: Int,
+        x: Float,
+        y: Float,
+    ) {
+        val event = MotionEvent.obtain(0, 0, action, x, y, 0)
+        dispatchTouchEvent(event)
+        event.recycle()
+    }
+
     private val Reviewer.rootLayout: View
         get() = findViewById(R.id.root_layout)
 
@@ -487,7 +628,7 @@ class ReviewerInsetsTest : RobolectricTest() {
     private val Reviewer.typeAnswerField: View
         get() = findViewById(R.id.answer_field)
 
-    private val Reviewer.answerArea: View
+    private val Reviewer.answerArea: ViewGroup
         get() = findViewById(R.id.answer_options_layout)
 
     private fun withReviewer(
@@ -503,3 +644,6 @@ class ReviewerInsetsTest : RobolectricTest() {
         block(ReviewerTest.startReviewer(this))
     }
 }
+
+/** The ease recorded in the revlog for a 'Good' answer */
+private const val REVLOG_EASE_GOOD = 3L
