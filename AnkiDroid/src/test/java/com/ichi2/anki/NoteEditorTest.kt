@@ -8,6 +8,10 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
+import android.util.SparseArray
+import android.view.View
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
@@ -39,6 +43,7 @@ import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.junit.Ignore
 import org.junit.Test
@@ -76,6 +81,57 @@ class NoteEditorTest : RobolectricTest() {
             val actualResourceId = noteEditor.snackbarErrorText
             assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
         }
+
+    @Test
+    fun savedFieldStateStaysWithinTransactionLimit() {
+        val fieldCount = 400
+        val fields = Array(fieldCount) { "Field$it" }
+        val noteTypeName = addStandardNoteType("Many Fields", fields, "{{Field0}}", "{{Field0}}")
+        val notetype = col.notetypes.byName(noteTypeName)!!
+        val editor = NoteEditorTestBuilder(notetype).build()
+
+        val viewState = SparseArray<Parcelable>()
+        editor.requireView().saveHierarchyState(viewState)
+        val parcel = Parcel.obtain()
+        val sizeInBytes =
+            try {
+                parcel.writeSparseArray(viewState)
+                parcel.dataSize()
+            } finally {
+                parcel.recycle()
+            }
+
+        assertThat(
+            "saved field state for $fieldCount fields must stay well under the Binder limit (was $sizeInBytes bytes)",
+            sizeInBytes,
+            lessThan(256 * 1024),
+        )
+    }
+
+    @Test
+    fun cursorSelectionIsRetainedAcrossViewStateRestore() {
+        val editor =
+            getNoteEditorAdding(NoteType.BASIC)
+                .withFirstField("hello world")
+                .build()
+        val editText = editor.getFieldForTest(0)
+        editText.setSelection(2, 5)
+
+        var lineView: View = editText
+        while (lineView !is FieldEditLine) {
+            lineView = lineView.parent as View
+        }
+        val viewState = SparseArray<Parcelable>()
+        lineView.saveHierarchyState(viewState)
+
+        // restore into a fresh line, as happens after a configuration change
+        val restored = FieldEditLine(editor.requireContext())
+        restored.id = lineView.id
+        restored.restoreHierarchyState(viewState)
+
+        assertThat(restored.binding.editText.selectionStart, equalTo(2))
+        assertThat(restored.binding.editText.selectionEnd, equalTo(5))
+    }
 
     @Test
     fun testErrorMessageNull() =
