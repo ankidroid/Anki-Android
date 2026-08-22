@@ -8,6 +8,9 @@ import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.Editable
+import android.text.InputFilter
+import android.text.Spanned
 import android.util.TypedValue
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -57,6 +60,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getIntOrNull
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -72,6 +76,9 @@ import com.ichi2.utils.setPaddingRelative
 import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
@@ -314,14 +321,20 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             // Give EditText focus and show keyboard
             setSelectAllOnFocus(true)
             requestFocus()
+            inputType = EditorInfo.TYPE_CLASS_NUMBER
             // a user may enter a negative value when extending limits
-            if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
-                inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+
+            when (contextMenuOption) {
+                EXTEND_NEW, EXTEND_REV -> inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+                STUDY_AHEAD -> applyStudyAheadFilters(defaultValue)
+                else -> {}
             }
         }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
-                TR.sentenceCase.chooseTags
+                TR.customStudyChooseTags().toSentenceCase(R.string.sentence_choose_tags)
+            } else if (contextMenuOption == STUDY_AHEAD) {
+                getString(R.string.dialog_positive_create)
             } else {
                 getString(R.string.dialog_ok)
             }
@@ -404,13 +417,138 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             }
         }
 
-        binding.detailsEditText2.doAfterTextChanged {
-            dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
+        var searchJob: Job? = null
+        binding.detailsEditText2.doAfterTextChanged { editable ->
+            if (replaceZeroWithNextNumber(editable)) return@doAfterTextChanged
+
+            val value = editable?.toString()?.toIntOrNull()
+
+            if (contextMenuOption != STUDY_AHEAD) {
+                dialog.positiveButton.isEnabled = value != null && value != 0
+            }
+
+            searchJob?.cancel()
+            searchJob =
+                lifecycleScope.launch {
+                    delay(300)
+                    studyAheadCase(contextMenuOption, dialog, value)
+                }
         }
 
         // Show soft keyboard
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return dialog
+    }
+
+    private fun studyAheadCase(
+        contextMenuOption: ContextMenuOption,
+        dialog: AlertDialog,
+        value: Int?,
+    ) {
+        if (contextMenuOption != STUDY_AHEAD) return
+
+        if (value == null || value == 0) {
+            binding.detailsEditText2Layout.error = null
+            dialog.positiveButton.isEnabled = false
+            return
+        }
+
+        binding.detailsEditText2Layout.suffixText =
+            resources.getQuantityString(
+                R.plurals.set_due_date_label_suffix,
+                value,
+                value,
+            )
+
+        lifecycleScope.launch {
+            val deckName = withCol { decks.name(viewModel.deckId) }
+            val query = buildQuery(deckName, contextMenuOption, value)
+            val matchingNotes = withCol { findNotes(query) }
+
+            if (value != userInputValue) return@launch
+
+            if (matchingNotes.isNotEmpty()) {
+                binding.detailsEditText2Layout.error = null
+                dialog.positiveButton.isEnabled = true
+            } else {
+                binding.detailsEditText2Layout.error =
+                    TR.customStudyNoCardsMatchedTheCriteriaYou()
+                dialog.positiveButton.isEnabled = false
+            }
+        }
+    }
+
+    private fun replaceZeroWithNextNumber(editable: Editable?): Boolean {
+        val text = editable?.toString() ?: return true
+
+        if (text.length > 1 && text.startsWith("0")) {
+            val newText = text.trimStart('0')
+
+            val finalText = newText.ifEmpty { "0" }
+
+            binding.detailsEditText2.setText(finalText)
+            binding.detailsEditText2.setSelection(finalText.length)
+            return true
+        }
+        return false
+    }
+
+    private fun applyStudyAheadFilters(defaultValue: String) {
+        // UI safeguard: prevent excessively long numeric input
+        binding.detailsEditText2.filters = arrayOf(InputFilter.LengthFilter(5), NoLeadingZeroFilter())
+
+        val initialValue = defaultValue.toIntOrNull() ?: 1
+        binding.detailsEditText2Layout.suffixText =
+            resources.getQuantityString(
+                R.plurals.set_due_date_label_suffix,
+                initialValue,
+                initialValue,
+            )
+        binding.detailsText1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+    }
+
+    // Uses Anki search syntax to filter cards due within N days.
+    // Reference: https://docs.ankiweb.net/searching.html (deck + prop:due)
+
+    private fun buildDeckQuery(deckName: String): String = "deck:\"$deckName\""
+
+    private fun buildReviewAheadFilter(days: Int?): String? = days?.let { "prop:due<=$it" }
+
+    @VisibleForTesting(otherwise = PRIVATE)
+    fun buildQuery(
+        deckName: String,
+        option: ContextMenuOption,
+        input: Int?,
+    ): String {
+        val baseQuery = buildDeckQuery(deckName)
+
+        val filter =
+            when (option) {
+                STUDY_AHEAD -> buildReviewAheadFilter(input)
+                else -> null
+            }
+
+        return listOfNotNull(baseQuery, filter).joinToString(" ")
+    }
+
+    class NoLeadingZeroFilter : InputFilter {
+        override fun filter(
+            source: CharSequence?,
+            start: Int,
+            end: Int,
+            dest: Spanned?,
+            dstart: Int,
+            dend: Int,
+        ): CharSequence? {
+            val currentText = dest.toString()
+            if (currentText == "0" && source?.isNotEmpty() == true) {
+                return source
+            }
+            if (dstart == 0 && source?.startsWith('0') == true && (dest?.length ?: 0) > 0) {
+                return source.toString().trimStart('0')
+            }
+            return null
+        }
     }
 
     // TODO cram kind and the included/excluded tags lists are only relevant for STUDY_TAGS and
@@ -491,8 +629,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             when (selectedSubDialog) {
                 EXTEND_NEW -> deferredDefaults.getCompleted().labelForNewQueueAvailable()
                 EXTEND_REV -> deferredDefaults.getCompleted().labelForReviewQueueAvailable()
+                STUDY_AHEAD -> TR.customStudyReviewAhead()
                 STUDY_FORGOT,
-                STUDY_AHEAD,
                 STUDY_PREVIEW,
                 STUDY_TAGS,
                 null,
@@ -507,7 +645,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 EXTEND_NEW -> res.getString(R.string.custom_study_new_extend)
                 EXTEND_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
-                STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
+                STUDY_AHEAD -> res.getString(R.string.custom_study_ahead_description)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
                 STUDY_TAGS -> res.getString(R.string.custom_study_tags)
                 null -> ""
