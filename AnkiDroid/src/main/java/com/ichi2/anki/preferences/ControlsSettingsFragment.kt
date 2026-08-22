@@ -27,6 +27,8 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.preferences.ControlPreference
 import com.ichi2.preferences.ReviewerControlPreference
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -241,21 +243,25 @@ class ControlsSettingsFragment :
             (findPreference<Preference>(key) as? ReviewerControlPreference)?.let { answerPref ->
                 val items =
                     arrayOf(
-                        getString(R.string.only_answer),
-                        getString(R.string.flip_and_answer),
+                        getString(R.string.dialog_yes),
+                        getString(R.string.dialog_no),
                     )
                 answerPref.setOnBindingSelectedListener { binding ->
                     AlertDialog.Builder(requireContext()).show {
                         setTitle(answerPref.title)
                         setIcon(answerPref.icon)
-                        setItems(items) { _, index ->
-                            when (index) {
-                                0 -> answerPref.addBinding(binding, CardSide.ANSWER)
-                                1 -> {
-                                    answerPref.addBinding(binding, CardSide.ANSWER)
-                                    showAnswerPref?.addBinding(binding, CardSide.QUESTION)
+                        setMessage(getString(R.string.also_assign_binding_to_show_answer, getString(R.string.show_answer)))
+                        positiveButton(text = items[0]) {
+                            answerPref.addBinding(binding, CardSide.ANSWER)
+                            showAnswerPref?.addBinding(binding, CardSide.QUESTION)
+                        }
+                        negativeButton(text = items[1]) {
+                            answerPref.addBinding(binding, CardSide.ANSWER)
+                            val filtered =
+                                showAnswerPref?.getMappableBindings()?.filterNot {
+                                    it.binding == binding && (it.side == CardSide.QUESTION || it.side == CardSide.BOTH)
                                 }
-                            }
+                            showAnswerPref?.value = filtered?.toPreferenceString()
                         }
                     }
                     true
