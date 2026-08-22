@@ -495,7 +495,6 @@
 
         <activity android:name=".IntroductionActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:configChanges="keyboardHidden|screenSize" />
 
         <service

@@ -3,27 +3,49 @@
   ~ SPDX-License-Identifier: GPL-3.0-or-later
   ~ SPDX-FileCopyrightText: Copyright (c) 2023 Ashish Yadav <mailtoashish693@gmail.com>
   -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- the root is full-bleed and takes the bottom inset, `intro_content` takes the side insets.
+     the gradient is a sibling of the scrolling content so it reaches the display edges -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground">
 
-        <ImageView
+    <!-- the logo is centred vertically and 150dp tall, so its top edge is 75dp above the
+         midpoint: the gradient ends there, as it did when anchored to the logo itself -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_midpoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
         android:id="@+id/top_gradient"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="75dp"
         android:background="@drawable/intro_gradient"
         android:minHeight="200dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/vertical_midpoint"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ankidroid_logo"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/intro_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
         <ImageView
         android:id="@+id/ankidroid_logo"
@@ -140,4 +162,5 @@
         android:layout_height="wrap_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
