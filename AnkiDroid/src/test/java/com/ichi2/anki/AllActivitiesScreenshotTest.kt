@@ -134,6 +134,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     ManageSpaceActivity::class.java,
                     // InfoScreenshotTest
                     Info::class.java,
+                    // NoteEditorScreenshotTest
+                    NoteEditorActivity::class.java,
                 )
             return ActivityList
                 .allActivitiesAndIntents()
