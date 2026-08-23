@@ -25,7 +25,6 @@ import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.ActivityInfoBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
-import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
@@ -178,11 +177,9 @@ class Info :
             // the toolbar's parent: padding on the Toolbar counts towards its minHeight,
             // which would shrink the app bar's content below actionBarSize
             binding.toolbarContainer.updatePadding(left = bars.left, top = bars.top, right = bars.right)
-            binding.content.updatePadding(
-                left = bars.left,
-                right = bars.right,
-                bottom = maxOf(bars.bottom, insets.bottomCornerClearance(binding.content)),
-            )
+            // no corner clearance: the buttons carry a 12dp horizontal margin, so the arc
+            // intrudes less than the navigation bar already clears
+            binding.content.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
             insets
         }
     }

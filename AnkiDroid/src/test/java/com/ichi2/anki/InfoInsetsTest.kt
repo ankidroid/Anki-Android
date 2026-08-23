@@ -94,14 +94,15 @@ class InfoInsetsTest : RobolectricTest() {
         }
 
     @Test
-    fun `bottom controls clear rounded display corners larger than the navigation bar`() =
+    fun `rounded display corners do not lift the buttons any further`() =
         withInfo { info ->
             info.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
 
             assertThat(
-                "'donate' rests above the corner arc, not just the navigation bar",
+                "the buttons' own 12dp margin puts them inboard of the corner arc, which at that " +
+                    "radius intrudes ~16dp, so the navigation bar already clears them",
                 info.content.paddingBottom,
-                equalTo(48.dp.toPx(targetContext)),
+                equalTo(24.dp.toPx(targetContext)),
             )
         }
 
