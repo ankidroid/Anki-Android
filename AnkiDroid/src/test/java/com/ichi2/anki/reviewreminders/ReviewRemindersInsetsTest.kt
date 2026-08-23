@@ -166,7 +166,8 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
     @Test
     fun `settings host - collapsible toolbar clears the status bar`() =
         withSettingsScheduleReminders { activity, binding ->
-            activity.dispatchInsets(navBarBottom = navigationBarSize)
+            val styleExpandedTitleMarginStart = binding.collapsingToolbarLayout.expandedTitleMarginStart
+            activity.dispatchInsets(navBarBottom = navigationBarSize, cutoutLeft = 32.dp)
 
             assertThat(
                 "the root does not pad itself; the app bar handles the inset",
@@ -177,6 +178,29 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 "the collapsible toolbar is pushed clear of the status bar",
                 binding.toolbar.top,
                 equalTo(statusBarHeight.toPx(targetContext)),
+            )
+            // the padding sits inside the collapsing layout, not on the app bar: the
+            // collapsed content scrim covers the collapsing layout's bounds, and must
+            // extend behind the cutout to match the rest of the toolbar
+            assertThat(
+                "toolbar content clears the cutout",
+                binding.collapsingToolbarLayout.paddingLeft,
+                equalTo(32.dp.toPx(targetContext)),
+            )
+            assertThat(
+                "the app bar is not padded: it would push the scrim off the cutout",
+                binding.appbar.paddingLeft,
+                equalTo(0),
+            )
+            assertThat(
+                "the expanded title clears the cutout: it ignores the layout's padding",
+                binding.collapsingToolbarLayout.expandedTitleMarginStart,
+                equalTo(styleExpandedTitleMarginStart + 32.dp.toPx(targetContext)),
+            )
+            assertThat(
+                "the root's layout does not offset the list again: its padding handles the cutout",
+                binding.recyclerView.left,
+                equalTo(0),
             )
             assertThat(
                 "the 'add reminder' button rests above the navigation bar",

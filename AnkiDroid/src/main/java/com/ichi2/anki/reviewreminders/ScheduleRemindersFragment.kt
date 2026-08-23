@@ -30,6 +30,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.Insets
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
@@ -214,7 +215,10 @@ class ScheduleRemindersFragment :
         // Set up toolbar
         when (host.toolbarType) {
             ToolbarType.EXTERNAL -> setupExternalActivityToolbar()
-            ToolbarType.INTERNAL_COLLAPSIBLE -> setupInternalFragmentToolbar(isCollapsible = true)
+            ToolbarType.INTERNAL_COLLAPSIBLE -> {
+                setCollapsibleToolbarInsets()
+                setupInternalFragmentToolbar(isCollapsible = true)
+            }
             ToolbarType.INTERNAL_NON_COLLAPSIBLE -> {
                 setNonCollapsibleToolbarInsets()
                 setupInternalFragmentToolbar(isCollapsible = false)
@@ -326,17 +330,39 @@ class ScheduleRemindersFragment :
         }
     }
 
+    private fun setCollapsibleToolbarInsets() {
+        val styleExpandedTitleMarginStart = binding.collapsingToolbarLayout.expandedTitleMarginStart
+        val styleExpandedTitleMarginEnd = binding.collapsingToolbarLayout.expandedTitleMarginEnd
+        setRootInsetsListener { bars ->
+            // the top inset is left to the appbar's fitsSystemWindows attribute. The padding
+            // goes on the collapsing layout, not the app bar, so the collapsed content scrim
+            // extends behind the cutout
+            binding.collapsingToolbarLayout.updatePadding(left = bars.left, right = bars.right)
+            // the expanded title ignores the padding: its margins are from the layout's edges
+            val isRtl = binding.collapsingToolbarLayout.layoutDirection == View.LAYOUT_DIRECTION_RTL
+            binding.collapsingToolbarLayout.expandedTitleMarginStart =
+                styleExpandedTitleMarginStart + if (isRtl) bars.right else bars.left
+            binding.collapsingToolbarLayout.expandedTitleMarginEnd =
+                styleExpandedTitleMarginEnd + if (isRtl) bars.left else bars.right
+        }
+    }
+
+    private fun setNonCollapsibleToolbarInsets() {
+        setRootInsetsListener { bars ->
+            // the collapsible toolbar (first in the shared appbar) consumes the insets
+            // so apply them manually
+            binding.appbar.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+        }
+    }
+
     /**
      * Replace the root CoordinatorLayout's inset handling.
      *
      * No-op in [FragmentHost.STUDY_OPTIONS_FRAGMENT] and [FragmentHost.STUDY_OPTIONS_FRAME]
      */
-    private fun setNonCollapsibleToolbarInsets() {
+    private fun setRootInsetsListener(block: (bars: Insets) -> Unit) {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
-            val bars = insets.getInsets(systemBars() or displayCutout())
-            // the collapsible toolbar (first in the shared appbar) consumes the insets
-            // so apply them manually
-            binding.appbar.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            block(insets.getInsets(systemBars() or displayCutout()))
             insets
         }
     }
