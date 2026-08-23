@@ -26,7 +26,7 @@ suspend fun <T> ProgressScope.withBackendProgress(
         extractProgress = extractProgress,
         updateUi = {
             updateProgress(
-                message = text,
+                message = text?.let(ProgressText::Raw),
                 amount = amount,
             )
         },

@@ -10,7 +10,7 @@ sealed interface ViewModelProgress {
     data object Idle : ViewModelProgress
 
     data class Active(
-        val message: String? = null,
+        val message: ProgressText? = null,
         val amount: ProgressContext.Amount? = null,
         val cancellable: Boolean = false,
         val formatAmount: (ProgressContext.Amount) -> String =

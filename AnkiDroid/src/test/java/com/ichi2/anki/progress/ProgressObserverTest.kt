@@ -3,7 +3,10 @@
 package com.ichi2.anki.progress
 
 import android.os.Looper
+import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.LoadingDialogFragment
 import com.ichi2.testutils.EmptyAnkiActivity
@@ -16,6 +19,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.time.Duration
@@ -90,10 +94,29 @@ class ProgressObserverTest : RobolectricTest() {
         op.cancel()
     }
 
-    private fun launchOp(gate: CompletableDeferred<Unit>) =
-        CoroutineScope(Dispatchers.Unconfined).launch {
-            progressManager.withProgress(message = "op") { gate.await() }
-        }
+    @Test
+    fun `a resource message is resolved into the dialog text`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY)
+
+        val gate = CompletableDeferred<Unit>()
+        val message = ProgressText.Res(R.string.progress_amount_bytes, listOf("1 MB", "2 MB"))
+        val op = launchOp(gate, message)
+        idleMainLooper(SHOW_DELAY * 2)
+
+        assertEquals("1 MB/2 MB", activity.loadingDialogText())
+
+        gate.complete(Unit)
+        op.cancel()
+    }
+
+    private fun launchOp(
+        gate: CompletableDeferred<Unit>,
+        message: ProgressText = ProgressText.Raw("op"),
+    ) = CoroutineScope(Dispatchers.Unconfined).launch {
+        progressManager.withProgress(message = message) { gate.await() }
+    }
 
     private fun startActivity(): ActivityController<EmptyAnkiActivity> =
         Robolectric
@@ -102,6 +125,13 @@ class ProgressObserverTest : RobolectricTest() {
             .also { saveControllerForCleanup(it) }
 
     private fun EmptyAnkiActivity.loadingDialog() = supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG)
+
+    private fun EmptyAnkiActivity.loadingDialogText() =
+        (loadingDialog() as? DialogFragment)
+            ?.dialog
+            ?.findViewById<TextView>(R.id.text)
+            ?.text
+            ?.toString()
 
     private fun idleMainLooper(duration: Duration) = shadowOf(Looper.getMainLooper()).idleFor(duration.toJavaDuration())
 
