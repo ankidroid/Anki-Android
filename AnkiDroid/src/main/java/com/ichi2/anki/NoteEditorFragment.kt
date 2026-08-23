@@ -49,6 +49,7 @@ import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.Insets
 import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
@@ -56,8 +57,14 @@ import androidx.core.util.component2
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.OnReceiveContentListener
-import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -85,12 +92,12 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.HashUtil
 import com.ichi2.anki.common.utils.android.digit
-import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
+import com.ichi2.anki.databinding.FragmentNoteEditorBinding
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
@@ -142,22 +149,22 @@ import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.convertToHtmlNewline
-import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.RunOnlyOnce
+import com.ichi2.anki.utils.bottomCornerClearance
+import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.utils.ext.window
+import com.ichi2.anki.utils.insetsOf
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
-import com.ichi2.themes.Themes
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
@@ -175,6 +182,7 @@ import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
@@ -209,6 +217,10 @@ class NoteEditorFragment :
     DispatchKeyEventListener,
     MenuProvider,
     ShortcutGroupProvider {
+    private val binding by viewBinding(FragmentNoteEditorBinding::bind)
+
+    private var bottomInsetPx = 0
+
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -536,13 +548,9 @@ class NoteEditorFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
-            Themes.currentTheme == DayTheme.EINK
-        @Suppress("deprecation", "API35 properly handle edge-to-edge")
-        requireActivity().window.statusBarColor = getColorFromAttr(requireContext(), CommonR.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
         // Set up toolbar
-        toolbar = view.findViewById(R.id.editor_toolbar)
+        toolbar = binding.editorToolbar
         toolbar.apply {
             formatListener =
                 TextFormatListener { formatter: Toolbar.TextFormatter ->
@@ -559,6 +567,7 @@ class NoteEditorFragment :
             )
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
+        setupEdgeToEdge()
         registerDeckSelectedHandler(REQUEST_DECK_SELECTION_NOTE_EDITOR, ::onDeckSelected)
         try {
             setupEditor(getColUnsafe)
@@ -573,10 +582,6 @@ class NoteEditorFragment :
             Timber.i("NoteEditor:: onBackPressed()")
             closeCardEditorWithCheck()
         }
-
-        @Suppress("deprecation", "API35 properly handle edge-to-edge")
-        requireActivity().window.navigationBarColor =
-            getColorFromAttr(requireContext(), R.attr.toolbarBackgroundColor)
 
         // Register this fragment as a menu provider with the activity
         (requireActivity() as MenuHost).addMenuProvider(
@@ -2210,25 +2215,46 @@ class NoteEditorFragment :
         button.setTooltipTextCompat(description)
     }
 
-    private fun updateToolbar() {
-        val editorLayout = requireView().findViewById<View>(R.id.note_editor_layout)
-        val bottomMargin =
-            if (shouldHideToolbar()) {
-                0
-            } else {
-                resources
-                    .getDimension(R.dimen.note_editor_toolbar_height)
-                    .toInt()
-            }
-        val params = editorLayout.layoutParams as MarginLayoutParams
-        params.bottomMargin = bottomMargin
-        editorLayout.layoutParams = params
-        if (shouldHideToolbar()) {
-            toolbar.visibility = View.GONE
-            return
-        } else {
-            toolbar.visibility = View.VISIBLE
+    private fun WindowInsetsCompat.paneInsets(): Insets {
+        val bars = getInsets(systemBars() or displayCutout() or ime())
+        return insetsOf(
+            left = if (inCardBrowserActivity) 0 else bars.left,
+            right = if (noteEditorActivity?.fragmented == true) 0 else bars.right,
+            bottom = bars.bottom,
+        )
+    }
+
+    private fun setupEdgeToEdge() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { root, insets ->
+            val bars = insets.paneInsets()
+            bottomInsetPx = maxOf(bars.bottom, insets.bottomCornerClearance(root))
+            toolbar.updatePadding(left = bars.left, right = bars.right)
+            applyBottomInset()
+            insets
         }
+        binding.noteEditorLayout.doOnApplyWindowInsets { fields, insets, initial ->
+            val bars = insets.paneInsets()
+            fields.updatePadding(
+                left = initial.padding.left + bars.left,
+                right = initial.padding.right + bars.right,
+            )
+        }
+        ViewCompat.requestApplyInsets(binding.rootLayout)
+    }
+
+    private fun applyBottomInset() {
+        val toolbarHeight =
+            if (toolbar.isVisible) resources.getDimensionPixelSize(R.dimen.note_editor_toolbar_height) else 0
+        toolbar.updatePadding(bottom = bottomInsetPx)
+        binding.noteEditorLayout.updateLayoutParams<MarginLayoutParams> {
+            bottomMargin = toolbarHeight + bottomInsetPx
+        }
+    }
+
+    private fun updateToolbar() {
+        toolbar.isVisible = !shouldHideToolbar()
+        applyBottomInset()
+        if (!toolbar.isVisible) return
         toolbar.clearCustomItems()
         if (editorNote!!.notetype.isCloze) {
             addClozeButton(

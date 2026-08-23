@@ -12,6 +12,14 @@ import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.core.view.marginTop
 
+/** [Insets.of], with named arguments */
+fun insetsOf(
+    left: Int = 0,
+    top: Int = 0,
+    right: Int = 0,
+    bottom: Int = 0,
+): Insets = Insets.of(left, top, right, bottom)
+
 /**
  * The radius, in pixels, of the larger of the two bottom corner radii.
  */
