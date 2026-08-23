@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.progress
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -45,7 +46,7 @@ fun AnkiActivity.observeProgress(
                     is ViewModelProgress.Active -> {
                         if (dialogVisible) {
                             showLoadingDialog(
-                                message = state.formatMessage(),
+                                message = formatMessage(state),
                                 cancellable = state.cancellable,
                             )
                             if (state.cancellable) wireCancelListener(viewModel)
@@ -57,7 +58,7 @@ fun AnkiActivity.observeProgress(
                                     if (latest is ViewModelProgress.Active) {
                                         dialogVisible = true
                                         showLoadingDialog(
-                                            message = latest.formatMessage(),
+                                            message = formatMessage(latest),
                                             cancellable = latest.cancellable,
                                         )
                                         if (latest.cancellable) wireCancelListener(viewModel)
@@ -108,11 +109,12 @@ fun Fragment.observeProgress(
     activity.observeProgress(viewModel, delayMillis)
 }
 
-private fun ViewModelProgress.Active.formatMessage(): String? {
-    val amount = amount ?: return message
-    val formattedAmount = formatAmount(amount)
+private fun Context.formatMessage(state: ViewModelProgress.Active): String? {
+    val text = state.message ?: state.messageRes?.let(::getString)
+    val amount = state.amount ?: return text
+    val formattedAmount = state.formatAmount(amount)
     return when {
-        message.isNullOrEmpty() -> formattedAmount
-        else -> "$message$separator$formattedAmount"
+        text.isNullOrEmpty() -> formattedAmount
+        else -> "$text${state.separator}$formattedAmount"
     }
 }

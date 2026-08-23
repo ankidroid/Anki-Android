@@ -4,6 +4,7 @@
 package com.ichi2.anki.progress
 
 import com.ichi2.anki.ProgressContext
+import com.ichi2.anki.R
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -11,6 +12,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ProgressManagerTest {
@@ -111,6 +113,36 @@ class ProgressManagerTest {
                 assertIs<ViewModelProgress.Active>(updatedState)
                 assertEquals("Step 2", updatedState.message)
                 assertEquals(testAmount, updatedState.amount)
+            }
+        }
+
+    @Test
+    fun `withProgress with a string resource publishes messageRes`() =
+        runTest {
+            val manager = ProgressManager()
+
+            manager.withProgress(messageRes = R.string.dialog_processing) {
+                val state = manager.progress.value
+                assertIs<ViewModelProgress.Active>(state)
+                assertEquals(R.string.dialog_processing, state.messageRes)
+                assertNull(state.message)
+            }
+
+            assertIs<ViewModelProgress.Idle>(manager.progress.value)
+        }
+
+    @Test
+    fun `updateProgress keeps messageRes as the fallback text`() =
+        runTest {
+            val manager = ProgressManager()
+
+            manager.withProgress(messageRes = R.string.dialog_processing) {
+                updateProgress(amount = ProgressContext.Amount(current = 1, max = 2))
+
+                val state = manager.progress.value
+                assertIs<ViewModelProgress.Active>(state)
+                assertEquals(R.string.dialog_processing, state.messageRes)
+                assertNull(state.message)
             }
         }
 
