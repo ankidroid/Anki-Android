@@ -28,12 +28,13 @@ fun AnkiActivity.observeProgress(
 ) {
     var dialogVisible =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG) != null
-    // Pending "show after delay" job survives subsequent Active emissions so the
-    // anti-flash delay isn't restarted on every progress update.
-    var pendingShow: Job? = null
 
     lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
+            // Pending "show after delay" job survives subsequent Active emissions so the
+            // anti-flash delay isn't restarted on every progress update. Kept inside the
+            // block: a job cancelled on stop must not linger into the next start.
+            var pendingShow: Job? = null
             viewModel.progressManager.progress.collect { state ->
                 when (state) {
                     is ViewModelProgress.Idle -> {
