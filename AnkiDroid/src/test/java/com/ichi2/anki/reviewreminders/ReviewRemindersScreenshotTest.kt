@@ -13,13 +13,19 @@ import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.launchActivity
+import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
+import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.PreferencesFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.simulateSystemBars
+import com.ichi2.utils.dp
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 
 /**
  * Covers all [FragmentHost] configurations of the fragment.
@@ -41,32 +47,46 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         prefix: String,
         captureScrolled: Boolean = true,
     ) {
-        ActivityScenario.launch<PreferencesActivity>(PreferencesActivity.getIntent(targetContext)).use { scenario ->
-            scenario.onActivity { activity ->
-                val fm = (activity.fragment as PreferencesFragment).childFragmentManager
-                commitScheduleRemindersAndCapture(
-                    fragmentManager = fm,
-                    containerId = R.id.settings_container,
-                    host = FragmentHost.SETTINGS,
-                    scope = ReviewReminderScope.Global,
-                    prefix = prefix,
-                )
-                if (captureScrolled) {
-                    fm
-                        .findFragmentById(R.id.settings_container)
-                        ?.view
-                        ?.findViewById<AppBarLayout>(R.id.appbar)
-                        ?.setExpanded(false, false)
-                    advanceRobolectricLooper()
-                    captureScreen("${prefix}_scheduleReminders_scrolled")
-                }
-                commitTroubleshootingAndCapture(
-                    fragmentManager = fm,
-                    containerId = R.id.settings_container,
-                    host = FragmentHost.SETTINGS,
-                    prefix = prefix,
-                )
+        withSettingsScheduleReminders { _, fm ->
+            captureScreen("${prefix}_scheduleReminders")
+            if (captureScrolled) {
+                fm.collapseToolbar()
+                captureScreen("${prefix}_scheduleReminders_scrolled")
             }
+            commitTroubleshootingAndCapture(
+                fragmentManager = fm,
+                containerId = R.id.settings_container,
+                host = FragmentHost.SETTINGS,
+                prefix = prefix,
+            )
+        }
+    }
+
+    @Test
+    fun `settings host with a landscape display cutout`() {
+        insertReminders(count = 6)
+        RuntimeEnvironment.setQualifiers("+land")
+        withSettingsScheduleReminders { activity, fm ->
+            activity.simulateSystemBars(cutoutLeft = 32.dp)
+            captureScreen("settingsHost_landscapeCutout")
+
+            // collapsed: the content scrim must extend behind the cutout band while the
+            // toolbar content stays clear of it
+            fm.collapseToolbar()
+            captureScreen("settingsHost_landscapeCutout_collapsed")
+        }
+    }
+
+    @Test
+    fun `settings host with a landscape display cutout - RTL`() {
+        insertReminders(count = 6)
+        RuntimeEnvironment.setQualifiers("+ar")
+        RuntimeEnvironment.setQualifiers("+land")
+        withSettingsScheduleReminders { activity, _ ->
+            // the cutout is physically on the left; the expanded title starts at the right
+            // in RTL, so it is inset via its end margin
+            activity.simulateSystemBars(cutoutLeft = 32.dp)
+            captureScreen("settingsHost_landscapeCutout_rtl")
         }
     }
 
@@ -115,17 +135,70 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
     }
 
     @Test
-    fun `standalone activity host`() {
-        val intent = ScheduleRemindersFragment.getIntent(targetContext, ReviewReminderScope.Global)
-        ActivityScenario.launch<ConfigAwareSingleFragmentActivity>(intent).use { scenario ->
+    fun `standalone activity host`() =
+        withStandaloneScheduleReminders { activity ->
+            captureScreen("standaloneActivityHost_scheduleReminders")
+            commitTroubleshootingAndCapture(
+                fragmentManager = activity.supportFragmentManager,
+                containerId = R.id.fragment_container,
+                host = FragmentHost.STANDALONE_ACTIVITY,
+                prefix = "standaloneActivityHost",
+            )
+        }
+
+    @Test
+    fun `standalone activity host with system bars`() =
+        withStandaloneScheduleReminders { activity ->
+            activity.simulateSystemBars()
+            captureScreen("standaloneActivityHost_systemBars")
+        }
+
+    @Test
+    fun `standalone activity host with system bars and a scrollable list`() {
+        insertReminders(count = 12)
+        withStandaloneScheduleReminders { activity ->
+            activity.simulateSystemBars()
+            val binding = FragmentScheduleRemindersBinding.bind(activity.fragment!!.requireView())
+            // scrolled to the end: the last reminder must clear the navigation bar band
+            binding.recyclerView.scrollToPosition(binding.recyclerView.adapter!!.itemCount - 1)
             advanceRobolectricLooper()
-            scenario.onActivity { activity ->
-                captureScreen("standaloneActivityHost_scheduleReminders")
-                commitTroubleshootingAndCapture(
-                    fragmentManager = activity.supportFragmentManager,
-                    containerId = R.id.fragment_container,
-                    host = FragmentHost.STANDALONE_ACTIVITY,
-                    prefix = "standaloneActivityHost",
+            captureScreen("standaloneActivityHost_systemBars_scrolledToEnd")
+        }
+    }
+
+    @Test
+    fun `standalone activity host troubleshooting with system bars`() {
+        // landscape: the checks overflow the screen, so the end of the content must scroll
+        // clear of the navigation bar band
+        RuntimeEnvironment.setQualifiers("+land")
+        withStandaloneScheduleReminders { activity ->
+            activity.supportFragmentManager.commit {
+                replace(
+                    R.id.fragment_container,
+                    ReminderTroubleshootingFragment.newInstance(FragmentHost.STANDALONE_ACTIVITY),
+                )
+            }
+            advanceRobolectricLooper()
+            activity.simulateSystemBars()
+            val binding =
+                FragmentReminderTroubleshootingBinding.bind(
+                    activity.supportFragmentManager
+                        .findFragmentById(R.id.fragment_container)!!
+                        .requireView(),
+                )
+            // scrolled to the end: the last check must clear the navigation bar band
+            binding.scrollView.scrollTo(0, binding.scrollView.getChildAt(0).bottom)
+            advanceRobolectricLooper()
+            captureScreen("standaloneActivityHost_troubleshooting_systemBars")
+        }
+    }
+
+    /** Inserts [count] reminders so the list has content to render behind the simulated bars */
+    private fun insertReminders(count: Int) {
+        runBlocking {
+            repeat(count) { index ->
+                ReviewRemindersDatabase.insertReminder(
+                    ReviewReminder.createReviewReminder(ReviewReminderTime(hour = 8 + index, minute = 0)),
                 )
             }
         }
@@ -157,5 +230,40 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         }
         advanceRobolectricLooper()
         captureScreen("${prefix}_troubleshooting")
+    }
+
+    /** Launches [ScheduleRemindersFragment] hosted in the settings screen */
+    private fun withSettingsScheduleReminders(block: (PreferencesActivity, FragmentManager) -> Unit) {
+        ActivityScenario.launch<PreferencesActivity>(PreferencesActivity.getIntent(targetContext)).use { scenario ->
+            scenario.onActivity { activity ->
+                val fm = (activity.fragment as PreferencesFragment).childFragmentManager
+                fm.commit {
+                    replace(
+                        R.id.settings_container,
+                        ScheduleRemindersFragment.newInstance(ReviewReminderScope.Global, FragmentHost.SETTINGS),
+                    )
+                }
+                advanceRobolectricLooper()
+                block(activity, fm)
+            }
+        }
+    }
+
+    /** Launches [ScheduleRemindersFragment] in its standalone activity */
+    private fun withStandaloneScheduleReminders(block: (ConfigAwareSingleFragmentActivity) -> Unit) {
+        val intent = ScheduleRemindersFragment.getIntent(targetContext, ReviewReminderScope.Global)
+        ActivityScenario.launch<ConfigAwareSingleFragmentActivity>(intent).use { scenario ->
+            advanceRobolectricLooper()
+            scenario.onActivity { activity -> block(activity) }
+        }
+    }
+
+    /** Collapses the settings host's toolbar, as when the list has been scrolled */
+    private fun FragmentManager.collapseToolbar() {
+        findFragmentById(R.id.settings_container)
+            ?.view
+            ?.findViewById<AppBarLayout>(R.id.appbar)
+            ?.setExpanded(false, false)
+        advanceRobolectricLooper()
     }
 }
