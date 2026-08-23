@@ -3,6 +3,7 @@
 package com.ichi2.anki.reviewreminders
 
 import android.app.Activity
+import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.IdRes
@@ -18,8 +19,10 @@ import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SdkSuppress
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -36,13 +39,16 @@ import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.insetsOf
+import com.ichi2.testutils.withWritePermissions
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.notNullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
 
 /**
  * Edge-to-edge inset handling for [ScheduleRemindersFragment] and [ReminderTroubleshootingFragment]
@@ -127,6 +133,7 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
         }
 
     @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.P) // layoutInDisplayCutoutMode
     fun `standalone host - the window renders into a display cutout`() =
         withStandaloneScheduleReminders { activity, _ ->
             assertThat(
@@ -134,6 +141,34 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 activity.window.attributes.layoutInDisplayCutoutMode,
                 equalTo(WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES),
             )
+        }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.Q])
+    @Suppress("DEPRECATION") // systemUiVisibility: how WindowCompat un-fits the window below API 30
+    fun `standalone host - the window renders edge to edge only while resumed`() =
+        withWritePermissions {
+            val intent = ScheduleRemindersFragment.getIntent(targetContext, ReviewReminderScope.Global)
+            ActivityScenario.launch<ConfigAwareSingleFragmentActivity>(intent).use { scenario ->
+                advanceRobolectricLooper()
+                scenario.onActivity { activity ->
+                    assertThat(
+                        "the window lays out edge to edge: scrolled content renders underneath the bottom bar",
+                        activity.window.decorView.systemUiVisibility and DECOR_FITS_FLAGS,
+                        equalTo(DECOR_FITS_FLAGS),
+                    )
+                }
+
+                scenario.moveToState(Lifecycle.State.STARTED)
+                advanceRobolectricLooper()
+                scenario.onActivity { activity ->
+                    assertThat(
+                        "pausing restores the window: other screens expect it to fit the system windows",
+                        activity.window.decorView.systemUiVisibility and DECOR_FITS_FLAGS,
+                        equalTo(0),
+                    )
+                }
+            }
         }
 
     @Test
@@ -208,6 +243,27 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 equalTo((fabMargin + navigationBarSize).toPx(targetContext)),
             )
         }
+
+    @Test
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.P) // layoutInDisplayCutoutMode
+    fun `settings host - the shared two-pane window is left alone`() {
+        // sw600dp: the settings host shares its window with the headers pane, which does not
+        // handle insets. Rendering the window edge to edge would slide that pane's content
+        // behind the system bars, so the reminders screens must leave the window untouched.
+        RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumTablet)
+        withSettingsScheduleReminders { activity, _ ->
+            assertThat(
+                "sanity: the headers pane shares the window",
+                activity.findViewById<View>(R.id.lateral_nav_container),
+                notNullValue(),
+            )
+            assertThat(
+                "the reminders pane does not change the shared window's cutout mode",
+                activity.window.attributes.layoutInDisplayCutoutMode,
+                equalTo(WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT),
+            )
+        }
+    }
 
     @Test
     fun `study options frame host - insets are applied by the host, not the fragment`() =
@@ -415,5 +471,17 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
         commit { replace(containerId, fragment) }
         advanceRobolectricLooper()
         return findFragmentById(containerId)!!.requireView()
+    }
+
+    companion object {
+        /**
+         * The `systemUiVisibility` layout flags which `WindowCompat.setDecorFitsSystemWindows`
+         * sets on API < 30 for a window which does not fit the system windows.
+         */
+        @Suppress("DEPRECATION")
+        private const val DECOR_FITS_FLAGS =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
     }
 }

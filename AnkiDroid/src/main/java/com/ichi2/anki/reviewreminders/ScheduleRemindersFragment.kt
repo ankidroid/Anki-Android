@@ -33,6 +33,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.graphics.Insets
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
@@ -739,27 +740,30 @@ class ScheduleRemindersFragment :
  * @see WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
  *
  * Needed even on API 35+: the app opts out of edge-to-edge enforcement
- * (`windowOptOutEdgeToEdgeEnforcement`), so these windows letterbox the cutout on every
+ * (`windowOptOutEdgeToEdgeEnforcement`), so these windows fit the system windows on every
  * API level.
  */
 internal fun Fragment.renderEdgeToEdge(host: FragmentHost) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return
     // these hosts call `enableEdgeToEdge`
     if (host == FragmentHost.STUDY_OPTIONS_FRAGMENT || host == FragmentHost.STUDY_OPTIONS_FRAME) return
+    if (host == FragmentHost.SETTINGS && isTwoPaneSettings) return
     val window = requireActivity().window
 
     viewLifecycleOwner.lifecycle.addObserver(
         object : DefaultLifecycleObserver {
             // resume/pause rather than view creation/destruction: when this fragment is replaced
-            // by one which also renders into the cutout, the new fragment's view is created
-            // before the old fragment restores the mode, but it is resumed afterwards
+            // by one which also renders edge to edge, the new fragment's view is created
+            // before the old fragment restores the window, but it is resumed afterwards
             override fun onResume(owner: LifecycleOwner) {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
                 window.setLayoutInDisplayCutoutMode(
                     WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES,
                 )
             }
 
             override fun onPause(owner: LifecycleOwner) {
+                WindowCompat.setDecorFitsSystemWindows(window, true)
                 window.setLayoutInDisplayCutoutMode(
                     WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT,
                 )
@@ -767,6 +771,13 @@ internal fun Fragment.renderEdgeToEdge(host: FragmentHost) {
         },
     )
 }
+
+/**
+ * Whether the settings screen is showing its two-pane (sw600dp) layout,
+ * with the headers pane alongside the content pane.
+ */
+private val Fragment.isTwoPaneSettings: Boolean
+    get() = requireActivity().findViewById<View>(R.id.lateral_nav_container) != null
 
 @RequiresApi(Build.VERSION_CODES.P)
 private fun Window.setLayoutInDisplayCutoutMode(mode: Int) {
