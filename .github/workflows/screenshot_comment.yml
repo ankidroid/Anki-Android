@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - name: Download PR number artifact
-        uses: dawidd6/action-download-artifact@57aa996fc1713cc1579039614f4645a7f4841fd4 # v23
+        uses: dawidd6/action-download-artifact@d63b86af1b34672e53c440b1b83979861906bad7 # v24
         with:
           name: pr
           run_id: ${{ github.event.workflow_run.id }}
@@ -54,7 +54,7 @@ jobs:
         run: |
           echo "pull_request_number=$(cat NR)" >> "$GITHUB_OUTPUT"
       - name: Download screenshot diff artifact
-        uses: dawidd6/action-download-artifact@57aa996fc1713cc1579039614f4645a7f4841fd4 # v23
+        uses: dawidd6/action-download-artifact@d63b86af1b34672e53c440b1b83979861906bad7 # v24
         with:
           run_id: ${{ github.event.workflow_run.id }}
           name: screenshot-diff
