@@ -7,8 +7,8 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.ankicommon.R
 import com.ichi2.testutils.EmptyAnkiActivity
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.launchFragmentInContainer
@@ -19,6 +19,7 @@ import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
+// TODO: move this to anki-common once dependencies are handled (#20737)
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
