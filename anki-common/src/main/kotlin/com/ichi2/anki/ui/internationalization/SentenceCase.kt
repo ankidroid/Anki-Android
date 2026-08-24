@@ -8,7 +8,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import anki.i18n.GeneratedTranslations
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
+import com.ichi2.anki.ankicommon.R
 
 // Functions for handling a move from 'Title Case' in Anki Desktop to 'Sentence case' in AnkiDroid
 
