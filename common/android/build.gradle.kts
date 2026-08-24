@@ -9,6 +9,7 @@ plugins {
 
 configure<LibraryExtension> {
     namespace = "com.ichi2.anki.common.android"
+    testFixtures.enable = true
 }
 
 dependencies {
@@ -29,4 +30,7 @@ dependencies {
     testImplementation(libs.junit.vintage.engine)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.junit)
+
+    testFixturesImplementation(libs.androidx.test.core)
+    testFixturesImplementation(libs.robolectric)
 }
