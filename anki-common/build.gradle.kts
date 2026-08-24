@@ -29,5 +29,7 @@ dependencies {
     implementation(libs.jakewharton.timber)
     implementation(libs.kotlinx.coroutines.core)
 
+    testFixturesImplementation(project(":common:android"))
+    testFixturesImplementation(libs.androidx.core.ktx)
     testFixturesImplementation(libs.androidx.test.core)
 }

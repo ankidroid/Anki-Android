@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.preferences.sharedPrefs
 
@@ -17,9 +16,9 @@ import com.ichi2.anki.common.preferences.sharedPrefs
  * Classes should also be marked with `@Config(application = EmptyApplication::class)` for
  * performance improvements
  *
- * Use [JvmTest] if a reference to Android is not necessary but the collection is required
+ * Use `JvmTest` if a reference to Android is not necessary but the collection is required
  *
- * Use [RobolectricTest] if access the collection is necessary
+ * Use `RobolectricTest` if access the collection is necessary
  */
 interface AndroidTest : DeferredNavigation
 
