@@ -5,8 +5,10 @@ package com.ichi2.anki.filtered
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -15,7 +17,12 @@ import android.widget.CheckBox
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,6 +40,7 @@ import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
+import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.configureIconsDirection
@@ -67,6 +75,19 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        } else {
+            val typedValue = TypedValue()
+            requireContext().theme.resolveAttribute(android.R.attr.background, typedValue, true)
+            @Suppress("DEPRECATION")
+            window.navigationBarColor = typedValue.data
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.content) { v, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
+            v.updatePadding(left = constraints.left, right = constraints.right, top = constraints.top, bottom = constraints.bottom)
+            insets
+        }
         binding.toolbar.apply {
             title = "" // properly set in state updates
             setNavigationOnClickListener {
