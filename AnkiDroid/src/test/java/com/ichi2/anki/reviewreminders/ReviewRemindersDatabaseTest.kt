@@ -22,6 +22,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.EpochMilliseconds
+import com.ichi2.anki.settings.Prefs
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.MapSerializer
@@ -112,13 +113,18 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
+        clearRemindersState()
     }
 
     @After
     override fun tearDown() {
         super.tearDown()
+        clearRemindersState()
+    }
+
+    private fun clearRemindersState() {
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
+        Prefs.reviewReminderDeserializationErrors = ""
     }
 
     @Test
