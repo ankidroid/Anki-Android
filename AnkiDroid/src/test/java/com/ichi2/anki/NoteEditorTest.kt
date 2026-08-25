@@ -653,6 +653,35 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
+    fun `hasUnsavedChanges - sticky field content alone is not an unsaved change`() =
+        runTest {
+            val basic = makeNoteForType(NoteType.BASIC)
+            basic!!.fields[0].sticky = true
+
+            val editor =
+                getNoteEditorAdding(NoteType.BASIC)
+                    .withFirstField("Hello")
+                    .withSecondField("World")
+                    .build()
+
+            editor.saveNote()
+            advanceRobolectricLooper()
+
+            // sticky field 0 carries "Hello" into the next note; nothing has actually been edited yet
+            assertThat(editor.currentFieldStrings.toList(), contains("Hello", ""))
+            assertFalse(editor.hasUnsavedChanges(), "fresh screen after save: no real edits yet")
+
+            // user types into the non-sticky field, then reverts their own edit
+            editor.setFieldValueFromUi(1, "x")
+            editor.setFieldValueFromUi(1, "")
+
+            assertFalse(
+                editor.hasUnsavedChanges(),
+                "user's only edit was reverted; only the sticky field remains populated - should not count as unsaved",
+            )
+        }
+
+    @Test
     fun `changing deck with multiple card ids moves all sibling cards`() =
         runTest {
             // Create a note with 2 cards (Basic and Reversed)

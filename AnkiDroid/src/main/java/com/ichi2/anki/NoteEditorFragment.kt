@@ -211,6 +211,13 @@ class NoteEditorFragment :
     private var isFieldEdited = false
     private var addNoteJob = RunOnlyOnce(scope = lifecycleScope)
 
+    /**
+     * The field values of a new note immediately after they were last (re)populated -
+     * e.g. after a sticky field was carried over from the previous note. Used so
+     * [hasUnsavedChanges] can tell sticky-carried-over content apart from an actual edit.
+     */
+    private var addNoteFieldBaseline: List<String> = emptyList()
+
     private val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
@@ -1160,8 +1167,10 @@ class NoteEditorFragment :
             }
 
             if (!isFieldEdited) return false
-            // BUG: Does not account for sticky fields
-            return editFields!!.any { it.text.toString() != "" }
+            // compare against the sticky-populated baseline rather than "any field non-empty",
+            // otherwise a sticky field alone would always look like an unsaved change
+            val currentStrings = editFields!!.map { it.text?.toString() ?: "" }
+            return currentStrings != addNoteFieldBaseline
         }
 
         // changed note type?
@@ -2171,12 +2180,14 @@ class NoteEditorFragment :
             editFields!!.first().focusWithKeyboard {
                 editFields!!.forEach { it.setText("") }
                 updateFieldsFromStickyText()
+                if (addNote) addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
             }
         } else {
             populateEditFields(changeType)
             if (changeType.type != Type.CHANGE_FIELD_COUNT) {
                 updateFieldsFromStickyText()
             }
+            if (addNote) addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
         }
     }
 
