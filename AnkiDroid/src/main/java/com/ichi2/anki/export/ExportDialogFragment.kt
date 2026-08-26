@@ -256,13 +256,10 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
 
     private fun handleAnkiPackageExport() {
         val limits = buildExportLimit()
-        var packagePrefix = getNonCollectionNamePrefix()
-        // files can't have `/` in their names
-        packagePrefix = packagePrefix.replace("/", "_")
         val exportPath =
             File(
                 getExportRootFile(),
-                "$packagePrefix-${getTimestamp(TimeManager.time)}.apkg",
+                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.apkg",
             ).path
         requireAnkiActivity().exportApkgPackage(
             exportPath = exportPath,
@@ -278,12 +275,18 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
      * Builds the prefix for the name of the exported file. This will be  either a deck's name or a
      * localized "SelectedNotes" text.
      */
-    private fun getNonCollectionNamePrefix(): String =
-        when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
-            ExportType.Notes, ExportType.Cards -> CollectionManager.TR.exportingSelectedNotes()
-            // notes/cards weren't selected so export the chosen deck(s)
-            null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
-        }
+    // TODO: return [Filename] once the construction of export paths is refactored
+    private fun getNonCollectionNamePrefix(): String {
+        val filename =
+            Filename.sanitize(
+                when (arguments?.getSerializableCompat<ExportType>(ARG_TYPE)) {
+                    ExportType.Notes, ExportType.Cards -> CollectionManager.TR.exportingSelectedNotes()
+                    // notes/cards weren't selected so export the chosen deck(s)
+                    null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
+                },
+            )
+        return filename.value
+    }
 
     private fun handleNotesInPlainTextExport() {
         val exportLimit = buildExportLimit()
