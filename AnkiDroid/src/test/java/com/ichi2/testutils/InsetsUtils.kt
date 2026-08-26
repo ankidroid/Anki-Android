@@ -50,7 +50,7 @@ fun insetsOf(
  * Overlays are displayed as translucent bands so content can be drawn behind them.
  *
  * @param cutoutLeft simulates a display cutout on the left edge, as when a phone with a
- * top notch is rotated to landscape
+ * top notch is rotated to landscape.
  */
 @SuppressLint("RtlHardcoded") // insets and cutouts are physical: not layout-direction relative
 fun Activity.simulateSystemBars(cutoutLeft: Dp = 0.dp) {
@@ -60,7 +60,8 @@ fun Activity.simulateSystemBars(cutoutLeft: Dp = 0.dp) {
         WindowInsetsCompat
             .Builder()
             .setInsets(statusBars(), insetsOf(top = statusBarHeight))
-            .setInsets(navigationBars(), insetsOf(bottom = navBarHeight))
+            // workaround for 'systemWindowInsets', so snackbars match a real device
+            .setInsets(navigationBars(), insetsOf(left = cutoutLeft, bottom = navBarHeight))
             .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
             .build()
     ViewCompat.dispatchApplyWindowInsets(findViewById(android.R.id.content), insets)
