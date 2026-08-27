@@ -293,7 +293,7 @@
             android:name="com.ichi2.anki.DeckPicker"
             android:theme="@style/Theme_Dark.Launcher"
             android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:configChanges="keyboardHidden|orientation"
             />
         <activity
             android:name="com.ichi2.anki.StudyOptionsActivity"

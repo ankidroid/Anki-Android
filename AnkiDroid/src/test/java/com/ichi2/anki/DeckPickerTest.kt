@@ -102,7 +102,7 @@ class DeckPickerTest : RobolectricTest() {
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<String> = listOf("normal", "xlarge")
+        fun initParameters(): Collection<String> = listOf("normal", "sw600dp")
     }
 
     @Before
@@ -576,7 +576,7 @@ class DeckPickerTest : RobolectricTest() {
 
     @Test
     fun checkDisplayOfStudyOptionsOnTablet() {
-        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        assumeTrue("We are running on a tablet", resources.configuration.smallestScreenWidthDp >= 600)
         val deckPickerEx =
             super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java,
@@ -588,6 +588,11 @@ class DeckPickerTest : RobolectricTest() {
             "Study options should show on start on tablet",
             studyOptionsFragment,
             notNullValue(),
+        )
+        assertThat(
+            "DeckPicker should use the fragmented layout on tablet",
+            deckPickerEx.fragmented,
+            equalTo(true),
         )
     }
 
@@ -799,7 +804,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `bottom navigation has correct labels`() =
         withBottomNavigationEnabled {
-            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            assumeTrue("Not running on tablet", resources.configuration.smallestScreenWidthDp < 600)
             deckPicker {
                 val menu = ActivityHomescreenBinding.bind(findViewById(R.id.root_layout)).bottomNavigation!!.menu
                 assertThat(menu.findItem(R.id.nav_home)?.title.toString(), equalTo("Decks"))
@@ -812,7 +817,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `Alt number shortcuts navigate between bottom navigation destinations`() =
         withBottomNavigationEnabled {
-            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            assumeTrue("Not running on tablet", resources.configuration.smallestScreenWidthDp < 600)
             deckPicker {
                 val bottomNav = ActivityHomescreenBinding.bind(findViewById(R.id.root_layout)).bottomNavigation!!
                 val shortcuts =
@@ -836,7 +841,7 @@ class DeckPickerTest : RobolectricTest() {
     @SdkSuppress(minSdkVersion = 26)
     fun `bottom navigation exposes a long title as a tooltip`() =
         withBottomNavigationEnabled {
-            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            assumeTrue("Not running on tablet", resources.configuration.smallestScreenWidthDp < 600)
             deckPicker {
                 val bottomNav = ActivityHomescreenBinding.bind(findViewById(R.id.root_layout)).bottomNavigation!!
                 val longTitle = "Statistikenübersicht"
@@ -850,7 +855,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `bottom navigation shortcuts are registered in keyboard shortcut help`() =
         withBottomNavigationEnabled {
-            assumeTrue("Not running on tablet", qualifiers != "xlarge")
+            assumeTrue("Not running on tablet", resources.configuration.smallestScreenWidthDp < 600)
             deckPicker {
                 val bottomNavigationShortcuts = shortcuts.shortcuts.filter { it.shortcut.startsWith("Alt+") }
 
