@@ -103,7 +103,7 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
      * Resolved preference keys (the localized string-resource values, not
      * resource ids) whose changes both the key and the new value are
      * reported to analytics. Populated during [initialize] from
-     * [AnalyticsConstants.reportablePrefKeys].
+     * [reportablePrefKeys].
      */
     lateinit var reportablePreferences: Set<String>
         private set
@@ -245,15 +245,15 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
     }
 
     /**
-     * Resolves [AnalyticsConstants.reportablePrefKeys] (string-resource ids)
+     * Resolves [reportablePrefKeys] (string-resource ids)
      * to their localized key strings via [context] and caches the result in
      * [reportablePreferences] for fast membership checks at the call site.
      */
     private fun initializePrefKeys(context: Context) {
         Timber.d("AnkiDroidUsageAnalytics:: initializing pref keys")
         reportablePreferences =
-            AnalyticsConstants.reportablePrefKeys.mapTo(
-                HashSet(AnalyticsConstants.reportablePrefKeys.size),
+            reportablePrefKeys.mapTo(
+                HashSet(reportablePrefKeys.size),
             ) { context.getString(it) }
     }
 
