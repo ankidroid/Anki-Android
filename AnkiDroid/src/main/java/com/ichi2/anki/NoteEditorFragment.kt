@@ -1172,8 +1172,6 @@ class NoteEditorFragment :
             }
 
             if (!isFieldEdited) return false
-            // compare against the sticky-populated baseline rather than "any field non-empty",
-            // otherwise a sticky field alone would always look like an unsaved change
             val currentStrings = editFields!!.map { it.text?.toString() ?: "" }
             return currentStrings != addNoteFieldBaseline
         }
@@ -2181,14 +2179,18 @@ class NoteEditorFragment :
             editFields!!.first().focusWithKeyboard {
                 editFields!!.forEach { it.setText("") }
                 updateFieldsFromStickyText()
-                if (addNote) addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+                if (addNote) {
+                    addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+                }
             }
         } else {
             populateEditFields(changeType)
             if (changeType.type != Type.CHANGE_FIELD_COUNT) {
                 updateFieldsFromStickyText()
             }
-            if (addNote) addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+            if (addNote) {
+                addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+            }
         }
     }
 
