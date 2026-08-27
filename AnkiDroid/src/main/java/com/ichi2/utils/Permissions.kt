@@ -20,7 +20,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -28,14 +27,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
+import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.common.permissions.hasPermission
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -50,21 +50,7 @@ import kotlin.reflect.KMutableProperty
 
 object Permissions {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuPhotosAndVideosPermissions =
-        listOf(
-            Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.READ_MEDIA_VIDEO,
-        )
-
-    /**
-     * The name of the "post notification" permission on API where it's defined.
-     */
-    val postNotification =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.POST_NOTIFICATIONS
-        } else {
-            null
-        }
+    val notificationsPermission: String = Manifest.permission.POST_NOTIFICATIONS
 
     /**
      * Returns whether AnkiDroid is able to request a permission from the user.
@@ -113,23 +99,39 @@ object Permissions {
             permissionRequestedFlag.setter.call(true)
             permissionRequestLauncher.launch(permission)
         } else {
-            when (permission) {
-                // Add overrides for opening specific settings subscreens here as needed
-                postNotification -> {
-                    showThemedToast(requireContext(), R.string.manually_grant_permissions, false)
-                    openAppNotificationsSettingsScreen()
-                }
-                // Else, default to opening the root page of the app settings screen
-                else -> showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
-            }
+            showToastAndOpenAppSettingsScreenForPermission(permission, R.string.manually_grant_permissions)
+        }
+    }
+
+    /**
+     * At and above API 33, the formal notification permission exists and can be requested via the usual permission flow.
+     * Below API 33, the permission is implicitly granted, but the user can still disable notifications for the app in system settings.
+     * In that case, we open the system settings screen for the user to manually enable notifications.
+     */
+    fun Fragment.attemptToEnableNotifications(notificationPermissionLauncher: ActivityResultLauncher<String>) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionThroughDialogOrSettings(
+                activity = requireActivity(),
+                permission = notificationsPermission,
+                permissionRequestedFlag = Prefs::notificationsPermissionRequested,
+                permissionRequestLauncher = notificationPermissionLauncher,
+            )
+        } else {
+            showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, R.string.manually_grant_permissions)
         }
     }
 
     /**
      * Shows the [com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment] in the [PermissionsBottomSheet]
-     * if notification permissions have not been granted. Does nothing if the permission does not need to
-     * be requested (i.e. API < 33), if the permission has already been granted,
-     * or if the user has previously denied the permission and selected "Don't ask again".
+     * if notification permissions have not been granted.
+     *
+     * Does nothing if the permission has already been granted.
+     * Always shows the bottom sheet the first time it detects that the permission has not been granted.
+     * Does nothing on API 33+ if the user has previously denied the permission and selected "Don't ask again".
+     * Does nothing on API <33 if the user has seen the bottom sheet once before.
+     *
+     * Even though the explicit permission is exclusive to API 33+, this method is still useful for API <33 because the user can
+     * manually disable notifications for the app in system settings.
      *
      * @param activity Used for checking whether notification permissions have been granted, or if the user has clicked
      * "Don't ask again" on previous requests.
@@ -141,20 +143,32 @@ object Permissions {
         fragmentManager: FragmentManager,
         callback: () -> Unit,
     ) {
-        postNotification?.let { notificationPermission ->
-            if (
-                !canPostNotifications(context = activity) &&
+        if (canPostNotifications(context = activity)) return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val canRequest =
                 canPermissionBeRequested(
                     activity,
-                    notificationPermission,
-                    Prefs::notificationsPermissionRequested,
+                    notificationsPermission,
+                    permissionRequestedFlag = Prefs::notificationsPermissionRequested,
                 )
-            ) {
-                Timber.i("Showing notifications bottom sheet")
-                PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
-                callback()
+            if (!canRequest) {
+                Timber.i("Not showing notifications permissions bottom sheet: permission permanently denied")
+                return
             }
+            Timber.i("Showing notifications permissions bottom sheet: API >= 33")
+            PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
+        } else {
+            if (Prefs.notificationsBottomSheetShownBelowAPI33) {
+                Timber.i("Not showing notifications permissions bottom sheet: already attempted")
+                return
+            }
+            Timber.i("Showing notifications permissions bottom sheet: API < 33")
+            PermissionsBottomSheet.launch(fragmentManager, PermissionSet.LEGACY_NOTIFICATIONS)
+            Prefs.notificationsBottomSheetShownBelowAPI33 = true
         }
+
+        callback()
     }
 
     /**
@@ -171,9 +185,6 @@ object Permissions {
             }
         }
     }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
 
     val legacyStorageAccessStartupPermissions =
         listOf(
@@ -251,10 +262,6 @@ object Permissions {
             context.arePermissionsDefinedInAnkiDroidManifest(MANAGE_EXTERNAL_STORAGE)
     }
 
-    fun canPostNotifications(context: Context): Boolean =
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-
     /**
      * Opens the Android settings for AnkiDroid if the device provide this feature.
      * Lets a user grant any missing permissions which have been permanently denied.
@@ -290,15 +297,37 @@ object Permissions {
         }
     }
 
-    fun Fragment.showToastAndOpenAppSettingsScreen(
+    /**
+     * Opens the Android settings screen for a specific permission. Add more branches to the `when` statement as needed.
+     * If no branch matches, falls back to opening the generic app settings screen.
+     *
+     * @param permission The permission to open the settings screen for. Can be [LEGACY_POST_NOTIFICATIONS] for pre-API 33 notifications.
+     * Can be null to open the generic app settings screen.
+     */
+    fun Fragment.openAppSettingsScreenForPermission(permission: String?) {
+        when {
+            ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && (permission == notificationsPermission)) ||
+                permission == LEGACY_POST_NOTIFICATIONS ->
+                openAppNotificationsSettingsScreen()
+
+            // Else, default to opening the root page of the app settings screen
+            else -> openAppSettingsScreen()
+        }
+    }
+
+    fun Fragment.showToastAndOpenAppSettingsScreenForPermission(
+        permission: String?,
         @StringRes message: Int,
     ) {
         showThemedToast(requireContext(), message, false)
-        openAppSettingsScreen()
+        openAppSettingsScreenForPermission(permission)
     }
 
-    fun Fragment.showToastAndOpenAppSettingsScreen(message: String) {
+    fun Fragment.showToastAndOpenAppSettingsScreenForPermission(
+        permission: String?,
+        message: String,
+    ) {
         showThemedToast(requireContext(), message, false)
-        openAppSettingsScreen()
+        openAppSettingsScreenForPermission(permission)
     }
 }

@@ -41,11 +41,11 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelSync
+import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.trySetForeground
-import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -74,7 +74,7 @@ class SyncWorker(
     private val workManager = WorkManager.getInstance(context)
     private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
     private val notificationManager: NotificationManagerCompat? =
-        if (Permissions.canPostNotifications(context)) {
+        if (canPostNotifications(context)) {
             NotificationManagerCompat.from(context)
         } else {
             null
