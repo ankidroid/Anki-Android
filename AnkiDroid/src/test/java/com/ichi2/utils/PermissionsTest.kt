@@ -34,6 +34,7 @@ import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
+import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
 import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
 import io.mockk.every
@@ -49,7 +50,10 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
@@ -86,6 +90,14 @@ class PermissionsTest {
     fun tearDown() {
         unmockkAll()
         Prefs.notificationsPermissionRequested = false
+    }
+
+    @Test
+    fun `openAppSettingsScreen is a no-op if no app can show the app settings screen`() {
+        val realActivity = Robolectric.buildActivity(Activity::class.java).setup().get()
+        // throw when resolving `ACTION_APPLICATION_DETAILS_SETTINGS`
+        shadowOf(realActivity.application).checkActivities(true)
+        assertDoesNotThrow { realActivity.openAppSettingsScreen() }
     }
 
     @Test
