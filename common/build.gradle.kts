@@ -21,5 +21,6 @@ dependencies {
 
     testFixturesImplementation(libs.hamcrest)
     testFixturesImplementation(libs.androidx.annotation)
+    testFixturesImplementation(libs.junit.vintage.engine)
     testFixturesImplementation(libs.slf4j.api)
 }

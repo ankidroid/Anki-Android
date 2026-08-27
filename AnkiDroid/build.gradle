@@ -624,7 +624,6 @@ dependencies {
     testFixturesImplementation libs.kotlin.stdlib
     testFixturesImplementation libs.jakewharton.timber
     testFixturesImplementation libs.hamcrest
-    testFixturesImplementation libs.slf4j.api
     testFixturesImplementation libs.androidx.test.junit
     // Required so the ExperimentalCoroutinesApi opt-in (applied globally) doesn't cause
     // an "unresolved" warning, which is treated as an error due to allWarningsAsErrors
