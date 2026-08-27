@@ -17,6 +17,8 @@
 
 package com.ichi2.anki.analytics
 
+import com.ichi2.anki.common.analytics.AnalyticsConstant
+
 /**
  * A centralized repository for all constant values used in analytics tracking.
  */
