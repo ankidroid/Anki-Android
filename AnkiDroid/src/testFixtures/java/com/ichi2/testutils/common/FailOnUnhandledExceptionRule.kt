@@ -5,7 +5,9 @@ package com.ichi2.testutils.common
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import timber.log.Timber
+import org.slf4j.LoggerFactory
+
+private val logger = LoggerFactory.getLogger(FailOnUnhandledExceptionRule::class.java)
 
 /**
  * (#16253) Under unit tests, ACRA may infinitely loop when trying to handle an unhandled exception
@@ -34,17 +36,17 @@ class FailOnUnhandledExceptionRule : TestRule {
             override fun evaluate() {
                 if (!isEnabled) return base.evaluate()
 
-                Timber.v("test: applying exception handler override")
+                logger.trace("test: applying exception handler override")
                 exceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
                 Thread.setDefaultUncaughtExceptionHandler { _: Thread?, throwable: Throwable ->
-                    Timber.e(throwable, "test: unhandled exception")
+                    logger.error("test: unhandled exception", throwable)
                     uncaughtException = throwable
                 }
 
                 try {
                     base.evaluate()
                 } finally {
-                    Timber.v("test: removing exception handler override")
+                    logger.trace("test: removing exception handler override")
                     Thread.setDefaultUncaughtExceptionHandler(exceptionHandler)
                 }
 
