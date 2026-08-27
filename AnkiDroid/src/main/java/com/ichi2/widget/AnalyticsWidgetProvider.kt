@@ -8,8 +8,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.CallSuper
-import com.ichi2.anki.analytics.AnalyticsConstants
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsConstants
 import com.ichi2.anki.common.analytics.UsageAnalytics
 import com.ichi2.anki.common.storage.grantedStoragePermissions
 import timber.log.Timber

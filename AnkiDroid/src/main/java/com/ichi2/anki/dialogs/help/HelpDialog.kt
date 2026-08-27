@@ -14,11 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.analytics.AnalyticsConstants.Actions
-import com.ichi2.anki.analytics.AnalyticsConstants.Category
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsConstants.Actions
+import com.ichi2.anki.common.analytics.AnalyticsConstants.Category
 import com.ichi2.anki.databinding.DialogHelpBinding
 import com.ichi2.anki.databinding.FragmentHelpPageBinding
 import com.ichi2.anki.databinding.ItemHelpEntryBinding

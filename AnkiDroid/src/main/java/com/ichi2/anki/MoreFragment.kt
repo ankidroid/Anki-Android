@@ -8,9 +8,9 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.analytics.AnalyticsConstants.Actions
-import com.ichi2.anki.analytics.AnalyticsConstants.Category
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsConstants.Actions
+import com.ichi2.anki.common.analytics.AnalyticsConstants.Category
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.databinding.FragmentMoreBinding

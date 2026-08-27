@@ -15,9 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.analytics
-
-import com.ichi2.anki.common.analytics.AnalyticsConstant
+package com.ichi2.anki.common.analytics
 
 /**
  * A centralized repository for all constant values used in analytics tracking.

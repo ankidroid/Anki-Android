@@ -6,6 +6,7 @@ package com.ichi2.anki.analytics
 import android.content.Context
 import com.google.auto.service.AutoService
 import com.ichi2.anki.common.analytics.Analytics
+import com.ichi2.anki.common.analytics.AnalyticsConstants
 import org.acra.config.CoreConfiguration
 import org.acra.interaction.ReportInteraction
 import org.acra.util.Installation
