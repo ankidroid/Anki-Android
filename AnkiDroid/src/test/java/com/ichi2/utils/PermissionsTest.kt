@@ -26,6 +26,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -54,6 +55,7 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 class PermissionsTest {
     private lateinit var activity: Activity
+    private lateinit var fragmentActivity: FragmentActivity
     private lateinit var context: Context
     private lateinit var fragment: Fragment
     private lateinit var fragmentManager: FragmentManager
@@ -64,7 +66,9 @@ class PermissionsTest {
     fun setUp() {
         context = getApplicationContext()
         activity = mockk(relaxed = true)
+        fragmentActivity = mockk(relaxed = true)
         fragment = mockk(relaxed = true)
+        every { fragment.requireActivity() } returns fragmentActivity
         fragmentManager = mockk(relaxed = true)
         permissionRequestLauncher = mockk(relaxed = true)
         permissionsSpy = spyk(Permissions)
@@ -169,7 +173,7 @@ class PermissionsTest {
         verify(exactly = 0) { permissionRequestLauncher.launch(DUMMY_PERMISSION_STRING) }
 
         val intentSlot = slot<Intent>()
-        verify(exactly = 1) { fragment.startActivity(capture(intentSlot)) }
+        verify(exactly = 1) { fragmentActivity.startActivity(capture(intentSlot)) }
         assertThat(intentSlot.captured.action, equalTo(Settings.ACTION_APPLICATION_DETAILS_SETTINGS))
     }
 
