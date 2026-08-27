@@ -259,15 +259,21 @@ object Permissions {
      * Opens the Android settings for AnkiDroid if the device provide this feature.
      * Lets a user grant any missing permissions which have been permanently denied.
      */
-    fun Fragment.openAppSettingsScreen() {
+    fun Activity.openAppSettingsScreen() {
         Timber.i("launching ACTION_APPLICATION_DETAILS_SETTINGS")
         startActivity(
             Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", requireActivity().packageName, null),
+                Uri.fromParts("package", packageName, null),
             ),
         )
     }
+
+    /**
+     * Opens the Android settings for AnkiDroid if the device provide this feature.
+     * Lets a user grant any missing permissions which have been permanently denied.
+     */
+    fun Fragment.openAppSettingsScreen() = requireActivity().openAppSettingsScreen()
 
     /**
      * Opens the Android notifications settings for AnkiDroid if the device provides this feature.
