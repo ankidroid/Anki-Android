@@ -10,10 +10,8 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki.analytics
+package com.ichi2.anki.common.analytics
 
-import com.ichi2.anki.common.analytics.AnalyticsConstant
-import com.ichi2.anki.common.analytics.AnalyticsConstants
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo

@@ -17,6 +17,7 @@ dependencies {
     testImplementation(libs.junit.vintage.engine)
     testImplementation(libs.hamcrest)
     testImplementation(libs.junit.platform.launcher)
+    testImplementation(libs.kotlin.reflect)
     testImplementation(kotlin("test"))
 
     testFixturesImplementation(libs.hamcrest)
