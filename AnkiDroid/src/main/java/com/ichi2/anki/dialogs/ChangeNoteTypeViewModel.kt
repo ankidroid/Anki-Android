@@ -329,7 +329,6 @@ class ChangeNoteTypeViewModel(
      * @throws ConfirmModSchemaException if a one-way sync dialog needs to be accepted
      */
     @NeedsTest("one way sync")
-    @NeedsTest("closeDialogFlow")
     fun executeChangeNoteTypeAsync() =
         viewModelScope.async {
             Timber.d("Changing note type from '%s' to '%s'", inputNoteType.name, outputNoteType.name)
