@@ -18,6 +18,7 @@ package com.ichi2.utils
 
 import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -261,12 +262,17 @@ object Permissions {
      */
     fun Activity.openAppSettingsScreen() {
         Timber.i("launching ACTION_APPLICATION_DETAILS_SETTINGS")
-        startActivity(
-            Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", packageName, null),
-            ),
-        )
+        try {
+            startActivity(
+                Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", packageName, null),
+                ),
+            )
+        } catch (e: ActivityNotFoundException) {
+            Timber.w(e, "No app can show the app settings screen")
+            showThemedToast(this, R.string.activity_start_failed, false)
+        }
     }
 
     /**
