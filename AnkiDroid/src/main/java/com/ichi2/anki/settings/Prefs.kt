@@ -43,6 +43,7 @@ import kotlin.reflect.KProperty
 //  after the UI classes of that package are moved to `com.ichi2.anki.ui.preferences`
 object Prefs : PrefsRepository(AnkiDroidApp.sharedPrefs(), AnkiDroidApp.appResources)
 
+// TODO: enforce that `preferences.xml` is used
 open class PrefsRepository(
     val sharedPrefs: SharedPreferences,
     private val resources: Resources,
@@ -388,7 +389,7 @@ open class PrefsRepository(
 
     val isHtmlTypeAnswerEnabled by booleanPref(R.string.use_input_tag_key, defaultValue = false)
     var useFixedPortInReviewer by booleanPref(R.string.use_fixed_port_pref_key, false)
-    var allowTemplatesToRecordAudio by booleanPref(R.string.allow_templates_to_record_audio, false)
+    var allowTemplatesToRecordAudio by booleanPref(R.string.pref_allow_template_audio_recording, false)
 
     var reviewerPort by intPref(R.string.reviewer_port_pref_key, defaultValue = 0)
 
