@@ -10,6 +10,11 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -67,6 +72,21 @@ open class SingleFragmentActivity :
         }
         if (supportsEdgeToEdge) {
             enableEdgeToEdge(statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { Themes.isNightTheme })
+            val root = findViewById<CoordinatorLayout>(R.id.root_layout)
+            ViewCompat.setOnApplyWindowInsetsListener(root) { _, insets ->
+                val constraints = insets.getInsets(systemBars() or displayCutout())
+                // apply the insets only for content/fragments defined by SingleFragmentActivity
+                // directly, subclasses(ex. ManageSpaceActivity, Preferences) should handle their
+                // content independently
+                if (this::class.java == SingleFragmentActivity::class.java) {
+                    findViewById<FragmentContainerView>(R.id.fragment_container)?.updatePadding(
+                        left = constraints.left,
+                        right = constraints.right,
+                        top = constraints.top,
+                    )
+                }
+                insets
+            }
         } else {
             setTransparentStatusBar()
         }
