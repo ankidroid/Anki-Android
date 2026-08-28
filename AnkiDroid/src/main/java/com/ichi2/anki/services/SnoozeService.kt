@@ -15,6 +15,7 @@ import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import com.ichi2.anki.reviewreminders.ReviewReminderId
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
+import com.ichi2.anki.reviewreminders.reminderLogPrefix
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.utils.ext.getParcelableCompat
 import timber.log.Timber
@@ -84,7 +85,8 @@ class SnoozeService : AnkiBroadcastReceiver() {
             val retrievedReminder = ReviewRemindersDatabase.getRemindersForScope(reviewReminderScope)[reviewReminderId]
             if (retrievedReminder == null) {
                 Timber.i(
-                    "Cancelling snoozed notification scheduling for reminder $reviewReminderId because it was not found in the database.",
+                    "${reminderLogPrefix(reviewReminderId)} skip: Cancelling snoozed notification scheduling " +
+                        "for reminder ${reviewReminderId.value} because it was not found in the database.",
                 )
                 return
             }
@@ -154,7 +156,7 @@ class SnoozeService : AnkiBroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        Timber.d("onReceiveBroadcast")
+        Timber.i("${reminderLogPrefix()} SnoozeService.onReceiveBroadcast")
         val extras = intent.extras ?: return
         val reviewReminderId =
             extras.getParcelableCompat<ReviewReminderId>(EXTRA_REVIEW_REMINDER_ID) ?: return
