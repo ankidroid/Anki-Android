@@ -52,6 +52,7 @@ import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.reviewreminders.ReminderLogTree
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.NotificationService
@@ -141,6 +142,7 @@ open class AnkiDroidApp :
             LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
             LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
         }
+        Timber.plant(ReminderLogTree(this))
         if (BuildConfig.ENABLE_LEAK_CANARY) {
             LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {
