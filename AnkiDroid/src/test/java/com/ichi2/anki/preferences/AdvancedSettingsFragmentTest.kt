@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.preferences
 
+import android.Manifest
 import androidx.preference.SwitchPreferenceCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
@@ -10,10 +11,13 @@ import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.launchActivity
 import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.testutils.denyPermissions
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 
 @RunWith(AndroidJUnit4::class)
 class AdvancedSettingsFragmentTest : RobolectricTest() {
@@ -31,6 +35,27 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
 
             allowTemplatesToRecordAudioSwitch.performClick()
             assertThat("disabled after unchecking the switch", prefs.allowTemplatesToRecordAudio, equalTo(false))
+        }
+    }
+
+    @Test
+    fun `'allow templates to record audio' switch does not request the permission when toggled off`() {
+        grantRecordAudioPermission()
+        prefs.allowTemplatesToRecordAudio = true
+
+        withAdvancedSettings {
+            // the switch is forced off when the screen opens without the permission,
+            // so an opt-out without it requires a revocation while the screen is open
+            denyPermissions(Manifest.permission.RECORD_AUDIO)
+
+            allowTemplatesToRecordAudioSwitch.performClick()
+
+            assertThat("opt-out is persisted", prefs.allowTemplatesToRecordAudio, equalTo(false))
+            assertThat(
+                "no permission request is launched",
+                shadowOf(requireActivity()).lastRequestedPermission,
+                nullValue(),
+            )
         }
     }
 
