@@ -27,6 +27,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
 import org.junit.Test
@@ -39,7 +40,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
         onExportDialog {
             // Select export type as anki collection package.
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingAnkiCollectionPackage()))
+            onData(containsString(TR.sentenceCase.ankiCollectionPackage))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
 
@@ -63,7 +64,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
         onExportDialog {
             // Select export type as anki deck package.
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingAnkiDeckPackage()))
+            onData(containsString(TR.sentenceCase.ankiDeckPackage))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
 
@@ -99,7 +100,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
         onExportDialog {
             // check legacy checkboxes status for collection export
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingAnkiCollectionPackage()))
+            onData(containsString(TR.sentenceCase.ankiCollectionPackage))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
             onView(withId(R.id.collection_export_legacy))
@@ -114,7 +115,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
             // check legacy checkboxes status for apkg export
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingAnkiDeckPackage()))
+            onData(containsString(TR.sentenceCase.ankiDeckPackage))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
             onView(withId(R.id.apkg_export_legacy))
@@ -129,7 +130,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
             // checkboxes are not shown for notes export
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingNotesInPlainText()))
+            onData(containsString(TR.sentenceCase.notesInPlainText))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
             onView(withId(R.id.apkg_export_legacy))
@@ -141,7 +142,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
             // checkboxes are not shown for cards export
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingCardsInPlainText()))
+            onData(containsString(TR.sentenceCase.cardsInPlainText))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
             onView(withId(R.id.apkg_export_legacy))

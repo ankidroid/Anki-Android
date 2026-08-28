@@ -92,4 +92,8 @@ undoActionUndone()
     <string name="sentence_answer_hard" maxLength="41">Answer hard</string>
     <string name="sentence_answer_good" maxLength="41">Answer good</string>
     <string name="sentence_copy_to_clipboard">Copy to clipboard</string>
+    <string name="sentence_anki_collection_package">Anki collection package</string>
+    <string name="sentence_anki_deck_package">Anki deck package</string>
+    <string name="sentence_notes_in_plain_text">Notes in plain text</string>
+    <string name="sentence_cards_in_plain_text">Cards in plain text</string>
 </resources>
