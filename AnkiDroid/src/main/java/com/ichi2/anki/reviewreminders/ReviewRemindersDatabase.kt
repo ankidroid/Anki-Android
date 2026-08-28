@@ -468,4 +468,9 @@ object ReviewRemindersDatabase {
             Prefs.reviewReminderDeserializationErrors = ""
         }
     }
+
+    /**
+     * For in-app debug info functionality.
+     */
+    fun dumpContentsToString(): String = remindersSharedPrefs.all.entries.joinToString("\n") { "${it.key} -> ${it.value}" }
 }
