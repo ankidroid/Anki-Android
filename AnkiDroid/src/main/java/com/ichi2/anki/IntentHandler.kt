@@ -114,9 +114,13 @@ class IntentHandler : AbstractIntentHandler() {
 
     private fun copyDebugInfoToClipboard(intent: Intent) {
         Timber.i("Copying debug info to clipboard")
-        // null string is handled by copyToClipboard in try-catch
+        val clipboardData =
+            intent.getStringExtra(EXTRA_CLIPBOARD_DATA) ?: run {
+                Timber.w("copyDebugInfoToClipboard: missing '%s' extra", EXTRA_CLIPBOARD_DATA)
+                return
+            }
         this.copyToClipboard(
-            text = (intent.getStringExtra(EXTRA_CLIPBOARD_DATA)!!),
+            text = clipboardData,
             failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }
