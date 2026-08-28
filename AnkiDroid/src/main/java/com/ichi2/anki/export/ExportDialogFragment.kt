@@ -291,7 +291,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         val exportPath =
             File(
                 getExportRootFile(),
-                "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt",
+                "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt"
             ).path
         requireAnkiActivity().exportSelectedNotes(
             exportPath = exportPath,
@@ -310,7 +310,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         val exportPath =
             File(
                 getExportRootFile(),
-                "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt",
+                "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt"
             ).path
         requireAnkiActivity().exportSelectedCards(
             exportPath = exportPath,
