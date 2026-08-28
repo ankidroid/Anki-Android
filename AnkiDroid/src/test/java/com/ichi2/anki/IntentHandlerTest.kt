@@ -12,11 +12,22 @@ import com.ichi2.anki.IntentHandler.LaunchType
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.robolectric.Robolectric
 
 @RunWith(AndroidJUnit4::class)
 class IntentHandlerTest {
+    @Test
+    fun `COPY_DEBUG_INFO without clip_data does not crash`() {
+        val intent = Intent("com.ichi2.anki.COPY_DEBUG_INFO")
+
+        assertDoesNotThrow {
+            Robolectric.buildActivity(IntentHandler::class.java, intent).create()
+        }
+    }
+
     // COULD_BE_BETTER: We're testing class internals here, would like to see these tests be replaced with
     // higher-level tests at a later date when we better extract dependencies
     @Test
