@@ -108,12 +108,21 @@ object ReviewReminderAlarmManager {
                 reviewReminder.id,
                 reviewReminder.scope,
                 NotificationService.NotificationServiceAction.ScheduleRecurringNotifications,
-            ) ?: return
+            )
+        if (pendingIntent == null) {
+            Timber
+                .tag(reminderTag(reviewReminder.id))
+                .w("Failed to create pending intent for review reminder ${reviewReminder.id.value}")
+            return
+        }
         Timber.v("Pending intent for ${reviewReminder.id} is $pendingIntent")
 
         if (attemptImmediateNotification) {
             // Attempt an immediate notification: If it has already been fired for the most recent scheduled time,
             // NotificationService will detect it and abort the notification.
+            Timber
+                .tag(reminderTag(reviewReminder.id))
+                .i("Attempting immediate notification for ${reviewReminder.id.value}")
             val immediateNotificationIntent =
                 NotificationService.getIntent(
                     context,
@@ -136,14 +145,16 @@ object ReviewReminderAlarmManager {
             }
         }
 
-        AlarmManagement.useAlarmManager(context) { alarmManager ->
+        AlarmManagement.useAlarmManager(context, alarmManagerErrorHandler(reviewReminder.id)) { alarmManager ->
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
                 alarmTimestamp.timeInMillis,
                 AlarmManagement.WINDOW_LENGTH_MS,
                 pendingIntent,
             )
-            Timber.d("Successfully scheduled review reminder notifications for ${reviewReminder.id}")
+            Timber
+                .tag(reminderTag(reviewReminder.id))
+                .i("Successfully scheduled review reminder notifications for ${reviewReminder.id.value}")
         }
     }
 
@@ -165,11 +176,19 @@ object ReviewReminderAlarmManager {
                 reviewReminder.id,
                 reviewReminder.scope,
                 NotificationService.NotificationServiceAction.ScheduleRecurringNotifications,
-            ) ?: return
+            )
+        if (pendingIntent == null) {
+            Timber
+                .tag(reminderTag(reviewReminder.id))
+                .w("Failed to create pending intent for review reminder ${reviewReminder.id.value}")
+            return
+        }
         Timber.v("Pending intent for ${reviewReminder.id} is $pendingIntent")
-        AlarmManagement.useAlarmManager(context) { alarmManager ->
+        AlarmManagement.useAlarmManager(context, alarmManagerErrorHandler(reviewReminder.id)) { alarmManager ->
             alarmManager.cancel(pendingIntent)
-            Timber.d("Successfully unscheduled review reminder notifications for ${reviewReminder.id}")
+            Timber
+                .tag(reminderTag(reviewReminder.id))
+                .i("Successfully unscheduled review reminder notifications for ${reviewReminder.id.value}")
         }
     }
 
@@ -185,7 +204,7 @@ object ReviewReminderAlarmManager {
      * manually deleted via [unscheduleReviewReminderNotifications].
      */
     suspend fun scheduleAllEnabledReviewReminderNotifications(context: Context) {
-        Timber.d("scheduleAllEnabledReviewReminderNotifications")
+        Timber.tag(reminderTag()).i("scheduleAllEnabledReviewReminderNotifications")
         val enabledReviewReminders =
             ReviewRemindersDatabase
                 .getAllReminders()
@@ -222,19 +241,35 @@ object ReviewReminderAlarmManager {
                 reviewReminder.id,
                 reviewReminder.scope,
                 NotificationService.NotificationServiceAction.SnoozeNotification,
-            ) ?: return
+            )
+        if (pendingIntent == null) {
+            Timber
+                .tag(reminderTag(reviewReminder.id))
+                .w("Failed to create pending intent for review reminder ${reviewReminder.id.value}")
+            return
+        }
         Timber.v("Pending intent for ${reviewReminder.id} is $pendingIntent")
 
         val alarmTimestamp = TimeManager.time.calendar()
         alarmTimestamp.add(Calendar.MINUTE, snoozeIntervalInMinutes)
-        AlarmManagement.useAlarmManager(context) { alarmManager ->
+        AlarmManagement.useAlarmManager(context, alarmManagerErrorHandler(reviewReminder.id)) { alarmManager ->
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
                 alarmTimestamp.timeInMillis,
                 AlarmManagement.WINDOW_LENGTH_MS,
                 pendingIntent,
             )
-            Timber.d("Successfully scheduled snoozed review reminder notifications for ${reviewReminder.id}")
+            Timber
+                .tag(reminderTag(reviewReminder.id))
+                .i("Successfully scheduled snoozed review reminder notifications for ${reviewReminder.id.value}")
         }
     }
+
+    /**
+     * Persists [AlarmManagement] failures against the reminder they relate to, rather than only logging them.
+     */
+    private fun alarmManagerErrorHandler(reviewReminderId: ReviewReminderId) =
+        { t: Throwable?, msg: String ->
+            Timber.tag(reminderTag(reviewReminderId)).w(t, msg)
+        }
 }

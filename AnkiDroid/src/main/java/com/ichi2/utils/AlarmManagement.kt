@@ -29,6 +29,7 @@ object AlarmManagement {
      */
     fun useAlarmManager(
         context: Context,
+        errorHandler: (Throwable?, String) -> Unit = Timber::w,
         block: (AlarmManager) -> Unit,
     ) {
         var error: String? = null
@@ -37,16 +38,16 @@ object AlarmManagement {
             if (alarmManager != null) {
                 block(alarmManager)
             } else {
-                Timber.w("Failed to get AlarmManager system service, aborting operation")
+                errorHandler(null, "Failed to get AlarmManager system service, aborting operation")
             }
         } catch (ex: SecurityException) {
             // #6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
             // We warn the user if they breach this limit
-            Timber.w(ex)
             error = "Too many alarms set"
+            errorHandler(ex, error)
         } catch (e: Exception) {
-            Timber.w(e)
             error = "Failed to schedule alarm"
+            errorHandler(e, error)
         }
         if (error != null) {
             try {
