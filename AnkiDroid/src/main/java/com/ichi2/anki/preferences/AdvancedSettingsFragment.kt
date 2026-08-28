@@ -52,9 +52,11 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
     private val microphonePermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) return@registerForActivityResult
+            if (isGranted) {
+                requirePreference<SwitchPreferenceCompat>(R.string.pref_allow_template_audio_recording).isChecked = true
+                return@registerForActivityResult
+            }
 
-            findPreference<SwitchPreferenceCompat>(R.string.pref_allow_template_audio_recording)?.isChecked = false
             if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.RECORD_AUDIO)) {
                 return@registerForActivityResult
             }
@@ -135,10 +137,14 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         requirePreference<SwitchPreferenceCompat>(R.string.pref_allow_template_audio_recording).apply {
             isChecked = isChecked && Permissions.canRecordAudio(requireContext())
-            setOnPreferenceChangeListener { newValue ->
-                if (newValue && !Permissions.canRecordAudio(requireContext())) {
-                    microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            setOnPreferenceChangeListener { _, newValue ->
+                if (newValue !is Boolean) return@setOnPreferenceChangeListener false
+                if (!newValue || Permissions.canRecordAudio(requireContext())) {
+                    return@setOnPreferenceChangeListener true
                 }
+                // veto the opt-in until the permission is granted
+                microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                false
             }
         }
 

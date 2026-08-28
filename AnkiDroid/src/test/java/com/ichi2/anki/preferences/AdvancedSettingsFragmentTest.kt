@@ -3,6 +3,7 @@
 package com.ichi2.anki.preferences
 
 import android.Manifest
+import android.content.pm.PackageManager
 import androidx.preference.SwitchPreferenceCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
@@ -56,6 +57,43 @@ class AdvancedSettingsFragmentTest : RobolectricTest() {
                 shadowOf(requireActivity()).lastRequestedPermission,
                 nullValue(),
             )
+        }
+    }
+
+    /**
+     * The opt-in is durable state read by the card viewers: it must not
+     * persist while the microphone permission request it depends on is still unresolved,
+     * e.g. if the process dies before the user answers the system dialog.
+     */
+    @Test
+    fun `'allow templates to record audio' switch does not persist the opt-in before the permission is granted`() {
+        prefs.allowTemplatesToRecordAudio = false
+
+        withAdvancedSettings {
+            allowTemplatesToRecordAudioSwitch.performClick()
+
+            assertThat("switch stays unchecked", allowTemplatesToRecordAudioSwitch.isChecked, equalTo(false))
+            assertThat("no opt-in is persisted", prefs.allowTemplatesToRecordAudio, equalTo(false))
+        }
+    }
+
+    @Test
+    fun `'allow templates to record audio' switch applies the opt-in once the permission is granted`() {
+        prefs.allowTemplatesToRecordAudio = false
+
+        withAdvancedSettings {
+            allowTemplatesToRecordAudioSwitch.performClick()
+
+            grantRecordAudioPermission()
+            val request = shadowOf(requireActivity()).lastRequestedPermission
+            requireActivity().onRequestPermissionsResult(
+                request.requestCode,
+                request.requestedPermissions,
+                intArrayOf(PackageManager.PERMISSION_GRANTED),
+            )
+
+            assertThat("switch is checked once the permission is granted", allowTemplatesToRecordAudioSwitch.isChecked, equalTo(true))
+            assertThat("the opt-in is persisted", prefs.allowTemplatesToRecordAudio, equalTo(true))
         }
     }
 
