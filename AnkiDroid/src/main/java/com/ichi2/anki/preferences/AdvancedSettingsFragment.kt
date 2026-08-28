@@ -135,8 +135,8 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         requirePreference<SwitchPreferenceCompat>(R.string.pref_allow_template_audio_recording).apply {
             isChecked = isChecked && Permissions.canRecordAudio(requireContext())
-            setOnPreferenceChangeListener {
-                if (!Permissions.canRecordAudio(requireContext())) {
+            setOnPreferenceChangeListener { newValue ->
+                if (newValue && !Permissions.canRecordAudio(requireContext())) {
                     microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
                 }
             }
