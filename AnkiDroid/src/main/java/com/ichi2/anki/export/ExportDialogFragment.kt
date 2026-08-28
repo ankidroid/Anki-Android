@@ -284,14 +284,13 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             // notes/cards weren't selected so export the chosen deck(s)
             null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
         }
-
     private fun handleNotesInPlainTextExport() {
         val exportLimit = buildExportLimit()
         val packagePrefix = getNonCollectionNamePrefix().replace("/", "_")
         val exportPath =
             File(
                 getExportRootFile(),
-                "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt"
+                "$packagePrefix-${getTimestamp(TimeManager.time)}.txt",
             ).path
         requireAnkiActivity().exportSelectedNotes(
             exportPath = exportPath,
@@ -303,14 +302,14 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             limit = exportLimit,
         )
     }
-
+    
     private fun handleCardsInPlainTextExport() {
-        val exportLimit = buildExportLimit()
+        val exportLimit = buildExportLimit(
         val packagePrefix = getNonCollectionNamePrefix().replace("/", "_")
         val exportPath =
             File(
                 getExportRootFile(),
-                "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt"
+                "$packagePrefix-${getTimestamp(TimeManager.time)}.txt",
             ).path
         requireAnkiActivity().exportSelectedCards(
             exportPath = exportPath,
