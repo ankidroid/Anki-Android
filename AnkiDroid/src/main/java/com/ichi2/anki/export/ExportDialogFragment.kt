@@ -284,6 +284,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             // notes/cards weren't selected so export the chosen deck(s)
             null -> (binding.deckSelector.adapter as DeckDisplayAdapter).getItem(binding.deckSelector.selectedItemPosition).name
         }
+
     private fun handleNotesInPlainTextExport() {
         val exportLimit = buildExportLimit()
         val packagePrefix = getNonCollectionNamePrefix().replace("/", "_")
@@ -302,7 +303,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             limit = exportLimit,
         )
     }
-    
+
     private fun handleCardsInPlainTextExport() {
         val exportLimit = buildExportLimit(
         val packagePrefix = getNonCollectionNamePrefix().replace("/", "_")
