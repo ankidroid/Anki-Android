@@ -21,6 +21,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
@@ -39,8 +40,10 @@ import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
 import com.ichi2.utils.Permissions.attemptToEnableNotifications
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
+import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -99,6 +102,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
         setupSummary()
         setupTroubleshootingChecks()
         setupSettingChangeDetector()
+        setupDebugButton()
         setupContentInsets()
     }
 
@@ -194,6 +198,18 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
      */
     private fun setupSettingChangeDetector() {
         onWindowFocusChanged { hasFocus -> if (hasFocus) viewModel.refreshChecks() }
+    }
+
+    private fun setupDebugButton() {
+        binding.copyDebugInfo.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val debugInfo = ReminderLogTree.readReminderLog() + "\n\n" + ReviewRemindersDatabase.dumpContentsToString()
+                requireContext().copyToClipboard(
+                    debugInfo,
+                    failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
+                )
+            }
+        }
     }
 
     companion object {
