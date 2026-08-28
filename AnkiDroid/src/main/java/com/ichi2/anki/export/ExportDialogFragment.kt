@@ -287,11 +287,13 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
 
     private fun handleNotesInPlainTextExport() {
         val exportLimit = buildExportLimit()
+        val packagePrefix = getNonCollectionNamePrefix().replace("/", "_")
         val exportPath =
-            File(
-                getExportRootFile(),
-                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
-            ).path
+        File(
+        getExportRootFile(),
+        "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt",
+        ).path
+
         requireAnkiActivity().exportSelectedNotes(
             exportPath = exportPath,
             withHtml = binding.notesIncludeHtml.isChecked,
@@ -305,11 +307,13 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
 
     private fun handleCardsInPlainTextExport() {
         val exportLimit = buildExportLimit()
+        val packagePrefix = getNonCollectionNamePrefix().replace("/", "_")
         val exportPath =
-            File(
-                getExportRootFile(),
-                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
-            ).path
+        File(
+        getExportRootFile(),
+        "${packagePrefix}-${getTimestamp(TimeManager.time)}.txt",
+        ).path
+
         requireAnkiActivity().exportSelectedCards(
             exportPath = exportPath,
             withHtml = binding.cardsIncludeHtml.isChecked,
