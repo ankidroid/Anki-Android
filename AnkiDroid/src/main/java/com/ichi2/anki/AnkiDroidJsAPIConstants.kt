@@ -33,8 +33,14 @@ object AnkiDroidJsAPIConstants {
     const val ANKI_JS_ERROR_CODE_SET_DUE: Int = 7
     const val ANKI_JS_ERROR_CODE_SEARCH_CARD: Int = 8
 
-    // js api developer contact
+    /** The API version cards are written against. Breaking changes bump the major version */
     const val CURRENT_JS_API_VERSION = "0.0.4"
+
+    /**
+     * The oldest API version still accepted.
+     * Raise this to end support for an old version, informing users of all templates using this
+     * API version that they should make changes, or contact the template developer.
+     */
     const val MINIMUM_JS_API_VERSION = "0.0.3"
 
     val flagCommands =
