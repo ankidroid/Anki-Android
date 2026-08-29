@@ -209,10 +209,6 @@ class ReviewerFragment :
             navigate(destination)
         }
 
-        viewModel.destinationFlow.collectIn(lifecycleScope) { destination ->
-            startActivity(destination.toIntent(requireContext()))
-        }
-
         binding.webViewContainer.setFrameStyle()
 
         if (Prefs.showAnswerFeedback) {
