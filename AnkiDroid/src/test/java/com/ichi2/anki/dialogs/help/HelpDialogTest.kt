@@ -25,6 +25,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
 import io.mockk.mockk
@@ -65,8 +66,8 @@ class HelpDialogTest {
     fun `Help contains the expected items at start`() {
         // checking the support menu
         val expectedSupportItems =
-            listOf(
-                R.string.help_item_support_opencollective_donate,
+            listOfNotNull(
+                R.string.help_item_support_opencollective_donate.takeIf { BuildConfig.SHOW_DONATE_LINKS },
                 R.string.multimedia_editor_trans_translate,
                 R.string.help_item_support_develop_ankidroid,
                 R.string.help_item_support_rate_ankidroid,

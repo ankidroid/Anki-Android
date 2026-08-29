@@ -26,6 +26,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import com.ichi2.anki.databinding.ActivityInfoBinding
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -71,7 +72,11 @@ class Info :
         }
         setViewBinding(binding)
         enableToolbar()
-        binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
+        } else {
+            binding.donate.isVisible = false
+        }
         title = "$appName v$pkgVersionName"
         binding.webView.webChromeClient =
             object : WebChromeClient() {
