@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.preferences
 
+import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.R
@@ -11,12 +12,9 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.ext.clear
 import org.junit.After
 import org.junit.Test
+import kotlin.reflect.KClass
 
 class PreferencesScreenshotTest : ScreenshotTest() {
-    init {
-        Prefs.isNewStudyScreenEnabled = true
-    }
-
     @After
     override fun tearDown() {
         super.tearDown()
@@ -29,26 +27,36 @@ class PreferencesScreenshotTest : ScreenshotTest() {
 
         fragments.forEach { fragment ->
             val fragmentClass = fragment::class
-            ActivityScenario
-                .launch<PreferencesActivity>(
-                    PreferencesActivity.getIntent(targetContext, fragmentClass),
-                ).use { scenario ->
-                    scenario.onActivity { activity ->
-                        val mainFragment = activity!!.fragment as PreferencesFragment
-                        val settingsFragment = mainFragment.childFragmentManager.findFragmentById(R.id.settings_container)
-                        // Robolectric generates a different temporary path every time,
-                        // so avoid creating an unnecessary diff in the collection path pref summary
-                        (settingsFragment as? AdvancedSettingsFragment)?.apply {
-                            requirePreference<Preference>(CollectionHelper.PREF_COLLECTION_PATH).summaryProvider = {
-                                "/storage/emulated/0/AnkiDroid"
-                            }
-                        }
-                        (settingsFragment as? AboutFragment)?.apply {
-                            binding.buildDate.text = "May 18, 2026"
-                        }
-                        captureScreen(fragmentClass.simpleName!!)
+            withPreferencesActivity(fragmentClass) { activity ->
+                Prefs.isNewStudyScreenEnabled = true
+                val mainFragment = activity.fragment as PreferencesFragment
+                val settingsFragment = mainFragment.childFragmentManager.findFragmentById(R.id.settings_container)
+                // Robolectric generates a different temporary path every time,
+                // so avoid creating an unnecessary diff in the collection path pref summary
+                (settingsFragment as? AdvancedSettingsFragment)?.apply {
+                    requirePreference<Preference>(CollectionHelper.PREF_COLLECTION_PATH).summaryProvider = {
+                        "/storage/emulated/0/AnkiDroid"
                     }
                 }
+                (settingsFragment as? AboutFragment)?.apply {
+                    binding.buildDate.text = "May 18, 2026"
+                }
+                captureScreen(fragmentClass.simpleName!!)
+            }
         }
+    }
+
+    private fun withPreferencesActivity(
+        fragmentClass: KClass<out Fragment>,
+        block: (PreferencesActivity) -> Unit,
+    ) {
+        ActivityScenario
+            .launch<PreferencesActivity>(
+                PreferencesActivity.getIntent(targetContext, fragmentClass),
+            ).use { scenario ->
+                scenario.onActivity { activity ->
+                    block(activity)
+                }
+            }
     }
 }
