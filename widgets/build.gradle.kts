@@ -11,6 +11,7 @@ configure<LibraryExtension> {
 }
 
 dependencies {
+    implementation(project(":anki-common"))
     implementation(project(":common"))
     implementation(project(":libanki"))
 
