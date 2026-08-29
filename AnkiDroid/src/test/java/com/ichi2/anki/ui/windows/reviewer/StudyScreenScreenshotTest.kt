@@ -10,9 +10,17 @@ import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.FrameStyle
 import com.ichi2.anki.settings.enums.ToolbarPosition
+import com.ichi2.testutils.ext.clear
+import org.junit.After
 import org.junit.Test
 
 class StudyScreenScreenshotTest : ScreenshotTest() {
+    @After
+    override fun tearDown() {
+        super.tearDown()
+        Prefs.clear()
+    }
+
     @Test
     fun captureScreenshot(
         @TestParameter toolbarPosition: ToolbarPosition,

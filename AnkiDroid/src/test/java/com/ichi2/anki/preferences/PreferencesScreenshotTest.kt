@@ -8,11 +8,19 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.ext.clear
+import org.junit.After
 import org.junit.Test
 
 class PreferencesScreenshotTest : ScreenshotTest() {
     init {
         Prefs.isNewStudyScreenEnabled = true
+    }
+
+    @After
+    override fun tearDown() {
+        super.tearDown()
+        Prefs.clear()
     }
 
     @Test
