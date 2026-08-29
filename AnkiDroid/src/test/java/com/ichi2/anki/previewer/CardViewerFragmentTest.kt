@@ -27,6 +27,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
 
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // WebChromeClient
@@ -83,6 +84,27 @@ class CardViewerFragmentTest : RobolectricTest() {
 
             verify(second).deny()
             assertThat("the user is not prompted again", ShadowDialog.getShownDialogs().size, equalTo(dialogCount))
+        }
+    }
+
+    @Test
+    fun `cancelled audio capture requests close the opt-in dialog`() {
+        grantRecordAudioPermission()
+        Prefs.allowTemplatesToRecordAudio = false
+        val request = audioCaptureRequest()
+
+        withCardViewerChromeClient { chromeClient ->
+            chromeClient.onPermissionRequest(request)
+            chromeClient.onPermissionRequestCanceled(request)
+            advanceRobolectricLooper()
+
+            assertThat(
+                "the opt-in dialog is dismissed with its request",
+                shadowOf(ShadowDialog.getLatestDialog()).hasBeenDismissed(),
+                equalTo(true),
+            )
+            verify(request, never()).grant(any())
+            assertThat("no opt-in is recorded", Prefs.allowTemplatesToRecordAudio, equalTo(false))
         }
     }
 

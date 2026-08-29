@@ -77,8 +77,11 @@ abstract class CardViewerFragment(
 
     private val appPermission by lazy { AppPermissions(requireContext()) { showSnackbar(it) } }
 
-    /** The [PermissionRequest] being asked about via the opt-in dialog or [microphonePermissionLauncher] */
+    /** The [PermissionRequest] being asked about via [optInDialog] or [microphonePermissionLauncher] */
     private var activeRequest: PermissionRequest? = null
+
+    /** The dialog asking the user to allow [activeRequest]. `null` if not shown */
+    private var optInDialog: AlertDialog? = null
 
     /** Whether the user declined the opt-in: further requests are denied without a prompt */
     private var userDeclinedRecording = false
@@ -132,21 +135,23 @@ abstract class CardViewerFragment(
         }
 
         activeRequest = request
-        AlertDialog.Builder(requireContext()).show {
-            message(R.string.template_is_trying_to_record_audio)
-            positiveButton(R.string.dialog_allow) {
-                if (canRecordAudio) {
-                    activeRequest = null
-                    Prefs.allowTemplatesToRecordAudio = true
-                    request.grantAudioCapture()
-                } else {
-                    // the request is active until microphonePermissionLauncher handles it
-                    microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+        optInDialog =
+            AlertDialog.Builder(requireContext()).show {
+                message(R.string.template_is_trying_to_record_audio)
+                positiveButton(R.string.dialog_allow) {
+                    if (canRecordAudio) {
+                        activeRequest = null
+                        Prefs.allowTemplatesToRecordAudio = true
+                        request.grantAudioCapture()
+                    } else {
+                        // the request stays active until microphonePermissionLauncher handles it
+                        microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                    }
                 }
+                negativeButton(R.string.dialog_cancel) { decline() }
+                setOnCancelListener { decline() }
+                setOnDismissListener { optInDialog = null }
             }
-            negativeButton(R.string.dialog_cancel) { decline() }
-            setOnCancelListener { decline() }
-        }
     }
 
     @CallSuper
@@ -430,6 +435,17 @@ abstract class CardViewerFragment(
             }
 
             askToAllowTemplateAudioRecording(request, canRecordAudio)
+        }
+
+        /**
+         * Forgets [request] after the WebView invalidated it (e.g. on navigating away), closing
+         * the opt-in dialog: granting or denying a cancelled request has no effect.
+         */
+        override fun onPermissionRequestCanceled(request: PermissionRequest) {
+            if (request != activeRequest) return
+            Timber.i("WebView cancelled its audio capture request")
+            activeRequest = null
+            optInDialog?.dismiss()
         }
     }
 
