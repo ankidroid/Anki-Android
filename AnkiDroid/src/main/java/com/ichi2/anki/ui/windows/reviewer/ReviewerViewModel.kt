@@ -233,7 +233,7 @@ class ReviewerViewModel(
         Timber.v("ReviewerViewModel::toggleMark")
         val card = currentCard.await()
         val note = withCol { card.note(this@withCol) }
-        NoteService.toggleMark(note)
+        NoteService.toggleMark(note, handler = this@ReviewerViewModel)
         isMarkedFlow.emit(NoteService.isMarked(note))
     }
 

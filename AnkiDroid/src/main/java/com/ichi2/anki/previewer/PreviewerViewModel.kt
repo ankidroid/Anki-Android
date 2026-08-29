@@ -121,7 +121,7 @@ class PreviewerViewModel(
         launchCatchingIO {
             val card = currentCard.await()
             val note = withCol { card.note(this@withCol) }
-            NoteService.toggleMark(note)
+            NoteService.toggleMark(note, handler = this@PreviewerViewModel)
             isMarked.emit(NoteService.isMarked(note))
         }
     }
@@ -251,6 +251,8 @@ class PreviewerViewModel(
         handler: Any?,
     ) {
         launchCatchingIO {
+            if (handler == this@PreviewerViewModel) return@launchCatchingIO
+
             when {
                 changes.noteText -> {
                     val card = currentCard.await()

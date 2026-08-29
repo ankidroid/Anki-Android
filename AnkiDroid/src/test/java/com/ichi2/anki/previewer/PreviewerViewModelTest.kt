@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.test
 import com.ichi2.anki.Flag
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.servicelayer.NoteService
@@ -177,6 +178,26 @@ class PreviewerViewModelTest : JvmTest() {
     fun `toggle mark`() =
         runTest {
             viewModel.toggleMark()
+            assertTrue(viewModel.isMarked.value)
+
+            val note = viewModel.currentCard.await().note()
+            assertTrue(NoteService.isMarked(note))
+        }
+
+    @Test
+    fun `mark does not rerender the current card`() =
+        runTest {
+            viewModel.eval.test {
+                viewModel.onPageFinished(false)
+                advanceUntilIdle()
+                awaitItem()
+
+                viewModel.toggleMark()
+                advanceUntilIdle()
+
+                expectNoEvents()
+            }
+
             assertTrue(viewModel.isMarked.value)
 
             val note = viewModel.currentCard.await().note()
