@@ -84,8 +84,7 @@ abstract class CardViewerFragment(
             Prefs.allowTemplatesToRecordAudio = isGranted
 
             if (isGranted) {
-                Timber.i("Granting audio capture permission to WebView")
-                pendingWebViewPermissionRequest?.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+                pendingWebViewPermissionRequest?.grantAudioCapture()
             } else {
                 Timber.i("Denying audio capture permission to WebView")
                 pendingWebViewPermissionRequest?.deny()
@@ -105,6 +104,33 @@ abstract class CardViewerFragment(
             }
             pendingWebViewPermissionRequest = null
         }
+
+    /**
+     * Asks whether the card template may record audio, granting [request] if the user allows it.
+     *
+     * If AnkiDroid lacks the microphone permission, requests it first and defers [request] to
+     * [microphonePermissionLauncher].
+     *
+     * @param canRecordAudio whether AnkiDroid holds [Manifest.permission.RECORD_AUDIO]
+     */
+    private fun askToAllowTemplateAudioRecording(
+        request: PermissionRequest,
+        canRecordAudio: Boolean,
+    ) {
+        AlertDialog.Builder(requireContext()).show {
+            message(R.string.template_is_trying_to_record_audio)
+            positiveButton(R.string.dialog_allow) {
+                if (canRecordAudio) {
+                    Prefs.allowTemplatesToRecordAudio = true
+                    request.grantAudioCapture()
+                } else {
+                    pendingWebViewPermissionRequest = request
+                    microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                }
+            }
+            negativeButton(R.string.dialog_cancel) { request.deny() }
+        }
+    }
 
     @CallSuper
     override fun onViewCreated(
@@ -372,28 +398,13 @@ abstract class CardViewerFragment(
                 return
             }
 
-            fun grantRequest() = request.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
-
             val canRecordAudio = Permissions.canRecordAudio(requireContext())
             if (canRecordAudio && Prefs.allowTemplatesToRecordAudio) {
-                Timber.i("Granting audio capture permission to WebView")
-                grantRequest()
+                request.grantAudioCapture()
                 return
             }
 
-            AlertDialog.Builder(requireContext()).show {
-                message(R.string.template_is_trying_to_record_audio)
-                positiveButton(R.string.dialog_allow) {
-                    if (canRecordAudio) {
-                        Prefs.allowTemplatesToRecordAudio = true
-                        grantRequest()
-                    } else {
-                        pendingWebViewPermissionRequest = request
-                        microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                    }
-                }
-                negativeButton(R.string.dialog_cancel) { request.deny() }
-            }
+            askToAllowTemplateAudioRecording(request, canRecordAudio)
         }
     }
 
@@ -402,4 +413,10 @@ abstract class CardViewerFragment(
             setAction(R.string.help) { openUrl(R.string.link_faq_missing_media) }
         }
     }
+}
+
+/** Allows the WebView to capture audio */
+private fun PermissionRequest.grantAudioCapture() {
+    Timber.i("Granting audio capture permission to WebView")
+    grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
 }
