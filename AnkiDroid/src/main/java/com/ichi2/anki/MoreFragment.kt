@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
@@ -93,6 +94,10 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
         // Hide rate if Play Store not available
         if (!IntentUtil.canOpenIntent(requireContext(), marketIntent)) {
             binding.moreSupportRate.visibility = View.GONE
+        }
+
+        if (!BuildConfig.SHOW_DONATE_LINKS) {
+            binding.moreSupportDonate.isVisible = false
         }
     }
 
