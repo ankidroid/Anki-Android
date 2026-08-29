@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.ankiActivity
@@ -139,7 +140,10 @@ class HelpDialog : AnalyticsDialogFragment() {
          */
         fun newSupportInstance(canRateApp: Boolean): HelpDialog {
             Analytics.send(LinkClicked(LinkAction.OPENED_SUPPORT_ANKIDROID))
-            val actualMenuItems = supportMenuItems.filterNot { it.action is Rate && !canRateApp }
+            val actualMenuItems =
+                supportMenuItems
+                    .filterNot { it.action is Rate && !canRateApp }
+                    .filterNot { it.analyticsId == LinkAction.OPENED_DONATE && !BuildConfig.SHOW_DONATE_LINKS }
             return HelpDialog().apply {
                 arguments =
                     Bundle().apply {

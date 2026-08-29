@@ -19,6 +19,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.getColorFromAttr
@@ -62,7 +63,11 @@ class Info :
         setViewBinding(binding)
         enableToolbar()
         applyInsets()
-        binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
+        } else {
+            binding.donate.isVisible = false
+        }
         title = "$appName v$pkgVersionName"
         binding.webView.webChromeClient =
             object : WebChromeClient() {
