@@ -57,6 +57,22 @@ open class SingleFragmentActivity :
     /** Whether this host is ported to edge to edge (17334) */
     open val supportsEdgeToEdge: Boolean get() = false
 
+    /**
+     * Whether the hosted screen is ported and lays out its own insets ([SupportsEdgeToEdge]), so a
+     * ported fragment brings its own support to every host rather than needing one of its own.
+     *
+     * Resolved from the intent: the fragment does not exist yet.
+     */
+    private val fragmentSupportsEdgeToEdge: Boolean by lazy {
+        val fragmentName = intent.getStringExtra(EXTRA_FRAGMENT_NAME) ?: return@lazy false
+        try {
+            SupportsEdgeToEdge::class.java.isAssignableFrom(Class.forName(fragmentName))
+        } catch (e: ClassNotFoundException) {
+            Timber.w(e, "Could not resolve %s", fragmentName)
+            false
+        }
+    }
+
     // the same host class serves every screen it shows, so report what it's showing
     override val analyticsScreenName: String
         get() = intent.getStringExtra(EXTRA_FRAGMENT_NAME)?.substringAfterLast('.') ?: super.analyticsScreenName
@@ -70,15 +86,16 @@ open class SingleFragmentActivity :
         if (!ensureStorageIsReady()) {
             return
         }
-        if (supportsEdgeToEdge) {
+        if (supportsEdgeToEdge || fragmentSupportsEdgeToEdge) {
             enableEdgeToEdge(statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { Themes.isNightTheme })
             val root = findViewById<CoordinatorLayout>(R.id.root_layout)
             ViewCompat.setOnApplyWindowInsetsListener(root) { _, insets ->
                 val constraints = insets.getInsets(systemBars() or displayCutout())
                 // apply the insets only for content/fragments defined by SingleFragmentActivity
                 // directly, subclasses(ex. ManageSpaceActivity, Preferences) should handle their
-                // content independently
-                if (this::class.java == SingleFragmentActivity::class.java) {
+                // content independently. A SupportsEdgeToEdge fragment lays out its own insets, so
+                // padding the container here would apply them twice
+                if (this::class.java == SingleFragmentActivity::class.java && !fragmentSupportsEdgeToEdge) {
                     findViewById<FragmentContainerView>(R.id.fragment_container)?.updatePadding(
                         left = constraints.left,
                         right = constraints.right,
@@ -168,3 +185,11 @@ open class SingleFragmentActivity :
 interface DispatchKeyEventListener {
     fun dispatchKeyEvent(event: KeyEvent): Boolean
 }
+
+/**
+ * A screen which lays out its own window insets.
+ *
+ * [SingleFragmentActivity] enables edge to edge for these and leaves the insets to them: it insets
+ * the fragment's container for the screens which do not handle their own.
+ */
+interface SupportsEdgeToEdge
