@@ -77,33 +77,41 @@ abstract class CardViewerFragment(
 
     private val appPermission by lazy { AppPermissions(requireContext()) { showSnackbar(it) } }
 
-    private var pendingWebViewPermissionRequest: PermissionRequest? = null
+    /** The [PermissionRequest] being asked about via the opt-in dialog or [microphonePermissionLauncher] */
+    private var activeRequest: PermissionRequest? = null
+
+    /** Whether the user declined the opt-in: further requests are denied without a prompt */
+    private var userDeclinedRecording = false
 
     private val microphonePermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             Prefs.allowTemplatesToRecordAudio = isGranted
 
             if (isGranted) {
-                pendingWebViewPermissionRequest?.grantAudioCapture()
+                activeRequest?.grantAudioCapture()
             } else {
                 Timber.i("Denying audio capture permission to WebView")
-                pendingWebViewPermissionRequest?.deny()
-
-                // Only ask to go to app settings if the permission dialog
-                // is no longer shown after repeated denials
-                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.RECORD_AUDIO)) {
-                    return@registerForActivityResult
-                }
-
-                AlertDialog.Builder(requireContext()).show {
-                    title(R.string.permission_denied)
-                    message(R.string.microphone_permission_denied_message)
-                    positiveButton(R.string.dialog_ok) { openAppSettingsScreen() }
-                    negativeButton(R.string.dialog_cancel)
-                }
+                activeRequest?.deny()
+                onMicrophonePermissionDenied()
             }
-            pendingWebViewPermissionRequest = null
+            activeRequest = null
         }
+
+    /**
+     * Offers to open the app settings, so the user may grant the microphone permission there.
+     *
+     * Only done if the system dialog is no longer shown after repeated denials.
+     */
+    private fun onMicrophonePermissionDenied() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.RECORD_AUDIO)) return
+
+        AlertDialog.Builder(requireContext()).show {
+            title(R.string.permission_denied)
+            message(R.string.microphone_permission_denied_message)
+            positiveButton(R.string.dialog_ok) { openAppSettingsScreen() }
+            negativeButton(R.string.dialog_cancel)
+        }
+    }
 
     /**
      * Asks whether the card template may record audio, granting [request] if the user allows it.
@@ -117,19 +125,27 @@ abstract class CardViewerFragment(
         request: PermissionRequest,
         canRecordAudio: Boolean,
     ) {
+        fun decline() {
+            userDeclinedRecording = true
+            activeRequest = null
+            request.deny()
+        }
+
+        activeRequest = request
         AlertDialog.Builder(requireContext()).show {
             message(R.string.template_is_trying_to_record_audio)
             positiveButton(R.string.dialog_allow) {
                 if (canRecordAudio) {
+                    activeRequest = null
                     Prefs.allowTemplatesToRecordAudio = true
                     request.grantAudioCapture()
                 } else {
-                    pendingWebViewPermissionRequest = request
+                    // the request is active until microphonePermissionLauncher handles it
                     microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
                 }
             }
-            negativeButton(R.string.dialog_cancel) { request.deny() }
-            setOnCancelListener { request.deny() }
+            negativeButton(R.string.dialog_cancel) { decline() }
+            setOnCancelListener { decline() }
         }
     }
 
@@ -402,6 +418,14 @@ abstract class CardViewerFragment(
             val canRecordAudio = Permissions.canRecordAudio(requireContext())
             if (canRecordAudio && Prefs.allowTemplatesToRecordAudio) {
                 request.grantAudioCapture()
+                return
+            }
+
+            // Prompt at most once at a time, and not again once declined: otherwise a template
+            // could spam requests, pressuring a user into consenting
+            if (activeRequest != null || userDeclinedRecording) {
+                Timber.i("Denying audio capture permission to WebView without prompting")
+                request.deny()
                 return
             }
 
