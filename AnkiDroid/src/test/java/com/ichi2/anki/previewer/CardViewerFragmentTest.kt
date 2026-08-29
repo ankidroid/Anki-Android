@@ -1,0 +1,82 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+package com.ichi2.anki.previewer
+
+import android.os.Build
+import android.view.ViewGroup
+import android.webkit.PermissionRequest
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import androidx.lifecycle.Lifecycle
+import androidx.test.core.app.ActivityScenario
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SdkSuppress
+import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.browser.IdsFile
+import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.createTransientDirectory
+import org.junit.After
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
+import org.mockito.kotlin.any
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import org.robolectric.shadows.ShadowDialog
+
+@SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // WebChromeClient
+@RunWith(AndroidJUnit4::class)
+class CardViewerFragmentTest : RobolectricTest() {
+    @Test
+    fun `dismissing the opt-in dialog denies the audio capture request`() {
+        grantRecordAudioPermission()
+        Prefs.allowTemplatesToRecordAudio = false
+        val request = audioCaptureRequest()
+
+        withCardViewerChromeClient { chromeClient ->
+            chromeClient.onPermissionRequest(request)
+            ShadowDialog.getLatestDialog().cancel()
+            advanceRobolectricLooper()
+
+            verify(request).deny()
+            verify(request, never()).grant(any())
+        }
+    }
+
+    private fun audioCaptureRequest(): PermissionRequest =
+        mock(PermissionRequest::class.java).also {
+            whenever(it.resources).thenReturn(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+        }
+
+    /** Runs [block] on the [WebChromeClient] attached to an open previewer's WebView */
+    private fun withCardViewerChromeClient(block: (WebChromeClient) -> Unit) {
+        val note = addBasicAndReversedNote()
+        val intent =
+            PreviewerFragment.getIntent(
+                targetContext,
+                idsFile = IdsFile(createTransientDirectory(), note.cardIds(col)),
+                currentIndex = 0,
+            )
+
+        ActivityScenario.launch<CardViewerActivity>(intent).use { scenario ->
+            scenario.moveToState(Lifecycle.State.RESUMED)
+            scenario.onActivity { activity ->
+                val webViewLayout = activity.findViewById<ViewGroup>(R.id.web_view_layout)
+                val webView =
+                    (0 until webViewLayout.childCount)
+                        .map { webViewLayout.getChildAt(it) }
+                        .filterIsInstance<WebView>()
+                        .single()
+                block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
+            }
+        }
+    }
+
+    /** [Prefs.allowTemplatesToRecordAudio] is process-wide state: reset it between tests */
+    @After
+    fun resetTemplateAudioOptIn() {
+        Prefs.allowTemplatesToRecordAudio = false
+    }
+}
