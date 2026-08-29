@@ -129,6 +129,7 @@ abstract class CardViewerFragment(
                 }
             }
             negativeButton(R.string.dialog_cancel) { request.deny() }
+            setOnCancelListener { request.deny() }
         }
     }
 
