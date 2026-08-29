@@ -23,6 +23,7 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
@@ -93,10 +94,15 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         }
 
         // Donate text
-        val donateLink = getString(R.string.link_opencollective_donate)
-        binding.donateDescription.apply {
-            text = getString(R.string.donate_description, donateLink).parseAsHtml()
-            movementMethod = LinkMovementMethod.getInstance()
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            val donateLink = getString(R.string.link_opencollective_donate)
+            binding.donateDescription.apply {
+                text = getString(R.string.donate_description, donateLink).parseAsHtml()
+                movementMethod = LinkMovementMethod.getInstance()
+            }
+        } else {
+            binding.aboutDonateTitle.isVisible = false
+            binding.donateDescription.isVisible = false
         }
 
         binding.rateAnkiDroid.setOnClickListener {
