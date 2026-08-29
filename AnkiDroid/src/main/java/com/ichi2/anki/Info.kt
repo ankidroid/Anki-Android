@@ -153,6 +153,14 @@ class Info :
                                     }
                                     document.body.style.setProperty("background", "$background");""",
                             )
+                            if (!BuildConfig.SHOW_DONATE_LINKS) {
+                                // remove donation links, keeping the text
+                                binding.webView.evaluateJavascript(
+                                    """document.querySelectorAll('a[href*="opencollective.com"]')
+                                        .forEach((a) => a.replaceWith(...a.childNodes));""",
+                                    null,
+                                )
+                            }
                         }
 
                         override fun shouldOverrideUrlLoading(
