@@ -241,6 +241,8 @@
     <string name="menu_font_size" maxLength="28">Font size</string>
 
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Show toolbar</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview sidebar</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview sidebar</string>
 
     <string name="format_insert_bold">Format as bold</string>
     <string name="format_insert_italic">Format as italic</string>
