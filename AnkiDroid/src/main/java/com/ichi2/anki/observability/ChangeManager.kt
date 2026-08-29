@@ -37,6 +37,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 object ChangeManager {
     // do not make this a 'fun interface' - lambdas may immediately be GCed
     // due to the use of WeakReference
+    /** @see opExecuted */
     interface Subscriber {
         /**
          * Called after a backend method invoked via col.op() or col.opWithProgress()
@@ -89,6 +90,8 @@ object ChangeManager {
      * @param owner The lifecycle owner controlling this subscription.
      * Defaults to [subscriber] if it implements [LifecycleOwner] (e.g. Activities/Fragments).
      * If provided, subscription waits for [Lifecycle.State.CREATED] and auto-unsubscribes on destroy.
+     *
+     * @see Subscriber.opExecuted
      */
     @Contract("subscriber -> call")
     fun subscribe(
