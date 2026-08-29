@@ -257,11 +257,6 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 activity.findViewById<View>(R.id.lateral_nav_container),
                 notNullValue(),
             )
-            assertThat(
-                "the reminders pane does not change the shared window's cutout mode",
-                activity.window.attributes.layoutInDisplayCutoutMode,
-                equalTo(WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT),
-            )
         }
     }
 

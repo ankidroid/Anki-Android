@@ -13,7 +13,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
@@ -21,7 +24,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
+import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.AppBarLayout
@@ -34,6 +39,7 @@ import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
+import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -232,6 +238,36 @@ class PreferencesFragment :
 class PreferencesActivity :
     SingleFragmentActivity(),
     SearchPreferenceResultListener {
+    override val supportsEdgeToEdge: Boolean = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    v: View,
+                    savedInstanceState: Bundle?,
+                ) {
+                    if (f !is SearchPreferenceFragment) return
+                    val recyclerView = v.findViewById<RecyclerView>(com.bytehamster.lib.preferencesearch.R.id.list)
+                    ViewCompat.setOnApplyWindowInsetsListener(recyclerView) { view, insets ->
+                        val bars =
+                            insets.getInsets(
+                                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout() or
+                                    WindowInsetsCompat.Type.ime(),
+                            )
+                        view.updatePadding(bottom = maxOf(bars.bottom, insets.bottomCornerClearance(view)))
+                        insets
+                    }
+                }
+            },
+            false,
+        )
+    }
+
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
         if (fragment is SearchPreferenceResultListener) {

@@ -10,8 +10,11 @@ import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.ext.clear
+import com.ichi2.testutils.simulateSystemBars
+import com.ichi2.utils.dp
 import org.junit.After
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 import kotlin.reflect.KClass
 
 class PreferencesScreenshotTest : ScreenshotTest() {
@@ -19,6 +22,22 @@ class PreferencesScreenshotTest : ScreenshotTest() {
     override fun tearDown() {
         super.tearDown()
         Prefs.clear()
+    }
+
+    @Test
+    fun headerFragmentOnPortrait() =
+        withPreferencesActivity(HeaderFragment::class) { activity ->
+            activity.simulateSystemBars()
+            captureScreen("HeaderFragment_portrait")
+        }
+
+    @Test
+    fun headerFragmentOnLandscape() {
+        RuntimeEnvironment.setQualifiers("+land")
+        withPreferencesActivity(HeaderFragment::class) { activity ->
+            activity.simulateSystemBars(cutoutLeft = 32.dp)
+            captureScreen("HeaderFragment_landscape")
+        }
     }
 
     @Test

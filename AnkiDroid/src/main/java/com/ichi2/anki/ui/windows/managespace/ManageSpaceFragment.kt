@@ -10,9 +10,6 @@ import android.text.format.Formatter
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +27,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.tools.AsyncDialogBuilder.CheckedItems
 import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
-import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.anki.withProgress
 import com.ichi2.preferences.TextWidgetPreference
@@ -234,32 +230,8 @@ class ManageSpaceFragment : SettingsFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupEdgeToEdge()
         binding.toolbar.apply {
             title = getString(R.string.pref__manage_space__screen_title)
-        }
-    }
-
-    /**
-     * The `AppBarLayout` keeps `fitsSystemWindows` so its `CollapsingToolbarLayout` owns the top
-     * inset: removing it glitches the status bar as the toolbar collapses.
-     */
-    private fun setupEdgeToEdge() {
-        // before the listener: setFitsSystemWindows re-runs setupForInsets, which clears it
-        binding.root.fitsSystemWindows = false
-        listView.clipToPadding = false
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val bars =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
-                )
-            binding.appbar.updatePadding(left = bars.left, right = bars.right)
-            listView.updatePadding(
-                left = bars.left,
-                right = bars.right,
-                bottom = maxOf(bars.bottom, insets.bottomCornerClearance(listView)),
-            )
-            insets
         }
     }
 

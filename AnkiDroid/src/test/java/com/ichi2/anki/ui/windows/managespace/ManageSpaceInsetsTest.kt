@@ -25,46 +25,14 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ManageSpaceInsetsTest : RobolectricTest() {
     @Test
-    fun `the collapsing toolbar owns the top inset`() =
-        withManageSpace { activity ->
-            activity.dispatchInsets()
-
-            assertThat(
-                "the root no longer consumes the insets",
-                activity.binding.root.fitsSystemWindows,
-                equalTo(false),
-            )
-            assertThat(
-                "the app bar keeps fitsSystemWindows: the collapsing toolbar applies the top inset",
-                activity.binding.appbar.fitsSystemWindows,
-                equalTo(true),
-            )
-            assertThat(
-                "the app bar is not padded on top, which would double-count the status bar",
-                activity.binding.appbar.paddingTop,
-                equalTo(0),
-            )
-        }
-
-    @Test
-    fun `the app bar is padded past a side navigation bar and cutout`() =
+    fun `the page is padded past a side navigation bar and cutout`() =
         withManageSpace { activity ->
             // landscape with 3-button navigation: the navigation bar is a side inset and the
             // camera cutout is on the opposite side
             activity.dispatchInsets(navBarRight = 48.dp, cutoutLeft = 32.dp)
 
-            assertThat(activity.binding.appbar.paddingLeft, equalTo(32.dp.toPx(targetContext)))
-            assertThat(activity.binding.appbar.paddingRight, equalTo(48.dp.toPx(targetContext)))
-        }
-
-    @Test
-    fun `the preference list clears a side navigation bar and cutout`() =
-        withManageSpace { activity ->
-            activity.dispatchInsets(navBarRight = 48.dp, cutoutLeft = 32.dp)
-
-            assertThat(activity.preferenceList.paddingLeft, equalTo(32.dp.toPx(targetContext)))
-            assertThat(activity.preferenceList.paddingRight, equalTo(48.dp.toPx(targetContext)))
-            assertThat("content below the app bar never takes the top inset", activity.preferenceList.paddingTop, equalTo(0))
+            assertThat(activity.binding.root.paddingLeft, equalTo(32.dp.toPx(targetContext)))
+            assertThat(activity.binding.root.paddingRight, equalTo(48.dp.toPx(targetContext)))
         }
 
     @Test
@@ -72,7 +40,6 @@ class ManageSpaceInsetsTest : RobolectricTest() {
         withManageSpace { activity ->
             activity.dispatchInsets(navBarBottom = 48.dp)
 
-            assertThat(activity.preferenceList.clipToPadding, equalTo(false))
             assertThat(activity.preferenceList.paddingBottom, equalTo(48.dp.toPx(targetContext)))
         }
 
