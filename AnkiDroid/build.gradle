@@ -602,6 +602,8 @@ dependencies {
     // for testing flows
     testImplementation libs.cashapp.turbine
 
+    androidTestImplementation testFixtures(project(":anki-common"))
+
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation libs.androidx.espresso.core
     androidTestImplementation(libs.androidx.espresso.contrib) {

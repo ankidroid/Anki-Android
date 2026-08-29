@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.testutils.ensureOpsExecuted
+import com.ichi2.anki.observability.ensureOpsExecuted
 import kotlinx.coroutines.joinAll
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.instanceOf
