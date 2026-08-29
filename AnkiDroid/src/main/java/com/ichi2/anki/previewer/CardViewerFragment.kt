@@ -57,8 +57,12 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.isBlockedCardScheme
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.stripDangerousPermissions
+import com.ichi2.utils.title
 import com.ichi2.utils.usesDangerousScheme
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -93,12 +97,10 @@ abstract class CardViewerFragment(
                 }
 
                 AlertDialog.Builder(requireContext()).show {
-                    setTitle(R.string.permission_denied)
-                    setMessage(R.string.microphone_permission_denied_message)
-                    setPositiveButton(R.string.dialog_ok) { _, _ ->
-                        openAppSettingsScreen()
-                    }
-                    setNegativeButton(R.string.dialog_cancel, null)
+                    title(R.string.permission_denied)
+                    message(R.string.microphone_permission_denied_message)
+                    positiveButton(R.string.dialog_ok) { openAppSettingsScreen() }
+                    negativeButton(R.string.dialog_cancel)
                 }
             }
             pendingWebViewPermissionRequest = null
@@ -380,8 +382,8 @@ abstract class CardViewerFragment(
             }
 
             AlertDialog.Builder(requireContext()).show {
-                setMessage(R.string.template_is_trying_to_record_audio)
-                setPositiveButton(R.string.dialog_allow) { _, _ ->
+                message(R.string.template_is_trying_to_record_audio)
+                positiveButton(R.string.dialog_allow) {
                     if (canRecordAudio) {
                         Prefs.allowTemplatesToRecordAudio = true
                         grantRequest()
@@ -390,9 +392,7 @@ abstract class CardViewerFragment(
                         microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
                     }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                    request.deny()
-                }
+                negativeButton(R.string.dialog_cancel) { request.deny() }
             }
         }
     }
