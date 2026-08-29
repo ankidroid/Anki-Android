@@ -131,7 +131,7 @@ testParameterInjector = "1.22"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "4.0.0"
+triplet = "4.1.1"
 turbine = "1.2.1"
 
 [libraries]
