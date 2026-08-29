@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.previewer
 
+import android.content.DialogInterface
 import android.os.Build
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
@@ -16,6 +17,8 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.createTransientDirectory
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -42,6 +45,44 @@ class CardViewerFragmentTest : RobolectricTest() {
 
             verify(request).deny()
             verify(request, never()).grant(any())
+        }
+    }
+
+    @Test
+    fun `audio capture requests are denied while an opt-in dialog is open`() {
+        grantRecordAudioPermission()
+        Prefs.allowTemplatesToRecordAudio = false
+        val first = audioCaptureRequest()
+        val second = audioCaptureRequest()
+
+        withCardViewerChromeClient { chromeClient ->
+            chromeClient.onPermissionRequest(first)
+            chromeClient.onPermissionRequest(second)
+
+            verify(second).deny()
+            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+            verify(first).grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
+            verify(second, never()).grant(any())
+        }
+    }
+
+    @Test
+    fun `declining the opt-in denies later requests without re-prompting`() {
+        grantRecordAudioPermission()
+        Prefs.allowTemplatesToRecordAudio = false
+        val first = audioCaptureRequest()
+        val second = audioCaptureRequest()
+
+        withCardViewerChromeClient { chromeClient ->
+            chromeClient.onPermissionRequest(first)
+            clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, true)
+            verify(first).deny()
+
+            val dialogCount = ShadowDialog.getShownDialogs().size
+            chromeClient.onPermissionRequest(second)
+
+            verify(second).deny()
+            assertThat("the user is not prompted again", ShadowDialog.getShownDialogs().size, equalTo(dialogCount))
         }
     }
 
