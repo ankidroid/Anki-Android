@@ -56,18 +56,18 @@ class BottomNavController(
         val tag: String,
         @StringRes val shortcutLabel: Int,
     ) {
-        HOME(R.id.nav_home, "home", R.string.deck_picker_group),
-        BROWSER(R.id.nav_browser, "browser", R.string.card_browser_context_menu),
-        STATS(R.id.nav_stats, "stats", R.string.open_statistics),
-        MORE(R.id.nav_more, "more", R.string.bottom_nav_more),
+        HOME(R.id.nav_home, "home", CommonString.deck_picker_group),
+        BROWSER(R.id.nav_browser, "browser", CommonString.card_browser_context_menu),
+        STATS(R.id.nav_stats, "stats", CommonString.open_statistics),
+        MORE(R.id.nav_more, "more", CommonString.bottom_nav_more),
         ;
 
         fun title(context: Context): String =
             when (this) {
                 HOME -> TR.actionsDecks()
-                BROWSER -> context.getString(R.string.bottom_nav_browse)
+                BROWSER -> context.getString(CommonString.bottom_nav_browse)
                 STATS -> TR.statisticsTitle()
-                MORE -> context.getString(R.string.bottom_nav_more)
+                MORE -> context.getString(CommonString.bottom_nav_more)
             }
 
         companion object {

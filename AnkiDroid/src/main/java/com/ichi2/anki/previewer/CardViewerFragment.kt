@@ -26,6 +26,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
@@ -96,10 +97,10 @@ abstract class CardViewerFragment(
         if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.RECORD_AUDIO)) return
 
         AlertDialog.Builder(requireContext()).show {
-            title(R.string.permission_denied)
-            message(R.string.microphone_permission_denied_message)
-            positiveButton(R.string.dialog_ok) { openAppSettingsScreen() }
-            negativeButton(R.string.dialog_cancel)
+            title(CommonString.permission_denied)
+            message(CommonString.microphone_permission_denied_message)
+            positiveButton(CommonString.dialog_ok) { openAppSettingsScreen() }
+            negativeButton(CommonString.dialog_cancel)
         }
     }
 
@@ -124,8 +125,8 @@ abstract class CardViewerFragment(
         activeRequest = request
         optInDialog =
             AlertDialog.Builder(requireContext()).show {
-                message(R.string.template_is_trying_to_record_audio)
-                positiveButton(R.string.dialog_allow) {
+                message(CommonString.template_is_trying_to_record_audio)
+                positiveButton(CommonString.dialog_allow) {
                     if (canRecordAudio) {
                         activeRequest = null
                         Prefs.allowTemplatesToRecordAudio = true
@@ -135,7 +136,7 @@ abstract class CardViewerFragment(
                         microphonePermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
                     }
                 }
-                negativeButton(R.string.dialog_cancel) { decline() }
+                negativeButton(CommonString.dialog_cancel) { decline() }
                 setOnCancelListener { decline() }
                 setOnDismissListener { optInDialog = null }
             }
@@ -215,7 +216,7 @@ abstract class CardViewerFragment(
             .onEach { errorMessage ->
                 AlertDialog
                     .Builder(requireContext())
-                    .setTitle(R.string.vague_error)
+                    .setTitle(CommonString.vague_error)
                     .setMessage(errorMessage)
                     .show()
             }.launchIn(lifecycleScope)
@@ -293,11 +294,11 @@ abstract class CardViewerFragment(
                 "intent" -> handleIntentUrl(url, Intent.URI_INTENT_SCHEME)
                 "missing-user-action" -> {
                     val actionNumber = url.toString().substringAfter(":")
-                    val message = getString(R.string.missing_user_action_dialog_message, actionNumber)
+                    val message = getString(CommonString.missing_user_action_dialog_message, actionNumber)
                     AlertDialog.Builder(requireContext()).show {
                         setMessage(message)
-                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
-                        setNeutralButton(R.string.help) { _, _ ->
+                        setPositiveButton(CommonString.dialog_ok) { _, _ -> }
+                        setNeutralButton(CommonString.help) { _, _ ->
                             openUrl(R.string.link_user_actions_help)
                         }
                     }
@@ -437,8 +438,8 @@ abstract class CardViewerFragment(
     }
 
     private fun showMediaErrorSnackbar(filename: String) {
-        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(R.string.link_faq_missing_media) }
+        showSnackbar(getString(CommonString.card_viewer_could_not_find_image, filename)) {
+            setAction(CommonString.help) { openUrl(R.string.link_faq_missing_media) }
         }
     }
 }

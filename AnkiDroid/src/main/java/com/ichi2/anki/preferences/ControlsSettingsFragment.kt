@@ -13,6 +13,7 @@ import androidx.preference.children
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -134,31 +135,31 @@ class ControlsSettingsFragment :
             it.dialogTitle = preferenceTitle
         }
         findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
-            it.title = TR.sentenceCase.gestureToggleWhiteboard(getString(R.string.gesture_toggle_whiteboard))
+            it.title = TR.sentenceCase.gestureToggleWhiteboard(getString(CommonString.gesture_toggle_whiteboard))
         }
         findPreference<ControlPreference>(getString(R.string.flag_red_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagRed(getString(R.string.gesture_flag_red))
+            it.title = TR.sentenceCase.gestureFlagRed(getString(CommonString.gesture_flag_red))
         }
         findPreference<ControlPreference>(getString(R.string.flag_orange_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagOrange(getString(R.string.gesture_flag_orange))
+            it.title = TR.sentenceCase.gestureFlagOrange(getString(CommonString.gesture_flag_orange))
         }
         findPreference<ControlPreference>(getString(R.string.flag_green_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagGreen(getString(R.string.gesture_flag_green))
+            it.title = TR.sentenceCase.gestureFlagGreen(getString(CommonString.gesture_flag_green))
         }
         findPreference<ControlPreference>(getString(R.string.flag_blue_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagBlue(getString(R.string.gesture_flag_blue))
+            it.title = TR.sentenceCase.gestureFlagBlue(getString(CommonString.gesture_flag_blue))
         }
         findPreference<ControlPreference>(getString(R.string.flag_pink_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagPink(getString(R.string.gesture_flag_pink))
+            it.title = TR.sentenceCase.gestureFlagPink(getString(CommonString.gesture_flag_pink))
         }
         findPreference<ControlPreference>(getString(R.string.flag_turquoise_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagTurquoise(getString(R.string.gesture_flag_turquoise))
+            it.title = TR.sentenceCase.gestureFlagTurquoise(getString(CommonString.gesture_flag_turquoise))
         }
         findPreference<ControlPreference>(getString(R.string.flag_purple_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagPurple(getString(R.string.gesture_flag_purple))
+            it.title = TR.sentenceCase.gestureFlagPurple(getString(CommonString.gesture_flag_purple))
         }
         findPreference<ControlPreference>(getString(R.string.remove_flag_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagRemove(getString(R.string.gesture_flag_remove))
+            it.title = TR.sentenceCase.gestureFlagRemove(getString(CommonString.gesture_flag_remove))
         }
         findPreference<ControlPreference>(getString(R.string.bury_card_command_key))?.let {
             it.title = TR.sentenceCase.buryCard
@@ -254,13 +255,13 @@ class ControlsSettingsFragment :
                     AlertDialog.Builder(requireContext()).show {
                         setTitle(answerPref.title)
                         setIcon(answerPref.icon)
-                        setMessage(getString(R.string.also_assign_binding_to_show_answer, getString(R.string.show_answer)))
+                        setMessage(getString(CommonString.also_assign_binding_to_show_answer, getString(CommonString.show_answer)))
 
-                        positiveButton(text = getString(R.string.dialog_assign)) {
+                        positiveButton(text = getString(CommonString.dialog_assign)) {
                             answerPref.addBinding(binding, CardSide.ANSWER)
                             showAnswerPref?.addBinding(binding, CardSide.QUESTION)
                         }
-                        negativeButton(text = getString(R.string.dialog_skip)) {
+                        negativeButton(text = getString(CommonString.dialog_skip)) {
                             answerPref.addBinding(binding, CardSide.ANSWER)
                         }
                     }

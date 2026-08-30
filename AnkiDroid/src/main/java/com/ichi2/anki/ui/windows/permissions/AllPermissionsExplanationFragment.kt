@@ -9,6 +9,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.databinding.FragmentAllPermissionsExplanationBinding
@@ -82,7 +83,7 @@ class AllPermissionsExplanationFragment : PermissionsFragment(R.layout.fragment_
                 isVisible = true
                 // If it's already granted, offer to revoke it on click; otherwise, request it
                 revokeIfGrantedOnClickElse {
-                    showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, R.string.manually_grant_permissions)
+                    showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, CommonString.manually_grant_permissions)
                 }
             }
         }

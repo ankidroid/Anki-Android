@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.servicelayer.LanguageHint
@@ -59,7 +59,7 @@ class TypeAnswer(
      * Optional warning for when a typed answer can't be displayed
      *
      * * empty card
-     * * unknown field specified [R.string.unknown_type_field_warning]
+     * * unknown field specified [CommonString.unknown_type_field_warning]
      * */
     var warning: String? = null
         private set
@@ -115,7 +115,7 @@ class TypeAnswer(
                     if (clozeIdx != 0) {
                         CollectionManager.TR.cardTemplateRenderingEmptyFront()
                     } else {
-                        res.getString(R.string.unknown_type_field_warning, fldTag)
+                        res.getString(CommonString.unknown_type_field_warning, fldTag)
                     }
             }
             "" -> {

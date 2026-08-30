@@ -29,6 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.account.AccountActivity.Companion.START_FROM_DECKPICKER
@@ -287,11 +288,11 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
         MaterialAlertDialogBuilder(requireContext()).show {
             Timber.i("Showing dialog: 'Sync now?'")
-            setTitle(R.string.login_successful)
+            setTitle(CommonString.login_successful)
             setIcon(R.drawable.ic_sync)
-            setMessage(R.string.sync_now)
-            positiveButton(R.string.button_sync) { openDeckPickerAndSync() }
-            negativeButton(R.string.dialog_continue) { showLoggedInView() }
+            setMessage(CommonString.sync_now)
+            positiveButton(CommonString.button_sync) { openDeckPickerAndSync() }
+            negativeButton(CommonString.dialog_continue) { showLoggedInView() }
             setOnCancelListener { showLoggedInView() }
         }
     }
@@ -316,7 +317,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         lifecycleScope.launch {
             requireActivity().withProgress(
                 extractProgress = {
-                    text = getString(R.string.sign_in)
+                    text = getString(CommonString.sign_in)
                 },
                 onCancel = { backend -> backend.setWantsAbort() },
             ) {

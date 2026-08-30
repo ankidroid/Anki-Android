@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.search.AdvancedSearchFieldsTab.FieldSearch
 import com.ichi2.anki.browser.search.AdvancedSearchFragment.OptionData
@@ -218,7 +219,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
             val fieldSearch =
                 AdvancedSearchFieldsTab.options[resultType] ?: run {
                     Timber.w("resultType '%s' was unhandled", resultType)
-                    showSnackbar(R.string.something_wrong)
+                    showSnackbar(CommonString.something_wrong)
                     return@registerFieldSelectionHandler
                 }
             launchCatchingTask {

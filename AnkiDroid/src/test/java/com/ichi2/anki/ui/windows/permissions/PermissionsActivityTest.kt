@@ -10,6 +10,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.ActivityAction
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.OptionalPermissionSet
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
@@ -48,7 +49,7 @@ class PermissionsActivityTest : RobolectricTest() {
         testInvalidActivityFinishes()
         assertThat(
             ShadowToast.getTextOfLatestToast(),
-            equalTo(getResourceString(R.string.something_wrong)),
+            equalTo(getResourceString(CommonString.something_wrong)),
         )
     }
 

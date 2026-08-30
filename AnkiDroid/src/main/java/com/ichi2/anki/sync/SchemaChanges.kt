@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Collection
@@ -20,7 +20,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 /**
- * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
+ * [launchCatchingTask], showing a one-way sync dialog: [CommonString.full_sync_confirmation]
  *
  * @param block calls a backend method which unconditionally performs a schema change,
  *  such as [Collection.changeNotetypeRaw]
@@ -31,7 +31,7 @@ fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
             // .also is used to ensure the activity is used as context
             val confirmModSchemaDialog =
                 ConfirmationDialog().also { dialog ->
-                    dialog.setArgs(message = getString(R.string.full_sync_confirmation))
+                    dialog.setArgs(message = getString(CommonString.full_sync_confirmation))
                     dialog.setConfirm {
                         launchCatchingTask {
                             block()
@@ -46,7 +46,7 @@ fun AnkiActivity.launchCatchingRequiringOneWaySync(block: suspend () -> Unit) =
     }
 
 /**
- * [launchCatchingTask], showing a one-way sync dialog: [R.string.full_sync_confirmation]
+ * [launchCatchingTask], showing a one-way sync dialog: [CommonString.full_sync_confirmation]
  *
  * **This method discards the undo and study queues when consent is provided**
  */
@@ -60,7 +60,7 @@ fun AnkiActivity.launchCatchingRequiringOneWaySyncDiscardUndo(block: suspend () 
             // .also is used to ensure the activity is used as context
             val confirmModSchemaDialog =
                 ConfirmationDialog().also { dialog ->
-                    dialog.setArgs(message = getString(R.string.full_sync_confirmation))
+                    dialog.setArgs(message = getString(CommonString.full_sync_confirmation))
                     dialog.setConfirm {
                         launchCatchingTask {
                             withCol { modSchema(check = false) }
@@ -86,8 +86,8 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
         suspendCoroutine { coroutine ->
             AlertDialog.Builder(this).show {
                 message(text = TR.deckConfigWillRequireFullSync().replace("\\s+".toRegex(), " "))
-                positiveButton(R.string.dialog_ok) { coroutine.resume(true) }
-                negativeButton(R.string.dialog_cancel) { coroutine.resume(false) }
+                positiveButton(CommonString.dialog_ok) { coroutine.resume(true) }
+                negativeButton(CommonString.dialog_cancel) { coroutine.resume(false) }
                 setOnCancelListener { coroutine.resume(false) }
             }
         }

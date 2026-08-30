@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.getColorFromAttr
@@ -163,21 +164,21 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
                         Triple(
                             R.drawable.ic_cancel_24,
                             context.getColor(android.R.color.holo_red_dark),
-                            context.getString(R.string.reminder_troubleshooting_summary_error),
+                            context.getString(CommonString.reminder_troubleshooting_summary_error),
                         )
 
                     SummaryStatus.Warning ->
                         Triple(
                             R.drawable.ic_warning_24,
                             getColorFromAttr(context, R.attr.reminderTroubleshootingWarning),
-                            context.getString(R.string.reminder_troubleshooting_summary_warning),
+                            context.getString(CommonString.reminder_troubleshooting_summary_warning),
                         )
 
                     SummaryStatus.Ok ->
                         Triple(
                             R.drawable.ic_check_circle_24,
                             getColorFromAttr(context, R.attr.reminderTroubleshootingOk),
-                            context.getString(R.string.reminder_troubleshooting_summary_ok),
+                            context.getString(CommonString.reminder_troubleshooting_summary_ok),
                         )
                 }
             binding.summaryIcon.setImageResource(iconRes)
@@ -215,7 +216,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
                 val debugInfo = ReminderLogTree.readReminderLog() + "\n\n" + ReviewRemindersDatabase.dumpContentsToString()
                 requireContext().copyToClipboard(
                     TruncatedString.from(debugInfo),
-                    failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
+                    failureMessageId = CommonString.about_ankidroid_error_copy_debug_info,
                 )
             }
         }
@@ -351,12 +352,12 @@ context(context: Context)
 private fun TroubleshootingCheck.title(): String =
     context.getString(
         when (this) {
-            is TroubleshootingCheck.NotificationPermission -> R.string.reminder_troubleshooting_check_notification_permission
-            is TroubleshootingCheck.NotificationChannelEnabled -> R.string.reminder_troubleshooting_check_notification_channel
-            is TroubleshootingCheck.DoNotDisturbOff -> R.string.reminder_troubleshooting_check_do_not_disturb
-            is TroubleshootingCheck.UnrestrictedOptimizationEnabled -> R.string.reminder_troubleshooting_check_battery_optimization
-            is TroubleshootingCheck.PowerSavingModeOff -> R.string.reminder_troubleshooting_check_power_saving_mode
-            is TroubleshootingCheck.ExactAlarmPermission -> R.string.reminder_troubleshooting_check_exact_alarm_permission
+            is TroubleshootingCheck.NotificationPermission -> CommonString.reminder_troubleshooting_check_notification_permission
+            is TroubleshootingCheck.NotificationChannelEnabled -> CommonString.reminder_troubleshooting_check_notification_channel
+            is TroubleshootingCheck.DoNotDisturbOff -> CommonString.reminder_troubleshooting_check_do_not_disturb
+            is TroubleshootingCheck.UnrestrictedOptimizationEnabled -> CommonString.reminder_troubleshooting_check_battery_optimization
+            is TroubleshootingCheck.PowerSavingModeOff -> CommonString.reminder_troubleshooting_check_power_saving_mode
+            is TroubleshootingCheck.ExactAlarmPermission -> CommonString.reminder_troubleshooting_check_exact_alarm_permission
         },
     )
 
@@ -369,24 +370,24 @@ private fun TroubleshootingCheck.statusName(): String? {
             is TroubleshootingCheck.ExactAlarmPermission,
             ->
                 if (passed) {
-                    R.string.reminder_troubleshooting_status_granted
+                    CommonString.reminder_troubleshooting_status_granted
                 } else {
-                    R.string.reminder_troubleshooting_status_denied
+                    CommonString.reminder_troubleshooting_status_denied
                 }
-            is TroubleshootingCheck.NotificationChannelEnabled -> if (passed) R.string.enabled else R.string.disabled
+            is TroubleshootingCheck.NotificationChannelEnabled -> if (passed) CommonString.enabled else CommonString.disabled
             is TroubleshootingCheck.DoNotDisturbOff,
             is TroubleshootingCheck.PowerSavingModeOff,
             ->
                 if (passed) {
-                    R.string.reminder_troubleshooting_status_off
+                    CommonString.reminder_troubleshooting_status_off
                 } else {
-                    R.string.reminder_troubleshooting_status_on
+                    CommonString.reminder_troubleshooting_status_on
                 }
             is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
                 when (result) {
-                    is CheckResult.Passed -> R.string.reminder_troubleshooting_status_unrestricted
-                    is CheckResult.Warning -> R.string.reminder_troubleshooting_status_optimized
-                    is CheckResult.Failed -> R.string.reminder_troubleshooting_status_restricted
+                    is CheckResult.Passed -> CommonString.reminder_troubleshooting_status_unrestricted
+                    is CheckResult.Warning -> CommonString.reminder_troubleshooting_status_optimized
+                    is CheckResult.Failed -> CommonString.reminder_troubleshooting_status_restricted
                     else -> null
                 }
         }
@@ -400,19 +401,19 @@ private fun TroubleshootingCheck.explanation(): String? {
             // no need for an explanation: the 'grant permission' action should be sufficient
             is TroubleshootingCheck.NotificationPermission -> null
             is TroubleshootingCheck.NotificationChannelEnabled ->
-                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_notification_channel else null
+                if (result.hasIssue) CommonString.reminder_troubleshooting_explanation_notification_channel else null
             is TroubleshootingCheck.DoNotDisturbOff ->
-                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_do_not_disturb else null
+                if (result.hasIssue) CommonString.reminder_troubleshooting_explanation_do_not_disturb else null
             is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
                 when (result) {
-                    is CheckResult.Warning -> R.string.reminder_troubleshooting_explanation_battery_optimized
-                    is CheckResult.Failed -> R.string.reminder_troubleshooting_explanation_battery_restricted
+                    is CheckResult.Warning -> CommonString.reminder_troubleshooting_explanation_battery_optimized
+                    is CheckResult.Failed -> CommonString.reminder_troubleshooting_explanation_battery_restricted
                     else -> null
                 }
             is TroubleshootingCheck.PowerSavingModeOff ->
-                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_power_saving_mode else null
+                if (result.hasIssue) CommonString.reminder_troubleshooting_explanation_power_saving_mode else null
             is TroubleshootingCheck.ExactAlarmPermission ->
-                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_exact_alarm else null
+                if (result.hasIssue) CommonString.reminder_troubleshooting_explanation_exact_alarm else null
         }
     return explanationRes?.let { context.getString(it) }
 }
@@ -446,7 +447,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
 
     fun requestNotificationPermission(): ResolveCheckAction? =
         ResolveCheckAction(
-            label = context.getString(R.string.reminder_troubleshooting_action_grant_permission),
+            label = context.getString(CommonString.reminder_troubleshooting_action_grant_permission),
             logDescription = "requesting POST_NOTIFICATIONS via system dialog or app settings",
         ) {
             fragment.attemptToEnableNotifications(fragment.notificationPermissionLauncher)
@@ -455,7 +456,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
     fun requestReminderNotifChannelPermission(): ResolveCheckAction? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null
         return ResolveCheckAction(
-            label = context.getString(R.string.reminder_troubleshooting_action_enable_notification_channel),
+            label = context.getString(CommonString.reminder_troubleshooting_action_enable_notification_channel),
             logDescription = "opening app notification settings screen",
         ) {
             fragment.openAppNotificationsSettingsScreen(highlightedChannel = NotificationChannel.REVIEW_REMINDERS)
@@ -467,7 +468,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
 
         return if (Permissions.canRequestIgnoreBatteryOptimizations(context)) {
             ResolveCheckAction(
-                label = context.getString(R.string.reminder_troubleshooting_action_disable_battery_optimization),
+                label = context.getString(CommonString.reminder_troubleshooting_action_disable_battery_optimization),
                 logDescription = "opening ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
             ) {
                 try {
@@ -484,7 +485,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
             }
         } else {
             ResolveCheckAction(
-                label = context.getString(R.string.reminder_troubleshooting_action_open_battery_settings),
+                label = context.getString(CommonString.reminder_troubleshooting_action_open_battery_settings),
                 logDescription = "opening ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS",
             ) {
                 openBatteryOptimizationList()
@@ -494,7 +495,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
 
     fun openBatterySaverSettings() =
         ResolveCheckAction(
-            label = context.getString(R.string.reminder_troubleshooting_action_open_battery_settings),
+            label = context.getString(CommonString.reminder_troubleshooting_action_open_battery_settings),
             logDescription = "opening ACTION_BATTERY_SAVER_SETTINGS",
         ) {
             context.startActivity(Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS))
@@ -503,7 +504,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
     fun openExactAlarmSettings(): ResolveCheckAction? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
         return ResolveCheckAction(
-            label = context.getString(R.string.reminder_troubleshooting_action_grant_permission),
+            label = context.getString(CommonString.reminder_troubleshooting_action_grant_permission),
             logDescription = "opening ACTION_REQUEST_SCHEDULE_EXACT_ALARM",
         ) {
             context.startActivity(

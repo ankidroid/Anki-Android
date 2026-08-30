@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentPermissionsUntil29Binding
 import com.ichi2.utils.Permissions
@@ -32,7 +33,7 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.fragment_permiss
                 // manually grant the permission.
                 showToastAndOpenAppSettingsScreenForPermission(
                     requestedPermissions.keys.singleOrNull(),
-                    R.string.startup_no_storage_permission,
+                    CommonString.startup_no_storage_permission,
                 )
             }
         }

@@ -6,7 +6,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.view.View
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.common.time.TIME_HOUR
 import com.ichi2.anki.common.time.TIME_MINUTE
 import kotlin.math.max
@@ -40,7 +40,7 @@ fun remainingTime(
                 (timeSeconds / TIME_MINUTE).roundToInt(),
                 1,
             )
-        res.getQuantityString(R.plurals.reviewer_window_title, timeX, timeX)
+        res.getQuantityString(CommonPlurals.reviewer_window_title, timeX, timeX)
         // It used to be minutes only. So the word "minutes" is not
         // explicitly written in the resource name.
         /*
@@ -58,7 +58,7 @@ fun remainingTime(
         remaining =
             (remainingSeconds.toFloat() / TIME_MINUTE).roundToInt()
         res.getQuantityString(
-            R.plurals.reviewer_window_title_hours_new,
+            CommonPlurals.reviewer_window_title_hours_new,
             timeX,
             timeX,
             remaining,
@@ -69,7 +69,7 @@ fun remainingTime(
         remaining =
             (remainingSeconds / TIME_HOUR).roundToInt()
         res.getQuantityString(
-            R.plurals.reviewer_window_title_days_new,
+            CommonPlurals.reviewer_window_title_days_new,
             timeX,
             timeX,
             remaining,

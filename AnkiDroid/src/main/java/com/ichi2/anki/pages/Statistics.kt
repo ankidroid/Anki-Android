@@ -10,6 +10,7 @@ import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
@@ -71,7 +72,7 @@ class Statistics : PageFragment(R.layout.page_statistics) {
     private fun exportWebViewContentAsPDF() {
         if (pendingPrintJob?.isActive == true) {
             Timber.w("Duplicate print attempted - skipping")
-            showSnackbar(R.string.already_in_progress)
+            showSnackbar(CommonString.already_in_progress)
             return
         }
         Timber.i("Saving Stats to PDF")

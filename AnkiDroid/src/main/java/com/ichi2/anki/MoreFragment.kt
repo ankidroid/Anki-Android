@@ -48,19 +48,19 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
         // Help section: each opens HelpDialog with the relevant sub-items
         binding.moreHelpManual.setOnClickListener {
             Analytics.send(LinkClicked(LinkAction.OPENED_USING_ANKIDROID))
-            openHelpSection(R.string.help_title_using_ankidroid)
+            openHelpSection(CommonString.help_title_using_ankidroid)
         }
         binding.moreHelpGetHelp.setOnClickListener {
             Analytics.send(LinkClicked(LinkAction.OPENED_GET_HELP))
-            openHelpSection(R.string.help_title_get_help)
+            openHelpSection(CommonString.help_title_get_help)
         }
         binding.moreHelpCommunity.setOnClickListener {
             Analytics.send(LinkClicked(LinkAction.OPENED_COMMUNITY))
-            openHelpSection(R.string.help_title_community)
+            openHelpSection(CommonString.help_title_community)
         }
         binding.moreHelpPrivacy.setOnClickListener {
             Analytics.send(LinkClicked(LinkAction.OPENED_PRIVACY))
-            openHelpSection(R.string.help_title_privacy)
+            openHelpSection(CommonString.help_title_privacy)
         }
 
         // Support section: direct URL actions

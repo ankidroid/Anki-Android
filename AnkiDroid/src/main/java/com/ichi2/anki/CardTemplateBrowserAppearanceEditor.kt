@@ -71,7 +71,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
         }
         val bundle = savedInstanceState ?: intent.extras
         if (bundle == null) {
-            showThemedToast(this, getString(R.string.something_wrong), true)
+            showThemedToast(this, getString(CommonString.something_wrong), true)
             finish()
             return
         }
@@ -128,11 +128,11 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
     private fun showRestoreDefaultDialog() {
         AlertDialog.Builder(this).show {
             setTitle(TR.sentenceCase.restoreToDefault)
-            positiveButton(R.string.restore) {
+            positiveButton(CommonString.restore) {
                 restoreDefaultAndClose()
             }
-            negativeButton(R.string.dialog_cancel)
-            message(R.string.card_template_browser_appearance_restore_default_dialog)
+            negativeButton(CommonString.dialog_cancel)
+            message(CommonString.card_template_browser_appearance_restore_default_dialog)
         }
     }
 

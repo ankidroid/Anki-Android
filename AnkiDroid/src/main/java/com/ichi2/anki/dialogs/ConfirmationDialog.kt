@@ -6,6 +6,7 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
 import com.ichi2.anki.utils.ext.requireString
@@ -34,7 +35,7 @@ class ConfirmationDialog : DialogFragment() {
         get() =
             requireArguments()
                 .getString(ARG_POSITIVE_BUTTON_TEXT)
-                .ifNullOrEmpty { getString(R.string.dialog_ok) }
+                .ifNullOrEmpty { getString(CommonString.dialog_ok) }
 
     private var confirm = Runnable {} // Do nothing by default
     private var cancel = Runnable {} // Do nothing by default
@@ -76,7 +77,7 @@ class ConfirmationDialog : DialogFragment() {
             title(text = title)
             message(text = message)
             positiveButton(text = positiveButtonText) { confirm.run() }
-            negativeButton(R.string.dialog_cancel) { cancel.run() }
+            negativeButton(CommonString.dialog_cancel) { cancel.run() }
         }
 
     companion object {

@@ -65,11 +65,11 @@ class SyncTest : RobolectricTest() {
 
             assertTrue(supportFragmentManager.fragments.any { it is SyncErrorDialog })
             assertEquals(
-                getString(R.string.sync_clock_off_with_current_time, exception.localizedMessage, currentTime),
+                getString(CommonString.sync_clock_off_with_current_time, exception.localizedMessage, currentTime),
                 dialog.findViewById<TextView>(android.R.id.message)?.text?.toString(),
             )
-            assertEquals(getString(R.string.dialog_cancel), dialog.getButton(DialogInterface.BUTTON_NEGATIVE).text)
-            assertEquals(getString(R.string.open_settings), dialog.getButton(DialogInterface.BUTTON_POSITIVE).text)
+            assertEquals(getString(CommonString.dialog_cancel), dialog.getButton(DialogInterface.BUTTON_NEGATIVE).text)
+            assertEquals(getString(CommonString.open_settings), dialog.getButton(DialogInterface.BUTTON_POSITIVE).text)
             assertEquals(View.GONE, dialog.getButton(DialogInterface.BUTTON_NEUTRAL).visibility)
             assertEquals("test", Prefs.hkey)
 
@@ -121,7 +121,7 @@ class SyncTest : RobolectricTest() {
             val dialog = failSync(BackendSyncException(backendError { this.message = message }))
 
             assertEquals(message, dialog.findViewById<TextView>(android.R.id.message)?.text?.toString())
-            assertEquals(getString(R.string.dialog_ok), dialog.getButton(DialogInterface.BUTTON_POSITIVE).text)
+            assertEquals(getString(CommonString.dialog_ok), dialog.getButton(DialogInterface.BUTTON_POSITIVE).text)
             assertEquals(View.GONE, dialog.getButton(DialogInterface.BUTTON_NEGATIVE).visibility)
             assertEquals(View.GONE, dialog.getButton(DialogInterface.BUTTON_NEUTRAL).visibility)
             assertEquals("test", Prefs.hkey)

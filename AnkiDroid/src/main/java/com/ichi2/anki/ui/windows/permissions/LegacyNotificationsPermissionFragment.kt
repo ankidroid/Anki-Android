@@ -6,6 +6,7 @@ package com.ichi2.anki.ui.windows.permissions
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.setFragmentResult
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.common.permissions.canPostNotifications
@@ -43,7 +44,7 @@ class LegacyNotificationsPermissionFragment : PermissionsFragment(R.layout.fragm
         savedInstanceState: Bundle?,
     ) {
         binding.legacyNotificationPermission.revokeIfGrantedOnClickElse {
-            showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, R.string.manually_grant_permissions)
+            showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, CommonString.manually_grant_permissions)
         }
     }
 }

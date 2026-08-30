@@ -6,7 +6,7 @@ package com.ichi2.anki.preferences.profiles
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.multiprofile.ProfileName
 import com.ichi2.anki.multiprofile.ProfileName.ValidationResult
 import com.ichi2.compose.theme.AnkiDroidTheme
@@ -24,13 +24,13 @@ fun AddProfileDialog(
     onDismissRequest: () -> Unit,
     onConfirm: (ProfileName) -> Unit,
 ) {
-    val emptyError = stringResource(R.string.profile_name_empty_error)
-    val tooLongError = stringResource(R.string.profile_name_too_long_error, ProfileName.MAX_LENGTH)
+    val emptyError = stringResource(CommonString.profile_name_empty_error)
+    val tooLongError = stringResource(CommonString.profile_name_too_long_error, ProfileName.MAX_LENGTH)
 
     TextInputDialog(
-        title = stringResource(R.string.add_profile),
-        label = stringResource(R.string.profile_name),
-        confirmText = stringResource(R.string.dialog_add),
+        title = stringResource(CommonString.add_profile),
+        label = stringResource(CommonString.profile_name),
+        confirmText = stringResource(CommonString.dialog_add),
         onConfirm = { text ->
             (ProfileName.validate(text) as? ValidationResult.Valid)?.let { onConfirm(it.name) }
         },

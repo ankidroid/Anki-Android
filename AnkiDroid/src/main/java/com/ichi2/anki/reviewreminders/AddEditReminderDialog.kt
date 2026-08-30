@@ -19,6 +19,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.databinding.DialogAddEditReminderBinding
@@ -94,11 +95,11 @@ class AddEditReminderDialog : DialogFragment() {
         val dialogBuilder =
             AlertDialog.Builder(requireActivity()).apply {
                 customView(binding.root)
-                positiveButton(R.string.dialog_ok)
-                neutralButton(R.string.dialog_cancel)
+                positiveButton(CommonString.dialog_ok)
+                neutralButton(CommonString.dialog_cancel)
 
                 if (dialogMode is DialogMode.Edit) {
-                    negativeButton(R.string.dialog_positive_delete)
+                    negativeButton(CommonString.dialog_positive_delete)
                 }
             }
         val dialog = dialogBuilder.create()
@@ -154,8 +155,8 @@ class AddEditReminderDialog : DialogFragment() {
         binding.addEditReminderToolbar.title =
             getString(
                 when (dialogMode) {
-                    is DialogMode.Add -> R.string.add_review_reminder
-                    is DialogMode.Edit -> R.string.edit_review_reminder
+                    is DialogMode.Add -> CommonString.add_review_reminder
+                    is DialogMode.Edit -> CommonString.edit_review_reminder
                 },
             )
     }
@@ -236,8 +237,8 @@ class AddEditReminderDialog : DialogFragment() {
             val value: Int? = text.toString().toIntOrNull()
             binding.addEditReminderCardThresholdInputWrapper.error =
                 when {
-                    (value == null) -> getString(R.string.add_edit_reminder_card_threshold_error_not_a_number)
-                    (value < 0) -> getString(R.string.add_edit_reminder_card_threshold_error_negative)
+                    (value == null) -> getString(CommonString.add_edit_reminder_card_threshold_error_not_a_number)
+                    (value < 0) -> getString(CommonString.add_edit_reminder_card_threshold_error_negative)
                     else -> null
                 }
             viewModel.setCardTriggerThreshold(value ?: 0)
@@ -289,7 +290,7 @@ class AddEditReminderDialog : DialogFragment() {
         Timber.i("Submitted dialog")
         // Do nothing if numerical fields are invalid
         binding.addEditReminderCardThresholdInputWrapper.error?.let {
-            binding.root.showSnackbar(R.string.something_wrong)
+            binding.root.showSnackbar(CommonString.something_wrong)
             return
         }
 
@@ -318,8 +319,8 @@ class AddEditReminderDialog : DialogFragment() {
 
         val confirmationDialog = ConfirmationDialog()
         confirmationDialog.setArgs(
-            getString(R.string.add_edit_reminder_delete_confirmation_title),
-            getString(R.string.add_edit_reminder_delete_confirmation_message),
+            getString(CommonString.add_edit_reminder_delete_confirmation_title),
+            getString(CommonString.add_edit_reminder_delete_confirmation_message),
         )
         confirmationDialog.setConfirm {
             setFragmentResult(

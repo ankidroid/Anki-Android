@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.preference.ListPreference
 import androidx.preference.ListPreferenceDialogFragmentCompat
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.runCatchingWithLog
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -42,7 +43,7 @@ class ExternalDirectorySelectionPreference(
     init {
         summaryProvider =
             SummaryProvider<ListPreference> { pref ->
-                pref.value.takeUnless { it.isNullOrEmpty() } ?: context.getString(R.string.pref_directory_not_set)
+                pref.value.takeUnless { it.isNullOrEmpty() } ?: context.getString(CommonString.pref_directory_not_set)
             }
     }
 
@@ -137,7 +138,7 @@ class ExternalDirectorySelectionPreference(
 class FullWidthListPreferenceDialogFragment : ListPreferenceDialogFragmentCompat() {
     override fun onPrepareDialogBuilder(builder: AlertDialog.Builder) {
         super.onPrepareDialogBuilder(builder)
-        builder.setNeutralButton(R.string.pref_custom_path) { _, _ -> showCustomPathInput() }
+        builder.setNeutralButton(CommonString.pref_custom_path) { _, _ -> showCustomPathInput() }
     }
 
     private fun showCustomPathInput() {
@@ -146,7 +147,7 @@ class FullWidthListPreferenceDialogFragment : ListPreferenceDialogFragmentCompat
         AlertDialog
             .Builder(context)
             .show {
-                setTitle(R.string.pref_enter_custom_path)
+                setTitle(CommonString.pref_enter_custom_path)
                 setView(R.layout.dialog_generic_text_input)
                 positiveButton(android.R.string.ok)
                 negativeButton(android.R.string.cancel)
@@ -162,7 +163,7 @@ class FullWidthListPreferenceDialogFragment : ListPreferenceDialogFragmentCompat
                     if (!Files.isWritable(pathObj)) {
                         showThemedToast(
                             context,
-                            context.getString(R.string.pref_directory_not_writable),
+                            context.getString(CommonString.pref_directory_not_writable),
                             true,
                         )
                         return@input
@@ -174,7 +175,7 @@ class FullWidthListPreferenceDialogFragment : ListPreferenceDialogFragmentCompat
                 } catch (e: Exception) {
                     Timber.w(e, "Failed to set custom path")
                     AlertDialog.Builder(context).show {
-                        setTitle(context.getString(R.string.could_not_create_dir, text.toString()))
+                        setTitle(context.getString(CommonString.could_not_create_dir, text.toString()))
                         setMessage(e.stackTraceToString())
                         positiveButton(android.R.string.ok)
                     }

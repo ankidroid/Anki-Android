@@ -26,6 +26,7 @@ import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DrawingFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -80,7 +81,7 @@ class MultimediaImageFragment :
     private var previewedImage: Uri? = null
 
     override val title: String
-        get() = resources.getString(R.string.multimedia_editor_popup_image)
+        get() = resources.getString(CommonString.multimedia_editor_popup_image)
 
     private lateinit var selectedImageOptions: ImageOptions
 
@@ -110,7 +111,7 @@ class MultimediaImageFragment :
 
                     val selectedImage = PickedImage(data).trustedUri
                     if (selectedImage == null) {
-                        showSnackbar(getString(R.string.select_image_failed))
+                        showSnackbar(getString(CommonString.select_image_failed))
                         return@registerForActivityResult
                     }
                     handleSelectImageIntent(selectedImage)
@@ -249,7 +250,7 @@ class MultimediaImageFragment :
         ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(requireContext(), "temp-photos")
         if (ankiCacheDirectory == null) {
             Timber.e("createUI() failed to get cache directory")
-            showErrorDialog(errorMessage = resources.getString(R.string.multimedia_editor_failed))
+            showErrorDialog(errorMessage = resources.getString(CommonString.multimedia_editor_failed))
             return
         }
 
@@ -349,7 +350,7 @@ class MultimediaImageFragment :
             pickImageLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
             Timber.w(e, "MultimediaImageFragment:: No app found to select image")
-            showSnackbar(R.string.activity_start_failed)
+            showSnackbar(CommonString.activity_start_failed)
         }
     }
 
@@ -380,7 +381,7 @@ class MultimediaImageFragment :
                 cameraLauncher.launch(photoURI)
             } catch (e: ActivityNotFoundException) {
                 Timber.w(e, "MultimediaImageFragment:: No camera found")
-                showSnackbar(R.string.activity_start_failed)
+                showSnackbar(CommonString.activity_start_failed)
             }
         }
     }
@@ -431,7 +432,7 @@ class MultimediaImageFragment :
         viewModel.currentMultimediaUri.value?.let { previewImage(it) }
         updateAndDisplayImageSize(imageFile)
 
-        showCropDialog(getString(R.string.crop_image))
+        showCropDialog(getString(CommonString.crop_image))
     }
 
     private fun updateAndDisplayImageSize(imageUri: String) {
@@ -447,24 +448,24 @@ class MultimediaImageFragment :
         val numberFormat = NumberFormat.getInstance()
         // length is in bits, other elements have MB, convert to MB
         val size = numberFormat.format(length / 1000000.0)
-        val message = getString(R.string.save_dialog_content, size)
+        val message = getString(CommonString.save_dialog_content, size)
         showCompressImageDialog(message)
     }
 
     private fun showCompressImageDialog(message: String) {
         AlertDialog.Builder(requireActivity()).show {
             message(text = message)
-            positiveButton(R.string.compress) {
+            positiveButton(CommonString.compress) {
                 viewModel.currentMultimediaPath.value.let {
                     if (it == null) return@positiveButton
                     if (!rotateAndCompress(it)) {
                         Timber.d("Unable to compress the clicked image")
-                        showErrorDialog(errorMessage = resources.getString(R.string.multimedia_editor_image_compression_failed))
+                        showErrorDialog(errorMessage = resources.getString(CommonString.multimedia_editor_image_compression_failed))
                         return@positiveButton
                     }
                 }
             }
-            negativeButton(R.string.dialog_no) {
+            negativeButton(CommonString.dialog_no) {
                 finishAddingImage()
             }
         }
@@ -478,10 +479,10 @@ class MultimediaImageFragment :
 
         AlertDialog.Builder(requireActivity()).show {
             message(text = message)
-            positiveButton(R.string.dialog_yes) {
+            positiveButton(CommonString.dialog_yes) {
                 requestCrop()
             }
-            negativeButton(R.string.dialog_no)
+            negativeButton(CommonString.dialog_no)
         }
     }
 

@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.preference.DialogPreference
 import androidx.preference.PreferenceFragmentCompat
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.DialogControlPreferenceBinding
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
@@ -78,7 +79,7 @@ open class ControlPreference :
         val bindingPreference = getPreferenceAssignedTo(binding) ?: return false
         if (bindingPreference == this) return false
         val actionTitle = bindingPreference.title ?: ""
-        val warning = context.getString(R.string.bindings_already_bound, actionTitle)
+        val warning = context.getString(CommonString.bindings_already_bound, actionTitle)
         warningDisplay.setWarning(warning)
         return true
     }
@@ -103,13 +104,13 @@ open class ControlPreference :
             setTitle(title)
             setIcon(icon)
             val gesturePicker = createGesturePicker()
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(CommonString.dialog_ok) {
                 val gesture = gesturePicker.getGesture() ?: return@positiveButton
                 val binding = Binding.GestureInput(gesture)
                 onGestureSelected(binding)
                 it.dismiss()
             }
-            negativeButton(R.string.dialog_cancel) { it.dismiss() }
+            negativeButton(CommonString.dialog_cancel) { it.dismiss() }
             customView(view = gesturePicker)
             gesturePicker.onGestureChanged { gesture ->
                 warnIfUsedOrClearWarning(Binding.GestureInput(gesture), gesturePicker)
@@ -128,12 +129,12 @@ open class ControlPreference :
             keyPicker.setBindingChangedListener { binding ->
                 warnIfUsedOrClearWarning(binding, keyPicker)
             }
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(CommonString.dialog_ok) {
                 val binding = keyPicker.getBinding() ?: return@positiveButton
                 onKeySelected(binding)
                 it.dismiss()
             }
-            negativeButton(R.string.dialog_cancel) { it.dismiss() }
+            negativeButton(CommonString.dialog_cancel) { it.dismiss() }
             keyPicker.setKeycodeValidation(KeySelectionDialogUtils.disallowModifierKeyCodes())
         }
     }
@@ -145,20 +146,20 @@ open class ControlPreference :
                 customView(view = axisPicker.binding.root)
                 setTitle(title)
                 setIcon(icon)
-                negativeButton(R.string.dialog_cancel) { it.dismiss() }
+                negativeButton(CommonString.dialog_cancel) { it.dismiss() }
             }
         axisPicker.setBindingChangedListener { binding ->
             dialog.dismiss()
             val bindingPref = getPreferenceAssignedTo(binding)
             if (bindingPref != null && bindingPref != this) {
                 AlertDialog.Builder(context).show {
-                    val warning = context.getString(R.string.bindings_already_bound, bindingPref.title)
+                    val warning = context.getString(CommonString.bindings_already_bound, bindingPref.title)
                     setTitle(binding.toDisplayString(context))
                     setMessage(warning)
-                    setPositiveButton(R.string.dialog_positive_replace) { _, _ ->
+                    setPositiveButton(CommonString.dialog_positive_replace) { _, _ ->
                         onAxisSelected(binding)
                     }
-                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                    setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
                 }
             } else {
                 onAxisSelected(binding)
@@ -234,7 +235,7 @@ open class ControlPreferenceDialogFragment : DialogFragment() {
             setTitle(preference.title)
             setIcon(preference.icon)
             customView(binding.root, paddingTop = 16.dp.toPx(context))
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(CommonString.dialog_cancel)
         }
     }
 
@@ -266,7 +267,7 @@ open class ControlPreferenceDialogFragment : DialogFragment() {
         }
         val titles =
             bindings.map {
-                getString(R.string.binding_remove_binding, getDisplayString(it))
+                getString(CommonString.binding_remove_binding, getDisplayString(it))
             }
         binding.listView.apply {
             adapter = ArrayAdapter(requireContext(), R.layout.item_control_preference, titles)

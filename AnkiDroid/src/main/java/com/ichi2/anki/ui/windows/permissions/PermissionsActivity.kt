@@ -10,6 +10,7 @@ import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -51,7 +52,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         val permissionSet = intent.getParcelableExtraCompat<StoragePermissionSet>(EXTRA_PERMISSIONS_SET)
         if (permissionSet == null) {
             Timber.w("EXTRA_PERMISSIONS_SET not set; finishing")
-            showThemedToast(this, R.string.something_wrong, false)
+            showThemedToast(this, CommonString.something_wrong, false)
             setResult(RESULT_CANCELED)
             finish()
             return

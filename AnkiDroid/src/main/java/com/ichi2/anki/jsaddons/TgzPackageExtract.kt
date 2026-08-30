@@ -35,7 +35,7 @@ package com.ichi2.anki.jsaddons
 
 import android.content.Context
 import android.text.format.Formatter
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.utils.FileUtil
 import org.apache.commons.compress.archivers.ArchiveException
@@ -130,13 +130,13 @@ class TgzPackageExtract(
         tarballFile: File,
         addonsPackageDir: AddonsPackageDir,
     ) {
-        require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon_package, tarballFile.absolutePath) }
+        require(isGzip(tarballFile)) { context.getString(CommonString.not_valid_js_addon_package, tarballFile.absolutePath) }
 
         try {
             compat.createDirectories(addonsPackageDir)
         } catch (e: IOException) {
             Timber.w(e)
-            throw IOException(context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath))
+            throw IOException(context.getString(CommonString.could_not_create_dir, addonsPackageDir.absolutePath))
         }
 
         // Make sure we have 2x the tar file size in free space (1x for tar file, 1x for unarchived tar file contents
@@ -259,7 +259,7 @@ class TgzPackageExtract(
             outputDir.deleteRecursively()
             throw ArchiveException(
                 context.getString(
-                    R.string.malicious_archive_exceeds_limit,
+                    CommonString.malicious_archive_exceeds_limit,
                     Formatter.formatFileSize(context, TOO_BIG_SIZE),
                     TOO_MANY_FILES,
                 ),
@@ -293,7 +293,7 @@ class TgzPackageExtract(
         } catch (e: IOException) {
             // clean up
             Timber.w(e)
-            throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
+            throw IOException(context.getString(CommonString.could_not_create_dir, parent.absolutePath))
         }
 
         FileOutputStream(outputFile).use { outputFileStream ->
@@ -338,7 +338,7 @@ class TgzPackageExtract(
             compat.createDirectories(outputFile)
         } catch (e: IOException) {
             Timber.w(e)
-            throw IOException(context.getString(R.string.could_not_create_dir, outputFile.absolutePath))
+            throw IOException(context.getString(CommonString.could_not_create_dir, outputFile.absolutePath))
         }
     }
 
@@ -359,19 +359,19 @@ class TgzPackageExtract(
                 destDirectory.canonicalPath
             } catch (_: IOException) {
                 // Path may contain PII; removing the %s param would churn translations — use a placeholder.
-                throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
+                throw ArchiveException(context.getString(CommonString.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
             }
         val childCanonical =
             try {
                 outputFile.canonicalPath
             } catch (_: IOException) {
-                throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
+                throw ArchiveException(context.getString(CommonString.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
             }
         val destPrefix = destCanonical + File.separator
         // Allow the destination directory itself (e.g. `./` entries). Reject anything else
         // that is not dest and not under dest + separator (sibling-prefix safe).
         if (childCanonical != destCanonical && !childCanonical.startsWith(destPrefix)) {
-            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
+            throw ArchiveException(context.getString(CommonString.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
         }
     }
 
@@ -409,7 +409,7 @@ class TgzPackageExtract(
     private fun enforceSpaceUsedLessThanHalfAvailable(outputDir: File) {
         val newAvailableSpace: Long = FileUtil.determineBytesAvailable(outputDir.canonicalPath)
         if (newAvailableSpace <= availableSpace / 2) {
-            throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
+            throw ArchiveException(context.getString(CommonString.file_extract_exceeds_storage_space))
         }
     }
 
@@ -452,7 +452,7 @@ class TgzPackageExtract(
         private const val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
         private const val TOO_MANY_FILES = 1024 // max number of files
 
-        /** Placeholder for [R.string.malicious_archive_entry_outside]; do not pass real archive paths. */
+        /** Placeholder for [CommonString.malicious_archive_entry_outside]; do not pass real archive paths. */
         private const val ARCHIVE_ENTRY_PATH_OMITTED = "archive entry"
     }
 }
