@@ -18,7 +18,6 @@
 package com.ichi2.anki.multiprofile
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.webkit.CookieManager
@@ -26,15 +25,12 @@ import android.webkit.WebView
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
-import org.acra.ACRA
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
-import java.util.UUID
 
 /**
  * Manages the creation, loading, and switching of user profiles.
