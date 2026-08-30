@@ -23,6 +23,7 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableAction
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * @param menuId menu Id of the action
@@ -47,7 +48,7 @@ enum class ViewerAction(
     EDIT(R.id.action_edit_note, R.drawable.ic_mode_edit_white, MENU_ONLY),
     BURY_MENU(R.id.action_bury, R.drawable.ic_flip_to_back_white, MENU_ONLY),
     SUSPEND_MENU(R.id.action_suspend, R.drawable.ic_suspend, MENU_ONLY),
-    DELETE(R.id.action_delete, R.drawable.ic_delete_white, MENU_ONLY),
+    DELETE(R.id.action_delete, CommonR.drawable.ic_delete_white, MENU_ONLY),
     TOGGLE_WHITEBOARD(R.id.action_toggle_whiteboard, R.drawable.ic_enable_whiteboard, MENU_ONLY),
 
     // Disabled
