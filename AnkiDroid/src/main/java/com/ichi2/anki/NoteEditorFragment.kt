@@ -1402,6 +1402,16 @@ class NoteEditorFragment :
             // because this item is already present in CardBrowser
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = !inCardBrowserActivity
         }
+        menu.findItem(R.id.action_toggle_previewer).apply {
+            isVisible = inNoteEditorActivity && noteEditorActivity?.hasPreviewerPane == true
+            isChecked = noteEditorActivity?.fragmented == true
+            title =
+                if (isChecked) {
+                    getString(R.string.note_editor_hide_previewer)
+                } else {
+                    getString(R.string.note_editor_show_previewer)
+                }
+        }
         if (editFields != null) {
             for (i in editFields!!.indices) {
                 val fieldText = editFields!![i].text
@@ -1459,6 +1469,13 @@ class NoteEditorFragment :
                 if (allowPreviewAction()) {
                     launchCatchingTask { performPreview() }
                 }
+                return true
+            }
+            R.id.action_toggle_previewer -> {
+                Timber.i("NoteEditor:: Toggle previewer pressed")
+                val nextVisible = noteEditorActivity?.fragmented != true
+                noteEditorActivity?.setPreviewerVisible(nextVisible)
+                requireActivity().invalidateOptionsMenu()
                 return true
             }
             R.id.action_save -> {
