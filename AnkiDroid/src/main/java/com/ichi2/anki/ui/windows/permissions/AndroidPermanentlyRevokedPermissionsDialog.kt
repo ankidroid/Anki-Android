@@ -21,7 +21,7 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createNoStorageList
@@ -49,7 +49,7 @@ object AndroidPermanentlyRevokedPermissionsDialog {
 
         val message =
             context.getString(
-                R.string.directory_revoked_after_inactivity,
+                S.directory_revoked_after_inactivity,
                 "WRITE_EXTERNAL_STORAGE",
                 getCurrentAnkiDroidDirectoryPath(context),
             )
@@ -73,6 +73,6 @@ object AndroidPermanentlyRevokedPermissionsDialog {
             CollectionHelper.getCurrentAnkiDroidDirectory(context).absolutePath
         } catch (e: Exception) {
             Timber.w(e)
-            context.getString(R.string.card_browser_unknown_deck_name)
+            context.getString(S.card_browser_unknown_deck_name)
         }
 }

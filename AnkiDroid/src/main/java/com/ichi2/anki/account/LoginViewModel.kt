@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.sync.SyncAuth
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -128,8 +128,8 @@ class LoginViewModel : ViewModel() {
 enum class LoginError(
     @StringRes private val messageResId: Int,
 ) {
-    EMPTY_USERNAME(R.string.invalid_email),
-    EMPTY_PASSWORD(R.string.password_empty),
+    EMPTY_USERNAME(S.invalid_email),
+    EMPTY_PASSWORD(S.password_empty),
     ;
 
     fun toHumanReadableString(context: Context): String = context.getString(this.messageResId)

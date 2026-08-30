@@ -38,6 +38,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropImageView
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.FragmentImageCropperBinding
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
@@ -195,7 +196,7 @@ class ImageCropper :
     ) {
         if (error != null) {
             Timber.e(error, "Failed to load image by URI")
-            showSnackbar(R.string.something_wrong)
+            showSnackbar(S.something_wrong)
         }
     }
 
@@ -216,7 +217,7 @@ class ImageCropper :
             activity?.finish()
         } else {
             Timber.e(result.error, "Failed to crop image")
-            showSnackbar(R.string.something_wrong)
+            showSnackbar(S.something_wrong)
         }
     }
 

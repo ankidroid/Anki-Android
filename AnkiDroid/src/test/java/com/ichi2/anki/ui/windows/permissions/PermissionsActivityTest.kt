@@ -26,6 +26,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.S
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -59,7 +60,7 @@ class PermissionsActivityTest : RobolectricTest() {
         testInvalidActivityFinishes()
         assertThat(
             ShadowToast.getTextOfLatestToast(),
-            equalTo(getResourceString(R.string.something_wrong)),
+            equalTo(getResourceString(S.something_wrong)),
         )
     }
 

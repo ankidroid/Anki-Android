@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.compat.requireSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
@@ -87,16 +87,16 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
                     DECK_OPTIONS -> TR.sentenceCase.deckOptions
                     CUSTOM_STUDY -> TR.sentenceCase.customStudy
                     DELETE_DECK -> TR.sentenceCase.deleteDeck
-                    EXPORT_DECK -> getString(R.string.export_deck)
+                    EXPORT_DECK -> getString(S.export_deck)
                     UNBURY -> TR.studyingUnbury()
                     CUSTOM_STUDY_REBUILD -> TR.actionsRebuild()
-                    CUSTOM_STUDY_EMPTY -> getString(R.string.empty_cram_label)
-                    CREATE_SUBDECK -> getString(R.string.create_subdeck)
-                    CREATE_SHORTCUT -> getString(R.string.create_shortcut)
-                    BROWSE_CARDS -> getString(R.string.browse_cards)
-                    EDIT_DESCRIPTION -> getString(R.string.edit_deck_description)
+                    CUSTOM_STUDY_EMPTY -> getString(S.empty_cram_label)
+                    CREATE_SUBDECK -> getString(S.create_subdeck)
+                    CREATE_SHORTCUT -> getString(S.create_shortcut)
+                    BROWSE_CARDS -> getString(S.browse_cards)
+                    EDIT_DESCRIPTION -> getString(S.edit_deck_description)
                     ADD_CARD -> TR.actionsAdd()
-                    SCHEDULE_REMINDERS -> getString(R.string.schedule_reminders_do_not_translate)
+                    SCHEDULE_REMINDERS -> getString(S.schedule_reminders_do_not_translate)
                 }
             }
     }

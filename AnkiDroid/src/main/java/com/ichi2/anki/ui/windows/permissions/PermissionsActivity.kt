@@ -26,6 +26,7 @@ import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
@@ -64,7 +65,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         val permissionSet = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, PermissionSet::class.java)
         if (permissionSet == null) {
             Timber.w("EXTRA_PERMISSIONS_SET not set; finishing")
-            showThemedToast(this, R.string.something_wrong, false)
+            showThemedToast(this, S.something_wrong, false)
             setResult(RESULT_CANCELED)
             finish()
             return

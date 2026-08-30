@@ -34,6 +34,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.databinding.FragmentFilteredDeckOptionsBinding
@@ -126,10 +127,10 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                             if (state.throwable != null) {
                                 // we can't recover from an initialization error so just exit
                                 AlertDialog.Builder(requireActivity()).show {
-                                    setTitle(R.string.import_title_error)
+                                    setTitle(S.import_title_error)
                                     message(text = state.throwable.toString())
                                     cancelable(false)
-                                    positiveButton(R.string.dialog_exit) { requireActivity().finish() }
+                                    positiveButton(S.dialog_exit) { requireActivity().finish() }
                                 }
                             } else {
                                 binding.loadingIndicator.isVisible = true
@@ -151,9 +152,9 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
                             // show any errors we might have
                             if (state.throwable != null) {
                                 AlertDialog.Builder(requireActivity()).show {
-                                    title(R.string.import_title_error)
+                                    title(S.import_title_error)
                                     message(text = state.throwable.message)
-                                    positiveButton(R.string.dialog_ok)
+                                    positiveButton(S.dialog_ok)
                                     setOnDismissListener { viewModel.clearError() }
                                 }
                                 return@collect
@@ -187,8 +188,8 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.deckNameInput.setTextIfChanged(state.name)
         binding.deckNameInputLayout.error =
             when (state.nameInputError) {
-                FilteredNameInputError.Empty -> getString(R.string.empty_cram_label)
-                FilteredNameInputError.AlreadyExists -> getString(R.string.error_name_exists)
+                FilteredNameInputError.Empty -> getString(S.empty_cram_label)
+                FilteredNameInputError.AlreadyExists -> getString(S.error_name_exists)
                 null -> null
             }
         binding.checkBoxAllowEmpty.setCheckedIfChanged(state.allowEmpty)
@@ -201,7 +202,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.filterLimitInput.setTextIfChanged(filter1State.limit)
         binding.filterLimitInputLayout.error =
             when (state.filter1State.error) {
-                SearchInputError.Empty -> getString(R.string.empty_cram_label)
+                SearchInputError.Empty -> getString(S.empty_cram_label)
                 SearchInputError.NotANumber -> TR.errorsInvalidInputEmpty()
                 null -> null
             }
@@ -229,7 +230,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.secondFilterLimitInput.setTextIfChanged(filter2State.limit)
         binding.secondFilterLimitInputLayout.error =
             when (state.filter2State.error) {
-                SearchInputError.Empty -> getString(R.string.empty_cram_label)
+                SearchInputError.Empty -> getString(S.empty_cram_label)
                 SearchInputError.NotANumber -> TR.errorsInvalidInputEmpty()
                 null -> null
             }
@@ -333,9 +334,9 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
         binding.checkBoxAllowEmpty.text = TR.decksCreateEvenIfEmpty()
         // reschedule options
         binding.rescheduleInfoLabel.text = TR.decksZeroMinutesHint()
-        binding.rescheduleDelayAgainLayout.hint = getString(R.string.filtered_option_delay_again)
-        binding.rescheduleDelayHardLayout.hint = getString(R.string.filtered_option_delay_hard)
-        binding.rescheduleDelayGoodLayout.hint = getString(R.string.filtered_option_delay_good)
+        binding.rescheduleDelayAgainLayout.hint = getString(S.filtered_option_delay_again)
+        binding.rescheduleDelayHardLayout.hint = getString(S.filtered_option_delay_hard)
+        binding.rescheduleDelayGoodLayout.hint = getString(S.filtered_option_delay_good)
     }
 
     /** Sets text of [TextInputEditText] to [newText] only if it's different from its current text */

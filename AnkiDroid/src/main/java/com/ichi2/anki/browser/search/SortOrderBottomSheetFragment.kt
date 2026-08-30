@@ -21,6 +21,7 @@ import anki.search.BrowserColumns.Sorting
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.browser.BrowserColumnKey
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -68,7 +69,7 @@ class SortOrderBottomSheetFragment(
 
         with(binding.title) {
             isVisible = true
-            text = getString(R.string.card_browser_change_display_order_title)
+            text = getString(S.card_browser_change_display_order_title)
         }
 
         with(this.behavior) {
@@ -145,14 +146,14 @@ class SortOrderBottomSheetFragment(
                         // do for all cards in the collection. 'Sort Field' can be used instead
                         CardBrowserColumn.QUESTION.ankiColumnKey,
                         CardBrowserColumn.ANSWER.ankiColumnKey,
-                        -> R.string.card_browser_order_subtitle_use_sort_field
+                        -> S.card_browser_order_subtitle_use_sort_field
 
                         // FSRS data is stored in JSON in the card table, it's not yet feasible to
                         // sort on this data
                         CardBrowserColumn.FSRS_DIFFICULTY.ankiColumnKey,
                         CardBrowserColumn.FSRS_STABILITY.ankiColumnKey,
                         CardBrowserColumn.FSRS_RETRIEVABILITY.ankiColumnKey,
-                        -> R.string.card_browser_order_subtitle_cards_mode_only
+                        -> S.card_browser_order_subtitle_cards_mode_only
 
                         else -> null
                     }
@@ -180,7 +181,7 @@ class SortOrderBottomSheetFragment(
         @CheckResult
         fun getLabel(context: Context): String =
             when (this) {
-                NoOrdering -> context.getString(R.string.card_browser_order_no_sorting_title)
+                NoOrdering -> context.getString(S.card_browser_order_no_sorting_title)
                 is AnkiColumn -> this.label
             }
 
@@ -192,7 +193,7 @@ class SortOrderBottomSheetFragment(
             val subtitleRes: Int? =
                 when (this) {
                     // No Ordering's subtitle is 'Faster'
-                    is NoOrdering -> R.string.card_browser_order_no_sorting_subtitle
+                    is NoOrdering -> S.card_browser_order_no_sorting_subtitle
                     // the selected column has an explanation of the sort: "Low to high"
                     is AnkiColumn if sort != null && sort.key == key ->
                         type.humanReadableExplanation(descending = sort.reverse)
@@ -261,15 +262,15 @@ class SortOrderBottomSheetFragment(
                 return buildList {
                     add(NoOrdering)
                     if (active.isNotEmpty()) {
-                        add(SectionHeader(R.string.user_active_columns))
+                        add(SectionHeader(S.user_active_columns))
                         addAll(active)
                     }
                     if (available.isNotEmpty()) {
-                        add(SectionHeader(R.string.user_potential_columns))
+                        add(SectionHeader(S.user_potential_columns))
                         addAll(available)
                     }
                     if (unavailable.isNotEmpty()) {
-                        add(SectionHeader(R.string.card_browser_order_section_unavailable))
+                        add(SectionHeader(S.card_browser_order_section_unavailable))
                         addAll(unavailable)
                     }
                 }

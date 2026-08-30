@@ -40,6 +40,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.cancelSync
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
@@ -107,7 +108,7 @@ class SyncWorker(
         } catch (throwable: Throwable) {
             Timber.w(throwable, "SyncWorker failed")
             notify {
-                setContentTitle(applicationContext.getString(R.string.sync_error))
+                setContentTitle(applicationContext.getString(S.sync_error))
                 throwable.localizedMessage?.let { message ->
                     setContentText(message)
                 }
@@ -195,7 +196,7 @@ class SyncWorker(
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
-        val cancelTitle = applicationContext.getString(R.string.dialog_cancel)
+        val cancelTitle = applicationContext.getString(S.dialog_cancel)
         val notification =
             buildNotification {
                 setContentTitle(TR.syncSyncing())
@@ -231,7 +232,7 @@ class SyncWorker(
             }.build()
 
     private fun getProgressNotification(progress: CharSequence): Notification {
-        val cancelTitle = applicationContext.getString(R.string.dialog_cancel)
+        val cancelTitle = applicationContext.getString(S.dialog_cancel)
 
         return buildNotification {
             setContentTitle(TR.syncSyncing())

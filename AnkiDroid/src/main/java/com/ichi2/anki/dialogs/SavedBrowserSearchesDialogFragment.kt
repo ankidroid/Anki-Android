@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardBrowser
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.browser.search.SavedSearches
@@ -65,15 +65,15 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
             )
         return AlertDialog
             .Builder(requireContext())
-            .title(text = resources.getString(R.string.card_browser_list_my_searches_title))
-            .negativeButton(R.string.dialog_cancel)
+            .title(text = resources.getString(S.card_browser_list_my_searches_title))
+            .negativeButton(S.dialog_cancel)
             .apply { customListAdapter(adapter) }
             .create()
     }
 
     private fun removeSearch(searchName: String) {
         AlertDialog.Builder(requireActivity()).show {
-            message(text = resources.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
+            message(text = resources.getString(S.card_browser_list_my_searches_remove_content, searchName))
             positiveButton(android.R.string.ok) {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_SAVED_SEARCH_ACTION,
@@ -84,7 +84,7 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
                 )
                 dialog?.dismiss() // Dismiss the root dialog
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
         }
     }
 

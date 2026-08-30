@@ -28,6 +28,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.ItemColumnSelectionBinding
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.dp
@@ -82,7 +83,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
                     val column = getItem(position)
 
                     binding.columnTitle.text =
-                        column?.label ?: getString(R.string.no_columns_available)
+                        column?.label ?: getString(S.no_columns_available)
 
                     binding.columnExample.text =
                         if (column?.sampleValue.isNullOrBlank()) "-" else column.sampleValue
@@ -108,7 +109,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
         listView.setOnItemClickListener { _, _, position, _ ->
             val selected = adapter.getItem(position)
-            if (selected == null || selected.label == getString(R.string.no_columns_available)) {
+            if (selected == null || selected.label == getString(S.no_columns_available)) {
                 Timber.d("Ignoring click on 'No Columns Available'")
                 return@setOnItemClickListener
             }
@@ -124,7 +125,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
         return AlertDialog
             .Builder(requireActivity())
-            .setTitle(getString(R.string.manage_browser_column))
+            .setTitle(getString(S.manage_browser_column))
             .setView(container)
             .setNegativeButton(android.R.string.cancel) { _, _ -> dismissAllowingStateLoss() }
             .create()

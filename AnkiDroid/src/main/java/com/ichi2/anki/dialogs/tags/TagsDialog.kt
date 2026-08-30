@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -171,9 +172,9 @@ class TagsDialog : AnalyticsDialogFragment {
 
         val positiveText =
             if (type == DialogType.EDIT_TAGS) {
-                getString(R.string.dialog_confirm)
+                getString(S.dialog_confirm)
             } else {
-                getString(R.string.select)
+                getString(S.select)
             }
 
         val tagsListLayout: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
@@ -199,7 +200,7 @@ class TagsDialog : AnalyticsDialogFragment {
             AlertDialog
                 .Builder(requireActivity())
                 .positiveButton(text = positiveText) { onPositiveButton() }
-                .negativeButton(R.string.dialog_cancel)
+                .negativeButton(S.dialog_cancel)
                 .customView(view = binding.root)
                 .create()
 
@@ -215,7 +216,7 @@ class TagsDialog : AnalyticsDialogFragment {
                                 binding.progressText.text =
                                     when (progress) {
                                         TagsDialogViewModel.InitProgress.Processing ->
-                                            getString(R.string.dialog_processing)
+                                            getString(S.dialog_processing)
                                         is TagsDialogViewModel.InitProgress.FetchingNoteTags ->
                                             "${progress.noteNumber}/${progress.noteCount}"
                                         TagsDialogViewModel.InitProgress.Finished -> null
@@ -301,7 +302,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     private fun adjustToolbar(tagsDialogView: View) {
         val toolbar: Toolbar = binding.toolbar.root
-        val titleRes = if (type == DialogType.EDIT_TAGS) R.string.card_details_tags else R.string.studyoptions_limit_select_tags
+        val titleRes = if (type == DialogType.EDIT_TAGS) S.card_details_tags else S.studyoptions_limit_select_tags
         toolbar.setTitle(titleRes)
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
@@ -324,7 +325,7 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbarSearchView = toolbarSearchItem?.actionView as AccessibleSearchView
         val queryET = toolbarSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
-        toolbarSearchView!!.queryHint = getString(R.string.filter_tags)
+        toolbarSearchView!!.queryHint = getString(S.filter_tags)
         toolbarSearchView!!.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -351,7 +352,7 @@ class TagsDialog : AnalyticsDialogFragment {
             true
         }
         if (type == DialogType.EDIT_TAGS) {
-            toolbarSearchView!!.queryHint = getString(R.string.add_new_filter_tags)
+            toolbarSearchView!!.queryHint = getString(S.add_new_filter_tags)
         } else {
             toolbarAddItem.isVisible = false
         }
@@ -370,9 +371,9 @@ class TagsDialog : AnalyticsDialogFragment {
             AlertDialog
                 .Builder(requireActivity())
                 .show {
-                    title(text = getString(R.string.add_tag))
-                    positiveButton(R.string.menu_add)
-                    negativeButton(R.string.dialog_cancel)
+                    title(text = getString(S.add_tag))
+                    positiveButton(S.menu_add)
+                    negativeButton(S.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
                     hint = TR.actionsName().dropLastWhile { it == ':' },
@@ -419,7 +420,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
                 if (exists) {
                     textInputLayout?.error =
-                        getString(R.string.tag_already_exists)
+                        getString(S.tag_already_exists)
 
                     positiveButton.isEnabled = false
                 } else {
@@ -442,10 +443,10 @@ class TagsDialog : AnalyticsDialogFragment {
             if (tags.add(tag)) {
                 binding.noTagsTextView.isVisible = false
                 tags.add(tag)
-                val positiveText = (dialog as? AlertDialog)?.positiveButton?.text ?: getString(R.string.dialog_ok)
-                feedbackText = getString(R.string.tag_editor_add_feedback, tag, positiveText)
+                val positiveText = (dialog as? AlertDialog)?.positiveButton?.text ?: getString(S.dialog_ok)
+                feedbackText = getString(S.tag_editor_add_feedback, tag, positiveText)
             } else {
-                feedbackText = getString(R.string.tag_editor_add_feedback_existing, tag)
+                feedbackText = getString(S.tag_editor_add_feedback_existing, tag)
             }
             tags.check(tag)
             tagsArrayAdapter?.sortData()

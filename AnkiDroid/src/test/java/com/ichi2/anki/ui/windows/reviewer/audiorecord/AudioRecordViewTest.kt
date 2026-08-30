@@ -6,7 +6,7 @@ package com.ichi2.anki.ui.windows.reviewer.audiorecord
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.ViewAudioRecordBinding
 import com.ichi2.themes.Themes
 import org.junit.Before
@@ -30,6 +30,6 @@ class AudioRecordViewTest {
 
     @Test
     fun `record button exposes a label to TalkBack`() {
-        assertEquals(context.getString(R.string.record_voice), binding.recordButton.contentDescription)
+        assertEquals(context.getString(S.record_voice), binding.recordButton.contentDescription)
     }
 }

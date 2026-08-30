@@ -22,7 +22,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.annotation.CheckResult
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.preferences.AppearanceSettingsFragment
 import com.ichi2.anki.settings.Prefs
@@ -74,14 +74,14 @@ object BackgroundImage {
 
         /** The bitmap is too large to draw safely. */
         data object TooLarge : Failure {
-            override fun message(context: Context): String = context.getString(R.string.background_image_too_large)
+            override fun message(context: Context): String = context.getString(S.background_image_too_large)
         }
 
         /** Decoding failed for some other reason. */
         data class Failed(
             val cause: String?,
         ) : Failure {
-            override fun message(context: Context): String = context.getString(R.string.failed_to_apply_background_image, cause)
+            override fun message(context: Context): String = context.getString(S.failed_to_apply_background_image, cause)
         }
     }
 
@@ -183,7 +183,7 @@ object BackgroundImage {
         (target.requireContext().contentResolver.openInputStreamSafe(selectedImage) as FileInputStream).channel.use { sourceChannel ->
             FileOutputStream(destFile).channel.use { destChannel ->
                 destChannel.transferFrom(sourceChannel, 0, sourceChannel.size())
-                target.showSnackbar(R.string.background_image_applied)
+                target.showSnackbar(S.background_image_applied)
             }
         }
         Prefs.isBackgroundEnabled = true

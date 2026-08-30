@@ -21,7 +21,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.PermissionSet
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
 import com.ichi2.anki.common.permissions.hasPermission
 import com.ichi2.anki.common.utils.android.isRobolectric
@@ -103,11 +103,11 @@ object Permissions {
             when (permission) {
                 // Add overrides for opening specific settings subscreens here as needed
                 postNotification -> {
-                    showThemedToast(requireContext(), R.string.manually_grant_permissions, false)
+                    showThemedToast(requireContext(), S.manually_grant_permissions, false)
                     openAppNotificationsSettingsScreen()
                 }
                 // Else, default to opening the root page of the app settings screen
-                else -> showToastAndOpenAppSettingsScreen(R.string.manually_grant_permissions)
+                else -> showToastAndOpenAppSettingsScreen(S.manually_grant_permissions)
             }
         }
     }
@@ -257,7 +257,7 @@ object Permissions {
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e, "No app can show the app settings screen")
-            showThemedToast(this, R.string.activity_start_failed, false)
+            showThemedToast(this, S.activity_start_failed, false)
         }
     }
 

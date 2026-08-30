@@ -20,7 +20,7 @@ import android.content.Intent
 import android.webkit.MimeTypeMap
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
@@ -76,12 +76,12 @@ object IntentUtil {
             if (canOpenIntent(activity, intent)) {
                 activity.startActivity(intent)
             } else {
-                val errorMsg = activity.getString(R.string.feedback_no_suitable_app_found)
+                val errorMsg = activity.getString(S.feedback_no_suitable_app_found)
                 activity.showSnackbar(errorMsg, Snackbar.LENGTH_SHORT)
             }
         } catch (e: Exception) {
             Timber.w(e)
-            val errorMsg = activity.getString(R.string.feedback_no_suitable_app_found)
+            val errorMsg = activity.getString(S.feedback_no_suitable_app_found)
             activity.showSnackbar(errorMsg, Snackbar.LENGTH_SHORT)
         }
     }

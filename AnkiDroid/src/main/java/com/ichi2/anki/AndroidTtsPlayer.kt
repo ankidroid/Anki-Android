@@ -313,7 +313,7 @@ fun TtsPlayer.TtsError.localizedErrorMessage(context: Context): String =
         // TODO: Do we want a human readable string here as well - snackbar has limited room
         // but developerString is currently not translated as it returns
         // developerString: ERROR_NETWORK_TIMEOUT, so "Audio error (ERROR_NETWORK_TIMEOUT)"
-        context.getString(R.string.tts_voices_playback_error_new, this.developerString)
+        context.getString(S.tts_voices_playback_error_new, this.developerString)
     } else {
         this.toString()
     }

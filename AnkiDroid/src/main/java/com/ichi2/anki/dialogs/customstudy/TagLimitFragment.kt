@@ -13,7 +13,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.FragmentTagLimitBinding
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Exclude
 import com.ichi2.anki.dialogs.customstudy.IncludedExcludedTagsAdapter.TagsSelectionMode.Include
@@ -69,8 +69,8 @@ class TagLimitFragment : DialogFragment() {
                 .Builder(requireContext())
                 .title(text = TR.sentenceCase.selectiveStudy)
                 .customView(binding.root)
-                .negativeButton(R.string.dialog_cancel)
-                .positiveButton(R.string.dialog_ok, null)
+                .negativeButton(S.dialog_cancel)
+                .positiveButton(S.dialog_ok, null)
                 .create()
 
         var allowSubmit = true

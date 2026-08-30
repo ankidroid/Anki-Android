@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.FragmentPermissionsUntil29Binding
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.showToastAndOpenAppSettingsScreen
@@ -43,7 +44,7 @@ class PermissionsUntil29Fragment : PermissionsFragment(R.layout.fragment_permiss
                 // The permission dialog did not show up of the user denied the permission.
                 // Offers to open the OS settings section for AnkiDroid. In this section, the user can
                 // manually grant the permission.
-                showToastAndOpenAppSettingsScreen(R.string.startup_no_storage_permission)
+                showToastAndOpenAppSettingsScreen(S.startup_no_storage_permission)
             }
         }
 

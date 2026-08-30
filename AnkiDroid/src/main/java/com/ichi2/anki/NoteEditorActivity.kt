@@ -333,7 +333,7 @@ class NoteEditorActivity :
         for ((index, templateName) in templateNames.withIndex()) {
             val tabTitle =
                 if (cardsWithEmptyFronts?.get(index) == true) {
-                    getString(R.string.card_previewer_empty_front_indicator, templateName)
+                    getString(S.card_previewer_empty_front_indicator, templateName)
                 } else {
                     templateName
                 }

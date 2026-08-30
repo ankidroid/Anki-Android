@@ -26,7 +26,7 @@ import anki.notetypes.StockNotetype
 import anki.notetypes.copy
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.databinding.DialogNewNoteTypeBinding
 import com.ichi2.anki.launchCatchingTask
@@ -87,7 +87,7 @@ class AddNewNotesType(
                         paddingTop = 24.dp.toPx(activity),
                         paddingBottom = 0,
                     )
-                    positiveButton(R.string.dialog_add) { _ ->
+                    positiveButton(S.dialog_add) { _ ->
                         val newName =
                             binding.notetypeNewName.text
                                 .toString()
@@ -102,7 +102,7 @@ class AddNewNotesType(
                             cloneStandardNotetype(newName, selectedOption)
                         }
                     }
-                    negativeButton(R.string.dialog_cancel)
+                    negativeButton(S.dialog_cancel)
                 }.show()
         dialog.initializeViewsWith(allOptions, currentNames)
     }
@@ -111,8 +111,8 @@ class AddNewNotesType(
         optionsToDisplay: List<AddNotetypeUiModel>,
         currentNames: List<String>,
     ) {
-        val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
-        val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
+        val addPrefixStr = context.resources.getString(S.model_browser_add_add)
+        val clonePrefixStr = context.resources.getString(S.model_browser_add_clone)
 
         binding.notetypeTypeLabel.text = TR.notetypesType()
         binding.notetypeNewNameLayout.hint = TR.deckConfigNamePrompt()
@@ -123,7 +123,7 @@ class AddNewNotesType(
 
             binding.notetypeNewNameLayout.error =
                 if (alreadyExists) {
-                    context.getString(R.string.error_name_exists)
+                    context.getString(S.error_name_exists)
                 } else {
                     null
                 }

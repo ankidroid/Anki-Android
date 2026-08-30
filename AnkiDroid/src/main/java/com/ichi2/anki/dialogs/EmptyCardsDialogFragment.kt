@@ -32,7 +32,7 @@ import anki.card_rendering.EmptyCardsReport
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.navigate
@@ -73,7 +73,7 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
             .Builder(requireContext())
             .show {
                 setTitle(TR.sentenceCase.emptyCardsTitle)
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setPositiveButton(S.dialog_ok) { _, _ ->
                     val state = viewModel.uiState.value
                     if (state is EmptyCardsSearchResult) {
                         // this dialog is only shown from DeckPicker so we use it directly to avoid
@@ -86,7 +86,7 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
                         )
                     }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                setNegativeButton(S.dialog_cancel) { _, _ ->
                     Timber.i("Empty cards dialog cancelled")
                 }
                 setView(binding.root)
@@ -103,12 +103,12 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
                 viewModel.uiState.collect { state ->
                     when (state) {
                         is SearchingForEmptyCards -> {
-                            binding.loadingMessage.text = getString(R.string.emtpy_cards_finding)
+                            binding.loadingMessage.text = getString(S.emtpy_cards_finding)
                             binding.loadingContainer.isVisible = true
                             binding.emptyCardsResultsContainer.isVisible = false
                             (dialog as? AlertDialog)?.positiveButton?.apply {
                                 isEnabled = false
-                                text = getString(R.string.dialog_ok)
+                                text = getString(S.dialog_ok)
                             }
                         }
 
@@ -121,7 +121,7 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
                                 // nothing to delete so also hide the preserve notes check box
                                 binding.keepNotesWithNoValidCards.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
-                                    getString(R.string.dialog_ok)
+                                    getString(S.dialog_ok)
                                 (dialog as? AlertDialog)?.negativeButton?.visibility = View.GONE
                             } else {
                                 binding.reportScrollView.updateViewHeight()
@@ -132,7 +132,7 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
                                 binding.keepNotesWithNoValidCards.isVisible = true
                                 binding.emptyReportMessage.isVisible = false
                                 (dialog as? AlertDialog)?.positiveButton?.text =
-                                    getString(R.string.dialog_positive_delete)
+                                    getString(S.dialog_positive_delete)
                                 binding.emptyCardsResultsContainer.isVisible = true
                             }
                             (dialog as? AlertDialog)?.positiveButton?.isEnabled = true
@@ -142,9 +142,9 @@ class EmptyCardsDialogFragment : AnalyticsDialogFragment() {
                             // the dialog is informational so there's nothing to do but show the
                             // error and exit
                             AlertDialog.Builder(requireActivity()).show {
-                                title(R.string.vague_error)
+                                title(S.vague_error)
                                 message(text = state.throwable.toString())
-                                positiveButton(R.string.dialog_ok) { }
+                                positiveButton(S.dialog_ok) { }
                             }
                             dismissNow()
                         }

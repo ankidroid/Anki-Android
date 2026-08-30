@@ -10,6 +10,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.negativeButton
@@ -31,8 +32,8 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
         resetCustomButtons.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 AlertDialog.Builder(requireContext()).show {
-                    title(R.string.reset_settings_to_default)
-                    positiveButton(R.string.reset) {
+                    title(S.reset_settings_to_default)
+                    positiveButton(S.reset) {
                         // Reset the settings to default
                         requireContext().sharedPrefs().edit {
                             allKeys().forEach {
@@ -44,7 +45,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                         addPreferencesFromResource(preferenceResource)
                         initSubscreen()
                     }
-                    negativeButton(R.string.dialog_cancel)
+                    negativeButton(S.dialog_cancel)
                 }
                 true
             }

@@ -21,7 +21,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -36,10 +38,10 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val message =
             if (isFilteredDeck) {
-                resources.getString(R.string.delete_cram_deck_message, "<b>$deckName</b>")
+                resources.getString(S.delete_cram_deck_message, "<b>$deckName</b>")
             } else {
                 resources.getQuantityString(
-                    R.plurals.delete_deck_message,
+                    Pl.delete_deck_message,
                     totalCards,
                     "<b>$deckName</b>",
                     totalCards,
@@ -48,17 +50,17 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
         super.onCreate(savedInstanceState)
         return AlertDialog
             .Builder(requireActivity())
-            .setTitle(R.string.delete_deck_title)
+            .setTitle(S.delete_deck_title)
             .setMessage(
                 HtmlCompat.fromHtml(
                     message,
                     HtmlCompat.FROM_HTML_MODE_LEGACY,
                 ),
             ).setIcon(R.drawable.ic_warning)
-            .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
+            .setPositiveButton(S.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
                 activity?.dismissAllDialogFragments()
-            }.setNegativeButton(R.string.dialog_cancel) { _, _ ->
+            }.setNegativeButton(S.dialog_cancel) { _, _ ->
                 activity?.dismissAllDialogFragments()
             }.create()
     }

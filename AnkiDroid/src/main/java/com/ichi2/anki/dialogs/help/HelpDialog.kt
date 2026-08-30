@@ -15,6 +15,7 @@ import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.common.analytics.Analytics
@@ -116,7 +117,7 @@ class HelpDialog : AnalyticsDialogFragment() {
             return HelpDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putInt(ARG_MENU_TITLE, R.string.help)
+                        putInt(ARG_MENU_TITLE, S.help)
                         putParcelableArray(ARG_MENU_ITEMS, mainHelpMenuItems)
                     }
             }
@@ -129,7 +130,7 @@ class HelpDialog : AnalyticsDialogFragment() {
             return HelpDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putInt(ARG_MENU_TITLE, R.string.help_title_privacy)
+                        putInt(ARG_MENU_TITLE, S.help_title_privacy)
                         putParcelableArray(ARG_MENU_ITEMS, privacyItems.toTypedArray())
                     }
             }
@@ -147,7 +148,7 @@ class HelpDialog : AnalyticsDialogFragment() {
             return HelpDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putInt(ARG_MENU_TITLE, R.string.help_title_support_ankidroid)
+                        putInt(ARG_MENU_TITLE, S.help_title_support_ankidroid)
                         putParcelableArray(ARG_MENU_ITEMS, actualMenuItems.toTypedArray())
                     }
             }
@@ -211,25 +212,25 @@ class HelpPageFragment : Fragment(R.layout.fragment_help_page) {
 internal val mainHelpMenuItems =
     arrayOf(
         HelpItem(
-            titleResId = R.string.help_title_using_ankidroid,
+            titleResId = S.help_title_using_ankidroid,
             iconResId = R.drawable.ic_manual_black_24dp,
             analyticsId = LinkAction.OPENED_USING_ANKIDROID,
             id = 1,
         ),
         HelpItem(
-            titleResId = R.string.help_title_get_help,
+            titleResId = S.help_title_get_help,
             iconResId = R.drawable.ic_help_black_24dp,
             analyticsId = LinkAction.OPENED_GET_HELP,
             id = 2,
         ),
         HelpItem(
-            titleResId = R.string.help_title_community,
+            titleResId = S.help_title_community,
             iconResId = R.drawable.ic_people_black_24dp,
             analyticsId = LinkAction.OPENED_COMMUNITY,
             id = 3,
         ),
         HelpItem(
-            titleResId = R.string.help_title_privacy,
+            titleResId = S.help_title_privacy,
             iconResId = R.drawable.ic_baseline_privacy_tip_24,
             analyticsId = LinkAction.OPENED_PRIVACY,
             id = 4,
@@ -241,42 +242,42 @@ internal val mainHelpMenuItems =
 internal val supportMenuItems =
     arrayOf(
         HelpItem(
-            titleResId = R.string.help_item_support_opencollective_donate,
+            titleResId = S.help_item_support_opencollective_donate,
             iconResId = R.drawable.ic_round_favorite_24,
             analyticsId = LinkAction.OPENED_DONATE,
             id = 5,
             action = OpenUrlResource(R.string.link_opencollective_donate),
         ),
         HelpItem(
-            titleResId = R.string.multimedia_editor_trans_translate,
+            titleResId = S.multimedia_editor_trans_translate,
             iconResId = R.drawable.ic_language_black_24dp,
             analyticsId = LinkAction.OPENED_TRANSLATE,
             id = 6,
             action = OpenUrlResource(R.string.link_translation),
         ),
         HelpItem(
-            titleResId = R.string.help_item_support_develop_ankidroid,
+            titleResId = S.help_item_support_develop_ankidroid,
             iconResId = R.drawable.ic_build_black_24,
             analyticsId = LinkAction.OPENED_DEVELOP,
             id = 7,
             action = OpenUrlResource(R.string.link_ankidroid_development_guide),
         ),
         HelpItem(
-            titleResId = R.string.help_item_support_rate_ankidroid,
+            titleResId = S.help_item_support_rate_ankidroid,
             iconResId = R.drawable.ic_star_black_24,
             analyticsId = LinkAction.OPENED_RATE,
             id = 8,
             action = Rate,
         ),
         HelpItem(
-            titleResId = R.string.help_item_support_other_ankidroid,
+            titleResId = S.help_item_support_other_ankidroid,
             iconResId = R.drawable.ic_help_black_24dp,
             analyticsId = LinkAction.OPENED_OTHER,
             id = 9,
             action = OpenUrlResource(R.string.link_contribution),
         ),
         HelpItem(
-            titleResId = R.string.send_feedback,
+            titleResId = S.send_feedback,
             iconResId = R.drawable.ic_email_black_24dp,
             analyticsId = LinkAction.OPENED_SEND_FEEDBACK,
             id = 10,
@@ -289,7 +290,7 @@ internal val supportMenuItems =
 internal val childHelpMenuItems =
     arrayOf(
         HelpItem(
-            titleResId = R.string.help_item_ankidroid_manual,
+            titleResId = S.help_item_ankidroid_manual,
             iconResId = R.drawable.ic_manual_black_24dp,
             analyticsId = LinkAction.OPENED_ANKIDROID_MANUAL,
             id = 100,
@@ -297,7 +298,7 @@ internal val childHelpMenuItems =
             action = OpenUrl(AnkiDroidApp.manualUrl),
         ),
         HelpItem(
-            titleResId = R.string.help_item_anki_manual,
+            titleResId = S.help_item_anki_manual,
             iconResId = R.drawable.ic_manual_black_24dp,
             analyticsId = LinkAction.OPENED_ANKI_MANUAL,
             id = 101,
@@ -305,7 +306,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_anki_manual),
         ),
         HelpItem(
-            titleResId = R.string.help_item_ankidroid_faq,
+            titleResId = S.help_item_ankidroid_faq,
             iconResId = R.drawable.ic_help_black_24dp,
             analyticsId = LinkAction.OPENED_ANKIDROID_FAQ,
             id = 102,
@@ -313,7 +314,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_ankidroid_faq),
         ),
         HelpItem(
-            titleResId = R.string.help_item_mailing_list,
+            titleResId = S.help_item_mailing_list,
             iconResId = R.drawable.ic_email_black_24dp,
             analyticsId = LinkAction.OPENED_MAILING_LIST,
             id = 200,
@@ -321,7 +322,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_forum),
         ),
         HelpItem(
-            titleResId = R.string.help_item_report_bug,
+            titleResId = S.help_item_report_bug,
             iconResId = R.drawable.ic_bug_report_black_24dp,
             analyticsId = LinkAction.OPENED_REPORT_BUG,
             id = 201,
@@ -329,7 +330,7 @@ internal val childHelpMenuItems =
             action = OpenUrl(AnkiDroidApp.feedbackUrl),
         ),
         HelpItem(
-            titleResId = R.string.help_title_send_exception,
+            titleResId = S.help_title_send_exception,
             iconResId = R.drawable.ic_round_assignment_24,
             analyticsId = LinkAction.EXCEPTION_REPORT,
             id = 202,
@@ -337,7 +338,7 @@ internal val childHelpMenuItems =
             action = SendReport,
         ),
         HelpItem(
-            titleResId = R.string.help_item_anki_forums,
+            titleResId = S.help_item_anki_forums,
             iconResId = R.drawable.ic_forum_black_24dp,
             analyticsId = LinkAction.OPENED_ANKI_FORUMS,
             id = 300,
@@ -345,7 +346,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_anki_forum),
         ),
         HelpItem(
-            titleResId = R.string.help_item_mailing_list,
+            titleResId = S.help_item_mailing_list,
             iconResId = R.drawable.ic_email_black_24dp,
             analyticsId = LinkAction.OPENED_MAILING_LIST,
             id = 301,
@@ -353,7 +354,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_forum),
         ),
         HelpItem(
-            titleResId = R.string.help_item_reddit,
+            titleResId = S.help_item_reddit,
             iconResId = R.drawable.ic_link,
             analyticsId = LinkAction.OPENED_REDDIT,
             id = 302,
@@ -361,7 +362,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_reddit),
         ),
         HelpItem(
-            titleResId = R.string.help_item_discord,
+            titleResId = S.help_item_discord,
             iconResId = R.drawable.ic_link,
             analyticsId = LinkAction.OPENED_DISCORD,
             id = 303,
@@ -369,7 +370,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_discord),
         ),
         HelpItem(
-            titleResId = R.string.help_item_facebook,
+            titleResId = S.help_item_facebook,
             iconResId = R.drawable.ic_link,
             analyticsId = LinkAction.OPENED_FACEBOOK,
             id = 304,
@@ -377,7 +378,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_facebook),
         ),
         HelpItem(
-            titleResId = R.string.help_item_twitter,
+            titleResId = S.help_item_twitter,
             iconResId = R.drawable.ic_link,
             analyticsId = LinkAction.OPENED_TWITTER,
             id = 305,
@@ -385,7 +386,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_twitter),
         ),
         HelpItem(
-            titleResId = R.string.help_item_ankidroid_privacy_policy,
+            titleResId = S.help_item_ankidroid_privacy_policy,
             iconResId = R.drawable.ic_baseline_policy_24,
             analyticsId = LinkAction.OPENED_ANKIDROID_PRIVACY_POLICY,
             id = 400,
@@ -393,7 +394,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_ankidroid_privacy_policy),
         ),
         HelpItem(
-            titleResId = R.string.help_item_ankiweb_privacy_policy,
+            titleResId = S.help_item_ankiweb_privacy_policy,
             iconResId = R.drawable.ic_baseline_policy_24,
             analyticsId = LinkAction.OPENED_ANKIWEB_PRIVACY_POLICY,
             id = 401,
@@ -401,7 +402,7 @@ internal val childHelpMenuItems =
             action = OpenUrlResource(R.string.link_ankiweb_privacy_policy),
         ),
         HelpItem(
-            titleResId = R.string.help_item_ankiweb_terms_and_conditions,
+            titleResId = S.help_item_ankiweb_terms_and_conditions,
             iconResId = R.drawable.ic_baseline_description_24,
             analyticsId = LinkAction.OPENED_ANKIWEB_TERMS_AND_CONDITIONS,
             id = 402,

@@ -25,6 +25,7 @@ import androidx.annotation.ColorInt
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
 import com.ichi2.utils.negativeButton
@@ -93,9 +94,9 @@ fun Context.showColorPickerDialog(
                     this.height = 12.dp.toPx(this@showColorPickerDialog)
                 }
             }
-            setTitle(R.string.choose_color)
-            setPositiveButton(R.string.dialog_ok, onPositiveCallback)
-            negativeButton(R.string.dialog_cancel)
+            setTitle(S.choose_color)
+            setPositiveButton(S.dialog_ok, onPositiveCallback)
+            negativeButton(S.dialog_cancel)
             setBottomSpace(12.dp)
             val callback =
                 object : Choreographer.FrameCallback {

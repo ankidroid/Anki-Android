@@ -186,8 +186,8 @@ abstract class NavigationDrawerActivity(
             object : ActionBarDrawerToggle(
                 this,
                 drawerLayout,
-                R.string.drawer_open,
-                R.string.drawer_close,
+                S.drawer_open,
+                S.drawer_close,
             ) {
                 override fun onDrawerClosed(drawerView: View) {
                     super.onDrawerClosed(drawerView)
@@ -496,8 +496,8 @@ abstract class NavigationDrawerActivity(
             val reviewCardsShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "reviewCardsShortcutId")
-                    .setShortLabel(context.getString(R.string.studyoptions_start))
-                    .setLongLabel(context.getString(R.string.studyoptions_start))
+                    .setShortLabel(context.getString(S.studyoptions_start))
+                    .setLongLabel(context.getString(S.studyoptions_start))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.review_shortcut))
                     .setIntents(arrayOf(deckPickerIntent, intentReviewCards))
                     .build()
@@ -510,8 +510,8 @@ abstract class NavigationDrawerActivity(
             val noteEditorShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "noteEditorShortcutId")
-                    .setShortLabel(context.getString(R.string.menu_add))
-                    .setLongLabel(context.getString(R.string.menu_add))
+                    .setShortLabel(context.getString(S.menu_add))
+                    .setLongLabel(context.getString(S.menu_add))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.add_shortcut))
                     .setIntent(intentAddNote)
                     .build()
@@ -523,8 +523,8 @@ abstract class NavigationDrawerActivity(
             val cardBrowserShortcut =
                 ShortcutInfoCompat
                     .Builder(context, "cardBrowserShortcutId")
-                    .setShortLabel(context.getString(R.string.card_browser))
-                    .setLongLabel(context.getString(R.string.card_browser))
+                    .setShortLabel(context.getString(S.card_browser))
+                    .setLongLabel(context.getString(S.card_browser))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.browse_shortcut))
                     .setIntent(intentCardBrowser)
                     .build()
