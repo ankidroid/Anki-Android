@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.sched.SetDueDateDays
@@ -211,10 +212,10 @@ class SetDueDateViewModel : ViewModel() {
         val text: Int,
     ) {
         /** Set the due date to a single day */
-        SINGLE_DAY(0, R.drawable.calendar_single_day, R.string.set_due_date_day),
+        SINGLE_DAY(0, R.drawable.calendar_single_day, S.set_due_date_day),
 
         /** Sets the due date randomly between a range of days */
-        DATE_RANGE(1, R.drawable.calendar_date_range, R.string.set_due_date_date_range),
+        DATE_RANGE(1, R.drawable.calendar_date_range, S.set_due_date_date_range),
     }
 
     class DateRange(

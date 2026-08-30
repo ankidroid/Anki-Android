@@ -380,7 +380,7 @@ open class DeckPicker :
             DeckPickerActivityResultCallback {
                 if (it.resultCode == RESULT_OK) {
                     lifecycleScope.launch {
-                        withProgress(message = getString(R.string.import_preparing_file)) {
+                        withProgress(message = getString(S.import_preparing_file)) {
                             withContext(Dispatchers.IO) {
                                 onSelectedPackageToImport(it.data!!)
                             }
@@ -734,13 +734,13 @@ open class DeckPicker :
         fun onDeckDeleted(result: DeckDeletionResult) {
             floatingActionButtonBinding.fabMain.isVisible = true
             showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
-                setAction(R.string.undo) { undo() }
+                setAction(S.undo) { undo() }
             }
         }
 
         fun onCardsEmptied(result: EmptyCardsResult) {
             showSnackbar(result.toHumanReadableString(), Snackbar.LENGTH_SHORT) {
-                setAction(R.string.undo) { undo() }
+                setAction(S.undo) { undo() }
             }
         }
 
@@ -828,7 +828,7 @@ open class DeckPicker :
             }
 
             supportActionBar?.apply {
-                subtitle = if (dueCount == 0) null else resources.getQuantityString(R.plurals.widget_cards_due, dueCount, dueCount)
+                subtitle = if (dueCount == 0) null else resources.getQuantityString(Pl.widget_cards_due, dueCount, dueCount)
                 val toolbar = findViewById<Toolbar>(R.id.toolbar)
                 TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
             }
@@ -900,7 +900,7 @@ open class DeckPicker :
         fun onError(errorMessage: String) {
             AlertDialog
                 .Builder(this)
-                .setTitle(R.string.vague_error)
+                .setTitle(S.vague_error)
                 .setMessage(errorMessage)
                 .show()
         }
@@ -940,7 +940,7 @@ open class DeckPicker :
             val uri = clip.getItemAt(0).uri
             if (!ImportUtils.FileImporter().isValidImportType(this, uri)) {
                 // TODO: This does nothing
-                ImportResult.Failure(getString(R.string.import_log_no_apkg))
+                ImportResult.Failure(getString(S.import_log_no_apkg))
                 return@OnReceiveContentListener remaining
             }
 
@@ -1109,19 +1109,19 @@ open class DeckPicker :
                 linksClickable = true
                 text =
                     getString(
-                        R.string.directory_inaccessible_info,
+                        S.directory_inaccessible_info,
                         getString(R.string.link_full_storage_access),
                     )
             }
         AlertDialog.Builder(this).show {
-            title(R.string.directory_inaccessible)
+            title(S.directory_inaccessible)
             customView(
                 contentView,
                 paddingTop = 16.dp.toPx(this@DeckPicker),
                 paddingStart = 32.dp.toPx(this@DeckPicker),
                 paddingEnd = 32.dp.toPx(this@DeckPicker),
             )
-            positiveButton(R.string.open_settings) {
+            positiveButton(S.open_settings) {
                 requestPathUpdateLauncher.navigate(PreferencesDestination.Advanced)
             }
         }
@@ -1145,7 +1145,7 @@ open class DeckPicker :
         val drawable = (result as? BackgroundImage.ResolveResult.Ready)?.drawable
         val applied =
             deckPickerBinding.background.setImageDrawableSafe(drawable) {
-                showThemedToast(this, getString(R.string.background_image_too_large), shortLength = false)
+                showThemedToast(this, getString(S.background_image_too_large), shortLength = false)
             }
         // activityHasBackground calls notifyDataSetChanged, ensure only 1 call
         deckListAdapter.activityHasBackground = applied && drawable != null
@@ -1254,7 +1254,7 @@ open class DeckPicker :
         )
 
         (menuItem.actionView as AccessibleSearchView).run {
-            queryHint = getString(R.string.search_decks)
+            queryHint = getString(S.search_decks)
             setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {
@@ -1322,9 +1322,9 @@ open class DeckPicker :
                 ?: return
         val tooltipText =
             when (state.syncIcon) {
-                SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
-                SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
-                SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
+                SyncIconState.Normal, SyncIconState.PendingChanges -> S.button_sync
+                SyncIconState.OneWay -> S.sync_menu_title_one_way_sync
+                SyncIconState.NotLoggedIn -> S.sync_menu_title_no_account
             }
         provider.setTooltipText(getString(tooltipText))
         when (state.syncIcon) {
@@ -1414,7 +1414,7 @@ open class DeckPicker :
             }
             R.id.action_deck_delete -> {
                 launchCatchingTask {
-                    withProgress(resources.getString(R.string.delete_deck)) {
+                    withProgress(resources.getString(S.delete_deck)) {
                         viewModel.deleteSelectedDeck().join()
                     }
                 }
@@ -1447,12 +1447,12 @@ open class DeckPicker :
         Timber.i("showing media check dialog")
         AlertDialog.Builder(this).show {
             title(text = TR.sentenceCase.checkMediaTitle)
-            message(text = getString(R.string.check_media_warning))
-            positiveButton(R.string.dialog_ok) {
+            message(text = getString(S.check_media_warning))
+            positiveButton(S.dialog_ok) {
                 Timber.i("Starting media check")
                 startActivity(MediaCheckFragment.getIntent(this@DeckPicker))
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
         }
     }
 
@@ -1854,7 +1854,7 @@ open class DeckPicker :
                 Timber.i("Dev Build - not showing 'new features'")
                 // Don't show new features dialog for development builds
                 InitialActivity.setUpgradedToLatestVersion(preferences)
-                val ver = resources.getString(R.string.updated_version, VersionUtils.pkgVersionName)
+                val ver = resources.getString(S.updated_version, VersionUtils.pkgVersionName)
                 postSnackbar(ver, Snackbar.LENGTH_SHORT)
                 showStartupScreensAndDialogs(preferences, 2)
             }
@@ -1914,10 +1914,10 @@ open class DeckPicker :
     fun repairCollection() {
         Timber.i("Repairing the Collection")
         // TODO: doesn't work on null collection-only on non-openable(is this still relevant with withCol?)
-        launchCatchingTask(resources.getString(R.string.deck_repair_error)) {
+        launchCatchingTask(resources.getString(S.deck_repair_error)) {
             Timber.d("doInBackgroundRepairCollection")
             val result =
-                withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
+                withProgress(resources.getString(S.backup_repair_deck_progress)) {
                     Timber.i("RepairCollection: Closing collection")
                     CollectionManager.ensureClosed()
                     val colFile =
@@ -1925,7 +1925,7 @@ open class DeckPicker :
                     BackupManager.repairCollection(colFile)
                 }
             if (!result) {
-                showThemedToast(this@DeckPicker, resources.getString(R.string.deck_repair_error), true)
+                showThemedToast(this@DeckPicker, resources.getString(S.deck_repair_error), true)
                 showCollectionErrorDialog()
             }
         }
@@ -1941,10 +1941,10 @@ open class DeckPicker :
             AlertDialog.Builder(this).show {
                 title(text = TR.sentenceCase.checkDatabase)
                 message(text = status.getWarningDetails(this@DeckPicker))
-                positiveButton(R.string.integrity_check_continue_anyway) {
+                positiveButton(S.integrity_check_continue_anyway) {
                     performIntegrityCheck()
                 }
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(S.dialog_cancel)
             }
         } else {
             performIntegrityCheck()
@@ -2070,7 +2070,7 @@ open class DeckPicker :
 
     fun openAnkiWebSharedDecks() {
         if (!NetworkUtils.isOnline) {
-            showSnackbar(R.string.check_network)
+            showSnackbar(S.check_network)
             Timber.d("DeckPicker:: No network, Shared deck download failed")
             return
         }
@@ -2119,8 +2119,8 @@ open class DeckPicker :
         }
 
         fun showEmptyDeckSnackbar() =
-            showSnackbar(R.string.empty_deck) {
-                setAction(R.string.menu_add) { viewModel.addNote(did, true) }
+            showSnackbar(S.empty_deck) {
+                setAction(S.menu_add) { viewModel.addNote(did, true) }
             }
 
         /** Check if we need to update the fragment or update the deck list */
@@ -2184,27 +2184,27 @@ open class DeckPicker :
 
             // User report: "success" is true even if Vivo does not have permission
             if (AdaptionUtil.isVivo) {
-                showThemedToast(this, getString(R.string.create_shortcut_error_vivo), false)
+                showThemedToast(this, getString(S.create_shortcut_error_vivo), false)
             }
             // #18601: MIUI gates shortcut creation behind Settings - Privacy Protection -
             // Other permissions - AnkiDroid - Home screen shortcuts [add shortcuts to Home screen]
             // TODO: Determine the result of 'success'
             if (AdaptionUtil.isMiui) {
-                showThemedToast(this, getString(R.string.create_shortcut_error_miui, getString(R.string.app_name)), false)
+                showThemedToast(this, getString(S.create_shortcut_error_miui, getString(R.string.app_name)), false)
             }
             if (!success) {
-                showThemedToast(this, getString(R.string.create_shortcut_failed), false)
+                showThemedToast(this, getString(S.create_shortcut_failed), false)
             }
         } catch (e: Exception) {
             Timber.w(e)
-            showThemedToast(this, getString(R.string.create_shortcut_error, e.localizedMessage), false)
+            showThemedToast(this, getString(S.create_shortcut_error, e.localizedMessage), false)
         }
     }
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
     @NeedsTest("ensure collapsed decks are also deleted")
     private fun disableDeckAndChildrenShortcuts(deckTreeDids: List<String>) {
-        val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
+        val errorMessage: CharSequence = getString(S.deck_shortcut_doesnt_exist)
         ShortcutUtils.disableShortcuts(this, deckTreeDids, errorMessage)
     }
 
@@ -2265,7 +2265,7 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId) =
         launchCatchingTask {
-            withProgress(resources.getString(R.string.delete_deck)) {
+            withProgress(resources.getString(S.delete_deck)) {
                 viewModel.deleteDeck(did).join()
             }
         }
@@ -2273,7 +2273,7 @@ open class DeckPicker :
     @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
         launchCatchingTask {
-            withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+            withProgress(resources.getString(S.rebuild_filtered_deck)) {
                 viewModel.rebuildFilteredDeck(did).join()
             }
             updateDeckList()
@@ -2305,7 +2305,7 @@ open class DeckPicker :
         val createDeckDialog =
             CreateDeckDialog(
                 context = this@DeckPicker,
-                title = getString(R.string.create_subdeck),
+                title = getString(S.create_subdeck),
                 deckDialogType = CreateDeckDialog.DeckDialogType.SUB_DECK,
                 parentId = did,
             )
@@ -2351,29 +2351,29 @@ open class DeckPicker :
 
             return ShortcutGroup(
                 listOfNotNull(
-                    shortcut("A", R.string.menu_add_note),
+                    shortcut("A", S.menu_add_note),
                     bottomNavShortcut("Alt+1", NavigationItem.HOME),
                     bottomNavShortcut("Alt+2", NavigationItem.BROWSER),
                     bottomNavShortcut("Alt+3", NavigationItem.STATS),
                     bottomNavShortcut("Alt+4", NavigationItem.MORE),
-                    shortcut("B", R.string.card_browser_context_menu),
-                    shortcut("Y", R.string.pref_cat_sync),
-                    shortcut("/", R.string.deck_conf_cram_search),
+                    shortcut("B", S.card_browser_context_menu),
+                    shortcut("Y", S.pref_cat_sync),
+                    shortcut("/", S.deck_conf_cram_search),
                     shortcut("S", Translations::decksStudyDeck),
-                    shortcut("T", R.string.open_statistics),
+                    shortcut("T", S.open_statistics),
                     shortcut("C") { this.sentenceCase.checkDatabase },
                     shortcut("D") { sentenceCase.createDeck },
-                    shortcut("F", R.string.new_dynamic_deck),
+                    shortcut("F", S.new_dynamic_deck),
                     if (fragmented) shortcut("DEL") { this.sentenceCase.deleteDeck } else null,
-                    if (fragmented) shortcut("Shift+DEL", R.string.delete_deck_without_confirmation) else null,
+                    if (fragmented) shortcut("Shift+DEL", S.delete_deck_without_confirmation) else null,
                     if (fragmented) shortcut("R") { this.sentenceCase.renameDeck } else null,
-                    shortcut("P", R.string.open_settings),
+                    shortcut("P", S.open_settings),
                     shortcut("M") { this.sentenceCase.checkMediaAction },
-                    shortcut("Ctrl+E", R.string.export_collection),
+                    shortcut("Ctrl+E", S.export_collection),
                     shortcut("Ctrl+Shift+I", Translations::actionsImport),
-                    shortcut("Ctrl+Shift+N", R.string.model_browser_label),
+                    shortcut("Ctrl+Shift+N", S.model_browser_label),
                 ),
-                R.string.deck_picker_group,
+                S.deck_picker_group,
             )
         }
 

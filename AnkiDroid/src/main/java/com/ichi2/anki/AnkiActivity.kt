@@ -296,7 +296,7 @@ open class AnkiActivity(
     }
 
     protected fun onSdCardNotMounted() {
-        showThemedToast(this, resources.getString(R.string.sd_card_not_mounted), false)
+        showThemedToast(this, resources.getString(S.sd_card_not_mounted), false)
         finish()
     }
 
@@ -471,7 +471,7 @@ open class AnkiActivity(
      */
     open fun openUrl(url: Uri) {
         if (!AdaptionUtil.hasWebBrowser(this)) {
-            showSnackbar(getString(R.string.no_browser_msg, url.toString()))
+            showSnackbar(getString(S.no_browser_msg, url.toString()))
             return
         }
         val toolbarColor = MaterialColors.getColor(this, CommonR.attr.appBarColor, 0)
@@ -690,9 +690,9 @@ open class AnkiActivity(
         val generalShortcutGroup =
             ShortcutGroup(
                 listOf(
-                    shortcut("Ctrl+Z", R.string.undo),
+                    shortcut("Ctrl+Z", S.undo),
                 ),
-                R.string.pref_cat_general,
+                S.pref_cat_general,
             ).toShortcutGroup(this)
 
         return listOfNotNull(shortcuts?.toShortcutGroup(this), generalShortcutGroup)
@@ -717,7 +717,7 @@ open class AnkiActivity(
         val attachment = File(path)
         if (!attachment.exists()) {
             Timber.e("Specified apkg file %s does not exist", path)
-            showThemedToast(this, resources.getString(R.string.apk_share_error), false)
+            showThemedToast(this, resources.getString(S.apk_share_error), false)
             return
         }
         val authority = "${this.packageName}.apkgfileprovider"
@@ -728,7 +728,7 @@ open class AnkiActivity(
                 FileProvider.getUriForFile(this, authority, attachment)
             } catch (e: IllegalArgumentException) {
                 Timber.e(e, "Could not generate a valid URI for the apkg file")
-                showThemedToast(this, resources.getString(R.string.apk_share_error), false)
+                showThemedToast(this, resources.getString(S.apk_share_error), false)
                 return
             }
         val targetMimeType = if (asText) "text/plain" else "application/apkg"
@@ -738,10 +738,10 @@ open class AnkiActivity(
                 .IntentBuilder(this)
                 .setType(targetMimeType)
                 .setStream(uri)
-                .setSubject(getString(R.string.export_email_subject, attachment.name))
+                .setSubject(getString(S.export_email_subject, attachment.name))
                 .setHtmlText(
                     getString(
-                        R.string.export_email_text,
+                        S.export_email_text,
                         getString(R.string.link_manual),
                         getString(R.string.link_distributions),
                     ),
@@ -753,13 +753,13 @@ open class AnkiActivity(
         val shareFileIntent =
             Intent.createChooser(
                 sendIntent,
-                getString(R.string.export_share_title),
+                getString(S.export_share_title),
             )
         if (shareFileIntent.resolveActivity(packageManager) != null) {
             startActivity(shareFileIntent)
         } else {
             // Try to save it?
-            showSnackbar(R.string.export_send_no_handlers)
+            showSnackbar(S.export_send_no_handlers)
             saveExportFile(path)
         }
     }
@@ -769,7 +769,7 @@ open class AnkiActivity(
         val attachment = File(exportPath)
         if (!attachment.exists()) {
             Timber.e("saveExportFile() Specified apkg file %s does not exist", exportPath)
-            showSnackbar(R.string.export_save_apkg_unsuccessful)
+            showSnackbar(S.export_save_apkg_unsuccessful)
             return
         }
 
@@ -789,22 +789,22 @@ open class AnkiActivity(
             saveFileLauncher.launch(saveIntent)
         } catch (ex: ActivityNotFoundException) {
             Timber.w(ex, "No activity found to handle saveExportFile request")
-            showSnackbar(R.string.activity_start_failed)
+            showSnackbar(S.activity_start_failed)
         }
     }
 
     private fun saveFileCallback(result: ActivityResult) {
         launchCatchingTask {
-            withProgress(getString(R.string.export_saving_exported_collection)) {
+            withProgress(getString(S.export_saving_exported_collection)) {
                 val isSuccessful =
                     withContext(Dispatchers.IO) {
                         exportToProvider(result.data!!)
                     }
 
                 if (isSuccessful) {
-                    showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
+                    showSnackbar(S.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
                 } else {
-                    showSnackbar(R.string.export_save_apkg_unsuccessful)
+                    showSnackbar(S.export_save_apkg_unsuccessful)
                 }
             }
         }

@@ -14,6 +14,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
@@ -77,7 +78,7 @@ class RemoveAccountFragment :
         webViewLayout = view.findViewById(R.id.webview_layout)
         setupWebView()
         view.findViewById<MaterialToolbar?>(R.id.toolbar)?.apply {
-            title = getString(R.string.remove_account)
+            title = getString(S.remove_account)
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }

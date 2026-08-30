@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM
 import com.ichi2.anki.dialogs.ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM
@@ -35,22 +35,22 @@ class ImportDialog : AsyncDialogFragment() {
         return when (dialogType) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
                 dialog
-                    .setTitle(R.string.import_title)
-                    .setMessage(res().getString(R.string.import_dialog_message_add, displayFileName))
-                    .positiveButton(R.string.import_message_add) {
+                    .setTitle(S.import_title)
+                    .setMessage(res().getString(S.import_dialog_message_add, displayFileName))
+                    .positiveButton(S.import_message_add) {
                         importViewModel.triggerImportAdd(packagePath)
                         activity?.dismissAllDialogFragments()
-                    }.negativeButton(R.string.dialog_cancel)
+                    }.negativeButton(S.dialog_cancel)
                     .create()
             }
             DIALOG_IMPORT_REPLACE_CONFIRM -> {
                 dialog
-                    .setTitle(R.string.import_title)
-                    .setMessage(res().getString(R.string.import_message_replace_confirm, displayFileName))
-                    .positiveButton(R.string.dialog_positive_replace) {
+                    .setTitle(S.import_title)
+                    .setMessage(res().getString(S.import_message_replace_confirm, displayFileName))
+                    .positiveButton(S.dialog_positive_replace) {
                         importViewModel.triggerImportReplace(packagePath)
                         activity?.dismissAllDialogFragments()
-                    }.negativeButton(R.string.dialog_cancel)
+                    }.negativeButton(S.dialog_cancel)
                     .create()
             }
         }
@@ -69,12 +69,12 @@ class ImportDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() {
-            return res().getString(R.string.import_interrupted)
+            return res().getString(S.import_interrupted)
         }
 
     override val notificationTitle: String
         get() {
-            return res().getString(R.string.import_title)
+            return res().getString(S.import_title)
         }
 
     enum class Type(

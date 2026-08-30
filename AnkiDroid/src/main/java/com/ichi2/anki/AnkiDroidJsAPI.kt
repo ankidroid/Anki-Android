@@ -115,7 +115,7 @@ open class AnkiDroidJsAPI(
         } catch (j: JSONException) {
             Timber.w(j)
             activity.runOnUiThread {
-                activity.showSnackbar(context.getString(R.string.invalid_json_data, j.localizedMessage))
+                activity.showSnackbar(context.getString(S.invalid_json_data, j.localizedMessage))
             }
         }
         return null
@@ -133,12 +133,12 @@ open class AnkiDroidJsAPI(
         errorCode: Int,
         apiDevContact: String,
     ) {
-        val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
-        val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, apiDevContact, errorMsg)
+        val errorMsg: String = context.getString(S.anki_js_error_code, errorCode)
+        val snackbarMsg: String = context.getString(S.api_version_developer_contact, apiDevContact, errorMsg)
 
         activity.showSnackbar(snackbarMsg, Snackbar.LENGTH_INDEFINITE) {
             setMaxLines(3)
-            setAction(R.string.reviewer_invalid_api_version_visit_documentation) {
+            setAction(S.reviewer_invalid_api_version_visit_documentation) {
                 activity.openUrl("https://github.com/ankidroid/Anki-Android/wiki")
             }
         }
@@ -154,7 +154,7 @@ open class AnkiDroidJsAPI(
         try {
             if (apiDevContact.isEmpty() || apiVer.isEmpty()) {
                 activity.runOnUiThread {
-                    activity.showSnackbar(context.getString(R.string.invalid_json_data, ""))
+                    activity.showSnackbar(context.getString(S.invalid_json_data, ""))
                 }
                 return false
             }
@@ -172,13 +172,13 @@ open class AnkiDroidJsAPI(
                 }
                 versionSupplied.isLowerThan(versionCurrent) -> {
                     activity.runOnUiThread {
-                        activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
+                        activity.showSnackbar(context.getString(S.update_js_api_version, apiDevContact))
                     }
                     versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION))
                 }
                 else -> {
                     activity.runOnUiThread {
-                        activity.showSnackbar(context.getString(R.string.valid_js_api_version, apiDevContact))
+                        activity.showSnackbar(context.getString(S.valid_js_api_version, apiDevContact))
                     }
                     false
                 }
@@ -568,7 +568,7 @@ open class AnkiDroidJsAPI(
                         .map { withCol { getCard(it.cardOrNoteId) } }
                 } catch (_: Exception) {
                     activity.webView!!.evaluateJavascript(
-                        "console.log('${context.getString(R.string.search_card_js_api_no_results)}')",
+                        "console.log('${context.getString(S.search_card_js_api_no_results)}')",
                         null,
                     )
                     showDeveloperContact(AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SEARCH_CARD, apiContract.cardSuppliedDeveloperContact)

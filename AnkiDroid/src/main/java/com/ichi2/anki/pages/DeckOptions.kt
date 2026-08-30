@@ -32,6 +32,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.ProgressContext
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -271,7 +272,7 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
                 extractProgress = {
                     // TODO: Don't use the amount yet, unused as a progress indicator, and
                     //  duplicates computeMemory's label
-                    text = this.toProgressText() ?: getString(R.string.dialog_processing)
+                    text = this.toProgressText() ?: getString(S.dialog_processing)
                 },
             ) {
                 withContext(Dispatchers.IO) {

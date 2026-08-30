@@ -764,14 +764,14 @@ class DeckPickerTest : RobolectricTest() {
             advanceRobolectricLooper()
 
             val binding = floatingActionButtonBinding
-            assertThat(binding.fabMain.text.toString(), equalTo(getString(R.string.menu_add)))
+            assertThat(binding.fabMain.text.toString(), equalTo(getString(S.menu_add)))
             assertThat(
                 binding.addSharedButton.text.toString(),
-                equalTo(getString(R.string.menu_get_shared_decks)),
+                equalTo(getString(S.menu_get_shared_decks)),
             )
             assertThat(
                 binding.addFilteredDeckButton.text.toString(),
-                equalTo(getString(R.string.new_dynamic_deck)),
+                equalTo(getString(S.new_dynamic_deck)),
             )
             // 'Create deck' uses a backend string rather than an android:text resource
             assertThat(

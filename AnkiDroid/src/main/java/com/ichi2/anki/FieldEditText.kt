@@ -179,7 +179,7 @@ class FieldEditText :
                 pasteListener!!.onPaste(this, mediaUri, description)
             } catch (e: Exception) {
                 Timber.w(e, "Failed to paste media")
-                showSnackbar(context.getString(R.string.multimedia_editor_something_wrong))
+                showSnackbar(context.getString(S.multimedia_editor_something_wrong))
                 false
             }
         }

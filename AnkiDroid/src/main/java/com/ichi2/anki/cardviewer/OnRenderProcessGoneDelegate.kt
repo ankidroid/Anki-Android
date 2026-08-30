@@ -22,7 +22,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.AbstractFlashcardViewer
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.utils.cancelable
@@ -112,7 +112,7 @@ open class OnRenderProcessGoneDelegate(
             Timber.d("Not showing toast - screen isn't visible")
             return
         }
-        val errorMessage = target.resources.getString(R.string.webview_crash_fatal, getErrorCause(detail))
+        val errorMessage = target.resources.getString(S.webview_crash_fatal, getErrorCause(detail))
         showThemedToast(target, errorMessage, false)
     }
 
@@ -122,14 +122,14 @@ open class OnRenderProcessGoneDelegate(
             Timber.d("Not showing toast - screen isn't visible")
             return
         }
-        val nonFatalError = target.resources.getString(R.string.webview_crash_nonfatal, getErrorCause(detail))
+        val nonFatalError = target.resources.getString(S.webview_crash_nonfatal, getErrorCause(detail))
         showThemedToast(target, nonFatalError, false)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     protected fun getErrorCause(detail: RenderProcessGoneDetail): String {
         // It's not necessarily an OOM crash, false implies a general code which is for "system terminated".
-        val errorCauseId = if (detail.didCrash()) R.string.webview_crash_unknown else R.string.webview_crash_oom
+        val errorCauseId = if (detail.didCrash()) S.webview_crash_unknown else S.webview_crash_oom
         return target.resources.getString(errorCauseId)
     }
 
@@ -143,15 +143,15 @@ open class OnRenderProcessGoneDelegate(
         val errorDetails =
             if (detail.didCrash()) {
                 res.getString(
-                    R.string.webview_crash_unknwon_detailed,
+                    S.webview_crash_unknwon_detailed,
                 )
             } else {
-                res.getString(R.string.webview_crash_oom_details)
+                res.getString(S.webview_crash_oom_details)
             }
         AlertDialog.Builder(target).show {
-            title(R.string.webview_crash_loop_dialog_title)
-            message(text = res.getString(R.string.webview_crash_loop_dialog_content, cardInformation, errorDetails))
-            positiveButton(R.string.dialog_ok) {
+            title(S.webview_crash_loop_dialog_title)
+            message(text = res.getString(S.webview_crash_loop_dialog_content, cardInformation, errorDetails))
+            positiveButton(S.dialog_ok) {
                 onCloseRenderLoopDialog()
             }
             cancelable(false)

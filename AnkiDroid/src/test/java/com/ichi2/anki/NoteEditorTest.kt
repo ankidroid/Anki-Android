@@ -105,7 +105,7 @@ class NoteEditorTest : RobolectricTest() {
 //            .withThirdField("C")
 //            .build()
 //        val actualResourceId = noteEditor.addNoteErrorResource
-//        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created_all_fields))
+//        assertThat(actualResourceId, equalTo(S.note_editor_no_cards_created_all_fields))
 //    }
 //
 //    @Test
@@ -116,7 +116,7 @@ class NoteEditorTest : RobolectricTest() {
 //            .withThirdField("C")
 //            .build()
 //        val actualResourceId = noteEditor.addNoteErrorResource
-//        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
+//        assertThat(actualResourceId, equalTo(S.note_editor_no_cards_created))
 //    }
 
     @Test
@@ -155,7 +155,7 @@ class NoteEditorTest : RobolectricTest() {
                     .build()
             noteEditor.saveNote()
             val actualResourceId = noteEditor.snackbarErrorText
-            assertThat(actualResourceId, equalTo(getString(R.string.note_editor_no_cards_created)))
+            assertThat(actualResourceId, equalTo(getString(S.note_editor_no_cards_created)))
         }
 
     @Test

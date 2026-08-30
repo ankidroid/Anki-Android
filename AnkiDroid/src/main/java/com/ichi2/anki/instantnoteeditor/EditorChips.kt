@@ -26,7 +26,7 @@ import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -134,8 +134,8 @@ private fun AnkiActivity.displayUpdateClozeNumberDialog(
     val repositionDialog =
         IntegerDialog().apply {
             setArgs(
-                title = this@displayUpdateClozeNumberDialog.getString(R.string.change_cloze_number),
-                prompt = this@displayUpdateClozeNumberDialog.getString(R.string.cloze_number),
+                title = this@displayUpdateClozeNumberDialog.getString(S.change_cloze_number),
+                prompt = this@displayUpdateClozeNumberDialog.getString(S.cloze_number),
                 digits = 2,
                 defaultValue = clozeNumber.toString(),
             )

@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.databinding.DialogDeckDescriptionBinding
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialogViewModel.DismissType
@@ -65,8 +66,8 @@ class EditDeckDescriptionDialog : DialogFragment() {
         return MaterialAlertDialogBuilder(requireContext())
             .create {
                 setView(binding.root)
-                positiveButton(R.string.save)
-                negativeButton(R.string.close)
+                positiveButton(S.save)
+                negativeButton(S.close)
             }.apply {
                 alertDialog = this
                 setOnShowListener {
@@ -109,7 +110,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
         // setup 'Format as Markdown' help
         binding.markdownFormattingHelp.apply {
             contentDescription =
-                getString(R.string.help_button_content_description, getString(R.string.format_deck_description_as_markdown))
+                getString(S.help_button_content_description, getString(S.format_deck_description_as_markdown))
             setOnClickListener {
                 MaterialAlertDialogBuilder(requireContext()).show {
                     setTitle(binding.formatAsMarkdownInput.text)
@@ -140,7 +141,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                         DismissType.ClosedWithoutSaving -> requireActivity().dismissAllDialogFragments()
                         DismissType.Saved -> {
                             requireActivity().dismissAllDialogFragments()
-                            showSnackbar(R.string.deck_description_saved)
+                            showSnackbar(S.deck_description_saved)
                             // notify DeckPicker to invalidate its toolbar menu, otherwise the undo
                             // action to revert the description change is not going to be visible
                             // when there are no other undo actions

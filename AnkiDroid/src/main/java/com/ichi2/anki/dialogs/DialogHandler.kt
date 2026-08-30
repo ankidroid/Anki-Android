@@ -11,7 +11,7 @@ import com.ichi2.anki.CollectionLoadingErrorDialog
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
@@ -141,7 +141,7 @@ fun AnkiActivity.requireDeckPickerOrShowError(): DeckPicker? {
     if (this is DeckPicker) return this
 
     showError(
-        message = getString(R.string.something_wrong),
+        message = getString(S.something_wrong),
         crashReportData =
             ClassCastException(
                 this.javaClass.simpleName + " is not " + DeckPicker::class.java.simpleName,

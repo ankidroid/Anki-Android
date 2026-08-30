@@ -352,7 +352,7 @@ class NoteEditorFragment :
                      * type was changed without moving this
                      * card to another type. */
                         Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
-                        showSnackbar(getString(R.string.template_for_current_card_deleted))
+                        showSnackbar(getString(S.template_for_current_card_deleted))
                         closeNoteEditor()
                     } else {
                         Timber.d("onActivityResult() template edit return, in add mode, just re-display")
@@ -475,7 +475,7 @@ class NoteEditorFragment :
                     saveNoteWithProgress()
                 }
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
         }
     }
 
@@ -490,8 +490,8 @@ class NoteEditorFragment :
         get() =
             when {
                 addNoteErrorMessage != null -> addNoteErrorMessage!!
-                allFieldsHaveContent() -> resources.getString(R.string.note_editor_no_cards_created_all_fields)
-                else -> resources.getString(R.string.note_editor_no_cards_created)
+                allFieldsHaveContent() -> resources.getString(S.note_editor_no_cards_created_all_fields)
+                else -> resources.getString(S.note_editor_no_cards_created)
             }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -708,7 +708,7 @@ class NoteEditorFragment :
                     ioEditorLauncher.launch("image/*")
                 } catch (_: ActivityNotFoundException) {
                     Timber.w("No app found to handle onGalleryClicked request")
-                    activity?.showSnackbar(R.string.activity_start_failed)
+                    activity?.showSnackbar(S.activity_start_failed)
                 }
             }
             pasteOcclusionImageButton?.setOnClickListener {
@@ -731,7 +731,7 @@ class NoteEditorFragment :
         } else {
             imageSelectionForOcclusionContainer?.visibility = View.GONE
             editOcclusionsButton?.visibility = View.VISIBLE
-            editOcclusionsButton?.text = resources.getString(R.string.edit_occlusions)
+            editOcclusionsButton?.text = resources.getString(S.edit_occlusions)
             editOcclusionsButton?.setOnClickListener {
                 setupImageOcclusionEditor()
             }
@@ -745,7 +745,7 @@ class NoteEditorFragment :
         val deckTextView = requireView().findViewById<TextView>(R.id.CardEditorDeckText)
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
         if (!addNote && editorNote!!.notetype.templates.length() > 1) {
-            deckTextView.setText(R.string.CardEditorCardDeck)
+            deckTextView.setText(S.CardEditorCardDeck)
         }
 
         deckId = requireArguments().getLong(EXTRA_DID, deckId)
@@ -781,7 +781,7 @@ class NoteEditorFragment :
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
-            requireAnkiActivity().setToolbarText(titleRes = R.string.menu_add)
+            requireAnkiActivity().setToolbarText(titleRes = S.menu_add)
             // set information transferred by intent
             var contents: String? = null
             val tags = requireArguments().getStringArray(EXTRA_TAGS)
@@ -796,7 +796,7 @@ class NoteEditorFragment :
                     changeNoteType(noteType.id)
                 }
             } catch (e: NoSuchElementException) {
-                showSnackbar(R.string.missing_note_type)
+                showSnackbar(S.missing_note_type)
                 // setting the text to null & caller to CALLER_NO_CALLER would skip adding text/image to edit field
                 sourceText = null
                 caller = NoteEditorCaller.NO_CALLER
@@ -838,7 +838,7 @@ class NoteEditorFragment :
                 reloadRequired = true
                 closeNoteEditorAfterSave()
             }
-            requireAnkiActivity().setTitle(R.string.cardeditor_title_edit_card)
+            requireAnkiActivity().setTitle(S.cardeditor_title_edit_card)
         }
         requireView().findViewById<View>(R.id.CardEditorTagButton).setOnClickListener {
             Timber.i("NoteEditor:: Tags button pressed... opening tags editor")
@@ -1038,7 +1038,7 @@ class NoteEditorFragment :
                     insertCloze(if (event.isAltPressed) AddClozeType.SAME_NUMBER else AddClozeType.INCREMENT_NUMBER)
                     // Anki Desktop warns, but still inserts the cloze
                     if (!isClozeType) {
-                        showSnackbar(R.string.note_editor_insert_cloze_no_cloze_note_type)
+                        showSnackbar(S.note_editor_insert_cloze_no_cloze_note_type)
                     }
                     return true
                 }
@@ -1144,12 +1144,12 @@ class NoteEditorFragment :
                             return false
                         }
                     }
-                    showSnackbar(resources.getString(R.string.intent_aedict_empty))
+                    showSnackbar(resources.getString(S.intent_aedict_empty))
                     return true
                 }
             }
         }
-        showSnackbar(resources.getString(R.string.intent_aedict_category))
+        showSnackbar(resources.getString(S.intent_aedict_category))
         return true
     }
 
@@ -1226,7 +1226,7 @@ class NoteEditorFragment :
 
         if (closeEditorAfterSave) {
             if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD || aedictIntent) {
-                showThemedToast(requireContext(), R.string.note_message, shortLength = true)
+                showThemedToast(requireContext(), S.note_message, shortLength = true)
             }
             closeNoteEditor(closeIntent ?: Intent())
         } else {
@@ -1239,7 +1239,7 @@ class NoteEditorFragment :
     private suspend fun saveNoteWithProgress() {
         // adding current note to collection
         val changes =
-            requireActivity().withProgress(resources.getString(R.string.saving_facts)) {
+            requireActivity().withProgress(resources.getString(S.saving_facts)) {
                 undoableOp {
                     addNote(editorNote!!, deckId)
                 }
@@ -1277,7 +1277,7 @@ class NoteEditorFragment :
             addNoteJob.launch {
                 val noteFieldsCheck = checkNoteFieldsResponse(editorNote!!)
                 if (noteFieldsCheck is NoteFieldsCheckResult.Failure) {
-                    addNoteErrorMessage = noteFieldsCheck.localizedMessage ?: getString(R.string.something_wrong)
+                    addNoteErrorMessage = noteFieldsCheck.localizedMessage ?: getString(S.something_wrong)
                     displayErrorSavingNote()
                     return@launch
                 }
@@ -1481,7 +1481,7 @@ class NoteEditorFragment :
             R.id.action_font_size -> {
                 Timber.i("NoteEditor:: Font Size button pressed")
                 val fontSizeDialog = IntegerDialog()
-                fontSizeDialog.setArgs(getString(R.string.menu_font_size), editTextFontSize, 2)
+                fontSizeDialog.setArgs(getString(S.menu_font_size), editTextFontSize, 2)
                 fontSizeDialog.setCallbackRunnable { fontSizeSp: Int? -> setFontSize(fontSizeSp) }
                 showDialogFragment(fontSizeDialog)
                 return true
@@ -1879,9 +1879,9 @@ class NoteEditorFragment :
                 previous.lastViewInTabOrder.nextFocusForwardId = R.id.CardEditorTagButton
             }
             mediaButton.contentDescription =
-                getString(R.string.multimedia_editor_attach_mm_content, editLineView.name)
+                getString(S.multimedia_editor_attach_mm_content, editLineView.name)
             toggleStickyButton.contentDescription =
-                getString(R.string.note_editor_toggle_sticky, editLineView.name)
+                getString(S.note_editor_toggle_sticky, editLineView.name)
 
             editLineView.isVisible = i !in indicesToHide
             fieldsLayoutContainer!!.addView(editLineView)
@@ -1894,7 +1894,7 @@ class NoteEditorFragment :
     ): ActionMode.Callback =
         CustomActionModeCallback(
             isClozeType,
-            getString(R.string.multimedia_editor_popup_cloze),
+            getString(S.multimedia_editor_popup_cloze),
             clozeMenuId,
             onActionItemSelected = { mode, item ->
                 if (item.itemId == clozeMenuId) {
@@ -1924,11 +1924,11 @@ class NoteEditorFragment :
         val limitStr = Backend.MAX_INDIVIDUAL_MEDIA_FILE_SIZE.toBytesShortString(context)
 
         MaterialAlertDialogBuilder(context).show {
-            title(R.string.media_file_size_warning_title)
+            title(S.media_file_size_warning_title)
             iconAttr(R.drawable.ic_warning)
-            message(text = getString(R.string.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
-            positiveButton(R.string.dialog_cancel)
-            negativeButton(R.string.media_file_size_add_anyway) {
+            message(text = getString(S.media_file_size_warning_message, fileName, fileSizeStr, limitStr))
+            positiveButton(S.dialog_cancel)
+            negativeButton(S.media_file_size_add_anyway) {
                 onForceAdd()
             }
         }
@@ -2275,8 +2275,8 @@ class NoteEditorFragment :
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
         drawable!!.setTint(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
-        addButton.contentDescription = resources.getString(R.string.add_toolbar_item)
-        addButton.setTooltipTextCompat(resources.getString(R.string.add_toolbar_item))
+        addButton.contentDescription = resources.getString(S.add_toolbar_item)
+        addButton.setTooltipTextCompat(resources.getString(S.add_toolbar_item))
     }
 
     private val toolbarButtons: ArrayList<CustomToolbarButton>
@@ -2332,12 +2332,12 @@ class NoteEditorFragment :
         editToolbarItemDialog: AlertDialog,
     ) {
         AlertDialog.Builder(requireContext()).show {
-            title(R.string.remove_toolbar_item)
-            positiveButton(R.string.dialog_positive_delete) {
+            title(S.remove_toolbar_item)
+            positiveButton(S.dialog_positive_delete) {
                 editToolbarItemDialog.dismiss()
                 removeButton(button)
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
         }
     }
 
@@ -2352,16 +2352,16 @@ class NoteEditorFragment :
         get() =
             AlertDialog
                 .Builder(requireContext())
-                .neutralButton(R.string.help) {
+                .neutralButton(S.help) {
                     requireContext().openUrl(R.string.link_manual_note_format_toolbar)
-                }.negativeButton(R.string.dialog_cancel)
+                }.negativeButton(S.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
         val v = layoutInflater.inflate(R.layout.dialog_note_editor_toolbar_add_custom_item, null)
         toolbarDialog.show {
-            title(R.string.add_toolbar_item)
+            title(S.add_toolbar_item)
             setView(v)
-            positiveButton(R.string.dialog_positive_create) {
+            positiveButton(S.dialog_positive_create) {
                 val etIcon = v.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
                 val et = v.findViewById<EditText>(R.id.note_editor_toolbar_before)
                 val et2 = v.findViewById<EditText>(R.id.note_editor_toolbar_after)
@@ -2382,7 +2382,7 @@ class NoteEditorFragment :
         val editToolbarDialog =
             toolbarDialog
                 .setView(view)
-                .positiveButton(R.string.save) {
+                .positiveButton(S.save) {
                     editToolbarButton(
                         etIcon.text.toString(),
                         et.text.toString(),
@@ -2410,15 +2410,15 @@ class NoteEditorFragment :
         get() =
             ShortcutGroup(
                 listOf(
-                    shortcut("Ctrl+ENTER") { getString(R.string.save) },
+                    shortcut("Ctrl+ENTER") { getString(S.save) },
                     shortcut("Ctrl+D") { TR.sentenceCase.selectDeck },
-                    shortcut("Ctrl+L") { getString(R.string.card_template_editor_group) },
-                    shortcut("Ctrl+N") { getString(R.string.select_note_type) },
-                    shortcut("Ctrl+Shift+T") { getString(R.string.tag_editor) },
-                    shortcut("Ctrl+Shift+C") { getString(R.string.multimedia_editor_popup_cloze) },
-                    shortcut("Ctrl+P") { getString(R.string.card_editor_preview_card) },
+                    shortcut("Ctrl+L") { getString(S.card_template_editor_group) },
+                    shortcut("Ctrl+N") { getString(S.select_note_type) },
+                    shortcut("Ctrl+Shift+T") { getString(S.tag_editor) },
+                    shortcut("Ctrl+Shift+C") { getString(S.multimedia_editor_popup_cloze) },
+                    shortcut("Ctrl+P") { getString(S.card_editor_preview_card) },
                 ),
-                R.string.note_editor_group,
+                S.note_editor_group,
             )
 
     private fun updateTags() {
@@ -2427,7 +2427,7 @@ class NoteEditorFragment :
         }
         tagsButton!!.text =
             resources.getString(
-                R.string.CardEditorTags,
+                S.CardEditorTags,
                 getColUnsafe.tags
                     .join(getColUnsafe.tags.canonify(selectedTags!!))
                     .trim()
@@ -2465,7 +2465,7 @@ class NoteEditorFragment :
         }
         cardsButton!!.text =
             HtmlCompat.fromHtml(
-                resources.getString(R.string.CardEditorCards, cardsList.toString()),
+                resources.getString(S.CardEditorCards, cardsList.toString()),
                 HtmlCompat.FROM_HTML_MODE_LEGACY,
             )
     }

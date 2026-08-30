@@ -25,6 +25,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.anki.testutil.awaitResumedActivity
 import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
@@ -82,9 +83,9 @@ class PreferencesNavigationTest {
         openSettings()
         onView(withId(com.bytehamster.lib.preferencesearch.R.id.search)).perform(click())
         onView(allOf(withId(com.bytehamster.lib.preferencesearch.R.id.search), hasFocus())).perform(typeText("Card"))
-        onView(withText(R.string.card_zoom)).perform(click())
+        onView(withText(S.card_zoom)).perform(click())
         onView(withId(R.id.settings_container)).check(matches(isDisplayed()))
-        onView(withText(R.string.notification_pref)).perform(click())
+        onView(withText(S.notification_pref)).perform(click())
         pressBack()
         onView(withClassName(endsWith("PreferencesActivity"))).check(doesNotExist())
     }

@@ -19,7 +19,7 @@ package com.ichi2.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.compat.setTooltipTextCompat
 
 /**
@@ -35,7 +35,7 @@ open class AccessibleSearchView : androidx.appcompat.widget.SearchView {
     init {
         // close_btn is the cross that deletes the search field content. It does not close the search view.
         findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
-            ?.setTooltipTextCompat(context.getString(R.string.discard))
+            ?.setTooltipTextCompat(context.getString(S.discard))
     }
     // SearchView contains four buttons. The three others seems never to appear in ankidroid.
     // there is also an arrow to the trailing side, that should get a tooltip. Alas, I fail to see the id of this button, so I can't add it.

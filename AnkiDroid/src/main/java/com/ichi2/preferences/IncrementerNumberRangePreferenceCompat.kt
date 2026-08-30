@@ -24,7 +24,7 @@ import android.view.View
 import android.widget.Button
 import androidx.core.widget.doAfterTextChanged
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.DialogIncrementerPreferenceBinding
 import com.ichi2.anki.ui.NonLeadingZeroInputFilter
 import com.ichi2.utils.moveCursorToEnd
@@ -161,14 +161,14 @@ class IncrementerNumberRangePreferenceCompat :
                 }
                 ValidationResult.OVERFLOW -> {
                     binding.decrementButton.isEnabled = true
-                    binding.textInputLayout.error = getString(R.string.maximum_value_is, numberRangePreference.max)
+                    binding.textInputLayout.error = getString(S.maximum_value_is, numberRangePreference.max)
                 }
                 ValidationResult.UNDERFLOW -> {
                     binding.incrementButton.isEnabled = true
-                    binding.textInputLayout.error = getString(R.string.minimum_value_is, numberRangePreference.min)
+                    binding.textInputLayout.error = getString(S.minimum_value_is, numberRangePreference.min)
                 }
                 ValidationResult.INVALID -> {
-                    binding.textInputLayout.error = getString(R.string.invalid_value)
+                    binding.textInputLayout.error = getString(S.invalid_value)
                 }
                 ValidationResult.EMPTY -> {
                     // Empty input is invalid for submission, but doesn't warrant an error message yet

@@ -24,7 +24,7 @@ import android.content.Intent
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -109,10 +109,10 @@ class AlarmManagerService : AnkiBroadcastReceiver() {
                 // #6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
                 // We warn the user if they breach this limit
                 Timber.w(ex)
-                error = R.string.boot_service_too_many_notifications
+                error = S.boot_service_too_many_notifications
             } catch (e: Exception) {
                 Timber.w(e)
-                error = R.string.boot_service_failed_to_schedule_notifications
+                error = S.boot_service_failed_to_schedule_notifications
             }
             if (error != null) {
                 try {

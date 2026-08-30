@@ -183,12 +183,12 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
          */
         private fun redirectUserToSignUpOrLogin() {
             // inform the user they need to log in as they've hit a rate limit
-            showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
+            showSnackbar(S.shared_decks_login_required, LENGTH_INDEFINITE) {
                 if (isLoggedIn()) return@showSnackbar
 
                 // If a user is not logged in inside AnkiDroid, assume they have no AnkiWeb account
                 // and give them the option to sign up
-                setAction(R.string.sign_up) {
+                setAction(S.sign_up) {
                     binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
                 }
             }
@@ -232,7 +232,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         //
         // statusBarStyle matches the status bar theme of the rest of the app
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
-        setTitle(R.string.download_deck)
+        setTitle(S.download_deck)
         setupEdgeToEdge()
 
         binding.webviewToolbar.setTitleTextColor(getColor(R.color.white))

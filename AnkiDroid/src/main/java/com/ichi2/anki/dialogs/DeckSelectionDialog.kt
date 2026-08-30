@@ -45,6 +45,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -86,7 +87,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
     private val title: String
         get() =
             requireArguments().getString(ARG_TITLE, null)
-                ?: getString(R.string.select_deck_title)
+                ?: getString(S.select_deck_title)
     private val templateEditorMessage: String?
         get() = requireArguments().getString(ARG_TEMPLATE_EDITOR_MESSAGE, null)
     private val allowMultipleSelection: Boolean
@@ -106,10 +107,10 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         binding.decks.adapter = decksAdapter
         setupMenu()
         return AlertDialog.Builder(requireActivity()).create {
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
             customView(view = binding.root)
             if (templateEditorMessage != null) {
-                positiveButton(R.string.restore_default) {
+                positiveButton(S.restore_default) {
                     onDeckSelected(null)
                 }
             }
@@ -133,7 +134,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         toolbar.inflateMenu(R.menu.deck_picker_dialog_menu)
         val searchItem = toolbar.menu.findItem(R.id.action_filter)
         val searchView = searchItem.actionView as AccessibleSearchView
-        searchView.queryHint = getString(R.string.deck_picker_dialog_filter_decks)
+        searchView.queryHint = getString(S.deck_picker_dialog_filter_decks)
         searchView.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -164,7 +165,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         val createDeckDialog =
             CreateDeckDialog(
                 context = requireActivity(),
-                title = getString(R.string.create_subdeck),
+                title = getString(S.create_subdeck),
                 deckDialogType = CreateDeckDialog.DeckDialogType.SUB_DECK,
                 parentId = parentDeck.deckId,
             )
@@ -339,7 +340,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                 expander.apply {
                     importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
                     setImageDrawable(if (node.collapsed) expandImage else collapseImage)
-                    contentDescription = context.getString(if (node.collapsed) R.string.expand else R.string.collapse)
+                    contentDescription = context.getString(if (node.collapsed) S.expand else S.collapse)
                     visibility = View.VISIBLE
                 }
             } else {
@@ -500,7 +501,7 @@ fun Fragment.registerDeckSelectedHandler(
  * Displays a [DeckSelectionDialog] for the user to select a deck. Using the default parameters will
  * result in all possible decks('All Decks', normal, filtered and the 'Default' deck) being shown.
  *
- * @param title the title for the selection dialog, uses [R.string.select_decks_title] if not provided
+ * @param title the title for the selection dialog, uses [S.select_decks_title] if not provided
  * @param asChild if true [DeckSelectionDialog] will start as a child of [Fragment]([Fragment.getChildFragmentManager]
  * will be used to start it). If false, the [FragmentActivity.getSupportFragmentManager] will be used
  * instead to start [DeckSelectionDialog]
@@ -560,7 +561,7 @@ fun Fragment.startDeckSelection(
  * Displays a [DeckSelectionDialog] for the user to select a deck. Using the default parameters will
  * result in all possible decks('All Decks', normal, filtered and the 'Default' deck) being shown.
  *
- * @param title the title for the selection dialog, uses [R.string.select_decks_title] if not provided
+ * @param title the title for the selection dialog, uses [S.select_decks_title] if not provided
  * @param templateEditorMessage an optional message shown only when used by [CardTemplateEditor]
  * @param requestKey specifies the request key to be used for this request
  * @param allowMultipleSelection if selection of multiple decks is permitted

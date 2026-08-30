@@ -218,7 +218,7 @@ class StudyOptionsFragment :
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
                 launchCatchingTask {
-                    withProgress(R.string.rebuild_filtered_deck) {
+                    withProgress(S.rebuild_filtered_deck) {
                         viewModel.rebuildCram()
                     }
                 }
@@ -227,7 +227,7 @@ class StudyOptionsFragment :
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
                 launchCatchingTask {
-                    withProgress(R.string.empty_filtered_deck) {
+                    withProgress(S.empty_filtered_deck) {
                         viewModel.emptyCram()
                     }
                 }
@@ -247,7 +247,7 @@ class StudyOptionsFragment :
             menu.findItem(R.id.action_rebuild)?.isVisible = true
             menu.findItem(R.id.action_empty)?.isVisible = true
             menu.findItem(R.id.action_custom_study)?.isVisible = false
-            menu.findItem(R.id.action_deck_or_study_options)?.setTitle(R.string.menu__study_options)
+            menu.findItem(R.id.action_deck_or_study_options)?.setTitle(S.menu__study_options)
         } else {
             menu.findItem(R.id.action_rebuild)?.isVisible = false
             menu.findItem(R.id.action_empty)?.isVisible = false
@@ -319,7 +319,7 @@ class StudyOptionsFragment :
             is StudyOptionsState.StudyOptions -> {
                 deckInfoLayout.visibility = View.VISIBLE
                 buttonStart.visibility = View.VISIBLE
-                buttonStart.setText(R.string.studyoptions_start)
+                buttonStart.setText(S.studyoptions_start)
             }
             is StudyOptionsState.Loading -> return
         }
@@ -340,7 +340,7 @@ class StudyOptionsFragment :
         @Language("HTML")
         val desc: String =
             if (isDynamic) {
-                resources.getString(R.string.dyn_deck_desc)
+                resources.getString(S.dyn_deck_desc)
             } else {
                 description ?: ""
             }
@@ -375,7 +375,7 @@ class StudyOptionsFragment :
                 when {
                     count > 0 ->
                         requireContext().resources.getQuantityString(
-                            R.plurals.studyoptions_buried_count,
+                            Pl.studyoptions_buried_count,
                             count,
                             count,
                         )

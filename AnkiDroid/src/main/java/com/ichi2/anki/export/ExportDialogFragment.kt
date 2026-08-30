@@ -25,6 +25,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.removeSafely
@@ -86,7 +87,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         return AlertDialog
             .Builder(requireActivity())
             .setView(binding.root)
-            .negativeButton(R.string.dialog_cancel)
+            .negativeButton(S.dialog_cancel)
             .positiveButton(text = TR.actionsExport()) {
                 val selectedIndex = binding.exportTypeSelector.selectedItemPosition
                 // just to be safe, if not exporting a collection and the decks spinner is not

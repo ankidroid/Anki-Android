@@ -33,6 +33,7 @@ import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.browser.search.CardBrowserSearchViewModel.SearchHistoryItems
 import com.ichi2.anki.browser.toUserSpannable
@@ -112,7 +113,7 @@ class StandardSearchFragment :
     private fun setupChips() {
         binding.decksChip.setOnClickListener {
             // TODO: see onDeckSelected
-            startDeckSelection(title = getString(R.string.search_deck), asChild = true, skipEmptyDefault = true)
+            startDeckSelection(title = getString(S.search_deck), asChild = true, skipEmptyDefault = true)
         }
 
         binding.tagsChip.setOnClickListener {
@@ -263,7 +264,7 @@ class StandardSearchFragment :
         }
 
         viewModel.isHistoryExpandedFlow.launchCollectionInLifecycleScope {
-            binding.toggleSearchHistory.setText(if (it) R.string.card_browser_see_less else R.string.card_browser_see_more)
+            binding.toggleSearchHistory.setText(if (it) S.card_browser_see_less else S.card_browser_see_more)
         }
 
         viewModel.searchHistoryAvailableFlow.launchCollectionInLifecycleScope {
