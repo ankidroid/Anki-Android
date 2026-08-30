@@ -16,34 +16,19 @@
 
 package com.ichi2.widget
 
-import android.appwidget.AppWidgetManager
-import android.content.Context
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 
-/**
- * @return An [AppWidgetManager] for the provided context, or `null`
- *
- * @see AppWidgetManager.getInstance
- */
+// These lists reference concrete provider classes, so they stay in :AnkiDroid
+// until the providers move to :widgets
 
-fun getAppWidgetManager(context: Context): AppWidgetManager? {
-    // The call returns null on a Supernote A5X, but as the underlying platform call is in Java,
-    // the result is assumed to be non-null in Kotlin
-    return AppWidgetManager.getInstance(context)
-}
-
-/** Whether 'Material You' dynamic color should be used for widgets */
-val disableMaterialYouDynamicColor: Boolean
-    get() = true
-
-val RECURRING_WIDGETS =
+val RECURRING_WIDGETS: List<Class<out AnalyticsWidgetProvider>> =
     listOf(
         DeckPickerWidget::class.java,
         CardAnalysisWidget::class.java,
     )
 
-val NON_RECURRING_WIDGETS =
+val NON_RECURRING_WIDGETS: List<Class<out AnalyticsWidgetProvider>> =
     listOf(
         AddNoteWidget::class.java,
         AnkiDroidWidgetSmall::class.java,
