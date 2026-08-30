@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.ellipsize
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.showError
@@ -246,7 +247,7 @@ object ReviewRemindersDatabase {
                     // Log error, it will be displayed to the user either immediately if the app is open or when they next open the app if not
                     val errorString = "Encountered (${e.message}) while parsing $jsonString"
                     Prefs.reviewReminderDeserializationErrors = Prefs.reviewReminderDeserializationErrors.orEmpty() + "[$errorString]"
-                    Timber.e(e, errorString)
+                    Timber.tag(reminderTag()).e(e, errorString)
                     CrashReportService.sendExceptionReport(
                         e,
                         origin = "ReviewRemindersDatabase:decodeJson",
@@ -418,17 +419,21 @@ object ReviewRemindersDatabase {
                     if (storedReminder == null) {
                         // The reminder should always be present as recurring notification alarms are unscheduled when
                         // a reminder is deleted, so this should never happen, but we fail gracefully just in case
-                        Timber.e(
-                            "Returning null for retrieveRefreshedReminder for reminder $id because it was not found in the database.",
+                        Timber.tag(reminderTag(id)).e(
+                            "Returning null for retrieveRefreshedReminder for reminder ${id.value} " +
+                                "because it was not found in the database.",
                         )
                         return@apply
                     }
 
                     if (storedReminder.latestNotifDelivered()) {
                         // Do not proceed if the notification has already been delivered
-                        Timber.i(
-                            "Returning null for retrieveRefreshedReminder for reminder $id: " +
-                                "Latest already delivered at ${storedReminder.latestNotifTime}",
+                        val elapsedSinceDelivery = TimeManager.time.calendar().timeInMillis - storedReminder.latestNotifTime
+                        Timber.tag(reminderTag(id)).i(
+                            "skip: Returning null for retrieveRefreshedReminder for reminder %d: Latest already delivered at %d (%dms ago)",
+                            id.value,
+                            storedReminder.latestNotifTime,
+                            elapsedSinceDelivery,
                         )
                         return@apply
                     }
@@ -462,4 +467,9 @@ object ReviewRemindersDatabase {
             Prefs.reviewReminderDeserializationErrors = ""
         }
     }
+
+    /**
+     * For in-app debug info functionality.
+     */
+    fun dumpContentsToString(): String = remindersSharedPrefs.all.entries.joinToString("\n") { "${it.key} -> ${it.value}" }
 }

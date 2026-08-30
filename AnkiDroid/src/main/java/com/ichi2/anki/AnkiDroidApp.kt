@@ -52,15 +52,16 @@ import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.reviewreminders.ReminderLogTree
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
-import com.ichi2.anki.services.AlarmManagerService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.startup.ensureCollectionPathSet
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
+import com.ichi2.utils.AlarmManagement
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
@@ -141,6 +142,7 @@ open class AnkiDroidApp :
             LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
             LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
         }
+        Timber.plant(ReminderLogTree(this))
         if (BuildConfig.ENABLE_LEAK_CANARY) {
             LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {
@@ -323,10 +325,13 @@ open class AnkiDroidApp :
             setupNotificationChannels(applicationContext)
 
             val context = this.withAppLocale()
+            // In the future, if more notifications are added to AnkiDroid, AlarmManagement.scheduleAllNotifications
+            // should be extended to handle them, but since for now the only modernized notifications are review reminder
+            // notifications, we block this behind the review-reminder-specific feature flag.
             if (Prefs.newReviewRemindersEnabled) {
-                Timber.i("Setting review reminder notifications if they have not already been set")
+                Timber.i("Setting notifications if they have not already been set")
                 applicationScope.launch {
-                    AlarmManagerService.scheduleAllNotifications(context)
+                    AlarmManagement.scheduleAllNotifications(context)
                 }
             } else {
                 // Register for notifications
