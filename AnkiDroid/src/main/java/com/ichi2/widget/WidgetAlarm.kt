@@ -140,10 +140,13 @@ private fun AppWidgetManager.getAppWidgetIds(
     return ids.map { AppWidgetId(it) }
 }
 
-fun restoreRecurringAlarms(context: Context) {
+fun restoreRecurringAlarms(
+    context: Context,
+    widgetClasses: List<Class<out AnalyticsWidgetProvider>>,
+) {
     val appWidgetManager = getAppWidgetManager(context) ?: return
 
-    for (widgetClass in RECURRING_WIDGETS) {
+    for (widgetClass in widgetClasses) {
         val activeIds =
             try {
                 appWidgetManager.getAppWidgetIds(context, widgetClass)

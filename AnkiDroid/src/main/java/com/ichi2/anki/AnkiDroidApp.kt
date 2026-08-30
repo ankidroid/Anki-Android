@@ -66,6 +66,7 @@ import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.DayRolloverAlarm
+import com.ichi2.widget.RECURRING_WIDGETS
 import com.ichi2.widget.WidgetNotificationScheduler
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
@@ -189,7 +190,7 @@ open class AnkiDroidApp :
         with(anki) { initializeAnkiDroidDirectory() }
         with(anki) { setupDayRollover() }
 
-        restoreRecurringAlarms(this)
+        restoreRecurringAlarms(this, RECURRING_WIDGETS)
 
         setupLifecycleLogging()
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
