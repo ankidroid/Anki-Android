@@ -536,11 +536,7 @@ open class Reviewer :
         }
 
         val answerArea = findViewById<View>(R.id.answer_options_layout)
-        if (answerButtonsAtBottom) {
-            // extends the answer area's color underneath the navigation bar, replacing the
-            // pre-edge-to-edge setNavigationBarColor(R.attr.showAnswerColor)
-            answerArea.setBackgroundColor(MaterialColors.getColor(this, R.attr.showAnswerColor, 0))
-        }
+        answerArea.setBackgroundColor(MaterialColors.getColor(this, R.attr.showAnswerColor, 0))
         // The bottom inset is painted showAnswerColor by the background, extending the
         // answer area's color underneath the navigation bar - or, in immersive review,
         // down to the screen edge
