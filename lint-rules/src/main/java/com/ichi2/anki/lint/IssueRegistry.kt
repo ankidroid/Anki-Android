@@ -16,7 +16,6 @@ import com.ichi2.anki.lint.rules.DirectSystemCurrentTimeMillisUsage
 import com.ichi2.anki.lint.rules.DirectSystemTimeInstantiation
 import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings
-import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength
 import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
@@ -54,10 +53,6 @@ class IssueRegistry : IssueRegistry() {
                 OpenInputStreamSafeDetector.ISSUE,
                 SentenceCaseConventions.ISSUE,
                 TranslationTypo.ISSUE,
-                FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
-                FixedPreferencesTitleLength.MENU_ISSUE_MAX_LENGTH,
-                FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
-                FixedPreferencesTitleLength.MENU_ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,
                 InvalidStringFormatDetector.ISSUE,
                 AvoidAlertDialogUsage.ISSUE,
