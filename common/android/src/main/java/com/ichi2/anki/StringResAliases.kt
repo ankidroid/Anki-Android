@@ -8,7 +8,7 @@ package com.ichi2.anki
  * A plain import (`import com.ichi2.anki.S`), which the IDE auto-inserts,
  * unlike `as` alias imports. Files in package `com.ichi2.anki` need no import.
  */
-typealias S = com.ichi2.anki.R.string
+typealias S = com.ichi2.anki.common.android.R.string
 
 /** Plural resources: `getQuantityString(Pl.widget_cards_due, n, n)`. */
-typealias Pl = com.ichi2.anki.R.plurals
+typealias Pl = com.ichi2.anki.common.android.R.plurals
