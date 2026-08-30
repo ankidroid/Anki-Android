@@ -18,7 +18,7 @@
  *  extract ankidroid.zip to temp_dir
  *
  * update
- *  copy latest file from temp_dir to AnkiDroid/src/main/res/values/ dir
+ *  copy latest file from temp_dir to common/android/src/main/res/values/ dir
  */
 
 import { uploadI18nFiles } from "./upload";

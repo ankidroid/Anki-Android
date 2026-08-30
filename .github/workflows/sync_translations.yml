@@ -91,7 +91,7 @@ jobs:
       - name: Check for changes and handle results
         id: tr_check
         run: |
-          git add docs/marketing/localized_description AnkiDroid/src/main/res
+          git add docs/marketing/localized_description common/android/src/main/res
           if git diff --cached --quiet; then
             echo "HAS_CHANGES=false" >> $GITHUB_OUTPUT
             echo "Translation Sync Result: No new translation found on Crowdin. No Pull Request necessary" >> $GITHUB_STEP_SUMMARY

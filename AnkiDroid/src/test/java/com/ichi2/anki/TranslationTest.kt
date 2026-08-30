@@ -14,15 +14,31 @@ import com.ichi2.testutils.getBackendNonArgStrings
 import com.ichi2.testutils.getTranslatableXmlStrings
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 import kotlin.test.fail
 
 /**
- * Ensures that translatable strings defined in the app's XML resource files
+ * Ensures that translatable strings defined in our XML resource files
  * (01-core, 02-strings, etc.) do not duplicate strings already available
  * from the backend via [GeneratedTranslations]/[TR].
  */
 @RunWith(AndroidJUnit4::class) // TODO: no Android dependencies; could be JvmTest
 class TranslationTest : RobolectricTest() {
+    @Test
+    fun `CrowdIn-managed files do not reappear in this module`() {
+        val staleFiles =
+            File("src/main/res")
+                .listFiles { dir -> dir.name == "values" || dir.name.startsWith("values-") }!!
+                .flatMap { dir -> dir.listFiles()?.toList() ?: emptyList() }
+                .filter { file -> file.name.matches(Regex("\\d+-.*\\.xml")) }
+        if (staleFiles.isNotEmpty()) {
+            fail(
+                "CrowdIn-managed string files belong in common/android/src/main/res, not AnkiDroid/src/main/res:\n" +
+                    staleFiles.joinToString("\n"),
+            )
+        }
+    }
+
     @Test
     fun `translatable strings do not duplicate GeneratedTranslations`() =
         runTest {
@@ -171,142 +187,142 @@ class TranslationTest : RobolectricTest() {
         private val BASELINE_DUPLICATES =
             setOf(
                 // example usages:
-                // "Add",                        // R.string.import_message_add, R.string.menu_add
-                // "General",                    // R.string.deck_conf_general, R.string.pref_cat_general
+                // "Add",                        // S.import_message_add, S.menu_add
+                // "General",                    // S.deck_conf_general, S.pref_cat_general
                 //                               // TR.preferencesGeneral()
                 //                               // TR.schedulingGeneral()
-                "Add", // R.string.import_message_add, R.string.menu_add
+                "Add", // S.import_message_add, S.menu_add
                 // TR.actionsAdd()
-                "Add tag", // R.string.add_tag | TR.editingTagsAdd()
-                "Advanced", // R.string.pref_cat_advanced | TR.deckConfigAdvancedTitle()
-                "Again", // R.string.ease_button_again
+                "Add tag", // S.add_tag | TR.editingTagsAdd()
+                "Advanced", // S.pref_cat_advanced | TR.deckConfigAdvancedTitle()
+                "Again", // S.ease_button_again
                 // TR.browsingAgainToday()
                 // TR.studyingAgain()
-                "All", // R.string.hide_system_bars_all_bars | TR.statisticsTrueRetentionAll()
-                "Always", // R.string.sync_media_always
+                "All", // S.hide_system_bars_all_bars | TR.statisticsTrueRetentionAll()
+                "Always", // S.sync_media_always
                 // TR.preferencesAlways()
                 // TR.importingUpdateAlways()
-                "Answer", // R.string.card_side_answer | TR.browsingAnswer()
-                "Back", // R.string.back_field_name, R.string.previewer_back
+                "Answer", // S.card_side_answer | TR.browsingAnswer()
+                "Back", // S.back_field_name, S.previewer_back
                 // TR.notetypesBackField()
-                "Cancel", // R.string.dialog_cancel
+                "Cancel", // S.dialog_cancel
                 // TR.actionsCancel()
                 // TR.syncCancelButton()
-                "Card", // R.string.card, R.string.reviewer_frame_style_card
+                "Card", // S.card, S.reviewer_frame_style_card
                 // TR.browsingCard()
-                "Cards", // R.string.show_cards
+                "Cards", // S.show_cards
                 // TR.browsingCards()
                 // TR.editingCards()
                 // TR.notetypesCards()
-                "Close", // R.string.close | TR.actionsClose()
-                "Collapse", // R.string.collapse
+                "Close", // S.close | TR.actionsClose()
+                "Collapse", // S.collapse
                 // TR.editingCollapse()
                 // TR.browsingSidebarCollapse()
                 // TR.changeNotetypeCollapse()
-                "Continue", // R.string.dialog_continue | TR.studyingContinue()
-                "Copied to clipboard", // R.string.about_ankidroid_successfully_copied_debug_info
+                "Continue", // S.dialog_continue | TR.studyingContinue()
+                "Copied to clipboard", // S.about_ankidroid_successfully_copied_debug_info
                 // TR.aboutCopiedToClipboard()
                 // TR.errorsCopiedToClipboard()
-                "Dark", // R.string.night_theme_dark | TR.preferencesThemeDark()
-                "Delete", // R.string.dialog_positive_delete
+                "Dark", // S.night_theme_dark | TR.preferencesThemeDark()
+                "Delete", // S.dialog_positive_delete
                 // TR.actionsDelete()
                 // TR.editingImageOcclusionDelete()
                 // TR.emptyCardsDeleteButton()
-                "Description", // R.string.deck_description_field_hint
+                "Description", // S.deck_description_field_hint
                 // TR.fieldsDescription()
                 // TR.schedulingDescription()
-                "Discard", // R.string.discard | TR.actionsDiscard()
-                "Due", // R.string.tags_dialog_option_due_cards
+                "Discard", // S.discard | TR.actionsDiscard()
+                "Due", // S.tags_dialog_option_due_cards
                 // TR.decksReviewHeader()
                 // TR.statisticsDueCount()
                 // TR.statisticsDueDate()
                 // TR.browsingSidebarDueToday()
-                "Easy", // R.string.ease_button_easy | TR.studyingEasy()
-                "Editing", // R.string.pref_cat_editing | TR.preferencesEditing()
-                "Empty", // R.string.empty_cram_label | TR.studyingEmpty()
-                "Error", // R.string.import_title_error, R.string.pref__etc__summary__error
-                // R.string.pref__widget_text__error, R.string.vague_error
+                "Easy", // S.ease_button_easy | TR.studyingEasy()
+                "Editing", // S.pref_cat_editing | TR.preferencesEditing()
+                "Empty", // S.empty_cram_label | TR.studyingEmpty()
+                "Error", // S.import_title_error, S.pref__etc__summary__error
+                // S.pref__widget_text__error, S.vague_error
                 // TR.qtMiscError()
-                "Expand", // R.string.expand
+                "Expand", // S.expand
                 // TR.editingExpand()
                 // TR.browsingSidebarExpand()
                 // TR.changeNotetypeExpand()
-                "Fields", // R.string.standard_fields_tab_header
+                "Fields", // S.standard_fields_tab_header
                 // TR.editingFields()
                 // TR.notetypesFields()
                 // TR.changeNotetypeFields()
-                "Flags", // R.string.filter_by_flags | TR.browsingSidebarFlags()
-                "Flip", // R.string.image_cropper_action_flip | TR.cardTemplatesFlip()
-                "General", // R.string.deck_conf_general, R.string.pref_cat_general
+                "Flags", // S.filter_by_flags | TR.browsingSidebarFlags()
+                "Flip", // S.image_cropper_action_flip | TR.cardTemplatesFlip()
+                "General", // S.deck_conf_general, S.pref_cat_general
                 // TR.preferencesGeneral()
                 // TR.schedulingGeneral()
-                "Good", // R.string.ease_button_good | TR.studyingGood()
-                "Hard", // R.string.ease_button_hard | TR.studyingHard()
-                "Help", // R.string.help | TR.actionsHelp()
-                "Language", // R.string.language | TR.preferencesLanguage()
-                "Later", // R.string.button_backup_later | TR.schedulingUpdateLaterButton()
-                "Learn More", // R.string.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
-                "Learn ahead limit", // R.string.learn_cutoff | TR.preferencesLearnAheadLimit()
-                "Light", // R.string.day_theme_light | TR.preferencesThemeLight()
-                "Media", // R.string.media
+                "Good", // S.ease_button_good | TR.studyingGood()
+                "Hard", // S.ease_button_hard | TR.studyingHard()
+                "Help", // S.help | TR.actionsHelp()
+                "Language", // S.language | TR.preferencesLanguage()
+                "Later", // S.button_backup_later | TR.schedulingUpdateLaterButton()
+                "Learn More", // S.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
+                "Learn ahead limit", // S.learn_cutoff | TR.preferencesLearnAheadLimit()
+                "Light", // S.day_theme_light | TR.preferencesThemeLight()
+                "Media", // S.media
                 // TR.editingMedia()
                 // TR.preferencesMedia()
-                "Never", // R.string.sync_media_never | TR.importingUpdateNever()
-                "New", // R.string.tags_dialog_option_new_cards
+                "Never", // S.sync_media_never | TR.importingUpdateNever()
+                "New", // S.tags_dialog_option_new_cards
                 // TR.actionsNew()
                 // TR.changeNotetypeNew()
                 // TR.statisticsCountsNewCards()
-                "Note", // R.string.note
+                "Note", // S.note
                 // TR.browsingNote()
                 // TR.preferencesNote()
                 // TR.notetypesOcclusionNote()
-                "Notes", // R.string.show_notes | TR.browsingNotes()
-                "OK", // R.string.dialog_ok
+                "Notes", // S.show_notes | TR.browsingNotes()
+                "OK", // S.dialog_ok
                 // TR.customStudyOk()
                 // TR.helpOk()
-                "Open", // R.string.open | TR.profilesOpen()
-                "Options", // R.string.error_handling_options, R.string.study_options
+                "Open", // S.open | TR.profilesOpen()
+                "Options", // S.error_handling_options, S.study_options
                 // TR.actionsOptions()
                 // TR.notetypesOptions()
                 // TR.cardTemplatesPreviewSettings()
-                "Preview", // R.string.card_editor_preview_card
+                "Preview", // S.card_editor_preview_card
                 // TR.actionsPreview()
                 // TR.cardTemplatesPreviewBox()
-                "Question", // R.string.card_side_question | TR.browsingQuestion()
-                "Record audio", // R.string.multimedia_editor_popup_audio | TR.editingRecordAudio()
-                "Redo", // R.string.redo | TR.undoRedo()
-                "Rename", // R.string.rename | TR.actionsRename()
-                "Reposition", // R.string.card_editor_reposition_card, R.string.card_template_reposition_template
+                "Question", // S.card_side_question | TR.browsingQuestion()
+                "Record audio", // S.multimedia_editor_popup_audio | TR.editingRecordAudio()
+                "Redo", // S.redo | TR.undoRedo()
+                "Rename", // S.rename | TR.actionsRename()
+                "Reposition", // S.card_editor_reposition_card, S.card_template_reposition_template
                 // TR.actionsReposition()
-                "Reschedule", // R.string.card_editor_reschedule_card | TR.browsingReschedule()
-                "Reviews", // R.string.pref_controls_reviews_tab
+                "Reschedule", // S.card_editor_reschedule_card | TR.browsingReschedule()
+                "Reviews", // S.pref_controls_reviews_tab
                 // TR.schedulingReviews()
                 // TR.cardStatsReviewCount()
                 // TR.deckConfigFsrsSimulatorRadioCount()
                 // TR.statisticsReviewsTitle()
-                "Save", // R.string.save
+                "Save", // S.save
                 // TR.actionsSave()
                 // TR.deckConfigSaveButton()
-                "Scheduling", // R.string.pref_cat_scheduling | TR.preferencesScheduling()
-                "Search", // R.string.card_browser_cram_search, R.string.card_browser_search_hint
-                // R.string.deck_conf_cram_search
+                "Scheduling", // S.pref_cat_scheduling | TR.preferencesScheduling()
+                "Search", // S.card_browser_cram_search, S.card_browser_search_hint
+                // S.deck_conf_cram_search
                 // TR.actionsSearch()
                 // TR.statisticsRangeSearch()
-                "Select", // R.string.select
+                "Select", // S.select
                 // TR.actionsSelect()
                 // TR.customStudySelect()
                 // TR.editingImageOcclusionSelectTool()
-                "Show remaining card count", // R.string.show_progress_summ | TR.preferencesShowRemainingCardCount()
-                "Study", // R.string.studyoptions_start | TR.decksStudy()
-                "Sync", // R.string.button_sync, R.string.pref_cat_sync
+                "Show remaining card count", // S.show_progress_summ | TR.preferencesShowRemainingCardCount()
+                "Study", // S.studyoptions_start | TR.decksStudy()
+                "Sync", // S.button_sync, S.pref_cat_sync
                 // TR.qtMiscSync()
-                "Synchronization", // R.string.sync_title | TR.preferencesTabSynchronisation()
-                "Tags", // R.string.card_details_tags
+                "Synchronization", // S.sync_title | TR.preferencesTabSynchronisation()
+                "Tags", // S.card_details_tags
                 // TR.editingTags()
                 // TR.browsingSidebarTags()
-                "Theme", // R.string.app_theme | TR.preferencesTheme()
-                "Timebox time limit", // R.string.time_limit | TR.preferencesTimeboxTimeLimit()
-                "Undo", // R.string.undo | TR.undoUndo()
+                "Theme", // S.app_theme | TR.preferencesTheme()
+                "Timebox time limit", // S.time_limit | TR.preferencesTimeboxTimeLimit()
+                "Undo", // S.undo | TR.undoUndo()
             )
 
         /**
@@ -332,10 +348,10 @@ class TranslationTest : RobolectricTest() {
                 // "Check media",        // R.string.check_media
                 //                       // TR.mediaCheckCheckMediaAction()
                 //                       // TR.mediaCheckWindowTitle()
-                "Answer buttons", // R.string.answer_buttons | TR.statisticsAnswerButtonsTitle()
-                "Follow system", // R.string.theme_follow_system | TR.preferencesThemeFollowSystem()
-                "Select all", // R.string.card_browser_select_all | TR.editingImageOcclusionSelectAll()
-                "Show answer", // R.string.show_answer
+                "Answer buttons", // S.answer_buttons | TR.statisticsAnswerButtonsTitle()
+                "Follow system", // S.theme_follow_system | TR.preferencesThemeFollowSystem()
+                "Select all", // S.card_browser_select_all | TR.editingImageOcclusionSelectAll()
+                "Show answer", // S.show_answer
                 // TR.studyingShowAnswer()
                 // TR.deckConfigQuestionActionShowAnswer()
             )
@@ -352,9 +368,9 @@ class TranslationTest : RobolectricTest() {
          */
         private val ANDROID_MANIFEST_STRINGS =
             setOf(
-                "Add note", // R.string.menu_add_note | TR.actionsAddNote()
-                "Image Occlusion", // R.string.image_occlusion | TR.notetypesImageOcclusionName()
-                "Manage note types", // R.string.model_browser_label
+                "Add note", // S.menu_add_note | TR.actionsAddNote()
+                "Image Occlusion", // S.image_occlusion | TR.notetypesImageOcclusionName()
+                "Manage note types", // S.model_browser_label
                 // TR.browsingManageNoteTypes()
                 // TR.qtMiscManageNoteTypes()
             )
@@ -367,7 +383,7 @@ class TranslationTest : RobolectricTest() {
          */
         private val IGNORED_BACKEND_TRANSLATIONS =
             setOf(
-                "launcherOff", // "Off" - unrelated to R.string.full_screen_off
+                "launcherOff", // "Off" - unrelated to S.full_screen_off
             )
     }
 }
