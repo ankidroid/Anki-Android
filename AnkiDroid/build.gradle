@@ -463,6 +463,15 @@ apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle.kts"
 apply from: "../lint.gradle"
 
+android {
+    lint {
+        // Analyze project-local dependencies (:common:android etc.) as part of this
+        // module's lint run.
+        // Required for whole-app UnusedResources and StringFormatMatches coverage
+        checkDependencies = true
+    }
+}
+
 dependencies {
     configurations.configureEach {
         resolutionStrategy {
