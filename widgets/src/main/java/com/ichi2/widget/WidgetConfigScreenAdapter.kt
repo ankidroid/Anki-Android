@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
-import com.ichi2.anki.databinding.ItemWidgetDeckConfigBinding
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.widgets.databinding.ItemWidgetDeckConfigBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
