@@ -484,7 +484,11 @@ open class Reviewer :
         findViewById<View>(R.id.top_bar).also { topBar ->
             // in BUTTONS_ONLY, the counts bar sits at the top of the window
             val baseTopPadding = topBar.paddingTop
-            val topBarTop: (WindowInsetsCompat) -> Int = { baseTopPadding + it.bars().top }
+            // top padding is added to stop the counts appearing inside rounded corners
+            // TODO: left padding could be used; but this screen is deprecated
+            val topBarTop: (WindowInsetsCompat) -> Int = {
+                baseTopPadding + it.getInsetsIgnoringVisibility(systemBars() or displayCutout()).top
+            }
             clearInsets(
                 topBar,
                 basePadding = resources.getDimensionPixelSize(R.dimen.side_margin),
