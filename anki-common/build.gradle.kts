@@ -5,6 +5,7 @@ import com.ichi2.anki.gradle.addAnkiBackendDependencies
 
 plugins {
     id("ankidroid.android.library")
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 configure<LibraryExtension> {
