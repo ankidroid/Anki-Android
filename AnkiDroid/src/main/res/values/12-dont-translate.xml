@@ -13,7 +13,7 @@ If you want to use a string in your code that can't be translated, please use:
 * constants.xml if the string must be a constant, such as the name of someone or a URL
 * hard coded string literals if the string should not be translated because it belongs to a feature in progress.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
     <!--
     Adding or removing new line at the start/end of the string cause crowdin to require a new translation. Let's check if a comment before lead to a translation need!
     Adding this kind of XML comment does not cause the need for a new translation!
