@@ -4,7 +4,7 @@ package com.ichi2.anki.sync
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.checkBoxPrompt
@@ -47,10 +47,10 @@ object MeteredSyncPolicy {
             return
         }
         AlertDialog.Builder(context).show {
-            message(R.string.metered_sync_data_warning)
-            positiveButton(R.string.dialog_continue) { onConfirm() }
-            negativeButton(R.string.dialog_cancel)
-            checkBoxPrompt(R.string.button_do_not_show_again) { checked ->
+            message(CommonString.metered_sync_data_warning)
+            positiveButton(CommonString.dialog_continue) { onConfirm() }
+            negativeButton(CommonString.dialog_cancel)
+            checkBoxPrompt(CommonString.button_do_not_show_again) { checked ->
                 setAlwaysAllow(checked)
             }
         }

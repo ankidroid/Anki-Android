@@ -12,6 +12,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.NotificationChannel
@@ -218,20 +220,20 @@ class NotificationService : AnkiBroadcastReceiver() {
 
             val title =
                 when (reviewReminder.scope) {
-                    is ReviewReminderScope.Global -> context.getString(R.string.review_reminder_notification_title_all_decks)
+                    is ReviewReminderScope.Global -> context.getString(CommonString.review_reminder_notification_title_all_decks)
                     is ReviewReminderScope.DeckSpecific -> {
                         val fullDeckName = reviewReminder.scope.getDeckName()
                         val deckName =
                             Decks.basename(fullDeckName) // don't show the full path with "::" included
                         context.getString(
-                            R.string.review_reminder_notification_title_deck,
+                            CommonString.review_reminder_notification_title_deck,
                             withUnicodeIsolation(deckName),
                         )
                     }
                 }
             val description =
                 context.resources.getQuantityString(
-                    R.plurals.review_reminder_notification_cards_due,
+                    CommonPlurals.review_reminder_notification_cards_due,
                     dueCardsTotal,
                     dueCardsTotal,
                 )
@@ -277,9 +279,12 @@ class NotificationService : AnkiBroadcastReceiver() {
                     .setAutoCancel(true) // Dismiss on click
                     .setTicker(title) // Accessibility
                     .addAction(
-                        context.getString(R.string.review_reminder_notification_snooze_button, 5.minutes.toString()),
+                        context.getString(CommonString.review_reminder_notification_snooze_button, 5.minutes.toString()),
                         fiveMinuteSnooze,
-                    ).addAction(context.getString(R.string.review_reminder_notification_snooze_button, 1.hours.toString()), oneHourSnooze)
+                    ).addAction(
+                        context.getString(CommonString.review_reminder_notification_snooze_button, 1.hours.toString()),
+                        oneHourSnooze,
+                    )
                     // Vibration and priority are set here for backwards compatibility; they are set via channel for API 33+
                     .setVibrate(longArrayOf(0, 500))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -362,7 +367,7 @@ class NotificationService : AnkiBroadcastReceiver() {
                 val cardsDueText =
                     context.resources
                         .getQuantityString(
-                            R.plurals.widget_minimum_cards_due_notification_ticker_text,
+                            CommonPlurals.widget_minimum_cards_due_notification_ticker_text,
                             dueCardsCount,
                             dueCardsCount,
                         )

@@ -176,7 +176,7 @@ open class AnkiDroidApp :
         }
         launchCacheCleanup()
         if (AdaptionUtil.isUserATestClient) {
-            showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
+            showThemedToast(this.applicationContext, getString(CommonString.user_is_a_robot), false)
         }
 
         setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)

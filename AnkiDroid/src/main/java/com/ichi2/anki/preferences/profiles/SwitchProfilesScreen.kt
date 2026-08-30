@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.multiprofile.ProfileId
 import com.ichi2.anki.multiprofile.ProfileName
@@ -59,7 +60,7 @@ fun SwitchProfilesScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.switch_profile)) },
+                title = { Text(stringResource(CommonString.switch_profile)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateUp) {
                         Icon(
@@ -76,7 +77,7 @@ fun SwitchProfilesScreen(
                 icon = {
                     Icon(painterResource(R.drawable.ic_switch_profile), contentDescription = null)
                 },
-                text = { Text(stringResource(R.string.add_profile)) },
+                text = { Text(stringResource(CommonString.add_profile)) },
             )
         },
     ) { contentPadding ->
@@ -152,13 +153,13 @@ private fun ProfileRow(
         IconButton(onClick = onEditClick) {
             Icon(
                 painterResource(R.drawable.ic_popup_menu_item_editor),
-                contentDescription = stringResource(R.string.edit_profile),
+                contentDescription = stringResource(CommonString.edit_profile),
             )
         }
         IconButton(onClick = onDeleteClick) {
             Icon(
                 painterResource(R.drawable.ic_delete),
-                contentDescription = stringResource(R.string.delete_profile),
+                contentDescription = stringResource(CommonString.delete_profile),
             )
         }
     }

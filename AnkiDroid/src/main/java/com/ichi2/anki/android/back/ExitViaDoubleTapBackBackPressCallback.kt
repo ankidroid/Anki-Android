@@ -7,6 +7,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.utils.android.HandlerUtils
@@ -57,7 +58,7 @@ fun AnkiActivity.exitViaDoubleTapBackCallback(): OnBackPressedCallback =
         lateinit var strongListenerReference: OnSharedPreferenceChangeListener
 
         override fun handleOnBackPressed() {
-            showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
+            showSnackbar(CommonString.back_pressed_once, Snackbar.LENGTH_SHORT)
             this.isEnabled = false
             HandlerUtils.executeFunctionWithDelay(2.seconds.inWholeMilliseconds) {
                 this.isEnabled = true

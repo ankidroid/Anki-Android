@@ -17,9 +17,9 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.OptionalPermissionSet
-import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
 import com.ichi2.anki.common.permissions.canPostNotifications
@@ -86,7 +86,7 @@ object Permissions {
             permissionRequestedFlag.setter.call(true)
             permissionRequestLauncher.launch(permission)
         } else {
-            showToastAndOpenAppSettingsScreenForPermission(permission, R.string.manually_grant_permissions)
+            showToastAndOpenAppSettingsScreenForPermission(permission, CommonString.manually_grant_permissions)
         }
     }
 
@@ -104,7 +104,7 @@ object Permissions {
                 permissionRequestLauncher = notificationPermissionLauncher,
             )
         } else {
-            showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, R.string.manually_grant_permissions)
+            showToastAndOpenAppSettingsScreenForPermission(LEGACY_POST_NOTIFICATIONS, CommonString.manually_grant_permissions)
         }
     }
 
@@ -273,7 +273,7 @@ object Permissions {
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e, "No app can show the app settings screen")
-            showThemedToast(this, R.string.activity_start_failed, false)
+            showThemedToast(this, CommonString.activity_start_failed, false)
         }
     }
 

@@ -25,6 +25,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.databinding.FragmentAudioRecordingBinding
@@ -40,7 +41,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
     internal val binding by viewBinding(FragmentAudioRecordingBinding::bind)
 
     override val title: String
-        get() = resources.getString(R.string.multimedia_editor_field_editing_audio)
+        get() = resources.getString(CommonString.multimedia_editor_field_editing_audio)
 
     private var audioRecordingController: AudioRecordingController? = null
 
@@ -49,7 +50,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
         ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(requireContext(), "temp-media")
         if (ankiCacheDirectory == null) {
             Timber.e("createUI() failed to get cache directory")
-            showErrorDialog(errorMessage = resources.getString(R.string.multimedia_editor_failed))
+            showErrorDialog(errorMessage = resources.getString(CommonString.multimedia_editor_failed))
             return
         }
     }
@@ -65,7 +66,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
                 setupDoneButton()
             } else {
                 Timber.d("Audio permission denied")
-                showErrorDialog(resources.getString(R.string.multimedia_editor_audio_permission_refused))
+                showErrorDialog(resources.getString(CommonString.multimedia_editor_audio_permission_refused))
             }
         }
 

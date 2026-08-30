@@ -10,6 +10,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.edit
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
@@ -38,9 +39,9 @@ class AnkiDroidCrashReportDialog :
         super.onCreate(savedInstanceState)
         val dialogBuilder = AlertDialog.Builder(this)
         dialogBuilder.setIcon(R.drawable.logo_star_144dp)
-        dialogBuilder.setTitle(R.string.feedback_title)
-        dialogBuilder.setPositiveButton(getString(R.string.feedback_report), this@AnkiDroidCrashReportDialog)
-        dialogBuilder.setNegativeButton(R.string.dialog_cancel, this@AnkiDroidCrashReportDialog)
+        dialogBuilder.setTitle(CommonString.feedback_title)
+        dialogBuilder.setPositiveButton(getString(CommonString.feedback_report), this@AnkiDroidCrashReportDialog)
+        dialogBuilder.setNegativeButton(CommonString.dialog_cancel, this@AnkiDroidCrashReportDialog)
         helper = CrashReportDialogHelper(this, intent)
         dialogBuilder.setView(buildCustomView(savedInstanceState))
         val dialog = dialogBuilder.create()

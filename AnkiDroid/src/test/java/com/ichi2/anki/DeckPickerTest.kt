@@ -932,14 +932,14 @@ class DeckPickerTest : RobolectricTest() {
             advanceRobolectricLooper()
 
             val binding = floatingActionButtonBinding
-            assertThat(binding.fabMain.text.toString(), equalTo(getString(R.string.menu_add)))
+            assertThat(binding.fabMain.text.toString(), equalTo(getString(CommonString.menu_add)))
             assertThat(
                 binding.addSharedButton.text.toString(),
-                equalTo(getString(R.string.menu_get_shared_decks)),
+                equalTo(getString(CommonString.menu_get_shared_decks)),
             )
             assertThat(
                 binding.addFilteredDeckButton.text.toString(),
-                equalTo(getString(R.string.new_dynamic_deck)),
+                equalTo(getString(CommonString.new_dynamic_deck)),
             )
             // 'Create deck' uses a backend string rather than an android:text resource
             assertThat(
@@ -1263,13 +1263,13 @@ class DeckPickerTest : RobolectricTest() {
                     .build()
             ViewCompat.performReceiveContent(findViewById(R.id.pull_to_sync_wrapper), payload)
 
-            val snackbar = showSnackbar(getString(R.string.import_log_no_apkg))
+            val snackbar = showSnackbar(getString(CommonString.import_log_no_apkg))
             assertThat("snackbar must be shown for unsupported file drop", snackbar, notNullValue())
 
             val snackbarText = snackbar?.text
             assertThat(
                 snackbarText,
-                equalTo(getString(R.string.import_log_no_apkg)),
+                equalTo(getString(CommonString.import_log_no_apkg)),
             )
         }
 }

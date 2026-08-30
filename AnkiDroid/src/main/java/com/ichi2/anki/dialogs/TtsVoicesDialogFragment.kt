@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.AndroidTtsVoice
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogTtsVoicesBinding
@@ -114,7 +115,7 @@ class TtsVoicesDialogFragment : DialogFragment(R.layout.dialog_tts_voices) {
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
-            showThemedToast(requireContext(), R.string.tts_voices_failed_opening_tts_system_settings, shortLength = true)
+            showThemedToast(requireContext(), CommonString.tts_voices_failed_opening_tts_system_settings, shortLength = true)
         }
     }
 
@@ -146,15 +147,15 @@ class TtsVoicesDialogFragment : DialogFragment(R.layout.dialog_tts_voices) {
         }
 
         viewModel.uninstalledVoicePlayed.observe { voice ->
-            dialog?.window?.decorView?.showSnackbar(R.string.tts_voices_selected_voice_should_be_installed) {
-                setAction(R.string.tts_voices_use_selected_voice_without_install) { viewModel.copyToClipboard(voice) }
+            dialog?.window?.decorView?.showSnackbar(CommonString.tts_voices_selected_voice_should_be_installed) {
+                setAction(CommonString.tts_voices_use_selected_voice_without_install) { viewModel.copyToClipboard(voice) }
             }
         }
 
         viewModel.ttsPlaybackErrorFlow.observe {
             val string = it.localizedErrorMessage(requireContext())
             dialog?.window?.decorView?.showSnackbar(string) {
-                setAction(R.string.help) {
+                setAction(CommonString.help) {
                     // TODO: Should do this in ViewModel, but we need an Activity
                     requireContext().openUrl(R.string.link_faq_tts)
                 }

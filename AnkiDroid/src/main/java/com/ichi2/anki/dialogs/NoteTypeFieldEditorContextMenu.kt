@@ -8,8 +8,8 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.NoteTypeFieldEditor
-import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.utils.create
 import timber.log.Timber
@@ -35,11 +35,11 @@ class NoteTypeFieldEditorContextMenu : AnalyticsDialogFragment() {
         val order: Int,
         @StringRes val actionTextId: Int,
     ) {
-        Reposition(0, R.string.model_field_editor_reposition_menu),
-        Sort(1, R.string.model_field_editor_sort_field),
-        Rename(2, R.string.model_field_editor_rename),
-        Delete(3, R.string.model_field_editor_delete),
-        AddLanguageHint(4, R.string.model_field_editor_language_hint),
+        Reposition(0, CommonString.model_field_editor_reposition_menu),
+        Sort(1, CommonString.model_field_editor_sort_field),
+        Rename(2, CommonString.model_field_editor_rename),
+        Delete(3, CommonString.model_field_editor_delete),
+        AddLanguageHint(4, CommonString.model_field_editor_language_hint),
     }
 
     companion object {

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentCheckPronunciationBinding
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
@@ -35,15 +36,15 @@ class CheckPronunciationFragment : Fragment(R.layout.fragment_check_pronunciatio
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (!isGranted) {
                 AlertDialog.Builder(requireContext()).show {
-                    setTitle(R.string.permission_denied)
-                    setMessage(R.string.microphone_permission_denied_message)
-                    setPositiveButton(R.string.dialog_ok) { _, _ ->
+                    setTitle(CommonString.permission_denied)
+                    setMessage(CommonString.microphone_permission_denied_message)
+                    setPositiveButton(CommonString.dialog_ok) { _, _ ->
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         val uri = Uri.fromParts("package", requireContext().packageName, null)
                         intent.data = uri
                         startActivity(intent)
                     }
-                    setNegativeButton(R.string.dialog_cancel, null)
+                    setNegativeButton(CommonString.dialog_cancel, null)
                 }
             }
         }

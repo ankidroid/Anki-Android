@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.commitNow
 import com.google.android.material.loadingindicator.LoadingIndicator
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.create
@@ -26,7 +27,7 @@ class LoadingDialogFragment : DialogFragment() {
         val canBeCancelled = arguments?.getBoolean(KEY_CANCELLABLE) ?: true
         isCancelable = canBeCancelled
         dialogView.findViewById<TextView>(R.id.text).text =
-            arguments?.getString(KEY_MESSAGE) ?: getString(R.string.dialog_processing)
+            arguments?.getString(KEY_MESSAGE) ?: getString(CommonString.dialog_processing)
         return AlertDialog
             .Builder(requireContext())
             .create {
@@ -43,7 +44,7 @@ class LoadingDialogFragment : DialogFragment() {
         /**
          * Creates an instance of [LoadingDialogFragment].
          * @param message optional message for the loading operation, will default to
-         * [R.string.dialog_processing] if not provided
+         * [CommonString.dialog_processing] if not provided
          * @param cancellable if the dialog should be cancellable or not (also affects cancel when
          * touching outside the dialog window)
          */
@@ -90,7 +91,7 @@ fun AnkiActivity.showLoadingDialog(
         val fragmentView = fragment.view // sanity check
         if (fragmentView != null && cancellable == fragment.isCancelable) {
             fragmentView.findViewById<TextView>(R.id.text)?.text =
-                message ?: getString(R.string.dialog_processing)
+                message ?: getString(CommonString.dialog_processing)
             return
         }
     }
