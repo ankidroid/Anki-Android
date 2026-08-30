@@ -54,11 +54,12 @@ fun getAndroidManifestStringResourceNames(): Set<String> =
         .mapTo(mutableSetOf()) { it.groupValues[1] }
 
 /**
- * Parses all translatable XML files from `res/values/` and extracts
+ * Parses all translatable XML files from `:common:android`'s `res/values/` and extracts
  * `<string>` element names and their text values.
  */
 fun getTranslatableXmlStrings(): List<XmlStringResource> {
-    val resDir = File("src/main/res/values")
+    // test working directory is the module directory: `AnkiDroid/`
+    val resDir = File("../common/android/src/main/res/values")
     val translatableFiles =
         resDir
             .listFiles { file ->
