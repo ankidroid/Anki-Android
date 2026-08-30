@@ -7,7 +7,7 @@
  * Licensed under the GPL-3.0 license. See LICENSE file in the project root for details.
  *
  * @description
- * updateI18nFiles() to update files in AnkiDroid/src/main/res/values/ with downloaded files from crowdin.
+ * updateI18nFiles() to update files in common/android/src/main/res/values/ with downloaded files from crowdin.
  * The downloaded file needs to extract first with 'yarn start extract'.
  * It's expected to be called through 'yarn start update'.
  */

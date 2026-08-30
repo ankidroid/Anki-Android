@@ -23,7 +23,7 @@ The following commands are available. Run them from the `./tools/localization` d
 
 ### Upload
 
-Uploads English `res/values` files to Crowdin.
+Uploads the English `res/values` files (from `common/android/src/main/res`) to Crowdin.
 
 > yarn start upload
 
@@ -41,7 +41,7 @@ Extracts files from `ankidroid.zip` into an internal staging area
 
 ### Update
 
-Updates the files from the extracted `ankidroid.zip` file by processing them lightly (adding copyright information, fixing some common errors, etc), then copying them into the correct Android resource folders for the translated languages
+Updates the files from the extracted `ankidroid.zip` file by processing them lightly (adding copyright information, fixing some common errors, etc), then copying them into `common/android/src/main/res/values-*` for the translated languages.
 
 > yarn start update
 
