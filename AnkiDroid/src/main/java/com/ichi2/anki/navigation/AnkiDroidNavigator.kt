@@ -11,6 +11,7 @@ import com.ichi2.anki.common.destinations.ChangelogDestination
 import com.ichi2.anki.common.destinations.CsvImporterDestination
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.Destination
+import com.ichi2.anki.common.destinations.LauncherDestination
 import com.ichi2.anki.common.destinations.Navigator
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.ReviewDeckDestination
@@ -35,6 +36,7 @@ object AnkiDroidNavigator : Navigator {
             is CsvImporterDestination -> destination.toIntent(navContext)
             is DeckOptionsDestination -> destination.toIntent(navContext)
             is ChangelogDestination -> destination.toIntent(navContext)
+            is LauncherDestination -> destination.toIntent(navContext)
             is PreferencesDestination -> destination.toIntent(navContext)
             is ReviewDeckDestination -> destination.toIntent(navContext)
             is StatisticsDestination -> destination.toIntent(navContext)
