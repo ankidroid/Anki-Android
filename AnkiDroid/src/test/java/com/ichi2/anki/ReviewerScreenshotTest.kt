@@ -64,6 +64,19 @@ class ReviewerScreenshotTest : ScreenshotTest() {
     }
 
     /**
+     * Buttons at the top in landscape: should be full width
+     */
+    @Test
+    fun landscapeAnswerButtonsAtTop() {
+        RuntimeEnvironment.setQualifiers("+land")
+        targetContext.sharedPrefs().edit { putString("answerButtonPosition", "top") }
+        withReviewer { reviewer ->
+            reviewer.simulateSideNavigationBar()
+            captureScreen("landscape_answer_buttons_top")
+        }
+    }
+
+    /**
      * Landscape with 3-button navigation: the navigation bar is a side inset and the camera
      * cutout is on the opposite side.
      */
