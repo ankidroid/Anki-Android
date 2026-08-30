@@ -18,6 +18,7 @@ package com.ichi2.anki.security
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.preferences.sharedPrefs
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicInteger
@@ -65,7 +66,7 @@ class AppPermissions(
         // Avoid decision fatigue by limiting the number of times the warning is shown.
         // Reset on app restart.
         if (launchDenialsSinceProcessStart.incrementAndGet() > MAX_SNACKBARS_PER_PROCESS) return
-        showSnackbar(context.getString(R.string.card_external_launch_denied_snackbar))
+        showSnackbar(context.getString(S.card_external_launch_denied_snackbar))
     }
 
     /**
@@ -88,7 +89,7 @@ class AppPermissions(
         // Avoid decision fatigue by limiting the number of times the warning is shown.
         // Reset on app restart.
         if (jaApiDenialsSinceProcessStart.incrementAndGet() > MAX_SNACKBARS_PER_PROCESS) return
-        showSnackbar(context.getString(R.string.dangerous_js_api_denied_snackbar))
+        showSnackbar(context.getString(S.dangerous_js_api_denied_snackbar))
     }
 
     companion object {

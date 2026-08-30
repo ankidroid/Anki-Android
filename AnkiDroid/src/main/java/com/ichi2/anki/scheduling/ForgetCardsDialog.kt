@@ -11,7 +11,9 @@ import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -101,10 +103,10 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
         return MaterialAlertDialogBuilder(requireContext()).create {
             // BUG: this is 'Reset Card'/'Forget Card' in Anki Desktop (24.04)
             // "Reset card progress" is less explicit on the singular/plural dimension
-            titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
+            titleWithHelpIcon(stringRes = S.reset_card_dialog_title) {
                 requireContext().openUrl(R.string.link_help_forget_cards)
             }
-            positiveButton(R.string.reset) {
+            positiveButton(S.reset) {
                 sharedPrefs.edit {
                     putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
                     putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
@@ -117,7 +119,7 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
                     },
                 )
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
             setView(binding.root)
         }
     }
@@ -192,7 +194,7 @@ private fun FragmentActivity.forgetCards(
     Timber.d("forgot %d cards", cardsIds.size)
     showSnackbar(
         resources.getQuantityString(
-            R.plurals.reset_cards_dialog_acknowledge,
+            Pl.reset_cards_dialog_acknowledge,
             cardsIds.size,
             cardsIds.size,
         ),

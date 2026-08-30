@@ -26,6 +26,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
 import com.ichi2.anki.deckpicker.BackgroundImage
@@ -65,7 +66,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                     backgroundImageResultLauncher.launch("image/*")
                 } catch (ex: ActivityNotFoundException) {
                     Timber.w(ex, "No app found to handle background preference change request")
-                    activity?.showSnackbar(R.string.activity_start_failed)
+                    activity?.showSnackbar(S.activity_start_failed)
                 }
                 true
             }
@@ -116,16 +117,16 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     private fun showRemoveBackgroundImageDialog() {
         AlertDialog.Builder(requireContext()).show {
-            title(R.string.remove_background_image)
-            positiveButton(R.string.dialog_remove) {
+            title(S.remove_background_image)
+            positiveButton(S.dialog_remove) {
                 if (BackgroundImage.remove(requireContext())) {
-                    showSnackbar(R.string.background_image_removed)
+                    showSnackbar(S.background_image_removed)
                     updateRemoveBackgroundVisibility()
                 } else {
-                    showSnackbar(R.string.error_deleting_image)
+                    showSnackbar(S.error_deleting_image)
                 }
             }
-            negativeButton(R.string.dialog_keep)
+            negativeButton(S.dialog_keep)
         }
     }
 
@@ -189,7 +190,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 if (BackgroundImage.shouldBeShown(requireContext())) {
                     showRemoveBackgroundImageDialog()
                 } else {
-                    showSnackbar(R.string.no_image_selected)
+                    showSnackbar(S.no_image_selected)
                 }
                 return@registerForActivityResult
             }
@@ -197,12 +198,12 @@ class AppearanceSettingsFragment : SettingsFragment() {
             try {
                 when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(this, selectedImage)) {
                     is FileSizeResult.FileTooLarge -> {
-                        showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
+                        showThemedToast(requireContext(), getString(S.image_max_size_allowed, sizeResult.maxMB), false)
                     }
                     is FileSizeResult.UncompressedBitmapTooLarge -> {
                         showThemedToast(
                             requireContext(),
-                            getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height),
+                            getString(S.image_dimensions_too_large, sizeResult.width, sizeResult.height),
                             false,
                         )
                     }
@@ -213,10 +214,10 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 }
             } catch (e: OutOfMemoryError) {
                 Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
+                showSnackbar(getString(S.error_selecting_image, e.localizedMessage))
             } catch (e: Exception) {
                 Timber.w(e)
-                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
+                showSnackbar(getString(S.error_selecting_image, e.localizedMessage))
             }
         }
 

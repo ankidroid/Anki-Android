@@ -83,7 +83,7 @@ class Info :
             }
         binding.leftButton.run {
             if (canOpenMarketUri()) {
-                setText(R.string.info_rate)
+                setText(S.info_rate)
                 setOnClickListener {
                     tryOpenIntent(
                         this@Info,
@@ -113,7 +113,7 @@ class Info :
         binding.webView.settings.allowContentAccess = true
         setRenderWorkaround(this)
         binding.rightButton.run {
-            text = getString(R.string.dialog_continue)
+            text = getString(S.dialog_continue)
             setOnClickListener { close() }
         }
         val background = backgroundColor.toRGBHex()

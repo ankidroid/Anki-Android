@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
@@ -180,7 +180,7 @@ abstract class MultimediaFragment(
      * "Something went wrong" message from the application's resources.
      */
     fun showSomethingWentWrong() {
-        showSnackbar(resources.getString(R.string.multimedia_editor_something_wrong))
+        showSnackbar(resources.getString(S.multimedia_editor_something_wrong))
     }
 
     /**
@@ -190,8 +190,8 @@ abstract class MultimediaFragment(
      */
     fun showErrorDialog(errorMessage: String? = null) {
         AlertDialog.Builder(requireContext()).show {
-            setMessage(errorMessage ?: resources.getString(R.string.something_wrong))
-            setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
+            setMessage(errorMessage ?: resources.getString(S.something_wrong))
+            setPositiveButton(getString(S.dialog_ok)) { _, _ ->
                 requireActivity().finish()
             }
         }

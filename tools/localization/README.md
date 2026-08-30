@@ -23,7 +23,7 @@ The following commands are available. Run them from the `./tools/localization` d
 
 ### Upload
 
-Uploads English `res/values` files to Crowdin.
+Uploads the English `res/values` files (from `common/android/src/main/res`) to Crowdin.
 
 > yarn start upload
 

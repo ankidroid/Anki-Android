@@ -27,6 +27,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.common.storage.CollectionHelper.getCurrentAnkiDroidDirectory
 import com.ichi2.anki.tests.InstrumentedTest
@@ -69,7 +70,7 @@ class DatabaseCorruptDialogTest : InstrumentedTest() {
 
     @Test
     fun testOpenCollectionFailedDialog() {
-        onView(withText(R.string.open_collection_failed_title))
+        onView(withText(S.open_collection_failed_title))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
     }
@@ -78,7 +79,7 @@ class DatabaseCorruptDialogTest : InstrumentedTest() {
     fun testCorruptCollectionDialog() {
         val corruptMsg =
             testContext.getString(
-                R.string.corrupt_db_message,
+                S.corrupt_db_message,
                 testContext.getString(R.string.repair_deck),
             )
         onView(withText(corruptMsg))

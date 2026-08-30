@@ -35,6 +35,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.navigate
@@ -91,7 +92,7 @@ class PreviewerFragment :
                     val displayIndex = currentIndex + 1
                     binding.slider.value = displayIndex.toFloat()
                     binding.progressIndicator.text =
-                        getString(R.string.preview_progress_bar_text, displayIndex, cardsCount)
+                        getString(S.preview_progress_bar_text, displayIndex, cardsCount)
                 }
         }
         // ************************************* Menu items *************************************
@@ -113,7 +114,7 @@ class PreviewerFragment :
                     with(menu.findItem(R.id.action_mark)) {
                         if (isMarked) {
                             setIcon(R.drawable.ic_star)
-                            setTitle(R.string.menu_unmark_note)
+                            setTitle(S.menu_unmark_note)
                         } else {
                             setIcon(R.drawable.ic_star_border_white)
                             title = TR.sentenceCase.markNote
@@ -262,10 +263,10 @@ class PreviewerFragment :
         menu.findItem(R.id.action_back_side_only).apply {
             if (isBackSideOnly) {
                 setIcon(R.drawable.ic_card_answer)
-                setTitle(R.string.card_side_answer)
+                setTitle(S.card_side_answer)
             } else {
                 setIconRes(requireContext(), R.drawable.ic_card_question)
-                setTitle(R.string.card_side_both)
+                setTitle(S.card_side_both)
             }
         }
     }

@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.ColumnItem
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.ACTIVE
@@ -254,8 +255,8 @@ enum class ColumnUsage(
     @StringRes val titleRes: Int,
 ) {
     /** A column displayed in Browse */
-    ACTIVE(R.string.user_active_columns),
+    ACTIVE(S.user_active_columns),
 
     /** A column which is not displayed in Browse */
-    AVAILABLE(R.string.user_potential_columns),
+    AVAILABLE(S.user_potential_columns),
 }

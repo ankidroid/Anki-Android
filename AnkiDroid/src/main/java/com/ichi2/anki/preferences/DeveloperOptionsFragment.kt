@@ -12,6 +12,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -98,7 +99,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                     "This will most likely make it so that you cannot access your collection. " +
                         "It will be very difficult to recover your data.",
                 )
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setPositiveButton(S.dialog_ok) { _, _ ->
                     Timber.w("Setting collection path to /storage/emulated/0/AnkiDroid")
                     AnkiDroidApp.sharedPrefs().edit {
                         putString(
@@ -107,7 +108,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                         )
                     }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(S.dialog_cancel) { _, _ -> }
             }
             false
         }
@@ -135,7 +136,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                 setPositiveButton("OK") { _, _ ->
                     generateNotes(numberOfNotes)
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(S.dialog_cancel) { _, _ -> }
             }
             true
         }
@@ -161,7 +162,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
                 setPositiveButton("OK") { _, _ ->
                     generateFiles(sizeOfFiles, numberOfFiles)
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(S.dialog_cancel) { _, _ -> }
             }
             true
         }
@@ -275,13 +276,13 @@ class DeveloperOptionsFragment : SettingsFragment() {
      */
     private fun showDisableDeveloperOptionsDialog() {
         AlertDialog.Builder(requireContext()).show {
-            setTitle(R.string.disable_dev_options)
-            setPositiveButton(R.string.dialog_ok) { _, _ ->
+            setTitle(S.disable_dev_options)
+            setPositiveButton(S.dialog_ok) { _, _ ->
                 Prefs.isDeveloperOptionsEnabled = false
                 parentFragmentManager.popBackStack()
                 ActivityCompat.recreate(requireActivity())
             }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            setNegativeButton(S.dialog_cancel) { _, _ -> }
         }
     }
 }

@@ -378,7 +378,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
         // Set activity title
         supportActionBar?.let {
-            it.setTitle(R.string.title_activity_template_editor)
+            it.setTitle(S.title_activity_template_editor)
             it.subtitle = tempNoteType!!.notetype.name
         }
         // Close collection opening dialog if needed
@@ -414,7 +414,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         require(deck is SelectableDeck.Deck?)
         if (tempNoteType!!.notetype.isCloze) {
             Timber.w("Attempted to set deck for cloze note type")
-            showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
+            showSnackbar(getString(S.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
 
@@ -423,7 +423,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
         if (deck != null && getColUnsafe.decks.isFiltered(deck.deckId)) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.name)
-            showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
+            showSnackbar(getString(S.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
 
@@ -431,11 +431,11 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             if (deck == null) {
                 Timber.i("Removing default template from template '%s'", templateName)
                 template.jsonObject.put("did", JSONObject.NULL)
-                getString(R.string.model_manager_deck_override_removed_message, templateName)
+                getString(S.model_manager_deck_override_removed_message, templateName)
             } else {
                 Timber.i("Setting template '%s' to '%s'", templateName, deck.name)
                 template.jsonObject.put("did", deck.deckId)
-                getString(R.string.model_manager_deck_override_added_message, templateName, deck.name)
+                getString(S.model_manager_deck_override_added_message, templateName, deck.name)
             }
 
         showSnackbar(message, Snackbar.LENGTH_SHORT)
@@ -556,20 +556,20 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         get() =
             ShortcutGroup(
                 listOf(
-                    shortcut("Ctrl+P", R.string.card_editor_preview_card),
-                    shortcut("Ctrl+1", R.string.edit_front_template),
-                    shortcut("Ctrl+2", R.string.edit_back_template),
-                    shortcut("Ctrl+3", R.string.edit_styling),
-                    shortcut("Ctrl+S", R.string.save),
-                    shortcut("Ctrl+I", R.string.card_template_editor_insert_field),
+                    shortcut("Ctrl+P", S.card_editor_preview_card),
+                    shortcut("Ctrl+1", S.edit_front_template),
+                    shortcut("Ctrl+2", S.edit_back_template),
+                    shortcut("Ctrl+3", S.edit_styling),
+                    shortcut("Ctrl+S", S.save),
+                    shortcut("Ctrl+I", S.card_template_editor_insert_field),
                     shortcut("Ctrl+A", Translations::cardTemplatesAddCardType),
                     shortcut("Ctrl+R", Translations::cardTemplatesRenameCardType),
-                    shortcut("Ctrl+B", R.string.edit_browser_appearance),
+                    shortcut("Ctrl+B", S.edit_browser_appearance),
                     shortcut("Ctrl+D", Translations::cardTemplatesRemoveCardType),
                     shortcut("Ctrl+O", Translations::cardTemplatesDeckOverride),
-                    shortcut("Ctrl+M", R.string.copy_the_template),
+                    shortcut("Ctrl+M", S.copy_the_template),
                 ),
-                R.string.card_template_editor_group,
+                S.card_template_editor_group,
             )
 
     class CardTemplateFragment : Fragment(R.layout.fragment_card_template_editor_template) {
@@ -794,7 +794,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
                 if (currentEditorViewId != R.id.styling_edit) {
                     // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
-                    menu.add(Menu.FIRST, insertFieldId, 0, getString(R.string.card_template_editor_insert_field))
+                    menu.add(Menu.FIRST, insertFieldId, 0, getString(S.card_template_editor_insert_field))
                 }
 
                 return initialSize != menu.size
@@ -978,7 +978,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 val template = tempModel!!.getTemplate(ordinal)
                 // Don't do anything if only one template
                 if (tempModel.templateCount < 2) {
-                    templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_cant_delete))
+                    templateEditor.showSimpleMessageDialog(resources.getString(S.card_template_editor_cant_delete))
                     return@launch
                 }
 
@@ -1006,8 +1006,8 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             val builder =
                 AlertDialog
                     .Builder(requireContext())
-                    .setTitle(R.string.orphan_note_title)
-                    .setMessage(R.string.orphan_note_message)
+                    .setTitle(S.orphan_note_title)
+                    .setMessage(S.orphan_note_message)
                     .setPositiveButton(android.R.string.ok, null)
 
             builder.show()
@@ -1046,9 +1046,9 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     }
                     confirmButton.isEnabled = false
                 }
-                launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
+                launchCatchingTask(resources.getString(S.card_template_editor_save_error)) {
                     try {
-                        requireActivity().withProgress(resources.getString(R.string.saving_model)) {
+                        requireActivity().withProgress(resources.getString(S.saving_model)) {
                             templateEditor.tempNoteType!!.saveToDatabase()
                         }
                         onModelSaved()
@@ -1085,9 +1085,9 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
                 @StringRes val overrideStringRes =
                     if (template != null && template.jsonObject.has("did") && !template.jsonObject.isNull("did")) {
-                        R.string.card_template_editor_deck_override_on
+                        S.card_template_editor_deck_override_on
                     } else {
-                        R.string.card_template_editor_deck_override_off
+                        S.card_template_editor_deck_override_off
                     }
                 menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes)
             }
@@ -1181,12 +1181,12 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                         AlertDialog.Builder(requireContext()).show {
                             setTitle(TR.sentenceCase.restoreToDefault)
                             setMessage(TR.cardTemplatesRestoreToDefaultConfirmation())
-                            setPositiveButton(R.string.restore) { _, _ ->
+                            setPositiveButton(S.restore) { _, _ ->
                                 launchCatchingTask {
                                     restoreNotetypeToStock(kind)
                                 }
                             }
-                            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                            setNegativeButton(S.dialog_cancel) { _, _ -> }
                         }
                     }
 
@@ -1206,7 +1206,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                             }
                         AlertDialog.Builder(requireContext()).show {
                             setTitle(TR.sentenceCase.restoreToDefault)
-                            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                            setNegativeButton(S.dialog_cancel) { _, _ -> }
                             listItems(stockNotetypesNames) { _: DialogInterface, index: Int ->
                                 val kind = stockNotetypeKinds[index]
                                 askUser(kind)
@@ -1288,12 +1288,12 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             launchCatchingTask {
                 val activity = requireAnkiActivity()
                 if (tempModel.notetype.isCloze) {
-                    showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
+                    showSnackbar(getString(S.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
                     return@launchCatchingTask
                 }
                 val name = getCurrentTemplateName(tempModel)
-                val title = getString(R.string.card_template_editor_deck_override)
-                val explanation = getString(R.string.deck_override_explanation, name)
+                val title = getString(S.card_template_editor_deck_override)
+                val explanation = getString(S.deck_override_explanation, name)
                 // Anki Desktop allows Dynamic decks, have reported this as a bug:
                 // https://forums.ankiweb.net/t/minor-bug-deck-override-to-filtered-deck/1493
                 startDeckSelection(title = title, templateEditorMessage = explanation, allowAll = false, allowFiltered = false)
@@ -1407,16 +1407,16 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             val msg =
                 String.format(
                     resources.getQuantityString(
-                        R.plurals.card_template_editor_confirm_delete,
+                        Pl.card_template_editor_confirm_delete,
                         numAffectedCards,
                     ),
                     numAffectedCards,
                     tmpl.jsonObject.optString("name"),
                 )
             d.setArgs(
-                title = getString(R.string.delete_card_type),
+                title = getString(S.delete_card_type),
                 message = msg,
-                positiveButtonText = getString(R.string.dialog_positive_delete),
+                positiveButtonText = getString(S.dialog_positive_delete),
             )
 
             val deleteCard = Runnable { deleteTemplate(tmpl, notetype) }
@@ -1438,15 +1438,15 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             val msg =
                 String.format(
                     resources.getQuantityString(
-                        R.plurals.card_template_editor_confirm_add,
+                        Pl.card_template_editor_confirm_add,
                         numAffectedCards,
                     ),
                     numAffectedCards,
                 )
             d.setArgs(
-                title = getString(R.string.add_card_type),
+                title = getString(S.add_card_type),
                 message = msg,
-                positiveButtonText = getString(R.string.menu_add),
+                positiveButtonText = getString(S.menu_add),
             )
 
             val addCard = Runnable { addNewTemplate(notetype) }
@@ -1476,7 +1476,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 val d = ConfirmationDialog()
-                d.setArgs(resources.getString(R.string.full_sync_confirmation))
+                d.setArgs(resources.getString(S.full_sync_confirmation))
                 val confirm =
                     Runnable {
                         templateEditor.getColUnsafe.modSchema(check = false)

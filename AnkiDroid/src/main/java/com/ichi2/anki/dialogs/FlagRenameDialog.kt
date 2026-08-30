@@ -26,7 +26,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ichi2.anki.Flag
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.DialogRenameFlagBinding
 import com.ichi2.utils.customView
 import com.ichi2.utils.title
@@ -42,7 +42,7 @@ class FlagRenameDialog : DialogFragment() {
         val builder =
             AlertDialog.Builder(requireContext()).apply {
                 customView(view = binding.root, 4, 4, 4, 4)
-                title(R.string.rename_flag)
+                title(S.rename_flag)
             }
         val dialog = builder.create()
 

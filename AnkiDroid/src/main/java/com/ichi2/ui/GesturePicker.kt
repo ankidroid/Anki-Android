@@ -26,7 +26,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureListener
 import com.ichi2.anki.databinding.ViewGesturePickerBinding
@@ -94,7 +94,7 @@ open class GesturePicker(
     inner class GestureWrapper(
         val gesture: Gesture?,
     ) {
-        override fun toString(): String = gesture?.toDisplayString(context) ?: resources.getString(R.string.gestures_none)
+        override fun toString(): String = gesture?.toDisplayString(context) ?: resources.getString(S.gestures_none)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true

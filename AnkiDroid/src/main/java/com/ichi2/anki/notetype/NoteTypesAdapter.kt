@@ -23,6 +23,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ItemManageNoteTypeBinding
 import com.ichi2.anki.notetype.NoteTypesAdapter.NoteTypeViewHolder
@@ -145,7 +146,7 @@ internal class NoteTypesAdapter(
             binding.noteName.text = state.name
             binding.noteUseCount.text =
                 context.resources.getQuantityString(
-                    R.plurals.model_browser_of_type,
+                    Pl.model_browser_of_type,
                     state.useCount,
                     state.useCount,
                 )

@@ -12,6 +12,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
@@ -111,7 +112,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
         ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(S.empty_collection_state_in_widget))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
@@ -140,7 +141,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             remoteViews: RemoteViews,
         ) {
             // Show empty_widget and set click listener to open configuration
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_widget_state))
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(S.empty_widget_state))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)

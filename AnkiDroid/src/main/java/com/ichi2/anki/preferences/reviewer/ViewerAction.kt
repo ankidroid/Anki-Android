@@ -11,6 +11,7 @@ import androidx.annotation.IdRes
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.ALWAYS
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.DISABLED
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType.MENU_ONLY
@@ -251,32 +252,32 @@ enum class ViewerAction(
                 STATISTICS -> TR.statisticsTitle()
                 RESCHEDULE_NOTE -> TR.sentenceCase.setDueDate
                 PREVIOUS_CARD_INFO -> TR.sentenceCase.previousCardInfo
-                UNDO -> getString(R.string.undo)
-                REDO -> getString(R.string.redo)
+                UNDO -> getString(S.undo)
+                REDO -> getString(S.redo)
                 FLAG_MENU -> TR.browsingFlag()
                 MARK -> TR.sentenceCase.markNote
-                EDIT -> getString(R.string.cardeditor_title_edit_card)
+                EDIT -> getString(S.cardeditor_title_edit_card)
                 BURY_MENU -> TR.studyingBury()
                 SUSPEND_MENU -> TR.studyingSuspend()
                 DELETE -> TR.sentenceCase.deleteNote
-                TOGGLE_WHITEBOARD -> getString(R.string.gesture_toggle_whiteboard)
+                TOGGLE_WHITEBOARD -> getString(S.gesture_toggle_whiteboard)
                 DECK_OPTIONS -> TR.sentenceCase.deckOptions
                 CARD_INFO -> TR.sentenceCase.cardInfo
-                ADD_NOTE -> getString(R.string.menu_add_note)
-                TAG -> getString(R.string.menu_edit_tags)
-                RESET_PROGRESS -> getString(R.string.card_editor_reset_card)
-                TOGGLE_AUTO_ADVANCE -> getString(R.string.toggle_auto_advance)
-                RECORD_VOICE -> getString(R.string.record_voice)
-                PLAY_MEDIA -> getString(R.string.replay_media)
-                USER_ACTION_1 -> getString(R.string.user_action_1)
-                USER_ACTION_2 -> getString(R.string.user_action_2)
-                USER_ACTION_3 -> getString(R.string.user_action_3)
-                USER_ACTION_4 -> getString(R.string.user_action_4)
-                USER_ACTION_5 -> getString(R.string.user_action_5)
-                USER_ACTION_6 -> getString(R.string.user_action_6)
-                USER_ACTION_7 -> getString(R.string.user_action_7)
-                USER_ACTION_8 -> getString(R.string.user_action_8)
-                USER_ACTION_9 -> getString(R.string.user_action_9)
+                ADD_NOTE -> getString(S.menu_add_note)
+                TAG -> getString(S.menu_edit_tags)
+                RESET_PROGRESS -> getString(S.card_editor_reset_card)
+                TOGGLE_AUTO_ADVANCE -> getString(S.toggle_auto_advance)
+                RECORD_VOICE -> getString(S.record_voice)
+                PLAY_MEDIA -> getString(S.replay_media)
+                USER_ACTION_1 -> getString(S.user_action_1)
+                USER_ACTION_2 -> getString(S.user_action_2)
+                USER_ACTION_3 -> getString(S.user_action_3)
+                USER_ACTION_4 -> getString(S.user_action_4)
+                USER_ACTION_5 -> getString(S.user_action_5)
+                USER_ACTION_6 -> getString(S.user_action_6)
+                USER_ACTION_7 -> getString(S.user_action_7)
+                USER_ACTION_8 -> getString(S.user_action_8)
+                USER_ACTION_9 -> getString(S.user_action_9)
                 BURY_NOTE -> TR.sentenceCase.buryNote
                 BURY_CARD -> TR.sentenceCase.buryCard
                 SUSPEND_NOTE -> TR.sentenceCase.suspendNote
@@ -307,7 +308,7 @@ enum class ViewerAction(
                 PAGE_UP,
                 PAGE_DOWN,
                 EXIT,
-                -> getString(R.string.empty_string)
+                -> getString(S.empty_string)
             }
         }
 

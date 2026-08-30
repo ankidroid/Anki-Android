@@ -46,36 +46,36 @@ object MediaRegistration {
      * Represents different types of media errors.
      */
     sealed class MediaError {
-        /** [Something wrong wrong][R.string.multimedia_editor_something_wrong] */
+        /** [Something wrong wrong][S.multimedia_editor_something_wrong] */
         data object GenericError : MediaError()
 
-        /** [Something went wrong, please try again[R.string.something_wrong] */
+        /** [Something went wrong, please try again[S.something_wrong] */
         data class GenericErrorTryAgain(
             val details: String?,
         ) : MediaError()
 
-        /** [Error converting clipboard image to png][R.string.multimedia_editor_png_paste_error] */
+        /** [Error converting clipboard image to png][S.multimedia_editor_png_paste_error] */
         class ConversionError(
             val message: String,
         ) : MediaError()
 
-        /** [The image is too large, please insert the image manually][R.string.note_editor_image_too_large] */
+        /** [The image is too large, please insert the image manually][S.note_editor_image_too_large] */
         data object ImageTooLarge : MediaError()
 
-        /** [The video file is too large, please insert the video manually][R.string.note_editor_video_too_large] */
+        /** [The video file is too large, please insert the video manually][S.note_editor_video_too_large] */
         data object VideoTooLarge : MediaError()
 
-        /** [The audio file is too large, please insert the audio manually][R.string.note_editor_audio_too_large] */
+        /** [The audio file is too large, please insert the audio manually][S.note_editor_audio_too_large] */
         data object AudioTooLarge : MediaError()
 
         fun toHumanReadableString(context: Context): String =
             when (this) {
-                is GenericError -> context.getString(R.string.multimedia_editor_something_wrong)
-                is GenericErrorTryAgain -> context.getString(R.string.something_wrong) + details?.let { "\n\n$it" }.orEmpty()
-                is ConversionError -> context.getString(R.string.multimedia_editor_png_paste_error, message)
-                is ImageTooLarge -> context.getString(R.string.note_editor_image_too_large)
-                is VideoTooLarge -> context.getString(R.string.note_editor_video_too_large)
-                is AudioTooLarge -> context.getString(R.string.note_editor_audio_too_large)
+                is GenericError -> context.getString(S.multimedia_editor_something_wrong)
+                is GenericErrorTryAgain -> context.getString(S.something_wrong) + details?.let { "\n\n$it" }.orEmpty()
+                is ConversionError -> context.getString(S.multimedia_editor_png_paste_error, message)
+                is ImageTooLarge -> context.getString(S.note_editor_image_too_large)
+                is VideoTooLarge -> context.getString(S.note_editor_video_too_large)
+                is AudioTooLarge -> context.getString(S.note_editor_audio_too_large)
             }
     }
 

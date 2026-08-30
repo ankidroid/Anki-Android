@@ -799,16 +799,16 @@ abstract class AbstractFlashcardViewer :
     protected fun showDeleteNoteDialog() {
         Timber.i("Displaying 'delete note' dialog")
         AlertDialog.Builder(this).show {
-            title(R.string.delete_card_title)
+            title(S.delete_card_title)
             setIcon(R.drawable.ic_warning)
             message(
                 text =
                     resources.getString(
-                        R.string.delete_note_message,
+                        S.delete_note_message,
                         stripHTMLAndSpecialFields(currentCard!!.question(getColUnsafe, true)).trim(),
                     ),
             )
-            positiveButton(R.string.dialog_positive_delete) {
+            positiveButton(S.dialog_positive_delete) {
                 Timber.i(
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
                     currentCard!!.nid,
@@ -816,7 +816,7 @@ abstract class AbstractFlashcardViewer :
                 launchCatchingTask { stopCardMediaPlayer() }
                 deleteNoteWithoutConfirmation()
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
         }
     }
 
@@ -832,12 +832,12 @@ abstract class AbstractFlashcardViewer :
                 }
             val deletedMessage =
                 resources.getQuantityString(
-                    R.plurals.card_browser_cards_deleted,
+                    Pl.card_browser_cards_deleted,
                     noteCount,
                     noteCount,
                 )
             showSnackbar(deletedMessage, Snackbar.LENGTH_LONG) {
-                setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
+                setAction(S.undo) { launchCatchingTask { undoAndShowSnackbar() } }
             }
         }
     }
@@ -1587,7 +1587,7 @@ abstract class AbstractFlashcardViewer :
                 }
             }
             stopCardMediaPlayer()
-            showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
+            showSnackbar(S.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
     }
@@ -1616,7 +1616,7 @@ abstract class AbstractFlashcardViewer :
                     }
                 }
             val count = changed.count
-            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
+            val noteSuspended = resources.getQuantityString(Pl.note_suspended, count, count)
             stopCardMediaPlayer()
             showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
@@ -1869,12 +1869,12 @@ abstract class AbstractFlashcardViewer :
 
         showSnackbar(
             getString(
-                R.string.show_answer_hint_long_press,
-                getString(R.string.pref_show_answer_long_press_time),
+                S.show_answer_hint_long_press,
+                getString(S.pref_show_answer_long_press_time),
             ),
             minimalClickSpeed + Reviewer.ACTION_SNACKBAR_TIME,
         ) {
-            setAction(R.string.settings) {
+            setAction(S.settings) {
                 navigate(PreferencesDestination.Accessibility)
             }
         }
@@ -2444,13 +2444,13 @@ abstract class AbstractFlashcardViewer :
             }
             if (url.startsWith("missing-user-action:")) {
                 val actionNumber = url.substringAfter(":")
-                val message = getString(R.string.missing_user_action_dialog_message, actionNumber)
+                val message = getString(S.missing_user_action_dialog_message, actionNumber)
                 Timber.i("showing 'missing user action' dialog")
                 AlertDialog.Builder(this@AbstractFlashcardViewer).show {
-                    setTitle(R.string.vague_error)
+                    setTitle(S.vague_error)
                     setMessage(message)
-                    setPositiveButton(R.string.dialog_ok) { _, _ -> }
-                    setNeutralButton(R.string.help) { _, _ ->
+                    setPositiveButton(S.dialog_ok) { _, _ -> }
+                    setNeutralButton(S.help) { _, _ ->
                         openUrl(R.string.link_user_actions_help)
                     }
                 }
@@ -2611,7 +2611,7 @@ abstract class AbstractFlashcardViewer :
                 startActivity(intent)
             } catch (_: ActivityNotFoundException) {
                 Timber.w("No app found to handle open external url from AbstractFlashcardViewer")
-                showSnackbar(R.string.activity_start_failed)
+                showSnackbar(S.activity_start_failed)
             }
             return true
         }
@@ -2676,7 +2676,7 @@ abstract class AbstractFlashcardViewer :
             Timber.e(e, "Exception decoding: '%s'", url)
             showThemedToast(
                 this@AbstractFlashcardViewer,
-                getString(R.string.card_viewer_url_decode_error),
+                getString(S.card_viewer_url_decode_error),
                 true,
             )
         }
@@ -2688,8 +2688,8 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal fun displayCouldNotFindMediaSnackbar(filename: String?) {
-        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
-            setAction(R.string.help) { openUrl(R.string.link_faq_missing_media) }
+        showSnackbar(getString(S.card_viewer_could_not_find_image, filename)) {
+            setAction(S.help) { openUrl(R.string.link_faq_missing_media) }
         }
     }
 
@@ -2841,7 +2841,7 @@ abstract class AbstractFlashcardViewer :
                             is AndroidTtsError.MissingVoiceError ->
                                 TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
                             is AndroidTtsError.InvalidVoiceError ->
-                                activity.showSnackbar(getString(R.string.voice_not_supported))
+                                activity.showSnackbar(getString(S.voice_not_supported))
                             else -> activity.showSnackbar(error.localizedErrorMessage(activity))
                         }
                     }

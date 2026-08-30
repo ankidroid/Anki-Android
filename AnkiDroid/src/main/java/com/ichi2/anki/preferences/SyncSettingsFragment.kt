@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.common.crashreporting.runCatchingWithReport
 import com.ichi2.anki.launchCatchingTask
@@ -56,7 +57,7 @@ class SyncSettingsFragment : SettingsFragment() {
                 Preference.SummaryProvider<EditTextPreference> {
                     runCatchingWithReport("network_timeout") {
                         TR.qtMiscSecond(this.getValue())
-                    }.getOrNull() ?: getString(R.string.pref__etc__summary__error)
+                    }.getOrNull() ?: getString(S.pref__etc__summary__error)
                 }
         }
 
@@ -65,15 +66,15 @@ class SyncSettingsFragment : SettingsFragment() {
             setSummary(TR.preferencesOnNextSyncForceChangesIn())
             setOnPreferenceClickListener {
                 AlertDialog.Builder(requireContext()).show {
-                    setTitle(R.string.one_way_sync_title)
+                    setTitle(S.one_way_sync_title)
                     setMessage(TR.preferencesOnNextSyncForceChangesIn())
-                    setPositiveButton(R.string.dialog_ok) { _, _ ->
+                    setPositiveButton(S.dialog_ok) { _, _ ->
                         launchCatchingTask {
                             withCol { modSchema(check = false) }
-                            showSnackbar(R.string.one_way_sync_confirmation, Snackbar.LENGTH_SHORT)
+                            showSnackbar(S.one_way_sync_confirmation, Snackbar.LENGTH_SHORT)
                         }
                     }
-                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                    setNegativeButton(S.dialog_cancel) { _, _ -> }
                 }
                 false
             }
@@ -90,14 +91,14 @@ class SyncSettingsFragment : SettingsFragment() {
 
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
-            customSyncBase() ?: getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
+            customSyncBase() ?: getString(S.custom_sync_server_summary_none_of_the_two_servers_used)
         }
     }
 
     private fun updateSyncAccountSummary() {
         requirePreference<Preference>(R.string.sync_account_key)
             .summary =
-            Prefs.username.ifNullOrEmpty { getString(R.string.sync_account_summ_logged_out) }
+            Prefs.username.ifNullOrEmpty { getString(S.sync_account_summ_logged_out) }
     }
 
     private fun updateOneWaySyncEnabledState() {

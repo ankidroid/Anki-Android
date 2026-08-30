@@ -6,7 +6,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.Process
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -44,7 +44,7 @@ object AppLoadedFromBackupWorkaround {
         Timber.w("Activity started with no application instance")
         showThemedToast(
             this,
-            getString(R.string.ankidroid_cannot_open_after_backup_try_again),
+            getString(S.ankidroid_cannot_open_after_backup_try_again),
             false,
         )
         CrashReportService.sendExceptionReport(

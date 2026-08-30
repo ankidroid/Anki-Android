@@ -26,6 +26,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.DialogInsertFieldBinding
 import com.ichi2.anki.databinding.ItemInsertSpecialFieldBinding
@@ -64,7 +65,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
         super.onViewCreated(view, savedInstanceState)
         val binding = DialogInsertFieldBinding.bind(view)
 
-        binding.toolbar.title = getString(R.string.card_template_editor_select_field)
+        binding.toolbar.title = getString(S.card_template_editor_select_field)
         binding.toolbar.setNavigationOnClickListener { dismiss() }
 
         binding.viewPager.adapter = InsertFieldDialogAdapter(this)
@@ -242,19 +243,19 @@ fun SpecialField.buildDescription(
 ): Spanned {
     fun buildSuffix(value: String?): String {
         if (value == null) return ""
-        return context.getString(R.string.special_field_example_suffix, value)
+        return context.getString(S.special_field_example_suffix, value)
     }
     return when (this) {
-        SpecialFields.FrontSide -> context.getString(R.string.special_field_front_side_help)
+        SpecialFields.FrontSide -> context.getString(S.special_field_front_side_help)
         SpecialFields.Deck ->
-            context.getString(R.string.special_field_deck_help, buildSuffix(metadata.deck))
+            context.getString(S.special_field_deck_help, buildSuffix(metadata.deck))
 
         SpecialFields.Subdeck ->
-            context.getString(R.string.special_field_subdeck_help, buildSuffix(metadata.subdeck))
+            context.getString(S.special_field_subdeck_help, buildSuffix(metadata.subdeck))
         SpecialFields.Flag -> {
             val code = metadata.flag ?: "N"
             context.getString(
-                R.string.special_field_flag_help,
+                S.special_field_flag_help,
                 if (code == "N") "flag$code" else "<b>flag$code</b>",
                 "<b>$code</b>",
                 Flag.entries.minOf { it.code }.toString(),
@@ -263,20 +264,20 @@ fun SpecialField.buildDescription(
         }
         SpecialFields.Tags -> {
             val tags = if (metadata.tags.isNullOrBlank()) null else metadata.tags
-            context.getString(R.string.special_field_tags_help, buildSuffix(tags))
+            context.getString(S.special_field_tags_help, buildSuffix(tags))
         }
         SpecialFields.CardId ->
-            context.getString(R.string.special_field_card_id_help, buildSuffix(metadata.cardId?.toString()))
+            context.getString(S.special_field_card_id_help, buildSuffix(metadata.cardId?.toString()))
 
         SpecialFields.CardTemplate ->
             context.getString(
-                R.string.special_field_card_help,
+                S.special_field_card_help,
                 buildSuffix(metadata.cardTemplateName),
             )
 
         SpecialFields.NoteType ->
             context.getString(
-                R.string.special_field_type_help,
+                S.special_field_type_help,
                 buildSuffix(metadata.noteTypeName),
             )
         // this shouldn't happen
@@ -290,7 +291,7 @@ private val Tab.title: String
     get() =
         dialog.requireContext().getString(
             when (this) {
-                Tab.FIELDS -> R.string.standard_fields_tab_header
-                Tab.SPECIAL -> R.string.special_fields_tab_header
+                Tab.FIELDS -> S.standard_fields_tab_header
+                Tab.SPECIAL -> S.special_fields_tab_header
             },
         )

@@ -15,7 +15,7 @@ import androidx.core.os.BundleCompat
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
 import com.ichi2.anki.common.analytics.LinkAction
@@ -57,7 +57,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                 if (options.importApkg) {
                     add(
                         ImportEntry(
-                            R.string.import_deck_package,
+                            S.import_deck_package,
                             LinkAction.IMPORT_APKG_FILE,
                             ImportFileType.APKG,
                         ),
@@ -66,7 +66,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                 if (options.importColpkg) {
                     add(
                         ImportEntry(
-                            R.string.import_collection_package,
+                            S.import_collection_package,
                             LinkAction.IMPORT_COLPKG_FILE,
                             ImportFileType.COLPKG,
                         ),
@@ -75,7 +75,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                 if (options.importTextFile) {
                     add(
                         ImportEntry(
-                            R.string.import_csv,
+                            S.import_csv,
                             LinkAction.IMPORT_CSV_FILE,
                             ImportFileType.CSV,
                             multiple = false,
@@ -171,7 +171,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                 }
             } catch (ex: ActivityNotFoundException) {
                 Timber.w("No activity to handle openImportFilePicker request")
-                activity.showSnackbar(R.string.activity_start_failed)
+                activity.showSnackbar(S.activity_start_failed)
             }
         }
     }

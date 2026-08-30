@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.utils.ValidationResult
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
@@ -45,9 +46,9 @@ class RenameCardTypeDialog {
             AlertDialog
                 .Builder(context)
                 .show {
-                    title(R.string.rename_card_type)
-                    positiveButton(R.string.rename) { }
-                    negativeButton(R.string.dialog_cancel)
+                    title(S.rename_card_type)
+                    positiveButton(S.rename) { }
+                    negativeButton(S.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
                     hint = CollectionManager.TR.actionsNewName().removeSuffix(":"),
@@ -59,7 +60,7 @@ class RenameCardTypeDialog {
                         when {
                             currentName == name -> ValidationResult.REJECTED
                             !existingNames.contains(name) -> ValidationResult.VALID
-                            else -> ValidationResult.error(context.getString(R.string.error_name_exists))
+                            else -> ValidationResult.error(context.getString(S.error_name_exists))
                         }
                     },
                     callback = { dialog, result ->

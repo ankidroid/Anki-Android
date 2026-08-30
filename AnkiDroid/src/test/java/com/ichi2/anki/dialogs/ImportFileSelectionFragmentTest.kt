@@ -6,8 +6,8 @@ package com.ichi2.anki.dialogs
 import android.content.Intent
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.S
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.Companion.buildImportFilePickerIntent
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.utils.MimeTypeUtils
@@ -71,7 +71,7 @@ class ImportFileSelectionFragmentTest : RobolectricTest() {
                 dialog.listView.itemLabels(),
                 equalTo(
                     listOf(
-                        targetContext.getString(R.string.import_deck_package),
+                        targetContext.getString(S.import_deck_package),
                         importCollectionPackageLabel,
                         importCsvLabel,
                     ),
@@ -99,7 +99,7 @@ class ImportFileSelectionFragmentTest : RobolectricTest() {
             ImportOptions(importColpkg = false, importApkg = true, importTextFile = false),
         ) { dialog ->
             assertThat(dialog.listView.count, equalTo(1))
-            assertThat(dialog.listView.itemLabels(), equalTo(listOf(targetContext.getString(R.string.import_deck_package))))
+            assertThat(dialog.listView.itemLabels(), equalTo(listOf(targetContext.getString(S.import_deck_package))))
         }
     }
 
@@ -133,9 +133,9 @@ class ImportFileSelectionFragmentTest : RobolectricTest() {
         }
     }
 
-    private val importCollectionPackageLabel = targetContext.getString(R.string.import_collection_package)
+    private val importCollectionPackageLabel = targetContext.getString(S.import_collection_package)
 
-    private val importCsvLabel = targetContext.getString(R.string.import_csv)
+    private val importCsvLabel = targetContext.getString(S.import_csv)
 
     private fun ListView.itemLabels(): List<String> = (0 until adapter.count).map { adapter.getItem(it).toString() }
 }

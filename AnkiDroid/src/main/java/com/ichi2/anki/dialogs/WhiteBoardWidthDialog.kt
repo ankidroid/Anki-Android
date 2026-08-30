@@ -22,7 +22,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -77,11 +77,11 @@ class WhiteBoardWidthDialog(
             ),
         )
         AlertDialog.Builder(context).show {
-            title(R.string.whiteboard_stroke_width)
-            positiveButton(R.string.save) {
+            title(S.whiteboard_stroke_width)
+            positiveButton(S.save) {
                 onStrokeWidthChanged?.accept(wbStrokeWidth)
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
             setView(layout)
         }
     }

@@ -21,6 +21,7 @@ import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.TtsVoices
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.libanki.TTSTag
@@ -37,13 +38,13 @@ object TtsPlaybackErrorDialog {
         Timber.i("Dialog is shown to guide users correctly to troubleshoot the Tts error: Missing voice error")
         activity.runOnUiThread {
             AlertDialog.Builder(activity).show {
-                setTitle(activity.getString(R.string.tts_error_dialog_title))
-                setMessage(activity.getString(R.string.tts_error_dialog_reason_text, TtsVoices.ttsEngine, ttsTag?.lang))
-                setNegativeButton(context.getString(R.string.tts_error_dialog_change_button_text)) { _, _ -> openSettings(activity) }
+                setTitle(activity.getString(S.tts_error_dialog_title))
+                setMessage(activity.getString(S.tts_error_dialog_reason_text, TtsVoices.ttsEngine, ttsTag?.lang))
+                setNegativeButton(context.getString(S.tts_error_dialog_change_button_text)) { _, _ -> openSettings(activity) }
                 setPositiveButton(
-                    activity.getString(R.string.tts_error_dialog_supported_voices_button_text),
+                    activity.getString(S.tts_error_dialog_supported_voices_button_text),
                 ) { _, _ -> showVoicesDialog(fragmentManager) }
-                setNeutralButton(context.getString(R.string.help)) { _, _ ->
+                setNeutralButton(context.getString(S.help)) { _, _ ->
                     activity.openUrl(R.string.link_faq_tts)
                 }
             }

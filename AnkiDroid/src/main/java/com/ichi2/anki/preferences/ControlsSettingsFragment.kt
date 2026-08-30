@@ -15,6 +15,7 @@ import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.google.android.material.tabs.TabLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -133,31 +134,31 @@ class ControlsSettingsFragment :
             it.dialogTitle = preferenceTitle
         }
         findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
-            it.title = TR.sentenceCase.gestureToggleWhiteboard(getString(R.string.gesture_toggle_whiteboard))
+            it.title = TR.sentenceCase.gestureToggleWhiteboard(getString(S.gesture_toggle_whiteboard))
         }
         findPreference<ControlPreference>(getString(R.string.flag_red_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagRed(getString(R.string.gesture_flag_red))
+            it.title = TR.sentenceCase.gestureFlagRed(getString(S.gesture_flag_red))
         }
         findPreference<ControlPreference>(getString(R.string.flag_orange_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagOrange(getString(R.string.gesture_flag_orange))
+            it.title = TR.sentenceCase.gestureFlagOrange(getString(S.gesture_flag_orange))
         }
         findPreference<ControlPreference>(getString(R.string.flag_green_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagGreen(getString(R.string.gesture_flag_green))
+            it.title = TR.sentenceCase.gestureFlagGreen(getString(S.gesture_flag_green))
         }
         findPreference<ControlPreference>(getString(R.string.flag_blue_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagBlue(getString(R.string.gesture_flag_blue))
+            it.title = TR.sentenceCase.gestureFlagBlue(getString(S.gesture_flag_blue))
         }
         findPreference<ControlPreference>(getString(R.string.flag_pink_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagPink(getString(R.string.gesture_flag_pink))
+            it.title = TR.sentenceCase.gestureFlagPink(getString(S.gesture_flag_pink))
         }
         findPreference<ControlPreference>(getString(R.string.flag_turquoise_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagTurquoise(getString(R.string.gesture_flag_turquoise))
+            it.title = TR.sentenceCase.gestureFlagTurquoise(getString(S.gesture_flag_turquoise))
         }
         findPreference<ControlPreference>(getString(R.string.flag_purple_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagPurple(getString(R.string.gesture_flag_purple))
+            it.title = TR.sentenceCase.gestureFlagPurple(getString(S.gesture_flag_purple))
         }
         findPreference<ControlPreference>(getString(R.string.remove_flag_command_key))?.let {
-            it.title = TR.sentenceCase.gestureFlagRemove(getString(R.string.gesture_flag_remove))
+            it.title = TR.sentenceCase.gestureFlagRemove(getString(S.gesture_flag_remove))
         }
         findPreference<ControlPreference>(getString(R.string.bury_card_command_key))?.let {
             it.title = TR.sentenceCase.buryCard
@@ -241,8 +242,8 @@ class ControlsSettingsFragment :
             (findPreference<Preference>(key) as? ReviewerControlPreference)?.let { answerPref ->
                 val items =
                     arrayOf(
-                        getString(R.string.only_answer),
-                        getString(R.string.flip_and_answer),
+                        getString(S.only_answer),
+                        getString(S.flip_and_answer),
                     )
                 answerPref.setOnBindingSelectedListener { binding ->
                     AlertDialog.Builder(requireContext()).show {

@@ -13,6 +13,7 @@ import anki.scheduler.CardAnswer.Rating
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ItemGradeNowBinding
 import com.ichi2.anki.launchCatchingTask
@@ -55,7 +56,7 @@ object GradeNowDialog {
 
         MaterialAlertDialogBuilder(context).show {
             title(text = with(context) { TR.sentenceCase.gradeNow })
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(S.dialog_cancel)
             setAdapter(adapter) { dialog, which ->
                 val selectedGrade = adapter.getItem(which)!!
                 Timber.i("selected '%s'", selectedGrade.name)
@@ -75,7 +76,7 @@ object GradeNowDialog {
             undoableOp { this.backend.gradeNow(ids, grade.rating) }
         }
         showSnackbar(TR.schedulingGradedCardsDone(ids.size)) {
-            setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
+            setAction(S.undo) { launchCatchingTask { undoAndShowSnackbar() } }
         }
     }
 }

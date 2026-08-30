@@ -21,6 +21,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.shape.AbsoluteCornerSize
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.browser.ColumnType
 import com.ichi2.utils.dp
 import com.ichi2.utils.updatePaddingRelative
@@ -215,24 +216,24 @@ class SortPill
                     setIconAndLabel(
                         standardButton,
                         R.drawable.ic_sort_pill_arrow_down_label,
-                        context.getString(R.string.sort_pill_label_text_ascending),
+                        context.getString(S.sort_pill_label_text_ascending),
                     )
                     setIconAndLabel(
                         reverseButton,
                         R.drawable.ic_sort_pill_arrow_down_label,
-                        context.getString(R.string.sort_pill_label_text_descending),
+                        context.getString(S.sort_pill_label_text_descending),
                     )
                 }
                 ColumnType.NUMERIC -> {
                     setIconAndLabel(
                         standardButton,
                         R.drawable.ic_sort_pill_arrow_down_label,
-                        context.getString(R.string.sort_pill_label_numeric_ascending),
+                        context.getString(S.sort_pill_label_numeric_ascending),
                     )
                     setIconAndLabel(
                         reverseButton,
                         R.drawable.ic_sort_pill_arrow_down_label,
-                        context.getString(R.string.sort_pill_label_numeric_descending),
+                        context.getString(S.sort_pill_label_numeric_descending),
                     )
                 }
                 ColumnType.DATE, ColumnType.UNSPECIFIED -> {
@@ -244,8 +245,8 @@ class SortPill
 
         private fun updateA11yDescriptions() {
             // set contentDescription to "<column>, ascending" / "<column>, descending"
-            val ascending = context.getString(R.string.sort_pill_a11y_ascending)
-            val descending = context.getString(R.string.sort_pill_a11y_descending)
+            val ascending = context.getString(S.sort_pill_a11y_ascending)
+            val descending = context.getString(S.sort_pill_a11y_descending)
             val prefix = columnContentDescription
             standardButton.contentDescription = if (prefix != null) "$prefix, $ascending" else ascending
             reverseButton.contentDescription = if (prefix != null) "$prefix, $descending" else descending
@@ -253,7 +254,7 @@ class SortPill
 
         private fun updateA11yState() {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
-            val selected = context.getString(R.string.sort_pill_a11y_selected)
+            val selected = context.getString(S.sort_pill_a11y_selected)
             standardButton.stateDescription = if (activeDirection == SortDirection.Ascending) selected else null
             reverseButton.stateDescription = if (activeDirection == SortDirection.Descending) selected else null
         }

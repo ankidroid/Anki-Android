@@ -14,7 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
@@ -61,14 +61,14 @@ class CollectionPathMismatchRecoveryTest : InstrumentedTest() {
 
     @Test
     fun errorHandlingShowsUseDefaultFolderOption() {
-        onView(withText(R.string.open_collection_failed_title))
+        onView(withText(S.open_collection_failed_title))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
-        onView(withText(R.string.error_handling_options)).inRoot(isDialog()).perform(click())
-        onView(withText(R.string.error_handling_title))
+        onView(withText(S.error_handling_options)).inRoot(isDialog()).perform(click())
+        onView(withText(S.error_handling_title))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
-        onView(withText(R.string.backup_use_default_folder))
+        onView(withText(S.backup_use_default_folder))
             .inRoot(isDialog())
             .check(matches(isDisplayed()))
     }

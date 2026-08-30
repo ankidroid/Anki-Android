@@ -207,7 +207,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private fun downloadFile(fileToBeDownloaded: DownloadFile) {
         val externalFilesFolder = requireContext().getExternalFilesDir(null)
         if (externalFilesFolder == null) {
-            showSnackbar(R.string.external_storage_unavailable)
+            showSnackbar(S.external_storage_unavailable)
             parentFragmentManager.popBackStack()
             return
         }
@@ -235,7 +235,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         onBackPressedCallback.isEnabled = isDownloadInProgress
         Timber.d("Download ID -> $downloadId")
         Timber.d("File name -> $fileName")
-        binding.downloadingTitle.text = getString(R.string.downloading_file, fileName)
+        binding.downloadingTitle.text = getString(S.downloading_file, fileName)
         startDownloadProgressChecker()
     }
 
@@ -347,7 +347,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
                 if (isVisible) {
                     // Setting these since progress checker can stop before progress is updated to represent 100%
-                    binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE)
+                    binding.downloadPercentageText.text = getString(S.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE)
                     binding.downloadProgressBar.progress = DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE.toInt()
 
                     // Remove cancel button and show import deck button
@@ -420,7 +420,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         Timber.d("Starting download progress checker")
         downloadProgressChecker.run()
         isProgressCheckerRunning = true
-        binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
+        binding.downloadPercentageText.text = getString(S.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
         binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
     }
 
@@ -470,7 +470,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     // Show download progress percentage up to 1 decimal place.
                     "%.1f".format(downloadProgress)
                 }
-            binding.downloadPercentageText.text = getString(R.string.percentage, percentageValue)
+            binding.downloadPercentageText.text = getString(S.percentage, percentageValue)
             binding.downloadProgressBar.progress = downloadProgress.toInt()
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
@@ -521,7 +521,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         try {
             context?.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {
-            context?.let { showThemedToast(it, R.string.something_wrong, false) }
+            context?.let { showThemedToast(it, S.something_wrong, false) }
             Timber.w(e)
         }
     }
@@ -539,17 +539,17 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         if (isVisible && !isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
-                context?.let { showThemedToast(it, R.string.import_log_no_apkg, false) }
+                context?.let { showThemedToast(it, S.import_log_no_apkg, false) }
                 // Go back if file is not a deck and cannot be imported
                 activity?.onBackPressedDispatcher?.onBackPressed()
             } else {
                 Timber.i("Download failed, update UI and provide option to retry")
-                context?.let { showThemedToast(it, R.string.something_wrong, false) }
+                context?.let { showThemedToast(it, S.something_wrong, false) }
                 // Update UI if download could not be successful
                 binding.tryDownloadAgainButton.visibility = View.VISIBLE
                 binding.openInWebBrowserButton.visibility = View.VISIBLE
                 binding.cancelDownloadButton.visibility = View.GONE
-                binding.downloadPercentageText.text = getString(R.string.download_failed)
+                binding.downloadPercentageText.text = getString(S.download_failed)
                 binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
             }
         }
@@ -566,8 +566,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         Timber.i("displaying cancel download confirmation dialog")
         downloadCancelConfirmationDialog =
             AlertDialog.Builder(requireContext()).create {
-                setTitle(R.string.cancel_download_question_title)
-                setPositiveButton(R.string.dialog_yes) { _, _ ->
+                setTitle(S.cancel_download_question_title)
+                setPositiveButton(S.dialog_yes) { _, _ ->
                     Timber.i("cancelling download")
                     downloadManager.remove(downloadId)
                     unregisterReceiver()
@@ -575,7 +575,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     onBackPressedCallback.isEnabled = isDownloadInProgress
                     parentFragmentManager.popBackStack()
                 }
-                setNegativeButton(R.string.dialog_no) { _, _ ->
+                setNegativeButton(S.dialog_no) { _, _ ->
                     Timber.i("dismissed cancel download confirmation dialog")
                     downloadCancelConfirmationDialog?.dismiss()
                 }

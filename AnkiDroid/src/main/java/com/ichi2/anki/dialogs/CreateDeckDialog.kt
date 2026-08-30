@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
@@ -93,16 +94,16 @@ class CreateDeckDialog(
                     // Uses "Rename" for rename deck dialogs and "Create" for all other deck-related dialogs.
                     val positiveButtonTextRes =
                         when (deckDialogType) {
-                            DeckDialogType.RENAME_DECK -> R.string.rename
+                            DeckDialogType.RENAME_DECK -> S.rename
 
                             DeckDialogType.DECK,
                             DeckDialogType.SUB_DECK,
-                            -> R.string.dialog_positive_create
+                            -> S.dialog_positive_create
                         }
                     positiveButton(positiveButtonTextRes) {
                         onPositiveButtonClicked()
                     }
-                    negativeButton(R.string.dialog_cancel)
+                    negativeButton(S.dialog_cancel)
                     setView(R.layout.dialog_generic_text_input)
                 }.input(
                     hint = textInputHint,
@@ -131,7 +132,7 @@ class CreateDeckDialog(
                         return@input
                     }
                     if (!maybeDeckName.equals(initialDeckName, ignoreCase = true) && deckExists(getColUnsafe, maybeDeckName)) {
-                        dialog.getInputTextLayout().error = context.getString(R.string.error_name_exists)
+                        dialog.getInputTextLayout().error = context.getString(S.error_name_exists)
                         dialog.positiveButton.isEnabled = false
                         return@input
                     }
@@ -142,7 +143,7 @@ class CreateDeckDialog(
                     // To fix: they need [01, 02, 10]. Show a hint to help them
                     dialog.getInputTextLayout().helperText =
                         if (text.containsNumberLargerThanNine()) {
-                            context.getString(R.string.create_deck_numeric_hint)
+                            context.getString(S.create_deck_numeric_hint)
                         } else {
                             null
                         }
@@ -182,10 +183,10 @@ class CreateDeckDialog(
         if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
             // 11668: Display feedback if a deck is created
-            displayFeedback(context.getString(R.string.deck_created))
+            displayFeedback(context.getString(S.deck_created))
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
-            displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
+            displayFeedback(context.getString(S.invalid_deck_name), Snackbar.LENGTH_LONG)
         }
         // AlertDialog should be dismissed after the Keyboard 'Done' or Deck 'Ok' button is pressed
         shownDialog?.dismiss()
@@ -227,7 +228,7 @@ class CreateDeckDialog(
         if (!Decks.isValidDeckName(newDeckName)) {
             Timber.w("CreateDeckDialog::renameDeck not renaming deck to invalid name")
             Timber.d("invalid deck name: %s", newDeckName)
-            displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
+            displayFeedback(context.getString(S.invalid_deck_name), Snackbar.LENGTH_LONG)
         } else if (newDeckName != previousDeckName) {
             try {
                 val decks = getColUnsafe.decks
@@ -235,7 +236,7 @@ class CreateDeckDialog(
                 decks.rename(decks.getLegacy(deckId)!!, newDeckName)
                 onNewDeckCreated(deckId)
                 // 11668: Display feedback if a deck is renamed
-                displayFeedback(context.getString(R.string.deck_renamed))
+                displayFeedback(context.getString(S.deck_renamed))
             } catch (e: BackendDeckIsFilteredException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error

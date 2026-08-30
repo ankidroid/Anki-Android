@@ -27,4 +27,17 @@ if (path != ":lint-rules") {
     dependencies {
         "lintChecks"(project(":lint-rules"))
     }
+    configure<com.android.build.api.dsl.Lint> {
+        // Workaround for internal lint rule: `CannotEnableHidden`
+        // we want to enable this in `:AnkiDroid` with `checkDependencies = true`
+
+        // > Any issues that are specifically disabled in a library cannot be
+        // > re-enabled in a dependent project. To fix this you need to also
+        // > enable the issue in the library project.
+        //
+        // > (This also applies for issues that are off by default; they cannot
+        // > just be enabled in a dependent project; they must also be enabled
+        // > in all the libraries the project depends on.)
+        enable += "LogConditional"
+    }
 }

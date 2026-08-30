@@ -70,8 +70,8 @@ private object AcraCrashReporter : CrashReporter {
     private enum class ToastType(
         @StringRes private val toastMessageRes: Int,
     ) {
-        AUTO_TOAST(R.string.feedback_auto_toast_text),
-        MANUAL_TOAST(R.string.feedback_for_manual_toast_text),
+        AUTO_TOAST(S.feedback_auto_toast_text),
+        MANUAL_TOAST(S.feedback_for_manual_toast_text),
         ;
 
         fun getToastMessage(context: Context) = context.getString(toastMessageRes)
@@ -114,10 +114,10 @@ private object AcraCrashReporter : CrashReporter {
                 .withPluginConfigurations(
                     DialogConfigurationBuilder()
                         .withReportDialogClass(AnkiDroidCrashReportDialog::class.java)
-                        .withCommentPrompt(application.getString(R.string.empty_string))
-                        .withTitle(application.getString(R.string.feedback_title))
-                        .withText(application.getString(R.string.feedback_default_text))
-                        .withPositiveButtonText(application.getString(R.string.feedback_report))
+                        .withCommentPrompt(application.getString(S.empty_string))
+                        .withTitle(application.getString(S.feedback_title))
+                        .withText(application.getString(S.feedback_default_text))
+                        .withPositiveButtonText(application.getString(S.feedback_report))
                         .withResIcon(R.drawable.logo_star_144dp)
                         .withEnabled(dialogEnabled)
                         .build(),

@@ -16,6 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
 import io.mockk.mockk
 import io.mockk.verify
@@ -56,12 +57,12 @@ class HelpDialogTest {
         // checking the support menu
         val expectedSupportItems =
             listOfNotNull(
-                R.string.help_item_support_opencollective_donate.takeIf { BuildConfig.SHOW_DONATE_LINKS },
-                R.string.multimedia_editor_trans_translate,
-                R.string.help_item_support_develop_ankidroid,
-                R.string.help_item_support_rate_ankidroid,
-                R.string.help_item_support_other_ankidroid,
-                R.string.send_feedback,
+                S.help_item_support_opencollective_donate.takeIf { BuildConfig.SHOW_DONATE_LINKS },
+                S.multimedia_editor_trans_translate,
+                S.help_item_support_develop_ankidroid,
+                S.help_item_support_rate_ankidroid,
+                S.help_item_support_other_ankidroid,
+                S.send_feedback,
             )
         val actualSupportItems =
             HelpDialog.newSupportInstance(true).requireArgsHelpEntries().map { it.titleResId }
@@ -73,10 +74,10 @@ class HelpDialogTest {
         // checking the help menu
         val expectedHelpItems =
             listOf(
-                R.string.help_title_using_ankidroid,
-                R.string.help_title_get_help,
-                R.string.help_title_community,
-                R.string.help_title_privacy,
+                S.help_title_using_ankidroid,
+                S.help_title_get_help,
+                S.help_title_community,
+                S.help_title_privacy,
             )
         val actualHelpItems =
             HelpDialog.newHelpInstance().requireArgsHelpEntries().map { it.titleResId }
@@ -116,45 +117,45 @@ class HelpDialogTest {
         launchFragment<HelpDialog>(
             fragmentArgs =
                 Bundle().apply {
-                    putInt(HelpDialog.ARG_MENU_TITLE, R.string.help)
+                    putInt(HelpDialog.ARG_MENU_TITLE, S.help)
                     putParcelableArray(ARG_MENU_ITEMS, mainHelpMenuItems)
                 },
             themeResId = R.style.Theme_Light,
             initialState = Lifecycle.State.RESUMED,
         ).onFragment {
-            onView(withText(R.string.help_title_community)).inRoot(isDialog()).perform(click())
+            onView(withText(S.help_title_community)).inRoot(isDialog()).perform(click())
             // check that the expected six children are shown
-            onView(withText(R.string.help_item_discord))
+            onView(withText(S.help_item_discord))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_reddit))
+            onView(withText(S.help_item_reddit))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_facebook))
+            onView(withText(S.help_item_facebook))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_mailing_list))
+            onView(withText(S.help_item_mailing_list))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_twitter))
+            onView(withText(S.help_item_twitter))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_anki_forums))
+            onView(withText(S.help_item_anki_forums))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
             // press back
             pressBackUnconditionally()
             // check that the expected initial four menu items are shown
-            onView(withText(R.string.help_title_community))
+            onView(withText(S.help_title_community))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_title_get_help))
+            onView(withText(S.help_title_get_help))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_title_privacy))
+            onView(withText(S.help_title_privacy))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_title_using_ankidroid))
+            onView(withText(S.help_title_using_ankidroid))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
         }
@@ -166,7 +167,7 @@ class HelpDialogTest {
         launchFragment<HelpDialog>(
             fragmentArgs =
                 Bundle().apply {
-                    putInt(HelpDialog.ARG_MENU_TITLE, R.string.help)
+                    putInt(HelpDialog.ARG_MENU_TITLE, S.help)
                     putParcelableArray(ARG_MENU_ITEMS, mainHelpMenuItems)
                 },
             themeResId = R.style.Theme_Light,
@@ -174,25 +175,25 @@ class HelpDialogTest {
         ).onFragment { fragment ->
             fragment.actionsDispatcher = mockActionDispatcher
             // start the first submenu
-            onView(withText(R.string.help_title_using_ankidroid))
+            onView(withText(S.help_title_using_ankidroid))
                 .inRoot(isDialog())
                 .perform(click())
             // the manual url is being shown
-            onView(withText(R.string.help_item_ankidroid_manual))
+            onView(withText(S.help_item_ankidroid_manual))
                 .inRoot(isDialog())
                 .perform(click())
             verify(exactly = 1) { mockActionDispatcher.onOpenUrl(AnkiDroidApp.manualUrl) }
             // an url resource is being shown
-            onView(withText(R.string.help_item_anki_manual)).inRoot(isDialog()).perform(click())
+            onView(withText(S.help_item_anki_manual)).inRoot(isDialog()).perform(click())
             verify(exactly = 1) { mockActionDispatcher.onOpenUrlResource(R.string.link_anki_manual) }
             pressBackUnconditionally()
             // start the second submenu
-            onView(withText(R.string.help_title_get_help)).inRoot(isDialog()).perform(click())
+            onView(withText(S.help_title_get_help)).inRoot(isDialog()).perform(click())
             // the feedback url is being shown
-            onView(withText(R.string.help_item_report_bug)).inRoot(isDialog()).perform(click())
+            onView(withText(S.help_item_report_bug)).inRoot(isDialog()).perform(click())
             verify(exactly = 1) { mockActionDispatcher.onOpenUrl(AnkiDroidApp.feedbackUrl) }
             // a report is sent
-            onView(withText(R.string.help_title_send_exception))
+            onView(withText(S.help_title_send_exception))
                 .inRoot(isDialog())
                 .perform(click())
             verify(exactly = 1) { mockActionDispatcher.onSendReport() }

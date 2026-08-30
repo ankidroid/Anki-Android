@@ -15,7 +15,7 @@
 package com.ichi2.anki.utils
 
 import android.content.Context
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 
 fun interface TranslatableException {
     fun getTranslatedMessage(context: Context): String
@@ -34,7 +34,7 @@ fun Context.getUserFriendlyErrorText(e: Exception): String =
         e.localizedMessage?.ifBlank { null }
             ?: e.message?.ifBlank { null }
             ?: e::class.simpleName?.ifBlank { null }
-            ?: getString(R.string.error__etc__unknown_error)
+            ?: getString(S.error__etc__unknown_error)
     }
 
 /**

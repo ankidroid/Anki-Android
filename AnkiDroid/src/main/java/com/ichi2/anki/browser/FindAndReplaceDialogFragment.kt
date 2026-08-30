@@ -19,6 +19,7 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_FIELD
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_MATCH_CASE
@@ -71,9 +72,9 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             .show {
                 title(text = title)
                 customView(binding.root)
-                neutralButton(R.string.help) { openUrl(R.string.link_manual_browser_find_replace) }
-                negativeButton(R.string.dialog_cancel) { removeIdsFile() }
-                positiveButton(R.string.dialog_positive_replace) { startFindReplace() }
+                neutralButton(S.help) { openUrl(R.string.link_manual_browser_find_replace) }
+                negativeButton(S.dialog_cancel) { removeIdsFile() }
+                positiveButton(S.dialog_positive_replace) { startFindReplace() }
             }.also { dialog ->
                 dialog.positiveButton.isEnabled = false
             }
@@ -102,7 +103,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             val fetchNoteIdsResult = runCatching { idsFile.getIds() }
             val noteIds = fetchNoteIdsResult.getOrNull()
             if (fetchNoteIdsResult.isFailure || noteIds == null) {
-                requireActivity().showSnackbar(R.string.something_wrong)
+                requireActivity().showSnackbar(S.something_wrong)
                 dismiss()
                 return@launch
             }

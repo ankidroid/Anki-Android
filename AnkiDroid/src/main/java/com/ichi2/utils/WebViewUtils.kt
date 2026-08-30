@@ -28,6 +28,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.utils.openUrl
 import kotlinx.coroutines.Dispatchers
@@ -188,8 +189,8 @@ private fun showOutdatedWebViewDialog(
     onDismiss: () -> Unit = {},
 ) {
     AlertDialog.Builder(context).show {
-        setMessage(context.getString(R.string.webview_update_message, installedVersion, OLDEST_WORKING_WEBVIEW_VERSION.value))
-        setPositiveButton(R.string.scoped_storage_learn_more) { _, _ ->
+        setMessage(context.getString(S.webview_update_message, installedVersion, OLDEST_WORKING_WEBVIEW_VERSION.value))
+        setPositiveButton(S.scoped_storage_learn_more) { _, _ ->
             context.openUrl(learnMoreUrl)
         }
         setOnDismissListener { onDismiss() }

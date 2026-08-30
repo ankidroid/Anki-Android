@@ -34,7 +34,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.databinding.FragmentMediaCheckBinding
 import com.ichi2.anki.launchCatchingTask
@@ -75,7 +77,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         launchCatchingTask {
-            withProgress(R.string.check_media_message) {
+            withProgress(S.check_media_message) {
                 viewModel.checkMedia().join()
             }
         }
@@ -153,10 +155,10 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
             setOnClickListener {
                 launchCatchingTask {
-                    withProgress(getString(R.string.check_media_adding_missing_tag)) {
+                    withProgress(getString(S.check_media_adding_missing_tag)) {
                         viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).join()
                         showResultDialog(
-                            R.string.check_media_tags_added,
+                            S.check_media_tags_added,
                             TR.browsingNotesUpdated(viewModel.taggedFiles),
                         )
                     }
@@ -194,14 +196,14 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private fun deleteConfirmationDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckDeleteUnusedConfirm())
-            positiveButton(R.string.dialog_positive_delete) { handleDeleteConfirmation() }
-            negativeButton(R.string.dialog_cancel)
+            positiveButton(S.dialog_positive_delete) { handleDeleteConfirmation() }
+            negativeButton(S.dialog_cancel)
         }
     }
 
     private fun handleDeleteConfirmation() {
         launchCatchingTask {
-            withProgress(resources.getString(R.string.delete_media_message)) {
+            withProgress(resources.getString(S.delete_media_message)) {
                 viewModel.deleteUnusedMedia().join()
                 showDeletionResult()
             }
@@ -217,9 +219,9 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
      */
     private fun showDeletionResult() {
         showResultDialog(
-            R.string.delete_media_result_title,
+            S.delete_media_result_title,
             resources.getQuantityString(
-                R.plurals.delete_media_result_message,
+                Pl.delete_media_result_message,
                 viewModel.deletedFiles,
                 viewModel.deletedFiles,
             ),
@@ -229,7 +231,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private fun showTrashRestoredDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckTrashRestored())
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(S.dialog_ok) {
                 requireActivity().finish()
             }
             cancelable(false)
@@ -239,7 +241,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private fun showTrashDeletedDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckTrashEmptied())
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(S.dialog_ok) {
                 requireActivity().finish()
             }
             cancelable(false)
@@ -253,7 +255,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         AlertDialog.Builder(requireContext()).show {
             title(titleRes)
             message(text = message)
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(S.dialog_ok) {
                 requireActivity().finish()
             }
             cancelable(false)

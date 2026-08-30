@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.dialogs.FieldSelectionDialog.Companion.RESULT_TYPE
 import com.ichi2.anki.dialogs.FieldSelectionDialog.Companion.registerFieldSelectionHandler
 import com.ichi2.anki.libanki.Field
@@ -55,7 +55,7 @@ class FieldSelectionDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         MaterialAlertDialogBuilder(requireContext()).create {
-            setTitle(R.string.card_template_editor_select_field)
+            setTitle(S.card_template_editor_select_field)
             setItems(fieldNames.toTypedArray()) { _, which ->
                 onFieldSelected(fieldNames[which])
             }
