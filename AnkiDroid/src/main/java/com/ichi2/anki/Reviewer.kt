@@ -48,6 +48,7 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
@@ -134,6 +135,7 @@ import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.cancelable
+import com.ichi2.utils.dp
 import com.ichi2.utils.iconAlpha
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.message
@@ -422,14 +424,22 @@ open class Reviewer :
         val bottomBarsAndKeyboard: (WindowInsetsCompat) -> Int = {
             it.getInsets(systemBars() or displayCutout() or ime()).bottom
         }
-        // Stable insets: the buttons stay clear of the navigation bar's region even while
-        // the bars are hidden - the gesture area is still active, by the display's rounded
-        // corners - keeping the pre-#9332 LAYOUT_STABLE placement, and unmoving when the
-        // bars are transiently revealed into that gap
+        // the bars' regions and the keyboard, with the bars' regions still reported (by
+        // the stable insets) while the bars are hidden
         val stableBottomBarsAndKeyboard: (WindowInsetsCompat) -> Int = {
             maxOf(
                 it.getInsetsIgnoringVisibility(systemBars() or displayCutout()).bottom,
                 it.getInsets(ime()).bottom,
+            )
+        }
+
+        // 3 button nav: when hidden, the 'show answer' button should be
+        // at the same position it would be with a gesture nav, to save screen space.
+        val bottomStrip = GESTURE_BAR_HEIGHT.toPx(this)
+        val bottomStripOrBars: (WindowInsetsCompat) -> Int = {
+            maxOf(
+                bottomBarsAndKeyboard(it),
+                minOf(it.getInsetsIgnoringVisibility(systemBars() or displayCutout()).bottom, bottomStrip),
             )
         }
 
@@ -443,7 +453,8 @@ open class Reviewer :
         val answerAreaBottom =
             when {
                 !answerButtonsAtBottom -> zero
-                immersive -> stableBottomBarsAndKeyboard
+                fullscreenMode == FullScreenMode.FULLSCREEN_ALL_GONE -> stableBottomBarsAndKeyboard
+                immersive -> bottomStripOrBars
                 else -> bottomBarsAndKeyboard
             }
 
@@ -533,9 +544,58 @@ open class Reviewer :
         // The bottom inset is painted showAnswerColor by the background, extending the
         // answer area's color underneath the navigation bar - or, in immersive review,
         // down to the screen edge
-        clearInsets(answerArea, bottom = answerAreaBottom)
+        val answerAreaBottomHeld =
+            if (immersive) resetInsetsWhenFadeEnds(answerArea, answerAreaBottom) else answerAreaBottom
+        clearInsets(answerArea, bottom = answerAreaBottomHeld)
 
         syncControlsWithSystemBars()
+    }
+
+    /**
+     * When system bars are animating away, only reset the insets when the fade ends.
+     */
+    private fun resetInsetsWhenFadeEnds(
+        view: View,
+        bottom: (WindowInsetsCompat) -> Int,
+    ): (WindowInsetsCompat) -> Int {
+        fun WindowInsetsAnimationCompat.animatesBars() = typeMask and systemBars() != 0
+
+        var barsAnimating = false
+        var heldInsets: WindowInsetsCompat? = null
+        ViewCompat.setWindowInsetsAnimationCallback(
+            view,
+            object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    if (animation.animatesBars()) {
+                        barsAnimating = true
+                    }
+                }
+
+                // required override; the per-frame animated insets are not used
+                override fun onProgress(
+                    insets: WindowInsetsCompat,
+                    runningAnimations: List<WindowInsetsAnimationCompat>,
+                ): WindowInsetsCompat = insets
+
+                override fun onEnd(animation: WindowInsetsAnimationCompat) {
+                    if (!animation.animatesBars()) return
+                    barsAnimating = false
+                    val held = heldInsets ?: return
+                    heldInsets = null
+                    ViewCompat.dispatchApplyWindowInsets(view, held)
+                }
+            },
+        )
+        return { insets ->
+            val target = bottom(insets)
+            if (barsAnimating && target < view.paddingBottom) {
+                heldInsets = insets
+                view.paddingBottom
+            } else {
+                heldInsets = null
+                target
+            }
+        }
     }
 
     /**
@@ -1984,6 +2044,18 @@ open class Reviewer :
         // These are lazy for unit tests
         private val EDGE_TO_EDGE_LIGHT_SCRIM by lazy { Color.argb(0xe6, 0xff, 0xff, 0xff) }
         private val EDGE_TO_EDGE_DARK_SCRIM by lazy { Color.argb(0x80, 0x1b, 0x1b, 0x1b) }
+
+        /**
+         * With the system bars hidden, the answer buttons rest this far above the bottom
+         * of the screen, clear of rounded corners.
+         *
+         * This constant comes from the AOSP gesture navigation bar inset
+         * * 16dp before Android 13
+         * * 24dp since Android 13 (use this - better for corner margins on all devices)
+         *
+         * Hardcoded: it's not feasible to obtain this in 3-button mode.
+         */
+        private val GESTURE_BAR_HEIGHT = 24.dp
 
         /** Default (500ms) time for action snackbars, such as undo, bury and suspend */
         const val ACTION_SNACKBAR_TIME = 500

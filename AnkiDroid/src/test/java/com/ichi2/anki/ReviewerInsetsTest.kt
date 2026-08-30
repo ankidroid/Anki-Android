@@ -2,7 +2,11 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsAnimation
 import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.marginBottom
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.testutils.insetsOf
@@ -29,6 +34,7 @@ import org.junit.runner.RunWith
  * content is inset. The counts bar, card and answer area are held inside the safe area, with
  * the answer area's background extending underneath the navigation bar.
  */
+@SdkSuppress(minSdkVersion = Build.VERSION_CODES.R)
 @RunWith(AndroidJUnit4::class)
 class ReviewerInsetsTest : RobolectricTest() {
     // rendering a card requires a media folder
@@ -246,19 +252,101 @@ class ReviewerInsetsTest : RobolectricTest() {
         withReviewer { reviewer ->
             // gesture navigation: the bars are hidden, but their region (the gesture area,
             // by the display's rounded corners) is still reported by the stable insets
-            reviewer.dispatchInsets(navBarStableBottom = 48.dp, barsVisible = false)
+            reviewer.dispatchInsets(navBarStableBottom = 24.dp, barsVisible = false)
 
             assertThat(
-                "the buttons rest a navigation bar's height above the screen edge, as they " +
-                    "did pre-edge-to-edge under SYSTEM_UI_FLAG_LAYOUT_STABLE - via painted " +
-                    "padding, so the answer area's color still reaches the screen edge",
+                "the buttons rest on the gesture area, as they did pre-edge-to-edge " +
+                    "under SYSTEM_UI_FLAG_LAYOUT_STABLE - via painted padding, so the " +
+                    "answer area's color still reaches the screen edge",
                 reviewer.answerArea.paddingBottom,
-                equalTo(48.dp.toPx(targetContext)),
+                equalTo(24.dp.toPx(targetContext)),
             )
             assertThat(
                 "no unpainted margin below the answer area",
                 reviewer.answerArea.marginBottom,
                 equalTo(0),
+            )
+        }
+    }
+
+    @Test
+    fun `immersive review - a hidden 3-button bar reserves only a gesture-sized strip`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            // 3-button navigation: the hidden bar's full height stays in the stable insets,
+            // but nothing is displayed under the buttons while it is hidden
+            reviewer.dispatchInsets(navBarStableBottom = 48.dp, barsVisible = false)
+
+            assertThat(
+                "the buttons rest a gesture-bar strip above the screen edge - matching " +
+                    "gesture navigation - rather than the hidden bar's full height",
+                reviewer.answerArea.paddingBottom,
+                equalTo(24.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
+    fun `immersive review - hide everything - the answer area keeps the revealed bars' size`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.FULLSCREEN_ALL_GONE)
+        withReviewer { reviewer ->
+            // the answer area is only shown alongside transiently revealed bars: while they
+            // are hidden it stays sized for them, so the fade-out does not shift the
+            // buttons - they disappear at the end of the fade, not the start
+            reviewer.dispatchInsets(navBarStableBottom = 48.dp, barsVisible = false)
+
+            assertThat(
+                "the hidden answer area keeps the revealed navigation bar's inset",
+                reviewer.answerArea.paddingBottom,
+                equalTo(48.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
+    fun `immersive review - the buttons hold their place until a hiding bar has faded`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            reviewer.dispatchInsets(navBarBottom = 48.dp)
+
+            // the system animates the bars away: the final (hidden) insets arrive at the
+            // start of the animation, while the bar fades for its duration
+            val hide = WindowInsetsAnimation(WindowInsets.Type.systemBars(), null, 200)
+            reviewer.window.decorView.dispatchWindowInsetsAnimationPrepare(hide)
+            reviewer.dispatchInsets(navBarStableBottom = 48.dp, barsVisible = false)
+
+            assertThat(
+                "the buttons hold their place while the bar is still fading",
+                reviewer.answerArea.paddingBottom,
+                equalTo(48.dp.toPx(targetContext)),
+            )
+
+            reviewer.window.decorView.dispatchWindowInsetsAnimationEnd(hide)
+            assertThat(
+                "once the bar has faded, the buttons drop to their resting strip",
+                reviewer.answerArea.paddingBottom,
+                equalTo(24.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @SuppressLint("NewApi") // as above: API 30+ dispatch, run on a current SDK
+    @Test
+    fun `immersive review - the buttons lift immediately as a bar is revealed`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            reviewer.dispatchInsets(navBarStableBottom = 48.dp, barsVisible = false)
+
+            // revealing also animates, but the buttons must not wait: they lift clear of
+            // the incoming bar at the start of its animation
+            val show = WindowInsetsAnimation(WindowInsets.Type.systemBars(), null, 200)
+            reviewer.window.decorView.dispatchWindowInsetsAnimationPrepare(show)
+            reviewer.dispatchInsets(navBarBottom = 48.dp)
+
+            assertThat(
+                "the buttons lift at the start of the reveal",
+                reviewer.answerArea.paddingBottom,
+                equalTo(48.dp.toPx(targetContext)),
             )
         }
     }
