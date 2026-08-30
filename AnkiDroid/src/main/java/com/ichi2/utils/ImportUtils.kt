@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -135,7 +136,7 @@ object ImportUtils {
                 CrashReportService.sendExceptionReport(e, "handleFileImport")
                 Timber.e(e, "failed to handle import intent")
                 ImportResult.Failure(
-                    humanReadableMessage = context.getString(R.string.import_error_handle_exception, e.localizedMessage),
+                    humanReadableMessage = context.getString(CommonString.import_error_handle_exception, e.localizedMessage),
                     exception = e,
                 )
             }
@@ -149,7 +150,7 @@ object ImportUtils {
             return if (importPathUri != null) {
                 handleContentProviderFile(context, importPathUri, intent)
             } else {
-                ImportResult.Failure(context.getString(R.string.import_error_handle_exception))
+                ImportResult.Failure(context.getString(CommonString.import_error_handle_exception))
             }
         }
 
@@ -194,7 +195,7 @@ object ImportUtils {
         ): ImportResult {
             // Note: intent.getData() can be null. Use data instead.
             if (!isValidImportType(context, importPathUri)) {
-                return ImportResult.Failure(context.getString(R.string.import_log_no_apkg))
+                return ImportResult.Failure(context.getString(CommonString.import_log_no_apkg))
             }
             // Get the original filename from the content provider URI
             var filename = getFileNameFromContentProvider(context, importPathUri)
@@ -216,7 +217,7 @@ object ImportUtils {
                         )
                         return ImportResult.Failure(
                             AnkiDroidApp.appResources.getString(
-                                R.string.import_error_content_provider,
+                                CommonString.import_error_content_provider,
                                 AnkiDroidApp.manualUrl + "#importing",
                             ),
                         )
@@ -230,10 +231,10 @@ object ImportUtils {
                 return if (isAnkiDatabase(filename)) {
                     // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
                     // but for now, show a "nice" error.
-                    ImportResult.Failure(context.resources.getString(R.string.import_error_load_imported_database))
+                    ImportResult.Failure(context.resources.getString(CommonString.import_error_load_imported_database))
                 } else {
                     // Don't import if file doesn't have an Anki package extension
-                    ImportResult.Failure(context.resources.getString(R.string.import_error_not_apkg_extension, filename))
+                    ImportResult.Failure(context.resources.getString(CommonString.import_error_not_apkg_extension, filename))
                 }
             }
 
@@ -245,11 +246,11 @@ object ImportUtils {
                 } catch (_: SecurityException) {
                     // Do not log the exception: it may interpolate attacker-controlled paths (PII).
                     Timber.e("Path traversal detected in handleContentProviderFile")
-                    return ImportResult.Failure(context.getString(R.string.import_error_handle_exception, "Invalid path"))
+                    return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 } catch (_: IllegalArgumentException) {
                     // Do not log the exception: it may interpolate attacker-controlled paths (PII).
                     Timber.e("Path traversal detected in handleContentProviderFile")
-                    return ImportResult.Failure(context.getString(R.string.import_error_handle_exception, "Invalid path"))
+                    return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 }
             val tempOutDir: String = Uri.fromFile(checkFile).encodedPath!!
 
@@ -371,13 +372,13 @@ object ImportUtils {
                 }
 
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)
-            val title = failure.title ?: activity.getString(R.string.import_title_error)
+            val title = failure.title ?: activity.getString(CommonString.import_title_error)
             val dialog =
                 AlertDialog.Builder(activity).show {
                     title(text = title)
                     message(text = failure.humanReadableMessage)
                     setCancelable(false)
-                    positiveButton(R.string.dialog_ok) {
+                    positiveButton(CommonString.dialog_ok) {
                         if (exitActivity) {
                             activity.finish()
                         }
@@ -475,7 +476,7 @@ object ImportUtils {
                 val exceptionForReport: Exception?,
                 val userFacingException: Exception?,
             ) {
-                fun buildTitle(context: Context) = context.getString(R.string.import_error_copy_to_cache_title)
+                fun buildTitle(context: Context) = context.getString(CommonString.import_error_copy_to_cache_title)
 
                 fun buildHumanReadableMessage(context: Context) =
                     buildString {
@@ -495,7 +496,7 @@ object ImportUtils {
                                     appendLine("\u2022 $line")
                                 }
                             }
-                        append(context.getString(R.string.import_error_copy_to_cache_explanation, suggestedFixes))
+                        append(context.getString(CommonString.import_error_copy_to_cache_explanation, suggestedFixes))
                     }
             }
         }

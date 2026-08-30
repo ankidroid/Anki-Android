@@ -5,7 +5,7 @@ package com.ichi2.anki.dialogs
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -18,7 +18,7 @@ import timber.log.Timber
 object DiscardChangesDialog {
     fun showDialog(
         context: Context,
-        positiveButtonText: String = context.getString(R.string.discard),
+        positiveButtonText: String = context.getString(CommonString.discard),
         negativeButtonText: String = with(context) { TR.sentenceCase.keepEditing },
         neutralButtonText: String? = null,
         message: String = TR.cardTemplatesDiscardChanges(),

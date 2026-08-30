@@ -6,6 +6,7 @@ import android.os.Looper
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.LoadingDialogFragment
@@ -99,7 +100,7 @@ class ProgressObserverTest : RobolectricTest() {
         val controller = startActivity()
         val activity = controller.get()
         activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { message ->
-            getString(R.string.progress_amount_bytes, message, "2 MB")
+            getString(CommonString.progress_amount_bytes, message, "2 MB")
         }
 
         val gate = CompletableDeferred<Unit>()

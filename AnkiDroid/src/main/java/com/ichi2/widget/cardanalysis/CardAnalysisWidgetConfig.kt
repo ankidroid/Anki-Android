@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.updateMargins
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -118,7 +119,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
 
     private fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null || deck !is SelectableDeck.Deck?) {
-            showThemedToast(this, R.string.something_wrong, false)
+            showThemedToast(this, CommonString.something_wrong, false)
             setResult(RESULT_CANCELED)
             finish()
             return
@@ -142,7 +143,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
                     Timber.w("CardAnalysisWidgetConfig: collection is empty")
                     showThemedToast(
                         this@CardAnalysisWidgetConfig,
-                        R.string.no_cards_placeholder_title,
+                        CommonString.no_cards_placeholder_title,
                         false,
                     )
                     finish()
@@ -161,7 +162,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
 
     private fun showDeckSelectionDialog() {
         startDeckSelection(
-            title = getString(R.string.select_deck_title),
+            title = getString(CommonString.select_deck_title),
             allowAll = false,
             skipEmptyDefault = true,
         )

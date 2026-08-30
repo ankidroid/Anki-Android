@@ -27,6 +27,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.CustomActionModeCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.common.destinations.NoteEditorDestination
@@ -385,7 +386,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
         when (result) {
             is SaveNoteResult.Failure -> {
                 Timber.d("Failed to save note")
-                savingErrorDialog(result.message ?: getString(R.string.something_wrong))
+                savingErrorDialog(result.message ?: getString(CommonString.something_wrong))
             }
 
             SaveNoteResult.Success -> {
@@ -396,7 +397,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
 
             is SaveNoteResult.Warning -> {
                 Timber.d("Showing warning to the user")
-                viewModel.setWarningMessage(result.message ?: getString(R.string.something_wrong))
+                viewModel.setWarningMessage(result.message ?: getString(CommonString.something_wrong))
             }
         }
     }
@@ -451,12 +452,12 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
      * AnkiDroid Note Editor **/
     private fun noClozeNoteTypesFoundDialog() {
         AlertDialog.Builder(this).show {
-            title(R.string.cloze_note_required)
-            message(R.string.cloze_not_found_message)
-            positiveButton(R.string.open) {
+            title(CommonString.cloze_note_required)
+            message(CommonString.cloze_not_found_message)
+            positiveButton(CommonString.open) {
                 openNoteEditor()
             }
-            negativeButton(R.string.dialog_cancel) {
+            negativeButton(CommonString.dialog_cancel) {
                 finish()
             }
         }
@@ -469,7 +470,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
             .onEach { errorMessage ->
                 AlertDialog
                     .Builder(this)
-                    .setTitle(R.string.vague_error)
+                    .setTitle(CommonString.vague_error)
                     .setMessage(errorMessage)
                     .show()
             }.launchIn(lifecycleScope)
@@ -497,10 +498,10 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
     private fun savingErrorDialog(message: String) {
         AlertDialog.Builder(this).show {
             message(text = message)
-            positiveButton(R.string.try_again) {
+            positiveButton(CommonString.try_again) {
                 checkAndSave()
             }
-            negativeButton(R.string.dialog_cancel) {
+            negativeButton(CommonString.dialog_cancel) {
                 instantAlertDialog.dismiss()
             }
         }
@@ -514,14 +515,14 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
             positiveButton(text = TR.actionsSave()) {
                 saveNoteWithProgress(skipClozeCheck = true)
             }
-            negativeButton(R.string.dialog_cancel)
+            negativeButton(CommonString.dialog_cancel)
         }
     }
 
     private fun saveNoteWithProgress(skipClozeCheck: Boolean) {
         lifecycleScope.launch {
             val result =
-                withProgress(resources.getString(R.string.saving_facts)) {
+                withProgress(resources.getString(CommonString.saving_facts)) {
                     viewModel.checkAndSaveNote(skipClozeCheck = skipClozeCheck)
                 }
             handleSaveNoteResult(result)
@@ -550,7 +551,7 @@ class InstantNoteEditorActivity : AnkiActivity(R.layout.activity_instant_note_ed
         CustomActionModeCallback(
             // we always have cloze type notes here
             isClozeType = true,
-            getString(R.string.multimedia_editor_popup_cloze),
+            getString(CommonString.multimedia_editor_popup_cloze),
             clozeMenuId,
             onActionItemSelected = { mode, item ->
                 val itemId = item.itemId

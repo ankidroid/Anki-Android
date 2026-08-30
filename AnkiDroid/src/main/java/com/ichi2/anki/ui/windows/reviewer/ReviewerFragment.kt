@@ -38,6 +38,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -595,7 +596,7 @@ class ReviewerFragment :
             val message = CollectionManager.TR.studyingCardStudiedIn(timebox.reps) + " " + CollectionManager.TR.studyingMinute(minutes)
 
             AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.timebox_reached_title)
+                setTitle(CommonString.timebox_reached_title)
                 setMessage(message)
                 setPositiveButton(CollectionManager.TR.studyingContinue()) { _, _ ->
                     Timber.i("ReviewerFragment: Timebox 'Continue'")
@@ -717,8 +718,8 @@ class ReviewerFragment :
                     if (hasShownUnsupportedFeatureWarning) return true
                     hasShownUnsupportedFeatureWarning = true
                     AlertDialog.Builder(requireContext()).show {
-                        setMessage(R.string.feature_not_supported_by_study_screen)
-                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                        setMessage(CommonString.feature_not_supported_by_study_screen)
+                        setPositiveButton(CommonString.dialog_ok) { _, _ -> }
                     }
                     true
                 }

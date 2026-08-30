@@ -53,14 +53,14 @@ class CollectionIntegrityStorageCheck {
             Timber.e("CollectionIntegrityCheckStatus in an invalid state")
             val defaultRequiredFreeSpace = defaultRequiredFreeSpace(context)
             return context.resources.getString(
-                R.string.integrity_check_insufficient_space,
+                CommonString.integrity_check_insufficient_space,
                 defaultRequiredFreeSpace,
             )
         }
         val required = Formatter.formatShortFileSize(context, requiredSpace)
         val insufficientSpace =
             context.resources.getString(
-                R.string.integrity_check_insufficient_space,
+                CommonString.integrity_check_insufficient_space,
                 required,
             )
 
@@ -68,7 +68,7 @@ class CollectionIntegrityStorageCheck {
         val currentFree = Formatter.formatShortFileSize(context, freeSpace)
         val insufficientSpaceCurrentFree =
             context.resources.getString(
-                R.string.integrity_check_insufficient_space_extra_content,
+                CommonString.integrity_check_insufficient_space_extra_content,
                 currentFree,
             )
         return insufficientSpace + insufficientSpaceCurrentFree
@@ -90,7 +90,7 @@ class CollectionIntegrityStorageCheck {
                 val requiredFreeSpace = defaultRequiredFreeSpace(context)
                 return fromError(
                     context.resources.getString(
-                        R.string.integrity_check_insufficient_space,
+                        CommonString.integrity_check_insufficient_space,
                         requiredFreeSpace,
                     ),
                 )
@@ -108,7 +108,7 @@ class CollectionIntegrityStorageCheck {
                 val readableFileSize = Formatter.formatFileSize(context, requiredSpaceInBytes)
                 return fromError(
                     context.resources.getString(
-                        R.string.integrity_check_insufficient_space,
+                        CommonString.integrity_check_insufficient_space,
                         readableFileSize,
                     ),
                 )

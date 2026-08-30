@@ -26,6 +26,7 @@ import anki.sync.SyncAuth
 import anki.sync.syncAuth
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.cancelMediaSync
@@ -133,7 +134,7 @@ class SyncMediaWorker(
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
-        val title = applicationContext.getString(R.string.syncing_media)
+        val title = applicationContext.getString(CommonString.syncing_media)
         val cancelTitle = TR.syncAbortButton()
         val notification =
             buildNotification {
@@ -179,7 +180,7 @@ class SyncMediaWorker(
             }.build()
 
     private fun getProgressNotification(progress: CharSequence): Notification {
-        val title = applicationContext.getString(R.string.syncing_media)
+        val title = applicationContext.getString(CommonString.syncing_media)
         val cancelTitle = TR.syncAbortButton()
 
         return buildNotification {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentTemplatePreviewerBinding
 import com.ichi2.anki.libanki.CardOrdinal
@@ -52,9 +53,9 @@ class TemplatePreviewerFragment :
             .onEach { showingAnswer ->
                 binding.showAnswer.text =
                     if (showingAnswer) {
-                        getString(R.string.hide_answer)
+                        getString(CommonString.hide_answer)
                     } else {
-                        getString(R.string.show_answer)
+                        getString(CommonString.show_answer)
                     }
             }.launchIn(lifecycleScope)
 

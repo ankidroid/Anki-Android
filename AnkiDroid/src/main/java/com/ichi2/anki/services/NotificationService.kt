@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.NotificationChannel
@@ -355,7 +356,7 @@ class NotificationService : AnkiBroadcastReceiver() {
                 val cardsDueText =
                     context.resources
                         .getQuantityString(
-                            R.plurals.widget_minimum_cards_due_notification_ticker_text,
+                            CommonPlurals.widget_minimum_cards_due_notification_ticker_text,
                             dueCardsCount,
                             dueCardsCount,
                         )

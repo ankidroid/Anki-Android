@@ -7,7 +7,7 @@ import android.app.AlarmManager
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.core.content.getSystemService
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import timber.log.Timber
@@ -49,10 +49,10 @@ object AlarmManagement {
         } catch (ex: SecurityException) {
             // #6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
             // We warn the user if they breach this limit
-            error = R.string.boot_service_too_many_notifications
+            error = CommonString.boot_service_too_many_notifications
             errorHandler(ex, "Too many alarms set")
         } catch (e: Exception) {
-            error = R.string.boot_service_failed_to_schedule_notifications
+            error = CommonString.boot_service_failed_to_schedule_notifications
             errorHandler(e, "Failed to schedule alarm")
         }
         if (error != null && showToastOnFailure) {

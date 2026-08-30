@@ -836,10 +836,10 @@ open class Reviewer :
                 if (whiteboard != null) {
                     try {
                         val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
-                        showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
+                        showSnackbar(getString(CommonString.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
                     } catch (e: Exception) {
                         Timber.w(e)
-                        showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
+                        showSnackbar(getString(CommonString.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
                     }
                 }
             }
@@ -938,10 +938,10 @@ open class Reviewer :
 
             if (isEraserMode) {
                 startMonitoringEraserButtonRipple()
-                showSnackbar(getString(R.string.white_board_eraser_enabled), 1000)
+                showSnackbar(getString(CommonString.white_board_eraser_enabled), 1000)
             } else {
                 stopMonitoringEraserButtonRipple()
-                showSnackbar(getString(R.string.white_board_eraser_disabled), 1000)
+                showSnackbar(getString(CommonString.white_board_eraser_disabled), 1000)
             }
         }
     }
@@ -1097,7 +1097,7 @@ open class Reviewer :
                     CrashReportService.sendExceptionReport(e, "Unable to create recorder tool bar")
                     showThemedToast(
                         this,
-                        this.getText(R.string.multimedia_editor_audio_view_create_failed).toString(),
+                        this.getText(CommonString.multimedia_editor_audio_view_create_failed).toString(),
                         true,
                     )
                 }
@@ -1147,7 +1147,7 @@ open class Reviewer :
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (currentCard == null) {
-            showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
+            showSnackbar(getString(CommonString.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
         Timber.i("opening card info")
@@ -1182,7 +1182,7 @@ open class Reviewer :
         val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
         if (currentCard != null && isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))) {
-            markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
+            markCardIcon.setTitle(CommonString.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(TR.sentenceCase.markNote).setIcon(R.drawable.ic_star_border_white)
         }
@@ -1242,7 +1242,7 @@ open class Reviewer :
         if (colIsOpenUnsafe()) { // Required mostly because there are tests where `col` is null
             if (whiteboardIsShownAndHasStrokes) {
                 // Make Undo action title to whiteboard Undo specific one
-                undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
+                undoIcon.title = resources.getString(CommonString.undo_action_whiteboard_last_stroke)
 
                 // Show whiteboard Eraser action button
                 if (!actionButtons.status.toggleEraserIsDisabled()) {
@@ -1260,7 +1260,7 @@ open class Reviewer :
                     // In this case, there is no object word for the verb, "Undo",
                     // so in some languages such as Japanese, which have pre/post-positional particle with the object,
                     // we need to use the string for just "Undo" instead of the string for "Undo %s".
-                    undoIcon.title = resources.getString(R.string.undo)
+                    undoIcon.title = resources.getString(CommonString.undo)
                     undoIcon.iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 }
             }
@@ -1276,7 +1276,7 @@ open class Reviewer :
                     iconAlpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                     isEnabled = true
                 } else {
-                    setTitle(R.string.redo)
+                    setTitle(CommonString.redo)
                     iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                     isEnabled = false
                 }
@@ -1296,7 +1296,7 @@ open class Reviewer :
         // White board button
         if (prefWhiteboard) {
             // Configure the whiteboard related items in the action bar
-            toggleWhiteboardIcon.setTitle(R.string.disable_whiteboard)
+            toggleWhiteboardIcon.setTitle(CommonString.disable_whiteboard)
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
             toggleWhiteboardIcon.isVisible = true
             if (!actionButtons.status.toggleStylusIsDisabled()) {
@@ -1322,29 +1322,29 @@ open class Reviewer :
                 // "hide whiteboard" icon
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
-                hideWhiteboardIcon.setTitle(R.string.hide_whiteboard)
+                hideWhiteboardIcon.setTitle(CommonString.hide_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 // eraser icon
                 toggleEraserIcon.icon = eraserIcon
                 if (isEraserMode) {
-                    toggleEraserIcon.setTitle(R.string.disable_eraser)
+                    toggleEraserIcon.setTitle(CommonString.disable_eraser)
                 } else { // default
-                    toggleEraserIcon.setTitle(R.string.enable_eraser)
+                    toggleEraserIcon.setTitle(CommonString.enable_eraser)
                 }
                 // whiteboard editor icon
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
                 if (toggleStylus) {
-                    toggleStylusIcon.setTitle(R.string.disable_stylus)
+                    toggleStylusIcon.setTitle(CommonString.disable_stylus)
                     stylusIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 } else {
-                    toggleStylusIcon.setTitle(R.string.enable_stylus)
+                    toggleStylusIcon.setTitle(CommonString.enable_stylus)
                     stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 }
                 toggleStylusIcon.icon = stylusIcon
             } else {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
-                hideWhiteboardIcon.setTitle(R.string.show_whiteboard)
+                hideWhiteboardIcon.setTitle(CommonString.show_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 toggleStylusIcon.isEnabled = false
@@ -1354,7 +1354,7 @@ open class Reviewer :
                 colorPalette.visibility = View.GONE
             }
         } else {
-            toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
+            toggleWhiteboardIcon.setTitle(CommonString.enable_whiteboard)
         }
         if (colIsOpenUnsafe() && getColUnsafe.decks.isFiltered(parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false
@@ -1373,11 +1373,11 @@ open class Reviewer :
 
         val voicePlaybackIcon = menu.findItem(R.id.action_toggle_mic_tool_bar)
         if (isMicToolBarVisible) {
-            voicePlaybackIcon.setTitle(R.string.menu_disable_voice_playback)
+            voicePlaybackIcon.setTitle(CommonString.menu_disable_voice_playback)
             // #18477: always show 'disable', even if 'enable' was invisible
             voicePlaybackIcon.isVisible = true
         } else {
-            voicePlaybackIcon.setTitle(R.string.menu_enable_voice_playback)
+            voicePlaybackIcon.setTitle(CommonString.menu_enable_voice_playback)
         }
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -1446,10 +1446,10 @@ open class Reviewer :
         easeButton1!!.setColor(background[0])
         easeButton4!!.setColor(background[3])
         // Ease 2 is "hard"
-        easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
+        easeButton2!!.setup(background[1], textColor[1], CommonString.ease_button_hard)
         easeButton2!!.requestFocus()
         // Ease 3 is good
-        easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
+        easeButton3!!.setup(background[2], textColor[2], CommonString.ease_button_good)
         easeButton4!!.setVisibility(View.VISIBLE)
         easeButton3!!.requestFocus()
 
@@ -1591,9 +1591,9 @@ open class Reviewer :
                 state.topCard.load(getColUnsafe)
                 val leechMessage: String =
                     if (state.topCard.queue.buriedOrSuspended()) {
-                        resources.getString(R.string.leech_suspend_notification)
+                        resources.getString(CommonString.leech_suspend_notification)
                     } else {
-                        resources.getString(R.string.leech_notification)
+                        resources.getString(CommonString.leech_notification)
                     }
                 showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             }
@@ -1609,14 +1609,14 @@ open class Reviewer :
     private suspend fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
         val nCards = timebox.reps
         val nMins = timebox.secs / 60
-        val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
-        val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+        val mins = resources.getQuantityString(CommonPlurals.in_minutes, nMins, nMins)
+        val timeboxMessage = resources.getQuantityString(CommonPlurals.timebox_reached, nCards, nCards, mins)
         suspendCancellableCoroutine { coroutines ->
             Timber.i("Showing timebox reached dialog")
             AlertDialog.Builder(this).show {
-                title(R.string.timebox_reached_title)
+                title(CommonString.timebox_reached_title)
                 message(text = timeboxMessage)
-                positiveButton(R.string.dialog_continue) {
+                positiveButton(CommonString.dialog_continue) {
                     coroutines.resume(Unit)
                 }
                 negativeButton(text = CollectionManager.TR.studyingFinish()) {

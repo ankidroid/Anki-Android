@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -19,7 +20,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         return AlertDialog.Builder(requireContext()).create {
             setTitle(notificationTitle)
             setMessage(notificationMessage)
-            setPositiveButton(R.string.dialog_ok) { _, _ ->
+            setPositiveButton(CommonString.dialog_ok) { _, _ ->
                 activity?.dismissSimpleMessageDialog(requireArguments().getBoolean(ARG_RELOAD))
             }
         }

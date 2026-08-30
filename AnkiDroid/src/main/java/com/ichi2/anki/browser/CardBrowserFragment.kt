@@ -66,6 +66,8 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.getColUnsafe
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 import com.ichi2.anki.android.input.ShortcutGroup
@@ -580,7 +582,7 @@ class CardBrowserFragment :
                         )
                         legacySearchView =
                             (searchItem!!.actionView as CardBrowserSearchView).apply {
-                                queryHint = resources.getString(R.string.card_browser_search_hint)
+                                queryHint = resources.getString(CommonString.card_browser_search_hint)
                                 setMaxWidth(Integer.MAX_VALUE)
                                 setOnQueryTextListener(
                                     object :
@@ -622,7 +624,7 @@ class CardBrowserFragment :
                     if (vm.isInMultiSelectMode) return
 
                     // qtMiscCreateFilteredDeck() contains QT Accelerators ('&') in Belarusian
-                    menu.findItem(R.id.action_create_filtered_deck).title = getString(R.string.new_dynamic_deck)
+                    menu.findItem(R.id.action_create_filtered_deck).title = getString(CommonString.new_dynamic_deck)
 
                     saveSearchItem?.isVisible = legacySearchView?.query?.isNotEmpty() != false
 
@@ -775,12 +777,12 @@ class CardBrowserFragment :
                         this.title =
                             if (vm.cardsOrNotes == CARDS) {
                                 resources.getQuantityString(
-                                    R.plurals.card_browser_export_cards,
+                                    CommonPlurals.card_browser_export_cards,
                                     vm.selectedRowCount(),
                                 )
                             } else {
                                 resources.getQuantityString(
-                                    R.plurals.card_browser_export_notes,
+                                    CommonPlurals.card_browser_export_notes,
                                     vm.selectedRowCount(),
                                 )
                             }
@@ -799,7 +801,7 @@ class CardBrowserFragment :
                         deleteNoteItem.apply {
                             this.title =
                                 resources.getQuantityString(
-                                    R.plurals.card_browser_delete_notes,
+                                    CommonPlurals.card_browser_delete_notes,
                                     vm.selectedNoteCount(),
                                 )
                         }
@@ -1008,7 +1010,7 @@ class CardBrowserFragment :
 
                 showSnackbar(message, Snackbar.LENGTH_SHORT) {
                     if (!searchAllDecks) return@showSnackbar
-                    setAction(R.string.card_browser_search_all_decks) {
+                    setAction(CommonString.card_browser_search_all_decks) {
                         activityViewModel.setSelectedDeck(SelectableDeck.AllDecks)
                     }
                 }
@@ -1024,7 +1026,7 @@ class CardBrowserFragment :
                     )
                 SearchResultMessage.NoCardsInSelectedDeck ->
                     showSnackbar(
-                        getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi),
+                        getString(CommonString.card_browser_no_cards_in_deck, selectedDeckNameForUi),
                         searchAllDecks = true,
                     )
             }
@@ -1097,14 +1099,14 @@ class CardBrowserFragment :
             toggleRowSelections.contentDescription =
                 getString(
                     when (selectionState) {
-                        SELECT_ALL -> R.string.card_browser_select_all
-                        SELECT_NONE -> R.string.card_browser_select_none
+                        SELECT_ALL -> CommonString.card_browser_select_all
+                        SELECT_NONE -> CommonString.card_browser_select_none
                     },
                 )
         }
 
         fun onSearchForDecks(unit: Unit) {
-            startDeckSelection(title = getString(R.string.search_deck), asChild = true, skipEmptyDefault = true)
+            startDeckSelection(title = getString(CommonString.search_deck), asChild = true, skipEmptyDefault = true)
         }
 
         fun advancedSearchChanged(inAdvancedSearch: Boolean) {
@@ -1148,22 +1150,22 @@ class CardBrowserFragment :
             when (message) {
                 UserMessage.SEARCH_SAVED ->
                     showSnackbar(
-                        R.string.card_browser_list_my_searches_successful_save,
+                        CommonString.card_browser_list_my_searches_successful_save,
                         Snackbar.LENGTH_SHORT,
                     )
                 UserMessage.SAVED_SEARCH_DUPLICATE_ADDED ->
                     showSnackbar(
-                        R.string.card_browser_list_my_searches_new_search_error_dup,
+                        CommonString.card_browser_list_my_searches_new_search_error_dup,
                         Snackbar.LENGTH_SHORT,
                     )
                 UserMessage.SAVED_SEARCH_DELETED ->
                     showSnackbar(
-                        R.string.card_browser_list_my_searches_successful_deleted,
+                        CommonString.card_browser_list_my_searches_successful_deleted,
                         Snackbar.LENGTH_SHORT,
                     )
                 UserMessage.SAVED_SEARCH_NAME_DOES_NOT_EXIST ->
                     showSnackbar(
-                        R.string.something_wrong,
+                        CommonString.something_wrong,
                         Snackbar.LENGTH_SHORT,
                     )
             }
@@ -1213,7 +1215,7 @@ class CardBrowserFragment :
         fun onChangeNoteType(result: ChangeNoteTypeResponse) =
             when (result) {
                 ChangeNoteTypeResponse.NoSelection -> Timber.w("change note type: no selection")
-                ChangeNoteTypeResponse.MixedSelection -> showSnackbar(R.string.different_note_types_selected)
+                ChangeNoteTypeResponse.MixedSelection -> showSnackbar(CommonString.different_note_types_selected)
                 is ChangeNoteTypeResponse.ChangeNoteType -> showDialogFragment(ChangeNoteTypeDialog.newInstance(result.noteIds))
             }
 
@@ -1228,10 +1230,10 @@ class CardBrowserFragment :
             val (title, subtitle) =
                 when (notification) {
                     is SortChangeNotification.NoOrdering ->
-                        getString(R.string.card_browser_order_no_sorting_title) to null
+                        getString(CommonString.card_browser_order_no_sorting_title) to null
                     is SortChangeNotification.CollectionOrdering -> {
                         val subtitleRes = notification.type.humanReadableExplanation(descending = notification.reverse)
-                        getString(R.string.card_browser_order_snackbar_sort_by, notification.columnLabel) to
+                        getString(CommonString.card_browser_order_snackbar_sort_by, notification.columnLabel) to
                             subtitleRes?.let(::getString)
                     }
                 }
@@ -1502,7 +1504,7 @@ class CardBrowserFragment :
 
             if (availableColumns.isEmpty()) {
                 Timber.w("No available columns to replace ${selectedColumn.label}")
-                showSnackbar(R.string.no_columns_available)
+                showSnackbar(CommonString.no_columns_available)
                 return@launch
             }
 
@@ -1518,7 +1520,7 @@ class CardBrowserFragment :
             return
         }
         startDeckSelection(
-            title = getString(R.string.move_all_to_deck),
+            title = getString(CommonString.move_all_to_deck),
             allowAll = false,
             allowFiltered = false,
             requestKey = REQUEST_DECK_SELECTION_CHANGE_DECK,
@@ -1543,7 +1545,7 @@ class CardBrowserFragment :
      */
     fun openNoteEditorForCurrentlySelectedRow() {
         if (!activityViewModel.openNoteEditorForCurrentlySelectedRow()) {
-            showSnackbar(R.string.no_note_to_edit)
+            showSnackbar(CommonString.no_note_to_edit)
         }
     }
 
@@ -1578,7 +1580,7 @@ class CardBrowserFragment :
             val message =
                 when (result.wasBuried) {
                     true -> TR.studyingCardsBuried(result.count)
-                    false -> resources.getQuantityString(R.plurals.unbury_cards_feedback, result.count, result.count)
+                    false -> resources.getQuantityString(CommonPlurals.unbury_cards_feedback, result.count, result.count)
                 }
             showUndoSnackbar(message)
         }
@@ -1617,8 +1619,8 @@ class CardBrowserFragment :
                     // No selected cards can be repositioned
                     showDialogFragment(
                         SimpleMessageDialog.newInstance(
-                            title = getString(R.string.vague_error),
-                            message = getString(R.string.reposition_card_not_new_error),
+                            title = getString(CommonString.vague_error),
+                            message = getString(CommonString.reposition_card_not_new_error),
                             reload = false,
                         ),
                     )
@@ -1628,7 +1630,7 @@ class CardBrowserFragment :
                     val top = repositionCardsResult.queueTop
                     val bottom = repositionCardsResult.queueBottom
                     if (top == null || bottom == null) {
-                        showSnackbar(R.string.something_wrong)
+                        showSnackbar(CommonString.something_wrong)
                         return@launchCatchingTask
                     }
                     val repositionDialog =
@@ -1647,10 +1649,10 @@ class CardBrowserFragment :
 
     fun deleteSelectedNotes() =
         launchCatchingTask {
-            withProgress(R.string.deleting_selected_notes) {
+            withProgress(CommonString.deleting_selected_notes) {
                 activityViewModel.deleteSelectedNotes()
             }.ifNotZero { noteCount ->
-                val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
+                val deletedMessage = resources.getQuantityString(CommonPlurals.card_browser_cards_deleted, noteCount, noteCount)
                 showUndoSnackbar(deletedMessage)
             }
         }
@@ -1846,7 +1848,7 @@ class CardBrowserFragment :
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message) {
-            setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
+            setAction(CommonString.undo) { launchCatchingTask { undoAndShowSnackbar() } }
             undoSnackbar = this
         }
     }
@@ -1931,39 +1933,39 @@ class CardBrowserFragment :
     val shortcuts get() =
         ShortcutGroup(
             listOf(
-                shortcut("Ctrl+Shift+A", R.string.edit_tags_dialog),
-                shortcut("Ctrl+A", R.string.card_browser_select_all),
+                shortcut("Ctrl+Shift+A", CommonString.edit_tags_dialog),
+                shortcut("Ctrl+A", CommonString.card_browser_select_all),
                 shortcut("Ctrl+Shift+E", Translations::exportingExport),
-                shortcut("Ctrl+E", R.string.menu_add_note),
-                shortcut("E", R.string.cardeditor_title_edit_card),
+                shortcut("Ctrl+E", CommonString.menu_add_note),
+                shortcut("E", CommonString.cardeditor_title_edit_card),
                 shortcut("Ctrl+D") { sentenceCase.changeDeck },
                 shortcut("Ctrl+K") { sentenceCase.toggleMark },
                 shortcut("Ctrl+Alt+R", Translations::browsingReschedule),
-                shortcut("DEL", R.string.delete_card_title),
-                shortcut("Ctrl+Alt+N", R.string.reset_card_dialog_title),
+                shortcut("DEL", CommonString.delete_card_title),
+                shortcut("Ctrl+Alt+N", CommonString.reset_card_dialog_title),
                 shortcut("Ctrl+Alt+T") { sentenceCase.toggleCardsNotes },
-                shortcut("Ctrl+T", R.string.card_browser_search_by_tag),
+                shortcut("Ctrl+T", CommonString.card_browser_search_by_tag),
                 shortcut("Ctrl+Shift+S", Translations::actionsReposition),
-                shortcut("Ctrl+Alt+S", R.string.card_browser_list_my_searches),
-                shortcut("Ctrl+S", R.string.card_browser_list_my_searches_save),
-                shortcut("Alt+S", R.string.card_browser_show_suspended),
+                shortcut("Ctrl+Alt+S", CommonString.card_browser_list_my_searches),
+                shortcut("Ctrl+S", CommonString.card_browser_list_my_searches_save),
+                shortcut("Alt+S", CommonString.card_browser_show_suspended),
                 shortcut("Ctrl+Shift+G") { sentenceCase.gradeNow },
                 shortcut("Ctrl+Shift+J") { sentenceCase.toggleBury },
                 shortcut("Ctrl+J") { sentenceCase.toggleSuspend },
                 shortcut("Ctrl+Shift+I") { sentenceCase.cardInfo },
-                shortcut("Ctrl+O", R.string.show_order_dialog),
-                shortcut("Ctrl+Shift+P", R.string.card_editor_preview_card),
-                shortcut("Ctrl+M", R.string.card_browser_show_marked),
-                shortcut("Esc", R.string.card_browser_select_none),
-                shortcut("Ctrl+1", R.string.gesture_flag_red),
-                shortcut("Ctrl+2", R.string.gesture_flag_orange),
-                shortcut("Ctrl+3", R.string.gesture_flag_green),
-                shortcut("Ctrl+4", R.string.gesture_flag_blue),
-                shortcut("Ctrl+5", R.string.gesture_flag_pink),
-                shortcut("Ctrl+6", R.string.gesture_flag_turquoise),
-                shortcut("Ctrl+7", R.string.gesture_flag_purple),
+                shortcut("Ctrl+O", CommonString.show_order_dialog),
+                shortcut("Ctrl+Shift+P", CommonString.card_editor_preview_card),
+                shortcut("Ctrl+M", CommonString.card_browser_show_marked),
+                shortcut("Esc", CommonString.card_browser_select_none),
+                shortcut("Ctrl+1", CommonString.gesture_flag_red),
+                shortcut("Ctrl+2", CommonString.gesture_flag_orange),
+                shortcut("Ctrl+3", CommonString.gesture_flag_green),
+                shortcut("Ctrl+4", CommonString.gesture_flag_blue),
+                shortcut("Ctrl+5", CommonString.gesture_flag_pink),
+                shortcut("Ctrl+6", CommonString.gesture_flag_turquoise),
+                shortcut("Ctrl+7", CommonString.gesture_flag_purple),
             ),
-            R.string.card_browser_context_menu,
+            CommonString.card_browser_context_menu,
         )
 
     private enum class TagsDialogListenerAction {

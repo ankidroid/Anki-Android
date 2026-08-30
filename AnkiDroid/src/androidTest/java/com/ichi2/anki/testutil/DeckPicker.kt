@@ -25,6 +25,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.tests.checkWithTimeout
@@ -39,7 +40,7 @@ fun closeGetStartedScreenIfExists() {
 }
 
 fun closeBackupCollectionDialogIfExists() {
-    onView(withText(R.string.button_backup_later))
+    onView(withText(CommonString.button_backup_later))
         .withFailureHandler { _, _ -> }
         .perform(click())
 }
@@ -63,7 +64,7 @@ fun createDeckWithUniqueName(): String {
     onView(withId(R.id.fab_main)).perform(click())
     onView(withId(R.id.add_deck_button)).perform(click())
     onView(withId(R.id.dialog_text_input)).perform(typeText(deckName))
-    onView(withText(R.string.dialog_ok)).perform(click())
+    onView(withText(CommonString.dialog_ok)).perform(click())
     return deckName
 }
 

@@ -187,12 +187,12 @@ object InitialActivity {
                 when (error) {
                     is FatalInitializationError.WebViewError ->
                         context.getString(
-                            R.string.ankidroid_init_failed_webview,
+                            CommonString.ankidroid_init_failed_webview,
                             error.errorDetail,
                         )
                     is FatalInitializationError.StorageError ->
                         context.getString(
-                            R.string.ankidroid_init_failed_storage,
+                            CommonString.ankidroid_init_failed_storage,
                             error.errorDetail,
                         )
                 }

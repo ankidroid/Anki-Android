@@ -12,6 +12,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -160,7 +161,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
         ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_collection_state_in_widget))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
 
@@ -187,7 +188,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
         ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_widget_state))
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(CommonString.empty_widget_state))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
 

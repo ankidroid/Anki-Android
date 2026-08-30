@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.ViewAudioPlayBinding
 
@@ -67,7 +68,7 @@ class AudioPlayView : ConstraintLayout {
         @DrawableRes iconRes: Int,
     ) {
         binding.playButton.contentDescription =
-            context.getString(if (iconRes == R.drawable.ic_replay) R.string.replay_voice else R.string.play_recording)
+            context.getString(if (iconRes == R.drawable.ic_replay) CommonString.replay_voice else CommonString.play_recording)
         binding.playIconView
             .animate()
             .alpha(0f)

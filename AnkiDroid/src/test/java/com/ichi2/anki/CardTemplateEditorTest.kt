@@ -225,7 +225,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooper()
         assertEquals(
             "Did not show dialog about deleting only card?",
-            getResourceString(R.string.card_template_editor_cant_delete),
+            getResourceString(CommonString.card_template_editor_cant_delete),
             getAlertDialogText(true),
         )
         assertEquals(
@@ -373,7 +373,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(
                 "Did not show dialog about deleting only card?",
-                getResourceString(R.string.orphan_note_message),
+                getResourceString(CommonString.orphan_note_message),
                 getAlertDialogText(true),
             )
             clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
@@ -459,7 +459,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(
                 "Did not show dialog about deleting template and it's card?",
-                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
+                getQuantityString(CommonPlurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
                 getAlertDialogText(true),
             )
             clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, true)
@@ -539,7 +539,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(
                 "Did not show dialog about deleting template and it's card?",
-                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
+                getQuantityString(CommonPlurals.card_template_editor_confirm_delete, 1, 1, "Card 1"),
                 getAlertDialogText(true),
             )
             clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
@@ -550,7 +550,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(
                 "Did not show dialog about deleting template and it's card?",
-                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
+                getQuantityString(CommonPlurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
                 getAlertDialogText(true),
             )
             clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
@@ -641,7 +641,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(
                 "Did not show dialog about deleting template and it's card?",
-                getQuantityString(R.plurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
+                getQuantityString(CommonPlurals.card_template_editor_confirm_delete, 1, 1, "Card 2"),
                 getAlertDialogText(true),
             )
             clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
@@ -675,7 +675,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertEquals(
                 "Did not show dialog about deleting template and it's card?",
-                getQuantityString(R.plurals.card_template_editor_confirm_delete, 0, 0, CollectionManager.TR.cardTemplatesCard(2)),
+                getQuantityString(CommonPlurals.card_template_editor_confirm_delete, 0, 0, CollectionManager.TR.cardTemplatesCard(2)),
                 getAlertDialogText(true),
             )
             clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
@@ -1158,7 +1158,7 @@ class CardTemplateEditorTest : RobolectricTest() {
             }
         assertEquals(
             "Did not show dialog about adding template and it's card?",
-            getQuantityString(R.plurals.card_template_editor_confirm_add, numAffectedCards, numAffectedCards),
+            getQuantityString(CommonPlurals.card_template_editor_confirm_add, numAffectedCards, numAffectedCards),
             getAlertDialogText(true),
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)

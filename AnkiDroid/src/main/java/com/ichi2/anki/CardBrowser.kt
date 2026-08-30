@@ -150,14 +150,14 @@ open class CardBrowser :
         when (saveSearchResult) {
             SaveSearchResult.ALREADY_EXISTS ->
                 showSnackbar(
-                    R.string.card_browser_list_my_searches_new_search_error_dup,
+                    CommonString.card_browser_list_my_searches_new_search_error_dup,
                     Snackbar.LENGTH_SHORT,
                 )
             SaveSearchResult.SUCCESS -> {
                 searchView!!.setQuery("", false)
                 mySearchesItem!!.isVisible = true
                 showSnackbar(
-                    R.string.card_browser_list_my_searches_successful_save,
+                    CommonString.card_browser_list_my_searches_successful_save,
                     Snackbar.LENGTH_SHORT,
                 )
             }
@@ -384,12 +384,12 @@ open class CardBrowser :
     private fun showSaveChangesDialog(destination: NoteEditorDestination) {
         DiscardChangesDialog.showDialog(
             context = this,
-            positiveButtonText = this.getString(R.string.save),
-            negativeButtonText = this.getString(R.string.discard),
+            positiveButtonText = this.getString(CommonString.save),
+            negativeButtonText = this.getString(CommonString.discard),
             // The neutral button allows the user to back out of the action,
             // e.g., if they accidentally triggered a navigation or card selection.
-            neutralButtonText = this.getString(R.string.dialog_cancel),
-            message = this.getString(R.string.save_changes_message),
+            neutralButtonText = this.getString(CommonString.dialog_cancel),
+            message = this.getString(CommonString.save_changes_message),
             positiveMethod = {
                 launchCatchingTask {
                     fragment?.saveNote()
@@ -738,7 +738,7 @@ suspend fun searchForRows(
 /** Renders the row count for [this] event as a localized "X cards/notes" string. */
 fun SearchState.Completed.formatCardCount(resources: android.content.res.Resources): String =
     resources.getQuantityString(
-        if (cardsOrNotes == CARDS) R.plurals.card_browser_subtitle else R.plurals.card_browser_subtitle_notes_mode,
+        if (cardsOrNotes == CARDS) CommonPlurals.card_browser_subtitle else CommonPlurals.card_browser_subtitle_notes_mode,
         rowCount,
         rowCount,
     )

@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.getColorFromAttr
@@ -214,7 +215,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
                 val debugInfo = ReminderLogTree.readReminderLog() + "\n\n" + ReviewRemindersDatabase.dumpContentsToString()
                 requireContext().copyToClipboard(
                     TruncatedString.from(debugInfo),
-                    failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
+                    failureMessageId = CommonString.about_ankidroid_error_copy_debug_info,
                 )
             }
         }

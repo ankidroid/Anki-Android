@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
@@ -284,7 +285,8 @@ class TagsArrayAdapter(
             // do not add padding if there is no visible nested tag
             binding.expandButton.visibility = View.GONE
         }
-        binding.expandButton.contentDescription = holder.itemView.context.getString(R.string.expand_tag, holder.node.tag.replace("::", " "))
+        binding.expandButton.contentDescription =
+            holder.itemView.context.getString(CommonString.expand_tag, holder.node.tag.replace("::", " "))
 
         binding.textView.text = TagsUtil.getTagParts(holder.node.tag).last()
 

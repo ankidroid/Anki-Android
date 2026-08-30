@@ -4,7 +4,7 @@ package com.ichi2.utils
 
 import android.content.Context
 import androidx.annotation.CheckResult
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.android.showThemedToast
 import java.io.PrintWriter
@@ -51,7 +51,7 @@ object ExceptionUtil {
             CrashReportService.sendExceptionReport(e, origin)
             showThemedToast(
                 context,
-                context.getString(R.string.multimedia_editor_something_wrong),
+                context.getString(CommonString.multimedia_editor_something_wrong),
                 true,
             )
         }

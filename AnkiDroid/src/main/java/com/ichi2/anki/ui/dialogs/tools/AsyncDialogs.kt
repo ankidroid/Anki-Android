@@ -135,8 +135,8 @@ sealed interface DialogResult {
  *     val dialogResult = awaitDialog {
  *         setTitle("Title")
  *         setMessage("Message")
- *         setPositiveButton(R.string.dialog_ok)
- *         setNegativeButton(R.string.dialog_cancel)
+ *         setPositiveButton(CommonString.dialog_ok)
+ *         setNegativeButton(CommonString.dialog_cancel)
  *     }
  *
  *     if (dialogResult is DialogResult.Ok) {

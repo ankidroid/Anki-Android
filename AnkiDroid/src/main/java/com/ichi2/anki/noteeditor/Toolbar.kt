@@ -37,6 +37,7 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
@@ -302,7 +303,7 @@ class Toolbar : FrameLayout {
                     )
                 onFormat(formatter)
             }
-            title(R.string.menu_font_size)
+            title(CommonString.menu_font_size)
         }
     }
 
@@ -318,7 +319,7 @@ class Toolbar : FrameLayout {
                 val formatter = TextWrapper(prefix = "<$charSequence>", suffix = "</$charSequence>")
                 onFormat(formatter)
             }
-            title(R.string.insert_heading)
+            title(CommonString.insert_heading)
         }
     }
 
@@ -332,7 +333,7 @@ class Toolbar : FrameLayout {
             setItems(labels) { _, index ->
                 onFormat(options[index].toTextWrapper())
             }
-            title(R.string.insert_mathjax)
+            title(CommonString.insert_mathjax)
         }
     }
 

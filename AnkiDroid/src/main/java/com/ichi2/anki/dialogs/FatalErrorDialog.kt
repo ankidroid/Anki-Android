@@ -5,8 +5,8 @@ package com.ichi2.anki.dialogs
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.InitialActivity.StartupFailure.InitializationError
-import com.ichi2.anki.R
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.create
 import com.ichi2.utils.message
@@ -23,13 +23,13 @@ object FatalErrorDialog {
         val context: Context = activity
         Timber.i("Displaying 'Fatal error'")
         return AlertDialog.Builder(context).create {
-            title(R.string.ankidroid_init_failed_webview_title)
+            title(CommonString.ankidroid_init_failed_webview_title)
             message(text = failure.toHumanReadableString(context))
-            positiveButton(R.string.close) {
+            positiveButton(CommonString.close) {
                 activity.closeCollectionAndFinish()
             }
             failure.infoLink?.let { url ->
-                neutralButton(R.string.help) {
+                neutralButton(CommonString.help) {
                     activity.openUrl(url)
                 }
             }

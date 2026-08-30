@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.ColumnItem
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
@@ -130,7 +131,7 @@ class BrowserColumnSelectionAdapter(
                 val isExclude = absoluteAdapterPosition < positionOfAvailableHeading
                 setImageResource(if (isExclude) R.drawable.ic_remove else R.drawable.ic_add)
 
-                val label = context.getString(if (isExclude) R.string.exclude_column else R.string.include_column)
+                val label = context.getString(if (isExclude) CommonString.exclude_column else CommonString.include_column)
                 contentDescription = label
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     tooltipText = label

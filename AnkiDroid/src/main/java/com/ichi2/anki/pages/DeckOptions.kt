@@ -17,6 +17,7 @@ import anki.collection.OpChanges
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.ProgressContext
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
@@ -296,7 +297,7 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
                 extractProgress = {
                     // TODO: Don't use the amount yet, unused as a progress indicator, and
                     //  duplicates computeMemory's label
-                    text = this.toProgressText() ?: getString(R.string.dialog_processing)
+                    text = this.toProgressText() ?: getString(CommonString.dialog_processing)
                 },
             ) {
                 withContext(Dispatchers.IO) {

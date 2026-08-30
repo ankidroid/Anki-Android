@@ -31,6 +31,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
@@ -193,13 +194,13 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     private fun render(state: SharedDecksDownloadUiState) {
-        binding.downloadingTitle.text = state.fileName?.let { getString(R.string.downloading_file, it) }
+        binding.downloadingTitle.text = state.fileName?.let { getString(CommonString.downloading_file, it) }
         binding.downloadPercentageText.text =
             when {
-                state.phase == DownloadPhase.Failed -> getString(R.string.download_failed)
+                state.phase == DownloadPhase.Failed -> getString(CommonString.download_failed)
                 // 19812: DownloadManager could not be queried, so all we can say is that it is running
                 state.percent == null -> TR.syncDownloadingFromAnkiweb()
-                else -> getString(R.string.percentage, formatDownloadPercent(state.percent))
+                else -> getString(CommonString.percentage, formatDownloadPercent(state.percent))
             }
         binding.downloadProgressBar.progress = state.percent?.toInt() ?: 0
         binding.checkNetworkInfoText.isVisible = state.isWaitingForNetwork
@@ -234,7 +235,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private fun downloadFile(fileToBeDownloaded: DownloadFile) {
         val externalFilesFolder = requireContext().getExternalFilesDir(null)
         if (externalFilesFolder == null) {
-            showSnackbar(R.string.external_storage_unavailable)
+            showSnackbar(CommonString.external_storage_unavailable)
             parentFragmentManager.popBackStack()
             return
         }
@@ -521,7 +522,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         try {
             context.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {
-            showThemedToast(context, R.string.something_wrong, false)
+            showThemedToast(context, CommonString.something_wrong, false)
             Timber.w(e)
         }
     }
@@ -537,14 +538,14 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
                 if (isVisible) {
-                    context?.let { showThemedToast(it, R.string.import_log_no_apkg, false) }
+                    context?.let { showThemedToast(it, CommonString.import_log_no_apkg, false) }
                     // Go back if file is not a deck and cannot be imported
                     activity?.onBackPressedDispatcher?.onBackPressed()
                 }
             } else {
                 Timber.i("Download failed, offer a retry")
                 if (isVisible) {
-                    context?.let { showThemedToast(it, R.string.something_wrong, false) }
+                    context?.let { showThemedToast(it, CommonString.something_wrong, false) }
                 }
                 viewModel.onDownloadFailed()
             }
@@ -561,15 +562,15 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         Timber.i("displaying cancel download confirmation dialog")
         downloadCancelConfirmationDialog =
             AlertDialog.Builder(requireContext()).create {
-                setTitle(R.string.cancel_download_question_title)
-                setPositiveButton(R.string.dialog_yes) { _, _ ->
+                setTitle(CommonString.cancel_download_question_title)
+                setPositiveButton(CommonString.dialog_yes) { _, _ ->
                     Timber.i("cancelling download")
                     downloadManager.remove(downloadId)
                     isDownloadInProgress = false
                     onBackPressedCallback.isEnabled = isDownloadInProgress
                     parentFragmentManager.popBackStack()
                 }
-                setNegativeButton(R.string.dialog_no) { _, _ ->
+                setNegativeButton(CommonString.dialog_no) { _, _ ->
                     Timber.i("dismissed cancel download confirmation dialog")
                     downloadCancelConfirmationDialog?.dismiss()
                 }
