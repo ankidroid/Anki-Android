@@ -8,14 +8,19 @@ plugins {
 
 configure<LibraryExtension> {
     namespace = "com.ichi2.anki.widgets"
+    buildFeatures.viewBinding = true
 }
 
 dependencies {
     implementation(project(":anki-common"))
     implementation(project(":common"))
+    implementation(project(":common:android"))
     implementation(project(":libanki"))
 
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.google.material)
     implementation(libs.jakewharton.timber)
+    implementation(libs.kotlinx.coroutines.core)
 }
