@@ -61,12 +61,12 @@ import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.startup.ensureCollectionPathSet
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
+import com.ichi2.anki.widget.RECURRING_WIDGETS
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.DayRolloverAlarm
-import com.ichi2.widget.RECURRING_WIDGETS
 import com.ichi2.widget.WidgetNotificationScheduler
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget

@@ -17,6 +17,8 @@
 package com.ichi2.widget
 
 import com.google.common.reflect.ClassPath
+import com.ichi2.anki.widget.NON_RECURRING_WIDGETS
+import com.ichi2.anki.widget.RECURRING_WIDGETS
 import org.junit.Test
 import java.lang.reflect.Modifier
 import kotlin.test.assertEquals
