@@ -7,6 +7,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,8 +20,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
@@ -31,10 +36,15 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.size
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -188,6 +198,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         if (!ensureStorageIsReady()) {
             return
         }
+        setupEdgeToEdge()
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get note type id
@@ -242,6 +253,30 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         }
 
         registerDeckSelectedHandler(action = ::onDeckSelected)
+    }
+
+    private fun setupEdgeToEdge() {
+        enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
+        ViewCompat.setOnApplyWindowInsetsListener(binding.templateEditorTop.root) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout())
+            findViewById<LinearLayout>(
+                R.id.template_editor_top,
+            )?.updatePadding(left = constraints.left, top = constraints.top, right = constraints.right)
+            insets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
+            val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
+            if (fragmented) {
+                findViewById<LinearLayout>(R.id.template_editor)?.updatePadding(left = constraints.left)
+                findViewById<FragmentContainerView>(R.id.fragment_container)?.updatePadding(right = constraints.right)
+            } else {
+                findViewById<FrameLayout>(
+                    R.id.bottom_navigation_container,
+                )?.updatePadding(left = constraints.left, right = constraints.right)
+                findViewById<ScrollView>(R.id.scroll_view)?.updatePadding(left = constraints.left, right = constraints.right)
+            }
+            insets
+        }
     }
 
     /**
