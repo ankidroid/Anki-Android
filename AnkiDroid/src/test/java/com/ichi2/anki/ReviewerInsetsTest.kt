@@ -172,6 +172,26 @@ class ReviewerInsetsTest : RobolectricTest() {
     }
 
     @Test
+    fun `immersive review - hidden bars - the counts bar keeps clear of the rounded corners`() {
+        FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
+        withReviewer { reviewer ->
+            val baseTopPadding = reviewer.countsBar.paddingTop
+            // landscape: the camera cutout is a side inset, so no visible inset pushes the
+            // counts below the display's rounded corners; the hidden status bar's region is
+            // still reported by the stable insets
+            reviewer.dispatchInsets(barsVisible = false)
+
+            assertThat(
+                "the counts rest a status bar's height below the top edge, as they did " +
+                    "pre-edge-to-edge under SYSTEM_UI_FLAG_LAYOUT_STABLE, clear of the " +
+                    "display's rounded corners",
+                reviewer.countsBar.paddingTop,
+                equalTo(baseTopPadding + 24.dp.toPx(targetContext)),
+            )
+        }
+    }
+
+    @Test
     fun `immersive review - the answer area's color extends under a revealed navigation bar`() {
         FullScreenMode.setPreference(targetContext.sharedPrefs(), FullScreenMode.BUTTONS_ONLY)
         withReviewer { reviewer ->
