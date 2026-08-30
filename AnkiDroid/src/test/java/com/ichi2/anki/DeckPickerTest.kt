@@ -8,21 +8,29 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteDatabaseCorruptException
+import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SdkSuppress
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.browser.CardBrowserFragment
+import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.getResFromAttr
@@ -33,15 +41,18 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.navigation.AnkiDroidNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.EXTRA_PERMISSIONS_SET
@@ -56,6 +67,7 @@ import com.ichi2.testutils.ext.addBasicNoteWithOp
 import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
+import com.ichi2.testutils.withBooleanPreference
 import com.ichi2.testutils.withDeniedPermissions
 import com.ichi2.testutils.withWritePermissions
 import kotlinx.coroutines.flow.merge
@@ -442,18 +454,13 @@ class DeckPickerTest : RobolectricTest() {
         assertEquals(expectedTitle, actualTitle)
     }
 
-    private fun withBottomNavigationEnabled(action: () -> Unit) {
-        val preferences = Prefs.sharedPrefs
-        val key = Prefs.key(R.string.dev_bottom_nav_key)
-        val previousValue = if (preferences.contains(key)) preferences.getBoolean(key, false) else null
-        preferences.edit { putBoolean(key, true) }
-        try {
-            action()
-        } finally {
-            preferences.edit {
-                if (previousValue == null) remove(key) else putBoolean(key, previousValue)
-            }
-        }
+    private fun withBottomNavigationEnabled(action: () -> Unit) = withBooleanPreference(R.string.dev_bottom_nav_key, true, action)
+
+    private fun DeckPicker.openEmbeddedCardBrowser(): CardBrowserFragment {
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId =
+            BottomNavController.NavigationItem.BROWSER.id
+        supportFragmentManager.executePendingTransactions()
+        return supportFragmentManager.findFragmentByTag("browser") as CardBrowserFragment
     }
 
     private fun DeckPicker.longPressDeck(name: String): View =
@@ -870,6 +877,89 @@ class DeckPickerTest : RobolectricTest() {
                 bottomNav.menu.findItem(R.id.nav_stats).title = longTitle
 
                 assertThat(bottomNav.findViewById<View>(R.id.nav_stats).tooltipText.toString(), equalTo(longTitle))
+            }
+        }
+
+    @Test
+    fun `bottom navigation supports the public card browser`() =
+        withBottomNavigationEnabled {
+            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+                assumeTrue("Not running on tablet", qualifiers != "xlarge")
+                deckPicker {
+                    val browser = openEmbeddedCardBrowser()
+                    val browserView = browser.requireView()
+                    val browserToolbar = browserView.findViewById<Toolbar>(R.id.toolbar)
+                    assertThat(browser.legacySearchView, notNullValue())
+                    assertThat(browserToolbar.menu.findItem(R.id.action_search), notNullValue())
+                }
+            }
+        }
+
+    @Test
+    fun `embedded card browser accounts for system bar insets`() =
+        withBottomNavigationEnabled {
+            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+                assumeTrue("Not running on tablet", qualifiers != "xlarge")
+                deckPicker {
+                    val browserView = openEmbeddedCardBrowser().requireView()
+
+                    val statusBarHeight = 24
+                    val insets =
+                        WindowInsetsCompat
+                            .Builder()
+                            .setInsets(WindowInsetsCompat.Type.statusBars(), Insets.of(0, statusBarHeight, 0, 0))
+                            .setInsets(WindowInsetsCompat.Type.navigationBars(), Insets.of(0, 0, 0, 48))
+                            .build()
+                    ViewCompat.dispatchApplyWindowInsets(browserView, insets)
+
+                    assertThat(browserView.findViewById<View>(R.id.toolbar_container).paddingTop, equalTo(statusBarHeight))
+                    assertThat(browserView.findViewById<RecyclerFastScroller>(R.id.browser_scroller).handleBottomInset, equalTo(0))
+                }
+            }
+        }
+
+    @Test
+    fun `embedded card browser updates selected row count after deselection`() =
+        withBottomNavigationEnabled {
+            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+                assumeTrue("Not running on tablet", qualifiers != "xlarge")
+                deckPicker {
+                    addBasicNoteWithOp(fields = listOf("first", "one"))
+                    addBasicNoteWithOp(fields = listOf("second", "two"))
+                    val browser = openEmbeddedCardBrowser()
+                    advanceRobolectricLooper()
+                    val viewModel = browser.activityViewModel
+                    val toolbarTitle = browser.requireView().findViewById<TextView>(R.id.toolbar_title)
+                    val firstRow = RowSelection(viewModel.getRowAtPosition(0), topOffset = 0)
+                    val secondRow = RowSelection(viewModel.getRowAtPosition(1), topOffset = 0)
+
+                    viewModel.handleRowLongPress(firstRow).join()
+                    viewModel.onTap(secondRow).join()
+                    advanceRobolectricLooper()
+                    assertThat(toolbarTitle.text.toString(), equalTo("2"))
+
+                    viewModel.onTap(firstRow).join()
+                    advanceRobolectricLooper()
+                    assertThat(toolbarTitle.text.toString(), equalTo("1"))
+                }
+            }
+        }
+
+    @Test
+    fun `embedded card browser can select all decks`() =
+        withBottomNavigationEnabled {
+            withBooleanPreference(R.string.dev_card_browser_search_view, false) {
+                assumeTrue("Not running on tablet", qualifiers != "xlarge")
+                deckPicker {
+                    val browser = openEmbeddedCardBrowser()
+
+                    browser.childFragmentManager.setFragmentResult(
+                        DeckSelectionDialog.REQUEST_SELECT_DECK,
+                        Bundle().apply {
+                            putParcelable(DeckSelectionDialog.ARG_SELECTED_DECK, SelectableDeck.AllDecks)
+                        },
+                    )
+                }
             }
         }
 

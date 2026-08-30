@@ -5,6 +5,7 @@ package com.ichi2.anki.browser
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -22,6 +23,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
@@ -29,6 +31,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuHost
@@ -210,13 +213,20 @@ class CardBrowserFragment :
     /** The focused row, should only be used for efficient `notifyItemChanged` calls */
     private var focusedRow: CardOrNoteId? = null
 
+    private val embeddedMultiSelectOnBackPressedCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
+            }
+        }
+
     // Dev option for Issue 18709
-    // The old layout's MenuProvider is coupled to the activity's toolbar, which causes
-    // menu bleeding when hosted in DeckPicker's bottom nav. The SearchView layout is
-    // self-contained and works in any host.
-    // TODO: decouple old layout via ContentHostFragment so this fallback isn't needed
     private val useSearchView: Boolean
-        get() = Prefs.devUsingCardBrowserSearchView || activity !is CardBrowser
+        get() = Prefs.devUsingCardBrowserSearchView
+
+    /** The standalone CardBrowser activity supplies its own toolbar; embedded hosts do not. */
+    private val usesEmbeddedLegacyToolbar: Boolean
+        get() = !useSearchView && activity !is CardBrowser
 
     /**
      * Returns the current deck name, "All Decks" if all decks are selected, or "Unknown"
@@ -247,22 +257,40 @@ class CardBrowserFragment :
     var searchItem: MenuItem? = null
     var legacySearchView: CardBrowserSearchView? = null
     private var saveSearchItem: MenuItem? = null
+    private var legacyToolbar: Toolbar? = null
+    private var legacyToolbarNavigationIcon: Drawable? = null
+    private var legacyToolbarTitle: TextView? = null
+    private var legacyDeckName: TextView? = null
+    private var legacySubtitle: TextView? = null
     // endregion
 
     private var toggleAdvancedSearch: Button? = null
 
-    // region SearchBarMenuHost
+    // region Fragment-owned menu hosts
     override val menuInflater: MenuInflater? get() = activity?.menuInflater
-    override val menuHostHelper = MenuHostHelper { invalidateSearchBarMenu() }
+    override val menuHostHelper = MenuHostHelper { invalidateMenu() }
+
+    override fun invalidateMenu() {
+        when {
+            useSearchView -> invalidateSearchBarMenu()
+            usesEmbeddedLegacyToolbar -> legacyToolbar?.invalidateMenu()
+            else -> (activity as? MenuHost)?.invalidateMenu()
+        }
+    }
     // endregion
 
     @get:LayoutRes
     private val layout: Int
-        get() = if (useSearchView) R.layout.fragment_card_browser_searchview else R.layout.fragment_card_browser
+        get() =
+            when {
+                useSearchView -> R.layout.fragment_card_browser_searchview
+                usesEmbeddedLegacyToolbar -> R.layout.fragment_card_browser_legacy_embedded
+                else -> R.layout.fragment_card_browser
+            }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (!useSearchView) {
+        if (!useSearchView && !usesEmbeddedLegacyToolbar) {
             require(context is MenuHost) { "Host activity must implement MenuHost when useSearchView is disabled" }
         }
     }
@@ -293,8 +321,7 @@ class CardBrowserFragment :
         // onSearchForDecks starts deck selection using childFragmentManager
         childFragmentManager.setFragmentResultListener(DeckSelectionDialog.REQUEST_SELECT_DECK, this) { _, bundle ->
             val selectedDeck = bundle.getParcelableCompat<SelectableDeck>(ARG_SELECTED_DECK)
-            require(selectedDeck is SelectableDeck.Deck) { "Expected non-null deck" }
-            activityViewModel.setSelectedDeck(selectedDeck)
+            activityViewModel.setSelectedDeck(requireNotNull(selectedDeck) { "Expected non-null deck" })
         }
 
         registerDeckSelectedHandler(REQUEST_DECK_SELECTION_CHANGE_DECK) { selectedDeck ->
@@ -339,6 +366,23 @@ class CardBrowserFragment :
             }
 
         progressIndicator = view.findViewById(R.id.browser_progress)
+
+        if (usesEmbeddedLegacyToolbar) {
+            legacyToolbar =
+                view.findViewById<Toolbar>(R.id.toolbar).apply {
+                    legacyToolbarNavigationIcon = navigationIcon
+                    navigationIcon = null
+                    setNavigationOnClickListener {
+                        activityViewModel.endMultiSelectMode(SingleSelectCause.NavigateBack)
+                    }
+                }
+            legacyToolbarTitle = view.findViewById(R.id.toolbar_title)
+            legacyDeckName = view.findViewById(R.id.deck_name)
+            legacySubtitle = view.findViewById(R.id.subtitle)
+            view.findViewById<View>(R.id.toolbar_content).setOnClickListener {
+                viewModel.openDeckSelectionDialog()
+            }
+        }
 
         decksChip =
             view.findViewById<Chip>(R.id.decks_chip)?.apply {
@@ -422,6 +466,11 @@ class CardBrowserFragment :
                 }
             }
 
+        if (activity !is CardBrowser) {
+            embeddedMultiSelectOnBackPressedCallback.isEnabled = activityViewModel.isInMultiSelectMode
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, embeddedMultiSelectOnBackPressedCallback)
+        }
+
         setupFlows()
 
         setupFragmentResultListeners()
@@ -431,15 +480,19 @@ class CardBrowserFragment :
 
     private fun applyContentInsets(root: View) {
         val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
+        val toolbarContainer = root.findViewById<View?>(R.id.toolbar_container)
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
             val bars =
                 insets.getInsets(
                     WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
                 )
             v.updatePadding(left = bars.left, right = bars.right)
+            toolbarContainer?.updatePadding(top = bars.top)
             // The bottom of the safe area is above the navigation bar and rounded display corners.
             // When scrolled to the bottom of the scrollbar should be aligned with the last row.
-            val safeAreaBottom = maxOf(bars.bottom, insets.bottomCornerClearance(v))
+            // Embedded content already ends above the bottom navigation, including its system-bar inset.
+            val safeAreaBottom =
+                if (activity is CardBrowser) maxOf(bars.bottom, insets.bottomCornerClearance(v)) else 0
             // Due to clipToPadding=false, only the last row is affected
             cardsListView.updatePadding(bottom = safeAreaBottom)
             // The scrollbar track stays full-height (edge to edge); only the handle is kept above
@@ -450,7 +503,12 @@ class CardBrowserFragment :
     }
 
     private fun setupMenu() {
-        val menuHost: MenuHost = if (useSearchView) this else (requireActivity() as MenuHost)
+        val menuHost: MenuHost =
+            when {
+                useSearchView -> this
+                usesEmbeddedLegacyToolbar -> requireNotNull(legacyToolbar)
+                else -> requireActivity() as MenuHost
+            }
 
         fun MenuItem.setupUndo() {
             isVisible = getColUnsafe().undoAvailable()
@@ -880,6 +938,11 @@ class CardBrowserFragment :
         if (::cardsListView.isInitialized) {
             cardsListView.adapter = null
         }
+        legacyToolbar = null
+        legacyToolbarNavigationIcon = null
+        legacyToolbarTitle = null
+        legacyDeckName = null
+        legacySubtitle = null
     }
 
     @Suppress("UNUSED_PARAMETER", "unused")
@@ -896,6 +959,15 @@ class CardBrowserFragment :
         fun onMultiSelectModeChanged(modeChange: ChangeMultiSelectMode) {
             val inMultiSelect = modeChange.resultedInMultiSelect
             toggleRowSelections.isVisible = inMultiSelect
+            legacyToolbarTitle?.apply {
+                text = activityViewModel.selectedRowCount().toString()
+                isVisible = inMultiSelect
+            }
+            legacyDeckName?.isVisible = !inMultiSelect
+            legacySubtitle?.isVisible = !inMultiSelect
+            legacyToolbar?.navigationIcon = legacyToolbarNavigationIcon.takeIf { inMultiSelect }
+            embeddedMultiSelectOnBackPressedCallback.isEnabled = inMultiSelect
+            invalidateMenu()
 
             // update adapter to remove check boxes
             cardsAdapter.notifyDataSetChanged()
@@ -963,12 +1035,16 @@ class CardBrowserFragment :
             cardsAdapter.notifyDataSetChanged()
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
             if (searchState is SearchState.Completed) {
+                legacySubtitle?.text = searchState.formatCardCount(resources)
                 onSearchCompleted(searchState)
                 invalidateMenu()
             }
         }
 
-        fun onSelectedRowsChanged(rows: Set<Any>) = cardsAdapter.notifyDataSetChanged()
+        fun onSelectedRowsChanged(rows: Set<Any>) {
+            legacyToolbarTitle?.text = rows.size.toString()
+            cardsAdapter.notifyDataSetChanged()
+        }
 
         fun onFocusedRowChanged(newFocused: CardOrNoteId?) {
             val previous = focusedRow
@@ -1097,6 +1173,7 @@ class CardBrowserFragment :
             Timber.d("syncing searchview state from chip updates")
             val filters = search.filters
 
+            legacyDeckName?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
             decksChip?.text = filters.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
             decksChip?.hasCheckedBackground = filters.decks.any()
 
