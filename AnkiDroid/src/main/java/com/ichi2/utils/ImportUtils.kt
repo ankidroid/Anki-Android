@@ -169,7 +169,18 @@ object ImportUtils {
             uri: Uri,
         ): String? {
             val filename = validateFileName(getFileNameFromContentProvider(context, uri) ?: return null)
-            val tempFile = File(context.cacheDir, filename)
+            val tempFile =
+                try {
+                    context.cacheDir.withFileNameSafe(filename)
+                } catch (_: SecurityException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in getFileCachedCopy")
+                    return null
+                } catch (_: IllegalArgumentException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in getFileCachedCopy")
+                    return null
+                }
             return when (val result = copyFileToCache(context, uri, tempFile.absolutePath)) {
                 is CacheFileResult.Success -> result.path
                 else -> null
@@ -239,7 +250,19 @@ object ImportUtils {
 
             // Copy to temporary file
             filename = validateFileName(filename)
-            val tempOutDir: String = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+            val checkFile =
+                try {
+                    context.cacheDir.withFileNameSafe(filename)
+                } catch (_: SecurityException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in handleContentProviderFile")
+                    return ImportResult.Failure(context.getString(R.string.import_error_handle_exception, "Invalid path"))
+                } catch (_: IllegalArgumentException) {
+                    // Do not log the exception: it may interpolate attacker-controlled paths (PII).
+                    Timber.e("Path traversal detected in handleContentProviderFile")
+                    return ImportResult.Failure(context.getString(R.string.import_error_handle_exception, "Invalid path"))
+                }
+            val tempOutDir: String = checkFile.absolutePath
 
             copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
                 CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")
@@ -268,26 +291,42 @@ object ImportUtils {
 
         private fun isAnkiDatabase(filename: String?): Boolean = filename != null && hasExtension(filename, "anki2")
 
+        /**
+         * Uses the last path segment ([File.name]) so directory components cannot escape the
+         * destination. Empty names, `.`, and `..` become `unnamed_file`. Leading dots on a real
+         * filename are preserved (e.g. `.hidden.apkg`, `..apkg`).
+         */
+        @CheckResult
+        private fun sanitizeFileName(fileName: String): String {
+            val sanitized = File(fileName).name
+            return if (sanitized.isEmpty() || sanitized == "." || sanitized == "..") {
+                "unnamed_file"
+            } else {
+                sanitized
+            }
+        }
+
         @NeedsTest("Add test for the fallback, ensure the fallback filename \"file_<timestamp>.<ext>\" is produced when decoding fails")
         private fun validateFileName(fileName: String): String {
             // #6137 - filenames can be too long when URLEncoded
+            val sanitized = sanitizeFileName(fileName)
             return try {
-                val encoded = URLEncoder.encode(fileName, "UTF-8")
+                val encoded = URLEncoder.encode(sanitized, "UTF-8")
                 if (encoded.length <= FILE_NAME_SHORTENING_THRESHOLD) {
                     Timber.d("No filename truncation necessary")
-                    fileName
+                    sanitized
                 } else {
                     Timber.d("Filename was longer than %d, shortening", FILE_NAME_SHORTENING_THRESHOLD)
                     // take 90 instead of 100 so we don't get the extension
                     val substringLength = FILE_NAME_SHORTENING_THRESHOLD - 10
                     val shortenedFileName = encoded.take(substringLength) + "..." + getExtension(fileName)
-                    Timber.d("Shortened filename '%s' to '%s'", fileName, shortenedFileName)
+                    Timber.d("Shortened filename")
                     // if we don't decode, % is double-encoded
-                    URLDecoder.decode(shortenedFileName, "UTF-8")
+                    sanitizeFileName(URLDecoder.decode(shortenedFileName, "UTF-8"))
                 }
             } catch (e: Exception) {
-                Timber.w(e, "Failed to shorten file: %s", fileName)
-                "file_${TimeManager.time.intTimeMS()}.${getExtension(fileName)}"
+                Timber.w(e, "Failed to shorten file")
+                sanitizeFileName("file_${TimeManager.time.intTimeMS()}.${getExtension(fileName)}")
             }
         }
 

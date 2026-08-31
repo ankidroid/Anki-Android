@@ -30,7 +30,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.lessThanOrEqualTo
-import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.startsWith
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -44,17 +44,19 @@ import java.io.File
 @RunWith(AndroidJUnit4::class)
 class ImportUtilsTest : RobolectricTest() {
     @Test
-    fun cjkNamesAreConvertedToUnicode() {
-        // NOTE: I don't know whether this still needs to exist, but it was added as this previously crashes
-        // and I would have added a regression without checking the history.
+    fun cjkNamesAreImportedUnderCacheDir() {
+        // Regression for filenames that previously crashed when building cache paths.
         // https://github.com/ankidroid/Anki-Android/commit/ed06954c8c678024e2fce25c19bd6cdaf0120260#diff-8eefa7f7b20c936f007c934965238520R58
-
         val inputFileName = "好.apkg"
+        val cachePrefix = targetContext.cacheDir.canonicalPath + File.separator
 
         val actualFilePath = importValidFile(inputFileName)
 
-        assertThat("Unicode character should be stripped", actualFilePath, not(containsString("好")))
-        assertThat("Unicode character should be urlencoded", actualFilePath, endsWith("%E5%A5%BD.apkg"))
+        assertThat(
+            File(actualFilePath).canonicalPath,
+            startsWith(cachePrefix),
+        )
+        assertThat(actualFilePath, endsWith("${File.separator}好.apkg"))
     }
 
     @Test
@@ -67,9 +69,8 @@ class ImportUtilsTest : RobolectricTest() {
 
         assertThat(actualFilePath, endsWith(".apkg"))
         assertThat(actualFilePath, containsString("..."))
-        // Obtain the filename from the path
-        assertThat(actualFilePath, containsString("%E5%A5%BD"))
-        val fileName = actualFilePath.substringAfter("%E5%A5%BD")
+        val fileName = File(actualFilePath).name
+        assertThat(fileName, containsString("好"))
         assertThat(fileName.length, lessThanOrEqualTo(100))
     }
 
@@ -80,6 +81,34 @@ class ImportUtilsTest : RobolectricTest() {
 
         // COULD_BE_BETTER: Strip off the file path
         return testFileImporter.cacheFileName
+    }
+
+    @Test
+    fun pathTraversalInFileNameIsRejected() {
+        // GHSA-q29p-h3pp-mh3v — Path traversal via import DISPLAY_NAME should be blocked
+        val cacheDir = targetContext.cacheDir
+        val cachePrefix = cacheDir.canonicalPath + File.separator
+        val maliciousFilenames =
+            listOf(
+                "../etc/passwd.apkg",
+                "..\\windows\\system32\\config.sam.apkg",
+                "../../../../../../../../../etc/passwd.apkg",
+                "..\\..\\..\\passwd.apkg",
+                "normal.apkg",
+            )
+
+        for (maliciousFilename in maliciousFilenames) {
+            val testFileImporter = TestFileImporter(maliciousFilename)
+            val intent = getValidClipDataUri(maliciousFilename)
+            val result = testFileImporter.handleFileImport(targetContext, intent)
+            assertTrue("Import should succeed after basename sanitization: $maliciousFilename", result is ImportResult.Success)
+
+            val cachedCanonical = File(testFileImporter.cacheFileName).canonicalPath
+            assertTrue(
+                "Cached file must remain under cacheDir ($cachePrefix): $maliciousFilename -> $cachedCanonical",
+                cachedCanonical.startsWith(cachePrefix),
+            )
+        }
     }
 
     @Test
