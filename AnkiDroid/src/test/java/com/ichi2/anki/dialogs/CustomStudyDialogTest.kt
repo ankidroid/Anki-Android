@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -23,6 +24,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
+import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS_KEY
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.dialogs.utils.performPositiveClick
@@ -302,6 +304,22 @@ class CustomStudyDialogTest : RobolectricTest() {
                 .inRoot(isDialog())
                 .check(matches(isEnabled()))
         }
+    }
+
+    @Test
+    fun `selectedKind maps selected card state index to cram kind`() {
+        val viewModel = CustomStudyViewModel(SavedStateHandle())
+        CustomStudyDialog.CustomStudyCardState.entries.forEachIndexed { index, cardState ->
+            viewModel.selectedCardStateIndex = index
+            assertThat(viewModel.selectedKind, equalTo(cardState.kind))
+        }
+    }
+
+    @Test
+    fun `selectedKind defaults to new cards when no card state is selected`() {
+        val viewModel = CustomStudyViewModel(androidx.lifecycle.SavedStateHandle())
+        viewModel.selectedCardStateIndex = android.widget.AdapterView.INVALID_POSITION
+        assertThat(viewModel.selectedKind, equalTo(anki.scheduler.CustomStudyRequest.Cram.CramKind.CRAM_KIND_NEW))
     }
 
     @Test
