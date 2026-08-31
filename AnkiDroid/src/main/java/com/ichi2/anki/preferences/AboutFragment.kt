@@ -26,6 +26,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
@@ -87,10 +88,15 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         }
 
         // Donate text
-        val donateLink = getString(R.string.link_opencollective_donate)
-        view.findViewById<TextView>(R.id.about_donate_description).apply {
-            text = getString(R.string.donate_description, donateLink).parseAsHtml()
-            movementMethod = LinkMovementMethod.getInstance()
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            val donateLink = getString(R.string.link_opencollective_donate)
+            view.findViewById<TextView>(R.id.about_donate_description).apply {
+                text = getString(R.string.donate_description, donateLink).parseAsHtml()
+                movementMethod = LinkMovementMethod.getInstance()
+            }
+        } else {
+            view.findViewById<View>(R.id.about_donate_title).isVisible = false
+            view.findViewById<TextView>(R.id.about_donate_description).isVisible = false
         }
 
         // Rate Ankidroid button

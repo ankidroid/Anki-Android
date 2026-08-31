@@ -27,6 +27,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -68,7 +69,13 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
         setContentView(R.layout.info)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        findViewById<MaterialButton>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            findViewById<MaterialButton>(R.id.info_donate).setOnClickListener {
+                openUrl(Uri.parse(getString(R.string.link_opencollective_donate)))
+            }
+        } else {
+            findViewById<MaterialButton>(R.id.info_donate).isVisible = false
+        }
         title = "$appName v$pkgVersionName"
         webView = findViewById(R.id.info)
         webView.webChromeClient = object : WebChromeClient() {
@@ -130,6 +137,14 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                                 "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
                                 "document.body.style.setProperty(\"background\", \"" + background + "\");"
                         )
+                        if (!BuildConfig.SHOW_DONATE_LINKS) {
+                            // remove donation links, keeping the text
+                            webView.evaluateJavascript(
+                                """document.querySelectorAll('a[href*="opencollective.com"]')
+                                    .forEach((a) => a.replaceWith(...a.childNodes));""",
+                                null
+                            )
+                        }
                     }
 
                     override fun shouldOverrideUrlLoading(
