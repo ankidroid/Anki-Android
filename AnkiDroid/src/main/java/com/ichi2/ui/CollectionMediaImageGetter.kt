@@ -93,8 +93,13 @@ class CollectionMediaImageGetter(
                 } else {
                     null
                 }
+            } catch (e: SecurityException) {
+                Timber.w("Path traversal attempt blocked")
+                Timber.d(e, "Path: %s", source)
+                null
             } catch (e: Throwable) {
-                Timber.w(e, "Failed to load deck description image: %s", source)
+                Timber.w("Failed to load deck description image")
+                Timber.d(e, "Failed to load deck description image: %s", source)
                 null
             }
         }
