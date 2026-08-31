@@ -258,4 +258,7 @@
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">Karta IDʼi%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Karta shabloni nomi%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Qayd turi nomi%s</string>
+    <!-- Change Note Type Dialog -->
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
 </resources>

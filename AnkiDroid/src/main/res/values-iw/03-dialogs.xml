@@ -28,7 +28,6 @@
     <plurals name="delete_deck_message">
         <item quantity="one">למחוק את כל הכרטיסים ב-%1$s? הוא מכיל %2$d כרטיסים</item>
         <item quantity="two">למחוק את כל הכרטיסים ב-%1$s? הוא מכיל %2$d כרטיסים</item>
-        <item quantity="many">למחוק את כל הכרטיסים ב-%1$s? הוא מכיל %2$d כרטיסים</item>
         <item quantity="other">למחוק את כל הכרטיסים ב-%1$s? הוא מכיל %2$d כרטיסים</item>
     </plurals>
     <string name="delete_cram_deck_message">למחוק את החפיסה %s המסוננת ולשלוח את כל הקלפים בחזרה לחפיסות המקוריות שלהם?</string>
@@ -39,7 +38,6 @@
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">כרטיס אחד אופס</item>
         <item quantity="two">%d כרטיסים אופסו</item>
-        <item quantity="many">%d כרטיסים אופסו</item>
         <item quantity="other">%d כרטיסים אופסו</item>
     </plurals>
     <string name="answering_error_title">שגיאת מסד נתונים</string>
@@ -97,7 +95,6 @@
     <plurals name="delete_media_result_message">
         <item quantity="one">קובץ אחד נמחק</item>
         <item quantity="two">שני קבצים נמחקו</item>
-        <item quantity="many">%d קבצים נמחקו</item>
         <item quantity="other">%d קבצים נמחקו</item>
     </plurals>
     <!-- Tags Dialog Options -->
@@ -176,7 +173,6 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">ייתכן שסנכרון אוטומטי יופעל בעוד %d שניה</item>
         <item quantity="two">ייתכן שסנכרון אוטומטי יופעל בעוד %d שניות</item>
-        <item quantity="many">ייתכן שסנכרון אוטומטי יופעל בעוד %d שניות</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">ייתכן שסנכרון אוטומטי יופעל בעוד %d שניות</item>
     </plurals>
     <string name="metered_sync_data_warning">ספק האינטרנט שלך עשוי לגבות כסף עבור שימוש בנתונים</string>
@@ -206,25 +202,21 @@
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
         <item quantity="one">הצג כרטיס ב</item>
         <item quantity="two">הצג כרטיסים ב</item>
-        <item quantity="many">הצג כרטיסים ב</item>
         <item quantity="other">הצג כרטיסים ב</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
         <item quantity="one">הצג כרטיס בטווח</item>
         <item quantity="two">הצג כרטיסים בטווח</item>
-        <item quantity="many">הצג כרטיסים בטווח</item>
         <item quantity="other">הצג כרטיסים בטווח</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="one">יום</item>
         <item quantity="two">ימים</item>
-        <item quantity="many">ימים</item>
         <item quantity="other">ימים</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
         <item quantity="one">מרווח נוכחי: %d יום</item>
         <item quantity="two">מרווח נוכחי: %d ימים</item>
-        <item quantity="many">מרווח נוכחי: %d ימים</item>
         <item quantity="other">מרווח נוכחי: %d ימים</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>
@@ -275,4 +267,7 @@
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">The ID of the card%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">השם של תבנית הקלף%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
+    <!-- Change Note Type Dialog -->
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
 </resources>
