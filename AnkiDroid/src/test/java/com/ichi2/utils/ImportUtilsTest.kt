@@ -33,6 +33,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class ImportUtilsTest : RobolectricTest() {
@@ -73,6 +74,31 @@ class ImportUtilsTest : RobolectricTest() {
 
         // COULD_BE_BETTER: Strip off the file path
         return testFileImporter.cacheFileName
+    }
+
+    @Test
+    fun pathTraversalInFileNameIsRejected() {
+        // GHSA-q29p-h3pp-mh3v — Path traversal via import DISPLAY_NAME should stay under cacheDir
+        val maliciousFilenames = listOf(
+            "../etc/passwd.apkg",
+            "..\\windows\\system32\\config.sam.apkg",
+            "../../../../../../../../../etc/passwd.apkg",
+            "..\\..\\..\\passwd.apkg",
+            "normal.apkg" // legitimate file should still work
+        )
+        val cachePrefix = targetContext.cacheDir.canonicalPath + File.separator
+
+        for (maliciousFilename in maliciousFilenames) {
+            val testFileImporter = TestFileImporter(maliciousFilename)
+            val intent = getValidClipDataUri(maliciousFilename)
+            testFileImporter.handleFileImport(targetContext, intent)
+
+            val cached = File(testFileImporter.cacheFileName)
+            assertTrue(
+                "Cached path must stay under cacheDir for: $maliciousFilename",
+                cached.canonicalPath.startsWith(cachePrefix)
+            )
+        }
     }
 
     @Test

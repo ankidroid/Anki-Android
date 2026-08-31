@@ -150,3 +150,27 @@ object FileUtil {
 
     fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
 }
+
+/**
+ * Extension method to safely resolve a child file within this parent directory.
+ * Prevents directory traversal attacks (e.g. "../", symlinks) by verifying canonical paths.
+ *
+ * Exception messages must not include filesystem paths or [childName]: they are reported to ACRA.
+ *
+ * @throws SecurityException If the resolved path escapes the parent directory.
+ * @throws IllegalArgumentException If the canonical path cannot be resolved.
+ */
+fun File.withFileNameSafe(childName: String): File {
+    val child = File(this, childName)
+    try {
+        val canonicalParent = this.canonicalPath
+        val canonicalChild = child.canonicalPath
+
+        if (!canonicalChild.startsWith(canonicalParent + File.separator)) {
+            throw SecurityException("Path traversal detected")
+        }
+    } catch (e: IOException) {
+        throw IllegalArgumentException("Unable to resolve canonical path", e)
+    }
+    return child
+}
