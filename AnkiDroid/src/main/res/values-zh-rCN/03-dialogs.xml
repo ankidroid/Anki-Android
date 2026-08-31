@@ -250,4 +250,7 @@
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">卡片%s的ID</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">卡片模板%s 的名称</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">笔记类型%s的名称</string>
+    <!-- Change Note Type Dialog -->
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
 </resources>

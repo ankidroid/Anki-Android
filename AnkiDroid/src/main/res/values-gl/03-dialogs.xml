@@ -258,4 +258,7 @@
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">O ID da tarxeta%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">O nome do modelo de tarxeta%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">O nome do tipo de nota%s</string>
+    <!-- Change Note Type Dialog -->
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
 </resources>
