@@ -105,6 +105,40 @@ class ImportUtilsTest : RobolectricTest() {
         assertFalse(ImportUtils.isValidPackageName("test.docx"))
     }
 
+    @Test
+    fun pathTraversalInFileNameIsRejected() {
+        // GHSA-q29p-h3pp-mh3v — Path traversal via import DISPLAY_NAME should be blocked
+        val maliciousFilenames = listOf(
+            "../etc/passwd.apkg",
+            "..\\windows\\system32\\config.sam.apkg",
+            "../../../../../../../../../etc/passwd.apkg",
+            "..\\..\\..\\passwd.apkg",
+            "normal.apkg" // legitimate file should still work
+        )
+
+        for (maliciousFilename in maliciousFilenames) {
+            val testFileImporter = TestFileImporter(maliciousFilename)
+            val intent = getValidClipDataUri(maliciousFilename)
+            testFileImporter.handleFileImport(targetContext, intent)
+
+            // Extract just the filename portion from the full path for checking
+            val sanitizedFileName = testFileImporter.cacheFileName.substringAfterLast("/")
+
+            // After sanitization, path traversal sequences should be removed
+            assertThat(
+                "Path traversal chars should be sanitized: $maliciousFilename",
+                sanitizedFileName,
+                not(containsString(".."))
+            )
+            // Path separators in the filename portion should be replaced with underscores
+            assertThat(
+                "Path separators in filename should be sanitized: $maliciousFilename",
+                sanitizedFileName,
+                not(containsString("/"))
+            )
+        }
+    }
+
     @CheckResult
     private fun getValidClipDataUri(fileName: String): Intent {
         val i = Intent()

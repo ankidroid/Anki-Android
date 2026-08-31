@@ -133,7 +133,14 @@ object ImportUtils {
         fun getFileCachedCopy(context: Context, intent: Intent): String? {
             val uri = getUris(intent)?.get(0) ?: return null
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
-            val tempPath = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+            // Canonical path verification for security (GHSA-q29p-h3pp-mh3v)
+            val tempFile = try {
+                context.cacheDir.withFileNameSafe(filename)
+            } catch (e: SecurityException) {
+                Timber.e(e, "Path traversal detected in getFileCachedCopy")
+                return null
+            }
+            val tempPath = Uri.fromFile(tempFile).encodedPath!!
             return if (copyFileToCache(context, uri, tempPath)) {
                 tempPath
             } else {
@@ -178,7 +185,9 @@ object ImportUtils {
                 } else {
                     // Copy to temporary file
                     filename = ensureValidLength(filename)
-                    val tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
+                    // Canonical path verification for security (GHSA-q29p-h3pp-mh3v)
+                    val checkFile = context.cacheDir.withFileNameSafe(filename)
+                    val tempOutDir = Uri.fromFile(checkFile).encodedPath!!
                     val errorMessage = if (copyFileToCache(context, data, tempOutDir)) null else context.getString(R.string.import_error_copy_to_cache)
                     // Show import dialog
                     if (errorMessage != null) {
@@ -248,13 +257,45 @@ object ImportUtils {
             return filename != null && hasExtension(filename, "anki2")
         }
 
+        /**
+         * Sanitize a filename to prevent directory traversal attacks.
+         * Called by ensureValidLength() before constructing File(context.cacheDir, sanitized).
+         * * Defense-in-depth: strips ../ and path separators so the resulting filename cannot escape cacheDir.
+         */
+        @CheckResult
+        private fun sanitizeFileName(fileName: String): String {
+            // Strip null bytes early to prevent unexpected behavior on POSIX systems
+            var sanitized = fileName.replace('\u0000', '_')
+
+            // Strip all path separators including Unicode variants (GHSA-q29p-h3pp-mh3v)
+            sanitized = sanitized.replace(Regex("[/\\\\\\uFF0F\\u2044]"), "_")
+
+            // Trim leading/trailing whitespace so space-prefixed traversal is handled
+            sanitized = sanitized.trim()
+
+            // Remove leading .. sequences (e.g., ".." -> "", "../foo" -> "_foo after separator strip)
+            while (sanitized.startsWith("..")) {
+                sanitized = sanitized.substring(2)
+            }
+
+            // Remove embedded .. path components (bounded by _ or string boundaries)
+            sanitized = sanitized.replace(Regex("(^|_)\\.\\.(?=_|$)"), "")
+
+            // Guard against empty result (e.g., input was exactly "..")
+            if (sanitized.isEmpty()) {
+                sanitized = "unnamed_file"
+            }
+
+            return sanitized
+        }
+
         private fun ensureValidLength(fileName: String): String {
             // #6137 - filenames can be too long when URLEncoded
             return try {
                 val encoded = URLEncoder.encode(fileName, "UTF-8")
                 if (encoded.length <= fileNameShorteningThreshold) {
                     Timber.d("No filename truncation necessary")
-                    fileName
+                    sanitizeFileName(fileName)
                 } else {
                     Timber.d("Filename was longer than %d, shortening", fileNameShorteningThreshold)
                     // take 90 instead of 100 so we don't get the extension
@@ -262,11 +303,11 @@ object ImportUtils {
                     val shortenedFileName = encoded.substring(0, substringLength) + "..." + getExtension(fileName)
                     Timber.d("Shortened filename '%s' to '%s'", fileName, shortenedFileName)
                     // if we don't decode, % is double-encoded
-                    URLDecoder.decode(shortenedFileName, "UTF-8")
+                    sanitizeFileName(URLDecoder.decode(shortenedFileName, "UTF-8"))
                 }
             } catch (e: Exception) {
                 Timber.w(e, "Failed to shorten file: %s", fileName)
-                fileName
+                sanitizeFileName(fileName)
             }
         }
 
