@@ -209,4 +209,78 @@ class FileUtilTest {
         writeStringToFile(fullFile, "Hello World")
         assertEquals(FileUtil.FilePrefix.EQUAL, isPrefix(prefixFile, fullFile))
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_validChild_returnsFile() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        val childFile = temporaryRootDir.withFileNameSafe("child.txt")
+        assertEquals(File(temporaryRootDir, "child.txt").canonicalPath, childFile.canonicalPath)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_pathTraversal_dotdot_throwsSecurityException() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        assertThrows(SecurityException::class.java) {
+            temporaryRootDir.withFileNameSafe("../outside.txt")
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_nestedChild_returnsFile() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        // The parent directories won't exist yet but the file reference should still be valid
+        val childFile = temporaryRootDir.withFileNameSafe("subdir/nested/deep.txt")
+        assertEquals(File(temporaryRootDir, "subdir/nested/deep.txt").canonicalPath, childFile.canonicalPath)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_deepTraversal_throwsSecurityException() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        assertThrows(SecurityException::class.java) {
+            temporaryRootDir.withFileNameSafe("../../../../etc/passwd")
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_subdirectoryChild_returnsFile() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        val subDir = File(temporaryRootDir, "subdir")
+        subDir.mkdirs()
+        val childFile = subDir.withFileNameSafe("child.txt")
+        assertEquals(File(subDir, "child.txt").canonicalPath, childFile.canonicalPath)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_emptyFilename_throwsSecurityException() {
+        val temporaryRootDir = temporaryDirectory.newFolder("tempRootDir")
+        assertThrows(SecurityException::class.java) {
+            temporaryRootDir.withFileNameSafe("")
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_symlinkEscaping_throwsSecurityException() {
+        val temp1 = temporaryDirectory.newFolder("tempRootDir1")
+        val temp2 = temporaryDirectory.newFolder("tempRootDir2")
+        // Create a symlink from temp1 pointing to temp2
+        val linkTarget = File(temp1, "linkToTemp2")
+        val osName = System.getProperty("os.name") ?: ""
+        val success = if (osName.contains("Mac") || osName.contains("Linux")) {
+            Runtime.getRuntime().exec(arrayOf("ln", "-s", temp2.absolutePath, linkTarget.absolutePath)).waitFor() == 0
+        } else {
+            false
+        }
+        if (success) {
+            assertThrows(SecurityException::class.java) {
+                temp1.withFileNameSafe("linkToTemp2")
+            }
+        }
+    }
 }

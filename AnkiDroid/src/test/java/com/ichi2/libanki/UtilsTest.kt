@@ -67,7 +67,8 @@ class UtilsTest {
             val tmpDir = File("/tmp")
             Assert.assertTrue(Utils.isInside(File(tmpDir, "test/file/path/no/parent"), tmpDir))
             Assert.assertTrue(Utils.isInside(File(tmpDir, "/tmp/absolute/path"), tmpDir))
-            Assert.assertTrue(Utils.isInside(File(tmpDir, "test/file/../../"), tmpDir))
+            // Fixed: a directory is not inside itself (trailing separator boundary check)
+            Assert.assertFalse(Utils.isInside(File(tmpDir, "test/file/../../"), tmpDir))
         } catch (ioe: IOException) {
             Assert.fail("Unexpected exception: $ioe")
         }

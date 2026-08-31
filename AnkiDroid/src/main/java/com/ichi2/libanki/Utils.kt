@@ -739,7 +739,7 @@ object Utils {
      */
     @Throws(IOException::class)
     fun isInside(file: File, dir: File): Boolean {
-        return file.canonicalPath.startsWith(dir.canonicalPath)
+        return file.canonicalPath.startsWith(dir.canonicalPath + File.separator)
     }
 
     /**

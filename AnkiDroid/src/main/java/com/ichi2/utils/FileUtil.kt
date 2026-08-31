@@ -250,3 +250,24 @@ object FileUtil {
         }
     }
 }
+
+/**
+ * Extension method to safely resolve a child file within this parent directory.
+ * Prevents directory traversal attacks (e.g. "../", symlinks) by verifying canonical paths.
+ *
+ * @throws SecurityException If the resolved path escapes the parent directory.
+ */
+fun File.withFileNameSafe(childName: String): File {
+    val child = File(this, childName)
+    try {
+        val canonicalParent = this.canonicalPath
+        val canonicalChild = child.canonicalPath
+
+        if (!canonicalChild.startsWith(canonicalParent + File.separator)) {
+            throw SecurityException("Path traversal detected")
+        }
+    } catch (e: IOException) {
+        throw IllegalArgumentException("Unable to resolve canonical path", e)
+    }
+    return child
+}
