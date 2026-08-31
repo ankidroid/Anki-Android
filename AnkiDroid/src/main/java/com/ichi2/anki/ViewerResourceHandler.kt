@@ -22,6 +22,7 @@ import android.webkit.WebResourceResponse
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.utils.AssetHelper.guessMimeType
+import com.ichi2.utils.withFileNameSafe
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -61,12 +62,7 @@ class ViewerResourceHandler(
                 return WebResourceResponse(guessMimeType(path), null, inputStream)
             }
 
-            val file = File(mediaDir, path)
-            if (!file.canonicalPath.startsWith(mediaDir.canonicalPath + File.separator)) {
-                Timber.w("Path traversal attempt blocked")
-                Timber.d("Path: %s", path)
-                return null
-            }
+            val file = mediaDir.withFileNameSafe(path)
             if (!file.exists()) {
                 return null
             }
@@ -76,6 +72,9 @@ class ViewerResourceHandler(
             val inputStream = FileInputStream(file)
             val mimeType = guessMimeType(path)
             return WebResourceResponse(mimeType, null, inputStream)
+        } catch (e: SecurityException) {
+            Timber.w("Path traversal attempt blocked")
+            return null
         } catch (e: Exception) {
             Timber.d("File not found")
             return null

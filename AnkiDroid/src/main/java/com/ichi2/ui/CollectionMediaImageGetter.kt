@@ -25,6 +25,7 @@ import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.core.graphics.drawable.toDrawable
 import com.ichi2.utils.BitmapUtil.decodeSampledBitmap
+import com.ichi2.utils.withFileNameSafe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -81,13 +82,7 @@ class CollectionMediaImageGetter(
                     return@withContext null
                 }
 
-                val localFile = File(mediaDir, source)
-
-                // Prevent path traversal to ensure file is inside media directory
-                if (!localFile.canonicalPath.startsWith(mediaDir.canonicalPath + File.separator)) {
-                    Timber.w("CollectionMediaImageGetter: Path traversal attempt detected: %s", source)
-                    return@withContext null
-                }
+                val localFile = mediaDir.withFileNameSafe(source)
 
                 if (localFile.exists()) {
                     // Use view width or fallback to screen width
