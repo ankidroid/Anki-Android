@@ -161,6 +161,56 @@ class ImportUtilsTest : RobolectricTest() {
         return context
     }
 
+    @Test
+    fun pathTraversalInFileNameIsRejected() {
+        // GHSA-q29p-h3pp-mh3v — Path traversal via import DISPLAY_NAME should be blocked.
+        // Canonical containment under cacheDir + separator must fail pre-fix for ../etc/passwd.apkg
+        // (File(cacheDir, that name) resolves outside cache).
+        val cacheRoot = targetContext.cacheDir.canonicalPath + File.separator
+        val maliciousFilenames =
+            listOf(
+                "../etc/passwd.apkg",
+                "..\\windows\\system32\\config.sam.apkg",
+                "../../../../../../../../../etc/passwd.apkg",
+                "..\\..\\..\\passwd.apkg",
+                "normal.apkg", // legitimate file should still work
+                "%2e%2e%2fetc%2fpasswd.apkg", // double-encoded path traversal
+                "....apkg", // odd-length dot sequence edge case
+            )
+
+        for (maliciousFilename in maliciousFilenames) {
+            val testFileImporter = TestFileImporter(maliciousFilename)
+            val intent = getValidClipDataUri(maliciousFilename)
+            val result = testFileImporter.handleFileImport(targetContext, intent)
+            assertTrue("import should succeed after sanitization: $maliciousFilename", result is ImportResult.Success)
+
+            val cachedCanonical = File(testFileImporter.cacheFileName).canonicalPath
+            assertTrue(
+                "cached copy must stay under cacheDir for: $maliciousFilename (was $cachedCanonical)",
+                cachedCanonical.startsWith(cacheRoot),
+            )
+        }
+    }
+
+    @Test
+    fun leadingDotFilenamesAreNotStripped() {
+        for (fileName in listOf(".hidden.apkg", "..apkg")) {
+            val actualFilePath = importValidFile(fileName)
+            assertThat(actualFilePath, endsWith("${File.separator}$fileName"))
+        }
+    }
+
+    @Test
+    fun getFileCachedCopyUsesUnnamedFileForEmptyDotAndDotDot() {
+        for (fileName in listOf("", ".", "..")) {
+            val actualFilepath = TestFileImporter(fileName).getFileCachedCopy(targetContext, "dummy".toUri())
+            assertEquals(
+                File(targetContext.cacheDir, "unnamed_file").absolutePath,
+                actualFilepath,
+            )
+        }
+    }
+
     @CheckResult
     private fun getValidClipDataUri(fileName: String): Intent {
         val i = Intent()
