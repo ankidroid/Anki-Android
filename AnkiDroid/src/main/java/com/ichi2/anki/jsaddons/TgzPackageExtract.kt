@@ -348,16 +348,29 @@ class TgzPackageExtract(
      * @param outputFile output file
      * @param destDirectory destination directory
      */
-    @Throws(ArchiveException::class, IOException::class)
+    @Throws(ArchiveException::class)
     private fun zipPathSafety(
         outputFile: File,
         destDirectory: File,
     ) {
-        val destDirCanonicalPath = destDirectory.canonicalPath
-        val outputFileCanonicalPath = outputFile.canonicalPath
-
-        if (!outputFileCanonicalPath.startsWith(destDirCanonicalPath)) {
-            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, outputFileCanonicalPath))
+        val destCanonical =
+            try {
+                destDirectory.canonicalPath
+            } catch (_: IOException) {
+                // Path may contain PII; removing the %s param would churn translations — use a placeholder.
+                throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
+            }
+        val childCanonical =
+            try {
+                outputFile.canonicalPath
+            } catch (_: IOException) {
+                throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
+            }
+        val destPrefix = destCanonical + File.separator
+        // Allow the destination directory itself (e.g. `./` entries). Reject anything else
+        // that is not dest and not under dest + separator (sibling-prefix safe).
+        if (childCanonical != destCanonical && !childCanonical.startsWith(destPrefix)) {
+            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
         }
     }
 
@@ -433,6 +446,9 @@ class TgzPackageExtract(
         private const val BUFFER = 512
         private const val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
         private const val TOO_MANY_FILES = 1024 // max number of files
+
+        /** Placeholder for [R.string.malicious_archive_entry_outside]; do not pass real archive paths. */
+        private const val ARCHIVE_ENTRY_PATH_OMITTED = "archive entry"
     }
 }
 

@@ -220,10 +220,12 @@ fun File.withFileNameSafe(childName: String): File {
         val canonicalChild = child.canonicalPath
 
         if (!canonicalChild.startsWith(canonicalParent + File.separator)) {
-            throw SecurityException("Invalid path: $childName traversal attempt detected")
+            // Do not put attacker-controlled paths in exception messages (they are reported to ACRA).
+            throw SecurityException("Path traversal detected")
         }
     } catch (e: IOException) {
-        throw IllegalArgumentException("Unable to resolve canonical path for $childName", e)
+        // Do not put attacker-controlled paths in exception messages (they are reported to ACRA).
+        throw IllegalArgumentException("Unable to resolve canonical path", e)
     }
     return child
 }

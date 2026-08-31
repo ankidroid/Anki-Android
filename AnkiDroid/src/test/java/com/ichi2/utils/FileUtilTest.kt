@@ -20,14 +20,18 @@ import org.acra.util.IOUtils.writeStringToFile
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
+import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
+import java.nio.file.FileSystems
+import java.nio.file.Files
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 class FileUtilTest {
     @get:Rule
@@ -155,4 +159,108 @@ class FileUtilTest {
      * Destructuring doesn't work on a `FileNameAndExtension?`
      * */
     private fun getValidFileNameAndExtension(input: String) = assertNotNull(FileNameAndExtension.fromString(input))
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe - valid child file returns File`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val result = parentDir.withFileNameSafe("child.txt")
+        assertEquals(File(parentDir, "child.txt"), result)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe - nested valid child returns File`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val result = parentDir.withFileNameSafe("subdir/nested/file.txt")
+        assertEquals(File(parentDir, "subdir/nested/file.txt"), result)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe path traversal with dotdot throws SecurityException`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        try {
+            parentDir.withFileNameSafe("../outside.txt")
+            fail("Expected SecurityException for path traversal")
+        } catch (e: SecurityException) {
+            assertTrue(e.message!!.contains("traversal"))
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe double dotdot traversal throws SecurityException`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        try {
+            parentDir.withFileNameSafe("../foo/../../outside.txt")
+            fail("Expected SecurityException for path traversal")
+        } catch (e: SecurityException) {
+            assertTrue(e.message!!.contains("traversal"))
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe child named same as parent in different location throws SecurityException`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val siblingDir = temporaryDirectory.newFolder("sibling_parent")
+        // Create a file at sibling_dir/parent to test the boundary case
+        File(siblingDir, "parent").mkdirs()
+        try {
+            parentDir.withFileNameSafe("../sibling_parent/parent/file.txt")
+            fail("Expected SecurityException for same-name traversal")
+        } catch (e: SecurityException) {
+            assertTrue(e.message!!.contains("traversal"))
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe - file named like parent but not traversing stays in place`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        // A file literally named "parent" inside the directory should be valid
+        val result = parentDir.withFileNameSafe("parent")
+        assertEquals(File(parentDir, "parent"), result)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe sibling prefix parentfoo is rejected`() {
+        val root = temporaryDirectory.root
+        val parentDir = File(root, "parent").apply { mkdirs() }
+        File(root, "parentfoo").mkdirs()
+        try {
+            parentDir.withFileNameSafe("../parentfoo/evil.txt")
+            fail("Expected SecurityException for sibling-prefix traversal")
+        } catch (e: SecurityException) {
+            assertTrue(e.message!!.contains("traversal"))
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `withFileNameSafe symlink escape throws SecurityException`() {
+        assumeTrue(
+            "Symlink test requires POSIX file attributes",
+            FileSystems.getDefault().supportedFileAttributeViews().contains("posix"),
+        )
+        val parentDir = temporaryDirectory.newFolder("symlinkParent")
+        val outsideDir = temporaryDirectory.newFolder("symlinkOutside")
+        val target = File(outsideDir, "secret.txt").apply { writeText("secret") }
+        val link = File(parentDir, "link").toPath()
+        try {
+            Files.createSymbolicLink(link, target.toPath())
+        } catch (e: UnsupportedOperationException) {
+            assumeTrue("Could not create symlink: ${e.message}", false)
+        } catch (e: IOException) {
+            assumeTrue("Could not create symlink: ${e.message}", false)
+        }
+        try {
+            parentDir.withFileNameSafe("link")
+            fail("Expected SecurityException for symlink escape")
+        } catch (e: SecurityException) {
+            assertTrue(e.message!!.contains("traversal"))
+        }
+    }
 }
