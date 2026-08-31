@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.contextmenu
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
@@ -35,6 +36,7 @@ abstract class SystemContextMenu(private val context: Context) {
     }
 
     fun ensureConsistentStateWithPreferenceStatus(preferenceStatus: Boolean) {
+        @SuppressLint("CheckResult")
         val actualStatus = systemMenuStatus
         if (actualStatus == null || actualStatus != preferenceStatus) {
             Timber.d("Modifying Context Menu Status: Preference was %b", preferenceStatus)
