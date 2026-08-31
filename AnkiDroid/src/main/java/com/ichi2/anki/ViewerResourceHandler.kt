@@ -1,6 +1,7 @@
 /*
  *  Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
  *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2026 Mike Hardy <github@mikehardy.net>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -21,6 +22,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.AssetHelper.guessMimeType
+import com.ichi2.utils.withFileNameSafe
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -56,7 +58,9 @@ class ViewerResourceHandler(context: Context) {
                 return WebResourceResponse(guessMimeType(path), null, inputStream)
             }
 
-            val file = File(mediaDir, path)
+            // Strip the URL path's leading '/' so File() treats it as a child of mediaDir
+            // (a leading '/' is absolute on the host JVM used by unit tests).
+            val file = mediaDir.withFileNameSafe(path.removePrefix("/"))
             if (!file.exists()) {
                 return null
             }
@@ -66,7 +70,10 @@ class ViewerResourceHandler(context: Context) {
             val inputStream = FileInputStream(file)
             val mimeType = guessMimeType(path)
             return WebResourceResponse(mimeType, null, inputStream)
-        } catch (e: Exception) {
+        } catch (_: SecurityException) {
+            Timber.w("Path traversal attempt blocked")
+            return null
+        } catch (_: Exception) {
             Timber.d("File not found")
             return null
         }
