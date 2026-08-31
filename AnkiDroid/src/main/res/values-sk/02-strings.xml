@@ -90,8 +90,8 @@
         <item quantity="many">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Všetky nové kartičiek</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Všetky nové kartičky</string>
+    <string name="studyoptions_total_label">Všetky kartičky</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Upraviť poznámku</string>
     <string name="discard">Zahodiť</string>
@@ -226,20 +226,20 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Veľkosť fontu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Zobraziť panel s nástrojmi</string>
-    <string name="format_insert_bold">Format as bold</string>
-    <string name="format_insert_italic">Format as italic</string>
-    <string name="format_insert_underline">Format as underline</string>
-    <string name="insert_horizontal_line">Insert horizontal line</string>
-    <string name="insert_heading">Insert heading</string>
-    <string name="format_font_size">Change font size</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="format_insert_bold">Formátovať ako tučné</string>
+    <string name="format_insert_italic">Formátovať ako kurzíva</string>
+    <string name="format_insert_underline">Formátovať ako podčiarknutie</string>
+    <string name="insert_horizontal_line">Vložiť vodorovnú čiaru</string>
+    <string name="insert_heading">Vložiť nadpis</string>
+    <string name="format_font_size">Zmeniť veľkosť písma</string>
+    <string name="insert_mathjax">Vložiť vzorec MathJax</string>
     <string name="note_editor_toolbar_icon">Text tlačidla</string>
-    <string name="before_text">HTML before selection</string>
-    <string name="after_text">HTML after selection</string>
-    <string name="add_toolbar_item">Create toolbar item</string>
-    <string name="edit_toolbar_item">Edit toolbar item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Vložte HTML, ktorý má byť pred a po zvolenom texte\n\nPodržte dlho položku nástrojovej lišty na jej úpravu alebo vymazanie</string>
-    <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="before_text">HTML pred označením</string>
+    <string name="after_text">HTML po označení</string>
+    <string name="add_toolbar_item">Vytvoriť položku lišty nástrojov</string>
+    <string name="edit_toolbar_item">Upraviť položku lišty nástrojov</string>
+    <string name="toolbar_item_explain_edit_or_remove">Vložte HTML, ktorý má byť pred a po označenom texte\n\nPodržte dlho položku nástrojovej lišty na jej úpravu alebo vymazanie</string>
+    <string name="remove_toolbar_item">Vymazať položku lišty nástrojov?</string>
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
     <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
@@ -249,7 +249,7 @@
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaša domovská obrazovka neumožňuje, aby AnkiDroid pridal zástupcov</string>
     <string name="create_shortcut_error">Chyba pri pridávaní odkazu: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Písať vety s veľkým začiatočným písmenom</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Posun lišty nástrojov</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
     <string name="dialog_hint_certificate">Certificate</string>
@@ -371,7 +371,7 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">Táto karta má funkcie, ktoré ešte nie sú podporované novou obrazovkou študovania.</string>
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">Scheduler upgrade required</string>

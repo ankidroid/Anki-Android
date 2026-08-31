@@ -35,7 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">Светлая</string>
     <string name="day_theme_plain">Звычайная</string>
-    <string name="day_theme_eink">E-Ink</string>
+    <string name="day_theme_eink">Электронныя чарніла</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">Чорная</string>
     <string name="night_theme_dark">Цёмная</string>

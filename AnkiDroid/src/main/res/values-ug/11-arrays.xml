@@ -35,7 +35,7 @@
     <!-- day_theme_labels -->
     <string name="day_theme_light">يورۇق</string>
     <string name="day_theme_plain">ئادەتتىكى</string>
-    <string name="day_theme_eink">E-Ink</string>
+    <string name="day_theme_eink">ئې-سىياھ</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">قارا</string>
     <string name="night_theme_dark">قاراڭغۇ</string>
