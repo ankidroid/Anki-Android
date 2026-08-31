@@ -465,6 +465,149 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_version_2_24_1_20260831"><a class="anchor" href="#_version_2_24_1_20260831"></a>Version 2.24.1 (20260831)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Urgent update to our 2.24.0 release: security updates, and temporarily removing donation links to
+comply with Play Store policies (more below).</p>
+</div>
+<div class="paragraph">
+<p>A special thank you to the following people for reporting the security issues fixed in this release:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/Kwstubbs">Kevin Stubbings</a> of the GitHub Security Lab (GHSL-2026-083, GHSL-2026-084, GHSL-2026-085)</p>
+</li>
+<li>
+<p><a href="https://github.com/kah-ja">Jan Kahmen</a> for (GHSA-qjjx-px4w-4986)</p>
+</li>
+<li>
+<p><a href="https://github.com/criticalAY">Ashish Yadav</a> (GHSA-cr2g-gf75-cm6r)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Removal of donation links</strong>: Please see <a href="https://github.com/ankidroid/Anki-Android/issues/21656">GitHub Issue 21656</a> for why this has happened and how
+to help us with this.</p>
+</div>
+<div class="paragraph">
+<p>Please see the <a href="#_version_2_24_0_20260502">2.24.0 changelog</a> below for the main 2.24 features announcement 👇</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Security</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Reviewer: cards can no longer open dangerous links [GHSL-2026-085, GHSA-54q9-5c5p-9rxg]</p>
+</li>
+<li>
+<p>Reviewer: cards require permission to launch apps [GHSL-2026-085, GHSA-54q9-5c5p-9rxg]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>May be unblocked in advanced settings, if all your cards are trustworthy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>JavaScript API: blocked calls which could read and modify cards (other than the currently selected card) [GHSL-2026-084, GHSA-54q9-5c5p-9rxg]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>May be unblocked in advanced settings, if all your cards are trustworthy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Reviewer: fix path traversal when loading media [GHSL-2026-083, GHSA-qjjx-px4w-4986]</p>
+</li>
+<li>
+<p>Import: sanitize filenames to block path traversal [GHSA-q29p-h3pp-mh3v]</p>
+</li>
+<li>
+<p>Note Editor: reject untrusted files from the image picker [GHSA-cr2g-gf75-cm6r]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Improvements</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Privacy: removed a log entry which could hint at your timezone</p>
+</li>
+<li>
+<p>Card Browser: better 'invalid search' messages</p>
+</li>
+<li>
+<p>Google Play: 'Donate' links removed to comply with Play policies</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Fixes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Deck Picker &amp; Card Browser: Fix memory leaks</p>
+</li>
+<li>
+<p>Fix crash when sharing an image to the Note Editor</p>
+</li>
+<li>
+<p>Fix crash when exporting a large number of notes</p>
+</li>
+<li>
+<p>Fix 'Auto Advance' not following the review queue</p>
+</li>
+<li>
+<p>Improve error names in error messages</p>
+</li>
+<li>
+<p>Whiteboard: fix flickering [Samsung/OnePlus]</p>
+</li>
+<li>
+<p>Whiteboard: fix crash on rotation when 'type in the answer' is open</p>
+</li>
+<li>
+<p>Note Editor: fix 'MathJax block' syntax</p>
+</li>
+<li>
+<p>Note Types: only enable 'Save' when there are unsaved changes</p>
+</li>
+<li>
+<p>Sync: fix conflict dialog only showing its title [Samsung-only]</p>
+</li>
+<li>
+<p>Export: sharing text is now a text/plain file</p>
+</li>
+<li>
+<p>Settings: fix crash when dragging reviewer actions and switching screens</p>
+</li>
+<li>
+<p>Settings: include 'Themes' in search results</p>
+</li>
+<li>
+<p>Reviewer: fix snackbar position when answer buttons are hidden</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Full list of <a href="https://github.com/ankidroid/Anki-Android/milestone/78?closed=1">2.24.1 fixes</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_version_2_24_0_20260502"><a class="anchor" href="#_version_2_24_0_20260502"></a>Version 2.24.0 (20260502)</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -518,6 +661,9 @@ sincere gratitude for the <a href="https://opencollective.com/ankidroid/contribu
 </li>
 <li>
 <p>Deck Picker: Compatibility with Anki Desktop deck search syntax</p>
+</li>
+<li>
+<p>Deck Picker: "Create backup" support</p>
 </li>
 <li>
 <p>Sync: Added 'Network timeout' preference</p>
@@ -1863,6 +2009,85 @@ as well as a bunch of other new features which are already in progress 🚂</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_version_2_19_6_20260831"><a class="anchor" href="#_version_2_19_6_20260831"></a>Version 2.19.6 (20260831)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Urgent update to our 2.19.5 release: security updates, and temporarily removing donation links to
+comply with Play Store policies (more below).</p>
+</div>
+<div class="paragraph">
+<p>A special thank you to the following people for reporting the security issues fixed in this release:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/Kwstubbs">Kevin Stubbings</a> of the GitHub Security Lab (GHSL-2026-084, GHSL-2026-085)</p>
+</li>
+<li>
+<p><a href="https://github.com/kah-ja">Jan Kahmen</a> for (GHSA-qjjx-px4w-4986)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Removal of donation links</strong>: Please see <a href="https://github.com/ankidroid/Anki-Android/issues/21656">GitHub Issue 21656</a> for why this has happened and how
+to help us with this.</p>
+</div>
+<div class="paragraph">
+<p>Please see the <a href="#_version_2_19_1_20241031">2.19.1 changelog</a> below for the main 2.19 features announcement 👇</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Security</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Reviewer: cards can no longer open dangerous links [GHSL-2026-085, GHSA-54q9-5c5p-9rxg]</p>
+</li>
+<li>
+<p>Reviewer: cards require permission to launch apps [GHSL-2026-085, GHSA-54q9-5c5p-9rxg]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>May be unblocked in advanced settings, if all your cards are trustworthy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>JavaScript API: blocked calls which could read and modify cards (other than the currently selected card) [GHSL-2026-084, GHSA-54q9-5c5p-9rxg]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>May be unblocked in advanced settings, if all your cards are trustworthy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Reviewer: fix path traversal when loading media [GHSA-qjjx-px4w-4986]</p>
+</li>
+<li>
+<p>Import: sanitize filenames to block path traversal [GHSA-q29p-h3pp-mh3v]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Improvements</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Google Play: 'Donate' links removed to comply with Play policies</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_version_2_19_5_20250711"><a class="anchor" href="#_version_2_19_5_20250711"></a>Version 2.19.5 (20250711)</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -2786,6 +3011,85 @@ and keep old versions available for them even when we are forced to move on</p>
 </li>
 <li>
 <p><a href="https://crowdin.com/project/ankidroid">1972 Translators</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_version_2_16_6_20260831"><a class="anchor" href="#_version_2_16_6_20260831"></a>Version 2.16.6 (20260831)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Urgent update to our 2.16.5 release: security updates, and temporarily removing donation links to
+comply with Play Store policies (more below).</p>
+</div>
+<div class="paragraph">
+<p>A special thank you to the following people for reporting the security issues fixed in this release:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/Kwstubbs">Kevin Stubbings</a> of the GitHub Security Lab (GHSL-2026-084, GHSL-2026-085)</p>
+</li>
+<li>
+<p><a href="https://github.com/kah-ja">Jan Kahmen</a> for (GHSA-qjjx-px4w-4986)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Removal of donation links</strong>: Please see <a href="https://github.com/ankidroid/Anki-Android/issues/21656">GitHub Issue 21656</a> for why this has happened and how
+to help us with this.</p>
+</div>
+<div class="paragraph">
+<p>Please see the <a href="#_version_2_16_2_20230726">2.16.2 changelog</a> below for the main 2.16 features announcement 👇</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Security</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Reviewer: cards can no longer open dangerous links [GHSL-2026-085, GHSA-54q9-5c5p-9rxg]</p>
+</li>
+<li>
+<p>Reviewer: cards require permission to launch apps [GHSL-2026-085, GHSA-54q9-5c5p-9rxg]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>May be unblocked in advanced settings, if all your cards are trustworthy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>JavaScript API: blocked calls which could read and modify cards (other than the currently selected card) [GHSL-2026-084, GHSA-54q9-5c5p-9rxg]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>May be unblocked in advanced settings, if all your cards are trustworthy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Reviewer: fix path traversal when loading media [GHSA-qjjx-px4w-4986]</p>
+</li>
+<li>
+<p>Import: sanitize filenames to block path traversal [GHSA-q29p-h3pp-mh3v]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Improvements</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Google Play: 'Donate' links removed to comply with Play policies</p>
 </li>
 </ul>
 </div>
@@ -5833,7 +6137,7 @@ essentially rewritten from scratch to be compatible with the new Anki Desktop v2
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-05-02 22:57:50 UTC
+Last updated 2026-08-31 20:46:26 UTC
 </div>
 </div>
 </body>
