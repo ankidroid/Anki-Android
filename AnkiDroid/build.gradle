@@ -52,6 +52,8 @@ android {
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
         buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
+        // whether UI elements linking to external donation pages are shown ('play' hides them)
+        buildConfigField "Boolean", "SHOW_DONATE_LINKS", "true"
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -168,6 +170,9 @@ android {
     productFlavors {
         play {
             dimension "appStore"
+            // Google Play no longer considers Open Collective to be acceptable for
+            // a 'tax-exempt' link. Temporarily remove our links
+            buildConfigField "Boolean", "SHOW_DONATE_LINKS", "false"
         }
         amazon {
             dimension "appStore"

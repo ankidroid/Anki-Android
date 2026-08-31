@@ -25,6 +25,7 @@ import androidx.core.os.ParcelCompat
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -99,8 +100,9 @@ object HelpDialog {
     fun createInstanceForSupportAnkiDroid(context: Context?): DialogFragment {
         UsageAnalytics.sendAnalyticsEvent(UsageAnalytics.Category.LINK_CLICKED, UsageAnalytics.Actions.OPENED_SUPPORT_ANKIDROID)
         val rateAppItem = RateAppItem(R.string.help_item_support_rate_ankidroid, R.drawable.ic_star_black_24, UsageAnalytics.Actions.OPENED_RATE)
+        val donateItem = LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate)
         val allItems = arrayOf(
-            LinkItem(R.string.help_item_support_opencollective_donate, R.drawable.ic_donate_black_24dp, UsageAnalytics.Actions.OPENED_DONATE, R.string.link_opencollective_donate),
+            donateItem,
             LinkItem(R.string.multimedia_editor_trans_translate, R.drawable.ic_language_black_24dp, UsageAnalytics.Actions.OPENED_TRANSLATE, R.string.link_translation),
             LinkItem(R.string.help_item_support_develop_ankidroid, R.drawable.ic_build_black_24, UsageAnalytics.Actions.OPENED_DEVELOP, R.string.link_ankidroid_development_guide),
             rateAppItem,
@@ -114,6 +116,9 @@ object HelpDialog {
         val itemList = ArrayList(listOf(*allItems))
         if (!canOpenIntent(context!!, AnkiDroidApp.getMarketIntent(context))) {
             itemList.remove(rateAppItem)
+        }
+        if (!BuildConfig.SHOW_DONATE_LINKS) {
+            itemList.remove(donateItem)
         }
         return createInstance(itemList, R.string.help_title_support_ankidroid)
     }

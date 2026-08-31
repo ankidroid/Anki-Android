@@ -70,10 +70,15 @@ class AboutFragment : Fragment() {
         }
 
         // Donate text
-        val donateLink = getString(R.string.link_opencollective_donate)
-        layoutView.findViewById<TextView>(R.id.about_donate_description).apply {
-            text = getString(R.string.donate_description, donateLink).parseAsHtml()
-            movementMethod = LinkMovementMethod.getInstance()
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            val donateLink = getString(R.string.link_opencollective_donate)
+            layoutView.findViewById<TextView>(R.id.about_donate_description).apply {
+                text = getString(R.string.donate_description, donateLink).parseAsHtml()
+                movementMethod = LinkMovementMethod.getInstance()
+            }
+        } else {
+            layoutView.findViewById<View>(R.id.about_donate_title).visibility = View.GONE
+            layoutView.findViewById<TextView>(R.id.about_donate_description).visibility = View.GONE
         }
 
         // Rate Ankidroid button

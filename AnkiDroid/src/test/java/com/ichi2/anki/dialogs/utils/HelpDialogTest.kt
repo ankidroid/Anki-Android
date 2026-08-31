@@ -16,8 +16,11 @@
 package com.ichi2.anki.dialogs.utils
 
 import android.annotation.SuppressLint
+import androidx.core.os.BundleCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.RunInBackground
 import com.ichi2.anki.dialogs.HelpDialog.createInstance
@@ -50,14 +53,12 @@ class HelpDialogTest : RobolectricTest() {
         val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        // to make the test more flexible, calculate the expected menu items count by actually
-        // checking what intents are available on the test environment
-        val expectedCount = if (IntentUtil.canOpenIntent(targetContext, AnkiDroidApp.getMarketIntent(targetContext))) {
-            6 // +1 because the "Rate" menu item should be shown as Play Store app is available on the system
-        } else {
-            5 // the default value for support dialog menu items count
-        }
-        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(expectedCount))
+        val rateAvailable = IntentUtil.canOpenIntent(
+            targetContext,
+            AnkiDroidApp.getMarketIntent(targetContext)
+        )
+        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(expectedSupportMenuCount(rateAvailable)))
+        assertDonateTitleMatchesFlavor(dialog)
     }
 
     @Test
@@ -68,9 +69,49 @@ class HelpDialogTest : RobolectricTest() {
         val dialog = createInstanceForSupportAnkiDroid(targetContext) as RecursivePictureMenu
         openDialogFragment(dialog)
         val v = getRecyclerViewFor(dialog)
-        // 6 because the option to rate the app is possible on the device
-        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(6))
+        MatcherAssert.assertThat(v.adapter!!.itemCount, Matchers.equalTo(expectedSupportMenuCount(rateAvailable = true)))
+        assertDonateTitleMatchesFlavor(dialog)
         unmockkStatic(IntentUtil::canOpenIntent)
+    }
+
+    @Test
+    fun testShowDonateLinksMatchesFlavor() {
+        val expectedShowDonate = when (BuildConfig.FLAVOR) {
+            "play" -> false
+            "amazon", "full" -> true
+            else -> throw AssertionError("Unexpected product flavor: ${BuildConfig.FLAVOR}")
+        }
+        MatcherAssert.assertThat(
+            "SHOW_DONATE_LINKS must match flavor ${BuildConfig.FLAVOR}",
+            BuildConfig.SHOW_DONATE_LINKS,
+            Matchers.equalTo(expectedShowDonate)
+        )
+    }
+
+    /**
+     * Support menu always includes translate, develop, other, and feedback (4).
+     * Donate is flavor-dependent ([BuildConfig.SHOW_DONATE_LINKS]).
+     * Rate is included when a market intent is available.
+     */
+    private fun expectedSupportMenuCount(rateAvailable: Boolean): Int {
+        val donateCount = if (BuildConfig.SHOW_DONATE_LINKS) 1 else 0
+        val rateCount = if (rateAvailable) 1 else 0
+        return 4 + donateCount + rateCount
+    }
+
+    private fun assertDonateTitleMatchesFlavor(dialog: RecursivePictureMenu) {
+        val items = BundleCompat.getParcelableArrayList(
+            dialog.requireArguments(),
+            "bundle",
+            RecursivePictureMenu.Item::class.java
+        )!!
+        val titles = items.map { it.title }
+        val donateTitle = R.string.help_item_support_opencollective_donate
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            MatcherAssert.assertThat(titles, Matchers.hasItem(donateTitle))
+        } else {
+            MatcherAssert.assertThat(titles, Matchers.not(Matchers.hasItem(donateTitle)))
+        }
     }
 
     @SuppressLint("CheckResult") // openDialogFragmentUsingActivity

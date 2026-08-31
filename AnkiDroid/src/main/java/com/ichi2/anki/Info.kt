@@ -64,7 +64,13 @@ class Info : AnkiActivity() {
         setContentView(R.layout.info)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        findViewById<View>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
+        if (BuildConfig.SHOW_DONATE_LINKS) {
+            findViewById<View>(R.id.info_donate).setOnClickListener {
+                openUrl(Uri.parse(getString(R.string.link_opencollective_donate)))
+            }
+        } else {
+            findViewById<View>(R.id.info_donate).visibility = View.GONE
+        }
         title = "$appName v$pkgVersionName"
         mWebView = findViewById(R.id.info)
         mWebView!!.webChromeClient = object : WebChromeClient() {
@@ -108,45 +114,76 @@ class Info : AnkiActivity() {
                 val background = backgroundColor.toRGBHex()
                 mWebView!!.loadUrl("file:///android_asset/changelog.html")
                 mWebView!!.settings.javaScriptEnabled = true
-                mWebView!!.webViewClient = object : WebViewClient() {
-                    override fun onPageFinished(view: WebView, url: String) {
-                        /* The order of below javascript code must not change (this order works both in debug and release mode)
-                                 *  or else it will break in any one mode.
-                                 */
-                        mWebView!!.loadUrl(
-                            "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
-                                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
-                                "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
-                                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                "document.body.style.setProperty(\"background\", \"" + background + "\");"
-                        )
-                    }
-
-                    override fun shouldOverrideUrlLoading(
-                        view: WebView?,
-                        request: WebResourceRequest?
-                    ): Boolean {
-                        // Excludes the url that are opened inside the changelog.html
-                        // and redirect the user to the browser
-                        val url = request?.url?.toString() ?: return false
-                        if (url == CHANGE_LOG_URL) {
-                            return false
-                        }
-                        if (!AdaptionUtil.hasWebBrowser(this@Info)) {
-                            // snackbar can't be used here as it's a webview and lack coordinator layout
-                            UIUtils.showThemedToast(
-                                this@Info,
-                                resources.getString(R.string.no_browser_notification) + url,
-                                false
-                            )
-                        } else {
-                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                        }
-                        return true
-                    }
-                }
+                mWebView!!.webViewClient = ChangelogWebViewClient(textColor, anchorTextColor, background)
             }
             else -> finishWithoutAnimation()
+        }
+    }
+
+    /**
+     * Changelog navigation for both API 24+ [WebResourceRequest] and API 21–23 String overloads.
+     * Returns true to keep the load in-app (blocked or opened externally); false to let WebView load it.
+     */
+    fun handleChangelogUrl(uri: Uri): Boolean {
+        if (shouldBlockChangelogDonateNavigation(BuildConfig.SHOW_DONATE_LINKS, uri.host)) {
+            return true
+        }
+        val url = uri.toString()
+        if (url == CHANGE_LOG_URL) {
+            return false
+        }
+        if (!AdaptionUtil.hasWebBrowser(this)) {
+            // snackbar can't be used here as it's a webview and lack coordinator layout
+            UIUtils.showThemedToast(
+                this,
+                resources.getString(R.string.no_browser_notification) + url,
+                false
+            )
+        } else {
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
+        return true
+    }
+
+    inner class ChangelogWebViewClient(
+        private val textColor: String = "",
+        private val anchorTextColor: String = "",
+        private val background: String = ""
+    ) : WebViewClient() {
+        override fun onPageFinished(view: WebView, url: String) {
+            /* The order of below javascript code must not change (this order works both in debug and release mode)
+                     *  or else it will break in any one mode.
+                     */
+            // ES5 only: minSdk 21 WebViews may not support forEach/arrows/replaceWith/spread.
+            var themeJs = "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
+                "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
+                "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
+                "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
+                "document.body.style.setProperty(\"background\", \"" + background + "\");"
+            if (!BuildConfig.SHOW_DONATE_LINKS) {
+                // Unwrap Open Collective anchors, keeping the text (live NodeList: iterate backwards).
+                themeJs += "x=document.getElementsByTagName(\"a\"); for(i=x.length-1;i>=0;i--){" +
+                    "if(x[i].href.indexOf(\"opencollective.com\")!==-1){" +
+                    "while(x[i].firstChild){x[i].parentNode.insertBefore(x[i].firstChild,x[i]);}" +
+                    "x[i].parentNode.removeChild(x[i]);}}"
+            }
+            mWebView!!.loadUrl(themeJs)
+        }
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            val uri = request?.url ?: return false
+            return handleChangelogUrl(uri)
+        }
+
+        @Suppress("DEPRECATION") // API 21–23 String overload
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            if (url == null) {
+                return false
+            }
+            return handleChangelogUrl(Uri.parse(url))
         }
     }
 
@@ -180,5 +217,13 @@ class Info : AnkiActivity() {
     companion object {
         const val TYPE_EXTRA = "infoType"
         const val TYPE_NEW_VERSION = 2
+
+        /**
+         * Play hides donate UI; changelog HTML may still contain Open Collective links until JS
+         * unwraps them. Swallow those navigations so a JS race cannot open a browser.
+         */
+        fun shouldBlockChangelogDonateNavigation(showDonateLinks: Boolean, host: String?): Boolean {
+            return !showDonateLinks && host?.contains("opencollective.com") == true
+        }
     }
 }
