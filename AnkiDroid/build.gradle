@@ -101,9 +101,9 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22400300
+        versionCode=22401300
         // If you change this to a new version, you probably also want to update .gradle/workflows/milestone.yml for the new version...
-        versionName="2.24.0"
+        versionName="2.24.1"
         minSdk = libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
@@ -312,14 +312,14 @@ play {
                 20804300L, // (2.8.4, minSdk 10, universal APK)
                 21004300L, // (2.10.4, minSdk 15, universal APK)
                 // release-2.14 minSdk 16: missing and not re-publishable, see issue 17791
-                121603300L, // (2.16.3, minSdk 21, ABI armeabi-v7a)
-                221603300L, // (2.16.3, minSdk 21, ABI x86)
-                321603300L, // (2.16.3, minSdk 21, ABI arm64-v8a)
-                421603300L, // (2.16.3, minSdk 21, ABI x86_64)
-                121905300L, // (2.19.5, minSdk 23, ABI armeabi-v7a)
-                221905300L, // (2.19.5, minSdk 23, ABI x86)
-                321905300L, // (2.19.5, minSdk 23, ABI arm64-v8a)
-                421905300L, // (2.19.5, minSdk 23, ABI x86_64)
+                121606300L, // (2.16.6, minSdk 21, ABI armeabi-v7a)
+                221606300L, // (2.16.6, minSdk 21, ABI x86)
+                321606300L, // (2.16.6, minSdk 21, ABI arm64-v8a)
+                421606300L, // (2.16.6, minSdk 21, ABI x86_64)
+                121906300L, // (2.19.6, minSdk 23, ABI armeabi-v7a)
+                221906300L, // (2.19.6, minSdk 23, ABI x86)
+                321906300L, // (2.19.6, minSdk 23, ABI arm64-v8a)
+                421906300L, // (2.19.6, minSdk 23, ABI x86_64)
         ])
     }
 
