@@ -4,6 +4,7 @@
  * Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>                               *
  * Copyright (c) 2015 Timothy Rae <perceptualchaos2@gmail.com>                          *
  * Copyright (c) 2016 Mark Carter <mark@marcardar.com>                                  *
+ * Copyright (c) 2026 Mike Hardy <github@mikehardy.net>                                 *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -176,6 +177,7 @@ import com.ichi2.utils.show
 import com.ichi2.utils.stripDangerousPermissions
 import com.ichi2.utils.title
 import com.ichi2.utils.usesDangerousScheme
+import com.ichi2.utils.withFileNameSafe
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -653,21 +655,7 @@ abstract class AbstractFlashcardViewer :
             mViewerUrl = baseUrl + "__viewer__.html"
         }
         mAssetLoader = WebViewAssetLoader.Builder()
-            .addPathHandler("/") { path: String ->
-                try {
-                    val file = File(mediaDir, path)
-                    val inputStream = FileInputStream(file)
-                    val mimeType = guessMimeType(path)
-                    val headers = HashMap<String, String>()
-                    headers["Access-Control-Allow-Origin"] = "*"
-                    val response = WebResourceResponse(mimeType, null, inputStream)
-                    response.responseHeaders = headers
-                    return@addPathHandler response
-                } catch (e: Exception) {
-                    Timber.w(e, "Error trying to open path in asset loader")
-                }
-                null
-            }
+            .addPathHandler("/") { path -> loadMediaFromAssetLoader(File(mediaDir), path) }
             .build()
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
@@ -2772,6 +2760,35 @@ abstract class AbstractFlashcardViewer :
                 Gesture.SWIPE_LEFT -> ActivityTransitionAnimation.Direction.LEFT
                 else -> ActivityTransitionAnimation.Direction.FADE
             }
+        }
+
+        /**
+         * 2.16 trigger — card JS can fetch `https://appassets.androidplatform.net/..%2f…`
+         * because Uri.getPath() decodes %2f and the handler sets Access-Control-Allow-Origin *.
+         */
+        @JvmStatic
+        fun loadMediaFromAssetLoader(mediaDir: File, path: String): WebResourceResponse? {
+            val file = try {
+                mediaDir.withFileNameSafe(path)
+            } catch (e: SecurityException) {
+                Timber.w("Path traversal attempt blocked")
+                return null
+            } catch (e: IllegalArgumentException) {
+                Timber.w("Path traversal attempt blocked")
+                return null
+            }
+            try {
+                val inputStream = FileInputStream(file)
+                val mimeType = guessMimeType(path)
+                val headers = HashMap<String, String>()
+                headers["Access-Control-Allow-Origin"] = "*"
+                val response = WebResourceResponse(mimeType, null, inputStream)
+                response.responseHeaders = headers
+                return response
+            } catch (e: Exception) {
+                Timber.w(e, "Error trying to open path in asset loader")
+            }
+            return null
         }
     }
 
