@@ -20,11 +20,13 @@ import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
 import org.junit.Assert.assertThrows
+import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
+import java.nio.file.Files
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -109,5 +111,74 @@ class FileUtilTest {
         val fileNameAndExtension = FileUtil.getFileNameAndExtension("a.b.c")
         assertThat(fileNameAndExtension!!.key, equalTo("a.b"))
         assertThat(fileNameAndExtension.value, equalTo(".c"))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_validChild_returnsFile() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val childFile = File(parentDir, "child.txt").apply { createNewFile() }
+        val result = parentDir.withFileNameSafe(childFile.name)
+        assertTrue(result.exists())
+        assertEquals(childFile.absolutePath, result.absolutePath)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_pathTraversal_dotdot_throwsSecurityException() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val traversalName = "../outside/secret.txt"
+        assertThrows(SecurityException::class.java) {
+            parentDir.withFileNameSafe(traversalName)
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_nestedTraversal_throwsSecurityException() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        // Test deeply nested traversal that escapes via multiple levels
+        val deepTraversalName = "../../outside/secret.txt"
+        assertThrows(SecurityException::class.java) {
+            parentDir.withFileNameSafe(deepTraversalName)
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_encodedTraversal_staysWithinBounds() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        // On most filesystems, literal "..%2f" is not decoded as path separator.
+        // The canonical check should confirm it stays within the parent directory.
+        val encodedName = "..%2f..%2foutside.txt"
+        val result = parentDir.withFileNameSafe(encodedName)
+        assertTrue(result.canonicalPath.startsWith(parentDir.canonicalPath))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_nestedChild_returnsFile() {
+        val rootDir = temporaryDirectory.newFolder("root")
+        val deepParent = File(rootDir, "deep/nested/parent").apply { mkdirs() }
+        val result = deepParent.withFileNameSafe("child.txt")
+        assertEquals(File(deepParent, "child.txt").canonicalPath, result.canonicalPath)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun withFileNameSafe_symlinkEscape_throwsSecurityException() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val outsideDir = temporaryDirectory.newFolder("outside")
+        File(outsideDir, "secret.txt").createNewFile()
+        val link = File(parentDir, "escape")
+        try {
+            Files.createSymbolicLink(link.toPath(), outsideDir.toPath())
+        } catch (e: Exception) {
+            assumeTrue("Symbolic links are not supported: ${e.message}", false)
+        }
+        assumeTrue("Symbolic link was not created", Files.isSymbolicLink(link.toPath()))
+        assertThrows(SecurityException::class.java) {
+            parentDir.withFileNameSafe("escape/secret.txt")
+        }
     }
 }

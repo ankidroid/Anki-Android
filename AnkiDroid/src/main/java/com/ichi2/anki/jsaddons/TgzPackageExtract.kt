@@ -331,8 +331,11 @@ class TgzPackageExtract(private val context: Context) {
         val destDirCanonicalPath = destDirectory.canonicalPath
         val outputFileCanonicalPath = outputFile.canonicalPath
 
-        if (!outputFileCanonicalPath.startsWith(destDirCanonicalPath)) {
-            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, outputFileCanonicalPath))
+        // Allow the destination directory itself (tar entry "./") as well as children.
+        if (outputFileCanonicalPath != destDirCanonicalPath &&
+            !outputFileCanonicalPath.startsWith(destDirCanonicalPath + File.separator)
+        ) {
+            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside))
         }
     }
 
