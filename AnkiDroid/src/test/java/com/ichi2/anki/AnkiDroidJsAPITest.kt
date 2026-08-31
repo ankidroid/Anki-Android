@@ -396,7 +396,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Pref off: denied, snackbar shown, returns success:false and search does not run.
         assertThat(
             getDataFromRequest("searchCardWithCallback", jsApi, "foo"),
-            equalTo(formatSuccessfulApiResult { put("value", false) }),
+            equalTo(formatSuccessfulApiResult { put("value", false) })
         )
 
         // Pref on: runs the search without error.
@@ -444,7 +444,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Pref off: denied, snackbar shown, returns success:false and tag is not applied.
         assertThat(
             getDataFromRequest("addTagToNote", jsapi, params),
-            equalTo(formatApiResult(false)),
+            equalTo(formatApiResult(false))
         )
 
         // Pref on: the tag is applied to the other note.
