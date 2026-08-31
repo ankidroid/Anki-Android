@@ -212,6 +212,7 @@ fun ContentResolver.openInputStreamSafe(uri: Uri): InputStream? {
  * Prevents directory traversal attacks (e.g. "../", symlinks) by verifying canonical paths.
  *
  * @throws SecurityException If the resolved path escapes the parent directory.
+ * @throws IllegalArgumentException If a canonical path cannot be resolved.
  */
 fun File.withFileNameSafe(childName: String): File {
     val child = File(this, childName)
@@ -220,10 +221,12 @@ fun File.withFileNameSafe(childName: String): File {
         val canonicalChild = child.canonicalPath
 
         if (!canonicalChild.startsWith(canonicalParent + File.separator)) {
-            throw SecurityException("Invalid path: $childName traversal attempt detected")
+            // Do not interpolate childName: exception messages are reported to ACRA (PII).
+            throw SecurityException("Invalid path: traversal attempt detected")
         }
     } catch (e: IOException) {
-        throw IllegalArgumentException("Unable to resolve canonical path for $childName", e)
+        // Do not interpolate childName: exception messages are reported to ACRA (PII).
+        throw IllegalArgumentException("Unable to resolve canonical path", e)
     }
     return child
 }

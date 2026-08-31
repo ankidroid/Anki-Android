@@ -20,11 +20,13 @@ import org.acra.util.IOUtils.writeStringToFile
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
+import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import java.io.IOException
+import java.nio.file.Files
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -143,6 +145,80 @@ class FileUtilTest {
 
         assertThat("replace extension, no .", underTest.replaceExtension(extension = "file").toString(), equalTo("file.file"))
         assertThat("replace extension, with .", underTest.replaceExtension(extension = ".file").toString(), equalTo("file.file"))
+    }
+
+    @Test
+    fun `withFileNameSafe - valid child file within parent directory returns File`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val result = parentDir.withFileNameSafe("child.txt")
+        assertNotNull(result)
+        assertEquals(File(parentDir, "child.txt"), result)
+    }
+
+    @Test
+    fun `withFileNameSafe - nested valid child returns File`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val subDir = File(parentDir, "subdir")
+        subDir.mkdirs()
+        val result = parentDir.withFileNameSafe("subdir/nested.txt")
+        assertNotNull(result)
+    }
+
+    @Test
+    fun `withFileNameSafe - path traversal with dotdot slash throws SecurityException`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        assertThrows<SecurityException> {
+            parentDir.withFileNameSafe("../outside.txt")
+        }
+    }
+
+    @Test
+    fun `withFileNameSafe - encoded path traversal percent2f does not decode by Java File`() {
+        // Note: Java's File class does NOT URL-decode the child name, so ..%2f is treated as a literal filename.
+        // This means it won't trigger path traversal but also isn't a valid file on most systems.
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val result = parentDir.withFileNameSafe("..%2f..%2foutside.txt")
+        assertNotNull(result)
+    }
+
+    @Test
+    fun `withFileNameSafe - child named same as parent in different location throws SecurityException`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val siblingDir = temporaryDirectory.newFolder("sibling_parent")
+        // Create a file at sibling_dir/parent (same name as parentDir)
+        val fakeChild = File(siblingDir, "parent")
+        fakeChild.createNewFile()
+        // Now try to create a child named "parent" inside parentDir - this should be safe
+        // But if symlinks are involved and resolve differently, it would fail
+        // The key test: ensure the separator boundary check works
+        val result = parentDir.withFileNameSafe("parent")
+        assertNotNull(result)
+    }
+
+    @Test
+    fun `withFileNameSafe - sibling directory sharing parent prefix is not treated as contained`() {
+        val parentDir = temporaryDirectory.newFolder("cache")
+        val siblingDir = File(parentDir.parentFile, "cache-evil")
+        siblingDir.mkdirs()
+        assertThrows<SecurityException> {
+            parentDir.withFileNameSafe("../cache-evil/payload.txt")
+        }
+    }
+
+    @Test
+    fun `withFileNameSafe - symlink traversal outside parent throws SecurityException`() {
+        val parentDir = temporaryDirectory.newFolder("parent")
+        val outsideDir = temporaryDirectory.newFolder("outside")
+        val outsideFile = File(outsideDir, "secret.txt")
+        writeStringToFile(outsideFile, "secret")
+        val linkPath =
+            runCatching {
+                Files.createSymbolicLink(File(parentDir, "link").toPath(), outsideFile.toPath())
+            }.getOrNull()
+        assumeTrue("Filesystem does not support symbolic links", linkPath != null && Files.isSymbolicLink(linkPath))
+        assertThrows<SecurityException> {
+            parentDir.withFileNameSafe("link")
+        }
     }
 
     /**

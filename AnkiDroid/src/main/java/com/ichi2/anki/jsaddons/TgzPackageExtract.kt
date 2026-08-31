@@ -352,11 +352,20 @@ class TgzPackageExtract(
         outputFile: File,
         destDirectory: File,
     ) {
-        val destDirCanonicalPath = destDirectory.canonicalPath
-        val outputFileCanonicalPath = outputFile.canonicalPath
-
-        if (!outputFileCanonicalPath.startsWith(destDirCanonicalPath)) {
-            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, outputFileCanonicalPath))
+        val canonicalParent: String
+        val canonicalChild: String
+        try {
+            canonicalParent = destDirectory.canonicalPath
+            canonicalChild = outputFile.canonicalPath
+        } catch (_: IOException) {
+            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
+        }
+        // Allow dest itself (tar entry "./") as well as children under dest + separator.
+        val contained =
+            canonicalChild == canonicalParent ||
+                canonicalChild.startsWith(canonicalParent + File.separator)
+        if (!contained) {
+            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ARCHIVE_ENTRY_PATH_OMITTED))
         }
     }
 
@@ -432,5 +441,8 @@ class TgzPackageExtract(
         private const val BUFFER = 512
         private const val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
         private const val TOO_MANY_FILES = 1024 // max number of files
+
+        /** Path-free placeholder for [R.string.malicious_archive_entry_outside] (do not log archive paths). */
+        private const val ARCHIVE_ENTRY_PATH_OMITTED = "archive entry"
     }
 }
