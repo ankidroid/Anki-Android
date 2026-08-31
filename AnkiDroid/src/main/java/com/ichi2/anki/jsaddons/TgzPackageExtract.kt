@@ -335,7 +335,7 @@ class TgzPackageExtract(private val context: Context) {
         if (outputFileCanonicalPath != destDirCanonicalPath &&
             !outputFileCanonicalPath.startsWith(destDirCanonicalPath + File.separator)
         ) {
-            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside))
+            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, ""))
         }
     }
 
