@@ -49,15 +49,15 @@
     <string name="pref_cat_workarounds" maxLength="41">Абходныя шляхі</string>
     <string name="pref_cat_plugins" maxLength="41">Плагiны</string>
     <string name="pref_cat_editing" maxLength="41">Рэдагаванне</string>
-    <string name="pref_cat_security" maxLength="41">Security</string>
+    <string name="pref_cat_security" maxLength="41">Бяспека</string>
     <!-- Card template JavaScript API permissions -->
-    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
-    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
-    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <string name="allow_dangerous_js_api_title" maxLength="41">Дазволіць небяспечныя API у JavaScript</string>
+    <string name="allow_dangerous_js_api_summ">Дазволіць любой картцы або шаблону чытаць і змяняць іншыя карткі або даныя ў вашай калекцыі Anki.\nПакіньце выключаным пакуль у вас няма даверу да ўсіх картак і шаблонаў у вашай калекцыі.</string>
+    <string name="dangerous_js_api_denied_snackbar">Бяспека: небяспечны выклік JavaScript заблакіраваны.\nКалі вы давяраеце ўсім карткам і шаблонам у вашай калекцыі, то гэту функцыю можна разблакіраваць у пашыраных наладах</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
-    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
-    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
-    <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <string name="allow_card_external_launch_title" maxLength="41">Карткі могуць запускаць іншыя праграмы</string>
+    <string name="allow_card_external_launch_summ">Карткі могуць адкрываць іншыя праграму ў вашай прыладзе і запускаць патэнцыйна непажаданыя дзеянні.\nПакіньце выключаным пакуль у вас няма даверу да ўсіх картак і шаблонаў у вашай калекцыі.</string>
+    <string name="card_external_launch_denied_snackbar">Бяспека: картка не можа запускаць іншыя праграмы.\nКалі вы давяраеце ўсім карткам і шаблонам у вашай калекцыі, то гэту функцыю можна разблакіраваць у пашыраных наладах.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Шырыня штрыха</string>
     <string name="use_input_tag" maxLength="41">Уводзіць адказ на картцы</string>
@@ -286,8 +286,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Эксперыментальныя</string>
     <string name="readtext_deprecation_warn">У AnkiDroid з\'явіўся палепшаны механізм сінтэзу маўлення (TTS), які сумяшчальны з іншымі кліентамі Anki і ўключае больш галасоў і паляпшэнні пры ўзнаўленні мовы!\n\nЗнайдзіце час для абнаўлення праграмы, бо гэта налада будзе неўзабаве выдалена.</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Абнавіце праграму да новага сінтэзу маўлення</string>
-    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
-    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Дазволіць шаблонам запісваць аўдыя</string>
+    <string name="template_is_trying_to_record_audio">Гэты шаблон спрабуе запісаць аўдыя</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage у экране навучання</string>
     <string name="pref_fixed_port_summary">Уключае JavaScript localStorage выкарыстоўваючы фіксаваны порт сервера ў экране навучання</string>
     <!-- Developer options -->

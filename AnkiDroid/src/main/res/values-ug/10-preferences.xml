@@ -243,7 +243,7 @@
     <string name="contributors_title">تۆھپىكار</string>
     <string name="about_contributors_description"><![CDATA[بۇلار بىزنىڭ قالتىس <a href=\"%1$s\">تۆھپىكارلىرىمىز</a>. پىروگرامما تۈزۈش، تەرجىمە قىلىش، ئىئانە قىلىش ۋە  <a href=\"%2$s\">تېخىمۇ كۆپ</a> ئۇسۇللار ئارقىلىق AnkiDroid غا ياردەم قىلالايسىز!]]></string>
     <string name="license">ئىجازەتنامە</string>
-    <string name="license_description"><![CDATA[AnkiDroid نى <a href=\"%1$s\">GPL-3.0</a> ۋە <a href=\"%2$s\">AGPL-3.0</a> ئىجازىتىدە تارقىتىدۇ، ئەسلى مەنبە كودى <a href=\"%3$s\">GitHub</a> تا بار]]></string>
+    <string name="license_description"><![CDATA[مەزكۇر AnkiDroid نى <a href=\"%1$s\">GPL-3.0</a> ۋە <a href=\"%2$s\">AGPL-3.0</a> ئىجازىتىدە تارقىتىدۇ، ئەسلى مەنبە كودى <a href=\"%3$s\">GitHub</a> تا بار]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid نۇرغۇن ئوچۇق كودلۇق <a href=\"%1$s\">ئىجازەت</a>تە تارقىتىلىدىغان ئۈچىنچى تەرەپ ئامبار ۋە سىنبەلگىنىمۇ ئىشلىتىدۇ]]></string>
     <string name="donate_description"><![CDATA[سىز AnkiDroid ئىجادىيىتىگە <a href=\"%1$s\">ئىئانە</a> قىلىش ئارقىلىق قوللىيالايسىز. ھەر قانداق مىقداردىكى ئىئانە چوڭقۇر ئالقىشلىنىدۇ.]]></string>
     <!-- Controls -->
@@ -282,8 +282,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">تەجرىبە</string>
     <string name="readtext_deprecation_warn">AnkiDroid تېخىمۇ ياخشى تېكىستتىن ئاۋازغا مېخانىزمىنى كىرگۈزدى، ئۇ باشقا Anki خېرىدار پىروگراممىسى بىلەن ماسلىشىدۇ ھەمدە تېخىمۇ كۆپ ئاۋاز ۋە تىلدا قويۇشنى قوللايدۇ!\n\nئامالنىڭ بارىچە تېزراق يۈكسەلتىڭ، چۈنكى بۇ تەڭشەك پات ئارىدا چىقىرىۋېتىلىدۇ</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">يېڭى تېكىستتىن ئاۋازغا پىچىمىغا يۈكسەلتىڭ</string>
-    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
-    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">قېلىپنىڭ ئۈن خاتىرىلىشىگە يول قويىدۇ</string>
+    <string name="template_is_trying_to_record_audio">بۇ قېلىپ ئۈن خاتىرىلەشنى سىناۋاتىدۇ</string>
     <string name="pref_fixed_port_title" maxLength="41">ئۆگىنىش ئېكرانىدىكى يەرلىك ساقلىغۇچ</string>
     <string name="pref_fixed_port_summary">ئۆگىنىش ئېكرانىدا مۇقىم مۇلازىمېتىر ئېغىزىنى ئىشلىتىپ JavaScript يەرلىك ساقلىغۇچنى قوزغىتىدۇ</string>
     <!-- Developer options -->
