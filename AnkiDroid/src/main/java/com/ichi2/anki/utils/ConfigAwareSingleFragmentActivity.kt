@@ -19,8 +19,6 @@ import kotlin.reflect.jvm.jvmName
  * or declare your own copy.
  */
 class ConfigAwareSingleFragmentActivity : SingleFragmentActivity() {
-    override val supportsEdgeToEdge: Boolean = true
-
     companion object {
         fun getIntent(
             context: Context,
