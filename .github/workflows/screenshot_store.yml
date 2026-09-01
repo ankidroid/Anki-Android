@@ -69,6 +69,16 @@ jobs:
           cache-provider: basic
           gradle-version: wrapper
 
+      - name: Warm Gradle Cache
+        # This makes sure we fetch gradle network resources with a retry
+        # TODO: --rerun-tasks in 'Record screenshots' discards the compilation performed here
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew robolectricSdkDownload :AnkiDroid:compilePlayDebugUnitTestKotlin -Pscreenshot --daemon
+
       - name: Record screenshots
         id: record-test
         run: |
