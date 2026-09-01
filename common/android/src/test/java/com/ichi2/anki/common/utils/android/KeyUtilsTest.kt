@@ -14,11 +14,13 @@ import android.view.KeyEvent.KEYCODE_STAR
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 /** Tests for [KeyEvent.digit]. */
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [35])
 class KeyUtilsTest {
     @Test
     fun `digit returns the digit for 0-9 keys`() {
