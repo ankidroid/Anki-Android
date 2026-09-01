@@ -6,7 +6,6 @@ package com.ichi2.anki
 import android.content.Intent
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
-import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
@@ -16,9 +15,6 @@ import kotlinx.coroutines.flow.first
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.TimeSource
 
 /**
  * Screenshot tests for [DeckPicker]
@@ -179,27 +175,4 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
             deckIds.all { id -> adapter.currentList.any { it.did == id && !it.collapsed } }
         }
     }
-}
-
-/**
- * Advances the main looper until [condition] holds, failing if [timeout] elapses first.
- *
- * @throws IllegalStateException [timeout] has elapsed without [condition] being true.
- */
-private fun advanceRobolectricLooperUntil(
-    timeout: Duration = 10.seconds,
-    lazyMessage: () -> Any = { "condition not met after $timeout" },
-    condition: () -> Boolean,
-) {
-    val start = TimeSource.Monotonic.markNow()
-    while (!condition()) {
-        check(start.elapsedNow() < timeout, lazyMessage)
-        // a real sleep, so background threads finish and post to main
-        Thread.sleep(10)
-        // `advanceRobolectricLooper` only drains tasks already on the main looper,
-        // so it can return while a diff is still in flight (as it's on a different thread).
-        advanceRobolectricLooper()
-    }
-    // flush the work triggered by the condition becoming true (e.g. a layout pass)
-    advanceRobolectricLooper()
 }
