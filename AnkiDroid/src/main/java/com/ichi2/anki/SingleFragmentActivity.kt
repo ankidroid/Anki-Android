@@ -78,6 +78,7 @@ open class SingleFragmentActivity :
                     left = constraints.left,
                     right = constraints.right,
                     top = constraints.top,
+                    bottom = constraints.bottom,
                 )
             }
             insets
