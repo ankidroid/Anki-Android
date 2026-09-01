@@ -56,6 +56,15 @@ jobs:
           cache-provider: basic
           gradle-version: wrapper
 
+      - name: Warm Gradle Cache
+        # This makes sure we fetch gradle network resources with a retry
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew robolectricSdkDownload :AnkiDroid:compilePlayDebugUnitTestKotlin -Pscreenshot --daemon
+
       - name: Download base branch screenshots
         uses: dawidd6/action-download-artifact@d63b86af1b34672e53c440b1b83979861906bad7 # v24
         continue-on-error: true
