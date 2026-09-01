@@ -16,6 +16,7 @@ plugins {
 
 extensions.configure<LibraryExtension> {
     compileSdk = libsVersionFor("compileSdk").toInt()
+    compileSdkMinor = libsVersionFor("compileSdkMinor").toInt()
 
     defaultConfig {
         minSdk = libsVersionFor("minSdk").toInt()
