@@ -21,7 +21,6 @@ import android.view.MenuItem
 import androidx.annotation.DrawableRes
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
-import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
@@ -65,14 +64,18 @@ private fun Context.increaseHorizontalPaddingOfMenuIcons(
     }
 }
 
+/**
+ * Sets [drawableResId] as the icon, with [horizontalPaddingDp] of padding on each side.
+ */
 fun MenuItem.setPaddedIcon(
     context: Context,
     @DrawableRes drawableResId: Int,
     horizontalPaddingDp: Float = DEFAULT_HORIZONTAL_PADDING,
 ) {
     val padding = horizontalPaddingDp.dp.toPx(context)
-    val drawable = ContextCompat.getDrawable(context, drawableResId)
-    icon = InsetDrawable(drawable, padding, 0, padding, 0)
+    // #21688 use the Menu's context to resolve the drawable
+    setIcon(drawableResId)
+    icon = InsetDrawable(icon, padding, 0, padding, 0)
 }
 
 /**
