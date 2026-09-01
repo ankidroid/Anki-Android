@@ -20,9 +20,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -35,10 +33,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.doOnAttach
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.core.view.updatePadding
@@ -264,16 +262,13 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             )?.updatePadding(left = constraints.left, top = constraints.top, right = constraints.right)
             insets
         }
+        // When not fragmented, each CardTemplateFragment insets its own template: the fragments
+        // are created after the first insets are dispatched, so they can't be reached from here
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
             val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
             if (fragmented) {
                 findViewById<LinearLayout>(R.id.template_editor)?.updatePadding(left = constraints.left)
                 findViewById<FragmentContainerView>(R.id.fragment_container)?.updatePadding(right = constraints.right)
-            } else {
-                findViewById<FrameLayout>(
-                    R.id.bottom_navigation_container,
-                )?.updatePadding(left = constraints.left, right = constraints.right)
-                findViewById<ScrollView>(R.id.scroll_view)?.updatePadding(left = constraints.left, right = constraints.right)
             }
             insets
         }
@@ -748,12 +743,20 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 }
             binding.editText.addTextChangedListener(templateEditorWatcher)
 
-            /* When keyboard is visible, hide the bottom navigation bar to allow viewing
-            of all template text when resize happens */
             ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-                binding.bottomNavigation.isVisible = !insets.isVisible(WindowInsetsCompat.Type.ime())
+                /* When keyboard is visible, hide the bottom navigation bar to allow viewing
+                of all template text when resize happens */
+                binding.bottomNavigation.isVisible = !insets.isVisible(ime())
+                // When fragmented, the activity insets the editor pane instead.
+                // The bottom navigation insets itself, so it is not padded here.
+                if (!templateEditor.fragmented) {
+                    val bars = insets.getInsets(systemBars() or displayCutout())
+                    binding.scrollView.updatePadding(left = bars.left, right = bars.right)
+                }
                 insets
             }
+            // the view is added to the pager after the insets were dispatched, so request them again
+            binding.root.doOnAttach { ViewCompat.requestApplyInsets(it) }
 
             /*
              * We focus on the editText to indicate it's editable, but we don't automatically
