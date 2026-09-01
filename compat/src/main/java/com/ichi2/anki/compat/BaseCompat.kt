@@ -23,6 +23,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.AnimRes
 import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -52,6 +53,12 @@ open class BaseCompat : Compat {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
         )
+    }
+
+    // Until API36, SHOW_IMPLICIT marks the request as one the system may ignore
+    override fun showSoftInput(view: View): Boolean {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        return imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
     override fun overrideTransition(
