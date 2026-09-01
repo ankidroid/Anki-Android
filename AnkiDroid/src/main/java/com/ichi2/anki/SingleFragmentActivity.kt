@@ -55,7 +55,7 @@ open class SingleFragmentActivity :
         get() = (fragment as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder ?: { }
 
     /** Whether this host is ported to edge to edge (17334) */
-    open val supportsEdgeToEdge: Boolean get() = false
+    open val supportsEdgeToEdge: Boolean get() = true
 
     // the same host class serves every screen it shows, so report what it's showing
     override val analyticsScreenName: String
