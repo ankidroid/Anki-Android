@@ -10,7 +10,7 @@ minSdk = "24"
 # The API should be as low as possible in order to enable dependencies to stay on a lower minSdk.
 apiMinSdk = "16"
 
-targetSdk = "35"  # affects which SDKs download in ../robolectricDownloader.gradle
+targetSdk = "36"  # affects which SDKs download in ../robolectricDownloader.gradle
 acra = '5.13.1'
 ktlint = '1.8.0'
 # AGP is included in Android Studio and changelogs are not well maintained/at a stable URL
