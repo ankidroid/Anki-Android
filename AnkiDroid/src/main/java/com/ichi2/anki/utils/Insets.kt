@@ -11,6 +11,8 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.core.view.marginTop
+import kotlin.math.ceil
+import kotlin.math.sqrt
 
 /** [Insets.of], with named arguments */
 fun insetsOf(
@@ -47,6 +49,30 @@ fun WindowInsetsCompat.bottomCornerClearance(view: View): Int {
     // `r - sqrt(r² - (r - d)²)` of vertical clearance, and `r - d` is never less (a chord vs the
     // arc), so the content never dips into the corner.
     return (bottomRoundedCornerRadius - endInset).coerceAtLeast(0)
+}
+
+/**
+ * The horizontal clearance, per side, which keeps the ends of a bottom-anchored row clear of the
+ *  bottom rounded display corners.
+ *
+ * A row resting [bottomInset] above the screen bottom ends `r - bottomInset` below where a
+ *  corner's arc begins, and there the arc reaches `r - sqrt(r² - (r - bottomInset)²)` in from the
+ *  screen edge. Content at least that far inboard clears the arc at every height it occupies.
+ *
+ * The clearance is measured from the screen edge: subtract any side inset already applied to
+ *  the row.
+ */
+fun WindowInsetsCompat.bottomCornerSideClearance(bottomInset: Int): Insets {
+    fun clearance(position: Int): Int {
+        val radius = getRoundedCorner(position)?.radius ?: 0
+        val depth = radius - bottomInset
+        if (depth <= 0) return 0
+        return ceil(radius - sqrt((radius.toDouble() * radius) - (depth.toDouble() * depth))).toInt()
+    }
+    return insetsOf(
+        left = clearance(RoundedCornerCompat.POSITION_BOTTOM_LEFT),
+        right = clearance(RoundedCornerCompat.POSITION_BOTTOM_RIGHT),
+    )
 }
 
 /**
