@@ -24,6 +24,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.InsertFieldDialog
@@ -942,6 +943,24 @@ class CardTemplateEditorTest : RobolectricTest() {
                 assertThat(previewer.ord, equalTo(1))
             }
         }
+
+    @Test
+    fun `the current card is focused`() {
+        withCardTemplateEditor(noteType = getCurrentDatabaseNoteTypeCopy("Basic (and reversed card)")) {
+            advanceRobolectricLooper()
+            assertThat("card 1 is focused on open", window.decorView.findFocus(), equalTo(templateFragment(0).binding.editText))
+
+            selectTab(1)
+            advanceRobolectricLooper()
+            assertThat("card 2 is focused once selected", window.decorView.findFocus(), equalTo(templateFragment(1).binding.editText))
+
+            selectTab(0)
+            advanceRobolectricLooper()
+            assertThat("card 1 is focused again", window.decorView.findFocus(), equalTo(templateFragment(0).binding.editText))
+        }
+    }
+
+    private fun CardTemplateEditor.templateFragment(ord: Int) = supportFragmentManager.findFragmentByTag("f$ord") as CardTemplateFragment
 
     private fun addCardType(
         testEditor: CardTemplateEditor,

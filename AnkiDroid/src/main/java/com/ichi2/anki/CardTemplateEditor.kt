@@ -47,6 +47,7 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import anki.notetypes.StockNotetype
 import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
 import anki.notetypes.notetypeId
@@ -249,6 +250,16 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             Timber.i("selected card index: %s", tab.position)
             loadTemplatePreviewerFragmentIfFragmented(tab.position)
         }
+
+        // ViewPager2 clears focus when a page is selected, so focus can't stay on an offscreen page.
+        // Move it to the selected page instead: see CardTemplateFragment.isCurrentPage
+        mainBinding.cardTemplateEditorPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    templateFragment(position)?.binding?.editText?.requestFocus()
+                }
+            },
+        )
 
         registerDeckSelectedHandler(action = ::onDeckSelected)
     }
@@ -505,6 +516,12 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         return true
     }
 
+    /** The page for a card, if the pager has created it */
+    private fun templateFragment(position: Int): CardTemplateFragment? {
+        val adapter = mainBinding.cardTemplateEditorPager.adapter ?: return null
+        return supportFragmentManager.findFragmentByTag("f${adapter.getItemId(position)}") as? CardTemplateFragment
+    }
+
     @get:VisibleForTesting
     val currentFragment: CardTemplateFragment?
         get() =
@@ -576,6 +593,10 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         // Index of this card template fragment in ViewPager
         private val cardIndex
             get() = requireArguments().getInt(CARD_INDEX)
+
+        /** Whether this is the page shown by the pager. */
+        private val isCurrentPage: Boolean
+            get() = templateEditor.mainBinding.cardTemplateEditorPager.currentItem == cardIndex
 
         private val templateName
             get() = tempModel.notetype.templates[cardIndex].name
@@ -763,8 +784,10 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
              * show the keyboard. This is intentional - the keyboard should only appear
              * when the user taps on the edit field, not every time the fragment loads.
              */
-            binding.editText.post {
-                binding.editText.requestFocus()
+            if (isCurrentPage) {
+                binding.editText.post {
+                    binding.editText.requestFocus()
+                }
             }
 
             parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
@@ -936,7 +959,9 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             )
             currentEditorViewId = viewId
             binding.editText.setText(editorContent)
-            binding.editText.requestFocus()
+            if (isCurrentPage) {
+                binding.editText.requestFocus()
+            }
             binding.editText.setSelection(
                 templateEditor.tabToCursorPositions[cardId]?.get(
                     currentEditorViewId,
