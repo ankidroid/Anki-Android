@@ -210,6 +210,13 @@ class CompatHelper private constructor() {
  */
 fun View.setTooltipTextCompat(tooltipText: CharSequence?) = TooltipCompat.setTooltipText(this, tooltipText)
 
+/**
+ * Request that the current input method's soft input area be shown to the user, if needed.
+ *
+ * @see Compat.showSoftInput
+ */
+fun View.showSoftInput(): Boolean = compat.showSoftInput(this)
+
 inline fun <reified T : Serializable> Bundle.requireSerializableCompat(key: String): T =
     requireNotNull(compat.getSerializable(this, key, T::class.java)) {
         "key: '$key' not found or null"

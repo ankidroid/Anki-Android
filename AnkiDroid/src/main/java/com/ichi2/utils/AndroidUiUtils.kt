@@ -21,7 +21,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.showSoftInput
 
 object AndroidUiUtils {
     /**
@@ -32,7 +32,7 @@ object AndroidUiUtils {
      */
     fun Activity?.showSoftInput() {
         val currentFocus = this?.currentFocus ?: return
-        CompatHelper.compat.showSoftInput(currentFocus)
+        currentFocus.showSoftInput()
     }
 
     /**
@@ -61,7 +61,7 @@ object AndroidUiUtils {
         //  Required on some Android 9, 10 devices to show keyboard: https://stackoverflow.com/a/7784904
         view.postDelayed({
             view.requestFocus()
-            CompatHelper.compat.showSoftInput(view)
+            view.showSoftInput()
             runnable?.run()
         }, 200)
     }

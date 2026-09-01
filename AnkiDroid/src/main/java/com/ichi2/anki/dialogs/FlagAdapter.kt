@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.Flag
-import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.showSoftInput
 import com.ichi2.anki.databinding.ItemEditFlagBinding
 import com.ichi2.utils.moveCursorToEnd
 import kotlinx.coroutines.CoroutineScope
@@ -85,7 +85,7 @@ class FlagAdapter(
             holder.flagNameEditLayout.visibility = View.VISIBLE
             holder.flagNameEdit.requestFocus()
             holder.flagNameEdit.moveCursorToEnd()
-            CompatHelper.compat.showSoftInput(holder.flagNameEdit)
+            holder.flagNameEdit.showSoftInput()
         }
 
         holder.saveButton.setOnClickListener {
