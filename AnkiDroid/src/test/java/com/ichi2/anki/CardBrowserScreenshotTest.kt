@@ -108,6 +108,16 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
         }
     }
 
+    @Test
+    fun multiselect() =
+        runTest {
+            val browser = getBrowserWithNotes(noteCount = 1)
+            browser.longClickRowAtPosition(0).join()
+            advanceRobolectricLooper()
+
+            captureScreen("multiselect")
+        }
+
     /**
      * Robolectric reports zero system-bar insets by default. Inject realistic ones so the app's
      * edge-to-edge layout responds as it would on a real device, and overlay a translucent band
