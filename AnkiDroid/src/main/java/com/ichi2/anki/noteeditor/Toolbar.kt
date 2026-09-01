@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
@@ -33,6 +34,7 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
@@ -66,6 +68,7 @@ class Toolbar : FrameLayout {
     var formatListener: TextFormatListener? = null
     private val toolbar: LinearLayout
     private val toolbarLayout: LinearLayout
+    private val scrollView: HorizontalScrollView
 
     /** A list of buttons, typically user-defined which modify text + selection */
     private val customButtons: MutableList<View> = ArrayList()
@@ -93,7 +96,19 @@ class Toolbar : FrameLayout {
             }
         toolbar = findViewById(R.id.editor_toolbar_internal)
         toolbarLayout = findViewById(R.id.toolbar_layout)
+        scrollView = findViewById(R.id.toolbar_scrollview)
         setupDefaultButtons()
+    }
+
+    /**
+     * Insets the ends of the button row, keeping buttons which rest there clear of the bottom
+     *  rounded display corners; buttons scroll beneath the clearance.
+     */
+    fun setSideClearance(
+        left: Int,
+        right: Int,
+    ) {
+        scrollView.updatePadding(left = left, right = right)
     }
 
     /** Sets up the "standard" buttons to insert bold, italics etc... */

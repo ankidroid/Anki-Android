@@ -155,7 +155,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.RunOnlyOnce
-import com.ichi2.anki.utils.bottomCornerClearance
+import com.ichi2.anki.utils.bottomCornerSideClearance
 import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.sharedPrefs
@@ -2225,10 +2225,16 @@ class NoteEditorFragment :
     }
 
     private fun setupEdgeToEdge() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { root, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
             val bars = insets.paneInsets()
-            bottomInsetPx = maxOf(bars.bottom, insets.bottomCornerClearance(root))
+            bottomInsetPx = bars.bottom
             toolbar.updatePadding(left = bars.left, right = bars.right)
+            // move the toolbar as low as possible, without being impacted by rounded corners
+            val corners = insets.bottomCornerSideClearance(bars.bottom)
+            toolbar.setSideClearance(
+                left = if (inCardBrowserActivity) 0 else (corners.left - bars.left).coerceAtLeast(0),
+                right = if (noteEditorActivity?.fragmented == true) 0 else (corners.right - bars.right).coerceAtLeast(0),
+            )
             applyBottomInset()
             insets
         }

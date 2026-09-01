@@ -5,6 +5,7 @@ package com.ichi2.anki
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.HorizontalScrollView
 import androidx.core.content.edit
 import androidx.core.view.RoundedCornerCompat
 import androidx.core.view.ViewCompat
@@ -143,19 +144,68 @@ class NoteEditorInsetsTest : RobolectricTest() {
     }
 
     @Test
-    fun `the formatting toolbar clears rounded display corners larger than the navigation bar`() =
+    fun `rounded corners inset the button row's ends, not the toolbar's height`() =
         withNoteEditor { activity ->
-            activity.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
+            activity.dispatchInsets(navBarBottom = 20.dp, bottomCornerRadius = 50.dp)
 
-            assertThat(activity.formattingToolbar.paddingBottom, equalTo(48.dp.toPx(targetContext)))
+            assertThat(
+                "the toolbar rests on the navigation bar, not above the corners",
+                activity.formattingToolbar.paddingBottom,
+                equalTo(20.dp.toPx(targetContext)),
+            )
+            // the arc reaches r - √(r² - (r - inset)²) = 50 - √(50² - 30²) = 10dp into the row
+            assertThat(activity.formattingToolbarRow.paddingLeft, equalTo(10.dp.toPx(targetContext)))
+            assertThat(activity.formattingToolbarRow.paddingRight, equalTo(10.dp.toPx(targetContext)))
+            assertThat(
+                "buttons scroll beneath the clearance, only resting clear of the corners",
+                activity.formattingToolbarRow.clipToPadding,
+                equalTo(false),
+            )
         }
 
     @Test
-    fun `a side navigation bar clearing the corner removes the bottom buffer`() =
+    fun `a side navigation bar clearing the corner takes the place of the row's clearance`() =
         withNoteEditor { activity ->
             activity.dispatchInsets(navBarRight = 48.dp, bottomCornerRadius = 34.dp)
 
             assertThat(activity.formattingToolbar.paddingBottom, equalTo(0))
+            assertThat(
+                "at the screen bottom the arc spans its full radius, all on the bare side",
+                activity.formattingToolbarRow.paddingLeft,
+                equalTo(34.dp.toPx(targetContext)),
+            )
+            assertThat(
+                "the navigation bar already pushes the row past the corner",
+                activity.formattingToolbarRow.paddingRight,
+                equalTo(0),
+            )
+        }
+
+    @Test
+    fun `the keyboard lifts the button row clear of the corners`() =
+        withNoteEditor { activity ->
+            activity.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp, imeBottom = 300.dp)
+
+            assertThat(activity.formattingToolbar.paddingBottom, equalTo(300.dp.toPx(targetContext)))
+            assertThat(activity.formattingToolbarRow.paddingLeft, equalTo(0))
+            assertThat(activity.formattingToolbarRow.paddingRight, equalTo(0))
+        }
+
+    @Test
+    fun `the two-pane editor only clears the corner on its outer edge`() =
+        withTabletNoteEditor { activity ->
+            activity.dispatchInsets(cutoutLeft = 32.dp, bottomCornerRadius = 48.dp)
+
+            assertThat(
+                "the cutout inset already covers part of the full-radius arc",
+                activity.formattingToolbarRow.paddingLeft,
+                equalTo((48 - 32).dp.toPx(targetContext)),
+            )
+            assertThat(
+                "the divider side borders no corner",
+                activity.formattingToolbarRow.paddingRight,
+                equalTo(0),
+            )
         }
 
     @Test
@@ -212,6 +262,9 @@ class NoteEditorInsetsTest : RobolectricTest() {
 
     private val NoteEditorActivity.formattingToolbar: View get() = findViewById(R.id.editor_toolbar)
 
+    /** The scrolling row of buttons inside [formattingToolbar] */
+    private val NoteEditorActivity.formattingToolbarRow: HorizontalScrollView get() = findViewById(R.id.toolbar_scrollview)
+
     private val NoteEditorActivity.editorFields: View get() = findViewById(R.id.note_editor_layout)
 
     private val NoteEditorActivity.fragmentRoot: View get() = getNoteEditorFragment().requireView()
@@ -233,12 +286,13 @@ class NoteEditorInsetsTest : RobolectricTest() {
                     .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
                     .setInsets(ime(), insetsOf(bottom = imeBottom))
                     .apply {
+                        // Robolectric's WindowInsets.Builder leaks rounded corners between tests
                         val radius = bottomCornerRadius.toPx(targetContext)
-                        if (radius > 0) {
-                            setRoundedCorner(
-                                RoundedCornerCompat.POSITION_BOTTOM_LEFT,
-                                RoundedCornerCompat(RoundedCornerCompat.POSITION_BOTTOM_LEFT, radius, radius, radius),
-                            )
+                        for (position in intArrayOf(
+                            RoundedCornerCompat.POSITION_BOTTOM_LEFT,
+                            RoundedCornerCompat.POSITION_BOTTOM_RIGHT,
+                        )) {
+                            setRoundedCorner(position, RoundedCornerCompat(position, radius, radius, radius))
                         }
                     }.build()
             }
