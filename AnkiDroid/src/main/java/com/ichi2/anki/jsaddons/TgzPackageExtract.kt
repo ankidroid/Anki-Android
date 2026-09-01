@@ -40,6 +40,7 @@ import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.utils.FileUtil
 import org.apache.commons.compress.archivers.ArchiveException
+import org.apache.commons.compress.archivers.ArchiveInputStream
 import org.apache.commons.compress.archivers.ArchiveStreamFactory
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
@@ -240,7 +241,7 @@ class TgzPackageExtract(
         try {
             FileInputStream(inputFile).use { inputStream ->
                 ArchiveStreamFactory().createArchiveInputStream<TarArchiveInputStream>("tar", inputStream).use { tarInputStream ->
-                    tarInputStream.forEach { entry ->
+                    tarInputStream.forEachEntry { entry ->
                         val outputFile = File(outputDir, entry.name)
 
                         // Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
@@ -374,7 +375,7 @@ class TgzPackageExtract(
             ArchiveStreamFactory().createArchiveInputStream<TarArchiveInputStream>("tar", inputStream).use { tarInputStream ->
                 var numOfEntries = 0
 
-                tarInputStream.forEach { entry ->
+                tarInputStream.forEachEntry { entry ->
                     numOfEntries++
                     if (numOfEntries > TOO_MANY_FILES) {
                         throw IllegalStateException("Too many files to untar")
@@ -433,4 +434,17 @@ class TgzPackageExtract(
         private const val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
         private const val TOO_MANY_FILES = 1024 // max number of files
     }
+}
+
+/**
+ * Calls [action] on each entry in the stream.
+ *
+ * Only commons-compress APIs predating 1.27 may be used here: Robolectric's API 36 `android-all`
+ * jar bundles an older commons-compress which shadows our dependency in unit tests, so
+ * `TarArchiveInputStream.forEach` and its `TarArchiveEntry`-returning `getNextEntry` override
+ * fail with [NoSuchMethodError]. `ArchiveInputStream.getNextEntry` links against both versions.
+ */
+private fun TarArchiveInputStream.forEachEntry(action: (TarArchiveEntry) -> Unit) {
+    val archiveInputStream: ArchiveInputStream<TarArchiveEntry> = this
+    generateSequence { archiveInputStream.nextEntry }.forEach(action)
 }
