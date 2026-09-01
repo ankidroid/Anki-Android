@@ -78,13 +78,21 @@ import com.ichi2.testutils.ensureOpWithHandler
 import com.ichi2.testutils.ensureOpsExecuted
 import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.empty
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThanOrEqualTo
+import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.lessThan
@@ -1820,6 +1828,41 @@ class CardBrowserViewModelTest : JvmTest() {
 
                 expectMostRecentItem()
             }
+        }
+
+    @Test
+    fun `search state is not lost when a cancelled search emits`() =
+        runViewModelTest {
+            // launchSearchForCards cancels the previous search job, which may emit its
+            // search state after cancellation. On a zero-capacity SharedFlow this corrupts
+            // the flow and later emissions are lost (kotlinx.coroutines#4681).
+            val scheduler = TestCoroutineScheduler()
+            val scope = CoroutineScope(StandardTestDispatcher(scheduler))
+            val received = mutableListOf<SearchState>()
+            val collector = scope.launch { flowOfSearchState.collect { received += it } }
+            scheduler.runCurrent()
+
+            val cancelledSearch =
+                scope.launch {
+                    try {
+                        awaitCancellation()
+                    } catch (e: CancellationException) {
+                        flowOfSearchState.emit(SearchState.Searching)
+                        throw e
+                    }
+                }
+            scheduler.runCurrent()
+            cancelledSearch.cancel()
+
+            val liveState = SearchState.Error("from the next search")
+            val liveSearch = scope.launch { flowOfSearchState.emit(liveState) }
+            scheduler.runCurrent()
+
+            assertThat("state from an active search reaches collectors", received, hasItem(liveState))
+
+            liveSearch.cancel()
+            collector.cancel()
+            scope.cancel()
         }
 
     @Test

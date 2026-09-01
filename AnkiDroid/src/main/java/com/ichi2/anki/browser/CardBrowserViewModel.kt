@@ -70,6 +70,7 @@ import com.ichi2.anki.utils.ext.setUserFlagForCards
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -142,7 +143,11 @@ class CardBrowserViewModel(
 
     val cards = BrowserRowCollection(CARDS, mutableListOf())
 
-    val flowOfSearchState = MutableSharedFlow<SearchState>()
+    val flowOfSearchState =
+        MutableSharedFlow<SearchState>(
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
 
     /**
      * Commands to drive the note editor either in a fragment or a standalone activity
