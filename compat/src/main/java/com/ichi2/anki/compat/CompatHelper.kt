@@ -40,6 +40,7 @@ class CompatHelper private constructor() {
     @SuppressLint("NewApi")
     private val compatValue: Compat =
         when {
+            sdkVersion >= Build.VERSION_CODES.BAKLAVA -> CompatV36()
             sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
             sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
             sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
