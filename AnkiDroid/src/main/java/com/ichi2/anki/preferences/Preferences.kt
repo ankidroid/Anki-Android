@@ -238,8 +238,6 @@ class PreferencesFragment :
 class PreferencesActivity :
     SingleFragmentActivity(),
     SearchPreferenceResultListener {
-    override val supportsEdgeToEdge: Boolean = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
