@@ -80,6 +80,23 @@ interface Compat {
 
     fun hideStatusBar(window: Window)
 
+    /**
+     * Request that the current input method's soft input area be shown to the
+     * user, if needed.
+     *
+     * Below Android 16, this is an implicit request: the window may not be
+     * shown, for example if a hardware keyboard is connected.
+     *
+     * @param view The currently focused view, which would like to receive soft keyboard input.
+     *   Note that this view is only considered focused here if both it itself has
+     *   [view focus][View.isFocused], and its containing window has
+     *   [window focus][View.hasWindowFocus]. Otherwise the call fails and returns `false`.
+     * @return `true` if a request was sent to system_server, `false` otherwise. Note:
+     *   this does not return result of the request.
+     * @see android.view.inputmethod.InputMethodManager.showSoftInput
+     */
+    fun showSoftInput(view: View): Boolean
+
     fun overrideTransition(
         activity: Activity,
         @AnimRes enter: Int,
