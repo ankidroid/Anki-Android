@@ -92,6 +92,8 @@ class ImportUtilsTest : RobolectricTest() {
                 "..\\windows\\system32\\config.sam.apkg",
                 "../../../../../../../../../etc/passwd.apkg",
                 "..\\..\\..\\passwd.apkg",
+                "%2e%2e%2fetc%2fpasswd.apkg", // percent-encoded traversal: File does not decode it
+                "....apkg",
                 "normal.apkg",
             )
 
@@ -108,6 +110,22 @@ class ImportUtilsTest : RobolectricTest() {
                 cacheDir,
                 cachedFile.parentFile,
             )
+        }
+    }
+
+    @Test
+    fun leadingDotFilenamesAreNotStripped() {
+        for (fileName in listOf(".hidden.apkg", "..apkg")) {
+            val actualFilePath = importValidFile(fileName)
+            assertEquals(fileName, File(Uri.decode(actualFilePath)).name)
+        }
+    }
+
+    @Test
+    fun getFileCachedCopyUsesUnnamedFileForEmptyDotAndDotDot() {
+        for (fileName in listOf("", ".", "..")) {
+            val actualFilepath = TestFileImporter(fileName).getFileCachedCopy(targetContext, "dummy".toUri())
+            assertEquals(File(targetContext.cacheDir, "unnamed_file").absolutePath, actualFilepath)
         }
     }
 
