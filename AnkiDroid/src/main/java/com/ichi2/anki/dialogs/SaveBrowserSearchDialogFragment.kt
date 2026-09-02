@@ -12,6 +12,7 @@ import androidx.fragment.app.setFragmentResult
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.ARG_SEARCH_QUERY
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.ARG_SEARCH_QUERY_NAME
@@ -39,12 +40,12 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
         return AlertDialog
             .Builder(requireContext())
             .show {
-                title(text = getString(R.string.card_browser_list_my_searches_save))
-                positiveButton(R.string.dialog_ok)
-                negativeButton(R.string.dialog_cancel)
+                title(text = getString(S.card_browser_list_my_searches_save))
+                positiveButton(S.dialog_ok)
+                negativeButton(S.dialog_cancel)
                 setView(R.layout.dialog_generic_text_input)
             }.input(
-                hint = getString(R.string.card_browser_list_my_searches_new_name),
+                hint = getString(S.card_browser_list_my_searches_new_name),
                 allowEmpty = false,
                 displayKeyboard = true,
                 waitForPositiveButton = true,
@@ -97,7 +98,7 @@ fun CardBrowser.registerSaveSearchHandler() {
             bundle.getString(ARG_SEARCH_QUERY_NAME)
         if (savedSearchName.isNullOrEmpty()) {
             showSnackbar(
-                R.string.card_browser_list_my_searches_new_search_error_empty_name,
+                S.card_browser_list_my_searches_new_search_error_empty_name,
                 Snackbar.LENGTH_SHORT,
             )
             return@setFragmentResultListener
@@ -128,7 +129,7 @@ fun Fragment.registerSaveSearchHandler(onSaveSearch: (SavedSearch) -> Unit) {
             bundle.getString(ARG_SEARCH_QUERY_NAME)
         if (savedSearchName.isNullOrEmpty()) {
             showSnackbar(
-                R.string.card_browser_list_my_searches_new_search_error_empty_name,
+                S.card_browser_list_my_searches_new_search_error_empty_name,
                 Snackbar.LENGTH_SHORT,
             )
             return@setFragmentResultListener

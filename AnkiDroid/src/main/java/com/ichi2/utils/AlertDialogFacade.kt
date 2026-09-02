@@ -483,7 +483,7 @@ fun AlertDialog.Builder.listItemsAndMessage(
  * **Example:**
  * ```kotlin
  * MaterialAlertDialogBuilder(context).create {
- *     titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
+ *     titleWithHelpIcon(stringRes = S.reset_card_dialog_title) {
  *         requireActivity().openUrl(Uri.parse(getString(R.string.link_manual)))
  *     }
  * }

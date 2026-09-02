@@ -35,6 +35,7 @@ import anki.search.SearchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -185,7 +186,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         if (item.checkAvailability != null) {
             val defaults = withProgress { deferredDefaults.await() }
             if (!item.checkAvailability(defaults)) {
-                showSnackbar(getString((R.string.studyoptions_no_cards_due)))
+                showSnackbar(getString((S.studyoptions_no_cards_due)))
                 return
             }
         }
@@ -323,7 +324,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
             } else {
-                getString(R.string.dialog_ok)
+                getString(S.dialog_ok)
             }
 
         // Set material dialog parameters
@@ -340,7 +341,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     paddingTop = verticalPadding,
                     paddingBottom = verticalPadding,
                 ).positiveButton(text = positiveBtnLabel, click = null)
-                .negativeButton(R.string.dialog_cancel) {
+                .negativeButton(S.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
                 }.create()
 
@@ -504,12 +505,12 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         get() {
             val res = resources
             return when (selectedSubDialog) {
-                EXTEND_NEW -> res.getString(R.string.custom_study_new_extend)
-                EXTEND_REV -> res.getString(R.string.custom_study_rev_extend)
-                STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
-                STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
-                STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
-                STUDY_TAGS -> res.getString(R.string.custom_study_tags)
+                EXTEND_NEW -> res.getString(S.custom_study_new_extend)
+                EXTEND_REV -> res.getString(S.custom_study_rev_extend)
+                STUDY_FORGOT -> res.getString(S.custom_study_forgotten)
+                STUDY_AHEAD -> res.getString(S.custom_study_ahead)
+                STUDY_PREVIEW -> res.getString(S.custom_study_preview)
+                STUDY_TAGS -> res.getString(S.custom_study_tags)
                 null -> ""
             }
         }

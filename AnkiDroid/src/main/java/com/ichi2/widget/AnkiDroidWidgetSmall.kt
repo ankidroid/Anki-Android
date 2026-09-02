@@ -20,6 +20,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.destinations.DeferredNavigation
@@ -147,7 +148,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     updateViews.setTextViewText(R.id.widget_due, dueCardsCount.toString())
                     updateViews.setContentDescription(
                         R.id.widget_due,
-                        context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
+                        context.resources.getQuantityString(Pl.widget_cards_due, dueCardsCount, dueCardsCount),
                     )
 
                     if (eta <= 0) {
@@ -158,7 +159,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         updateViews.setTextViewText(R.id.widget_eta, etaText)
                         updateViews.setContentDescription(
                             R.id.widget_eta,
-                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
+                            context.resources.getQuantityString(Pl.widget_eta, eta, eta),
                         )
                     }
                 }

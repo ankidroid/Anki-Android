@@ -27,6 +27,7 @@ import anki.config.Preferences.BackupLimits
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.snackbar.showSnackbar
@@ -149,17 +150,17 @@ class BackupLimitsPresenter(
             preference.summaryProvider =
                 Preference.SummaryProvider<EditTextPreference> {
                     when (viewModel.flowOfState.value) {
-                        is State.Fetching -> fragment.getString(R.string.pref__etc__summary__fetching)
-                        is State.Error.NoCollection -> fragment.getString(R.string.pref__etc__summary__no_collection)
-                        is State.Error.Exception -> fragment.getString(R.string.pref__etc__summary__error)
+                        is State.Fetching -> fragment.getString(S.pref__etc__summary__fetching)
+                        is State.Error.NoCollection -> fragment.getString(S.pref__etc__summary__no_collection)
+                        is State.Error.Exception -> fragment.getString(S.pref__etc__summary__error)
                         is State.Fetched -> preference.text
                     }
                 }
 
             preference.onClickListener = listener@{
                 when (val state = viewModel.flowOfState.value) {
-                    is State.Fetching -> fragment.showSnackbar(R.string.pref__etc__snackbar__fetching)
-                    is State.Error.NoCollection -> fragment.showSnackbar(R.string.pref__etc__snackbar__no_collection)
+                    is State.Fetching -> fragment.showSnackbar(S.pref__etc__snackbar__fetching)
+                    is State.Error.NoCollection -> fragment.showSnackbar(S.pref__etc__snackbar__no_collection)
                     is State.Error.Exception ->
                         fragment.showSnackbar(
                             text = fragment.requireContext().getUserFriendlyErrorText(state.exception),

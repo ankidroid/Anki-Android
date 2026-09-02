@@ -51,6 +51,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
@@ -582,12 +583,12 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                         REGULAR_TO_REGULAR -> Standard
                         CLOZE_TO_CLOZE, REGULAR_TO_CLOZE ->
                             WithWarning(
-                                warningRes = R.string.card_numbers_unchanged,
+                                warningRes = S.card_numbers_unchanged,
                             )
                         // Improvement: we could detect this using the max ord of provided notes
                         CLOZE_TO_REGULAR ->
                             WithWarning(
-                                warningRes = R.string.extra_cloze_deletions_removed,
+                                warningRes = S.extra_cloze_deletions_removed,
                             )
                     }
             }
@@ -705,5 +706,5 @@ private fun AnkiActivity.changeNoteType(viewModel: ChangeNoteTypeViewModel) =
 @VisibleForTesting
 fun ChangeNoteTypeException.Kind.toString(context: Context): String =
     when (this) {
-        ChangeNoteTypeException.Kind.NO_CHANGES -> context.getString(R.string.error_no_changes_to_save)
+        ChangeNoteTypeException.Kind.NO_CHANGES -> context.getString(S.error_no_changes_to_save)
     }

@@ -40,6 +40,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.android.AnkiShakeDetector
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -562,7 +563,7 @@ class ReviewerFragment :
             val message = CollectionManager.TR.studyingCardStudiedIn(timebox.reps) + " " + CollectionManager.TR.studyingMinute(minutes)
 
             AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.timebox_reached_title)
+                setTitle(S.timebox_reached_title)
                 setMessage(message)
                 setPositiveButton(CollectionManager.TR.studyingContinue()) { _, _ ->
                     Timber.i("ReviewerFragment: Timebox 'Continue'")
@@ -691,8 +692,8 @@ class ReviewerFragment :
                     if (hasShownUnsupportedFeatureWarning) return true
                     hasShownUnsupportedFeatureWarning = true
                     AlertDialog.Builder(requireContext()).show {
-                        setMessage(R.string.feature_not_supported_by_study_screen)
-                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                        setMessage(S.feature_not_supported_by_study_screen)
+                        setPositiveButton(S.dialog_ok) { _, _ -> }
                     }
                     true
                 }

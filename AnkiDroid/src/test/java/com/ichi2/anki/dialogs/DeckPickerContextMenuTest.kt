@@ -13,6 +13,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -96,12 +97,12 @@ class DeckPickerContextMenuTest : JvmTest() {
     fun `Shows standard options`() {
         launch(withArguments()).onFragment { fragment ->
             with(fragment.requireContext()) {
-                fragment.assertOptionPresent(R.string.menu_add)
-                fragment.assertOptionPresent(R.string.browse_cards)
+                fragment.assertOptionPresent(S.menu_add)
+                fragment.assertOptionPresent(S.browse_cards)
                 fragment.assertOptionPresent(TR.sentenceCase.renameDeck)
                 fragment.assertOptionPresent(TR.sentenceCase.deckOptions)
-                fragment.assertOptionPresent(R.string.export_deck)
-                fragment.assertOptionPresent(R.string.create_shortcut)
+                fragment.assertOptionPresent(S.export_deck)
+                fragment.assertOptionPresent(S.create_shortcut)
                 fragment.assertOptionPresent(TR.sentenceCase.deleteDeck)
             }
         }
@@ -135,7 +136,7 @@ class DeckPickerContextMenuTest : JvmTest() {
     fun `Shows options to empty and rebuild when deck is dynamic`() {
         launch(withArguments(isDynamic = true)).onFragment { fragment ->
             assertTrue(
-                fragment.foundOptions().contains(fragment.getString(R.string.empty_cram_label)),
+                fragment.foundOptions().contains(fragment.getString(S.empty_cram_label)),
                 "'Empty' should be present when deck is dynamic",
             )
             assertTrue(
@@ -149,7 +150,7 @@ class DeckPickerContextMenuTest : JvmTest() {
     fun `Shows option to create subdeck when deck is not dynamic`() {
         launch(withArguments()).onFragment { fragment ->
             assertTrue(
-                fragment.foundOptions().contains(fragment.getString(R.string.create_subdeck)),
+                fragment.foundOptions().contains(fragment.getString(S.create_subdeck)),
                 "'Create subdeck' should be present when deck is not dynamic",
             )
         }

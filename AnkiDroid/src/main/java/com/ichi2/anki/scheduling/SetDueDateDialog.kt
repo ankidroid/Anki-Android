@@ -29,7 +29,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncCatching
 import com.ichi2.anki.browser.IdsFile
@@ -104,7 +106,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
             } catch (e: IOException) {
                 // the file may be missing, or truncated if the write was interrupted
                 Timber.w(e, "Failed to read cardIds")
-                showThemedToast(requireContext(), R.string.something_wrong, false)
+                showThemedToast(requireContext(), S.something_wrong, false)
                 dismiss()
                 return
             }
@@ -167,8 +169,8 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                     openUrl(R.string.link_set_due_date_help)
                 }
                 title(text = TR.sentenceCase.setDueDate)
-                positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
-                negativeButton(R.string.dialog_cancel)
+                positiveButton(S.dialog_ok) { launchUpdateDueDate() }
+                negativeButton(S.dialog_cancel)
                 setView(binding.root)
             }.apply {
                 show()
@@ -223,7 +225,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                                 tv.isVisible = true
                                 tv.text =
                                     resources.getQuantityString(
-                                        R.plurals.set_due_date_current_interval,
+                                        Pl.set_due_date_current_interval,
                                         currentInterval,
                                         currentInterval,
                                     )
@@ -329,18 +331,18 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                         viewModel.nextSingleDayDueDate = currentValue
                         suffixText =
                             resources.getQuantityString(
-                                R.plurals.set_due_date_label_suffix,
+                                Pl.set_due_date_label_suffix,
                                 currentValue ?: 0,
                             )
                     }
-                    suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
+                    suffixText = resources.getQuantityString(Pl.set_due_date_label_suffix, 0)
                     helperText =
                         getString(
-                            R.string.set_due_date_hintText,
+                            S.set_due_date_hintText,
                             // 0 days
-                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0),
+                            resources.getQuantityString(Pl.set_due_date_label_suffix, 0),
                             // 1 day
-                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1),
+                            resources.getQuantityString(Pl.set_due_date_label_suffix, 1),
                         )
                     setOnEditorActionListener { _, actionId, event ->
                         return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -360,7 +362,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
             }
             binding.dateSingleLabel.text =
                 resources.getQuantityString(
-                    R.plurals.set_due_date_single_day_label,
+                    Pl.set_due_date_single_day_label,
                     viewModel.cardCount,
                 )
         }
@@ -395,11 +397,11 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                         viewModel.setNextDateRangeStart(value)
                         suffixText =
                             resources.getQuantityString(
-                                R.plurals.set_due_date_label_suffix,
+                                Pl.set_due_date_label_suffix,
                                 value ?: 0,
                             )
                     }
-                    suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
+                    suffixText = resources.getQuantityString(Pl.set_due_date_label_suffix, 0)
                     selectAllWhenFocused()
                 }
             }
@@ -411,11 +413,11 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                         viewModel.setNextDateRangeEnd(value)
                         suffixText =
                             resources.getQuantityString(
-                                R.plurals.set_due_date_label_suffix,
+                                Pl.set_due_date_label_suffix,
                                 value ?: 0,
                             )
                     }
-                    suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
+                    suffixText = resources.getQuantityString(Pl.set_due_date_label_suffix, 0)
                     viewModel.dateRange.end?.let { end -> setText(end.toString()) }
                     setOnEditorActionListener { _, actionId, event ->
                         return@setOnEditorActionListener if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -434,7 +436,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                 }
             }
             binding.dateRangeLabel.text =
-                resources.getQuantityString(R.plurals.set_due_date_range_label, viewModel.cardCount)
+                resources.getQuantityString(Pl.set_due_date_range_label, viewModel.cardCount)
         }
 
         override fun onResume() {
@@ -462,7 +464,7 @@ private fun AnkiActivity.updateDueDate(
         if (cardsUpdated == null) {
             Timber.w("unable to update due date")
             if (showError) {
-                showThemedToast(this@updateDueDate, R.string.something_wrong, true)
+                showThemedToast(this@updateDueDate, S.something_wrong, true)
             }
             return@asyncCatching null
         }

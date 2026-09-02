@@ -14,8 +14,8 @@ import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.S
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.libanki.DeckId
@@ -302,7 +302,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertThat(
                     "Snackbar should confirm deck creation for valid name",
                     activity.latestSnackbarText(),
-                    equalTo(getResourceString(R.string.deck_created)),
+                    equalTo(getResourceString(S.deck_created)),
                 )
             }
         }
@@ -319,7 +319,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Snackbar should show invalid name error for blank name",
                 activity.latestSnackbarText(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(S.invalid_deck_name)),
             )
         }
     }
@@ -335,7 +335,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should confirm deck creation for valid name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.deck_created)),
+                equalTo(getResourceString(S.deck_created)),
             )
         }
     }
@@ -351,7 +351,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should show invalid name error for blank name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(S.invalid_deck_name)),
             )
         }
     }
@@ -367,7 +367,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertThat(
                     "Snackbar should confirm rename for valid name",
                     activity.latestSnackbarText(),
-                    equalTo(getResourceString(R.string.deck_renamed)),
+                    equalTo(getResourceString(S.deck_renamed)),
                 )
             }
         }
@@ -385,7 +385,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Snackbar should show invalid name error for blank name",
                 activity.latestSnackbarText(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(S.invalid_deck_name)),
             )
         }
     }
@@ -401,7 +401,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should confirm rename for valid name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.deck_renamed)),
+                equalTo(getResourceString(S.deck_renamed)),
             )
         }
     }
@@ -417,7 +417,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should show invalid name error for blank name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(S.invalid_deck_name)),
             )
         }
     }

@@ -30,6 +30,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.S
 import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
@@ -90,7 +91,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
             // first setup of the widget, no deck selected so deck name view should be empty
             onView(withId(R.id.deck_name)).check(matches(withText("")))
             // select dialog already open, select deck 1
-            onView(withText(R.string.select_deck_title))
+            onView(withText(S.select_deck_title))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
             onView(withText(TEST_DECK_NAME1)).inRoot(isDialog()).perform(click())
@@ -129,7 +130,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
             // no selection yet
             onView(withId(R.id.deck_name)).check(matches(withText("")))
             // cancel deck selection
-            onView(withText(R.string.dialog_cancel)).inRoot(isDialog()).perform(click())
+            onView(withText(S.dialog_cancel)).inRoot(isDialog()).perform(click())
             // still no deck selected, so deck name should still be empty
             onView(withId(R.id.deck_name)).check(matches(withText("")))
             // set configuration as done

@@ -20,7 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.dialogs.viewmodel.ExportReadyViewModel.ExportReadyParams
 import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.utils.negativeButton
@@ -37,13 +37,13 @@ class ExportReadyDialog : DialogFragment() {
         val dialog = AlertDialog.Builder(requireActivity())
 
         dialog
-            .setTitle(getString(R.string.export_ready_title))
-            .positiveButton(R.string.export_choice_save_to) {
+            .setTitle(getString(S.export_ready_title))
+            .positiveButton(S.export_choice_save_to) {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_EXPORT_SAVE,
                     Bundle().apply { putString(KEY_EXPORT_PATH, exportPath) },
                 )
-            }.negativeButton(R.string.export_choice_share) {
+            }.negativeButton(S.export_choice_share) {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_EXPORT_SHARE,
                     Bundle().apply {

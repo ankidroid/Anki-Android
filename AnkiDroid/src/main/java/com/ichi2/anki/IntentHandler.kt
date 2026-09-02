@@ -121,7 +121,7 @@ class IntentHandler : AbstractIntentHandler() {
             }
         this.copyToClipboard(
             text = clipboardData,
-            failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
+            failureMessageId = S.about_ankidroid_error_copy_debug_info,
         )
     }
 
@@ -219,7 +219,7 @@ class IntentHandler : AbstractIntentHandler() {
         Timber.i("Handling file import")
         if (!hasShownAppIntro()) {
             Timber.i("Trying to import a file when the app was not started at all")
-            showThemedToast(this, R.string.app_not_initialized_new, false)
+            showThemedToast(this, S.app_not_initialized_new, false)
             return
         }
         val importResult = handleFileImport(this, intent)
@@ -376,7 +376,7 @@ class IntentHandler : AbstractIntentHandler() {
             val granted = grantedStoragePermissions(context)
 
             if (!granted && showToast) {
-                showThemedToast(context, context.getString(R.string.intent_handler_failed_no_storage_permission), false)
+                showThemedToast(context, context.getString(S.intent_handler_failed_no_storage_permission), false)
             }
 
             return granted
@@ -465,7 +465,7 @@ class IntentHandler : AbstractIntentHandler() {
                 if (!limited && !hkey.isNullOrEmpty() && NetworkUtils.isOnline) {
                     deckPicker.sync()
                 } else {
-                    val err = res.getString(R.string.sync_error)
+                    val err = res.getString(S.sync_error)
                     if (limited) {
                         val remainingTimeInSeconds =
                             max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
@@ -473,7 +473,7 @@ class IntentHandler : AbstractIntentHandler() {
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
                         val message =
                             res.getQuantityString(
-                                R.plurals.sync_automatic_sync_needs_more_time,
+                                Pl.sync_automatic_sync_needs_more_time,
                                 remaining,
                                 remaining,
                             )
@@ -481,7 +481,7 @@ class IntentHandler : AbstractIntentHandler() {
                     } else {
                         deckPicker.showSimpleNotification(
                             err,
-                            res.getString(R.string.youre_offline),
+                            res.getString(S.youre_offline),
                             NotificationChannel.SYNC,
                         )
                     }

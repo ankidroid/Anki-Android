@@ -19,7 +19,9 @@ import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
@@ -53,7 +55,7 @@ sealed interface Size {
 
     class Error(
         val exception: Exception,
-        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error,
+        @StringRes val widgetTextId: Int = S.pref__widget_text__error,
     ) : Size
 }
 
@@ -231,7 +233,7 @@ class ManageSpaceFragment : SettingsFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.apply {
-            title = getString(R.string.pref__manage_space__screen_title)
+            title = getString(S.pref__manage_space__screen_title)
         }
     }
 
@@ -245,17 +247,17 @@ class ManageSpaceFragment : SettingsFragment() {
 
             val deleteFilesPromptResult =
                 requireContext().awaitDialog {
-                    setTitle(R.string.dialog__delete_unused_media_files__title)
+                    setTitle(S.dialog__delete_unused_media_files__title)
                     setMultiChoiceItems(unusedFileNames, CheckedItems.All)
-                    setPositiveButton(R.string.dialog_positive_delete)
-                    setNegativeButton(R.string.dialog_cancel)
+                    setPositiveButton(S.dialog_positive_delete)
+                    setNegativeButton(S.dialog_cancel)
                 }
 
             if (deleteFilesPromptResult is DialogResult.Ok.MultipleChoice) {
                 val checkedItems = deleteFilesPromptResult.checkedItems
                 val filesNamesToDelete = unusedFileNames.filterIndexed { index, _ -> checkedItems[index] }
 
-                withProgress(R.string.delete_media_message) {
+                withProgress(S.delete_media_message) {
                     viewModel.deleteMediaFiles(filesNamesToDelete)
                 }
             }
@@ -275,17 +277,17 @@ class ManageSpaceFragment : SettingsFragment() {
 
             val chooseBackupsPromptResult =
                 requireContext().awaitDialog {
-                    setTitle(R.string.dialog__delete_backups__title)
+                    setTitle(S.dialog__delete_backups__title)
                     setMultiChoiceItems(backupNames, CheckedItems.None)
-                    setPositiveButton(R.string.dialog_positive_delete)
-                    setNegativeButton(R.string.dialog_cancel)
+                    setPositiveButton(S.dialog_positive_delete)
+                    setNegativeButton(S.dialog_cancel)
                 }
 
             if (chooseBackupsPromptResult is DialogResult.Ok.MultipleChoice) {
                 val checkedItems = chooseBackupsPromptResult.checkedItems
                 val backupsToDelete = backupFiles.filterIndexed { index, _ -> checkedItems[index] }
 
-                withProgress(R.string.progress__deleting_backups) {
+                withProgress(S.progress__deleting_backups) {
                     viewModel.deleteBackups(backupsToDelete)
                 }
             }
@@ -308,15 +310,15 @@ class ManageSpaceFragment : SettingsFragment() {
         if (size is Size.Bytes) {
             val deleteCollectionPromptResult =
                 requireContext().awaitDialog {
-                    setTitle(R.string.dialog__delete_collection__title)
-                    setMessage(R.string.dialog__delete_collection__message)
-                    setPositiveButton(R.string.dialog_positive_delete)
-                    setNegativeButton(R.string.dialog_cancel)
+                    setTitle(S.dialog__delete_collection__title)
+                    setMessage(S.dialog__delete_collection__message)
+                    setPositiveButton(S.dialog_positive_delete)
+                    setNegativeButton(S.dialog_cancel)
                 }
 
             if (deleteCollectionPromptResult is DialogResult.Ok) {
                 try {
-                    withProgress(R.string.progress__deleting_collection) {
+                    withProgress(S.progress__deleting_collection) {
                         viewModel.deleteCollection()
                     }
                 } finally {
@@ -336,15 +338,15 @@ class ManageSpaceFragment : SettingsFragment() {
 
     private fun adjustDeleteEverythingStringsDependingOnCollectionLocation(preference: Preference) {
         if (viewModel.collectionDirectory.isInsideDirectoriesRemovedWithTheApp(requireContext())) {
-            preference.setTitle(R.string.pref__delete_everything__title)
-            preference.setSummary(R.string.pref__delete_everything__summary)
-            deleteEverythingDialogTitle = R.string.dialog__delete_everything__title
-            deleteEverythingDialogMessage = R.string.dialog__delete_everything__message
+            preference.setTitle(S.pref__delete_everything__title)
+            preference.setSummary(S.pref__delete_everything__summary)
+            deleteEverythingDialogTitle = S.dialog__delete_everything__title
+            deleteEverythingDialogMessage = S.dialog__delete_everything__message
         } else {
-            preference.setTitle(R.string.pref__delete_app_data__title)
-            preference.setSummary(R.string.pref__delete_app_data__summary)
-            deleteEverythingDialogTitle = R.string.dialog__delete_app_data__title
-            deleteEverythingDialogMessage = R.string.dialog__delete_app_data__message
+            preference.setTitle(S.pref__delete_app_data__title)
+            preference.setSummary(S.pref__delete_app_data__summary)
+            deleteEverythingDialogTitle = S.dialog__delete_app_data__title
+            deleteEverythingDialogMessage = S.dialog__delete_app_data__message
         }
     }
 
@@ -353,8 +355,8 @@ class ManageSpaceFragment : SettingsFragment() {
             requireContext().awaitDialog {
                 setTitle(deleteEverythingDialogTitle)
                 setMessage(deleteEverythingDialogMessage)
-                setPositiveButton(R.string.dialog_positive_delete)
-                setNegativeButton(R.string.dialog_cancel)
+                setPositiveButton(S.dialog_positive_delete)
+                setNegativeButton(S.dialog_cancel)
             }
 
         if (deleteEverythingPromptResult is DialogResult.Ok) {
@@ -373,12 +375,12 @@ class ManageSpaceFragment : SettingsFragment() {
 
         widgetText =
             when (size) {
-                is Size.Calculating -> getString(R.string.pref__widget_text__calculating)
+                is Size.Calculating -> getString(S.pref__widget_text__calculating)
                 is Size.Error -> getString(size.widgetTextId)
                 is Size.Bytes -> size.totalSize.toHumanReadableSize()
                 is Size.FilesAndBytes ->
                     resources.getQuantityString(
-                        R.plurals.pref__widget_text__n_files_n_bytes,
+                        Pl.pref__widget_text__n_files_n_bytes,
                         size.files.size,
                         size.files.size,
                         size.totalSize.toHumanReadableSize(),
@@ -401,7 +403,7 @@ class ManageSpaceFragment : SettingsFragment() {
 
     private fun showSnackbarIfCalculatingOrError(size: Size) {
         when (size) {
-            is Size.Calculating -> showSnackbar(R.string.pref__etc__snackbar__calculating)
+            is Size.Calculating -> showSnackbar(S.pref__etc__snackbar__calculating)
             is Size.Error -> showSnackbar(requireContext().getUserFriendlyErrorText(size.exception))
             else -> {}
         }

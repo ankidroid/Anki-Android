@@ -27,7 +27,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.Pl
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.ext.unregisterReceiverSilently
@@ -121,7 +123,7 @@ class DeckPickerWidgetConfig :
                     Timber.w("Closing: Collection is empty")
                     showThemedToast(
                         this@DeckPickerWidgetConfig,
-                        R.string.empty_collection_state_in_widget,
+                        S.empty_collection_state_in_widget,
                         false,
                     )
                     finish()
@@ -154,7 +156,7 @@ class DeckPickerWidgetConfig :
                 // anchors to it instead of the Save button while the async
                 // updateFabVisibility() is still in flight.
                 binding.fabWidgetDeckPicker.isVisible = true
-                showSnackbar(R.string.deck_removed_from_widget)
+                showSnackbar(S.deck_removed_from_widget)
                 updateViewVisibility()
                 updateFabVisibility()
                 updateDoneButtonVisibility()
@@ -174,7 +176,7 @@ class DeckPickerWidgetConfig :
         binding.fabWidgetDeckPicker.setOnClickListener {
             // TODO previous code filtered the already selected decks, we guard against this for now
             startDeckSelection(
-                title = getString(R.string.select_decks_title),
+                title = getString(S.select_decks_title),
                 allowAll = false,
                 skipEmptyDefault = true,
                 allowMultipleSelection = true,
@@ -257,7 +259,7 @@ class DeckPickerWidgetConfig :
      *   and the activity is finished.
      */
     private fun setupDoneButton() {
-        val saveText = getString(R.string.save).uppercase()
+        val saveText = getString(S.save).uppercase()
 
         // Set the button text and click listener only once during initialization
         binding.submitButton.text = saveText
@@ -351,7 +353,7 @@ class DeckPickerWidgetConfig :
         val isDeckAlreadySelected = deckAdapter.deckIds.contains(deck.deckId)
 
         if (isDeckAlreadySelected) {
-            showSnackbar(getString(R.string.deck_already_selected_message))
+            showSnackbar(getString(S.deck_already_selected_message))
             return
         }
 
@@ -359,7 +361,7 @@ class DeckPickerWidgetConfig :
         if (deckAdapter.itemCount >= MAX_DECKS_ALLOWED) {
             // Snackbar will only be shown when adding the 5th deck
             if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
+                showSnackbar(resources.getQuantityString(Pl.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
             }
             // The FAB visibility should be handled in updateFabVisibility()
             return
@@ -373,7 +375,7 @@ class DeckPickerWidgetConfig :
         setUnsavedChanges(true)
         // Show snackbar and dismiss the selection dialog once the 5th deck is reached
         if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-            showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
+            showSnackbar(resources.getQuantityString(Pl.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
             dismissDeckSelectionDialog()
         }
     }

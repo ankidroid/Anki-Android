@@ -23,6 +23,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.FragmentSwitchProfilesBinding
 import com.ichi2.utils.ValidationResult
 import com.ichi2.utils.input
@@ -62,8 +63,8 @@ class SwitchProfilesFragment : Fragment(R.layout.fragment_switch_profiles) {
             .show {
                 title(text = "Add profile")
 
-                positiveButton(R.string.dialog_add)
-                negativeButton(R.string.dialog_cancel)
+                positiveButton(S.dialog_add)
+                negativeButton(S.dialog_cancel)
                 setView(R.layout.dialog_generic_text_input)
             }.input(
                 hint = "Profile name",

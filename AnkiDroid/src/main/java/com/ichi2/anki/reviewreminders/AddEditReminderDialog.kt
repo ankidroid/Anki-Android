@@ -32,6 +32,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.databinding.DialogAddEditReminderBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
@@ -104,11 +105,11 @@ class AddEditReminderDialog : DialogFragment() {
         val dialogBuilder =
             AlertDialog.Builder(requireActivity()).apply {
                 customView(binding.root)
-                positiveButton(R.string.dialog_ok)
-                neutralButton(R.string.dialog_cancel)
+                positiveButton(S.dialog_ok)
+                neutralButton(S.dialog_cancel)
 
                 if (dialogMode is DialogMode.Edit) {
-                    negativeButton(R.string.dialog_positive_delete)
+                    negativeButton(S.dialog_positive_delete)
                 }
             }
         val dialog = dialogBuilder.create()
@@ -164,8 +165,8 @@ class AddEditReminderDialog : DialogFragment() {
         binding.addEditReminderToolbar.title =
             getString(
                 when (dialogMode) {
-                    is DialogMode.Add -> R.string.add_review_reminder
-                    is DialogMode.Edit -> R.string.edit_review_reminder
+                    is DialogMode.Add -> S.add_review_reminder
+                    is DialogMode.Edit -> S.edit_review_reminder
                 },
             )
     }
@@ -299,7 +300,7 @@ class AddEditReminderDialog : DialogFragment() {
         Timber.i("Submitted dialog")
         // Do nothing if numerical fields are invalid
         binding.addEditReminderCardThresholdInputWrapper.error?.let {
-            binding.root.showSnackbar(R.string.something_wrong)
+            binding.root.showSnackbar(S.something_wrong)
             return
         }
 

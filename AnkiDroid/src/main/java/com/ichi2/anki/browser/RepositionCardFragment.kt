@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.FragmentRepositionCardBinding
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.create
@@ -67,7 +67,7 @@ class RepositionCardFragment : DialogFragment() {
             AlertDialog.Builder(requireContext()).create {
                 title(text = title)
                 customView(binding.root)
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(S.dialog_cancel)
                 positiveButton(text = TR.actionsReposition()) {
                     val position =
                         binding.startInputEditText.textAsIntOrNull() ?: return@positiveButton

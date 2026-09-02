@@ -18,7 +18,7 @@ package com.ichi2.anki.reviewer
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import java.util.Objects
@@ -61,8 +61,8 @@ class ReviewerBinding(
     override fun toDisplayString(context: Context): String {
         val bindingString = binding.toDisplayString(context)
         return when (side) {
-            CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question, bindingString)
-            CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer, bindingString)
+            CardSide.QUESTION -> context.getString(S.display_binding_card_side_question, bindingString)
+            CardSide.ANSWER -> context.getString(S.display_binding_card_side_answer, bindingString)
             CardSide.BOTH -> bindingString
         }
     }

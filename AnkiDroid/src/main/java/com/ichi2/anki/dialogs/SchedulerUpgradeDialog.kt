@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.utils.openUrl
 
@@ -31,10 +32,10 @@ class SchedulerUpgradeDialog(
     fun showDialog() {
         val dialog =
             MaterialAlertDialogBuilder(activity)
-                .setTitle(R.string.scheduler_upgrade_required_dialog_title)
+                .setTitle(S.scheduler_upgrade_required_dialog_title)
                 .setMessage(TR.schedulingUpdateRequired())
-                .setPositiveButton(R.string.dialog_ok, null)
-                .setNegativeButton(R.string.dialog_cancel, null)
+                .setPositiveButton(S.dialog_ok, null)
+                .setNegativeButton(S.dialog_cancel, null)
                 .apply {
                     if (AdaptionUtil.hasWebBrowser(activity)) {
                         setNeutralButton(TR.schedulingUpdateMoreInfoButton(), null)

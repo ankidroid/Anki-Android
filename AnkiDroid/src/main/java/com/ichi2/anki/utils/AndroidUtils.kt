@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -68,7 +68,7 @@ fun Context.openUrl(url: String) {
 
 fun Context.openUrl(uri: Uri) {
     if (!AdaptionUtil.hasWebBrowser(this)) {
-        val noBrowserMessage = getString(R.string.no_browser_msg, uri.toString())
+        val noBrowserMessage = getString(S.no_browser_msg, uri.toString())
         if (this is FragmentActivity) {
             showSnackbar(noBrowserMessage) {
                 setAction(android.R.string.copyUrl) {
@@ -85,9 +85,9 @@ fun Context.openUrl(uri: Uri) {
     } catch (ex: Exception) {
         Timber.w("No app found to handle opening an external url from ${this::class.java.name}")
         if (this is FragmentActivity) {
-            showSnackbar(R.string.activity_start_failed)
+            showSnackbar(S.activity_start_failed)
         } else {
-            showThemedToast(this, R.string.activity_start_failed, false)
+            showThemedToast(this, S.activity_start_failed, false)
         }
     }
 }
@@ -95,14 +95,14 @@ fun Context.openUrl(uri: Uri) {
 // necessary for Fragments that are BaseSnackbarBuilderProvider to work correctly
 fun Fragment.openUrl(uri: Uri) {
     if (!AdaptionUtil.hasWebBrowser(requireContext())) {
-        showSnackbar(getString(R.string.no_browser_msg, uri.toString()))
+        showSnackbar(getString(S.no_browser_msg, uri.toString()))
         return
     }
     try {
         startActivity(Intent(Intent.ACTION_VIEW, uri))
     } catch (ex: ActivityNotFoundException) {
         Timber.w("No app found to handle opening an external url from ${Fragment::class.java.name}")
-        showSnackbar(R.string.activity_start_failed)
+        showSnackbar(S.activity_start_failed)
     }
 }
 

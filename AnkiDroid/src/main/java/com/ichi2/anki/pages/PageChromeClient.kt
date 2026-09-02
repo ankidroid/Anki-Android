@@ -20,7 +20,7 @@ import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
@@ -40,7 +40,7 @@ open class PageChromeClient : WebChromeClient() {
         try {
             AlertDialog.Builder(view.context).show {
                 message?.let { message(text = message) }
-                positiveButton(R.string.dialog_ok) { result?.confirm() }
+                positiveButton(S.dialog_ok) { result?.confirm() }
                 setOnCancelListener { result?.cancel() }
             }
         } catch (e: IllegalStateException) {
@@ -67,8 +67,8 @@ open class PageChromeClient : WebChromeClient() {
         try {
             AlertDialog.Builder(view.context).show {
                 message?.let { message(text = message) }
-                positiveButton(R.string.dialog_ok) { result?.confirm() }
-                negativeButton(R.string.dialog_cancel) { result?.cancel() }
+                positiveButton(S.dialog_ok) { result?.confirm() }
+                negativeButton(S.dialog_cancel) { result?.cancel() }
                 cancelable(false)
             }
         } catch (e: WindowManager.BadTokenException) {

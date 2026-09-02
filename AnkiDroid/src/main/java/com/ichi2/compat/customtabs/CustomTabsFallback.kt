@@ -6,7 +6,7 @@ package com.ichi2.compat.customtabs
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.compat.customtabs.CustomTabActivityHelper.CustomTabFallback
@@ -28,7 +28,7 @@ class CustomTabsFallback : CustomTabFallback {
             // and I assume an exported intent will take priority over a non-exported intent.
             // Add an exception report to see if I'm wrong
             CrashReportService.sendExceptionReport(e, "CustomTabsFallback::openUri")
-            showThemedToast(activity, activity.getString(R.string.web_page_error, uri), false)
+            showThemedToast(activity, activity.getString(S.web_page_error, uri), false)
         }
     }
 }

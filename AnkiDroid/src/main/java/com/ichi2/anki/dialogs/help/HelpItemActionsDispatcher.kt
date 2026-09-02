@@ -5,7 +5,7 @@ package com.ichi2.anki.dialogs.help
 import androidx.annotation.StringRes
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.snackbar.showSnackbar
@@ -49,14 +49,14 @@ class AnkiActivityHelpActionsDispatcher(
 
     override fun onSendReport() {
         if (AdaptionUtil.isUserATestClient) {
-            ankiActivity.showSnackbar(ankiActivity.getString(R.string.user_is_a_robot))
+            ankiActivity.showSnackbar(ankiActivity.getString(S.user_is_a_robot))
         } else {
             val wasReportSent = CrashReportService.sendReport(ankiActivity)
             if (!wasReportSent) {
-                ankiActivity.showSnackbar(ankiActivity.getString(R.string.help_dialog_exception_report_debounce))
+                ankiActivity.showSnackbar(ankiActivity.getString(S.help_dialog_exception_report_debounce))
                 return
             }
-            ankiActivity.showSnackbar(ankiActivity.getString(R.string.help_dialog_exception_report_sent))
+            ankiActivity.showSnackbar(ankiActivity.getString(S.help_dialog_exception_report_sent))
         }
     }
 }

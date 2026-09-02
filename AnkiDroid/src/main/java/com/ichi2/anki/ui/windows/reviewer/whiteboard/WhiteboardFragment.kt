@@ -29,6 +29,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.DispatchKeyEventListener
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.android.back.doubleBackPressCallback
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.utils.android.systemIsInNightMode
@@ -96,7 +97,7 @@ class WhiteboardFragment :
         doubleBackCallback =
             doubleBackPressCallback(
                 enabled = computeDoubleBackEnabled(),
-                onFirstBack = { showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) },
+                onFirstBack = { showSnackbar(S.back_pressed_once, Snackbar.LENGTH_SHORT) },
                 shouldReEnable = { computeDoubleBackEnabled() },
             ).also {
                 requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it)
@@ -178,7 +179,7 @@ class WhiteboardFragment :
                 showRemoveColorDialog(index)
             } else {
                 Timber.i("Tried to remove the last brush of the whiteboard")
-                showSnackbar(R.string.cannot_remove_last_brush_message)
+                showSnackbar(S.cannot_remove_last_brush_message)
             }
         }
 
@@ -296,11 +297,11 @@ class WhiteboardFragment :
     private fun showRemoveColorDialog(index: Int) {
         AlertDialog
             .Builder(requireContext())
-            .setMessage(R.string.whiteboard_remove_brush_message)
-            .setPositiveButton(R.string.dialog_remove) { dialog, _ ->
+            .setMessage(S.whiteboard_remove_brush_message)
+            .setPositiveButton(S.dialog_remove) { dialog, _ ->
                 Timber.i("Removed brush of index %d", index)
                 viewModel.removeBrush(index)
-            }.setNegativeButton(R.string.dialog_cancel, null)
+            }.setNegativeButton(S.dialog_cancel, null)
             .show()
     }
 

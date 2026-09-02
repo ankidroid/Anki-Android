@@ -24,6 +24,7 @@ import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -104,10 +105,10 @@ class BootService : AnkiBroadcastReceiver() {
             runnable.run()
         } catch (ex: SecurityException) {
             Timber.w(ex)
-            error = R.string.boot_service_too_many_notifications
+            error = S.boot_service_too_many_notifications
         } catch (e: Exception) {
             Timber.w(e)
-            error = R.string.boot_service_failed_to_schedule_notifications
+            error = S.boot_service_failed_to_schedule_notifications
         }
         if (error != null) {
             if (!failedToShowNotifications) {

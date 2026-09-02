@@ -287,9 +287,9 @@ fun Context.showError(
         AlertDialog
             .Builder(this)
             .create {
-                title(R.string.vague_error)
+                title(S.vague_error)
                 message(text = message)
-                positiveButton(R.string.dialog_ok)
+                positiveButton(S.dialog_ok)
                 helpAction?.let { neutralButton(text = it.buttonText(this@showError)) }
                 if (crashReportData?.reportableException == true) {
                     Timber.w("sending crash report on close")
@@ -389,7 +389,7 @@ suspend fun <T> FragmentActivity.withProgress(
  * flashes of a dialog.
  */
 suspend fun <T> Activity.withProgress(
-    message: String = resources.getString(R.string.dialog_processing),
+    message: String = resources.getString(S.dialog_processing),
     op: suspend () -> T,
 ): T =
     withProgressDialog(
@@ -403,7 +403,7 @@ suspend fun <T> Activity.withProgress(
 
 /** @see withProgress(String, ...) */
 suspend fun <T> Fragment.withProgress(
-    message: String = getString(R.string.dialog_processing),
+    message: String = getString(S.dialog_processing),
     block: suspend () -> T,
 ): T = requireActivity().withProgress(message, block)
 
@@ -560,7 +560,7 @@ data class ProgressContext(
                     // replace spaces with NBSP so newlines are handled better
                     val curStr = Formatter.formatShortFileSize(context, current).replace(' ', '\u00A0')
                     val maxStr = Formatter.formatShortFileSize(context, max).replace(' ', '\u00A0')
-                    context.getString(R.string.progress_amount_bytes, curStr, maxStr)
+                    context.getString(S.progress_amount_bytes, curStr, maxStr)
                 },
             )
     }
@@ -689,7 +689,7 @@ data class CrashReportData(
      */
     sealed class HelpAction {
         /** Label for the 'help' button on the error dialog. Defaults to "Help". */
-        open fun buttonText(context: Context): CharSequence = context.getString(R.string.help)
+        open fun buttonText(context: Context): CharSequence = context.getString(S.help)
 
         /** `false` hides the help button. */
         open fun canExecute(context: Context): Boolean = true

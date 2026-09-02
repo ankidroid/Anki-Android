@@ -35,7 +35,7 @@ package com.ichi2.anki.jsaddons
 
 import android.content.Context
 import android.text.format.Formatter
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.utils.FileUtil
@@ -131,12 +131,12 @@ class TgzPackageExtract(
         tarballFile: File,
         addonsPackageDir: AddonsPackageDir,
     ) {
-        require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon_package, tarballFile.absolutePath) }
+        require(isGzip(tarballFile)) { context.getString(S.not_valid_js_addon_package, tarballFile.absolutePath) }
 
         try {
             compat.createDirectories(addonsPackageDir)
         } catch (e: IOException) {
-            showThemedToast(context, context.getString(R.string.could_not_create_dir, addonsPackageDir.absolutePath), false)
+            showThemedToast(context, context.getString(S.could_not_create_dir, addonsPackageDir.absolutePath), false)
             Timber.w(e)
             return
         }
@@ -258,7 +258,7 @@ class TgzPackageExtract(
             outputDir.deleteRecursively()
             throw ArchiveException(
                 context.getString(
-                    R.string.malicious_archive_exceeds_limit,
+                    S.malicious_archive_exceeds_limit,
                     Formatter.formatFileSize(context, TOO_BIG_SIZE),
                     TOO_MANY_FILES,
                 ),
@@ -292,7 +292,7 @@ class TgzPackageExtract(
         } catch (e: IOException) {
             // clean up
             Timber.w(e)
-            throw IOException(context.getString(R.string.could_not_create_dir, parent.absolutePath))
+            throw IOException(context.getString(S.could_not_create_dir, parent.absolutePath))
         }
 
         FileOutputStream(outputFile).use { outputFileStream ->
@@ -337,7 +337,7 @@ class TgzPackageExtract(
             compat.createDirectories(outputFile)
         } catch (e: IOException) {
             Timber.w(e)
-            throw IOException(context.getString(R.string.could_not_create_dir, outputFile.absolutePath))
+            throw IOException(context.getString(S.could_not_create_dir, outputFile.absolutePath))
         }
     }
 
@@ -357,7 +357,7 @@ class TgzPackageExtract(
         val outputFileCanonicalPath = outputFile.canonicalPath
 
         if (!outputFileCanonicalPath.startsWith(destDirCanonicalPath)) {
-            throw ArchiveException(context.getString(R.string.malicious_archive_entry_outside, outputFileCanonicalPath))
+            throw ArchiveException(context.getString(S.malicious_archive_entry_outside, outputFileCanonicalPath))
         }
     }
 
@@ -395,7 +395,7 @@ class TgzPackageExtract(
     private fun enforceSpaceUsedLessThanHalfAvailable(outputDir: File) {
         val newAvailableSpace: Long = FileUtil.determineBytesAvailable(outputDir.canonicalPath)
         if (newAvailableSpace <= availableSpace / 2) {
-            throw ArchiveException(context.getString(R.string.file_extract_exceeds_storage_space))
+            throw ArchiveException(context.getString(S.file_extract_exceeds_storage_space))
         }
     }
 

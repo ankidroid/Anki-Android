@@ -21,6 +21,7 @@ import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
 import com.ichi2.utils.negativeButton
@@ -40,7 +41,7 @@ class RepositionCardTemplateDialog {
                 AlertDialog
                     .Builder(context)
                     .show {
-                        positiveButton(R.string.dialog_ok) {
+                        positiveButton(S.dialog_ok) {
                             result(
                                 displayedDialog!!
                                     .getInputField()
@@ -49,7 +50,7 @@ class RepositionCardTemplateDialog {
                                     .toInt(),
                             )
                         }
-                        negativeButton(R.string.dialog_cancel)
+                        negativeButton(S.dialog_cancel)
                         setMessage(CollectionManager.TR.cardTemplatesEnterNewCardPosition1(numberOfTemplates))
                         setView(R.layout.dialog_generic_text_input)
                     }.input(

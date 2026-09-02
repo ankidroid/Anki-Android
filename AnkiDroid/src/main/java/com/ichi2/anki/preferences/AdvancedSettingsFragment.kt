@@ -29,6 +29,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.exception.StorageAccessException
@@ -62,12 +63,12 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
 
             AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.permission_denied)
-                setMessage(R.string.microphone_permission_denied_message)
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setTitle(S.permission_denied)
+                setMessage(S.microphone_permission_denied_message)
+                setPositiveButton(S.dialog_ok) { _, _ ->
                     openAppSettingsScreen()
                 }
-                setNegativeButton(R.string.dialog_cancel, null)
+                setNegativeButton(S.dialog_cancel, null)
             }
         }
 
@@ -91,9 +92,9 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     // TODO: Request MANAGE_EXTERNAL_STORAGE
                     Timber.e(e, "Could not initialize directory: %s", newPath)
                     AlertDialog.Builder(requireContext()).show {
-                        setTitle(R.string.dialog_collection_path_not_dir)
-                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
-                        setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
+                        setTitle(S.dialog_collection_path_not_dir)
+                        setPositiveButton(S.dialog_ok) { _, _ -> }
+                        setNegativeButton(S.reset_custom_buttons) { _, _ ->
                             text = getDefaultAnkiDroidDirectory(requireContext()).absolutePath
                         }
                     }
@@ -107,13 +108,13 @@ class AdvancedSettingsFragment : SettingsFragment() {
             if (!(isChecked as Boolean)) return@setOnPreferenceChangeListener true
             AlertDialog.Builder(requireContext()).show {
                 setIcon(R.drawable.ic_warning)
-                setMessage(R.string.readtext_deprecation_warn)
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> ttsPref.isChecked = false }
-                setNeutralButton(R.string.scoped_storage_learn_more) { _, _ ->
+                setMessage(S.readtext_deprecation_warn)
+                setNegativeButton(S.dialog_cancel) { _, _ -> ttsPref.isChecked = false }
+                setNeutralButton(S.scoped_storage_learn_more) { _, _ ->
                     ttsPref.isChecked = false
                     requireContext().openUrl(R.string.link_tts)
                 }
-                setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                setPositiveButton(S.dialog_ok) { _, _ -> }
                 setOnCancelListener { ttsPref.isChecked = false }
             }
             return@setOnPreferenceChangeListener true
@@ -122,15 +123,15 @@ class AdvancedSettingsFragment : SettingsFragment() {
         // Configure "Reset languages" preference
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.reset_languages)
+                setTitle(S.reset_languages)
                 setIcon(R.drawable.ic_warning)
-                setMessage(R.string.reset_languages_question)
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setMessage(S.reset_languages_question)
+                setPositiveButton(S.dialog_ok) { _, _ ->
                     if (MetaDB.resetLanguages(requireContext())) {
-                        showSnackbar(R.string.reset_confirmation)
+                        showSnackbar(S.reset_confirmation)
                     }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(S.dialog_cancel) { _, _ -> }
             }
             false
         }

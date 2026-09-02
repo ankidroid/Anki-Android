@@ -21,7 +21,7 @@ import android.os.Bundle
 import android.view.View
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditorFragment
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.libanki.Field
 import com.ichi2.anki.libanki.NotetypeJson
@@ -171,7 +171,7 @@ class FieldState private constructor(
                     // Set the new field label text
                     if (allowFieldRemapping(oldFields)) {
                         // Show the content of old field if remapping is enabled
-                        fields[i][0] = String.format(context.resources.getString(R.string.field_remapping), fname, oldFields[j][0])
+                        fields[i][0] = String.format(context.resources.getString(S.field_remapping), fname, oldFields[j][0])
                     } else {
                         fields[i][0] = fname
                     }

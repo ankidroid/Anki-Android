@@ -22,6 +22,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
@@ -81,7 +82,7 @@ class CongratsPage :
             .onEach { errorMessage ->
                 AlertDialog
                     .Builder(requireContext())
-                    .setTitle(R.string.vague_error)
+                    .setTitle(S.vague_error)
                     .setMessage(errorMessage)
                     .show()
             }.launchIn(lifecycleScope)
@@ -98,7 +99,7 @@ class CongratsPage :
                                 TR.studyingAllBuriedCards(),
                             )
                         AlertDialog.Builder(requireContext()).show {
-                            negativeButton(R.string.dialog_cancel)
+                            negativeButton(S.dialog_cancel)
                             listItemsAndMessage(
                                 TR.studyingWhatWouldYouLikeToUnbury(),
                                 unburyOptions,
@@ -193,7 +194,7 @@ class CongratsPage :
                     activity.showSnackbar(message)
                 }
             } else {
-                activity.showSnackbar(R.string.studyoptions_no_cards_due)
+                activity.showSnackbar(S.studyoptions_no_cards_due)
             }
         }
 
@@ -202,7 +203,7 @@ class CongratsPage :
             val info = withCol { sched.congratulationsInfo() }
             val secsUntilNextLearn = info.secsUntilNextLearn
             if (secsUntilNextLearn >= SECONDS_PER_DAY) {
-                return activity.getString(R.string.studyoptions_congrats_finished)
+                return activity.getString(S.studyoptions_congrats_finished)
             }
             // https://github.com/ankitects/anki/blob/9b4dd54312de8798a3f2bee07892bb3a488d1f9b/ts/lib/tslib/time.ts#L22
             val (unit, amount) =
@@ -215,7 +216,7 @@ class CongratsPage :
                 }
 
             val nextLearnDue = TR.schedulingNextLearnDue(unit, round(amount).toInt())
-            return activity.getString(R.string.studyoptions_congrats_next_due_in, nextLearnDue)
+            return activity.getString(S.studyoptions_congrats_next_due_in, nextLearnDue)
         }
 
         fun DeckPicker.onDeckCompleted() {

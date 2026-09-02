@@ -29,7 +29,7 @@ import androidx.core.view.allViews
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.permissions.hasPermission
 import com.ichi2.anki.settings.Prefs
@@ -63,7 +63,7 @@ abstract class PermissionsFragment(
             } else {
                 Timber.i("Internet permission denied")
                 showToastAndOpenAppSettingsScreen(
-                    getString(R.string.permission_required_message, getString(R.string.internet_access_title)),
+                    getString(S.permission_required_message, getString(S.internet_access_title)),
                 )
             }
         }
@@ -138,7 +138,7 @@ abstract class PermissionsFragment(
     protected fun PermissionsItem.revokeIfGrantedOnClickElse(callback: () -> Unit) {
         setOnPermissionsRequested { areAlreadyGranted ->
             if (areAlreadyGranted) {
-                showToastAndOpenAppSettingsScreen(R.string.revoke_permissions)
+                showToastAndOpenAppSettingsScreen(S.revoke_permissions)
             } else {
                 callback()
             }

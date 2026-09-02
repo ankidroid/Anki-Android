@@ -69,7 +69,7 @@ object ReadText {
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
             showThemedToast(
                 flashCardViewer.get()!!,
-                flashCardViewer.get()!!.getString(R.string.no_tts_available_message) +
+                flashCardViewer.get()!!.getString(S.no_tts_available_message) +
                     " (" + loc + ")",
                 false,
             )
@@ -115,13 +115,13 @@ object ReadText {
         if (availableLocales().isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available")
             dialog
-                .message(R.string.no_tts_available_message)
+                .message(S.no_tts_available_message)
                 .setIcon(R.drawable.ic_warning)
-                .positiveButton(R.string.dialog_ok)
+                .positiveButton(S.dialog_ok)
         } else {
             val localeMappings: List<Pair<String, CharSequence>> =
                 mutableListOf<Pair<String, String>>().apply {
-                    add(Pair(NO_TTS, res.getString(R.string.tts_no_tts))) // add option: "no tts"
+                    add(Pair(NO_TTS, res.getString(S.tts_no_tts))) // add option: "no tts"
                     val (validLocales, invalidLocales) =
                         availableLocales()
                             .sortedWith(compareBy { it.displayName })
@@ -137,7 +137,7 @@ object ReadText {
                 }
             Timber.i("showing 'select language' dialog")
             dialog
-                .title(R.string.select_locale_title)
+                .title(S.select_locale_title)
                 .setItems(localeMappings.map { it.second }.toTypedArray()) { _, index ->
                     val locale = localeMappings[index].first
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
@@ -267,7 +267,7 @@ object ReadText {
             // they originally requested)
             showThemedToast(
                 flashCardViewer.get()!!,
-                flashCardViewer.get()!!.getString(R.string.no_tts_available_message) +
+                flashCardViewer.get()!!.getString(S.no_tts_available_message) +
                     " (" + originalLocaleCode + ")",
                 false,
             )
@@ -301,7 +301,7 @@ object ReadText {
                         Timber.d("TTS initialized and available languages found")
                         (context as AbstractFlashcardViewer).ttsInitialized()
                     } else {
-                        ankiActivityContext?.showSnackbar(R.string.no_tts_available_message)
+                        ankiActivityContext?.showSnackbar(S.no_tts_available_message)
                         Timber.w("TTS initialized but no available languages found")
                     }
                     textToSpeech!!.setOnUtteranceProgressListener(
@@ -324,8 +324,8 @@ object ReadText {
                                 val ankiActivity = context as AnkiActivity
                                 ankiActivity.mayOpenUrl(helpUrl)
                                 // TODO: We can do better in this UI now we have a reason for failure
-                                ankiActivity.showSnackbar(R.string.no_tts_available_message) {
-                                    setAction(R.string.help) { openTtsHelpUrl(helpUrl) }
+                                ankiActivity.showSnackbar(S.no_tts_available_message) {
+                                    setAction(S.help) { openTtsHelpUrl(helpUrl) }
                                 }
                             }
 
@@ -342,7 +342,7 @@ object ReadText {
                         },
                     )
                 } else {
-                    showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
+                    showThemedToast(context, context.getString(S.no_tts_available_message), false)
                     Timber.w("TTS not successfully initialized")
                 }
             }

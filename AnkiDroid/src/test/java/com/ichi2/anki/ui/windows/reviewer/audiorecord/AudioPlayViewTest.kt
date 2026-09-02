@@ -8,6 +8,7 @@ import android.os.Looper
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.ViewAudioPlayBinding
 import com.ichi2.themes.Themes
 import org.junit.Before
@@ -32,12 +33,12 @@ class AudioPlayViewTest {
 
     @Test
     fun `play button exposes a label to TalkBack`() {
-        assertEquals(context.getString(R.string.play_recording), binding.playButton.contentDescription)
+        assertEquals(context.getString(S.play_recording), binding.playButton.contentDescription)
     }
 
     @Test
     fun `cancel button exposes a label to TalkBack`() {
-        assertEquals(context.getString(R.string.dialog_cancel), binding.cancelButton.contentDescription)
+        assertEquals(context.getString(S.dialog_cancel), binding.cancelButton.contentDescription)
     }
 
     @Test
@@ -45,6 +46,6 @@ class AudioPlayViewTest {
         audioPlayView.changePlayIcon(R.drawable.ic_replay)
         shadowOf(Looper.getMainLooper()).idle()
 
-        assertEquals(context.getString(R.string.replay_voice), binding.playButton.contentDescription)
+        assertEquals(context.getString(S.replay_voice), binding.playButton.contentDescription)
     }
 }

@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
+import com.ichi2.anki.S
 import com.ichi2.anki.databinding.FragmentTemplatePreviewerContainerBinding
 import com.ichi2.anki.previewer.TemplatePreviewerFragment.Companion.ARG_KEY
 import com.ichi2.anki.utils.ext.doOnTabSelected
@@ -64,7 +65,7 @@ class TemplatePreviewerPage : Fragment(R.layout.fragment_template_previewer_cont
             for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
                 val tabTitle =
                     if (cardsWithEmptyFronts?.get(index) == true) {
-                        getString(R.string.card_previewer_empty_front_indicator, templateName)
+                        getString(S.card_previewer_empty_front_indicator, templateName)
                     } else {
                         templateName
                     }
