@@ -262,7 +262,7 @@ object ImportUtils {
                     Timber.e("Path traversal detected in handleContentProviderFile")
                     return ImportResult.Failure(context.getString(R.string.import_error_handle_exception, "Invalid path"))
                 }
-            val tempOutDir: String = checkFile.absolutePath
+            val tempOutDir: String = Uri.fromFile(checkFile).encodedPath!!
 
             copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
                 CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")
