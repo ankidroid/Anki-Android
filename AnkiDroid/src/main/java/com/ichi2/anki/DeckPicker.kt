@@ -2217,6 +2217,7 @@ open class DeckPicker :
                     title = TR.sentenceCase.renameDeck,
                     deckDialogType = CreateDeckDialog.DeckDialogType.RENAME_DECK,
                     parentId = null,
+                    renamedDeckId = did,
                 )
             createDeckDialog.deckName = currentName
             createDeckDialog.onNewDeckCreated = {
