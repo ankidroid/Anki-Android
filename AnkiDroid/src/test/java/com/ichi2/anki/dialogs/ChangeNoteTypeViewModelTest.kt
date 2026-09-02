@@ -47,6 +47,23 @@ class ChangeNoteTypeViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `closeDialogFlow emits unit on success`() =
+        viewModelTest {
+            val basicAndOptionalReversed = col.notetypes.byName("Basic (optional reversed card)")!!
+            setOutputNoteType(basicAndOptionalReversed)
+
+            closeDialogFlow.test {
+                // MutableStateFlow emits its initial value (null) immediately.
+                assertThat(awaitItem(), equalTo(null))
+
+                val changes = executeChangeNoteTypeAsync().await()
+                // assert that the flow emitted unit after execution
+                assertThat(awaitItem(), equalTo(Unit))
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
     fun `integration test - regular`() =
         viewModelTest {
             // A basic card mapped to '"Basic (optional reversed card)"'
