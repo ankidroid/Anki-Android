@@ -25,6 +25,7 @@ import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -455,6 +456,14 @@ class DeckPickerTest : RobolectricTest() {
         }
     }
 
+    private fun DeckPicker.longPressDeck(name: String): View =
+        deckPickerBinding.decks.children
+            .single { it.findViewById<TextView>(R.id.deck_name).text == name }
+            .also {
+                it.performLongClick()
+                advanceRobolectricLooper()
+            }
+
     private fun keyDownEvent(
         keyCode: Int,
         modifiers: Int,
@@ -617,6 +626,23 @@ class DeckPickerTest : RobolectricTest() {
                 "No deck is being displayed",
                 hasAtLeastOneDeckBeingDisplayed(),
                 equalTo(false),
+            )
+        }
+    }
+
+    @Test
+    fun `long pressed deck is highlighted on phones`() {
+        val initiallySelectedDeck = addDeck("Initially selected")
+        addDeck("Long pressed")
+        col.decks.select(initiallySelectedDeck)
+
+        deckPicker {
+            assumeTrue("Not running on tablet", !fragmented)
+            val selectedDeck = longPressDeck("Long pressed")
+
+            assertThat(
+                shadowOf(selectedDeck.background).createdFromResId,
+                equalTo(getResFromAttr(this, R.attr.currentDeckBackground)),
             )
         }
     }
