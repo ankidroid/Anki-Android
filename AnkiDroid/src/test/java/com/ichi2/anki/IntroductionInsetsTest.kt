@@ -4,16 +4,9 @@ package com.ichi2.anki
 
 import android.content.Intent
 import android.view.View
-import androidx.core.view.RoundedCornerCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsCompat.Type.displayCutout
-import androidx.core.view.WindowInsetsCompat.Type.navigationBars
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.introduction.SetupCollectionFragment
-import com.ichi2.testutils.insetsOf
-import com.ichi2.utils.Dp
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -95,34 +88,6 @@ class IntroductionInsetsTest : RobolectricTest() {
     /** Everything except the gradient: the view taking the side insets */
     private val IntroductionActivity.content: View
         get() = findViewById(R.id.intro_content)
-
-    /** Dispatches realistic system-bar insets, which Robolectric otherwise reports as zero. */
-    private fun IntroductionActivity.dispatchInsets(
-        navBarBottom: Dp = 0.dp,
-        navBarRight: Dp = 0.dp,
-        cutoutLeft: Dp = 0.dp,
-        bottomCornerRadius: Dp = 0.dp,
-    ) {
-        val insets =
-            with(targetContext) {
-                WindowInsetsCompat
-                    .Builder()
-                    .setInsets(statusBars(), insetsOf(top = 24.dp))
-                    .setInsets(navigationBars(), insetsOf(right = navBarRight, bottom = navBarBottom))
-                    .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
-                    .apply {
-                        val radius = bottomCornerRadius.toPx(targetContext)
-                        if (radius > 0) {
-                            // only the radius is read by the implementation; the center is unused
-                            setRoundedCorner(
-                                RoundedCornerCompat.POSITION_BOTTOM_LEFT,
-                                RoundedCornerCompat(RoundedCornerCompat.POSITION_BOTTOM_LEFT, radius, radius, radius),
-                            )
-                        }
-                    }.build()
-            }
-        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
-    }
 
     private fun withIntroduction(block: (IntroductionActivity) -> Unit) =
         block(

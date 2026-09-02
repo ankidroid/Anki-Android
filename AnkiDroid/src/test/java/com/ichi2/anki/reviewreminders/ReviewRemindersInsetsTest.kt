@@ -8,10 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsCompat.Type.displayCutout
-import androidx.core.view.WindowInsetsCompat.Type.navigationBars
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.marginRight
@@ -38,7 +34,7 @@ import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.BackupManagerTestUtilities
-import com.ichi2.testutils.insetsOf
+import com.ichi2.testutils.windowInsetsOf
 import com.ichi2.testutils.withWritePermissions
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
@@ -63,7 +59,7 @@ import org.robolectric.annotation.Config
  */
 @RunWith(AndroidJUnit4::class)
 class ReviewRemindersInsetsTest : RobolectricTest() {
-    /** The height of the simulated status bar */
+    /** The height of the status bar simulated by [windowInsetsOf] */
     private val statusBarHeight = 24.dp
 
     /** The size of the simulated navigation bar: its height, or its width when on the side of the screen */
@@ -353,12 +349,7 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
     ) {
         val insets =
             with(targetContext) {
-                WindowInsetsCompat
-                    .Builder()
-                    .setInsets(statusBars(), insetsOf(top = statusBarHeight))
-                    .setInsets(navigationBars(), insetsOf(right = navBarRight, bottom = navBarBottom))
-                    .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
-                    .build()
+                windowInsetsOf(navBarBottom = navBarBottom, navBarRight = navBarRight, cutoutLeft = cutoutLeft)
             }
         ViewCompat.dispatchApplyWindowInsets(findViewById(android.R.id.content), insets)
         // relayout synchronously so the insets affect view positions before the test asserts

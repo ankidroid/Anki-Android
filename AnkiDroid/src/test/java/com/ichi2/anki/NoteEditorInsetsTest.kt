@@ -7,21 +7,13 @@ import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.HorizontalScrollView
 import androidx.core.content.edit
-import androidx.core.view.RoundedCornerCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsCompat.Type.displayCutout
-import androidx.core.view.WindowInsetsCompat.Type.ime
-import androidx.core.view.WindowInsetsCompat.Type.navigationBars
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.noteeditor.getNoteEditorFragment
 import com.ichi2.anki.noteeditor.toIntent
-import com.ichi2.testutils.insetsOf
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.withSplitPaneUi
-import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -268,36 +260,6 @@ class NoteEditorInsetsTest : RobolectricTest() {
     private val NoteEditorActivity.editorFields: View get() = findViewById(R.id.note_editor_layout)
 
     private val NoteEditorActivity.fragmentRoot: View get() = getNoteEditorFragment().requireView()
-
-    /** Dispatches realistic system-bar insets, which Robolectric otherwise reports as zero. */
-    private fun NoteEditorActivity.dispatchInsets(
-        navBarBottom: Dp = 0.dp,
-        navBarRight: Dp = 0.dp,
-        cutoutLeft: Dp = 0.dp,
-        bottomCornerRadius: Dp = 0.dp,
-        imeBottom: Dp = 0.dp,
-    ) {
-        val insets =
-            with(targetContext) {
-                WindowInsetsCompat
-                    .Builder()
-                    .setInsets(statusBars(), insetsOf(top = 24.dp))
-                    .setInsets(navigationBars(), insetsOf(right = navBarRight, bottom = navBarBottom))
-                    .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
-                    .setInsets(ime(), insetsOf(bottom = imeBottom))
-                    .apply {
-                        // Robolectric's WindowInsets.Builder leaks rounded corners between tests
-                        val radius = bottomCornerRadius.toPx(targetContext)
-                        for (position in intArrayOf(
-                            RoundedCornerCompat.POSITION_BOTTOM_LEFT,
-                            RoundedCornerCompat.POSITION_BOTTOM_RIGHT,
-                        )) {
-                            setRoundedCorner(position, RoundedCornerCompat(position, radius, radius, radius))
-                        }
-                    }.build()
-            }
-        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
-    }
 
     private fun withNoteEditor(block: (NoteEditorActivity) -> Unit) {
         val activity =
