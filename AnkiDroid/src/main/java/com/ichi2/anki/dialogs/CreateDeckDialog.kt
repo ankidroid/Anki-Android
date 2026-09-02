@@ -37,6 +37,7 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 
 /**
@@ -51,11 +52,18 @@ class CreateDeckDialog(
     private val title: CharSequence,
     private val deckDialogType: DeckDialogType,
     private val parentId: DeckId?,
+    /** The deck to rename. Only used by [DeckDialogType.RENAME_DECK] */
+    private val renamedDeckId: DeckId? = null,
 ) {
-    private var previousDeckName: String? = null
     lateinit var onNewDeckCreated: ((DeckId) -> Unit)
     private var initialDeckName = ""
     private var shownDialog: AlertDialog? = null
+
+    init {
+        require(deckDialogType != DeckDialogType.RENAME_DECK || renamedDeckId != null) {
+            "renamedDeckId is required to rename a deck"
+        }
+    }
 
     enum class DeckDialogType {
         DECK,
@@ -70,7 +78,6 @@ class CreateDeckDialog(
     var deckName: String
         get() = shownDialog!!.getInputField().text.toString()
         set(deckName) {
-            previousDeckName = deckName
             initialDeckName = deckName
         }
 
@@ -130,7 +137,7 @@ class CreateDeckDialog(
                         return@input
                     }
                     val existingDeckId = getColUnsafe.decks.idForName(maybeDeckName)
-                    if (existingDeckId != null && existingDeckId != getColUnsafe.decks.idForName(initialDeckName)) {
+                    if (existingDeckId != null && existingDeckId != renamedDeckId) {
                         dialog.getInputTextLayout().error = context.getString(R.string.error_name_exists)
                         dialog.positiveButton.isEnabled = false
                         return@input
@@ -220,18 +227,21 @@ class CreateDeckDialog(
             Timber.w("CreateDeckDialog::renameDeck not renaming deck to invalid name")
             Timber.d("invalid deck name: %s", newDeckName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
-        } else if (newDeckName != previousDeckName) {
+        } else {
+            val deckId = renamedDeckId!!
             try {
-                val decks = getColUnsafe.decks
-                val deckId = decks.id(previousDeckName!!)
-                decks.rename(decks.getLegacy(deckId)!!, newDeckName)
-                onNewDeckCreated(deckId)
-                // 11668: Display feedback if a deck is renamed
-                displayFeedback(context.getString(R.string.deck_renamed))
+                // the backend reports no change if the new name normalises to the old one
+                if (getColUnsafe.decks.rename(deckId, newDeckName).deck) {
+                    onNewDeckCreated(deckId)
+                    // 11668: Display feedback if a deck is renamed
+                    displayFeedback(context.getString(R.string.deck_renamed))
+                }
             } catch (e: BackendDeckIsFilteredException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error
                 displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
+            } catch (e: BackendNotFoundException) {
+                Timber.w(e, "not renaming deck %d", deckId)
             }
         }
         // AlertDialog should be dismissed after the Keyboard 'Done' or Deck 'Ok' button is pressed
