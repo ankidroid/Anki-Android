@@ -7,17 +7,12 @@ import android.view.View
 import android.view.View.MeasureSpec
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.content.edit
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsCompat.Type.navigationBars
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.testutils.BackupManagerTestUtilities
-import com.ichi2.testutils.insetsOf
-import com.ichi2.utils.Dp
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -173,19 +168,6 @@ class DeckPickerInsetsTest : RobolectricTest() {
             val containerBottom = container.locationInWindow().y + container.height
             return containerBottom - fabBottom
         }
-
-    /** Dispatches realistic system-bar insets, which Robolectric otherwise reports as zero. */
-    private fun DeckPicker.dispatchInsets(navBarBottom: Dp) {
-        val insets =
-            with(targetContext) {
-                WindowInsetsCompat
-                    .Builder()
-                    .setInsets(statusBars(), insetsOf(top = 24.dp))
-                    .setInsets(navigationBars(), insetsOf(bottom = navBarBottom))
-                    .build()
-            }
-        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
-    }
 
     /**
      * Forces measure/layout passes so view bounds can be asserted.

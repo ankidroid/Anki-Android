@@ -8,19 +8,12 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsAnimation
 import androidx.core.content.edit
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsCompat.Type.displayCutout
-import androidx.core.view.WindowInsetsCompat.Type.ime
-import androidx.core.view.WindowInsetsCompat.Type.navigationBars
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.core.view.marginBottom
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.FullScreenMode
-import com.ichi2.testutils.insetsOf
-import com.ichi2.utils.Dp
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -496,41 +489,6 @@ class ReviewerInsetsTest : RobolectricTest() {
 
     private val Reviewer.answerArea: View
         get() = findViewById(R.id.answer_options_layout)
-
-    /**
-     * Dispatches realistic system-bar insets, which Robolectric otherwise reports as zero.
-     *
-     * The 'stable' insets ([WindowInsetsCompat.getInsetsIgnoringVisibility]) report the bars'
-     * regions whether or not they are currently visible: [navBarStableBottom] stays reported
-     * while immersive mode hides the bars themselves.
-     */
-    private fun Reviewer.dispatchInsets(
-        navBarBottom: Dp = 0.dp,
-        navBarRight: Dp = 0.dp,
-        navBarStableBottom: Dp = navBarBottom,
-        cutoutLeft: Dp = 0.dp,
-        cutoutTop: Dp = 0.dp,
-        imeBottom: Dp = 0.dp,
-        barsVisible: Boolean = true,
-    ) {
-        val insets =
-            with(targetContext) {
-                WindowInsetsCompat
-                    .Builder()
-                    .setInsets(statusBars(), insetsOf(top = if (barsVisible) 24.dp else 0.dp))
-                    .setInsetsIgnoringVisibility(statusBars(), insetsOf(top = 24.dp))
-                    .setInsets(navigationBars(), insetsOf(right = navBarRight, bottom = navBarBottom))
-                    .setInsetsIgnoringVisibility(
-                        navigationBars(),
-                        insetsOf(right = navBarRight, bottom = navBarStableBottom),
-                    ).setInsets(displayCutout(), insetsOf(left = cutoutLeft, top = cutoutTop))
-                    .setInsetsIgnoringVisibility(displayCutout(), insetsOf(left = cutoutLeft, top = cutoutTop))
-                    .setInsets(ime(), insetsOf(bottom = imeBottom))
-                    .setVisible(statusBars() or navigationBars(), barsVisible)
-                    .build()
-            }
-        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
-    }
 
     private fun withReviewer(
         answerButtonsPosition: String? = null,
