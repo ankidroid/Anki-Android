@@ -429,7 +429,9 @@
     <issue id="Range" severity="ignore" />
     <issue id="ResourceType" severity="ignore" />
     <issue id="RestrictedApi" severity="ignore" />
+    <!-- WrongThread & ThreadConstraint should be IDE-only, not breaking the build -->
     <issue id="WrongThread" severity="informational" />
+    <issue id="ThreadConstraint" severity="informational" />
     <issue id="VisibleForTests" severity="ignore" />
     <issue id="ProtectedPermissions" severity="ignore" />
     <issue id="TextViewEdits" severity="ignore" />
