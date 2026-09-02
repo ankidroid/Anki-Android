@@ -252,6 +252,40 @@ class CreateDeckDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `renaming a deck with an extra colon does not conflict with itself`() {
+        testRenameDialog(currentName = "a::b") {
+            input = "a:::b"
+            assertThat("no error is displayed", getInputTextLayout().error, nullValue())
+            assertThat("rename is enabled", positiveButton.isEnabled, equalTo(true))
+        }
+    }
+
+    @Test
+    fun `renaming a deck to an existing deck name shows an error`() {
+        col.decks.id("c")
+        testRenameDialog(currentName = "a::b") {
+            input = "c"
+            assertThat(
+                "error is displayed",
+                getInputTextLayout().error?.toString(),
+                equalTo(getResourceString(R.string.error_name_exists)),
+            )
+            assertThat("rename is disabled", positiveButton.isEnabled, equalTo(false))
+        }
+    }
+
+    private fun testRenameDialog(
+        currentName: String,
+        callback: (AlertDialog.() -> Unit),
+    ) {
+        col.decks.id(currentName)
+        withCreateDeckDialog(DeckDialogType.RENAME_DECK) {
+            deckName = currentName
+            callback(this.showDialog())
+        }
+    }
+
     /**
      * Executes [callback] on the [AlertDialog] created from [CreateDeckDialog]
      */

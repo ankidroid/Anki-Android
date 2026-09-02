@@ -27,7 +27,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
-import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.snackbar.showSnackbar
@@ -130,7 +129,8 @@ class CreateDeckDialog(
                         dialog.positiveButton.isEnabled = false
                         return@input
                     }
-                    if (!maybeDeckName.equals(initialDeckName, ignoreCase = true) && deckExists(getColUnsafe, maybeDeckName)) {
+                    val existingDeckId = getColUnsafe.decks.idForName(maybeDeckName)
+                    if (existingDeckId != null && existingDeckId != getColUnsafe.decks.idForName(initialDeckName)) {
                         dialog.getInputTextLayout().error = context.getString(R.string.error_name_exists)
                         dialog.positiveButton.isEnabled = false
                         return@input
@@ -150,14 +150,6 @@ class CreateDeckDialog(
         shownDialog = dialog
         return dialog
     }
-
-    /**
-     * @return true if the collection contains a deck with the given name
-     */
-    private fun deckExists(
-        col: Collection,
-        name: String,
-    ): Boolean = col.decks.byName(name) != null
 
     /**
      * Returns the fully qualified deck name for the provided input
