@@ -311,7 +311,8 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                         callback = { dialog, text ->
                             val inputStr = text.toString().trim()
 
-                            val isDuplicate = allNotetypes.any { it.name.equals(inputStr, ignoreCase = true) }
+                            val isDuplicate =
+                                allNotetypes.any { it.id != state.id && it.name.equals(inputStr, ignoreCase = true) }
 
                             val isUnchanged = inputStr == state.name
 
