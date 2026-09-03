@@ -416,6 +416,23 @@ class CustomStudyDialogTest : RobolectricTest() {
             }
         }
 
+    @Test
+    @Config(qualifiers = "en")
+    fun `'review ahead' warns when 0 days is entered`() =
+        runTest {
+            withStudyAheadDialog {
+                val layout = binding.detailsEditText2Layout
+
+                onSubscreenEditText().perform(replaceText("0"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat(layout.error?.toString(), equalTo("Minimum value is 1"))
+
+                onSubscreenEditText().perform(replaceText(""))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertNull(layout.error, "an empty field is not an error yet")
+            }
+        }
+
     /** Adds a note to [deckName] whose card is due tomorrow */
     private fun addNoteDueTomorrow(deckName: String) {
         addBasicNote().update { moveToDeck(deckName, false) }.firstCard().update {

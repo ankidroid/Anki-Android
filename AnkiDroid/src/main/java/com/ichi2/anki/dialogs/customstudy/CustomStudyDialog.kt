@@ -450,7 +450,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         days: Int?,
     ) {
         if (days == null || days == 0) {
-            binding.detailsEditText2Layout.error = null
+            binding.detailsEditText2Layout.error = if (days == 0) getString(R.string.minimum_value_is, 1) else null
             dialog.positiveButton.isEnabled = false
             return
         }
