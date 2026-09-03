@@ -569,12 +569,6 @@ class Decks(
     @RustCleanup("does not match upstream")
     fun select(did: DeckId) {
         col.backend.setCurrentDeck(did)
-        val selectedDeckName = name(did)
-        val childrenDids =
-            allNamesAndIds(skipEmptyDefault = true, includeFiltered = false)
-                .filter { it.name.startsWith("$selectedDeckName::") }
-                .map { it.id }
-        col.config.set(ACTIVE_DECKS, listOf(did) + childrenDids)
     }
 
     /** @return The currently selected deck ID. */
@@ -739,9 +733,6 @@ class Decks(
 
         /** Configuration saving the current deck  */
         const val CURRENT_DECK = "curDeck"
-
-        /** Configuration saving the set of active decks (i.e. current decks and its descendants)  */
-        const val ACTIVE_DECKS = "activeDecks"
 
         @NotInPyLib
         const val DECK_SEPARATOR = "::"
