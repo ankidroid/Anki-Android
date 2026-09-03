@@ -79,4 +79,5 @@ undoActionUndone()
     <string name="sentence_answer_hard" maxLength="41">Answer hard</string>
     <string name="sentence_answer_good" maxLength="41">Answer good</string>
     <string name="sentence_copy_to_clipboard">Copy to clipboard</string>
+    <string name="sentence_no_flag">No flag</string>
 </resources>

@@ -359,7 +359,7 @@ class CardBrowserFragment :
             view.findViewById<Chip>(R.id.flags_chip)?.apply {
                 setOnClickListener {
                     launchCatchingTask {
-                        FlagsBottomSheetFragment.createInstance().show(childFragmentManager)
+                        FlagsBottomSheetFragment.createInstance(requireContext()).show(childFragmentManager)
                     }
                 }
             }
@@ -461,7 +461,7 @@ class CardBrowserFragment :
             val flagGroupId = 1001
             val subMenu = this
             lifecycleScope.launch {
-                for ((flag, displayName) in Flag.queryDisplayNames()) {
+                for ((flag, displayName) in Flag.queryDisplayNames(requireContext())) {
                     val item =
                         subMenu
                             .add(flagGroupId, flag.code, Menu.NONE, displayName)

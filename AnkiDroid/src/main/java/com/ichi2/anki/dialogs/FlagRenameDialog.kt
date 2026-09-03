@@ -75,7 +75,7 @@ class FlagRenameDialog : DialogFragment() {
     private suspend fun createFlagList(): List<FlagItem> {
         Timber.d("Creating flag list")
         return Flag
-            .queryDisplayNames()
+            .queryDisplayNames(requireContext())
             .filter { it.key != Flag.NONE }
             .map { (flag, displayName) ->
                 FlagItem(

@@ -136,7 +136,7 @@ class StandardSearchFragment :
 
         binding.flagsChip.setOnClickListener {
             launchCatchingTask {
-                FlagsBottomSheetFragment.createInstance().show(childFragmentManager)
+                FlagsBottomSheetFragment.createInstance(requireContext()).show(childFragmentManager)
             }
         }
 

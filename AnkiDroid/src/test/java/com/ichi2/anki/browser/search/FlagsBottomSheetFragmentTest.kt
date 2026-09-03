@@ -26,7 +26,7 @@ class FlagsBottomSheetFragmentTest : RobolectricTest() {
     @Test
     fun `flag checkbox exposes its label to TalkBack`() =
         withCardBrowserFragment {
-            FlagsBottomSheetFragment.createInstance().show(childFragmentManager, FlagsBottomSheetFragment.TAG)
+            FlagsBottomSheetFragment.createInstance(requireContext()).show(childFragmentManager, FlagsBottomSheetFragment.TAG)
             shadowOf(Looper.getMainLooper()).idle()
 
             onView(withId(R.id.list)).inRoot(isDialog()).check { view, _ ->
@@ -34,7 +34,7 @@ class FlagsBottomSheetFragmentTest : RobolectricTest() {
                 val holder = requireNotNull(recyclerView.findViewHolderForAdapterPosition(0))
                 val checkbox = holder.itemView.findViewById<CheckBox>(R.id.checkbox)
                 // position 0 is Flag.NONE
-                assertThat(checkbox.contentDescription, equalTo("No Flag" as CharSequence))
+                assertThat(checkbox.contentDescription, equalTo("No flag" as CharSequence))
             }
         }
 }

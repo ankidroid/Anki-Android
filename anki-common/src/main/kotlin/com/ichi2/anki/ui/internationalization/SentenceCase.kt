@@ -341,6 +341,9 @@ object SentenceCase {
 
     context(_: Context)
     fun cardStatsPreviousCardStudy(title: String) = title.toSentenceCase(R.string.sentence_card_stats_previous_card_study)
+
+    context(_: Context)
+    val noFlag get() = TR.browsingNoFlag().toSentenceCase(R.string.sentence_no_flag)
 }
 
 /**

@@ -95,7 +95,7 @@ class ReviewerMenuView : LinearLayout {
 
     suspend fun setFlagTitles() {
         val submenu = findItem(R.id.action_flag)?.subMenu ?: return
-        for ((flag, name) in Flag.queryDisplayNames()) {
+        for ((flag, name) in Flag.queryDisplayNames(context)) {
             submenu.findItem(flag.id)?.title = name
         }
     }
