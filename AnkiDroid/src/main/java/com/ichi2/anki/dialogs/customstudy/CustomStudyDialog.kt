@@ -8,6 +8,7 @@ import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.InputFilter
 import android.util.TypedValue
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -56,6 +57,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.NonLeadingZeroInputFilter
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.getIntOrNull
@@ -321,6 +323,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
             }
             if (contextMenuOption == STUDY_AHEAD) {
+                inputType = EditorInfo.TYPE_CLASS_NUMBER
+                filters += arrayOf(InputFilter.LengthFilter(5), NonLeadingZeroInputFilter)
                 setSuffixText(defaultValue.toInt())
             }
         }
