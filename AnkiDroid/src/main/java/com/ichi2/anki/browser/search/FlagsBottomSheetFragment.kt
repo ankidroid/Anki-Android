@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.browser.search
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -166,11 +167,11 @@ class FlagsBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment_bot
         const val TAG = "FlagsBottomSheetFragment"
         private const val ARG_FLAGS = "flagData"
 
-        suspend fun createInstance(): FlagsBottomSheetFragment =
+        suspend fun createInstance(context: Context): FlagsBottomSheetFragment =
             FlagsBottomSheetFragment().apply {
                 Timber.d("Building 'FlagsBottomSheetFragment' dialog")
 
-                val userDefinedNames = Flag.queryDisplayNames()
+                val userDefinedNames = Flag.queryDisplayNames(context)
                 val flags =
                     Flag.entries.map {
                         FlagUiModel(it, label = userDefinedNames.getValue(it))

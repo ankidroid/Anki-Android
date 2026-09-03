@@ -3,6 +3,7 @@
 
 package com.ichi2.anki
 
+import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
@@ -12,6 +13,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag.Companion.queryDisplayNames
 import com.ichi2.anki.common.utils.ext.getStringOrNull
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -67,15 +69,18 @@ enum class Flag(
      *
      * @see queryDisplayNames - more efficient
      */
-    private fun displayName(labels: FlagLabels): String {
+    private fun displayName(
+        labels: FlagLabels,
+        context: Context,
+    ): String {
         // NONE may not be renamed
-        if (this == NONE) return defaultDisplayName()
-        return labels.getLabel(this) ?: defaultDisplayName()
+        if (this == NONE) return defaultDisplayName(context)
+        return labels.getLabel(this) ?: defaultDisplayName(context)
     }
 
-    private fun defaultDisplayName(): String =
+    private fun defaultDisplayName(context: Context): String =
         when (this) {
-            NONE -> TR.browsingNoFlag()
+            NONE -> with(context) { TR.sentenceCase.noFlag }
             RED -> TR.actionsFlagRed()
             ORANGE -> TR.actionsFlagOrange()
             GREEN -> TR.actionsFlagGreen()
@@ -140,11 +145,11 @@ enum class Flag(
         /**
          * @return A mapping from each [Flag] to its display name (optionally user-defined)
          */
-        suspend fun queryDisplayNames(): Map<Flag, String> {
+        suspend fun queryDisplayNames(context: Context): Map<Flag, String> {
             // load user-defined flag labels from the collection
             val labels = FlagLabels.loadFromColConfig()
             // either map to user-provided name, or translated name
-            return Flag.entries.associateWith { it.displayName(labels) }
+            return Flag.entries.associateWith { it.displayName(labels, context) }
         }
     }
 }
