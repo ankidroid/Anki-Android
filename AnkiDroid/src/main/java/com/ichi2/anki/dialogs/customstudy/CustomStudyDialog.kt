@@ -279,6 +279,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         binding = FragmentCustomStudyBinding.inflate(requireActivity().layoutInflater)
 
         binding.detailsText1.text = text1
+        // 'review ahead' has a dialog title, so the empty label would only add a blank line
+        binding.detailsText1.isVisible = contextMenuOption != STUDY_AHEAD
         binding.detailsText2.text = text2
 
         binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
@@ -322,6 +324,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
+            } else if (contextMenuOption == STUDY_AHEAD) {
+                getString(R.string.dialog_positive_create)
             } else {
                 getString(R.string.dialog_ok)
             }
@@ -333,7 +337,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val dialog =
             AlertDialog
                 .Builder(requireActivity())
-                .customView(
+                .apply {
+                    if (contextMenuOption == STUDY_AHEAD) {
+                        title(text = contextMenuOption.getTitle(resources))
+                    }
+                }.customView(
                     view = binding.root,
                     paddingStart = horizontalPadding,
                     paddingEnd = horizontalPadding,
@@ -507,7 +515,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 EXTEND_NEW -> res.getString(R.string.custom_study_new_extend)
                 EXTEND_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
-                STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
+                STUDY_AHEAD -> res.getString(R.string.custom_study_ahead_description)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
                 STUDY_TAGS -> res.getString(R.string.custom_study_tags)
                 null -> ""
