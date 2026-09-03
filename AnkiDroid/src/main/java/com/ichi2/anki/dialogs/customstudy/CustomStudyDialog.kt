@@ -320,6 +320,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
             }
+            if (contextMenuOption == STUDY_AHEAD) {
+                setSuffixText(defaultValue.toInt())
+            }
         }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
@@ -414,11 +417,19 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         binding.detailsEditText2.doAfterTextChanged {
             dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
+            if (contextMenuOption == STUDY_AHEAD) {
+                userInputValue?.let { setSuffixText(it) }
+            }
         }
 
         // Show soft keyboard
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return dialog
+    }
+
+    /** Sets the suffix of the days input: `[1] day`, `[3] days` */
+    private fun setSuffixText(days: Int) {
+        binding.detailsEditText2Layout.suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, days)
     }
 
     // TODO cram kind and the included/excluded tags lists are only relevant for STUDY_TAGS and
