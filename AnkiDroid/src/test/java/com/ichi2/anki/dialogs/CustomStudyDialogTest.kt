@@ -433,6 +433,22 @@ class CustomStudyDialogTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `'review ahead' validates the default value on open`() =
+        runTest {
+            // the default is 1 day; the only card is due in 30 days
+            addBasicNote().firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today + 30
+            }
+
+            withStudyAheadDialog { dialog ->
+                assertThat("nothing to review ahead", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat(binding.detailsEditText2Layout.error?.toString(), equalTo(TR.customStudyNoCardsMatchedTheCriteriaYou()))
+            }
+        }
+
     /** Adds a note to [deckName] whose card is due tomorrow */
     private fun addNoteDueTomorrow(deckName: String) {
         addBasicNote().update { moveToDeck(deckName, false) }.firstCard().update {
