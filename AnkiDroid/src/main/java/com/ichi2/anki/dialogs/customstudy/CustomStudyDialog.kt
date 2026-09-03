@@ -421,6 +421,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }
                 launchCustomStudy(contextMenuOption, n)
             }
+            if (contextMenuOption == STUDY_AHEAD) {
+                // the stored default may match no cards
+                searchJob = launchCatchingTask { updateCreateButtonState(dialog, userInputValue) }
+            }
         }
 
         binding.detailsEditText2.doAfterTextChanged {
