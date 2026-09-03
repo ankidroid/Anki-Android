@@ -43,13 +43,13 @@
         android:id="@+id/details_edit_text_2_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:suffixTextAppearance="@style/TextAppearance.MaterialComponents.Body1">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/details_edit_text_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:inputType="number|numberSigned"
             tools:text="1"
             />
