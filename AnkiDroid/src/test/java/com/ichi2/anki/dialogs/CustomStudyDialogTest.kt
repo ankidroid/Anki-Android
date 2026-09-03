@@ -3,6 +3,7 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import android.os.Looper
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
@@ -52,6 +53,7 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -323,6 +325,21 @@ class CustomStudyDialogTest : RobolectricTest() {
         assertThat(viewModel.selectedKind, equalTo(CramKind.CRAM_KIND_NEW))
     }
 
+    @Test
+    @Config(qualifiers = "en")
+    fun `'review ahead' shows a day or days suffix`() {
+        withStudyAheadDialog {
+            val layout = binding.detailsEditText2Layout
+            assertThat("default of 1 day", layout.suffixText.toString(), equalTo("day"))
+
+            onSubscreenEditText().perform(replaceText("2"))
+            assertThat(layout.suffixText.toString(), equalTo("days"))
+
+            onSubscreenEditText().perform(replaceText("1"))
+            assertThat(layout.suffixText.toString(), equalTo("day"))
+        }
+    }
+
     /**
      * Runs [block] on a [CustomStudyDialog]
      */
@@ -335,6 +352,15 @@ class CustomStudyDialogTest : RobolectricTest() {
                 block(dialogFragment)
             }
         }
+    }
+
+    /** Opens the 'review ahead' subscreen for [deckId] and runs [block] once the dialog is shown and its buttons exist */
+    private fun withStudyAheadDialog(
+        deckId: DeckId = Consts.DEFAULT_DECK_ID,
+        block: CustomStudyDialog.(dialog: AlertDialog) -> Unit,
+    ) = withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_AHEAD, deckId = deckId)) { fragment ->
+        shadowOf(Looper.getMainLooper()).idle()
+        fragment.block(fragment.dialog as AlertDialog)
     }
 
     private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
