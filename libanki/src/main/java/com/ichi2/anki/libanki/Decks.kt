@@ -564,11 +564,15 @@ class Decks(
         }
     }
 
-    /** Select a new branch (deck and descendants). */
+    /**
+     * Select a new branch (deck and descendants).
+     *
+     * @see setCurrent includes `undoableOp` support - use for UI code.
+     */
     @LibAnkiAlias("select")
-    @RustCleanup("does not match upstream")
+    @Suppress("CheckResult")
     fun select(did: DeckId) {
-        col.backend.setCurrentDeck(did)
+        setCurrent(did)
     }
 
     /** @return The currently selected deck ID. */
