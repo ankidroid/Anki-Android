@@ -340,6 +340,20 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `'review ahead' rejects leading zeros and more than 5 digits`() {
+        withStudyAheadDialog {
+            val editText = binding.detailsEditText2
+
+            onSubscreenEditText().perform(replaceText("0"))
+            editText.append("5")
+            assertThat("a digit typed after '0' is rejected", editText.text.toString(), equalTo("0"))
+
+            onSubscreenEditText().perform(replaceText("123456"))
+            assertThat(editText.text.toString(), equalTo("12345"))
+        }
+    }
+
     /**
      * Runs [block] on a [CustomStudyDialog]
      */
