@@ -74,6 +74,7 @@ import com.ichi2.utils.setPaddingRelative
 import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
@@ -126,6 +127,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
     private val userInputValue: Int?
         get() = binding.detailsEditText2.textAsIntOrNull()
+
+    /** The search for cards to review ahead. Cancelled when the input changes, so only the latest input counts */
+    private var searchJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -420,10 +424,14 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         binding.detailsEditText2.doAfterTextChanged {
-            dialog.positiveButton.isEnabled = userInputValue != null && userInputValue != 0
-            if (contextMenuOption == STUDY_AHEAD) {
-                userInputValue?.let { setSuffixText(it) }
+            val value = userInputValue
+            if (contextMenuOption != STUDY_AHEAD) {
+                dialog.positiveButton.isEnabled = value != null && value != 0
+                return@doAfterTextChanged
             }
+            value?.let { setSuffixText(it) }
+            searchJob?.cancel()
+            searchJob = launchCatchingTask { updateCreateButtonState(dialog, value) }
         }
 
         // Show soft keyboard
@@ -435,6 +443,33 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     private fun setSuffixText(days: Int) {
         binding.detailsEditText2Layout.suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, days)
     }
+
+    /** Enables 'Create' only if some cards would be reviewed ahead by [days] */
+    private suspend fun updateCreateButtonState(
+        dialog: AlertDialog,
+        days: Int?,
+    ) {
+        if (days == null || days == 0) {
+            binding.detailsEditText2Layout.error = null
+            dialog.positiveButton.isEnabled = false
+            return
+        }
+        val hasCards = hasCardsDueWithin(days)
+        binding.detailsEditText2Layout.error = if (hasCards) null else TR.customStudyNoCardsMatchedTheCriteriaYou()
+        dialog.positiveButton.isEnabled = hasCards
+    }
+
+    /** Whether the deck has cards due in the next [days] days, as 'review ahead' would select them */
+    private suspend fun hasCardsDueWithin(days: Int): Boolean =
+        withCol {
+            val search =
+                listOf(
+                    SearchNode.newBuilder().setDeck(decks.name(viewModel.deckId)).build(),
+                    // prop:due<=days
+                    SearchNode.newBuilder().setDueInDays(days).build(),
+                )
+            findCards(buildSearchString(search)).isNotEmpty()
+        }
 
     // TODO cram kind and the included/excluded tags lists are only relevant for STUDY_TAGS and
     //  should be included in the option to not leak in the method's api

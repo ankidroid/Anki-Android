@@ -40,6 +40,7 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonEqual
 import com.ichi2.testutils.uninitializeField
+import com.ichi2.utils.positiveButton
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.allOf
@@ -351,6 +352,76 @@ class CustomStudyDialogTest : RobolectricTest() {
 
             onSubscreenEditText().perform(replaceText("123456"))
             assertThat(editText.text.toString(), equalTo("12345"))
+        }
+    }
+
+    @Test
+    fun `'review ahead' disables Create when no cards are due in the period`() =
+        runTest {
+            // a card due tomorrow matches 'review ahead by 1 day'
+            val card = addBasicNote().firstCard()
+            card.update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today + 1
+            }
+
+            withStudyAheadDialog { dialog ->
+                val layout = binding.detailsEditText2Layout
+
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("enabled when a card matches", dialog.positiveButton.isEnabled, equalTo(true))
+                assertNull(layout.error)
+
+                onSubscreenEditText().perform(replaceText("0"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("disabled for 0 days", dialog.positiveButton.isEnabled, equalTo(false))
+
+                card.update { due = col.sched.today + 30 }
+
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("disabled when nothing matches", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat(layout.error?.toString(), equalTo(TR.customStudyNoCardsMatchedTheCriteriaYou()))
+            }
+        }
+
+    @Test
+    fun `'review ahead' search does not treat the deck name as a pattern`() =
+        runTest {
+            // '_' is a single-character wildcard in a search: "A_B" must not match "AXB"
+            val emptyDeckId = addDeck("A_B")
+            addDeck("AXB")
+            addNoteDueTomorrow(deckName = "AXB")
+
+            withStudyAheadDialog(deckId = emptyDeckId) { dialog ->
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("A_B has no cards", dialog.positiveButton.isEnabled, equalTo(false))
+            }
+        }
+
+    @Test
+    fun `'review ahead' search escapes the deck name`() =
+        runTest {
+            // '\' starts an escape sequence in a search
+            val deckId = addDeck("""A\B""")
+            addNoteDueTomorrow(deckName = """A\B""")
+
+            withStudyAheadDialog(deckId = deckId) { dialog ->
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat(dialog.positiveButton.isEnabled, equalTo(true))
+            }
+        }
+
+    /** Adds a note to [deckName] whose card is due tomorrow */
+    private fun addNoteDueTomorrow(deckName: String) {
+        addBasicNote().update { moveToDeck(deckName, false) }.firstCard().update {
+            queue = QueueType.Rev
+            type = CardType.Rev
+            due = col.sched.today + 1
         }
     }
 
