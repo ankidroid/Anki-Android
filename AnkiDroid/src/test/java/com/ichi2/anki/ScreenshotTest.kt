@@ -3,6 +3,10 @@
 
 package com.ichi2.anki
 
+import android.view.View
+import android.view.WindowManager
+import androidx.core.content.getSystemService
+import androidx.core.view.allViews
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.RoborazziOptions
@@ -21,6 +25,8 @@ import org.robolectric.RobolectricTestParameterInjector
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.GraphicsMode
+import org.robolectric.shadow.api.Shadow
+import org.robolectric.shadows.ShadowWindowManagerImpl
 import java.io.File
 
 interface ScreenshotTestCategory
@@ -126,6 +132,7 @@ abstract class ScreenshotTest : RobolectricTest() {
         // baseline is always in the root for the class, copied to /diffs/ if a change occurred
         val fileName = "$fileNamePrefix$name.png"
         val baseline = File(classDir, fileName)
+        disableScrollbarFading()
         captureScreenRoboImage(
             filePath = baseline.path,
             roborazziOptions = provideRoborazziContext().options.withCompareOutputDir(diffDir.path),
@@ -139,6 +146,13 @@ abstract class ScreenshotTest : RobolectricTest() {
         if (diffWritten && baseline.isFile) {
             baseline.copyTo(File(diffDir, baseline.name), overwrite = true)
         }
+    }
+
+    /** [View.disableScrollbarFading] for every window */
+    private fun disableScrollbarFading() {
+        val windowManager = targetContext.getSystemService<WindowManager>()
+        val windows = Shadow.extract<ShadowWindowManagerImpl>(windowManager).views
+        windows.forEach { it.disableScrollbarFading() }
     }
 
     class ThemeProvider : TestParameterValuesProvider() {
@@ -162,6 +176,12 @@ abstract class ScreenshotTest : RobolectricTest() {
             return DeviceConfig.entries.filter { requestedDevices.contains(it.name.lowercase()) }
         }
     }
+}
+
+fun View.disableScrollbarFading() {
+    allViews
+        .filter { it.isScrollbarFadingEnabled }
+        .forEach { it.isScrollbarFadingEnabled = false }
 }
 
 /** Sets the directory for _actual.png and _compare.png */
