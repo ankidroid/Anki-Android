@@ -42,6 +42,7 @@ import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.addNote
+import com.ichi2.anki.testutil.awaitPendingOpChanges
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.testutils.common.assertThrows
 import kotlinx.serialization.json.Json
@@ -2516,6 +2517,7 @@ class ContentProviderTest : InstrumentedTest() {
     @Test
     fun testUpdateNonExistentNoteDoesNotNotifyUI() {
         val counter = TestSubscriber()
+        ChangeManager.awaitPendingOpChanges()
         ChangeManager.subscribe(counter)
         try {
             val values =
@@ -2528,7 +2530,7 @@ class ContentProviderTest : InstrumentedTest() {
                 contentResolver.update(uri, values, null, null)
             }
 
-            Thread.sleep(1000)
+            ChangeManager.awaitPendingOpChanges()
             assertEquals("UI should not be notified if update is failed", 0, counter.count)
         } finally {
             ChangeManager.unsubscribe(counter)
@@ -2552,13 +2554,14 @@ class ContentProviderTest : InstrumentedTest() {
     @Test
     fun testDeleteNonExistentNoteDoesNotNotifyUI() {
         val counter = TestSubscriber()
+        ChangeManager.awaitPendingOpChanges()
         ChangeManager.subscribe(counter)
         try {
             val uri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, "999999")
             val deletedCount = contentResolver.delete(uri, null, null)
             assertEquals("It should return 0 for non-existent note", 0, deletedCount)
 
-            Thread.sleep(1000)
+            ChangeManager.awaitPendingOpChanges()
             assertEquals("UI should not be notify if nothing was deleted", 0, counter.count)
         } finally {
             ChangeManager.unsubscribe(counter)
@@ -2593,11 +2596,12 @@ class ContentProviderTest : InstrumentedTest() {
     @Test
     fun testBulkInsertEmptyListDoesNotNotifyUI() {
         val counter = TestSubscriber()
+        ChangeManager.awaitPendingOpChanges()
         ChangeManager.subscribe(counter)
         try {
             contentResolver.bulkInsert(FlashCardsContract.Note.CONTENT_URI, emptyArray())
 
-            Thread.sleep(1000)
+            ChangeManager.awaitPendingOpChanges()
             assertEquals("UI should not be notified for empty bulk insert", 0, counter.count)
         } finally {
             ChangeManager.unsubscribe(counter)

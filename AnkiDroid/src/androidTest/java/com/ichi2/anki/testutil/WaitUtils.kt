@@ -5,7 +5,9 @@ package com.ichi2.anki.testutil
 import android.app.Activity
 import android.os.SystemClock
 import androidx.test.platform.app.InstrumentationRegistry
+import anki.collection.OpChanges
 import com.ichi2.anki.TestUtils
+import com.ichi2.anki.observability.ChangeManager
 import kotlin.test.fail
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -38,3 +40,10 @@ inline fun <reified T : Activity> awaitResumedActivity(timeout: Duration = 10.se
         timeout,
         message = { "Timed out waiting for ${T::class.java.simpleName}; resumed = ${TestUtils.activityInstance}" },
     ) { TestUtils.activityInstance is T }
+
+/**
+ * Waits for all published [OpChanges] to be delivered to [ChangeManager] subscribers.
+ */
+fun ChangeManager.awaitPendingOpChanges() {
+    InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+}
