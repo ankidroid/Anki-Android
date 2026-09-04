@@ -107,10 +107,17 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
                 Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits")
             }
             session
-        } catch (e: SecurityException) {
+        } catch (e: RuntimeException) {
             // #6142 - A securityException here means that we're not able to load the CustomTabClient at all, whereas
             // the IllegalStateException was a failure, but could be continued from
             Timber.w(e, "CustomTabsService bind attempt failed, using fallback")
+            CrashReportService.sendExceptionReport(
+                e = e,
+                origin = "CustomTabActivityHelper::onServiceConnected",
+                onlyIfSilent = true,
+            )
+            // TODO: https://github.com/ankidroid/Anki-Android/issues/21708
+            // Edge throws on a cold bind. Retry in the future instead of disabling the feature
             disableCustomTabHandler()
         }
     }

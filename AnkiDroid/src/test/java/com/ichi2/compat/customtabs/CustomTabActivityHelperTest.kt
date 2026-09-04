@@ -33,6 +33,7 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
@@ -79,6 +80,31 @@ class CustomTabActivityHelperTest {
         verify(fallback, times(1)).openUri(any(), any())
     }
 
+    @Test
+    fun ensureClientThrowingNullPointerExceptionFromWarmupDoesNotCrash() {
+        val badClient = getClientThrowing(NullPointerException("Attempt to get length of null array"))
+        val customTabActivityHelper = getValidTabHandler()
+
+        customTabActivityHelper.onServiceConnected(badClient)
+
+        assertThat("Should be failed after call", customTabActivityHelper.isFailed)
+    }
+
+    @Test
+    fun ensureClientThrowingNullPointerExceptionFromNewSessionDoesNotCrash() {
+        val exceptionToThrow = NullPointerException("Attempt to get length of null array")
+        val badClient =
+            mock<CustomTabsClient> {
+                on { it.warmup(anyLong()) } doReturn true
+                on { it.newSession(anyOrNull()) } doThrow exceptionToThrow
+            }
+        val customTabActivityHelper = getValidTabHandler()
+
+        customTabActivityHelper.onServiceConnected(badClient)
+
+        assertThat("Should be failed after call", customTabActivityHelper.isFailed)
+    }
+
     @CheckResult
     private fun getValidTabHandler(): CustomTabActivityHelper =
         CustomTabActivityHelper().also {
@@ -86,13 +112,14 @@ class CustomTabActivityHelperTest {
         }
 
     @CheckResult
-    private fun getClientThrowingSecurityException(): CustomTabsClient {
-        val exceptionToThrow = SecurityException("Binder invocation to an incorrect interface")
+    private fun getClientThrowingSecurityException(): CustomTabsClient =
+        getClientThrowing(SecurityException("Binder invocation to an incorrect interface"))
 
-        return mock {
+    @CheckResult
+    private fun getClientThrowing(exceptionToThrow: RuntimeException): CustomTabsClient =
+        mock {
             on { it.warmup(anyLong()) } doThrow exceptionToThrow
             on { it.extraCommand(anyString(), any()) } doThrow exceptionToThrow
-            on { it.newSession(any()) } doThrow exceptionToThrow
+            on { it.newSession(anyOrNull()) } doThrow exceptionToThrow
         }
-    }
 }
