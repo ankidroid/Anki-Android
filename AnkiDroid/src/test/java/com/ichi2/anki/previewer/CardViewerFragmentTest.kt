@@ -113,8 +113,15 @@ class CardViewerFragmentTest : RobolectricTest() {
             whenever(it.resources).thenReturn(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
         }
 
-    /** Runs [block] on the [WebChromeClient] attached to an open previewer's WebView */
-    private fun withCardViewerChromeClient(block: (WebChromeClient) -> Unit) {
+    @Test
+    fun `native double-tap and pinch zoom are disabled to avoid a WebView touch lockup`() {
+        withCardViewerWebView { webView ->
+            assertThat(webView.settings.supportZoom(), equalTo(false))
+        }
+    }
+
+    /** Runs [block] on the [WebView] of an open previewer */
+    private fun withCardViewerWebView(block: (WebView) -> Unit) {
         val note = addBasicAndReversedNote()
         val intent =
             PreviewerFragment.getIntent(
@@ -132,8 +139,15 @@ class CardViewerFragmentTest : RobolectricTest() {
                         .map { webViewLayout.getChildAt(it) }
                         .filterIsInstance<WebView>()
                         .single()
-                block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
+                block(webView)
             }
+        }
+    }
+
+    /** Runs [block] on the [WebChromeClient] attached to an open previewer's WebView */
+    private fun withCardViewerChromeClient(block: (WebChromeClient) -> Unit) {
+        withCardViewerWebView { webView ->
+            block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
         }
     }
 

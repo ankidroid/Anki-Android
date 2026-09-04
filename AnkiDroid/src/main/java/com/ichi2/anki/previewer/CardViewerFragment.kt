@@ -193,8 +193,7 @@ abstract class CardViewerFragment(
             with(settings) {
                 javaScriptEnabled = true
                 loadWithOverviewMode = true
-                builtInZoomControls = true
-                displayZoomControls = false
+                setSupportZoom(false)
                 allowFileAccess = true
                 domStorageEnabled = true
                 // allow videos to autoplay via our JavaScript eval
