@@ -684,6 +684,34 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
+    fun `hasUnsavedChanges - changing note type while adding does not discard unsaved field content`() =
+        runTest {
+            val editor =
+                getNoteEditorAdding(NoteType.BASIC)
+                    .build()
+
+            // user types content into the first field but hasn't saved yet
+            editor.setFieldValueFromUi(0, "unsaved user content")
+            assertTrue(editor.hasUnsavedChanges(), "typing into a field is an unsaved change")
+
+            // user switches the note type (Basic -> Basic (and reversed)); both have a "Front" field
+            // at index 0, so the typed content is carried over into the new field layout
+            editor.noteType = col.notetypes.basicAndReversed
+            advanceRobolectricLooper()
+
+            assertThat(
+                "content should be preserved across the note type change",
+                editor.currentFieldStrings.toList(),
+                contains("unsaved user content", ""),
+            )
+            assertTrue(
+                editor.hasUnsavedChanges(),
+                "the user's unsaved content survived the note type change, so it must still be " +
+                    "reported as an unsaved change - otherwise pressing back silently discards it",
+            )
+        }
+
+    @Test
     fun `changing deck with multiple card ids moves all sibling cards`() =
         runTest {
             // Create a note with 2 cards (Basic and Reversed)
