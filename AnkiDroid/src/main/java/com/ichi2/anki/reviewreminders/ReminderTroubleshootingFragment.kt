@@ -102,7 +102,6 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
         setupTroubleshootingChecks()
         setupSettingChangeDetector()
         setupContentInsets()
-        renderEdgeToEdge(host)
     }
 
     /**

@@ -40,7 +40,6 @@ import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.notNullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
@@ -129,20 +128,20 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
         }
 
     @Test
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.P) // layoutInDisplayCutoutMode
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.R) // enableEdgeToEdge uses SHORT_EDGES below API 30
     fun `standalone host - the window renders into a display cutout`() =
         withStandaloneScheduleReminders { activity, _ ->
             assertThat(
                 "the window renders into the cutout instead of being letterboxed",
                 activity.window.attributes.layoutInDisplayCutoutMode,
-                equalTo(WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES),
+                equalTo(WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS),
             )
         }
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.Q])
     @Suppress("DEPRECATION") // systemUiVisibility: how WindowCompat un-fits the window below API 30
-    fun `standalone host - the window renders edge to edge only while resumed`() =
+    fun `standalone host - the window stays edge to edge after pausing`() =
         withWritePermissions {
             val intent = ScheduleRemindersFragment.getIntent(targetContext, ReviewReminderScope.Global)
             ActivityScenario.launch<ConfigAwareSingleFragmentActivity>(intent).use { scenario ->
@@ -159,9 +158,9 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 advanceRobolectricLooper()
                 scenario.onActivity { activity ->
                     assertThat(
-                        "pausing restores the window: other screens expect it to fit the system windows",
+                        "pausing leaves the window alone: the host renders every screen edge to edge",
                         activity.window.decorView.systemUiVisibility and DECOR_FITS_FLAGS,
-                        equalTo(0),
+                        equalTo(DECOR_FITS_FLAGS),
                     )
                 }
             }
@@ -239,22 +238,6 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 equalTo((fabMargin + navigationBarSize).toPx(targetContext)),
             )
         }
-
-    @Test
-    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.P) // layoutInDisplayCutoutMode
-    fun `settings host - the shared two-pane window is left alone`() {
-        // sw600dp: the settings host shares its window with the headers pane, which does not
-        // handle insets. Rendering the window edge to edge would slide that pane's content
-        // behind the system bars, so the reminders screens must leave the window untouched.
-        RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumTablet)
-        withSettingsScheduleReminders { activity, _ ->
-            assertThat(
-                "sanity: the headers pane shares the window",
-                activity.findViewById<View>(R.id.lateral_nav_container),
-                notNullValue(),
-            )
-        }
-    }
 
     @Test
     fun `study options frame host - insets are applied by the host, not the fragment`() =
