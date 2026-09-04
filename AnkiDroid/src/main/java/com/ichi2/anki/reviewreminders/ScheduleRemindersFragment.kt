@@ -16,6 +16,7 @@ import androidx.annotation.IdRes
 import androidx.core.graphics.Insets
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
+import androidx.core.view.ViewGroupCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
@@ -341,6 +342,8 @@ class ScheduleRemindersFragment :
      * No-op in [FragmentHost.STUDY_OPTIONS_FRAGMENT] and [FragmentHost.STUDY_OPTIONS_FRAME]
      */
     private fun setRootInsetsListener(block: (bars: Insets) -> Unit) {
+        // API < 30: simulate API 30+ behaviour - insets are not affected by siblings.
+        ViewGroupCompat.installCompatInsetsDispatch(binding.rootLayout)
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
             block(insets.getInsets(systemBars() or displayCutout()))
             insets
