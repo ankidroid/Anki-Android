@@ -40,6 +40,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.CardInfoDestination
 import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
@@ -60,7 +61,6 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -156,14 +156,14 @@ class CardBrowserViewModel(
     val flowOfNoteEditorCommand = MutableSharedFlow<NoteEditorCommand>()
 
     sealed interface NoteEditorCommand {
-        /** Tablet pane: show pane and load the editor with [launcher]. */
+        /** Tablet pane: show pane and load the editor at [destination]. */
         data class LoadInPane(
-            val launcher: NoteEditorLauncher,
+            val destination: NoteEditorDestination,
         ) : NoteEditorCommand
 
-        /** Phone: launch the standalone NoteEditor activity with [launcher]. */
+        /** Phone: launch the standalone NoteEditor activity at [destination]. */
         data class LaunchActivity(
-            val launcher: NoteEditorLauncher,
+            val destination: NoteEditorDestination,
         ) : NoteEditorCommand
 
         /** Tablet pane: hide the pane (no row available). */
@@ -352,14 +352,14 @@ class CardBrowserViewModel(
         }
     }
 
-    /** Builds a [NoteEditorLauncher] for the current selection, or `null` if there's nothing to edit. */
-    suspend fun editNoteLauncher(): NoteEditorLauncher? {
+    /** Builds a destination for editing the current selection, or `null` if there's nothing to edit. */
+    suspend fun editNoteLauncher(): NoteEditorDestination? {
         val cardIds = getCardIdsForNoteEditor()
         if (cardIds.isEmpty()) {
             Timber.w("EditSelection skipped: card list is empty")
             return null
         }
-        return NoteEditorLauncher.EditSelection(
+        return NoteEditorDestination.EditSelection(
             cardIds = cardIds,
             animation = TransitionDirection.DEFAULT,
             inCardBrowserActivity = isFragmented,
