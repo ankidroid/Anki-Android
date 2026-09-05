@@ -18,6 +18,7 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.zafarkhaja.semver.Version
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.SUCCESS_KEY
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
@@ -525,11 +526,75 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `unsupported api version is only reported once`() =
+        runTest {
+            addBasicNote("Front", "Back")
+
+            val reviewer: Reviewer = startReviewer()
+            advanceRobolectricLooper()
+
+            val jsapi = reviewer.jsApi
+            val unsupported = jsApiContract(version = "0.0.2")
+
+            repeat(3) { jsapi.handleJsApiRequest("deckName", unsupported, false) }
+
+            // a card issues many requests: the warning must not be repeated for each one
+            assertThat(jsapi.reportedApiMessages.size, equalTo(1))
+        }
+
+    @Test
+    fun `outdated version within the current major works without warning the user`() =
+        runTest {
+            addBasicNote("Front", "Back")
+
+            val reviewer: Reviewer = startReviewer()
+            advanceRobolectricLooper()
+
+            val jsapi = reviewer.jsApi
+            val outdated = jsApiContract(version = AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION)
+
+            val response = jsapi.handleJsApiRequest("deckName", outdated, false).decodeToString()
+
+            assertThat(response, equalTo(formatApiResult("Default")))
+            // versions only break across majors: most users can't act on
+            // 'contact the developer', so they must not be warned about a compatible update
+            assertThat(jsapi.reportedApiMessages, equalTo(emptySet<String>()))
+        }
+
+    @Test
+    fun `card from an older major works without warning during its deprecation window`() =
+        runTest {
+            addBasicNote("Front", "Back")
+
+            val reviewer: Reviewer = startReviewer()
+            advanceRobolectricLooper()
+
+            val jsapi = reviewer.jsApi
+
+            // the state after a breaking change ships as 1.0.0, before the minimum is raised
+            val accepted =
+                jsapi.requireApiVersion(
+                    apiVer = "0.0.4",
+                    apiDevContact = "test@example.com",
+                    versionCurrent = Version.parse("1.0.0"),
+                    versionMinimum = Version.parse("0.0.3"),
+                )
+
+            assertThat(accepted, equalTo(true))
+            // the window is aimed at template developers, via dev channels: users can't act
+            // on it, and their cards still work
+            assertThat(jsapi.reportedApiMessages, equalTo(emptySet<String>()))
+        }
+
     companion object {
-        fun jsApiContract(data: String = ""): ByteArray =
+        fun jsApiContract(
+            data: String = "",
+            version: String = AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION,
+        ): ByteArray =
             JSONObject()
                 .apply {
-                    put("version", "0.0.3")
+                    put("version", version)
                     put("developer", "test@example.com")
                     put("data", data)
                 }.toString()

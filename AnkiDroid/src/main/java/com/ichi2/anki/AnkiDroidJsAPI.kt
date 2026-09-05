@@ -4,6 +4,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.lifecycleScope
 import anki.scheduler.CardAnswer.Rating
 import com.github.zafarkhaja.semver.Version
@@ -133,6 +134,7 @@ open class AnkiDroidJsAPI(
         errorCode: Int,
         apiDevContact: String,
     ) {
+        if (!reportedApiMessages.add("error$errorCode/$apiDevContact")) return
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
         val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, apiDevContact, errorMsg)
 
@@ -144,44 +146,52 @@ open class AnkiDroidJsAPI(
         }
     }
 
+    /** Keys of messages already shown: a card sends a request for each API call it makes */
+    @VisibleForTesting
+    val reportedApiMessages = mutableSetOf<String>()
+
+    private fun showSnackbarOnce(
+        key: String,
+        message: String,
+    ) {
+        if (!reportedApiMessages.add(key)) return
+        activity.runOnUiThread { activity.showSnackbar(message) }
+    }
+
     /**
-     * Supplied api version must be equal to current api version to call mark card, toggle flag functions etc.
+     * Checks whether the API version a card declares is accepted, warning the user if not.
+     *
+     * Users are warned when a template:
+     * - Requires an AnkiDroid update: [R.string.valid_js_api_version]
+     * - Is no longer supported: [R.string.update_js_api_version]
+     * - Is invalid: [R.string.invalid_json_data]
      */
-    private fun requireApiVersion(
+    @VisibleForTesting
+    internal fun requireApiVersion(
         apiVer: String,
         apiDevContact: String,
+        versionCurrent: Version = Version.parse(AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION),
+        versionMinimum: Version = Version.parse(AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION),
     ): Boolean {
         try {
             if (apiDevContact.isEmpty() || apiVer.isEmpty()) {
-                activity.runOnUiThread {
-                    activity.showSnackbar(context.getString(R.string.invalid_json_data, ""))
-                }
+                showSnackbarOnce("$apiVer/$apiDevContact", context.getString(R.string.invalid_json_data, ""))
                 return false
             }
-            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION)
             val versionSupplied = Version.parse(apiVer)
 
-            /*
-             * if api major version equals to supplied major version then return true and also check for minor version and patch version
-             * show toast for update and contact developer if need updates
-             * otherwise return false
-             */
             return when {
-                versionSupplied == versionCurrent -> {
-                    true
-                }
-                versionSupplied.isLowerThan(versionCurrent) -> {
-                    activity.runOnUiThread {
-                        activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
-                    }
-                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION))
-                }
-                else -> {
-                    activity.runOnUiThread {
-                        activity.showSnackbar(context.getString(R.string.valid_js_api_version, apiDevContact))
-                    }
+                // the card needs a newer AnkiDroid
+                versionSupplied.isHigherThan(versionCurrent) -> {
+                    showSnackbarOnce("$apiVer/$apiDevContact", context.getString(R.string.valid_js_api_version, apiDevContact))
                     false
                 }
+                // support has ended
+                versionSupplied.isLowerThan(versionMinimum) -> {
+                    showSnackbarOnce("$apiVer/$apiDevContact", context.getString(R.string.update_js_api_version, apiDevContact))
+                    false
+                }
+                else -> true
             }
         } catch (e: Exception) {
             Timber.w(e, "requireApiVersion::exception")
