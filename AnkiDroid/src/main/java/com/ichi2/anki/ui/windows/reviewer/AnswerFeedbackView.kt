@@ -16,10 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import com.ichi2.anki.R
@@ -32,66 +29,45 @@ class AnswerFeedbackView : AppCompatImageView {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    private var fadeOutRunnable: Runnable? = null
-    private val handler = Handler(Looper.getMainLooper())
+    private val fadeOut =
+        Runnable {
+            if (!Animations.areAnimationsEnabled(context)) {
+                visibility = GONE
+            } else {
+                animate()
+                    .alpha(0f)
+                    .setDuration(250)
+                    .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_linear_in))
+                    .withEndAction { visibility = GONE }
+                    .start()
+            }
+        }
 
     /**
-     * Shows the feedback for one second
-     * with a quick fade in, brief hold, then gentle fade out.
+     * Shows the feedback with a quick fade in, brief hold, then gentle fade out.
+     * uses ViewPropertyAnimator instead of legacy AlphaAnimation to avoid compositing
+     * artifacts with WebView backdrop-filter when Frame style "Box" removes card elevation.
      */
     fun toggle() {
-        clearAnimation()
+        animate().cancel()
 
-        fadeOutRunnable?.let {
-            handler.removeCallbacks(it)
-            fadeOutRunnable = null
-        }
+        removeCallbacks(fadeOut)
 
         if (!Animations.areAnimationsEnabled(context)) {
             visibility = VISIBLE
-            fadeOutRunnable =
-                Runnable {
-                    visibility = GONE
-                    fadeOutRunnable = null
-                }.also {
-                    handler.postDelayed(it, 800.milliseconds)
-                }
+            postDelayed(fadeOut, 800.milliseconds)
             return
         }
 
-        val fadeIn = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_in)
-        val fadeOut = AnimationUtils.loadAnimation(context, R.anim.answer_feedback_fade_out)
+        alpha = 0f
+        visibility = VISIBLE
 
-        fadeIn.setAnimationListener(
-            object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {
-                    visibility = VISIBLE
-                }
-
-                override fun onAnimationEnd(animation: Animation) {
-                    fadeOutRunnable =
-                        Runnable {
-                            startAnimation(fadeOut)
-                        }.also {
-                            handler.postDelayed(it, 400)
-                        }
-                }
-
-                override fun onAnimationRepeat(animation: Animation) {}
-            },
-        )
-        fadeOut.setAnimationListener(
-            object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {}
-
-                override fun onAnimationEnd(animation: Animation) {
-                    visibility = GONE
-                    fadeOutRunnable = null
-                }
-
-                override fun onAnimationRepeat(animation: Animation) {}
-            },
-        )
-        startAnimation(fadeIn)
+        animate()
+            .alpha(1f)
+            .setDuration(150)
+            .setInterpolator(AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in))
+            .withEndAction {
+                postDelayed(fadeOut, 400.milliseconds)
+            }.start()
     }
 }
