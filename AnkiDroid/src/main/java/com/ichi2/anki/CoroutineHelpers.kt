@@ -31,13 +31,16 @@ import com.ichi2.anki.common.annotations.UseContextParameter
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
+import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.pages.fromCurrentDeck
 import com.ichi2.anki.pages.toIntent
+import com.ichi2.anki.preferences.toIntent
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.redirectToMainEntryPoint
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -198,7 +201,9 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.w(exc, errorMessage)
                 if (!isFinishing) redirectToMainEntryPoint()
             }
-            is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException -> {
+            is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException,
+            is CollectionLockedException,
+            -> {
                 // these exceptions do not generate worthwhile crash reports
                 Timber.i("Showing error dialog but not sending a crash report.")
                 showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
@@ -718,6 +723,20 @@ data class CrashReportData(
             }
         }
 
+        /**
+         * Opens settings at the Advanced screen, where changing the 'AnkiDroid directory'
+         * resolves a [CollectionLockedException] (#21051)
+         */
+        data object OpenAdvancedSettings : HelpAction() {
+            override fun buttonText(context: Context): CharSequence = context.getString(R.string.settings)
+
+            override suspend fun execute(context: Context): Boolean {
+                Timber.i("Opening 'Advanced settings'")
+                context.startActivity(PreferencesDestination.Advanced.toIntent(context))
+                return true
+            }
+        }
+
         /** Opens 'Check Database' */
         data object OpenCheckDatabase : HelpAction() {
             override fun buttonText(context: Context): CharSequence = with(context) { TR.sentenceCase.checkDatabase }
@@ -746,6 +765,7 @@ data class CrashReportData(
                     }
 
                 if (link != null) return AnkiBackendLink(link)
+                if (e is CollectionLockedException) return OpenAdvancedSettings
                 if (e.isInvalidFsrsParametersException()) return OpenDeckOptions
                 if (e.isDeckNotFoundInLimitsMapException()) return OpenCheckDatabase
 

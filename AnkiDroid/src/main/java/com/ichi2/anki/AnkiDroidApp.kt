@@ -43,6 +43,7 @@ import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.logging.FragmentLifecycleLogger
@@ -136,6 +137,7 @@ open class AnkiDroidApp :
         initializeWidgetRepository()
         WidgetNotificationScheduler.register { scheduleNotification() }
         Animations.setPreferencesProvider { context -> PrefsRepository(context) }
+        CollectionLockedException.messageProvider = { getString(R.string.database_locked_summary_new, getString(R.string.col_path)) }
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())
