@@ -2190,11 +2190,13 @@ class NoteEditorFragment :
             }
         } else {
             populateEditFields(changeType)
+            // Only re-capture the baseline when the fields came from sticky text, not from a
+            // note type switch, which may carry forward text the user just typed.
             if (changeType.type != Type.CHANGE_FIELD_COUNT) {
                 updateFieldsFromStickyText()
-            }
-            if (addNote) {
-                addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+                if (addNote) {
+                    addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+                }
             }
         }
     }
