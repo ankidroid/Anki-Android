@@ -9,6 +9,7 @@
     android:background="?attr/alternativeBackgroundColor"
     android:fitsSystemWindows="true"
     android:focusableInTouchMode="true"
+    android:defaultFocusHighlightEnabled="false"
     tools:context=".ui.windows.reviewer.ReviewerFragment">
 
     <LinearLayout
