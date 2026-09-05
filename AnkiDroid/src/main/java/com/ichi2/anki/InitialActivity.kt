@@ -2,6 +2,7 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabaseCorruptException
@@ -26,6 +27,8 @@ import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
+import com.ichi2.anki.startup.StoragePolicy
+import com.ichi2.anki.startup.folderToPersist
 import com.ichi2.anki.ui.windows.permissions.InternetPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.LegacyNotificationsPermissionFragment
 import com.ichi2.anki.ui.windows.permissions.NotificationsPermissionFragment
@@ -227,6 +230,20 @@ enum class StoragePermissionSet(
     EXTERNAL_MANAGER(Permissions.externalManagerStorageAccessStartupPermissions, PermissionsStartingAt30Fragment::class.java),
 
     APP_PRIVATE(Permissions.appPrivateStartupPermissions, InternetPermissionFragment::class.java),
+    ;
+
+    /** Who chooses the collection folder on a fresh install. */
+    @get:SuppressLint("NewApi") // a branch on EXTERNAL_MANAGER does not use its APIs
+    val storagePolicy: StoragePolicy
+        get() =
+            when (this) {
+                LEGACY_ACCESS -> StoragePolicy.Fixed(AnkiDroidFolder.PUBLIC)
+                EXTERNAL_MANAGER -> StoragePolicy.Fixed(AnkiDroidFolder.PUBLIC)
+                APP_PRIVATE -> StoragePolicy.Fixed(AnkiDroidFolder.APP_PRIVATE)
+            }
+
+    /** The folder to persist on startup, or `null` if the user has yet to choose. */
+    fun folderToPersist(context: Context): AnkiDroidFolder? = storagePolicy.folderToPersist(hasRequiredPermissions(context))
 }
 
 /**
