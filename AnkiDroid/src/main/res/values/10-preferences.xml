@@ -236,7 +236,7 @@
 
     <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    
+
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
 
@@ -464,10 +464,12 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
         ><![CDATA[Improved study screen that will succeed the current one. Some features of the old screen have been changed or removed. Please report any <a href="%1$s">feedback</a> or <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <string name="screen" maxLength="41">Screen</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the 'Answer' commands to only answer the card"
-        >Only answer</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the 'Answer' commands to answer the card if on the answer side, and flip it if on the question side"
-        >Flip and answer</string>
+    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an 'Answer' command, asking whether it should also be assigned to the 'Show answer'; %1$s is 'Show answer'"
+        >Also assign to ‘%1$s’?</string>
+    <string name="skip" comment="Skip assigning binding to 'Show answer'"
+        >Skip</string>
+    <string name="assign" comment="Assign binding to 'Answer' command"
+        >Assign</string>
 
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>

@@ -27,6 +27,8 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.preferences.ControlPreference
 import com.ichi2.preferences.ReviewerControlPreference
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -239,23 +241,28 @@ class ControlsSettingsFragment :
             )
         for (key in answerCommandKeys) {
             (findPreference<Preference>(key) as? ReviewerControlPreference)?.let { answerPref ->
-                val items =
-                    arrayOf(
-                        getString(R.string.only_answer),
-                        getString(R.string.flip_and_answer),
-                    )
                 answerPref.setOnBindingSelectedListener { binding ->
+                    val isAlreadyAssigned =
+                        showAnswerPref?.getMappableBindings()?.any {
+                            it.binding == binding &&
+                                (it.side == CardSide.QUESTION || it.side == CardSide.BOTH)
+                        } == true
+                    if (isAlreadyAssigned) {
+                        answerPref.addBinding(binding, CardSide.ANSWER)
+                        return@setOnBindingSelectedListener true
+                    }
+
                     AlertDialog.Builder(requireContext()).show {
                         setTitle(answerPref.title)
                         setIcon(answerPref.icon)
-                        setItems(items) { _, index ->
-                            when (index) {
-                                0 -> answerPref.addBinding(binding, CardSide.ANSWER)
-                                1 -> {
-                                    answerPref.addBinding(binding, CardSide.ANSWER)
-                                    showAnswerPref?.addBinding(binding, CardSide.QUESTION)
-                                }
-                            }
+                        setMessage(getString(R.string.also_assign_binding_to_show_answer, getString(R.string.show_answer)))
+
+                        positiveButton(text = getString(R.string.assign)) {
+                            answerPref.addBinding(binding, CardSide.ANSWER)
+                            showAnswerPref?.addBinding(binding, CardSide.QUESTION)
+                        }
+                        negativeButton(text = getString(R.string.skip)) {
+                            answerPref.addBinding(binding, CardSide.ANSWER)
                         }
                     }
                     true
