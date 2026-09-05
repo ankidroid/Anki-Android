@@ -32,7 +32,7 @@ class ProgressManager {
      * is re-inserted (to move it to the "latest" position).
      */
     private class Op(
-        var message: String?,
+        var message: ProgressText?,
         var amount: ProgressContext.Amount?,
         val onCancel: (() -> Unit)?,
         val formatAmount: (ProgressContext.Amount) -> String,
@@ -53,7 +53,7 @@ class ProgressManager {
      *  dedicated API instead of overloading [updateProgress].
      */
     suspend fun <T> withProgress(
-        message: String? = null,
+        message: ProgressText? = null,
         onCancel: (() -> Unit)? = null,
         formatAmount: (ProgressContext.Amount) -> String =
             { (current, max) -> "$current/$max" },
@@ -93,12 +93,12 @@ class ProgressManager {
      */
     internal fun updateOp(
         opId: Long,
-        message: String?,
+        message: ProgressText?,
         amount: ProgressContext.Amount?,
     ) {
         synchronized(lock) {
             val op = activeOps[opId] ?: return
-            op.message = message
+            message?.let { op.message = it }
             op.amount = amount
             // Only the displayed op (last-started) drives the published state.
             if (activeOps.entries.last().key == opId) {
@@ -136,8 +136,9 @@ class ProgressScope internal constructor(
     private val manager: ProgressManager,
     private val opId: Long,
 ) {
+    /** A null [message] keeps the current one. */
     fun updateProgress(
-        message: String? = null,
+        message: ProgressText? = null,
         amount: ProgressContext.Amount? = null,
     ) {
         manager.updateOp(opId, message = message, amount = amount)

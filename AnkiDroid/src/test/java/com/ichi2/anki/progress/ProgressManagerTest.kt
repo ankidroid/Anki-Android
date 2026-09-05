@@ -4,6 +4,7 @@
 package com.ichi2.anki.progress
 
 import com.ichi2.anki.ProgressContext
+import com.ichi2.anki.R
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -25,10 +26,10 @@ class ProgressManagerTest {
         runTest {
             val manager = ProgressManager()
 
-            manager.withProgress(message = "Loading...") {
+            manager.withProgress(message = ProgressText.Raw("Loading...")) {
                 val state = manager.progress.value
                 assertIs<ViewModelProgress.Active>(state)
-                assertEquals("Loading...", state.message)
+                assertEquals(ProgressText.Raw("Loading..."), state.message)
             }
 
             assertIs<ViewModelProgress.Idle>(manager.progress.value)
@@ -68,14 +69,14 @@ class ProgressManagerTest {
 
             val job1 =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "Op 1") {
+                    manager.withProgress(message = ProgressText.Raw("Op 1")) {
                         deferred1.await()
                     }
                 }
 
             val job2 =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "Op 2") {
+                    manager.withProgress(message = ProgressText.Raw("Op 2")) {
                         deferred2.await()
                     }
                 }
@@ -99,18 +100,50 @@ class ProgressManagerTest {
         runTest {
             val manager = ProgressManager()
 
-            manager.withProgress(message = "Starting") {
+            manager.withProgress(message = ProgressText.Raw("Starting")) {
                 val initialState = manager.progress.value
                 assertIs<ViewModelProgress.Active>(initialState)
-                assertEquals("Starting", initialState.message)
+                assertEquals(ProgressText.Raw("Starting"), initialState.message)
 
                 val testAmount = ProgressContext.Amount(current = 5, max = 10)
-                updateProgress(message = "Step 2", amount = testAmount)
+                updateProgress(message = ProgressText.Raw("Step 2"), amount = testAmount)
 
                 val updatedState = manager.progress.value
                 assertIs<ViewModelProgress.Active>(updatedState)
-                assertEquals("Step 2", updatedState.message)
+                assertEquals(ProgressText.Raw("Step 2"), updatedState.message)
                 assertEquals(testAmount, updatedState.amount)
+            }
+        }
+
+    @Test
+    fun `withProgress publishes a resource message`() =
+        runTest {
+            val manager = ProgressManager()
+            val message = ProgressText.Res(R.string.dialog_processing)
+
+            manager.withProgress(message = message) {
+                val state = manager.progress.value
+                assertIs<ViewModelProgress.Active>(state)
+                assertEquals(message, state.message)
+            }
+
+            assertIs<ViewModelProgress.Idle>(manager.progress.value)
+        }
+
+    @Test
+    fun `updateProgress without a message keeps the current one`() =
+        runTest {
+            val manager = ProgressManager()
+            val message = ProgressText.Res(R.string.dialog_processing)
+
+            manager.withProgress(message = message) {
+                val amount = ProgressContext.Amount(current = 1, max = 2)
+                updateProgress(amount = amount)
+
+                val state = manager.progress.value
+                assertIs<ViewModelProgress.Active>(state)
+                assertEquals(message, state.message)
+                assertEquals(amount, state.amount)
             }
         }
 
@@ -259,13 +292,13 @@ class ProgressManagerTest {
             val nonCancellableJob =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
                     manager.withProgress {
-                        updateProgress(message = "mid-update")
+                        updateProgress(message = ProgressText.Raw("mid-update"))
                         nonCancellableDone.await()
                     }
                 }
 
             val state = manager.progress.value as ViewModelProgress.Active
-            assertEquals("mid-update", state.message)
+            assertEquals(ProgressText.Raw("mid-update"), state.message)
             assertEquals(true, state.cancellable)
 
             cancellableDone.complete(Unit)
@@ -283,15 +316,15 @@ class ProgressManagerTest {
 
             val jobA =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "A") { aDone.await() }
+                    manager.withProgress(message = ProgressText.Raw("A")) { aDone.await() }
                 }
             val jobB =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "B") { bDone.await() }
+                    manager.withProgress(message = ProgressText.Raw("B")) { bDone.await() }
                 }
 
             val state = manager.progress.value as ViewModelProgress.Active
-            assertEquals("B", state.message, "newest op wins")
+            assertEquals(ProgressText.Raw("B"), state.message, "newest op wins")
 
             aDone.complete(Unit)
             bDone.complete(Unit)
@@ -308,18 +341,18 @@ class ProgressManagerTest {
 
             val jobA =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "A") { aDone.await() }
+                    manager.withProgress(message = ProgressText.Raw("A")) { aDone.await() }
                 }
             val jobB =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "B") { bDone.await() }
+                    manager.withProgress(message = ProgressText.Raw("B")) { bDone.await() }
                 }
 
-            assertEquals("B", (manager.progress.value as ViewModelProgress.Active).message)
+            assertEquals(ProgressText.Raw("B"), (manager.progress.value as ViewModelProgress.Active).message)
 
             bDone.complete(Unit)
             jobB.join()
-            assertEquals("A", (manager.progress.value as ViewModelProgress.Active).message)
+            assertEquals(ProgressText.Raw("A"), (manager.progress.value as ViewModelProgress.Active).message)
 
             aDone.complete(Unit)
             jobA.join()
@@ -336,24 +369,24 @@ class ProgressManagerTest {
 
             val jobA =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "A") {
+                    manager.withProgress(message = ProgressText.Raw("A")) {
                         aUpdated.await()
-                        updateProgress(message = "A-updated")
+                        updateProgress(message = ProgressText.Raw("A-updated"))
                         aDone.await()
                     }
                 }
             val jobB =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "B") { bDone.await() }
+                    manager.withProgress(message = ProgressText.Raw("B")) { bDone.await() }
                 }
 
             // B is the displayed op (latest-started).
-            assertEquals("B", (manager.progress.value as ViewModelProgress.Active).message)
+            assertEquals(ProgressText.Raw("B"), (manager.progress.value as ViewModelProgress.Active).message)
 
             // A updates while B is still displayed — displayed message must NOT flicker to A's.
             aUpdated.complete(Unit)
             assertEquals(
-                "B",
+                ProgressText.Raw("B"),
                 (manager.progress.value as ViewModelProgress.Active).message,
                 "non-displayed op's update must not steal the dialog",
             )
@@ -362,7 +395,7 @@ class ProgressManagerTest {
             bDone.complete(Unit)
             jobB.join()
             assertEquals(
-                "A-updated",
+                ProgressText.Raw("A-updated"),
                 (manager.progress.value as ViewModelProgress.Active).message,
                 "A's held update should surface once it becomes the displayed op",
             )
@@ -454,12 +487,12 @@ class ProgressManagerTest {
 
             val opJob =
                 launch(UnconfinedTestDispatcher(testScheduler)) {
-                    manager.withProgress(message = "start") {
+                    manager.withProgress(message = ProgressText.Raw("start")) {
                         // Stream of updates every 100ms would defeat the delay
                         // under the old collectLatest pattern.
                         repeat(10) { i ->
                             kotlinx.coroutines.delay(100)
-                            updateProgress(message = "step $i")
+                            updateProgress(message = ProgressText.Raw("step $i"))
                         }
                         done.await()
                     }
