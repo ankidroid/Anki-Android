@@ -245,6 +245,9 @@ object SentenceCase {
     val ankiCollectionPackage get() = TR.exportingAnkiCollectionPackage().toSentenceCase(R.string.sentence_anki_collection_package)
 
     context(_: Fragment)
+    val ankiDeckPackage get() = TR.exportingAnkiDeckPackage().toSentenceCase(R.string.sentence_anki_deck_package)
+
+    context(_: Fragment)
     val browserOptions get() = TR.browsingBrowserOptions().toSentenceCase(R.string.sentence_browser_options)
 
     context(_: Fragment)

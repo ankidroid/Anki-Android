@@ -167,7 +167,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
                         android.R.layout.simple_spinner_item,
                         listOf(
                             "${sentenceCase.ankiCollectionPackage} (.colpkg)",
-                            "${exportingAnkiDeckPackage()} (.apkg)",
+                            "${sentenceCase.ankiDeckPackage} (.apkg)",
                             "${exportingNotesInPlainText()} (.txt)",
                             "${exportingCardsInPlainText()} (.txt)",
                         ),
