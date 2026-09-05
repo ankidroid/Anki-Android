@@ -6,10 +6,12 @@ import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
 /** Tests for [darkenColor] and [lightenColorAbsolute] */
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [35])
 class ColorUtilsTest {
     @Test
     fun darkenColor_withNoChange_returnsSameColor() {

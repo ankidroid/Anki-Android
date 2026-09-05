@@ -17,11 +17,9 @@
 
 package com.ichi2.anki.dialogs
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -31,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.ichi2.anki.Flag
+import com.ichi2.anki.compat.showSoftInput
 import com.ichi2.anki.databinding.ItemEditFlagBinding
 import com.ichi2.utils.moveCursorToEnd
 import kotlinx.coroutines.CoroutineScope
@@ -86,8 +85,7 @@ class FlagAdapter(
             holder.flagNameEditLayout.visibility = View.VISIBLE
             holder.flagNameEdit.requestFocus()
             holder.flagNameEdit.moveCursorToEnd()
-            val inputMethodManager = holder.flagNameEdit.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.showSoftInput(holder.flagNameEdit, InputMethodManager.SHOW_IMPLICIT)
+            holder.flagNameEdit.showSoftInput()
         }
 
         holder.saveButton.setOnClickListener {
