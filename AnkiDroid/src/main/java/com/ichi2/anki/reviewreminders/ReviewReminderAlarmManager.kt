@@ -7,10 +7,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.PendingIntentCompat
-import androidx.core.content.getSystemService
-import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
-import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.utils.AlarmManagement
 import timber.log.Timber
@@ -26,40 +23,6 @@ import java.util.Calendar
  * [scheduleSnoozedNotification] on this object after receiving a snooze broadcast.
  */
 object ReviewReminderAlarmManager {
-    /**
-     * Shows error messages if an error occurs when scheduling review reminders via AlarmManager.
-     * This function wraps all calls to AlarmManager in this class.
-     */
-    private fun catchAlarmManagerExceptions(
-        context: Context,
-        block: (AlarmManager) -> Unit,
-    ) {
-        var error: Int? = null
-        try {
-            val alarmManager = context.getSystemService<AlarmManager>()
-            if (alarmManager != null) {
-                block(alarmManager)
-            } else {
-                Timber.w("Failed to get AlarmManager system service, aborting operation")
-            }
-        } catch (ex: SecurityException) {
-            // #6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
-            // We warn the user if they breach this limit
-            Timber.w(ex)
-            error = R.string.boot_service_too_many_notifications
-        } catch (e: Exception) {
-            Timber.w(e)
-            error = R.string.boot_service_failed_to_schedule_notifications
-        }
-        if (error != null) {
-            try {
-                showThemedToast(context, context.getString(error), false)
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to show AlarmManager exception toast for error: $error")
-            }
-        }
-    }
-
     /**
      * Gets the pending intent of a review reminder's scheduled notifications.
      * This pending intent can then be used to either schedule those notifications or cancel them.
@@ -173,7 +136,7 @@ object ReviewReminderAlarmManager {
             }
         }
 
-        catchAlarmManagerExceptions(context) { alarmManager ->
+        AlarmManagement.useAlarmManager(context, showToastOnFailure = true) { alarmManager ->
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
                 alarmTimestamp.timeInMillis,
@@ -204,7 +167,7 @@ object ReviewReminderAlarmManager {
                 NotificationService.NotificationServiceAction.ScheduleRecurringNotifications,
             ) ?: return
         Timber.v("Pending intent for ${reviewReminder.id} is $pendingIntent")
-        catchAlarmManagerExceptions(context) { alarmManager ->
+        AlarmManagement.useAlarmManager(context, showToastOnFailure = true) { alarmManager ->
             alarmManager.cancel(pendingIntent)
             Timber.d("Successfully unscheduled review reminder notifications for ${reviewReminder.id}")
         }
@@ -264,7 +227,7 @@ object ReviewReminderAlarmManager {
 
         val alarmTimestamp = TimeManager.time.calendar()
         alarmTimestamp.add(Calendar.MINUTE, snoozeIntervalInMinutes)
-        catchAlarmManagerExceptions(context) { alarmManager ->
+        AlarmManagement.useAlarmManager(context, showToastOnFailure = true) { alarmManager ->
             alarmManager.setWindow(
                 AlarmManager.RTC_WAKEUP,
                 alarmTimestamp.timeInMillis,
