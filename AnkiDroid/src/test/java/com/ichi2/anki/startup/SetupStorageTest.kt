@@ -2,22 +2,18 @@
 
 package com.ichi2.anki.startup
 
-import android.annotation.SuppressLint
 import android.os.Build
-import android.os.Environment
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.common.permissions.isExternalStorageManager
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.exception.SystemStorageException
+import com.ichi2.testutils.publicCollectionPath
+import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
 import com.ichi2.testutils.withWritePermissions
-import io.mockk.every
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -113,7 +109,7 @@ class SetupStorageTest : RobolectricTest() {
 
         ensureCollectionPathSet(targetContext)
 
-        assertEquals(publicDirectory, collectionPath)
+        assertEquals(publicCollectionPath, collectionPath)
     }
 
     @Test
@@ -123,7 +119,7 @@ class SetupStorageTest : RobolectricTest() {
 
         withWritePermissions { ensureCollectionPathSet(targetContext) }
 
-        assertEquals(publicDirectory, collectionPath)
+        assertEquals(publicCollectionPath, collectionPath)
     }
 
     // TODO: 13574 - the decision is deferred to the user: the screen may be skipped
@@ -134,7 +130,7 @@ class SetupStorageTest : RobolectricTest() {
 
         withManageExternalStorageInManifest { ensureCollectionPathSet(targetContext) }
 
-        assertEquals(publicDirectory, collectionPath)
+        assertEquals(publicCollectionPath, collectionPath)
     }
 
     @Test
@@ -146,21 +142,6 @@ class SetupStorageTest : RobolectricTest() {
             withAllFilesAccess { ensureCollectionPathSet(targetContext) }
         }
 
-        assertEquals(publicDirectory, collectionPath)
-    }
-
-    private val publicDirectory: String
-        get() = File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath
-
-    /** `MANAGE_EXTERNAL_STORAGE` is granted */
-    @SuppressLint("NewApi") // isExternalStorageManager requires R, guaranteed by @Config
-    private fun withAllFilesAccess(block: () -> Unit) {
-        mockkStatic(::isExternalStorageManager)
-        every { isExternalStorageManager() } returns true
-        try {
-            block()
-        } finally {
-            unmockkStatic(::isExternalStorageManager)
-        }
+        assertEquals(publicCollectionPath, collectionPath)
     }
 }
