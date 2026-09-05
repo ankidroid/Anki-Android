@@ -21,6 +21,11 @@ import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewOutcomeReceiver
+import androidx.webkit.WebViewStartUpConfig
+import androidx.webkit.WebViewStartUpResult
+import androidx.webkit.WebViewStartupException
 import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.initializeAnalytics
@@ -64,6 +69,7 @@ import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.anki.widget.RECURRING_WIDGETS
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
 import com.ichi2.widget.DayRolloverAlarm
@@ -72,9 +78,12 @@ import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.restoreRecurringAlarms
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
+import java.util.concurrent.Executors
+import kotlin.coroutines.resume
 
 /**
  * Application class.
@@ -195,6 +204,7 @@ open class AnkiDroidApp :
         setupLifecycleLogging()
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         setupTextToSpeech()
+        setupWebView()
     }
 
     /**
@@ -465,6 +475,45 @@ open class AnkiDroidApp :
             sendExceptionReport(e, "checkWebViewAvailable")
             Timber.e(e, "checkWebViewAvailable")
             false
+        }
+
+    /**
+     * Start up the WebView to speed up later WebView usages.
+     */
+    private fun setupWebView() {
+        applicationScope.launch {
+            coMeasureTime("setupWebView") {
+                startUpWebView()
+            }
+        }
+    }
+
+    private suspend fun startUpWebView() =
+        suspendCancellableCoroutine { continuation ->
+            val executor = Executors.newSingleThreadExecutor()
+            val config = WebViewStartUpConfig.Builder(executor).build()
+
+            val callback =
+                object : WebViewOutcomeReceiver<WebViewStartUpResult, WebViewStartupException> {
+                    override fun onResult(result: WebViewStartUpResult?) {
+                        executor.shutdown()
+                        continuation.resume(Unit)
+                    }
+
+                    override fun onError(e: WebViewStartupException) {
+                        fatalInitializationError = FatalInitializationError.WebViewError(e)
+                        sendExceptionReport(e, "setupWebView")
+                        Timber.e(e, "setupWebView")
+                        executor.shutdown()
+                        continuation.resume(Unit)
+                    }
+                }
+
+            WebViewCompat.startUpWebView(
+                this@AnkiDroidApp,
+                config,
+                callback,
+            )
         }
 
     /**
