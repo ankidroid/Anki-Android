@@ -21,12 +21,30 @@ import fi.iki.elonen.NanoHTTPD
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
+import java.io.File
 
 open class AnkiServer(
     private val postHandler: PostRequestHandler,
+    cacheDir: File? = null,
     port: Int = 0,
 ) : NanoHTTPD(LOCALHOST, port) {
-    fun baseUrl(): String = "http://$LOCALHOST:$listeningPort/"
+    private val sslContext =
+        cacheDir?.let { cacheDir ->
+            runCatching { SslUtil.getSSLContext(cacheDir) }
+                .onFailure { Timber.w(it, "Failed to initialize HTTPS for AnkiServer") }
+                .getOrNull()
+        }
+
+    init {
+        // Enable HTTPS when a keystore was created successfully
+        // This allows WebView to load cards without cleartext restrictions on modern Android.
+        sslContext?.let { makeSecure(it.serverSocketFactory, null) }
+    }
+
+    fun baseUrl(): String {
+        val scheme = if (sslContext != null) "https" else "http"
+        return "$scheme://$LOCALHOST:$listeningPort/"
+    }
 
     // it's faster to serve local files without GZip. see 'page render' in logs
     // This also removes 'W/System: A resource failed to call end.'

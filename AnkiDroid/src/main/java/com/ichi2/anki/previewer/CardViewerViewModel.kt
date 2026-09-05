@@ -37,8 +37,10 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import timber.log.Timber
+import java.io.File
 
 abstract class CardViewerViewModel(
+    protected val cacheDir: File,
     val savedStateHandle: SavedStateHandle,
 ) : ViewModel(),
     OnErrorListener,
