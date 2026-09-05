@@ -3,6 +3,7 @@
 package com.ichi2.anki.dialogs
 
 import android.os.Bundle
+import android.os.Looper
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
@@ -39,6 +40,7 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonEqual
 import com.ichi2.testutils.uninitializeField
+import com.ichi2.utils.positiveButton
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.allOf
@@ -52,6 +54,7 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -323,6 +326,138 @@ class CustomStudyDialogTest : RobolectricTest() {
         assertThat(viewModel.selectedKind, equalTo(CramKind.CRAM_KIND_NEW))
     }
 
+    @Test
+    @Config(qualifiers = "en")
+    fun `'review ahead' shows a day or days suffix`() {
+        withStudyAheadDialog {
+            val layout = binding.detailsEditText2Layout
+            assertThat("default of 1 day", layout.suffixText.toString(), equalTo("day"))
+
+            onSubscreenEditText().perform(replaceText("2"))
+            assertThat(layout.suffixText.toString(), equalTo("days"))
+
+            onSubscreenEditText().perform(replaceText("1"))
+            assertThat(layout.suffixText.toString(), equalTo("day"))
+        }
+    }
+
+    @Test
+    fun `'review ahead' rejects leading zeros and more than 5 digits`() {
+        withStudyAheadDialog {
+            val editText = binding.detailsEditText2
+
+            onSubscreenEditText().perform(replaceText("0"))
+            editText.append("5")
+            assertThat("a digit typed after '0' is rejected", editText.text.toString(), equalTo("0"))
+
+            onSubscreenEditText().perform(replaceText("123456"))
+            assertThat(editText.text.toString(), equalTo("12345"))
+        }
+    }
+
+    @Test
+    fun `'review ahead' disables Create when no cards are due in the period`() =
+        runTest {
+            // a card due tomorrow matches 'review ahead by 1 day'
+            val card = addBasicNote().firstCard()
+            card.update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today + 1
+            }
+
+            withStudyAheadDialog { dialog ->
+                val layout = binding.detailsEditText2Layout
+
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("enabled when a card matches", dialog.positiveButton.isEnabled, equalTo(true))
+                assertNull(layout.error)
+
+                onSubscreenEditText().perform(replaceText("0"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("disabled for 0 days", dialog.positiveButton.isEnabled, equalTo(false))
+
+                card.update { due = col.sched.today + 30 }
+
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("disabled when nothing matches", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat(layout.error?.toString(), equalTo(TR.customStudyNoCardsMatchedTheCriteriaYou()))
+            }
+        }
+
+    @Test
+    fun `'review ahead' search does not treat the deck name as a pattern`() =
+        runTest {
+            // '_' is a single-character wildcard in a search: "A_B" must not match "AXB"
+            val emptyDeckId = addDeck("A_B")
+            addDeck("AXB")
+            addNoteDueTomorrow(deckName = "AXB")
+
+            withStudyAheadDialog(deckId = emptyDeckId) { dialog ->
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat("A_B has no cards", dialog.positiveButton.isEnabled, equalTo(false))
+            }
+        }
+
+    @Test
+    fun `'review ahead' search escapes the deck name`() =
+        runTest {
+            // '\' starts an escape sequence in a search
+            val deckId = addDeck("""A\B""")
+            addNoteDueTomorrow(deckName = """A\B""")
+
+            withStudyAheadDialog(deckId = deckId) { dialog ->
+                onSubscreenEditText().perform(replaceText("1"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat(dialog.positiveButton.isEnabled, equalTo(true))
+            }
+        }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'review ahead' warns when 0 days is entered`() =
+        runTest {
+            withStudyAheadDialog {
+                val layout = binding.detailsEditText2Layout
+
+                onSubscreenEditText().perform(replaceText("0"))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertThat(layout.error?.toString(), equalTo("Minimum value is 1"))
+
+                onSubscreenEditText().perform(replaceText(""))
+                shadowOf(Looper.getMainLooper()).idle()
+                assertNull(layout.error, "an empty field is not an error yet")
+            }
+        }
+
+    @Test
+    fun `'review ahead' validates the default value on open`() =
+        runTest {
+            // the default is 1 day; the only card is due in 30 days
+            addBasicNote().firstCard().update {
+                queue = QueueType.Rev
+                type = CardType.Rev
+                due = col.sched.today + 30
+            }
+
+            withStudyAheadDialog { dialog ->
+                assertThat("nothing to review ahead", dialog.positiveButton.isEnabled, equalTo(false))
+                assertThat(binding.detailsEditText2Layout.error?.toString(), equalTo(TR.customStudyNoCardsMatchedTheCriteriaYou()))
+            }
+        }
+
+    /** Adds a note to [deckName] whose card is due tomorrow */
+    private fun addNoteDueTomorrow(deckName: String) {
+        addBasicNote().update { moveToDeck(deckName, false) }.firstCard().update {
+            queue = QueueType.Rev
+            type = CardType.Rev
+            due = col.sched.today + 1
+        }
+    }
+
     /**
      * Runs [block] on a [CustomStudyDialog]
      */
@@ -335,6 +470,15 @@ class CustomStudyDialogTest : RobolectricTest() {
                 block(dialogFragment)
             }
         }
+    }
+
+    /** Opens the 'review ahead' subscreen for [deckId] and runs [block] once the dialog is shown and its buttons exist */
+    private fun withStudyAheadDialog(
+        deckId: DeckId = Consts.DEFAULT_DECK_ID,
+        block: CustomStudyDialog.(dialog: AlertDialog) -> Unit,
+    ) = withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_AHEAD, deckId = deckId)) { fragment ->
+        shadowOf(Looper.getMainLooper()).idle()
+        fragment.block(fragment.dialog as AlertDialog)
     }
 
     private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
