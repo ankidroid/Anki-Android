@@ -66,18 +66,7 @@ class PreferencesScreenshotTest : ScreenshotTest() {
             val fragmentClass = fragment::class
             withPreferencesActivity(fragmentClass) { activity ->
                 Prefs.isNewStudyScreenEnabled = true
-                val mainFragment = activity.fragment as PreferencesFragment
-                val settingsFragment = mainFragment.childFragmentManager.findFragmentById(R.id.settings_container)
-                // Robolectric generates a different temporary path every time,
-                // so avoid creating an unnecessary diff in the collection path pref summary
-                (settingsFragment as? AdvancedSettingsFragment)?.apply {
-                    requirePreference<Preference>(CollectionHelper.PREF_COLLECTION_PATH).summaryProvider = {
-                        "/storage/emulated/0/AnkiDroid"
-                    }
-                }
-                (settingsFragment as? AboutFragment)?.apply {
-                    binding.buildDate.text = "May 18, 2026"
-                }
+                activity.stabilizeContent()
                 captureScreen(fragmentClass.simpleName!!)
             }
         }
@@ -100,17 +89,34 @@ class PreferencesScreenshotTest : ScreenshotTest() {
         advanceRobolectricLooper()
     }
 
+    /** Replaces content which changes between runs, so it does not appear in diffs */
+    private fun PreferencesActivity.stabilizeContent() {
+        val settingsFragment = settingsFragment
+        // Robolectric generates a different temporary path every time,
+        // so avoid creating an unnecessary diff in the collection path pref summary
+        (settingsFragment as? AdvancedSettingsFragment)?.apply {
+            requirePreference<Preference>(CollectionHelper.PREF_COLLECTION_PATH).summaryProvider = {
+                "/storage/emulated/0/AnkiDroid"
+            }
+        }
+        (settingsFragment as? AboutFragment)?.apply {
+            binding.buildDate.text = "May 18, 2026"
+        }
+    }
+
     private fun withPreferencesActivity(
         fragmentClass: KClass<out Fragment>,
         block: (PreferencesActivity) -> Unit,
     ) {
-        ActivityScenario
-            .launch<PreferencesActivity>(
-                PreferencesActivity.getIntent(targetContext, fragmentClass),
-            ).use { scenario ->
-                scenario.onActivity { activity ->
-                    block(activity)
-                }
+        val intent = PreferencesActivity.getIntent(targetContext, fragmentClass)
+        ActivityScenario.launch<PreferencesActivity>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                block(activity)
             }
+        }
     }
+
+    /** The fragment displayed in the settings pane */
+    private val PreferencesActivity.settingsFragment: Fragment?
+        get() = (fragment as PreferencesFragment).childFragmentManager.findFragmentById(R.id.settings_container)
 }
