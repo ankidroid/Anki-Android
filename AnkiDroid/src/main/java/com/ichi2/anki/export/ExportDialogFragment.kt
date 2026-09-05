@@ -168,7 +168,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
                         listOf(
                             "${sentenceCase.ankiCollectionPackage} (.colpkg)",
                             "${sentenceCase.ankiDeckPackage} (.apkg)",
-                            "${exportingNotesInPlainText()} (.txt)",
+                            "${sentenceCase.notesInPlainText} (.txt)",
                             "${exportingCardsInPlainText()} (.txt)",
                         ),
                     ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
