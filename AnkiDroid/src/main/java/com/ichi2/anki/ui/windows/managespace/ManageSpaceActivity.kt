@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.ui.windows.managespace
 
+import androidx.fragment.app.Fragment
 import com.ichi2.anki.SingleFragmentActivity
 
 /**
@@ -13,4 +14,6 @@ import com.ichi2.anki.SingleFragmentActivity
  * @see ManageSpaceFragment
  * @see SingleFragmentActivity.onCreate
  */
-class ManageSpaceActivity : SingleFragmentActivity()
+class ManageSpaceActivity : SingleFragmentActivity() {
+    override fun createFragment(): Fragment = ManageSpaceFragment()
+}
