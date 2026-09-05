@@ -4,14 +4,18 @@ package com.ichi2.anki.preferences
 
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import com.google.android.material.appbar.AppBarLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.storage.CollectionHelper
+import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
 import com.ichi2.testutils.ext.clear
+import com.ichi2.testutils.launchForFullHeightScreenshot
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.utils.dp
 import org.junit.After
@@ -60,13 +64,16 @@ class PreferencesScreenshotTest : ScreenshotTest() {
 
     @Test
     fun `capture all preference fragments`() {
+        Prefs.isNewStudyScreenEnabled = true
         val fragments = PreferenceTestUtils.getAllPreferencesFragments(targetContext)
 
         fragments.forEach { fragment ->
             val fragmentClass = fragment::class
-            withPreferencesActivity(fragmentClass) { activity ->
-                Prefs.isNewStudyScreenEnabled = true
-                activity.stabilizeContent()
+            withPreferencesActivity(
+                fragmentClass,
+                fullHeightList = fragment.fullHeightList(),
+                setup = { activity -> activity.stabilizeContent() },
+            ) {
                 captureScreen(fragmentClass.simpleName!!)
             }
         }
@@ -104,13 +111,24 @@ class PreferencesScreenshotTest : ScreenshotTest() {
         }
     }
 
+    /**
+     * @param fullHeightList if set, the screenshot is full height: the screen is sized to show the whole list
+     * @param setup run after each launch of the screen, before [block]
+     */
     private fun withPreferencesActivity(
         fragmentClass: KClass<out Fragment>,
+        fullHeightList: ((PreferencesActivity) -> RecyclerView)? = null,
+        setup: (PreferencesActivity) -> Unit = {},
         block: (PreferencesActivity) -> Unit,
     ) {
         val intent = PreferencesActivity.getIntent(targetContext, fragmentClass)
+        if (fullHeightList != null) {
+            launchForFullHeightScreenshot(intent, fullHeightList, setup, block)
+            return
+        }
         ActivityScenario.launch<PreferencesActivity>(intent).use { scenario ->
             scenario.onActivity { activity ->
+                setup(activity)
                 block(activity)
             }
         }
@@ -119,4 +137,12 @@ class PreferencesScreenshotTest : ScreenshotTest() {
     /** The fragment displayed in the settings pane */
     private val PreferencesActivity.settingsFragment: Fragment?
         get() = (fragment as PreferencesFragment).childFragmentManager.findFragmentById(R.id.settings_container)
+
+    /** @return the list which makes the screenshot full height, or null to capture at the device height */
+    private fun Fragment.fullHeightList(): ((PreferencesActivity) -> RecyclerView)? =
+        when (this) {
+            is PreferenceFragmentCompat -> { activity -> (activity.settingsFragment as PreferenceFragmentCompat).listView }
+            is ReviewerMenuSettingsFragment -> { activity -> activity.settingsFragment!!.requireView().findViewById(R.id.recycler_view) }
+            else -> null
+        }
 }
