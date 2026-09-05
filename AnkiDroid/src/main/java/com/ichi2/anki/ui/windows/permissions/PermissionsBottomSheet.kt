@@ -65,10 +65,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         }
 
         val permissionSet = requireArguments().requireParcelable<PermissionSet>(ARG_PERMISSION_SET)
-        val permissionsFragment =
-            requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
-                "invalid permissionsFragment"
-            }
+        val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         view.post {
             childFragmentManager.commit {
                 replace(binding.bottomSheetFragmentContainer.id, permissionsFragment)

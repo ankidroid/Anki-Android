@@ -57,10 +57,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
             finish()
             return
         }
-        val permissionsFragment =
-            requireNotNull(permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance()) {
-                "invalid permissionsFragment"
-            }
+        val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         setFragmentResultListener(PERMISSIONS_FRAGMENT_RESULT_KEY) { _, bundle ->
             val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSIONS_KEY)
             setContinueButtonEnabled(hasAllPermissions)

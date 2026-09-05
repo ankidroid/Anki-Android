@@ -67,7 +67,7 @@ class PermissionsActivityTest : RobolectricTest() {
     fun `Each screen starts normally and has the same permissions of a PermissionSet`() {
         testActivity { activity ->
             for (permissionSet in PermissionSet.entries) {
-                val fragment = permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance() ?: continue
+                val fragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
                 activity.supportFragmentManager.commitNow {
                     replace(R.id.fragment_container, fragment)
                 }

@@ -200,7 +200,7 @@ object InitialActivity {
 @Parcelize
 enum class PermissionSet(
     val permissions: List<String>,
-    val permissionsFragment: Class<out PermissionsFragment>?,
+    val permissionsFragment: Class<out PermissionsFragment>,
 ) : Parcelable {
     LEGACY_ACCESS(Permissions.legacyStorageAccessStartupPermissions, PermissionsUntil29Fragment::class.java),
 
