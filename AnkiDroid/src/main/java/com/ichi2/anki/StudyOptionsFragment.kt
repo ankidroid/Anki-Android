@@ -110,7 +110,9 @@ class StudyOptionsFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        if (!fragmented) {
+            requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        }
         if (!fragmented) {
             requireAnkiActivity().setToolbarText(title = "")
         }

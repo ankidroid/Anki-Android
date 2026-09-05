@@ -15,7 +15,6 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.Color
 import android.graphics.PixelFormat
@@ -281,8 +280,7 @@ open class DeckPicker :
 
     override var fragmented: Boolean
         get() =
-            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK ==
-                Configuration.SCREENLAYOUT_SIZE_XLARGE
+            resources.configuration.smallestScreenWidthDp >= 600
         set(_) = throw UnsupportedOperationException()
 
     // Short animation duration from system
@@ -1156,12 +1154,8 @@ open class DeckPicker :
 
         Timber.d("onCreateOptionsMenu()")
         floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
-        // TODO: Refactor menu handling logic to the activity
-        // The menus for the fragmented view should be the responsibility of the activity.
-        // This would mean extracting the menu logic out of the fragments, extending it to the full width of the activity,
-        // and having the activity be responsible for it. This change should reduce complexity.
-        // We should have two menu files for the DeckPicker (fragmented/non), and one for the Options (non-fragmented)
         menuInflater.inflate(R.menu.deck_picker, menu)
+        withStudyOptionsFragment { onCreateMenu(menu, menuInflater) }
         menu.findItem(R.id.deck_picker_action_filter)?.let {
             toolbarSearchItem = it
             setupSearchIcon(it)
@@ -1180,6 +1174,7 @@ open class DeckPicker :
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
         updateSearchVisibilityFromState(menu)
+        withStudyOptionsFragment { onPrepareMenu(menu) }
         // ...then launch a task to possibly update the visible icons.
         // Store the job so that tests can easily await it. In the future
         // this may be better done by injecting a custom test scheduler
@@ -1198,8 +1193,19 @@ open class DeckPicker :
         menu.findItem(R.id.action_custom_study)?.setShowAsAction(
             if (fragmented) MenuItem.SHOW_AS_ACTION_ALWAYS else MenuItem.SHOW_AS_ACTION_NEVER,
         )
+        withStudyOptionsFragment { onPrepareMenu(menu) }
         return super.onPrepareOptionsMenu(menu)
     }
+
+    /**
+     * Fragment-owned study options menu entries only exist in the split-pane layout.
+     */
+    private inline fun <T> withStudyOptionsFragment(block: StudyOptionsFragment.() -> T): T? =
+        if (fragmented) {
+            fragment?.block()
+        } else {
+            null
+        }
 
     fun setupMediaSyncMenuItem(menu: Menu) {
         // shouldn't be necessary, but `invalidateOptionsMenu()` is called way more than necessary
@@ -1348,6 +1354,15 @@ open class DeckPicker :
             return true
         }
         when (item.itemId) {
+            R.id.action_custom_study,
+            R.id.action_deck_or_study_options,
+            R.id.action_schedule_reminders,
+            R.id.action_unbury,
+            R.id.action_rebuild,
+            R.id.action_empty,
+            -> {
+                return withStudyOptionsFragment { onMenuItemSelected(item) } ?: false
+            }
             R.id.action_undo -> {
                 Timber.i("DeckPicker:: Undo button pressed")
                 undo()
