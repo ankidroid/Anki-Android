@@ -56,8 +56,8 @@ class SelectStoragePermissionsTest {
     @Config(sdk = [Q])
     @Test
     fun startupQ() {
-        assertThat(selectStoragePermissions(canManageExternalStorage = false), equalTo(PermissionSet.LEGACY_ACCESS))
-        assertThat(selectStoragePermissions(canManageExternalStorage = true), equalTo(PermissionSet.LEGACY_ACCESS))
+        assertThat(selectStoragePermissions(canManageExternalStorage = false), equalTo(StoragePermissionSet.LEGACY_ACCESS))
+        assertThat(selectStoragePermissions(canManageExternalStorage = true), equalTo(StoragePermissionSet.LEGACY_ACCESS))
     }
 
     @SuppressLint("InlinedApi")
@@ -101,7 +101,7 @@ class SelectStoragePermissionsTest {
     fun startupAfterQWithoutManageExternalStorage() {
         assertThat(
             selectStoragePermissions(canManageExternalStorage = false),
-            equalTo(PermissionSet.APP_PRIVATE),
+            equalTo(StoragePermissionSet.APP_PRIVATE),
         )
     }
 
@@ -111,7 +111,7 @@ class SelectStoragePermissionsTest {
     fun `full build - screen is required while no collection path is set`() {
         context.sharedPrefs().edit { remove(CollectionHelper.PREF_COLLECTION_PATH) }
         withManageExternalStorageInManifest {
-            assertThat(selectStoragePermissions(context), equalTo(PermissionSet.EXTERNAL_MANAGER))
+            assertThat(selectStoragePermissions(context), equalTo(StoragePermissionSet.EXTERNAL_MANAGER))
         }
     }
 
@@ -123,7 +123,7 @@ class SelectStoragePermissionsTest {
             putString(CollectionHelper.PREF_COLLECTION_PATH, "/storage/emulated/0/AnkiDroid")
         }
         withManageExternalStorageInManifest {
-            assertThat(selectStoragePermissions(context), equalTo(PermissionSet.EXTERNAL_MANAGER))
+            assertThat(selectStoragePermissions(context), equalTo(StoragePermissionSet.EXTERNAL_MANAGER))
         }
     }
 
@@ -134,7 +134,7 @@ class SelectStoragePermissionsTest {
             putString(CollectionHelper.PREF_COLLECTION_PATH, File(context.filesDir, "AnkiDroid").path)
         }
         withManageExternalStorageInManifest {
-            assertThat(selectStoragePermissions(context), equalTo(PermissionSet.APP_PRIVATE))
+            assertThat(selectStoragePermissions(context), equalTo(StoragePermissionSet.APP_PRIVATE))
         }
     }
 
@@ -158,7 +158,7 @@ class SelectStoragePermissionsTest {
     private fun selectStoragePermissions(
         canManageExternalStorage: Boolean,
         currentFolderIsAccessibleAndLegacy: Boolean = false,
-    ): PermissionSet =
+    ): StoragePermissionSet =
         com.ichi2.anki.selectStoragePermissions(
             canManageExternalStorage = canManageExternalStorage,
             currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,

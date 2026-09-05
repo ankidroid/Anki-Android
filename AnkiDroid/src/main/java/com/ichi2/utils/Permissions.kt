@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anki.NotificationChannel
-import com.ichi2.anki.PermissionSet
+import com.ichi2.anki.OptionalPermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
@@ -144,14 +144,14 @@ object Permissions {
                 return
             }
             Timber.i("Showing notifications permissions bottom sheet: API >= 33")
-            PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS)
+            PermissionsBottomSheet.launch(fragmentManager, OptionalPermissionSet.NOTIFICATIONS)
         } else {
             if (Prefs.notificationsBottomSheetShownBelowAPI33) {
                 Timber.i("Not showing notifications permissions bottom sheet: already attempted")
                 return
             }
             Timber.i("Showing notifications permissions bottom sheet: API < 33")
-            PermissionsBottomSheet.launch(fragmentManager, PermissionSet.LEGACY_NOTIFICATIONS)
+            PermissionsBottomSheet.launch(fragmentManager, OptionalPermissionSet.LEGACY_NOTIFICATIONS)
             Prefs.notificationsBottomSheetShownBelowAPI33 = true
         }
 

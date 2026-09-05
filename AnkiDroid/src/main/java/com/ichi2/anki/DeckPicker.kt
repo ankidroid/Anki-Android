@@ -1047,7 +1047,7 @@ open class DeckPicker :
 
                 override fun hasRequiredPermissions(): Boolean = permissions.hasRequiredPermissions(context)
 
-                override val requiredPermissions: PermissionSet
+                override val requiredPermissions: StoragePermissionSet
                     get() = permissions
 
                 override val preferences: SharedPreferences

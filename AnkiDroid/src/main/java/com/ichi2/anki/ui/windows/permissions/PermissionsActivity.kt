@@ -12,8 +12,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.content.IntentCompat
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
+import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
@@ -49,7 +49,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         binding.continueButton.setOnClickListener { finish() }
 
         // #20881: Activity should not be launchd without extras
-        val permissionSet = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, PermissionSet::class.java)
+        val permissionSet = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, StoragePermissionSet::class.java)
         if (permissionSet == null) {
             Timber.w("EXTRA_PERMISSIONS_SET not set; finishing")
             showThemedToast(this, R.string.something_wrong, false)
@@ -79,7 +79,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
 
         fun getIntent(
             context: Context,
-            permissionsSet: PermissionSet,
+            permissionsSet: StoragePermissionSet,
         ): Intent =
             Intent(context, PermissionsActivity::class.java).apply {
                 putExtra(EXTRA_PERMISSIONS_SET, permissionsSet as Parcelable)

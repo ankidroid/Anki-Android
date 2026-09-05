@@ -20,7 +20,7 @@ import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.OnErrorListener
-import com.ichi2.anki.PermissionSet
+import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
@@ -493,7 +493,7 @@ class DeckPickerViewModel :
 
     sealed class StartupResponse {
         data class RequestPermissions(
-            val requiredPermissions: PermissionSet,
+            val requiredPermissions: StoragePermissionSet,
         ) : StartupResponse()
 
         /**
@@ -538,7 +538,7 @@ class DeckPickerViewModel :
     interface AnkiDroidEnvironment {
         fun hasRequiredPermissions(): Boolean
 
-        val requiredPermissions: PermissionSet
+        val requiredPermissions: StoragePermissionSet
 
         /** The preferences of the (profile) context the collection path is read from */
         val preferences: SharedPreferences

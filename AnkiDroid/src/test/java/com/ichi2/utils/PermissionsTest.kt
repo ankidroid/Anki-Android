@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
-import com.ichi2.anki.PermissionSet
+import com.ichi2.anki.OptionalPermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.common.permissions.LEGACY_POST_NOTIFICATIONS
 import com.ichi2.anki.settings.Prefs
@@ -172,11 +172,11 @@ class PermissionsTest {
         setCanPermissionBeRequested(true)
         showBottomSheetShouldSucceed()
         showBottomSheetShouldSucceed()
-        verify(exactly = 2) { PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS) }
+        verify(exactly = 2) { PermissionsBottomSheet.launch(fragmentManager, OptionalPermissionSet.NOTIFICATIONS) }
 
         setCanPermissionBeRequested(false)
         showBottomSheetShouldFail()
-        verify(exactly = 2) { PermissionsBottomSheet.launch(fragmentManager, PermissionSet.NOTIFICATIONS) }
+        verify(exactly = 2) { PermissionsBottomSheet.launch(fragmentManager, OptionalPermissionSet.NOTIFICATIONS) }
     }
 
     @Test
@@ -192,7 +192,7 @@ class PermissionsTest {
 
         setCanPermissionBeRequested(false)
         showBottomSheetShouldFail()
-        verify(exactly = 1) { PermissionsBottomSheet.launch(fragmentManager, PermissionSet.LEGACY_NOTIFICATIONS) }
+        verify(exactly = 1) { PermissionsBottomSheet.launch(fragmentManager, OptionalPermissionSet.LEGACY_NOTIFICATIONS) }
         assertThat(Prefs.notificationsBottomSheetShownBelowAPI33, equalTo(true))
     }
 

@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.ichi2.anki.PermissionSet
+import com.ichi2.anki.OptionalPermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentPermissionsBottomSheetBinding
 import com.ichi2.anki.utils.ext.behavior
@@ -64,7 +64,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        val permissionSet = requireArguments().requireParcelable<PermissionSet>(ARG_PERMISSION_SET)
+        val permissionSet = requireArguments().requireParcelable<OptionalPermissionSet>(ARG_PERMISSION_SET)
         val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         view.post {
             childFragmentManager.commit {
@@ -80,7 +80,7 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         private const val FRAGMENT_TAG = "notifications_bottom_sheet"
 
         /**
-         * Arguments key for the [PermissionSet] to launch this BottomSheet with.
+         * Arguments key for the [OptionalPermissionSet] to launch this BottomSheet with.
          */
         private const val ARG_PERMISSION_SET = "arg_permission_set"
 
@@ -91,11 +91,11 @@ class PermissionsBottomSheet : BottomSheetDialogFragment() {
         const val RESULT_DISMISS = "result_dismiss"
 
         /**
-         * Starts this BottomSheet with the provided [PermissionSet].
+         * Starts this BottomSheet with the provided [OptionalPermissionSet].
          */
         fun launch(
             fragmentManager: FragmentManager,
-            permissionsSet: PermissionSet,
+            permissionsSet: OptionalPermissionSet,
         ) {
             val bottomSheet =
                 PermissionsBottomSheet().apply {

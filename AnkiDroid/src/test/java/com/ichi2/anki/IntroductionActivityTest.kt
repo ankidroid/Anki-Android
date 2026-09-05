@@ -30,7 +30,7 @@ class IntroductionActivityTest : RobolectricTest() {
     @Test
     fun `Sync without storage permission opens PermissionsActivity`() =
         runTest {
-            // Robolectric runs at API 35 where selectStoragePermissions returns PermissionSet.APP_PRIVATE,
+            // Robolectric runs at API 35 where selectStoragePermissions returns StoragePermissionSet.APP_PRIVATE,
             // which is just [INTERNET]. Denying INTERNET is the cheapest
             // way to make hasCollectionStoragePermissions() return false in this environment.
             withDeniedPermissions(INTERNET) {
