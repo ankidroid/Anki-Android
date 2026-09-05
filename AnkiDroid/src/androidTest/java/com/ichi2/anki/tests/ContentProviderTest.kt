@@ -367,6 +367,118 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     @Test
+    fun testSearchCards_fillWindowCopiesAllRows() {
+        val note = addTempClozeNote("{{c1::A}} {{c2::B}}")
+        assertThat("sanity check", note.numberOfCards(col), greaterThan(1))
+
+        val cursor =
+            contentResolver.query(
+                FlashCardsContract.Card.CONTENT_URI,
+                null,
+                "nid:${note.id}",
+                null,
+                null,
+            )
+
+        assertNotNull(cursor)
+        cursor.use {
+            val window = CursorWindow("test")
+            val initialPosition = it.position
+            cursorFillWindow(it, 0, window)
+            assertThat("position should not change", it.position, equalTo(initialPosition))
+            assertThat("Count should be copied", window.numRows, equalTo(it.count))
+        }
+    }
+
+    @Test
+    fun testSearchCards_randomAccessIsStable() {
+        val note = addTempClozeNote("{{c1::A}} {{c2::B}}")
+        assertThat("sanity check", note.numberOfCards(col), greaterThan(1))
+
+        val cursor =
+            contentResolver.query(
+                FlashCardsContract.Card.CONTENT_URI,
+                null,
+                "nid:${note.id}",
+                null,
+                null,
+            )
+
+        assertNotNull(cursor)
+        cursor.use {
+            fun rowAt(position: Int): List<String?> {
+                assertTrue("move to $position", it.moveToPosition(position))
+                return (0 until it.columnCount).map { column -> it.getString(column) }
+            }
+
+            val forwards = (0 until it.count).map { position -> rowAt(position) }
+            assertThat("sanity check", forwards.size, greaterThan(1))
+
+            for (position in it.count - 1 downTo 0) {
+                assertEquals("row $position read backwards", forwards[position], rowAt(position))
+            }
+            assertEquals("row 0 re-read", forwards[0], rowAt(0))
+            assertEquals("row 0 read twice in a row", forwards[0], rowAt(0))
+        }
+    }
+
+    @Test
+    fun testSearchCards_rowOfCardDeletedAfterQueryIsNull() {
+        val note = addTempClozeNote("{{c1::A}} {{c2::B}}")
+        assertThat("sanity check", note.numberOfCards(col), greaterThan(1))
+
+        val cursor =
+            contentResolver.query(
+                FlashCardsContract.Card.CONTENT_URI,
+                null,
+                "nid:${note.id}",
+                null,
+                null,
+            )
+
+        assertNotNull(cursor)
+        cursor.use {
+            val cardIds = mutableListOf<Long>()
+            val idColumn = it.getColumnIndexOrThrow(FlashCardsContract.Card._ID)
+            while (it.moveToNext()) {
+                cardIds.add(it.getLong(idColumn))
+            }
+            assertThat("sanity check", cardIds.size, greaterThan(1))
+
+            col.removeNotes(noteIds = listOf(note.id))
+
+            for (position in cardIds.indices) {
+                assertTrue("move to $position", it.moveToPosition(position))
+                assertEquals("_id of a deleted card", cardIds[position], it.getLong(idColumn))
+                for (column in 0 until it.columnCount) {
+                    if (column == idColumn) continue
+                    assertTrue(
+                        "column ${it.getColumnName(column)} of a deleted card is null",
+                        it.isNull(column),
+                    )
+                }
+            }
+        }
+    }
+
+    @Test
+    @Suppress("Recycle")
+    fun testSearchCards_unknownColumnThrowsFromQuery() {
+        val exception =
+            assertThrows<UnsupportedOperationException> {
+                contentResolver.query(
+                    FlashCardsContract.Card.CONTENT_URI,
+                    arrayOf(FlashCardsContract.Card._ID, "not_a_column"),
+                    null,
+                    null,
+                    null,
+                )
+            }
+
+        assertThat(exception.message, containsString("not_a_column"))
+    }
+
+    @Test
     fun testQueryCardById() {
         val card = getFirstCardFromScheduler(col)
 
