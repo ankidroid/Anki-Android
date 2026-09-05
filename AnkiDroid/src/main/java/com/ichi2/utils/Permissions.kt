@@ -264,12 +264,12 @@ object Permissions {
      * @param highlightedChannel The notification channel to highlight in the notifications settings screen,
      * to draw the user's attention.
      */
-    fun Fragment.openAppNotificationsSettingsScreen(highlightedChannel: NotificationChannel? = null) {
+    fun Activity.openAppNotificationsSettingsScreen(highlightedChannel: NotificationChannel? = null) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Timber.i("launching ACTION_APP_NOTIFICATION_SETTINGS")
             startActivity(
                 Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                    putExtra(Settings.EXTRA_APP_PACKAGE, requireActivity().packageName)
+                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
                     highlightedChannel?.let { putExtra(Settings.EXTRA_CHANNEL_ID, it.id) }
                 },
             )
@@ -277,6 +277,9 @@ object Permissions {
             openAppSettingsScreen()
         }
     }
+
+    fun Fragment.openAppNotificationsSettingsScreen(highlightedChannel: NotificationChannel? = null) =
+        requireActivity().openAppNotificationsSettingsScreen(highlightedChannel)
 
     fun Fragment.showToastAndOpenAppSettingsScreen(
         @StringRes message: Int,

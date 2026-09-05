@@ -45,7 +45,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsTest {
-    private lateinit var activity: Activity
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var context: Context
     private lateinit var fragment: Fragment
@@ -56,7 +55,6 @@ class PermissionsTest {
     @Before
     fun setUp() {
         context = getApplicationContext()
-        activity = mockk(relaxed = true)
         fragmentActivity = mockk(relaxed = true)
         fragment = mockk(relaxed = true)
         every { fragment.requireActivity() } returns fragmentActivity
@@ -154,7 +152,7 @@ class PermissionsTest {
 
     private fun triggerPermissionRequest() {
         fragment.requestPermissionThroughDialogOrSettings(
-            activity,
+            fragmentActivity,
             DUMMY_PERMISSION_STRING,
             Prefs::notificationsPermissionRequested,
             permissionRequestLauncher,
@@ -177,13 +175,13 @@ class PermissionsTest {
     }
 
     private fun showBottomSheetShouldFail() {
-        permissionsSpy.showNotificationsPermissionBottomSheetIfNeeded(activity, fragmentManager) {
+        permissionsSpy.showNotificationsPermissionBottomSheetIfNeeded(fragmentActivity, fragmentManager) {
             throw IllegalStateException("callback should not be called")
         }
     }
 
     private fun showBottomSheetShouldSucceed() {
-        permissionsSpy.showNotificationsPermissionBottomSheetIfNeeded(activity, fragmentManager) {
+        permissionsSpy.showNotificationsPermissionBottomSheetIfNeeded(fragmentActivity, fragmentManager) {
             Prefs.notificationsPermissionRequested = true
         }
     }
