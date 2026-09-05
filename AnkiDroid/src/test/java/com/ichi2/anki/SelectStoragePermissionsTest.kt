@@ -11,10 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.utils.Permissions
-import io.mockk.every
-import io.mockk.mockkObject
-import io.mockk.unmockkObject
+import com.ichi2.testutils.withManageExternalStorageInManifest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -140,17 +137,6 @@ class SelectStoragePermissionsTest {
 
     private val context: Context
         get() = ApplicationProvider.getApplicationContext()
-
-    /** a 'full' build: `MANAGE_EXTERNAL_STORAGE` is declared in the manifest */
-    private fun withManageExternalStorageInManifest(block: () -> Unit) {
-        mockkObject(Permissions)
-        every { Permissions.canManageExternalStorage(any()) } returns true
-        try {
-            block()
-        } finally {
-            unmockkObject(Permissions)
-        }
-    }
 
     /**
      * Helper for [com.ichi2.anki.selectStoragePermissions], making `currentFolderIsAccessibleAndLegacy` optional
