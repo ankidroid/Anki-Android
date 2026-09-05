@@ -1167,11 +1167,9 @@ open class DeckPicker :
 
         Timber.d("onCreateOptionsMenu()")
         floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
-        // TODO: Refactor menu handling logic to the activity
-        // The menus for the fragmented view should be the responsibility of the activity.
-        // This would mean extracting the menu logic out of the fragments, extending it to the full width of the activity,
-        // and having the activity be responsible for it. This change should reduce complexity.
-        // We should have two menu files for the DeckPicker (fragmented/non), and one for the Options (non-fragmented)
+        // Fragments own their menus: each fragment registers a MenuProvider against this
+        // activity (see StudyOptionsFragment), and the menu host dispatches creation,
+        // preparation and selection to them. This activity never drives a fragment's menu.
         menuInflater.inflate(R.menu.deck_picker, menu)
         menu.findItem(R.id.deck_picker_action_filter)?.let {
             toolbarSearchItem = it
@@ -1203,13 +1201,6 @@ open class DeckPicker :
                 updateMenuFromState(menu)
             }
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        menu.findItem(R.id.action_custom_study)?.setShowAsAction(
-            if (fragmented) MenuItem.SHOW_AS_ACTION_ALWAYS else MenuItem.SHOW_AS_ACTION_NEVER,
-        )
-        return super.onPrepareOptionsMenu(menu)
     }
 
     fun setupMediaSyncMenuItem(menu: Menu) {
