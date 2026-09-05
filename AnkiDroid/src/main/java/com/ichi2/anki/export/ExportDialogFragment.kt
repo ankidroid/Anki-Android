@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
@@ -53,7 +54,9 @@ import java.io.File
  * Intended to replicate the desktop UI.
  */
 class ExportDialogFragment : AnalyticsDialogFragment() {
-    private lateinit var binding: DialogExportOptionsBinding
+    @VisibleForTesting
+    internal lateinit var binding: DialogExportOptionsBinding
+        private set
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
