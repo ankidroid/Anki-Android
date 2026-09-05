@@ -63,7 +63,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
         onExportDialog {
             // Select export type as anki deck package.
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingAnkiDeckPackage()))
+            onData(containsString("Anki deck package"))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
 
@@ -114,7 +114,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
             // check legacy checkboxes status for apkg export
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingAnkiDeckPackage()))
+            onData(containsString("Anki deck package"))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
             onView(withId(R.id.apkg_export_legacy))
