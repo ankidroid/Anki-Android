@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.core.view.ViewCompat
+import androidx.core.view.ViewGroupCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
@@ -82,6 +83,7 @@ abstract class SettingsFragment :
             setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         }
 
+        ViewGroupCompat.installCompatInsetsDispatch(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
             view.updatePadding(
