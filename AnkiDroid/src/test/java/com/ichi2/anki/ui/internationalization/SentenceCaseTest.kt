@@ -55,6 +55,7 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.checkMediaDeleteUnused, equalTo("Delete unused"))
                     assertThat(TR.sentenceCase.ankiCollectionPackage, equalTo("Anki collection package"))
                     assertThat(TR.sentenceCase.ankiDeckPackage, equalTo("Anki deck package"))
+                    assertThat(TR.sentenceCase.notesInPlainText, equalTo("Notes in plain text"))
 
                     // input-taking accessors: a Title Case input only maps to the sentence form
                     // if the correct sentence-case resource is wired

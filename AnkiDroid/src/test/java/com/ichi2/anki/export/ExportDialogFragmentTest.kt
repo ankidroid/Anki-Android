@@ -129,7 +129,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
 
             // checkboxes are not shown for notes export
             onView(withId(R.id.export_type_selector)).inRoot(isDialog()).perform(click())
-            onData(containsString(TR.exportingNotesInPlainText()))
+            onData(containsString("Notes in plain text"))
                 .inAdapterView(withId(R.id.export_type_selector))
                 .perform(click())
             onView(withId(R.id.apkg_export_legacy))

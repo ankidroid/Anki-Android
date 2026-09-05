@@ -70,6 +70,7 @@ undoActionUndone()
     <string name="sentence_all_decks">All decks</string>
     <string name="sentence_anki_collection_package">Anki collection package</string>
     <string name="sentence_anki_deck_package">Anki deck package</string>
+    <string name="sentence_notes_in_plain_text">Notes in plain text</string>
     <string name="sentence_browser_options">Browser options</string>
     <string name="sentence_change_deck" maxLength="28">Change deck</string>
     <string name="sentence_toggle_mark">Toggle mark</string>
