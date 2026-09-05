@@ -14,7 +14,7 @@ import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
  */
 class ImageOcclusionScreenshotTest : SingleFragmentScreenshotTest() {
     override fun buildIntent(): Intent {
-        val noteTypeId = col.notetypes.byName("Basic")!!.id
+        val noteTypeId = col.notetypes.imageOcclusion.id
         return ImageOcclusion.getIntent(
             targetContext,
             ImageOcclusionArgs.Add(

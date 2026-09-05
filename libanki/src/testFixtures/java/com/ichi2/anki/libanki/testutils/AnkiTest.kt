@@ -415,6 +415,9 @@ interface AnkiTest {
     val Notetypes.cloze
         get() = byName("Cloze")!!
 
+    val Notetypes.imageOcclusion
+        get() = byName("Image Occlusion")!!
+
     /**
      * Returns the backend protobuf of the note type
      */
