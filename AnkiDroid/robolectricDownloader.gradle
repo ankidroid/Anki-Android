@@ -31,9 +31,9 @@ def robolectricAndroidSdkVersions = [
         [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
         [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
         [androidVersion: "14", frameworkSdkBuildVersion: "10818077"],
-        [androidVersion: "15", frameworkSdkBuildVersion: "13954326"], // current targetSdk
+        [androidVersion: "15", frameworkSdkBuildVersion: "13954326"],
         // TODO: check TarArchiveInputStream.forEachEntry when this is updated
-        [androidVersion: "16", frameworkSdkBuildVersion: "13921718"], // used for `@Config(sdk = Build.VERSION_CODES.BAKLAVA)`
+        [androidVersion: "16", frameworkSdkBuildVersion: "13921718"], // current targetSdk
 ]
 
 // Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks
