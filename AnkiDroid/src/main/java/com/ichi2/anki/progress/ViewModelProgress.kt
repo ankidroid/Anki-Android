@@ -3,14 +3,17 @@
 
 package com.ichi2.anki.progress
 
+import androidx.annotation.StringRes
 import com.ichi2.anki.ProgressContext
 
 /** Progress state observed by the UI. See [ProgressManager] for concurrent-op semantics. */
 sealed interface ViewModelProgress {
     data object Idle : ViewModelProgress
 
+    /** [messageRes] is resolved by the observer and shown when [message] is null. */
     data class Active(
         val message: String? = null,
+        @StringRes val messageRes: Int? = null,
         val amount: ProgressContext.Amount? = null,
         val cancellable: Boolean = false,
         val formatAmount: (ProgressContext.Amount) -> String =

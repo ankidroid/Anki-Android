@@ -3,10 +3,13 @@
 
 package com.ichi2.anki.progress
 
+import androidx.annotation.StringRes
 import com.ichi2.anki.ProgressContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.concurrent.atomic.AtomicLong
+
+private val defaultFormatAmount: (ProgressContext.Amount) -> String = { (current, max) -> "$current/$max" }
 
 /**
  * Progress state shared by a ViewModel and its UI.
@@ -33,6 +36,7 @@ class ProgressManager {
      */
     private class Op(
         var message: String?,
+        @StringRes val messageRes: Int?,
         var amount: ProgressContext.Amount?,
         val onCancel: (() -> Unit)?,
         val formatAmount: (ProgressContext.Amount) -> String,
@@ -55,9 +59,42 @@ class ProgressManager {
     suspend fun <T> withProgress(
         message: String? = null,
         onCancel: (() -> Unit)? = null,
-        formatAmount: (ProgressContext.Amount) -> String =
-            { (current, max) -> "$current/$max" },
+        formatAmount: (ProgressContext.Amount) -> String = defaultFormatAmount,
         separator: String = " ",
+        block: suspend ProgressScope.() -> T,
+    ): T =
+        runOp(
+            message = message,
+            messageRes = null,
+            onCancel = onCancel,
+            formatAmount = formatAmount,
+            separator = separator,
+            block = block,
+        )
+
+    /** [withProgress] with a string resource as the initial message, resolved by the observer. */
+    suspend fun <T> withProgress(
+        @StringRes messageRes: Int,
+        onCancel: (() -> Unit)? = null,
+        formatAmount: (ProgressContext.Amount) -> String = defaultFormatAmount,
+        separator: String = " ",
+        block: suspend ProgressScope.() -> T,
+    ): T =
+        runOp(
+            message = null,
+            messageRes = messageRes,
+            onCancel = onCancel,
+            formatAmount = formatAmount,
+            separator = separator,
+            block = block,
+        )
+
+    private suspend fun <T> runOp(
+        message: String?,
+        @StringRes messageRes: Int?,
+        onCancel: (() -> Unit)?,
+        formatAmount: (ProgressContext.Amount) -> String,
+        separator: String,
         block: suspend ProgressScope.() -> T,
     ): T {
         val opId = nextOpId.incrementAndGet()
@@ -65,6 +102,7 @@ class ProgressManager {
             activeOps[opId] =
                 Op(
                     message = message,
+                    messageRes = messageRes,
                     amount = null,
                     onCancel = onCancel,
                     formatAmount = formatAmount,
@@ -122,6 +160,7 @@ class ProgressManager {
                 val latest = activeOps.values.last()
                 ViewModelProgress.Active(
                     message = latest.message,
+                    messageRes = latest.messageRes,
                     amount = latest.amount,
                     cancellable = activeOps.values.any { it.onCancel != null },
                     formatAmount = latest.formatAmount,
