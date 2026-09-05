@@ -170,9 +170,11 @@ class ChangeNoteTypeViewModel(
     }
 
     /**
-     * Whether [updateTemplateMapping] can be called
+     * Whether template mapping applies to the current conversion
      *
      * Templates may only be updated if the input and output note type are non-cloze
+     *
+     * @see canChangeTemplates
      */
     val canChangeTemplatesFlow by lazy {
         conversionTypeFlow
@@ -264,6 +266,15 @@ class ChangeNoteTypeViewModel(
      */
     val outputNoteType
         get() = outputNoteTypeFlow.value
+
+    /**
+     * Whether template mapping applies to the current conversion: both note types must be regular
+     *
+     * Unlike [canChangeTemplatesFlow], this never lags behind [outputNoteType]
+     */
+    val canChangeTemplates: Boolean
+        get() =
+            ConversionType.fromNoteTypeChange(current = inputNoteType, new = outputNoteType) == ConversionType.REGULAR_TO_REGULAR
 
     init {
         delayedInit {
@@ -432,7 +443,11 @@ class ChangeNoteTypeViewModel(
         outputTemplateIndex: Int,
         mappedFrom: SelectedIndex,
     ) = viewModelScope.launch {
-        require(canChangeTemplatesFlow.value) { "changing templates was disabled" }
+        // a Spinner may deliver a selection the user didn't make
+        if (!canChangeTemplatesFlow.value) {
+            Timber.w("ignoring template mapping: changing templates is disabled")
+            return@launch
+        }
 
         Timber.d("Updating card mapping: %d -> %s", outputTemplateIndex, mappedFrom)
         val updatedValue = mappedFrom.toNullableInt()
