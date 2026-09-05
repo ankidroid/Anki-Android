@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.test.core.app.ActivityScenario
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.insetsOf
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
@@ -48,6 +50,29 @@ class CardTemplateEditorScreenshotTest : ScreenshotTest() {
             advanceRobolectricLooper()
             simulateSideNavigationBar()
             captureScreen("landscape")
+        }
+    }
+
+    /** How the IME appears while a physical keyboard is attached */
+    enum class PhysicalKeyboardIme { BUTTONS, GESTURES, SOFTWARE_KEYBOARD }
+
+    /** The template tabs stay for a physical keyboard, and only hide for the full software keyboard */
+    @Test
+    fun physicalKeyboard(
+        @TestParameter ime: PhysicalKeyboardIme,
+    ) {
+        RuntimeEnvironment.setQualifiers("+land-keysexposed-qwerty")
+        withCardTemplateEditor {
+            when (ime) {
+                // 3-button navigation reports a visible IME with no height
+                PhysicalKeyboardIme.BUTTONS -> dispatchInsets(navBarRight = 48.dp, imeVisible = true)
+                // gesture navigation shows only a 48dp strip
+                PhysicalKeyboardIme.GESTURES -> dispatchInsets(navBarBottom = 24.dp, imeBottom = 48.dp)
+                // the user may still opt into the software keyboard
+                PhysicalKeyboardIme.SOFTWARE_KEYBOARD -> dispatchInsets(navBarBottom = 24.dp, imeBottom = 240.dp)
+            }
+            advanceRobolectricLooper()
+            captureScreen("physical_keyboard_${ime.name.lowercase()}")
         }
     }
 

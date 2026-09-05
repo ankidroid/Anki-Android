@@ -75,6 +75,8 @@ fun insetsOf(
  * @param cutoutTop a display cutout on the top edge (portrait phone with a notch)
  * @param bottomCornerRadius the radius of both bottom rounded display corners
  * @param imeBottom the height of the on-screen keyboard
+ * @param imeVisible whether the keyboard is shown. Defaults to whether it has a height: a physical
+ * keyboard may show an IME with only a navigation strip, or no height at all
  * @param barsVisible whether the status and navigation bars are shown; `false` in immersive mode
  */
 context(context: Context)
@@ -86,6 +88,7 @@ fun windowInsetsOf(
     cutoutTop: Dp = 0.dp,
     bottomCornerRadius: Dp = 0.dp,
     imeBottom: Dp = 0.dp,
+    imeVisible: Boolean = imeBottom.dp > 0f,
     barsVisible: Boolean = true,
 ): WindowInsetsCompat =
     WindowInsetsCompat
@@ -99,6 +102,7 @@ fun windowInsetsOf(
         ).setInsets(displayCutout(), insetsOf(left = cutoutLeft, top = cutoutTop))
         .setInsetsIgnoringVisibility(displayCutout(), insetsOf(left = cutoutLeft, top = cutoutTop))
         .setInsets(ime(), insetsOf(bottom = imeBottom))
+        .setVisible(ime(), imeVisible)
         .setVisible(statusBars() or navigationBars(), barsVisible)
         .apply {
             // set even when zero: Robolectric's WindowInsets.Builder leaks rounded corners between tests
@@ -121,6 +125,7 @@ fun Activity.dispatchInsets(
     cutoutTop: Dp = 0.dp,
     bottomCornerRadius: Dp = 0.dp,
     imeBottom: Dp = 0.dp,
+    imeVisible: Boolean = imeBottom.dp > 0f,
     barsVisible: Boolean = true,
 ) {
     val insets =
@@ -132,6 +137,7 @@ fun Activity.dispatchInsets(
             cutoutTop = cutoutTop,
             bottomCornerRadius = bottomCornerRadius,
             imeBottom = imeBottom,
+            imeVisible = imeVisible,
             barsVisible = barsVisible,
         )
     ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)

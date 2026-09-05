@@ -765,9 +765,9 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             binding.editText.addTextChangedListener(templateEditorWatcher)
 
             ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-                /* When keyboard is visible, hide the bottom navigation bar to allow viewing
-                of all template text when resize happens */
-                binding.bottomNavigation.isVisible = !insets.isVisible(ime())
+                // Hide the template tabs to make room for a full software keyboard. A physical
+                // keyboard can report a visible IME with only a navigation strip (or zero height).
+                binding.bottomNavigation.isVisible = insets.getInsets(ime()).bottom <= binding.bottomNavigation.minimumHeight
                 // When fragmented, the activity insets the editor pane instead.
                 // The bottom navigation insets itself, so it is not padded here.
                 if (!templateEditor.fragmented) {
