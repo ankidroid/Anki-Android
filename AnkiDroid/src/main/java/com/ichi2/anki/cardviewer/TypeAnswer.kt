@@ -17,6 +17,8 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
+ * Handles 'Type the answer' for the old study screen
+ *
  * @param useInputTag use an `<input>` tag to allow for HTML styling
  * @param autoFocus Whether the user wants to focus "type in answer"
  */
@@ -75,21 +77,13 @@ class TypeAnswer(
         correct = null
         val q = card.question(col)
         val m = PATTERN.matcher(q)
-        var clozeIdx = 0
         if (!m.find()) {
             return
         }
-        var fldTag = m.group(1)!!
-        // if it's a cloze, extract data
-        if (fldTag.startsWith("cloze:")) {
-            // get field and cloze position
-            clozeIdx = card.ord + 1
-            fldTag = fldTag.split(":").toTypedArray()[1]
-        }
-        if (fldTag.startsWith("nc:")) {
-            combining = false
-            fldTag = fldTag.split(":").toTypedArray()[1]
-        }
+        val parsed = TypeAnswerModifiers.parse(m.group(1)!!)
+        combining = parsed.combining
+        val fldTag = parsed.fieldName
+        val clozeIdx = if (parsed.cloze) card.ord + 1 else 0
         // loop through fields for a match
         for (fld in card.noteType(col).fields) {
             val name = fld.name

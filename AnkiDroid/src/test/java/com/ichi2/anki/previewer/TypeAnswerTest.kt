@@ -7,10 +7,12 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class TypeAnswerTest : JvmTest() {
@@ -25,6 +27,17 @@ class TypeAnswerTest : JvmTest() {
             val result = assertDoesNotThrow { typeAnswer.answerFilter("") }
             assertThat(result, containsString("$ ls"))
             assertThat(result, not(containsString("[[type:Back]]")))
+        }
+
+    @Test
+    fun `chained modifiers are parsed`() =
+        runTest {
+            val card = addClozeNote("{{c1::hello}} world").firstCard()
+
+            val typeAnswer = TypeAnswer.getInstance(card, "[[type:cloze:nc:Text]]")
+
+            assertNotNull(typeAnswer, "chained 'cloze' and 'nc' modifiers")
+            assertThat(typeAnswer.expectedAnswer, equalTo("hello"))
         }
 
     companion object {
