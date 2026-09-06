@@ -9,6 +9,7 @@ import com.ichi2.anki.model.FieldFilters.FuriganaFilter
 import com.ichi2.anki.model.FieldFilters.HintFilter
 import com.ichi2.anki.model.FieldFilters.KanaFilter
 import com.ichi2.anki.model.FieldFilters.KanjiFilter
+import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
 import com.ichi2.anki.model.FieldFilters.TextFilter
 import com.ichi2.anki.model.FieldFilters.TextToSpeechFilter
 import com.ichi2.anki.model.FieldFilters.TextToSpeechFilter.TextToSpeechOptions
@@ -71,6 +72,7 @@ class FieldFilterChainTest {
                 HintFilter to "hint",
                 TypeTheAnswerFilter to "type",
                 TypeTheAnswerNonCombiningFilter to "type:nc",
+                NoSuggestFilter to "nosuggest",
                 invalidTextToSpeechFilter() to "tts",
                 FuriganaFilter to "furigana",
                 KanaFilter to "kana",
@@ -130,21 +132,54 @@ class FieldFilterChainTest {
     }
 
     @Test
-    fun `tryAdd - 'type' - no more filters can be added`() {
+    fun `tryAdd - 'type' - only 'nosuggest' can be added`() {
         val chain = standardChain().add(TypeTheAnswerFilter)
 
         for (filter in FieldFilters.ALL) {
+            if (filter == NoSuggestFilter) continue
             assertNull(chain.tryAdd(filter, allowInvalid = true), message = filter.name)
         }
+        assertNotNull(chain.tryAdd(NoSuggestFilter), message = "nosuggest after type")
     }
 
     @Test
-    fun `tryAdd - 'type-nc' - no more filters can be added`() {
+    fun `tryAdd - 'type-nc' - only 'nosuggest' can be added`() {
         val chain = standardChain().add(TypeTheAnswerNonCombiningFilter)
 
         for (filter in FieldFilters.ALL) {
+            if (filter == NoSuggestFilter) continue
             assertNull(chain.tryAdd(filter, allowInvalid = true), message = filter.name)
         }
+        assertNotNull(chain.tryAdd(NoSuggestFilter), message = "nosuggest after type:nc")
+    }
+
+    @Test
+    fun `tryAdd - 'nosuggest' cannot be added without a preceding 'type' filter`() {
+        // 'nosuggest' only modifies the [[type:...]] marker
+        assertNull(standardChain().tryAdd(NoSuggestFilter), message = "empty chain")
+        assertNull(standardChain().add(HintFilter).tryAdd(NoSuggestFilter), message = "after hint")
+        assertNull(standardChain().add(textToSpeechFilter(), allowInvalid = true).tryAdd(NoSuggestFilter), message = "after tts")
+    }
+
+    @Test
+    fun `tryAdd - 'nosuggest' cannot be added twice`() {
+        val chain = standardChain().add(TypeTheAnswerFilter).add(NoSuggestFilter)
+
+        assertNull(chain.tryAdd(NoSuggestFilter), message = "duplicate nosuggest blocked")
+    }
+
+    @Test
+    fun `render - 'nosuggest' after 'type'`() {
+        val chain = standardChain().add(TypeTheAnswerFilter).add(NoSuggestFilter)
+
+        assertEquals("{{nosuggest:type:$FIELD_NAME}}", chain.render())
+    }
+
+    @Test
+    fun `render - 'nosuggest' after 'type-nc'`() {
+        val chain = standardChain().add(TypeTheAnswerNonCombiningFilter).add(NoSuggestFilter)
+
+        assertEquals("{{nosuggest:type:nc:$FIELD_NAME}}", chain.render())
     }
 
     @Test
