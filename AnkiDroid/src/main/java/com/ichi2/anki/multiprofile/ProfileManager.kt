@@ -28,7 +28,7 @@ import java.io.File
 class ProfileManager private constructor(
     context: Context,
 ) {
-    private val profileContext = context.applicationContext
+    private val profileContext = context.applicationContext ?: context
 
     lateinit var activeProfileContext: Context
         private set
@@ -662,6 +662,10 @@ class ProfileManager private constructor(
         /**
          * Factory method to safely create and initialize the ProfileManager.
          * Guaranteed to return a ProfileManager with a valid [activeProfileContext].
+         *
+         * @param context an application-level context. Safe to call from
+         *   [android.app.Application.attachBaseContext], where the base context is
+         *   passed directly because [Context.getApplicationContext] is still null.
          */
         fun create(context: Context): ProfileManager {
             val manager = ProfileManager(context)
