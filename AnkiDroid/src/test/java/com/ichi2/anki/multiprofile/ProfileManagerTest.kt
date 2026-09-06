@@ -18,6 +18,7 @@
 package com.ichi2.anki.multiprofile
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.os.Build
 import android.webkit.CookieManager
@@ -71,6 +72,19 @@ class ProfileManagerTest {
         ProfileManager.create(context)
 
         assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
+    fun `create works before the application context is available`() {
+        val duringAttachBaseContext =
+            object : ContextWrapper(context) {
+                override fun getApplicationContext(): Context? = null
+            }
+
+        val manager = ProfileManager.create(duringAttachBaseContext)
+
+        assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+        assertEquals(context.filesDir.absolutePath, manager.activeProfileContext.filesDir.absolutePath)
     }
 
     @Test
