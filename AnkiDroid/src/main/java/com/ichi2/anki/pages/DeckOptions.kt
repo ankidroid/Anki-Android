@@ -11,6 +11,7 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import anki.collection.ComputeParamsProgress
@@ -229,6 +230,21 @@ class DeckOptions : PageFragment() {
 
         webViewLayout.evaluateJavascript(openJs) {}
         webViewLayout.evaluateJavascript(closeJs) {}
+    }
+
+    /**
+     * The WebView was recreated after its renderer crashed, and the page is being reloaded
+     *
+     * Restore the loading state until the page reports it is ready again
+     *
+     * @see onWebViewReady
+     */
+    override fun onWebViewRecreated(webView: WebView) {
+        Timber.i("WebView recreated: reloading deck options")
+        webViewIsReady = false
+        webViewLayout.isInvisible = true
+        pageLoadingIndicator.isVisible = true
+        super.onWebViewRecreated(webView)
     }
 
     fun onWebViewReady() {
