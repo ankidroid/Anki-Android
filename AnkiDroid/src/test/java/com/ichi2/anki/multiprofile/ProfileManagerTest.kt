@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.webkit.CookieManager
+import android.webkit.ValueCallback
 import android.webkit.WebView
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
@@ -28,6 +29,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.KEY_LAST_ACTIVE_PROFILE_ID
+import com.ichi2.anki.multiprofile.ProfileManager.Companion.KEY_WEBVIEW_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
 import io.mockk.every
 import io.mockk.just
@@ -46,6 +48,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class ProfileManagerTest {
@@ -149,13 +152,87 @@ class ProfileManagerTest {
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.O_MR1])
-    fun `Legacy device clears cookies on init (Pre-API 28)`() {
-        mockkStatic(CookieManager::class)
-        val mockCookies = mockk<CookieManager>(relaxed = true)
-        every { CookieManager.getInstance() } returns mockCookies
+    fun `Legacy device keeps cookies on first run as the WebView data is already Default's (Pre-API 28)`() {
+        val cookieManager = mockCookieManager()
+        assertNull(prefs.getString(KEY_WEBVIEW_PROFILE_ID, null), "no WebView owner is recorded before the first run")
+
         ProfileManager.create(context)
 
-        verify(exactly = 1) { mockCookies.removeAllCookies(null) }
+        verify(exactly = 0) { cookieManager.removeAllCookies(any()) }
+        verify(exactly = 0) { CookieManager.getInstance() }
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.O_MR1])
+    fun `Legacy device does not clear cookies for the same profile repeatedly (Pre-API 28)`() {
+        val cookieManager = mockCookieManager()
+        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, "p_bob") }
+
+        // the first launch clears the cookies as p_bob takes ownership of the WebView data
+        ProfileManager.create(context)
+        // the second launch does not clear them again as p_bob already owns the data
+        ProfileManager.create(context)
+
+        verify(exactly = 1) { cookieManager.removeAllCookies(any()) }
+        verify(exactly = 1) { cookieManager.flush() }
+        assertEquals("p_bob", prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.O_MR1])
+    fun `Legacy device clears cookies once the active profile changed (Pre-API 28)`() {
+        val cookieManager = mockCookieManager()
+
+        ProfileManager.create(context)
+        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, "p_bob") }
+        ProfileManager.create(context)
+
+        verify(exactly = 1) { cookieManager.removeAllCookies(any()) }
+        assertEquals("p_bob", prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.O_MR1])
+    fun `Legacy device clears cookies with no recorded owner once another profile exists (Pre-API 28)`() {
+        val cookieManager = mockCookieManager()
+        val manager = ProfileManager.create(context)
+        manager.createNewProfile(ProfileName.fromTrustedSource("Bob"))
+        prefs.edit(commit = true) { remove(KEY_WEBVIEW_PROFILE_ID) }
+
+        ProfileManager.create(context)
+
+        verify(exactly = 1) { cookieManager.removeAllCookies(any()) }
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+    }
+
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.O_MR1])
+    fun `Legacy device clears cookies again if the removal never completed (Pre-API 28)`() {
+        val cookieManager = mockCookieManager(completesRemoval = false)
+        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, "p_bob") }
+
+        ProfileManager.create(context)
+        ProfileManager.create(context)
+
+        verify(exactly = 2) { cookieManager.removeAllCookies(any()) }
+        assertNull(prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+    }
+
+    @Test
+    fun `getAllProfiles ignores bookkeeping keys whose value parses as profile JSON`() {
+        val manager = ProfileManager.create(context)
+        val metadataJson =
+            ProfileManager
+                .ProfileMetadata(displayName = ProfileName.fromTrustedSource("Not a profile"))
+                .toJson()
+
+        prefs.edit(commit = true) { putString(KEY_WEBVIEW_PROFILE_ID, metadataJson) }
+
+        assertFalse(
+            "Bookkeeping keys must never surface as profiles",
+            manager.getAllProfiles().containsKey(ProfileId(KEY_WEBVIEW_PROFILE_ID)),
+        )
     }
 
     @Test
@@ -529,6 +606,19 @@ class ProfileManagerTest {
 
         assertFalse("media.trash contents should be deleted", trashFile.exists())
         assertFalse("media.trash folder should be deleted", trashFile.parentFile!!.exists())
+    }
+
+    /** Stubs [CookieManager.getInstance]. [completesRemoval] fires the cookie removal callback. */
+    private fun mockCookieManager(completesRemoval: Boolean = true): CookieManager {
+        mockkStatic(CookieManager::class)
+        val cookieManager = mockk<CookieManager>(relaxed = true)
+        every { CookieManager.getInstance() } returns cookieManager
+        if (completesRemoval) {
+            every { cookieManager.removeAllCookies(any()) } answers {
+                firstArg<ValueCallback<Boolean>>().onReceiveValue(true)
+            }
+        }
+        return cookieManager
     }
 
     private fun writeProfileCollectionPath(

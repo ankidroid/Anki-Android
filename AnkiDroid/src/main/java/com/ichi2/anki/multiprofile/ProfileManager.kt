@@ -198,9 +198,43 @@ class ProfileManager private constructor(
         prefs.edit { putString(PREF_COLLECTION_PATH, profileCollectionDir.absolutePath) }
     }
 
+    /**
+     * Records [profileId] as the owner of the shared WebView storage, clearing the cookies of the
+     * previous owner first.
+     *
+     * [WebView.setDataDirectorySuffix] is unavailable before API 28, so every profile shares one
+     * WebView data directory and a profile change has to clear it. No recorded owner means the
+     * first run of a build which records one: if Default is also the only profile then no other
+     * profile has ever run here, so the existing data is adopted rather than cleared, which would
+     * otherwise touch the WebView on the startup path and drop the AnkiWeb session of users who
+     * never switch profiles.
+     */
+    private fun resetWebViewDataIfProfileChanged(profileId: ProfileId) {
+        val webViewOwner = profileRegistry.getWebViewProfileId()
+        if (webViewOwner == profileId) return
+
+        if (webViewOwner == null && profileId.isDefault() && profileRegistry.isOnlyProfile(profileId)) {
+            Timber.i("Adopting the existing WebView data: no other profile has run on this install")
+            profileRegistry.setWebViewProfileId(profileId)
+            return
+        }
+
+        Timber.i("WebView data belongs to another profile, clearing cookies")
+        CookieManager.getInstance().removeAllCookiesSync {
+            profileRegistry.setWebViewProfileId(profileId)
+        }
+    }
+
+    /** Runs [block] once the removal has completed and the cookies are flushed to disk. */
+    private fun CookieManager.removeAllCookiesSync(block: CookieManager.() -> Unit) =
+        removeAllCookies {
+            flush()
+            block()
+        }
+
     private fun configureWebView(profileId: ProfileId) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            CookieManager.getInstance().removeAllCookies(null)
+            resetWebViewDataIfProfileChanged(profileId)
             return
         }
 
@@ -550,6 +584,26 @@ class ProfileManager private constructor(
             globalPrefs.edit { putString(KEY_LAST_ACTIVE_PROFILE_ID, id.value) }
         }
 
+        fun getWebViewProfileId(): ProfileId? {
+            val id = globalPrefs.getString(KEY_WEBVIEW_PROFILE_ID, null)
+            return id?.let { ProfileId(it) }
+        }
+
+        fun setWebViewProfileId(id: ProfileId) {
+            globalPrefs.edit { putString(KEY_WEBVIEW_PROFILE_ID, id.value) }
+        }
+
+        /**
+         * Whether [id] is the only profile in the registry.
+         *
+         * Counts raw keys rather than [getAllProfiles] so that an entry which fails to parse still
+         * counts as a profile.
+         */
+        fun isOnlyProfile(id: ProfileId): Boolean {
+            val profileKeys = globalPrefs.all.keys - BOOKKEEPING_KEYS
+            return profileKeys.size == 1 && id.value in profileKeys
+        }
+
         fun saveProfile(
             id: ProfileId,
             metadata: ProfileMetadata,
@@ -589,7 +643,7 @@ class ProfileManager private constructor(
             val allEntries = globalPrefs.all
             for ((key, value) in allEntries) {
                 // Skip internal bookkeeping keys; only profile entries remain
-                if (key == KEY_LAST_ACTIVE_PROFILE_ID) continue
+                if (key in BOOKKEEPING_KEYS) continue
 
                 val metadata =
                     try {
@@ -633,6 +687,12 @@ class ProfileManager private constructor(
         private const val MAX_ATTEMPTS = 10
         const val PROFILE_REGISTRY_FILENAME = "profiles_prefs"
         const val KEY_LAST_ACTIVE_PROFILE_ID = "last_active_profile_id"
+
+        /** Profile whose data the shared WebView storage currently holds. Pre-API 28 only. */
+        const val KEY_WEBVIEW_PROFILE_ID = "webview_profile_id"
+
+        /** Registry keys that are not profile entries. */
+        private val BOOKKEEPING_KEYS = setOf(KEY_LAST_ACTIVE_PROFILE_ID, KEY_WEBVIEW_PROFILE_ID)
 
         const val DEFAULT_PROFILE_DISPLAY_NAME = "Default"
 
