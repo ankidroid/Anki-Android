@@ -3,12 +3,14 @@
 
 package com.ichi2.anki.preferences.profiles
 
+import com.ichi2.anki.common.utils.firstGraphemeOrNull
+
 /** UI model for a row in the profile list. */
 data class ProfileItem(
     val id: String,
     val name: String,
 ) {
-    /** Uppercased first letter of the name, shown in the avatar circle. */
+    /** Uppercased first character of the name, shown in the avatar circle. */
     val initial: String
-        get() = name.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
+        get() = name.firstGraphemeOrNull()?.uppercase() ?: "?"
 }
