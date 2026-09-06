@@ -170,6 +170,20 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun `reminders for a deleted deck`() {
+        val deckId = addDeck("Deleted deck")
+        val deckScope = ReviewReminderScope.DeckSpecific(deckId)
+        insertReminder(ReviewReminderTime(8, 0))
+        insertReminder(ReviewReminderTime(9, 30), scope = deckScope)
+        insertReminder(ReviewReminderTime(18, 15), scope = deckScope, enabled = false)
+        col.decks.remove(listOf(deckId))
+
+        withStandaloneScheduleReminders {
+            captureScreen("deletedDeckReminders")
+        }
+    }
+
+    @Test
     fun `standalone activity host with system bars`() =
         withStandaloneScheduleReminders { activity ->
             activity.simulateSystemBars()
