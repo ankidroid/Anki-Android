@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.util.AndroidRuntimeException
+import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.annotation.MainThread
 import androidx.annotation.StringRes
@@ -78,7 +79,7 @@ fun showDialogIfWebViewOutdated(
 @MainThread
 fun getWebviewUserAgent(context: Context): String? {
     try {
-        return WebView(context).settings.userAgentString
+        return WebSettings.getDefaultUserAgent(context)
     } catch (e: AndroidRuntimeException) {
         // MissingWebViewPackageException is not public
         if (e.cause.toString().contains("MissingWebViewPackageException")) {
