@@ -157,6 +157,19 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun `enabled and disabled global and deck reminders`() {
+        val deckScope = ReviewReminderScope.DeckSpecific(addDeck("Japanese::Vocabulary"))
+        insertReminder(ReviewReminderTime(8, 0))
+        insertReminder(ReviewReminderTime(9, 30), enabled = false)
+        insertReminder(ReviewReminderTime(18, 15), scope = deckScope)
+        insertReminder(ReviewReminderTime(21, 45), scope = deckScope, enabled = false)
+
+        withStandaloneScheduleReminders {
+            captureScreen("globalAndDeckReminders_enabledAndDisabled")
+        }
+    }
+
+    @Test
     fun `standalone activity host with system bars`() =
         withStandaloneScheduleReminders { activity ->
             activity.simulateSystemBars()
@@ -201,6 +214,16 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
             advanceRobolectricLooper()
             captureScreen("standaloneActivityHost_troubleshooting_systemBars")
         }
+    }
+
+    private fun insertReminder(
+        time: ReviewReminderTime,
+        scope: ReviewReminderScope = ReviewReminderScope.Global,
+        enabled: Boolean = true,
+    ) = runBlocking {
+        ReviewRemindersDatabase.insertReminder(
+            ReviewReminder.createReviewReminder(time = time, scope = scope, enabled = enabled),
+        )
     }
 
     /** Inserts [count] reminders so the list has content to render behind the simulated bars */
