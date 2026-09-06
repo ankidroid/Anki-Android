@@ -39,6 +39,8 @@ androidxComposeBillOfMaterials = "2026.06.01"
 androidxConstraintlayout = "2.2.2"
 # https://developer.android.com/jetpack/androidx/releases/core
 androidxCoreKtx = "1.17.0"
+# https://developer.android.com/jetpack/androidx/releases/credentials
+androidxCredentials = "1.6.0"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
 androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
@@ -140,6 +142,7 @@ acra-dialog = { module = "ch.acra:acra-dialog", version.ref = "acra" }
 acra-http = { module = "ch.acra:acra-http", version.ref = "acra" }
 android-image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "imageCropper" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidxConstraintlayout" }
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "androidxCredentials" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifinterface" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtx" }
