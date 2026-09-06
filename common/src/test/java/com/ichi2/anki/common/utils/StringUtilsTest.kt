@@ -250,4 +250,29 @@ class StringUtilsTest {
         assertThat(input.ellipsize(10), equalTo("Brazil\uD83C\uDDE7\uD83C\uDDF7"))
         assertThat(input + " ".ellipsize(11), equalTo("Brazil\uD83C\uDDE7\uD83C\uDDF7 "))
     }
+
+    @Test
+    fun firstGraphemeOrNull_plain_letter() {
+        assertThat("work".firstGraphemeOrNull(), equalTo("w"))
+    }
+
+    @Test
+    fun firstGraphemeOrNull_empty_string() {
+        assertNull("".firstGraphemeOrNull())
+    }
+
+    @Test
+    fun firstGraphemeOrNull_emoji_is_not_split() {
+        assertThat("\uD83D\uDE00 Study".firstGraphemeOrNull(), equalTo("\uD83D\uDE00"))
+    }
+
+    @Test
+    fun firstGraphemeOrNull_flag_is_not_split() {
+        assertThat("\uD83C\uDDEE\uD83C\uDDF3 India".firstGraphemeOrNull(), equalTo("\uD83C\uDDEE\uD83C\uDDF3"))
+    }
+
+    @Test
+    fun firstGraphemeOrNull_keeps_combining_accent_with_its_base_letter() {
+        assertThat("e\u0301cole".firstGraphemeOrNull(), equalTo("e\u0301"))
+    }
 }

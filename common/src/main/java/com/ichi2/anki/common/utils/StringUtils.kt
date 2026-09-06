@@ -157,3 +157,13 @@ private fun String.indexOfLastGraphemeCluster(
 
     return lastSafe
 }
+
+/** The first grapheme cluster, keeping an emoji, a flag or an accented letter whole. */
+fun String.firstGraphemeOrNull(): String? {
+    val iterator = BreakIterator.getCharacterInstance()
+    iterator.setText(this)
+
+    val end = iterator.next()
+    if (end == BreakIterator.DONE || end == 0) return null
+    return this.substring(0, end)
+}
