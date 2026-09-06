@@ -262,9 +262,9 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loginState.collect { state ->
-                when (state) {
-                    is LoginState.Success -> {
+            viewModel.loginFlow.collect { login ->
+                when (login) {
+                    is Login.Success -> {
                         Timber.i("Login Successful")
                         val activity = requireActivity()
                         val isForResult = arguments?.getBoolean(START_FROM_DECKPICKER) ?: false
@@ -278,10 +278,9 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                         }
                         showLoginSuccessDialog()
                     }
-                    is LoginState.Error -> {
-                        showSnackbar(text = state.exception.message.toString())
+                    is Login.Error -> {
+                        showSnackbar(text = login.exception.message.toString())
                     }
-                    is LoginState.Idle -> { /* Not needed */ }
                 }
             }
         }
@@ -327,7 +326,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                     endpoint,
                 )
 
-                viewModel.loginState.first { it is LoginState.Success || it is LoginState.Error }
+                viewModel.loginFlow.first()
             }
         }
     }

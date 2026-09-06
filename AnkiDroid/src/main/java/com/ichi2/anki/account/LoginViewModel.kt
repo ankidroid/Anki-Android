@@ -26,7 +26,9 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
@@ -46,8 +48,8 @@ class LoginViewModel : ViewModel() {
     val passwordError: StateFlow<LoginError?>
         field = MutableStateFlow<LoginError?>(null)
 
-    val loginState: StateFlow<LoginState>
-        field = MutableStateFlow<LoginState>(LoginState.Idle)
+    val loginFlow: SharedFlow<Login>
+        field = MutableSharedFlow()
 
     fun onUserNameFocusChange(
         hasFocus: Boolean,
@@ -90,15 +92,15 @@ class LoginViewModel : ViewModel() {
                 val auth = syncLogin(username, password, endpoint)
                 Timber.i("Login success")
                 updateLogin(username, auth.hkey)
-                loginState.value = LoginState.Success
+                loginFlow.emit(Login.Success)
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 Timber.i("Login auth failed")
                 updateLogin("", "")
-                loginState.value = LoginState.Error(exc)
+                loginFlow.emit(Login.Error(exc))
             } catch (exc: Exception) {
                 // do not log the error, can contain PII
                 Timber.w("Login error")
-                loginState.value = LoginState.Error(exc)
+                loginFlow.emit(Login.Error(exc))
             }
         }
     }
@@ -135,11 +137,8 @@ enum class LoginError(
     fun toHumanReadableString(context: Context): String = context.getString(this.messageResId)
 }
 
-/** Handles the Login State */
-sealed class LoginState {
-    data object Idle : LoginState()
-
-    data object Success : LoginState()
+sealed class Login {
+    data object Success : Login()
 
     /**
      * The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException]
@@ -148,5 +147,5 @@ sealed class LoginState {
      */
     data class Error(
         val exception: Exception,
-    ) : LoginState()
+    ) : Login()
 }
