@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
@@ -69,7 +70,8 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
         reminderTroubleshootingViewModelFactory(requireContext())
     }
 
-    private val binding by viewBinding(FragmentReminderTroubleshootingBinding::bind)
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentReminderTroubleshootingBinding::bind)
 
     /**
      * [ScheduleRemindersFragment] can be hosted from multiple activities and must change its UI to accommodate its host
