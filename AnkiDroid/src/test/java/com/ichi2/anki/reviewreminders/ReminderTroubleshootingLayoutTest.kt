@@ -2,14 +2,9 @@
 
 package com.ichi2.anki.reviewreminders
 
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.ListAdapter
-import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
-import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -63,20 +58,6 @@ class ReminderTroubleshootingLayoutTest : RobolectricTest() {
                 checksList.height,
                 greaterThanOrEqualTo(itemCount * checkItemMinHeight.toPx(targetContext)),
             )
-        }
-    }
-
-    /** Runs [block] on a [ReminderTroubleshootingFragment] in its standalone activity */
-    private fun withTroubleshootingFragment(block: ReminderTroubleshootingFragment.() -> Unit) {
-        val intent = ScheduleRemindersFragment.getIntent(targetContext, ReviewReminderScope.Global)
-        ActivityScenario.launch<ConfigAwareSingleFragmentActivity>(intent).use { scenario ->
-            advanceRobolectricLooper()
-            scenario.onActivity { activity ->
-                val fragment = ReminderTroubleshootingFragment.newInstance(FragmentHost.STANDALONE_ACTIVITY)
-                activity.supportFragmentManager.commit { replace(R.id.fragment_container, fragment) }
-                advanceRobolectricLooper()
-                fragment.block()
-            }
         }
     }
 }

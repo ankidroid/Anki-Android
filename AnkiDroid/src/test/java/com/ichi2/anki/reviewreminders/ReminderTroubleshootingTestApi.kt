@@ -8,13 +8,28 @@ import android.content.Context
 import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.getSystemService
+import androidx.fragment.app.commit
 import androidx.test.filters.SdkSuppress
 import com.ichi2.anki.NotificationChannel
+import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.anki.reviewreminders.CheckResult.Failed
 import com.ichi2.anki.reviewreminders.CheckResult.Passed
 import com.ichi2.anki.reviewreminders.CheckResult.Warning
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import org.robolectric.Shadows.shadowOf
 import android.app.NotificationChannel as AndroidNotificationChannel
+
+/** Runs [block] on a [ReminderTroubleshootingFragment] in its standalone activity */
+context(test: RobolectricTest)
+fun withTroubleshootingFragment(block: ReminderTroubleshootingFragment.() -> Unit) =
+    withStandaloneScheduleReminders { activity ->
+        val fragment = ReminderTroubleshootingFragment.newInstance(FragmentHost.STANDALONE_ACTIVITY)
+        activity.supportFragmentManager.commit { replace(R.id.fragment_container, fragment) }
+        advanceRobolectricLooper()
+        fragment.block()
+    }
 
 /**
  * Sets the outcomes of the visible troubleshooting checks using Android service shadows.
