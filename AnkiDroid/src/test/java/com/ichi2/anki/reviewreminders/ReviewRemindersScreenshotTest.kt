@@ -4,6 +4,7 @@
 package com.ichi2.anki.reviewreminders
 
 import androidx.annotation.IdRes
+import androidx.core.content.edit
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.test.core.app.ActivityScenario
@@ -24,6 +25,8 @@ import com.ichi2.testutils.scrollToLastPosition
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.utils.dp
 import kotlinx.coroutines.runBlocking
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 
@@ -31,6 +34,13 @@ import org.robolectric.RuntimeEnvironment
  * Covers all [FragmentHost] configurations of the fragment.
  */
 class ReviewRemindersScreenshotTest : ScreenshotTest() {
+    @Before
+    @After
+    fun clearReminders() {
+        // The database retains its own SharedPreferences instance across Robolectric test cases.
+        ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
+    }
+
     @Test
     fun `settings host`() {
         captureSettingsHost("settingsHost")
