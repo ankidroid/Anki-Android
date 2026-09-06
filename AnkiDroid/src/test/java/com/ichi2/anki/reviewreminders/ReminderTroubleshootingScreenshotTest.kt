@@ -6,6 +6,7 @@ import androidx.fragment.app.commit
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.reviewreminders.CheckResult.Failed
 import com.ichi2.anki.reviewreminders.CheckResult.Warning
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
@@ -27,6 +28,17 @@ class ReminderTroubleshootingScreenshotTest : ScreenshotTest() {
         )
 
         captureReminderTroubleshooting("checksWithWarnings")
+    }
+
+    @Test
+    fun `failed checks`() {
+        targetContext.setTroubleshootingChecks(
+            notificationPermission = Failed,
+            notificationChannel = Failed,
+            batteryOptimization = Failed,
+        )
+
+        captureReminderTroubleshooting("failedChecks")
     }
 
     /** Shows [ReminderTroubleshootingFragment] as a standalone screen and captures it as [name] */
