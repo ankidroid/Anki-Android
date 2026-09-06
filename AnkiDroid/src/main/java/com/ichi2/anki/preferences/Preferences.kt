@@ -39,7 +39,6 @@ import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
-import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -257,7 +256,7 @@ class PreferencesActivity :
                                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout() or
                                     WindowInsetsCompat.Type.ime(),
                             )
-                        view.updatePadding(bottom = maxOf(bars.bottom, insets.bottomCornerClearance(view)))
+                        view.updatePadding(bottom = bars.bottom)
                         insets
                     }
                 }

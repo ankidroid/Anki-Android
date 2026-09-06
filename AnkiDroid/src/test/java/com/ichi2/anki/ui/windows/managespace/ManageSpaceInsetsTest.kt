@@ -37,14 +37,6 @@ class ManageSpaceInsetsTest : RobolectricTest() {
         }
 
     @Test
-    fun `the last row clears rounded display corners larger than the navigation bar`() =
-        withManageSpace { activity ->
-            activity.dispatchInsets(navBarBottom = 24.dp, bottomCornerRadius = 48.dp)
-
-            assertThat(activity.preferenceList.paddingBottom, equalTo(48.dp.toPx(targetContext)))
-        }
-
-    @Test
     fun `a side navigation bar clearing the corner removes the bottom buffer`() =
         withManageSpace { activity ->
             activity.dispatchInsets(navBarRight = 48.dp, bottomCornerRadius = 34.dp)
