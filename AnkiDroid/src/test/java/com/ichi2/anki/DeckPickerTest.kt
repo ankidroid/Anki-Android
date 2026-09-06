@@ -608,6 +608,76 @@ class DeckPickerTest : RobolectricTest() {
             studyOptionsFragment,
             notNullValue(),
         )
+        assertThat(
+            "DeckPicker should use the fragmented layout on tablet",
+            deckPickerEx.fragmented,
+            equalTo(true),
+        )
+    }
+
+    @Test
+    fun `study options menu items are only displayed in fragmented mode`() {
+        deckPickerEx {
+            val isTablet = fragmented
+            val menu = menu()
+            if (isTablet) {
+                // Ossifies the split-pane menu decision: the side panel fragment contributes
+                // its items to this activity's toolbar via its MenuProvider.
+                assertThat(
+                    "custom study should be displayed in fragmented mode",
+                    menu.findItem(R.id.action_custom_study),
+                    notNullValue(),
+                )
+                assertThat(
+                    "deck options should be displayed in fragmented mode",
+                    menu.findItem(R.id.action_deck_or_study_options),
+                    notNullValue(),
+                )
+            } else {
+                // No side panel fragment exists: its items must not appear.
+                assertThat(
+                    "custom study must not be displayed outside fragmented mode",
+                    menu.findItem(R.id.action_custom_study),
+                    nullValue(),
+                )
+                assertThat(
+                    "deck options must not be displayed outside fragmented mode",
+                    menu.findItem(R.id.action_deck_or_study_options),
+                    nullValue(),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `restored study options fragment is pruned when recreated into single pane`() {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        val scenario = ActivityScenario.launch(DeckPicker::class.java)
+        advanceRobolectricLooper()
+        scenario.onActivity { deckPicker ->
+            assertThat(
+                "side panel fragment should be displayed on tablet",
+                deckPicker.supportFragmentManager.findFragmentById(R.id.studyoptions_fragment),
+                notNullValue(),
+            )
+        }
+        // Fold the device: the activity recreates into the single-pane layout, while
+        // FragmentManager restores the saved side panel fragment into it.
+        RuntimeEnvironment.setQualifiers("sw320dp")
+        scenario.recreate()
+        advanceRobolectricLooper()
+        scenario.onActivity { deckPicker ->
+            assertThat(
+                "restored side panel fragment must be pruned in single-pane layout",
+                deckPicker.supportFragmentManager.findFragmentById(R.id.studyoptions_fragment),
+                nullValue(),
+            )
+            assertThat(
+                "study options menu items must not leak into the single-pane toolbar",
+                deckPicker.menu().findItem(R.id.action_custom_study),
+                nullValue(),
+            )
+        }
     }
 
     @Test
