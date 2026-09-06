@@ -19,6 +19,19 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
+import androidx.credentials.CreatePasswordRequest
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.GetPasswordOption
+import androidx.credentials.PasswordCredential
+import androidx.credentials.exceptions.CreateCredentialCancellationException
+import androidx.credentials.exceptions.CreateCredentialException
+import androidx.credentials.exceptions.CreateCredentialNoCreateOptionException
+import androidx.credentials.exceptions.CreateCredentialProviderConfigurationException
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -49,6 +62,8 @@ import timber.log.Timber
 
 class LoginFragment : Fragment(R.layout.fragment_my_account) {
     private val viewModel: LoginViewModel by viewModels()
+
+    private val credentialManager: CredentialManager by lazy { CredentialManager.create(requireContext()) }
 
     private lateinit var username: TextInputEditText
     private lateinit var userNameLayout: TextInputLayout
@@ -88,6 +103,10 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
 
         initListeners()
         initObservers()
+
+        if (savedInstanceState == null) {
+            fetchStoredCredentials()
+        }
     }
 
     private fun initLoginSuccessDialogResultListener() {
@@ -206,7 +225,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             password.setAutoFillListener {
                 passwordLayout.isEndIconVisible = false
                 Timber.i("Attempting login from autofill")
-                attemptLogin()
+                attemptLoginFromSavedPassword()
             }
         }
     }
@@ -266,6 +285,9 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                 when (login) {
                     is Login.Success -> {
                         Timber.i("Login Successful")
+                        if (!login.fromSavedPassword) {
+                            saveCredential(login.username, login.password)
+                        }
                         val activity = requireActivity()
                         val isForResult = arguments?.getBoolean(START_FROM_DECKPICKER) ?: false
 
@@ -287,6 +309,82 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
     }
 
     /**
+     * Queries the system's [CredentialManager] for saved password credentials.
+     * If available, prompts the user or auto-selects to populate credentials and log in.
+     */
+    private fun fetchStoredCredentials() {
+        val passwordOption = GetPasswordOption(isAutoSelectAllowed = true)
+        val request =
+            GetCredentialRequest
+                .Builder()
+                .addCredentialOption(passwordOption)
+                .build()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response =
+                    credentialManager.getCredential(
+                        context = requireActivity(),
+                        request = request,
+                    )
+                handleCredentialResponse(response)
+            } catch (_: GetCredentialCancellationException) {
+                Timber.i("User cancelled credential retrieval")
+            } catch (_: NoCredentialException) {
+                Timber.i("No saved credentials found in credential manager")
+            } catch (e: GetCredentialException) {
+                Timber.w(e, "Failed to retrieve credentials from credential manager")
+            }
+        }
+    }
+
+    /**
+     * Handles the successful credential response by populating the text fields and initiating login.
+     */
+    private fun handleCredentialResponse(response: GetCredentialResponse) {
+        when (val credential = response.credential) {
+            is PasswordCredential -> {
+                Timber.i("Retrieved PasswordCredential for user: ${credential.id}")
+                username.setText(credential.id)
+                password.setText(credential.password)
+                passwordLayout.isEndIconVisible = false
+                attemptLoginFromSavedPassword()
+            }
+            else -> {
+                Timber.w("Received unexpected credential type: ${credential.type}")
+            }
+        }
+    }
+
+    /**
+     * Tries to save the username and password on the system's credential manager.
+     */
+    private suspend fun saveCredential(
+        username: String,
+        password: String,
+    ) {
+        if (username.isEmpty() || password.isEmpty()) return
+        val request = CreatePasswordRequest(id = username, password = password)
+        try {
+            credentialManager.createCredential(
+                context = requireActivity(),
+                request = request,
+            )
+            Timber.i("Credential saved to credential manager")
+        } catch (_: CreateCredentialCancellationException) {
+            Timber.i("User declined to save credential")
+        } catch (_: CreateCredentialNoCreateOptionException) {
+            // may happen if 1. the manager can't save the password for some reason,
+            //  2. manager is set to 'None' in the system settings
+            Timber.i("The defined credential manager can't save the password")
+        } catch (_: CreateCredentialProviderConfigurationException) {
+            Timber.i("No credential manager provider available on this device")
+        } catch (e: CreateCredentialException) {
+            Timber.w(e, "Failed to save credential to credential manager")
+        }
+    }
+
+    /**
      * Displays a dialog asking if a user would like to sync after a login success
      *
      * * **Positive:** opens the Deck Picker and starts a sync
@@ -296,7 +394,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         showDialogFragment(LoginSuccessDialogFragment())
     }
 
-    private fun attemptLogin() {
+    private fun attemptLoginFromSavedPassword() {
         val username = username.text.toString().trim()
         val password = password.text.toString()
         if (username.isEmpty() || password.isEmpty()) {
@@ -304,12 +402,13 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
             return
         }
         Timber.i("Attempting auto-login")
-        handleNewLogin(username, password)
+        handleNewLogin(username, password, fromSavedPassword = true)
     }
 
     private fun handleNewLogin(
         username: String,
         password: String,
+        fromSavedPassword: Boolean = false,
     ) {
         val endpoint = getEndpoint()
 
@@ -324,6 +423,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                     username,
                     password,
                     endpoint,
+                    fromSavedPassword,
                 )
 
                 viewModel.loginFlow.first()

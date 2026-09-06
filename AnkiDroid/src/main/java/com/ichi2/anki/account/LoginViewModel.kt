@@ -85,6 +85,7 @@ class LoginViewModel : ViewModel() {
         username: String,
         password: String,
         endpoint: String?,
+        fromSavedPassword: Boolean,
     ) {
         Timber.i("Logging in")
         viewModelScope.launch {
@@ -92,7 +93,7 @@ class LoginViewModel : ViewModel() {
                 val auth = syncLogin(username, password, endpoint)
                 Timber.i("Login success")
                 updateLogin(username, auth.hkey)
-                loginFlow.emit(Login.Success)
+                loginFlow.emit(Login.Success(username, password, fromSavedPassword))
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
                 Timber.i("Login auth failed")
                 updateLogin("", "")
@@ -138,7 +139,11 @@ enum class LoginError(
 }
 
 sealed class Login {
-    data object Success : Login()
+    data class Success(
+        val username: String,
+        val password: String,
+        val fromSavedPassword: Boolean,
+    ) : Login()
 
     /**
      * The error here is an exception from the login attempt itself i.e. [net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncAuthFailedException]
