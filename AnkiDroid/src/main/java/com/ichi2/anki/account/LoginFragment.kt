@@ -25,7 +25,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
@@ -48,9 +47,6 @@ import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.Permissions
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -98,6 +94,45 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         initObservers()
     }
 
+    private fun initLoginSuccessDialogResultListener() {
+        /** @see DeckPicker.onNewIntent */
+        fun openDeckPickerAndSync() {
+            Timber.i("Opening Deck Picker for Sync")
+            val intent =
+                DeckPicker.getIntent(
+                    requireContext(),
+                    autoSync = true,
+                )
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        fun showLoggedInView() {
+            Timber.i("Showing LoggedIn view")
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.popBackStack(
+                null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE,
+            )
+            fragmentManager.commit {
+                replace(R.id.fragment_container, LoggedInFragment())
+            }
+            Permissions.requestNotificationPermissionsForSyncing(requireActivity())
+        }
+
+        parentFragmentManager.setFragmentResultListener(
+            LoginSuccessDialogFragment.REQUEST_KEY,
+            viewLifecycleOwner,
+        ) { _, bundle ->
+            when (LoginSuccessDialogFragment.actionFrom(bundle)) {
+                LoginSuccessDialogFragment.Action.SYNC -> openDeckPickerAndSync()
+                LoginSuccessDialogFragment.Action.CONTINUE -> showLoggedInView()
+                null -> {}
+            }
+        }
+    }
+
     /** Applies edge-to-edge insets for the screen */
     private fun setupEdgeToEdge(view: View) {
         val toolbarContainer = view.findViewById<View>(R.id.toolbar_container)
@@ -134,6 +169,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         initUsernameListeners()
         initPasswordListeners()
         initButtonListeners()
+        initLoginSuccessDialogResultListener()
     }
 
     private fun initUsernameListeners() {
@@ -270,42 +306,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
      * * **Negative:** continues to [LoggedInFragment]
      */
     private fun showLoginSuccessDialog() {
-        /** @see LoggedInFragment */
-        fun showLoggedInView() {
-            Timber.i("Showing LoggedIn view")
-            val fragmentManager = requireActivity().supportFragmentManager
-            fragmentManager.popBackStack(
-                null,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE,
-            )
-            fragmentManager.commit {
-                replace(R.id.fragment_container, LoggedInFragment())
-            }
-            Permissions.requestNotificationPermissionsForSyncing(requireActivity())
-        }
-
-        /** @see DeckPicker.onNewIntent */
-        fun openDeckPickerAndSync() {
-            Timber.i("Opening Deck Picker for Sync")
-            val intent =
-                DeckPicker.getIntent(
-                    requireContext(),
-                    autoSync = true,
-                )
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-
-        MaterialAlertDialogBuilder(requireContext()).show {
-            Timber.i("Showing dialog: 'Sync now?'")
-            setTitle(CommonString.login_successful)
-            setIcon(R.drawable.ic_sync)
-            setMessage(CommonString.sync_now)
-            positiveButton(CommonString.button_sync) { openDeckPickerAndSync() }
-            negativeButton(CommonString.dialog_continue) { showLoggedInView() }
-            setOnCancelListener { showLoggedInView() }
-        }
+        showDialogFragment(LoginSuccessDialogFragment())
     }
 
     private fun attemptLogin() {
