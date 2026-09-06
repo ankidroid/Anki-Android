@@ -4,6 +4,7 @@ package com.ichi2.anki.reviewreminders
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -13,7 +14,6 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
-import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
@@ -453,7 +453,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
         return ResolveCheckAction(label = "Grant permission", logDescription = "opening ACTION_REQUEST_SCHEDULE_EXACT_ALARM") {
             context.startActivity(
                 Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                    data = "package:${context.packageName}".toUri()
+                    data = Uri.fromParts("package", context.packageName, null)
                 },
             )
         }
