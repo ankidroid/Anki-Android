@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.test.core.app.ActivityScenario
 import com.google.android.material.appbar.AppBarLayout
+import com.ichi2.anki.OptionalPermissionSet
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.StudyOptionsActivity
@@ -206,6 +207,17 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
                     fragment.reminderCount == 1
             }
             captureScreen("notificationPermissionBottomSheet")
+        }
+    }
+
+    @Test
+    fun `legacy notification permission bottom sheet`() {
+        shadowOf(targetContext.getSystemService<NotificationManager>()!!).setNotificationsEnabled(false)
+        withScheduleRemindersFragment { fragment ->
+            // Capture the legacy content on the suite's SDK; mixing SDKs cannot share the native backend.
+            PermissionsBottomSheet.launch(fragment.childFragmentManager, OptionalPermissionSet.LEGACY_NOTIFICATIONS)
+            advanceRobolectricLooper()
+            captureScreen("legacyNotificationPermissionBottomSheet")
         }
     }
 
