@@ -16,6 +16,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.junit.After
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -74,7 +75,14 @@ class DeckOptionsTest : InstrumentedTest() {
                 scenario.onActivity { ready = fragment.webViewLayout.isVisible }
                 ready
             }
-            block(fragment)
+            val webView = fragment.webViewLayout.webView
+            try {
+                block(fragment)
+            } catch (e: Throwable) {
+                // catching Throwable handles assertions/timeouts caused by a renderer segfault
+                assumeTrue("WebView renderer should not crash: ${e.message}", fragment.webViewLayout.webView === webView)
+                throw e
+            }
         }
     }
 
