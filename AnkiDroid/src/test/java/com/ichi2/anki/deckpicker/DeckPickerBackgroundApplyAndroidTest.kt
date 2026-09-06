@@ -4,9 +4,9 @@ package com.ichi2.anki.deckpicker
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -35,7 +35,7 @@ class DeckPickerBackgroundApplyAndroidTest {
     @Test
     fun nullResultClearsImageAndKeepsHasBackground() {
         val imageView = ImageView(context)
-        imageView.setImageDrawable(ColorDrawable(Color.RED))
+        imageView.setImageDrawable(Color.RED.toDrawable())
         val toastState = BackgroundFailureToastState()
 
         val next =
@@ -71,7 +71,7 @@ class DeckPickerBackgroundApplyAndroidTest {
     @Test
     fun readyResultSetsHasBackground() {
         val imageView = ImageView(context)
-        val drawable = ColorDrawable(Color.BLUE)
+        val drawable = Color.BLUE.toDrawable()
         val next =
             applyLoadedDeckPickerBackground(
                 context = context,
@@ -138,7 +138,7 @@ class DeckPickerBackgroundApplyAndroidTest {
     fun oomToastsTooLargeOnce() {
         val imageView = OomImageView(context)
         val toastState = BackgroundFailureToastState()
-        val drawable = ColorDrawable(Color.GREEN)
+        val drawable = Color.GREEN.toDrawable()
 
         val first =
             applyLoadedDeckPickerBackground(

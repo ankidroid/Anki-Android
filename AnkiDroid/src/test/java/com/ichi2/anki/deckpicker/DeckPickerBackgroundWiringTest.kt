@@ -4,7 +4,7 @@ package com.ichi2.anki.deckpicker
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import androidx.core.graphics.drawable.toDrawable
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -40,7 +40,7 @@ class DeckPickerBackgroundWiringTest : RobolectricTest() {
         deckPicker.applyDeckPickerBackground(null)
         assertThat(imageView.drawable, nullValue())
 
-        val drawable = ColorDrawable(Color.MAGENTA)
+        val drawable = Color.MAGENTA.toDrawable()
         deckPicker.applyDeckPickerBackground(BackgroundImage.ResolveResult.Ready(drawable))
         assertThat(imageView.drawable, notNullValue())
 
