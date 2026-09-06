@@ -250,6 +250,15 @@ object Permissions {
     }
 
     /**
+     * Whether [Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS] may be used to ask the user
+     * to exempt AnkiDroid from battery optimization.
+     *
+     * Google Play restricts [Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS].
+     */
+    fun canRequestIgnoreBatteryOptimizations(context: Context): Boolean =
+        context.arePermissionsDefinedInAnkiDroidManifest(Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+
+    /**
      * Opens the Android settings for AnkiDroid if the device provide this feature.
      * Lets a user grant any missing permissions which have been permanently denied.
      */
