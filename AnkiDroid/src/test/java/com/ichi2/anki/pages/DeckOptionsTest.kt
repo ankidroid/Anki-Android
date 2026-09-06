@@ -2,8 +2,6 @@
 
 package com.ichi2.anki.pages
 
-import android.webkit.WebView
-import androidx.core.view.children
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -51,9 +49,5 @@ class DeckOptionsTest : RobolectricTest() {
 
     /** The last JavaScript evaluated by the WebView of [DeckOptions] */
     private val DeckOptions.lastEvaluatedJavascript: String?
-        get() =
-            webViewLayout.children
-                .filterIsInstance<WebView>()
-                .single()
-                .let { shadowOf(it).lastEvaluatedJavascript }
+        get() = shadowOf(webViewLayout.webView).lastEvaluatedJavascript
 }
