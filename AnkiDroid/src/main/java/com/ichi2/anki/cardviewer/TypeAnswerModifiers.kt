@@ -6,13 +6,14 @@ package com.ichi2.anki.cardviewer
  * Represents modifiers for `[[type:...]]`
  *
  * Examples:
- * - `[[type:nc:Field]]`
+ * - `[[type:nosuggest:nc:Field]]`
  * - `[[type:cloze:Field]]`
  */
 internal data class TypeAnswerModifiers(
     val fieldName: String,
     val combining: Boolean,
     val cloze: Boolean,
+    val noSuggest: Boolean,
 ) {
     companion object {
         /**
@@ -22,8 +23,13 @@ internal data class TypeAnswerModifiers(
             var remaining = rawField
             var combining = true
             var cloze = false
+            var noSuggest = false
             while (true) {
                 when {
+                    remaining.startsWith("nosuggest:") -> {
+                        noSuggest = true
+                        remaining = remaining.removePrefix("nosuggest:")
+                    }
                     remaining.startsWith("cloze:") -> {
                         cloze = true
                         remaining = remaining.removePrefix("cloze:")
@@ -36,6 +42,7 @@ internal data class TypeAnswerModifiers(
                         fieldName = remaining,
                         combining = combining,
                         cloze = cloze,
+                        noSuggest = noSuggest,
                     )
                 }
             }

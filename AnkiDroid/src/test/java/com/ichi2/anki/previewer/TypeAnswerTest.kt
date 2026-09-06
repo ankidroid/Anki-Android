@@ -40,6 +40,31 @@ class TypeAnswerTest : JvmTest() {
             assertThat(typeAnswer.expectedAnswer, equalTo("hello"))
         }
 
+    /** [Issue #10352](https://github.com/ankidroid/Anki-Android/issues/10352) */
+    @Test
+    fun `noSuggest is false when nosuggest modifier is absent`() =
+        runTest {
+            val card = addBasicWithTypingNote("front", "back").firstCard()
+            val typeAnswer = requireNotNull(TypeAnswer.getInstance(card, "[[type:Back]]"))
+            assertThat(typeAnswer.noSuggest, equalTo(false))
+        }
+
+    @Test
+    fun `noSuggest is true when nosuggest modifier is present`() =
+        runTest {
+            val card = addBasicWithTypingNote("front", "back").firstCard()
+            val typeAnswer = requireNotNull(TypeAnswer.getInstance(card, "[[type:nosuggest:Back]]"))
+            assertThat(typeAnswer.noSuggest, equalTo(true))
+        }
+
+    @Test
+    fun `nosuggest composes with nc modifier`() =
+        runTest {
+            val card = addBasicWithTypingNote("front", "back").firstCard()
+            val typeAnswer = requireNotNull(TypeAnswer.getInstance(card, "[[type:nosuggest:nc:Back]]"))
+            assertThat(typeAnswer.noSuggest, equalTo(true))
+        }
+
     companion object {
         suspend fun TypeAnswer.Companion.createInstance(card: Card) = requireNotNull(TypeAnswer.getInstance(card, VALID_CARD_TEXT))
 
