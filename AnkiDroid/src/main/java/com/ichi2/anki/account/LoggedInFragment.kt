@@ -15,6 +15,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
+import androidx.credentials.exceptions.ClearCredentialException
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -22,6 +25,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.settings.Prefs
@@ -30,6 +34,7 @@ import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.isCompactWidth
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
 import com.ichi2.anki.utils.ext.showDialogFragment
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class LoggedInFragment : Fragment(R.layout.fragment_my_account_logged_in) {
@@ -103,10 +108,19 @@ class LoggedInFragment : Fragment(R.layout.fragment_my_account_logged_in) {
 
     private fun logout() {
         viewModel.onLogout()
+        // stops credential providers from automatically signing in again
+        val credentialManager = CredentialManager.create(requireContext())
+        applicationScope.launch {
+            try {
+                credentialManager.clearCredentialState(ClearCredentialStateRequest())
+            } catch (e: ClearCredentialException) {
+                Timber.w(e, "Failed to clear credential state")
+            }
+        }
 
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.commit {
-            replace(R.id.fragment_container, LoginFragment())
+            replace(R.id.fragment_container, LoginFragment.afterLogout())
         }
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
