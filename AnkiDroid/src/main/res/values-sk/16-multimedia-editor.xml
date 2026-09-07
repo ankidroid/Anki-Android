@@ -22,7 +22,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Pridať obrázok</string>
     <string name="multimedia_editor_popup_audio_clip">Pridať zvukovú stopu</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Pridať video nahrávku</string>
     <string name="multimedia_editor_popup_audio">Nahrať zvuk</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
     <!-- Field editing general -->

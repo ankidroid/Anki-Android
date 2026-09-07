@@ -69,7 +69,7 @@
     <string name="leech_notification">Carte marquée « encombrante »</string>
     <string name="webview_crash_unknown">Erreur inconnue</string>
     <string name="webview_crash_unknwon_detailed">Erreur interne dans le système WebView</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">Mémoire insuffisante</string>
     <string name="webview_crash_oom_details">WebView a été arrêté par le système. Cela se produit généralement lorsque l\'application manque de mémoire, souvent en raison de la taille des polices ou des fichiers.</string>
     <string name="webview_crash_nonfatal">Plantage du moteur de rendu Webview. Cause : %s</string>
     <string name="webview_crash_fatal">Erreur fatale : Plantage du moteur de rendu WebView. Cause : %s</string>
@@ -325,7 +325,7 @@
     <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">Internet</string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">Installer</string>
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">Impossible d\'ouvrir les paramètres de la synthèse vocale</string>
-    <string name="shared_decks_login_required">Veuillez vous connecter pour télécharger plus de decks</string>
+    <string name="shared_decks_login_required">Veuillez vous connecter pour télécharger plus de paquets</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="deck_description_saved">Description mise à jour</string>
     <string name="format_deck_description_as_markdown">Formater en Markdown</string>
@@ -369,4 +369,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Jour</string>
     <string name="set_due_date_date_range">Plage de dates</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Déjà en cours</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

@@ -155,7 +155,8 @@
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
     <string name="export_share_title">Imbia su pachete de Anki impreende</string>
     <string name="export_email_subject">Cartas mnemònicas esportadas dae AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Salude!
+    <string name="export_email_text"><![CDATA[
+        Salude!
         <br/><br/>
         Custu est unu matzu de cartas mnemònicas de Anki imbiadu dae AnkiDroid[1].
         Proa a l\'abèrrere impreende una de sas distributziones de Anki a disponimentu[2] e gosa·ti un\'imparu fàtzile e efitziente!<br/><br/>
@@ -370,4 +371,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Day</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Αποτυχία αποθήκευσης πακέτου Anki</string>
     <string name="export_share_title">Αποστολή πακέτου Anki μέσω</string>
     <string name="export_email_subject">Εξαχθείσες κάρτες AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Γεια!
+    <string name="export_email_text"><![CDATA[
+        Γεια!
         <br/><br/>
         Αυτή είναι μια τράπουλα καρτών Anki που στάλθηκε από το AnkiDroid[1].
         Δοκιμάστε να την ανοίξετε με κάποια από τις διαθέσιμες διανομές[2] του Anki και απολαύστε έναν γρήγορο και αποτελεσματικό τρόπο εκμάθησης!<br/><br/>
@@ -368,4 +369,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Day</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

@@ -83,7 +83,7 @@
     <string name="menu_unmark_note">Уклони ознаку белешке</string>
     <string name="menu_enable_voice_playback" maxLength="28">Омогући аудио репродукцију</string>
     <string name="menu_disable_voice_playback">Онемогући аудио репродукцију</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Направи резервну копију</string>
     <string name="new_dynamic_deck">Направи филтриран шпил</string>
     <string name="directory_inaccessible">Недоступан каталог AnkiDroid</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -95,7 +95,7 @@
     <string name="empty_cram_label" maxLength="28">Очисти</string>
     <string name="create_subdeck">Креирај подсет</string>
     <string name="empty_filtered_deck">Испразњује се филтрирани сет&#8230;</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Претрага сетова</string>
     <string name="empty_deck">Овај шпил је празан</string>
     <string name="invalid_deck_name">Неисправно име сета</string>
     <string name="studyoptions_congrats_finished">Браво! То је све за данас.</string>
@@ -172,9 +172,9 @@
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Брза картица</string>
     <!-- Internet Permissions -->
-    <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
-    <string name="permission_required_message">Please grant AnkiDroid the ‘%s’ permission to continue</string>
+    <string name="internet_access_title" comment="used for notifying user to unable internet access">Интернет</string>
+    <string name="permission_access_summary">Потребно за рад апликације</string>
+    <string name="permission_required_message">Да би наставио, додели апликацији AnkiDroid дозволу „%s“</string>
     <!-- Multiple profile -->
-    <string name="add_profile">Add profile</string>
+    <string name="add_profile">Додај профил</string>
 </resources>

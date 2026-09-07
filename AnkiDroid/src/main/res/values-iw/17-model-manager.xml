@@ -29,7 +29,6 @@
     <plurals name="model_browser_of_type">
         <item quantity="one">רשומה אחת</item>
         <item quantity="two">%dפתקים</item>
-        <item quantity="many">%dפתקים</item>
         <item quantity="other">%d פתקים</item>
     </plurals>
     <!--Browser-->

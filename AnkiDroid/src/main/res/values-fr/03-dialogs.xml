@@ -70,7 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Quitter</string>
     <string name="dialog_continue">Continuer</string>
     <string name="dialog_processing">Traitement&#8230;</string>
-    <string name="dialog_allow">Allow</string>
+    <string name="dialog_allow">Autoriser</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Créer</string>
     <string name="dialog_positive_delete" maxLength="28">Supprimer</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -105,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permission d\'enregistrement audio refusée</string>
     <string name="permission_denied">Permission refusée</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Accès au micro refusé. Autorisez l’accès dans les réglages de l’application</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Continuer quand même</string>
     <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
@@ -251,14 +251,18 @@
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Spécial</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
     <string name="special_field_front_side_help">Contenu du template avant. L\'audio n\'est pas automatiquement lu</string>
-    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Le jeu complet de la carte, y compris les decks parents%s</string>
-    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Le jeu actuel de la carte, excluant les decks parents%s</string>
+    <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">Le jeu complet de la carte, y compris les paquets parents%s</string>
+    <string name="special_field_subdeck_help" comment="%s: either blank or \' %s\'">Le jeu actuel de la carte, excluant les paquets parents%s</string>
     <string name="special_field_flag_help">Donne en sortie ‘%1$s’, où %2$s est le code du drapeau (%3$s\–%4$s\)</string>
     <string name="special_field_tags_help" comment="%s: either blank or \' %s\'">Les tags de la note%s</string>
     <string name="special_field_card_id_help" comment="%s: either blank or \' %s\'">L\'ID de la carte%s</string>
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Le nom du modèle de carte%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Le nom du type de note%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Depuis</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">Vers</string>
+    <!-- Add profile dialog -->
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
 </resources>

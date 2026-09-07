@@ -87,7 +87,6 @@
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d קבור</item>
         <item quantity="two">+%d קבורים</item>
-        <item quantity="many">+%d קבורים</item>
         <item quantity="other">+%d קבורים</item>
     </plurals>
     <string name="studyoptions_total_new_label">סה\"כ קלפים חדשים</string>
@@ -116,14 +115,12 @@
     <plurals name="timebox_reached">
         <item quantity="one">%1$d כרטסיה נלמדו ב%2$s</item>
         <item quantity="two">%1$d כרטסיות נלמדו ב%2$s</item>
-        <item quantity="many">%1$d כרטסיות נלמדו ב%2$s</item>
         <item quantity="other">%1$d כרטסיות נלמדו ב%2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
         <item quantity="one">דקה אחת</item>
         <item quantity="two">%1$d דקות</item>
-        <item quantity="many">%1$d דקות</item>
         <item quantity="other">%1$d דקות</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">כרטיס AnkiDroid</string>
@@ -159,7 +156,8 @@
     <string name="export_save_apkg_unsuccessful">שמירת חבילת Anki נכשלה</string>
     <string name="export_share_title">שלח חבילת אנקי באמצעות</string>
     <string name="export_email_subject">קלפי AnkiDroid שיוצאו: %s</string>
-    <string name="export_email_text"><![CDATA[         היי!
+    <string name="export_email_text"><![CDATA[
+         היי!
          <br/><br/>
          זוהי חפיסת כרטיסי פלאש של Anki שנשלחה מ-AnkiDroid[1].
          נסה לפתוח אותו באמצעות אחת מההפצות הזמינות של Anki[2] ותיהנה מלמידה קלה ויעילה!<br/><br/>
@@ -283,7 +281,6 @@
     <plurals name="note_suspended">
         <item quantity="one">כרטיס %d הושעה.</item>
         <item quantity="two">%d כרטיסים הושעו.</item>
-        <item quantity="many">%d כרטיסים הושעו.</item>
         <item quantity="other">%d כרטיסים הושעו.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
@@ -304,7 +301,6 @@
     <plurals name="note_types_selected">
         <item quantity="one">סוג רשומה אחד נבחר</item>
         <item quantity="two">%d note types selected</item>
-        <item quantity="many">סוגי רשומה רבים נבחרו</item>
         <item quantity="other">%d סוגי רשומה נבחרו</item>
     </plurals>
     <!-- App Intro -->
@@ -343,7 +339,6 @@
     <plurals name="unbury_cards_feedback">
         <item quantity="one">כרטיס אחד הוצא מהטמנה</item>
         <item quantity="two">%d כרטיסים הוצאו מהטמנה</item>
-        <item quantity="many">%d כרטיסים הוצאו מהטמנה</item>
         <item quantity="other">%d כרטיסים הוצאו מהטמנה</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">מיקום מחדש</string>
@@ -380,4 +375,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">יום</string>
     <string name="set_due_date_date_range">טוח תאריכים</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">כבר בפעולה</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

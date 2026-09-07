@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Ruajtja e paketës Anki dështoi</string>
     <string name="export_share_title">Dërgo paketën Anki duke përdorur</string>
     <string name="export_email_subject">Kartolina të eksportuara nga AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Përshëndetje!
+    <string name="export_email_text"><![CDATA[
+        Përshëndetje!
         <br/><br/>
         Kjo është një kuvertë e kartave flash Anki dërguar nga AnkiDroid[1].
         Provo ta hapësh duke përdorur një nga shpërndarjet e disponueshme Anki[2] dhe shijo mësimin e lehtë dhe efikas!<br/><br/>
@@ -368,4 +369,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Day</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

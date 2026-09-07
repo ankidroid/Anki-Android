@@ -105,9 +105,9 @@
     <string name="card_browser_see_more">Zobrazit více</string>
     <string name="card_browser_see_less">Zobrazit méně</string>
     <!-- Sort Order -->
-    <string name="card_browser_order_no_sorting_title" comment="Title of the \'no sorting\' row in the Choose Display Order bottom sheet">No sorting</string>
-    <string name="card_browser_order_no_sorting_subtitle" comment="Subtitle for the \'no sorting\' row noting that no-sort is faster than sorted queries">Faster</string>
-    <string name="card_browser_order_snackbar_sort_by" comment="Snackbar shown after sort changes. %1$s is the column name (e.g. \'Card Type\')">Sort by %1$s</string>
+    <string name="card_browser_order_no_sorting_title" comment="Title of the \'no sorting\' row in the Choose Display Order bottom sheet">Žádné řazení</string>
+    <string name="card_browser_order_no_sorting_subtitle" comment="Subtitle for the \'no sorting\' row noting that no-sort is faster than sorted queries">Rychlejší</string>
+    <string name="card_browser_order_snackbar_sort_by" comment="Snackbar shown after sort changes. %1$s is the column name (e.g. \'Card Type\')">Řazeno podle %1$s</string>
     <string name="card_browser_order_subtitle_text_ascending" comment="Sort direction subtitle for text columns when ascending (A before Z)">A–Z</string>
     <string name="card_browser_order_subtitle_text_descending" comment="Sort direction subtitle for text columns when descending (Z before A)">Z–A</string>
     <string name="card_browser_order_subtitle_numeric_ascending" comment="Sort direction subtitle for numeric columns when ascending (smallest value first)">Low to high</string>
@@ -125,7 +125,7 @@
     <string name="sort_pill_a11y_ascending" comment="SortPill accessibility: ascending half">Ascending</string>
     <string name="sort_pill_a11y_descending" comment="SortPill accessibility: descending half">Descending</string>
     <string name="sort_pill_a11y_selected" comment="SortPill accessibility: state announcement when this half is the active sort direction">Selected</string>
-    <string name="card_browser_order_section_unavailable" comment="Header: browser columns that cannot be sorted (e.g. Question)">Unavailable</string>
-    <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the \'Question/Answer\' column is not sortable.">Card content can\'t be sorted. Use Sort Field</string>
-    <string name="card_browser_order_subtitle_cards_mode_only" comment="Fix for trying to sort on FSRS columns in Notes mode">Only available in cards mode</string>
+    <string name="card_browser_order_section_unavailable" comment="Header: browser columns that cannot be sorted (e.g. Question)">Nedostupné</string>
+    <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the \'Question/Answer\' column is not sortable.">Obsah karet nelze seřadit. Použijte pole třídění</string>
+    <string name="card_browser_order_subtitle_cards_mode_only" comment="Fix for trying to sort on FSRS columns in Notes mode">Dostupné pouze v zobrazení karet</string>
 </resources>

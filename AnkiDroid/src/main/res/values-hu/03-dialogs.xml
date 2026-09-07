@@ -44,7 +44,7 @@
     <string name="storage_full_message">Nincs elég szabad tárhely az AnkiDroid megnyitásához. Szabadítson fel helyet a folytatáshoz.</string>
     <string name="repair_deck_dialog">Tényleg megpróbálod megjavítani az adatbázist?\n\nEnnek megkísérlése előtt a program létrehoz egy másolatot a \'%s\' almappában.</string>
     <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
-    <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
+    <string name="intent_aedict_category">Hogy új kártyákat adhass az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
     <string name="custom_study_new_extend">Növeld/csökkentsd (\"-3\") a mai új kártyák korlátját</string>
     <string name="custom_study_rev_extend">Növeld/csökkentsd (\"-3\") a mai ismétlődő kártyák korlátját</string>
     <string name="custom_study_forgotten">Az elmúlt x napban elfelejtett kártyák ismétlése:</string>
@@ -224,7 +224,7 @@
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">A rendszeren található WebView elavult, ezért néhány funkció nem fog megfelelően működni. Kérem frissítse.\n\nA telepített verzió:%1$d\nA legalacsonyabb szükséges verzió:%2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Tömörít</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Nem támogatott nyelv</string>
     <string name="tts_error_dialog_reason_text">A(z) <b>%1$s</b> szövegfelolvasó nem támogatja a következő nyelvet: <b>%2$s</b></string>
@@ -248,7 +248,7 @@
     <string name="choose_color">Choose color</string>
     <!-- Special Fields -->
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
-    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
+    <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Speciális</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
     <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
     <string name="special_field_deck_help" comment="%s: either blank or \' %s\'">The full deck of the card, including parent decks%s</string>
@@ -261,4 +261,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <!-- Add profile dialog -->
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
 </resources>

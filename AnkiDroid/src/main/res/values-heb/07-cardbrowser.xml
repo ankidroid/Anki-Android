@@ -27,19 +27,16 @@
     <plurals name="card_browser_subtitle">
         <item quantity="one">כרטיס אחד מוצג</item>
         <item quantity="two">שני כרטיסים מוצגים</item>
-        <item quantity="many">מוצגים %d קלפים</item>
         <item quantity="other">%d כרטיסים מוצגים</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">הרשומה %d מוצגת</item>
         <item quantity="two">מוצגים שני קלפים</item>
-        <item quantity="many">מוצגים %d קלפים</item>
         <item quantity="other">מוצגים %d כרטיסים</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">מחק רשומה</item>
         <item quantity="two">מחק הערות</item>
-        <item quantity="many">מחק הערות</item>
         <item quantity="other">מחק הערות</item>
     </plurals>
     <string name="delete_card_title">למחוק את הרשומה?</string>
@@ -74,19 +71,16 @@
     <plurals name="card_browser_export_cards">
         <item quantity="one">ייצוא כרטיס</item>
         <item quantity="two">יצוא כרטיסים</item>
-        <item quantity="many">יצוא כרטיסים</item>
         <item quantity="other">יצוא כרטיסים</item>
     </plurals>
     <plurals name="card_browser_export_notes">
         <item quantity="one">יצוא פתק</item>
         <item quantity="two">יצוא פתקים</item>
-        <item quantity="many">יצוא פתקים</item>
         <item quantity="other">יצוא פתקים</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">כרטיס אחד נמחק.</item>
         <item quantity="two">%d כרטיסים נמחקו.</item>
-        <item quantity="many">%d כרטיסים נמחקו.</item>
         <item quantity="other">%d כרטיסים נמחקו.</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
