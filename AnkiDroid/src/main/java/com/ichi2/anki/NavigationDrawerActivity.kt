@@ -151,7 +151,7 @@ abstract class NavigationDrawerActivity(
     fun navDrawerIsReady(): Boolean = navigationView != null
 
     // Navigation drawer initialisation
-    @Suppress("deprecation", "API35 properly handle edge-to-edge")
+    @Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
     protected fun initNavigationDrawer(mainView: View = findViewById(android.R.id.content)) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         drawerLayout = mainView.findViewById(R.id.drawer_layout)

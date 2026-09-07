@@ -659,7 +659,7 @@ open class AnkiActivity(
         )
 
     /** @see Window.setNavigationBarColor */
-    @Suppress("deprecation", "API35 properly handle edge-to-edge")
+    @Suppress("DEPRECATION", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(
         @AttrRes attr: Int,
     ) {
