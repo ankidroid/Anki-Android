@@ -25,7 +25,6 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.storage.grantedStoragePermissions
 import com.ichi2.anki.common.utils.android.showThemedToast
-import com.ichi2.anki.common.utils.trimToLength
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
@@ -433,7 +432,7 @@ class IntentHandler : AbstractIntentHandler() {
             it.action = CLIPBOARD_INTENT
             // max length for an intent is 500KB.
             // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
-            it.putExtra(EXTRA_CLIPBOARD_DATA, textToCopy.trimToLength(25000))
+            it.putExtra(EXTRA_CLIPBOARD_DATA, textToCopy.take(25000))
         }
 
         fun requiresCollectionAccess(launchType: LaunchType): Boolean =
