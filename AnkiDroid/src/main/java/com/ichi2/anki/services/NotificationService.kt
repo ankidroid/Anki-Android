@@ -52,6 +52,11 @@ import com.ichi2.anki.common.android.R as CommonR
  *
  * This service can be triggered in one of two possible ways, depending on whether the notification
  * being fired is a recurring notification or a one-time snoozed notification. See [NotificationServiceAction].
+ *
+ * TODO: Rename and reorganize the (handle/send/fire)ReviewReminderNotification functions for better readability and separation of concerns.
+ * These three verbs are way too similar. The "send" method should be split into "validate" and "hydrate". "send" sometimes aborts and does nothing.
+ * The distinction between "handle" and "send" should be made more clear. All uses of "fire" in the codebase, including in documentation,
+ * should be aligned to mean "trigger the OS display unconditionally."
  */
 class NotificationService : AnkiBroadcastReceiver() {
     companion object {
