@@ -22,10 +22,12 @@ import kotlin.time.Duration.Companion.milliseconds
 /**
  * Shows/dismisses a loading dialog driven by [viewModel]'s progress flow.
  * [delayMillis] defers the initial show so quick operations don't flash a dialog.
+ * [resolveMessage] maps the ViewModel's message to the text shown in the dialog.
  */
-fun AnkiActivity.observeProgress(
-    viewModel: HasProgress,
+fun <M : Any> AnkiActivity.observeProgress(
+    viewModel: HasProgress<M>,
     delayMillis: Duration = 600.milliseconds,
+    resolveMessage: Context.(M) -> String,
 ) {
     var dialogVisible =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG) != null
@@ -47,7 +49,7 @@ fun AnkiActivity.observeProgress(
                     is ViewModelProgress.Active -> {
                         if (dialogVisible) {
                             showLoadingDialog(
-                                message = formatMessage(state),
+                                message = formatMessage(state, resolveMessage),
                                 cancellable = state.cancellable,
                             )
                             if (state.cancellable) wireCancelListener(viewModel)
@@ -59,7 +61,7 @@ fun AnkiActivity.observeProgress(
                                     if (latest is ViewModelProgress.Active) {
                                         dialogVisible = true
                                         showLoadingDialog(
-                                            message = formatMessage(latest),
+                                            message = formatMessage(latest, resolveMessage),
                                             cancellable = latest.cancellable,
                                         )
                                         if (latest.cancellable) wireCancelListener(viewModel)
@@ -74,7 +76,7 @@ fun AnkiActivity.observeProgress(
     }
 }
 
-private fun AnkiActivity.wireCancelListener(viewModel: HasProgress) {
+private fun AnkiActivity.wireCancelListener(viewModel: HasProgress<*>) {
     supportFragmentManager.executePendingTransactions()
     val fragment =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG)
@@ -95,9 +97,10 @@ private fun AnkiActivity.wireCancelListener(viewModel: HasProgress) {
  * TODO: relax [showLoadingDialog]/[dismissLoadingDialog] to `FragmentActivity` and drop
  *   the cast.
  */
-fun Fragment.observeProgress(
-    viewModel: HasProgress,
+fun <M : Any> Fragment.observeProgress(
+    viewModel: HasProgress<M>,
     delayMillis: Duration = 600.milliseconds,
+    resolveMessage: Context.(M) -> String,
 ) {
     val activity = requireActivity() as? AnkiActivity
     if (activity == null) {
@@ -107,11 +110,14 @@ fun Fragment.observeProgress(
         )
         return
     }
-    activity.observeProgress(viewModel, delayMillis)
+    activity.observeProgress(viewModel, delayMillis, resolveMessage)
 }
 
-private fun Context.formatMessage(state: ViewModelProgress.Active): String? {
-    val text = state.message?.resolve(this)
+private fun <M : Any> Context.formatMessage(
+    state: ViewModelProgress.Active<M>,
+    resolveMessage: Context.(M) -> String,
+): String? {
+    val text = state.message?.let { resolveMessage(it) }
     val amount = state.amount ?: return text
     val formattedAmount = state.formatAmount(amount)
     return when {

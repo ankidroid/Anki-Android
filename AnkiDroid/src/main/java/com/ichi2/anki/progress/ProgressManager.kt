@@ -11,19 +11,22 @@ import java.util.concurrent.atomic.AtomicLong
 /**
  * Progress state shared by a ViewModel and its UI.
  *
+ * [M] is the ViewModel's message type: a domain value (typically an enum) which the UI maps
+ * to display text in [observeProgress]. This keeps Android resources out of the ViewModel.
+ *
  * Concurrent [withProgress] calls are supported: the flow stays [Active][ViewModelProgress.Active]
  * until every call finishes. The displayed message/amount comes from whichever op was last to
  * start or update (one dialog, last write wins). The dialog is cancellable if any active op
  * passed an `onCancel`, and [requestCancel] fires all of those callbacks.
  */
-class ProgressManager {
-    val progress: StateFlow<ViewModelProgress>
-        field = MutableStateFlow<ViewModelProgress>(ViewModelProgress.Idle)
+class ProgressManager<M : Any> {
+    val progress: StateFlow<ViewModelProgress<M>>
+        field = MutableStateFlow<ViewModelProgress<M>>(ViewModelProgress.Idle)
 
     private val lock = Any()
 
     /** Keyed by op id, iteration order is start/update order the last entry wins. */
-    private val activeOps = linkedMapOf<Long, Op>()
+    private val activeOps = linkedMapOf<Long, Op<M>>()
     private val nextOpId = AtomicLong(0)
 
     /**
@@ -31,8 +34,8 @@ class ProgressManager {
      * don't allocate. The instance is reused across updates and only the map entry
      * is re-inserted (to move it to the "latest" position).
      */
-    private class Op(
-        var message: ProgressText?,
+    private class Op<M : Any>(
+        var message: M?,
         var amount: ProgressContext.Amount?,
         val onCancel: (() -> Unit)?,
         val formatAmount: (ProgressContext.Amount) -> String,
@@ -53,12 +56,12 @@ class ProgressManager {
      *  dedicated API instead of overloading [updateProgress].
      */
     suspend fun <T> withProgress(
-        message: ProgressText? = null,
+        message: M? = null,
         onCancel: (() -> Unit)? = null,
         formatAmount: (ProgressContext.Amount) -> String =
             { (current, max) -> "$current/$max" },
         separator: String = " ",
-        block: suspend ProgressScope.() -> T,
+        block: suspend ProgressScope<M>.() -> T,
     ): T {
         val opId = nextOpId.incrementAndGet()
         synchronized(lock) {
@@ -93,7 +96,7 @@ class ProgressManager {
      */
     internal fun updateOp(
         opId: Long,
-        message: ProgressText?,
+        message: M?,
         amount: ProgressContext.Amount?,
     ) {
         synchronized(lock) {
@@ -132,13 +135,13 @@ class ProgressManager {
 }
 
 /** Receiver inside [ProgressManager.withProgress] for mid-operation updates. */
-class ProgressScope internal constructor(
-    private val manager: ProgressManager,
+class ProgressScope<M : Any> internal constructor(
+    private val manager: ProgressManager<M>,
     private val opId: Long,
 ) {
     /** A null [message] keeps the current one. */
     fun updateProgress(
-        message: ProgressText? = null,
+        message: M? = null,
         amount: ProgressContext.Amount? = null,
     ) {
         manager.updateOp(opId, message = message, amount = amount)

@@ -5,7 +5,9 @@ package com.ichi2.anki.progress
 
 /**
  * Interface for ViewModels that expose progress state to the UI.
+ *
+ * @param M the ViewModel's progress message type. See [ProgressManager].
  */
-interface HasProgress {
-    val progressManager: ProgressManager
+interface HasProgress<M : Any> {
+    val progressManager: ProgressManager<M>
 }
