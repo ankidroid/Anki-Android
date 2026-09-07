@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
+import androidx.core.content.getSystemService
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.snackbar.canProperlyShowSnackbars
@@ -18,6 +19,12 @@ import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
 object ClipboardUtil {
+    /**
+     * Text in the clipboard cannot exceed 1 MB because that is the limit of the Binder IPC transaction buffer.
+     * We truncate at a much lower limit because the 1 MB limit is shared between all ongoing transactions.
+     */
+    const val MAX_CLIPBOARD_TEXT_LENGTH = 100_000
+
     val IMAGE_MIME_TYPES = arrayOf("image/*")
     val AUDIO_MIME_TYPES = arrayOf("audio/*")
     val VIDEO_MIME_TYPES = arrayOf("video/*")
@@ -72,7 +79,7 @@ object ClipboardUtil {
 }
 
 /**
- * Copies the provided [text] to the clipboard (truncated if necessary, >5 lines),
+ * Copies the provided [text] to the clipboard (truncated if necessary, see [ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH]),
  * and show either a snackbar, if possible, or a toast with a success/failure
  * message if the system does not already show a 'copied to clipboard' message
  *
@@ -113,12 +120,13 @@ fun Context.copyToClipboard(
  *
  * If the clipboard manager is obtained, the method creates a new clip with the provided text along with
  * the application name and version information. It then sets this clip as the primary clip on the clipboard.
+ * The text is truncated to the maximum length defined by [ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH].
  *
  * @param text The text to be copied to the clipboard.
  * @return `true` if the text was successfully copied to the clipboard, `false` if clipboard access failed.
  */
 private fun Context.copyTextToClipboard(text: String): Boolean {
-    val clipboardManager = this.getSystemService(Activity.CLIPBOARD_SERVICE) as? ClipboardManager
+    val clipboardManager = this.getSystemService<ClipboardManager>()
     if (clipboardManager == null) {
         Timber.w("Failed to obtain ClipboardManager")
         return false
@@ -128,7 +136,7 @@ private fun Context.copyTextToClipboard(text: String): Boolean {
         clipboardManager.setPrimaryClip(
             ClipData.newPlainText(
                 "${VersionUtils.appName} v${VersionUtils.pkgVersionName}",
-                text,
+                text.take(ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH),
             ),
         )
         true
