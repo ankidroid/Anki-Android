@@ -43,7 +43,7 @@
         <item quantity="other">%d resetovaných kartičiek</item>
     </plurals>
     <string name="answering_error_title">Chyba databázy</string>
-    <string name="answering_error_message">Zápis zbierky zlyhal. Databáza môže byť poškodená alebo na úložisku nie je dostatok miesta.\n\nAk sa to stáva častejšie, skontrolujte databázu, opravte zbierku alebo ju obnovte zo zálohy. Ak to chcete urobiť, stlačte  „možnosti” .\n\Môže ísť aj o chybu aplikácie; prosím oznámte túto chybu aby sme to mohli skontrolovať.</string>
+    <string name="answering_error_message">Zápis kolekcie zlyhal. Databáza môže byť poškodená alebo na úložisku nie je dostatok miesta.\n\nAk sa to stáva častejšie, skontrolujte databázu, opravte kolekciu alebo ju obnovte zo zálohy. Ak to chcete urobiť, stlačte „Možnosti”.\n\Môže ísť aj o chybu aplikácie; prosím oznámte túto chybu aby sme to mohli skontrolovať.</string>
     <string name="answering_error_report">Nahlásiť chybu</string>
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue.</string>
     <string name="repair_deck_dialog">Naozaj chcete skúsiť opraviť databázu?\n\nPred začatím pokusu o opravenie bude vytvorená kópia v podpriečinku \"%s\".</string>
@@ -83,9 +83,9 @@
     <string name="dialog_positive_repair">Opraviť</string>
     <string name="dialog_positive_replace">Nahradiť</string>
     <string name="dialog_collection_path_not_dir">Špecifikovaná cesta nebola platným adresárom</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">Zadaný text neodpovedá požadovanému certifikátu X509 kódovanom vo formáte PEM.</string>
+    <string name="dialog_invalid_custom_certificate_title">Chyba pri dekódovaní certifikátu</string>
+    <string name="dialog_updated_custom_certificate">Certifikát aktualizovaný</string>
     <!-- Media checking -->
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Kontrola multimédií&#8230;</string>
@@ -124,7 +124,7 @@
     <string name="database_locked_title">Databáza uzamknutá</string>
     <string name="database_locked_summary">Databázu AnkiDroid používa iná aplikácia. Zavrite, prosím, danú aplikáciu a potom znovu otvorte AnkiDroid.</string>
     <string name="incompatible_database_version_title">Nekompatibilná verzia databázy</string>
-    <string name="incompatible_database_version_summary">Databáza je pokročilejšej verzie ako vie AnkiDroid pracovať. Aktualizujte AnkiDroid alebo zmeňte verziu databázy na nižšiu verziu\n\nPodporovaná verzia: %1$d\nVerzia databázy: %2$d\n\nNasledovné možnosti obnovenia prepíšu vašu aktuálnu zbierku, pravdepodobne kompatibilnou verziou databázy:</string>
+    <string name="incompatible_database_version_summary">Databáza je pokročilejšej verzie ako vie AnkiDroid pracovať. Aktualizujte AnkiDroid alebo zmeňte verziu databázy na nižšiu verziu\n\nPodporovaná verzia: %1$d\nVerzia databázy: %2$d\n\nNasledovné možnosti obnovenia prepíšu vašu aktuálnu kolekciu, pravdepodobne kompatibilnou verziou databázy:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">Použil sa obrázok pozadia</string>
     <string name="background_image_removed">Obrázok pozadia bol odstránený</string>
@@ -261,7 +261,7 @@
     <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
     <string name="different_note_types_selected">Please select notes from only one notetype.</string>
     <string name="error_no_changes_to_save">No changes to save</string>
-    <string name="choose_color">Choose color</string>
+    <string name="choose_color">Vybrať farbu</string>
     <!-- Special Fields -->
     <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
@@ -277,4 +277,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <!-- Add profile dialog -->
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
 </resources>

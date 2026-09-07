@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
     <string name="export_share_title">Anki-პაკეტის გაგზავნა:</string>
     <string name="export_email_subject">AnkiDroid-მა წარმატებით განახორციელა ბარათების ექსპორტი: %s</string>
-    <string name="export_email_text"><![CDATA[        გამარჯობა!
+    <string name="export_email_text"><![CDATA[
+        გამარჯობა!
         <br/><br/>
         ეს არის AnkiDroid-ის მიერ გამოგზავნილი ბარათების დასტა[1].
         სცადეთ მისი გახსნა Anki-ს ნებისმიერი ხელმისაწვდომი ვერსიით[2] და ისიამოვნეთ ადვილი და შედეგიანი სწავლებით!<br/><br/>
@@ -368,4 +369,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Day</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

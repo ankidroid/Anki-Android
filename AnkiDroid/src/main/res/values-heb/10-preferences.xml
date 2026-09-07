@@ -28,7 +28,6 @@
     <plurals name="pref_summ_minutes">
         <item quantity="one">דקה אחת</item>
         <item quantity="two">%d דקות</item>
-        <item quantity="many">%d דקות</item>
         <item quantity="other">%d דקות</item>
     </plurals>
     <string name="pref_milliseconds">%s מילישניות</string>
@@ -174,7 +173,6 @@
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">%d שעה אחרי חצות</item>
         <item quantity="two">%d שעות אחרי חצות</item>
-        <item quantity="many">%d שעות אחרי חצות</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">%d שעות אחרי חצות</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
@@ -320,7 +318,6 @@
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">קובץ %1$d\n%2$s</item>
         <item quantity="two">%1$d קבצים\n%2$s</item>
-        <item quantity="many">%1$d קבצים\n%2$s</item>
         <item quantity="other">%1$d קבצים\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->

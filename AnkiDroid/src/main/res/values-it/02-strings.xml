@@ -153,7 +153,8 @@
     <string name="export_save_apkg_unsuccessful">Salvataggio pacchetto di Anki fallito</string>
     <string name="export_share_title">Invia pacchetto Anki usando</string>
     <string name="export_email_subject">AnkiDroid ha esportato le carte: %s</string>
-    <string name="export_email_text"><![CDATA[        Ciao!
+    <string name="export_email_text"><![CDATA[
+        Ciao!
         <br/><br/>
         Questo è un mazzo di carte di studio Anki inviato da AnkiDroid[1].
         Prova ad aprirlo usando una delle distribuzioni di Anki[2] e goditi un apprendimento semplice ed efficiente!<br/><br/>
@@ -368,4 +369,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Day</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

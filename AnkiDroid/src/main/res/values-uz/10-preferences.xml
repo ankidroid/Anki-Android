@@ -47,7 +47,7 @@
     <string name="pref_cat_workarounds" maxLength="41">Vaqtinchalik yechimlar</string>
     <string name="pref_cat_plugins" maxLength="41">Plaginlar</string>
     <string name="pref_cat_editing" maxLength="41">Tahrirlash</string>
-    <string name="pref_cat_security" maxLength="41">Security</string>
+    <string name="pref_cat_security" maxLength="41">Xavfsizlik</string>
     <!-- Card template JavaScript API permissions -->
     <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
     <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
@@ -262,8 +262,8 @@
     <string name="user_action_8" maxLength="28">Foydalanuvchi amali 8</string>
     <string name="user_action_9" maxLength="28">Foydalanuvchi amali 9</string>
     <string name="toggle_auto_advance" maxLength="28">Avtomatik ilgarilashni yoqish/oʻchirish</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
+    <string name="enable_auto_advance" maxLength="28">Avto‑ilgarilashni yoqish</string>
+    <string name="disable_auto_advance" maxLength="28">Avto‑ilgarilashni oʻchirish</string>
     <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
     <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
     <!-- Select card side -->

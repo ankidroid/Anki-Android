@@ -156,7 +156,8 @@
     <string name="export_save_apkg_unsuccessful">Anki pakotnes saglabāšana neizdevās</string>
     <string name="export_share_title">Nosūtīt Anki pakotni ar</string>
     <string name="export_email_subject">AnkiDroid izgūtās zibkartītes: %s</string>
-    <string name="export_email_text"><![CDATA[        Sveiciens!
+    <string name="export_email_text"><![CDATA[
+        Sveiciens!
         <br/><br/>
         Šī ir Anki zibkartīšu kava, kas nosūtīta no AnkiDroid[1].
         Mēģini to atvērt ar vienu no pieejamajām Anki lietotnēm[2] un izbaudīt vieglu un iedarbīgu mācīšanos!<br/><br/>
@@ -374,4 +375,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Diena</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

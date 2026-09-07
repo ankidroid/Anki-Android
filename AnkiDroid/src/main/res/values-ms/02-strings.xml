@@ -150,7 +150,8 @@
     <string name="export_save_apkg_unsuccessful">Gagal simpan pakej Anki</string>
     <string name="export_share_title">Hantar pakej Anki menggunakan</string>
     <string name="export_email_subject">Kad imbasan dieksport AnkiDroid: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[
+        Hi!
         <br/><br/>
         Ini merupakan dek kad imbasan Anki dihantar dari AnkiDroid[1].
         Cuba buka dek ini menggunakan salah satu pengedaran Anki tersedia[2] dan nikmati pembelajaran senang dan cekap!<br/><br/>
@@ -362,4 +363,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Day</string>
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Switch profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

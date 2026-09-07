@@ -369,4 +369,8 @@
     <string name="set_due_date_day" comment="Used for setting due date">Día</string>
     <string name="set_due_date_date_range">Intervalo de datas</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Xa en progreso</string>
+    <!-- Switch profiles screen -->
+    <string name="switch_profile" comment="Title of the screen where the user switches between profiles">Cambiar de perfil</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Editar perfil</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Eliminar perfil</string>
 </resources>

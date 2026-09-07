@@ -44,19 +44,16 @@
     <plurals name="reviewer_window_title" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards.">
         <item quantity="one">נותרה דקה אחת</item>
         <item quantity="two">נותרו %d דקות</item>
-        <item quantity="many">נותרו %d דקות</item>
         <item quantity="other">נותרו %d דקות</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of minutes.">
         <item quantity="one">%1$d שעה נותרה %2$d</item>
         <item quantity="two">נותרו %1$d שעות %2$d</item>
-        <item quantity="many">נותרו %1$d שעות %2$d</item>
         <item quantity="other">נותרו %1$d שעות %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new" comment="Header of the reviewer, telling the users how many minutes remains before they have seen all cards. The second parameter is the number of hours.">
         <item quantity="one">נותר יום אחד ו-%2$d שעות</item>
         <item quantity="two">נותרו %1$d ימים ו-%2$d שעות</item>
-        <item quantity="many">נותרו %1$d ימים ו-%2$d שעות</item>
         <item quantity="other">נותרו %1$d ימים ו-%2$d שעות</item>
     </plurals>
     <string name="type_answer_hint" comment="In the reviewer. When the user use note type with hint. It\'s the default content of the text field in which the user is invited to type their answer. It disappears as soon as the user start to type.">הקלדת תשובה</string>
@@ -123,13 +120,11 @@
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">זה ייצר כרטיס אחד. האם להמשיך?</item>
         <item quantity="two">פעולה זו תיצור %1$d כרטיסים. להמשיך?</item>
-        <item quantity="many">פעולה זו תיצור %1$d כרטיסים. להמשיך?</item>
         <item quantity="other">פעולה זו תיצור %1$d כרטיסים. להמשיך?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">למחוק את סוג הכרטיס \"%2$s\" ואת כל %1$d הכרטיסים שלו?</item>
         <item quantity="two">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
-        <item quantity="many">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
         <item quantity="other">מחק את סוג הקלפים \"%2$s\" ואת כל %1$d הקלפים שלו?</item>
     </plurals>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הכרטיס: %s</string>

@@ -27,20 +27,17 @@
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">נותר כרטיס AnkiDroid %d</item>
         <item quantity="two">נותרו %d כרטיסי AnkiDroid</item>
-        <item quantity="many">נותרו %d כרטיסי AnkiDroid</item>
         <item quantity="other">נותרו %d כרטיסי AnkiDroid</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid קטן</string>
     <plurals name="widget_cards_due">
         <item quantity="one">נותר כרטיס אחד</item>
         <item quantity="two">נותרו %d כרטיסים</item>
-        <item quantity="many">נותרו %d כרטיסים</item>
         <item quantity="other">נותרו %d כרטיסים</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="one">נותרה דקה</item>
         <item quantity="two">נותרו שתי דקות</item>
-        <item quantity="many">נותרו %d דקות</item>
         <item quantity="other">נותרו %d דקות</item>
     </plurals>
     <string name="widget_add_note_button">הוסף פתק AnkiDroid חדש</string>
@@ -55,7 +52,6 @@
     <plurals name="deck_limit_reached">
         <item quantity="one" comment="Consider keeping the unbreakable space after the digit">ניתן לבחור עד %d חפיסה.</item>
         <item quantity="two">ניתן לבחור עד %d חפיסות.</item>
-        <item quantity="many">ניתן לבחור עד %d חפיסות.</item>
         <item quantity="other" comment="Consider keeping the unbreakable space after the digit">ניתן לבחור עד %d חפיסות.</item>
     </plurals>
     <string name="empty_widget_state" comment="To denote the widget is empty">חפיסה חסרה. הקש כדי להגדיר מחדש.</string>

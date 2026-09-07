@@ -97,8 +97,8 @@
     <string name="browse_manage_columns">Spravovať stĺpce</string>
     <string name="user_active_columns">Aktívne</string>
     <string name="user_potential_columns">Dostupné</string>
-    <string name="include_column">Include column</string>
-    <string name="exclude_column">Exclude column</string>
+    <string name="include_column">Pridať stĺpec</string>
+    <string name="exclude_column">Odobrať stĺpec</string>
     <string name="save_changes_message">Please save your changes first</string>
     <string name="browser_find_replace_loading_fields">Retrieving fields names&#8230;</string>
     <!-- Search history -->

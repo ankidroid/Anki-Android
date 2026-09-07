@@ -51,15 +51,15 @@
     <string name="pref_cat_workarounds" maxLength="41">حلول بديلة</string>
     <string name="pref_cat_plugins" maxLength="41">الإضافات</string>
     <string name="pref_cat_editing" maxLength="41">تحرير</string>
-    <string name="pref_cat_security" maxLength="41">Security</string>
+    <string name="pref_cat_security" maxLength="41">الأمان</string>
     <!-- Card template JavaScript API permissions -->
-    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
-    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
-    <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <string name="allow_dangerous_js_api_title" maxLength="41">السماح لـ JavaScript API الخطرة عموماً</string>
+    <string name="allow_dangerous_js_api_summ">يسمح لأي بطاقة أو قالب بقراءة وتعديل البطاقات الأخرى أو معلومات مجموعة آنكي خاصتك.\nدع هذا الخيار إلا إن كنت تثق بجميع البطاقات والقوالب في مجموعتك.</string>
+    <string name="dangerous_js_api_denied_snackbar">الأمان: تم ردع نداء شديد الخطر لـ JavaScript.\nإن كنت تثق بجميع البطاقات والقوالب في مجموعتك فيمكنك أن تسمح لهذا في الخيارات المتقدمة.</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
-    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
-    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
-    <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
+    <string name="allow_card_external_launch_title" maxLength="41">السماح للبطاقات بفتح تطبيقات أخرى</string>
+    <string name="allow_card_external_launch_summ">تستطيع البطاقات فتح تطبيقات أخرى على جهازك مما قد يسبب نتائج غير مرغوبة.\nدع هذا الخيار إلا إن كنت تثق بجميع البطاقات والقوالب في مجموعتك.</string>
+    <string name="card_external_launch_denied_snackbar">الأمان: تم منع البطاقة من فتح تطبيق آخر.\nإن كنت تثق بجميع البطاقات والقوالب في مجموعتك فيمكنك أن تسمح لهذا في الخيارات المتقدمة.</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">عرض الخط</string>
     <string name="use_input_tag" maxLength="41">إدخال الجواب في البطاقة</string>
@@ -271,10 +271,10 @@
     <string name="user_action_8" maxLength="28">إجراء رقم ٨</string>
     <string name="user_action_9" maxLength="28">إجراء رقم ٩</string>
     <string name="toggle_auto_advance" maxLength="28">بدأ أو إيقاف التقدم التلقائي</string>
-    <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
-    <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
-    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
-    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
+    <string name="enable_auto_advance" maxLength="28">بدأ التقدم التلقائي</string>
+    <string name="disable_auto_advance" maxLength="28">إيقاف التقدم التلقائي</string>
+    <string name="enable_voice_recording" maxLength="28">تفعيل تسجيل الصوت</string>
+    <string name="disable_voice_recording" maxLength="28">تعطيل تسجيل الصوت</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">حدد جانب بطاقة</string>
     <string name="card_side_question">سؤال</string>
@@ -289,8 +289,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">تجريبي</string>
     <string name="readtext_deprecation_warn">يوفر آنكي درويد الآن طريقة جديدة لتحويل النص إلى كلام متوافقة مع برامج آنكي الأخرى وتتضمن أصوات أكثر وتحسينات للتشغيل!\n\nيرجى التحديث بأسرع وقت ممكن لأن هذا الخيار سَيُزال قريبًا</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">يرجى التحديث إلى الصيغة الجديدة لتحويل النص إلى كلام</string>
-    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
-    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">السماح للقوالب بتسجيل الصوت</string>
+    <string name="template_is_trying_to_record_audio">يحاول هذا القالب تسجيل الصوت</string>
     <string name="pref_fixed_port_title" maxLength="41">الذاكرة المحلية في شاشة الدراسة</string>
     <string name="pref_fixed_port_summary">يفعل JavaScript localStorage باستخدام  مرفأ خادم ثابت في شاشة الدراسة</string>
     <!-- Developer options -->

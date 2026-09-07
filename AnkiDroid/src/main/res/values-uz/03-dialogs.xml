@@ -70,7 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Chiqish</string>
     <string name="dialog_continue">Davom etish</string>
     <string name="dialog_processing">Ishlamoqda&#8230;</string>
-    <string name="dialog_allow">Allow</string>
+    <string name="dialog_allow">Ruxsat berish</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Yaratish</string>
     <string name="dialog_positive_delete" maxLength="28">Oʻchirish</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -261,4 +261,8 @@
     <!-- Change Note Type Dialog -->
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <!-- Add profile dialog -->
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
 </resources>
