@@ -425,16 +425,6 @@ class IntentHandler : AbstractIntentHandler() {
             storeMessage(DoSync().toMessage())
         }
 
-        fun copyStringToClipboardIntent(
-            context: Context,
-            textToCopy: String,
-        ) = Intent(context, IntentHandler::class.java).also {
-            it.action = CLIPBOARD_INTENT
-            // max length for an intent is 500KB.
-            // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
-            it.putExtra(EXTRA_CLIPBOARD_DATA, textToCopy.take(25000))
-        }
-
         fun requiresCollectionAccess(launchType: LaunchType): Boolean =
             when (launchType) {
                 LaunchType.SYNC,
