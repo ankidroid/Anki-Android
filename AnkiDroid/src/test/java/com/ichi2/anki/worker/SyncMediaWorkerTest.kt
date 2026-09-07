@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.work.testing.TestListenableWorkerBuilder
 import androidx.work.testing.WorkManagerTestInitHelper
 import com.ichi2.anki.NOTIFICATION_MIN_DELAY_MS
-import com.ichi2.anki.receiver.CopyToClipboardReceiver
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -49,19 +48,5 @@ class SyncMediaWorkerTest {
             shadowOf(pendingIntent).flags and PendingIntent.FLAG_IMMUTABLE,
             not(equalTo(0)),
         )
-    }
-
-    // https://github.com/ankidroid/Anki-Android/issues/20826
-    @Test
-    fun `error text is trimmed to fit in the binder transaction buffer`() {
-        val hugeText = "e".repeat(SyncMediaWorker.MAX_ERROR_TEXT_LENGTH + 1)
-
-        val pendingIntent = worker.getCopyToClipboardIntent(hugeText)
-
-        val errorText =
-            shadowOf(pendingIntent)
-                .savedIntent
-                .getStringExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG)
-        assertThat(errorText?.length, equalTo(SyncMediaWorker.MAX_ERROR_TEXT_LENGTH))
     }
 }

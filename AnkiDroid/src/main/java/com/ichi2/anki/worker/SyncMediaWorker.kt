@@ -155,7 +155,7 @@ class SyncMediaWorker(
     internal fun getCopyToClipboardIntent(text: String): PendingIntent {
         val intent =
             Intent(applicationContext, CopyToClipboardReceiver::class.java).apply {
-                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, text.take(MAX_ERROR_TEXT_LENGTH))
+                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, text)
             }
         return PendingIntent.getBroadcast(
             applicationContext,
@@ -198,15 +198,6 @@ class SyncMediaWorker(
         private const val HKEY_KEY = "hkey"
         private const val ENDPOINT_KEY = "endpoint"
         const val NOTIFICATION_UPDATE_RATE_MS = 500L
-
-        /**
-         * Maximum length of the error text placed in [getCopyToClipboardIntent].
-         *
-         * The notification and its intents must fit in the Binder transaction buffer (~1MB),
-         * which an unusually large message (e.g. from a [StackOverflowError]) may exceed
-         */
-        @VisibleForTesting
-        const val MAX_ERROR_TEXT_LENGTH = 100_000
 
         fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
             val constraints =
