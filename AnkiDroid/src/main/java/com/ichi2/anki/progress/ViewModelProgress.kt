@@ -6,15 +6,15 @@ package com.ichi2.anki.progress
 import com.ichi2.anki.ProgressContext
 
 /** Progress state observed by the UI. See [ProgressManager] for concurrent-op semantics. */
-sealed interface ViewModelProgress {
-    data object Idle : ViewModelProgress
+sealed interface ViewModelProgress<out M : Any> {
+    data object Idle : ViewModelProgress<Nothing>
 
-    data class Active(
-        val message: ProgressText? = null,
+    data class Active<M : Any>(
+        val message: M? = null,
         val amount: ProgressContext.Amount? = null,
         val cancellable: Boolean = false,
         val formatAmount: (ProgressContext.Amount) -> String =
             { (current, max) -> "$current/$max" },
         val separator: String = " ",
-    ) : ViewModelProgress
+    ) : ViewModelProgress<M>
 }

@@ -28,9 +28,9 @@ import kotlin.time.toJavaDuration
 
 @RunWith(AndroidJUnit4::class)
 class ProgressObserverTest : RobolectricTest() {
-    private val progressManager = ProgressManager()
+    private val progressManager = ProgressManager<String>()
     private val viewModel =
-        object : HasProgress {
+        object : HasProgress<String> {
             override val progressManager = this@ProgressObserverTest.progressManager
         }
 
@@ -38,7 +38,7 @@ class ProgressObserverTest : RobolectricTest() {
     fun `dialog appears after the delay and is dismissed when the op ends`() {
         val controller = startActivity()
         val activity = controller.get()
-        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY)
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
 
         val gate = CompletableDeferred<Unit>()
         val op = launchOp(gate)
@@ -58,7 +58,7 @@ class ProgressObserverTest : RobolectricTest() {
     fun `dialog is not shown for an op that ends within the delay`() {
         val controller = startActivity()
         val activity = controller.get()
-        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY)
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
 
         val gate = CompletableDeferred<Unit>()
         val op = launchOp(gate)
@@ -74,7 +74,7 @@ class ProgressObserverTest : RobolectricTest() {
     fun `dialog is shown when the activity is stopped and restarted during the show delay`() {
         val controller = startActivity()
         val activity = controller.get()
-        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY)
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
 
         val gate = CompletableDeferred<Unit>()
         val op = launchOp(gate)
@@ -95,14 +95,15 @@ class ProgressObserverTest : RobolectricTest() {
     }
 
     @Test
-    fun `a resource message is resolved into the dialog text`() {
+    fun `the message is resolved into the dialog text`() {
         val controller = startActivity()
         val activity = controller.get()
-        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY)
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { message ->
+            getString(R.string.progress_amount_bytes, message, "2 MB")
+        }
 
         val gate = CompletableDeferred<Unit>()
-        val message = ProgressText.Res(R.string.progress_amount_bytes, listOf("1 MB", "2 MB"))
-        val op = launchOp(gate, message)
+        val op = launchOp(gate, message = "1 MB")
         idleMainLooper(SHOW_DELAY * 2)
 
         assertEquals("1 MB/2 MB", activity.loadingDialogText())
@@ -113,7 +114,7 @@ class ProgressObserverTest : RobolectricTest() {
 
     private fun launchOp(
         gate: CompletableDeferred<Unit>,
-        message: ProgressText = ProgressText.Raw("op"),
+        message: String = "op",
     ) = CoroutineScope(Dispatchers.Unconfined).launch {
         progressManager.withProgress(message = message) { gate.await() }
     }

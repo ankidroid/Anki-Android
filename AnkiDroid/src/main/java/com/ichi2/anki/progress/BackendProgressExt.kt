@@ -13,12 +13,14 @@ import net.ankiweb.rsdroid.Backend
  *
  * @param backend the Anki backend instance to poll for progress
  * @param extractProgress lambda to extract progress data from the backend
+ * @param toMessage converts the extracted [ProgressContext.text] into the ViewModel's message type
  * @param block the operation to execute
  */
-suspend fun <T> ProgressScope.withBackendProgress(
+suspend fun <M : Any, T> ProgressScope<M>.withBackendProgress(
     backend: Backend,
     progressContext: ProgressContext = ProgressContext(),
     extractProgress: ProgressContext.() -> Unit,
+    toMessage: (String) -> M,
     block: suspend CoroutineScope.() -> T,
 ): T =
     backend.withProgress(
@@ -26,7 +28,7 @@ suspend fun <T> ProgressScope.withBackendProgress(
         extractProgress = extractProgress,
         updateUi = {
             updateProgress(
-                message = text?.let(ProgressText::Raw),
+                message = text?.let(toMessage),
                 amount = amount,
             )
         },
