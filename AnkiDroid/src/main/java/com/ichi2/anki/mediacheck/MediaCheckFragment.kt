@@ -11,6 +11,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebViewClient
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
@@ -24,8 +25,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.databinding.FragmentMediaCheckBinding
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.withProgress
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -60,11 +61,8 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-        launchCatchingTask {
-            withProgress(R.string.check_media_message) {
-                viewModel.checkMedia().join()
-            }
-        }
+        observeProgress(viewModel) { progress -> getString(progress.messageRes) }
+        viewModel.checkMedia()
 
         lifecycleScope.launch {
             viewModel.mediaCheckResult.collectLatest { result ->
@@ -139,13 +137,11 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
             setOnClickListener {
                 launchCatchingTask {
-                    withProgress(getString(R.string.check_media_adding_missing_tag)) {
-                        viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).join()
-                        showResultDialog(
-                            R.string.check_media_tags_added,
-                            TR.browsingNotesUpdated(viewModel.taggedFiles),
-                        )
-                    }
+                    viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).join()
+                    showResultDialog(
+                        R.string.check_media_tags_added,
+                        TR.browsingNotesUpdated(viewModel.taggedFiles),
+                    )
                 }
             }
         }
@@ -161,19 +157,15 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
     private fun confirmMediaRestore() {
         launchCatchingTask {
-            withProgress {
-                viewModel.restoreTrash().join()
-                showTrashRestoredDialog()
-            }
+            viewModel.restoreTrash().join()
+            showTrashRestoredDialog()
         }
     }
 
     private fun deleteTrash() {
         launchCatchingTask {
-            withProgress {
-                viewModel.deleteTrash().join()
-                showTrashDeletedDialog()
-            }
+            viewModel.deleteTrash().join()
+            showTrashDeletedDialog()
         }
     }
 
@@ -187,10 +179,8 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
     private fun handleDeleteConfirmation() {
         launchCatchingTask {
-            withProgress(resources.getString(R.string.delete_media_message)) {
-                viewModel.deleteUnusedMedia().join()
-                showDeletionResult()
-            }
+            viewModel.deleteUnusedMedia().join()
+            showDeletionResult()
         }
     }
 
@@ -250,3 +240,12 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         fun getIntent(context: Context): Intent = SingleFragmentActivity.getIntent(context, MediaCheckFragment::class)
     }
 }
+
+@get:StringRes
+private val MediaCheckProgress.messageRes: Int
+    get() =
+        when (this) {
+            MediaCheckProgress.CHECKING_MEDIA -> R.string.check_media_message
+            MediaCheckProgress.ADDING_TAGS -> R.string.check_media_adding_missing_tag
+            MediaCheckProgress.DELETING_MEDIA -> R.string.delete_media_message
+        }
