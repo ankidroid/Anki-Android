@@ -15,11 +15,8 @@
  */
 package com.ichi2.anki.dialogs.tags
 
-import com.ichi2.utils.TagsUtil.compareTag
 import com.ichi2.utils.TagsUtil.getTagAncestors
-import com.ichi2.utils.TagsUtil.getTagRoot
 import com.ichi2.utils.UniqueArrayList
-import com.ichi2.utils.UniqueArrayList.Companion.from
 import java.util.ArrayList
 import java.util.TreeSet
 
@@ -57,16 +54,15 @@ class TagsList(
 
     init {
         this.checkedTags.addAll(checkedTags)
-        this.allTags = from(allTags, java.lang.String.CASE_INSENSITIVE_ORDER)
+        this.allTags = UniqueArrayList()
+        this.allTags.addAll(allTags)
         this.allTags.addAll(this.checkedTags)
         indeterminateTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
         if (uncheckedTags != null) {
             this.allTags.addAll(uncheckedTags)
             // intersection between mCheckedTags and uncheckedTags
             indeterminateTags.addAll(this.checkedTags)
-            val uncheckedSet: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
-            uncheckedSet.addAll(uncheckedTags)
-            indeterminateTags.retainAll(uncheckedSet)
+            indeterminateTags.retainAll(uncheckedTags.toSet())
             this.checkedTags.removeAll(indeterminateTags)
         }
         prepareTagHierarchy()
@@ -229,11 +225,11 @@ class TagsList(
      * Initialize the tag hierarchy.
      */
     private fun prepareTagHierarchy() {
-        val allTags: List<String> = ArrayList(allTags)
-        for (tag in allTags) {
+        // Ancestors for existing tags are already present in the pre-sorted tag tree.
+        // We only need to ensure ancestors for checked tags are present and indeterminate.
+        val currentCheckedTags: List<String> = ArrayList(checkedTags)
+        for (tag in currentCheckedTags) {
             addAncestors(tag)
-        }
-        for (tag in checkedTags) {
             markAncestorsIndeterminate(tag)
         }
     }
@@ -266,20 +262,8 @@ class TagsList(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
-        val sortedList =
-            allTags.toList().sortedWith { lhs: String?, rhs: String? ->
-                val lhsRoot = getTagRoot(lhs!!)
-                val rhsRoot = getTagRoot(rhs!!)
-                val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-                val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-                if (lhsChecked != rhsChecked) {
-                    if (lhsChecked) -1 else 1
-                } else {
-                    compareTag(lhs, rhs)
-                }
-            }
-        allTags.clear()
-        allTags.addAll(sortedList)
+        // No-op: The tag list is already populated in DFN (Depth First Network) tree order
+        // from the backend's col.tags.tree().
     }
 
     /**

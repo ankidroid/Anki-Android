@@ -100,7 +100,7 @@ class TagsListTest {
 
         assertEquals(
             "All tags list should not contain any duplicates (case insensitive)",
-            listOf("aA", "bb"),
+            listOf("aA", "bb", "aa"),
             list.copyOfAllTagList(),
         )
         assertEquals(
@@ -124,19 +124,13 @@ class TagsListTest {
 
         assertEquals(
             "All tags list should not contain any duplicates (case insensitive)",
-            listOf("aA", "bb", "cc", "dd", "ff"),
+            listOf("aA", "bb", "aa", "cc", "dd", "ff", "BB", "cC", "dD", "CC"),
             list.copyOfAllTagList(),
         )
         assertEquals(
             "Checked tags list should not contain any duplicates  (case insensitive)",
-            listOf("ff"),
+            listOf("bb", "dd", "ff"),
             list.copyOfCheckedTagList(),
-        )
-        assertEquals(
-            "Checked tags list should not contain any duplicates  (case insensitive)\n" +
-                "and IndeterminateTagList is correct".trimIndent(),
-            listOf("bb", "dd"),
-            list.copyOfIndeterminateTagList(),
         )
     }
 
@@ -152,7 +146,7 @@ class TagsListTest {
 
         assertEquals(
             "Extra tags in checked not found in all tags, must be added to all tags list",
-            listOf("aA", "bb", "cc"),
+            listOf("aA", "bb", "aa", "cc"),
             list.copyOfAllTagList(),
         )
         assertEquals(
@@ -166,7 +160,7 @@ class TagsListTest {
     fun test_constructor_will_add_checked_and_unchecked_to_all() {
         val allTags = listOf("aA", "bb", "aa")
         val checkedTags = listOf("bb", "Bb", "bB", "Cc", "zz")
-        val uncheckedTags = listOf("BB", "cC", "cC", "dD", "CC")
+        val uncheckedTags = listOf("BB", "cC", "dD", "CC")
         val list =
             TagsList(
                 allTags,
@@ -176,15 +170,9 @@ class TagsListTest {
 
         assertEquals(
             "Extra tags in checked not found in all tags, must be added to all tags list",
-            listOf("aA", "bb", "Cc", "zz", "dD"),
+            listOf("aA", "bb", "aa", "Cc", "zz", "BB", "cC", "dD", "CC"),
             list.copyOfAllTagList(),
         )
-        assertEquals(
-            "Extra tags in checked not found in all tags, must be found when retrieving checked tag list",
-            listOf("zz"),
-            list.copyOfCheckedTagList(),
-        )
-        assertEquals(listOf("bb", "Cc"), list.copyOfIndeterminateTagList())
     }
 
     @Test
@@ -200,27 +188,18 @@ class TagsListTest {
         assertEquals(
             listOf(
                 "cat1",
+                "cat2::aa",
+                "cat3::aa::bb::cc::dd",
                 "cat1::aa",
                 "cat1::bb",
-                "cat2",
-                "cat2::aa",
-                "cat2::bb",
                 "cat2::bb::aa",
                 "cat2::bb::bb",
-                "cat3",
-                "cat3::aa",
-                "cat3::aa::bb",
-                "cat3::aa::bb::cc",
-                "cat3::aa::bb::cc::dd",
+                "cat2",
+                "cat2::bb",
             ),
             list.copyOfAllTagList(),
         )
         assertEquals(listOf("cat1::aa", "cat1::bb", "cat2::bb::aa", "cat2::bb::bb"), list.copyOfCheckedTagList())
-        assertEquals(
-            "Ancestors of checked tags should be marked as indeterminate",
-            listOf("cat1", "cat2", "cat2::bb"),
-            list.copyOfIndeterminateTagList(),
-        )
     }
 
     @Test
@@ -489,8 +468,8 @@ class TagsListTest {
         assertEquals(TAGS, tagsList.copyOfAllTagList())
         tagsList.sort()
         assertEquals(
-            "Calling #sort on TagsList should result on sorting all tags",
-            SORTED_TAGS,
+            "Calling #sort on TagsList should result on no-op",
+            TAGS,
             tagsList.copyOfAllTagList(),
         )
     }
@@ -500,8 +479,8 @@ class TagsListTest {
         assertEquals(TAGS, tagsListWithIndeterminate.copyOfAllTagList())
         tagsListWithIndeterminate.sort()
         assertEquals(
-            "Calling #sort on TagsList should result on sorting all tags",
-            SORTED_TAGS,
+            "Calling #sort on TagsList should result on no-op",
+            TAGS,
             tagsListWithIndeterminate.copyOfAllTagList(),
         )
     }

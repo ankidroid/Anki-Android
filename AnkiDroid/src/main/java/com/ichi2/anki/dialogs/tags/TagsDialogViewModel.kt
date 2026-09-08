@@ -46,31 +46,60 @@ class TagsDialogViewModel(
     init {
         tags =
             asyncIO {
-                val allTags = withCol { tags.all() }
+                val allTagsNode = withCol { tags.tree() }
+                val allTags = mutableListOf<String>()
+
+                fun traverse(
+                    node: anki.tags.TagTreeNode,
+                    parentFullTag: String,
+                ) {
+                    for (child in node.childrenList) {
+                        val fullTag = if (parentFullTag.isEmpty()) child.name else "$parentFullTag::${child.name}"
+                        allTags.add(fullTag)
+                        traverse(child, fullTag)
+                    }
+                }
+                traverse(allTagsNode, "")
+
                 val allCheckedTags = mutableSetOf<String>()
                 val uncheckedTags = mutableSetOf<String>()
-                // For each note, put the checked tag in checked list and unchecked tags in unchecked list.
-                // This will result in few tags being present in both lists, checked and
-                // unchecked as they might be present in one note but absent in any other.
-                // Such tags are referred as `indeterminateTags` in [TagsList]
-                noteIds.forEachIndexed { index, nid ->
-                    // TODO: Lift up withCol{ } call out of loop. Performs `N` expensive db queries.
-                    val noteTags = withCol { getNote(nid) }.tags
-                    initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
-                    val (checked, unchecked) = allTags.partition { noteTags.contains(it) }
-                    allCheckedTags.addAll(checked)
-                    uncheckedTags.addAll(unchecked)
+
+                // Fetch all tags for the given notes
+                val notesTagsList =
+                    noteIds.mapIndexed { index, nid ->
+                        initProgress.emit(InitProgress.FetchingNoteTags(index + 1, noteIds.size))
+                        withCol { getNote(nid) }.tags
+                    }
+
+                // For each tag check if it's present in the notes to determine if it's checked or unchecked
+                if (notesTagsList.isNotEmpty()) {
+                    for (tag in allTags) {
+                        var isChecked = false
+                        var isUnchecked = false
+                        for (noteTags in notesTagsList) {
+                            if (noteTags.any { it.equals(tag, ignoreCase = true) }) {
+                                isChecked = true
+                            } else {
+                                isUnchecked = true
+                            }
+                            if (isChecked && isUnchecked) break
+                        }
+                        if (isChecked) allCheckedTags.add(tag)
+                        if (isUnchecked) uncheckedTags.add(tag)
+                    }
                 }
+
                 // add the extra checked tags, these are to be shown as `checked` and cannot be indeterminate
                 val extraCheckedTags = checkedTags.toSet()
                 allCheckedTags.addAll(extraCheckedTags)
                 uncheckedTags.removeAll(extraCheckedTags)
                 initProgress.emit(InitProgress.Processing)
                 if (isCustomStudying) {
+                    val customStudyTags = allTags.filter { allCheckedTags.contains(it) }
                     TagsList(
-                        allTags = allCheckedTags,
+                        allTags = customStudyTags,
                         checkedTags = emptyList(),
-                        uncheckedTags = allCheckedTags,
+                        uncheckedTags = customStudyTags,
                     )
                 } else {
                     TagsList(
