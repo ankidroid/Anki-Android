@@ -129,11 +129,13 @@ val Double.dp
 @JvmInline
 value class Dp(
     val dp: Float,
-) {
+) : Comparable<Dp> {
     // TODO: improve once we have context parameters
     fun toPx(context: Context) = dp.dpToPx(context)
 
     operator fun plus(other: Dp) = Dp(dp = dp + other.dp)
+
+    override fun compareTo(other: Dp) = dp.compareTo(other.dp)
 }
 
 private fun Float.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density + 0.5f).toInt()
