@@ -118,6 +118,12 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat("syncMediaLogTitle", TR.syncMediaLogTitle(), equalTo("Media Sync Log"))
                     assertThat(TR.sentenceCase.mediaSyncLog, equalTo("Media sync log"))
 
+                    // Anki Desktop uses '...', our resources use the ellipsis character
+                    assertThat("profilesCreatingBackup", TR.profilesCreatingBackup(), equalTo("Creating Backup..."))
+                    assertThat(TR.sentenceCase.creatingBackup, equalTo("Creating backup…"))
+                    assertThat("Creating Backup...".toSentenceCase(this, R.string.sentence_creating_backup), equalTo("Creating backup…"))
+                    assertThat("Creating Backup…".toSentenceCase(this, R.string.sentence_creating_backup), equalTo("Creating backup…"))
+
                     assertThat("Toggle Suspend".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
                     assertThat("Ook? Ook?".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Ook? Ook?"))
                 }

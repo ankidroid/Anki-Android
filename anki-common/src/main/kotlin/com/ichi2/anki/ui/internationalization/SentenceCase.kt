@@ -34,8 +34,7 @@ fun String.toSentenceCase(
     @StringRes resId: Int,
 ): String {
     val resString = context.getString(resId)
-    // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
-    if (this.equals(resString, ignoreCase = true)) return resString
+    if (this.matchesSentenceCaseResource(resString)) return resString
     return this
 }
 
@@ -44,9 +43,18 @@ fun String.toSentenceCase(
     @StringRes resId: Int,
 ): String {
     val resString = resources.getString(resId)
-    // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
-    if (this.equals(resString, ignoreCase = true)) return resString
+    if (this.matchesSentenceCaseResource(resString)) return resString
     return this
+}
+
+/**
+ * Whether this string is [resString], ignoring the differences which `sentence-case.xml` exists to fix
+ */
+private fun String.matchesSentenceCaseResource(resString: String): Boolean {
+    // TranslationTypo: our resources must use the ellipsis character
+    val normalized = this.replace("...", "\u2026")
+    // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
+    return normalized.equals(resString, ignoreCase = true)
 }
 
 /**
@@ -359,6 +367,9 @@ object SentenceCase {
 
     context(_: Context)
     val keepEditing get() = TR.addingKeepEditing().toSentenceCase(R.string.sentence_keep_editing)
+
+    context(_: Context)
+    val creatingBackup get() = TR.profilesCreatingBackup().toSentenceCase(R.string.sentence_creating_backup)
 }
 
 /**
