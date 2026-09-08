@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright (c) 2026 YongWoo Shin <onlym6659@gmail.com>
 
-package com.ichi2.anki
+package com.ichi2.anki.shareddeck
 
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
+import com.ichi2.anki.R
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -18,6 +20,7 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import kotlin.test.assertEquals
 
+/** Tests for [SharedDecksActivity] */
 @RunWith(AndroidJUnit4::class)
 class SharedDecksActivityTest : RobolectricTest() {
     @Test
