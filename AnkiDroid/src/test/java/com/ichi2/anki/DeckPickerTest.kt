@@ -975,7 +975,7 @@ class DeckPickerTest : RobolectricTest() {
                     equalTo(
                         mapOf(
                             "Alt+1" to "Deck picker",
-                            "Alt+2" to "Card Browser",
+                            "Alt+2" to "Card browser",
                             "Alt+3" to "Open statistics",
                             "Alt+4" to "More",
                         ),
