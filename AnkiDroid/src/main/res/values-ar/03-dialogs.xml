@@ -94,7 +94,7 @@
     <string name="check_media_warning">قد يستغرق هذا وقتًا طويلًا مع مجموعات الوسائط الكبيرة. أتود الاستمرار؟</string>
     <string name="check_media_message">يتم فحص الوسائط&#8230;</string>
     <string name="check_media_adding_missing_tag">تجري إضافة الوسوم&#8230;</string>
-    <string name="check_media_tags_added">أضيفت الوسوم</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">جار حذف الوسائط&#8230;</string>
     <string name="delete_media_result_title">نتيجة الحذف</string>
     <plurals name="delete_media_result_message">

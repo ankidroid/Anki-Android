@@ -90,7 +90,7 @@
     <string name="check_media_warning">Это может занять много времени с большими коллекциями медиа. Продолжить?</string>
     <string name="check_media_message">Медиафайлы проверяются&#8230;</string>
     <string name="check_media_adding_missing_tag">Добавление меток&#8230;</string>
-    <string name="check_media_tags_added">Метки добавлены</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Медиафайлы 
 удаляются&#8230;</string>
     <string name="delete_media_result_title">Результат удаления</string>

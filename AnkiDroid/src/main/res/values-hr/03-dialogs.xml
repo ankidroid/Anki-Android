@@ -88,7 +88,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Provjera medija&#8230;</string>
     <string name="check_media_adding_missing_tag">Dodavanje oznaka&#8230;</string>
-    <string name="check_media_tags_added">Oznake dodane</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Brisanje medija&#8230;</string>
     <string name="delete_media_result_title">Rezultat brisanja</string>
     <plurals name="delete_media_result_message">

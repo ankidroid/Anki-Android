@@ -86,7 +86,7 @@
     <string name="check_media_warning">با مجموعه‌های رسانه‌ای حجیم، این کار ممکن است بسیار زمان‌بر باشد. آیا ادامه می‌دهید؟</string>
     <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
     <string name="check_media_adding_missing_tag">در حال اضافه کردن تگ ها&#8230;</string>
-    <string name="check_media_tags_added">تگ ها اضافه شدند</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">حذف رسانه&#8230;</string>
     <string name="delete_media_result_title">نتیجه حذف</string>
     <plurals name="delete_media_result_message">

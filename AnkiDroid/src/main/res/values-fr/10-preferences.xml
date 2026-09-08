@@ -143,7 +143,7 @@
     <string name="select_locale_title">Sélectionnez la langue</string>
     <string name="software_render" maxLength="41">Désactiver le rendu matériel de carte</string>
     <string name="software_render_summ">Le rendu matériel est plus rapide mais peut rencontrer des problèmes, en particulier sur Android 8/8.1. Si vous ne pouvez pas visualiser certaines parties de l\'interface de révision des cartes, essayez d\'activer cette option.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Désactiver le mode d\'édition à un champ à la fois</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Aligner au centre</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">Partager l\'utilisation de la fonctionnalité</string>
     <string name="analytics_summ">Vous pouvez contribuer à AnkiDroid en aidant l\'équipe de développement à voir quelles fonctionnalités les gens utilisent</string>
     <string name="note_editor_replace_newlines" maxLength="41">Remplacer les nouvelles lignes par du HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">Dans l\'éditeur de notes, convertissez toutes les instances de &lt;br&gt; en nouvelles lignes lors de l\'édition d\'une carte.</string>
     <string name="type_in_answer_focus" maxLength="41">Mettre en évidence « Saisir la réponse »</string>
     <string name="type_in_answer_focus_summ">Mettre en évidence automatique le champ \" Saisir la réponse\" dans l\'écran de révision</string>
     <!-- About -->

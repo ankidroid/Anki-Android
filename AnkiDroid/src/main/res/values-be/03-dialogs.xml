@@ -90,7 +90,7 @@
     <string name="check_media_warning">Гэта можа заняць шмат часу ў тым выпадку, калі калекцыя медыяфайлаў занадта вялікая. Працягнуць?</string>
     <string name="check_media_message">Праверка медыяфайлаў&#8230;</string>
     <string name="check_media_adding_missing_tag">Дадаванне тэгаў&#8230;</string>
-    <string name="check_media_tags_added">Тэгі дададзены</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Выдаленне медыяфайлаў&#8230;</string>
     <string name="delete_media_result_title">Вынік выдалення</string>
     <plurals name="delete_media_result_message">

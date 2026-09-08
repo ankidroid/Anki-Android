@@ -86,7 +86,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Kontrolado de aŭdvidaĵoj&#8230;</string>
     <string name="check_media_adding_missing_tag">Aldonado de etikedoj&#8230;</string>
-    <string name="check_media_tags_added">Aldonis etikedojn</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Forigado de aŭdvidaĵoj&#8230;</string>
     <string name="delete_media_result_title">Rezulto de forigo</string>
     <plurals name="delete_media_result_message">

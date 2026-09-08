@@ -86,7 +86,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽𐌳𐌰 𐌼𐌰𐌹𐌳𐌾𐌰&#8230;</string>
     <string name="check_media_adding_missing_tag">𐌱𐌹𐌰𐌿𐌺𐌰𐌽𐌳𐌰 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰&#8230;</string>
-    <string name="check_media_tags_added">𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰 𐌱𐌹𐌰𐌿𐌺𐌰𐌽𐌰</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽𐌳𐌰 𐌼𐌰𐌹𐌳𐌾𐌰𐌼&#8230;</string>
     <string name="delete_media_result_title">𐍄𐌰𐌿𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌰𐌹𐍃</string>
     <plurals name="delete_media_result_message">

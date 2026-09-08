@@ -84,7 +84,7 @@
     <string name="check_media_warning">由於較大的媒體檔案，這可能會花比較久的時間。確定繼續？</string>
     <string name="check_media_message">正在檢查媒體&#8230;</string>
     <string name="check_media_adding_missing_tag">添加標籤&#8230;</string>
-    <string name="check_media_tags_added">標籤已添加</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">刪除媒體中&#8230;</string>
     <string name="delete_media_result_title">克漏字結果</string>
     <plurals name="delete_media_result_message">

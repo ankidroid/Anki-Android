@@ -88,7 +88,7 @@
     <string name="check_media_warning">Tas var aizņemt ilgu laiku, ja ir lieli informācijas nesēju krājumi. Turpināt?</string>
     <string name="check_media_message">Pārbauda informācijas nesējus&#8230;</string>
     <string name="check_media_adding_missing_tag">Pievieno birkas&#8230;</string>
-    <string name="check_media_tags_added">Birkas pievienotas</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Izdzēš informācijas nesējus&#8230;</string>
     <string name="delete_media_result_title">Izdzēšanas iznākums</string>
     <plurals name="delete_media_result_message">

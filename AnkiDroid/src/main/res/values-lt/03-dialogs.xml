@@ -90,7 +90,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Tikrinamos laikmenos&#8230;</string>
     <string name="check_media_adding_missing_tag">Žymių pridėjimas&#8230;</string>
-    <string name="check_media_tags_added">Žymos pridėtos</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Medijos pašalinimas&#8230;</string>
     <string name="delete_media_result_title">Ištrynimo rezultatas</string>
     <plurals name="delete_media_result_message">

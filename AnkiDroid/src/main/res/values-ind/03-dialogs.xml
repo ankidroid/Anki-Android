@@ -84,7 +84,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Memeriksa media&#8230;</string>
     <string name="check_media_adding_missing_tag">Menambah tag&#8230;</string>
-    <string name="check_media_tags_added">Tag telah ditambahkan</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Menghapus media&#8230;</string>
     <string name="delete_media_result_title">Hasil penghapusan</string>
     <plurals name="delete_media_result_message">

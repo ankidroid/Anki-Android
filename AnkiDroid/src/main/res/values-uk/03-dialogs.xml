@@ -90,7 +90,7 @@
     <string name="check_media_warning">У випадку великих медіа-колекцій це може забрати багато часу. Продовжити?</string>
     <string name="check_media_message">Перевіряємо мультимедіа&#8230;</string>
     <string name="check_media_adding_missing_tag">Додавання тегів&#8230;</string>
-    <string name="check_media_tags_added">Теги додано</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Видалення медіа&#8230;</string>
     <string name="delete_media_result_title">Результат видалення</string>
     <plurals name="delete_media_result_message">
