@@ -14,7 +14,6 @@ import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.launchActivity
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
-import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.PreferencesFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
@@ -159,7 +158,7 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         insertReminders(count = 12)
         withScheduleRemindersFragment { fragment ->
             fragment.requireActivity().simulateSystemBars()
-            val binding = FragmentScheduleRemindersBinding.bind(fragment.requireView())
+            val binding = fragment.binding
             // scrolled to the end: the last reminder must clear the navigation bar band
             binding.recyclerView.scrollToLastPosition()
             advanceRobolectricLooper()

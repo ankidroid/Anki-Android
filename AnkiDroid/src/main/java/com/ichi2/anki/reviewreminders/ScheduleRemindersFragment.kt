@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.Insets
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
@@ -161,7 +162,8 @@ class ScheduleRemindersFragment :
             ?: FragmentHost.SETTINGS
     }
 
-    private val binding by viewBinding(FragmentScheduleRemindersBinding::bind)
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentScheduleRemindersBinding::bind)
 
     private val troubleshootingViewModel: ReminderTroubleshootingViewModel by activityViewModels {
         reminderTroubleshootingViewModelFactory(requireContext())
