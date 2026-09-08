@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">(Mal)pliigi (“-3”) hodiaŭan limigon de novaj kartoj je</string>
     <string name="custom_study_rev_extend">(Mal)pliigi (“-3”) hodiaŭan limigon de kartoj por ripeti je</string>
     <string name="custom_study_forgotten">Ripeti kartojn forgesitajn dum tiom da antaŭaj tagoj:</string>
-    <string name="custom_study_ahead">Anticipe ripeti kartojn je tiom da tagoj:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Antaŭrigardi novajn kartojn aldonitajn dum tiom da antaŭaj tagoj:</string>
     <string name="custom_study_tags">Nombro da kartoj por elekti el la kartaro:</string>
     <string name="storage_full_title">Konservejo plena</string>

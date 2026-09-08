@@ -50,7 +50,7 @@
     <string name="custom_study_new_extend">Palielināt/samazināt (\"-3\") šodienas jauno kartīšu skaitu par</string>
     <string name="custom_study_rev_extend">Palielināt/samazināt (\"-3\") šodienas izskatīšanas ierobežojumu par</string>
     <string name="custom_study_forgotten">Parskatīt kartītes, kas ir aizmirstas pēdējās x dienās:</string>
-    <string name="custom_study_ahead">Izskatīt uz priekšu x dienas:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Priekškatīt jaunās kartītes, kas pievienotas pēdējās x dienās:</string>
     <string name="custom_study_tags">Atlasīt x kavas kartītes:</string>
     <string name="storage_full_title">Krātuve pilna</string>

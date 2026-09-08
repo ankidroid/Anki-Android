@@ -46,7 +46,7 @@
     <string name="custom_study_new_extend">Tambahkan/kurangi (“-3”) batas kartu baru hari ini sampai</string>
     <string name="custom_study_rev_extend">Tambahkan/kurangi (“-3”) batas kartu ulasan hari ini sampai</string>
     <string name="custom_study_forgotten">Ulas kartu yang terlupakan dalam x hari terakhir:</string>
-    <string name="custom_study_ahead">Ulas duluan sampai x hari:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Pratinjau kartu yang baru ditambahkan dalam x hari terakhir:</string>
     <string name="custom_study_tags">Pilih x kartu dari dek:</string>
     <string name="storage_full_title">Penyimpanan sudah penuh</string>

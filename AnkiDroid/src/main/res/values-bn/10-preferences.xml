@@ -144,9 +144,9 @@
     <string name="select_locale_title">ভাষা নির্বাচন করুন</string>
     <string name="software_render" maxLength="41">কার্ড হার্ডওয়্যার রেন্ডার অক্ষম করুন</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="disable_extended_text_ui" maxLength="41">একক-ক্ষেত্র সম্পাদনা মোড অক্ষম করুন</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ল্যান্ডস্কেপ মোডে থাকাকালীন \'মোছা বন্ধ করুন\' প্রসঙ্গ মেনুকে অনুমতি দেয়</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">কেন্দ্র সারিবদ্ধ</string>
     <string name="vertical_centering_summ">কার্ডের বিষয়বস্তু উল্লম্বভাবে কেন্দ্রে রাখুন</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ডবল ট্যাপ সময়ের ব্যবধান</string>
@@ -234,7 +234,7 @@
     <string name="analytics_title" maxLength="41">বৈশিষ্ট্য ব্যবহার শেয়ার করুন</string>
     <string name="analytics_summ">লোকেরা কী কী বৈশিষ্ট্য ব্যবহার করে তা দেখতে বিকাশ দলকে সাহায্য করে আপনি AnkiDroid-এ অবদান রাখতে পারেন</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML দিয়ে নতুন লাইন প্রতিস্থাপন করুন</string>
-    <string name="note_editor_replace_newlines_summ">নোট এডিটরে, &lt;br&gt; একটি কার্ড সম্পাদনা করার সময় নতুন লাইন।</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">ফোকাস \'টাইপ উত্তর\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

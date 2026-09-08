@@ -144,9 +144,9 @@
     <string name="select_locale_title">تىل تاللىنىدۇ</string>
     <string name="software_render" maxLength="41">كارتىنى قاتتىق دېتالدا رەڭلەشنى چەكلەيدۇ</string>
     <string name="software_render_summ">قاتتىق دېتالدا رەڭلەشنىڭ سۈرئىتى تېز ئەمما مەسىلە بولۇشى مۇمكىن، بولۇپمۇ ‪Android 8/8.1 ‬نەشرىدە. ئەگەر كارتا تەكرارلايدىغان ئىشلەتكۈچى ئارايۈزىنىڭ بىر قىسمىنى كۆرەلمىسىڭىز، بۇ تەڭشەكنى سىناپ بېقىڭ.</string>
-    <string name="disable_extended_text_ui" maxLength="41">تاق بۆلەك تەھرىرلەش ھالىتىنى چەكلەيدۇ</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">توغرىسىغا ھالەتتە مەزمۇن تىزىملىكىدە «بوش ئورۇن تولدۇرۇش» قا يول قويىدۇ.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">ئۇتتۇرىغا توغرىلا</string>
     <string name="vertical_centering_summ">كارتا مەزمۇنىنى بويىغا ئوتتۇرىغا توغرىلايدۇ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ۋاقىت ئارىلىقى قوش چېكىلىدۇ</string>
@@ -234,7 +234,7 @@
     <string name="analytics_title" maxLength="41">ئىقتىدار ئىشلىتىشنى ھەمبەھىرلەيدۇ</string>
     <string name="analytics_summ">ئىشلەتكۈچىلەرنىڭ قايسى ئىقتىدارلارنى ئىشلىتىدىغانلىقىنى ئىگىلەش ئارقىلى ئىجادكارلارغا ياردەم بېرىپ  AnkiDroid قا تۆھپە قوشالايسىز</string>
     <string name="note_editor_replace_newlines" maxLength="41">يېڭى قۇرنى HTML بىلەن ئالماشتۇرىدۇ</string>
-    <string name="note_editor_replace_newlines_summ">خاتىرە تەھرىرلىگۈچتە، كارتا تەھرىرلىگەندە &lt;br&gt; ھەر قاندىغى قۇر ئالماشتۇرۇشقا ئايلاندۇرۇلىدۇ.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">(جاۋاب كىرگۈزۈش) كە مەركەزلىشىدۇ</string>
     <string name="type_in_answer_focus_summ">ئۆگىنىش ئېكرانىدا ئۆزلۈكىدىن (جاۋاب كىرگۈزۈش) بۆلىكىگە مەركەزلىشىدۇ</string>
     <!-- About -->

@@ -50,7 +50,7 @@
     <string name="custom_study_new_extend">Povećaj/umanji (“-3”) današnji limit novih kartica za</string>
     <string name="custom_study_rev_extend">Povećaj/umanji (“-3”) današnji limit kartica ponavljanja za</string>
     <string name="custom_study_forgotten">Kartice ponavljanja zaboravljene u zadnjih x dana:</string>
-    <string name="custom_study_ahead">Ponavljaj x dana unaprijed:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Pregledaj nove kartice dodane u zadnjih x dana:</string>
     <string name="custom_study_tags">Odaberi x kartica iz špila:</string>
     <string name="storage_full_title">Pohrana je puna</string>

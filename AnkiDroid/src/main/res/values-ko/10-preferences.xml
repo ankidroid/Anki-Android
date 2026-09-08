@@ -142,9 +142,9 @@
     <string name="select_locale_title">언어 선택</string>
     <string name="software_render" maxLength="41">카드 하드웨어 렌더링 비활성화</string>
     <string name="software_render_summ">하드웨어 렌더링은 더 빠르지만 특히 Android 8/8.1에서 문제가 있을 수 있습니다.  카드 복습 사용자 인터페이스의 일부가 표시되지 않으면 이 설정을 시도해 보십시오.</string>
-    <string name="disable_extended_text_ui" maxLength="41">단일 필드 편집 모드 비활성화</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">가로 모드에서 \'빈칸 뚫기\' 메뉴를 표시합니다.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">가운데 정렬</string>
     <string name="vertical_centering_summ">카드의 내용을 세로로 중앙에 배치</string>
     <string name="pref_double_tap_time_interval" maxLength="41">더블 탭 인식 간격</string>
@@ -230,7 +230,7 @@
     <string name="analytics_title" maxLength="41">기능 사용 공유하기</string>
     <string name="analytics_summ">개발팀이 사람들이 어떤 기능을 사용하는지 볼 수 있도록 도와주어 AnkiDroid에 기여할 수 있습니다.</string>
     <string name="note_editor_replace_newlines" maxLength="41">줄바꿈을 HTML로 변환</string>
-    <string name="note_editor_replace_newlines_summ">노트 편집기에서 카드를 편집할 때,  &lt;br&gt;를 줄바꿈으로 변환합니다.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">\'정답 입력\' 포커스</string>
     <string name="type_in_answer_focus_summ">\'정답 입력\' 필드에 자동으로 포커스합니다.</string>
     <!-- About -->

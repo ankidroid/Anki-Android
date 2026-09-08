@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de noves cartes a</string>
     <string name="custom_study_rev_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de revisions a</string>
     <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
-    <string name="custom_study_ahead">Revisió de x dies endavant:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">No queda espai al disc</string>

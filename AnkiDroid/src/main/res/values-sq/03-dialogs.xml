@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Rrit/zvogëlo (“-3”) kufirin e ri të kartës së sotme me</string>
     <string name="custom_study_rev_extend">Rrit/zvogëlo (“-3”) kufirin e sotëm të rishikimit me</string>
     <string name="custom_study_forgotten">Rishikoni kartat e harruara në x ditët e fundit:</string>
-    <string name="custom_study_ahead">Rishikoni përpara për x ditë:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Shikoni paraprakisht kartat e reja të shtuara në x ditët e fundit:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Magazinimi plot</string>

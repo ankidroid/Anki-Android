@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Aumentar/disminuir (“-3”) el límite actual de tarjetas en</string>
     <string name="custom_study_rev_extend">Aumentar/disminuir (“-3”) el límite actual de revisión por</string>
     <string name="custom_study_forgotten">Repasar tarjetas olvidadas en los últimos x días:</string>
-    <string name="custom_study_ahead">Revisar anticipadamente en x días:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
     <string name="custom_study_tags">Selecciona x tarjetas del mazo:</string>
     <string name="storage_full_title">Almacenamiento lleno</string>

@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Korota/alenna (\"-3\") tämän päivän uusien kortien rajaa arvolla</string>
     <string name="custom_study_rev_extend">Korota/alenna (\"-3\") tämän päivän kerrattavien kortien rajaa arvolla</string>
     <string name="custom_study_forgotten">Kortteja unohdettu edellisenä x päivänä:</string>
-    <string name="custom_study_ahead">Kertaa etukäteen x päivää:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
     <string name="custom_study_tags">Valitse x korttia satunnaisesti pakasta:</string>
     <string name="storage_full_title">Tallennustila on täynnä</string>

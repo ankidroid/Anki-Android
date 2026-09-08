@@ -52,7 +52,7 @@
     <string name="custom_study_new_extend">Zvýšiť/znížiť („-3”) dnešný limit nových kartičiek o</string>
     <string name="custom_study_rev_extend">Zvýšiť/znížiť („-3”) dnešný limit kartičiek na zopakovanie o</string>
     <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>
-    <string name="custom_study_ahead">Opakovať dopredu o x dní:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Úložisko je plné</string>

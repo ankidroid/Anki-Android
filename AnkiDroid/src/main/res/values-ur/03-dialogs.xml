@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">آج کی نئی کارڈ کی حد (\"-3\") میں اضافہ/کم کریں۔</string>
     <string name="custom_study_rev_extend">آج کی نظرثانی کی حد میں اضافہ/کمی (\"-3\")</string>
     <string name="custom_study_forgotten">پچھلے دنوں میں بھولے گئے کارڈز کا جائزہ لیں:</string>
-    <string name="custom_study_ahead">ایکس دنوں میں آگے کا جائزہ لیں:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">پچھلے x دنوں میں شامل کیے گئے نئے کارڈز کا جائزہ لیں:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">اسٹوریج بھرا ہوا ہے</string>

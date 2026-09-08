@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Augmentation/diminution (« -3 ») de la limite actuelle de la nouvelle carte</string>
     <string name="custom_study_rev_extend">Augmentation/diminution (« -3 ») de la limite de révision d\'aujourd\'hui de</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
-    <string name="custom_study_ahead">Réviser à l\'avance de x jours :</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
     <string name="custom_study_tags">Sélectionnez x cartes du paquet :</string>
     <string name="storage_full_title">Stockage plein</string>

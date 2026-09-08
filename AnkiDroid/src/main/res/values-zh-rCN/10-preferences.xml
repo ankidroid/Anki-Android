@@ -142,9 +142,9 @@
     <string name="select_locale_title">选择语言</string>
     <string name="software_render" maxLength="41">禁用卡牌硬件渲染</string>
     <string name="software_render_summ">硬件渲染速度较快，但可能有问题，特别是在 Android 8/8.1。如果您看不到部分卡片复习用户界面，请尝试此设置。</string>
-    <string name="disable_extended_text_ui" maxLength="41">禁用单字段编辑模式</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">旋转至横屏时允许上下文菜单中选择「创建填空题」。</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">居中对齐</string>
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
     <string name="pref_double_tap_time_interval" maxLength="41">两次轻按时间间隔</string>
@@ -231,7 +231,7 @@
     <string name="analytics_title" maxLength="41">分享软件使用情况</string>
     <string name="analytics_summ">通过让开发人员了解您在使用哪些功能，您可用让 AnkiDroid 变得更好</string>
     <string name="note_editor_replace_newlines" maxLength="41">用 HTML 替换换行</string>
-    <string name="note_editor_replace_newlines_summ">在笔记编辑器中，编辑卡片时将所有的&lt;br&gt;转换为换行符。</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">定位答案输入框</string>
     <string name="type_in_answer_focus_summ">在学习时，光标自动跳转至输入框</string>
     <!-- About -->

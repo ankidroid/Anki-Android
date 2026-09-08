@@ -148,9 +148,9 @@
     <string name="select_locale_title">حدد اللغة</string>
     <string name="software_render" maxLength="41">عطِّل عارض البطاقات العَتادي</string>
     <string name="software_render_summ">عرض العتاد أسرع لكنه قد يسبب مشاكل، خصوصًا على أندرويد ٨ أو ٨٫١. إذا لم تكن ترى جزءًا من واجهة مراجعة البطاقة، جرب هذا الخيار.</string>
-    <string name="disable_extended_text_ui" maxLength="41">تعطيل وضع تحرير الحقل الفردي</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">السماح بقائمة سياق «ملء الفراغات» في الوضع الأفقي.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">محاذاة للوسط</string>
     <string name="vertical_centering_summ">محاذاة محتوى البطاقات إلى الوسط عموديًا</string>
     <string name="pref_double_tap_time_interval" maxLength="41">الفاصل الزمني للنقر المزدوج</string>
@@ -241,7 +241,7 @@
     <string name="analytics_title" maxLength="41">مشاركة بيانات استخدام الميزات</string>
     <string name="analytics_summ">تستطيع المساهمة في آنكي درويد من خلال مساعدة فريق التطوير على معرفة الميزات التي يستخدمها الناس</string>
     <string name="note_editor_replace_newlines" maxLength="41">استبدال السطور الجديدة بـ HTML</string>
-    <string name="note_editor_replace_newlines_summ">في محرر الملحوظات، حوّل أي ظهور لـ &lt;br&gt; إلى سطور جديدة عند تحرير بطاقة.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">التركيز على «أدخل الإجابة»</string>
     <string name="type_in_answer_focus_summ">ركز على حقل «أدخل الإجابة» في شاشة الدراسة تلقائيًا</string>
     <!-- About -->

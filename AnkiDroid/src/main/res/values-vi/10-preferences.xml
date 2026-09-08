@@ -142,9 +142,9 @@
     <string name="select_locale_title">Chọn ngôn ngữ</string>
     <string name="software_render" maxLength="41">Tắt kết xuất phần cứng thẻ</string>
     <string name="software_render_summ">Kết xuất phần cứng nhanh hơn nhưng có thể gặp sự cố, cụ thể là trên Android 8 / 8.1. Nếu bạn không thể thấy các phần của giao diện người dùng xem xét thẻ, hãy thử cài đặt này.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Tắt chế độ chỉnh sửa trường đơn</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Cho phép menu ngữ cảnh \'Đánh dấu Cloze\' khi ở chế độ ngang.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Chọn Center align</string>
     <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
@@ -229,7 +229,7 @@
     <string name="analytics_title" maxLength="41">Chia sẻ việc sử dụng tính năng</string>
     <string name="analytics_summ">Bạn có thể đóng góp cho AnkiDroid bằng cách giúp nhóm phát triển xem mọi người sử dụng những tính năng nào</string>
     <string name="note_editor_replace_newlines" maxLength="41">Thay thế dòng mới bằng HTML</string>
-    <string name="note_editor_replace_newlines_summ">Trong Trình chỉnh sửa ghi chú, chuyển đổi thẻ &lt;br&gt; thành dòng mới khi chỉnh sửa thẻ.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Tập trung \'Nhập câu trả lời\'</string>
     <string name="type_in_answer_focus_summ">Tự động đặt con trỏ vào trường ‘nhập câu trả lời’ trong màn hình học tập</string>
     <!-- About -->

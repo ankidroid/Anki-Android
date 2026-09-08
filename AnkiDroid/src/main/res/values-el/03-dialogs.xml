@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου νέων καρτών κατά</string>
     <string name="custom_study_rev_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου επαναλήψεων κατά</string>
     <string name="custom_study_forgotten">Επανάληψη ξεχασμένων καρτών στις τελευταίες x μέρες:</string>
-    <string name="custom_study_ahead">Επανάληψη μπροστά κατά x μέρες:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
     <string name="custom_study_tags">Επιλέξτε x κάρτες από την τράπουλα:</string>
     <string name="storage_full_title">Γεμάτος χώρος αποθήκευσης</string>

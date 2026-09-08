@@ -143,9 +143,9 @@
     <string name="select_locale_title">Dil Seç</string>
     <string name="software_render" maxLength="41">Kart donanım renderını devredışı bırak</string>
     <string name="software_render_summ">Donanım renderı daha hızlıdır ama sorunları olabilir, özellikle de Android 8/8.1\'de. Kart çalışma kullanıcı arayüzünün bazı kısımlarını göremiyorsanız, bunu ayarı deneyin.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Tek Alan Düzenleme Modunu Devredışı Bırak</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Yatay moddayken \"boşluk doldurma\" durum menüsüne izin ver</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Ortaya hizala</string>
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Çift dokunma zaman aralığı</string>
@@ -232,7 +232,7 @@
     <string name="analytics_title" maxLength="41">Özellik kullanımını paylaş</string>
     <string name="analytics_summ">Geliştirme ekibinin insanların hangi özellikleri kullandığını görmesine yardım ederek AnkiDroid\'e katkıda bulunabilirsiniz.</string>
     <string name="note_editor_replace_newlines" maxLength="41">Satırbaşlarını HTML\'le değiştir</string>
-    <string name="note_editor_replace_newlines_summ">Not Düzenleyicide kart değiştirirken, bütün &lt;br&gt;leri satırbaşına çevir</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">\"Cevabı yaz\"a odaklan</string>
     <string name="type_in_answer_focus_summ">Çalışma ekranında otomatik olarak \"cevabı yaz\" alanını odakla</string>
     <!-- About -->

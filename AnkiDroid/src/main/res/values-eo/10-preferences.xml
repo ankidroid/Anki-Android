@@ -143,9 +143,9 @@
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
     <string name="software_render_summ">Aparatara bildigilo estas pli rapida, sed povas kaŭzi problemojn, precipe ĉe Android 8/8.1. Se parto de fasado ĉe la ekrano “ripeti karton” ne aperas, provu aktivigi tiun ĉi agordon.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Malaktivigi unukampan redakt‑reĝimon</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Montri la kuntekstan menuon “truteksta malpleno” kiam en horizontala orientiĝo.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Centrigi vertikale</string>
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Ignori duan frapeton antaŭ ol</string>
@@ -228,7 +228,7 @@
     <string name="analytics_title" maxLength="41">Kunhavigi uzadon de eblaĵoj</string>
     <string name="analytics_summ">Vi povas kontribui al AnkiDroid per helpi al la disvovla teamo scii kiujn funkciojn homoj uzas</string>
     <string name="note_editor_replace_newlines" maxLength="41">Anstataŭigi novajn liniojn en HTML</string>
-    <string name="note_editor_replace_newlines_summ">En la kart‑redaktilo, konverti ĉiujn &lt;br&gt; al novaj linioj dum redakti karton.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Marki kampon “enigi respondon”</string>
     <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” sur la lernada ekrano</string>
     <!-- About -->

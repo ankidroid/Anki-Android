@@ -144,9 +144,9 @@
     <string name="select_locale_title">Seleccionar idioma</string>
     <string name="software_render" maxLength="41">Desactivar a representación por hardware das tarxetas</string>
     <string name="software_render_summ">A representación por hardware é máis rápida pero pode dar problemas, especialmente en Android 8/8.1. Proba esta opción se non podes ver algunhas partes da interface de repaso das tarxetas.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Desactivar o modo de edición de campo único</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permite o menú contextual «Preguntas aniñadas» cando se está en modo horizontal.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Aliñar ao centro</string>
     <string name="vertical_centering_summ">Centrar o contido das tarxetas verticalmente</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tempo do dobre toque</string>
@@ -234,7 +234,7 @@
     <string name="analytics_title" maxLength="41">Compartir o uso das funcións</string>
     <string name="analytics_summ">Podes contribuír ao AnkiDroid axudando ao equipo de desenvolvedores a saber que funcións se usan máis</string>
     <string name="note_editor_replace_newlines" maxLength="41">Substituír os saltos de liña por HTML</string>
-    <string name="note_editor_replace_newlines_summ">No editor de notas, converte os casos de &lt;br&gt; en novas liñas ao editar unha tarxeta.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Resaltar \"escribe a resposta\"</string>
     <string name="type_in_answer_focus_summ">Resaltar automaticamente o campo «escribe a resposta» na pantalla de estudo.</string>
     <!-- About -->

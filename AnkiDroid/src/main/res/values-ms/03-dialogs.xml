@@ -46,7 +46,7 @@
     <string name="custom_study_new_extend">Tambahkan/Kurangkan (“-3”) had kad baru hari ini sebanyak</string>
     <string name="custom_study_rev_extend">Tambahkan/Kurangkan (“-3”) had semakan hari ini sebanyak</string>
     <string name="custom_study_forgotten">Semak kad terlupa dalam x hari:</string>
-    <string name="custom_study_ahead">Semak awal sebanyak x hari:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Pratonton kad baru ditambah dalam x hari lepas:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Storan penuh</string>

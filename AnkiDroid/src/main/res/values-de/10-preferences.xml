@@ -143,9 +143,9 @@
     <string name="select_locale_title">Sprache wählen</string>
     <string name="software_render" maxLength="41">Karten-Hardware-Rendering deaktivieren</string>
     <string name="software_render_summ">Hardware-Rendering ist schneller, kann aber Probleme haben, insbesondere auf Android 8/8.1. Wenn Sie Teile der Benutzeroberfläche der Karte nicht sehen können, versuchen Sie diese Einstellung.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Einzelfeldbearbeitungsmodus deaktivieren</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Erlaubt im Querformat das Kontextmenü »Auslassung erzeugen«</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Zentriert</string>
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Zeitintervall für Doppeltippen</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">Funktionsnutzung teilen</string>
     <string name="analytics_summ">Sie können zu AnkiDroid beitragen, indem Sie dem Entwicklerteam Einblick gewähren, welche Funktionen Sie verwenden</string>
     <string name="note_editor_replace_newlines" maxLength="41">Zeilenumbrüche durch HTML ersetzen</string>
-    <string name="note_editor_replace_newlines_summ">Beim Bearbeiten einer Karte im Notizeditor alle vorkommenden »&lt;br&gt;« in Zeilenbrüche umwandeln.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Auf »Antwort eingeben« fokussieren</string>
     <string name="type_in_answer_focus_summ">Automatisch im Lernbildschirm auf »Antwort eingeben« fokussieren</string>
     <!-- About -->

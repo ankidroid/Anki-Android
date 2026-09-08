@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">𐍆𐌰𐌿𐍂𐌰𐍃𐌰𐌹𐍈𐌰𐌽 𐌱𐌹 𐍇 𐌳𐌰𐌲𐌰𐌽𐍃:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">𐌽𐌹𐌿𐌾𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃 𐍆𐌰𐌿𐍂𐌰𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽 𐌰𐍆𐍄𐌿𐌼𐌹𐍃𐍄𐌰𐌹𐌼 𐍇 𐌳𐌰𐌲𐌰𐌼:</string>
     <string name="custom_study_tags">𐍅𐌰𐌻𐌴𐌹 x 𐌺𐌰𐍂𐍄𐍉𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃:</string>
     <string name="storage_full_title">𐍂𐌿𐌼 𐌹𐍃𐍄 𐍆𐌿𐌻𐌻</string>

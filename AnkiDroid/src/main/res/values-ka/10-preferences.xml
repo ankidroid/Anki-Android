@@ -143,9 +143,9 @@
     <string name="select_locale_title">ენის არჩევა</string>
     <string name="software_render" maxLength="41">ბარათების აპარატული ვიზუალიზაციის გამორთვა</string>
     <string name="software_render_summ">აპარატული ვიზუალიზაცია უფრო სწრაფია, მაგრამ შეიძლება ხარვეზები ჰქონდეს, განსაკუთრებით Android 8/8.1-ს შემთხვევაში. სცადეთ ეს პარამეტრი, თუკი ვერ ხედავთ ბარათების გადამხედველის ინტერფეისის გარკვეულ ნაწილებს.</string>
-    <string name="disable_extended_text_ui" maxLength="41">ცალკე ველის რედაქტირების რეჟიმის გამორთვა</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">შესაძლებელს ხდის, გამოიყენოთ „გამოტოვებული ადგილის“ კონტექსტური მენიუ ჰორიზონტალურ რეჟიმში.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">ცენტრში მოთავსება</string>
     <string name="vertical_centering_summ">ბარათების შიგთავსის ვერტიკალურ ცენტრში მოთავსება</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ორმაგი შეხების შუალედის დრო</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">ფუნქციათა მოხმარების მონაცემთა გაზიარება</string>
     <string name="analytics_summ">დეველოპერთა გუნდისთვის ფუნქციების გამოყენების სტატისტიკის გაზიარებით შეგიძლიათ AnkiDroid-ში წვლილი შეიტანოთ</string>
     <string name="note_editor_replace_newlines" maxLength="41">აბზაცების ჩანაცვლება HTML-ით</string>
-    <string name="note_editor_replace_newlines_summ">რედაქტორში ბარათის რედაქტირებისას ყოველი &lt;br&gt; აბზაცით ჩანაცვლდება.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">დაფოკუსება „პასუხის ჩაწერაზე“</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

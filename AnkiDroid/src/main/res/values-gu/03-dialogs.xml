@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">આજની નવી કાર્ડ મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_rev_extend">આજની સમીક્ષા મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_forgotten">છેલ્લા x દિવસમાં ભૂલી ગયેલા કાર્ડની સમીક્ષા કરો:</string>
-    <string name="custom_study_ahead">x દિવસ આગળ સમીક્ષા કરો:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">છેલ્લા x દિવસમાં ઉમેરાયેલા નવા કાર્ડ્સનું પૂર્વાવલોકન કરો:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">સ્ટોરેજ ભરાઈ ગયું</string>

@@ -143,9 +143,9 @@
     <string name="select_locale_title">Seletziona sa limba</string>
     <string name="software_render" maxLength="41">Disabìlita su renderizadore fìsicu (hardware) de sas cartas</string>
     <string name="software_render_summ">Su renderizadore fìsicu (hardware) est prus lestru ma diat pòdere tènnere problemas, mescamente in Android 8/8.1. Si non resesses a bìdere cantos de s\'interfache de impreu proa custa impostatzione.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disabìlita sa modalidade de modìfica a campu sìngulu</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permitet su menù de cuntestu \'Omissione (iscantzellamentu cloze)\' in sa modalidade orizontale</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Allìnia a tzentru</string>
     <string name="vertical_centering_summ">Tzentra in verticale su cuntenutu de sas cartas</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">Cumpartzi s\'impreu de sas funtzionalidades</string>
     <string name="analytics_summ">Podes contribuire a AnkiDroid agiudende s\'iscuadra de isvilupu a bìdere ite funtzionalidades impreat sa gente</string>
     <string name="note_editor_replace_newlines" maxLength="41">Remplasa sas lìnias noas cun s\'HTML</string>
-    <string name="note_editor_replace_newlines_summ">In s\'editore de notas cunverte cada istàntzia de &lt;br&gt; in lìnias noas cando ses modifichende una carta.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Pone in evidèntzia ‘iscrie sa risposta’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->
