@@ -1,14 +1,16 @@
 // noinspection MissingCopyrightHeader #17351
 
-package com.ichi2.anki
+package com.ichi2.anki.shareddeck
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.SharedDecksDownloadFragment.Companion.getDeckPageUri
+import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertNull
 
+/** Tests for [SharedDecksDownloadFragment] */
 @RunWith(AndroidJUnit4::class)
 class SharedDecksDownloadFragmentTest : RobolectricTest() {
     @Test
