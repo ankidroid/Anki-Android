@@ -23,8 +23,10 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
@@ -36,6 +38,7 @@ import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.databinding.FragmentSharedDecksDownloadBinding
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.create
@@ -43,7 +46,6 @@ import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.File
 import java.net.URLConnection
-import kotlin.math.abs
 
 /**
  * Used when a download is captured from AnkiWeb shared decks WebView.
@@ -54,6 +56,7 @@ import kotlin.math.abs
  */
 class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_download) {
     private val binding by viewBinding(FragmentSharedDecksDownloadBinding::bind)
+    private val viewModel: SharedDecksDownloadViewModel by viewModels()
 
     private var downloadId: Long = 0
 
@@ -84,9 +87,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
-
-        const val DOWNLOAD_STARTED_PROGRESS_PERCENTAGE = "0"
-        const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
 
         const val EXTRA_IS_SHARED_DOWNLOAD = "extra_is_shared_download"
 
@@ -137,6 +137,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupEdgeToEdge(view)
+        viewModel.uiState.launchCollectionInLifecycleScope(::render)
 
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
@@ -164,10 +165,24 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             Timber.i("Try again button clicked, retry downloading of deck")
             downloadManager.remove(downloadId)
             downloadFile(fileToBeDownloaded)
-            binding.cancelDownloadButton.visibility = View.VISIBLE
-            binding.tryDownloadAgainButton.visibility = View.GONE
-            binding.openInWebBrowserButton.visibility = View.GONE
         }
+    }
+
+    private fun render(state: SharedDecksDownloadUiState) {
+        binding.downloadingTitle.text = state.fileName?.let { getString(R.string.downloading_file, it) }
+        binding.downloadPercentageText.text =
+            when {
+                state.phase == DownloadPhase.Failed -> getString(R.string.download_failed)
+                // 19812: DownloadManager could not be queried, so all we can say is that it is running
+                state.percent == null -> TR.syncDownloadingFromAnkiweb()
+                else -> getString(R.string.percentage, formatDownloadPercent(state.percent))
+            }
+        binding.downloadProgressBar.progress = state.percent?.toInt() ?: 0
+        binding.checkNetworkInfoText.isVisible = state.isWaitingForNetwork
+        binding.cancelDownloadButton.isVisible = state.phase == DownloadPhase.Downloading
+        binding.importSharedDeckButton.isVisible = state.phase == DownloadPhase.Complete
+        binding.tryDownloadAgainButton.isVisible = state.phase == DownloadPhase.Failed
+        binding.openInWebBrowserButton.isVisible = state.phase == DownloadPhase.Failed
     }
 
     /** Applies edge-to-edge insets for the screen */
@@ -224,7 +239,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         onBackPressedCallback.isEnabled = isDownloadInProgress
         Timber.d("Download ID -> $downloadId")
         Timber.d("File name -> $fileName")
-        binding.downloadingTitle.text = getString(R.string.downloading_file, fileName)
+        viewModel.onDownloadStarted(currentFileName)
         startDownloadProgressChecker()
     }
 
@@ -334,15 +349,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     return
                 }
 
-                if (isVisible) {
-                    // Setting these since progress checker can stop before progress is updated to represent 100%
-                    binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE)
-                    binding.downloadProgressBar.progress = DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE.toInt()
-
-                    // Remove cancel button and show import deck button
-                    binding.cancelDownloadButton.visibility = View.GONE
-                    binding.importSharedDeckButton.visibility = View.VISIBLE
-                }
+                // the progress checker can stop before it sees 100%, so complete it here
+                viewModel.onDownloadComplete()
 
                 Timber.i("Opening downloaded deck for import")
                 openDownloadedDeck(context)
@@ -409,8 +417,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         Timber.d("Starting download progress checker")
         downloadProgressChecker.run()
         isProgressCheckerRunning = true
-        binding.downloadPercentageText.text = getString(R.string.percentage, DOWNLOAD_STARTED_PROGRESS_PERCENTAGE)
-        binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
     }
 
     /**
@@ -423,7 +429,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     /**
-     * Checks download progress and sets the current progress in ProgressBar.
+     * Reads the current progress out of [DownloadManager] and reports it to the ViewModel.
      */
     private fun checkDownloadProgress() {
         val query = DownloadManager.Query()
@@ -434,8 +440,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 downloadManager.query(query)
             } catch (_: IllegalArgumentException) {
                 // 19812: column local_filename is not allowed in queries
-                binding.downloadPercentageText.text = TR.syncDownloadingFromAnkiweb()
-                binding.downloadProgressBar.progress = 0
+                viewModel.onProgressUnavailable()
                 return
             }
 
@@ -445,22 +450,10 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 return
             }
 
-            // Calculate download progress and display it in the ProgressBar.
-            val downloadedBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-            val totalBytes = it.getInt(it.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES))
-            // Taking absolute value to prevent case of -0.0 % being shown.
-            val downloadProgress: Float = abs(downloadedBytes * 1f / totalBytes * 100)
-            val downloadProgressIntValue = downloadProgress.toInt()
-            val percentageValue =
-                if (downloadProgressIntValue == 0 || downloadProgressIntValue == 100) {
-                    // Show 0 % and 100 % instead of 0.0 % and 100.0 %
-                    downloadProgressIntValue.toString()
-                } else {
-                    // Show download progress percentage up to 1 decimal place.
-                    "%.1f".format(downloadProgress)
-                }
-            binding.downloadPercentageText.text = getString(R.string.percentage, percentageValue)
-            binding.downloadProgressBar.progress = downloadProgress.toInt()
+            viewModel.onProgress(
+                downloadedBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)),
+                totalBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)),
+            )
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
             val columnIndexForReason = it.getColumnIndex(DownloadManager.COLUMN_REASON)
@@ -475,14 +468,10 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 return
             }
 
-            // Display message if download is waiting for network connection
-            if (it.getInt(columnIndexForStatus) == DownloadManager.STATUS_PAUSED &&
-                it.getInt(columnIndexForReason) == DownloadManager.PAUSED_WAITING_FOR_NETWORK
-            ) {
-                binding.checkNetworkInfoText.visibility = View.VISIBLE
-            } else {
-                binding.checkNetworkInfoText.visibility = View.GONE
-            }
+            val waitingForNetwork =
+                it.getInt(columnIndexForStatus) == DownloadManager.STATUS_PAUSED &&
+                    it.getInt(columnIndexForReason) == DownloadManager.PAUSED_WAITING_FOR_NETWORK
+            viewModel.onWaitingForNetwork(waitingForNetwork)
         }
     }
 
@@ -525,21 +514,20 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         isSuccessful: Boolean,
         isInvalidDeckFile: Boolean = false,
     ) {
-        if (isVisible && !isSuccessful) {
+        if (!isSuccessful) {
             if (isInvalidDeckFile) {
                 Timber.i("File is not a valid deck, hence return from the download screen")
-                context?.let { showThemedToast(it, R.string.import_log_no_apkg, false) }
-                // Go back if file is not a deck and cannot be imported
-                activity?.onBackPressedDispatcher?.onBackPressed()
+                if (isVisible) {
+                    context?.let { showThemedToast(it, R.string.import_log_no_apkg, false) }
+                    // Go back if file is not a deck and cannot be imported
+                    activity?.onBackPressedDispatcher?.onBackPressed()
+                }
             } else {
-                Timber.i("Download failed, update UI and provide option to retry")
-                context?.let { showThemedToast(it, R.string.something_wrong, false) }
-                // Update UI if download could not be successful
-                binding.tryDownloadAgainButton.visibility = View.VISIBLE
-                binding.openInWebBrowserButton.visibility = View.VISIBLE
-                binding.cancelDownloadButton.visibility = View.GONE
-                binding.downloadPercentageText.text = getString(R.string.download_failed)
-                binding.downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
+                Timber.i("Download failed, offer a retry")
+                if (isVisible) {
+                    context?.let { showThemedToast(it, R.string.something_wrong, false) }
+                }
+                viewModel.onDownloadFailed()
             }
         }
 
