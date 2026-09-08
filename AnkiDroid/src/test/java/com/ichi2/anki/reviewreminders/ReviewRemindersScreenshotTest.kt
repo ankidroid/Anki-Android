@@ -51,6 +51,8 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
 
     @Test
     fun `settings host`() {
+        // overflow the list: the toolbar only collapses once the list can scroll
+        insertReminders(count = 12)
         captureSettingsHost("settingsHost")
     }
 
