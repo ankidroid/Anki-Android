@@ -586,7 +586,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 EXTEND_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
                 STUDY_AHEAD -> res.getString(R.string.custom_study_ahead_description)
-                STUDY_PREVIEW -> res.getString(R.string.custom_study_preview_description)
+                STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
                 STUDY_TAGS -> res.getString(R.string.custom_study_tags)
                 null -> ""
             }
