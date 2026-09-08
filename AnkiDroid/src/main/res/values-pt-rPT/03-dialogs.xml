@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Aumentar/diminuir (\"-3\") o limite de novas fichas, de hoje, em</string>
     <string name="custom_study_rev_extend">Aumentar/diminuir (\"-3\") o limite de fichas a rever, de hoje, em</string>
     <string name="custom_study_forgotten">Rever fichas esquecidas nos últimos x dias:</string>
-    <string name="custom_study_ahead">Rever em avanço por x dias:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Pré-visualizar novas fichas adicionadas nos últimos x dias:</string>
     <string name="custom_study_tags">Seleccione x fichas do baralho:</string>
     <string name="storage_full_title">Armazenamento cheio</string>

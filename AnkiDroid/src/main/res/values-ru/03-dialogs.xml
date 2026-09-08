@@ -52,7 +52,7 @@
     <string name="custom_study_new_extend">Увеличить или уменьшить («-3») лимит новых на сегодня</string>
     <string name="custom_study_rev_extend">Увеличить или уменьшить («-3») лимит повторяемых на сегодня</string>
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
-    <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
     <string name="custom_study_tags">Выберите количество карточек:</string>
     <string name="storage_full_title">Хранилище заполнено</string>

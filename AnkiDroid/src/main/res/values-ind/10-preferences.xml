@@ -143,9 +143,9 @@
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Matikan perangkat keras pe-render kartu</string>
     <string name="software_render_summ">Render menggunakan perangkat keras lebih cepat namun dapat mengakibatkan masalah, terutama pada Android 8/8.1. Jika Anda tidak dapat melihat bagian peninjauan kartu dari antarmuka pengguna, coba pengaturan berikut ini.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Nonaktifkan mode edit kolom tunggal</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Membolehkan konteks menu \'titik-titik\' saat mode lanskap</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Rata tengah</string>
     <string name="vertical_centering_summ">Ratakan tengah isi kartu secara vertikal</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali</string>
@@ -231,7 +231,7 @@
     <string name="analytics_title" maxLength="41">Bagikan data penggunaan fitur</string>
     <string name="analytics_summ">Kamu bisa berkontribusi ke AnkiDroid dengan membantu tim pengembangan tahu fitur mana yang orang gunakan</string>
     <string name="note_editor_replace_newlines" maxLength="41">Ganti newlines dengan HTML</string>
-    <string name="note_editor_replace_newlines_summ">Di Note Editor, konversikan bentuk apapun dari&lt;br&gt; menjadi neelones ketika mengedit sebuah kartu.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Fokus \'ketik di jawaban\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

@@ -146,9 +146,9 @@
     <string name="select_locale_title">Pasirinkite kalbą</string>
     <string name="software_render" maxLength="41">Išjungti kortelės techninės įrangos atvaizdavimą</string>
     <string name="software_render_summ">Techninė įranga atvaizduoja greičiau, tačiau gali kilti problemų, ypač naudojant \"Android 8/8.1\". Jei nematote kortelių peržiūros naudotojo sąsajos dalių, išbandykite šį nustatymą.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Išjungti vieno lauko redagavimo režimą</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Leidžia naudoti kontekstinį meniu \"Cloze Deletion\", kai naudojamas kraštovaizdžio režimas.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Centrinis lygiavimas</string>
     <string name="vertical_centering_summ">Kortelių turinį vertikaliai išdėstyti centre</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Dvigubo bakstelėjimo laiko intervalas</string>
@@ -238,7 +238,7 @@
     <string name="analytics_title" maxLength="41">Dalintis funkcijų naudojimu</string>
     <string name="analytics_summ">Galite prisidėti prie „AnkiDroid“ tobulinimo, padėdami kūrėjų komandai suprasti, kokiomis funkcijomis žmonės naudojasi</string>
     <string name="note_editor_replace_newlines" maxLength="41">Naujų eilučių pakeitimas HTML</string>
-    <string name="note_editor_replace_newlines_summ">Pastabų redaktoriuje redaguodami kortelę visus &lt;br&gt; atvejus paverskite naujomis eilutėmis.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Dėmesio centre \"įveskite atsakymą</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Dagdagan/bawasan (\"-3\") ang hangganan ng bagong card ngayong araw ng</string>
     <string name="custom_study_rev_extend">Dagdagan/bawasan (\"-3\") ang hangganan ng pagrepaso ngayong araw ng</string>
     <string name="custom_study_forgotten">Ang mga review kard na nakalimutan sa huling x araw:</string>
-    <string name="custom_study_ahead">Suriin nang maaga ng x araw:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">I-preview ang mga bagong kjard na naidagdag sa mga huling x araw:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Puno na ang storage</string>

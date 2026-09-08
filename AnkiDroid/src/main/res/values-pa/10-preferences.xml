@@ -144,9 +144,9 @@
     <string name="select_locale_title">ਭਾਸ਼ਾ ਚੁਣੋ</string>
     <string name="software_render" maxLength="41">ਕਾਰਡ ਹਾਰਡਵੇਅਰ ਰੈਂਡਰ ਨੂੰ ਅਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="software_render_summ">ਹਾਰਡਵੇਅਰ ਰੈਂਡਰ ਤੇਜ਼ ਹੈ ਪਰ ਸਮੱਸਿਆ ਹੋ ਸਕਦੀ ਹੈ, ਖਾਸ ਕਰਕੇ Android 8/8.1 \'ਤੇ। ਜੇਕਰ ਤੁਸੀਂ ਕਾਰਡ ਸਮੀਖਿਆ ਯੂਜ਼ਰ ਇੰਟਰਫੇਸ ਦੇ ਹਿੱਸੇ ਨਹੀਂ ਦੇਖ ਸਕਦੇ, ਤਾਂ ਇਸ ਸੈਟਿੰਗ ਨੂੰ ਅਜ਼ਮਾਓ।</string>
-    <string name="disable_extended_text_ui" maxLength="41">ਸਿੰਗਲ-ਫੀਲਡ ਸੰਪਾਦਨ ਮੋਡ ਨੂੰ ਅਸਮਰੱਥ ਬਣਾਓ</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਹੋਣ \'ਤੇ \'ਕਲੋਜ਼ ਡਿਲੀਸ਼ਨ\' ਸੰਦਰਭ ਮੀਨੂ ਦੀ ਆਗਿਆ ਦਿੰਦਾ ਹੈ।</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">ਕੇਂਦਰ ਇਕਸਾਰ</string>
     <string name="vertical_centering_summ">ਕਾਰਡਾਂ ਦੀ ਸਮੱਗਰੀ ਨੂੰ ਖੜ੍ਹਵੇਂ ਤੌਰ \'ਤੇ ਕੇਂਦਰਿਤ ਕਰੋ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ਡਬਲ ਟੈਪ ਟਾਈਮ ਅੰਤਰਾਲ</string>
@@ -232,7 +232,7 @@
     <string name="analytics_title" maxLength="41">ਵਿਸ਼ੇਸ਼ਤਾ ਦੀ ਵਰਤੋਂ ਸਾਂਝੀ ਕਰੋ</string>
     <string name="analytics_summ">ਤੁਸੀਂ ਵਿਕਾਸ ਟੀਮ ਦੀ ਇਹ ਦੇਖਣ ਵਿੱਚ ਮਦਦ ਕਰਕੇ AnkiDroid ਵਿੱਚ ਯੋਗਦਾਨ ਪਾ ਸਕਦੇ ਹੋ ਕਿ ਲੋਕ ਕਿਹੜੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹਨ</string>
     <string name="note_editor_replace_newlines" maxLength="41">ਨਵੀਆਂ ਲਾਈਨਾਂ ਨੂੰ HTML ਨਾਲ ਬਦਲੋ</string>
-    <string name="note_editor_replace_newlines_summ">ਨੋਟ ਐਡੀਟਰ ਵਿੱਚ, &lt;br&gt; ਇੱਕ ਕਾਰਡ ਨੂੰ ਸੰਪਾਦਿਤ ਕਰਦੇ ਸਮੇਂ ਨਵੀਆਂ ਲਾਈਨਾਂ ਵਿੱਚ.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">ਫੋਕਸ \'ਜਵਾਬ ਟਾਈਪ ਕਰੋ\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

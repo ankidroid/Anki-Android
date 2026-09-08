@@ -46,7 +46,7 @@
     <string name="custom_study_new_extend">增加/减少（“-3”）今天的新卡片限制</string>
     <string name="custom_study_rev_extend">增加/减少（“-3”）今天的复习卡片限制</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
-    <string name="custom_study_ahead">提前 x 天复习：</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
     <string name="custom_study_tags">从牌组中选择 x 张卡片：</string>
     <string name="storage_full_title">存储空间已满</string>

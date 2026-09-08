@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Heutigen Tageshöchstwerts für neue Karten erhöhen („3“) oder verringern („-3“) um</string>
     <string name="custom_study_rev_extend">Heutigen Tageshöchstwerts für Wiederholungskarten erhöhen („3“) oder verringern („-3“) um</string>
     <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
-    <string name="custom_study_ahead">x Tage im Voraus lernen:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
     <string name="custom_study_tags">Wählen Sie x Karten aus dem Stapel aus:</string>
     <string name="storage_full_title">Speicher voll</string>

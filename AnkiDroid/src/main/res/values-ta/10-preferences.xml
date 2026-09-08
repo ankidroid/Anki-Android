@@ -143,9 +143,9 @@
     <string name="select_locale_title">மொழியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="software_render" maxLength="41">கார்டு வன்பொருள் ரெண்டரிங்கை முடக்கு</string>
     <string name="software_render_summ">ஹார்டுவேர் ரெண்டர் வேகமானது ஆனால் சிக்கல்கள் இருக்கலாம், குறிப்பாக Android 8/8.1 இல். கார்டு மதிப்பாய்வு பயனர் இடைமுகத்தின் பகுதிகளை உங்களால் பார்க்க முடியவில்லை என்றால், இந்த அமைப்பை முயற்சிக்கவும்.</string>
-    <string name="disable_extended_text_ui" maxLength="41">ஒற்றை-புலம் எடிட்டிங் பயன்முறையை முடக்கு</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">லேண்ட்ஸ்கேப் பயன்முறையில் இருக்கும்போது \'அழித்தலை மூடவும்\' சூழல் மெனுவை அனுமதிக்கிறது.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">மத்திய சீரமைப்பு</string>
     <string name="vertical_centering_summ">அட்டைகளின் உள்ளடக்கத்தை செங்குத்தாக மையப்படுத்தவும்</string>
     <string name="pref_double_tap_time_interval" maxLength="41">இருமுறை தட்டுதல் நேர இடைவெளி</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">பகிர்வு அம்சம்</string>
     <string name="analytics_summ">மக்கள் எந்த அம்சங்களைப் பயன்படுத்துகிறார்கள் என்பதை டெவலப்மென்ட் குழுவுக்குத் தெரியப்படுத்துவதன் மூலம் நீங்கள் AnkiDroid க்கு பங்களிக்கலாம்</string>
     <string name="note_editor_replace_newlines" maxLength="41">புதிய வரிகளை HTML உடன் மாற்றவும்</string>
-    <string name="note_editor_replace_newlines_summ">குறிப்பு எடிட்டரில், &lt;br&gt; கார்டைத் திருத்தும்போது புதிய வரிகளுக்கு.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">\'பதிலைத் தட்டச்சு செய்வதில்\' கவனம் செலுத்துங்கள்</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

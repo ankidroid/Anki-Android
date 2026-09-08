@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Aumentare/diminuire (“-3”) il limite odierno di nuove carte di</string>
     <string name="custom_study_rev_extend">Aumentare/diminuire (“-3”) il limite odierno di revisioni di</string>
     <string name="custom_study_forgotten">Ripeti carte dimenticate negli ultimi x giorni:</string>
-    <string name="custom_study_ahead">Ripeti in anticipo di x giorni:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Anteprima carte nuove aggiunte negli ultimi x giorni:</string>
     <string name="custom_study_tags">Seleziona x carte casualmente dal mazzo:</string>
     <string name="storage_full_title">Spazio di archiviazione pieno</string>

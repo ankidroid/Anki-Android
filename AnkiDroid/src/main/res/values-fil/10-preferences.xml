@@ -144,9 +144,9 @@
     <string name="select_locale_title">Piliin ang wika</string>
     <string name="software_render" maxLength="41">Hindi paganahin ang card hardware render</string>
     <string name="software_render_summ">Mas mabilis ang hardware render pero maaring magkaroon ng mga problema, lalo na sa Android 8/8.1. Kung hindi mo makita ang ibang bahagi ng user interface sa pag-repaso ng card, subukan ang setting na ito.</string>
-    <string name="disable_extended_text_ui" maxLength="41">I-disable Ang Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Papayagan ang context menu na \'Pagbura ng Cloze\' tuwing gagamit ng landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Center align</string>
     <string name="vertical_centering_summ">Patayo ang nilalaman ng mga baraha</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Pagitan ng dalawang pindot</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">Ibahagi ang paggamit ng mga katangian</string>
     <string name="analytics_summ">Maaari ka mag-ambag sa AnkiDroid sa pagtulong sa development team na makita ang mga katangiang madalas ginagamit ng mga tao</string>
     <string name="note_editor_replace_newlines" maxLength="41">Palitan ang mga newlines ng HTML</string>
-    <string name="note_editor_replace_newlines_summ">Sa Note Editor, palitan ang mga instansya ng &lt;br&gt; ng newlines tuwing nag-eedit ng card.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Tampulan ang \'i-type ang sagot\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

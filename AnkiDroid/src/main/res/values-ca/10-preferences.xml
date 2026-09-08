@@ -143,9 +143,9 @@
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
     <string name="software_render" maxLength="41">Desactiva hardware de mostrar carta</string>
     <string name="software_render_summ">La mostra per hardware és més ràpida, però pot tenir problemes, concretament a Android 8 / 8.1. Si no podeu veure parts de la carta, proveu aquesta configuració.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Desactiva mode d\'edició d\'un sol camp</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Permet el menú \'Supressió Parcial\' quan som en mode apaisat</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Alinear al centre</string>
     <string name="vertical_centering_summ">Centra verticalment el contingut de cartes</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interval de doble tacte</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">Compartir ús de característica</string>
     <string name="analytics_summ">Podeu contribuir a AnkiDroid ajudant a l\'equip de desenvolupament a saber quines funcions utilitzen els usuaris</string>
     <string name="note_editor_replace_newlines" maxLength="41">Substitueix noves línies per HTML</string>
-    <string name="note_editor_replace_newlines_summ">A l\'editor de notes, converteix les instàncies de &lt;br&gt; a línies noves quan s\'editi una carta.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Enfoca \'escriu resposta\'</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

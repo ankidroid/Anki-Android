@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">आजची नवीन कार्ड मर्यादा वाढवा / कमी करा (“-3”)</string>
     <string name="custom_study_rev_extend">आजची पुनरावलोकन मर्यादा वाढवा / कमी करा (“-3”)</string>
     <string name="custom_study_forgotten">गेल्या x दिवसात विसरलेल्या कार्डांचे पुनरावलोकन करा:</string>
-    <string name="custom_study_ahead">एक्स दिवसांपूर्वी पुनरावलोकन करा:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">शेवटच्या x दिवसात जोडलेल्या नवीन कार्डांचे पूर्वावलोकन करा:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">स्टोरेज भरले आहे</string>

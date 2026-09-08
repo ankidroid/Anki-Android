@@ -143,9 +143,9 @@
     <string name="select_locale_title">ಒಂದು ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="software_render" maxLength="41">ಕಾರ್ಡ್ ಹಾರ್ಡ್‌ವೇರ್ ರೆಂಡರ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="software_render_summ">ಹಾರ್ಡ್‌ವೇರ್ ರೆಂಡರ್ ವೇಗವಾಗಿದೆ ಆದರೆ ವಿಶೇಷವಾಗಿ Android 8/8.1 ನಲ್ಲಿ ಸಮಸ್ಯೆಗಳನ್ನು ಹೊಂದಿರಬಹುದು. ಕಾರ್ಡ್ ವಿಮರ್ಶೆ ಬಳಕೆದಾರ ಇಂಟರ್ಫೇಸ್‌ನ ಭಾಗಗಳನ್ನು ನೀವು ನೋಡಲು ಸಾಧ್ಯವಾಗದಿದ್ದರೆ, ಈ ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಪ್ರಯತ್ನಿಸಿ.</string>
-    <string name="disable_extended_text_ui" maxLength="41">ಏಕ-ಕ್ಷೇತ್ರ ಸಂಪಾದನೆ ಮೋಡ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ಲ್ಯಾಂಡ್‌ಸ್ಕೇಪ್ ಮೋಡ್‌ನಲ್ಲಿರುವಾಗ \'ಮುಚ್ಚು ಅಳಿಸು\' ಸಂದರ್ಭ ಮೆನುವನ್ನು ಅನುಮತಿಸುತ್ತದೆ.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">ಕೇಂದ್ರಕ್ಕೆ ಲಗತ್ತಿಸಿ</string>
     <string name="vertical_centering_summ">ಕಾರ್ಡ್‌ಗಳ ವಿಷಯವನ್ನು ಲಂಬವಾಗಿ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ಡಬಲ್ ಟ್ಯಾಪ್ ಸಮಯದ ಮಧ್ಯಂತರ</string>
@@ -231,7 +231,7 @@
     <string name="analytics_title" maxLength="41">ವೈಶಿಷ್ಟ್ಯದ ಬಳಕೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="analytics_summ">ಜನರು ಯಾವ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಬಳಸುತ್ತಾರೆ ಎಂಬುದನ್ನು ನೋಡಲು ಅಭಿವೃದ್ಧಿ ತಂಡಕ್ಕೆ ಸಹಾಯ ಮಾಡುವ ಮೂಲಕ ನೀವು AnkiDroid ಗೆ ಕೊಡುಗೆ ನೀಡಬಹುದು</string>
     <string name="note_editor_replace_newlines" maxLength="41">ಹೊಸ ಸಾಲುಗಳನ್ನು HTML ನೊಂದಿಗೆ ಬದಲಾಯಿಸಿ</string>
-    <string name="note_editor_replace_newlines_summ">ಟಿಪ್ಪಣಿ ಸಂಪಾದಕದಲ್ಲಿ, &lt;br&gt; ಕಾರ್ಡ್ ಅನ್ನು ಸಂಪಾದಿಸುವಾಗ ಯಾವುದೇ ನಿದರ್ಶನಗಳನ್ನು ಹೊಸ ಲೈನ್‌ಗಳಿಗೆ ಪರಿವರ್ತಿಸಿ.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">\'ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ\' ಮೇಲೆ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

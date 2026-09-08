@@ -143,9 +143,9 @@
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Lumpuhkan pemapar perkakasan kad</string>
     <string name="software_render_summ">Pemapar perkakasan lebih pantas namun mungkin terdapat kesulitan, khususnya pada Android 8/8.1. Jika anda tidak dapat melihat sebahagian daripada antara muka semakan kad, cuba tetapan ini.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Lumpuhkan Mod Sunting Medan Tunggal</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Benarkan menu konteks \'Penghapusan Kloz\' ketika mod landskap.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Jajar ke tengah</string>
     <string name="vertical_centering_summ">Tengahkan kandungan kad secara menegak</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
@@ -232,7 +232,7 @@
     <string name="analytics_title" maxLength="41">Kongsi penggunaan ciri-ciri</string>
     <string name="analytics_summ">Anda boleh sumbang kepada AnkiDroid dengan membantu para pembangun lihat ciri-ciri yang orang ramai guna</string>
     <string name="note_editor_replace_newlines" maxLength="41">Ganti baris baru dengan HTML</string>
-    <string name="note_editor_replace_newlines_summ">Dalam Penyunting Nota, tukar mana-mana &lt;br&gt; kepada baris baru apabila sunting kad.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Fokus ‘taip dalam jawapan’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

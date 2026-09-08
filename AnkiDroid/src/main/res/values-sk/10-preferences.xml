@@ -146,9 +146,9 @@
     <string name="select_locale_title">Zvoliť jazyk</string>
     <string name="software_render" maxLength="41">Vypnúť hardvérové renderovanie kartičky</string>
     <string name="software_render_summ">Hardvérové renderovanie je rýchlejšie, ale môže spôsobiť problémy, najmä na Android 8/8.1. Ak nemôžete vidieť časti užívateľského rozhrania pri opakovaní kartičiek, skúste toto nastavenie.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Vypnúť mód editácie jedného poľa</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Povoliť kontextové menu doplňovačky pri horizontálnom zobrazení.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Zarovnanie na stred</string>
     <string name="vertical_centering_summ">Vycentrovať obsah kartičiek vertikálne</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas oneskorenia dvojitého dotyku</string>
@@ -238,7 +238,7 @@
     <string name="analytics_title" maxLength="41">Zdieľať používanie prvkov</string>
     <string name="analytics_summ">Môžete prispieť pre AnkiDroid tak, že umožníte vývojovému tímu sledovať, ktoré prvky sa používajú</string>
     <string name="note_editor_replace_newlines" maxLength="41">Nahradiť nové riadky s HTML</string>
-    <string name="note_editor_replace_newlines_summ">Premeniť v editore poznámok každý prípad &lt;br&gt; do nového riadku pri editácii kartičky.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Vybrať „napíšte odpoveď“</string>
     <string name="type_in_answer_focus_summ">Automaticky vyberie pole „napíšte odpoveď“ na obrazovke študovania.</string>
     <!-- About -->

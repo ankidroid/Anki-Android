@@ -145,9 +145,9 @@
     <string name="select_locale_title">Atlasīt valodu</string>
     <string name="software_render" maxLength="41">Atspējot kartīšu aparatūras atveidotāju</string>
     <string name="software_render_summ">Aparatūras atveidotājs ir ātrāks, bet tam var būt sarežģījumi, it īpaši ar Android 8/8.1. Šis iestatījums jāmēģina, ja kartīšu nav redzamas atsevišķas kartīšu izskatīšanas saskarnes daļas.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Atspējot viena lauka labošanu</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Ļauj \"Satura paslēpšana\" konteksta izvēlni, kad tiek izmantots guleniskais novietojums.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Centrēt</string>
     <string name="vertical_centering_summ">Kartīšu saturu noviedod vidū (stateniski)</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Divkārša piesitiena starplaiks</string>
@@ -235,7 +235,7 @@
     <string name="analytics_title" maxLength="41">Kopīgot iespēju lietojumu</string>
     <string name="analytics_summ">Tu vari sniegt savu ieguldījumu AnkiDroid, palīdzot izstrādes komandai redzēt, kuras iespējas cilvēki izmanto</string>
     <string name="note_editor_replace_newlines" maxLength="41">Aizstāt pārejas jaunā rindā ar HTML</string>
-    <string name="note_editor_replace_newlines_summ">Piezīmju redaktorā pārveidot jebkuru &lt;br&gt; par pāreju uz jaunu rindu, kad tiek labota kartīte.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Pārslēgties uz \"Ierakstīt atbildi\"</string>
     <string name="type_in_answer_focus_summ">Apgūšanas ekrānā automātiski pārslēgties uz lauku \"Ievadīt atbildi\"</string>
     <!-- About -->

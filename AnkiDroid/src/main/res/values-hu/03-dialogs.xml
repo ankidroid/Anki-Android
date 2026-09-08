@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Növeld/csökkentsd (\"-3\") a mai új kártyák korlátját</string>
     <string name="custom_study_rev_extend">Növeld/csökkentsd (\"-3\") a mai ismétlődő kártyák korlátját</string>
     <string name="custom_study_forgotten">Az elmúlt x napban elfelejtett kártyák ismétlése:</string>
-    <string name="custom_study_ahead">Idő előtti, x nappal előre ismétlés:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Tárhely megtelt</string>

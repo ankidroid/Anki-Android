@@ -51,7 +51,7 @@
     <string name="custom_study_new_extend">הוספה/הורדה(“-3”) הגבלת כרטיסים חדשים להיום ב</string>
     <string name="custom_study_rev_extend">הוספה/הורדה(“-3”) הגבלת חזרות להיום ב</string>
     <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים</string>
-    <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
     <string name="custom_study_tags">בחר x קלפים מהחפיסה:</string>
     <string name="storage_full_title">האיחסון מלא</string>

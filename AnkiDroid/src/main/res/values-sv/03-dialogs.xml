@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Öka/minska (”-3”) dagens nya kortgräns med</string>
     <string name="custom_study_rev_extend">Öka/minska (“-3”) dagens repetitionsgräns med</string>
     <string name="custom_study_forgotten">Repetera kort som är glömda under de senaste x dagarna:</string>
-    <string name="custom_study_ahead">Repetera i förväg för x dagar:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
     <string name="custom_study_tags">Välj x kort från kortleken:</string>
     <string name="storage_full_title">Lagring full</string>

@@ -56,7 +56,7 @@
     <string name="custom_study_new_extend">إضافة/طرح (مثلًا «-٣») إلى حد البطاقات الجديدة لهذا اليوم</string>
     <string name="custom_study_rev_extend">إضافة/طرح (مثلًا «-٣») إلى حد المراجعات لهذا اليوم</string>
     <string name="custom_study_forgotten">راجع البطاقات المنسية في آخر س يوم:</string>
-    <string name="custom_study_ahead">راجع مبكرًا بـ س يوم:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
     <string name="custom_study_tags">إختر س بطاقة من الرزمة:</string>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>

@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Bugünün yeni kart sınırını şu kadar arttırın/azaltın (“-3”)</string>
     <string name="custom_study_rev_extend">Bugünün gözden geçirme sınırını şu kadar arttırın/azaltın (“-3”)</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
-    <string name="custom_study_ahead">X günleri önce izle:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
     <string name="custom_study_tags">Desteden x kart seç:</string>
     <string name="storage_full_title">Depolama alanı dolu</string>

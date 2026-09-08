@@ -52,7 +52,7 @@
     <string name="custom_study_new_extend">Павялічыць/паменшыць (“-3”) абмежаванні новых картак на сёння</string>
     <string name="custom_study_rev_extend">Павялічыць/паменшыць (“-3”) абмежаванні паўтарэння новых картак на сёння</string>
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
-    <string name="custom_study_ahead">Вывучыць на некалькі дзён наперад:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзены за апошнія некалькі дзён:</string>
     <string name="custom_study_tags">Выберыце х картак з калоды:</string>
     <string name="storage_full_title">Сховішча запоўнена</string>

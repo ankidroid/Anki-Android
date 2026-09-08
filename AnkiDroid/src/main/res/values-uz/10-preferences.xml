@@ -143,9 +143,9 @@
     <string name="select_locale_title">Tilni tanlash</string>
     <string name="software_render" maxLength="41">Qurilma renderini oʻchirish</string>
     <string name="software_render_summ">Qurilma renderi tezroq, lekin muammolarga duch kelishi mumkin, xususan, Android 8/8.1ʼda. Agar siz kartani takrorlash foydalanuvchi interfeysi qismlarini koʻrmasangiz, ushbu sozlamani sinab koʻring.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Yagona maydon tahrirlash rejimini oʻchir</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Albom (gorizontal) rejimida \'Boʻshliqni toʻldirish\' kontekst menyusini yoqish</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Markazga tenglashtirish</string>
     <string name="vertical_centering_summ">Kartalar tarkibini vertikal ravishda markazga tekislash</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Ikki marta bosish intervali</string>
@@ -232,7 +232,7 @@
     <string name="analytics_title" maxLength="41">Funksiyalarni ishlatishimni ulashish</string>
     <string name="analytics_summ">Dasturchilarga odamlar qaysi funksiyalardan foydalanayotganligini koʻrishga yordam berish orqali AnkiDroidʼga hissa qoʻshishingiz mumkin</string>
     <string name="note_editor_replace_newlines" maxLength="41">Yangi qatorlarni HTML bilan almashtirish</string>
-    <string name="note_editor_replace_newlines_summ">Qayd muharririda &lt;br&gt; belgilari kartani tahrirlayotganda yangi qatorlarga oʻgiriladi.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">‘Javobni kiritish’ maydoniga oʻtish</string>
     <string name="type_in_answer_focus_summ">Oʻrganish ekranida ‘javobni kiritish’ maydoniga avtomatik tarzda oʻtish</string>
     <!-- About -->

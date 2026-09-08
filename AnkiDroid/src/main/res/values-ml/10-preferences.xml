@@ -143,9 +143,9 @@
     <string name="select_locale_title">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
     <string name="software_render" maxLength="41">കാർഡ് ഹാർഡ്‌വെയർ റെൻഡർ പ്രവർത്തനരഹിതമാക്കുക</string>
     <string name="software_render_summ">ഹാർഡ്‌വെയർ റെൻഡർ വേഗതയേറിയതാണെങ്കിലും പ്രശ്‌നങ്ങളുണ്ടാകാം, പ്രത്യേകിച്ചും Android 8 / 8.1. കാർഡ് അവലോകന ഉപയോക്തൃ ഇന്റർഫേസിന്റെ ഭാഗങ്ങൾ നിങ്ങൾക്ക് കാണാൻ കഴിയുന്നില്ലെങ്കിൽ, ഈ ക്രമീകരണം പരീക്ഷിക്കുക.</string>
-    <string name="disable_extended_text_ui" maxLength="41">സിംഗിൾ-ഫീൽഡ് എഡിറ്റ് മോഡ് അപ്രാപ്തമാക്കുക</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ലാൻഡ്‌സ്‌കേപ്പ് മോഡിലായിരിക്കുമ്പോൾ \'ക്ലോസ് ഡിലീറ്റ്\' സന്ദർഭ മെനു അനുവദിക്കുന്നു.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">സെന്റർ വിന്യാസം</string>
     <string name="vertical_centering_summ">കാർഡുകളുടെ ഉള്ളടക്കം ലംബമായി കേന്ദ്രീകരിക്കുക</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ഇരട്ട ടാപ്പ് സമയ ഇടവേള</string>
@@ -233,7 +233,7 @@
     <string name="analytics_title" maxLength="41">സവിശേഷത ഉപയോഗം പങ്കിടുക</string>
     <string name="analytics_summ">ആളുകൾ ഉപയോഗിക്കുന്ന ഫീച്ചറുകൾ ഏതൊക്കെയെന്ന് കാണാൻ ഡെവലപ്‌മെൻ്റ് ടീമിനെ സഹായിക്കുന്നതിലൂടെ നിങ്ങൾക്ക് AnkiDroid-ലേക്ക് സംഭാവന ചെയ്യാം</string>
     <string name="note_editor_replace_newlines" maxLength="41">HTML ഉപയോഗിച്ച് പുതിയ ലൈനുകൾ മാറ്റിസ്ഥാപിക്കുക</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">\'ഉത്തരം ടൈപ്പ് ചെയ്യുക\' എന്നതിൽ ശ്രദ്ധ കേന്ദ്രീകരിക്കുക</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

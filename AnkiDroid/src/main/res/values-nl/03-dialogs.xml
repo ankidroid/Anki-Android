@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">De nieuwe kaartlimiet van vandaag verhogen/verlagen (\"-3\") met</string>
     <string name="custom_study_rev_extend">De nieuwe overhoringslimiet van vandaag verhogen/verlagen (\"-3\") met</string>
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>
-    <string name="custom_study_ahead">Herhaal x dagen vooruit:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
     <string name="custom_study_tags">Selecteer x aantal kaarten van de deck</string>
     <string name="storage_full_title">Opslag vol</string>

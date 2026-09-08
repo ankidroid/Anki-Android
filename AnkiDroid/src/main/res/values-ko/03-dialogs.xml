@@ -46,7 +46,7 @@
     <string name="custom_study_new_extend">오늘의 새로운 카드 제한을 (“-3”) 만큼 증가/감소시키기</string>
     <string name="custom_study_rev_extend">오늘의 복습 제한을 (“-3”) 만큼 증가/감소시키기</string>
     <string name="custom_study_forgotten">최근 x일 동안 잊혀진 복습 카드:</string>
-    <string name="custom_study_ahead">x일 만큼 미리 복습하기:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">최근 x일 내에 추가된 카드 미리 학습하기:</string>
     <string name="custom_study_tags">카드 묶음으로부터 선택된 카드 수:</string>
     <string name="storage_full_title">저장 공간이 가득 찼습니다.</string>

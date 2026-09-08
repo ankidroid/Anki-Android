@@ -143,9 +143,9 @@
     <string name="select_locale_title">انتخاب زبان</string>
     <string name="software_render" maxLength="41">غیر فعال کردن رندر سخت‌افزار کارت</string>
     <string name="software_render_summ">رندر سخت افزاری سریع تر است ولی ممکن است مشکل داشته باشد، مخصوصا روی اندروید 8 یا 8.1. اگر بعضی از دکمه های مرور کارت ها را نمیبینید، این تنظیمات را امتحان کنید.</string>
-    <string name="disable_extended_text_ui" maxLength="41">غیرفعال کردن حالت ویرایش یک فیلد</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">فعالسازی فهرست امکانات کارت کلوز در حالت لندسکیپ.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">تراز در وسط</string>
     <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
     <string name="pref_double_tap_time_interval" maxLength="41">فاصله زمانی دو بار زدن</string>
@@ -232,7 +232,7 @@
     <string name="analytics_title" maxLength="41">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>
     <string name="analytics_summ">شما می‌توانید با به اشتراک گذاشتن ویژگی‌هایی که مردم استفاده می کنند به توسعۀ آنکی‌دروید کمک کنید</string>
     <string name="note_editor_replace_newlines" maxLength="41">خط های جدید را با HTML جایگذین کن</string>
-    <string name="note_editor_replace_newlines_summ">در ویرایشگر یادداشت، همه &lt;br&gt; را به خط جدید تبدیل کن موقع ویرایش کارت</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">روی ‘تایپ کردن در جای جواب’ تمرکز کن</string>
     <string name="type_in_answer_focus_summ">قرارگیری خودکار نشانگر روی فیلد «پاسخ را تایپ کنید» در صفحهٔ مطالعه</string>
     <!-- About -->

@@ -142,9 +142,9 @@
     <string name="select_locale_title">言語を選択</string>
     <string name="software_render" maxLength="41">カードのハードウェアレンダリングを無効にする</string>
     <string name="software_render_summ">ハードウェアによるレンダリングは高速ですが、問題が発生する可能性があります（特にAndroid 8/8.1において）。 カード学習画面のユーザーインターフェースの一部が表示されない場合は、この設定を試してみてください</string>
-    <string name="disable_extended_text_ui" maxLength="41">単一フィールド編集モードを無効にする</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め問題箇所」のコンテキストメニューを許可します</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">上下方向の中央寄せ</string>
     <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
     <string name="pref_double_tap_time_interval" maxLength="41">連続タップの最短間隔</string>
@@ -231,7 +231,7 @@
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます</string>
     <string name="note_editor_replace_newlines" maxLength="41">改行タグを改行に置き換えて表示</string>
-    <string name="note_editor_replace_newlines_summ">「ノートを編集」画面のフィールドで、改行を表すHTMLタグ &lt;br&gt; を表示せず、実際に改行に置き換えた状態で表示します。新たに改行を行った場合も、その箇所に &lt;br&gt; タグを挿入しますが、そのタグは表示しません</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
     <string name="type_in_answer_focus_summ">答えをキーボード入力するタイプのカードを学習画面に表示したときに、あらかじめ文字入力欄を選択してキーボードを表示した状態にします</string>
     <!-- About -->

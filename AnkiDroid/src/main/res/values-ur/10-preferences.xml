@@ -144,9 +144,9 @@
     <string name="select_locale_title">زبان منتخب کریں</string>
     <string name="software_render" maxLength="41">کارڈ ہارڈویئر رینڈر کو غیر فعال کریں</string>
     <string name="software_render_summ">ہارڈ ویئر رینڈر تیز تر ہے لیکن اس میں مسائل ہو سکتے ہیں، خاص طور پر Android 8/8.1 پر۔ اگر آپ کارڈ ریویو یوزر انٹرفیس کے حصے نہیں دیکھ سکتے ہیں تو اس ترتیب کو آزمائیں۔</string>
-    <string name="disable_extended_text_ui" maxLength="41">سنگل فیلڈ ایڈیٹ موڈ کو غیر فعال کریں</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">لینڈ اسکیپ موڈ میں ہونے پر \'کلوز ڈیلیٹ\' سیاق و سباق کے مینو کی اجازت دیتا ہے</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">بیچ میں سیدھ کریں</string>
     <string name="vertical_centering_summ">کارڈز کے مواد کو عمودی طور پر مرکز کریں</string>
     <string name="pref_double_tap_time_interval" maxLength="41">دو بار تھپتھپائیں وقت کا وقفہ</string>
@@ -234,7 +234,7 @@
     <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
     <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

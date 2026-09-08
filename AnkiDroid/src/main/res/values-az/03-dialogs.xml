@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Son x günlərdə unudulmuş kartları nəzərdən keçirin:</string>
-    <string name="custom_study_ahead">Ön x günləri nəzərdən keçirin:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Son x günlərdə əlavə edilmiş yeni kartların Ön görünüşü:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Yaddaş doludur</string>

@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Aumentar/diminuír (“-3”) o límite de novas tarxetas en</string>
     <string name="custom_study_rev_extend">Aumentar/diminuír (\"-3\") o límite de repasos actual en</string>
     <string name="custom_study_forgotten">Repasar as tarxetas esquecidas nos últimos x días:</string>
-    <string name="custom_study_ahead">Repasar con x días de adianto:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Amosar as tarxetas novas engadidas nos últimos x días:</string>
     <string name="custom_study_tags">Seleccionar x tarxetas da baralla:</string>
     <string name="storage_full_title">Almacenamento cheo</string>

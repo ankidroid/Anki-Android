@@ -52,7 +52,7 @@
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Preglej kartice, ki so bile v zadnjih x-ih dneh pozabljene:</string>
-    <string name="custom_study_ahead">Preglej vnaprej za x dni:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">Preglej nove kartice dodane v zadnjih x-ih dneh:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Storage full</string>

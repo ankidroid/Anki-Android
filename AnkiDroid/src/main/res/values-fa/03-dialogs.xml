@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">محدودیت تعداد کارت های امروز را کم/زیاد (\"-۳\") کن به این اندازه</string>
     <string name="custom_study_rev_extend">محدودیت تعداد مرور های امروز را کم/زیاد (\"-۳\") کن به این اندازه</string>
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
-    <string name="custom_study_ahead">مرور پیش از موعد تا x روز:</string>
+    <string name="custom_study_ahead_description">Review cards due in the next:</string>
     <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
     <string name="custom_study_tags">انتخاب x کارت از دسته کارت ها:</string>
     <string name="storage_full_title">حافظه</string>

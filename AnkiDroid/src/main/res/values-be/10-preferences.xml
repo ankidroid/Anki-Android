@@ -146,9 +146,9 @@
     <string name="select_locale_title">Выберыце мову</string>
     <string name="software_render" maxLength="41">Адключыць апаратны апрацоўшчык картак</string>
     <string name="software_render_summ">Апаратны апрацоўшчык працуе хутчэй, але можа выклікаць праблемы (асабліва ў АС Android 8/8.1). Паспрабуйце гэтыя налады, калі ў вас праблемы з адлюстраваннем картак у рэжыме паўтарэння.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Адключыць рэжым адзіночнага поля</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Уключае кантэкстнае меню \"Заданні з пропускамі\" ў альбомным рэжыме.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Выраўноўваць па цэнтры</string>
     <string name="vertical_centering_summ">Цэнтраваць змесціва картак вертыкальна</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтэрвал у падвойным дотыку</string>
@@ -238,7 +238,7 @@
     <string name="analytics_title" maxLength="41">Дзяліцца звесткамі выкарыстання</string>
     <string name="analytics_summ">Вы можаце зрабіць свой унёсак у AnkiDroid дапамагаючы камандзе распрацоўшчыкаў зразумець, якія функцыі выкарыстоўваюць карыстальнікі праграмы.</string>
     <string name="note_editor_replace_newlines" maxLength="41">Замяняць новыя радкі на HTML</string>
-    <string name="note_editor_replace_newlines_summ">Змяняць у рэдактары нататак любыя выпадкі &lt;br&gt; на новыя радкі падчас рэдагавання карткі.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Пераключацца на поле «Увесці адказ»</string>
     <string name="type_in_answer_focus_summ">Аўтаматычна пераключацца на поле «Увесці адказ» у экране навучання</string>
     <!-- About -->

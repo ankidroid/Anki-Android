@@ -144,9 +144,9 @@
     <string name="select_locale_title">𐍂𐌰𐌶𐌳𐌰 𐍅𐌰𐌻𐌾𐌰𐌽</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
     <string name="software_render_summ">𐌷𐌰𐍂𐌳𐌿𐍅𐌰𐍂𐍉𐍃 𐌰𐍄𐌰𐌿𐌲𐌾𐌰 𐍃𐍀𐍂𐌰𐌿𐍄𐌹𐌶𐌰 𐌹𐍃𐍄 𐌹𐌸 𐌼𐌰𐌲 𐌿𐌽𐍂𐌰𐌹𐌷𐍄𐌰𐌱𐌰 𐍅𐌰𐌿𐍂𐌺𐌾𐌰𐌽, 𐌸𐌹𐍃𐌷𐌿𐌽 𐌰𐌽𐌰 𐌰𐌽𐌳𐍂𐌰𐌿𐌳 8/8.1. 𐌾𐌰𐌱𐌰𐌹 𐌽𐌹 𐌼𐌰𐌲𐍄 𐌳𐌰𐌹𐌻𐌹𐌽𐍃 𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽𐍄𐌰𐌹𐍂𐍆𐌰𐌺𐌹𐍉𐍃 𐌱𐍂𐌿𐌺𐌾𐌰𐌽𐌴 𐌰𐍆𐍄𐍂𐌰𐍃𐌹𐌿𐌽𐌰𐌹𐍃 𐌺𐌰𐍂𐍄𐍉, 𐌺𐌹𐌿𐍃𐌰𐌹 𐌸𐍉 𐌻𐌰𐌲𐌴𐌹𐌽.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">𐌻𐌰𐌲𐌾𐌰𐌽 𐌹𐌽 𐌼𐌹𐌳𐌿𐌼𐌰𐌹</string>
     <string name="vertical_centering_summ">𐍅𐌰𐌹𐌷𐍄𐍃 𐍇𐌰𐍂𐍄𐍉 𐌹𐌽 𐌷𐌰𐌿𐌷𐌴𐌹𐌽 𐌻𐌰𐌲𐌾𐌰𐌽</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval</string>
@@ -234,7 +234,7 @@
     <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
     <string name="note_editor_replace_newlines" maxLength="41">𐌽𐌹𐌿𐌾𐌰𐍃𐍄𐍂𐌹𐌺𐌰𐌽𐍃 𐌼𐌹𐌸𐍃𐌰𐍄𐌾𐌰𐌽 𐌼𐌹𐌸 𐌷𐍄𐌼𐌻</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the study screen</string>
     <!-- About -->

@@ -143,9 +143,9 @@
     <string name="select_locale_title">Valitse kieli</string>
     <string name="software_render" maxLength="41">Poista korttien laitteistokiihdytetty renderöinti käytöstä</string>
     <string name="software_render_summ">Laitteistokiihdytetty renderöinti on nopeampaa, mutta siinä voi esiintyä ongelmia, erityisesti Android 8/8.1 -käyttöjärjestelmässä. Jos et näe korttien kertauskäyttöliittymää kokonaan, kokeile tätä asetusta.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Poista yhden kentän muokkaustila käytöstä</string>
+    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Sallii \"Aukkotehtävä\" -valikon käytön, kun näyttö on vaakatilassa.</string>
+    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Tasaa keskelle</string>
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Kaksoisnapautuksen aikaväli</string>
@@ -232,7 +232,7 @@
     <string name="analytics_title" maxLength="41">Jaa tietoja käyttämistäsi ominaisuuksista</string>
     <string name="analytics_summ">Voit auttaa AnkiDroidin kehitystiimiä ymmärtämään, mitä sovelluksen ominaisuuksia oikeasti käytetään</string>
     <string name="note_editor_replace_newlines" maxLength="41">Korvaa rivinvaihdot HTML:llä</string>
-    <string name="note_editor_replace_newlines_summ">Muunna muistiinpanoeditorissa kaikki &lt;br&gt; -merkit rivinvaihdoiksi korttia muokattaessa.</string>
+    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="type_in_answer_focus" maxLength="41">Kohdista \"kirjoita vastaus\" -kenttään</string>
     <string name="type_in_answer_focus_summ">Automaattisesti kohdista ‘kirjoita vastaus’ -kenttään opiskeluruudussa</string>
     <!-- About -->
