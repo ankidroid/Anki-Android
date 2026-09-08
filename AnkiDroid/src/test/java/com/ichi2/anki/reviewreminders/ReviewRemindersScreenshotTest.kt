@@ -157,9 +157,9 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
     @Test
     fun `standalone activity host with system bars and a scrollable list`() {
         insertReminders(count = 12)
-        withStandaloneScheduleReminders { activity ->
-            activity.simulateSystemBars()
-            val binding = FragmentScheduleRemindersBinding.bind(activity.fragment!!.requireView())
+        withScheduleRemindersFragment { fragment ->
+            fragment.requireActivity().simulateSystemBars()
+            val binding = FragmentScheduleRemindersBinding.bind(fragment.requireView())
             // scrolled to the end: the last reminder must clear the navigation bar band
             binding.recyclerView.scrollToLastPosition()
             advanceRobolectricLooper()
@@ -258,6 +258,10 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
             scenario.onActivity { activity -> block(activity) }
         }
     }
+
+    /** Launches [ScheduleRemindersFragment] in its own activity, exposing the fragment */
+    private fun withScheduleRemindersFragment(block: (ScheduleRemindersFragment) -> Unit) =
+        withStandaloneScheduleReminders { activity -> block(activity.fragment as ScheduleRemindersFragment) }
 
     /** Collapses the settings host's toolbar, as when the list has been scrolled */
     private fun FragmentManager.collapseToolbar() {
