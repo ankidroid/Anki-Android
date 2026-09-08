@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">Augmentation/diminution (« -3 ») de la limite actuelle de la nouvelle carte</string>
     <string name="custom_study_rev_extend">Augmentation/diminution (« -3 ») de la limite de révision d\'aujourd\'hui de</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
+    <string name="custom_study_ahead_description">Revoir les cartes dues dans le prochain :</string>
     <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
     <string name="custom_study_tags">Sélectionnez x cartes du paquet :</string>
     <string name="storage_full_title">Stockage plein</string>
@@ -86,7 +86,7 @@
     <string name="check_media_warning">Cela peut prendre beaucoup de temps avec les grandes collections de médias. Continuer?</string>
     <string name="check_media_message">Vérification des médias&#8230;</string>
     <string name="check_media_adding_missing_tag">Ajout d\'étiquettes&#8230;</string>
-    <string name="check_media_tags_added">Étiquettes ajoutées</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Suppression du média&#8230;</string>
     <string name="delete_media_result_title">Résultat de la suppression</string>
     <plurals name="delete_media_result_message">
@@ -262,7 +262,7 @@
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Depuis</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">Vers</string>
     <!-- Add profile dialog -->
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Nom du profil</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Le nom du profil ne peut pas être vide</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Le nom du profil doit compter  %1$d caractères ou moins.</string>
 </resources>

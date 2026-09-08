@@ -86,7 +86,7 @@
     <string name="check_media_warning">Juda katta media kolleksiya uchun uzoq vaqt olishi mumkin. Davom etmoqchimisiz?</string>
     <string name="check_media_message">Media fayllar tekshirilmoqda&#8230;</string>
     <string name="check_media_adding_missing_tag">Teglar qoʻshilmoqda</string>
-    <string name="check_media_tags_added">Teglar qoʻshildi</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Media fayllar oʻchirilmoqda&#8230;</string>
     <string name="delete_media_result_title">Oʻchirish natijasi</string>
     <plurals name="delete_media_result_message">

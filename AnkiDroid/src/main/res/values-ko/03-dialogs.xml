@@ -84,7 +84,7 @@
     <string name="check_media_warning">미디어가 클 경우 시간이 오래 걸릴 수 있습니다. 계속할까요?</string>
     <string name="check_media_message">미디어 점검 중&#8230;</string>
     <string name="check_media_adding_missing_tag">태그 추가 중&#8230;</string>
-    <string name="check_media_tags_added">태그 추가됨</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">미디어 삭제 중&#8230;</string>
     <string name="delete_media_result_title">삭제 결과</string>
     <plurals name="delete_media_result_message">

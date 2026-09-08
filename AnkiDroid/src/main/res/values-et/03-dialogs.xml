@@ -86,7 +86,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Meedia kontrollimine&#8230;</string>
     <string name="check_media_adding_missing_tag">Siltide lisamine&#8230;</string>
-    <string name="check_media_tags_added">Sildid on lisatud</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Meedia kustutamine&#8230;</string>
     <string name="delete_media_result_title">Tulemuse kustutamine</string>
     <plurals name="delete_media_result_message">

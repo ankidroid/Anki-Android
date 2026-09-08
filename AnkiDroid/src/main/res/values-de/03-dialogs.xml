@@ -86,7 +86,7 @@
     <string name="check_media_warning">Das kann mit großen Mediensammlungen lange dauern. Fortfahren?</string>
     <string name="check_media_message">Medien werden überprüft &#8230;</string>
     <string name="check_media_adding_missing_tag">Schlagworte werden hinzugefügt&#8230;</string>
-    <string name="check_media_tags_added">Schlagworte hinzugefügt</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Medien werden gelöscht &#8230;</string>
     <string name="delete_media_result_title">Löschergebnis</string>
     <plurals name="delete_media_result_message">

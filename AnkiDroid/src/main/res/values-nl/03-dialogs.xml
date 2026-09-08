@@ -86,7 +86,7 @@
     <string name="check_media_warning">Dit kan lang duren bij grote media-collecties. Doorgaan?</string>
     <string name="check_media_message">Media controleren&#8230;</string>
     <string name="check_media_adding_missing_tag">Tags aan het toevoegen&#8230;</string>
-    <string name="check_media_tags_added">Tags toevoegen</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Verwijdering van media&#8230;</string>
     <string name="delete_media_result_title">Resultaat van verwijdering</string>
     <plurals name="delete_media_result_message">

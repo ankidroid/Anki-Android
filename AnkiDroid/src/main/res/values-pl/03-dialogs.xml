@@ -90,7 +90,7 @@
     <string name="check_media_warning">To może zająć dużo czasu w przypadku dużych kolekcji multimedialnych. Kontynuować?</string>
     <string name="check_media_message">Sprawdzanie mediów&#8230;</string>
     <string name="check_media_adding_missing_tag">Dodawanie tagów&#8230;</string>
-    <string name="check_media_tags_added">Tagi dodane</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Usuwanie mediów&#8230;</string>
     <string name="delete_media_result_title">Wynik usuwania</string>
     <plurals name="delete_media_result_message">

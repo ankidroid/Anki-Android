@@ -84,7 +84,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Đang kiểm tra tệp đa phương tiện&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Đang xóa phương tiện&#8230;</string>
     <string name="delete_media_result_title">Kết quả xóa</string>
     <plurals name="delete_media_result_message">

@@ -86,7 +86,7 @@
     <string name="check_media_warning">Potrebbe richiedere molto tempo per collezioni multimediali di grandi dimensioni. Procedere?</string>
     <string name="check_media_message">Controllo i media&#8230;</string>
     <string name="check_media_adding_missing_tag">Aggiungi etichetta</string>
-    <string name="check_media_tags_added">Etichette aggiunte</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">Eliminando media&#8230;</string>
     <string name="delete_media_result_title">Eliminazione risultato</string>
     <plurals name="delete_media_result_message">

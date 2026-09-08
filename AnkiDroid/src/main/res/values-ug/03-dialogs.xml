@@ -86,7 +86,7 @@
     <string name="check_media_warning">چوڭ ۋاسىتە توپلىمىغا ئۇزۇن ۋاقىت كېتىشى مۇمكىن. داۋاملاشتۇرامدۇ؟</string>
     <string name="check_media_message">ۋاسىتە تەكشۈرۈۋاتىدۇ&#8230;</string>
     <string name="check_media_adding_missing_tag">بەلگە قوش&#8230;</string>
-    <string name="check_media_tags_added">بەلگە قوشۇلدى</string>
+    <string name="check_media_tags_added">Tagging results</string>
     <string name="delete_media_message">ۋاسىتە ئۆچۈرۈۋاتىدۇ&#8230;</string>
     <string name="delete_media_result_title">ئۆچۈرۈش نەتىجىسى</string>
     <plurals name="delete_media_result_message">
