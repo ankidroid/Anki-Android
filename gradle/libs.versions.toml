@@ -217,6 +217,8 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidxTest" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTest" }
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "androidxWork" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
 hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "hamcrest" }
 ivanshafran-shared-preferences-mock = { module = "io.github.ivanshafran:shared-preferences-mock", version.ref = "sharedPreferencesMock" }
