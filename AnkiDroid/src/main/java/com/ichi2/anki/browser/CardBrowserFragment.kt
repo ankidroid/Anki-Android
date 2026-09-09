@@ -38,7 +38,9 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuHostHelper
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
@@ -482,13 +484,10 @@ class CardBrowserFragment :
         val browserScroller = root.findViewById<RecyclerFastScroller>(R.id.browser_scroller)
         val toolbarContainer = root.findViewById<View?>(R.id.toolbar_container)
         ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
-            val bars =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
-                )
+            val bars = insets.getInsets(systemBars() or displayCutout() or ime())
             v.updatePadding(left = bars.left, right = bars.right)
             toolbarContainer?.updatePadding(top = bars.top)
-            // The bottom of the safe area is above the navigation bar and rounded display corners.
+            // The bottom of the safe area is above the navigation bar, rounded display corners and keyboard.
             // When scrolled to the bottom of the scrollbar should be aligned with the last row.
             // Embedded content already ends above the bottom navigation, including its system-bar inset.
             val safeAreaBottom =
@@ -540,7 +539,7 @@ class CardBrowserFragment :
 
                 fun isKeyboardVisible(view: View?): Boolean =
                     view?.let {
-                        ViewCompat.getRootWindowInsets(it)?.isVisible(WindowInsetsCompat.Type.ime())
+                        ViewCompat.getRootWindowInsets(it)?.isVisible(ime())
                     } ?: false
 
                 override fun onCreateMenu(
