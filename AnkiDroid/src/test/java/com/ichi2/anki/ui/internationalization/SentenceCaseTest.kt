@@ -85,6 +85,7 @@ class SentenceCaseTest : RobolectricTest() {
                     assertThat(TR.sentenceCase.emptyCards, equalTo("Empty cards"))
                     assertThat(TR.sentenceCase.flagCard, equalTo("Flag card"))
                     assertThat(TR.sentenceCase.noFlag, equalTo("No flag"))
+                    assertThat(TR.sentenceCase.keepEditing, equalTo("Keep editing"))
                     assertThat(TR.sentenceCase.copyToClipboard, equalTo("Copy to clipboard"))
                     assertThat(TR.sentenceCase.frontTemplate, equalTo("Front template"))
                     assertThat(TR.sentenceCase.backTemplate, equalTo("Back template"))
