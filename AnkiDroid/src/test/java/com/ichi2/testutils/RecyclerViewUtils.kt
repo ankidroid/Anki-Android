@@ -15,11 +15,35 @@
  */
 package com.ichi2.testutils
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 
 object RecyclerViewUtils {
     inline fun <reified VH : RecyclerView.ViewHolder?> viewHolderAt(
         recyclerView: RecyclerView,
         position: Int,
     ): VH = recyclerView.findViewHolderForAdapterPosition(position) as VH
+}
+
+/** The adapter position of the last item */
+val RecyclerView.lastPosition: Int
+    get() = adapter!!.itemCount - 1
+
+/** The laid-out view of the last item, which must be on screen */
+val RecyclerView.lastItemView: View
+    get() = layoutManager!!.findViewByPosition(lastPosition)!!
+
+/**
+ * Requests a scroll to the last item. Layout is left to the caller.
+ *
+ * @see scrollToEnd
+ */
+fun RecyclerView.scrollToLastPosition() = scrollToPosition(lastPosition)
+
+/** Scrolls until the last item is fully visible and the list can scroll no further, then settles layout */
+fun RecyclerView.scrollToEnd() {
+    scrollToLastPosition()
+    while (canScrollVertically(1)) scrollBy(0, 50)
+    advanceRobolectricLooper()
 }

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.testutils.dispatchInsets
+import com.ichi2.testutils.lastItemView
+import com.ichi2.testutils.scrollToLastPosition
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.allOf
@@ -75,7 +77,7 @@ class CardBrowserInsetsTest : RobolectricTest() {
             )
 
             // scroll to the end and re-lay-out so the fast scroller re-positions
-            browser.cardList.scrollToPosition(49)
+            browser.cardList.scrollToLastPosition()
             browser.layoutForTest()
 
             // at the bottom: the track is trimmed by the inset, aligning with the handle & last row
@@ -100,13 +102,12 @@ class CardBrowserInsetsTest : RobolectricTest() {
 
             // scroll to the end, then back up by part of the inset so the last row's bottom sits
             // between its resting line and the bottom of the screen
-            list.scrollToPosition(49)
+            list.scrollToLastPosition()
             browser.layoutForTest()
             list.scrollBy(0, -navBarBottom / 2)
             browser.layoutForTest()
 
-            val layoutManager = list.layoutManager!!
-            val lastRowBottom = layoutManager.getDecoratedBottom(layoutManager.findViewByPosition(49)!!)
+            val lastRowBottom = list.layoutManager!!.getDecoratedBottom(list.lastItemView)
             assertThat(
                 "the last row's bottom is on screen, below its resting line",
                 lastRowBottom,
@@ -127,12 +128,11 @@ class CardBrowserInsetsTest : RobolectricTest() {
             val handle = scroller.handle
             val list = browser.cardList
 
-            list.scrollToPosition(49)
+            list.scrollToLastPosition()
             browser.layoutForTest()
             assertThat("list is fully scrolled", list.canScrollVertically(1), equalTo(false))
 
-            val layoutManager = list.layoutManager!!
-            val lastRowBottom = layoutManager.getDecoratedBottom(layoutManager.findViewByPosition(49)!!)
+            val lastRowBottom = list.layoutManager!!.getDecoratedBottom(list.lastItemView)
             val restingLine = scroller.height - navBarBottom
             assertThat("the last row rests above the safe area", lastRowBottom, equalTo(restingLine))
             assertThat("the track's bottom rests on the same line", track.bottom, equalTo(restingLine))
@@ -199,7 +199,7 @@ class CardBrowserInsetsTest : RobolectricTest() {
             assertThat("no bottom buffer is reserved", browser.cardList.paddingBottom, equalTo(0))
             assertThat("the handle may reach the parent's bottom", browser.fastScroller.handleBottomInset, equalTo(0))
 
-            browser.cardList.scrollToPosition(49)
+            browser.cardList.scrollToLastPosition()
             browser.layoutForTest()
             assertThat("list is fully scrolled", browser.cardList.canScrollVertically(1), equalTo(false))
             assertThat(
