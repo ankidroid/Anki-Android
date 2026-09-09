@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
+import com.ichi2.anki.testutil.waitUntil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
@@ -40,14 +41,14 @@ class CardBrowserDeepLinkTest : InstrumentedTest() {
                 setPackage(testContext.packageName)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-        testContext.startActivity(deepLink)
-
-        waitForActivity<CardBrowser> {
-            assertThat(
-                "the deep link opens the browser on its search",
-                viewModel.searchTerms,
-                equalTo("dog"),
-            )
+        withCardBrowser(deepLink) { browser ->
+            InstrumentationRegistry.getInstrumentation().runOnMainSync {
+                assertThat(
+                    "the deep link opens the browser on its search",
+                    browser.viewModel.searchTerms,
+                    equalTo("dog"),
+                )
+            }
         }
     }
 
@@ -64,40 +65,47 @@ class CardBrowserDeepLinkTest : InstrumentedTest() {
                 setPackage(testContext.packageName)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-        testContext.startActivity(deepLink)
-
-        val browser = awaitResumed<CardBrowser>()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
 
-        // The SearchBar & keyboard may need to be collapsed before 'back' finishes the activity
-        val deadline = SystemClock.uptimeMillis() + 3.seconds.inWholeMilliseconds
-        while (!browser.isFinishing && SystemClock.uptimeMillis() < deadline) {
-            instrumentation.runOnMainSync { browser.onBackPressedDispatcher.onBackPressed() }
-            instrumentation.waitForIdleSync()
-        }
+        withCardBrowser(deepLink) { browser ->
+            // The SearchBar & keyboard may need to be collapsed before 'back' finishes the activity
+            val deadline = SystemClock.uptimeMillis() + 3.seconds.inWholeMilliseconds
+            while (!browser.isFinishing && SystemClock.uptimeMillis() < deadline) {
+                instrumentation.runOnMainSync { browser.onBackPressedDispatcher.onBackPressed() }
+                instrumentation.waitForIdleSync()
+            }
 
-        assertThat("'back' closes the browser", browser.isFinishing, equalTo(true))
-        assertThat(
-            "'back' does not surface DeckPicker beneath the browser",
-            TestUtils.activityInstance,
-            not(instanceOf(DeckPicker::class.java)),
-        )
+            assertThat("'back' closes the browser", browser.isFinishing, equalTo(true))
+            assertThat(
+                "'back' does not surface DeckPicker beneath the browser",
+                TestUtils.activityInstance,
+                not(instanceOf(DeckPicker::class.java)),
+            )
+        }
     }
 
-    /**
-     * Waits for an activity of type [T] to resume (the end of the deep-link chain), runs [block]
-     * against it on the main thread, then finishes its task. Fails if [T] does not resume in time.
-     */
-    private inline fun <reified T : Activity> waitForActivity(
-        timeout: Duration = 10.seconds,
-        crossinline block: T.() -> Unit,
+    /** Launches [deepLink] and runs [block] on the [CardBrowser] it launched. */
+    private inline fun withCardBrowser(
+        deepLink: Intent,
+        block: (CardBrowser) -> Unit,
     ) {
-        val resolved = awaitResumed<T>(timeout)
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        testContext.startActivity(deepLink)
+        val browser = awaitResumed<CardBrowser>()
         try {
-            instrumentation.runOnMainSync { resolved.block() }
+            block(browser)
         } finally {
-            instrumentation.runOnMainSync { resolved.finishAndRemoveTask() }
+            browser.finishAndAwaitDestruction()
+        }
+    }
+
+    /** Keep the collection open until the activity can no longer access it. */
+    private fun Activity.finishAndAwaitDestruction() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        instrumentation.runOnMainSync { finishAndRemoveTask() }
+        waitUntil(message = { "Timed out waiting for ${javaClass.simpleName} to be destroyed" }) {
+            var destroyed = false
+            instrumentation.runOnMainSync { destroyed = isDestroyed }
+            destroyed
         }
     }
 
