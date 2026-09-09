@@ -197,3 +197,35 @@ fun Activity.simulateSystemBars(
     }
     advanceRobolectricLooper()
 }
+
+/**
+ * Injects insets to simulate the keyboard open over the navigation bar, as on an edge-to-edge
+ * device.
+ *
+ * A translucent band marks where the keyboard would sit, so content drawn underneath it can be
+ * seen.
+ *
+ * @param keyboardHeight the height of the keyboard, measured from the bottom of the screen
+ * @param navBarBottom the height of the navigation bar, which the keyboard covers
+ */
+fun Activity.simulateKeyboard(
+    keyboardHeight: Dp = 300.dp,
+    navBarBottom: Dp = 48.dp,
+) {
+    val context: Context = this
+    val insets =
+        WindowInsetsCompat
+            .Builder()
+            .setInsets(statusBars(), insetsOf(top = 24.dp))
+            .setInsets(navigationBars(), insetsOf(bottom = navBarBottom))
+            .setInsets(ime(), insetsOf(bottom = keyboardHeight))
+            .build()
+    ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+
+    val decor = window.decorView as ViewGroup
+    decor.addView(
+        View(this).apply { setBackgroundColor(0x80000000.toInt()) },
+        FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, keyboardHeight.toPx(context), Gravity.BOTTOM),
+    )
+    advanceRobolectricLooper()
+}

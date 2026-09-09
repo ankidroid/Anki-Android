@@ -54,6 +54,7 @@ import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
@@ -647,6 +648,17 @@ open class DeckPicker :
 
     /** Applied edge-to-edge insets for the screen */
     private fun setupEdgeToEdge() {
+        /**
+         * The view the deck list rests above: the FAB, or the 'Studied X cards' line while the
+         * FAB is hidden (searching)
+         */
+        fun listAnchor(): View =
+            if (floatingActionButtonBinding.fabMain.isVisible) {
+                floatingActionButtonBinding.fabMain
+            } else {
+                deckPickerBinding.reviewSummaryTextView
+            }
+
         fun setRecyclerViewBottomPaddingAbove(target: View) {
             val recyclerView = deckPickerBinding.decks
             if (recyclerView.height == 0 || target.height == 0) return
@@ -667,6 +679,8 @@ open class DeckPicker :
         // Bottom padding is used. wrap_content meant margin wasn't viable
         ViewCompat.setOnApplyWindowInsetsListener(deckPickerBinding.root) { deckPickerInclude, insets ->
             val bars = insets.getInsets(systemBars() or displayCutout())
+            // edge-to-edge disables adjustResize: the keyboard is cleared via the ime inset
+            val withKeyboard = insets.getInsets(systemBars() or displayCutout() or ime())
             // BottomFadeFrameLayout handles contrast for bottom nav; let the system draw
             // its own scrim when the nav bar is on the side (no manual fade applies there)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -677,13 +691,16 @@ open class DeckPicker :
                 left = bars.left,
                 right = if (fragmented) 0 else bars.right,
             )
-            deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = bars.bottom)
+            deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = withKeyboard.bottom)
 
             val bottomNavView = findViewById<View?>(R.id.bottom_navigation)
             val bottomNavOffset = if (bottomNavView?.isVisible == true) BOTTOM_NAV_HEIGHT_DP.dp.toPx(this) else 0
-            floatingActionButtonBinding.root.updatePadding(bottom = bars.bottom + bottomNavOffset)
+            // the keyboard covers the bottom navigation: clear whichever is taller
+            floatingActionButtonBinding.root.updatePadding(
+                bottom = maxOf(bars.bottom + bottomNavOffset, withKeyboard.bottom),
+            )
 
-            setRecyclerViewBottomPaddingAbove(floatingActionButtonBinding.fabMain)
+            setRecyclerViewBottomPaddingAbove(listAnchor())
             insets
         }
         floatingActionButtonBinding.fabMain.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
@@ -692,6 +709,8 @@ open class DeckPicker :
         deckPickerBinding.reviewSummaryTextView.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
             // exclude paddingBottom: it holds the edge-to-edge inset, which is already applied
             raiseFabAboveSummary(view.height - view.paddingBottom)
+            // a hidden FAB has no layout passes to follow: the list rests above the summary line
+            if (listAnchor() === view) setRecyclerViewBottomPaddingAbove(view)
         }
         // The summary is hidden until the collection loads.
         // Assume the summary takes up a single line, so it does not 'jump' up on load
