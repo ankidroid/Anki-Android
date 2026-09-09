@@ -356,6 +356,9 @@ object SentenceCase {
 
     context(_: Context)
     val noFlag get() = TR.browsingNoFlag().toSentenceCase(R.string.sentence_no_flag)
+
+    context(_: Context)
+    val keepEditing get() = TR.addingKeepEditing().toSentenceCase(R.string.sentence_keep_editing)
 }
 
 /**
