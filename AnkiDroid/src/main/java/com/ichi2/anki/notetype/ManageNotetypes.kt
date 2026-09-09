@@ -25,6 +25,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.updateMargins
@@ -168,7 +169,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
 
     private fun applyInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
-            val constraints = insets.getInsets(systemBars() or displayCutout())
+            val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
             Timber.d("Applying insets: $constraints")
             binding.appBarLayout.updatePadding(left = constraints.left, top = constraints.top, right = constraints.right)
             binding.noteTypesList.updatePadding(left = constraints.left, right = constraints.right, bottom = constraints.bottom)
