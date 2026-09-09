@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
 import com.ichi2.testutils.insetsOf
+import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.utils.dp
 import org.junit.Test
@@ -48,9 +49,7 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
             browser.simulateNavigationBar()
 
             val list = browser.findViewById<RecyclerView>(R.id.card_browser_list)
-            list.scrollToPosition(49)
-            while (list.canScrollVertically(1)) list.scrollBy(0, 50)
-            advanceRobolectricLooper()
+            list.scrollToEnd()
 
             // keep the auto-hiding fast scroller visible for the capture
             browser.findViewById<RecyclerFastScroller>(R.id.browser_scroller).show(animate = false)
@@ -72,9 +71,7 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
             browser.simulateSideNavigationBar()
 
             val list = browser.findViewById<RecyclerView>(R.id.card_browser_list)
-            list.scrollToPosition(49)
-            while (list.canScrollVertically(1)) list.scrollBy(0, 50)
-            advanceRobolectricLooper()
+            list.scrollToEnd()
 
             // keep the auto-hiding fast scroller visible for the capture
             browser.findViewById<RecyclerFastScroller>(R.id.browser_scroller).show(animate = false)
@@ -98,9 +95,7 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
             browser.simulateGestureNavigationBar()
 
             val list = browser.findViewById<RecyclerView>(R.id.card_browser_list)
-            list.scrollToPosition(49)
-            while (list.canScrollVertically(1)) list.scrollBy(0, 50)
-            advanceRobolectricLooper()
+            list.scrollToEnd()
 
             // keep the auto-hiding fast scroller visible for the capture
             browser.findViewById<RecyclerFastScroller>(R.id.browser_scroller).show(animate = false)
@@ -116,9 +111,7 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
             browser.simulateSystemBars(navBarBottom = HIDDEN_GESTURE_BAR, bottomCornerRadius = 34.dp)
 
             val list = browser.findViewById<RecyclerView>(R.id.card_browser_list)
-            list.scrollToPosition(49)
-            while (list.canScrollVertically(1)) list.scrollBy(0, 50)
-            advanceRobolectricLooper()
+            list.scrollToEnd()
 
             // keep the auto-hiding fast scroller visible for the capture
             browser.findViewById<RecyclerFastScroller>(R.id.browser_scroller).show(animate = false)

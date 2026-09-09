@@ -16,6 +16,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
 import com.ichi2.testutils.ext.clear
 import com.ichi2.testutils.launchForFullHeightScreenshot
+import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.utils.dp
 import org.junit.After
@@ -91,9 +92,7 @@ class PreferencesScreenshotTest : ScreenshotTest() {
         val mainFragment = fragment as PreferencesFragment
         val settingsFragment = mainFragment.childFragmentManager.findFragmentById(R.id.settings_container) as SettingsFragment
         val list = settingsFragment.listView
-        list.scrollToPosition(list.adapter!!.itemCount - 1)
-        while (list.canScrollVertically(1)) list.scrollBy(0, 50)
-        advanceRobolectricLooper()
+        list.scrollToEnd()
     }
 
     /** Replaces content which changes between runs, so it does not appear in diffs */

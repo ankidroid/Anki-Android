@@ -21,6 +21,7 @@ import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.scrollToLastPosition
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.utils.dp
 import kotlinx.coroutines.runBlocking
@@ -160,7 +161,7 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
             activity.simulateSystemBars()
             val binding = FragmentScheduleRemindersBinding.bind(activity.fragment!!.requireView())
             // scrolled to the end: the last reminder must clear the navigation bar band
-            binding.recyclerView.scrollToPosition(binding.recyclerView.adapter!!.itemCount - 1)
+            binding.recyclerView.scrollToLastPosition()
             advanceRobolectricLooper()
             captureScreen("standaloneActivityHost_systemBars_scrolledToEnd")
         }
