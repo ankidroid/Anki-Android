@@ -1,4 +1,5 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.dialogs.tags
 
 import android.app.Dialog
