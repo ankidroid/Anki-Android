@@ -211,7 +211,7 @@ fun includeUnitTestCoverage(
     project: Project,
     classDir: String,
 ) {
-    report.sourceDirectories.from(project.files("${project.projectDir}/src/main/java"))
+    report.sourceDirectories.from(project.files("src/main/java"))
     report.classDirectories.from(
         project.files(
             project.fileTree(
