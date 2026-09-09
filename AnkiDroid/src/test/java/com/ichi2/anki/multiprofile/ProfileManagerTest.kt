@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
@@ -54,6 +55,7 @@ class ProfileManagerTest {
     @After
     fun tearDown() {
         unmockkAll()
+        ProfileManager.resetForTesting()
     }
 
     @Test
@@ -61,6 +63,40 @@ class ProfileManagerTest {
         ProfileManager.create(context)
 
         assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
+    fun `createOrNull returns a manager on the active profile context`() {
+        val manager = assertNotNull(ProfileManager.createOrNull(context))
+
+        assertTrue("Expected a profile context", manager.activeProfileContext is ProfileContextWrapper)
+        assertNull(ProfileManager.attachError)
+        assertEquals(context.filesDir.absolutePath, manager.activeProfileContext.filesDir.absolutePath)
+    }
+
+    @Test
+    fun `createOrNull initializes the Default profile on first run`() {
+        ProfileManager.createOrNull(context)
+
+        assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
+    fun `createOrNull returns null when the profile environment cannot be loaded`() {
+        val unusableStorage =
+            object : ContextWrapper(context) {
+                override fun getApplicationContext(): Context? = null
+
+                override fun getSharedPreferences(
+                    name: String,
+                    mode: Int,
+                ): SharedPreferences = throw IllegalStateException("storage unavailable")
+            }
+
+        val manager = ProfileManager.createOrNull(unusableStorage)
+
+        assertNull(manager, "must not brick startup")
+        assertNotNull(ProfileManager.attachError, "Failure must be recorded for later logging")
     }
 
     @Test
