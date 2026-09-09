@@ -4,13 +4,18 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.view.View
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.lastItemView
+import com.ichi2.testutils.scrollToEnd
+import com.ichi2.testutils.simulateKeyboard
 import kotlinx.coroutines.flow.first
 import org.junit.After
 import org.junit.Before
@@ -54,6 +59,25 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
         withDeckPicker(deckCount = 30) { deckPicker ->
             deckPicker.simulateEdgeToEdge()
             captureScreen("edgeToEdge_30_decks")
+        }
+
+    /** Ensure that 'studied today' overlaying a deck name works when the IME is open */
+    @Test
+    fun keyboard_studied_line_overlaying_deck_name() =
+        withDeckPicker(deckCount = 30) { deckPicker ->
+            deckPicker.searchWithKeyboard()
+            deckPicker.scrollLastDeckOntoStudiedLine()
+
+            captureScreen("keyboard_studied_line_overlaying_deck_name")
+        }
+
+    @Test
+    fun keyboard_open_scrolled_to_bottom() =
+        withDeckPicker(deckCount = 30) { deckPicker ->
+            deckPicker.searchWithKeyboard()
+            deckPicker.deckPickerBinding.decks.scrollToEnd()
+
+            captureScreen("keyboard_open_scrolled_to_bottom")
         }
 
     @Test
@@ -138,6 +162,32 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
 
             captureScreen("hierarchy_lines_many_siblings")
         }
+
+    /** Expands the deck search, hiding the FAB, and opens the keyboard over the navigation bar */
+    private fun DeckPicker.searchWithKeyboard() {
+        requireNotNull(searchDecksIcon).expandActionView()
+        advanceRobolectricLooper()
+        // settles layout: the list's bottom padding follows the summary line's layout pass
+        simulateKeyboard()
+    }
+
+    /** Scrolls to the end, then back so the last deck's name is centered on the 'Studied' line */
+    private fun DeckPicker.scrollLastDeckOntoStudiedLine() {
+        val list = deckPickerBinding.decks
+        list.scrollToEnd()
+        val lastDeck = list.lastItemView
+        val studiedLine = deckPickerBinding.reviewSummaryTextView
+        list.scrollBy(0, lastDeck.contentCenterYInWindow - studiedLine.contentCenterYInWindow)
+        advanceRobolectricLooper()
+    }
+
+    /**
+     * The vertical center of the receiver's content, relative to its window.
+     *
+     * Padding is excluded: the 'Studied' line's bottom padding holds the keyboard inset.
+     */
+    private val View.contentCenterYInWindow: Int
+        get() = locationInWindow().y + paddingTop + (height - paddingTop - paddingBottom) / 2
 
     private fun enableBottomNavigation() {
         Prefs.sharedPrefs.edit { putBoolean(Prefs.key(R.string.dev_bottom_nav_key), true) }
