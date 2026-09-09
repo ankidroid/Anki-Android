@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
@@ -54,6 +55,7 @@ class ProfileManagerTest {
     @After
     fun tearDown() {
         unmockkAll()
+        ProfileManager.resetForTesting()
     }
 
     @Test
@@ -61,6 +63,40 @@ class ProfileManagerTest {
         ProfileManager.create(context)
 
         assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
+    fun `attachTo returns the active profile context`() {
+        val attached = ProfileManager.attachTo(context)
+
+        assertTrue("Expected a profile context", attached is ProfileContextWrapper)
+        assertNull(ProfileManager.attachError)
+        assertEquals(context.filesDir.absolutePath, attached.filesDir.absolutePath)
+    }
+
+    @Test
+    fun `attachTo initializes the Default profile on first run`() {
+        ProfileManager.attachTo(context)
+
+        assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+    }
+
+    @Test
+    fun `attachTo falls back to the base context when the profile cannot be loaded`() {
+        val unusableStorage =
+            object : ContextWrapper(context) {
+                override fun getApplicationContext(): Context? = null
+
+                override fun getSharedPreferences(
+                    name: String,
+                    mode: Int,
+                ): SharedPreferences = throw IllegalStateException("storage unavailable")
+            }
+
+        val attached = ProfileManager.attachTo(unusableStorage)
+
+        assertEquals("Must not brick startup", unusableStorage, attached)
+        assertNotNull(ProfileManager.attachError, "Failure must be recorded for later logging")
     }
 
     @Test
