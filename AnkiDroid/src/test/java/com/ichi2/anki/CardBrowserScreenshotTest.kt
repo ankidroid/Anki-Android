@@ -10,6 +10,7 @@ import androidx.core.view.RoundedCornerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.recyclerview.widget.RecyclerView
@@ -128,6 +129,25 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun cardBrowserKeyboardScrolledToBottom() =
+        withCardBrowser(noteCount = 50) { browser ->
+            requireNotNull(browser.cardBrowserFragment.searchItem).expandActionView()
+            advanceRobolectricLooper()
+            browser.simulateKeyboard()
+
+            val list = browser.findViewById<RecyclerView>(R.id.card_browser_list)
+            list.scrollToPosition(49)
+            while (list.canScrollVertically(1)) list.scrollBy(0, 50)
+            advanceRobolectricLooper()
+
+            // keep the auto-hiding fast scroller visible for the capture
+            browser.findViewById<RecyclerFastScroller>(R.id.browser_scroller).show(animate = false)
+            advanceRobolectricLooper()
+
+            captureScreen("keyboard_scrolled_to_bottom")
+        }
+
+    @Test
     fun multiselect() =
         runTest {
             val browser = getBrowserWithNotes(noteCount = 1)
@@ -164,6 +184,35 @@ class CardBrowserScreenshotTest : ScreenshotTest() {
             FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 navBarHeight.toPx(targetContext),
+                Gravity.BOTTOM,
+            ),
+        )
+    }
+
+    /** As [simulateNavigationBar], but with the keyboard open over it */
+    private fun CardBrowser.simulateKeyboard() {
+        val keyboardHeight = 300.dp
+        val insets =
+            with(targetContext) {
+                WindowInsetsCompat
+                    .Builder()
+                    .setInsets(statusBars(), insetsOf(top = 24.dp))
+                    .setInsets(navigationBars(), insetsOf(bottom = 48.dp))
+                    .setInsets(ime(), insetsOf(bottom = keyboardHeight))
+                    .build()
+            }
+        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+
+        val decor = window.decorView as ViewGroup
+        val keyboardOverlay =
+            View(this).apply {
+                setBackgroundColor(0x80000000.toInt())
+            }
+        decor.addView(
+            keyboardOverlay,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                keyboardHeight.toPx(targetContext),
                 Gravity.BOTTOM,
             ),
         )
