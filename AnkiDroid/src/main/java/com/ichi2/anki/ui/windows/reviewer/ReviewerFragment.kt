@@ -94,6 +94,7 @@ import timber.log.Timber
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.reflect.jvm.jvmName
+import kotlin.time.Duration.Companion.milliseconds
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.fragment_reviewer),
@@ -678,9 +679,23 @@ class ReviewerFragment :
                 isScrollingJob?.cancel()
                 isScrollingJob =
                     lifecycleScope.launch {
-                        delay(300)
+                        delay(300.milliseconds)
                         isScrolling = false
                     }
+            }
+
+            viewModel.gestureEventFlow.collectIn(lifecycleScope) { rawGesture ->
+                handleGesture(rawGesture)
+            }
+        }
+
+        fun handleGesture(rawGesture: RawGesture) {
+            val webView = webViewLayout.getChildAt(0) as? WebView ?: return
+            if (isScrolling) return
+            gestureParser.parse(rawGesture, scale, webView) { gesture ->
+                if (gesture == null) return@parse
+                Timber.v("ReviewerFragment::onGesture %s", gesture)
+                bindingMap.onGesture(gesture)
             }
         }
 
@@ -689,15 +704,6 @@ class ReviewerFragment :
             url: Uri,
         ): Boolean {
             return when (url.scheme) {
-                "gesture" -> {
-                    if (isScrolling) return true
-                    gestureParser.parse(url, scale, webView) { gesture ->
-                        if (gesture == null) return@parse
-                        Timber.v("ReviewerFragment::onGesture %s", gesture)
-                        bindingMap.onGesture(gesture)
-                    }
-                    true
-                }
                 "ankidroid" -> {
                     when (url.host) {
                         "show-answer" -> viewModel.onShowAnswer()
