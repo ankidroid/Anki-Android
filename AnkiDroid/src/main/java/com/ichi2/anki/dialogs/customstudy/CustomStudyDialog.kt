@@ -33,11 +33,13 @@ import anki.scheduler.CustomStudyRequest.Cram.CramKind
 import anki.scheduler.copy
 import anki.scheduler.customStudyRequest
 import anki.search.SearchNode
+import anki.search.searchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncIO
+import com.ichi2.anki.browser.search.CardState
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -448,14 +450,18 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         binding.detailsEditText2Layout.suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, days)
     }
 
-    /** Whether the deck has new cards added in the last [days] days */
+    /**
+     * Whether the deck has new cards added in the last [days] days.
+     *
+     * Upstream: https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py
+     */
     private suspend fun hasPreviewCards(days: Int): Boolean =
         withCol {
             val search =
                 listOf(
-                    SearchNode.newBuilder().setDeck(decks.name(viewModel.deckId)).build(),
-                    "is:new",
-                    "added:$days",
+                    searchNode { deck = decks.name(viewModel.deckId) },
+                    CardState.New.toSearchNode(),
+                    searchNode { addedInDays = days },
                 )
             findCards(buildSearchString(search)).isNotEmpty()
         }
