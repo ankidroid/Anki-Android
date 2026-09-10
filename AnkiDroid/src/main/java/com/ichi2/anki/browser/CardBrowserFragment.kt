@@ -130,7 +130,6 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.observability.ChangeManager
-import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.requireAnkiActivity
@@ -154,7 +153,6 @@ import com.ichi2.anki.utils.ext.visibleItemPositions
 import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.withProgress
 import com.ichi2.ui.CardBrowserSearchView
-import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.replaceText
@@ -1813,7 +1811,7 @@ class CardBrowserFragment :
             TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, stateFilter)
             TagsDialogListenerAction.EDIT_TAGS ->
                 launchCatchingTask {
-                    editSelectedCardsTags(selectedTags, indeterminateTags)
+                    activityViewModel.editSelectedCardsTags(selectedTags, indeterminateTags)
                 }
             else -> {}
         }
@@ -1892,30 +1890,6 @@ class CardBrowserFragment :
 
     private fun addNote() {
         onAddNoteActivityResult.navigate(addNoteDestination)
-    }
-
-    /**
-     * Updates the tags of selected/checked notes and saves them to the disk
-     * @param selectedTags list of checked tags
-     * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
-     * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
-     */
-    private suspend fun editSelectedCardsTags(
-        selectedTags: List<String>,
-        indeterminateTags: List<String>,
-    ) = withProgress {
-        val selectedNoteIds = activityViewModel.queryAllSelectedNoteIds().distinct()
-        undoableOp {
-            val selectedNotes =
-                selectedNoteIds
-                    .map { noteId -> getNote(noteId) }
-                    .onEach { note ->
-                        val previousTags: List<String> = note.tags
-                        val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
-                        note.setTagsFromStr(this@undoableOp, tags.join(updatedTags))
-                    }
-            updateNotes(selectedNotes)
-        }
     }
 
     private fun filterByTags(
