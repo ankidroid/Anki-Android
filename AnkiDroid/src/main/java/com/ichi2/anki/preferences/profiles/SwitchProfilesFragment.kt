@@ -13,7 +13,11 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.compose.theme.AnkiDroidTheme
+import timber.log.Timber
 
 /**
  * Lets the user switch between profiles.
@@ -22,14 +26,24 @@ import com.ichi2.compose.theme.AnkiDroidTheme
  * preference_headers.xml launches it by class name.
  */
 class SwitchProfilesFragment : Fragment() {
-    private val viewModel: SwitchProfilesViewModel by viewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View =
-        ComposeView(requireContext()).apply {
+    ): View {
+        val profileManager = AnkiDroidApp.instance.profileManager
+        if (profileManager == null) {
+            Timber.w("Profile environment unavailable, closing the switch profile screen")
+            showThemedToast(requireContext(), CommonString.something_wrong, false)
+            if (parentFragmentManager.backStackEntryCount > 0) {
+                parentFragmentManager.popBackStack()
+            } else {
+                requireActivity().finish()
+            }
+            return View(requireContext())
+        }
+        val viewModel: SwitchProfilesViewModel by viewModels { SwitchProfilesViewModel.factory(profileManager) }
+        return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 AnkiDroidTheme {
@@ -48,4 +62,5 @@ class SwitchProfilesFragment : Fragment() {
                 }
             }
         }
+    }
 }
