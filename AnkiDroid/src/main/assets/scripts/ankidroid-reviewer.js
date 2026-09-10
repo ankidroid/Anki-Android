@@ -114,7 +114,11 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
                 if (Date.now() - touchStartTime > MULTI_TOUCH_TIMEOUT) {
                     return;
                 }
-                window.location.href = `${SCHEME}://multiFingerTap/?touchCount=${touchCount}`;
+
+                fetch(`/ankidroid/multiFingerTap`, {
+                    method: "POST",
+                    body: JSON.stringify({ touchCount: touchCount }),
+                });
                 return;
             }
 
@@ -127,17 +131,30 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             const endX = event.changedTouches[0].pageX;
             const endY = event.changedTouches[0].pageY;
             const scrollDirection = getScrollDirection(event.target);
-            const params = new URLSearchParams({
+
+            const payload = {
                 x: Math.round(endX),
                 y: Math.round(endY),
                 deltaX: Math.round(endX - startX),
                 deltaY: Math.round(endY - startY),
                 time: Date.now(),
-            });
+            };
             if (scrollDirection !== null) {
-                params.append("scrollDirection", scrollDirection);
+                payload.scrollDirection = scrollDirection;
             }
-            window.location.href = `${SCHEME}://tapOrSwipe/?${params.toString()}`;
+
+            fetch(`/ankidroid/tapOrSwipe`, {
+                method: "POST",
+                body: JSON.stringify(payload),
+            });
+        },
+        { passive: true },
+    );
+
+    document.addEventListener(
+        "touchcancel",
+        () => {
+            touchCount = 0;
         },
         { passive: true },
     );

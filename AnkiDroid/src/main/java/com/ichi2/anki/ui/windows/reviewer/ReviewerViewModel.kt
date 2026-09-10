@@ -67,6 +67,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import org.intellij.lang.annotations.Language
+import org.json.JSONObject
 import timber.log.Timber
 import com.ichi2.anki.common.destinations.Destination as NavigateDestination
 
@@ -111,6 +112,7 @@ class ReviewerViewModel(
     val pageUpFlow = MutableSharedFlow<Unit>()
     val pageDownFlow = MutableSharedFlow<Unit>()
     val statesMutationEvalFlow = MutableSharedFlow<String>()
+    val gestureEventFlow = MutableSharedFlow<RawGesture>()
 
     override val server: AnkiServer = AnkiServer(this, repository.getServerPort()).also { it.start() }
     private val stateMutationKey = repository.generateStateMutationKey()
@@ -428,6 +430,7 @@ class ReviewerViewModel(
         }
     }
 
+    @NeedsTest("Verify gesture payloads are parsed and emitted to gestureEventFlow")
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
         bytes: ByteArray,
@@ -443,6 +446,27 @@ class ReviewerViewModel(
             }
             "statesMutated" -> {
                 onStateMutationCallback()
+                return byteArrayOf()
+            }
+            "multiFingerTap" -> {
+                val json = JSONObject(String(bytes))
+                val touchCount = json.getInt("touchCount")
+                gestureEventFlow.emit(RawGesture.MultiTouch(touchCount))
+                return byteArrayOf()
+            }
+            "tapOrSwipe" -> {
+                val json = JSONObject(String(bytes))
+                val rawGesture =
+                    RawGesture.TapOrSwipe(
+                        x = json.getInt("x"),
+                        y = json.getInt("y"),
+                        deltaX = json.getInt("deltaX"),
+                        deltaY = json.getInt("deltaY"),
+                        time = json.getLong("time"),
+                        scrollDirection = if (json.has("scrollDirection")) json.getString("scrollDirection") else null,
+                    )
+
+                gestureEventFlow.emit(rawGesture)
                 return byteArrayOf()
             }
         }
