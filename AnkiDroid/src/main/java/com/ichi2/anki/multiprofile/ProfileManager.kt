@@ -145,7 +145,8 @@ class ProfileManager private constructor(
     context(_: ProfileSwitchContext)
     fun switchActiveProfile(newProfileId: ProfileId) {
         Timber.i("Switching profile to ID: $newProfileId")
-        profileRegistry.setLastActiveProfileId(newProfileId)
+        // commit, not apply: the app restarts straight after a switch, and a pending apply() would be lost
+        profileRegistry.setLastActiveProfileId(newProfileId, commit = true)
     }
 
     private fun loadProfileData(profileId: ProfileId) {
@@ -580,8 +581,11 @@ class ProfileManager private constructor(
             return id?.let { ProfileId(it) }
         }
 
-        fun setLastActiveProfileId(id: ProfileId) {
-            globalPrefs.edit { putString(KEY_LAST_ACTIVE_PROFILE_ID, id.value) }
+        fun setLastActiveProfileId(
+            id: ProfileId,
+            commit: Boolean = false,
+        ) {
+            globalPrefs.edit(commit = commit) { putString(KEY_LAST_ACTIVE_PROFILE_ID, id.value) }
         }
 
         fun getWebViewProfileId(): ProfileId? {
