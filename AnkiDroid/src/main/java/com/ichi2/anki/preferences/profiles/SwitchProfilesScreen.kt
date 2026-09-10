@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.R
+import com.ichi2.anki.multiprofile.ProfileId
 import com.ichi2.anki.multiprofile.ProfileName
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.compose.theme.dimensions
@@ -83,7 +84,7 @@ fun SwitchProfilesScreen(
             modifier = Modifier.fillMaxSize(),
             contentPadding = contentPadding,
         ) {
-            items(profiles, key = { it.id }) { profile ->
+            items(profiles, key = { it.id.value }) { profile ->
                 ProfileRow(
                     profile = profile,
                     onEditClick = { onEditProfile(profile) },
@@ -170,8 +171,8 @@ private fun SwitchProfilesScreenPreview() {
         SwitchProfilesScreen(
             profiles =
                 listOf(
-                    ProfileItem(id = "default", name = "Default"),
-                    ProfileItem(id = "work", name = "Work"),
+                    ProfileItem(id = ProfileId.DEFAULT, name = "Default"),
+                    ProfileItem(id = ProfileId("p_work"), name = "Work"),
                 ),
             isAddProfileDialogVisible = false,
             onNavigateUp = {},
