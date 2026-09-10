@@ -129,7 +129,8 @@ open class AnkiDroidApp :
         }
     }
 
-    private var profileManager: ProfileManager? = null
+    var profileManager: ProfileManager? = null
+        private set
 
     private val profileContext: Context?
         get() = profileManager?.activeProfileContext
