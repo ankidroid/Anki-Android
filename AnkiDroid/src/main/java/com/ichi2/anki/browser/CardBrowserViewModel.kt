@@ -69,6 +69,7 @@ import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
+import com.ichi2.utils.TagsUtil.getUpdatedTags
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -1275,6 +1276,30 @@ class CardBrowserViewModel(
                 else -> flagSearchTerm
             }
         setFilterQuery(searchTerms)
+    }
+
+    /**
+     * Updates the tags of selected/checked notes and saves them to the disk
+     * @param selectedTags list of checked tags
+     * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
+     * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
+     */
+    suspend fun editSelectedCardsTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+    ) = progressManager.withProgress {
+        val selectedNoteIds = queryAllSelectedNoteIds().distinct()
+        undoableOp {
+            val selectedNotes =
+                selectedNoteIds
+                    .map { noteId -> getNote(noteId) }
+                    .onEach { note ->
+                        val previousTags: List<String> = note.tags
+                        val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
+                        note.setTagsFromStr(this@undoableOp, tags.join(updatedTags))
+                    }
+            updateNotes(selectedNotes)
+        }
     }
 
     suspend fun filterByTags(

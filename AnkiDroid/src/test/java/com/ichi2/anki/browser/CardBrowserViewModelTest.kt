@@ -962,6 +962,17 @@ class CardBrowserViewModelTest : JvmTest() {
             assertProgressAround { findAndReplace(result).await() }
         }
 
+    @Test
+    fun `editSelectedCardsTags reports progress and tags the selected note`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+            val noteId = queryAllSelectedNoteIds().single()
+
+            assertProgressAround { editSelectedCardsTags(selectedTags = listOf("tagged"), indeterminateTags = emptyList()) }
+
+            assertThat(col.getNote(noteId).tags, equalTo(listOf("tagged")))
+        }
+
     /** @see <a href="https://github.com/ankidroid/Anki-Android/issues/20556">#20556</a> */
     @Test
     fun `delete note - no crash when cardIdToBeScrolledTo is deleted in NOTES mode`() {
