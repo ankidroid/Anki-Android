@@ -3,11 +3,12 @@
 
 package com.ichi2.anki.preferences.profiles
 
+import com.ichi2.anki.multiprofile.ProfileId
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class ProfileItemTest {
-    private fun initialOf(name: String) = ProfileItem(id = "id", name = name).initial
+    private fun initialOf(name: String) = ProfileItem(id = ProfileId.DEFAULT, name = name).initial
 
     @Test
     fun `initial is the uppercased first letter`() {
