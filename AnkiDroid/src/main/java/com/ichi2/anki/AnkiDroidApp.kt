@@ -91,6 +91,10 @@ open class AnkiDroidApp :
     @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
     private val notifications = MutableLiveData<Void?>()
 
+    /** Manager for the active profile, null if the profile environment failed to load. */
+    var profileManager: ProfileManager? = null
+        private set
+
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
     val sharedPrefsLastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
 
@@ -125,7 +129,8 @@ open class AnkiDroidApp :
      * WebView exists, and every preference read must already be namespaced.
      */
     override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(ProfileManager.createOrNull(base)?.activeProfileContext ?: base)
+        profileManager = ProfileManager.createOrNull(base)
+        super.attachBaseContext(profileManager?.activeProfileContext ?: base)
     }
 
     /**

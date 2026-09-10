@@ -58,6 +58,13 @@ class AnkiDroidAppTest {
     }
 
     @Test
+    fun `the application retains the profile manager`() {
+        val app = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
+
+        assertNotNull(app.profileManager, "callers need the manager to reach the active profile")
+    }
+
+    @Test
     fun `preferences are namespaced for a non-default profile`() {
         val profileId = ProfileId("p_namespaced")
         val base = ApplicationProvider.getApplicationContext<AnkiDroidApp>().baseContext
