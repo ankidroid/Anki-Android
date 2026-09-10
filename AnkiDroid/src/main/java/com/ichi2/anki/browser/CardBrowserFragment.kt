@@ -28,6 +28,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
@@ -129,6 +130,7 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.previewer.PreviewerFragment
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.requireNavigationDrawerActivity
 import com.ichi2.anki.scheduling.ForgetCardsDialog
@@ -319,6 +321,8 @@ class CardBrowserFragment :
             // so it is necessary to dismiss the change deck dialog
             (parentFragmentManager.findFragmentByTag(DeckSelectionDialog.TAG) as? DeckSelectionDialog)?.dismiss()
         }
+
+        observeProgress(activityViewModel) { progress -> getString(progress.messageRes) }
 
         // onSearchForDecks starts deck selection using childFragmentManager
         childFragmentManager.setFragmentResultListener(DeckSelectionDialog.REQUEST_SELECT_DECK, this) { _, bundle ->
@@ -1567,15 +1571,15 @@ class CardBrowserFragment :
     @VisibleForTesting
     fun toggleMark() =
         launchCatchingTask {
-            withProgress { activityViewModel.toggleMark() }
+            activityViewModel.toggleMark()
         }
 
-    fun toggleSuspendCards() = launchCatchingTask { withProgress { activityViewModel.toggleSuspendCards().join() } }
+    fun toggleSuspendCards() = launchCatchingTask { activityViewModel.toggleSuspendCards().join() }
 
     /** @see CardBrowserViewModel.toggleBury */
     fun toggleBury() =
         launchCatchingTask {
-            val result = withProgress { activityViewModel.toggleBury() } ?: return@launchCatchingTask
+            val result = activityViewModel.toggleBury() ?: return@launchCatchingTask
             // show a snackbar as there's currently no colored background for buried cards
             val message =
                 when (result.wasBuried) {
@@ -1649,9 +1653,7 @@ class CardBrowserFragment :
 
     fun deleteSelectedNotes() =
         launchCatchingTask {
-            withProgress(R.string.deleting_selected_notes) {
-                activityViewModel.deleteSelectedNotes()
-            }.ifNotZero { noteCount ->
+            activityViewModel.deleteSelectedNotes().ifNotZero { noteCount ->
                 val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
                 showUndoSnackbar(deletedMessage)
             }
@@ -1747,7 +1749,7 @@ class CardBrowserFragment :
 
     fun updateFlagForSelectedRows(flag: Flag) =
         launchCatchingTask {
-            withProgress { activityViewModel.updateSelectedCardsFlag(flag) }
+            activityViewModel.updateSelectedCardsFlag(flag)
         }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -1829,7 +1831,7 @@ class CardBrowserFragment :
     @VisibleForTesting
     internal fun moveSelectedCardsToDeck(did: DeckId): Job =
         launchCatchingTask {
-            val changed = withProgress { activityViewModel.moveSelectedCardsToDeck(did).await() }
+            val changed = activityViewModel.moveSelectedCardsToDeck(did).await()
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
 
@@ -1841,14 +1843,12 @@ class CardBrowserFragment :
         shift: Boolean,
     ) = launchCatchingTask {
         val count =
-            withProgress {
-                activityViewModel.repositionSelectedRows(
-                    position = position,
-                    step = step,
-                    shuffle = shuffle,
-                    shift = shift,
-                )
-            }
+            activityViewModel.repositionSelectedRows(
+                position = position,
+                step = step,
+                shuffle = shuffle,
+                shift = shift,
+            )
         showSnackbar(
             TR.browsingChangedNewPosition(count),
             Snackbar.LENGTH_SHORT,
@@ -2050,3 +2050,10 @@ fun buildUserSpannable(
 
     return spannable
 }
+
+@get:StringRes
+private val CardBrowserProgress.messageRes: Int
+    get() =
+        when (this) {
+            CardBrowserProgress.DELETING_NOTES -> R.string.deleting_selected_notes
+        }
