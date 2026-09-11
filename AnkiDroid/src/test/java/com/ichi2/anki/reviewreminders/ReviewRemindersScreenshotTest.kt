@@ -24,7 +24,6 @@ import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
-import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
 import com.ichi2.anki.withDeckPicker
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.positiveButton
@@ -335,19 +334,6 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
             }
         }
     }
-
-    /** Launches [ScheduleRemindersFragment] in its standalone activity */
-    private fun withStandaloneScheduleReminders(block: (ConfigAwareSingleFragmentActivity) -> Unit) {
-        val intent = ScheduleRemindersFragment.getIntent(targetContext, ReviewReminderScope.Global)
-        ActivityScenario.launch<ConfigAwareSingleFragmentActivity>(intent).use { scenario ->
-            advanceRobolectricLooper()
-            scenario.onActivity { activity -> block(activity) }
-        }
-    }
-
-    /** Launches [ScheduleRemindersFragment] in its own activity, exposing the fragment */
-    private fun withScheduleRemindersFragment(block: (ScheduleRemindersFragment) -> Unit) =
-        withStandaloneScheduleReminders { activity -> block(activity.fragment as ScheduleRemindersFragment) }
 
     /** Collapses the settings host's toolbar, as when the list has been scrolled */
     private fun FragmentManager.collapseToolbar() {
