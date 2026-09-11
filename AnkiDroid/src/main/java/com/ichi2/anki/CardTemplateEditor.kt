@@ -404,7 +404,8 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         return tempNoteType != null && tempNoteType!!.notetype.toString() != oldNoteType.toString()
     }
 
-    private fun enableDiscardChangesDialog() {
+    /** Updates [displayDiscardChangesCallback] to match [noteTypeHasChanged]. */
+    private fun updateDiscardChangesCallback() {
         displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
     }
 
@@ -450,7 +451,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
         // Deck Override can change from "on" <-> "off"
         invalidateOptionsMenu()
-        enableDiscardChangesDialog()
+        updateDiscardChangesCallback()
     }
 
     override fun onKeyUp(
@@ -743,7 +744,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                             }
                         refreshFragmentRunnable = updateRunnable
                         refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
-                        templateEditor.enableDiscardChangesDialog()
+                        templateEditor.updateDiscardChangesCallback()
                     }
 
                     override fun beforeTextChanged(
@@ -921,7 +922,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 existingNames = existingNames,
             ) { newName ->
                 template.name = newName.value
-                templateEditor.enableDiscardChangesDialog()
+                templateEditor.updateDiscardChangesCallback()
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
@@ -1418,7 +1419,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             val currentTemplate = getCurrentTemplate()
             if (currentTemplate != null) {
                 result.applyTo(currentTemplate)
-                templateEditor.enableDiscardChangesDialog()
+                templateEditor.updateDiscardChangesCallback()
             }
         }
 
@@ -1504,7 +1505,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             try {
                 templateEditor.getColUnsafe.modSchema(check = true)
                 schemaChangingAction.run()
-                templateEditor.enableDiscardChangesDialog()
+                templateEditor.updateDiscardChangesCallback()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -1514,7 +1515,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     Runnable {
                         templateEditor.getColUnsafe.modSchema(check = false)
                         schemaChangingAction.run()
-                        templateEditor.enableDiscardChangesDialog()
+                        templateEditor.updateDiscardChangesCallback()
                         templateEditor.dismissAllDialogFragments()
                     }
                 val cancel = Runnable { templateEditor.dismissAllDialogFragments() }
