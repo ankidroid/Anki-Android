@@ -684,6 +684,33 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
+    fun `hasUnsavedChanges - sticky field with a br line break survives a note type switch - 21716`() =
+        runTest {
+            val basic = makeNoteForType(NoteType.BASIC)
+            basic!!.fields[0].sticky = true
+
+            val editor =
+                getNoteEditorAdding(NoteType.BASIC)
+                    .withFirstField("Hello<br>World")
+                    .build()
+
+            editor.saveNote()
+            advanceRobolectricLooper()
+            assertFalse(editor.hasUnsavedChanges(), "fresh screen after save: no real edits yet")
+
+            // switching note type re-populates every field from its own current content, which
+            // converts the sticky field's `<br>` into a real line break - this must not look like
+            // an edit, since the field's rendered content is unchanged from the user's perspective
+            editor.noteType = col.notetypes.byName("Basic (optional reversed card)")!!
+            advanceRobolectricLooper()
+
+            assertFalse(
+                editor.hasUnsavedChanges(),
+                "the sticky field's content round-tripped through a <br>/newline conversion but was never actually edited",
+            )
+        }
+
+    @Test
     fun `hasUnsavedChanges - changing note type while adding does not discard unsaved field content`() =
         runTest {
             val editor =
