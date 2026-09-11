@@ -341,14 +341,6 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressedDispatcher.onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     /**
      * Callback used to finish initializing the activity after the collection has been correctly loaded
      * @param col Collection which has been loaded
