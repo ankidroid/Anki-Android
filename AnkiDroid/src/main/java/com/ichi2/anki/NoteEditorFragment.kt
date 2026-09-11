@@ -46,7 +46,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.FileProvider
-import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.Insets
@@ -94,6 +93,7 @@ import com.ichi2.anki.common.utils.HashUtil
 import com.ichi2.anki.common.utils.android.digit
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
@@ -919,11 +919,7 @@ class NoteEditorFragment :
 
                     result.data?.let {
                         val cropResultData =
-                            IntentCompat.getParcelableExtra(
-                                it,
-                                CROP_IMAGE_RESULT,
-                                ImageCropper.CropResultData::class.java,
-                            )
+                            it.getParcelableExtraCompat<ImageCropper.CropResultData>(CROP_IMAGE_RESULT)
                         Timber.d("Cropped image data: $cropResultData")
                         if (cropResultData?.uriPath == null) return@registerForActivityResult
                         setupImageOcclusionEditor(cropResultData.uriPath)

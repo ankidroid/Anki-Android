@@ -6,9 +6,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.IntentCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
@@ -25,7 +25,7 @@ class CopyToClipboardReceiver : BroadcastReceiver() {
         intent: Intent,
     ) {
         val text =
-            IntentCompat.getParcelableExtra(intent, EXTRA_SYNC_ERROR_LOG, TruncatedString::class.java) ?: run {
+            intent.getParcelableExtraCompat<TruncatedString>(EXTRA_SYNC_ERROR_LOG) ?: run {
                 Timber.w("CopyToClipboardReceiver: no error log found")
                 showThemedToast(context, R.string.something_wrong, shortLength = true)
                 return
