@@ -26,6 +26,7 @@ import com.ichi2.anki.dialogs.tryDisplayLocalizedName
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.libanki.TtsVoice
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -198,7 +199,7 @@ class TtsVoicesViewModel : ViewModel() {
         // At least in API 33, we do not need to display a snackbar, as the Android OS already
         // displays the copied text
         appContext.copyToClipboard(
-            text = voice.toString(),
+            text = TruncatedString.from(voice.toString()),
         )
     }
 

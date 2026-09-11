@@ -41,6 +41,7 @@ import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -119,7 +120,7 @@ class IntentHandler : AbstractIntentHandler() {
                 return
             }
         this.copyToClipboard(
-            text = clipboardData,
+            text = TruncatedString.from(clipboardData),
             failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }

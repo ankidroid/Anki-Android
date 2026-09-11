@@ -23,6 +23,7 @@ import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import timber.log.Timber
 
@@ -72,7 +73,7 @@ fun Context.openUrl(uri: Uri) {
         if (this is FragmentActivity) {
             showSnackbar(noBrowserMessage) {
                 setAction(android.R.string.copyUrl) {
-                    copyToClipboard(uri.toString())
+                    copyToClipboard(TruncatedString.from(uri.toString()))
                 }
             }
         } else {

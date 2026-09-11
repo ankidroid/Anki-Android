@@ -36,6 +36,7 @@ import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.receiver.CopyToClipboardReceiver
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
+import com.ichi2.utils.TruncatedString
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import net.ankiweb.rsdroid.Backend
@@ -98,7 +99,7 @@ class SyncMediaWorker(
                     addAction(
                         R.drawable.baseline_content_copy_24,
                         with(applicationContext) { TR.sentenceCase.copyToClipboard },
-                        getCopyToClipboardIntent(message),
+                        getCopyToClipboardIntent(TruncatedString.from(message)),
                     )
                 }
             }
@@ -152,7 +153,7 @@ class SyncMediaWorker(
     }
 
     @VisibleForTesting
-    internal fun getCopyToClipboardIntent(text: String): PendingIntent {
+    internal fun getCopyToClipboardIntent(text: TruncatedString): PendingIntent {
         val intent =
             Intent(applicationContext, CopyToClipboardReceiver::class.java).apply {
                 putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, text)

@@ -28,6 +28,7 @@ import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.IntentUtil
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.show
@@ -119,7 +120,7 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
                     DebugInfoService.getDebugInfo(requireContext())
                 }
             requireContext().copyToClipboard(
-                debugInfo,
+                TruncatedString.from(debugInfo),
                 failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
             )
         }
