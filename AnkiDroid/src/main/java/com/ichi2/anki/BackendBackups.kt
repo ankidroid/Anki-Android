@@ -21,6 +21,8 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendException
 
@@ -57,7 +59,22 @@ fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiAc
     }
 }
 
-private suspend fun createBackup(force: Boolean): Boolean {
+/**
+ * Held for the whole of a background backup, including the stage the backend
+ * finishes after it has released the collection.
+ *
+ * Waiting on the backend directly does not work from elsewhere: it hands its
+ * running backup to whichever caller asks first, and [createBackup] asks as soon
+ * as the backup starts, so a second caller returns without waiting.
+ */
+val backupLock = Mutex()
+
+private suspend fun createBackup(force: Boolean) =
+    backupLock.withLock {
+        createBackupHoldingLock(force)
+    }
+
+private suspend fun createBackupHoldingLock(force: Boolean): Boolean {
     val created =
         withCol {
             // this two-step approach releases the backend lock after the initial copy
