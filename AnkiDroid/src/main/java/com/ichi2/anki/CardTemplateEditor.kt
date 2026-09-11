@@ -545,13 +545,8 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
     @get:VisibleForTesting
     val currentFragment: CardTemplateFragment?
-        get() =
-            try {
-                supportFragmentManager.findFragmentByTag("f" + ord) as CardTemplateFragment?
-            } catch (e: Exception) {
-                Timber.w("Failed to get current fragment")
-                null
-            }
+        get() = templateFragment(ord)
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------

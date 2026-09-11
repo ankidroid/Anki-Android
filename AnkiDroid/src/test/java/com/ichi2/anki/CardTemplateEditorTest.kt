@@ -8,6 +8,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Looper
+import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -763,6 +764,46 @@ class CardTemplateEditorTest : RobolectricTest() {
 
             dispatchInsets()
             assertTrue("Back should confirm discarding edits", onBackPressedDispatcher.hasEnabledCallbacks())
+        }
+    }
+
+    /** Deleting a card type recreates the pages with new adapter IDs. */
+    @Test
+    fun `Back follows the keyboard after deleting a card type - Issue 21807`() {
+        withCardTemplateEditor(col.notetypes.basicAndReversed) {
+            assertTrue("Unable to delete the card type", shadowOf(this).clickMenuItem(R.id.action_delete))
+            advanceRobolectricLooper()
+            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+            advanceRobolectricLooper()
+            assertEquals("One card type should remain", 1, tempNoteType!!.templateCount)
+            assertTrue("The deletion is unsaved", noteTypeHasChanged())
+
+            dispatchInsets(imeBottom = 240.dp)
+            assertEquals("The keyboard should hide the tabs", View.GONE, findViewById<View>(R.id.bottom_navigation).visibility)
+            assertFalse("Back should dismiss the keyboard", onBackPressedDispatcher.hasEnabledCallbacks())
+
+            dispatchInsets()
+            onBackPressedDispatcher.onBackPressed()
+            assertEquals("Back should now confirm discarding the deletion", "Discard changes?", getAlertDialogText(true))
+            assertFalse("The deletion must not be discarded without confirmation", isFinishing)
+        }
+    }
+
+    @Test
+    fun `Ctrl+2 switches to the back template after deleting a card type`() {
+        withCardTemplateEditor(col.notetypes.basicAndReversed) {
+            assertTrue("Unable to delete the card type", shadowOf(this).clickMenuItem(R.id.action_delete))
+            advanceRobolectricLooper()
+            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+            advanceRobolectricLooper()
+            assertEquals("One card type should remain", 1, tempNoteType!!.templateCount)
+
+            val template = tempNoteType!!.getTemplate(0)
+            assertEquals("The front template should be selected initially", template.qfmt, editText.text.toString())
+
+            onKeyUp(KeyEvent.KEYCODE_2, KeyEvent(0, 0, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_2, 0, KeyEvent.META_CTRL_ON))
+
+            assertEquals("Ctrl+2 should show the back template", template.afmt, editText.text.toString())
         }
     }
 
