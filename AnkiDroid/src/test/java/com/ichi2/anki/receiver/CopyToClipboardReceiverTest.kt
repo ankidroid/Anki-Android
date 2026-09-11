@@ -42,10 +42,7 @@ class CopyToClipboardReceiverTest {
                 .setSmallIcon(R.drawable.ic_star_notify)
                 .build(),
         )
-        val intent =
-            Intent(context, CopyToClipboardReceiver::class.java).apply {
-                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, TruncatedString.from("sync error log"))
-            }
+        val intent = CopyToClipboardReceiver.getIntent(context, TruncatedString.from("sync error log"))
 
         CopyToClipboardReceiver().onReceive(context, intent)
 
@@ -80,10 +77,7 @@ class CopyToClipboardReceiverTest {
         Shadow
             .extract<ShadowContextImpl>((context as Application).baseContext)
             .removeSystemService(Context.CLIPBOARD_SERVICE)
-        val intent =
-            Intent(context, CopyToClipboardReceiver::class.java).apply {
-                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, TruncatedString.from("sync error log"))
-            }
+        val intent = CopyToClipboardReceiver.getIntent(context, TruncatedString.from("sync error log"))
 
         CopyToClipboardReceiver().onReceive(context, intent)
 

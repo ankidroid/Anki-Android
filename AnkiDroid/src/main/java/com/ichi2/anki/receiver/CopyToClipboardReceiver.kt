@@ -37,6 +37,18 @@ class CopyToClipboardReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val EXTRA_SYNC_ERROR_LOG = "syncErrorLog"
+        private const val EXTRA_SYNC_ERROR_LOG = "syncErrorLog"
+
+        /**
+         * Method for getting an intent for this service.
+         * @return An intent which copies [text] to the clipboard when broadcast to this receiver.
+         */
+        fun getIntent(
+            context: Context,
+            text: TruncatedString,
+        ): Intent =
+            Intent(context, CopyToClipboardReceiver::class.java).apply {
+                putExtra(EXTRA_SYNC_ERROR_LOG, text)
+            }
     }
 }

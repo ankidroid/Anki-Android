@@ -6,7 +6,6 @@ package com.ichi2.anki.worker
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.annotation.VisibleForTesting
@@ -154,10 +153,7 @@ class SyncMediaWorker(
 
     @VisibleForTesting
     internal fun getCopyToClipboardIntent(text: TruncatedString): PendingIntent {
-        val intent =
-            Intent(applicationContext, CopyToClipboardReceiver::class.java).apply {
-                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, text)
-            }
+        val intent = CopyToClipboardReceiver.getIntent(applicationContext, text)
         return PendingIntent.getBroadcast(
             applicationContext,
             0,
