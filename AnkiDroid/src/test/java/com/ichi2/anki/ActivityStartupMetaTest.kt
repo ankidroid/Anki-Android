@@ -38,6 +38,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
                 .filter { !it.startsWith("org.acra") }
                 .filter { !it.startsWith("leakcanary.internal") }
                 .filter { it != "com.canhub.cropper.CropImageActivity" }
+                .filter { it != "com.jakewharton.processphoenix.PhoenixActivity" }
                 .toTypedArray()
         MatcherAssert.assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
     }
