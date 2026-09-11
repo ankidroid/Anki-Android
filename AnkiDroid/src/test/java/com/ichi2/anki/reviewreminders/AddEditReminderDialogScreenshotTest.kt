@@ -3,9 +3,7 @@
 
 package com.ichi2.anki.reviewreminders
 
-import android.view.View
 import androidx.fragment.app.FragmentActivity
-import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.DialogMode
 import org.junit.Test
@@ -14,18 +12,13 @@ import org.robolectric.Robolectric.buildActivity
 class AddEditReminderDialogScreenshotTest : ScreenshotTest() {
     @Test
     fun `add mode`() {
-        val activity = buildActivity(FragmentActivity::class.java).setup().get()
-        AddEditReminderDialog
-            .getInstance(DialogMode.Add(ReviewReminderScope.Global))
-            .show(activity.supportFragmentManager, "dialog")
-        advanceRobolectricLooper()
-        captureScreen("add_mode")
+        withReminderDialog(DialogMode.Add(ReviewReminderScope.Global)) {
+            captureScreen("add_mode")
 
-        val dialogFragment =
-            activity.supportFragmentManager.findFragmentByTag("dialog") as AddEditReminderDialog
-        dialogFragment.dialog?.findViewById<View>(R.id.add_edit_reminder_advanced_dropdown)?.performClick()
-        advanceRobolectricLooper()
-        captureScreen("add_mode_advanced_open")
+            binding.addEditReminderAdvancedDropdown.performClick()
+            advanceRobolectricLooper()
+            captureScreen("add_mode_advanced_open")
+        }
     }
 
     @Test
@@ -37,17 +30,23 @@ class AddEditReminderDialogScreenshotTest : ScreenshotTest() {
                 scope = ReviewReminderScope.DeckSpecific(deckId),
                 onlyNotifyIfNoReviews = true,
             )
-        val activity = buildActivity(FragmentActivity::class.java).setup().get()
-        AddEditReminderDialog
-            .getInstance(DialogMode.Edit(reminder))
-            .show(activity.supportFragmentManager, "dialog")
-        advanceRobolectricLooper()
-        captureScreen("edit_mode")
+        withReminderDialog(DialogMode.Edit(reminder)) {
+            captureScreen("edit_mode")
 
-        val dialogFragment =
-            activity.supportFragmentManager.findFragmentByTag("dialog") as AddEditReminderDialog
-        dialogFragment.dialog?.findViewById<View>(R.id.add_edit_reminder_advanced_dropdown)?.performClick()
+            binding.addEditReminderAdvancedDropdown.performClick()
+            advanceRobolectricLooper()
+            captureScreen("edit_mode_advanced_open")
+        }
+    }
+
+    private fun withReminderDialog(
+        mode: DialogMode,
+        block: AddEditReminderDialog.() -> Unit,
+    ) {
+        val activity = buildActivity(FragmentActivity::class.java).setup().get()
+        val dialog = AddEditReminderDialog.getInstance(mode)
+        dialog.show(activity.supportFragmentManager, "dialog")
         advanceRobolectricLooper()
-        captureScreen("edit_mode_advanced_open")
+        dialog.block()
     }
 }
