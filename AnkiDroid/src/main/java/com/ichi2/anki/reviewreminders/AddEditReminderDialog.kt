@@ -7,6 +7,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.format.DateFormat
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -73,7 +74,9 @@ class AddEditReminderDialog : DialogFragment() {
 
     private val viewModel: AddEditReminderDialogViewModel by viewModels()
 
-    private lateinit var binding: DialogAddEditReminderBinding
+    @VisibleForTesting
+    internal lateinit var binding: DialogAddEditReminderBinding
+        private set
 
     /**
      * The mode of this dialog, retrieved from arguments and set by [getInstance].
