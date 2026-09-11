@@ -9,6 +9,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import timber.log.Timber
 
@@ -29,7 +30,7 @@ class CopyToClipboardReceiver : BroadcastReceiver() {
                 return
             }
         // only dismiss the notification once the text is safely on the clipboard
-        if (context.copyToClipboard(text)) {
+        if (context.copyToClipboard(TruncatedString.from(text))) {
             NotificationManagerCompat.from(context).cancel(NotificationId.SYNC_MEDIA)
         }
     }
