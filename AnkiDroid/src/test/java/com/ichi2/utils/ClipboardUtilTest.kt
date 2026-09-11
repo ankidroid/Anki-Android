@@ -103,35 +103,47 @@ class ClipboardUtilTest {
         // At most 1MB can be present in the Binder IPC transaction buffer at a time, but we should not exceed half of that
         // since that limit is shared between all ongoing transactions. The truncation is based on characters, but each character
         // in Kotlin is 2 bytes, so we multiply the max length by 2 to get the byte size.
-        assertThat(ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH * 2, lessThan(1_000_000 / 2))
+        assertThat(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH * 2, lessThan(1_000_000 / 2))
     }
 
     @Test
-    fun `copyToClipboard copies text shorter than the limit unchanged`() {
-        assertTrue(context.copyToClipboard("hello"))
+    fun `TruncatedString keeps text shorter than the limit unchanged`() {
+        assertThat(TruncatedString.from("hello").value, equalTo("hello"))
+    }
+
+    @Test
+    fun `TruncatedString keeps text exactly at the limit unchanged`() {
+        val text = "a".repeat(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH)
+        assertThat(TruncatedString.from(text).value, equalTo(text))
+    }
+
+    @Test
+    fun `TruncatedString truncates text longer than the limit`() {
+        val truncated = TruncatedString.from("a".repeat(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH) + "b".repeat(10)).value
+
+        assertThat(truncated, hasLength(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH))
+        assertThat(truncated, equalTo("a".repeat(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH)))
+    }
+
+    @Test
+    fun `copyToClipboard copies the text to the clipboard`() {
+        assertTrue(context.copyToClipboard(TruncatedString.from("hello")))
         assertThat(copiedText(), equalTo("hello"))
     }
 
     @Test
-    fun `copyToClipboard copies text exactly at the limit unchanged`() {
-        val text = "a".repeat(ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH)
-        assertTrue(context.copyToClipboard(text))
-        assertThat(copiedText(), equalTo(text))
-    }
-
-    @Test
-    fun `copyToClipboard truncates text longer than the limit`() {
-        assertTrue(context.copyToClipboard("a".repeat(ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH) + "b".repeat(10)))
+    fun `copyToClipboard copies oversized text truncated`() {
+        assertTrue(context.copyToClipboard(TruncatedString.from("a".repeat(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH) + "b".repeat(10))))
 
         val copied = copiedText()
-        assertThat(copied, hasLength(ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH))
-        assertThat(copied, equalTo("a".repeat(ClipboardUtil.MAX_CLIPBOARD_TEXT_LENGTH)))
+        assertThat(copied, hasLength(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH))
+        assertThat(copied, equalTo("a".repeat(TruncatedString.MAX_CLIPBOARD_TEXT_LENGTH)))
     }
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.S])
     fun `copyToClipboard shows a success message below S_V2`() {
-        assertTrue(context.copyToClipboard("hello"))
+        assertTrue(context.copyToClipboard(TruncatedString.from("hello")))
         assertThat(
             ShadowToast.getTextOfLatestToast(),
             equalTo(context.getString(R.string.about_ankidroid_successfully_copied_debug_info)),
@@ -142,13 +154,13 @@ class ClipboardUtilTest {
     @Config(sdk = [Build.VERSION_CODES.S_V2])
     fun `copyToClipboard shows no message on S_V2 and above`() {
         // the system shows its own 'copied to clipboard' message, so showing ours too would duplicate it
-        assertTrue(context.copyToClipboard("hello"))
+        assertTrue(context.copyToClipboard(TruncatedString.from("hello")))
         assertThat(ShadowToast.shownToastCount(), equalTo(0))
     }
 
     @Test
     fun `copyToClipboard returns false and reports failure if the clipboard is unavailable`() {
-        assertFalse(contextWithClipboard(null).copyToClipboard("hello"))
+        assertFalse(contextWithClipboard(null).copyToClipboard(TruncatedString.from("hello")))
         assertThat(
             ShadowToast.getTextOfLatestToast(),
             equalTo(context.getString(R.string.failed_to_copy)),
@@ -162,7 +174,7 @@ class ClipboardUtilTest {
                 every { setPrimaryClip(any()) } throws RuntimeException("android.os.TransactionTooLargeException")
             }
 
-        assertFalse(contextWithClipboard(throwingClipboard).copyToClipboard("hello"))
+        assertFalse(contextWithClipboard(throwingClipboard).copyToClipboard(TruncatedString.from("hello")))
         assertThat(
             ShadowToast.getTextOfLatestToast(),
             equalTo(context.getString(R.string.failed_to_copy)),
