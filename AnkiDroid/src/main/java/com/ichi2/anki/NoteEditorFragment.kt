@@ -591,17 +591,6 @@ class NoteEditorFragment :
         )
     }
 
-    /**
-     * Handles an intent containing an image from the user's gallery or the internet by opening
-     * MultimediaActivity specifically for creating a new card.
-     *
-     * It extracts the image URI from the intent data based on the intent's action.
-     * If the action is `Intent.ACTION_SEND`, the method uses `IntentCompat.getParcelableExtra` to retrieve
-     * the image URI from the `Intent.EXTRA_STREAM` extra. Otherwise, it assumes the image URI is directly
-     * available in the intent's data field.
-     *
-     * @param data the Intent containing the image information from the user's share action
-     */
     override fun onSaveInstanceState(outState: Bundle) {
         addInstanceStateToBundle(outState)
         super.onSaveInstanceState(outState)
