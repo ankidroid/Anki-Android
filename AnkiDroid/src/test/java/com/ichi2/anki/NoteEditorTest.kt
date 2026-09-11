@@ -684,6 +684,56 @@ class NoteEditorTest : RobolectricTest() {
         }
 
     @Test
+    fun `hasUnsavedChanges - changing note type while adding does not discard unsaved field content`() =
+        runTest {
+            val editor =
+                getNoteEditorAdding(NoteType.BASIC)
+                    .build()
+
+            // user types content into the first field but hasn't saved yet
+            editor.setFieldValueFromUi(0, "unsaved user content")
+            assertTrue(editor.hasUnsavedChanges(), "typing into a field is an unsaved change")
+
+            // user switches the note type (Basic -> Basic (and reversed)); both have a "Front" field
+            // at index 0, so the typed content is carried over into the new field layout
+            editor.noteType = col.notetypes.basicAndReversed
+            advanceRobolectricLooper()
+
+            assertThat(
+                "content should be preserved across the note type change",
+                editor.currentFieldStrings.toList(),
+                contains("unsaved user content", ""),
+            )
+            assertTrue(
+                editor.hasUnsavedChanges(),
+                "the user's unsaved content survived the note type change, so it must still be " +
+                    "reported as an unsaved change - otherwise pressing back silently discards it",
+            )
+        }
+
+    @Test
+    fun `hasUnsavedChanges - typing then clearing a field before a note type switch that adds fields is not an unsaved change - 21716`() =
+        runTest {
+            val editor =
+                getNoteEditorAdding(NoteType.BASIC)
+                    .build()
+
+            // user types into the first field, then reverts their own edit before switching
+            editor.setFieldValueFromUi(0, "x")
+            editor.setFieldValueFromUi(0, "")
+            assertFalse(editor.hasUnsavedChanges(), "user's only edit was reverted; nothing to save")
+
+            // switch to a note type with an extra field (Basic -> Basic (optional reversed card))
+            editor.noteType = col.notetypes.byName("Basic (optional reversed card)")!!
+            advanceRobolectricLooper()
+
+            assertFalse(
+                editor.hasUnsavedChanges(),
+                "all fields are still blank after the note type switch added a field; there is nothing to save",
+            )
+        }
+
+    @Test
     fun `changing deck with multiple card ids moves all sibling cards`() =
         runTest {
             // Create a note with 2 cards (Basic and Reversed)
