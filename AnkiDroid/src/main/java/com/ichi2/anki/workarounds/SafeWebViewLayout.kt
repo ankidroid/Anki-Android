@@ -45,6 +45,11 @@ open class SafeWebViewLayout :
             field = value
         }
 
+    override fun setBackgroundColor(color: Int) {
+        super.setBackgroundColor(color)
+        webView.setBackgroundColor(color)
+    }
+
     protected open fun createWebView() = WebView(context)
 
     init {
