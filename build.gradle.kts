@@ -127,12 +127,7 @@ subprojects {
 
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
-                val compilerArgs = mutableListOf(
-                    // https://youtrack.jetbrains.com/issue/KT-73255
-                    // Apply @StringRes to both constructor params and generated properties
-                    "-Xannotation-default-target=param-property",
-                    "-Xexplicit-backing-fields"
-                )
+                val compilerArgs = mutableListOf<String>()
 
                 if (isInIdeaSync) {
                     compilerArgs += "-XXLanguage:+ExplicitBackingFields"
@@ -140,9 +135,6 @@ subprojects {
 
                 if (project.path !in listOf(":anki-common", ":api", ":common", ":common:android")) {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
-                }
-                if (project.path != ":api") {
-                    compilerArgs += "-Xcontext-parameters"
                 }
                 // Opt in to Material3 APIs marked experimental once at the module level
                 // (currently only :AnkiDroid uses Compose Material3). Avoids littering
