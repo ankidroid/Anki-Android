@@ -3,11 +3,9 @@
 
 package com.ichi2.anki.reviewreminders
 
-import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.reviewreminders.AddEditReminderDialog.DialogMode
 import org.junit.Test
-import org.robolectric.Robolectric.buildActivity
 
 class AddEditReminderDialogScreenshotTest : ScreenshotTest() {
     @Test
@@ -42,10 +40,9 @@ class AddEditReminderDialogScreenshotTest : ScreenshotTest() {
     private fun withReminderDialog(
         mode: DialogMode,
         block: AddEditReminderDialog.() -> Unit,
-    ) {
-        val activity = buildActivity(FragmentActivity::class.java).setup().get()
+    ) = withScheduleRemindersFragment { fragment ->
         val dialog = AddEditReminderDialog.getInstance(mode)
-        dialog.show(activity.supportFragmentManager, "dialog")
+        dialog.show(fragment.childFragmentManager, "dialog")
         advanceRobolectricLooper()
         dialog.block()
     }
