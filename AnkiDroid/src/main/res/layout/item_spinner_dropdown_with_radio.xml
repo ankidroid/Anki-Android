@@ -11,7 +11,7 @@
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     style="?android:attr/spinnerDropDownItemStyle"
-    android:checkMark="?android:attr/listChoiceIndicatorSingle"
+    android:checkMark="@drawable/spinner_dropdown_radio_indicator"
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="?dropdownListPreferredItemHeight"
