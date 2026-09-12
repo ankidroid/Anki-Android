@@ -20,6 +20,7 @@ plugins {
 
 extensions.configure<LibraryExtension> {
     compileSdk = libsVersionFor("compileSdk").toInt()
+    compileSdkMinor = libsVersionFor("compileSdkMinor").toInt()
 
     compileOptions {
         // API remains on VERSION_11 for consumer compatibility.

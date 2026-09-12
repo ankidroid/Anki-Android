@@ -5,7 +5,8 @@ package com.ichi2.anki.compat
 
 import android.view.Window
 import androidx.annotation.RequiresApi
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat.Type.statusBars
 
 @RequiresApi(30)
 @Suppress("ktlint:standard:property-naming")
@@ -21,7 +22,6 @@ open class CompatV30 : CompatV29() {
         if (view == null) {
             return
         }
-        val controller = view.windowInsetsController
-        controller?.hide(WindowInsetsCompat.Type.statusBars())
+        WindowCompat.getInsetsController(window, view).hide(statusBars())
     }
 }
