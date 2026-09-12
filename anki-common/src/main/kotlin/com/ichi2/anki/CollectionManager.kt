@@ -26,6 +26,7 @@ import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.utils.android.Threads
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.Collection
@@ -299,15 +300,20 @@ object CollectionManager {
             throw CollectionHelper.systemStorageFailure ?: StorageNotConfiguredException()
         }
         ensureBackendInner()
-        emulatedOpenFailure?.triggerFailure()
-        if (collection == null || collection!!.dbClosed) {
-            val collectionPath = collectionPathInValidFolder()
-            collection =
-                collection(
-                    collectionFiles = collectionPath,
-                    databaseBuilder = { backend -> createDatabaseUsingRustBackend(backend) },
-                    backend = backend,
-                )
+        try {
+            emulatedOpenFailure?.triggerFailure()
+            if (collection == null || collection!!.dbClosed) {
+                val collectionPath = collectionPathInValidFolder()
+                collection =
+                    collection(
+                        collectionFiles = collectionPath,
+                        databaseBuilder = { backend -> createDatabaseUsingRustBackend(backend) },
+                        backend = backend,
+                    )
+            }
+        } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
+            // All consumers should better explain the issue
+            throw CollectionLockedException(e)
         }
     }
 
@@ -475,7 +481,7 @@ object CollectionManager {
     }
 
     enum class CollectionOpenFailure {
-        /** Raises [BackendException.BackendDbException.BackendDbLockedException] */
+        /** Raises [BackendException.BackendDbException.BackendDbLockedException], surfaced as [CollectionLockedException] */
         LOCKED,
 
         /** Raises [BackendException.BackendFatalError] */

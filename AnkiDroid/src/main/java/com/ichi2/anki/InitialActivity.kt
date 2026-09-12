@@ -24,6 +24,7 @@ import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.storage.isLegacyStorage
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
@@ -69,7 +70,7 @@ object InitialActivity {
             try {
                 CollectionManager.getColUnsafe()
                 return null
-            } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
+            } catch (e: CollectionLockedException) {
                 Timber.w(e)
                 StartupFailure.DatabaseLocked
             } catch (e: BackendException.BackendDbException.BackendDbFileTooNewException) {
