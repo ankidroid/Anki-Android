@@ -207,6 +207,72 @@ class ReviewRemindersTest : InstrumentedTest() {
         }
     }
 
+    @Test
+    fun deleteLastReminder() {
+        val reminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(9, 15))
+        insertReminder(reminder)
+        withReminders(reminderCount = 1) {
+            onView(withId(R.id.reminders_list_time_text)).perform(click())
+            openDeleteConfirmation()
+            assertEquals(listOf(reminder), storedReminders(), "Deletion must wait for confirmation")
+            onView(withId(android.R.id.button1)).perform(click())
+
+            waitUntil(message = { "The deleted reminder is still stored: ${storedReminders()}" }) { storedReminders().isEmpty() }
+            assertReminderCount(0)
+        }
+        withReminders {
+            onView(withId(R.id.no_reminders_placeholder)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun cancelDeletingReminder() {
+        val reminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(9, 15))
+        insertReminder(reminder)
+        withReminders(reminderCount = 1) {
+            onView(withId(R.id.reminders_list_time_text)).perform(click())
+            openDeleteConfirmation()
+            onView(withId(android.R.id.button2)).perform(click())
+
+            onView(withText("Delete this reminder?")).check(doesNotExist())
+            assertEquals(listOf(reminder), storedReminders())
+            onView(withId(R.id.add_edit_reminder_toolbar)).check(matches(isDisplayed()))
+            onView(withId(android.R.id.button3)).perform(click())
+            assertReminderRow(reminder, allDecksName)
+        }
+        withReminders(reminderCount = 1) {
+            assertReminderRow(reminder, allDecksName)
+        }
+    }
+
+    @Test
+    fun deleteReminderForDeletedDeck() {
+        val deckId = col.decks.id("Deck to delete")
+        val orphan =
+            ReviewReminder.createReviewReminder(
+                time = ReviewReminderTime(9, 15),
+                scope = ReviewReminderScope.DeckSpecific(deckId),
+            )
+        val remaining = ReviewReminder.createReviewReminder(time = ReviewReminderTime(10, 30))
+        insertReminder(orphan)
+        insertReminder(remaining)
+        col.decks.remove(listOf(deckId))
+
+        withReminders(reminderCount = 2) {
+            onView(withText("Deck not found")).checkWithTimeout(matches(isDisplayed()))
+            onView(withText("Deck not found")).perform(click())
+            openDeleteConfirmation()
+            onView(withId(android.R.id.button1)).perform(click())
+
+            assertEquals(remaining, awaitSingleReminder { it.id == remaining.id })
+            assertTrue(runBlocking { ReviewRemindersDatabase.getRemindersForScope(orphan.scope).isEmpty() })
+            assertReminderRow(remaining, allDecksName)
+        }
+        withReminders(reminderCount = 1) {
+            assertReminderRow(remaining, allDecksName)
+        }
+    }
+
     private fun withReminders(
         scope: ReviewReminderScope = ReviewReminderScope.Global,
         reminderCount: Int = 0,
@@ -223,6 +289,11 @@ class ReviewRemindersTest : InstrumentedTest() {
     private fun openAddDialog() {
         onView(withId(R.id.floating_action_button_add)).perform(click())
         onView(withId(R.id.add_edit_reminder_deck_name)).checkWithTimeout(matches(withText(allDecksName)))
+    }
+
+    private fun openDeleteConfirmation() {
+        onView(withId(android.R.id.button2)).perform(click())
+        onView(withText("Delete this reminder?")).check(matches(isDisplayed()))
     }
 
     private fun selectDeck(deckName: String) {
