@@ -279,6 +279,43 @@ class ReviewRemindersTest : InstrumentedTest() {
         }
     }
 
+    @Test
+    fun disableAndEnableReminder() {
+        val deckName = "Reminder deck"
+        val reminder =
+            ReviewReminder.createReviewReminder(
+                time = ReviewReminderTime(9, 15),
+                scope = ReviewReminderScope.DeckSpecific(col.decks.id(deckName)),
+                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
+                onlyNotifyIfNoReviews = true,
+            )
+        insertReminder(reminder)
+
+        withReminders(reminderCount = 1) {
+            assertReminderRow(reminder, deckName)
+            onView(withId(R.id.reminders_list_switch)).perform(click())
+
+            val disabled = awaitSingleReminder { !it.enabled }
+            reminder.enabled = false
+            assertThat("Disabling must preserve the reminder's other settings", disabled, equalTo(reminder))
+            assertReminderRow(disabled, deckName)
+            onView(withId(R.id.add_edit_reminder_toolbar)).check(doesNotExist())
+        }
+        withReminders(reminderCount = 1) {
+            assertReminderRow(reminder, deckName)
+            onView(withId(R.id.reminders_list_switch)).perform(click())
+
+            val enabled = awaitSingleReminder { it.enabled }
+            reminder.enabled = true
+            assertThat("Enabling must preserve the reminder's other settings", enabled, equalTo(reminder))
+            assertReminderRow(enabled, deckName)
+            onView(withId(R.id.add_edit_reminder_toolbar)).check(doesNotExist())
+        }
+        withReminders(reminderCount = 1) {
+            assertReminderRow(reminder, deckName)
+        }
+    }
+
     private fun withReminders(
         scope: ReviewReminderScope = ReviewReminderScope.Global,
         reminderCount: Int = 0,
