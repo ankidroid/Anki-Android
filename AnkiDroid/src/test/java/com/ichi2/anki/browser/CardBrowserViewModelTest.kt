@@ -1688,6 +1688,47 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `multiselect state is kept if saved before the selection is restored`() {
+        val handle = SavedStateHandle()
+        runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
+            selectRowAtPosition(1)
+            // HACK: easiest way to add it to the bundle. This is called on destruction
+            handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
+        }
+
+        // MANUAL: the restored selection has not been applied to the rows when state is saved
+        runViewModelTest(savedStateHandle = handle, initMode = InitMode.MANUAL) {
+            assertThat("rows are not yet selected", selectedRows, empty())
+            handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
+        }
+
+        runViewModelTest(savedStateHandle = handle, initMode = InitMode.NO_DELAY) {
+            assertThat("row is selected after restore", selectedRows, hasSize(1))
+        }
+    }
+
+    @Test
+    fun `saved state reflects a selection changed after restore`() {
+        val handle = SavedStateHandle()
+        runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
+            selectRowAtPosition(1)
+            // HACK: easiest way to add it to the bundle. This is called on destruction
+            handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
+        }
+
+        runViewModelTest(savedStateHandle = handle, initMode = InitMode.NO_DELAY) {
+            assertThat("row is selected after restore", selectedRows, hasSize(1))
+            selectRowAtPosition(0)
+            assertThat("two rows are selected", selectedRows, hasSize(2))
+
+            handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
+            val savedIds = handle.multiselectStateFile!!.getIds()
+            val expectedIds = selectedRows.map { it.cardOrNoteId }
+            assertThat("saved selection matches the rows", savedIds, containsInAnyOrder(*expectedIds.toTypedArray()))
+        }
+    }
+
+    @Test
     fun `change note type - no selection`() =
         runViewModelTest {
             flowOfChangeNoteType.test {
