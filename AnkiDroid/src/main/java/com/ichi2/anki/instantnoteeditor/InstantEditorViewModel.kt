@@ -27,6 +27,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteFieldsCheckResult
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.checkNoteFieldsResponse
+import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.ext.replaceWith
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity.DialogType
 import com.ichi2.anki.libanki.DeckId
@@ -34,6 +35,7 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -163,8 +165,11 @@ class InstantEditorViewModel :
             undoableOp { addNote(note, deckId) }
 
             SaveNoteResult.Success
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Timber.w(e, "Error saving note")
+            CrashReportService.sendExceptionReport(e, "InstantEditorViewModel::saveNote")
             SaveNoteResult.Failure()
         }
     }
