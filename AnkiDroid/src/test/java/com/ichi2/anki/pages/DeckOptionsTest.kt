@@ -2,8 +2,7 @@
 
 package com.ichi2.anki.pages
 
-import android.webkit.WebView
-import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -13,6 +12,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.ext.clear
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,6 +39,25 @@ class DeckOptionsTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `loading state is restored when the WebView is recreated`() {
+        withDeckOptions {
+            onWebViewReady()
+            assertThat("WebView is shown when ready", webViewLayout.isVisible, equalTo(true))
+            assertThat("loading indicator is hidden when ready", pageLoadingIndicator.isVisible, equalTo(false))
+
+            onWebViewRecreated(webViewLayout.webView)
+
+            assertThat("WebView is hidden while the page reloads", webViewLayout.isVisible, equalTo(false))
+            assertThat("loading indicator is shown while the page reloads", pageLoadingIndicator.isVisible, equalTo(true))
+
+            onWebViewReady()
+
+            assertThat("WebView is shown when the reloaded page is ready", webViewLayout.isVisible, equalTo(true))
+            assertThat("loading indicator is hidden when the reloaded page is ready", pageLoadingIndicator.isVisible, equalTo(false))
+        }
+    }
+
     private fun withDeckOptions(block: DeckOptions.() -> Unit) {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
@@ -51,9 +70,5 @@ class DeckOptionsTest : RobolectricTest() {
 
     /** The last JavaScript evaluated by the WebView of [DeckOptions] */
     private val DeckOptions.lastEvaluatedJavascript: String?
-        get() =
-            webViewLayout.children
-                .filterIsInstance<WebView>()
-                .single()
-                .let { shadowOf(it).lastEvaluatedJavascript }
+        get() = shadowOf(webViewLayout.webView).lastEvaluatedJavascript
 }

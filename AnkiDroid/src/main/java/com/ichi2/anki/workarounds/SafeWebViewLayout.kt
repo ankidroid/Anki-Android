@@ -24,6 +24,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.annotation.MainThread
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import com.ichi2.anki.BuildConfig
@@ -37,7 +38,10 @@ open class SafeWebViewLayout :
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    private var webView: WebView = createWebView()
+    /** The wrapped [WebView], replaced if its renderer crashes */
+    @VisibleForTesting
+    var webView: WebView = createWebView()
+        private set
 
     var scrollBars: Int = webView.scrollBarStyle
         set(value) {
