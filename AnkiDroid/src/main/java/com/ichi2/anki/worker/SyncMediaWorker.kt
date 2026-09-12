@@ -38,8 +38,15 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
 import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
+
+/**
+ * Held while a media sync runs. A profile switch holds it until the process dies,
+ * so a media sync cannot start part way through a restart.
+ */
+val mediaSyncLock = Mutex()
 
 class SyncMediaWorker(
     context: Context,
@@ -55,7 +62,10 @@ class SyncMediaWorker(
 
     override suspend fun doWork(): Result {
         Timber.v("SyncMediaWorker::doWork")
+        return mediaSyncLock.withLockUnlessSwitching { doWorkHoldingLock() }
+    }
 
+    private suspend fun doWorkHoldingLock(): Result {
         try {
             val auth =
                 syncAuth {

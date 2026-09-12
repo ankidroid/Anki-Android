@@ -112,6 +112,8 @@ mockitoKotlin = "6.3.0"
 mockk = "1.14.11"
 nanohttpd = "2.3.1"
 okhttp = "5.4.0"
+# https://github.com/JakeWharton/ProcessPhoenix/releases
+processPhoenix = "3.0.0"
 # https://github.com/protocolbuffers/protobuf/releases
 protobufKotlinLite = "4.35.1"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
@@ -198,6 +200,7 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 android-lint-api = { module = "com.android.tools.lint:lint-api", version.ref = "lint" }
 android-lint = { module = "com.android.tools.lint:lint", version.ref = "lint" }
 android-lint-tests = { module = "com.android.tools.lint:lint-tests", version.ref = "lint" }
+process-phoenix = { module = "com.jakewharton:process-phoenix", version.ref = "processPhoenix" }
 protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobufKotlinLite" }
 search-preference = { module = "com.github.ByteHamster:SearchPreference", version.ref = "searchpreference" }
 seismic = { module = "com.squareup:seismic", version.ref = "seismic" }
