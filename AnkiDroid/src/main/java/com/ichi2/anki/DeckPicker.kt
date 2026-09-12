@@ -117,8 +117,10 @@ import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.databinding.IncludeDeckPickerBinding
 import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
+import com.ichi2.anki.deckpicker.BackgroundFailureToastState
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
+import com.ichi2.anki.deckpicker.DeckPickerBackgroundLoader
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
@@ -127,6 +129,8 @@ import com.ichi2.anki.deckpicker.EmptyCardsResult
 import com.ichi2.anki.deckpicker.OptionsMenuState
 import com.ichi2.anki.deckpicker.ShortcutData
 import com.ichi2.anki.deckpicker.SyncIconState
+import com.ichi2.anki.deckpicker.applyLoadedDeckPickerBackground
+import com.ichi2.anki.deckpicker.installDeckPickerBackgroundLoader
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
@@ -189,7 +193,6 @@ import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
-import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
@@ -291,6 +294,7 @@ open class DeckPicker :
 
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
+    private val backgroundFailureToastState = BackgroundFailureToastState()
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
     @VisibleForTesting
@@ -564,7 +568,14 @@ open class DeckPicker :
             )
         }
 
-        lifecycleScope.launch { applyDeckPickerBackground() }
+        installDeckPickerBackgroundLoader(
+            lifecycle,
+            DeckPickerBackgroundLoader(
+                scope = lifecycleScope,
+                load = { BackgroundImage.resolve(this) },
+                apply = { applyDeckPickerBackground(it) },
+            ),
+        )
 
         setupPullToSync()
         // Setup the FloatingActionButtons
@@ -1154,18 +1165,16 @@ open class DeckPicker :
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)
     }
 
-    private suspend fun applyDeckPickerBackground() {
-        val result = BackgroundImage.resolve(this)
-        if (result is BackgroundImage.ResolveResult.Failure) {
-            showThemedToast(this, result.message(this), shortLength = false)
-        }
-        val drawable = (result as? BackgroundImage.ResolveResult.Ready)?.drawable
-        val applied =
-            deckPickerBinding.background.setImageDrawableSafe(drawable) {
-                showThemedToast(this, getString(R.string.background_image_too_large), shortLength = false)
-            }
-        // activityHasBackground calls notifyDataSetChanged, ensure only 1 call
-        deckListAdapter.activityHasBackground = applied && drawable != null
+    @VisibleForTesting
+    internal fun applyDeckPickerBackground(result: BackgroundImage.ResolveResult?) {
+        deckListAdapter.activityHasBackground =
+            applyLoadedDeckPickerBackground(
+                context = this,
+                imageView = deckPickerBinding.background,
+                result = result,
+                toastState = backgroundFailureToastState,
+                currentHasBackground = deckListAdapter.activityHasBackground,
+            )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
