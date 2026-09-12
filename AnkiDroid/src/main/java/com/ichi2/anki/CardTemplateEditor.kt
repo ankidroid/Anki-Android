@@ -341,12 +341,14 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressedDispatcher.onBackPressed()
-            return true
+    override fun onActionBarBackPressed(): Boolean {
+        // not the back dispatcher: its callback is disabled while the keyboard is open
+        if (noteTypeHasChanged()) {
+            showDiscardChangesDialog()
+        } else {
+            finish()
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     /**
@@ -395,15 +397,34 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         if (startingOrdId != -1) {
             mainBinding.cardTemplateEditorPager.setCurrentItem(startingOrdId, animationDisabled())
         }
+        updateDiscardChangesCallback()
     }
 
     fun noteTypeHasChanged(): Boolean {
+        // insets and 'Up' can both arrive before the note type is loaded: answer them without
+        // opening the collection
+        val tempNoteType = tempNoteType ?: return false
         val oldNoteType: NotetypeJson? = getColUnsafe.notetypes.get(noteTypeId)
-        return tempNoteType != null && tempNoteType!!.notetype.toString() != oldNoteType.toString()
+        return tempNoteType.notetype.toString() != oldNoteType.toString()
     }
 
-    private fun enableDiscardChangesDialog() {
-        displayDiscardChangesCallback.isEnabled = noteTypeHasChanged()
+    /**
+     * Whether a software keyboard is open, which 'back' dismisses.
+     *
+     * The template tabs are hidden when the keyboard is open, so 'back' should reveal them.
+     */
+    private val isKeyboardOpen: Boolean
+        get() =
+            currentFragment
+                ?.takeIf { it.view != null }
+                ?.binding
+                ?.bottomNavigation
+                ?.isVisible == false
+
+    /** Updates [displayDiscardChangesCallback]. Call when the edits or the keyboard change. */
+    private fun updateDiscardChangesCallback() {
+        // 'back' dismisses the keyboard, revealing the tabs again
+        displayDiscardChangesCallback.isEnabled = !isKeyboardOpen && noteTypeHasChanged()
     }
 
     private fun showDiscardChangesDialog() =
@@ -448,7 +469,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
         // Deck Override can change from "on" <-> "off"
         invalidateOptionsMenu()
-        enableDiscardChangesDialog()
+        updateDiscardChangesCallback()
     }
 
     override fun onKeyUp(
@@ -524,13 +545,8 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
     @get:VisibleForTesting
     val currentFragment: CardTemplateFragment?
-        get() =
-            try {
-                supportFragmentManager.findFragmentByTag("f" + ord) as CardTemplateFragment?
-            } catch (e: Exception) {
-                Timber.w("Failed to get current fragment")
-                null
-            }
+        get() = templateFragment(ord)
+
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -741,7 +757,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                             }
                         refreshFragmentRunnable = updateRunnable
                         refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
-                        templateEditor.enableDiscardChangesDialog()
+                        templateEditor.updateDiscardChangesCallback()
                     }
 
                     override fun beforeTextChanged(
@@ -768,6 +784,8 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 // Hide the template tabs to make room for a full software keyboard. A physical
                 // keyboard can report a visible IME with only a navigation strip (or zero height).
                 binding.bottomNavigation.isVisible = insets.getInsets(ime()).bottom <= binding.bottomNavigation.minimumHeight
+                // only the selected page; a page reapplies insets on attach, so none is missed
+                if (isCurrentPage) templateEditor.updateDiscardChangesCallback()
                 // When fragmented, the activity insets the editor pane instead.
                 // The bottom navigation insets itself, so it is not padded here.
                 if (!templateEditor.fragmented) {
@@ -916,7 +934,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 existingNames = existingNames,
             ) { newName ->
                 template.name = newName.value
-                templateEditor.enableDiscardChangesDialog()
+                templateEditor.updateDiscardChangesCallback()
                 Timber.i("updated card template name")
                 Timber.d("updated name of template %d to '%s'", ordinal, newName)
 
@@ -1413,7 +1431,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             val currentTemplate = getCurrentTemplate()
             if (currentTemplate != null) {
                 result.applyTo(currentTemplate)
-                templateEditor.enableDiscardChangesDialog()
+                templateEditor.updateDiscardChangesCallback()
             }
         }
 
@@ -1499,7 +1517,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             try {
                 templateEditor.getColUnsafe.modSchema(check = true)
                 schemaChangingAction.run()
-                templateEditor.enableDiscardChangesDialog()
+                templateEditor.updateDiscardChangesCallback()
                 templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
@@ -1509,7 +1527,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     Runnable {
                         templateEditor.getColUnsafe.modSchema(check = false)
                         schemaChangingAction.run()
-                        templateEditor.enableDiscardChangesDialog()
+                        templateEditor.updateDiscardChangesCallback()
                         templateEditor.dismissAllDialogFragments()
                     }
                 val cancel = Runnable { templateEditor.dismissAllDialogFragments() }
