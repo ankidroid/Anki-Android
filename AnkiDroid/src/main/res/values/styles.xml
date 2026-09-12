@@ -291,6 +291,11 @@
         <item name="colorOnPrimaryContainer">?attr/editTextHighlightColor</item>
     </style>
 
+    <!-- Applied to a TextInputLayout which should show the error outline, but not an error message. -->
+    <style name="TextAppearance.AnkiDroid.HiddenError" parent="TextAppearance.Design.Error">
+        <item name="android:textSize">0sp</item>
+    </style>
+
     <style name="Widget.AnkiDroid.SortPillButton" parent="Widget.Material3.Button.UnelevatedButton">
         <!-- wrap_content + 48dp min size so the pill grows with larger accessibility text scales -->
         <item name="android:layout_width">wrap_content</item>
