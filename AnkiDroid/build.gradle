@@ -585,6 +585,9 @@ dependencies {
     testImplementation libs.test.parameter.injector
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation libs.robolectric
+    testImplementation libs.androidx.compose.ui.test.junit4
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>()
+    debugImplementation libs.androidx.compose.ui.test.manifest
     testImplementation libs.androidx.test.core
     testImplementation libs.androidx.test.junit
     testImplementation libs.kotlin.reflect
