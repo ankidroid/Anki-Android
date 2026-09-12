@@ -93,6 +93,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 tools:text="Ignore accents in search (slower)"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/default_search_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:expandedHintEnabled="false"
+                app:endIconMode="clear_text"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:hint="Default search text">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/default_search_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    tools:hint="e.g. 'deck:current'"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout
