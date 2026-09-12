@@ -24,6 +24,7 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.common.annotations.DuplicatedCode
 import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.destinations.toBundle
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.ui.TransitionDirection.DEFAULT
 import com.ichi2.anki.libanki.Consts
@@ -33,7 +34,6 @@ import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.model.SelectableDeck
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.noteeditor.getNoteEditorFragment
 import com.ichi2.anki.noteeditor.openNoteEditorWithArgs
 import com.ichi2.testutils.getString
@@ -692,9 +692,9 @@ class NoteEditorTest : RobolectricTest() {
             val cardIds: List<Long> = note.cardIds(col)
             val testDeckId: Long = addDeck("Test Deck")
 
-            // Launch Editor using the Launcher bundle (mimic launch from browser)
+            // Launch Editor using the destination bundle (mimic launch from browser)
             val bundle =
-                NoteEditorLauncher
+                NoteEditorDestination
                     .EditSelection(
                         cardIds = cardIds,
                         animation = DEFAULT,
@@ -723,9 +723,9 @@ class NoteEditorTest : RobolectricTest() {
             val initialDeckId = col.getCard(cardIds[1]).did
             val newDeckId: Long = addDeck("Test Deck")
 
-            // Launch Editor using the Launcher bundle with a single card id
+            // Launch Editor using the destination bundle with a single card id
             val bundle =
-                NoteEditorLauncher
+                NoteEditorDestination
                     .EditSelection(
                         cardIds = listOf(cardIds[0]),
                         animation = DEFAULT,
@@ -840,7 +840,7 @@ class NoteEditorTest : RobolectricTest() {
         ensureCollectionLoadIsSynchronous()
         val bundle =
             when (from) {
-                REVIEWER -> NoteEditorDestination.AddNoteFromReviewer().toIntent().extras!!
+                REVIEWER -> NoteEditorDestination.AddNoteFromReviewer().toBundle()
                 DECK_LIST -> NoteEditorFragment.addNoteArgs()
             }
         return openNoteEditorWithArgs(bundle)
@@ -861,7 +861,7 @@ class NoteEditorTest : RobolectricTest() {
     ): NoteEditorFragment {
         val bundle =
             when (from) {
-                REVIEWER -> NoteEditorLauncher.EditSelection(listOf(n.firstCard().id), DEFAULT).toBundle()
+                REVIEWER -> NoteEditorDestination.EditSelection(listOf(n.firstCard().id), DEFAULT).toBundle()
                 DECK_LIST -> NoteEditorFragment.addNoteArgs()
             }
         return openNoteEditorWithArgs(bundle)

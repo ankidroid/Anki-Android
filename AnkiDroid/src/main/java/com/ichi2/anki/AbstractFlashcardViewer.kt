@@ -99,6 +99,7 @@ import com.ichi2.anki.cardviewer.handledGamepadKeyUp
 import com.ichi2.anki.common.android.animationDisabled
 import com.ichi2.anki.common.android.animationEnabled
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.PreferencesDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -124,7 +125,6 @@ import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TtsPlayer
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimedia.getAvTag
-import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
@@ -792,8 +792,9 @@ abstract class AbstractFlashcardViewer :
         }
         val animation = fromGesture.toAnimationTransition().invert()
         Timber.i("Launching 'edit card'")
-        val editCardIntent = NoteEditorLauncher.EditSelection(listOf(currentCard!!.id), animation).toIntent(this)
-        editCurrentCardLauncher.launch(editCardIntent)
+        editCurrentCardLauncher.navigate(
+            NoteEditorDestination.EditSelection(listOf(currentCard!!.id), animation),
+        )
     }
 
     protected fun showDeleteNoteDialog() {
