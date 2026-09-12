@@ -508,6 +508,10 @@ class DeckPickerViewModel :
         data object Success : StartupResponse()
     }
 
+    /** The startup check launched by [handleStartup]. Stored so tests can await it */
+    var startupJob: Job? = null
+        private set
+
     /**
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
@@ -522,17 +526,26 @@ class DeckPickerViewModel :
         }
 
         Timber.d("handleStartup: Continuing after permission granted")
-        val failure = InitialActivity.getStartupFailureType(environment.preferences, environment::initializeAnkiDroidFolder)
-        if (failure != null) {
-            flowOfStartupResponse.value = StartupResponse.FatalError(failure)
-            return
-        }
+        startupJob =
+            viewModelScope.launch {
+                // opening the collection waits on the collection queue, which a sync stuck on an
+                // unresponsive server can hold for a long time. Waiting on the main thread here
+                // froze the DeckPicker when it was recreated
+                val failure =
+                    withContext(Dispatchers.IO) {
+                        InitialActivity.getStartupFailureType(environment.preferences, environment::initializeAnkiDroidFolder)
+                    }
+                if (failure != null) {
+                    flowOfStartupResponse.value = StartupResponse.FatalError(failure)
+                    return@launch
+                }
 
-        // successful startup
+                // successful startup
 
-        configureRenderingMode()
+                configureRenderingMode()
 
-        flowOfStartupResponse.value = StartupResponse.Success
+                flowOfStartupResponse.value = StartupResponse.Success
+            }
     }
 
     interface AnkiDroidEnvironment {
