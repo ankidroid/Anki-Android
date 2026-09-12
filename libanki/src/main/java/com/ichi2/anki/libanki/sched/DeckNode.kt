@@ -110,6 +110,15 @@ data class DeckNode(
     fun hasCardsReadyToStudy(): Boolean = revCount > 0 || newCount > 0 || lrnCount > 0
 
     /**
+     * Sum of new, review and learning cards due across the top-level decks, for
+     * the deck-picker subtitle. The root's own aggregate is not used as the
+     * backend caps it at the 9999 daily limit. Per-deck counts already apply
+     * each deck's daily limits, so subdecks sharing a parent limit are not
+     * double-counted (issue 17605).
+     */
+    fun totalCardsDue(): Int = children.sumOf { it.newCount + it.revCount + it.lrnCount }
+
+    /**
      * The node with [did] [deckId], if it is either this node or a descendant.
      */
     fun find(deckId: DeckId): DeckNode? {
