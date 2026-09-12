@@ -65,9 +65,10 @@ class LoadingDialogFragment : DialogFragment() {
  * if it's already showing and the new call doesn't modify input parameters(ex. [cancellable]). In
  * any other cases, the old instance will be removed and a new one will be used.
  *
- * Note: Multiple calls of this method will result in a single dialog being shown, this also
- * implies that a call to [dismissLoadingDialog] will dismiss the dialogs of all calls. Callers need
- * to handle this scenario by combining the loading states and manually handling showing/dismissing.
+ * Note: Multiple calls with the same [tag] will result in a single dialog being shown, this also
+ * implies that a call to [dismissLoadingDialog] with that [tag] will dismiss the dialogs of all
+ * those calls. Callers need to handle this scenario by combining the loading states and manually
+ * handling showing/dismissing, or by using different tags.
  *
  * @param message the message to show along with the [LoadingIndicator] or null to default to
  * use "Processing..."
@@ -78,9 +79,10 @@ class LoadingDialogFragment : DialogFragment() {
 fun AnkiActivity.showLoadingDialog(
     message: String? = null,
     cancellable: Boolean = true,
+    tag: String = LoadingDialogFragment.TAG,
 ) {
     val fragment =
-        supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG) as? LoadingDialogFragment
+        supportFragmentManager.findFragmentByTag(tag) as? LoadingDialogFragment
     val isAlreadyShowing = fragment?.dialog?.isShowing == true
     if (isAlreadyShowing) {
         // if a dialog is already showing and it has the same input params then just update the
@@ -97,7 +99,7 @@ fun AnkiActivity.showLoadingDialog(
     removeImmediately(fragment)
     val loadingDialog = LoadingDialogFragment.newInstance(message, cancellable)
     // showNow() avoids a race condition - removal is synchronous
-    loadingDialog.showNow(supportFragmentManager, LoadingDialogFragment.TAG)
+    loadingDialog.showNow(supportFragmentManager, tag)
 }
 
 /** Synchronously removes the provided [LoadingDialogFragment] if valid(not null) */
@@ -108,10 +110,10 @@ private fun AnkiActivity.removeImmediately(fragment: LoadingDialogFragment?) {
 }
 
 /**
- * Dismisses and removes the current displayed [LoadingDialogFragment] if one is present.
+ * Dismisses and removes the [LoadingDialogFragment] shown with [tag] if one is present.
  */
-fun AnkiActivity.dismissLoadingDialog() {
+fun AnkiActivity.dismissLoadingDialog(tag: String = LoadingDialogFragment.TAG) {
     val fragment =
-        supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG) as? LoadingDialogFragment
+        supportFragmentManager.findFragmentByTag(tag) as? LoadingDialogFragment
     removeImmediately(fragment)
 }

@@ -29,8 +29,8 @@ fun <M : Any> AnkiActivity.observeProgress(
     delayMillis: Duration = 600.milliseconds,
     resolveMessage: Context.(M) -> String,
 ) {
-    var dialogVisible =
-        supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG) != null
+    val dialogTag = "${LoadingDialogFragment.TAG}:${viewModel.javaClass.name}"
+    var dialogVisible = supportFragmentManager.findFragmentByTag(dialogTag) != null
 
     lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -44,15 +44,16 @@ fun <M : Any> AnkiActivity.observeProgress(
                         pendingShow?.cancel()
                         pendingShow = null
                         dialogVisible = false
-                        dismissLoadingDialog()
+                        dismissLoadingDialog(dialogTag)
                     }
                     is ViewModelProgress.Active -> {
                         if (dialogVisible) {
                             showLoadingDialog(
                                 message = formatMessage(state, resolveMessage),
                                 cancellable = state.cancellable,
+                                tag = dialogTag,
                             )
-                            if (state.cancellable) wireCancelListener(viewModel)
+                            if (state.cancellable) wireCancelListener(viewModel, dialogTag)
                         } else if (pendingShow == null) {
                             pendingShow =
                                 launch {
@@ -63,8 +64,9 @@ fun <M : Any> AnkiActivity.observeProgress(
                                         showLoadingDialog(
                                             message = formatMessage(latest, resolveMessage),
                                             cancellable = latest.cancellable,
+                                            tag = dialogTag,
                                         )
-                                        if (latest.cancellable) wireCancelListener(viewModel)
+                                        if (latest.cancellable) wireCancelListener(viewModel, dialogTag)
                                     }
                                     pendingShow = null
                                 }
@@ -76,10 +78,13 @@ fun <M : Any> AnkiActivity.observeProgress(
     }
 }
 
-private fun AnkiActivity.wireCancelListener(viewModel: HasProgress<*>) {
+private fun AnkiActivity.wireCancelListener(
+    viewModel: HasProgress<*>,
+    dialogTag: String,
+) {
     supportFragmentManager.executePendingTransactions()
     val fragment =
-        supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG)
+        supportFragmentManager.findFragmentByTag(dialogTag)
             as? LoadingDialogFragment
     fragment?.dialog?.setOnCancelListener {
         viewModel.progressManager.requestCancel()

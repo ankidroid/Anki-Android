@@ -33,6 +33,10 @@ class ProgressObserverTest : RobolectricTest() {
         object : HasProgress<String> {
             override val progressManager = this@ProgressObserverTest.progressManager
         }
+    private val otherViewModel =
+        object : HasProgress<String> {
+            override val progressManager = ProgressManager<String>()
+        }
 
     @Test
     fun `dialog appears after the delay and is dismissed when the op ends`() {
@@ -112,11 +116,60 @@ class ProgressObserverTest : RobolectricTest() {
         op.cancel()
     }
 
+    @Test
+    fun `an idle observer does not dismiss another observer's dialog after a restart`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
+        activity.observeProgress(otherViewModel, delayMillis = SHOW_DELAY) { it }
+
+        val gate = CompletableDeferred<Unit>()
+        val op = launchOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertNotNull(activity.loadingDialog(), "dialog must show for the running op")
+
+        controller.pause().stop()
+        controller.start().resume()
+        idleMainLooper(SHOW_DELAY)
+
+        assertNotNull(activity.loadingDialog(), "the idle observer must not dismiss the running op's dialog")
+
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        assertNull(activity.loadingDialog(), "dialog must be dismissed once the op ends")
+        op.cancel()
+    }
+
+    @Test
+    fun `an observer whose op ends does not dismiss another observer's dialog`() {
+        val activity = startActivity().get()
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
+        activity.observeProgress(otherViewModel, delayMillis = SHOW_DELAY) { it }
+
+        val gate = CompletableDeferred<Unit>()
+        val otherGate = CompletableDeferred<Unit>()
+        val op = launchOp(gate)
+        val otherOp = launchOp(otherGate, manager = otherViewModel.progressManager)
+        idleMainLooper(SHOW_DELAY * 2)
+
+        otherGate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+
+        assertNotNull(activity.loadingDialog(), "the running op's dialog must stay")
+
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        assertNull(activity.loadingDialog(), "dialog must be dismissed once both ops end")
+        op.cancel()
+        otherOp.cancel()
+    }
+
     private fun launchOp(
         gate: CompletableDeferred<Unit>,
         message: String = "op",
+        manager: ProgressManager<String> = progressManager,
     ) = CoroutineScope(Dispatchers.Unconfined).launch {
-        progressManager.withProgress(message = message) { gate.await() }
+        manager.withProgress(message = message) { gate.await() }
     }
 
     private fun startActivity(): ActivityController<EmptyAnkiActivity> =
@@ -125,7 +178,8 @@ class ProgressObserverTest : RobolectricTest() {
             .setup()
             .also { saveControllerForCleanup(it) }
 
-    private fun EmptyAnkiActivity.loadingDialog() = supportFragmentManager.findFragmentByTag(LoadingDialogFragment.TAG)
+    private fun EmptyAnkiActivity.loadingDialog() =
+        supportFragmentManager.fragments.filterIsInstance<LoadingDialogFragment>().singleOrNull()
 
     private fun EmptyAnkiActivity.loadingDialogText() =
         (loadingDialog() as? DialogFragment)
