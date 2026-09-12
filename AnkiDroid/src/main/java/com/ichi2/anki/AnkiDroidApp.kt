@@ -49,6 +49,7 @@ import com.ichi2.anki.logging.FragmentLifecycleLogger
 import com.ichi2.anki.logging.LogType
 import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.logging.RobolectricDebugTree
+import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -90,6 +91,10 @@ open class AnkiDroidApp :
     @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
     private val notifications = MutableLiveData<Void?>()
 
+    /** Manager for the active profile, null if the profile environment failed to load. */
+    var profileManager: ProfileManager? = null
+        private set
+
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
     val sharedPrefsLastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
 
@@ -119,6 +124,16 @@ open class AnkiDroidApp :
     }
 
     /**
+     * Runs before [onCreate] and before any ContentProvider, which is what the
+     * profile environment needs: WebView data directories must be set before any
+     * WebView exists, and every preference read must already be namespaced.
+     */
+    override fun attachBaseContext(base: Context) {
+        profileManager = ProfileManager.createOrNull(base)
+        super.attachBaseContext(profileManager?.activeProfileContext ?: base)
+    }
+
+    /**
      * On application creation, i.e. when the application process starts.
      * This is called before any activities, services, or receivers are created.
      */
@@ -144,6 +159,9 @@ open class AnkiDroidApp :
             LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
         }
         Timber.plant(ReminderLogTree(this))
+        ProfileManager.attachError?.let {
+            Timber.w(it, "Failed to load the profile environment, running on the base context")
+        }
         if (BuildConfig.ENABLE_LEAK_CANARY) {
             LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {

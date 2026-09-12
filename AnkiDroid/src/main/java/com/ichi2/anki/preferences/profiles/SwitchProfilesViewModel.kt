@@ -4,6 +4,10 @@
 package com.ichi2.anki.preferences.profiles
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.ProfileName
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,11 +17,12 @@ import timber.log.Timber
  * State holder for [SwitchProfilesFragment]. Keeps the dialog visibility out
  * of the view layer so it survives configuration changes.
  */
-class SwitchProfilesViewModel : ViewModel() {
+class SwitchProfilesViewModel(
+    private val profileManager: ProfileManager,
+) : ViewModel() {
     /** Profiles shown in the list. */
-    // TODO: load from ProfileManager.getAllProfiles once ProfileManager is wired into the app
     val profiles: StateFlow<List<ProfileItem>>
-        field = MutableStateFlow<List<ProfileItem>>(emptyList())
+        field = MutableStateFlow(profileManager.profileItems())
 
     val isAddProfileDialogVisible: StateFlow<Boolean>
         field = MutableStateFlow(false)
@@ -34,8 +39,7 @@ class SwitchProfilesViewModel : ViewModel() {
     fun addProfile(name: ProfileName) {
         isAddProfileDialogVisible.value = false
         Timber.i("Add profile confirmed (%d chars)", name.value.length)
-        // TODO: handle profile creation via ProfileManager.createNewProfile once
-        //  ProfileManager is wired into the app
+        // TODO: handle profile creation via ProfileManager.createNewProfile
     }
 
     fun editProfile(profile: ProfileItem) {
@@ -46,5 +50,28 @@ class SwitchProfilesViewModel : ViewModel() {
     fun deleteProfile(profile: ProfileItem) {
         Timber.i("Delete profile requested: %s", profile.id)
         // TODO: implement profile deletion via ProfileManager
+    }
+
+    /** Reloads the list from the registry. */
+    fun refresh() {
+        profiles.value = profileManager.profileItems()
+    }
+
+    companion object {
+        fun factory(profileManager: ProfileManager): ViewModelProvider.Factory =
+            viewModelFactory {
+                initializer {
+                    SwitchProfilesViewModel(profileManager)
+                }
+            }
+
+        /**
+         * The registry is backed by SharedPreferences, which has no defined order,
+         * so sort by name to keep the list stable across launches.
+         */
+        private fun ProfileManager.profileItems(): List<ProfileItem> =
+            getAllProfiles()
+                .map { (id, metadata) -> ProfileItem(id = id, name = metadata.displayName.value) }
+                .sortedBy { it.name }
     }
 }
