@@ -2190,11 +2190,27 @@ class NoteEditorFragment :
             }
         } else {
             populateEditFields(changeType)
-            if (changeType.type != Type.CHANGE_FIELD_COUNT) {
+            if (changeType.type == Type.CHANGE_FIELD_COUNT) {
+                // A note type switch may carry the user's just-typed text into the new fields,
+                // so don't re-capture the baseline from current content. Instead, remap the
+                // existing baseline the same way the field content itself was remapped: keep
+                // baseline values for fields that still exist (put through the same <br>-to-newline
+                // conversion `populateEditFields` just applied to the actual field content, so a
+                // sticky field containing literal `<br>` text doesn't look edited), and treat any
+                // field the new note type added as baseline-empty, since it didn't exist for the
+                // user to edit before.
+                if (addNote) {
+                    addNoteFieldBaseline =
+                        List(editFields!!.size) { i ->
+                            val old = addNoteFieldBaseline.getOrElse(i) { "" }
+                            FieldEditText.convertBrToNewline(old, changeType.replaceNewlines)
+                        }
+                }
+            } else {
                 updateFieldsFromStickyText()
-            }
-            if (addNote) {
-                addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+                if (addNote) {
+                    addNoteFieldBaseline = editFields!!.map { it.text?.toString() ?: "" }
+                }
             }
         }
     }
