@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.card_rendering.EmptyCardsReport
 import anki.card_rendering.emptyCardsReport
 import app.cash.turbine.test
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.RobolectricTest
@@ -23,10 +24,15 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.observability.ensureOpsExecuted
+import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -38,6 +44,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.measureTime
@@ -299,6 +306,87 @@ class DeckPickerViewModelTest : RobolectricTest() {
 
             override fun initializeAnkiDroidFolder(): Boolean = CollectionHelper.isCurrentAnkiDroidDirAccessible(targetContext)
         }
+
+    @Test
+    fun `deleteDeck reports progress`() =
+        runProgressTest {
+            val deckId = addDeck("Deleted")
+
+            assertProgressAround(DeckPickerProgress.DELETING_DECK) { deleteDeck(deckId).join() }
+        }
+
+    @Test
+    fun `deleteSelectedDeck reports progress before reading the selected deck`() =
+        runTest {
+            col.decks.select(addDeck("Deleted"))
+
+            DeckPickerViewModel().run {
+                withQueuedCollectionAccess {
+                    val deletion = deleteSelectedDeck()
+                    val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(progressManager.progress.value)
+                    assertEquals(DeckPickerProgress.DELETING_DECK, active.message)
+                    deletion.join()
+                }
+                assertIs<ViewModelProgress.Idle>(progressManager.progress.value)
+            }
+        }
+
+    @Test
+    fun `rebuildFilteredDeck reports progress`() =
+        runProgressTest {
+            val filteredDeckId = moveAllCardsToFilteredDeck()
+
+            assertProgressAround(DeckPickerProgress.REBUILDING_FILTERED_DECK) { rebuildFilteredDeck(filteredDeckId).join() }
+        }
+
+    @Test
+    fun `emptyFilteredDeck reports progress`() =
+        runProgressTest {
+            val filteredDeckId = moveAllCardsToFilteredDeck()
+
+            assertProgressAround { emptyFilteredDeck(filteredDeckId).join() }
+        }
+
+    @Test
+    fun `deleteEmptyCards reports progress`() =
+        runProgressTest {
+            val cardsToEmpty = createEmptyCards()
+
+            assertProgressAround(DeckPickerProgress.DELETING_EMPTY_CARDS) { deleteEmptyCards(cardsToEmpty).join() }
+        }
+
+    /**
+     * [runTest] with a ViewModel built after Main becomes a [StandardTestDispatcher]. The ViewModel's
+     * scope captures Main when it is built, and an inline Main would hide the Active state.
+     */
+    private fun runProgressTest(testBody: suspend DeckPickerViewModel.() -> Unit) =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            DeckPickerViewModel().testBody()
+        }
+
+    private suspend fun TestScope.withQueuedCollectionAccess(block: suspend () -> Unit) {
+        val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+        try {
+            block()
+        } finally {
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
+
+    private suspend fun DeckPickerViewModel.assertProgressAround(
+        message: DeckPickerProgress? = null,
+        op: suspend () -> Unit,
+    ) {
+        progressManager.progress.test {
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            op()
+            val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(awaitItem())
+            assertEquals(message, active.message)
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            expectNoEvents()
+        }
+    }
 
     /**
      * Creates a note with 3 cards, all empty

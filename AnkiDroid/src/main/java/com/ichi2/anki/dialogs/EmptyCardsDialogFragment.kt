@@ -43,7 +43,6 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.ui.internationalization.sentenceCase
-import com.ichi2.anki.withProgress
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -298,8 +297,6 @@ fun DeckPicker.startDeletingEmptyCards(
         keepNotes,
     )
     launchCatchingTask {
-        withProgress(TR.emptyCardsDeleting()) {
-            viewModel.deleteEmptyCards(report, keepNotes).join()
-        }
+        viewModel.deleteEmptyCards(report, keepNotes).join()
     }
 }
