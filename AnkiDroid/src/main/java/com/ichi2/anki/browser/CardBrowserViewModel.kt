@@ -64,9 +64,12 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.utils.ext.getCardOrNull
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.utils.ext.setUserFlagForCards
+import com.ichi2.utils.TagsUtil.getUpdatedTags
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -130,7 +133,10 @@ class CardBrowserViewModel(
     val savedStateHandle: SavedStateHandle,
     private val manualInit: Boolean = false,
 ) : ViewModel(),
-    SharedPreferencesProvider by preferences {
+    SharedPreferencesProvider by preferences,
+    HasProgress<CardBrowserProgress> {
+    override val progressManager = ProgressManager<CardBrowserProgress>()
+
     // TODO: abstract so we can use a `Context` and `pref_display_filenames_in_browser_key`
     val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
 
@@ -757,25 +763,27 @@ class CardBrowserViewModel(
      * otherwise, they will be unmarked
      */
     suspend fun toggleMark() {
-        val cardIds = queryAllSelectedCardIds()
-        if (cardIds.isEmpty()) {
-            Timber.i("Not marking cards - nothing selected")
-            return
-        }
-        undoableOp(this) {
-            val noteIds = notesOfCards(cardIds)
-            // if all notes are marked, remove the mark
-            // if no notes are marked, add the mark
-            // if there is a mix, enable the mark on all
-            val wantMark = !noteIds.all { getNote(it).hasTag(this@undoableOp, "marked") }
-            Timber.i("setting mark = %b for %d notes", wantMark, noteIds.size)
-            if (wantMark) {
-                tags.bulkAdd(noteIds, "marked")
-            } else {
-                tags.bulkRemove(noteIds, "marked")
+        progressManager.withProgress {
+            val cardIds = queryAllSelectedCardIds()
+            if (cardIds.isEmpty()) {
+                Timber.i("Not marking cards - nothing selected")
+                return@withProgress
             }
+            undoableOp(this@CardBrowserViewModel) {
+                val noteIds = notesOfCards(cardIds)
+                // if all notes are marked, remove the mark
+                // if no notes are marked, add the mark
+                // if there is a mix, enable the mark on all
+                val wantMark = !noteIds.all { getNote(it).hasTag(this@undoableOp, "marked") }
+                Timber.i("setting mark = %b for %d notes", wantMark, noteIds.size)
+                if (wantMark) {
+                    tags.bulkAdd(noteIds, "marked")
+                } else {
+                    tags.bulkRemove(noteIds, "marked")
+                }
+            }
+            flowOfCardStateChanged.emit(Unit)
         }
-        flowOfCardStateChanged.emit(Unit)
     }
 
     /**
@@ -783,19 +791,20 @@ class CardBrowserViewModel(
      * @return the number of deleted notes
      */
     @NeedsTest("Deleting the focused row is properly handled;#18639")
-    suspend fun deleteSelectedNotes(): Int {
-        val cardIds = queryAllSelectedCardIds()
-        // reset the pane row if that row is about to be deleted
-        if (paneRow?.cardOrNoteId in cardIds) {
-            paneRow = null
-        }
-        return undoableOp(this@CardBrowserViewModel) { removeNotes(cardIds = cardIds) }
-            .count
-            .also {
-                endMultiSelectMode(SingleSelectCause.Other)
-                refreshSearch()
+    suspend fun deleteSelectedNotes(): Int =
+        progressManager.withProgress(message = CardBrowserProgress.DELETING_NOTES) {
+            val cardIds = queryAllSelectedCardIds()
+            // reset the pane row if that row is about to be deleted
+            if (paneRow?.cardOrNoteId in cardIds) {
+                paneRow = null
             }
-    }
+            undoableOp(this@CardBrowserViewModel) { removeNotes(cardIds = cardIds) }
+                .count
+                .also {
+                    endMultiSelectMode(SingleSelectCause.Other)
+                    refreshSearch()
+                }
+        }
 
     fun setCardsOrNotes(newValue: CardsOrNotes) =
         viewModelScope.launch {
@@ -1051,18 +1060,20 @@ class CardBrowserViewModel(
             if (!hasSelectedAnyRows()) {
                 return@launch
             }
-            Timber.d("toggling selected cards suspend status")
-            val cardIds = queryAllSelectedCardIds()
+            progressManager.withProgress {
+                Timber.d("toggling selected cards suspend status")
+                val cardIds = queryAllSelectedCardIds()
 
-            undoableOp<OpChanges> {
-                val wantUnsuspend = cardIds.all { getCard(it).queue == QueueType.Suspended }
-                if (wantUnsuspend) {
-                    sched.unsuspendCards(cardIds)
-                } else {
-                    sched.suspendCards(cardIds).changes
+                undoableOp<OpChanges> {
+                    val wantUnsuspend = cardIds.all { getCard(it).queue == QueueType.Suspended }
+                    if (wantUnsuspend) {
+                        sched.unsuspendCards(cardIds)
+                    } else {
+                        sched.suspendCards(cardIds).changes
+                    }
                 }
+                Timber.d("finished 'toggleSuspendCards'")
             }
-            Timber.d("finished 'toggleSuspendCards'")
         }
 
     /**
@@ -1084,25 +1095,27 @@ class CardBrowserViewModel(
         // https://github.com/ankitects/anki/blob/074becc0cee1e9ae59be701ad6c26787f74b4594/qt/aqt/browser/browser.py#L896-L902
         fun Card.isBuried(): Boolean = queue == ManuallyBuried || queue == SiblingBuried
 
-        val cardIds = queryAllSelectedCardIds()
+        return progressManager.withProgress {
+            val cardIds = queryAllSelectedCardIds()
 
-        // this variable exists as `undoableOp` needs an OpChanges as return value
-        var wasBuried: Boolean? = null
-        undoableOp {
-            // this differs from Anki Desktop which uses the first selected card to determine the
-            // 'checked' status
-            val wantUnbury = cardIds.all { getCard(it).isBuried() }
+            // this variable exists as `undoableOp` needs an OpChanges as return value
+            var wasBuried: Boolean? = null
+            undoableOp {
+                // this differs from Anki Desktop which uses the first selected card to determine the
+                // 'checked' status
+                val wantUnbury = cardIds.all { getCard(it).isBuried() }
 
-            wasBuried = !wantUnbury
-            if (wantUnbury) {
-                Timber.i("unburying %d cards", cardIds.size)
-                sched.unburyCards(cardIds)
-            } else {
-                Timber.i("burying %d cards", cardIds.size)
-                sched.buryCards(cardIds).changes
+                wasBuried = !wantUnbury
+                if (wantUnbury) {
+                    Timber.i("unburying %d cards", cardIds.size)
+                    sched.unburyCards(cardIds)
+                } else {
+                    Timber.i("burying %d cards", cardIds.size)
+                    sched.buryCards(cardIds).changes
+                }
             }
+            BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
         }
-        return BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
     }
 
     fun querySelectionExportData(): Pair<ExportType, List<Long>>? {
@@ -1178,14 +1191,15 @@ class CardBrowserViewModel(
         step: Int,
         shuffle: Boolean,
         shift: Boolean,
-    ): Int {
-        val ids = queryAllSelectedCardIds()
+    ): Int =
+        progressManager.withProgress {
+            val ids = queryAllSelectedCardIds()
 
-        Timber.d("repositioning %d cards to %d", ids.size, position)
-        return undoableOp {
-            sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
-        }.count
-    }
+            Timber.d("repositioning %d cards to %d", ids.size, position)
+            undoableOp {
+                sched.sortCards(cids = ids, position, step = step, shuffle = shuffle, shift = shift)
+            }.count
+        }
 
     /** Returns the number of rows of the current result set  */
     val rowCount: Int
@@ -1264,6 +1278,30 @@ class CardBrowserViewModel(
         setFilterQuery(searchTerms)
     }
 
+    /**
+     * Updates the tags of selected/checked notes and saves them to the disk
+     * @param selectedTags list of checked tags
+     * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
+     * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
+     */
+    suspend fun editSelectedCardsTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+    ) = progressManager.withProgress {
+        val selectedNoteIds = queryAllSelectedNoteIds().distinct()
+        undoableOp {
+            val selectedNotes =
+                selectedNoteIds
+                    .map { noteId -> getNote(noteId) }
+                    .onEach { note ->
+                        val previousTags: List<String> = note.tags
+                        val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
+                        note.setTagsFromStr(this@undoableOp, tags.join(updatedTags))
+                    }
+            updateNotes(selectedNotes)
+        }
+    }
+
     suspend fun filterByTags(
         selectedTags: List<String>,
         cardState: CardStateFilter,
@@ -1329,18 +1367,21 @@ class CardBrowserViewModel(
 
     fun moveSelectedCardsToDeck(deckId: DeckId): Deferred<OpChangesWithCount> =
         viewModelScope.async {
-            val selectedCardIds = queryAllSelectedCardIds()
-            return@async undoableOp {
-                setDeck(selectedCardIds, deckId)
+            progressManager.withProgress {
+                val selectedCardIds = queryAllSelectedCardIds()
+                undoableOp {
+                    setDeck(selectedCardIds, deckId)
+                }
             }
         }
 
-    suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> {
-        val idsToChange = queryAllSelectedCardIds()
-        undoableOp(this) { setUserFlagForCards(cids = idsToChange, flag = flag) }
-        flowOfCardStateChanged.emit(Unit)
-        return idsToChange
-    }
+    suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> =
+        progressManager.withProgress {
+            val idsToChange = queryAllSelectedCardIds()
+            undoableOp(this@CardBrowserViewModel) { setUserFlagForCards(cids = idsToChange, flag = flag) }
+            flowOfCardStateChanged.emit(Unit)
+            idsToChange
+        }
 
     /**
      * Turn off [Multi-Select Mode][isInMultiSelectMode] and return to normal state
@@ -1483,20 +1524,22 @@ class CardBrowserViewModel(
      */
     fun findAndReplace(result: FindReplaceResult) =
         viewModelScope.async {
-            // TODO pass the selection as the user saw it in the dialog to avoid running "find
-            //  and replace" on a different selection
-            val noteIds = if (result.onlyOnSelectedNotes) queryAllSelectedNoteIds() else emptyList()
+            progressManager.withProgress {
+                // TODO pass the selection as the user saw it in the dialog to avoid running "find
+                //  and replace" on a different selection
+                val noteIds = if (result.onlyOnSelectedNotes) queryAllSelectedNoteIds() else emptyList()
 
-            if (result.field == TAGS_AS_FIELD) {
-                undoableOp {
-                    tags.findAndReplace(noteIds, result.search, result.replacement, result.regex, result.matchCase)
-                }.count
-            } else {
-                val field =
-                    if (result.field == ALL_FIELDS_AS_FIELD) null else result.field
-                undoableOp {
-                    findAndReplace(noteIds, result.search, result.replacement, result.regex, field, result.matchCase)
-                }.count
+                if (result.field == TAGS_AS_FIELD) {
+                    undoableOp {
+                        tags.findAndReplace(noteIds, result.search, result.replacement, result.regex, result.matchCase)
+                    }.count
+                } else {
+                    val field =
+                        if (result.field == ALL_FIELDS_AS_FIELD) null else result.field
+                    undoableOp {
+                        findAndReplace(noteIds, result.search, result.replacement, result.regex, field, result.matchCase)
+                    }.count
+                }
             }
         }
 
@@ -1694,6 +1737,11 @@ class CardBrowserViewModel(
 enum class SaveSearchResult {
     ALREADY_EXISTS,
     SUCCESS,
+}
+
+/** The operation [CardBrowserViewModel] is running, shown as a progress message by the UI. */
+enum class CardBrowserProgress {
+    DELETING_NOTES,
 }
 
 /**
