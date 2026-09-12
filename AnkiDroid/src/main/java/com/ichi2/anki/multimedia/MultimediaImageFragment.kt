@@ -269,6 +269,7 @@ class MultimediaImageFragment :
         setupDoneButton()
     }
 
+    @NeedsTest("Verify the webview background color is transparent and matches the app theme")
     private fun setupWebView() {
         binding.multimediaWebView.setWebViewClient(SafeWebViewClient())
         binding.multimediaWebView.setBackgroundColor(Color.TRANSPARENT)
