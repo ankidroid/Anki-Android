@@ -29,6 +29,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.servicelayer.StartupWebViewService
 import com.ichi2.anki.utils.openUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -171,15 +172,18 @@ data class WebViewInfo(
  *
  * @return A [WebViewInfo] object with WebView package details.
  */
-suspend fun getWebViewInfo(context: Context): WebViewInfo =
-    withContext(Dispatchers.Main) {
-        val packageInfo = runCatching { WebViewCompat.getCurrentWebViewPackage(context) }.getOrNull()
+suspend fun getWebViewInfo(context: Context): WebViewInfo {
+    StartupWebViewService.startUpWebView(context)
+    return withContext(Dispatchers.Main) {
+        val packageInfo =
+            runCatching { WebViewCompat.getCurrentWebViewPackage(context) }.getOrNull()
         WebViewInfo(
             userAgent = getWebviewUserAgent(context),
             packageName = packageInfo?.packageName,
             versionCode = runCatching { packageInfo?.let { PackageInfoCompat.getLongVersionCode(it) } }.getOrNull(),
         )
     }
+}
 
 private fun showOutdatedWebViewDialog(
     context: Context,

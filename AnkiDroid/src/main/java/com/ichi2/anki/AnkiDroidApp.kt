@@ -22,7 +22,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
+import com.ichi2.anki.AnkiDroidApp.Companion.instance
+import com.ichi2.anki.AnkiDroidApp.Companion.isInitialized
+import com.ichi2.anki.AnkiDroidApp.Companion.makeBackendUsable
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
+import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.analytics.initializeAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.common.android.AdaptionUtil
@@ -54,6 +58,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.reviewreminders.ReminderLogTree
 import com.ichi2.anki.servicelayer.DebugInfoService
+import com.ichi2.anki.servicelayer.StartupWebViewService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
@@ -172,8 +177,7 @@ open class AnkiDroidApp :
             showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
         }
 
-        setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
-
+        setupWebView()
         setupContextMenus()
 
         setup("makeBackendUsable") { makeBackendUsable(this) }
@@ -444,6 +448,26 @@ open class AnkiDroidApp :
         setup("setupCustomFieldFilters") {
             // enable {{tts-voices:}} field filter
             TtsVoicesFieldFilter.ensureApplied()
+        }
+    }
+
+    /**
+     * Start up WebView to speed up its later usages.
+     * Set up WebView functionalities.
+     */
+    private fun setupWebView() {
+        setup("setupWebView") {
+            applicationScope.launch {
+                val result = StartupWebViewService.startUpWebView(this@AnkiDroidApp)
+                if (result.isSuccess) {
+                    setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
+                } else {
+                    val e = result.exceptionOrNull() ?: return@launch
+                    fatalInitializationError = FatalInitializationError.WebViewError(e)
+                    sendExceptionReport(e, "setupWebView")
+                    Timber.e(e, "setupWebView")
+                }
+            }
         }
     }
 
