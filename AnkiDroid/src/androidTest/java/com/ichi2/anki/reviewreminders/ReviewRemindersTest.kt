@@ -25,6 +25,7 @@ import com.google.android.material.chip.Chip
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
@@ -134,6 +135,78 @@ class ReviewRemindersTest : InstrumentedTest() {
         }
     }
 
+    @Test
+    fun editReminderChangingDeckAndSettings() {
+        val originalScope = ReviewReminderScope.DeckSpecific(col.decks.id("Original deck"))
+        val destinationDeckName = "Destination deck"
+        val destinationScope = ReviewReminderScope.DeckSpecific(col.decks.id(destinationDeckName))
+        val original =
+            ReviewReminder
+                .createReviewReminder(
+                    time = ReviewReminderTime(7, 30),
+                    cardTriggerThreshold = ReviewReminderCardTriggerThreshold(2),
+                    scope = originalScope,
+                    enabled = false,
+                ).apply { latestNotifTime = 1L }
+        insertReminder(original)
+
+        val updatedTime = ReviewReminderTime(9, 45)
+        withReminders(reminderCount = 1) {
+            assertReminderRow(original, "Original deck")
+            onView(withId(R.id.reminders_list_time_text)).perform(click())
+            onView(withId(R.id.add_edit_reminder_deck_name)).checkWithTimeout(matches(withText("Original deck")))
+            onView(withId(R.id.add_edit_reminder_time_button)).check(matches(withText(original.time.toFormattedString(testContext))))
+            onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
+            onView(withId(R.id.add_edit_reminder_card_threshold_input)).check(matches(withText("2")))
+            onView(withId(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)).check(matches(not(isChecked())))
+
+            selectDeck(destinationDeckName)
+            selectTime(updatedTime)
+            onView(withId(R.id.add_edit_reminder_card_threshold_input)).perform(scrollTo(), replaceText("7"), closeSoftKeyboard())
+            onView(withId(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)).perform(scrollTo(), click())
+            val beforeSave = TimeManager.time.intTimeMS()
+            onView(withId(android.R.id.button1)).perform(click())
+
+            val updated = awaitSingleReminder { it.scope == destinationScope }
+            val afterSave = TimeManager.time.intTimeMS()
+            assertEquals(updatedTime, updated.time)
+            assertEquals(ReviewReminderCardTriggerThreshold(7), updated.cardTriggerThreshold)
+            assertTrue(updated.onlyNotifyIfNoReviews)
+            assertFalse(updated.enabled)
+            assertTrue(updated.latestNotifTime in beforeSave..afterSave, "Editing must reset the last notification time to now")
+            assertTrue(runBlocking { ReviewRemindersDatabase.getRemindersForScope(originalScope).isEmpty() })
+            assertReminderRow(updated, destinationDeckName)
+        }
+        withReminders(scope = destinationScope, reminderCount = 1) {
+            assertReminderRow(storedReminders().single(), destinationDeckName)
+            onView(withId(R.id.reminders_list_time_text)).perform(click())
+            onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
+            onView(withId(R.id.add_edit_reminder_card_threshold_input)).check(matches(withText("7")))
+            onView(withId(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)).check(matches(isChecked()))
+        }
+        withReminders(scope = originalScope) {
+            onView(withId(R.id.no_reminders_placeholder)).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun cancelEditingReminder() {
+        val original = ReviewReminder.createReviewReminder(time = ReviewReminderTime(7, 30))
+        insertReminder(original)
+        withReminders(reminderCount = 1) {
+            onView(withId(R.id.reminders_list_time_text)).perform(click())
+            selectTime(ReviewReminderTime(9, 45))
+            onView(withId(android.R.id.button3)).perform(click())
+
+            onView(withId(R.id.add_edit_reminder_toolbar)).check(doesNotExist())
+            assertEquals(listOf(original), storedReminders())
+            assertReminderRow(original, allDecksName)
+        }
+        withReminders(reminderCount = 1) {
+            assertReminderRow(original, allDecksName)
+        }
+    }
+
     private fun withReminders(
         scope: ReviewReminderScope = ReviewReminderScope.Global,
         reminderCount: Int = 0,
@@ -178,8 +251,12 @@ class ReviewRemindersTest : InstrumentedTest() {
 
     private fun storedReminders(): List<ReviewReminder> = runBlocking { ReviewRemindersDatabase.getAllReminders().getRemindersList() }
 
-    private fun awaitSingleReminder(): ReviewReminder {
-        waitUntil(message = { "Expected one saved reminder, found ${storedReminders()}" }) { storedReminders().size == 1 }
+    private fun insertReminder(reminder: ReviewReminder) = runBlocking { ReviewRemindersDatabase.insertReminder(reminder) }
+
+    private fun awaitSingleReminder(predicate: (ReviewReminder) -> Boolean = { true }): ReviewReminder {
+        waitUntil(message = { "Expected one saved reminder matching the changes, found ${storedReminders()}" }) {
+            storedReminders().singleOrNull()?.let(predicate) == true
+        }
         return storedReminders().single()
     }
 
