@@ -94,6 +94,7 @@ import timber.log.Timber
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.reflect.jvm.jvmName
+import kotlin.time.Duration.Companion.milliseconds
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.fragment_reviewer),
@@ -678,9 +679,23 @@ class ReviewerFragment :
                 isScrollingJob?.cancel()
                 isScrollingJob =
                     lifecycleScope.launch {
-                        delay(300)
+                        delay(300.milliseconds)
                         isScrolling = false
                     }
+            }
+
+            viewModel.gestureEventFlow.collectIn(lifecycleScope) { rawGesture ->
+                handleGesture(rawGesture)
+            }
+        }
+
+        fun handleGesture(rawGesture: RawGesture) {
+            val webView = webViewLayout.getChildAt(0) as? WebView ?: return
+            if (isScrolling) return
+            gestureParser.parse(rawGesture, scale, webView) { gesture ->
+                if (gesture == null) return@parse
+                Timber.v("ReviewerFragment::onGesture %s", gesture)
+                bindingMap.onGesture(gesture)
             }
         }
 
@@ -690,12 +705,20 @@ class ReviewerFragment :
         ): Boolean {
             return when (url.scheme) {
                 "gesture" -> {
-                    if (isScrolling) return true
-                    gestureParser.parse(url, scale, webView) { gesture ->
-                        if (gesture == null) return@parse
-                        Timber.v("ReviewerFragment::onGesture %s", gesture)
-                        bindingMap.onGesture(gesture)
-                    }
+                    val rawGesture =
+                        if (url.host == "multiFingerTap") {
+                            RawGesture.MultiTouch(url.getQueryParameter("touchCount")?.toIntOrNull() ?: 0)
+                        } else {
+                            RawGesture.TapOrSwipe(
+                                x = url.getQueryParameter("x")?.toIntOrNull() ?: 0,
+                                y = url.getQueryParameter("y")?.toIntOrNull() ?: 0,
+                                deltaX = url.getQueryParameter("deltaX")?.toIntOrNull() ?: 0,
+                                deltaY = url.getQueryParameter("deltaY")?.toIntOrNull() ?: 0,
+                                time = url.getQueryParameter("time")?.toLongOrNull() ?: 0,
+                                scrollDirection = url.getQueryParameter("scrollDirection"),
+                            )
+                        }
+                    handleGesture(rawGesture)
                     true
                 }
                 "ankidroid" -> {
