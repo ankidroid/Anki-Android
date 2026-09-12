@@ -8,7 +8,9 @@ import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import timber.log.Timber
 
@@ -23,7 +25,7 @@ class CopyToClipboardReceiver : BroadcastReceiver() {
         intent: Intent,
     ) {
         val text =
-            intent.getStringExtra(EXTRA_SYNC_ERROR_LOG) ?: run {
+            intent.getParcelableExtraCompat<TruncatedString>(EXTRA_SYNC_ERROR_LOG) ?: run {
                 Timber.w("CopyToClipboardReceiver: no error log found")
                 showThemedToast(context, R.string.something_wrong, shortLength = true)
                 return
@@ -35,6 +37,18 @@ class CopyToClipboardReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val EXTRA_SYNC_ERROR_LOG = "syncErrorLog"
+        private const val EXTRA_SYNC_ERROR_LOG = "syncErrorLog"
+
+        /**
+         * Method for getting an intent for this service.
+         * @return An intent which copies [text] to the clipboard when broadcast to this receiver.
+         */
+        fun getIntent(
+            context: Context,
+            text: TruncatedString,
+        ): Intent =
+            Intent(context, CopyToClipboardReceiver::class.java).apply {
+                putExtra(EXTRA_SYNC_ERROR_LOG, text)
+            }
     }
 }

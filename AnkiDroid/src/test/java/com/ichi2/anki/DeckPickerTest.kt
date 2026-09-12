@@ -15,7 +15,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.Insets
@@ -35,6 +34,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
@@ -1040,7 +1040,7 @@ class DeckPickerTest : RobolectricTest() {
                         equalTo(PermissionsActivity::class.java.name),
                     )
 
-                    val extra = IntentCompat.getParcelableExtra(intent, EXTRA_PERMISSIONS_SET, StoragePermissionSet::class.java)
+                    val extra = intent.getParcelableExtraCompat<StoragePermissionSet>(EXTRA_PERMISSIONS_SET)
 
                     assertNotNull(extra)
                     assertThat(extra.permissions, equalTo(listOf(INTERNET)))

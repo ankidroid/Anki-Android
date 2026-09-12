@@ -107,6 +107,7 @@ import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp
 import com.ichi2.utils.listItems
@@ -1273,7 +1274,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
             context?.let { ctx ->
                 ctx.copyToClipboard(
-                    template.toMarkdown(ctx),
+                    TruncatedString.from(template.toMarkdown(ctx)),
                 )
             }
         }

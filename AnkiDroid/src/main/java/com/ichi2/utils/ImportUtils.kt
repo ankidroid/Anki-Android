@@ -365,7 +365,7 @@ object ImportUtils {
                             appendLine(DebugInfoService.getDebugInfo(activity))
                         }
 
-                    appContext.copyToClipboard(stringToCopy)
+                    appContext.copyToClipboard(TruncatedString.from(stringToCopy))
                 }
 
             Timber.d("showImportUnsuccessfulDialog() message %s", failure.humanReadableMessage)

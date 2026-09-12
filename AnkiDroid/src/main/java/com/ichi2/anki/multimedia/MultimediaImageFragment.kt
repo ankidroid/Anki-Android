@@ -21,7 +21,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.content.IntentCompat
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +28,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.DrawingFragment
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.FragmentMultimediaImageBinding
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
@@ -167,11 +167,7 @@ class MultimediaImageFragment :
                 Activity.RESULT_OK -> {
                     result.data?.let {
                         val cropResultData =
-                            IntentCompat.getParcelableExtra(
-                                it,
-                                CROP_IMAGE_RESULT,
-                                ImageCropper.CropResultData::class.java,
-                            )
+                            it.getParcelableExtraCompat<ImageCropper.CropResultData>(CROP_IMAGE_RESULT)
                         Timber.d("Cropped image data: $cropResultData")
 
                         if (cropResultData?.uriPath == null || cropResultData.uriContent == null) return@registerForActivityResult

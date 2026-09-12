@@ -12,7 +12,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.FileProvider
-import androidx.core.content.IntentCompat
 import androidx.work.WorkManager
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
@@ -25,7 +24,7 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
 import com.ichi2.anki.common.storage.grantedStoragePermissions
 import com.ichi2.anki.common.utils.android.showThemedToast
-import com.ichi2.anki.common.utils.trimToLength
+import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.requireDeckPickerOrShowError
@@ -42,6 +41,7 @@ import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -120,7 +120,7 @@ class IntentHandler : AbstractIntentHandler() {
                 return
             }
         this.copyToClipboard(
-            text = clipboardData,
+            text = TruncatedString.from(clipboardData),
             failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }
@@ -274,7 +274,7 @@ class IntentHandler : AbstractIntentHandler() {
     private fun handleImageImport(data: Intent) {
         val imageUri =
             if (intent.action == Intent.ACTION_SEND) {
-                IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, Uri::class.java)
+                intent.getParcelableExtraCompat<Uri>(Intent.EXTRA_STREAM)
             } else {
                 data.data
             }
@@ -424,16 +424,6 @@ class IntentHandler : AbstractIntentHandler() {
         fun sendDoSyncMsg() {
             // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
             storeMessage(DoSync().toMessage())
-        }
-
-        fun copyStringToClipboardIntent(
-            context: Context,
-            textToCopy: String,
-        ) = Intent(context, IntentHandler::class.java).also {
-            it.action = CLIPBOARD_INTENT
-            // max length for an intent is 500KB.
-            // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
-            it.putExtra(EXTRA_CLIPBOARD_DATA, textToCopy.trimToLength(25000))
         }
 
         fun requiresCollectionAccess(launchType: LaunchType): Boolean =

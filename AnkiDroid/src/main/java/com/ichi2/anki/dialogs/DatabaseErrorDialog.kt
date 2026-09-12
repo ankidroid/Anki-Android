@@ -57,6 +57,7 @@ import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.startup.resetAnkiDroidDirectory
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.copyToClipboard
@@ -452,7 +453,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             ).joinToString(separator = "\n")
 
         context.copyToClipboard(
-            combinedInfo,
+            TruncatedString.from(combinedInfo),
             failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }

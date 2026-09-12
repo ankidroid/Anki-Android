@@ -40,6 +40,7 @@ import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.setBackgroundTint
 import com.ichi2.utils.Permissions.attemptToEnableNotifications
 import com.ichi2.utils.Permissions.openAppNotificationsSettingsScreen
+import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.dp
 import dev.androidbroadcast.vbpd.viewBinding
@@ -205,7 +206,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
             viewLifecycleOwner.lifecycleScope.launch {
                 val debugInfo = ReminderLogTree.readReminderLog() + "\n\n" + ReviewRemindersDatabase.dumpContentsToString()
                 requireContext().copyToClipboard(
-                    debugInfo,
+                    TruncatedString.from(debugInfo),
                     failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
                 )
             }
