@@ -18,6 +18,7 @@
 
 package com.ichi2.anki.multimedia
 
+import android.net.Uri
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.utils.htmlEncode
 import com.ichi2.anki.compat.CompatHelper
@@ -31,12 +32,10 @@ import com.ichi2.anki.libanki.SoundOrVideoTag
 import com.ichi2.anki.libanki.SoundOrVideoTag.Type
 import com.ichi2.anki.libanki.TTSTag
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.anki.libanki.getFileUri
 import com.ichi2.anki.utils.CollectionPreferences
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import java.io.File
-import java.nio.file.Paths
 
 /**
  * Takes content with [AvRef]s and expands them to reference the media file
@@ -72,8 +71,7 @@ fun expandSounds(
 
     fun SoundOrVideoTag.asHtmlVideo(): String {
         val filename = this.filename
-        val path = Paths.get(mediaDir.absolutePath, filename).toString()
-        val uri = getFileUri(path)
+        val encodedFilename = Uri.encode(filename)
 
         val playsound = "${playTag.side}:${playTag.index}"
 
@@ -84,7 +82,7 @@ fun expandSounds(
         @Language("HTML")
         val result =
             """<video
-                    | src="$uri"
+                    | src="$encodedFilename"
                     | controls
                     | data-file="${filename.htmlEncode()}"
                     | onended='$onEnded'
