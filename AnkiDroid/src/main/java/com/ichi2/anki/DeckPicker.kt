@@ -15,7 +15,6 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.database.SQLException
 import android.graphics.Color
 import android.graphics.PixelFormat
@@ -63,6 +62,7 @@ import androidx.draganddrop.DropHelper
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -282,8 +282,7 @@ open class DeckPicker :
 
     override var fragmented: Boolean
         get() =
-            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK ==
-                Configuration.SCREENLAYOUT_SIZE_XLARGE
+            resources.configuration.smallestScreenWidthDp >= 600
         set(_) = throw UnsupportedOperationException()
 
     // Short animation duration from system
@@ -516,6 +515,18 @@ open class DeckPicker :
         }
 
         setViewBinding(binding)
+        if (binding.studyoptionsFragment == null) {
+            // On recreation into this single-pane layout (e.g. a foldable changing form
+            // factor), saved state can still hold the split-pane's side panel fragment.
+            // A restored fragment without its container is never displayed, but it would
+            // still reach its view lifecycle and register its menu items with this
+            // activity. Remove it before that happens. See #21555.
+            supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)?.let { restoredFragment ->
+                supportFragmentManager.commitNow {
+                    remove(restoredFragment)
+                }
+            }
+        }
         enableToolbar()
         // TODO This method is run on every activity recreation, which can happen often.
         //  It seems that the original idea was for this to only run once, on app start.
@@ -1175,11 +1186,9 @@ open class DeckPicker :
 
         Timber.d("onCreateOptionsMenu()")
         floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
-        // TODO: Refactor menu handling logic to the activity
-        // The menus for the fragmented view should be the responsibility of the activity.
-        // This would mean extracting the menu logic out of the fragments, extending it to the full width of the activity,
-        // and having the activity be responsible for it. This change should reduce complexity.
-        // We should have two menu files for the DeckPicker (fragmented/non), and one for the Options (non-fragmented)
+        // Fragments own their menus: each fragment registers a MenuProvider against this
+        // activity (see StudyOptionsFragment), and the menu host dispatches creation,
+        // preparation and selection to them. This activity never drives a fragment's menu.
         menuInflater.inflate(R.menu.deck_picker, menu)
         menu.findItem(R.id.deck_picker_action_filter)?.let {
             toolbarSearchItem = it
@@ -1211,13 +1220,6 @@ open class DeckPicker :
                 updateMenuFromState(menu)
             }
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        menu.findItem(R.id.action_custom_study)?.setShowAsAction(
-            if (fragmented) MenuItem.SHOW_AS_ACTION_ALWAYS else MenuItem.SHOW_AS_ACTION_NEVER,
-        )
-        return super.onPrepareOptionsMenu(menu)
     }
 
     fun setupMediaSyncMenuItem(menu: Menu) {

@@ -123,6 +123,11 @@ class StudyOptionsFragment :
         menuInflater: MenuInflater,
     ) {
         menuInflater.inflate(R.menu.study_options_fragment, menu)
+        if (fragmented) {
+            // Primary action in the split-pane DeckPicker toolbar; when hosted in
+            // StudyOptionsActivity the XML default (ifRoom) applies.
+            menu.findItem(R.id.action_custom_study)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        }
         menu.findItem(R.id.action_rebuild)?.title = TR.actionsRebuild()
         menu.findItem(R.id.action_custom_study)?.title = TR.sentenceCase.customStudy
         menu.findItem(R.id.action_unbury)?.title = TR.studyingUnbury()
