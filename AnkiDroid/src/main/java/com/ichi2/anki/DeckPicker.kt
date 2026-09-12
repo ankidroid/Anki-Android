@@ -118,6 +118,7 @@ import com.ichi2.anki.databinding.IncludeDeckPickerBinding
 import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.deckpicker.DeckDeletionResult
+import com.ichi2.anki.deckpicker.DeckPickerProgress
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.FlattenedDeckList
@@ -163,6 +164,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.reviewreminders.ReviewReminderScope
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase
@@ -635,6 +637,7 @@ open class DeckPicker :
             onReceiveContentListener,
         )
 
+        observeProgress(viewModel) { progress -> progressMessage(progress) }
         setupFlows()
     }
 
@@ -1433,9 +1436,7 @@ open class DeckPicker :
             }
             R.id.action_deck_delete -> {
                 launchCatchingTask {
-                    withProgress(resources.getString(CommonString.delete_deck)) {
-                        viewModel.deleteSelectedDeck().join()
-                    }
+                    viewModel.deleteSelectedDeck().join()
                 }
                 return true
             }
@@ -1455,9 +1456,7 @@ open class DeckPicker :
 
     private fun createBackup() {
         launchCatchingTask {
-            withProgress(message = TR.sentenceCase.creatingBackup) {
-                performBackupInBackground(true)
-            }
+            viewModel.createBackup()
             showThemedToast(this@DeckPicker, TR.profilesBackupCreated(), false)
         }
     }
@@ -2286,17 +2285,13 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId) =
         launchCatchingTask {
-            withProgress(resources.getString(CommonString.delete_deck)) {
-                viewModel.deleteDeck(did).join()
-            }
+            viewModel.deleteDeck(did).join()
         }
 
     @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
         launchCatchingTask {
-            withProgress(resources.getString(CommonString.rebuild_filtered_deck)) {
-                viewModel.rebuildFilteredDeck(did).join()
-            }
+            viewModel.rebuildFilteredDeck(did).join()
             updateDeckList()
             tryShowStudyOptionsPanel()
         }
@@ -2304,9 +2299,7 @@ open class DeckPicker :
 
     private fun emptyFiltered(did: DeckId) {
         launchCatchingTask {
-            withProgress {
-                viewModel.emptyFilteredDeck(did).join()
-            }
+            viewModel.emptyFilteredDeck(did).join()
         }
     }
 
@@ -2511,3 +2504,11 @@ class CollectionLoadingErrorDialog :
 
 val ActivityHomescreenBinding.studyoptionsFrame: FragmentContainerView?
     get() = studyoptionsFragment
+
+private fun Context.progressMessage(progress: DeckPickerProgress): String =
+    when (progress) {
+        DeckPickerProgress.DELETING_DECK -> getString(CommonString.delete_deck)
+        DeckPickerProgress.REBUILDING_FILTERED_DECK -> getString(CommonString.rebuild_filtered_deck)
+        DeckPickerProgress.DELETING_EMPTY_CARDS -> TR.emptyCardsDeleting()
+        DeckPickerProgress.CREATING_BACKUP -> TR.sentenceCase.creatingBackup
+    }
