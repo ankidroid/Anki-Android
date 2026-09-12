@@ -34,6 +34,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.SdkSuppress
 import anki.backend.backendError
 import anki.collection.opChanges
@@ -96,6 +99,7 @@ import com.ichi2.ui.AccessibleSearchView
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import org.hamcrest.MatcherAssert.assertThat
@@ -291,6 +295,27 @@ class DeckPickerTest : RobolectricTest() {
             assertThat("deck was deleted", col.decks.count(), equalTo(1))
         }
     }
+
+    @Test
+    fun `deleting a deck blocks deck selection while collection access is queued`() =
+        runTest {
+            val deleted = addDeck("Deleted")
+            val other = addDeck("Other")
+            val selected = col.decks.selected()
+            lateinit var deckPicker: DeckPicker
+            withDeckPicker(deckCount = 0) { deckPicker = it }
+            advanceRobolectricLooperUntil { deckPicker.dueTree?.find(other) != null }
+
+            val deletion =
+                withQueuedCollectionAccess {
+                    deckPicker.deleteDeck(deleted).also {
+                        onView(withText("Other")).perform(click())
+                    }
+                }
+            deletion.join()
+
+            assertEquals("a deck was selected while deleting", selected, col.decks.selected())
+        }
 
     @Test
     fun `Delete shortcut requests confirmation only in tablet layout`() {
@@ -684,6 +709,15 @@ class DeckPickerTest : RobolectricTest() {
 
             assertTrue(allCardsInSameDeck(cardIds, deckId))
         }
+
+    private suspend fun <T> TestScope.withQueuedCollectionAccess(block: suspend () -> T): T {
+        val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+        try {
+            return block()
+        } finally {
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
 
     private fun allCardsInSameDeck(
         cardIds: List<Long>,
