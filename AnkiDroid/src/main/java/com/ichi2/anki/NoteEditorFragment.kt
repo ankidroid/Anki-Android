@@ -349,39 +349,45 @@ class NoteEditorFragment :
     private val requestTemplateEditLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
-            NoteEditorActivityResultCallback {
-                // Note type can change regardless of exit type - update ourselves and CardBrowser
-                reloadRequired = true
-                editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.noteTypeId)!!
-                if (currentEditedCard == null ||
-                    !editorNote!!
-                        .cardIds(getColUnsafe)
-                        .contains(currentEditedCard!!.id)
-                ) {
-                    if (!addNote) {
-                    /* This can occur, for example, if the
-                     * card type was deleted or if the note
-                     * type was changed without moving this
-                     * card to another type. */
-                        Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
-                        showSnackbar(getString(R.string.template_for_current_card_deleted))
-                        closeNoteEditor()
-                    } else {
-                        Timber.d("onActivityResult() template edit return, in add mode, just re-display")
-                        updateCards(editorNote!!.notetype)
-                    }
-                } else {
-                    Timber.d("onActivityResult() template edit return - current card exists")
-                    // reload current card - the template ordinals are possibly different post-edit
-                    currentEditedCard = getColUnsafe.getCard(currentEditedCard!!.id)
-                    @NeedsTest("#17282 returning from template editor saves further made changes")
-                    // make sure the card's note is available going forward
-                    currentEditedCard!!.note(getColUnsafe)
-                    editorNote = currentEditedCard!!.note // update the NoteEditor's working note reference
-                    updateCards(editorNote!!.notetype)
-                }
-            },
+            NoteEditorActivityResultCallback { onTemplateEditorResult() },
         )
+
+    /** Handles a return from the [CardTemplateEditor] */
+    @VisibleForTesting
+    internal fun onTemplateEditorResult() {
+        // Note type can change regardless of exit type - update ourselves and CardBrowser
+        reloadRequired = true
+        editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.noteTypeId)!!
+        if (currentEditedCard == null ||
+            !editorNote!!
+                .cardIds(getColUnsafe)
+                .contains(currentEditedCard!!.id)
+        ) {
+            if (!addNote) {
+            /* This can occur, for example, if the
+             * card type was deleted or if the note
+             * type was changed without moving this
+             * card to another type. */
+                Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
+                showSnackbar(getString(R.string.template_for_current_card_deleted))
+                closeNoteEditor()
+            } else {
+                Timber.d("onActivityResult() template edit return, in add mode, just re-display")
+                // the fields may have changed, so rebuild them
+                refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
+            }
+        } else {
+            Timber.d("onActivityResult() template edit return - current card exists")
+            // reload current card - the template ordinals are possibly different post-edit
+            currentEditedCard = getColUnsafe.getCard(currentEditedCard!!.id)
+            @NeedsTest("#17282 returning from template editor saves further made changes")
+            // make sure the card's note is available going forward
+            currentEditedCard!!.note(getColUnsafe)
+            editorNote = currentEditedCard!!.note // update the NoteEditor's working note reference
+            // the fields may have changed, so rebuild them
+            setNote(editorNote, FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
+        }
+    }
 
     private val ioEditorLauncher =
         registerForActivityResult(

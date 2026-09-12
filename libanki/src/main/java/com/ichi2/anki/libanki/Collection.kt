@@ -1185,14 +1185,26 @@ class Collection(
      * directly mutating the database).
      */
     @LibAnkiAlias("undo")
-    fun undo(): OpChangesAfterUndo = backend.undo()
+    fun undo(): OpChangesAfterUndo {
+        val out = backend.undo()
+        if (out.changes.notetype) {
+            notetypes.clearCache()
+        }
+        return out
+    }
 
     /**
      * Returns result of backend redo operation, or throws UndoEmpty.
      */
     @RustCleanup("document exception")
     @LibAnkiAlias("redo")
-    fun redo(): OpChangesAfterUndo = backend.redo()
+    fun redo(): OpChangesAfterUndo {
+        val out = backend.redo()
+        if (out.changes.notetype) {
+            notetypes.clearCache()
+        }
+        return out
+    }
 
     @Deprecated("Not implemented")
     @LibAnkiAlias("op_made_changes")
