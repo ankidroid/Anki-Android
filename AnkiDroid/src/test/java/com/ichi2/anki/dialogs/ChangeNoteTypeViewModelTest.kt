@@ -14,11 +14,13 @@ import com.ichi2.anki.dialogs.ChangeNoteTypeViewModelTest.Launch.Regular
 import com.ichi2.anki.dialogs.SelectedIndex.NOTHING
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.NotetypeJson
+import kotlinx.coroutines.Job
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class ChangeNoteTypeViewModelTest : RobolectricTest() {
@@ -413,6 +415,20 @@ class ChangeNoteTypeViewModelTest : RobolectricTest() {
     }
 
     @Test
+    fun `a template selection is ignored after switching to cloze`() =
+        viewModelTest(Regular(templateCount = 2)) {
+            setOutputNoteType(col.notetypes.byName("Cloze")!!)
+
+            assertTemplateSelectionIsIgnored()
+        }
+
+    @Test
+    fun `a template selection is ignored for a cloze note type`() =
+        viewModelTest(Cloze()) {
+            assertTemplateSelectionIsIgnored()
+        }
+
+    @Test
     fun `init fails if no notes`() {
         val ex = assertFailsWith<IllegalArgumentException> { buildViewModel(noteIds = emptyList()) }
         assertThat(ex.message, equalTo("ARG_NOTE_IDS was empty"))
@@ -557,4 +573,25 @@ private suspend fun ChangeNoteTypeViewModel.setOutputNoteType(noteType: Notetype
 private fun ChangeNoteTypeViewModel.templateNameToIndex(name: String) =
     SelectedIndex.Index(this.outputNoteType.templatesNames.indexOf(name))
 
-private fun ChangeNoteTypeViewModel.canMapTemplates(): Boolean = canChangeTemplatesFlow.value
+/** [ChangeNoteTypeViewModel.canChangeTemplates], checking that [ChangeNoteTypeViewModel.canChangeTemplatesFlow] agrees */
+private fun ChangeNoteTypeViewModel.canMapTemplates(): Boolean =
+    canChangeTemplates.also { assertThat("canChangeTemplatesFlow agrees", canChangeTemplatesFlow.value, equalTo(it)) }
+
+/** Waits for the job, returning what it failed with, or `null` if it succeeded */
+private suspend fun Job.failureOrNull(): Throwable? {
+    join()
+    var cause: Throwable? = null
+    invokeOnCompletion { cause = it }
+    return cause
+}
+
+/** Asserts that a template selection is dropped, rather than being fatal or changing the map */
+private suspend fun ChangeNoteTypeViewModel.assertTemplateSelectionIsIgnored() {
+    assertThat("precondition: templates are locked", canMapTemplates(), equalTo(false))
+    val mappingBefore = templateChangeMap
+
+    val failure = updateTemplateMapping(outputTemplateIndex = 0, mappedFrom = NOTHING).failureOrNull()
+
+    assertNull(failure, "the selection must not crash")
+    assertThat("the mapping is left alone", templateChangeMap, equalTo(mappingBefore))
+}
