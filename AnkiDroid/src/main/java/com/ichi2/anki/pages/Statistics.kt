@@ -32,7 +32,6 @@ class Statistics : PageFragment(R.layout.page_statistics) {
     // After killing the app, printManager.printJobs can still list active jobs
     private var pendingPrintJob: PrintJob? = null
 
-    @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
