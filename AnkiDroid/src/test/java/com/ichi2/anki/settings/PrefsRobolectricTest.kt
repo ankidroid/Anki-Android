@@ -7,6 +7,7 @@ import android.content.res.Resources
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import com.ichi2.anki.EmptyApplicationCategory
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.utils.append
 import com.ichi2.anki.preferences.HeaderFragment
@@ -147,7 +148,16 @@ class PrefsRobolectricTest : RobolectricTest() {
                         PreferenceTestUtils.attrToStringArray(it["entryValues"]!!, targetContext).toList()
                 }
 
+        // Theme preferences are the source of truth, and use `TR` so no longer fit the pattern.
+        val enumDerivedEntryValueKeys =
+            setOf(
+                R.string.app_theme_key,
+                R.string.day_theme_key,
+                R.string.night_theme_key,
+            ).map { targetContext.getString(it) }
+
         for ((key, enumValues) in prefsEnumKeysAndValues) {
+            if (key in enumDerivedEntryValueKeys) continue
             assertContains(listPreferences, key)
             assertEquals(enumValues, listPreferences[key])
         }
