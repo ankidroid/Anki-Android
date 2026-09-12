@@ -28,7 +28,11 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
+import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.testutils.ensureOpsExecuted
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -36,6 +40,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 /** Test of [DeckPickerViewModel] */
 @RunWith(AndroidJUnit4::class)
@@ -145,6 +150,68 @@ class DeckPickerViewModelTest : RobolectricTest() {
 
             // backend assert
             assertThat("col undo status", col.undoStatus().undo, equalTo("Empty"))
+        }
+    }
+
+    @Test
+    fun `deleteDeck reports progress`() =
+        runProgressTest {
+            val deckId = addDeck("Deleted")
+
+            assertProgressAround(DeckPickerProgress.DELETING_DECK) { deleteDeck(deckId).join() }
+        }
+
+    @Test
+    fun `rebuildFilteredDeck reports progress`() =
+        runProgressTest {
+            val filteredDeckId = moveAllCardsToFilteredDeck()
+
+            assertProgressAround(DeckPickerProgress.REBUILDING_FILTERED_DECK) { rebuildFilteredDeck(filteredDeckId).join() }
+        }
+
+    @Test
+    fun `emptyFilteredDeck reports progress`() =
+        runProgressTest {
+            val filteredDeckId = moveAllCardsToFilteredDeck()
+
+            assertProgressAround { emptyFilteredDeck(filteredDeckId).join() }
+        }
+
+    @Test
+    fun `deleteEmptyCards reports progress`() =
+        runProgressTest {
+            val cardsToEmpty = createEmptyCards()
+
+            assertProgressAround(DeckPickerProgress.DELETING_EMPTY_CARDS) { deleteEmptyCards(cardsToEmpty).join() }
+        }
+
+    @Test
+    fun `createBackup reports progress`() =
+        runProgressTest {
+            assertProgressAround(DeckPickerProgress.CREATING_BACKUP) { createBackup() }
+        }
+
+    /**
+     * [runTest] with a ViewModel built after Main becomes a [StandardTestDispatcher]. The ViewModel's
+     * scope captures Main when it is built, and an inline Main would hide the Active state.
+     */
+    private fun runProgressTest(testBody: suspend DeckPickerViewModel.() -> Unit) =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            DeckPickerViewModel().testBody()
+        }
+
+    private suspend fun DeckPickerViewModel.assertProgressAround(
+        message: DeckPickerProgress? = null,
+        op: suspend () -> Unit,
+    ) {
+        progressManager.progress.test {
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            op()
+            val active = assertIs<ViewModelProgress.Active<DeckPickerProgress>>(awaitItem())
+            assertEquals(message, active.message)
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            expectNoEvents()
         }
     }
 

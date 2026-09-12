@@ -38,6 +38,8 @@ import com.ichi2.anki.libanki.utils.extend
 import com.ichi2.anki.notetype.ManageNoteTypesDestination
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.performBackupInBackground
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.syncAuth
@@ -63,7 +65,10 @@ import com.ichi2.anki.common.destinations.Destination as NavigateDestination
  */
 class DeckPickerViewModel :
     ViewModel(),
-    OnErrorListener {
+    OnErrorListener,
+    HasProgress<DeckPickerProgress> {
+    override val progressManager = ProgressManager<DeckPickerProgress>()
+
     val flowOfStartupResponse = MutableStateFlow<StartupResponse?>(null)
 
     private val flowOfDeckDueTree = MutableStateFlow<DeckNode?>(null)
@@ -186,28 +191,26 @@ class DeckPickerViewModel :
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      *
-     * This is a slow operation and should be inside `withProgress`
-     *
      * @param did ID of the deck to delete
      */
-    @CheckResult // This is a slow operation and should be inside `withProgress`
+    @CheckResult
     fun deleteDeck(did: DeckId) =
         viewModelScope.launch {
-            val deckName = withCol { decks.getLegacy(did)!!.name }
-            val changes = undoableOp { decks.remove(listOf(did)) }
-            // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
-            // to match and avoid unnecessary scrolls in `renderPage()`.
-            focusedDeck = Consts.DEFAULT_DECK_ID
+            progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
+                val deckName = withCol { decks.getLegacy(did)!!.name }
+                val changes = undoableOp { decks.remove(listOf(did)) }
+                // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
+                // to match and avoid unnecessary scrolls in `renderPage()`.
+                focusedDeck = Consts.DEFAULT_DECK_ID
 
-            deckDeletedNotification.emit(
-                DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
-            )
+                deckDeletedNotification.emit(
+                    DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
+                )
+            }
         }
 
     /**
      * Deletes the currently selected deck
-     *
-     * This is a slow operation and should be inside `withProgress`
      */
     @CheckResult
     fun deleteSelectedDeck() =
@@ -227,28 +230,31 @@ class DeckPickerViewModel :
         report: EmptyCardsReport,
         preserveNotes: Boolean,
     ) = viewModelScope.launch {
-        // https://github.com/ankitects/anki/blob/39e293b27d36318e00131fd10144755eec8d1922/qt/aqt/emptycards.py#L98-L109
-        val toDelete = mutableListOf<CardId>()
+        progressManager.withProgress(message = DeckPickerProgress.DELETING_EMPTY_CARDS) {
+            // https://github.com/ankitects/anki/blob/39e293b27d36318e00131fd10144755eec8d1922/qt/aqt/emptycards.py#L98-L109
+            val toDelete = mutableListOf<CardId>()
 
-        for (note in report.notesList) {
-            if (preserveNotes && note.willDeleteNote) {
-                // leave first card
-                toDelete.extend(note.cardIdsList.drop(1))
-            } else {
-                toDelete.extend(note.cardIdsList)
+            for (note in report.notesList) {
+                if (preserveNotes && note.willDeleteNote) {
+                    // leave first card
+                    toDelete.extend(note.cardIdsList.drop(1))
+                } else {
+                    toDelete.extend(note.cardIdsList)
+                }
             }
+            val result = undoableOp { removeCardsAndOrphanedNotes(toDelete) }
+            emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
         }
-        val result = undoableOp { removeCardsAndOrphanedNotes(toDelete) }
-        emptyCardsNotification.emit(EmptyCardsResult(cardsDeleted = result.count))
     }
 
-    // TODO: move withProgress to the ViewModel, so we don't return 'Job'
     fun emptyFilteredDeck(deckId: DeckId): Job =
         viewModelScope.launch {
-            Timber.i("empty filtered deck %s", deckId)
-            withCol { decks.select(deckId) }
-            undoableOp { sched.emptyFilteredDeck(decks.selected()) }
-            flowOfDeckCountsChanged.emit(Unit)
+            progressManager.withProgress {
+                Timber.i("empty filtered deck %s", deckId)
+                withCol { decks.select(deckId) }
+                undoableOp { sched.emptyFilteredDeck(decks.selected()) }
+                flowOfDeckCountsChanged.emit(Unit)
+            }
         }
 
     /**
@@ -257,12 +263,14 @@ class DeckPickerViewModel :
     @CheckResult
     fun rebuildFilteredDeck(deckId: DeckId): Job =
         viewModelScope.launch {
-            Timber.i("rebuilding filtered deck %s", deckId)
-            withCol {
-                decks.select(deckId)
-                sched.rebuildFilteredDeck(decks.selected())
+            progressManager.withProgress(message = DeckPickerProgress.REBUILDING_FILTERED_DECK) {
+                Timber.i("rebuilding filtered deck %s", deckId)
+                withCol {
+                    decks.select(deckId)
+                    sched.rebuildFilteredDeck(decks.selected())
+                }
+                flowOfDeckCountsChanged.emit(Unit)
             }
-            flowOfDeckCountsChanged.emit(Unit)
         }
 
     /**
@@ -345,6 +353,11 @@ class DeckPickerViewModel :
     fun scheduleReviewReminders(deckId: DeckId) =
         viewModelScope.launch {
             flowOfDestination.emit(ScheduleRemindersDestination(deckId))
+        }
+
+    suspend fun createBackup() =
+        progressManager.withProgress(message = DeckPickerProgress.CREATING_BACKUP) {
+            performBackupInBackground(force = true)
         }
 
     /**
@@ -661,6 +674,14 @@ class DeckPickerViewModel :
     companion object {
         const val UPGRADE_VERSION_KEY = "lastUpgradeVersion"
     }
+}
+
+/** The operation [DeckPickerViewModel] is running, shown as a progress message by the UI. */
+enum class DeckPickerProgress {
+    DELETING_DECK,
+    REBUILDING_FILTERED_DECK,
+    DELETING_EMPTY_CARDS,
+    CREATING_BACKUP,
 }
 
 /** Result of [DeckPickerViewModel.deleteDeck] */
