@@ -146,9 +146,9 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ github.event.inputs.clearCaches }}
+          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v2-${{ github.event.inputs.clearCaches }}
           restore-keys: |
-            avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1
+            avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v2
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
@@ -200,6 +200,12 @@ jobs:
           script: |
             touch adb-log.txt
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
+            # Disable ART statsd metrics reporting. On the 16 KB page size image, the first
+            # report (~3s into each process) probes userfaultfd(), which the WebView renderer
+            # sandbox forbids: the renderer is killed and WebView tests flake. ART only reads
+            # this flag when the zygote starts, so it must be set before the restart below.
+            # See: https://github.com/ankidroid/Anki-Android/issues/21740
+            $ANDROID_HOME/platform-tools/adb shell su root "setprop persist.device_config.runtime_native.metrics.write-to-statsd false"
             $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
             sleep 10
             sleep $FIRST_BOOT_DELAY
