@@ -206,6 +206,8 @@ class BrowserColumnSelectionTouchHelperCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
     ) {
+        super.clearView(recyclerView, viewHolder)
+
         // this needs to be done after onMoved, or the drag operation sometimes completes early
         // when on a tablet
         recyclerView.runWhenNotComputingLayout { recyclerView.adapter?.notifyItemRangeChanged(0, items.size) }
