@@ -19,6 +19,7 @@ import com.ichi2.testutils.changedPositions
 import com.ichi2.testutils.completeDroppedItem
 import com.ichi2.testutils.dispatchTouch
 import com.ichi2.testutils.dropDraggedItem
+import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.withViewOnScreen
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -40,6 +41,19 @@ class BrowserColumnSelectionTouchHelperCallbackTest : RobolectricTest() {
             list.completeDroppedItem()
 
             assertThat("refreshed after drop completes", changedRows, equalTo(list.allRows))
+        }
+
+    @Test
+    fun `scrolling a dropped row off-screen before it completes does not crash`() =
+        withColumnSelectionList { list ->
+            val changedRows = list.adapter!!.changedPositions()
+            list.startDrag(row = 1)
+            list.dropDraggedItem()
+
+            // recycling the row cancels its animation, which calls clearView mid-scroll
+            list.scrollToEnd()
+
+            assertThat("refreshed after scrolling", changedRows, equalTo(list.allRows))
         }
 
     /** Displays the 'manage columns' list in a window a few rows tall, so a scroll recycles rows */

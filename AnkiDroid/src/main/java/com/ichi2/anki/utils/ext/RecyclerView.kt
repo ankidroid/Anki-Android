@@ -30,3 +30,16 @@ inline fun RecyclerView.doOnScrolled(crossinline action: (dx: Int, dy: Int) -> U
         },
     )
 }
+
+/**
+ * Runs [action] immediately, unless the RecyclerView is computing a layout or scrolling, in
+ * which case it is posted to the next frame.
+ *
+ * Callbacks such as `ItemTouchHelper.Callback.clearView` may be invoked during a layout, when the
+ * adapter may not be notified of changes.
+ *
+ * @see RecyclerView.isComputingLayout
+ */
+fun RecyclerView.runWhenNotComputingLayout(action: Runnable) {
+    if (isComputingLayout) post(action) else action.run()
+}
