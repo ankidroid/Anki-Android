@@ -24,6 +24,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.ichi2.anki.TestUtils.isTablet
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.disableIntroductionSlide
 import com.ichi2.anki.testutil.discardPreliminaryViews
@@ -63,7 +64,7 @@ class DeckPickerTest : InstrumentedTest() {
 
         // Check if currently open Activity is StudyOptionsActivity
         onView(withId(R.id.studyoptions_frame))
-            .check(ViewAssertions.matches(isDisplayed()))
+            .checkWithTimeout(ViewAssertions.matches(isDisplayed()))
     }
 
     @Test
