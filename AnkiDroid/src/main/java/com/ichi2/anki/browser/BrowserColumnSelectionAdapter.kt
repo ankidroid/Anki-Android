@@ -28,6 +28,7 @@ import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
 import com.ichi2.anki.databinding.ItemBrowserColumnsEntryBinding
 import com.ichi2.anki.databinding.ItemBrowserColumnsHeadingBinding
+import com.ichi2.anki.utils.ext.runWhenNotComputingLayout
 import com.ichi2.anki.utils.ext.swapPositions
 
 class BrowserColumnSelectionAdapter(
@@ -207,7 +208,7 @@ class BrowserColumnSelectionTouchHelperCallback(
     ) {
         // this needs to be done after onMoved, or the drag operation sometimes completes early
         // when on a tablet
-        recyclerView.adapter?.notifyItemRangeChanged(0, items.size)
+        recyclerView.runWhenNotComputingLayout { recyclerView.adapter?.notifyItemRangeChanged(0, items.size) }
     }
 
     override fun onSwiped(
