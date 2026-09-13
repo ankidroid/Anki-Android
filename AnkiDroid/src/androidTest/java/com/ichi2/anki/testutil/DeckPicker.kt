@@ -28,7 +28,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.ichi2.anki.R
 import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.tests.checkWithTimeout
-import com.ichi2.anki.testutil.ThreadUtils.sleep
 
 /**
  * This file contains utility methods to interact with the DeckPicker.
@@ -74,10 +73,6 @@ fun tapOnCountLayouts(deckName: String) {
             clickChildViewWithId(R.id.counts_layout),
         ),
     )
-
-    // without this sleep, the study options fragment sometimes loses the "load and become active" race vs the assertion below.
-    // It actually won the race sometimes so sleeping a full second is generous. This should be quite stable
-    sleep(1000)
 }
 
 /**
