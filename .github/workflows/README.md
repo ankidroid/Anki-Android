@@ -16,7 +16,7 @@ Alternately, you may run the actions on your fork of `Anki-Android`.
 | [Lint (Kotlin)](https://github.com/ankidroid/Anki-Android/blob/main/.github/workflows/lint.yml)            | `./gradlew lintAll ktLintCheck lint-rules:test --daemon`             | Android lint rules, formatting and tests for lint rules   |
 | [Lint (JavaScript)](https://github.com/ankidroid/Anki-Android/blob/main/.github/workflows/lint.yml)        | See script                                                           | Prettier, lint & code formatting                          |
 | [Unit Tests](https://github.com/ankidroid/Anki-Android/blob/main/.github/workflows/tests_unit.yml)         | `./gradlew jacocoUnitTestReport --daemon`                            | Unit tests for the Android Project                        |
-| [Emulator Tests](https://github.com/ankidroid/Anki-Android/blob/main/.github/workflows/tests_emulator.yml) | `TEST_RELEASE_BUILD=true ./gradlew jacocoAndroidTestReport --daemon` | Emulator tests for the Android Project                    |
+| [Emulator Tests](https://github.com/ankidroid/Anki-Android/blob/main/.github/workflows/tests_emulator.yml) | `TEST_RELEASE_BUILD=true ./gradlew jacocoAndroidTestReport --daemon` | Emulator tests for the Android Project.<br/>CI runs `adb shell settings put global hide_error_dialogs 1` first |
 | [CodeQL](https://github.com/ankidroid/Anki-Android/blob/main/.github/workflows/codeql.yml)                 | N/A                                                                  | GitHub-only check.<br/>[Docs](https://codeql.github.com/) |
 
 ## Other Workflows

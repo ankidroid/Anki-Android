@@ -221,6 +221,8 @@ jobs:
           script: |
             touch adb-log.txt
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
+            # Fix "Speech Recognition and Synthesis from Google keeps stopping" causing RootViewWithoutFocusException  
+            adb shell settings put global hide_error_dialogs 1
             adb emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
