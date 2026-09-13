@@ -14,7 +14,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -145,20 +146,16 @@ class StudyOptionsActivity :
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { view, insets ->
             val bars =
                 insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+                    systemBars() or displayCutout(),
                 )
             view.updatePadding(left = bars.left, top = bars.top, right = bars.right)
             insets
         }
-        ViewCompat.setOnApplyWindowInsetsListener(binding.studyoptionsFrame) { view, insets ->
-            val bars =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
-                )
-            view.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
-            // insets are applied by padding. CONSUMED means hosted fragments don't apply them
-            // again (e.g. ScheduleRemindersFragment).
-            WindowInsetsCompat.CONSUMED
+        ViewCompat.setOnApplyWindowInsetsListener(binding.studyoptionsFrame) { _, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            // the toolbar clears the top: the hosted fragments apply the remaining insets
+            // themselves, so their scrolled content renders underneath the navigation bar
+            insets.inset(0, bars.top, 0, 0)
         }
     }
 

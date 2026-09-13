@@ -8,7 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.annotation.IdRes
 import androidx.core.view.ViewCompat
-import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.marginRight
 import androidx.core.view.marginTop
@@ -19,21 +18,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
-import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
-import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.StudyOptionsActivity
-import com.ichi2.anki.common.destinations.StudyOptionsDestination
-import com.ichi2.anki.common.destinations.launchActivity
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
 import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.PreferencesFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
 import com.ichi2.anki.utils.ConfigAwareSingleFragmentActivity
-import com.ichi2.anki.withDeckPicker
-import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.windowInsetsOf
 import com.ichi2.testutils.withWritePermissions
 import com.ichi2.utils.Dp
@@ -42,19 +34,14 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 
 /**
  * Edge-to-edge inset handling for [ScheduleRemindersFragment] and [ReminderTroubleshootingFragment]
- * across their [FragmentHost]s.
+ * in the hosts where they fill the window ([FragmentHost.SETTINGS] and
+ * [FragmentHost.STANDALONE_ACTIVITY]): the fragments apply the system bar insets themselves.
  *
- * The hosts fall into two groups:
- *
- * - hosts where the fragment fills the window ([FragmentHost.SETTINGS] and
- *   [FragmentHost.STANDALONE_ACTIVITY]): the fragment applies the system bar insets itself;
- * - hosts which apply the insets to the fragment's container ([FragmentHost.STUDY_OPTIONS_FRAME]
- *   and [FragmentHost.STUDY_OPTIONS_FRAGMENT]): the fragment must not apply them again.
+ * [ReviewRemindersScreenshotTest] covers the study options hosts.
  */
 @RunWith(AndroidJUnit4::class)
 class ReviewRemindersInsetsTest : RobolectricTest() {
@@ -239,84 +226,6 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
             )
         }
 
-    @Test
-    fun `study options frame host - insets are applied by the host, not the fragment`() =
-        withStudyOptionsFrameScheduleReminders { activity, binding ->
-            activity.dispatchInsets(navBarBottom = navigationBarSize)
-
-            assertThat(
-                "the host clears the navigation bar",
-                (binding.root.parent as View).paddingBottom,
-                equalTo(navigationBarSize.toPx(targetContext)),
-            )
-            assertThat(
-                "the fragment does not apply the top inset again",
-                binding.root.paddingTop,
-                equalTo(0),
-            )
-            assertThat(
-                "the fragment does not apply the bottom inset again",
-                binding.root.paddingBottom,
-                equalTo(0),
-            )
-            assertThat(
-                "the toolbar is provided by the host",
-                binding.appbar.isVisible,
-                equalTo(false),
-            )
-            assertThat(
-                "the fragment does not move the 'add reminder' button again",
-                binding.floatingActionButtonAdd.marginBottom,
-                equalTo(fabMargin.toPx(targetContext)),
-            )
-        }
-
-    @Test
-    fun `study options frame host - troubleshooting does not apply insets of its own`() =
-        withStudyOptionsFrameTroubleshooting { activity, binding ->
-            activity.dispatchInsets(navBarBottom = navigationBarSize)
-
-            assertThat(
-                "the fragment does not apply the top inset again",
-                binding.troubleshootingToolbar.marginTop,
-                equalTo(0),
-            )
-            assertThat(
-                "the fragment does not apply the bottom inset again",
-                binding.scrollView.paddingBottom,
-                equalTo(0),
-            )
-        }
-
-    @Test
-    fun `study options fragment host - side panel toolbar is not offset by the status bar`() =
-        withStudyOptionsFragmentScheduleReminders { deckPicker, binding ->
-            deckPicker.dispatchInsets(navBarBottom = navigationBarSize)
-
-            assertThat(
-                "the host clears the navigation bar",
-                (binding.root.parent as View).paddingBottom,
-                equalTo(navigationBarSize.toPx(targetContext)),
-            )
-            // The side panel sits below the DeckPicker toolbar, which already clears the status
-            // bar: the panel's own toolbar must not absorb the status bar inset again
-            assertThat(
-                "the panel toolbar is not padded by the status bar",
-                binding.appbar.paddingTop,
-                equalTo(0),
-            )
-            assertThat(
-                "the panel toolbar is not pushed down by the status bar",
-                binding.nonCollapsibleToolbar.top,
-                equalTo(0),
-            )
-            assertThat(
-                "the fragment does not move the 'add reminder' button again",
-                binding.floatingActionButtonAdd.marginBottom,
-                equalTo(fabMargin.toPx(targetContext)),
-            )
-        }
-
     /**
      * Dispatches realistic system-bar insets, which Robolectric otherwise reports as zero.
      *
@@ -379,57 +288,6 @@ class ReviewRemindersInsetsTest : RobolectricTest() {
                 block(activity, FragmentScheduleRemindersBinding.bind(view))
             }
         }
-    }
-
-    /** Launches [ScheduleRemindersFragment] hosted in the study options frame */
-    private fun withStudyOptionsFrameScheduleReminders(block: (StudyOptionsActivity, FragmentScheduleRemindersBinding) -> Unit) {
-        val deckId = addDeck("Test Deck")
-        launchActivity<StudyOptionsActivity>(StudyOptionsDestination).use { scenario ->
-            scenario.onActivity { activity ->
-                val view =
-                    activity.supportFragmentManager.showFragment(
-                        R.id.studyoptions_frame,
-                        ScheduleRemindersFragment.newInstance(
-                            ReviewReminderScope.DeckSpecific(deckId),
-                            FragmentHost.STUDY_OPTIONS_FRAME,
-                        ),
-                    )
-                block(activity, FragmentScheduleRemindersBinding.bind(view))
-            }
-        }
-    }
-
-    /** Launches [ReminderTroubleshootingFragment] hosted in the study options frame */
-    private fun withStudyOptionsFrameTroubleshooting(block: (StudyOptionsActivity, FragmentReminderTroubleshootingBinding) -> Unit) {
-        launchActivity<StudyOptionsActivity>(StudyOptionsDestination).use { scenario ->
-            scenario.onActivity { activity ->
-                val view =
-                    activity.supportFragmentManager.showFragment(
-                        R.id.studyoptions_frame,
-                        ReminderTroubleshootingFragment.newInstance(FragmentHost.STUDY_OPTIONS_FRAME),
-                    )
-                block(activity, FragmentReminderTroubleshootingBinding.bind(view))
-            }
-        }
-    }
-
-    /** Launches [ScheduleRemindersFragment] in the deck picker's tablet side panel */
-    private fun withStudyOptionsFragmentScheduleReminders(block: (DeckPicker, FragmentScheduleRemindersBinding) -> Unit) {
-        // the side panel only exists on wide screens
-        RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumTablet)
-        withDeckPicker(deckCount = 1, withCards = true) { deckPicker ->
-            val deckId = addDeck("Panel Deck")
-            val view =
-                deckPicker.supportFragmentManager.showFragment(
-                    R.id.studyoptions_fragment,
-                    ScheduleRemindersFragment.newInstance(
-                        ReviewReminderScope.DeckSpecific(deckId),
-                        FragmentHost.STUDY_OPTIONS_FRAGMENT,
-                    ),
-                )
-            block(deckPicker, FragmentScheduleRemindersBinding.bind(view))
-        }
-        BackupManagerTestUtilities.reset()
     }
 
     /** Replaces the contents of [containerId] with [fragment] and returns the fragment's laid-out view */
