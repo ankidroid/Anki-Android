@@ -85,9 +85,9 @@ class ScheduleRemindersFragment :
      * Possible hosts of this fragment. Certain stylistic changes need to be made based on where this
      * fragment is opened from / nested within.
      *
-     * This fragment applies the system bar insets to its own views. Hosts which instead apply the
-     * insets to this fragment's container ([STUDY_OPTIONS_FRAGMENT] and [STUDY_OPTIONS_FRAME])
-     * consume them, so that they are not applied a second time here.
+     * This fragment applies the system bar insets to its own views. Hosts which show it below a
+     * toolbar of their own ([STUDY_OPTIONS_FRAGMENT] and [STUDY_OPTIONS_FRAME]) consume the insets
+     * which they have already cleared, so that they are not applied a second time here.
      *
      * @param containerId The XML ID of the container in which this fragment is hosted.
      * @param toolbarType The type of toolbar to display for this fragment.
@@ -218,7 +218,10 @@ class ScheduleRemindersFragment :
 
         // Set up toolbar
         when (host.toolbarType) {
-            ToolbarType.EXTERNAL -> setupExternalActivityToolbar()
+            ToolbarType.EXTERNAL -> {
+                setExternalToolbarInsets()
+                setupExternalActivityToolbar()
+            }
             ToolbarType.INTERNAL_COLLAPSIBLE -> {
                 setCollapsibleToolbarInsets()
                 setupInternalFragmentToolbar(isCollapsible = true)
@@ -351,10 +354,13 @@ class ScheduleRemindersFragment :
         }
     }
 
+    /** The host's toolbar clears the system bars: only the content applies the insets */
+    private fun setExternalToolbarInsets() = setRootInsetsListener { }
+
     /**
-     * Replace the root CoordinatorLayout's inset handling.
+     * Replaces the root CoordinatorLayout's inset handling with [block].
      *
-     * No-op in [FragmentHost.STUDY_OPTIONS_FRAGMENT] and [FragmentHost.STUDY_OPTIONS_FRAME]
+     * @param block applies the system bar and display cutout insets to the toolbar
      */
     private fun setRootInsetsListener(block: (bars: Insets) -> Unit) {
         // API < 30: simulate API 30+ behaviour - insets are not affected by siblings.
@@ -368,9 +374,6 @@ class ScheduleRemindersFragment :
     /**
      * Keeps the list, the 'no reminders' placeholder and the 'add reminder' button clear of the
      * navigation bar and any display cutout.
-     *
-     * These listeners are no-ops in hosts which apply the insets to this fragment's container
-     * and consume them.
      */
     private fun setContentInsets() {
         binding.recyclerView.doOnApplyWindowInsets { view, insets, initial ->

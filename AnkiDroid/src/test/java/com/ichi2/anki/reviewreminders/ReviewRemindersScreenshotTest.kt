@@ -18,6 +18,7 @@ import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.launchActivity
 import com.ichi2.anki.databinding.FragmentReminderTroubleshootingBinding
+import com.ichi2.anki.databinding.FragmentScheduleRemindersBinding
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.PreferencesFragment
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment.FragmentHost
@@ -269,6 +270,95 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         }
     }
 
+    @Test
+    fun `study options frame host with system bars and a scrollable list`() {
+        val deckId = addDeck("Test Deck")
+        val scope = ReviewReminderScope.DeckSpecific(deckId)
+        insertReminders(count = 12, scope = scope)
+        launchActivity<StudyOptionsActivity>(StudyOptionsDestination).use { scenario ->
+            scenario.onActivity { activity ->
+                val binding =
+                    commitScheduleReminders(
+                        fragmentManager = activity.supportFragmentManager,
+                        containerId = R.id.studyoptions_frame,
+                        host = FragmentHost.STUDY_OPTIONS_FRAME,
+                        scope = scope,
+                    )
+                activity.simulateSystemBars()
+                // the list continues underneath the navigation bar band
+                captureScreen("studyOptionsFrameHost_systemBars")
+                // scrolled to the end: the last reminder must clear the navigation bar band
+                binding.recyclerView.scrollToLastPosition()
+                advanceRobolectricLooper()
+                captureScreen("studyOptionsFrameHost_systemBars_scrolledToEnd")
+            }
+        }
+    }
+
+    @Test
+    fun `study options frame host troubleshooting with system bars`() {
+        // landscape: the checks overflow the screen, so the end of the content must scroll
+        // clear of the navigation bar band
+        RuntimeEnvironment.setQualifiers("+land")
+        launchActivity<StudyOptionsActivity>(StudyOptionsDestination).use { scenario ->
+            scenario.onActivity { activity ->
+                val binding =
+                    commitTroubleshooting(
+                        fragmentManager = activity.supportFragmentManager,
+                        containerId = R.id.studyoptions_frame,
+                        host = FragmentHost.STUDY_OPTIONS_FRAME,
+                    )
+                activity.simulateSystemBars()
+                binding.scrollView.scrollTo(0, binding.scrollView.getChildAt(0).bottom)
+                advanceRobolectricLooper()
+                captureScreen("studyOptionsFrameHost_troubleshooting_systemBars")
+            }
+        }
+    }
+
+    @Test
+    fun `study options fragment host with system bars and a scrollable list`() {
+        setTabletQualifiers()
+        withDeckPicker(deckCount = 1, withCards = true) { deckPicker ->
+            val scope = ReviewReminderScope.DeckSpecific(addDeck("Test Deck"))
+            insertReminders(count = 12, scope = scope)
+            val binding =
+                commitScheduleReminders(
+                    fragmentManager = deckPicker.supportFragmentManager,
+                    containerId = R.id.studyoptions_fragment,
+                    host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
+                    scope = scope,
+                )
+            // a camera cutout beside the deck list: the deck list clears it, the panel must not
+            // clear it a second time
+            deckPicker.simulateSystemBars(cutoutLeft = 32.dp)
+            captureScreen("studyOptionsFragmentHost_systemBars")
+            // scrolled to the end: the last reminder must clear the navigation bar band
+            binding.recyclerView.scrollToLastPosition()
+            advanceRobolectricLooper()
+            captureScreen("studyOptionsFragmentHost_systemBars_scrolledToEnd")
+        }
+        BackupManagerTestUtilities.reset()
+    }
+
+    @Test
+    fun `study options fragment host troubleshooting with system bars`() {
+        setTabletQualifiers()
+        withDeckPicker(deckCount = 1, withCards = true) { deckPicker ->
+            val binding =
+                commitTroubleshooting(
+                    fragmentManager = deckPicker.supportFragmentManager,
+                    containerId = R.id.studyoptions_fragment,
+                    host = FragmentHost.STUDY_OPTIONS_FRAGMENT,
+                )
+            deckPicker.simulateSystemBars(cutoutLeft = 32.dp)
+            binding.scrollView.scrollTo(0, binding.scrollView.getChildAt(0).bottom)
+            advanceRobolectricLooper()
+            captureScreen("studyOptionsFragmentHost_troubleshooting_systemBars")
+        }
+        BackupManagerTestUtilities.reset()
+    }
+
     private fun insertReminder(
         time: ReviewReminderTime,
         scope: ReviewReminderScope = ReviewReminderScope.Global,
@@ -280,14 +370,27 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
     }
 
     /** Inserts [count] reminders so the list has content to render behind the simulated bars */
-    private fun insertReminders(count: Int) {
-        runBlocking {
-            repeat(count) { index ->
-                ReviewRemindersDatabase.insertReminder(
-                    ReviewReminder.createReviewReminder(ReviewReminderTime(hour = 8 + index, minute = 0)),
-                )
-            }
+    private fun insertReminders(
+        count: Int,
+        scope: ReviewReminderScope = ReviewReminderScope.Global,
+    ) {
+        repeat(count) { index ->
+            insertReminder(ReviewReminderTime(hour = 8 + index, minute = 0), scope = scope)
         }
+    }
+
+    /** Shows [ScheduleRemindersFragment] in [containerId] and returns its laid-out views */
+    private fun commitScheduleReminders(
+        fragmentManager: FragmentManager,
+        @IdRes containerId: Int,
+        host: FragmentHost,
+        scope: ReviewReminderScope,
+    ): FragmentScheduleRemindersBinding {
+        fragmentManager.commit {
+            replace(containerId, ScheduleRemindersFragment.newInstance(scope, host))
+        }
+        advanceRobolectricLooper()
+        return (fragmentManager.findFragmentById(containerId) as ScheduleRemindersFragment).binding
     }
 
     private fun commitScheduleRemindersAndCapture(
@@ -297,11 +400,22 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         scope: ReviewReminderScope,
         prefix: String,
     ) {
+        commitScheduleReminders(fragmentManager, containerId, host, scope)
+        captureScreen("${prefix}_scheduleReminders")
+    }
+
+    /** Shows [ReminderTroubleshootingFragment] in [containerId] and returns its laid-out views */
+    private fun commitTroubleshooting(
+        fragmentManager: FragmentManager,
+        @IdRes containerId: Int,
+        host: FragmentHost,
+    ): FragmentReminderTroubleshootingBinding {
         fragmentManager.commit {
-            replace(containerId, ScheduleRemindersFragment.newInstance(scope, host))
+            replace(containerId, ReminderTroubleshootingFragment.newInstance(host))
+            addToBackStack(null)
         }
         advanceRobolectricLooper()
-        captureScreen("${prefix}_scheduleReminders")
+        return (fragmentManager.findFragmentById(containerId) as ReminderTroubleshootingFragment).binding
     }
 
     private fun commitTroubleshootingAndCapture(
@@ -310,11 +424,7 @@ class ReviewRemindersScreenshotTest : ScreenshotTest() {
         host: FragmentHost,
         prefix: String,
     ) {
-        fragmentManager.commit {
-            replace(containerId, ReminderTroubleshootingFragment.newInstance(host))
-            addToBackStack(null)
-        }
-        advanceRobolectricLooper()
+        commitTroubleshooting(fragmentManager, containerId, host)
         captureScreen("${prefix}_troubleshooting")
     }
 
