@@ -4,6 +4,7 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.os.Build
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
@@ -28,6 +29,8 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class BottomNavigationScrollTest : RobolectricTest() {
@@ -273,10 +276,12 @@ class BottomNavigationScrollTest : RobolectricTest() {
             assertThat(summary.height > 0, equalTo(true))
             deckPicker.scrollFrom(deckPicker.deckPickerBinding.decks, 40)
             advanceRobolectricLooper()
-            // Robolectric re-dispatches zero insets when the bar's state changes: apply a real nav bar after
             deckPicker.dispatchInsets(navBarBottom = 48.dp)
             deckPicker.binding.root.requestLayout()
             advanceRobolectricLooper()
+            // Robolectric re-dispatches zero insets whenever the bar's state or height changes:
+            // apply the real nav bar again once layout has settled
+            deckPicker.dispatchInsets(navBarBottom = 48.dp)
 
             assertThat(HideViewOnScrollBehavior.from(nav).isScrolledOut, equalTo(true))
             assertThat(summary.alpha, equalTo(1f))
@@ -304,15 +309,80 @@ class BottomNavigationScrollTest : RobolectricTest() {
             assertThat(fade.anchorView, equalTo(summary))
         }
 
+    /** Tabs draw edge-to-edge: their content scrolls beneath the bottom navigation and the system bar */
     @Test
-    fun `hidden bar releases space for fragment content`() =
+    fun `the card browser scrolls beneath the bottom navigation`() =
         withBottomNavigation { deckPicker ->
             val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
             val container = deckPicker.binding.bottomNavFragmentContainer!!
-            deckPicker.scrollFrom(deckPicker.deckPickerBinding.decks, 40)
+            val list = deckPicker.findViewById<RecyclerView>(R.id.card_browser_list)
 
-            assertThat(HideViewOnScrollBehavior.from(nav).isScrolledOut, equalTo(true))
-            assertThat((container.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin < nav.height, equalTo(true))
+            assertThat("the tab fills the screen", container.bottom, equalTo(deckPicker.binding.root.height))
+            assertThat("the last card can scroll above the bar", list.paddingBottom, equalTo(nav.height))
+            assertThat(list.clipToPadding, equalTo(false))
+        }
+
+    @Test
+    fun `More scrolls beneath the bottom navigation`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.MORE.id
+            advanceRobolectricLooper()
+            val scrollView = deckPicker.moreBinding.moreScrollView
+
+            assertThat("the last item can scroll above the bar", scrollView.paddingBottom, equalTo(nav.height))
+            assertThat(scrollView.clipToPadding, equalTo(false))
+        }
+
+    /** Insets work differently below API 30: issue 21562 was reported on API 29 */
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.Q])
+    fun `tabs scroll beneath the bottom navigation on API 29`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.MORE.id
+            advanceRobolectricLooper()
+            assertThat("More clears the bar", deckPicker.moreBinding.moreScrollView.paddingBottom, equalTo(nav.height))
+
+            nav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            val list = deckPicker.findViewById<RecyclerView>(R.id.card_browser_list)
+            assertThat("the card browser clears the bar", list.paddingBottom, equalTo(nav.height))
+        }
+
+    @Test
+    fun `Statistics pads its page beneath the bottom navigation`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.STATS.id
+            advanceRobolectricLooper()
+
+            deckPicker.dispatchInsets()
+
+            val cssPixels = nav.height / deckPicker.resources.displayMetrics.density
+            assertThat(
+                shadowOf(deckPicker.statisticsWebView).lastEvaluatedJavascript,
+                equalTo("document.body.style.paddingBottom = '${cssPixels}px'"),
+            )
+        }
+
+    /** Resizing on every slide relayouts the tab: Statistics' WebView visibly stutters */
+    @Test
+    fun `hiding the bar does not resize the tab`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.STATS.id
+            advanceRobolectricLooper()
+            val page = deckPicker.statisticsBinding.webviewLayout
+            val shownHeight = page.height
+
+            HideViewOnScrollBehavior.from(nav).slideOut(nav)
+            deckPicker.binding.root.requestLayout()
+            advanceRobolectricLooper()
+
+            assertThat(page.height, equalTo(shownHeight))
         }
 
     private fun withBottomNavigation(test: (DeckPicker) -> Unit) =

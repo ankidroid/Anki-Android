@@ -6,17 +6,21 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
+import android.webkit.WebView
 import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
+import com.ichi2.anki.databinding.FragmentMoreBinding
+import com.ichi2.anki.databinding.PageStatisticsBinding
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.withBooleanPreference
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 
 @RunWith(AndroidJUnit4::class)
@@ -125,11 +129,25 @@ class BottomNavigationRestoreTest : RobolectricTest() {
         assertThat("$tab content is shown", container.isVisible, equalTo(true))
         assertThat("$tab hides the deck list", deckPicker.deckList.isVisible, equalTo(false))
         assertThat("$tab fragment is not hidden", deckPicker.supportFragmentManager.findFragmentByTag(tab.tag)?.isHidden, equalTo(false))
-        assertThat(
-            "$tab content clears the bar",
-            (container.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin,
-            equalTo(deckPicker.bottomNav.height),
-        )
+        // Tabs draw beneath the bar and pad their content by its height
+        deckPicker.dispatchInsets()
+        assertThat("$tab content clears the bar", deckPicker.contentBottomInset(tab), equalTo(deckPicker.bottomNav.height))
+    }
+
+    private fun DeckPicker.contentBottomInset(tab: NavigationItem): Int {
+        val view = supportFragmentManager.findFragmentByTag(tab.tag)!!.requireView()
+        return when (tab) {
+            NavigationItem.BROWSER -> view.findViewById<View>(R.id.card_browser_list).paddingBottom
+            NavigationItem.MORE -> FragmentMoreBinding.bind(view).moreScrollView.paddingBottom
+            NavigationItem.STATS -> {
+                // Statistics pads its page, as resizing its WebView would relayout the page
+                val webView = PageStatisticsBinding.bind(view).webviewLayout.getChildAt(0) as WebView
+                val css = shadowOf(webView).lastEvaluatedJavascript
+                val cssPixels = Regex("paddingBottom = '([0-9.]+)px'").find(css)!!.groupValues[1].toFloat()
+                (cssPixels * resources.displayMetrics.density).toInt()
+            }
+            NavigationItem.HOME -> error("Home is not a tab in the container")
+        }
     }
 
     private val DeckPicker.bottomNav: BottomNavigationView

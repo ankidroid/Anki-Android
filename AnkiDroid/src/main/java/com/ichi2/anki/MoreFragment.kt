@@ -3,11 +3,18 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.annotation.StringRes
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.ancestors
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.analytics.AnalyticsEvent.LinkClicked
@@ -33,11 +40,39 @@ import dev.androidbroadcast.vbpd.viewBinding
 class MoreFragment : Fragment(R.layout.fragment_more) {
     private val binding by viewBinding(FragmentMoreBinding::bind)
 
+    /**
+     * Scrolls a focused item above the bottom navigation.
+     *
+     * [androidx.core.widget.NestedScrollView] brings focus on screen ignoring its padding, which is
+     * beneath the navigation.
+     */
+    private val keepFocusAboveNavigation =
+        ViewTreeObserver.OnGlobalFocusChangeListener { _, focused ->
+            val scrollView = binding.moreScrollView
+            if (focused == null || focused.ancestors.none { it === scrollView }) return@OnGlobalFocusChangeListener
+            scrollView.post {
+                val bounds = Rect().also(focused::getDrawingRect)
+                scrollView.offsetDescendantRectToMyCoords(focused, bounds)
+                val visibleBottom = scrollView.scrollY + scrollView.height - scrollView.paddingBottom
+                if (bounds.bottom > visibleBottom) scrollView.scrollBy(0, bounds.bottom - visibleBottom)
+            }
+        }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.viewTreeObserver.addOnGlobalFocusChangeListener(keepFocusAboveNavigation)
+
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, right = bars.right)
+            // content scrolls beneath the navigation: only the last item is kept above it
+            binding.moreScrollView.updatePadding(bottom = bottomNavigationInset(insets, bars.bottom))
+            insets
+        }
 
         val marketIntent = AnkiDroidApp.getMarketIntent(requireContext())
 
@@ -99,6 +134,11 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
         if (!BuildConfig.SHOW_DONATE_LINKS) {
             binding.moreSupportDonate.isVisible = false
         }
+    }
+
+    override fun onDestroyView() {
+        requireView().viewTreeObserver.removeOnGlobalFocusChangeListener(keepFocusAboveNavigation)
+        super.onDestroyView()
     }
 
     /**
