@@ -46,7 +46,7 @@
     <string name="custom_study_new_extend">增加/减少（“-3”）今天的新卡片限制</string>
     <string name="custom_study_rev_extend">增加/减少（“-3”）今天的复习卡片限制</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
+    <string name="custom_study_ahead_description">复习接下去多久到期的卡片：</string>
     <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
     <string name="custom_study_tags">从牌组中选择 x 张卡片：</string>
     <string name="storage_full_title">存储空间已满</string>
@@ -84,7 +84,7 @@
     <string name="check_media_warning">对于大型媒体集合，这可能需要很长时间。继续吗？</string>
     <string name="check_media_message">正在检查媒体文件&#8230;</string>
     <string name="check_media_adding_missing_tag">正在添加标签&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">标记结果</string>
     <string name="delete_media_message">正在删除媒体&#8230;</string>
     <string name="delete_media_result_title">填空结果</string>
     <plurals name="delete_media_result_message">
@@ -254,7 +254,7 @@
     <string name="change_note_type_from" comment="Label indicating the original note type before changing it">从</string>
     <string name="change_note_type_to" comment="Label indicating the new note type to change to">到</string>
     <!-- Add profile dialog -->
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">配置方案名称</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">配置方案名称不能为空</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">配置文件名称长度必须是 %1$d 个字符或更短</string>
 </resources>

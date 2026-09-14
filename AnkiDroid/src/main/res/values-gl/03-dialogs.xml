@@ -86,7 +86,7 @@
     <string name="check_media_warning">Isto pode levar moito tempo con coleccións multimedia grandes. Queres continuar?</string>
     <string name="check_media_message">Verificando multimedia&#8230;</string>
     <string name="check_media_adding_missing_tag">Engadindo etiquetas&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Resultados das etiquetas</string>
     <string name="delete_media_message">Eliminando multimedia&#8230;</string>
     <string name="delete_media_result_title">Resultado da eliminación</string>
     <plurals name="delete_media_result_message">
