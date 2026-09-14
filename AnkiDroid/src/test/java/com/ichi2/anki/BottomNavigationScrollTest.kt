@@ -4,10 +4,13 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.os.Build
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityManager
+import android.view.accessibility.AccessibilityNodeInfo
 import android.webkit.WebView
 import android.widget.ScrollView
 import android.widget.TextView
@@ -26,9 +29,14 @@ import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.withPref
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
+import kotlin.math.roundToInt
 
 @RunWith(AndroidJUnit4::class)
 class BottomNavigationScrollTest : RobolectricTest() {
@@ -274,10 +282,12 @@ class BottomNavigationScrollTest : RobolectricTest() {
             assertThat(summary.height > 0, equalTo(true))
             deckPicker.scrollFrom(deckPicker.deckPickerBinding.decks, 40)
             advanceRobolectricLooper()
-            // Robolectric re-dispatches zero insets when the bar's state changes: apply a real nav bar after
             deckPicker.dispatchInsets(navBarBottom = 48.dp)
             deckPicker.binding.root.requestLayout()
             advanceRobolectricLooper()
+            // Robolectric re-dispatches zero insets whenever the bar's state or height changes:
+            // apply the real nav bar again once layout has settled
+            deckPicker.dispatchInsets(navBarBottom = 48.dp)
 
             assertThat(HideViewOnScrollBehavior.from(nav).isScrolledOut, equalTo(true))
             assertThat(summary.alpha, equalTo(1f))
@@ -305,15 +315,206 @@ class BottomNavigationScrollTest : RobolectricTest() {
             assertThat(fade.anchorView, equalTo(summary))
         }
 
+    /** Tabs draw edge-to-edge: their content scrolls beneath the bottom navigation and the system bar */
     @Test
-    fun `hidden bar releases space for fragment content`() =
+    fun `the card browser scrolls beneath the bottom navigation`() =
         withBottomNavigation { deckPicker ->
             val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
             val container = deckPicker.binding.bottomNavFragmentContainer!!
-            deckPicker.scrollFrom(deckPicker.deckPickerBinding.decks, 40)
+            val list = deckPicker.findViewById<RecyclerView>(R.id.card_browser_list)
 
-            assertThat(HideViewOnScrollBehavior.from(nav).isScrolledOut, equalTo(true))
-            assertThat((container.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin < nav.height, equalTo(true))
+            assertThat("the tab fills the screen", container.bottom, equalTo(deckPicker.binding.root.height))
+            assertThat("the last card can scroll above the bar", list.paddingBottom, equalTo(nav.height))
+            assertThat(list.clipToPadding, equalTo(false))
+        }
+
+    /** A hidden bar leaves no gap at the end of a tab: only the system bar is kept clear */
+    @Test
+    fun `tabs end above the system bar while the bottom bar is hidden`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            val behavior = HideViewOnScrollBehavior.from(nav)
+            val systemBar = 48.dp.toPx(deckPicker)
+            for (tab in listOf(NavigationItem.BROWSER, NavigationItem.MORE, NavigationItem.STATS)) {
+                nav.selectedItemId = tab.id
+                advanceRobolectricLooper()
+
+                behavior.slideOut(nav, false)
+                advanceRobolectricLooper()
+                // Robolectric re-dispatches zero insets when the bar's state changes
+                deckPicker.dispatchInsets(navBarBottom = 48.dp)
+                assertThat("$tab: hidden bar", deckPicker.endPadding(tab), equalTo(systemBar + deckPicker.belowScreen(tab)))
+
+                behavior.slideIn(nav, false)
+                advanceRobolectricLooper()
+                deckPicker.dispatchInsets(navBarBottom = 48.dp)
+                assertThat("$tab: shown bar", deckPicker.endPadding(tab), greaterThan(systemBar))
+            }
+        }
+
+    /** As in the deck list, a tab's bar continues beneath a display cutout: only its content is inset */
+    @Test
+    fun `tab bars continue beneath a display cutout`() =
+        withBottomNavigation { deckPicker ->
+            val cutout = 30.dp.toPx(deckPicker)
+            for (tab in listOf(NavigationItem.BROWSER, NavigationItem.MORE, NavigationItem.STATS)) {
+                deckPicker.bottomNav.selectedItemId = tab.id
+                advanceRobolectricLooper()
+                deckPicker.dispatchInsets(cutoutLeft = 30.dp)
+                deckPicker.binding.root.requestLayout()
+                advanceRobolectricLooper()
+
+                val view = deckPicker.supportFragmentManager.findFragmentByTag(tab.tag)!!.requireView()
+                val toolbar = view.findViewById<View>(R.id.toolbar)
+                val (bar, content) =
+                    when (tab) {
+                        NavigationItem.BROWSER ->
+                            view.findViewById<View>(R.id.toolbar_container) to
+                                view.findViewById(R.id.card_browser_list)
+                        NavigationItem.MORE -> toolbar.parent as View to deckPicker.moreBinding.moreScrollView.getChildAt(0)
+                        // Robolectric does not lay out the WebView: use the area its layout gives it
+                        NavigationItem.STATS -> deckPicker.statisticsBinding.appBar to deckPicker.statisticsBinding.webviewLayout
+                        NavigationItem.HOME -> error("not a tab with its own content")
+                    }
+                assertThat("$tab: bar reaches the edge", bar.leftOnScreen, equalTo(0))
+                assertThat("$tab: toolbar clears the cutout", toolbar.leftOnScreen + toolbar.paddingLeft, greaterThanOrEqualTo(cutout))
+                assertThat("$tab: content clears the cutout", content.leftOnScreen + content.paddingLeft, greaterThanOrEqualTo(cutout))
+            }
+        }
+
+    /** TalkBack asks the view to show itself, without moving the keyboard focus */
+    @Test
+    fun `More shows an accessibility-focused item above the bottom navigation`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.MORE.id
+            advanceRobolectricLooper()
+            val binding = deckPicker.moreBinding
+            binding.moreScrollView.scrollTo(0, 0)
+            val item = binding.moreSupportFeedback
+
+            item.performAccessibilityAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SHOW_ON_SCREEN.id, null)
+            advanceRobolectricLooper()
+
+            assertThat("the bottom navigation is still visible", HideViewOnScrollBehavior.from(nav).isScrolledIn, equalTo(true))
+            assertThat(item.topOnScreen + item.height, lessThanOrEqualTo(nav.topOnScreen))
+        }
+
+    @Test
+    fun `More scrolls beneath the bottom navigation`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.MORE.id
+            advanceRobolectricLooper()
+            val scrollView = deckPicker.moreBinding.moreScrollView
+
+            assertThat("the last item can scroll above the bar", scrollView.paddingBottom, equalTo(nav.height))
+            assertThat(scrollView.clipToPadding, equalTo(false))
+        }
+
+    /** Insets work differently below API 30: issue 21562 was reported on API 29 */
+    @Test
+    @Config(sdk = [Build.VERSION_CODES.Q])
+    fun `tabs scroll beneath the bottom navigation on API 29`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.MORE.id
+            advanceRobolectricLooper()
+            assertThat("More clears the bar", deckPicker.moreBinding.moreScrollView.paddingBottom, equalTo(nav.height))
+
+            nav.selectedItemId = NavigationItem.BROWSER.id
+            advanceRobolectricLooper()
+            val list = deckPicker.findViewById<RecyclerView>(R.id.card_browser_list)
+            assertThat("the card browser clears the bar", list.paddingBottom, equalTo(nav.height))
+        }
+
+    @Test
+    fun `Statistics pads its page beneath the bottom navigation`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.STATS.id
+            advanceRobolectricLooper()
+
+            deckPicker.dispatchInsets()
+
+            assertThat(
+                deckPicker.endPadding(NavigationItem.STATS),
+                equalTo(nav.height + deckPicker.belowScreen(NavigationItem.STATS)),
+            )
+            assertThat("the page is not resized", deckPicker.statisticsBinding.webviewLayout.paddingBottom, equalTo(0))
+        }
+
+    @Test
+    fun `Statistics keeps clear of the status bar and display cutout`() =
+        withBottomNavigation { deckPicker ->
+            deckPicker.bottomNav.selectedItemId = NavigationItem.STATS.id
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets(cutoutLeft = 30.dp)
+            deckPicker.binding.root.requestLayout()
+            advanceRobolectricLooper()
+
+            val statistics = deckPicker.statisticsBinding
+            assertThat("toolbar is below the status bar", statistics.toolbar.topOnScreen, greaterThanOrEqualTo(24.dp.toPx(deckPicker)))
+            assertThat("toolbar clears the cutout", statistics.deckName.leftOnScreen, greaterThanOrEqualTo(30.dp.toPx(deckPicker)))
+            val page = statistics.webviewLayout
+            assertThat("page clears the cutout", page.leftOnScreen + page.paddingLeft, greaterThanOrEqualTo(30.dp.toPx(deckPicker)))
+        }
+
+    /** While its toolbar is expanded, the Statistics page extends below the screen by the toolbar's height */
+    @Test
+    fun `Statistics pads its page for the part the expanded toolbar pushes off screen`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.STATS.id
+            advanceRobolectricLooper()
+            val statistics = deckPicker.statisticsBinding
+            statistics.appBar.setExpanded(true, false)
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets()
+
+            val offScreen = deckPicker.belowScreen(NavigationItem.STATS)
+            assertThat("the expanded toolbar pushes the page down", offScreen, equalTo(statistics.toolbar.height))
+            assertThat("expanded", deckPicker.endPadding(NavigationItem.STATS), equalTo(nav.height + offScreen))
+
+            statistics.appBar.setExpanded(false, false)
+            advanceRobolectricLooper()
+            assertThat("collapsed", deckPicker.endPadding(NavigationItem.STATS), equalTo(nav.height))
+        }
+
+    /** TalkBack moves through the page without its scroll padding: the page instead ends above the bar */
+    @Test
+    fun `with TalkBack, the Statistics page ends above the bottom navigation`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.STATS.id
+            advanceRobolectricLooper()
+            shadowOf(deckPicker.getSystemService(AccessibilityManager::class.java)).setTouchExplorationEnabled(true)
+            advanceRobolectricLooper()
+            deckPicker.dispatchInsets()
+
+            val statistics = deckPicker.statisticsBinding
+            assertThat("the toolbar no longer scrolls the page down", statistics.appBar.totalScrollRange, equalTo(0))
+            assertThat("the page ends above the bar", statistics.webviewLayout.paddingBottom, equalTo(nav.height))
+            assertThat("so it needs no padding of its own", deckPicker.endPadding(NavigationItem.STATS), equalTo(0))
+        }
+
+    /** Resizing on every slide relayouts the tab: Statistics' WebView visibly stutters */
+    @Test
+    fun `hiding the bar does not resize the tab`() =
+        withBottomNavigation { deckPicker ->
+            val nav = deckPicker.bottomNav
+            nav.selectedItemId = NavigationItem.STATS.id
+            advanceRobolectricLooper()
+            val page = deckPicker.statisticsBinding.webviewLayout
+            val shownHeight = page.height
+
+            HideViewOnScrollBehavior.from(nav).slideOut(nav)
+            deckPicker.binding.root.requestLayout()
+            advanceRobolectricLooper()
+
+            assertThat(page.height, equalTo(shownHeight))
         }
 
     private fun withBottomNavigation(test: (DeckPicker) -> Unit) =
@@ -347,8 +548,32 @@ class BottomNavigationScrollTest : RobolectricTest() {
         advanceRobolectricLooper()
     }
 
+    /** How far a tab's content extends below the screen: Statistics' expanded toolbar pushes its page down */
+    private fun DeckPicker.belowScreen(tab: NavigationItem): Int =
+        if (tab != NavigationItem.STATS) {
+            0
+        } else {
+            statisticsBinding.webviewLayout.let { it.bottom - (it.parent as View).height }.coerceAtLeast(0)
+        }
+
+    /** The space a tab leaves beneath its last item, in pixels */
+    private fun DeckPicker.endPadding(tab: NavigationItem): Int =
+        when (tab) {
+            NavigationItem.BROWSER -> findViewById<RecyclerView>(R.id.card_browser_list).paddingBottom
+            NavigationItem.MORE -> moreBinding.moreScrollView.paddingBottom
+            NavigationItem.STATS -> {
+                val css = shadowOf(statisticsWebView).lastEvaluatedJavascript
+                val cssPixels = Regex("""bottomInset = ([0-9.]+);""").find(css)!!.groupValues[1].toFloat()
+                (cssPixels * resources.displayMetrics.density).roundToInt()
+            }
+            NavigationItem.HOME -> error("not a tab with its own content")
+        }
+
     private val View.topOnScreen: Int
         get() = IntArray(2).also { getLocationOnScreen(it) }[1]
+
+    private val View.leftOnScreen: Int
+        get() = IntArray(2).also { getLocationOnScreen(it) }[0]
 
     private val View.contentBottomOnScreen: Int
         get() = topOnScreen + height - paddingBottom

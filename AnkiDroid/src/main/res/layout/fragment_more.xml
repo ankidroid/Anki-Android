@@ -27,10 +27,11 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Nested scrolling lets the bottom navigation hide on scroll -->
-    <androidx.core.widget.NestedScrollView
+    <com.ichi2.anki.ui.PaddingAwareNestedScrollView
         android:id="@+id/more_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -341,5 +342,5 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.ichi2.anki.ui.PaddingAwareNestedScrollView>
 </LinearLayout>
