@@ -44,7 +44,7 @@
     <!-- Reviewer.kt (Study Screen) -->
     <string name="save_whiteboard" maxLength="28">ئاق دوسكىنى ساقلا</string>
     <string name="enable_stylus" maxLength="28">قەلەمدە يېزىشنى قوزغات</string>
-    <string name="disable_stylus">قەلەمدە يېزىشنى چەكلەيدۇ</string>
+    <string name="disable_stylus">قەلەمدە يېزىشنى چەكلە</string>
     <string name="eraser" maxLength="28">ئۆچۈرگۈچ</string>
     <string name="add_brush" maxLength="28">چوتكا قوش</string>
     <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">سول</string>
@@ -56,7 +56,7 @@
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">سىزىق توملۇقى</string>
     <string name="stylus_mode" comment="Title of the menu item that toggles the whiteboard stylus mode" maxLength="28">قەلەم ھالىتى</string>
     <string name="cannot_remove_last_brush_message">ئالدىنقى چوتكىنى چىقىرىۋېتەلمەيدۇ</string>
-    <string name="enable_whiteboard" maxLength="28">ئاق دوسكىنى قوزغىتىدۇ</string>
+    <string name="enable_whiteboard" maxLength="28">ئاق دوسكىنى قوزغات</string>
     <string name="disable_whiteboard">ئاق دوسكىنى چەكلە</string>
     <string name="show_whiteboard">ئاق دوسكىنى كۆرسەت</string>
     <string name="enable_eraser" maxLength="28">ئۆچۈرگۈچنى قوزغات</string>
@@ -370,7 +370,7 @@
     <string name="set_due_date_date_range">چېسلا دائىرىسى</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">ئىجرا قىلىنىۋاتىدۇ</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">تەرجىمىھال ئالماشتۇر</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">تەرجىمىھال تەھرىر</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">تەرجىمىھال ئۆچۈر</string>
 </resources>

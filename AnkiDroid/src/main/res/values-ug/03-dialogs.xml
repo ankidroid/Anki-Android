@@ -48,7 +48,7 @@
     <string name="custom_study_new_extend">بۈگۈنكى يېڭى كارتا چېكىنى («3-»)ئاشۇرىدۇ/كېمەيتىدۇ</string>
     <string name="custom_study_rev_extend">بۈگۈنكى تەكرارلايدىغان كارتا چېكىنى («3-»)ئاشۇرىدۇ/كېمەيتىدۇ</string>
     <string name="custom_study_forgotten">ئۆتكەن x كۈندە ئۇنتۇلغان كارتىنى تەكرارلايدۇ:</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
+    <string name="custom_study_ahead_description">كېيىنكى كارتىنى تەكرارلاش مۆھلىتى:</string>
     <string name="custom_study_preview">يېقىنقى x كۈندە قوشقان يېڭى كارتىنى ئالدىن كۆزىتىدۇ:</string>
     <string name="custom_study_tags">دەستىدىن x كارتا تاللىنىدۇ:</string>
     <string name="storage_full_title">ساقلىغۇچ لىق</string>
@@ -86,7 +86,7 @@
     <string name="check_media_warning">چوڭ ۋاسىتە توپلىمىغا ئۇزۇن ۋاقىت كېتىشى مۇمكىن. داۋاملاشتۇرامدۇ؟</string>
     <string name="check_media_message">ۋاسىتە تەكشۈرۈۋاتىدۇ&#8230;</string>
     <string name="check_media_adding_missing_tag">بەلگە قوش&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">بەلگە قويۇش نەتىجىسى</string>
     <string name="delete_media_message">ۋاسىتە ئۆچۈرۈۋاتىدۇ&#8230;</string>
     <string name="delete_media_result_title">ئۆچۈرۈش نەتىجىسى</string>
     <plurals name="delete_media_result_message">
@@ -259,10 +259,10 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">كارتا قېلىپى %s نىڭ ئىسمى</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">خاتىرە تۈرى %s نىڭ ئىسمى</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">نەدىن</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">نەگە</string>
     <!-- Add profile dialog -->
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">تەرجىمىھال ئىسمى</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">تەرجىمىھال ئىسمى بوش قالمايدۇ</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">تەرجىمىھال ئىسمى چوقۇم %1$d ھەر ياكى ئۇنىڭدىن قىسقا بولىدۇ</string>
 </resources>
