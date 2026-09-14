@@ -9,10 +9,16 @@ import android.print.PrintManager
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updatePadding
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.bottomNavigationInset
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
 import com.ichi2.anki.databinding.PageStatisticsBinding
@@ -45,6 +51,27 @@ class Statistics : PageFragment(R.layout.page_statistics) {
             binding.toolbar.navigationIcon = null
         }
 
+        // In the bottom navigation, the page draws beneath the bar: pad it so its end can scroll above,
+        // and so content scrolled into view (such as a focused control) stops above the bar.
+        // Padding the WebView instead would resize it, which relayouts the page.
+        if (activity is DeckPicker) {
+            // Unlike SingleFragmentActivity, DeckPicker does not pad the tab for the status bar and cutout
+            binding.appBar.fitsSystemWindows = true
+            ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+                val bars = insets.getInsets(systemBars() or displayCutout())
+                view.updatePadding(left = bars.left, right = bars.right)
+                insets
+            }
+            ViewCompat.setOnApplyWindowInsetsListener(webViewLayout) { _, insets ->
+                val bottom = bottomNavigationInset(insets, insets.getInsets(systemBars()).bottom) / resources.displayMetrics.density
+                webViewLayout.evaluateJavascript(
+                    "document.body.style.paddingBottom = '${bottom}px'; " +
+                        "document.scrollingElement.style.scrollPaddingBottom = '${bottom}px'",
+                )
+                insets
+            }
+        }
+
         binding.deckName.setOnClickListener {
             startDeckSelection(allowAll = false, allowFiltered = false, skipEmptyDefault = true)
         }
@@ -67,6 +94,12 @@ class Statistics : PageFragment(R.layout.page_statistics) {
             }
         }
     }
+
+    // the page has no body to pad until it loads
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?) =
+        super.onCreateWebViewClient(savedInstanceState).apply {
+            onPageFinishedCallbacks.add { ViewCompat.requestApplyInsets(webViewLayout) }
+        }
 
     override fun onWebViewCreated() {
         // Also called when the WebView is recreated after a renderer crash, so the listener is re-attached.

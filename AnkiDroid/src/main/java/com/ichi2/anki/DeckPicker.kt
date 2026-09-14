@@ -751,20 +751,31 @@ open class DeckPicker :
                 left = if (isRtl && fragmented) 0 else bars.left,
                 right = if (!isRtl && fragmented) 0 else bars.right,
             )
+            // The bottom navigation raises the summary itself, as it slides in and out
             deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = withKeyboard.bottom)
 
-            val bottomNavOffset =
-                if (binding.bottomNavigation?.let { it.isVisible && HideViewOnScrollBehavior.from(it).isScrolledIn } == true) {
-                    BOTTOM_NAV_HEIGHT_DP.dp.toPx(this)
-                } else {
-                    0
+            val bottomNavigation =
+                binding.bottomNavigation?.takeIf { it.isVisible && HideViewOnScrollBehavior.from(it).isScrolledIn }
+            // Estimate the bar until it is measured
+            val navigationInset =
+                when {
+                    bottomNavigation == null -> bars.bottom
+                    bottomNavigation.height > 0 -> bottomNavigation.heightAbove(insets)
+                    else -> bars.bottom + BOTTOM_NAV_HEIGHT_DP.dp.toPx(this)
                 }
             // the keyboard covers the bottom navigation: clear whichever is taller
-            floatingActionButtonBinding.root.updatePadding(
-                bottom = maxOf(bars.bottom + bottomNavOffset, withKeyboard.bottom),
-            )
-
+            floatingActionButtonBinding.root.updatePadding(bottom = maxOf(navigationInset, withKeyboard.bottom))
             insets
+        }
+        // Re-apply the insets when the bar's own height is measured or changes. Changes to its padding
+        // come from the insets themselves: re-applying for those would only repeat the same values.
+        var bottomNavigationContentHeight = 0
+        binding.bottomNavigation?.addOnLayoutChangeListener { bar, _, _, _, _, _, _, _, _ ->
+            val contentHeight = bar.height - bar.paddingBottom
+            if (contentHeight != bottomNavigationContentHeight) {
+                bottomNavigationContentHeight = contentHeight
+                ViewCompat.requestApplyInsets(deckPickerBinding.root)
+            }
         }
         // Insets move the FAB's ancestors without changing the FAB's bounds within its parent.
         // Wait until the whole hierarchy is laid out before reading positions in the window.
