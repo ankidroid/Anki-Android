@@ -4,13 +4,13 @@ package com.ichi2.anki
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat.Type.navigationBars
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -52,18 +52,6 @@ fun setupBottomNavigation() {
     bottomNav.isVisible = true
     val scrollBehavior = HideViewOnScrollBehavior.from(bottomNav)
 
-    fun updateFragmentBottomMargin() {
-        val margin =
-            if (scrollBehavior.isScrolledIn) {
-                bottomNav.height
-            } else {
-                ViewCompat.getRootWindowInsets(bottomNav)?.getInsets(navigationBars())?.bottom ?: 0
-            }
-        if (fragmentContainer.marginBottom != margin) {
-            fragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = margin }
-        }
-    }
-
     fun positionStudiedSummary(animate: Boolean) {
         // The "Studied X cards today" summary is anchored to the bottom of the Decks layout, not to the bar.
         // Raise it above the bar while the bar is shown. When the bar hides, return it to its resting
@@ -103,7 +91,6 @@ fun setupBottomNavigation() {
     // Never hide the bar while explore-by-touch (e.g. TalkBack) is on, so it stays reachable.
     scrollBehavior.disableOnTouchExploration(true)
     scrollBehavior.addOnScrollStateChangedListener { _, _ ->
-        updateFragmentBottomMargin()
         positionStudiedSummary(animate = true)
         // Re-apply insets so the Decks FAB and list padding follow the bar's new position.
         ViewCompat.requestApplyInsets(deckPicker.deckPickerBinding.root)
@@ -120,10 +107,11 @@ fun setupBottomNavigation() {
         }
     deckPicker.onBackPressedDispatcher.addCallback(deckPicker, bottomNavBackCallback)
 
-    // Handle system navigation bar insets for the bottom nav
+    // Keep navigation controls clear of system bars and display cutouts while its background
+    // continues edge-to-edge.
     ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, insets ->
-        val navBars = insets.getInsets(navigationBars())
-        view.updatePadding(bottom = navBars.bottom)
+        val bars = insets.getInsets(systemBars() or displayCutout())
+        view.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
         insets
     }
 
@@ -137,7 +125,6 @@ fun setupBottomNavigation() {
     }
 
     bottomNav.addOnLayoutChangeListener { _, _, top, _, bottom, _, oldTop, _, oldBottom ->
-        updateFragmentBottomMargin()
         if (bottom - top != oldBottom - oldTop) positionStudiedSummary(animate = false)
     }
     studiedSummary.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
@@ -237,6 +224,33 @@ private fun showBottomNavFragment(
         }
     }
     fragmentContainer.isVisible = true
+}
+
+/**
+ * The bottom navigation's height above the window's bottom edge, for [insets].
+ *
+ * The bar is padded by the system bar inset, which may not be applied yet: its own height is added
+ * to the inset instead. Reading the padded height would need the insets dispatched again once the
+ * bar is laid out.
+ */
+internal fun BottomNavigationView.heightAbove(insets: WindowInsetsCompat): Int =
+    insets.getInsets(systemBars() or displayCutout()).bottom + height - paddingBottom
+
+/**
+ * The bottom inset for a tab's scrolling content: the bottom navigation when hosted in it,
+ * otherwise [contentBottom]. Content scrolls beneath the bar and pads its end by this.
+ *
+ * The bar's full height is used even while it is hidden: changing it on every slide relayouts the
+ * tab, which stutters (Statistics' WebView).
+ */
+fun Fragment.bottomNavigationInset(
+    insets: WindowInsetsCompat,
+    contentBottom: Int,
+): Int {
+    val deckPicker = activity as? DeckPicker ?: return contentBottom
+    if (!deckPicker.bottomNavigationEnabled) return contentBottom
+    val bottomNav = deckPicker.binding.bottomNavigation ?: return contentBottom
+    return maxOf(contentBottom, bottomNav.heightAbove(insets))
 }
 
 /**
