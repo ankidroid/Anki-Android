@@ -13,6 +13,7 @@ import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.dispatchInsets
+import com.ichi2.testutils.withBooleanPreference
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -79,6 +80,63 @@ class DeckPickerInsetsTest : RobolectricTest() {
                 deckPicker.dispatchInsets(navBarBottom = 48.dp)
                 deckPicker.layoutForTest()
                 assertThat("the keyboard must not leave extra space below the decks", list.paddingBottom, equalTo(restingPadding))
+            }
+        }
+
+    @Test
+    fun `FAB clears bottom navigation`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            withDeckPicker(deckCount = 2) { deckPicker ->
+                deckPicker.dispatchInsets(navBarBottom = 48.dp)
+                deckPicker.layoutForTest()
+
+                val bottomNavigation = deckPicker.findViewById<View>(R.id.bottom_navigation)
+                assertThat(
+                    "the FAB clears both app and system navigation",
+                    deckPicker.floatingActionButtonBinding.root.paddingBottom,
+                    equalTo(bottomNavigation.height),
+                )
+            }
+        }
+
+    /** The 80dp estimate is only for before the bar is measured: it must not become a minimum */
+    @Test
+    fun `FAB follows a bottom navigation shorter than the estimate`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            withDeckPicker(deckCount = 2) { deckPicker ->
+                val bottomNavigation = deckPicker.findViewById<View>(R.id.bottom_navigation)
+                bottomNavigation.layoutParams = bottomNavigation.layoutParams.apply { height = 40.dp.toPx(targetContext) }
+                deckPicker.dispatchInsets(navBarBottom = 48.dp)
+                deckPicker.layoutForTest()
+
+                assertThat(
+                    deckPicker.floatingActionButtonBinding.root.paddingBottom,
+                    equalTo(bottomNavigation.height),
+                )
+            }
+        }
+
+    @Test
+    fun `bottom navigation clears landscape system bars`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            withDeckPicker(deckCount = 2) { deckPicker ->
+                val cutoutLeft = 32.dp.toPx(targetContext)
+                val navigationBarRight = 48.dp.toPx(targetContext)
+                deckPicker.dispatchInsets(navBarRight = 48.dp, cutoutLeft = 32.dp)
+                deckPicker.layoutForTest()
+
+                val bottomNavigation = deckPicker.findViewById<View>(R.id.bottom_navigation)
+                assertThat("bottom navigation clears the display cutout", bottomNavigation.paddingLeft, equalTo(cutoutLeft))
+                assertThat(
+                    "bottom navigation clears the side navigation bar",
+                    bottomNavigation.paddingRight,
+                    equalTo(navigationBarRight),
+                )
+                assertThat(
+                    "the FAB clears app navigation when the system navigation is on the side",
+                    deckPicker.floatingActionButtonBinding.root.paddingBottom,
+                    equalTo(bottomNavigation.height),
+                )
             }
         }
 

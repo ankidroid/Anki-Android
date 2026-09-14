@@ -4,13 +4,15 @@ package com.ichi2.anki
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -52,16 +54,15 @@ fun setupBottomNavigation() {
     bottomNav.isVisible = true
     val scrollBehavior = HideViewOnScrollBehavior.from(bottomNav)
 
-    fun updateFragmentBottomMargin() {
-        val margin =
-            if (scrollBehavior.isScrolledIn) {
-                bottomNav.height
-            } else {
-                ViewCompat.getRootWindowInsets(bottomNav)?.getInsets(navigationBars())?.bottom ?: 0
-            }
-        if (fragmentContainer.marginBottom != margin) {
-            fragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = margin }
-        }
+    // Tabs draw beneath the bar and pad their content by it, as they do for the system bar.
+    // The bar's full height is used even while hidden: changing it on every slide would
+    // relayout the tab, which stutters (Statistics' WebView).
+    ViewCompat.setOnApplyWindowInsetsListener(fragmentContainer) { _, insets ->
+        val navBars = insets.getInsets(navigationBars())
+        WindowInsetsCompat
+            .Builder(insets)
+            .setInsets(navigationBars(), Insets.of(navBars.left, navBars.top, navBars.right, maxOf(navBars.bottom, bottomNav.height)))
+            .build()
     }
 
     fun positionStudiedSummary(animate: Boolean) {
@@ -103,7 +104,6 @@ fun setupBottomNavigation() {
     // Never hide the bar while explore-by-touch (e.g. TalkBack) is on, so it stays reachable.
     scrollBehavior.disableOnTouchExploration(true)
     scrollBehavior.addOnScrollStateChangedListener { _, _ ->
-        updateFragmentBottomMargin()
         positionStudiedSummary(animate = true)
         // Re-apply insets so the Decks FAB and list padding follow the bar's new position.
         ViewCompat.requestApplyInsets(deckPicker.deckPickerBinding.root)
@@ -120,10 +120,11 @@ fun setupBottomNavigation() {
         }
     deckPicker.onBackPressedDispatcher.addCallback(deckPicker, bottomNavBackCallback)
 
-    // Handle system navigation bar insets for the bottom nav
+    // Keep navigation controls clear of system bars and display cutouts while its background
+    // continues edge-to-edge.
     ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, insets ->
-        val navBars = insets.getInsets(navigationBars())
-        view.updatePadding(bottom = navBars.bottom)
+        val bars = insets.getInsets(systemBars() or displayCutout())
+        view.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
         insets
     }
 
@@ -137,7 +138,6 @@ fun setupBottomNavigation() {
     }
 
     bottomNav.addOnLayoutChangeListener { _, _, top, _, bottom, _, oldTop, _, oldBottom ->
-        updateFragmentBottomMargin()
         if (bottom - top != oldBottom - oldTop) positionStudiedSummary(animate = false)
     }
     studiedSummary.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->

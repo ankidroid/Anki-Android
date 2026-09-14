@@ -19,11 +19,13 @@ import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.lastItemView
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateKeyboard
+import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.utils.dp
 import kotlinx.coroutines.flow.first
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.shadows.ShadowDialog
 
 /**
@@ -99,6 +101,25 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
             captureScreen("snackbar_keyboard_open")
             snackbar.dismiss()
         }
+
+    @Test
+    fun bottom_navigation_edge_to_edge() {
+        enableBottomNavigation()
+        withDeckPicker(deckCount = 30) { deckPicker ->
+            deckPicker.simulateSystemBars()
+            captureScreen("bottom_navigation_edgeToEdge")
+        }
+    }
+
+    @Test
+    fun bottom_navigation_landscape() {
+        enableBottomNavigation()
+        RuntimeEnvironment.setQualifiers("+land")
+        withDeckPicker(deckCount = 30) { deckPicker ->
+            deckPicker.simulateSystemBars(cutoutLeft = 32.dp, navBarBottom = 0.dp, navBarRight = 48.dp)
+            captureScreen("bottom_navigation_landscape")
+        }
+    }
 
     /** Ensure that 'studied today' overlaying a deck name works when the IME is open */
     @Test
