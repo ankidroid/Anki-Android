@@ -6,6 +6,7 @@ package com.ichi2.anki
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,6 +21,34 @@ import org.robolectric.android.controller.ActivityController
 
 @RunWith(AndroidJUnit4::class)
 class BottomNavigationRestoreTest : RobolectricTest() {
+    @Test
+    fun `a configuration change keeps the open tab on screen`() =
+        forEachTab { tab ->
+            val controller = launchOn(tab)
+            controller.recreate()
+            advanceRobolectricLooper()
+
+            assertShowsTab(controller.get(), tab)
+        }
+
+    @Test
+    fun `restoring after process death keeps the open tab on screen`() =
+        forEachTab { tab ->
+            assertShowsTab(restoreAfterProcessDeath(launchOn(tab)), tab)
+        }
+
+    @Test
+    fun `back returns to the deck list after a restore`() =
+        forEachTab { tab ->
+            val deckPicker = restoreAfterProcessDeath(launchOn(tab))
+
+            deckPicker.onBackPressedDispatcher.onBackPressed()
+            advanceRobolectricLooper()
+
+            assertThat("$tab: back selects Home", deckPicker.bottomNav.selectedItemId, equalTo(NavigationItem.HOME.id))
+            assertThat("$tab: back shows the deck list", deckPicker.deckList.isVisible, equalTo(true))
+        }
+
     @Test
     fun `restoring on Home after the browser was opened`() =
         withBottomNavigation {
@@ -51,6 +80,11 @@ class BottomNavigationRestoreTest : RobolectricTest() {
             test()
         }
 
+    private fun forEachTab(test: (NavigationItem) -> Unit) =
+        withBottomNavigation {
+            listOf(NavigationItem.BROWSER, NavigationItem.STATS, NavigationItem.MORE).forEach(test)
+        }
+
     private fun launchOn(tab: NavigationItem): ActivityController<DeckPicker> =
         startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).also {
             it.get().select(tab)
@@ -80,6 +114,22 @@ class BottomNavigationRestoreTest : RobolectricTest() {
         saveControllerForCleanup(restored)
         advanceRobolectricLooper()
         return restored.get()
+    }
+
+    private fun assertShowsTab(
+        deckPicker: DeckPicker,
+        tab: NavigationItem,
+    ) {
+        val container = deckPicker.binding.bottomNavFragmentContainer!!
+        assertThat("$tab is selected", deckPicker.bottomNav.selectedItemId, equalTo(tab.id))
+        assertThat("$tab content is shown", container.isVisible, equalTo(true))
+        assertThat("$tab hides the deck list", deckPicker.deckList.isVisible, equalTo(false))
+        assertThat("$tab fragment is not hidden", deckPicker.supportFragmentManager.findFragmentByTag(tab.tag)?.isHidden, equalTo(false))
+        assertThat(
+            "$tab content clears the bar",
+            (container.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin,
+            equalTo(deckPicker.bottomNav.height),
+        )
     }
 
     private val DeckPicker.bottomNav: BottomNavigationView
