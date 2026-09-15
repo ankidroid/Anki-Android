@@ -65,6 +65,7 @@ android {
     namespace = "com.ichi2.anki"
 
     compileSdk = libs.versions.compileSdk.get().toInteger()
+    compileSdkMinor = libs.versions.compileSdkMinor.get().toInteger()
 
     buildFeatures {
         buildConfig = true
