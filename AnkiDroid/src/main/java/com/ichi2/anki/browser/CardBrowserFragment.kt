@@ -1541,8 +1541,6 @@ class CardBrowserFragment :
     /**
      * @see CardBrowserViewModel.openNoteEditorForCurrentlySelectedRow
      */
-    @NeedsTest("note edits are saved")
-    @NeedsTest("I/O edits are saved")
     fun openNoteEditorForCurrentlySelectedRow() {
         if (!activityViewModel.openNoteEditorForCurrentlySelectedRow()) {
             showSnackbar(R.string.no_note_to_edit)
