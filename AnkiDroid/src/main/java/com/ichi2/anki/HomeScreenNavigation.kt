@@ -32,6 +32,9 @@ import com.ichi2.anki.settings.Prefs
 @NeedsTest("back press returns to Home tab before exiting")
 context(deckPicker: DeckPicker)
 fun setupBottomNavigation() {
+    if (deckPicker.supportFragmentManager.findFragmentByTag(NavigationItem.BROWSER.tag) != null) {
+        ensureBrowserViewModel()
+    }
     if (!Prefs.devBottomNavEnabled || deckPicker.fragmented) return
 
     val bottomNav = deckPicker.findViewById<BottomNavigationView>(R.id.bottom_navigation)
