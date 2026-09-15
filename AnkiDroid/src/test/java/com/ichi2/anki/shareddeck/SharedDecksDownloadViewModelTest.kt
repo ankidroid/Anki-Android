@@ -33,6 +33,8 @@ class SharedDecksDownloadViewModelTest {
     fun `onProgress reports the share of the total downloaded`() {
         viewModel.onProgress(downloadedBytes = 25, totalBytes = 200)
         assertThat(state.percent, equalTo(12.5f))
+        assertThat(state.downloadedBytes, equalTo(25L))
+        assertThat(state.totalBytes, equalTo(200L))
     }
 
     @Test
