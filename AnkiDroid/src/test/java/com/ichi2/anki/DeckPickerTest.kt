@@ -18,6 +18,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.Insets
+import androidx.core.net.toUri
+import androidx.core.view.ContentInfoCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -65,6 +67,7 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addBasicNoteWithOp
 import com.ichi2.testutils.ext.menu
+import com.ichi2.testutils.ext.text
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.testutils.withBooleanPreference
@@ -1109,6 +1112,26 @@ class DeckPickerTest : RobolectricTest() {
             return super.onPrepareOptionsMenu(menu)
         }
     }
+
+    @Test
+    fun draggingUnsupportedFileShowsSnackbarError() =
+        deckPicker {
+            val clipData = android.content.ClipData.newRawUri("unsupported", "file:///path/to/image.jpg".toUri())
+            val payload =
+                ContentInfoCompat
+                    .Builder(clipData, ContentInfoCompat.SOURCE_DRAG_AND_DROP)
+                    .build()
+            ViewCompat.performReceiveContent(findViewById(R.id.pull_to_sync_wrapper), payload)
+
+            val snackbar = showSnackbar(getString(R.string.import_log_no_apkg))
+            assertThat("snackbar must be shown for unsupported file drop", snackbar, notNullValue())
+
+            val snackbarText = snackbar?.text
+            assertThat(
+                snackbarText,
+                equalTo(getString(R.string.import_log_no_apkg)),
+            )
+        }
 }
 
 fun RobolectricTest.setIntroductionSlidesShown(shown: Boolean) {
