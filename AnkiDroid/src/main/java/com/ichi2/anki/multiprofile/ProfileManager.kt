@@ -720,6 +720,37 @@ class ProfileManager private constructor(
             )
 
         /**
+         * Failure from the last [attachTo], if any.
+         *
+         * Timber is not planted during [android.app.Application.attachBaseContext],
+         * so a failure there cannot be logged where it happens.
+         */
+        var attachError: Throwable? = null
+            private set
+
+        /**
+         * Loads the active profile and returns the context the application should run on.
+         *
+         * Falls back to [base] when the profile environment cannot be loaded, because
+         * throwing here would stop the app from starting at all. Users with only the
+         * Default profile are unaffected either way: the wrapper delegates everything
+         * to [base] for that profile.
+         */
+        fun attachTo(base: Context): Context =
+            try {
+                attachError = null
+                create(base).activeProfileContext
+            } catch (e: Exception) {
+                attachError = e
+                base
+            }
+
+        @VisibleForTesting
+        fun resetForTesting() {
+            attachError = null
+        }
+
+        /**
          * Factory method to safely create and initialize the ProfileManager.
          * Guaranteed to return a ProfileManager with a valid [activeProfileContext].
          *

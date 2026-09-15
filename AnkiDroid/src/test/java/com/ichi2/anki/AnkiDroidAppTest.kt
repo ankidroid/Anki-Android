@@ -15,11 +15,20 @@
  */
 package com.ichi2.anki
 
+import android.content.Context
+import androidx.core.content.edit
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
+import com.ichi2.anki.multiprofile.ProfileContextWrapper
+import com.ichi2.anki.multiprofile.ProfileId
+import com.ichi2.anki.multiprofile.ProfileManager
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
+import java.io.File
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidAppTest {
@@ -34,5 +43,33 @@ class AnkiDroidAppTest {
         // It's meant to be non-null, but it's developer-defined, and we don't want a crash in the reporting dialog
         //noinspection ConstantConditions
         assertDoesNotThrow { sendExceptionReport(message, "AnkiDroidAppTest") }
+    }
+
+    @Test
+    fun `application runs on the profile context`() {
+        val app = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
+
+        assertNull(ProfileManager.attachError)
+        assertTrue(
+            "attachBaseContext must install the profile context",
+            app.baseContext is ProfileContextWrapper,
+        )
+    }
+
+    @Test
+    fun `preferences are namespaced for a non-default profile`() {
+        val profileId = ProfileId("p_namespaced")
+        val base = ApplicationProvider.getApplicationContext<AnkiDroidApp>().baseContext
+        base
+            .getSharedPreferences(ProfileManager.PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE)
+            .edit(commit = true) { putString(ProfileManager.KEY_LAST_ACTIVE_PROFILE_ID, profileId.value) }
+
+        val attached = ProfileManager.attachTo(base) as ProfileContextWrapper
+        attached.getSharedPreferences("settings", Context.MODE_PRIVATE).edit(commit = true) {
+            putString("key", "profile value")
+        }
+
+        val namespaced = File(base.dataDir, "shared_prefs/profile_${profileId.value}_settings.xml")
+        assertTrue("Expected a namespaced prefs file at $namespaced", namespaced.exists())
     }
 }
