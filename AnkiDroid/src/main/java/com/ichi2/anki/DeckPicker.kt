@@ -270,7 +270,8 @@ open class DeckPicker :
 
     private val importViewModel: ImportViewModel by viewModels()
 
-    private lateinit var binding: ActivityHomescreenBinding
+    internal lateinit var binding: ActivityHomescreenBinding
+        private set
 
     @VisibleForTesting
     internal val deckPickerBinding: IncludeDeckPickerBinding

@@ -291,7 +291,14 @@ open class RobolectricTest :
             testClass: RobolectricTest,
             clazz: Class<T>?,
             i: Intent?,
-        ): T {
+        ): T = startActivityControllerNormallyOpenCollectionWithIntent(testClass, clazz, i).get()
+
+        @JvmStatic
+        protected fun <T : Activity?> startActivityControllerNormallyOpenCollectionWithIntent(
+            testClass: RobolectricTest,
+            clazz: Class<T>?,
+            i: Intent?,
+        ): ActivityController<T> {
             if (AbstractFlashcardViewer::class.java.isAssignableFrom(clazz!!)) {
                 // fixes 'Don't know what to do with dataSource...' inside Sounds.kt
                 // solution from https://github.com/robolectric/robolectric/issues/4673
@@ -308,7 +315,7 @@ open class RobolectricTest :
                     .visible()
             advanceRobolectricLooper()
             testClass.saveControllerForCleanup(controller)
-            return controller.get()
+            return controller
         }
     }
 
@@ -382,6 +389,11 @@ open class RobolectricTest :
         clazz: Class<T>?,
         i: Intent?,
     ): T = startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
+
+    internal fun <T : Activity?> startActivityControllerNormallyOpenCollectionWithIntent(
+        clazz: Class<T>?,
+        i: Intent?,
+    ): ActivityController<T> = startActivityControllerNormallyOpenCollectionWithIntent(this, clazz, i)
 
     internal inline fun <reified T : Activity?> startRegularActivity(): T = startRegularActivity(null)
 
