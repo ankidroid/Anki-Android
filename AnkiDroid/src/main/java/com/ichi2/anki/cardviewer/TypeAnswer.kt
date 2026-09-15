@@ -33,6 +33,14 @@ class TypeAnswer(
     var combining: Boolean = true
         private set
 
+    /**
+     * Whether keyboard suggestions, swiping and autocorrect should be disabled (#10352).
+     *
+     * @see com.ichi2.anki.model.FieldFilters.NoSuggestFilter
+     */
+    var noSuggest: Boolean = false
+        private set
+
     /** What the learner actually typed (externally mutable) */
     var input = ""
 
@@ -74,6 +82,7 @@ class TypeAnswer(
         res: Resources,
     ) {
         combining = true
+        noSuggest = false
         correct = null
         val q = card.question(col)
         val m = PATTERN.matcher(q)
@@ -82,6 +91,7 @@ class TypeAnswer(
         }
         val parsed = TypeAnswerModifiers.parse(m.group(1)!!)
         combining = parsed.combining
+        noSuggest = parsed.noSuggest
         val fldTag = parsed.fieldName
         val clozeIdx = if (parsed.cloze) card.ord + 1 else 0
         // loop through fields for a match

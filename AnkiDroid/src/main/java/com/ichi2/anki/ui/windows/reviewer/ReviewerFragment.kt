@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -262,15 +263,29 @@ class ReviewerFragment :
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
+            // Default `inputType` from the layout, restored when `{{nosuggest}}` is unused (#10352)
+            val defaultInputType = binding.typeAnswerEditText.inputType
 
             /**
-             * Sync `imeHintLocales` on the answer `EditText` to match [typeInAnswer].
-             * Returns `true` if anything changed (caller should `restartInput()`).
+             * Sync `inputType` and `imeHintLocales` on the answer `EditText` to match
+             * [typeInAnswer]. Returns `true` if anything changed (caller should `restartInput()`).
              */
             fun EditText.syncTypeAnswerProperties(typeInAnswer: TypeAnswer): Boolean {
-                if (imeHintLocales == typeInAnswer.imeHintLocales) return false
-                imeHintLocales = typeInAnswer.imeHintLocales
-                return true
+                // #10352: TYPE_NULL is used by 'Reword' to remove all suggestions. This works better
+                // than a password as the keyboard won't suggest to open the password manager
+                // other methods did not work for GBoard
+                val targetInputType =
+                    if (typeInAnswer.noSuggest) InputType.TYPE_NULL else defaultInputType
+                var changed = false
+                if (inputType != targetInputType) {
+                    inputType = targetInputType
+                    changed = true
+                }
+                if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                    imeHintLocales = typeInAnswer.imeHintLocales
+                    changed = true
+                }
+                return changed
             }
 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
