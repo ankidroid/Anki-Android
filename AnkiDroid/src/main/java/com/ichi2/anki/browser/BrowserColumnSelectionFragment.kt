@@ -165,16 +165,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.dialog_browser_co
                 yieldAll(available.map(::ColumnItem))
             }.toMutableList()
 
-        val callback =
-            object : BrowserColumnSelectionTouchHelperCallback(recyclerViewItems) {
-                override fun clearView(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                ) {
-                    columnAdapter.refreshDataset()
-                }
-            }
-        val itemTouchHelper = ItemTouchHelper(callback)
+        val itemTouchHelper = ItemTouchHelper(BrowserColumnSelectionTouchHelperCallback(recyclerViewItems))
 
         this.columnAdapter =
             BrowserColumnSelectionAdapter(recyclerViewItems).apply {
