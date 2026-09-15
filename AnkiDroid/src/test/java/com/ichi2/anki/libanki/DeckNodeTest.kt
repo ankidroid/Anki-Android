@@ -31,6 +31,9 @@ class DeckNodeTest {
         level: Int,
         collapsed: Boolean = false,
         children: List<DeckNode> = emptyList(),
+        newCount: Int = 0,
+        reviewCount: Int = 0,
+        learnCount: Int = 0,
     ): DeckNode {
         val treeNode =
             deckTreeNode {
@@ -39,9 +42,9 @@ class DeckNodeTest {
                 this.level = level
                 this.collapsed = collapsed
                 children.forEach { this.children.add(it.node) }
-                this.reviewCount = 0
-                this.newCount = 0
-                this.learnCount = 0
+                this.reviewCount = reviewCount
+                this.newCount = newCount
+                this.learnCount = learnCount
                 this.filtered = false
             }
         return DeckNode(treeNode, name)
@@ -152,6 +155,35 @@ class DeckNodeTest {
         val results2 = science.filterAndFlatten("ist gr")
         // Math::group should not be found
         assertEquals(listOf<String>("Science", "Chemistry", "Group"), results2.map { it.lastDeckNameComponent })
+    }
+
+    @Test
+    fun `totalCardsDue sums top-level decks across new review and learning`() {
+        val a = makeNode("A", deckId = 1, level = 1, newCount = 100, reviewCount = 50, learnCount = 5)
+        val b = makeNode("B", deckId = 2, level = 1, newCount = 200, reviewCount = 0, learnCount = 10)
+        val root = makeNode("", deckId = 0, level = 0, children = listOf(a, b))
+        // A (155) + B (210)
+        assertEquals(365, root.totalCardsDue())
+    }
+
+    @Test
+    fun `totalCardsDue uses top-level decks not the root's capped aggregate`() {
+        // Root aggregate is capped at 9999; summing children recovers the total.
+        val a = makeNode("A", deckId = 1, level = 1, newCount = 9999)
+        val b = makeNode("B", deckId = 2, level = 1, newCount = 9999)
+        val root = makeNode("", deckId = 0, level = 0, newCount = 9999, children = listOf(a, b))
+        assertEquals(19998, root.totalCardsDue())
+    }
+
+    @Test
+    fun `totalCardsDue uses each top-level deck's aggregate, not its subdecks`() {
+        // Subdecks share the parent's limit, so only the parent's aggregate
+        // counts; summing the subdecks would double-count the shared pool.
+        val sub1 = makeNode("Sub1", deckId = 2, level = 2, newCount = 9905)
+        val sub2 = makeNode("Sub2", deckId = 3, level = 2, newCount = 9905)
+        val parent = makeNode("Parent", deckId = 1, level = 1, newCount = 9905, children = listOf(sub1, sub2))
+        val root = makeNode("", deckId = 0, level = 0, children = listOf(parent))
+        assertEquals(9905, root.totalCardsDue())
     }
 }
 
