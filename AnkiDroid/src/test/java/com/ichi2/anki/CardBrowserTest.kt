@@ -84,6 +84,7 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.toIntent
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
@@ -1541,6 +1542,62 @@ class CardBrowserTest : RobolectricTest() {
 
             assertMenusEqual(expectedMenuItems, menu)
         }
+
+    @Test
+    fun `note edits made in the browser are saved`() {
+        val note = addBasicNote("Hello", "World")
+
+        withBrowser(fragmented = true) {
+            cardBrowserFragment.openNoteEditorForCurrentlySelectedRow()
+            advanceRobolectricLooper()
+
+            val editor = requireNotNull(fragment) { "note editor unloaded" }
+            editor.setFieldValueFromUi(0, "Hello edited")
+            editor.saveNote()
+            advanceRobolectricLooper()
+
+            assertThat("edit is saved", col.getNote(note.id).fields[0], equalTo("Hello edited"))
+        }
+    }
+
+    /**
+     * see issue 15609
+     */
+    @Test
+    fun `image occlusion edits made in the browser are saved - 15609`() {
+        val note =
+            col.newNote(col.notetypes.byName("Image Occlusion")!!).apply {
+                setField(0, "{{c1::x}}")
+                col.addNote(this, col.decks.selected())
+            }
+
+        withBrowser(fragmented = true) {
+            cardBrowserFragment.openNoteEditorForCurrentlySelectedRow()
+            advanceRobolectricLooper()
+            val editor = requireNotNull(fragment) { "note editor unloaded" }
+
+            undoableOp {
+                updateImageOcclusionNote(
+                    noteId = note.id,
+                    occlusions = "{{c2::x}}",
+                    header = "",
+                    backExtra = "",
+                    tags = emptyList(),
+                )
+            }
+
+            // calling advanceRobolectricLooper() only afterwards
+            // otherwise the pane would be reloaded and editor.saveNote() would not be able to overwrite the note with the stale one anymore
+            editor.saveNote()
+            advanceRobolectricLooper()
+
+            assertThat(
+                "change is not overwritten",
+                col.getNote(note.id).fields[0],
+                containsString("c2::x"),
+            )
+        }
+    }
 
     @Test
     fun `options menu test - new ui - standard`() =
