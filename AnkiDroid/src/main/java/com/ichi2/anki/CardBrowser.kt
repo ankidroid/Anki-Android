@@ -254,13 +254,8 @@ open class CardBrowser :
         registerDeckSelectedHandler(action = ::onDeckSelected)
         registerFindReplaceHandler { result ->
             launchCatchingTask {
-                withProgress {
-                    val count =
-                        withProgress {
-                            viewModel.findAndReplace(result)
-                        }.await()
-                    showSnackbar(TR.browsingNotesUpdated(count))
-                }
+                val count = viewModel.findAndReplace(result).await()
+                showSnackbar(TR.browsingNotesUpdated(count))
             }
         }
         registerSavedSearchActionHandler { type, searchName ->

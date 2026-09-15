@@ -66,6 +66,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.model.cardBrowserNoSorting
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.progress.ViewModelProgress
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.settings.Prefs
@@ -80,12 +81,15 @@ import com.ichi2.testutils.ext.reopenWithLanguage
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
 import org.hamcrest.Matchers.containsInAnyOrder
@@ -107,6 +111,7 @@ import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -865,6 +870,107 @@ class CardBrowserViewModelTest : JvmTest() {
 
             // flowOfCardsUpdated already performs a refresh
             ensureOpWithHandler(this) { deleteSelectedNotes() }
+        }
+
+    @Test
+    fun `toggle mark - handler passed to undoableOp prevents double refresh`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            ensureOpWithHandler(this) { toggleMark() }
+        }
+
+    @Test
+    fun `flag - handler passed to undoableOp prevents double refresh`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            ensureOpWithHandler(this) { updateSelectedCardsFlag(Flag.RED) }
+        }
+
+    @Test
+    fun `deleteSelectedNotes reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            assertProgressAround(CardBrowserProgress.DELETING_NOTES) { deleteSelectedNotes() }
+        }
+
+    @Test
+    fun `toggleMark reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            assertProgressAround { toggleMark() }
+        }
+
+    @Test
+    fun `toggleSuspendCards reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            assertProgressAround { toggleSuspendCards().join() }
+        }
+
+    @Test
+    fun `updateSelectedCardsFlag reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            assertProgressAround { updateSelectedCardsFlag(Flag.RED) }
+        }
+
+    @Test
+    fun `toggleBury reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            assertProgressAround { toggleBury() }
+        }
+
+    @Test
+    fun `moveSelectedCardsToDeck reports progress`() =
+        runViewModelTest(notes = 2) {
+            val newDeck = addDeck("World")
+            selectRowsWithPositions(0)
+
+            assertProgressAround { moveSelectedCardsToDeck(newDeck).await() }
+        }
+
+    @Test
+    fun `repositionSelectedRows reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+
+            assertProgressAround { repositionSelectedRows(position = 100, step = 1, shuffle = false, shift = false) }
+        }
+
+    @Test
+    fun `findAndReplace reports progress`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+            val result =
+                FindReplaceResult(
+                    search = "Front",
+                    replacement = "Replaced",
+                    field = FindAndReplaceDialogFragment.ALL_FIELDS_AS_FIELD,
+                    onlyOnSelectedNotes = true,
+                    matchCase = false,
+                    regex = false,
+                )
+
+            assertProgressAround { findAndReplace(result).await() }
+        }
+
+    @Test
+    fun `editSelectedCardsTags reports progress and tags the selected note`() =
+        runViewModelTest(notes = 2) {
+            selectRowsWithPositions(0)
+            val noteId = queryAllSelectedNoteIds().single()
+
+            assertProgressAround { editSelectedCardsTags(selectedTags = listOf("tagged"), indeterminateTags = emptyList()) }
+
+            assertThat(col.getNote(noteId).tags, equalTo(listOf("tagged")))
         }
 
     /** @see <a href="https://github.com/ankidroid/Anki-Android/issues/20556">#20556</a> */
@@ -2112,6 +2218,25 @@ fun runCardBrowserViewModelTest(
     savedStateHandle: SavedStateHandle = SavedStateHandle(),
     testBody: suspend CardBrowserViewModel.() -> Unit,
 ) = runViewModelTest(notes, manualInit, savedStateHandle, testBody)
+
+/**
+ * Asserts [op] moves progress Idle, Active, Idle. Main becomes a [StandardTestDispatcher] so an op
+ * launched in `viewModelScope` is dispatched rather than run inline, which would hide Active.
+ */
+private suspend fun CardBrowserViewModel.assertProgressAround(
+    message: CardBrowserProgress? = null,
+    op: suspend () -> Unit,
+) {
+    Dispatchers.setMain(StandardTestDispatcher(currentCoroutineContext()[TestCoroutineScheduler]))
+    progressManager.progress.test {
+        assertIs<ViewModelProgress.Idle>(awaitItem())
+        op()
+        val active = assertIs<ViewModelProgress.Active<CardBrowserProgress>>(awaitItem())
+        assertEquals(message, active.message)
+        assertIs<ViewModelProgress.Idle>(awaitItem())
+        expectNoEvents()
+    }
+}
 
 @Suppress("SameParameterValue")
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
