@@ -16,6 +16,11 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.annotations.NeedsTest
 import timber.log.Timber
 
+private const val DECK_PICKER_SCREEN_NAME = "DeckPicker"
+private const val CARD_BROWSER_SCREEN_NAME = "CardBrowser"
+private const val STATISTICS_SCREEN_NAME = "Statistics"
+private const val MORE_SCREEN_NAME = "MoreFragment"
+
 /**
  * Controls bottom navigation bar behaviour.
  *
@@ -55,11 +60,12 @@ class BottomNavController(
         /** Fragment tag used to find and reuse this destination's fragment across tab switches. */
         val tag: String,
         @StringRes val shortcutLabel: Int,
+        val analyticsScreenName: String,
     ) {
-        HOME(R.id.nav_home, "home", CommonString.deck_picker_group),
-        BROWSER(R.id.nav_browser, "browser", CommonString.card_browser_context_menu),
-        STATS(R.id.nav_stats, "stats", CommonString.open_statistics),
-        MORE(R.id.nav_more, "more", CommonString.bottom_nav_more),
+        HOME(R.id.nav_home, "home", CommonString.deck_picker_group, DECK_PICKER_SCREEN_NAME),
+        BROWSER(R.id.nav_browser, "browser", CommonString.card_browser_context_menu, CARD_BROWSER_SCREEN_NAME),
+        STATS(R.id.nav_stats, "stats", CommonString.open_statistics, STATISTICS_SCREEN_NAME),
+        MORE(R.id.nav_more, "more", CommonString.bottom_nav_more, MORE_SCREEN_NAME),
         ;
 
         fun title(context: Context): String =
