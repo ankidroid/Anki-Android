@@ -27,7 +27,7 @@ class SharedDecksDownloadViewModel : ViewModel() {
     ) {
         // DownloadManager reports -1 for a download whose size it does not know yet
         val percent = if (totalBytes > 0) abs(downloadedBytes * 100f / totalBytes) else 0f
-        uiState.update { it.copy(percent = percent) }
+        uiState.update { it.copy(percent = percent, downloadedBytes = downloadedBytes, totalBytes = totalBytes) }
     }
 
     /** The [android.app.DownloadManager] query failed, so progress cannot be reported. */
@@ -55,6 +55,9 @@ data class SharedDecksDownloadUiState(
     val fileName: String? = null,
     /** `null` when progress could not be read, in which case the screen says only that a download is running. */
     val percent: Float? = 0f,
+    val downloadedBytes: Long = 0,
+    /** -1 until [android.app.DownloadManager] knows the size of the file. */
+    val totalBytes: Long = -1,
     val phase: DownloadPhase = DownloadPhase.Downloading,
     val isWaitingForNetwork: Boolean = false,
 )
