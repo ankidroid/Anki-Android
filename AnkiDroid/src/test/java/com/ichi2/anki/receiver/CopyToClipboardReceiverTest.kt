@@ -14,6 +14,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.utils.TruncatedString
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -41,10 +42,7 @@ class CopyToClipboardReceiverTest {
                 .setSmallIcon(R.drawable.ic_star_notify)
                 .build(),
         )
-        val intent =
-            Intent(context, CopyToClipboardReceiver::class.java).apply {
-                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, "sync error log")
-            }
+        val intent = CopyToClipboardReceiver.getIntent(context, TruncatedString.from("sync error log"))
 
         CopyToClipboardReceiver().onReceive(context, intent)
 
@@ -79,10 +77,7 @@ class CopyToClipboardReceiverTest {
         Shadow
             .extract<ShadowContextImpl>((context as Application).baseContext)
             .removeSystemService(Context.CLIPBOARD_SERVICE)
-        val intent =
-            Intent(context, CopyToClipboardReceiver::class.java).apply {
-                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, "sync error log")
-            }
+        val intent = CopyToClipboardReceiver.getIntent(context, TruncatedString.from("sync error log"))
 
         CopyToClipboardReceiver().onReceive(context, intent)
 

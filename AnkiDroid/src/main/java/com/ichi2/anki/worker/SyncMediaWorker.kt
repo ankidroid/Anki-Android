@@ -6,7 +6,6 @@ package com.ichi2.anki.worker
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.annotation.VisibleForTesting
@@ -36,6 +35,7 @@ import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.receiver.CopyToClipboardReceiver
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
+import com.ichi2.utils.TruncatedString
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import net.ankiweb.rsdroid.Backend
@@ -98,7 +98,7 @@ class SyncMediaWorker(
                     addAction(
                         R.drawable.baseline_content_copy_24,
                         with(applicationContext) { TR.sentenceCase.copyToClipboard },
-                        getCopyToClipboardIntent(message),
+                        getCopyToClipboardIntent(TruncatedString.from(message)),
                     )
                 }
             }
@@ -152,11 +152,8 @@ class SyncMediaWorker(
     }
 
     @VisibleForTesting
-    internal fun getCopyToClipboardIntent(text: String): PendingIntent {
-        val intent =
-            Intent(applicationContext, CopyToClipboardReceiver::class.java).apply {
-                putExtra(CopyToClipboardReceiver.EXTRA_SYNC_ERROR_LOG, text.take(MAX_ERROR_TEXT_LENGTH))
-            }
+    internal fun getCopyToClipboardIntent(text: TruncatedString): PendingIntent {
+        val intent = CopyToClipboardReceiver.getIntent(applicationContext, text)
         return PendingIntent.getBroadcast(
             applicationContext,
             0,
@@ -198,15 +195,6 @@ class SyncMediaWorker(
         private const val HKEY_KEY = "hkey"
         private const val ENDPOINT_KEY = "endpoint"
         const val NOTIFICATION_UPDATE_RATE_MS = 500L
-
-        /**
-         * Maximum length of the error text placed in [getCopyToClipboardIntent].
-         *
-         * The notification and its intents must fit in the Binder transaction buffer (~1MB),
-         * which an unusually large message (e.g. from a [StackOverflowError]) may exceed
-         */
-        @VisibleForTesting
-        const val MAX_ERROR_TEXT_LENGTH = 100_000
 
         fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
             val constraints =

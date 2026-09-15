@@ -56,26 +56,6 @@ class StringUtilsTest {
     }
 
     @Test
-    fun trimToLength_under_max() {
-        assertThat("hello".trimToLength(10), equalTo("hello"))
-    }
-
-    @Test
-    fun trimToLength_over_max() {
-        assertThat("hello".trimToLength(3), equalTo("hel"))
-    }
-
-    @Test
-    fun trimToLength_exact_match() {
-        assertThat("hello".trimToLength(5), equalTo("hello"))
-    }
-
-    @Test
-    fun trimToLength_zero() {
-        assertThat("hello".trimToLength(0), equalTo(""))
-    }
-
-    @Test
     fun lastIndexOfOrNull_not_found() {
         assertNull("hello".lastIndexOfOrNull('z'))
         assertNull("".lastIndexOfOrNull('a'))
