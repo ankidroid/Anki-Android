@@ -445,10 +445,13 @@ object CollectionManager {
         }
     }
 
-    fun setTestDispatcher(dispatcher: CoroutineDispatcher) {
+    /** @return the previous dispatcher, so a test can restore it */
+    fun setTestDispatcher(dispatcher: CoroutineDispatcher): CoroutineDispatcher {
         // note: we avoid the call to .limitedParallelism() here,
         // as it does not seem to be compatible with the test scheduler
+        val previous = queue
         queue = dispatcher
+        return previous
     }
 
     /**
