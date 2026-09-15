@@ -52,7 +52,6 @@ import androidx.core.util.component2
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
@@ -721,12 +720,12 @@ open class DeckPicker :
         }
         if (fragmented) {
             val studyoptionsView = binding.studyoptionsFragment ?: return
-            ViewCompat.setOnApplyWindowInsetsListener(studyoptionsView) { studyOptions, insets ->
+            ViewCompat.setOnApplyWindowInsetsListener(studyoptionsView) { _, insets ->
                 val bars = insets.getInsets(systemBars() or displayCutout())
-                studyOptions.updatePadding(right = bars.right, bottom = bars.bottom)
-                // insets are applied by padding. CONSUMED means hosted fragments don't apply them
-                // again (e.g. ScheduleRemindersFragment).
-                WindowInsetsCompat.CONSUMED
+                // the toolbar clears the top and the deck list clears the left: the panel's
+                // fragments apply the remaining insets themselves, so their scrolled content
+                // renders underneath the navigation bar
+                insets.inset(bars.left, bars.top, 0, 0)
             }
         }
     }

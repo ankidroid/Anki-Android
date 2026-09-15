@@ -22,7 +22,12 @@ import androidx.constraintlayout.widget.Group
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
 import androidx.core.view.MenuProvider
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.doOnAttach
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -40,6 +45,7 @@ import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -114,8 +120,22 @@ class StudyOptionsFragment :
         if (!fragmented) {
             requireAnkiActivity().setToolbarText(title = "")
         }
+        setupContentInsets(view)
         viewModel.flowOfState.launchCollectionInLifecycleScope(::rebuildUi)
         refreshInterface()
+    }
+
+    /** Keeps the content clear of the system bars and any display cutout. */
+    private fun setupContentInsets(view: View) {
+        view.doOnApplyWindowInsets { v, insets, _ ->
+            // Both hosts display this fragment below a toolbar, so don't update the top padding.
+            // Note: the left-padding is 0 when fragmented - handled by DeckPicker
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            v.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
+        }
+        // the view may be added after the insets were dispatched (returning from the review
+        // reminders screen), so request them again
+        view.doOnAttach { ViewCompat.requestApplyInsets(it) }
     }
 
     override fun onCreateMenu(

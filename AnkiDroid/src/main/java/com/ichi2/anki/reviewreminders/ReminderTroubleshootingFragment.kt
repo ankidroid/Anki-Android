@@ -15,8 +15,10 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.doOnAttach
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -116,8 +118,7 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
      *
      * The content renders underneath the bottom bar while scrolling.
      *
-     * These listeners are no-ops in hosts which apply the insets to this fragment's container
-     * and consume them.
+     * Hosts which show this fragment below a toolbar of their own consume the top inset.
      */
     private fun setupContentInsets() {
         binding.troubleshootingToolbar.doOnApplyWindowInsets { view, insets, initial ->
@@ -132,6 +133,8 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
             val bars = insets.getInsets(systemBars() or displayCutout())
             view.updatePadding(left = bars.left, right = bars.right, bottom = initial.padding.bottom + bars.bottom)
         }
+        // the view replaces the reminders list after the insets were dispatched, so request them again
+        binding.root.doOnAttach { ViewCompat.requestApplyInsets(it) }
     }
 
     private fun setupExternalActivityToolbar() {
