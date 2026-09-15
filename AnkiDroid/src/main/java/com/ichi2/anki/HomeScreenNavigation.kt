@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.pages.Statistics
 import com.ichi2.anki.settings.Prefs
@@ -64,6 +65,9 @@ fun setupBottomNavigation() {
 
     bottomNav.setOnItemSelectedListener { item ->
         val navItem = NavigationItem.fromId(item.itemId) ?: return@setOnItemSelectedListener false
+        if (item.itemId != bottomNav.selectedItemId) {
+            Analytics.sendAnalyticsScreenView(navItem.analyticsScreenName)
+        }
         handleNavigationItemSelected(navItem, contentWrapper, fragmentContainer, bottomNavBackCallback)
     }
 
@@ -79,6 +83,13 @@ fun showRestoredBottomNavTab() {
     if (!Prefs.devBottomNavEnabled || deckPicker.fragmented) return
     val bottomNav = deckPicker.binding.bottomNavigation ?: return
     bottomNav.selectedItemId = bottomNav.selectedItemId
+}
+
+context(deckPicker: DeckPicker)
+fun selectedBottomNavItem(): NavigationItem? {
+    if (!Prefs.devBottomNavEnabled || deckPicker.fragmented) return null
+    val bottomNav = deckPicker.findViewById<BottomNavigationView?>(R.id.bottom_navigation) ?: return null
+    return NavigationItem.fromId(bottomNav.selectedItemId)
 }
 
 context(deckPicker: DeckPicker)

@@ -55,11 +55,12 @@ class BottomNavController(
         /** Fragment tag used to find and reuse this destination's fragment across tab switches. */
         val tag: String,
         @StringRes val shortcutLabel: Int,
+        val analyticsScreenName: String,
     ) {
-        HOME(R.id.nav_home, "home", R.string.deck_picker_group),
-        BROWSER(R.id.nav_browser, "browser", R.string.card_browser_context_menu),
-        STATS(R.id.nav_stats, "stats", R.string.open_statistics),
-        MORE(R.id.nav_more, "more", R.string.bottom_nav_more),
+        HOME(R.id.nav_home, "home", R.string.deck_picker_group, "DeckPicker"),
+        BROWSER(R.id.nav_browser, "browser", R.string.card_browser_context_menu, "CardBrowser"),
+        STATS(R.id.nav_stats, "stats", R.string.open_statistics, "Statistics"),
+        MORE(R.id.nav_more, "more", R.string.bottom_nav_more, "MoreFragment"),
         ;
 
         fun title(context: Context): String =
