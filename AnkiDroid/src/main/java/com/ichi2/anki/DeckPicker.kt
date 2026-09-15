@@ -271,7 +271,8 @@ open class DeckPicker :
 
     private val importViewModel: ImportViewModel by viewModels()
 
-    private lateinit var binding: ActivityHomescreenBinding
+    internal lateinit var binding: ActivityHomescreenBinding
+        private set
 
     @VisibleForTesting
     internal val deckPickerBinding: IncludeDeckPickerBinding
@@ -286,6 +287,9 @@ open class DeckPicker :
             resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK ==
                 Configuration.SCREENLAYOUT_SIZE_XLARGE
         set(_) = throw UnsupportedOperationException()
+
+    override val analyticsScreenName: String
+        get() = selectedBottomNavItem()?.analyticsScreenName ?: super.analyticsScreenName
 
     // Short animation duration from system
     private var shortAnimDuration = 0
@@ -1539,6 +1543,7 @@ open class DeckPicker :
             importColpkgListener = DatabaseRestorationListener(this, path)
         }
         mediaUsnOnConflict = savedInstanceState.getSerializableCompat("mediaUsnOnConflict")
+        showRestoredBottomNavTab()
     }
 
     override fun onPause() {
