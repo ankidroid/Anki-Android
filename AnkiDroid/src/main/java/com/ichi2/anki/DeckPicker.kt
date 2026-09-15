@@ -1538,6 +1538,7 @@ open class DeckPicker :
             importColpkgListener = DatabaseRestorationListener(this, path)
         }
         mediaUsnOnConflict = savedInstanceState.getSerializableCompat("mediaUsnOnConflict")
+        showRestoredBottomNavTab()
     }
 
     override fun onPause() {
