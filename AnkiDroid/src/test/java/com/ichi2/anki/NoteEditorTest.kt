@@ -4,6 +4,7 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
@@ -19,6 +20,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.config.ConfigKey
+import anki.notetypes.StockNotetype
+import anki.notetypes.notetypeId
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
@@ -65,6 +68,49 @@ class NoteEditorTest : RobolectricTest() {
             (n.requireView().findViewById<TextView>(R.id.CardEditorCardsButton)).text.toString(),
             equalTo("Cards: Card 1"),
         )
+    }
+
+    @Test // #20510
+    fun `editing - fields are refreshed after the template editor restores the note type to default`() {
+        val basic = col.notetypes.byName("Basic")!!
+        col.notetypes.addFieldLegacy(basic, col.notetypes.newField("ThirdField"))
+
+        val editor = getNoteEditorEditingExistingBasicNote("Hello", "World", REVIEWER)
+        assertThat("field count before restore", editor.editFields!!.size, equalTo(3))
+
+        // simulate 'Restore to Default' being performed inside the CardTemplateEditor
+        @SuppressLint("CheckResult")
+        col.notetypes.restoreNotetypeToStock(
+            notetypeId { ntid = basic.id },
+            StockNotetype.Kind.KIND_BASIC,
+        )
+        editor.onTemplateEditorResult()
+
+        assertThat("field count after restore", editor.editFields!!.size, equalTo(2))
+        assertThat(editor.currentFieldStrings.toList(), contains("Hello", "World"))
+    }
+
+    @Test // #20510
+    fun `adding - fields are refreshed after the template editor restores the note type to default`() {
+        val basic = col.notetypes.byName("Basic")!!
+        col.notetypes.addFieldLegacy(basic, col.notetypes.newField("ThirdField"))
+
+        val editor =
+            getNoteEditorAdding(NoteType.BASIC)
+                .withFirstField("Hello")
+                .build()
+        assertThat("field count before restore", editor.editFields!!.size, equalTo(3))
+
+        // simulate 'Restore to Default' being performed inside the CardTemplateEditor
+        @SuppressLint("CheckResult")
+        col.notetypes.restoreNotetypeToStock(
+            notetypeId { ntid = basic.id },
+            StockNotetype.Kind.KIND_BASIC,
+        )
+        editor.onTemplateEditorResult()
+
+        assertThat("field count after restore", editor.editFields!!.size, equalTo(2))
+        assertThat("typed text is preserved", editor.currentFieldStrings[0], equalTo("Hello"))
     }
 
     @Test
