@@ -466,6 +466,11 @@
     <issue id="NotSibling" severity="ignore" />
     <issue id="UnknownIdInLayout" severity="ignore" />
     <issue id="WrongThreadInterprocedural" severity="ignore" />
+    <!-- Requires a `assetlinks.json` file available on AnkiWeb
+    https://developer.android.com/training/app-links/configure-assetlinks -->
+    <issue id="CredManMissingDal" severity="ignore" />
+    <!--Demands a Google Play Services dependency to save credentials on API < 34 -->
+    <issue id="CredentialDependency" severity="ignore" />
 
     <!-- PERF: Could improve by not using notifyDataSetChanged() -->
     <issue id="NotifyDataSetChanged" severity="ignore" />
