@@ -4,11 +4,13 @@ package com.ichi2.anki
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -32,6 +34,9 @@ import com.ichi2.anki.settings.Prefs
 @NeedsTest("back press returns to Home tab before exiting")
 context(deckPicker: DeckPicker)
 fun setupBottomNavigation() {
+    if (deckPicker.supportFragmentManager.findFragmentByTag(NavigationItem.BROWSER.tag) != null) {
+        ensureBrowserViewModel()
+    }
     if (!Prefs.devBottomNavEnabled || deckPicker.fragmented) return
 
     val bottomNav = deckPicker.findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -61,6 +66,19 @@ fun setupBottomNavigation() {
         val navItem = NavigationItem.fromId(item.itemId) ?: return@setOnItemSelectedListener false
         handleNavigationItemSelected(navItem, contentWrapper, fragmentContainer, bottomNavBackCallback)
     }
+
+    bottomNav.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
+        if (fragmentContainer.marginBottom != view.height) {
+            fragmentContainer.updateLayoutParams<ViewGroup.MarginLayoutParams> { bottomMargin = view.height }
+        }
+    }
+}
+
+context(deckPicker: DeckPicker)
+fun showRestoredBottomNavTab() {
+    if (!Prefs.devBottomNavEnabled || deckPicker.fragmented) return
+    val bottomNav = deckPicker.binding.bottomNavigation ?: return
+    bottomNav.selectedItemId = bottomNav.selectedItemId
 }
 
 context(deckPicker: DeckPicker)
@@ -130,12 +148,6 @@ private fun showBottomNavFragment(
 ) {
     contentWrapper.isVisible = false
     deckPicker.floatingActionMenu.hideFloatingActionButton()
-    val bottomNav = deckPicker.findViewById<View>(R.id.bottom_navigation)
-    (fragmentContainer.layoutParams as? CoordinatorLayout.LayoutParams)?.let { lp ->
-        lp.topMargin = 0
-        lp.bottomMargin = bottomNav.height
-        fragmentContainer.layoutParams = lp
-    }
     deckPicker.supportFragmentManager.commit {
         hideBottomNavFragments()
         val existing = deckPicker.supportFragmentManager.findFragmentByTag(tag)
