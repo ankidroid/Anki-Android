@@ -5,6 +5,7 @@ package com.ichi2.anki
 
 import android.view.View
 import android.view.WindowManager
+import android.widget.EditText
 import androidx.core.content.getSystemService
 import androidx.core.view.allViews
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
@@ -133,6 +134,7 @@ abstract class ScreenshotTest : RobolectricTest() {
         val fileName = "$fileNamePrefix$name.png"
         val baseline = File(classDir, fileName)
         disableScrollbarFading()
+        restartTextCursorBlink()
         captureScreenRoboImage(
             filePath = baseline.path,
             roborazziOptions = provideRoborazziContext().options.withCompareOutputDir(diffDir.path),
@@ -149,11 +151,17 @@ abstract class ScreenshotTest : RobolectricTest() {
     }
 
     /** [View.disableScrollbarFading] for every window */
-    private fun disableScrollbarFading() {
-        val windowManager = targetContext.getSystemService<WindowManager>()
-        val windows = Shadow.extract<ShadowWindowManagerImpl>(windowManager).views
-        windows.forEach { it.disableScrollbarFading() }
-    }
+    private fun disableScrollbarFading() = windows.forEach { it.disableScrollbarFading() }
+
+    /** [View.restartTextCursorBlink] for every window */
+    private fun restartTextCursorBlink() = windows.forEach { it.restartTextCursorBlink() }
+
+    /** The root view of every window: the activity and any dialogs above it */
+    private val windows: List<View>
+        get() {
+            val windowManager = targetContext.getSystemService<WindowManager>()
+            return Shadow.extract<ShadowWindowManagerImpl>(windowManager).views
+        }
 
     class ThemeProvider : TestParameterValuesProvider() {
         override fun provideValues(context: Context?): List<ThemeConfig> {
@@ -182,6 +190,22 @@ fun View.disableScrollbarFading() {
     allViews
         .filter { it.isScrollbarFadingEnabled }
         .forEach { it.isScrollbarFadingEnabled = false }
+}
+
+/** [EditText.displayFocusedCursors] for every text cursor in the hierarchy */
+fun View.restartTextCursorBlink() {
+    allViews
+        .filterIsInstance<EditText>()
+        .forEach { it.displayFocusedCursors() }
+}
+
+/** Ensures a cursor is always shown if the field is focused. */
+fun EditText.displayFocusedCursors() {
+    // cursor is not blinking
+    if (!isCursorVisible) return
+    // reset the blink cycle, so the cursor always appears in the screenshot
+    isCursorVisible = false
+    isCursorVisible = true
 }
 
 /** Sets the directory for _actual.png and _compare.png */
