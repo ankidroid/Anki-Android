@@ -25,6 +25,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
@@ -62,6 +63,22 @@ class CardBrowserFragmentTest : RobolectricTest() {
             val offenders = shortcuts.shortcuts.map { it.label }.filterNot { it.isSentenceCase }
             assertThat("shortcut labels should be Sentence case, not Title Case", offenders, empty())
         }
+
+    @Test
+    fun `opening editor refreshes rows only when leaving multi-select`() {
+        val change = SingleSelectCause.OpenNoteEditorActivity
+        val previousSelection = change.previouslySelectedRowIds
+
+        try {
+            change.previouslySelectedRowIds = emptySet()
+            assertThat(shouldRefreshBrowserRows(change), equalTo(false))
+
+            change.previouslySelectedRowIds = setOf(CardOrNoteId(1))
+            assertThat(shouldRefreshBrowserRows(change), equalTo(true))
+        } finally {
+            change.previouslySelectedRowIds = previousSelection
+        }
+    }
 }
 
 private val capitalizedFollowingWord = Regex("""\s\p{Lu}\p{Ll}""")
