@@ -102,6 +102,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeSource
 
 typealias ContextMenuOption = DeckPickerContextMenuOption
 
@@ -1020,6 +1021,32 @@ class DeckPickerTest : RobolectricTest() {
             )
         }
 
+    @Test
+    fun `fatal error arriving after menu creation blanks the options menu`() =
+        deckPickerEx {
+            // the startup check runs on Dispatchers.IO; wait for it to finish and for its
+            // response to be handled, so it cannot race the injected failure below
+            val waitedFor = TimeSource.Monotonic.markNow()
+            while (waitedFor.elapsedNow() < 5.seconds &&
+                (viewModel.startupJob?.isCompleted != true || viewModel.flowOfStartupResponse.value != null)
+            ) {
+                Thread.sleep(10)
+                advanceRobolectricLooper()
+            }
+            assertThat("the real startup check completed", viewModel.startupJob?.isCompleted, equalTo(true))
+            assertThat("the startup response was handled", viewModel.flowOfStartupResponse.value, nullValue())
+            assertThat("menu was built normally on startup", lastCreateOptionsMenuResult, equalTo(true))
+
+            // a slow startup check delivers a fatal error once the menu already exists
+            viewModel.flowOfStartupResponse.value =
+                DeckPickerViewModel.StartupResponse.FatalError(InitialActivity.StartupFailure.DatabaseLocked)
+            advanceRobolectricLooper()
+            advanceRobolectricLooper()
+
+            assertThat("the failure was handled", databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_DB_LOCKED))
+            assertThat("the menu is rebuilt and blanked", lastCreateOptionsMenuResult, equalTo(false))
+        }
+
     /** Regression test for [#20712](https://github.com/ankidroid/Anki-Android/issues/20712) */
     @Test
     fun `SQLiteDatabaseCorruptException in runCatching shows database error dialog`() =
@@ -1083,6 +1110,11 @@ class DeckPickerTest : RobolectricTest() {
         var databaseErrorDialog: DatabaseErrorDialogType? = null
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
+
+        /** result of the last [onCreateOptionsMenu] call: false means the menu was blanked */
+        var lastCreateOptionsMenuResult: Boolean? = null
+
+        override fun onCreateOptionsMenu(menu: Menu): Boolean = super.onCreateOptionsMenu(menu).also { lastCreateOptionsMenuResult = it }
 
         override fun showDatabaseErrorDialog(
             errorDialogType: DatabaseErrorDialogType,
