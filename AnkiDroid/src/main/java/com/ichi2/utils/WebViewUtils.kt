@@ -28,12 +28,17 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewOutcomeReceiver
+import androidx.webkit.WebViewStartUpConfig
+import androidx.webkit.WebViewStartUpResult
+import androidx.webkit.WebViewStartupException
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.utils.openUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.util.concurrent.Executors
 
 @JvmInline
 value class WebViewVersion(
@@ -232,3 +237,34 @@ fun setWebContentsDebuggingEnabled(enabled: Boolean) =
         // android.util.AndroidRuntimeException: android.webkit.WebViewFactory$MissingWebViewPackageException: Failed to load WebView provider: No WebView installed
         Timber.w(e, "setWebContentsDebuggingEnabled")
     }
+
+/**
+ * Starts the WebView on a background thread, so later WebView usage is faster.
+ *
+ * Exactly one of [onSuccess] or [onFailure] is called, on the main thread, once startup completes.
+ *
+ * Background work runs on a dedicated thread, released once startup completes.
+ *
+ * @see WebViewCompat.startUpWebView
+ */
+fun startUpWebView(
+    context: Context,
+    onSuccess: () -> Unit,
+    onFailure: (Throwable) -> Unit,
+) {
+    val executor = Executors.newSingleThreadExecutor()
+    val config = WebViewStartUpConfig.Builder(executor).build()
+    val callback =
+        object : WebViewOutcomeReceiver<WebViewStartUpResult, WebViewStartupException> {
+            override fun onResult(result: WebViewStartUpResult?) {
+                executor.shutdown()
+                onSuccess()
+            }
+
+            override fun onError(e: WebViewStartupException) {
+                executor.shutdown()
+                onFailure(e)
+            }
+        }
+    WebViewCompat.startUpWebView(context, config, callback)
+}
