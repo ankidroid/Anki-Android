@@ -65,6 +65,7 @@ import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.core.widget.doAfterTextChanged
 import androidx.draganddrop.DropHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -75,6 +76,7 @@ import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteEditorFragment.Companion.NoteEditorCaller.Companion.fromValue
@@ -2388,18 +2390,66 @@ class NoteEditorFragment :
                     requireContext().openUrl(R.string.link_manual_note_format_toolbar)
                 }.negativeButton(R.string.dialog_cancel)
 
+    @NeedsTest("Create button disabled until name + one HTML field are filled")
     private fun displayAddToolbarDialog() {
         val v = layoutInflater.inflate(R.layout.dialog_note_editor_toolbar_add_custom_item, null)
-        toolbarDialog.show {
-            title(R.string.add_toolbar_item)
-            setView(v)
-            positiveButton(R.string.dialog_positive_create) {
-                val etIcon = v.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
-                val et = v.findViewById<EditText>(R.id.note_editor_toolbar_before)
-                val et2 = v.findViewById<EditText>(R.id.note_editor_toolbar_after)
-                addToolbarButton(etIcon.text.toString(), et.text.toString(), et2.text.toString())
+
+        val etIcon = v.findViewById<EditText>(R.id.note_editor_toolbar_item_icon)
+        val etBefore = v.findViewById<EditText>(R.id.note_editor_toolbar_before)
+        val etAfter = v.findViewById<EditText>(R.id.note_editor_toolbar_after)
+
+        val etIconLayout = v.findViewById<TextInputLayout>(R.id.note_editor_toolbar_item_icon_layout)
+        val etBeforeLayout = v.findViewById<TextInputLayout>(R.id.note_editor_toolbar_before_layout)
+        val etAfterLayout = v.findViewById<TextInputLayout>(R.id.note_editor_toolbar_after_layout)
+
+        // Both HTML fields share one error message, displayed under etAfterLayout only.
+        // etBeforeLayout still receives the message so accessibility services report the field as
+        // invalid, but its text is hidden and it is not a live region, which would announce the message twice
+        etBeforeLayout.setErrorTextAppearance(R.style.TextAppearance_AnkiDroid_HiddenError)
+        etBeforeLayout.errorAccessibilityLiveRegion = View.ACCESSIBILITY_LIVE_REGION_NONE
+
+        val dialog =
+            toolbarDialog.show {
+                title(R.string.add_toolbar_item)
+                setView(v)
+                positiveButton(R.string.dialog_positive_create) {
+                    addToolbarButton(etIcon.text.toString(), etBefore.text.toString(), etAfter.text.toString())
+                }
+            }
+
+        val posButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        posButton.isEnabled = false
+
+        // Setting an unchanged error would re-announce it to screen readers on every keystroke
+        fun TextInputLayout.setErrorIfChanged(message: String) {
+            if (error == message) return
+            error = message
+        }
+
+        fun updateToolbarItemValidationState() {
+            val hasIcon = etIcon.text.toString().isNotBlank()
+            val hasHtml = etBefore.text.toString().isNotBlank() || etAfter.text.toString().isNotBlank()
+            posButton.isEnabled = hasIcon && hasHtml
+
+            if (hasIcon) {
+                etIconLayout.isErrorEnabled = false
+            } else {
+                etIconLayout.setErrorIfChanged(getString(R.string.note_editor_toolbar_icon_requirement_error))
+            }
+
+            if (hasHtml) {
+                etBeforeLayout.isErrorEnabled = false
+                etAfterLayout.isErrorEnabled = false
+            } else {
+                val message = getString(R.string.before_after_text_requirement_error)
+                etBeforeLayout.setErrorIfChanged(message)
+                etAfterLayout.setErrorIfChanged(message)
             }
         }
+
+        etIcon.doAfterTextChanged { updateToolbarItemValidationState() }
+        etBefore.doAfterTextChanged { updateToolbarItemValidationState() }
+        etAfter.doAfterTextChanged { updateToolbarItemValidationState() }
     }
 
     private fun displayEditToolbarDialog(currentButton: CustomToolbarButton) {
