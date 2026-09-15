@@ -103,6 +103,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.doOnApplyWindowInsets
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnTabSelected
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -764,17 +765,20 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 }
             binding.editText.addTextChangedListener(templateEditorWatcher)
 
-            ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            binding.root.doOnApplyWindowInsets { view, insets, initial ->
                 // Hide the template tabs to make room for a full software keyboard. A physical
                 // keyboard can report a visible IME with only a navigation strip (or zero height).
-                binding.bottomNavigation.isVisible = insets.getInsets(ime()).bottom <= binding.bottomNavigation.minimumHeight
+                val softwareKeyboardVisible = insets.getInsets(ime()).bottom > binding.bottomNavigation.minimumHeight
+                binding.bottomNavigation.isVisible = !softwareKeyboardVisible
+                val bottomInset = insets.getInsets(systemBars() or displayCutout() or ime()).bottom
+                view.updatePadding(
+                    bottom = if (softwareKeyboardVisible) bottomInset else 0,
+                )
                 // When fragmented, the activity insets the editor pane instead.
-                // The bottom navigation insets itself, so it is not padded here.
                 if (!templateEditor.fragmented) {
                     val bars = insets.getInsets(systemBars() or displayCutout())
                     binding.scrollView.updatePadding(left = bars.left, right = bars.right)
                 }
-                insets
             }
             // the view is added to the pager after the insets were dispatched, so request them again
             binding.root.doOnAttach { ViewCompat.requestApplyInsets(it) }
