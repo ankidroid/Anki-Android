@@ -13,6 +13,7 @@ import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.dispatchInsets
+import com.ichi2.testutils.withBooleanPreference
 import com.ichi2.utils.dp
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -28,6 +29,46 @@ import org.robolectric.Robolectric
  */
 @RunWith(AndroidJUnit4::class)
 class DeckPickerInsetsTest : RobolectricTest() {
+    @Test
+    fun `studied summary clears bottom navigation`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            withDeckPicker(deckCount = 2) { deckPicker ->
+                deckPicker.dispatchInsets(navBarBottom = 48.dp)
+                deckPicker.layoutForTest()
+
+                val bottomNavigation = deckPicker.findViewById<View>(R.id.bottom_navigation)
+                assertThat(
+                    "summary clears both app and system navigation",
+                    deckPicker.deckPickerBinding.reviewSummaryTextView.paddingBottom,
+                    equalTo(bottomNavigation.height),
+                )
+            }
+        }
+
+    @Test
+    fun `bottom navigation clears landscape system bars`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            withDeckPicker(deckCount = 2) { deckPicker ->
+                val cutoutLeft = 32.dp.toPx(targetContext)
+                val navigationBarRight = 48.dp.toPx(targetContext)
+                deckPicker.dispatchInsets(navBarRight = 48.dp, cutoutLeft = 32.dp)
+                deckPicker.layoutForTest()
+
+                val bottomNavigation = deckPicker.findViewById<View>(R.id.bottom_navigation)
+                assertThat("bottom navigation clears the display cutout", bottomNavigation.paddingLeft, equalTo(cutoutLeft))
+                assertThat(
+                    "bottom navigation clears the side navigation bar",
+                    bottomNavigation.paddingRight,
+                    equalTo(navigationBarRight),
+                )
+                assertThat(
+                    "summary clears app navigation when the system navigation is on the side",
+                    deckPicker.deckPickerBinding.reviewSummaryTextView.paddingBottom,
+                    equalTo(bottomNavigation.height),
+                )
+            }
+        }
+
     @Test
     fun `FAB is above the navigation bar`() =
         withDeckPicker(deckCount = 2) { deckPicker ->
