@@ -34,6 +34,7 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
@@ -434,6 +435,7 @@ class SharedDecksDownloadFragment : Fragment() {
             viewModel.onProgress(
                 downloadedBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)),
                 totalBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)),
+                timeMillis = TimeManager.time.intTimeMS(),
             )
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)

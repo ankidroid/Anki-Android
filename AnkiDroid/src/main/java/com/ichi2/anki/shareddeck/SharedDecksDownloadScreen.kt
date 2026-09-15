@@ -4,12 +4,14 @@
 
 package com.ichi2.anki.shareddeck
 
+import android.text.format.DateUtils
 import android.text.format.Formatter
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -102,6 +104,7 @@ fun SharedDecksDownloadScreen(
                 modifier = Modifier.padding(vertical = MaterialTheme.dimensions.screenEdge),
             )
             Spacer(Modifier.weight(1f))
+            StatCards(state)
             InfoCard()
             if (state.isWaitingForNetwork) NetworkWarning()
             Actions(
@@ -210,11 +213,71 @@ private fun downloadSizeText(
 }
 
 @Composable
+private fun StatCards(state: SharedDecksDownloadUiState) {
+    val dimensions = MaterialTheme.dimensions
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(start = dimensions.screenEdge, end = dimensions.screenEdge, bottom = dimensions.space150),
+        horizontalArrangement = Arrangement.spacedBy(dimensions.space150),
+    ) {
+        StatCard(
+            label = stringResource(R.string.download_speed_label),
+            value = speedText(state.speedBytesPerSecond, state.downloadedBytes),
+            modifier = Modifier.weight(1f),
+        )
+        StatCard(
+            label = stringResource(R.string.download_time_left_label),
+            value = timeLeftText(state.secondsRemaining),
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun StatCard(
+    label: String,
+    value: String,
+    modifier: Modifier = Modifier,
+) {
+    TonalCard(modifier = modifier) {
+        Column(modifier = Modifier.padding(MaterialTheme.dimensions.sectionGap)) {
+            Text(
+                text = label.uppercase(),
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = value,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(top = MaterialTheme.dimensions.space50),
+            )
+        }
+    }
+}
+
+@Composable
+private fun speedText(
+    bytesPerSecond: Long,
+    downloadedBytes: Long,
+): String {
+    if (bytesPerSecond <= 0 && downloadedBytes <= 0) return stringResource(R.string.download_speed_unknown)
+    val speed = Formatter.formatFileSize(LocalContext.current, bytesPerSecond.coerceAtLeast(0))
+    return stringResource(R.string.download_speed_unit, speed)
+}
+
+@Composable
+private fun timeLeftText(secondsRemaining: Long?): String =
+    secondsRemaining?.let(DateUtils::formatElapsedTime) ?: stringResource(R.string.download_time_unknown)
+
+@Composable
 private fun InfoCard() {
     val dimensions = MaterialTheme.dimensions
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+    TonalCard(
         modifier =
             Modifier
                 .fillMaxWidth()
@@ -247,6 +310,19 @@ private fun InfoCard() {
             )
         }
     }
+}
+
+@Composable
+private fun TonalCard(
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        modifier = modifier,
+        content = content,
+    )
 }
 
 @Composable
@@ -317,6 +393,8 @@ private class DownloadStateProvider : PreviewParameterProvider<SharedDecksDownlo
             percent = 42.7f,
             downloadedBytes = 19_200_000,
             totalBytes = 44_900_000,
+            speedBytesPerSecond = 1_200_000,
+            secondsRemaining = 21,
         )
 
     override val values =

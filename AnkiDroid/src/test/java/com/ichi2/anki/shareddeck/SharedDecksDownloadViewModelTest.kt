@@ -31,7 +31,7 @@ class SharedDecksDownloadViewModelTest {
 
     @Test
     fun `onProgress reports the share of the total downloaded`() {
-        viewModel.onProgress(downloadedBytes = 25, totalBytes = 200)
+        viewModel.onProgress(downloadedBytes = 25, totalBytes = 200, timeMillis = 0)
         assertThat(state.percent, equalTo(12.5f))
         assertThat(state.downloadedBytes, equalTo(25L))
         assertThat(state.totalBytes, equalTo(200L))
@@ -40,13 +40,37 @@ class SharedDecksDownloadViewModelTest {
     @Test
     fun `progress is zero while the total size is unknown`() {
         // DownloadManager reports -1 until the server tells it how big the file is
-        viewModel.onProgress(downloadedBytes = 5_000, totalBytes = -1)
+        viewModel.onProgress(downloadedBytes = 5_000, totalBytes = -1, timeMillis = 0)
         assertThat(state.percent, equalTo(0f))
     }
 
     @Test
+    fun `speed and time left come from the last two polls`() {
+        viewModel.onProgress(downloadedBytes = 0, totalBytes = 10_000, timeMillis = 0)
+        viewModel.onProgress(downloadedBytes = 1_000, totalBytes = 10_000, timeMillis = 1_000)
+        assertThat(state.speedBytesPerSecond, equalTo(1_000L))
+        assertThat(state.secondsRemaining, equalTo(9L))
+    }
+
+    @Test
+    fun `time left is unknown while the total size is unknown`() {
+        viewModel.onProgress(downloadedBytes = 0, totalBytes = -1, timeMillis = 0)
+        viewModel.onProgress(downloadedBytes = 1_000, totalBytes = -1, timeMillis = 1_000)
+        assertThat(state.secondsRemaining, nullValue())
+    }
+
+    @Test
+    fun `a retry measures the speed from scratch`() {
+        viewModel.onProgress(downloadedBytes = 0, totalBytes = 10_000, timeMillis = 0)
+        viewModel.onProgress(downloadedBytes = 5_000, totalBytes = 10_000, timeMillis = 1_000)
+        viewModel.onDownloadStarted("deck.apkg")
+        viewModel.onProgress(downloadedBytes = 0, totalBytes = 10_000, timeMillis = 2_000)
+        assertThat(state.speedBytesPerSecond, equalTo(0L))
+    }
+
+    @Test
     fun `onProgressUnavailable drops the percentage`() {
-        viewModel.onProgress(downloadedBytes = 50, totalBytes = 100)
+        viewModel.onProgress(downloadedBytes = 50, totalBytes = 100, timeMillis = 0)
         viewModel.onProgressUnavailable()
         assertThat(state.percent, nullValue())
     }
@@ -61,18 +85,21 @@ class SharedDecksDownloadViewModelTest {
 
     @Test
     fun `onDownloadComplete finishes at 100 percent`() {
-        viewModel.onProgress(downloadedBytes = 90, totalBytes = 100)
+        viewModel.onProgress(downloadedBytes = 90, totalBytes = 100, timeMillis = 0)
         viewModel.onDownloadComplete()
         assertThat(state.phase, equalTo(DownloadPhase.Complete))
         assertThat(state.percent, equalTo(100f))
+        assertThat(state.secondsRemaining, equalTo(0L))
     }
 
     @Test
     fun `onDownloadFailed resets the progress`() {
-        viewModel.onProgress(downloadedBytes = 90, totalBytes = 100)
+        viewModel.onProgress(downloadedBytes = 90, totalBytes = 100, timeMillis = 0)
         viewModel.onDownloadFailed()
         assertThat(state.phase, equalTo(DownloadPhase.Failed))
         assertThat(state.percent, equalTo(0f))
+        assertThat(state.speedBytesPerSecond, equalTo(0L))
+        assertThat(state.secondsRemaining, nullValue())
     }
 
     @Test
