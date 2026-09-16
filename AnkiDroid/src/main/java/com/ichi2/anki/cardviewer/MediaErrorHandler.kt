@@ -49,6 +49,9 @@ class MediaErrorHandler : MediaErrorListener {
     private var missingMediaCount = 0
     private var hasExecuted = false
 
+    /** Files already reported on the current card, so {{FrontSide}} doesn't repeat them on the answer */
+    private val reportedFileNames = mutableSetOf<String>()
+
     private var automaticTtsFailureCount = 0
 
     override fun onError(uri: Uri): MediaErrorBehavior {
@@ -102,8 +105,18 @@ class MediaErrorHandler : MediaErrorListener {
         // Therefore limit this feature to the common case of local files, which should always work.
         if (url.host != LOCALHOST) return
 
+        val filename =
+            try {
+                URLUtil.guessFileName(url.toString(), null, null)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to determine missing media filename")
+                return
+            }
+        // The user was already told about this file on this card: allow another file on this side to be reported
+        if (filename in reportedFileNames) return
+
         try {
-            val filename = URLUtil.guessFileName(url.toString(), null, null)
+            reportedFileNames.add(filename)
             onFailure.invoke(filename)
             missingMediaCount++
         } catch (e: Exception) {
@@ -137,6 +150,10 @@ class MediaErrorHandler : MediaErrorListener {
 
     fun onCardSideChange() {
         hasExecuted = false
+    }
+
+    fun onDisplayQuestion() {
+        reportedFileNames.clear()
     }
 
     fun processTtsFailure(

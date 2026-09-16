@@ -92,6 +92,36 @@ class MediaErrorHandlerTest {
     }
 
     @Test
+    fun sameFileAfterFlipIsNotShownAgain() {
+        // #21857: {{FrontSide}} re-renders the question's missing image on the answer
+        processFailure(getValidRequest("example.jpg"))
+        sut.onCardSideChange()
+        processFailure(getValidRequest("example.jpg"))
+        assertThat(timesCalled, equalTo(1))
+        assertThat(fileNames, contains("example.jpg"))
+    }
+
+    @Test
+    fun differentFileIsShownAfterSameFileIsSkipped() {
+        processFailure(getValidRequest("example.jpg"))
+        sut.onCardSideChange()
+        processFailure(getValidRequest("example.jpg"))
+        processFailure(getValidRequest("example2.jpg"))
+        assertThat(timesCalled, equalTo(2))
+        assertThat(fileNames, contains("example.jpg", "example2.jpg"))
+    }
+
+    @Test
+    fun sameFileOnNextCardIsShown() {
+        processFailure(getValidRequest("example.jpg"))
+        sut.onCardSideChange()
+        sut.onDisplayQuestion()
+        processFailure(getValidRequest("example.jpg"))
+        assertThat(timesCalled, equalTo(2))
+        assertThat(fileNames, contains("example.jpg", "example.jpg"))
+    }
+
+    @Test
     fun invalidRequestIsIgnored() {
         val invalidRequest = getInvalidRequest("example.jpg")
         processFailure(invalidRequest)

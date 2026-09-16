@@ -1328,6 +1328,7 @@ abstract class AbstractFlashcardViewer :
 
     open fun displayCardQuestion() {
         Timber.d("displayCardQuestion()")
+        mediaErrorHandler.onDisplayQuestion()
         displayAnswer = false
         backButtonPressedToReturn = false
         setInterface()
