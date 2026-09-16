@@ -1407,6 +1407,16 @@ class NoteEditorFragment :
             // because this item is already present in CardBrowser
             menu.findItem(R.id.action_add_note_from_note_editor).isVisible = !inCardBrowserActivity
         }
+        menu.findItem(R.id.action_toggle_previewer).apply {
+            isVisible = inNoteEditorActivity && noteEditorActivity?.hasPreviewerPane == true
+            isChecked = noteEditorActivity?.isPreviewerVisible == true
+            title =
+                if (isChecked) {
+                    getString(R.string.note_editor_hide_previewer)
+                } else {
+                    getString(R.string.note_editor_show_previewer)
+                }
+        }
         if (editFields != null) {
             for (i in editFields!!.indices) {
                 val fieldText = editFields!![i].text
@@ -1451,7 +1461,7 @@ class NoteEditorFragment :
     // TODO: Move this logic to a [NoteEditorActivity.kt]
     private fun allowPreviewAction(): Boolean =
         when {
-            inNoteEditorActivity && noteEditorActivity?.fragmented == true -> false
+            inNoteEditorActivity && noteEditorActivity?.isPreviewerVisible == true -> false
             addNote && currentNotetypeIsImageOcclusion() -> false
             else -> true
         }
@@ -1464,6 +1474,17 @@ class NoteEditorFragment :
                 if (allowPreviewAction()) {
                     launchCatchingTask { performPreview() }
                 }
+                return true
+            }
+            R.id.action_toggle_previewer -> {
+                Timber.i("NoteEditor:: Toggle previewer pressed")
+                val editorActivity = noteEditorActivity
+                if (editorActivity == null) {
+                    Timber.w("NoteEditor:: Toggle previewer pressed outside of NoteEditorActivity")
+                    return true
+                }
+                editorActivity.setPreviewerVisible(!editorActivity.isPreviewerVisible)
+                editorActivity.invalidateOptionsMenu()
                 return true
             }
             R.id.action_save -> {
@@ -2219,7 +2240,7 @@ class NoteEditorFragment :
         val bars = getInsets(systemBars() or displayCutout() or ime())
         return insetsOf(
             left = if (inCardBrowserActivity) 0 else bars.left,
-            right = if (noteEditorActivity?.fragmented == true) 0 else bars.right,
+            right = if (noteEditorActivity?.isPreviewerVisible == true) 0 else bars.right,
             bottom = bars.bottom,
         )
     }
@@ -2233,7 +2254,7 @@ class NoteEditorFragment :
             val corners = insets.bottomCornerSideClearance(bars.bottom)
             toolbar.setSideClearance(
                 left = if (inCardBrowserActivity) 0 else (corners.left - bars.left).coerceAtLeast(0),
-                right = if (noteEditorActivity?.fragmented == true) 0 else (corners.right - bars.right).coerceAtLeast(0),
+                right = if (noteEditorActivity?.isPreviewerVisible == true) 0 else (corners.right - bars.right).coerceAtLeast(0),
             )
             applyBottomInset()
             insets
