@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.edit
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
@@ -71,13 +72,29 @@ class NoteEditorActivity :
     private var previewerFrame: FragmentContainerView? = null
 
     /**
+     * The user's persisted previewer visibility preference.
+     * Applied to the views by [applyPreviewerVisibility], restored in [onCreate].
+     */
+    private var previewerVisibilityPref: Boolean = true
+
+    /**
      * Job for managing delayed previewer refresh operations.
      * Automatically cancelled when the lifecycle scope is destroyed, preventing memory leaks.
      */
     private var refreshPreviewerJob: Job? = null
 
-    val fragmented: Boolean
-        get() = previewerFrame?.isVisible == true
+    /**
+     * Whether the previewer pane is currently visible.
+     *
+     * `false` in single-pane layouts, and in split layouts where the user has
+     * hidden the pane via the "Show preview sidebar" menu action.
+     */
+    val isPreviewerVisible: Boolean
+        get() = binding.previewerFrameLayout?.isVisible == true
+
+    /** Whether this layout contains a previewer pane (split layouts only); never changes at runtime. */
+    val hasPreviewerPane: Boolean
+        get() = previewerFrame != null
 
     private lateinit var binding: ActivityNoteEditorBinding
 
@@ -123,7 +140,9 @@ class NoteEditorActivity :
         setupEdgeToEdge()
 
         previewerFrame = binding.previewerFrame
-        Timber.i("Note Editor is in %s mode", if (fragmented) "split" else "single-pane")
+        previewerVisibilityPref = loadPreviewerVisibilityPreference()
+        applyPreviewerVisibility()
+        Timber.i("Note Editor is in %s mode", if (isPreviewerVisible) "split" else "single-pane")
 
         // TODO: specify how non-null but invalid extras are handled
         val fragmentArgs = intent.extras ?: NoteEditorFragment.addNoteArgs()
@@ -158,11 +177,7 @@ class NoteEditorActivity :
             onBackPressedDispatcher.onBackPressed()
         }
 
-        if (fragmented) {
-            // Defer previewer loading to avoid blocking onCreate
-            binding.previewerFrame!!.post {
-                loadNoteEditorPreviewer(true)
-            }
+        if (hasPreviewerPane) {
             val parentLayout = binding.noteEditorXlView!!
             val divider = binding.noteEditorResizingDivider!!
             val noteEditorPane = binding.noteEditorFragmentFrame
@@ -176,9 +191,38 @@ class NoteEditorActivity :
                 leftPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
                 rightPaneWeightKey = PREF_PREVIEWER_PANE_WEIGHT,
             )
+            if (isPreviewerVisible) {
+                // Defer previewer loading to avoid blocking onCreate
+                binding.previewerFrame!!.post {
+                    loadNoteEditorPreviewer(true)
+                }
+            }
         }
 
         startLoadingCollection()
+    }
+
+    fun setPreviewerVisible(visible: Boolean) {
+        if (!hasPreviewerPane) return
+
+        previewerVisibilityPref = visible
+        savePreviewerVisibilityPreference(visible)
+        applyPreviewerVisibility()
+        if (visible) {
+            loadNoteEditorPreviewer(true)
+        }
+    }
+
+    private fun loadPreviewerVisibilityPreference(): Boolean = Prefs.getUiConfig(this).getBoolean(PREF_SHOW_PREVIEWER, true)
+
+    private fun savePreviewerVisibilityPreference(visible: Boolean) {
+        Prefs.getUiConfig(this).edit { putBoolean(PREF_SHOW_PREVIEWER, visible) }
+    }
+
+    private fun applyPreviewerVisibility() {
+        val visible = hasPreviewerPane && previewerVisibilityPref
+        binding.previewerFrameLayout?.isVisible = visible
+        binding.noteEditorResizingDivider?.isVisible = visible
     }
 
     /**
@@ -203,7 +247,7 @@ class NoteEditorActivity :
      * - Cloze notes: Fragment recreation with preserved tab selection to handle dynamic cloze changes
      */
     fun loadNoteEditorPreviewer(forceReplace: Boolean) {
-        if (!fragmented) {
+        if (!isPreviewerVisible) {
             return
         }
 
@@ -363,7 +407,7 @@ class NoteEditorActivity :
     override fun onResume() {
         super.onResume()
         // Refresh the previewer when activity resumes, if needed
-        if (fragmented) {
+        if (isPreviewerVisible) {
             loadNoteEditorPreviewer(false)
         }
     }
@@ -371,14 +415,14 @@ class NoteEditorActivity :
     //region NoteEditorFragmentDelegate Protocol Methods
 
     override fun onNoteEditorReady() {
-        // Load the if fragmented, else does nothing
-        if (!fragmented) return
+        // Load the previewer if visible, else do nothing
+        if (!isPreviewerVisible) return
 
         loadNoteEditorPreviewer(false)
     }
 
     override fun onNoteTextChanged() {
-        if (!fragmented) return
+        if (!isPreviewerVisible) return
 
         refreshPreviewerJob?.cancel()
         refreshPreviewerJob =
@@ -389,13 +433,13 @@ class NoteEditorActivity :
     }
 
     override fun onNoteSaved() {
-        if (!fragmented) return
+        if (!isPreviewerVisible) return
 
         loadNoteEditorPreviewer(true)
     }
 
     override fun onNoteTypeChanged() {
-        if (!fragmented) return
+        if (!isPreviewerVisible) return
 
         loadNoteEditorPreviewer(true)
     }
@@ -407,6 +451,7 @@ class NoteEditorActivity :
         // Keys for saving pane weights in SharedPreferences
         private const val PREF_NOTE_EDITOR_PANE_WEIGHT = "noteEditorPaneWeight"
         private const val PREF_PREVIEWER_PANE_WEIGHT = "previewerPaneWeight"
+        private const val PREF_SHOW_PREVIEWER = "noteEditorShowPreviewer"
 
         private val REFRESH_NOTE_EDITOR_PREVIEW_DELAY = 100.milliseconds
     }

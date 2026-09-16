@@ -1762,6 +1762,7 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_capitalize to true,
                     R.id.action_show_toolbar to true,
                     R.id.action_scroll_toolbar to true,
+                    R.id.action_toggle_previewer to false,
                 )
 
             assertMenusEqual(expectedMenuItems, menu)
@@ -1805,6 +1806,7 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_capitalize to true,
                     R.id.action_show_toolbar to true,
                     R.id.action_scroll_toolbar to true,
+                    R.id.action_toggle_previewer to false,
                 )
 
             assertMenusEqual(expectedMenuItems, menu)
