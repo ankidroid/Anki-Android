@@ -359,7 +359,7 @@ abstract class CardViewerFragment(
             request: WebResourceRequest,
             error: WebResourceError,
         ) {
-            viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
+            viewModel.mediaErrorHandler.onMediaNotFoundError(request) { filename: String ->
                 showMediaErrorSnackbar(filename)
             }
         }
