@@ -481,12 +481,20 @@ object CollectionManager {
         /** Raises [BackendException.BackendFatalError] */
         FATAL_ERROR,
 
+        /** Raises [BackendException.BackendDbException.BackendDbFullException] */
+        DISK_FULL,
+
+        /** Raises [BackendException.BackendDbException.BackendDbCorruptException] */
+        DATABASE_CORRUPT,
+
         ;
 
         fun triggerFailure() {
             when (this) {
                 LOCKED -> throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
                 FATAL_ERROR -> throw BackendException.BackendFatalError(backendError {})
+                DISK_FULL -> throw BackendException.BackendDbException.BackendDbFullException(backendError {})
+                DATABASE_CORRUPT -> throw BackendException.BackendDbException.BackendDbCorruptException(backendError {})
             }
         }
     }
