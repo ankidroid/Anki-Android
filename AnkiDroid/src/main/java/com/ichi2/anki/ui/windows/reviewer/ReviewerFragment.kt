@@ -132,9 +132,7 @@ class ReviewerFragment :
 
     override fun onStart() {
         super.onStart()
-        if (!requireActivity().isChangingConfigurations) {
-            shakeDetector?.start()
-        }
+        shakeDetector?.start()
     }
 
     override fun onStop() {
@@ -360,7 +358,6 @@ class ReviewerFragment :
         }
         if (bindingMap.isBound(Gesture.SHAKE)) {
             shakeDetector = AnkiShakeDetector.createInstance(requireContext(), this)
-            shakeDetector?.start()
         }
     }
 
