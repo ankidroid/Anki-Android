@@ -66,6 +66,7 @@ import kotlinx.coroutines.withTimeout
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendException.BackendCardTypeException
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
@@ -203,12 +204,8 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.i("Showing error dialog but not sending a crash report.")
                 showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
             }
-            is BackendException -> {
-                Timber.e(exc, errorMessage)
-                if (callerTrace != null) Timber.e(callerTrace)
-                showError(exc.localizedMessage!!, exc.toCrashReportData(this))
-            }
-            is SQLiteDatabaseCorruptException -> {
+            // must precede `is BackendException`: BackendDbCorruptException is a subclass
+            is SQLiteDatabaseCorruptException, is BackendDbCorruptException -> {
                 Timber.e(exc, errorMessage)
                 DatabaseCorruption.isDetected = true
                 if (callerTrace != null) Timber.e(callerTrace)
@@ -217,6 +214,11 @@ suspend fun <T> FragmentActivity.runCatching(
                         errorDialogType = DatabaseErrorDialogType.DIALOG_LOAD_FAILED,
                         exceptionData = DatabaseErrorDialog.CustomExceptionData.fromException(exc),
                     )
+            }
+            is BackendException -> {
+                Timber.e(exc, errorMessage)
+                if (callerTrace != null) Timber.e(callerTrace)
+                showError(exc.localizedMessage!!, exc.toCrashReportData(this))
             }
             else -> {
                 Timber.e(exc, errorMessage)

@@ -25,6 +25,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SdkSuppress
+import anki.backend.backendError
 import anki.collection.opChanges
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
@@ -74,6 +75,7 @@ import com.ichi2.testutils.withBooleanPreference
 import com.ichi2.testutils.withDeniedPermissions
 import com.ichi2.testutils.withWritePermissions
 import kotlinx.coroutines.flow.merge
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.containsString
@@ -1098,6 +1100,14 @@ class DeckPickerTest : RobolectricTest() {
     fun `SQLiteDatabaseCorruptException in runCatching shows database error dialog`() =
         deckPickerEx {
             runCatching { throw SQLiteDatabaseCorruptException() }
+            assertThat(databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED))
+        }
+
+    /** The backend may raise corruption directly, without conversion to a SQLite exception */
+    @Test
+    fun `BackendDbCorruptException in runCatching shows database error dialog`() =
+        deckPickerEx {
+            runCatching { throw BackendDbCorruptException(backendError {}) }
             assertThat(databaseErrorDialog, equalTo(DatabaseErrorDialogType.DIALOG_LOAD_FAILED))
         }
 
