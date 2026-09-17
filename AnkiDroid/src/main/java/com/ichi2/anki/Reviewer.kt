@@ -1115,8 +1115,7 @@ open class Reviewer :
     private fun showDueDateDialog() =
         launchCatchingTask {
             Timber.i("showing due date dialog")
-            val dialog = SetDueDateDialog.newInstance(externalCacheDir ?: cacheDir, listOf(currentCardId!!))
-            showDialogFragment(dialog)
+            SetDueDateDialog.show(this@Reviewer, listOf(currentCardId!!))
         }
 
     private fun showResetCardDialog() {
