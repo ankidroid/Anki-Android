@@ -171,6 +171,9 @@ object CollectionManager {
     /**
      * [withCol], publishing a [CollectionLease] on [flowOfCollectionLease] for the duration.
      *
+     * Previously admitted [tryWithCol] calls finish before this operation enters the queue.
+     * New [tryWithCol] calls are skipped while this operation waits or runs.
+     *
      * @param onCancel cancels [operation], must return promptly
      */
     suspend fun <T> withColExclusive(
@@ -200,11 +203,7 @@ object CollectionManager {
      * Use this for quick, disposable work. [block] is not executed and `null` is returned if
      * [CollectionLease] is held.
      *
-     * In normal cases this is equivalent to [withCol].
-     *
      * Example usage: obtaining deck counts while a sync may be ongoing.
-     *
-     * Note: A lease acquired after the check can still make this call wait behind the operation.
      */
     suspend fun <T> tryWithCol(
         @WorkerThread block: Collection.() -> T,

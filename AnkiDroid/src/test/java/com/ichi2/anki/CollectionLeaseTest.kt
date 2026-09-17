@@ -8,6 +8,7 @@ import com.ichi2.anki.CollectionManager.tryWithCol
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withColExclusive
 import com.ichi2.anki.CollectionManager.withLeaseForTest
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import net.ankiweb.rsdroid.Backend
@@ -27,6 +29,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.CoroutineContext
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -140,9 +143,162 @@ class CollectionLeaseTest : RobolectricTest() {
         }
 
     @Test
+    fun `a lease cannot overtake brief work paused before queue dispatch`() =
+        runTest {
+            val queue = StandardTestDispatcher(testScheduler)
+            var dispatchBrief: (() -> Unit)? = null
+            val pausedQueue =
+                object : CoroutineDispatcher() {
+                    override fun dispatch(
+                        context: CoroutineContext,
+                        block: Runnable,
+                    ) {
+                        if (dispatchBrief == null) {
+                            // Pause after admission but before submitting to the serial queue.
+                            dispatchBrief = { queue.dispatch(context, block) }
+                        } else {
+                            queue.dispatch(context, block)
+                        }
+                    }
+                }
+            withCollectionQueue(pausedQueue) {
+                val events = mutableListOf<String>()
+                val brief =
+                    async(start = CoroutineStart.UNDISPATCHED) {
+                        tryWithCol { events.add("brief") }
+                    }
+                val otherBrief =
+                    async(start = CoroutineStart.UNDISPATCHED) {
+                        tryWithCol { events.add("other brief") }
+                    }
+                val sync =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        withColExclusive(CollectionOperation.SYNC) { events.add("sync") }
+                    }
+                try {
+                    testScheduler.runCurrent()
+                    assertEquals(true, otherBrief.await(), "overlapping brief work must not be skipped")
+                    assertEquals(listOf("other brief"), events, "sync must wait for every admitted brief call")
+                    assertThat(collectionLease, notNullValue())
+                    assertThat(tryWithCol { error("new work must be skipped while sync waits") }, nullValue())
+                } finally {
+                    checkNotNull(dispatchBrief).invoke()
+                }
+                assertEquals(true, brief.await())
+                sync.join()
+                assertEquals(listOf("other brief", "brief", "sync"), events)
+            }
+        }
+
+    @Test
+    fun `a lease waits for all admitted brief calls without skipping overlapping calls`() =
+        runTest {
+            withCollectionQueue(StandardTestDispatcher(testScheduler)) {
+                val events = mutableListOf<String>()
+                val first =
+                    async(start = CoroutineStart.UNDISPATCHED) {
+                        tryWithCol { events.add("first") }
+                    }
+                val second =
+                    async(start = CoroutineStart.UNDISPATCHED) {
+                        tryWithCol { events.add("second") }
+                    }
+                val sync =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        // Observe admission independently of the collection queue's ordering.
+                        withLeaseForTest(CollectionOperation.SYNC) { events.add("sync") }
+                    }
+                assertFalse(sync.isCompleted, "the lease must wait for both admitted calls")
+                assertThat(collectionLease, notNullValue())
+                assertThat(tryWithCol { error("new work must be skipped while sync waits") }, nullValue())
+                assertEquals(true, first.await())
+                assertEquals(true, second.await())
+                sync.join()
+                assertEquals(listOf("first", "second", "sync"), events)
+                assertThat(collectionLease, nullValue())
+            }
+        }
+
+    @Test
+    fun `cancelling admitted brief work allows a waiting lease to proceed`() =
+        runTest {
+            withCollectionQueue(StandardTestDispatcher(testScheduler)) {
+                val brief =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        tryWithCol { error("cancelled brief work must not run") }
+                    }
+                var syncRan = false
+                val sync =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        withLeaseForTest(CollectionOperation.SYNC) { syncRan = true }
+                    }
+                assertFalse(syncRan)
+                brief.cancelAndJoin()
+                sync.join()
+                assertTrue(syncRan)
+                assertThat(collectionLease, nullValue())
+                assertEquals(1, tryWithCol { decks.count() })
+            }
+        }
+
+    @Test
+    fun `failing admitted brief work allows a waiting lease to proceed`() =
+        runTest {
+            withCollectionQueue(StandardTestDispatcher(testScheduler)) {
+                val brief =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        assertFailsWith<IllegalStateException> {
+                            tryWithCol { error("brief work failed") }
+                        }
+                    }
+                var syncRan = false
+                val sync =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        withLeaseForTest(CollectionOperation.SYNC) { syncRan = true }
+                    }
+                assertFalse(syncRan)
+                brief.join()
+                sync.join()
+                assertTrue(syncRan)
+                assertThat(collectionLease, nullValue())
+                assertEquals(1, tryWithCol { decks.count() })
+            }
+        }
+
+    @Test
+    fun `cancelling a lease waiting for brief work allows more brief work`() =
+        runTest {
+            withCollectionQueue(StandardTestDispatcher(testScheduler)) {
+                val first = async(start = CoroutineStart.UNDISPATCHED) { tryWithCol { decks.count() } }
+                var abortCalls = 0
+                val sync =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        withColExclusive(CollectionOperation.SYNC, onCancel = { abortCalls++ }) {
+                            error("cancelled sync must not run")
+                        }
+                    }
+                collectionLease!!.cancel()
+                sync.join()
+                assertTrue(sync.isCancelled)
+                assertEquals(0, abortCalls)
+                assertThat(collectionLease, nullValue())
+                val second = async(start = CoroutineStart.UNDISPATCHED) { tryWithCol { decks.count() } }
+                val next =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        withLeaseForTest(CollectionOperation.FULL_DOWNLOAD) { }
+                    }
+                assertFalse(next.isCompleted, "the next lease must still wait for admitted work")
+                assertEquals(1, first.await())
+                assertEquals(1, second.await())
+                next.join()
+                assertThat(collectionLease, nullValue())
+            }
+        }
+
+    @Test
     fun `cancelling an overlapping operation preserves the running lease`() =
         runTest {
-            withProductionQueue {
+            withCollectionQueue {
                 val entered = CountDownLatch(1)
                 val release = CountDownLatch(1)
                 val first =
@@ -176,7 +332,7 @@ class CollectionLeaseTest : RobolectricTest() {
     @Test
     fun `cancelling a queued lease skips its block without aborting the running operation`() =
         runTest {
-            withProductionQueue {
+            withCollectionQueue {
                 val entered = CountDownLatch(1)
                 val release = CountDownLatch(1)
                 launch(start = CoroutineStart.UNDISPATCHED) {
@@ -225,7 +381,7 @@ class CollectionLeaseTest : RobolectricTest() {
     @Test
     fun `overlapping operations acquire distinct leases in order`() =
         runTest {
-            withProductionQueue {
+            withCollectionQueue {
                 val entered = CountDownLatch(1)
                 val release = CountDownLatch(1)
                 val first =
@@ -271,9 +427,12 @@ class CollectionLeaseTest : RobolectricTest() {
             }
         }
 
-    /** Exercise the real withContext queue, and restore Robolectric's lock before teardown. */
-    private suspend fun TestScope.withProductionQueue(block: suspend CoroutineScope.() -> Unit) {
-        CollectionManager.setTestDispatcher(Dispatchers.IO.limitedParallelism(1), useReentrantLock = false)
+    /** Exercise the withContext queue, and restore Robolectric's lock before teardown. */
+    private suspend fun TestScope.withCollectionQueue(
+        dispatcher: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1),
+        block: suspend CoroutineScope.() -> Unit,
+    ) {
+        CollectionManager.setTestDispatcher(dispatcher, useReentrantLock = false)
         try {
             coroutineScope(block)
         } finally {

@@ -3,6 +3,7 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.common.time.TimeManager
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,13 @@ internal class CollectionLeaseManager {
     // Serialize ownership before entering the collection queue, so a waiter cannot replace its owner.
     private val mutex = Mutex()
 
+    /**
+     * Used in both [tryWithoutLease] and [withLease], so a lease waits for all previously accepted calls.
+     */
+    private val acceptanceLock = Any()
+    private var briefCallCount = 0
+    private var briefCallsFinished: CompletableDeferred<Unit>? = null
+
     val flowOfLease: StateFlow<CollectionLease?>
         field = MutableStateFlow<CollectionLease?>(null)
 
@@ -30,6 +38,10 @@ internal class CollectionLeaseManager {
      * Publishes one lease at a time, cancelling queued work through its own coroutine scope.
      *
      * If a lease is already active, suspend until the lease is released.
+     *
+     * No new brief calls can be accepted after the lease is published.
+     *
+     * All previously accepted calls must finish before invoking [block].
      */
     suspend fun <T> withLease(
         operation: CollectionOperation,
@@ -45,29 +57,57 @@ internal class CollectionLeaseManager {
                         cancelQueued = { cancel() },
                         cancelRunning = onCancel,
                     )
-                flowOfLease.value = lease
+                // wait for brief jobs to finish (& acquire briefCallsFinished to await)
+                val briefWork =
+                    synchronized(acceptanceLock) {
+                        flowOfLease.value = lease
+                        briefCallsFinished
+                    }
                 Timber.d("collection lease acquired: %s", operation)
                 try {
+                    // wait for all brief jobs to complete
+                    briefWork?.await()
                     block(lease)
                 } finally {
                     lease.finish()
-                    flowOfLease.value = null
+                    synchronized(acceptanceLock) {
+                        flowOfLease.value = null
+                    }
                     Timber.d("collection lease released: %s", lease)
                 }
             }
         }
 
     /**
-     * Skips disposable work when a lease is held.
+     * Skips disposable work when a [CollectionLease] is held.
      *
-     * Note: due to interleaving, a lease acquired after the check may still cause this call
-     * to wait for the collection queue.
+     * Otherwise, reserves access until [block] finishes.
      */
     suspend fun <T> tryWithoutLease(block: suspend () -> T): T? {
-        lease?.let {
-            Timber.d("tryWithCol: skipped, %s", it)
-            return null
+        // Overlapping brief calls are accepted together.
+        // `withLease` waits for all of them to complete before entering the collection queue.
+        synchronized(acceptanceLock) {
+            lease?.let {
+                Timber.d("tryWithCol: skipped, %s", it)
+                return null
+            }
+            if (briefCallCount++ == 0) {
+                briefCallsFinished = CompletableDeferred()
+            }
         }
-        return block()
+        try {
+            return block()
+        } finally {
+            val finished =
+                synchronized(acceptanceLock) {
+                    if (--briefCallCount == 0) {
+                        briefCallsFinished.also { briefCallsFinished = null }
+                    } else {
+                        null
+                    }
+                }
+            // Resume the waiting lease outside the lock.
+            finished?.complete(Unit)
+        }
     }
 }
