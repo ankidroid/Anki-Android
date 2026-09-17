@@ -26,7 +26,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.slider.Slider
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
 
 /**
@@ -54,7 +53,6 @@ import com.ichi2.anki.utils.getFormattedStringOrPlurals
  *       which will be replaced by the preference value.
  *       `displayValue` is always true if a `displayFormat` is provided.
  */
-@NeedsTest("onTouchListener is only called once")
 class SliderPreference(
     context: Context,
     attrs: AttributeSet? = null,
