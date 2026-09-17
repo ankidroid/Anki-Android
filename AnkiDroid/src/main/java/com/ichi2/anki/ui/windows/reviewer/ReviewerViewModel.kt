@@ -165,7 +165,17 @@ class ReviewerViewModel(
         if (isAfterRecreation) {
             launchCatchingIO {
                 // TODO handle "Don't keep activities"
-                if (showingAnswer.value) showAnswer() else showQuestion()
+                if (showingAnswer.value) {
+                    showAnswer()
+                    // on configuration change: mutationSignal & queueState are retained
+                    // on process death: a new queueState/mutationSignal exist. Call
+                    // `runStateMutationHook` to ensure mutationSignal completes.
+                    if (!mutationSignal.isCompleted) {
+                        runStateMutationHook()
+                    }
+                } else {
+                    showQuestion()
+                }
             }
         } else {
             launchCatchingIO {

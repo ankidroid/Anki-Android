@@ -6,18 +6,22 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelStore
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
+import app.cash.turbine.test
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.utils.ext.cardStateCustomizer
-import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class ReviewerViewModelTest : JvmTest() {
+class ReviewerViewModelTest : RobolectricTest() {
     private val viewModelStore = ViewModelStore()
+
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
 
     @After
     fun clearViewModels() {
@@ -41,5 +45,74 @@ class ReviewerViewModelTest : JvmTest() {
             viewModel.onStateMutationCallback()
             advanceUntilIdle()
             assertEquals(1, col.getCard(card.id).reps)
+        }
+
+    @Test
+    fun `restored answer can be graded after process death`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            val savedStateHandle = SavedStateHandle(mapOf("showingAnswer" to true))
+            val viewModel = ReviewerViewModel(savedStateHandle).also { viewModelStore.put("reviewer", it) }
+
+            viewModel.onPageFinished(true)
+            advanceUntilIdle()
+            assertTrue(viewModel.showingAnswer.value)
+
+            viewModel.answerCard(Rating.GOOD)
+            advanceUntilIdle()
+            assertEquals(1, col.getCard(card.id).reps)
+        }
+
+    @Test
+    fun `restored answer waits for the custom scheduler after process death`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            col.cardStateCustomizer = "await new Promise(resolve => setTimeout(resolve, 5000));"
+            val savedStateHandle = SavedStateHandle(mapOf("showingAnswer" to true))
+            val viewModel = ReviewerViewModel(savedStateHandle).also { viewModelStore.put("reviewer", it) }
+
+            viewModel.statesMutationEvalFlow.test {
+                viewModel.onPageFinished(true)
+                advanceUntilIdle()
+                assertTrue(viewModel.showingAnswer.value)
+                assertTrue(awaitItem().contains(col.cardStateCustomizer))
+
+                viewModel.answerCard(Rating.GOOD)
+                advanceUntilIdle()
+                assertEquals(0, col.getCard(card.id).reps)
+                cancelAndIgnoreRemainingEvents()
+
+                viewModel.onStateMutationCallback()
+                advanceUntilIdle()
+                assertEquals(1, col.getCard(card.id).reps)
+            }
+        }
+
+    @Test
+    fun `restoring answer with retained view model does not rerun custom scheduler`() =
+        runTest {
+            val card = addBasicNote().firstCard()
+            col.cardStateCustomizer = "await new Promise(resolve => setTimeout(resolve, 5000));"
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+
+            viewModel.statesMutationEvalFlow.test {
+                viewModel.onPageFinished(false)
+                advanceUntilIdle()
+                awaitItem()
+                viewModel.onStateMutationCallback()
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                assertTrue(viewModel.showingAnswer.value)
+
+                viewModel.onPageFinished(true)
+                advanceUntilIdle()
+                expectNoEvents()
+                assertTrue(viewModel.showingAnswer.value)
+                cancelAndIgnoreRemainingEvents()
+
+                viewModel.answerCard(Rating.GOOD)
+                advanceUntilIdle()
+                assertEquals(1, col.getCard(card.id).reps)
+            }
         }
 }
