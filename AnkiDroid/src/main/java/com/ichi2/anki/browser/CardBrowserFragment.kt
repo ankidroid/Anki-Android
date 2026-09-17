@@ -1762,13 +1762,7 @@ class CardBrowserFragment :
         tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
         lifecycleScope.launch {
             val noteIds = activityViewModel.queryAllSelectedNoteIds()
-            val dialog =
-                tagsDialogFactory.newTagsDialog().withArguments(
-                    requireContext(),
-                    type = TagsDialog.DialogType.EDIT_TAGS,
-                    noteIds = noteIds,
-                )
-            showDialogFragment(dialog)
+            tagsDialogFactory.showEditTags(requireActivity(), noteIds = noteIds)
         }
     }
 
