@@ -12,6 +12,7 @@ import anki.sync.syncAuth
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withColExclusive
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChanged
@@ -145,7 +146,10 @@ private suspend fun handleNormalSync(
             onCancel = ::cancelSync,
             manualCancelButton = R.string.dialog_cancel,
         ) {
-            withCol {
+            withColExclusive(
+                operation = CollectionOperation.SYNC,
+                onCancel = ::cancelSync,
+            ) {
                 syncCollection(auth2, syncMedia = false) // media is synced by SyncMediaWorker
             }
         }
@@ -224,7 +228,10 @@ private suspend fun handleDownload(
         onCancel = ::cancelSync,
         manualCancelButton = R.string.dialog_cancel,
     ) {
-        withCol {
+        withColExclusive(
+            operation = CollectionOperation.FULL_DOWNLOAD,
+            onCancel = ::cancelSync,
+        ) {
             try {
                 createBackup(
                     BackupManager.getBackupDirectoryFromCollection(colDb),
@@ -259,7 +266,10 @@ private suspend fun handleUpload(
         onCancel = ::cancelSync,
         manualCancelButton = R.string.dialog_cancel,
     ) {
-        withCol {
+        withColExclusive(
+            operation = CollectionOperation.FULL_UPLOAD,
+            onCancel = ::cancelSync,
+        ) {
             close(downgrade = false, forFullSync = true)
             try {
                 fullUploadOrDownload(auth, upload = true, serverUsn = mediaUsn)
