@@ -84,6 +84,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     private lateinit var binding: DialogTagsBinding
     private var type: DialogType? = null
+    internal val isEditingTags: Boolean get() = type == DialogType.EDIT_TAGS
     private var tagsArrayAdapter: TagsArrayAdapter? = null
     private var toolbarSearchView: AccessibleSearchView? = null
     private var toolbarSearchItem: MenuItem? = null
