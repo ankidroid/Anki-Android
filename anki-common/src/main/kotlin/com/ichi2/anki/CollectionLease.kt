@@ -14,6 +14,7 @@ import net.ankiweb.rsdroid.Backend
  *
  * @see CollectionManager.withColExclusive
  */
+// TODO: #17551 Add leases for unused constants & profile the app to find more
 enum class CollectionOperation {
     SYNC,
     FULL_DOWNLOAD,

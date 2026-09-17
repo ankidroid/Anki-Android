@@ -511,7 +511,10 @@ object CollectionManager {
         }
     }
 
-    /** Set [useReentrantLock] to false to exercise the dispatcher queue in concurrency tests. */
+    /**
+     * Set [useReentrantLock] to false to exercise the dispatcher queue in concurrency tests.
+     * Join test work and restore the default before teardown; concurrent overrides are unsupported.
+     */
     fun setTestDispatcher(
         dispatcher: CoroutineDispatcher,
         useReentrantLock: Boolean = true,
