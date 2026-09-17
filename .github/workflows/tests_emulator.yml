@@ -161,6 +161,20 @@ jobs:
           max_attempts: 3
           command: ./gradlew packagePlayRelease packagePlayReleaseAndroidTest --daemon
 
+      - name: Install Android Emulator
+        # Retry to work around https://github.com/ReactiveCircus/android-emulator-runner/issues/496
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        with:
+          timeout_minutes: 5
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: '"$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --verbose --install emulator --channel=0'
+          # sdkmanager preserves failed downloads and installation state for resuming.
+          on_retry_command: >-
+            rm -rf "${ANDROID_HOME:?}/.temp"
+            "${ANDROID_HOME:?}/.downloadIntermediates"
+            "${ANDROID_HOME:?}/emulator/.installer"
+
       - name: AVD Boot and Snapshot Creation
         # Only generate a snapshot for saving if we are on main branch with a cache miss
         # Comment the if out to generate snapshots on branch for performance testing
