@@ -141,8 +141,8 @@ class ReviewerFragment :
         super.onStop()
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
-            shakeDetector?.stop()
         }
+        shakeDetector?.stop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
