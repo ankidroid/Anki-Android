@@ -11,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
@@ -162,19 +163,68 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
         }
     }
 
+    /** Moving to the next card resets the viewport even when the answer was never shown. */
+    @Test
+    fun buryingQuestionStartsNextQuestionAtTop() = checkBuryingQuestionStartsNextQuestionAtTop(zoom = false)
+
+    @Test
+    fun buryingQuestionResetsZoomAndStartsNextQuestionAtTop() = checkBuryingQuestionStartsNextQuestionAtTop(zoom = true)
+
+    private fun checkBuryingQuestionStartsNextQuestionAtTop(zoom: Boolean) {
+        addLabelledClozeCard("first")
+        addLabelledClozeCard("second")
+
+        withReviewer { fragment ->
+            val buriedLabel = waitForAnyLabel()
+            val originalScale = pageScale
+            if (zoom) zoomIn()
+            scrollDown()
+            fragment.executeAction(ViewerAction.BURY_CARD)
+            waitUntil(message = { "Next question did not load" }) {
+                currentLabel.let { it.isNotEmpty() && it != buriedLabel }
+            }
+            waitForScale(originalScale)
+            awaitAnimationFrames()
+
+            assertEquals(0.0, pageScrollY, "scroll position after burying a card")
+        }
+    }
+
     private fun addTallClozeCard(answer: String) {
         addClozeNote("$SPACER{{c1::$answer}}$SPACER").firstCard(col).update { did = testDeckId }
     }
 
-    private fun withReviewer(block: SafeWebViewLayout.() -> Unit) {
+    /** Adds a tall cloze card whose question side is identifiable by [label]. */
+    private fun addLabelledClozeCard(label: String) {
+        addClozeNote("<div id='label'>$label</div>$SPACER{{c1::answer}}$SPACER")
+            .firstCard(col)
+            .update { did = testDeckId }
+    }
+
+    private fun withReviewer(block: SafeWebViewLayout.(ReviewerFragment) -> Unit) {
         ActivityScenario.launch<CardViewerActivity>(ReviewerFragment.getIntent(testContext)).use { scenario ->
-            lateinit var webViewLayout: SafeWebViewLayout
+            lateinit var fragment: ReviewerFragment
             scenario.onActivity { activity ->
-                val fragment = activity.fragment as ReviewerFragment
-                webViewLayout = fragment.binding.webViewLayout
+                fragment = activity.fragment as ReviewerFragment
             }
-            webViewLayout.block()
+            fragment.binding.webViewLayout.block(fragment)
         }
+    }
+
+    private fun ReviewerFragment.executeAction(action: ViewerAction) {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            viewModel.executeAction(action)
+        }
+    }
+
+    /** The label of the currently displayed card, or `""` if no card is displayed. */
+    private val SafeWebViewLayout.currentLabel: String
+        get() = evaluateScript("document.getElementById('label')?.textContent ?? ''").removeSurrounding("\"")
+
+    /** Waits for a labelled card to display, returning its label. */
+    private fun SafeWebViewLayout.waitForAnyLabel(): String {
+        waitUntil(timeout = 30.seconds, message = { "Question did not load" }) { currentLabel.isNotEmpty() }
+        return currentLabel
     }
 
     private fun clickShowAnswer() {
