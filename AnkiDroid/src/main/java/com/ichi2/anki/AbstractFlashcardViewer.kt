@@ -112,7 +112,6 @@ import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
-import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.libanki.Card
@@ -2706,11 +2705,7 @@ abstract class AbstractFlashcardViewer :
     internal fun showTagsDialog() {
         Timber.i("opening tags dialog")
         val noteId = currentCard!!.note(getColUnsafe).id
-        val dialog =
-            tagsDialogFactory!!
-                .newTagsDialog()
-                .withArguments(this, TagsDialog.DialogType.EDIT_TAGS, noteIds = listOf(noteId))
-        showDialogFragment(dialog)
+        tagsDialogFactory!!.showEditTags(this, noteIds = listOf(noteId))
     }
 
     override fun onSelectedTags(

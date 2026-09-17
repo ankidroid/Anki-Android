@@ -15,7 +15,11 @@
  */
 package com.ichi2.anki.dialogs.tags
 
+import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import com.ichi2.anki.libanki.NoteId
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.ExtendedFragmentFactory
 
 class TagsDialogFactory(
@@ -34,4 +38,14 @@ class TagsDialogFactory(
     }
 
     fun newTagsDialog(): TagsDialog = TagsDialog(listener)
+
+    @MainThread
+    fun showEditTags(
+        activity: FragmentActivity,
+        noteIds: List<NoteId> = emptyList(),
+        checkedTags: ArrayList<String> = arrayListOf(),
+    ) {
+        val dialog = newTagsDialog().withArguments(activity, TagsDialog.DialogType.EDIT_TAGS, noteIds, checkedTags)
+        activity.showDialogFragment(dialog)
+    }
 }
