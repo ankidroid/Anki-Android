@@ -1604,7 +1604,7 @@ class CardBrowserFragment :
                 activityViewModel.selectedRows.size,
                 allCardIds.size,
             )
-            showDialogFragment(SetDueDateDialog.newInstance(this@CardBrowserFragment, allCardIds))
+            SetDueDateDialog.show(requireActivity(), allCardIds)
         }
     }
 

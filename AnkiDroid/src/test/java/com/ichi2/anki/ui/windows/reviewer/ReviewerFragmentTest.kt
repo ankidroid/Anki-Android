@@ -12,6 +12,8 @@ import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.anki.scheduling.SetDueDateDialog
+import com.ichi2.anki.scheduling.singleDayText
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -20,6 +22,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
@@ -35,6 +38,31 @@ class ReviewerFragmentTest : RobolectricTest() {
 
     @Test
     fun `shaking does not stack edit tags dialogs`() = assertShakeDoesNotStackDialogs(ViewerAction.TAG)
+
+    @Test
+    fun `repeated set due date actions preserve the open dialog`() =
+        runTest {
+            val cardId = addBasicNote().firstCard().id
+            withReviewer {
+                viewModel.executeAction(ViewerAction.RESCHEDULE_NOTE)
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+                val dialog = assertIs<SetDueDateDialog>(currentDialog)
+                dialog.singleDayText.setText("12")
+                val backStackCount = parentFragmentManager.backStackEntryCount
+
+                repeat(3) {
+                    viewModel.executeAction(ViewerAction.RESCHEDULE_NOTE)
+                }
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+
+                assertSame(dialog, currentDialog)
+                assertEquals(backStackCount, parentFragmentManager.backStackEntryCount)
+                assertEquals("12", dialog.singleDayText.text.toString())
+                assertEquals(listOf(cardId), dialog.cardIds)
+            }
+        }
 
     private fun assertShakeDoesNotStackDialogs(action: ViewerAction) =
         runTest {

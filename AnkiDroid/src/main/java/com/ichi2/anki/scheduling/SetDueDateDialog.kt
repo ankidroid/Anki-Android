@@ -15,10 +15,12 @@ import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.annotation.CheckResult
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -49,6 +51,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnImeHidden
 import com.ichi2.anki.utils.ext.requireBoolean
 import com.ichi2.anki.utils.ext.requireParcelable
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.utils.AndroidUiUtils
@@ -60,9 +63,11 @@ import com.ichi2.utils.title
 import com.ichi2.utils.titleWithHelpIcon
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -267,6 +272,27 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
 
         private const val RESULT_SUBMIT_DUE_DATE = "SubmitDueDate"
 
+        // Only accessed on the main thread.
+        private val pendingActivities = mutableSetOf<FragmentActivity>()
+
+        /** Keeps the existing dialog and its input when another request arrives. */
+        suspend fun show(
+            activity: FragmentActivity,
+            cardIds: List<CardId>,
+        ) = withContext(Dispatchers.Main.immediate) {
+            if (activity.supportFragmentManager.fragments.any { it is SetDueDateDialog } || !pendingActivities.add(activity)) {
+                Timber.d("Ignoring 'set due date' request: dialog is already open or being prepared")
+                return@withContext
+            }
+            try {
+                val dialog = newInstance(activity.externalCacheDir ?: activity.cacheDir, cardIds)
+                activity.showDialogFragment(dialog)
+            } finally {
+                pendingActivities.remove(activity)
+            }
+        }
+
+        @VisibleForTesting
         @CheckResult
         suspend fun newInstance(
             cacheDir: File,
@@ -284,15 +310,6 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                     }
                 Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
             }
-        }
-
-        @CheckResult
-        suspend fun newInstance(
-            fragment: Fragment,
-            cardIds: List<CardId>,
-        ): SetDueDateDialog {
-            val context = fragment.requireContext()
-            return newInstance(context.externalCacheDir ?: context.cacheDir, cardIds)
         }
     }
 

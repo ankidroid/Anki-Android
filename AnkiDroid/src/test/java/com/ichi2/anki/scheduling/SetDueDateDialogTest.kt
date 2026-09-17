@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -21,19 +22,35 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
+import com.ichi2.anki.servicelayer.getFSRSStatus
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.utils.positiveButton
+import io.mockk.coEvery
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
 import java.io.File
 import kotlin.coroutines.coroutineContext
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNotSame
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @NeedsTest("set interval to same value visibility with FSRS")
 @RunWith(AndroidJUnit4::class)
@@ -205,6 +222,97 @@ class SetDueDateDialogTest : RobolectricTest() {
 
             assertThat(cacheDir.listFiles()?.size, equalTo(0))
         }
+
+    @Test
+    fun `concurrent requests return without waiting for dialog preparation`() =
+        withActivity { activity ->
+            val firstCardIds = listOf(addBasicNote().firstCard().id)
+            val secondCardIds = listOf(addBasicNote().firstCard().id)
+            withPausedPreparation { finishPreparingDialog ->
+                val first = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, firstCardIds) }
+                val second = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, secondCardIds) }
+
+                assertFalse(first.isCompleted)
+                assertTrue(second.isCompleted, "duplicate requests return without waiting")
+
+                finishPreparingDialog.complete(Unit)
+                first.await()
+                second.await()
+                advanceRobolectricLooper()
+
+                assertEquals(firstCardIds, assertNotNull(activity.currentDialog).cardIds)
+                assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
+                assertEquals(1, activity.dueDateFiles.size)
+            }
+        }
+
+    @Test
+    fun `dialog can reopen after dismissal`() =
+        withActivity { activity ->
+            val firstCardIds = listOf(addBasicNote().firstCard().id)
+            val secondCardIds = listOf(addBasicNote().firstCard().id)
+            SetDueDateDialog.show(activity, firstCardIds)
+            advanceRobolectricLooper()
+            val dialog = assertNotNull(activity.currentDialog)
+
+            dialog.dismiss()
+            advanceRobolectricLooper()
+            assertNull(activity.currentDialog)
+
+            SetDueDateDialog.show(activity, secondCardIds)
+            advanceRobolectricLooper()
+            val reopenedDialog = assertNotNull(activity.currentDialog)
+            assertNotSame(dialog, reopenedDialog)
+            assertEquals(secondCardIds, reopenedDialog.cardIds)
+            assertTrue(reopenedDialog.requireDialog().isShowing)
+        }
+
+    @Test
+    fun `cancelled preparation allows another dialog request`() =
+        withActivity { activity ->
+            val cardIds = listOf(addBasicNote().firstCard().id)
+            withPausedPreparation { finishPreparingDialog ->
+                val request = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, cardIds) }
+                assertFalse(request.isCompleted)
+                request.cancelAndJoin()
+
+                finishPreparingDialog.complete(Unit)
+                SetDueDateDialog.show(activity, cardIds)
+                advanceRobolectricLooper()
+
+                val dialog = assertNotNull(activity.currentDialog)
+                assertEquals(cardIds, dialog.cardIds)
+                assertTrue(dialog.requireDialog().isShowing)
+            }
+        }
+
+    private val FragmentActivity.currentDialog: SetDueDateDialog?
+        get() = supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as SetDueDateDialog?
+
+    private val FragmentActivity.dueDateFiles: List<File>
+        get() = (externalCacheDir ?: cacheDir).listFiles { _, name -> name.startsWith("set-due-date") }.orEmpty().toList()
+
+    private fun withActivity(block: suspend TestScope.(FragmentActivity) -> Unit) =
+        runTest {
+            Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+                controller.get().setTheme(R.style.Base_Theme_Light)
+                block(controller.setup().get())
+            }
+        }
+
+    private suspend fun withPausedPreparation(block: suspend (CompletableDeferred<Unit>) -> Unit) {
+        val finishPreparingDialog = CompletableDeferred<Unit>()
+        mockkStatic(::getFSRSStatus)
+        try {
+            coEvery { getFSRSStatus() } coAnswers {
+                finishPreparingDialog.await()
+                false
+            }
+            block(finishPreparingDialog)
+        } finally {
+            unmockkStatic(::getFSRSStatus)
+        }
+    }
 
     private suspend fun setDueDateArgs(cardIds: List<CardId>): Bundle =
         SetDueDateDialog
