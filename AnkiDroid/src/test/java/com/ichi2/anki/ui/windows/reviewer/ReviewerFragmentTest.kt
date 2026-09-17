@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -22,6 +23,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
@@ -63,6 +65,60 @@ class ReviewerFragmentTest : RobolectricTest() {
                 assertEquals(listOf(cardId), dialog.cardIds)
             }
         }
+
+    @Test
+    fun `repeated edit tags actions preserve unconfirmed selections`() =
+        runTest {
+            addBasicNote()
+            withReviewer {
+                val dialog = openEditTags(this)
+                dialog.addTag("unconfirmed")
+                advanceUntilIdle()
+                val tags = dialog.viewModel.tags.await()
+                assertTrue(tags.isChecked("unconfirmed"))
+                val backStackCount = parentFragmentManager.backStackEntryCount
+
+                repeat(3) {
+                    viewModel.executeAction(ViewerAction.TAG)
+                }
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+
+                assertSame(dialog, currentDialog)
+                assertEquals(backStackCount, parentFragmentManager.backStackEntryCount)
+                assertTrue(tags.isChecked("unconfirmed"))
+            }
+        }
+
+    @Test
+    fun `edit tags can reopen after dismissal without unconfirmed selections`() =
+        runTest {
+            addBasicNote()
+            withReviewer {
+                val dialog = openEditTags(this)
+                dialog.addTag("unconfirmed")
+                advanceUntilIdle()
+                val tags = dialog.viewModel.tags.await()
+                assertTrue(tags.isChecked("unconfirmed"))
+
+                dialog.dismiss()
+                advanceRobolectricLooper()
+                assertNull(currentDialog)
+
+                val reopenedDialog = openEditTags(this)
+                assertNotSame(dialog, reopenedDialog)
+                assertTrue(reopenedDialog.requireDialog().isShowing)
+                val reopenedTags = reopenedDialog.viewModel.tags.await()
+                assertFalse(reopenedTags.isChecked("unconfirmed"))
+            }
+        }
+
+    private suspend fun TestScope.openEditTags(reviewer: ReviewerFragment): TagsDialog {
+        reviewer.viewModel.executeAction(ViewerAction.TAG)
+        advanceUntilIdle()
+        advanceRobolectricLooper()
+        return assertIs<TagsDialog>(reviewer.currentDialog)
+    }
 
     private fun assertShakeDoesNotStackDialogs(action: ViewerAction) =
         runTest {
