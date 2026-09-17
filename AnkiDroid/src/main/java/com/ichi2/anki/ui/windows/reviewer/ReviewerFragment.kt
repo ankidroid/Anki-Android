@@ -198,11 +198,17 @@ class ReviewerFragment :
             }
         }
 
-        viewModel.showingAnswer.collectIn(lifecycleScope) {
-            reviewerWebViewClient.resetZoom()
+        viewModel.showingAnswer.collectIn(lifecycleScope) { showingAnswer ->
+            // reset zoom if flipped
+            if (showingAnswer) reviewerWebViewClient.resetZoom()
             // focus on the whole layout so motion controllers can be captured
             // without navigating the other View elements
             binding.rootLayout.requestFocus()
+        }
+
+        // reset zoom if the card changes (incl. bury/suspend)
+        viewModel.onCardUpdatedFlow.collectIn(lifecycleScope) {
+            reviewerWebViewClient.resetZoom()
         }
 
         viewModel.navigateFlow.collectIn(lifecycleScope) { destination ->
