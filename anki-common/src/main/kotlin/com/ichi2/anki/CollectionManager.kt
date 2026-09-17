@@ -513,6 +513,7 @@ object CollectionManager {
 
     /**
      * Set [useReentrantLock] to false to exercise the dispatcher queue in concurrency tests.
+     * Join test work and restore the default before teardown; concurrent overrides are unsupported.
      *
      * @return the previous dispatcher, so a test can restore it
      */
