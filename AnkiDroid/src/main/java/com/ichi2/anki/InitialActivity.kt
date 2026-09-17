@@ -75,7 +75,15 @@ object InitialActivity {
             } catch (e: BackendException.BackendDbException.BackendDbFileTooNewException) {
                 Timber.w(e)
                 StartupFailure.FutureAnkidroidVersion
+            } catch (e: BackendException.BackendDbException.BackendDbFullException) {
+                Timber.w(e)
+                StartupFailure.DiskFull
+            } catch (e: BackendException.BackendDbException.BackendDbCorruptException) {
+                Timber.w(e)
+                DatabaseCorruption.isDetected = true
+                StartupFailure.DBError(e)
             } catch (e: SQLiteFullException) {
+                // TODO: delete the android.database branches when the backend is no longer Android
                 Timber.w(e)
                 StartupFailure.DiskFull
             } catch (e: SQLiteDatabaseCorruptException) {
