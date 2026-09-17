@@ -348,6 +348,12 @@ class ReviewerFragment :
 
     @NeedsTest("Whiteboard takes priority on shake events")
     override fun hearShake() {
+        // Sensor events still arrive while a dialog or another window covers the reviewer.
+        if (view?.hasWindowFocus() != true) {
+            Timber.d("Ignoring shake: reviewer window does not have focus")
+            return
+        }
+
         if (whiteboardFragment?.onScreenShake() != true) {
             bindingMap.onGesture(Gesture.SHAKE)
         }
