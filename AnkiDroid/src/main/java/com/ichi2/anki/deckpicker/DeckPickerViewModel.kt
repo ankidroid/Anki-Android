@@ -356,7 +356,7 @@ class DeckPickerViewModel :
      *
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
-    // TODO: this should not be executed if syncing - called after sync is completed
+    // TODO: #17551 use tryWithCol, refresh via `ChangeManager` and collapse into one collection read.
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     fun updateDeckList(): Job =
         viewModelScope.launch(Dispatchers.IO) {
