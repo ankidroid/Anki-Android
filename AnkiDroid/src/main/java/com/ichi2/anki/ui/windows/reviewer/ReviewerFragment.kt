@@ -17,6 +17,7 @@ import android.webkit.WebView
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.ActionMenuView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -91,6 +92,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.reflect.jvm.jvmName
@@ -103,10 +105,13 @@ class ReviewerFragment :
     TagsDialogListener,
     ShakeDetector.Listener {
     override val viewModel: ReviewerViewModel by viewModels()
-    private val binding by viewBinding(FragmentReviewerBinding::bind)
+
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentReviewerBinding::bind)
 
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
     private lateinit var bindingMap: BindingMap<ReviewerBinding, ViewerAction>
+    private lateinit var reviewerWebViewClient: ReviewerWebViewClient
     private var shakeDetector: AnkiShakeDetector? = null
     private val whiteboardFragment get() = childFragmentManager.findFragmentByTag(WhiteboardFragment::class.jvmName) as? WhiteboardFragment
     private val isBigScreen: Boolean get() = resources.configuration.smallestScreenWidthDp >= 720
@@ -194,7 +199,7 @@ class ReviewerFragment :
         }
 
         viewModel.showingAnswer.collectIn(lifecycleScope) {
-            resetZoom()
+            reviewerWebViewClient.resetZoom()
             // focus on the whole layout so motion controllers can be captured
             // without navigating the other View elements
             binding.rootLayout.requestFocus()
@@ -320,11 +325,6 @@ class ReviewerFragment :
                     request.complete(typedAnswer)
                 }
             }
-    }
-
-    private fun resetZoom() {
-        webViewLayout.settings.loadWithOverviewMode = false
-        webViewLayout.settings.loadWithOverviewMode = true
     }
 
     @NeedsTest("Whiteboard takes priority on key events")
@@ -654,14 +654,17 @@ class ReviewerFragment :
         stateFilter: CardStateFilter,
     ) = viewModel.onEditedTags(selectedTags)
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient = ReviewerWebViewClient(savedInstanceState)
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): CardViewerWebViewClient =
+        ReviewerWebViewClient(savedInstanceState).also { reviewerWebViewClient = it }
 
     override fun onCreateWebChromeClient(): CardViewerWebChromeClient = ReviewerWebChromeClient()
 
     private inner class ReviewerWebViewClient(
         savedInstanceState: Bundle?,
     ) : CardViewerWebViewClient(savedInstanceState) {
-        private var scale: Float = if (!isRobolectric) webViewLayout.scale else 1F
+        // Capture the fresh WebView's scale before any pinch zoom; this includes screen density.
+        private val initialScale: Float = if (!isRobolectric) webViewLayout.scale else 1F
+        private var scale: Float = initialScale
         private var isScrolling: Boolean = false
         private var isScrollingJob: Job? = null
         private val gestureParser by lazy {
@@ -671,6 +674,13 @@ class ReviewerFragment :
             )
         }
         private var hasShownUnsupportedFeatureWarning = false
+
+        /** Resets pinch zoom, leaving the viewport untouched when already at the initial scale. */
+        fun resetZoom() {
+            val factor = initialScale / scale
+            if (abs(factor - 1f) < 0.001f) return
+            webViewLayout.zoomBy(factor.coerceIn(0.01f, 100f))
+        }
 
         init {
             webViewLayout.setOnScrollChangeListener { _, _, _, _, _ ->
