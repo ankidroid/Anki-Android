@@ -1762,28 +1762,25 @@ class CardBrowserFragment :
         tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
         lifecycleScope.launch {
             val noteIds = activityViewModel.queryAllSelectedNoteIds()
-            tagsDialogFactory.showEditTags(requireActivity(), noteIds = noteIds)
+            tagsDialogFactory.show(requireActivity(), noteIds = noteIds)
         }
     }
 
     fun showFilterByTagsDialog() {
         launchCatchingTask {
             tagsDialogListenerAction = TagsDialogListenerAction.FILTER
-            val dialog =
-                tagsDialogFactory.newTagsDialog().withArguments(
-                    context = requireContext(),
-                    type = TagsDialog.DialogType.FILTER_BY_TAG,
-                    noteIds = emptyList(),
-                    checkedTags =
-                        if (useNewTaggingLogic) {
-                            ArrayList(
-                                activityViewModel.searchRequestFlow.value.filters.tags,
-                            )
-                        } else {
-                            ArrayList()
-                        },
-                )
-            showDialogFragment(dialog)
+            tagsDialogFactory.show(
+                requireActivity(),
+                type = TagsDialog.DialogType.FILTER_BY_TAG,
+                checkedTags =
+                    if (useNewTaggingLogic) {
+                        ArrayList(
+                            activityViewModel.searchRequestFlow.value.filters.tags,
+                        )
+                    } else {
+                        ArrayList()
+                    },
+            )
         }
     }
 

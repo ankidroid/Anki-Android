@@ -24,12 +24,12 @@ class TagsDialogFactoryTest : RobolectricTest() {
     @Test
     fun `duplicate edit requests preserve preselected tags`() =
         withFactory { activity, factory ->
-            factory.showEditTags(activity, checkedTags = arrayListOf("initial"))
+            factory.show(activity, checkedTags = arrayListOf("initial"))
             advanceRobolectricLooper()
             val dialog = activity.currentDialog
             val filesBeforeDuplicate = activity.cacheDir.listFiles()?.toSet()
 
-            factory.showEditTags(activity, checkedTags = arrayListOf("replacement"))
+            factory.show(activity, checkedTags = arrayListOf("replacement"))
 
             assertSame(dialog, activity.currentDialog)
             assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
@@ -46,11 +46,11 @@ class TagsDialogFactoryTest : RobolectricTest() {
 
     private fun assertModeDoesNotBlockEditing(type: DialogType) =
         withFactory { activity, factory ->
-            val previousDialog = factory.newTagsDialog().withArguments(activity, type)
+            val previousDialog = TagsDialog(mock()).withArguments(activity, type)
             activity.showDialogFragment(previousDialog)
             advanceRobolectricLooper()
 
-            factory.showEditTags(activity, checkedTags = arrayListOf("editing"))
+            factory.show(activity, checkedTags = arrayListOf("editing"))
             advanceRobolectricLooper()
 
             val editDialog = activity.currentDialog

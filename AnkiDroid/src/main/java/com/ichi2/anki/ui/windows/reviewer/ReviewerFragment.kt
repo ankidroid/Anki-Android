@@ -604,7 +604,7 @@ class ReviewerFragment :
             }
 
         viewModel.editNoteTagsFlow.collectIn(lifecycleScope) { noteId ->
-            tagsDialogFactory.showEditTags(requireActivity(), noteIds = listOf(noteId))
+            tagsDialogFactory.show(requireActivity(), noteIds = listOf(noteId))
         }
 
         viewModel.setDueDateFlow.collectIn(lifecycleScope) { cardId ->

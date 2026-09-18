@@ -42,7 +42,6 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.hasCheckedBackground
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
-import com.ichi2.anki.utils.ext.showDialogFragment
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -104,14 +103,11 @@ class StandardSearchFragment :
         binding.tagsChip.setOnClickListener {
             // see onSelectedTags
             launchCatchingTask {
-                val dialog =
-                    tagsDialogFactory.newTagsDialog().withArguments(
-                        context = requireContext(),
-                        type = TagsDialog.DialogType.FILTER_BY_TAG,
-                        noteIds = emptyList(),
-                        checkedTags = ArrayList(viewModel.filtersFlow.value.tags),
-                    )
-                showDialogFragment(dialog)
+                tagsDialogFactory.show(
+                    requireActivity(),
+                    type = TagsDialog.DialogType.FILTER_BY_TAG,
+                    checkedTags = ArrayList(viewModel.filtersFlow.value.tags),
+                )
             }
         }
 
