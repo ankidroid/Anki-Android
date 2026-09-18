@@ -144,7 +144,6 @@ class DeckAdapter(
         if (node.canCollapse) {
             binding.deckExpander.setOnClickListener {
                 onDeckChildrenToggled(node.did)
-                notifyItemChanged(position) // Ensure UI updates
             }
         } else {
             binding.deckExpander.isClickable = false
