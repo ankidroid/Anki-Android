@@ -55,7 +55,8 @@ import java.net.URLConnection
  * simultaneously is not supported.
  */
 class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_download) {
-    private val binding by viewBinding(FragmentSharedDecksDownloadBinding::bind)
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentSharedDecksDownloadBinding::bind)
     private val viewModel: SharedDecksDownloadViewModel by viewModels()
 
     private var downloadId: Long = 0
