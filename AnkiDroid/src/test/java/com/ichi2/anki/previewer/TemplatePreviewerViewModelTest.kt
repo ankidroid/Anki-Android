@@ -60,8 +60,8 @@ class TemplatePreviewerViewModelTest : JvmTest() {
                 ),
         ) {
             onPageFinished(false)
-            assertThat(this.cardsWithEmptyFronts!!.await()[0], equalTo(false))
-            assertThat(this.cardsWithEmptyFronts.await()[1], equalTo(true))
+            assertThat(this.cardsWithEmptyFronts.await()!![0], equalTo(false))
+            assertThat(this.cardsWithEmptyFronts.await()!![1], equalTo(true))
         }
 
     @Test
@@ -89,7 +89,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         val notetype = col.notetypes.byName("Basic (optional reversed card)")!!
         val arguments =
             TemplatePreviewerArguments(
-                notetypeFile = NotetypeFile(tempDirectory.root, notetype),
+                notetypeProvider = NotetypeFile(tempDirectory.root, notetype).toProvider(),
                 fields = fields ?: listOf("question text", "answer text", "y"),
                 tags = emptyList(),
                 ord = ord,
@@ -107,7 +107,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         val notetype = col.notetypes.byName("Cloze")!!
         val arguments =
             TemplatePreviewerArguments(
-                notetypeFile = NotetypeFile(tempDirectory.root, notetype),
+                notetypeProvider = NotetypeFile(tempDirectory.root, notetype).toProvider(),
                 fields = fields ?: listOf("{{c1::foo}} {{c2::bar}}", "anki"),
                 tags = emptyList(),
                 ord = ord,

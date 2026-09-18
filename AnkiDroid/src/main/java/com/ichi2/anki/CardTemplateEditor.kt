@@ -300,7 +300,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
             val args =
                 TemplatePreviewerArguments(
-                    notetypeFile = notetypeFile,
+                    notetypeProvider = notetypeFile.toProvider(),
                     id = note.id,
                     ord = ord,
                     fields = note.fields,
@@ -1323,7 +1323,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 val note = withCol { getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
                 val args =
                     TemplatePreviewerArguments(
-                        notetypeFile = notetypeFile,
+                        notetypeProvider = notetypeFile.toProvider(),
                         id = note.id,
                         ord = templateEditor.ord,
                         fields = note.fields,

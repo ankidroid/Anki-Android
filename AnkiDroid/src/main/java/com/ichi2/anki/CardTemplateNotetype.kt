@@ -14,6 +14,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.libanki.CardTemplate
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.observability.undoableOp
@@ -490,6 +491,78 @@ class CardTemplateNotetype(
 }
 
 /**
+ * Represents a note type.
+ */
+sealed class NoteTypeProvider : Parcelable {
+    abstract fun getNoteType(col: Collection): NotetypeJson
+
+    /**
+     * Returns whether we can get a note type from this provider.
+     */
+    abstract fun isUsable(): Boolean
+
+    companion object CREATOR : Parcelable.Creator<NoteTypeProvider> {
+        override fun createFromParcel(source: Parcel): NoteTypeProvider {
+            val providerType = source.readInt()
+            return when (providerType) {
+                Id.PROVIDER_TYPE -> Id(source.readLong())
+                File.PROVIDER_TYPE -> File(NotetypeFile.CREATOR.createFromParcel(source))
+                else -> throw IllegalArgumentException("Unknown NoteTypeProvider type: $providerType")
+            }
+        }
+
+        override fun newArray(size: Int): Array<NoteTypeProvider?> = arrayOfNulls(size)
+    }
+
+    /**
+     * A note type from the collection. We assume it's actually currently in the collection.
+     */
+    data class Id(
+        val id: NoteTypeId,
+    ) : NoteTypeProvider() {
+        companion object {
+            const val PROVIDER_TYPE = 0
+        }
+
+        override fun describeContents(): Int = 0
+
+        override fun writeToParcel(
+            dest: Parcel,
+            flags: Int,
+        ) {
+            dest.writeInt(PROVIDER_TYPE)
+            dest.writeLong(id)
+        }
+
+        override fun getNoteType(col: Collection): NotetypeJson = col.notetypes.get(id)!!
+
+        override fun isUsable(): Boolean = true
+    }
+
+    data class File(
+        val file: NotetypeFile,
+    ) : NoteTypeProvider() {
+        companion object {
+            const val PROVIDER_TYPE = 1
+        }
+
+        override fun describeContents(): Int = 0
+
+        override fun writeToParcel(
+            dest: Parcel,
+            flags: Int,
+        ) {
+            dest.writeInt(PROVIDER_TYPE)
+            file.writeToParcel(dest, flags)
+        }
+
+        override fun getNoteType(col: Collection): NotetypeJson = file.getNotetype()
+
+        override fun isUsable(): Boolean = file.isUsable()
+    }
+}
+
+/**
  * Temporary file containing a [NotetypeJson]
  *
  * Useful for adding a [NotetypeJson] into a [Bundle], like when using [Intent.putExtra]
@@ -596,6 +669,8 @@ class NotetypeFile(
     ) {
         dest.writeString(path)
     }
+
+    fun toProvider(): NoteTypeProvider = NoteTypeProvider.File(this)
 
     companion object {
         @JvmField
