@@ -169,6 +169,12 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         }
     }
 
+    override fun onDestroyView() {
+        stopDownloadProgressChecker()
+        removeCancelConfirmationDialog()
+        super.onDestroyView()
+    }
+
     /** Registers the broadcast receiver for download completion. */
     private fun registerDownloadReceiver() {
         Timber.d("Registering broadcast receiver for download completion")
