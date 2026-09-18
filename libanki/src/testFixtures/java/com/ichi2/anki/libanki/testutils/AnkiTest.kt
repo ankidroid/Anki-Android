@@ -412,6 +412,9 @@ interface AnkiTest {
     val Notetypes.basicAndReversed
         get() = byName("Basic (and reversed card)")!!
 
+    val Notetypes.basicOptionalReversed
+        get() = byName("Basic (optional reversed card)")!!
+
     val Notetypes.cloze
         get() = byName("Cloze")!!
 
