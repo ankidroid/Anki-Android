@@ -27,6 +27,8 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
@@ -143,6 +145,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
 
+        registerDownloadReceiver()
         downloadFile(fileToBeDownloaded)
 
         binding.cancelDownloadButton.setOnClickListener {
@@ -175,13 +178,21 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         super.onDestroyView()
     }
 
-    /** Registers the broadcast receiver for download completion. */
+    /** Registers once per view, retaining the same context and receiver for cleanup. */
     private fun registerDownloadReceiver() {
-        Timber.d("Registering broadcast receiver for download completion")
-        activity?.registerReceiverCompat(
-            onComplete,
+        val context = requireContext()
+        val receiver = onComplete
+        context.registerReceiverCompat(
+            receiver,
             IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
             ContextCompat.RECEIVER_EXPORTED,
+        )
+        viewLifecycleOwner.lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                override fun onDestroy(owner: LifecycleOwner) {
+                    context.unregisterReceiver(receiver)
+                }
+            },
         )
     }
 
@@ -220,7 +231,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     /**
-     * Register broadcast receiver for listening to download completion.
      * Set the request for downloading a deck, enqueue it in DownloadManager, store download ID and
      * file name, mark download to be in progress, set the title of the download screen and start
      * the download progress checker.
@@ -237,8 +247,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         if (!decksDownloadFolder.exists()) {
             decksDownloadFolder.mkdirs()
         }
-        registerDownloadReceiver()
-
         val currentFileName = fileToBeDownloaded.toFileName(extension = "apkg")
 
         val downloadRequest = generateDeckDownloadRequest(fileToBeDownloaded, currentFileName)
@@ -279,8 +287,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     /**
-     * Registered in downloadFile() method.
-     * When [AnkiBroadcastReceiver.onReceiveBroadcast] is called, open the deck file in AnkiDroid to import it.
+     * Opens the active download for import when it completes. Registered for the view's lifetime by
+     * [registerDownloadReceiver].
      */
     private var onComplete: BroadcastReceiver =
         object : AnkiBroadcastReceiver() {
@@ -288,6 +296,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 context: Context,
                 intent: Intent,
             ) {
+                if (!isDownloadInProgress) return
                 Timber.i("Download might be complete now, verify and continue with import")
 
                 /**
@@ -387,21 +396,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         } catch (e: Exception) {
             null
         }
-
-    /**
-     * Unregister the mOnComplete broadcast receiver.
-     */
-    private fun unregisterReceiver() {
-        Timber.d("Unregistering receiver")
-        try {
-            activity?.unregisterReceiver(onComplete)
-        } catch (exception: IllegalArgumentException) {
-            // This might throw an exception in cases where the receiver is already in unregistered state.
-            // Log the exception in such cases, there is nothing else to do.
-            Timber.w(exception)
-            return
-        }
-    }
 
     /**
      * Check download progress and update status at intervals of 0.1 second.
@@ -539,7 +533,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             }
         }
 
-        unregisterReceiver()
         isDownloadInProgress = false
         onBackPressedCallback.isEnabled = isDownloadInProgress
 
@@ -555,7 +548,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 setPositiveButton(R.string.dialog_yes) { _, _ ->
                     Timber.i("cancelling download")
                     downloadManager.remove(downloadId)
-                    unregisterReceiver()
                     isDownloadInProgress = false
                     onBackPressedCallback.isEnabled = isDownloadInProgress
                     parentFragmentManager.popBackStack()
