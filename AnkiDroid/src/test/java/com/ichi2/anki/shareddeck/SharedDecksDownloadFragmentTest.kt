@@ -30,7 +30,9 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 import java.io.File
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -77,6 +79,19 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
         download.complete(downloadId = 2L)
         assertNotNull(shadowOf(download.activity).nextStartedActivity)
+    }
+
+    @Test
+    fun `destroying the view dismisses the download cancellation dialog`() {
+        val download = startDownload()
+        download.fragment.binding.cancelDownloadButton
+            .performClick()
+        val dialog = assertNotNull(ShadowDialog.getLatestDialog())
+        assertTrue(dialog.isShowing)
+
+        download.activity.supportFragmentManager.commitNow { detach(download.fragment) }
+
+        assertFalse(dialog.isShowing)
     }
 
     @Test
