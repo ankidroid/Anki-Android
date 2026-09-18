@@ -1,0 +1,53 @@
+{
+    "mode": "reviewed",
+    "startedAt": "2026-09-28T00:00:00+05:30",
+    "lastReviewedAt": "2026-09-29T12:00:00+05:30",
+    "baseBranch": "fix/19876-shared-decks-429-login-prompt",
+    "prNumber": null,
+    "prTitle": "fix(shared-decks): show login snackbar when AnkiWeb rate-limits deck downloads",
+    "prAuthor": "sanjaysargam",
+    "prLabels": [],
+    "linkedGithubIssues": [
+        {
+            "number": 19876,
+            "title": "Show relevant toast message as \"Please login to download more decks\"",
+            "type": "bug",
+            "state": "open",
+            "summary": "Anonymous user downloading a second shared deck gets generic 'Something went wrong'; AnkiWeb actually returns 429 asking for login.",
+            "acceptanceCriteria": [
+                "Show a 'Please login to download more decks' message instead of the generic error"
+            ],
+            "alignmentVerdict": "fully_addressed"
+        }
+    ],
+    "lastReviewedHead": "42f142dc08 (user commit) + uncommitted ViewModel rework",
+    "reviewedCommits": ["42f142dc08"],
+    "openIssues": [],
+    "resolvedIssues": [
+        {
+            "id": 1,
+            "description": "Working tree unverified: rerun tests and ktlint",
+            "resolvedAt": "2026-09-28T12:00:00+05:30",
+            "resolution": "tests + ktlint green"
+        },
+        {
+            "id": 2,
+            "description": "Failed DownloadManager entry never removed on login path",
+            "resolvedAt": "2026-09-28T00:00:00+05:30",
+            "resolution": "downloadManager.remove(downloadId) added; pinned by verify in test"
+        },
+        {
+            "id": 3,
+            "description": "Stale @VisibleForTesting(PRIVATE) on 429 constant",
+            "resolvedAt": "2026-09-28T00:00:00+05:30",
+            "resolution": "annotation removed"
+        },
+        {
+            "id": 4,
+            "description": "Maintainer feedback: 429 while backgrounded - receiver did FragmentManager work against saved state (ISE swallowed by receiver try/catch, generic path double-fired)",
+            "resolvedAt": "2026-09-29T12:00:00+05:30",
+            "resolution": "ViewModel rework: DownloadPhase.LoginRequired; receiver records state only, render() (repeatOnLifecycle STARTED) shows snackbar + pops. Backgrounded regression test confirmed failing pre-rework, passing after. All tests + ktlint green."
+        }
+    ],
+    "mergeRecommendation": "approve_with_suggestions"
+}

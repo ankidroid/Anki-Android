@@ -14,3 +14,6 @@ fun Decks.update(
     block(deck)
     this.save(deck)
 }
+
+/** @see Decks.remove */
+fun Decks.remove(deckId: DeckId) = remove(listOf(deckId))
