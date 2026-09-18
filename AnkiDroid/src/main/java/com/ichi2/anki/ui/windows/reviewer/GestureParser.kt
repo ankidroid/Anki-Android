@@ -86,8 +86,8 @@ class GestureParser(
         block: (Gesture?) -> Unit,
     ) {
         val isPotentialDoubleTap = data.time - lastTapTime < doubleTapTimeout
-        lastTapTime = data.time
         if (isDoubleTapEnabled) {
+            lastTapTime = data.time
             if (isPotentialDoubleTap) {
                 // Confirmed double tap. Cancel any pending single tap and fire double tap.
                 singleTapJob?.cancel()
@@ -104,6 +104,8 @@ class GestureParser(
             }
         } else {
             if (!isPotentialDoubleTap) {
+                // Ignored taps must not extend the timeout for the next single tap.
+                lastTapTime = data.time
                 block(getTap(data, webViewState))
             } // Otherwise, ignore the double tap.
         }

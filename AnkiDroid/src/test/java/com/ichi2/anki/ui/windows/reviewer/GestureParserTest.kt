@@ -16,6 +16,8 @@ import org.junit.BeforeClass
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 class GestureParserTest {
     // Avoids `java.lang.RuntimeException: Method scheme in android.net.Uri$Builder not mocked.`
@@ -67,6 +69,58 @@ class GestureParserTest {
             gesture = it
         }
         return gesture
+    }
+
+    private fun GestureParser.parseTap(elapsed: Duration): List<Gesture?> {
+        val webViewState = GestureParser.WebViewState(1F, 0, 0, 900, 1500)
+        val gestures = mutableListOf<Gesture?>()
+        val uri = createMockUri(x = 450, y = 1250, time = 10000 + elapsed.inWholeMilliseconds.toInt())
+        parseInternal(uri, webViewState) { gestures.add(it) }
+        return gestures
+    }
+
+    private sealed class Tap(
+        val elapsed: Duration,
+    ) {
+        class Accepted(
+            elapsed: Duration,
+        ) : Tap(elapsed)
+
+        class Blocked(
+            elapsed: Duration,
+        ) : Tap(elapsed)
+    }
+
+    @Test
+    fun `ignored taps do not extend the timeout when double taps are disabled`() {
+        val gestureParser =
+            GestureParser(
+                scope = TestScope(),
+                isDoubleTapEnabled = false,
+                gestureMode = TapGestureMode.NINE_POINT,
+                swipeSensitivity = 1F,
+            )
+        // The double-tap timeout is mocked to 200ms in before().
+        val taps =
+            listOf(
+                Tap.Accepted(0.milliseconds),
+                Tap.Blocked(100.milliseconds),
+                Tap.Blocked(150.milliseconds),
+                Tap.Blocked(199.milliseconds),
+                Tap.Accepted(200.milliseconds),
+                Tap.Blocked(201.milliseconds),
+                Tap.Blocked(399.milliseconds),
+                Tap.Accepted(400.milliseconds),
+            )
+        for (tap in taps) {
+            val gestures = gestureParser.parseTap(tap.elapsed)
+            val expected: List<Gesture?> =
+                when (tap) {
+                    is Tap.Accepted -> listOf(Gesture.TAP_BOTTOM)
+                    is Tap.Blocked -> emptyList()
+                }
+            assertEquals(expected, gestures, "Tap at ${tap.elapsed}")
+        }
     }
 
     @Test
@@ -316,7 +370,7 @@ class GestureParserTest {
         @JvmStatic // required for @BeforeClass
         fun before() {
             mockkStatic(ViewConfiguration::class)
-            every { ViewConfiguration.getDoubleTapTimeout() } answers { 300 }
+            every { ViewConfiguration.getDoubleTapTimeout() } answers { 200 }
         }
 
         @JvmStatic // required for @AfterClass
