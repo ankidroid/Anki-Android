@@ -20,6 +20,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -345,9 +346,16 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                             onDownloadFinished(isSuccessful = false)
                             return null
                         }
+
+                        // DownloadManager may add a suffix if the requested filename already exists.
+                        val localUri = it.getString(it.getColumnIndexOrThrow(DownloadManager.COLUMN_LOCAL_URI))
+                        if (localUri == null) {
+                            Timber.w("Completed download has no local URI")
+                            onDownloadFinished(isSuccessful = false)
+                            return null
+                        }
+                        return localUri.toUri().toFile()
                     }
-                    val sharedDecksPath = File(context.getExternalFilesDir(null), SHARED_DECKS_DOWNLOAD_FOLDER)
-                    return File(sharedDecksPath, fileName.toString())
                 }
 
                 val downloadedFile =
