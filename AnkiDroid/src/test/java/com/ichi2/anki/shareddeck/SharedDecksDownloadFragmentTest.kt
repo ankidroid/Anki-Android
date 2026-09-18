@@ -83,6 +83,40 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `completed download with a missing file offers retry instead of importing`() {
+        val download = startDownload()
+        assertFalse(download.file.exists())
+
+        download.complete()
+
+        assertNull(shadowOf(download.activity).nextStartedActivity)
+        val retryButton = download.fragment.binding.tryDownloadAgainButton
+        assertTrue(retryButton.isVisible)
+
+        retryButton.performClick()
+        verify(download.activity.downloadManager).remove(1L)
+        download.file.writeText("downloaded again")
+        download.complete()
+
+        assertNotNull(shadowOf(download.activity).nextStartedActivity)
+    }
+
+    @Test
+    fun `import button offers retry if the downloaded file has been deleted`() {
+        val download = completedDownload()
+        assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        assertTrue(download.file.delete())
+
+        download.fragment.binding.importSharedDeckButton
+            .performClick()
+        shadowOf(Looper.getMainLooper()).idle()
+
+        assertNull(shadowOf(download.activity).nextStartedActivity)
+        val retryButton = download.fragment.binding.tryDownloadAgainButton
+        assertTrue(retryButton.isVisible)
+    }
+
+    @Test
     fun `removing the download fragment prevents late completion from starting an import`() {
         val download = startDownload()
         download.file.writeText("deck contents")
