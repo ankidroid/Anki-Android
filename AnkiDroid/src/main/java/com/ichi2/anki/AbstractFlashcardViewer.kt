@@ -2705,7 +2705,7 @@ abstract class AbstractFlashcardViewer :
     internal fun showTagsDialog() {
         Timber.i("opening tags dialog")
         val noteId = currentCard!!.note(getColUnsafe).id
-        tagsDialogFactory!!.showEditTags(this, noteIds = listOf(noteId))
+        tagsDialogFactory!!.show(this, noteIds = listOf(noteId))
     }
 
     override fun onSelectedTags(

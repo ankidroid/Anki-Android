@@ -1685,7 +1685,7 @@ class NoteEditorFragment :
 
     private fun showTagsDialog() {
         val selTags = selectedTags?.let { ArrayList(it) } ?: arrayListOf()
-        tagsDialogFactory!!.showEditTags(requireActivity(), checkedTags = selTags)
+        tagsDialogFactory!!.show(requireActivity(), checkedTags = selTags)
     }
 
     override fun onSelectedTags(
