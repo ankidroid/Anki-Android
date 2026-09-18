@@ -303,6 +303,24 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun copyNoteCopiesNoteType() {
+        val originalNote = addBasicAndReversedNote()
+
+        addBasicNote()
+
+        val editor =
+            openNoteEditorWithArgs(NoteEditorDestination.EditSelection(listOf(originalNote.firstCard().id), DEFAULT).toBundle())
+        val copyNoteBundle = getCopyNoteIntent(editor)
+        val newNoteEditor = openNoteEditorWithArgs(copyNoteBundle)
+
+        assertThat(
+            "the note type of the copied note should match the original",
+            newNoteEditor.editorNote!!.notetype.name,
+            equalTo(col.notetypes.basicAndReversed.name),
+        )
+    }
+
+    @Test
     fun stickyFieldsAreUnchangedAfterAdd() =
         runTest {
             // #6795 - newlines were converted to <br>

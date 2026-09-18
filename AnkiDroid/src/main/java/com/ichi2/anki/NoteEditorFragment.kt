@@ -158,6 +158,7 @@ import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.RunOnlyOnce
 import com.ichi2.anki.utils.bottomCornerSideClearance
 import com.ichi2.anki.utils.doOnApplyWindowInsets
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -773,6 +774,7 @@ class NoteEditorFragment :
         }
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
         setDid(editorNote)
+        setNoteType(col)
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
@@ -1541,7 +1543,14 @@ class NoteEditorFragment :
     }
 
     fun copyNote() {
-        requestAddLauncher.navigate(NoteEditorDestination.CopyNote(deckId, fieldsText, selectedTags))
+        requestAddLauncher.navigate(
+            NoteEditorDestination.CopyNote(
+                deckId,
+                fieldsText,
+                currentlySelectedNotetype?.id ?: editorNote!!.noteTypeId,
+                selectedTags,
+            ),
+        )
     }
 
     // ----------------------------------------------------------------------------
@@ -2133,6 +2142,19 @@ class NoteEditorFragment :
         }
     }
 
+    /**
+     * Set the note type id if we're currently copying a note.
+     */
+    fun setNoteType(col: Collection) {
+        if (addNote) {
+            requireArguments()
+                .getLongOrNull(EXTRA_NOTE_TYPE_ID)
+                ?.let {
+                    col.notetypes.setCurrent(it)
+                }
+        }
+    }
+
     /** Refreshes the UI using the currently selected note type as a template  */
     private fun refreshNoteData(changeType: FieldChangeType) {
         setNote(null, changeType)
@@ -2698,6 +2720,7 @@ class NoteEditorFragment :
         const val EXTRA_TAGS = "TAGS"
         const val EXTRA_ID = "ID"
         const val EXTRA_DID = "DECK_ID"
+        const val EXTRA_NOTE_TYPE_ID = "NOTE_TYPE_ID"
         const val EXTRA_TEXT_FROM_SEARCH_VIEW = "SEARCH"
         const val EXTRA_EDIT_FROM_CARD_ID = "editCid"
         const val ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD"
