@@ -62,7 +62,7 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
                 intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.NOTEEDITOR.value)
                 intent.putExtra(NoteEditorFragment.EXTRA_DID, deckId)
                 intent.putExtra(NoteEditorFragment.EXTRA_CONTENTS, fieldsText)
-                tags?.let { intent.putExtra(NoteEditorFragment.EXTRA_TAGS, it.toTypedArray()) }
+                intent.putExtra(NoteEditorFragment.EXTRA_TAGS, tags.toTypedArray())
             }
         is NoteEditorDestination.PassArguments ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->
