@@ -27,7 +27,7 @@
         "@eslint/eslintrc": "^3.3.7",
         "@eslint/js": "^10.0.1",
         "@types/jest": "^30.0.0",
-        "@types/node": "^26.5.0",
+        "@types/node": "^26.5.1",
         "@typescript-eslint/eslint-plugin": "^8.70.0",
         "@typescript-eslint/parser": "^8.70.0",
         "eslint": "^10.10.0",
