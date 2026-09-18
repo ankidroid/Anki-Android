@@ -28,7 +28,6 @@ import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -250,10 +249,15 @@ class DeckPickerViewModel :
         viewModelScope.launch {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val deckName = withCol { decks.getLegacy(did)!!.name }
-                val changes = undoableOp { decks.remove(listOf(did)) }
-                // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
-                // to match and avoid unnecessary scrolls in `renderPage()`.
-                focusedDeck = Consts.DEFAULT_DECK_ID
+                val changes =
+                    undoableOp {
+                        removeDeckAndSelectAdjacent(
+                            deckId = did,
+                            visibleDeckIds = flowOfDeckList.value.data.map { it.did },
+                            filter = DeckFilters.create(flowOfDeckSearchQuery.value),
+                        )
+                    }
+                focusedDeck = withCol { decks.selected() }
 
                 deckDeletedNotification.emit(
                     DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
