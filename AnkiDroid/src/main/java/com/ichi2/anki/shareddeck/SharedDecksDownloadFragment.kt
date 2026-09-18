@@ -486,6 +486,13 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private fun openDownloadedDeck(context: Context) {
         val sharedDecksPath = File(context.getExternalFilesDir(null), SHARED_DECKS_DOWNLOAD_FOLDER)
         val downloadedFile = File(sharedDecksPath, fileName.toString())
+        // A successful DownloadManager entry can outlive its file, e.g. after another import.
+        if (!downloadedFile.isFile) {
+            Timber.w("Downloaded shared deck no longer exists")
+            onDownloadFinished(isSuccessful = false)
+            return
+        }
+
         val mimeType = URLConnection.guessContentTypeFromName(fileName)
         val fileIntent = Intent(context, IntentHandler::class.java)
         fileIntent.action = Intent.ACTION_VIEW
