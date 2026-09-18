@@ -11,6 +11,7 @@ import android.os.Looper
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
+import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
@@ -79,6 +80,30 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
         download.complete(downloadId = 2L)
         assertNotNull(shadowOf(download.activity).nextStartedActivity)
+    }
+
+    @Test
+    fun `removing the download fragment prevents late completion from starting an import`() {
+        val download = startDownload()
+        download.file.writeText("deck contents")
+        download.activity.supportFragmentManager.commitNow { remove(download.fragment) }
+
+        download.complete()
+
+        assertNull(shadowOf(download.activity).nextStartedActivity)
+    }
+
+    @Test
+    fun `destroying only the view prevents late completion from starting an import`() {
+        val download = startDownload()
+        download.file.writeText("deck contents")
+        download.activity.supportFragmentManager.commitNow { detach(download.fragment) }
+        assertEquals(Lifecycle.State.CREATED, download.fragment.lifecycle.currentState)
+        assertNull(download.fragment.view)
+
+        download.complete()
+
+        assertNull(shadowOf(download.activity).nextStartedActivity)
     }
 
     @Test
