@@ -54,13 +54,75 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
-    fun `duplicate completion does not start another import`() {
-        val download = completedDownload()
-        assertNotNull(shadowOf(download.activity).nextStartedActivity)
+    fun `filename collision imports the completed download instead of the older file`() {
+        val download = startDownload()
+        download.file.writeText("older deck")
+        val completedFile = File(download.file.parentFile, "blank-1.apkg").apply { writeText("new deck") }
 
-        download.complete()
+        download.complete(completedFile = completedFile)
+
+        val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        val input = assertNotNull(download.activity.contentResolver.openInputStreamSafe(intent.data!!))
+        assertEquals("new deck", input.bufferedReader().use { it.readText() })
+        assertEquals("older deck", download.file.readText())
+
+        // Manually importing again must also use the completed download's file.
+        download.withFileProvider {
+            download.fragment.binding.importSharedDeckButton
+                .performClick()
+        }
+        val retryIntent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        assertEquals(intent.data, retryIntent.data)
+
+        assertTrue(completedFile.delete())
+        download.fragment.binding.importSharedDeckButton
+            .performClick()
+        shadowOf(Looper.getMainLooper()).idle()
 
         assertNull(shadowOf(download.activity).nextStartedActivity)
+        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+    }
+
+    @Test
+    fun `missing completed file offers retry even if the requested filename exists`() {
+        val download = startDownload()
+        download.file.writeText("older deck")
+        val completedFile = File(download.file.parentFile, "blank-1.apkg")
+        assertFalse(completedFile.exists())
+
+        download.complete(completedFile = completedFile)
+
+        assertNull(shadowOf(download.activity).nextStartedActivity)
+        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+    }
+
+    @Test
+    fun `missing download location offers retry instead of importing the older file`() {
+        val download = startDownload()
+        download.file.writeText("older deck")
+
+        download.complete(localUri = null)
+
+        assertNull(shadowOf(download.activity).nextStartedActivity)
+        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+    }
+
+    @Test
+    fun `duplicate completion does not replace the completed file or start another import`() {
+        val download = completedDownload()
+        val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        val otherFile = File(download.file.parentFile, "other.apkg").apply { writeText("other deck") }
+
+        download.complete(completedFile = otherFile)
+
+        assertNull(shadowOf(download.activity).nextStartedActivity)
+
+        download.withFileProvider {
+            download.fragment.binding.importSharedDeckButton
+                .performClick()
+        }
+        val manualIntent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        assertEquals(intent.data, manualIntent.data)
     }
 
     @Test
@@ -80,6 +142,34 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
         download.complete(downloadId = 2L)
         assertNotNull(shadowOf(download.activity).nextStartedActivity)
+    }
+
+    @Test
+    fun `retry binds the import button to the new completed file`() {
+        val download = completedDownload()
+        assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        assertTrue(download.file.delete())
+        download.fragment.binding.importSharedDeckButton
+            .performClick()
+        shadowOf(Looper.getMainLooper()).idle()
+
+        whenever(download.activity.downloadManager.enqueue(any())).thenReturn(2L)
+        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+        download.fragment.binding.tryDownloadAgainButton
+            .performClick()
+        val completedFile = File(download.file.parentFile, "blank-1.apkg").apply { writeText("new deck") }
+        download.complete(downloadId = 2L, completedFile = completedFile)
+        val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+
+        download.withFileProvider {
+            download.fragment.binding.importSharedDeckButton
+                .performClick()
+        }
+
+        val manualIntent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        assertEquals(intent.data, manualIntent.data)
+        val input = assertNotNull(download.activity.contentResolver.openInputStreamSafe(manualIntent.data!!))
+        assertEquals("new deck", input.bufferedReader().use { it.readText() })
     }
 
     @Test
@@ -234,34 +324,55 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
                 .appendPath(file.name)
                 .build()
 
-        init {
-            shadowOf(activity.contentResolver).registerInputStreamSupplier(uri) { file.inputStream() }
-        }
-
         fun complete(
             downloadId: Long = 1L,
             status: Int = DownloadManager.STATUS_SUCCESSFUL,
+            completedFile: File = file,
+            localUri: Uri? = Uri.fromFile(completedFile),
         ) {
-            whenever(activity.downloadManager.query(any())).thenAnswer { downloadCursor(status) }
-            // FileProvider's root check hardcodes '/', which rejects Windows paths under Robolectric.
-            // Stub only URI generation; keep the real file and the fragment's existence checks.
-            mockStatic(FileProvider::class.java).use { provider ->
-                provider.`when`<Uri> { FileProvider.getUriForFile(any(), eq(uri.authority!!), eq(file)) }.thenReturn(uri)
+            whenever(activity.downloadManager.query(any())).thenAnswer { downloadCursor(status, localUri) }
+            withFileProvider {
                 activity.sendBroadcast(
                     Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadId),
                 )
+            }
+        }
+
+        fun withFileProvider(action: () -> Unit) {
+            // FileProvider's root check hardcodes '/', which rejects Windows paths under Robolectric.
+            // Stub only URI generation; keep the real file and the fragment's existence checks.
+            mockStatic(FileProvider::class.java).use { provider ->
+                provider
+                    .`when`<Uri> { FileProvider.getUriForFile(any(), eq(uri.authority!!), any()) }
+                    .thenAnswer { invocation ->
+                        val importedFile = invocation.getArgument<File>(2)
+                        val importedUri =
+                            uri
+                                .buildUpon()
+                                .path(null)
+                                .appendPath("shared_decks")
+                                .appendPath(importedFile.name)
+                                .build()
+                        shadowOf(activity.contentResolver).registerInputStreamSupplier(importedUri) { importedFile.inputStream() }
+                        importedUri
+                    }
+                action()
                 shadowOf(Looper.getMainLooper()).idle()
             }
         }
     }
 
-    private fun downloadCursor(status: Int): MatrixCursor =
+    private fun downloadCursor(
+        status: Int,
+        localUri: Uri? = null,
+    ): MatrixCursor =
         MatrixCursor(
             arrayOf(
                 DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR,
                 DownloadManager.COLUMN_TOTAL_SIZE_BYTES,
                 DownloadManager.COLUMN_STATUS,
                 DownloadManager.COLUMN_REASON,
+                DownloadManager.COLUMN_LOCAL_URI,
             ),
-        ).apply { addRow(arrayOf<Any>(100L, 100L, status, 0)) }
+        ).apply { addRow(arrayOf<Any?>(100L, 100L, status, 0, localUri?.toString())) }
 }
