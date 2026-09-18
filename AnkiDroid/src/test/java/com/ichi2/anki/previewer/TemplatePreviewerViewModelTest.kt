@@ -86,7 +86,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         fields: List<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runTest {
-        val notetype = col.notetypes.byName("Basic (optional reversed card)")!!
+        val notetype = col.notetypes.basicOptionalReversed
         val arguments =
             TemplatePreviewerArguments(
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),
@@ -104,7 +104,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
         fields: List<String>? = null,
         block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runTest {
-        val notetype = col.notetypes.byName("Cloze")!!
+        val notetype = col.notetypes.cloze
         val arguments =
             TemplatePreviewerArguments(
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),
