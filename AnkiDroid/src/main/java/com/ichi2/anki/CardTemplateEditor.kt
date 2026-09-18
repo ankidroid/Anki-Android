@@ -66,6 +66,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import com.ichi2.anki.common.utils.ext.contentEquals
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.ActivityCardTemplateEditorBinding
 import com.ichi2.anki.databinding.FragmentCardTemplateEditorTemplateBinding
@@ -406,8 +407,8 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
         // insets and 'Up' can both arrive before the note type is loaded: answer them without
         // opening the collection
         val tempNoteType = tempNoteType ?: return false
-        val oldNoteType: NotetypeJson? = getColUnsafe.notetypes.get(noteTypeId)
-        return tempNoteType.notetype.toString() != oldNoteType.toString()
+        val oldNoteType = getColUnsafe.notetypes.get(noteTypeId) ?: return true
+        return !tempNoteType.notetype.jsonObject.contentEquals(oldNoteType.jsonObject)
     }
 
     /**
