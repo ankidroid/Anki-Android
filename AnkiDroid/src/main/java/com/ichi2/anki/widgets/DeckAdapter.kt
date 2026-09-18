@@ -274,9 +274,10 @@ private val deckNodeDiffCallback =
             newItem: DisplayDeckNode,
         ): Boolean = oldItem == newItem
 
-        // We have to return a non-null payload to prevent cross-fading which resulted in the doubling of the chevron
+        // Reuse rows for expand/collapse updates to avoid cross-fading different chevrons.
+        // Selection changes need a new row: replacing the background of a pressed row restarts its ripple.
         override fun getChangePayload(
             oldItem: DisplayDeckNode,
             newItem: DisplayDeckNode,
-        ): Any = true
+        ): Any? = if (oldItem.isSelected != newItem.isSelected) null else true
     }
