@@ -504,10 +504,26 @@ class NotetypeFile(
 ) : File(path),
     Parcelable {
     /**
+     * A cache containing the note type if it can be known othewise the reason it can't.
+     */
+    sealed class Cache {
+        class Exc(
+            val e: Exception,
+        ) : Cache()
+
+        class NT(
+            val nt: NotetypeJson,
+        ) : Cache()
+    }
+
+    private var cache: Cache? = null
+
+    /**
      * @param directory where the file will be saved
      * @param notetype to be stored
      */
     constructor(directory: File, notetype: NotetypeJson) : this(createTempFile("notetype", ".tmp", directory).absolutePath) {
+        cache = Cache.NT(notetype)
         try {
             ByteArrayInputStream(notetype.toString().toByteArray()).use { source ->
                 compat.copyFile(source, this.absolutePath)
@@ -523,7 +539,19 @@ class NotetypeFile(
      */
     constructor(context: Context, notetype: NotetypeJson) : this(context.cacheDir, notetype)
 
+    /**
+     * Gets the note type. This potentially read from file so should be used on IO thread ideally.
+     */
     fun getNotetype(): NotetypeJson =
+        when (val cache = fillCacheIfNeeded()) {
+            is Cache.Exc -> throw cache.e
+            is Cache.NT -> cache.nt
+        }
+
+    /**
+     * Load the note type from file.
+     */
+    private fun loadNotetype(): NotetypeJson =
         try {
             ByteArrayOutputStream().use { target ->
                 compat.copyFile(absolutePath, target)
@@ -535,16 +563,30 @@ class NotetypeFile(
         }
 
     /**
-     * Returns the notetype, or `null` if the backing file can't be read (e.g. the temp
-     * file was cleaned up by the OS after process death, or the user cleared app data).
+     * Refresh the cache from file. Returns its new value.
      */
-    fun getNotetypeOrNull(): NotetypeJson? =
-        try {
-            getNotetype()
-        } catch (e: IOException) {
-            Timber.d(e, "Failed to read notetype")
-            null
-        }
+    private fun fillCache(): Cache {
+        val cache =
+            try {
+                val nt = loadNotetype()
+                Cache.NT(nt)
+            } catch (e: Exception) {
+                Cache.Exc(e)
+            }
+        this.cache = cache
+        return cache
+    }
+
+    /**
+     * Fill the cache from file if it's not yet filled.
+     */
+    private fun fillCacheIfNeeded(): Cache = cache ?: fillCache()
+
+    /**
+     * Whether we can get a note type from this object. Returns false if the file was deleted.
+     * Loads the note type in cache to avoid rereading it.
+     */
+    fun isUsable(): Boolean = fillCacheIfNeeded() is Cache.NT
 
     override fun describeContents(): Int = 0
 
@@ -560,7 +602,7 @@ class NotetypeFile(
         @Suppress("unused")
         val CREATOR =
             object : Parcelable.Creator<NotetypeFile> {
-                override fun createFromParcel(source: Parcel?): NotetypeFile = NotetypeFile(source!!.readString()!!)
+                override fun createFromParcel(source: Parcel): NotetypeFile = NotetypeFile(source.readString()!!)
 
                 override fun newArray(size: Int): Array<NotetypeFile> = arrayOf()
             }

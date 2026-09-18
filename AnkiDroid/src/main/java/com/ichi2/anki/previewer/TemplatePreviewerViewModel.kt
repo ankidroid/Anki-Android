@@ -292,6 +292,6 @@ data class TemplatePreviewerArguments(
             BundleCompat
                 .getParcelable(bundle, TemplatePreviewerFragment.ARG_KEY, TemplatePreviewerArguments::class.java)
                 ?.notetypeFile
-                ?.getNotetypeOrNull() != null
+                ?.isUsable() ?: false
     }
 }
