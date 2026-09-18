@@ -16,12 +16,14 @@
 
 package com.ichi2.anki
 
+import android.os.Parcel
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateNotetype.ChangeType.ADD
 import com.ichi2.anki.CardTemplateNotetype.ChangeType.DELETE
 import com.ichi2.anki.CardTemplateNotetype.TemplateChange
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.testutils.createTransientDirectory
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
@@ -189,6 +191,26 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         val adjExpected8 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
         assertTemplateChangesEqual(expected8, tempNotetype.templateChanges)
         assertTemplateChangesEqual(adjExpected8, tempNotetype.adjustedTemplateChanges)
+    }
+
+    @Test
+    fun testNoteTypeProviderParceling() {
+        val idProvider = NoteTypeProvider.Id(123L)
+        assertRoundTrips(idProvider)
+
+        val file = NotetypeFile(createTransientDirectory(), NotetypeJson("{\"foo\": \"bar\"}"))
+        assertRoundTrips(NoteTypeProvider.File(file))
+    }
+
+    private fun assertRoundTrips(provider: NoteTypeProvider) {
+        val parcel = Parcel.obtain()
+        provider.writeToParcel(parcel, 0)
+        parcel.setDataPosition(0)
+
+        val restored = NoteTypeProvider.CREATOR.createFromParcel(parcel)
+        Assert.assertEquals(provider, restored)
+
+        parcel.recycle()
     }
 
     @Suppress("UNCHECKED_CAST")
