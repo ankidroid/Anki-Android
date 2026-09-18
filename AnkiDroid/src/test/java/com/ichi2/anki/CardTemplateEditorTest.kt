@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment
 import com.ichi2.anki.CardTemplateEditor.CardTemplateFragment.CardTemplate
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.utils.ext.deepClonedInto
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.NotetypeJson
@@ -48,6 +49,33 @@ import kotlin.test.junit5.JUnit5Asserter.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CardTemplateEditorTest : RobolectricTest() {
+    @Test
+    fun `change detection does not serialize the note type - Issue 21912`() {
+        val original = col.notetypes.basic
+        val edited =
+            NotetypeJson(
+                original.jsonObject.deepClonedInto(
+                    object : JSONObject() {
+                        override fun toString(): String = error("Change detection must not serialize the whole note type")
+                    },
+                ),
+            )
+        val intent = CardEditor(ntid = original.id).toIntent(targetContext)
+        val controller = Robolectric.buildActivity(CardTemplateEditor::class.java, intent)
+        saveControllerForCleanup(controller)
+        // Guard the note type before onCreate: the initial Back callback update triggers the crash.
+        controller.get().tempNoteType = CardTemplateNotetype(edited)
+        controller.setup()
+
+        with(controller.get()) {
+            assertFalse("Opening the editor should not mark the note type as changed", noteTypeHasChanged())
+            edited.templates[0].qfmt += "edited"
+            assertTrue("A nested template edit should be detected", noteTypeHasChanged())
+            edited.templates[0].qfmt = original.templates[0].qfmt
+            assertFalse("Reverting the edit should clear the change", noteTypeHasChanged())
+        }
+    }
+
     @Test
     @Throws(Exception::class)
     fun testEditTemplateContents() {
