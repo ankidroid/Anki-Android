@@ -169,6 +169,16 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         }
     }
 
+    /** Registers the broadcast receiver for download completion. */
+    private fun registerDownloadReceiver() {
+        Timber.d("Registering broadcast receiver for download completion")
+        activity?.registerReceiverCompat(
+            onComplete,
+            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+            ContextCompat.RECEIVER_EXPORTED,
+        )
+    }
+
     private fun render(state: SharedDecksDownloadUiState) {
         binding.downloadingTitle.text = state.fileName?.let { getString(R.string.downloading_file, it) }
         binding.downloadPercentageText.text =
@@ -221,13 +231,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         if (!decksDownloadFolder.exists()) {
             decksDownloadFolder.mkdirs()
         }
-        // Register broadcast receiver for download completion.
-        Timber.d("Registering broadcast receiver for download completion")
-        activity?.registerReceiverCompat(
-            onComplete,
-            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
-            ContextCompat.RECEIVER_EXPORTED,
-        )
+        registerDownloadReceiver()
 
         val currentFileName = fileToBeDownloaded.toFileName(extension = "apkg")
 
