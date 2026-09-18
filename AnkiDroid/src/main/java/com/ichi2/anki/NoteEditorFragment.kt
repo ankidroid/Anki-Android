@@ -1541,7 +1541,7 @@ class NoteEditorFragment :
     }
 
     fun copyNote() {
-        requestAddLauncher.navigate(NoteEditorDestination.CopyNote(deckId, fieldsText, selectedTags))
+        requestAddLauncher.navigate(NoteEditorDestination.CopyNote(deckId, fieldsText, selectedTags ?: listOf()))
     }
 
     // ----------------------------------------------------------------------------
