@@ -162,6 +162,7 @@ import com.ichi2.anki.utils.HanUnificationDetector
 import com.ichi2.anki.utils.RunOnlyOnce
 import com.ichi2.anki.utils.bottomCornerSideClearance
 import com.ichi2.anki.utils.doOnApplyWindowInsets
+import com.ichi2.anki.utils.ext.getLongOrNull
 import com.ichi2.anki.utils.ext.requireLong
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
@@ -585,7 +586,7 @@ class NoteEditorFragment :
         setupEdgeToEdge()
         registerDeckSelectedHandler(REQUEST_DECK_SELECTION_NOTE_EDITOR, ::onDeckSelected)
         try {
-            setupEditor(getColUnsafe)
+            setupEditor(getColUnsafe, savedInstanceState)
         } catch (ex: RuntimeException) {
             Timber.w(ex, "setupEditor")
             requireAnkiActivity().onCollectionLoadError()
@@ -629,7 +630,10 @@ class NoteEditorFragment :
     }
 
     // Finish initializing the fragment after the collection has been correctly loaded
-    private fun setupEditor(col: Collection) {
+    private fun setupEditor(
+        col: Collection,
+        savedInstanceState: Bundle?,
+    ) {
         val intent = requireActivity().intent
         Timber.d("NoteEditor() onCollectionLoaded: caller: %s", caller)
         requireAnkiActivity().registerReceiver()
@@ -790,7 +794,11 @@ class NoteEditorFragment :
             }
         }
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
-        setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
+        setNote(
+            editorNote,
+            FieldChangeType.onActivityCreation(shouldReplaceNewlines()),
+            noteTypeId = savedInstanceState?.getLongOrNull("noteTypeId") ?: requireArguments().getLongOrNull(EXTRA_NOTE_TYPE_ID),
+        )
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
             requireAnkiActivity().setToolbarText(titleRes = CommonString.menu_add)
@@ -1640,7 +1648,14 @@ class NoteEditorFragment :
     }
 
     fun copyNote() {
-        requestAddLauncher.navigate(NoteEditorDestination.CopyNote(deckId, fieldsText, selectedTags.orEmpty()))
+        requestAddLauncher.navigate(
+            NoteEditorDestination.CopyNote(
+                deckId = deckId,
+                fieldsText = fieldsText,
+                noteTypeId = currentlySelectedNotetype?.id ?: editorNote!!.noteTypeId,
+                tags = selectedTags.orEmpty(),
+            ),
+        )
     }
 
     // ----------------------------------------------------------------------------
@@ -2820,6 +2835,7 @@ class NoteEditorFragment :
         const val EXTRA_TAGS = "TAGS"
         const val EXTRA_ID = "ID"
         const val EXTRA_DID = "DECK_ID"
+        const val EXTRA_NOTE_TYPE_ID = "NOTE_TYPE_ID"
         const val EXTRA_TEXT_FROM_SEARCH_VIEW = "SEARCH"
         const val EXTRA_EDIT_FROM_CARD_ID = "editCid"
         const val ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD"
