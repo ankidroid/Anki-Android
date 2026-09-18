@@ -304,7 +304,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     // Halt execution if file doesn't have extension as 'apkg' or 'colpkg'
                     if (!ImportUtils.isFileAValidDeck(fileName!!)) {
                         Timber.i("File does not have 'apkg' or 'colpkg' extension, abort the deck opening task")
-                        checkDownloadStatusAndUnregisterReceiver(isSuccessful = false, isInvalidDeckFile = true)
+                        onDownloadFinished(isSuccessful = false, isInvalidDeckFile = true)
                         return false
                     }
 
@@ -316,7 +316,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                         // Return if cursor is empty.
                         if (!it.moveToFirst()) {
                             Timber.i("Empty cursor, cannot continue further with success check and deck import")
-                            checkDownloadStatusAndUnregisterReceiver(isSuccessful = false)
+                            onDownloadFinished(isSuccessful = false)
                             return false
                         }
 
@@ -325,9 +325,9 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
                         // Return if download was not successful.
                         if (it.getInt(columnStatusIndex) != DownloadManager.STATUS_SUCCESSFUL) {
-                            Timber.i("Download could not be successful, update UI and unregister receiver")
+                            Timber.i("Download could not be successful, update UI")
                             Timber.d("Status code -> ${it.getIntOrNull(columnStatusIndex)}, reason ${it.getIntOrNull(columnReasonIndex)}")
-                            checkDownloadStatusAndUnregisterReceiver(isSuccessful = false)
+                            onDownloadFinished(isSuccessful = false)
                             return false
                         }
                     }
@@ -339,13 +339,13 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                         verifyDeckIsImportable()
                     } catch (exception: Exception) {
                         Timber.w(exception)
-                        checkDownloadStatusAndUnregisterReceiver(isSuccessful = false)
+                        onDownloadFinished(isSuccessful = false)
                         return
                     }
 
                 if (!verified) {
                     // Could be a retryable fault (we received notification of another file)
-                    // Otherwise, checkDownloadStatusAndUnregisterReceiver should have been called
+                    // Otherwise, onDownloadFinished should have been called
                     // to update the UI
                     return
                 }
@@ -356,8 +356,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 Timber.i("Opening downloaded deck for import")
                 openDownloadedDeck(context)
 
-                Timber.d("Checking download status and unregistering receiver")
-                checkDownloadStatusAndUnregisterReceiver(isSuccessful = true)
+                Timber.d("Download finished")
+                onDownloadFinished(isSuccessful = true)
             }
         }
 
@@ -506,12 +506,9 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     /**
-     * Handle download error scenarios.
-     *
-     * If there are any pending downloads, continue with them.
-     * Else, set mIsPreviousDownloadOngoing as false and unregister mOnComplete broadcast receiver.
+     * Updates the UI after download completion or failure and marks the download as inactive.
      */
-    private fun checkDownloadStatusAndUnregisterReceiver(
+    private fun onDownloadFinished(
         isSuccessful: Boolean,
         isInvalidDeckFile: Boolean = false,
     ) {
