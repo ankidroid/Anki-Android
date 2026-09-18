@@ -175,12 +175,20 @@ class WhiteboardToolbar : LinearLayout {
     /**
      * Animates the toolbar to its hidden (peeking) state.
      */
-    fun hide() = dragHandler.hide()
+    fun hide() =
+        post {
+            if (!isAttachedToWindow) return@post
+            dragHandler.hide()
+        }
 
     /**
      * Animates the toolbar to its fully visible state.
      */
-    fun show() = dragHandler.show()
+    fun show() =
+        post {
+            if (!isAttachedToWindow) return@post
+            dragHandler.show()
+        }
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         val intercepted = dragHandler.onInterceptTouchEvent(ev)

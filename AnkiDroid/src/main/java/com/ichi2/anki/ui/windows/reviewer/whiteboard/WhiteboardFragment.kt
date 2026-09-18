@@ -272,9 +272,9 @@ class WhiteboardFragment :
         viewModel.isToolbarShown
             .onEach { isShown ->
                 if (isShown) {
-                    showToolbar()
+                    toolbar.show()
                 } else {
-                    hideToolbar()
+                    toolbar.hide()
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -441,18 +441,6 @@ class WhiteboardFragment :
                     ToolbarAlignment.LEFT -> Gravity.LEFT or Gravity.CENTER_VERTICAL
                     ToolbarAlignment.RIGHT -> Gravity.RIGHT or Gravity.CENTER_VERTICAL
                 }
-        }
-    }
-
-    private fun showToolbar() {
-        binding.whiteboardToolbar.post {
-            binding.whiteboardToolbar.show()
-        }
-    }
-
-    private fun hideToolbar() {
-        binding.whiteboardToolbar.post {
-            binding.whiteboardToolbar.hide()
         }
     }
 
