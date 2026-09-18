@@ -155,7 +155,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
         binding.importSharedDeckButton.setOnClickListener {
             Timber.i("Import deck button clicked")
-            openDownloadedDeck(context)
+            openDownloadedDeck(requireContext())
         }
 
         binding.openInWebBrowserButton.setOnClickListener {
@@ -483,28 +483,27 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     /**
      * Open the downloaded deck using 'mFileName'.
      */
-    private fun openDownloadedDeck(context: Context?) {
+    private fun openDownloadedDeck(context: Context) {
+        val sharedDecksPath = File(context.getExternalFilesDir(null), SHARED_DECKS_DOWNLOAD_FOLDER)
+        val downloadedFile = File(sharedDecksPath, fileName.toString())
         val mimeType = URLConnection.guessContentTypeFromName(fileName)
         val fileIntent = Intent(context, IntentHandler::class.java)
         fileIntent.action = Intent.ACTION_VIEW
 
         val fileUri =
-            context?.let {
-                val sharedDecksPath = File(it.getExternalFilesDir(null), SHARED_DECKS_DOWNLOAD_FOLDER)
-                FileProvider.getUriForFile(
-                    it,
-                    it.applicationContext?.packageName + ".apkgfileprovider",
-                    File(sharedDecksPath, fileName.toString()),
-                )
-            }
+            FileProvider.getUriForFile(
+                context,
+                context.packageName + ".apkgfileprovider",
+                downloadedFile,
+            )
         Timber.d("File URI -> $fileUri")
         fileIntent.setDataAndType(fileUri, mimeType)
         fileIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         fileIntent.putExtra(EXTRA_IS_SHARED_DOWNLOAD, true)
         try {
-            context?.startActivity(fileIntent)
+            context.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {
-            context?.let { showThemedToast(it, R.string.something_wrong, false) }
+            showThemedToast(context, R.string.something_wrong, false)
             Timber.w(e)
         }
     }
