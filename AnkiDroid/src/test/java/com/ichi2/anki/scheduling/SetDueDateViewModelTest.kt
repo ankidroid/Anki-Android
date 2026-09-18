@@ -27,6 +27,22 @@ class SetDueDateViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `submission waits for scheduler initialization`() =
+        runTest {
+            val viewModel = SetDueDateViewModel()
+            viewModel.nextSingleDayDueDate = 3
+
+            assertFalse(viewModel.isValid, "valid input cannot be submitted before the scheduler setting is known")
+            assertThat(viewModel.calculateDaysParameter(), equalTo(null))
+            assertThat("keyboard submission is also guarded", viewModel.updateDueDateAsync().await(), equalTo(null))
+
+            viewModel.init(cardIds = listOf(1, 2), fsrsEnabled = true)
+
+            assertTrue(viewModel.isValid, "existing input becomes valid once the scheduler setting is known")
+            assertThat(viewModel.calculateDaysParameter(), equalTo(SetDueDateDays("3!")))
+        }
+
+    @Test
     fun `single day validation`() =
         runViewModelTest {
             fun canSaveWithValue(
