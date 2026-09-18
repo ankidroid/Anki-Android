@@ -167,6 +167,19 @@ interface AnkiTest {
         col
     }
 
+    /**
+     * Prevent DayRolloverAlarm from unburying cards during the test.
+     * Call before burying cards to process any pending day rollover.
+     */
+    fun preventDayRolloverAlarmFromUnburyingCards() {
+        col.backend.schedTimingToday()
+    }
+
+    /** Reproduces DayRolloverAlarm's cutoff query, which also processes pending day rollover. */
+    fun simulateDayRolloverAlarmCutoffQuery() {
+        col.sched.dayCutoff
+    }
+
     fun addDeck(
         deckName: String?,
         setAsSelected: Boolean = false,
