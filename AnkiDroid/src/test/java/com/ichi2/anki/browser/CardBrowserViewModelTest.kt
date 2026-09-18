@@ -117,6 +117,7 @@ class CardBrowserViewModelTest : JvmTest() {
     override fun setUp() {
         super.setUp()
         Prefs.putString(com.ichi2.anki.R.string.pref_browser_no_sorting, null)
+        preventDayRolloverAlarmFromUnburyingCards()
     }
 
     @Test
@@ -319,6 +320,8 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("toggle bury initially buries", it.wasBuried)
                 assertThat("1 card is buried", it.count, equalTo(1))
             }
+            // without this, the test could pass because the background task never ran
+            simulateDayRolloverAlarmCutoffQuery()
             toggleBury().also {
                 assertNotNull(it)
                 assertThat("toggle bury unburied on second press", !it.wasBuried)
