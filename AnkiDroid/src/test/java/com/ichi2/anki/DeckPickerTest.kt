@@ -62,6 +62,7 @@ import com.ichi2.anki.ui.windows.permissions.PermissionsActivity.Companion.EXTRA
 import com.ichi2.anki.utils.Destination
 import com.ichi2.anki.utils.ext.defaultConfig
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.common.Flaky
@@ -468,13 +469,15 @@ class DeckPickerTest : RobolectricTest() {
         return supportFragmentManager.findFragmentByTag("browser") as CardBrowserFragment
     }
 
-    private fun DeckPicker.longPressDeck(name: String): View =
-        deckPickerBinding.decks.children
-            .single { it.findViewById<TextView>(R.id.deck_name).text == name }
-            .also {
-                it.performLongClick()
-                advanceRobolectricLooper()
-            }
+    private fun DeckPicker.longPressDeck(name: String): View {
+        val decks = deckPickerBinding.decks
+        val adapter = decks.adapter as DeckAdapter
+        val deck = adapter.currentList.single { it.lastDeckNameComponent == name }
+        val position = adapter.currentList.indexOf(deck)
+        decks.findViewHolderForAdapterPosition(position)!!.itemView.performLongClick()
+        advanceRobolectricLooperUntil { adapter.currentList[position].isSelected }
+        return decks.findViewHolderForAdapterPosition(position)!!.itemView
+    }
 
     private fun keyDownEvent(
         keyCode: Int,
