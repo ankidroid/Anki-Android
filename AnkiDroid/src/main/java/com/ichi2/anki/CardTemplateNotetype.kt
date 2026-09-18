@@ -17,8 +17,8 @@ import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.utils.ext.writeJson
 import timber.log.Timber
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -362,10 +362,8 @@ class CardTemplateNotetype(
             Timber.d("saveTempNoteType() saving tempNoteType")
             var tempNoteTypeFile: File
             try {
-                ByteArrayInputStream(tempNoteType.toString().toByteArray()).use { source ->
-                    tempNoteTypeFile = File.createTempFile("editedTemplate", ".json", context.cacheDir)
-                    compat.copyFile(source, tempNoteTypeFile.absolutePath)
-                }
+                tempNoteTypeFile = File.createTempFile("editedTemplate", ".json", context.cacheDir)
+                tempNoteTypeFile.writeJson(tempNoteType.jsonObject)
             } catch (ioe: IOException) {
                 Timber.e(ioe, "Unable to create+write temp file for note type")
                 return null
@@ -509,9 +507,7 @@ class NotetypeFile(
      */
     constructor(directory: File, notetype: NotetypeJson) : this(createTempFile("notetype", ".tmp", directory).absolutePath) {
         try {
-            ByteArrayInputStream(notetype.toString().toByteArray()).use { source ->
-                compat.copyFile(source, this.absolutePath)
-            }
+            writeJson(notetype.jsonObject)
         } catch (ioe: IOException) {
             Timber.w(ioe, "Unable to create+write temp file for note type")
         }
