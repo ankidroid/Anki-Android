@@ -11,6 +11,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.utils.ext.cardStateCustomizer
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -22,6 +23,12 @@ class ReviewerViewModelTest : RobolectricTest() {
     private val viewModelStore = ViewModelStore()
 
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
+    @Before
+    fun disableAutoplay() {
+        // stored in collection; no need for a reset
+        updateDeckConfig(col.decks.selected()) { autoplay = false }
+    }
 
     @After
     fun clearViewModels() {
