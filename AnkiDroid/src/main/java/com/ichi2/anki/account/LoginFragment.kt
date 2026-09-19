@@ -29,11 +29,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.account.AccountActivity.Companion.START_FROM_DECKPICKER
 import com.ichi2.anki.dialogs.help.HelpDialog
+import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.getEndpoint
+import com.ichi2.anki.showError
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.bottomCornerClearance
@@ -243,7 +246,15 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                         showLoginSuccessDialog()
                     }
                     is LoginState.Error -> {
-                        showSnackbar(text = state.exception.message.toString())
+                        when (val exception = state.exception) {
+                            // the locked-collection guidance is too long for a snackbar
+                            is CollectionLockedException ->
+                                requireContext().showError(
+                                    exception.localizedMessage!!,
+                                    exception.toCrashReportData(requireContext(), reportException = false),
+                                )
+                            else -> showSnackbar(text = exception.message.toString())
+                        }
                     }
                     is LoginState.Idle -> { /* Not needed */ }
                 }
