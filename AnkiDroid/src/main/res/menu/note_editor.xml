@@ -44,4 +44,9 @@
         android:checkable="true"
         android:checked="true"
         ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_toggle_previewer"
+        android:checkable="true"
+        android:title="@string/note_editor_show_previewer"
+        ankidroid:showAsAction="never"/>
 </menu>
