@@ -23,9 +23,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.databinding.FragmentAudioRecordingBinding
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
@@ -36,7 +36,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_recording) {
-    private val binding by viewBinding(FragmentAudioRecordingBinding::bind)
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val binding by viewBinding(FragmentAudioRecordingBinding::bind)
 
     override val title: String
         get() = resources.getString(R.string.multimedia_editor_field_editing_audio)
@@ -90,7 +91,6 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
         return true
     }
 
-    @NeedsTest("Done button is enabled only when the length is not null")
     private fun setupDoneButton() {
         lifecycleScope.launch {
             viewModel.currentMultimediaPath.collect { path ->
@@ -108,7 +108,6 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
         }
     }
 
-    @NeedsTest("AudioRecordingController is correctly initialized")
     private fun initializeAudioRecorder() {
         if (audioRecordingController != null) return
         Timber.d("Initialising AudioRecordingController")
