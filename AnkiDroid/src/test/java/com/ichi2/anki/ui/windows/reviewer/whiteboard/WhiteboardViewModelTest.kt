@@ -22,6 +22,82 @@ class WhiteboardViewModelTest {
     }
 
     @Test
+    fun `pressing stylus button enables eraser when brush was active`() {
+        assertFalse(viewModel.isEraserActive)
+        val initialTool = viewModel.activeTool.value
+        assertIs<WhiteboardTool.Brush>(initialTool)
+        val initialBrushWidth = initialTool.width
+        val initialBrushColor = initialTool.color
+
+        viewModel.setStylusButtonPressed(true)
+
+        assertTrue(viewModel.isEraserActive)
+        val eraserTool = viewModel.activeTool.value
+        assertIs<WhiteboardTool.Eraser>(eraserTool)
+        assertEquals(viewModel.eraser.width, eraserTool.width)
+
+        viewModel.setStylusButtonPressed(false)
+
+        assertFalse(viewModel.isEraserActive)
+        val restoredTool = viewModel.activeTool.value
+        assertIs<WhiteboardTool.Brush>(restoredTool)
+        assertEquals(initialBrushWidth, restoredTool.width)
+        assertEquals(initialBrushColor, restoredTool.color)
+    }
+
+    @Test
+    fun `releasing stylus button leaves eraser active if eraser was already active before pressing`() {
+        viewModel.enableEraser()
+        assertTrue(viewModel.isEraserActive)
+        assertIs<WhiteboardTool.Eraser>(viewModel.activeTool.value)
+
+        viewModel.setStylusButtonPressed(true)
+        assertTrue(viewModel.isEraserActive)
+        assertIs<WhiteboardTool.Eraser>(viewModel.activeTool.value)
+
+        viewModel.setStylusButtonPressed(false)
+        assertTrue(viewModel.isEraserActive)
+        assertIs<WhiteboardTool.Eraser>(viewModel.activeTool.value)
+    }
+
+    @Test
+    fun `selecting brush while stylus button is pressed keeps brush after button is released`() {
+        viewModel.setStylusButtonPressed(true)
+        assertTrue(viewModel.isEraserActive)
+
+        viewModel.setActiveBrush(0)
+        assertFalse(viewModel.isEraserActive)
+        assertIs<WhiteboardTool.Brush>(viewModel.activeTool.value)
+
+        viewModel.setStylusButtonPressed(false)
+        assertFalse(viewModel.isEraserActive)
+        assertIs<WhiteboardTool.Brush>(viewModel.activeTool.value)
+    }
+
+    @Test
+    fun `stylus button preserves selected brush index when restoring`() {
+        viewModel.addBrush(0xFF00FF)
+        val secondBrushIndex = viewModel.brushes.value.lastIndex
+        viewModel.setActiveBrush(secondBrushIndex)
+        val selectedBrush = viewModel.activeTool.value
+        assertIs<WhiteboardTool.Brush>(selectedBrush)
+        val selectedBrushWidth = selectedBrush.width
+        val selectedBrushColor = selectedBrush.color
+
+        viewModel.setStylusButtonPressed(true)
+        assertTrue(viewModel.isEraserActive)
+        assertIs<WhiteboardTool.Eraser>(viewModel.activeTool.value)
+
+        viewModel.setStylusButtonPressed(false)
+        assertFalse(viewModel.isEraserActive)
+        val restoredTool = viewModel.activeTool.value
+        assertIs<WhiteboardTool.Brush>(restoredTool)
+        assertEquals(secondBrushIndex, viewModel.activeBrushIndex.value)
+        assertEquals(selectedBrushWidth, restoredTool.width)
+        assertEquals(selectedBrushColor, restoredTool.color)
+    }
+
+    @Test
     fun `toggleEraser toggles between eraser and brush`() {
         assertFalse(viewModel.isEraserActive)
         val initialBrush = viewModel.activeTool.value
