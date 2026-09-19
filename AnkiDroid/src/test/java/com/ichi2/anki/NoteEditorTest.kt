@@ -303,6 +303,62 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
+    fun copyNoteCopiesNoteType() {
+        val originalNote = addBasicAndReversedNote()
+
+        addBasicNote()
+
+        val editor =
+            openNoteEditorWithArgs(NoteEditorDestination.EditSelection(listOf(originalNote.firstCard().id), DEFAULT).toBundle())
+        val copyNoteBundle = getCopyNoteIntent(editor)
+        val newNoteEditor = openNoteEditorWithArgs(copyNoteBundle)
+
+        assertThat(
+            "the note type of the copied note should match the original",
+            newNoteEditor.editorNote!!.notetype.name,
+            equalTo(col.notetypes.basicAndReversed.name),
+        )
+    }
+
+    @Test
+    fun copyNoteCopiesAllFieldsWhenNoteTypeChanges() {
+        val name = addStandardNoteType("Three Fields", arrayOf("Front", "Back", "Extra"), "{{Front}}", "{{Back}}{{Extra}}")
+        val originalNote = addNoteUsingNoteTypeName(name, "front value", "back value", "third value")
+
+        // The last-added note type has fewer fields than the note being copied.
+        addBasicNote()
+
+        val editor =
+            openNoteEditorWithArgs(NoteEditorDestination.EditSelection(listOf(originalNote.firstCard().id), DEFAULT).toBundle())
+        val copiedEditor = openNoteEditorWithArgs(getCopyNoteIntent(editor))
+        advanceRobolectricLooper()
+
+        assertEquals(originalNote.noteTypeId, copiedEditor.editorNote!!.noteTypeId)
+        assertEquals(
+            listOf("front value", "back value", "third value"),
+            copiedEditor.currentFieldStrings.toList(),
+            "All copied field contents should survive the note type change",
+        )
+    }
+
+    @Test
+    fun copyNoteCopiesDeckIdWhenDecidingDeckByNoteType() {
+        col.config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, false)
+        val sourceDeckId = addDeck("Source deck")
+        // Moving the cards leaves the note type's remembered deck unchanged.
+        val originalNote = addBasicAndReversedNote().updateCards { did = sourceDeckId }
+        addBasicNote()
+
+        val editor =
+            openNoteEditorWithArgs(NoteEditorDestination.EditSelection(listOf(originalNote.firstCard().id), DEFAULT).toBundle())
+        assertEquals(sourceDeckId, editor.deckId)
+        val copiedEditor = openNoteEditorWithArgs(getCopyNoteIntent(editor))
+        advanceRobolectricLooper()
+
+        assertEquals(sourceDeckId, copiedEditor.deckId, "The copied deck should take precedence over the note type's remembered deck")
+    }
+
+    @Test
     fun stickyFieldsAreUnchangedAfterAdd() =
         runTest {
             // #6795 - newlines were converted to <br>
