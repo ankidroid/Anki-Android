@@ -139,4 +139,35 @@ object BitmapUtil {
         }
         return inSampleSize
     }
+
+    /**
+     * Largest power-of-two [BitmapFactory.Options.inSampleSize] that keeps both decoded
+     * dimensions at least as large as the requested size (suitable for `centerCrop`).
+     */
+    @CheckResult
+    fun calculateInSampleSize(
+        srcWidth: Int,
+        srcHeight: Int,
+        reqWidth: Int,
+        reqHeight: Int,
+    ): Int {
+        if (reqWidth <= 0 || reqHeight <= 0 || srcWidth <= 0 || srcHeight <= 0) {
+            return 1
+        }
+        var inSampleSize = 1
+        val halfWidth = srcWidth / 2
+        val halfHeight = srcHeight / 2
+        while (
+            inSampleSize <= Int.MAX_VALUE / 2 &&
+            halfHeight / inSampleSize >= reqHeight &&
+            halfWidth / inSampleSize >= reqWidth
+        ) {
+            inSampleSize *= 2
+        }
+        return inSampleSize
+    }
+
+    /** RGB_565 is only used when the source has no alpha. */
+    @CheckResult
+    fun preferredConfig(hasAlpha: Boolean): Bitmap.Config = if (hasAlpha) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
 }
