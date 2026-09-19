@@ -26,11 +26,7 @@
 package com.ichi2.anki.libanki
 
 import com.ichi2.anki.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.anki.libanki.utils.NotInPyLib
 import org.intellij.lang.annotations.Language
-import org.jetbrains.annotations.VisibleForTesting
-import java.io.File
-import java.net.URI
 import java.util.regex.Pattern
 
 /**
@@ -147,15 +143,4 @@ data class AvRef(
 
         val REGEX = Regex("\\[anki:(play:(.):(\\d+))]")
     }
-}
-
-/** Similar to [File.toURI], but doesn't use the absolute file to simplify testing */
-@NotInPyLib
-@VisibleForTesting
-fun getFileUri(path: String): URI {
-    var p = path
-    if (File.separatorChar != '/') p = p.replace(File.separatorChar, '/')
-    if (!p.startsWith("/")) p = "/$p"
-    if (!p.startsWith("//")) p = "//$p"
-    return URI("file", p, null)
 }
