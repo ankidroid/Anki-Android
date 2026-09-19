@@ -4,15 +4,23 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import android.os.Looper
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -41,12 +49,15 @@ import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonEqual
 import com.ichi2.testutils.uninitializeField
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.textAsIntOrNull
 import io.mockk.every
 import io.mockk.mockk
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.lessThan
 import org.intellij.lang.annotations.Language
@@ -185,6 +196,92 @@ class CustomStudyDialogTest : RobolectricTest() {
         ) {
             onSubscreenEditText()
                 .check(matches(withText(reviewExtendByValue.toString())))
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'extend limits' dialogs are titled 'Extend daily limits' and confirm with 'Increase'`() {
+        listOf(ContextMenuOption.EXTEND_NEW, ContextMenuOption.EXTEND_REV).forEach { option ->
+            withExtendLimitsDialog(option) { dialog ->
+                onView(withText("Extend daily limits"))
+                    .inRoot(isDialog())
+                    .check(matches(isDisplayed()))
+                assertThat("$option positive button", dialog.positiveButton.text.toString(), equalTo("Increase"))
+            }
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'extend limits' descriptions do not mention decreasing the limit`() {
+        listOf(ContextMenuOption.EXTEND_NEW, ContextMenuOption.EXTEND_REV).forEach { option ->
+            withExtendLimitsDialog(option) {
+                assertThat("$option description", binding.detailsText2.text.toString(), not(containsString("decrease")))
+            }
+        }
+    }
+
+    @Test
+    fun `'extend limits' dialogs show the available cards below the input`() {
+        mapOf(
+            ContextMenuOption.EXTEND_NEW to { defaultsOfDefaultDeck.labelForNewQueueAvailable() },
+            ContextMenuOption.EXTEND_REV to { defaultsOfDefaultDeck.labelForReviewQueueAvailable() },
+        ).forEach { (option, expectedLabel) ->
+            withExtendLimitsDialog(option) {
+                val root = binding.root
+                val availableCards =
+                    assertNotNull(
+                        root.children.firstOrNull { it is TextView && it.isVisible && it.text.toString() == expectedLabel() },
+                        "$option available cards label",
+                    )
+                val input =
+                    generateSequence<View>(binding.detailsEditText2Layout) { it.parent as? View }
+                        .first { it.parent == root }
+                assertThat(
+                    "$option available cards label is below the input",
+                    root.indexOfChild(availableCards),
+                    greaterThan(root.indexOfChild(input)),
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `'extend limits' steppers change the value by 1`() {
+        listOf(ContextMenuOption.EXTEND_NEW, ContextMenuOption.EXTEND_REV).forEach { option ->
+            withExtendLimitsDialog(option) {
+                val initial = assertNotNull(binding.detailsEditText2.textAsIntOrNull(), "$option initial value")
+
+                onStepper(R.string.plus_sign).perform(click())
+                assertThat("$option after +", binding.detailsEditText2.text.toString(), equalTo("${initial + 1}"))
+
+                onStepper(R.string.minus_sign).perform(click())
+                onStepper(R.string.minus_sign).perform(click())
+                assertThat("$option after -", binding.detailsEditText2.text.toString(), equalTo("${initial - 1}"))
+            }
+        }
+    }
+
+    @Test
+    fun `'extend limits' stepper treats an empty value as 0`() {
+        withExtendLimitsDialog(ContextMenuOption.EXTEND_NEW) {
+            onSubscreenEditText().perform(replaceText(""))
+            onStepper(R.string.plus_sign).perform(click())
+            assertThat(binding.detailsEditText2.text.toString(), equalTo("1"))
+        }
+    }
+
+    @Test
+    fun `steppers are not shown outside of 'extend limits'`() {
+        withCustomStudyFragment(args = argumentsDisplayingSubscreen(ContextMenuOption.STUDY_FORGOT)) {
+            shadowOf(Looper.getMainLooper()).idle()
+            onView(allOf(withContentDescription(R.string.plus_sign), isDisplayed()))
+                .inRoot(isDialog())
+                .check(doesNotExist())
+            onView(allOf(withContentDescription(R.string.minus_sign), isDisplayed()))
+                .inRoot(isDialog())
+                .check(doesNotExist())
         }
     }
 
@@ -481,6 +578,14 @@ class CustomStudyDialogTest : RobolectricTest() {
         fragment.block(fragment.dialog as AlertDialog)
     }
 
+    private fun withExtendLimitsDialog(
+        option: ContextMenuOption,
+        block: CustomStudyDialog.(dialog: AlertDialog) -> Unit,
+    ) = withCustomStudyFragment(args = argumentsDisplayingSubscreen(option)) { fragment ->
+        shadowOf(Looper.getMainLooper()).idle()
+        fragment.block(fragment.dialog as AlertDialog)
+    }
+
     private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
         mockk<Collection>(relaxed = true) {
             every { sched } returns
@@ -522,6 +627,10 @@ class CustomStudyDialogTest : RobolectricTest() {
 
     private fun onSubscreenEditText() =
         onView(withId(R.id.details_edit_text_2))
+            .inRoot(isDialog())
+
+    private fun onStepper(contentDescription: Int) =
+        onView(withContentDescription(contentDescription))
             .inRoot(isDialog())
 
     private fun CustomStudyDialog.submitSubscreenData() =

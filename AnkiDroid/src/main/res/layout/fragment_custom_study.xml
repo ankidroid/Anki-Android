@@ -39,21 +39,83 @@
         android:text=""
         android:textSize="16sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/details_edit_text_2_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:suffixTextAppearance="@style/TextAppearance.MaterialComponents.Body1">
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/details_edit_text_2"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/details_decrement_button"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="@string/minus_sign"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:visibility="gone"
+            app:backgroundTint="?attr/incrementerButtonBackground"
+            app:icon="@drawable/ic_remove"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="24dp"
+            app:iconTint="@color/white"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:visibility="visible" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/details_edit_text_2_layout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="number|numberSigned"
-            tools:text="1"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_weight="1"
+            app:errorEnabled="true"
+            app:suffixTextAppearance="@style/TextAppearance.MaterialComponents.Body1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/details_edit_text_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number|numberSigned"
+                tools:text="1"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/details_increment_button"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="12dp"
+            android:contentDescription="@string/plus_sign"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:visibility="gone"
+            app:backgroundTint="?attr/incrementerButtonBackground"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="24dp"
+            app:iconTint="@color/white"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/details_available_cards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="4dip"
+        android:layout_marginEnd="4dip"
+        android:gravity="start"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:text="Available new cards: 20"
+        tools:visibility="visible" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cards_state_selector_layout"
