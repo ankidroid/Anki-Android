@@ -228,14 +228,14 @@ class SetDueDateDialogTest : RobolectricTest() {
         withActivity { activity ->
             val firstCardIds = listOf(addBasicNote().firstCard().id)
             val secondCardIds = listOf(addBasicNote().firstCard().id)
-            withPausedPreparation { finishPreparingDialog ->
+            withPausedLoading { finishLoading ->
                 val first = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, firstCardIds) }
                 val second = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, secondCardIds) }
 
                 assertFalse(first.isCompleted)
                 assertTrue(second.isCompleted, "duplicate requests return without waiting")
 
-                finishPreparingDialog.complete(Unit)
+                finishLoading.complete(Unit)
                 first.await()
                 second.await()
                 advanceRobolectricLooper()
@@ -271,12 +271,12 @@ class SetDueDateDialogTest : RobolectricTest() {
     fun `cancelled preparation allows another dialog request`() =
         withActivity { activity ->
             val cardIds = listOf(addBasicNote().firstCard().id)
-            withPausedPreparation { finishPreparingDialog ->
+            withPausedLoading { finishLoading ->
                 val request = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, cardIds) }
                 assertFalse(request.isCompleted)
                 request.cancelAndJoin()
 
-                finishPreparingDialog.complete(Unit)
+                finishLoading.complete(Unit)
                 SetDueDateDialog.show(activity, cardIds)
                 advanceRobolectricLooper()
 
@@ -300,15 +300,18 @@ class SetDueDateDialogTest : RobolectricTest() {
             }
         }
 
-    private suspend fun withPausedPreparation(block: suspend (CompletableDeferred<Unit>) -> Unit) {
-        val finishPreparingDialog = CompletableDeferred<Unit>()
+    private suspend fun withPausedLoading(
+        fsrsEnabled: Boolean? = false,
+        block: suspend (CompletableDeferred<Unit>) -> Unit,
+    ) {
+        val finishLoading = CompletableDeferred<Unit>()
         mockkStatic(::getFSRSStatus)
         try {
             coEvery { getFSRSStatus() } coAnswers {
-                finishPreparingDialog.await()
-                false
+                finishLoading.await()
+                fsrsEnabled
             }
-            block(finishPreparingDialog)
+            block(finishLoading)
         } finally {
             unmockkStatic(::getFSRSStatus)
         }

@@ -13,6 +13,7 @@ import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.observability.undoableOp
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -41,24 +42,16 @@ class SetDueDateViewModel : ViewModel() {
     /** The cards to change the due date of */
     lateinit var cardIds: List<CardId>
 
-    /** Whether the Free Spaced Repetition Scheduler is enabled */
-    // initialized in init()
-    private var fsrsEnabled: Boolean = false
-        set(value) {
-            field = value
-            Timber.d("fsrsEnabled : %b", value)
-            if (value) {
-                Timber.d("updateIntervalToMatchDueDate forced to true: FSRS is enabled")
-                this.updateIntervalToMatchDueDate = true
-            }
-        }
+    /** Whether FSRS is enabled, or `null` while the scheduler setting is loading. */
+    val fsrsEnabled: StateFlow<Boolean?>
+        field = MutableStateFlow<Boolean?>(null)
 
     /** Whether the user can set [updateIntervalToMatchDueDate] */
     val canSetUpdateIntervalToMatchDueDate
         // this only makes sense in SM-2, where the due date does not directly impact the next
         // interval calculation. In FSRS, the current date is taken into account
         // so ivl should match due date for simplicity
-        get() = !fsrsEnabled
+        get() = fsrsEnabled.value == false
 
     /**
      * The number of cards which will be affected
@@ -100,10 +93,10 @@ class SetDueDateViewModel : ViewModel() {
      * @throws UnsupportedOperationException if unset when FSRS is enabled
      */
     var updateIntervalToMatchDueDate: Boolean = false
-        get() = if (fsrsEnabled) true else field
+        get() = if (fsrsEnabled.value == true) true else field
         set(value) {
             Timber.d("updateIntervalToMatchDueDate: %b", value)
-            if (fsrsEnabled && !value) {
+            if (fsrsEnabled.value == true && !value) {
                 throw UnsupportedOperationException("due date must match interval if using FSRS")
             }
             field = value
@@ -123,7 +116,13 @@ class SetDueDateViewModel : ViewModel() {
         fsrsEnabled: Boolean,
     ) {
         this.cardIds = cardIds
-        this.fsrsEnabled = fsrsEnabled
+        Timber.d("fsrsEnabled : %b", fsrsEnabled)
+        if (fsrsEnabled) {
+            Timber.d("updateIntervalToMatchDueDate forced to true: FSRS is enabled")
+            updateIntervalToMatchDueDate = true
+        }
+        this.fsrsEnabled.value = fsrsEnabled
+        refreshIsValid()
 
         initCurrentInterval(cardIds)
     }
@@ -163,10 +162,12 @@ class SetDueDateViewModel : ViewModel() {
                 Tab.SINGLE_DAY -> nextSingleDayDueDate.let { it != null && it >= 0 }
                 Tab.DATE_RANGE -> dateRange.isValid()
             }
-        isValidFlow.update { isValid }
+        isValidFlow.update { isValid && fsrsEnabled.value != null }
     }
 
     fun calculateDaysParameter(): SetDueDateDays? {
+        // Also guard submission via the keyboard while the scheduler setting is loading.
+        if (fsrsEnabled.value == null) return null
         val dateRange =
             when (currentTab) {
                 Tab.SINGLE_DAY -> nextSingleDayDueDate?.let { "$it" }
