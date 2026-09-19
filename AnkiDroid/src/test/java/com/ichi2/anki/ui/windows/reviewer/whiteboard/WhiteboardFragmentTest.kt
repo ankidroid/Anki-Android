@@ -2,6 +2,8 @@
 
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
+import android.view.InputDevice
+import android.view.MotionEvent
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +16,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -37,6 +41,55 @@ class WhiteboardFragmentTest : RobolectricTest() {
             assertNull(fragment.view)
 
             viewModel.setIsToolbarShown(!viewModel.isToolbarShown.value)
+        }
+    }
+
+    @Test
+    fun `recreated view restores brush when stylus button is no longer pressed`() {
+        launchFragmentInContainer<WhiteboardFragment>().use { scenario ->
+            lateinit var retainedViewModel: WhiteboardViewModel
+            scenario.onFragment { fragment ->
+                retainedViewModel = ViewModelProvider(fragment)[WhiteboardViewModel::class.java]
+                val view = fragment.binding.whiteboardView
+                view.dispatchStylusTouch(MotionEvent.ACTION_DOWN, MotionEvent.BUTTON_STYLUS_PRIMARY)
+                view.dispatchStylusTouch(MotionEvent.ACTION_UP, MotionEvent.BUTTON_STYLUS_PRIMARY)
+                assertIs<WhiteboardTool.Eraser>(retainedViewModel.activeTool.value)
+            }
+
+            // The button is released while the old view is unavailable to receive the event.
+            scenario.recreate()
+            scenario.onFragment { fragment ->
+                assertSame(retainedViewModel, ViewModelProvider(fragment)[WhiteboardViewModel::class.java])
+                val view = fragment.binding.whiteboardView
+                view.dispatchStylusTouch(MotionEvent.ACTION_DOWN)
+                assertIs<WhiteboardTool.Brush>(view.activeTool)
+            }
+        }
+    }
+
+    @Test
+    fun `recreated view restores brush when stylus button is released mid stroke`() {
+        launchFragmentInContainer<WhiteboardFragment>().use { scenario ->
+            lateinit var retainedViewModel: WhiteboardViewModel
+            scenario.onFragment { fragment ->
+                retainedViewModel = ViewModelProvider(fragment)[WhiteboardViewModel::class.java]
+                val view = fragment.binding.whiteboardView
+                view.dispatchStylusTouch(MotionEvent.ACTION_DOWN, MotionEvent.BUTTON_STYLUS_PRIMARY)
+                view.dispatchStylusTouch(MotionEvent.ACTION_UP, MotionEvent.BUTTON_STYLUS_PRIMARY)
+                assertIs<WhiteboardTool.Eraser>(retainedViewModel.activeTool.value)
+            }
+
+            // The button stays held while the activity is recreated and the next stroke begins.
+            scenario.recreate()
+            scenario.onFragment { fragment ->
+                assertSame(retainedViewModel, ViewModelProvider(fragment)[WhiteboardViewModel::class.java])
+                val view = fragment.binding.whiteboardView
+                view.dispatchStylusTouch(MotionEvent.ACTION_DOWN, MotionEvent.BUTTON_STYLUS_PRIMARY)
+                assertIs<WhiteboardTool.Eraser>(view.activeTool)
+
+                view.dispatchStylusTouch(MotionEvent.ACTION_MOVE)
+                assertIs<WhiteboardTool.Brush>(view.activeTool, "Releasing the button should restore the brush during this stroke")
+            }
         }
     }
 
@@ -72,6 +125,48 @@ class WhiteboardFragmentTest : RobolectricTest() {
         val holder = adapter.createViewHolder(recycler, adapter.getItemViewType(index))
         adapter.bindViewHolder(holder, index)
         return (holder.itemView as MaterialButton).isChecked
+    }
+
+    private fun WhiteboardView.dispatchStylusTouch(
+        action: Int,
+        buttonState: Int = 0,
+    ) {
+        val properties =
+            arrayOf(
+                MotionEvent.PointerProperties().apply {
+                    id = 0
+                    toolType = MotionEvent.TOOL_TYPE_STYLUS
+                },
+            )
+        val coordinates =
+            arrayOf(
+                MotionEvent.PointerCoords().apply {
+                    x = 50f
+                    y = 50f
+                },
+            )
+        val event =
+            MotionEvent.obtain(
+                0L,
+                0L,
+                action,
+                1,
+                properties,
+                coordinates,
+                0,
+                buttonState,
+                1f,
+                1f,
+                0,
+                0,
+                InputDevice.SOURCE_STYLUS,
+                0,
+            )
+        try {
+            dispatchTouchEvent(event)
+        } finally {
+            event.recycle()
+        }
     }
 
     private fun changeToolbarVisibilityBeforeDestroyingView(isShown: Boolean) {
