@@ -48,7 +48,7 @@ class TemplatePreviewerPage : Fragment(R.layout.fragment_template_previewer_cont
         val viewModel = fragment.viewModel
 
         lifecycleScope.launch {
-            val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts?.await()
+            val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts.await()
             for ((index, templateName) in viewModel.getTemplateNames().withIndex()) {
                 val tabTitle =
                     if (cardsWithEmptyFronts?.get(index) == true) {

@@ -10,11 +10,13 @@ import androidx.core.os.BundleCompat
 import androidx.lifecycle.SavedStateHandle
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.NoteTypeProvider
 import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
+import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -24,7 +26,6 @@ import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.require
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -35,9 +36,9 @@ import org.jetbrains.annotations.VisibleForTesting
 class TemplatePreviewerViewModel(
     savedStateHandle: SavedStateHandle,
 ) : CardViewerViewModel(savedStateHandle) {
-    private val notetype: NotetypeJson
+    private val notetype: Deferred<NotetypeJson>
     private val fillEmpty: Boolean
-    private val isCloze: Boolean
+    private val isCloze: Deferred<Boolean>
 
     /**
      * Identifies which of the card templates or cloze deletions it corresponds to
@@ -49,20 +50,23 @@ class TemplatePreviewerViewModel(
 
     private val note: Deferred<Note>
     private val templateNames: Deferred<List<String>>
-    private val clozeOrds: Deferred<List<CardOrdinal>>?
+    private val clozeOrds: Deferred<List<CardOrdinal>?>
     override var currentCard: Deferred<Card>
     override val server = AnkiServer(this).also { it.start() }
 
     /**
      * Ordered list of cards with empty fronts
      */
-    internal val cardsWithEmptyFronts: Deferred<List<Boolean>>?
+    internal val cardsWithEmptyFronts: Deferred<List<Boolean>?>
 
     init {
         val arguments = savedStateHandle.require<TemplatePreviewerArguments>(TemplatePreviewerFragment.ARG_KEY)
-        notetype = arguments.notetype
+        notetype =
+            asyncIO {
+                withCol { arguments.notetype(this) }
+            }
         fillEmpty = arguments.fillEmpty
-        isCloze = notetype.isCloze
+        isCloze = asyncIO { notetype.await().isCloze }
         ordFlow = MutableStateFlow(arguments.ord)
 
         note =
@@ -71,7 +75,7 @@ class TemplatePreviewerViewModel(
                     if (arguments.id != 0L) {
                         Note(this, arguments.id)
                     } else {
-                        Note.fromNotetypeId(this@withCol, arguments.notetype.id)
+                        Note.fromNotetypeId(this@withCol, arguments.notetype(this).id)
                     }
                 }.apply {
                     fields = arguments.fields.toMutableList()
@@ -81,6 +85,7 @@ class TemplatePreviewerViewModel(
         currentCard =
             asyncIO {
                 val note = note.await()
+                val notetype = notetype.await()
                 withCol {
                     note.ephemeralCard(
                         col = this,
@@ -91,28 +96,37 @@ class TemplatePreviewerViewModel(
                     )
                 }
             }
-        if (isCloze) {
-            val clozeNumbers =
-                asyncIO {
+
+        clozeOrds =
+            asyncIO {
+                if (isCloze.await()) {
                     val note = note.await()
-                    withCol { clozeNumbersInNote(note) }
+                    val clozeNumbers = withCol { clozeNumbersInNote(note) }
+                    clozeNumbers.map { it - 1 }
+                } else {
+                    null
                 }
-            clozeOrds =
-                asyncIO {
-                    clozeNumbers.await().map { it - 1 }
-                }
-            templateNames =
-                asyncIO {
+            }
+
+        templateNames =
+            asyncIO {
+                if (isCloze.await()) {
+                    val note = note.await()
+                    val clozeNumbers = withCol { clozeNumbersInNote(note) }
                     val tr = CollectionManager.TR
-                    clozeNumbers.await().map { tr.cardTemplatesCard(it) }
+                    clozeNumbers.map { tr.cardTemplatesCard(it) }
+                } else {
+                    notetype.await().templatesNames
                 }
-            cardsWithEmptyFronts = null
-        } else {
-            clozeOrds = null
-            templateNames = CompletableDeferred(notetype.templatesNames)
-            cardsWithEmptyFronts =
-                asyncIO {
+            }
+
+        cardsWithEmptyFronts =
+            asyncIO {
+                if (isCloze.await()) {
+                    null
+                } else {
                     val note = note.await()
+                    val notetype = notetype.await()
                     List(templateNames.await().size) { ord ->
                         val questionText =
                             withCol {
@@ -128,7 +142,7 @@ class TemplatePreviewerViewModel(
                         EMPTY_FRONT_LINK in questionText
                     }
                 }
-        }
+            }
     }
 
     /* *********************************************************************************************
@@ -148,6 +162,7 @@ class TemplatePreviewerViewModel(
                 currentCard =
                     asyncIO {
                         val note = note.await()
+                        val notetype = notetype.await()
                         withCol {
                             note.ephemeralCard(
                                 col = this,
@@ -181,8 +196,8 @@ class TemplatePreviewerViewModel(
     fun onTabSelected(position: Int) {
         launchCatchingIO {
             val ord =
-                if (isCloze) {
-                    clozeOrds!!.await()[position]
+                if (isCloze.await()) {
+                    clozeOrds.await()!![position]
                 } else {
                     position
                 }
@@ -192,14 +207,14 @@ class TemplatePreviewerViewModel(
 
     @CheckResult
     suspend fun getCurrentTabIndex(): Int =
-        if (isCloze) {
-            clozeOrds!!.await().indexOf(ordFlow.value)
+        if (isCloze.await()) {
+            clozeOrds.await()!!.indexOf(ordFlow.value)
         } else {
             ordFlow.value
         }
 
     suspend fun getSafeClozeOrd(): CardOrdinal {
-        val ords = clozeOrds?.await() ?: return 0
+        val ords = clozeOrds.await() ?: return 0
         return if (ords.isEmpty()) 0 else ordFlow.value.coerceIn(0, ords.size - 1)
     }
 
@@ -215,6 +230,7 @@ class TemplatePreviewerViewModel(
 
             currentCard =
                 asyncIO {
+                    val notetype = notetype.await()
                     withCol {
                         note.ephemeralCard(
                             col = this,
@@ -270,7 +286,7 @@ class TemplatePreviewerViewModel(
  */
 @Parcelize
 data class TemplatePreviewerArguments(
-    private val notetypeFile: NotetypeFile,
+    private val notetypeProvider: NoteTypeProvider,
     val fields: List<String>,
     val tags: List<String>,
     val id: NoteId = 0,
@@ -278,7 +294,7 @@ data class TemplatePreviewerArguments(
     val fillEmpty: Boolean = false,
     val deckId: DeckId = DEFAULT_DECK_ID,
 ) : Parcelable {
-    val notetype: NotetypeJson get() = notetypeFile.getNotetype()
+    fun notetype(col: Collection): NotetypeJson = notetypeProvider.getNoteType(col)
 
     companion object {
         /**
@@ -291,7 +307,7 @@ data class TemplatePreviewerArguments(
         fun isUsable(bundle: Bundle): Boolean =
             BundleCompat
                 .getParcelable(bundle, TemplatePreviewerFragment.ARG_KEY, TemplatePreviewerArguments::class.java)
-                ?.notetypeFile
-                ?.getNotetypeOrNull() != null
+                ?.notetypeProvider
+                ?.isUsable() ?: false
     }
 }

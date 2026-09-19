@@ -23,7 +23,7 @@ class TemplatePreviewerScreenshotTest : ScreenshotTest() {
         val notetypeFile = NotetypeFile(createTransientDirectory(), notetype)
         val arguments =
             TemplatePreviewerArguments(
-                notetypeFile = notetypeFile,
+                notetypeProvider = notetypeFile.toProvider(),
                 fields = listOf("Front", "Back"),
                 tags = emptyList(),
             )

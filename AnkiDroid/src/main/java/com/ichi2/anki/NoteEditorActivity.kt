@@ -271,16 +271,13 @@ class NoteEditorActivity :
         tags: List<String>,
         ord: CardOrdinal,
     ): TemplatePreviewerFragment {
+        val note = noteEditorFragment.editorNote!!
         val args =
             TemplatePreviewerArguments(
-                notetypeFile =
-                    NotetypeFile(
-                        this@NoteEditorActivity,
-                        noteEditorFragment.editorNote!!.notetype,
-                    ),
+                notetypeProvider = NoteTypeProvider.Id(note.noteTypeId),
                 fields = fields,
                 tags = tags,
-                id = noteEditorFragment.editorNote!!.id,
+                id = note.id,
                 ord = ord,
                 fillEmpty = false,
             )
@@ -314,7 +311,7 @@ class NoteEditorActivity :
     private suspend fun TemplatePreviewerFragment.setupTabs(tabLayout: TabLayout) {
         tabLayout.removeAllTabs()
 
-        val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts?.await()
+        val cardsWithEmptyFronts = viewModel.cardsWithEmptyFronts.await()
         val templateNames = viewModel.getTemplateNames()
 
         for ((index, templateName) in templateNames.withIndex()) {
