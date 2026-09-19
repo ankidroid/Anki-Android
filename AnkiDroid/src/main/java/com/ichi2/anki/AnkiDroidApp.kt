@@ -49,6 +49,7 @@ import com.ichi2.anki.logging.FragmentLifecycleLogger
 import com.ichi2.anki.logging.LogType
 import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.logging.RobolectricDebugTree
+import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -75,6 +76,7 @@ import com.ichi2.widget.restoreRecurringAlarms
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
+import java.io.File
 import java.util.Locale
 
 /**
@@ -117,6 +119,42 @@ open class AnkiDroidApp :
             throw e
         }
     }
+
+    private var profileManager: ProfileManager? = null
+
+    private val profileContext: Context?
+        get() = profileManager?.activeProfileContext
+
+    /**
+     * Runs before [onCreate] and before any ContentProvider, which is what the
+     * profile environment needs: WebView data directories must be set before any
+     * WebView exists, and every preference read must already be namespaced.
+     */
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        if (isAcraSenderProcess()) return
+        profileManager = ProfileManager.createOrNull(base)
+    }
+
+    override fun getSharedPreferences(
+        name: String,
+        mode: Int,
+    ): SharedPreferences = profileContext?.getSharedPreferences(name, mode) ?: super.getSharedPreferences(name, mode)
+
+    override fun getFilesDir(): File = profileContext?.filesDir ?: super.getFilesDir()
+
+    override fun getCacheDir(): File = profileContext?.cacheDir ?: super.getCacheDir()
+
+    override fun getCodeCacheDir(): File = profileContext?.codeCacheDir ?: super.getCodeCacheDir()
+
+    override fun getNoBackupFilesDir(): File = profileContext?.noBackupFilesDir ?: super.getNoBackupFilesDir()
+
+    override fun getDatabasePath(name: String): File = profileContext?.getDatabasePath(name) ?: super.getDatabasePath(name)
+
+    override fun getDir(
+        name: String,
+        mode: Int,
+    ): File = profileContext?.getDir(name, mode) ?: super.getDir(name, mode)
 
     /**
      * On application creation, i.e. when the application process starts.
@@ -167,6 +205,9 @@ open class AnkiDroidApp :
         if (isAcraSenderProcess()) {
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
             return
+        }
+        ProfileManager.attachError?.let {
+            Timber.w(it, "Failed to load the profile environment, running on the base context")
         }
         if (AdaptionUtil.isUserATestClient) {
             showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
