@@ -43,9 +43,34 @@ class WhiteboardView : View {
     var onEraseGestureStart: ((Float, Float) -> Unit)? = null
     var onEraseGestureMove: ((Float, Float) -> Unit)? = null
     var onEraseGestureEnd: (() -> Unit)? = null
-    var isEraserActive: Boolean = false
-    var eraserMode: EraserMode = EraserMode.INK
+    var onStylusButtonStateChanged: ((Boolean) -> Unit)? = null
+
+    var activeTool: WhiteboardTool = WhiteboardTool.Brush(Color.BLACK, WhiteboardRepository.DEFAULT_STROKE_WIDTH)
+        set(value) {
+            field = value
+            if (value is WhiteboardTool.Brush) {
+                isStylusButtonOverriding = false
+            }
+            when (value) {
+                is WhiteboardTool.Brush -> {
+                    currentPaint.color = value.color
+                    currentPaint.strokeWidth = value.width
+                }
+                is WhiteboardTool.Eraser -> {
+                    eraserPreviewPaint.strokeWidth = value.width
+                }
+            }
+            invalidate()
+        }
+
     var isStylusOnlyMode: Boolean = false
+
+    /**
+     * Whether the stylus button is currently overriding the active [WhiteboardTool.Brush]
+     * with the eraser tool.
+     */
+    var isStylusButtonOverriding = false
+        internal set
 
     private val currentPath = SmoothPath()
     private val currentPaint =
@@ -110,11 +135,9 @@ class WhiteboardView : View {
         // Draw the committed history
         canvas.drawBitmap(bufferBitmap, 0f, 0f, canvasPaint)
 
-        // Draw the live preview path for the current gesture
-        if (isEraserActive) {
+        if (activeTool is WhiteboardTool.Eraser) {
             canvas.drawPath(currentPath, eraserPreviewPaint)
         } else {
-            // Draw the normal brush or pixel eraser preview
             canvas.drawPath(currentPath, currentPaint)
         }
     }
@@ -132,20 +155,20 @@ class WhiteboardView : View {
             return multiTouchDetector.onTouchEvent(event)
         }
 
-        if (isStylusOnlyMode && event.getToolType(0) != MotionEvent.TOOL_TYPE_STYLUS) {
+        if (isStylusOnlyMode && !event.isStylus) {
             return false
         }
 
         val touchX = event.x
         val touchY = event.y
-        val isPathEraser = isEraserActive && eraserMode == EraserMode.STROKE
 
-        when (event.action) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                updateStylusButtonState(event)
                 isDrawing = true
                 hasMoved = false
                 currentPath.moveTo(touchX, touchY)
-                if (isPathEraser) {
+                if (isStrokeEraser) {
                     onEraseGestureStart?.invoke(touchX, touchY)
                 }
                 invalidate()
@@ -153,34 +176,133 @@ class WhiteboardView : View {
             MotionEvent.ACTION_MOVE -> {
                 if (!isDrawing) return false
 
-                hasMoved = true
-                currentPath.drawAlong(event)
-                if (isPathEraser) {
-                    onEraseGestureMove?.invoke(touchX, touchY)
+                val isButtonPressed = event.hasStylusButtonPressed()
+                if (isButtonPressed != isStylusButtonOverriding && isToolChange(isButtonPressed)) {
+                    hasMoved = true
+                    currentPath.drawAlong(event)
+                    if (isStrokeEraser) {
+                        onEraseGestureMove?.invoke(touchX, touchY)
+                    }
+                    handleMidStrokeToolChange(touchX, touchY, isButtonPressed)
+                } else {
+                    hasMoved = true
+                    currentPath.drawAlong(event)
+                    if (isStrokeEraser) {
+                        onEraseGestureMove?.invoke(touchX, touchY)
+                    }
+                    invalidate()
                 }
-                invalidate()
+            }
+            MotionEvent.ACTION_BUTTON_PRESS,
+            MotionEvent.ACTION_BUTTON_RELEASE,
+            -> {
+                if (!isDrawing) {
+                    updateStylusButtonState(event)
+                    return true
+                }
+                val isButtonPressed = event.hasStylusButtonPressed()
+                if (isButtonPressed != isStylusButtonOverriding && isToolChange(isButtonPressed)) {
+                    handleMidStrokeToolChange(touchX, touchY, isButtonPressed)
+                }
             }
             MotionEvent.ACTION_UP -> {
                 if (!isDrawing) return false
 
-                if (isPathEraser) {
-                    onEraseGestureEnd?.invoke()
-                } else {
-                    if (!hasMoved) {
-                        // A single tap. Add a tiny line segment to ensure it has a non-zero length,
-                        // which makes it more robust for path operations.
-                        currentPath.lineTo(touchX + 0.2f, touchY + 0.2f)
-                    }
-                    onNewPath?.invoke(currentPath.clone())
-                }
-                // Reset the path for the next gesture
+                commitCurrentStroke(touchX, touchY)
                 currentPath.reset()
                 isDrawing = false
+                updateStylusButtonState(event)
+                invalidate()
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                currentPath.reset()
+                isDrawing = false
+                updateStylusButtonState(event)
                 invalidate()
             }
             else -> return false
         }
         return true
+    }
+
+    override fun onHoverEvent(event: MotionEvent): Boolean {
+        updateStylusButtonState(event)
+        return super.onHoverEvent(event)
+    }
+
+    private val isStrokeEraser: Boolean
+        get() = activeTool is WhiteboardTool.Eraser && (activeTool as WhiteboardTool.Eraser).mode == EraserMode.STROKE
+
+    /**
+     * Determines whether [isButtonPressed] represents a tool change.
+     *
+     * A button press is a tool change only if the active tool is a [WhiteboardTool.Brush].
+     * A button release is a tool change only if the button was actively overriding a brush.
+     */
+    private fun isToolChange(isButtonPressed: Boolean): Boolean =
+        if (isButtonPressed) {
+            activeTool is WhiteboardTool.Brush
+        } else {
+            isStylusButtonOverriding
+        }
+
+    private fun commitCurrentStroke(
+        touchX: Float,
+        touchY: Float,
+    ) {
+        if (isStrokeEraser) {
+            onEraseGestureEnd?.invoke()
+        } else {
+            if (!hasMoved) {
+                // A single tap. Add a tiny line segment to ensure it has a non-zero length,
+                // which makes it more robust for path operations.
+                currentPath.lineTo(touchX + 0.2f, touchY + 0.2f)
+            }
+            onNewPath?.invoke(currentPath.clone())
+        }
+    }
+
+    private fun handleMidStrokeToolChange(
+        touchX: Float,
+        touchY: Float,
+        isButtonPressed: Boolean,
+    ) {
+        commitCurrentStroke(touchX, touchY)
+        currentPath.reset()
+        hasMoved = false
+        currentPath.moveTo(touchX, touchY)
+
+        isStylusButtonOverriding = isButtonPressed
+        onStylusButtonStateChanged?.invoke(isButtonPressed)
+
+        if (isStrokeEraser) {
+            onEraseGestureStart?.invoke(touchX, touchY)
+        }
+        invalidate()
+    }
+
+    private val MotionEvent.isStylus: Boolean
+        get() =
+            (0 until pointerCount).any {
+                val toolType = getToolType(it)
+                toolType == MotionEvent.TOOL_TYPE_STYLUS || toolType == MotionEvent.TOOL_TYPE_ERASER
+            }
+
+    private fun MotionEvent.hasStylusButtonPressed(): Boolean {
+        if (!isStylus) return false
+        val stylusButtons =
+            MotionEvent.BUTTON_STYLUS_PRIMARY or
+                MotionEvent.BUTTON_STYLUS_SECONDARY or
+                MotionEvent.BUTTON_SECONDARY
+        return (buttonState and stylusButtons) != 0
+    }
+
+    private fun updateStylusButtonState(event: MotionEvent) {
+        val isButtonPressed = event.hasStylusButtonPressed()
+        if (isButtonPressed != isStylusButtonOverriding && isToolChange(isButtonPressed)) {
+            isStylusButtonOverriding = isButtonPressed
+            onStylusButtonStateChanged?.invoke(isButtonPressed)
+        }
     }
 
     /**
@@ -189,21 +311,6 @@ class WhiteboardView : View {
     fun setHistory(actions: List<DrawingAction>) {
         history = actions
         redrawHistory()
-    }
-
-    /**
-     * Configures the paint for the live drawing preview based on the current tool.
-     */
-    fun setCurrentBrush(
-        color: Int,
-        strokeWidth: Float,
-    ) {
-        currentPaint.strokeWidth = strokeWidth
-        currentPaint.xfermode = null
-        currentPaint.color = color
-
-        // Configure the stroke eraser's preview paint separately
-        eraserPreviewPaint.strokeWidth = strokeWidth
     }
 
     /**
