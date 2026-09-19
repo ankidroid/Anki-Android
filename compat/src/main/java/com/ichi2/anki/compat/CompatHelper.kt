@@ -40,6 +40,7 @@ class CompatHelper private constructor() {
     @SuppressLint("NewApi")
     private val compatValue: Compat =
         when {
+            sdkVersion >= Build.VERSION_CODES.BAKLAVA -> CompatV36()
             sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
             sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
             sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
@@ -208,6 +209,13 @@ class CompatHelper private constructor() {
  * @param tooltipText the tooltip text
  */
 fun View.setTooltipTextCompat(tooltipText: CharSequence?) = TooltipCompat.setTooltipText(this, tooltipText)
+
+/**
+ * Request that the current input method's soft input area be shown to the user, if needed.
+ *
+ * @see Compat.showSoftInput
+ */
+fun View.showSoftInput(): Boolean = compat.showSoftInput(this)
 
 inline fun <reified T : Serializable> Bundle.requireSerializableCompat(key: String): T =
     requireNotNull(compat.getSerializable(this, key, T::class.java)) {

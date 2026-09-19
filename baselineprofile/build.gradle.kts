@@ -13,6 +13,10 @@ configure<TestExtension> {
         libs.versions.compileSdk
             .get()
             .toInt()
+    compileSdkMinor =
+        libs.versions.compileSdkMinor
+            .get()
+            .toInt()
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
