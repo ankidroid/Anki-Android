@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="24dp">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,19 +60,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/toolbar_item_explain_edit_or_remove"
-            android:paddingBottom="15dp"/>
+            android:paddingBottom="16dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="@string/note_editor_toolbar_icon">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_editor_toolbar_item_icon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/content_vertical_padding"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -80,25 +80,25 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="@string/before_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_editor_toolbar_before"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/content_vertical_padding"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="@string/after_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_editor_toolbar_after"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/content_vertical_padding"/>
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </LinearLayout>
