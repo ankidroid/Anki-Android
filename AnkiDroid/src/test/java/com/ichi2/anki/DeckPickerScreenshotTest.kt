@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// SPDX-FileCopyrightText: 2026 Brayan Oliveira <brayandso.dev@gmail.com>
 
 package com.ichi2.anki
 
