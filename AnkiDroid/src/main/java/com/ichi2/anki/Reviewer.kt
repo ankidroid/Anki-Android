@@ -1937,7 +1937,7 @@ open class Reviewer :
                     FullScreenMode.FULLSCREEN_ALL_GONE -> FullScreenMode.BUTTONS_AND_MENU
                 }
             FullScreenMode.setPreference(prefs, nextMode)
-            setFullScreen(this)
+            ActivityCompat.recreate(this)
             true
         } catch (e: Exception) {
             Timber.w(e, "Error toggling fullscreen")
