@@ -41,9 +41,9 @@ import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.lessThanOrEqualTo
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import org.junit.rules.ExternalResource
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -65,6 +65,18 @@ abstract class InstrumentedTest : DeferredNavigation {
     /** Allows [com.ichi2.testutils.Flaky] to annotate tests in subclasses */
     @get:Rule
     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
+
+    /**
+     * Keep the backend alive until other rules, including activity rules, finish their cleanup.
+     * The lowest order makes this the outermost rule, so its cleanup runs last.
+     */
+    @get:Rule(order = Int.MIN_VALUE)
+    val collectionCleanup =
+        object : ExternalResource() {
+            override fun after() {
+                runAfterEachTest()
+            }
+        }
 
     /**
      * @return A File object pointing to a directory in which temporary test files can be placed. The directory is
@@ -123,8 +135,7 @@ abstract class InstrumentedTest : DeferredNavigation {
         CollectionManager.setColForTests(null)
     }
 
-    @After
-    fun runAfterEachTest() {
+    private fun runAfterEachTest() {
         try {
             if (CollectionManager.isOpenUnsafe()) {
                 CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()
