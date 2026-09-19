@@ -453,6 +453,7 @@ open class Scheduler(
     @LibAnkiAlias("filtered_deck_order_labels")
     fun filteredDeckOrderLabels() = col.backend.filteredDeckOrderLabels()
 
+    /** Returns the deck due tree using the study/reviewer collapsed state. See [deckTree]. */
     fun deckDueTree(): DeckNode = deckTree(true)
 
     /**
@@ -470,6 +471,20 @@ open class Scheduler(
         return tree
     }
 
+    /**
+     * Returns the deck tree.
+     *
+     * @param includeCounts if `true`, due counts (new/learn/review) are calculated for each node.
+     *
+     * **Side effect — collapsed state scope:** this flag also determines which per-deck
+     * "collapsed" state is populated on each [DeckNode].
+     * - `true`  → uses the **study/reviewer** state (`study_collapsed`)
+     * - `false` → uses the **browser** state (`browser_collapsed`)
+     *
+     * The backend infers the scope from whether a non-zero timestamp is supplied
+     * (see upstream [`add_collapsed_and_filtered`](https://github.com/ankitects/anki/blob/754ce3a25f608010c0249e074e5d7fe95bda035f/rslib/src/decks/tree.rs#L76-L92)),
+     * so the two concerns cannot currently be chosen independently.
+     */
     fun deckTree(includeCounts: Boolean): DeckNode = DeckNode(col.backend.deckTree(now = if (includeCounts) time.intTime() else 0), "")
 
     fun deckLimit(): String = Utils.ids2str(col.decks.active())

@@ -220,6 +220,12 @@ class Decks(
         )
     }
 
+    /**
+     * Returns the deck tree without due counts, using the **browser** collapsed state.
+     *
+     * Passing `now = 0` to the backend implicitly selects the browser collapsed state
+     * instead of the study/reviewer state. See [Scheduler.deckTree] for details.
+     */
     @LibAnkiAlias("deck_tree")
     @Suppress("unused")
     fun deckTree(): DeckTreeNode = col.backend.deckTree(now = 0)
