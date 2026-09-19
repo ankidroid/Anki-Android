@@ -22,12 +22,12 @@ class BrushAdapter(
     private val onBrushClick: (View, Int) -> Unit,
     private val onBrushLongClick: (Int) -> Unit,
 ) : RecyclerView.Adapter<BrushAdapter.BrushViewHolder>() {
-    private var brushes: List<BrushInfo> = emptyList()
+    private var brushes: List<WhiteboardTool.Brush> = emptyList()
     private var activeIndex: Int = -1
     private var isEraserActive: Boolean = false
 
     fun updateData(
-        newBrushes: List<BrushInfo>,
+        newBrushes: List<WhiteboardTool.Brush>,
         newActiveIndex: Int,
         eraserActive: Boolean,
     ) {
@@ -41,12 +41,15 @@ class BrushAdapter(
         newActiveIndex: Int,
         eraserActive: Boolean,
     ) {
+        if (activeIndex == newActiveIndex && isEraserActive == eraserActive) return
         val oldIndex = activeIndex
         activeIndex = newActiveIndex
         isEraserActive = eraserActive
 
         if (oldIndex in brushes.indices) notifyItemChanged(oldIndex)
-        if (newActiveIndex in brushes.indices) notifyItemChanged(newActiveIndex)
+        if (newActiveIndex in brushes.indices && newActiveIndex != oldIndex) {
+            notifyItemChanged(newActiveIndex)
+        }
     }
 
     override fun getItemCount(): Int = brushes.size
@@ -74,7 +77,7 @@ class BrushAdapter(
         private val button: MaterialButton = itemView as MaterialButton
 
         fun bind(
-            brush: BrushInfo,
+            brush: WhiteboardTool.Brush,
             isSelected: Boolean,
         ) = button.apply {
             isCheckable = true

@@ -153,7 +153,7 @@ class WhiteboardFragment :
         toolbar.undoButton.setOnClickListener { viewModel.undo() }
         toolbar.redoButton.setOnClickListener { viewModel.redo() }
         toolbar.eraserButton.setOnClickListener {
-            if (viewModel.isEraserActive.value) {
+            if (viewModel.activeTool.value is WhiteboardTool.Eraser) {
                 toolbar.eraserButton.isChecked = true
                 if (eraserPopup?.isShowing == true) {
                     eraserPopup?.dismiss()
@@ -166,7 +166,7 @@ class WhiteboardFragment :
         }
 
         toolbar.onBrushClick = { view, index ->
-            if (viewModel.activeBrushIndex.value == index && !viewModel.isEraserActive.value) {
+            if (viewModel.activeBrushIndex.value == index && viewModel.activeTool.value !is WhiteboardTool.Eraser) {
                 showBrushConfigurationPopup(view, index)
             } else {
                 viewModel.setActiveBrush(index)
@@ -223,39 +223,25 @@ class WhiteboardFragment :
 
         viewModel.paths.onEach(whiteboardView::setHistory).launchIn(viewLifecycleOwner.lifecycleScope)
 
-        combine(
-            viewModel.brushColor,
-            viewModel.activeStrokeWidth,
-        ) { color, width ->
-            whiteboardView.setCurrentBrush(color, width)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-
-        combine(
-            viewModel.isEraserActive,
-            viewModel.eraserMode,
-            viewModel.eraserDisplayWidth,
-        ) { isActive, mode, width ->
-            whiteboardView.isEraserActive = isActive
-            toolbar.eraserButton.updateState(isActive, mode, width)
-            whiteboardView.eraserMode = mode
-            if (!isActive) {
-                eraserPopup?.dismiss()
-            }
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-
-        viewModel.brushes
-            .onEach { brushesInfo ->
-                toolbar.setBrushes(brushesInfo, viewModel.activeBrushIndex.value, viewModel.isEraserActive.value)
+        viewModel.activeTool
+            .onEach { tool ->
+                whiteboardView.activeTool = tool
+                val isEraser = tool is WhiteboardTool.Eraser
+                toolbar.updateSelection(viewModel.activeBrushIndex.value, isEraser)
+                toolbar.eraserButton.updateState(isEraser, viewModel.eraser.mode, viewModel.eraser.width)
+                if (!isEraser) {
+                    eraserPopup?.dismiss()
+                }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.activeBrushIndex
-            .onEach {
-                toolbar.updateSelection(it, viewModel.isEraserActive.value)
+            .onEach { index ->
+                toolbar.updateSelection(index, viewModel.activeTool.value is WhiteboardTool.Eraser)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.isEraserActive
-            .onEach {
-                toolbar.updateSelection(viewModel.activeBrushIndex.value, it)
+        viewModel.brushes
+            .onEach { brushesInfo ->
+                toolbar.setBrushes(brushesInfo, viewModel.activeBrushIndex.value, viewModel.activeTool.value is WhiteboardTool.Eraser)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.isStylusOnlyMode
@@ -284,7 +270,7 @@ class WhiteboardFragment :
      */
     private fun showAddColorDialog() {
         requireContext()
-            .showColorPickerDialog(viewModel.brushColor.value) { color ->
+            .showColorPickerDialog(viewModel.currentBrushColor) { color ->
                 Timber.i("Added brush with color ${color.toRGBAHex()}")
                 viewModel.addBrush(color)
             }
@@ -375,7 +361,7 @@ class WhiteboardFragment :
      */
     private fun showChangeColorDialog() {
         requireContext()
-            .showColorPickerDialog(viewModel.brushColor.value) { color ->
+            .showColorPickerDialog(viewModel.currentBrushColor) { color ->
                 viewModel.updateBrushColor(color)
                 brushConfigPopup?.dismiss()
             }
@@ -388,16 +374,16 @@ class WhiteboardFragment :
         val inflater = LayoutInflater.from(requireContext())
         val eraserWidthBinding = PopupEraserOptionsBinding.inflate(inflater)
 
-        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraserDisplayWidth.value
+        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraser.width
         eraserWidthBinding.eraserWidthSlider.addOnChangeListener { _, value, fromUser ->
-            if (fromUser) viewModel.setActiveStrokeWidth(value)
+            if (fromUser) viewModel.setEraserStrokeWidth(value)
         }
         eraserWidthBinding.eraserWidthSlider.setLabelFormatter { value: Float ->
             value.roundToInt().toString()
         }
 
         eraserWidthBinding.eraserModeToggleGroup.clearOnButtonCheckedListeners()
-        when (viewModel.eraserMode.value) {
+        when (viewModel.eraser.mode) {
             EraserMode.STROKE -> eraserWidthBinding.eraserModeToggleGroup.check(R.id.eraser_mode_stroke)
             EraserMode.INK -> eraserWidthBinding.eraserModeToggleGroup.check(R.id.eraser_mode_ink)
         }
@@ -406,14 +392,11 @@ class WhiteboardFragment :
                 when (checkedId) {
                     R.id.eraser_mode_stroke -> {
                         viewModel.setEraserMode(EraserMode.STROKE)
-                        eraserWidthBinding.eraserWidthSlider.value =
-                            viewModel.strokeEraserStrokeWidth.value
+                        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraser.strokeEraserWidth
                     }
-
                     R.id.eraser_mode_ink -> {
                         viewModel.setEraserMode(EraserMode.INK)
-                        eraserWidthBinding.eraserWidthSlider.value =
-                            viewModel.inkEraserStrokeWidth.value
+                        eraserWidthBinding.eraserWidthSlider.value = viewModel.eraser.inkWidth
                     }
                 }
             }
@@ -422,7 +405,7 @@ class WhiteboardFragment :
         eraserPopup = PopupWindow(eraserWidthBinding.root, 280.dp.toPx(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT, true)
         eraserPopup?.elevation = 8f
         eraserPopup?.setOnDismissListener {
-            binding.whiteboardToolbar.updateSelection(viewModel.activeBrushIndex.value, viewModel.isEraserActive.value)
+            binding.whiteboardToolbar.updateSelection(viewModel.activeBrushIndex.value, viewModel.activeTool.value is WhiteboardTool.Eraser)
             eraserPopup = null
         }
 
