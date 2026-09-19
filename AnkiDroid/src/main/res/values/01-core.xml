@@ -125,9 +125,9 @@
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
 
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
 
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
 
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
