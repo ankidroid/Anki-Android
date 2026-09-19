@@ -5,6 +5,7 @@ package com.ichi2.compat.customtabs
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.CheckResult
@@ -13,8 +14,11 @@ import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
+import androidx.core.content.pm.PackageInfoCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
 
@@ -25,6 +29,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     private var customTabsSession: CustomTabsSession? = null
     private var client: CustomTabsClient? = null
     private var connection: CustomTabsServiceConnection? = null
+    private var customTabsProviderInfo: String? = null
 
     /**
      * Unbinds the Activity from the Custom Tabs Service.
@@ -36,6 +41,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
         client = null
         customTabsSession = null
         connection = null
+        customTabsProviderInfo = null
     }
 
     /**
@@ -59,15 +65,18 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      */
     fun bindCustomTabsService(activity: Activity) {
         if (client != null) return
+        customTabsProviderInfo = null
         try {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity) ?: return
+            customTabsProviderInfo = getProviderInfo(activity, packageName)
             connection = ServiceConnection(this)
             CustomTabsClient.bindCustomTabsService(activity, packageName, connection!!)
         } catch (e: SecurityException) {
-            Timber.w(e, "CustomTabsService bind attempt failed, using fallback")
+            Timber.w(e, "CustomTabsService bind attempt failed, using fallback. %s", customTabsProviderInfo)
             CrashReportService.sendExceptionReport(
                 e = e,
                 origin = "bindCustomTabsService",
+                additionalInfo = customTabsProviderInfo,
                 onlyIfSilent = true,
             )
             disableCustomTabHandler()
@@ -80,6 +89,20 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
         client = null
         customTabsSession = null
         connection = null
+        customTabsProviderInfo = null
+    }
+
+    private fun getProviderInfo(
+        context: Context,
+        packageName: String,
+    ): String {
+        val packageInfo = runCatching { context.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) }.getOrNull()
+        val version =
+            packageInfo?.let {
+                val versionCode = runCatching { PackageInfoCompat.getLongVersionCode(it) }.getOrNull()
+                "${it.versionName ?: "unknown"} (${versionCode ?: "unknown"})"
+            }
+        return "Custom Tabs provider: $packageName, version: ${version ?: "unknown"}"
     }
 
     /**
@@ -110,10 +133,11 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
         } catch (e: RuntimeException) {
             // #6142 - A securityException here means that we're not able to load the CustomTabClient at all, whereas
             // the IllegalStateException was a failure, but could be continued from
-            Timber.w(e, "CustomTabsService bind attempt failed, using fallback")
+            Timber.w(e, "CustomTabsService bind attempt failed, using fallback. %s", customTabsProviderInfo)
             CrashReportService.sendExceptionReport(
                 e = e,
                 origin = "CustomTabActivityHelper::onServiceConnected",
+                additionalInfo = customTabsProviderInfo,
                 onlyIfSilent = true,
             )
             // TODO: https://github.com/ankidroid/Anki-Android/issues/21708
