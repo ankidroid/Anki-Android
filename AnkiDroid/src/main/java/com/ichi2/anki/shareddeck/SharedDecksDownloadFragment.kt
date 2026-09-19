@@ -13,39 +13,41 @@ import android.database.Cursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.CookieManager
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.ichi2.anki.CollectionManager.TR
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
-import com.ichi2.anki.databinding.FragmentSharedDecksDownloadBinding
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.create
-import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.File
 import java.net.URLConnection
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * Used when a download is captured from AnkiWeb shared decks WebView.
@@ -54,9 +56,10 @@ import java.net.URLConnection
  * Only one download is supported at a time, since importing multiple decks
  * simultaneously is not supported.
  */
-class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_download) {
-    private val binding by viewBinding(FragmentSharedDecksDownloadBinding::bind)
+class SharedDecksDownloadFragment : Fragment() {
     private val viewModel: SharedDecksDownloadViewModel by viewModels()
+
+    private val fileToBeDownloaded by lazy { arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!! }
 
     private var downloadId: Long = 0
 
@@ -131,75 +134,54 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View =
+        ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setBackgroundColor(MaterialColors.getColor(this, CommonR.attr.appBarColor))
+            setContent {
+                AnkiDroidTheme {
+                    val state by viewModel.uiState.collectAsStateWithLifecycle()
+                    SharedDecksDownloadScreen(
+                        state = state,
+                        onCancelClick = {
+                            Timber.i("Cancel download button clicked")
+                            showCancelConfirmationDialog()
+                        },
+                        onImportClick = {
+                            Timber.i("Import deck button clicked")
+                            openDownloadedDeck(requireContext())
+                        },
+                        onTryAgainClick = ::retryDownload,
+                        onOpenInBrowserClick = ::openInBrowser,
+                    )
+                }
+            }
+        }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupEdgeToEdge(view)
-        viewModel.uiState.launchCollectionInLifecycleScope(::render)
-
-        val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
-
         downloadFile(fileToBeDownloaded)
-
-        binding.cancelDownloadButton.setOnClickListener {
-            Timber.i("Cancel download button clicked")
-            showCancelConfirmationDialog()
-        }
-
-        binding.importSharedDeckButton.setOnClickListener {
-            Timber.i("Import deck button clicked")
-            openDownloadedDeck(context)
-        }
-
-        binding.openInWebBrowserButton.setOnClickListener {
-            Timber.i("'Open in Browser' clicked")
-            downloadManager.remove(downloadId)
-            openUrl(requireContext().getDeckPageUri(fileToBeDownloaded.url).toUri())
-            parentFragmentManager.popBackStack()
-        }
-
-        binding.tryDownloadAgainButton.setOnClickListener {
-            Timber.i("Try again button clicked, retry downloading of deck")
-            downloadManager.remove(downloadId)
-            downloadFile(fileToBeDownloaded)
-        }
     }
 
-    private fun render(state: SharedDecksDownloadUiState) {
-        binding.downloadingTitle.text = state.fileName?.let { getString(R.string.downloading_file, it) }
-        binding.downloadPercentageText.text =
-            when {
-                state.phase == DownloadPhase.Failed -> getString(R.string.download_failed)
-                // 19812: DownloadManager could not be queried, so all we can say is that it is running
-                state.percent == null -> TR.syncDownloadingFromAnkiweb()
-                else -> getString(R.string.percentage, formatDownloadPercent(state.percent))
-            }
-        binding.downloadProgressBar.progress = state.percent?.toInt() ?: 0
-        binding.checkNetworkInfoText.isVisible = state.isWaitingForNetwork
-        binding.cancelDownloadButton.isVisible = state.phase == DownloadPhase.Downloading
-        binding.importSharedDeckButton.isVisible = state.phase == DownloadPhase.Complete
-        binding.tryDownloadAgainButton.isVisible = state.phase == DownloadPhase.Failed
-        binding.openInWebBrowserButton.isVisible = state.phase == DownloadPhase.Failed
+    private fun retryDownload() {
+        Timber.i("Try again button clicked, retry downloading of deck")
+        downloadManager.remove(downloadId)
+        downloadFile(fileToBeDownloaded)
     }
 
-    /** Applies edge-to-edge insets for the screen */
-    private fun setupEdgeToEdge(view: View) {
-        // systemBars (not just statusBars) so a landscape 3-button navigation bar,
-        // which is a side inset, is also cleared
-        ViewCompat.setOnApplyWindowInsetsListener(view) { root, insets ->
-            val bars =
-                insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
-                )
-            // top inset on the root only: the strip behind the status bar shows the
-            // root's app bar color, while the other sides keep the content background
-            root.updatePadding(top = bars.top)
-            binding.downloadContent.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
-            insets
-        }
+    private fun openInBrowser() {
+        Timber.i("'Open in Browser' clicked")
+        downloadManager.remove(downloadId)
+        openUrl(requireContext().getDeckPageUri(fileToBeDownloaded.url).toUri())
+        parentFragmentManager.popBackStack()
     }
 
     /**
@@ -453,6 +435,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             viewModel.onProgress(
                 downloadedBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR)),
                 totalBytes = it.getLong(it.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)),
+                timeMillis = TimeManager.time.intTimeMS(),
             )
 
             val columnIndexForStatus = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
