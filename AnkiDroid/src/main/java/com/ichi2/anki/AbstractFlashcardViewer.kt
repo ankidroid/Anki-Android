@@ -77,6 +77,7 @@ import com.ichi2.anki.android.back.exitViaDoubleTapBackCallback
 import com.ichi2.anki.backend.stripHTMLAndSpecialFields
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext.Companion.createInstance
+import com.ichi2.anki.cardviewer.AudioPlayingErrorListener
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.GestureProcessor
@@ -85,7 +86,6 @@ import com.ichi2.anki.cardviewer.MediaErrorBehavior
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorHandler
-import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.cardviewer.OnRenderProcessGoneDelegate
 import com.ichi2.anki.cardviewer.RenderedCard
 import com.ichi2.anki.cardviewer.SingleCardSide
@@ -1327,6 +1327,7 @@ abstract class AbstractFlashcardViewer :
 
     open fun displayCardQuestion() {
         Timber.d("displayCardQuestion()")
+        mediaErrorHandler.onCardSideChange()
         displayAnswer = false
         backButtonPressedToReturn = false
         setInterface()
@@ -2412,7 +2413,7 @@ abstract class AbstractFlashcardViewer :
             error: WebResourceError,
         ) {
             super.onReceivedError(view, request, error)
-            mediaErrorHandler.processFailure(request) { filename: String ->
+            mediaErrorHandler.onMediaNotFoundError(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename,
                 )
@@ -2425,7 +2426,7 @@ abstract class AbstractFlashcardViewer :
             errorResponse: WebResourceResponse,
         ) {
             super.onReceivedHttpError(view, request, errorResponse)
-            mediaErrorHandler.processFailure(request) { filename: String ->
+            mediaErrorHandler.onMediaNotFoundError(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename,
                 )
@@ -2805,19 +2806,19 @@ abstract class AbstractFlashcardViewer :
         }
 
         fun getCardMediaPlayerInstance(viewer: AbstractFlashcardViewer): CardMediaPlayer {
-            val soundErrorListener = viewer.createMediaErrorListener()
+            val soundErrorListener = viewer.createAudioMediaErrorListener()
 
             return CardMediaPlayer(
                 javascriptEvaluator = { viewer.webViewClient?.eval(it) },
-                mediaErrorListener = soundErrorListener,
+                audioPlayingErrorListener = soundErrorListener,
             ).apply {
                 setOnMediaGroupCompletedListener(viewer::onMediaGroupCompleted)
             }
         }
 
-        fun AbstractFlashcardViewer.createMediaErrorListener(): MediaErrorListener {
+        fun AbstractFlashcardViewer.createAudioMediaErrorListener(): AudioPlayingErrorListener {
             val activity = this
-            return object : MediaErrorListener {
+            return object : AudioPlayingErrorListener {
                 override fun onMediaPlayerError(
                     mp: MediaPlayer?,
                     which: Int,
