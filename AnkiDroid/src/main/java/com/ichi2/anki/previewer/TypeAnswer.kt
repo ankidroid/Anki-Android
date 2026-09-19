@@ -19,13 +19,21 @@ import org.jetbrains.annotations.VisibleForTesting
  *
  * @see [combining]
  * @see [imeHintLocales]
+ * @see [noSuggest]
  * */
 @NeedsTest("combining and non combining answers are properly parsed")
+@NeedsTest("nosuggest modifier is parsed and composes with nc/cloze")
 class TypeAnswer private constructor(
     private val text: String,
     /** whether combining characters should be compared. Defined by the presence of the
      *   `nc:` specifier in the type answer tag */
     private val combining: Boolean,
+    /**
+     * Whether keyboard suggestions, swiping and autocorrect should be disabled (#10352).
+     *
+     * @see com.ichi2.anki.model.FieldFilters.NoSuggestFilter
+     */
+    val noSuggest: Boolean,
     private val field: Field,
     var expectedAnswer: String,
 ) {
@@ -71,6 +79,7 @@ class TypeAnswer private constructor(
             return TypeAnswer(
                 text = text,
                 combining = modifiers.combining,
+                noSuggest = modifiers.noSuggest,
                 field = typeAnswerField,
                 expectedAnswer = expectedAnswer,
             )

@@ -49,6 +49,7 @@ import com.ichi2.anki.logging.FragmentLifecycleLogger
 import com.ichi2.anki.logging.LogType
 import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.logging.RobolectricDebugTree
+import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -444,6 +445,8 @@ open class AnkiDroidApp :
         setup("setupCustomFieldFilters") {
             // enable {{tts-voices:}} field filter
             TtsVoicesFieldFilter.ensureApplied()
+            // enable {{nosuggest:type:}} field filter (issue #10352)
+            NoSuggestFilter.ensureApplied()
         }
     }
 
