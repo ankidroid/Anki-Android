@@ -421,6 +421,8 @@ suspend fun <T> Fragment.withProgress(
     block: suspend () -> T,
 ): T = requireActivity().withProgress(messageId, block)
 
+// TODO: #17551 add a lease-owned progress UI, with `CollectionLease.cancel` as its Cancel handler.
+//  Rethink `progressDialogShown` and `FLAG_NOT_TOUCHABLE`.
 @Suppress("Deprecation") // ProgressDialog deprecation
 suspend fun <T> withProgressDialog(
     context: Activity,
