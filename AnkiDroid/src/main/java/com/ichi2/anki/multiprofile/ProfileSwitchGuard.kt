@@ -43,8 +43,12 @@ class ProfileSwitchGuard(
         ) : Result()
     }
 
+    // TODO: COLLECTION_BUSY has no check yet: CollectionManager serialises on a
+    //  private queue it does not expose. Closing the collection already waits for a
+    //  running operation, so this is about warning the user rather than about safety.
     enum class BlockReason {
         BACKUP_IN_PROGRESS,
+        SYNC_IN_PROGRESS,
         MEDIA_SYNC_IN_PROGRESS,
         COLLECTION_BUSY,
     }
