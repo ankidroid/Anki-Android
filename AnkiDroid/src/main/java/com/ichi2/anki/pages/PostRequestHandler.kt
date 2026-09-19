@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// SPDX-FileCopyrightText: Copyright (c) 2023 Brayan Oliveira <brayandso.dev@gmail.com>
 // SPDX-FileCopyrightText: Copyright (c) 2024 voczi <dev@voczi.com>
 
 package com.ichi2.anki.pages
