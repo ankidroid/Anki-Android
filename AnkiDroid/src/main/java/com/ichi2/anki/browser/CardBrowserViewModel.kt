@@ -476,9 +476,12 @@ class CardBrowserViewModel(
     val flowOfInitCompleted = MutableStateFlow(false)
 
     /**
-     * Cards/notes to be selected on the next search after init completes.
+     * Cards/notes to select when the next search completes, restored from [STATE_MULTISELECT_VALUES].
+     *
+     * While non-empty, the rows do not yet reflect the saved selection, so
+     * [generateExpensiveSavedState] saves this instead of [selectedRows]
      */
-    private var pendingSelectionRestore: List<CardOrNoteId> = emptyList()
+    private var pendingSelectionRestore: List<CardOrNoteId>
 
     val flowOfColumnHeadings: StateFlow<List<ColumnHeading>> =
         combine(flowOfActiveColumns, flowOfCardsOrNotes, flowOfAllColumns) { activeColumns, cardsOrNotes, allColumns ->
@@ -524,6 +527,26 @@ class CardBrowserViewModel(
     init {
         Timber.d("CardBrowserViewModel::init, launchOptions: '${options?.javaClass?.simpleName}'")
 
+        // restore selection state
+        val idsFile =
+            savedStateHandle.get<Bundle>(STATE_MULTISELECT_VALUES)?.let { bundle ->
+                BundleCompat.getParcelable(bundle, STATE_MULTISELECT_VALUES, IdsFile::class.java)
+            }
+        pendingSelectionRestore =
+            try {
+                idsFile?.getIds()?.map { CardOrNoteId(it) }
+            } catch (e: Exception) {
+                // #19572: I suspect we have a startup bug here, so continue reporting the exception
+                Timber.w(e, "failed to read STATE_MULTISELECT_VALUES")
+                CrashReportService.sendExceptionReport(
+                    e = e,
+                    origin = "19572: STATE_MULTISELECT_VALUES",
+                    onlyIfSilent = true,
+                )
+                // fallback to no selections, but still in multiselect mode
+                null
+            } ?: emptyList()
+
         var selectAllDecks = false
         when (options) {
             is CardBrowserLaunchOptions.SystemContextMenu -> {
@@ -545,8 +568,7 @@ class CardBrowserViewModel(
         performSearchFlow
             .onEach {
                 Timber.d("performSearchFlow -> launching search")
-                val ids = pendingSelectionRestore.also { pendingSelectionRestore = emptyList() }
-                launchSearchForCards(cardOrNoteIdsToSelect = ids)
+                launchSearchForCards()
             }.launchIn(viewModelScope)
 
         flowOfCardsOrNotes
@@ -571,26 +593,6 @@ class CardBrowserViewModel(
             Timber.i("initCompleted")
 
             if (!manualInit) {
-                // restore selection state
-                val idsFile =
-                    savedStateHandle.get<Bundle>(STATE_MULTISELECT_VALUES)?.let { bundle ->
-                        BundleCompat.getParcelable(bundle, STATE_MULTISELECT_VALUES, IdsFile::class.java)
-                    }
-                pendingSelectionRestore =
-                    try {
-                        idsFile?.getIds()?.map { CardOrNoteId(it) }
-                    } catch (e: Exception) {
-                        // #19572: I suspect we have a startup bug here, so continue reporting the exception
-                        Timber.w(e, "failed to read STATE_MULTISELECT_VALUES")
-                        CrashReportService.sendExceptionReport(
-                            e = e,
-                            origin = "19572: STATE_MULTISELECT_VALUES",
-                            onlyIfSilent = true,
-                        )
-                        // fallback to no selections, but still in multiselect mode
-                        null
-                    } ?: emptyList()
-
                 flowOfInitCompleted.update { true }
             }
         }
@@ -605,8 +607,10 @@ class CardBrowserViewModel(
     @VisibleForTesting // far too complicated to mock setSavedStateProvider
     fun generateExpensiveSavedState() =
         Bundle().apply {
-            if (selectedRows.isEmpty()) return@apply
-            putParcelable(STATE_MULTISELECT_VALUES, IdsFile(cacheDir, selectedRows.map { it.cardOrNoteId }, "multiselect-values"))
+            // a restored selection not yet applied to the rows is still the selection to save
+            val selection = pendingSelectionRestore.ifEmpty { selectedRows.toList() }
+            if (selection.isEmpty()) return@apply
+            putParcelable(STATE_MULTISELECT_VALUES, IdsFile(cacheDir, selection.map { it.cardOrNoteId }, "multiselect-values"))
         }
 
     /**
@@ -1386,16 +1390,12 @@ class CardBrowserViewModel(
     }
 
     /**
-     * @param cardOrNoteIdsToSelect if the screen is reinitialized after destruction
-     * restore these rows after the search is completed
+     * Once the search completes, [pendingSelectionRestore] is applied to the rows
      *
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    fun launchSearchForCards(
-        cardOrNoteIdsToSelect: List<CardOrNoteId> = emptyList(),
-        fromUserSearch: Boolean = false,
-    ) {
+    fun launchSearchForCards(fromUserSearch: Boolean = false) {
         if (!initCompleted) return
 
         viewModelScope.launch {
@@ -1419,7 +1419,8 @@ class CardBrowserViewModel(
                     ensurePaneRowValid()
                     if (isFragmented) flowOfNoteEditorCommand.emit(NoteEditorCommand.fromCurrentSearchState())
                     flowOfSearchState.emit(SearchState.Completed.fromCurrentState(fromUserSearch))
-                    selectUnvalidatedRowIds(cardOrNoteIdsToSelect)
+                    selectUnvalidatedRowIds(pendingSelectionRestore)
+                    pendingSelectionRestore = emptyList()
                 }
 
             viewModelScope.launch {
