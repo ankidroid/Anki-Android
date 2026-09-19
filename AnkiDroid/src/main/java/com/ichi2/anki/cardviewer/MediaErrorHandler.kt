@@ -36,6 +36,9 @@ class MediaErrorHandler : MediaErrorListener {
     private var missingMediaCount = 0
     private var hasExecuted = false
 
+    /** Only successful WebView notifications are remembered, bounded by [MAX_DISPLAY_TIMES]. */
+    private val reportedMissingMedia = mutableSetOf<String>()
+
     private var automaticTtsFailureCount = 0
 
     override fun onError(uri: Uri): MediaErrorBehavior {
@@ -91,12 +94,16 @@ class MediaErrorHandler : MediaErrorListener {
 
         try {
             val filename = URLUtil.guessFileName(url.toString(), null, null)
+
+            // A duplicate must leave this side available to report a different missing file.
+            if (filename in reportedMissingMedia) return
+
+            hasExecuted = true
             onFailure.invoke(filename)
+            reportedMissingMedia.add(filename)
             missingMediaCount++
         } catch (e: Exception) {
             Timber.w(e, "Failed to notify UI of media failure")
-        } finally {
-            hasExecuted = true
         }
     }
 
