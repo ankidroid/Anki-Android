@@ -49,6 +49,7 @@ import com.ichi2.anki.logging.FragmentLifecycleLogger
 import com.ichi2.anki.logging.LogType
 import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.logging.RobolectricDebugTree
+import com.ichi2.anki.logging.logActivityCreation
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -386,10 +387,7 @@ open class AnkiDroidApp :
                         activity: Activity,
                         savedInstanceState: Bundle?,
                     ) {
-                        Timber.i(
-                            "${activity::class.simpleName}::onCreate, savedInstanceState: %s",
-                            savedInstanceState?.let { "${it.keySet().size} keys" },
-                        )
+                        activity.logActivityCreation(savedInstanceState)
                         (activity as? FragmentActivity)
                             ?.supportFragmentManager
                             ?.registerFragmentLifecycleCallbacks(
