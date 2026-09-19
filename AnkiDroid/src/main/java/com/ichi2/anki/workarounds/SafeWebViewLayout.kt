@@ -64,6 +64,9 @@ open class SafeWebViewLayout :
     val scale get() = webView.scale
 
     @MainThread
+    fun zoomBy(zoomFactor: Float) = webView.zoomBy(zoomFactor)
+
+    @MainThread
     fun setWebViewClient(webViewClient: SafeWebViewClient) {
         webViewClient.setOnRenderProcessGoneListener(this)
         webView.webViewClient = webViewClient
