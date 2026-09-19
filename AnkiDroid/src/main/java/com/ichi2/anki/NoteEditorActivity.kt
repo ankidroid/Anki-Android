@@ -223,7 +223,7 @@ class NoteEditorActivity :
         launchCatchingTask {
             try {
                 val fields = noteEditorFragment.prepareNoteFields()
-                val tags = noteEditorFragment.selectedTags ?: mutableListOf()
+                val tags = noteEditorFragment.selectedTags ?: listOf()
 
                 fun updatePreviewerFragment(ord: Int) {
                     val previewerFragment = createPreviewerFragment(fields, tags, ord)

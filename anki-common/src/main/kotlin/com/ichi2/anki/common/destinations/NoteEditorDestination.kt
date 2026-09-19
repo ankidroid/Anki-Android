@@ -87,7 +87,7 @@ sealed class NoteEditorDestination : Destination() {
     data class CopyNote(
         val deckId: DeckId,
         val fieldsText: String,
-        val tags: List<String>? = null,
+        val tags: List<String>,
     ) : NoteEditorDestination()
 
     /**
