@@ -43,8 +43,22 @@ class WhiteboardView : View {
     var onEraseGestureStart: ((Float, Float) -> Unit)? = null
     var onEraseGestureMove: ((Float, Float) -> Unit)? = null
     var onEraseGestureEnd: (() -> Unit)? = null
-    var isEraserActive: Boolean = false
-    var eraserMode: EraserMode = EraserMode.INK
+
+    var activeTool: WhiteboardTool = WhiteboardTool.Brush(Color.BLACK, WhiteboardRepository.DEFAULT_STROKE_WIDTH)
+        set(value) {
+            field = value
+            when (value) {
+                is WhiteboardTool.Brush -> {
+                    currentPaint.color = value.color
+                    currentPaint.strokeWidth = value.width
+                }
+                is WhiteboardTool.Eraser -> {
+                    eraserPreviewPaint.strokeWidth = value.width
+                }
+            }
+            invalidate()
+        }
+
     var isStylusOnlyMode: Boolean = false
 
     private val currentPath = SmoothPath()
@@ -110,11 +124,9 @@ class WhiteboardView : View {
         // Draw the committed history
         canvas.drawBitmap(bufferBitmap, 0f, 0f, canvasPaint)
 
-        // Draw the live preview path for the current gesture
-        if (isEraserActive) {
+        if (activeTool is WhiteboardTool.Eraser) {
             canvas.drawPath(currentPath, eraserPreviewPaint)
         } else {
-            // Draw the normal brush or pixel eraser preview
             canvas.drawPath(currentPath, currentPaint)
         }
     }
@@ -138,7 +150,7 @@ class WhiteboardView : View {
 
         val touchX = event.x
         val touchY = event.y
-        val isPathEraser = isEraserActive && eraserMode == EraserMode.STROKE
+        val isPathEraser = activeTool is WhiteboardTool.Eraser && (activeTool as WhiteboardTool.Eraser).mode == EraserMode.STROKE
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -189,21 +201,6 @@ class WhiteboardView : View {
     fun setHistory(actions: List<DrawingAction>) {
         history = actions
         redrawHistory()
-    }
-
-    /**
-     * Configures the paint for the live drawing preview based on the current tool.
-     */
-    fun setCurrentBrush(
-        color: Int,
-        strokeWidth: Float,
-    ) {
-        currentPaint.strokeWidth = strokeWidth
-        currentPaint.xfermode = null
-        currentPaint.color = color
-
-        // Configure the stroke eraser's preview paint separately
-        eraserPreviewPaint.strokeWidth = strokeWidth
     }
 
     /**

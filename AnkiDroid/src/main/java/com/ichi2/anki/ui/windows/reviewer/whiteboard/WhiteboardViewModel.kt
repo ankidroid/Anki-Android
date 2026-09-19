@@ -16,9 +16,9 @@ import com.ichi2.anki.common.utils.ext.indexOfOrNull
 import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.utils.toRGBAHex
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -43,6 +43,26 @@ enum class EraserMode { INK, STROKE }
  * Defines the available toolbar alignment options.
  */
 enum class ToolbarAlignment { LEFT, RIGHT, BOTTOM }
+
+sealed interface WhiteboardTool {
+    val width: Float
+
+    data class Brush(
+        val color: Int,
+        override val width: Float,
+    ) : WhiteboardTool {
+        override fun toString(): String = "Brush(color=${color.toRGBAHex()}, width=${"%.1f".format(width)})"
+    }
+
+    data class Eraser(
+        val mode: EraserMode = EraserMode.INK,
+        val inkWidth: Float = WhiteboardRepository.DEFAULT_ERASER_WIDTH,
+        val strokeEraserWidth: Float = WhiteboardRepository.DEFAULT_ERASER_WIDTH,
+    ) : WhiteboardTool {
+        override val width: Float
+            get() = if (mode == EraserMode.INK) inkWidth else strokeEraserWidth
+    }
+}
 
 /**
  * Represents a command that can be undone and redone.
@@ -77,18 +97,21 @@ class WhiteboardViewModel(
     val canUndo = undoStack.map { it.isNotEmpty() }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val canRedo = redoStack.map { it.isNotEmpty() }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-    // State for brushes
-    val brushes = MutableStateFlow<List<BrushInfo>>(emptyList())
+    val brushes = MutableStateFlow<List<WhiteboardTool.Brush>>(emptyList())
     val activeBrushIndex = MutableStateFlow(0)
+    var eraser: WhiteboardTool.Eraser = WhiteboardTool.Eraser()
+        private set
+    val activeTool =
+        MutableStateFlow<WhiteboardTool>(
+            WhiteboardTool.Brush(Color.BLACK, WhiteboardRepository.DEFAULT_STROKE_WIDTH),
+        )
 
-    // State for the currently active tool's properties
-    val inkEraserStrokeWidth = MutableStateFlow(WhiteboardRepository.DEFAULT_ERASER_WIDTH)
-    val strokeEraserStrokeWidth = MutableStateFlow(WhiteboardRepository.DEFAULT_ERASER_WIDTH)
+    val currentBrushColor: Int
+        get() =
+            (activeTool.value as? WhiteboardTool.Brush)?.color
+                ?: brushes.value.getOrNull(activeBrushIndex.value)?.color
+                ?: Color.BLACK
 
-    val brushColor = MutableStateFlow(Color.BLACK)
-    val activeStrokeWidth = MutableStateFlow(WhiteboardRepository.DEFAULT_STROKE_WIDTH)
-    val isEraserActive = MutableStateFlow(false)
-    val eraserMode = MutableStateFlow(EraserMode.INK)
     val isStylusOnlyMode = MutableStateFlow(false)
     val toolbarAlignment = MutableStateFlow(ToolbarAlignment.BOTTOM)
     val isToolbarShown = MutableStateFlow(true)
@@ -99,11 +122,6 @@ class WhiteboardViewModel(
      * navigation, so the "go back again to exit" snackbar is suppressed.
      */
     val isDrawing = MutableStateFlow(false)
-
-    val eraserDisplayWidth =
-        combine(eraserMode, inkEraserStrokeWidth, strokeEraserStrokeWidth) { mode, inkWidth, strokeWidth ->
-            if (mode == EraserMode.INK) inkWidth else strokeWidth
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, WhiteboardRepository.DEFAULT_ERASER_WIDTH)
 
     private var eraserLastX = 0.0f
     private var eraserLastY = 0.0f
@@ -117,17 +135,21 @@ class WhiteboardViewModel(
     fun loadState(isDarkMode: Boolean) {
         this.isDarkMode = isDarkMode
         brushes.value = repository.loadBrushes(isDarkMode)
-        inkEraserStrokeWidth.value = repository.inkEraserWidth
-        strokeEraserStrokeWidth.value = repository.strokeEraserWidth
-        eraserMode.value = repository.eraserMode
+        eraser =
+            WhiteboardTool.Eraser(
+                mode = repository.eraserMode,
+                inkWidth = repository.inkEraserWidth,
+                strokeEraserWidth = repository.strokeEraserWidth,
+            )
         isStylusOnlyMode.value = repository.stylusOnlyMode
         toolbarAlignment.value = repository.toolbarAlignment
         isToolbarShown.value = repository.isToolbarShown
 
-        val lastActiveIndex = repository.loadLastActiveBrushIndex(isDarkMode)
+        val savedBrushIndex = repository.loadLastActiveBrushIndex(isDarkMode)
+        activeBrushIndex.value = savedBrushIndex
 
-        if (!isEraserActive.value) {
-            setActiveBrush(lastActiveIndex)
+        if (activeTool.value !is WhiteboardTool.Eraser) {
+            setActiveBrush(savedBrushIndex)
         }
     }
 
@@ -135,12 +157,19 @@ class WhiteboardViewModel(
      * Adds a new completed path to the drawing history.
      */
     fun addPath(path: Path) {
-        val isPixelEraser = isEraserActive.value && eraserMode.value == EraserMode.INK
+        val tool = activeTool.value
+        val isPixelEraser = tool is WhiteboardTool.Eraser && tool.mode == EraserMode.INK
+        val strokeWidth = tool.width
+        val color =
+            when (tool) {
+                is WhiteboardTool.Brush -> tool.color
+                is WhiteboardTool.Eraser -> Color.BLACK
+            }
         val newAction =
             DrawingAction(
                 path,
-                brushColor.value,
-                activeStrokeWidth.value,
+                color,
+                strokeWidth,
                 isPixelEraser,
             )
         paths.update { it + newAction }
@@ -176,9 +205,11 @@ class WhiteboardViewModel(
         var pathWasErased = false
 
         val pathsToEvaluate = remainingPaths.filter { it !in pathsErasedInCurrentGesture && !it.isEraser }
+        val eraserRadius =
+            ((activeTool.value as? WhiteboardTool.Eraser)?.width ?: eraser.width) / 2
 
         for (action in pathsToEvaluate) {
-            if (isPathIntersectingWithSegment(action, x, y, eraserLastX, eraserLastY, activeStrokeWidth.value / 2)) {
+            if (isPathIntersectingWithSegment(action, x, y, eraserLastX, eraserLastY, eraserRadius)) {
                 remainingPaths.remove(action)
                 pathsErasedInCurrentGesture.add(action)
                 pathWasErased = true
@@ -336,27 +367,24 @@ class WhiteboardViewModel(
     fun setActiveBrush(index: Int) {
         val brush = brushes.value.getOrNull(index) ?: return
 
-        isEraserActive.value = false
         activeBrushIndex.value = index
         repository.saveLastActiveBrushIndex(index, isDarkMode)
 
-        brushColor.value = brush.color
-        activeStrokeWidth.value = brush.width
+        activeTool.value = brush
     }
 
     /**
      * Toggles the eraser tool on or off.
      */
     fun enableEraser() {
-        isEraserActive.value = true
-        activeStrokeWidth.value = eraserDisplayWidth.value
+        activeTool.value = eraser
     }
 
     /**
      * Toggles between the eraser and the last active brush.
      */
     fun toggleEraser() {
-        if (isEraserActive.value) {
+        if (activeTool.value is WhiteboardTool.Eraser) {
             setActiveBrush(activeBrushIndex.value)
         } else {
             enableEraser()
@@ -364,18 +392,34 @@ class WhiteboardViewModel(
     }
 
     /**
+     * Updates the eraser state and keeps the active tool in sync if it is currently an eraser.
+     */
+    private fun updateEraser(transform: (WhiteboardTool.Eraser) -> WhiteboardTool.Eraser) {
+        val updated = transform(eraser)
+        eraser = updated
+        if (activeTool.value is WhiteboardTool.Eraser) {
+            activeTool.value = updated
+        }
+    }
+
+    /**
      * Sets the eraser mode (pixel or path).
      */
     fun setEraserMode(mode: EraserMode) {
-        eraserMode.value = mode
         repository.eraserMode = mode
-        if (isEraserActive.value) {
-            activeStrokeWidth.value =
-                if (mode == EraserMode.INK) {
-                    inkEraserStrokeWidth.value
-                } else {
-                    strokeEraserStrokeWidth.value
-                }
+        updateEraser { it.copy(mode = mode) }
+    }
+
+    /**
+     * Sets the stroke width for the eraser tool.
+     */
+    fun setEraserStrokeWidth(newWidth: Float) {
+        if (eraser.mode == EraserMode.INK) {
+            repository.inkEraserWidth = newWidth
+            updateEraser { it.copy(inkWidth = newWidth) }
+        } else {
+            repository.strokeEraserWidth = newWidth
+            updateEraser { it.copy(strokeEraserWidth = newWidth) }
         }
     }
 
@@ -383,26 +427,20 @@ class WhiteboardViewModel(
      * Sets the stroke width for the currently active tool (brush or eraser).
      */
     fun setActiveStrokeWidth(newWidth: Float) {
-        if (isEraserActive.value) {
-            if (eraserMode.value == EraserMode.INK) {
-                inkEraserStrokeWidth.value = newWidth
-                repository.inkEraserWidth = newWidth
-            } else {
-                strokeEraserStrokeWidth.value = newWidth
-                repository.strokeEraserWidth = newWidth
+        when (activeTool.value) {
+            is WhiteboardTool.Eraser -> setEraserStrokeWidth(newWidth)
+            is WhiteboardTool.Brush -> {
+                val index = activeBrushIndex.value
+                val updatedBrushes = brushes.value.replaceAt(index) { it.copy(width = newWidth) }
+                brushes.value = updatedBrushes
+                repository.saveBrushes(updatedBrushes, isDarkMode)
+                activeTool.value = updatedBrushes[index]
             }
-        } else {
-            // Update the width of the active brush
-            val activeIndex = activeBrushIndex.value
-            val updatedBrushes = brushes.value.replaceAt(activeIndex) { it.copy(width = newWidth) }
-            brushes.value = updatedBrushes
-            repository.saveBrushes(updatedBrushes, isDarkMode)
         }
-        activeStrokeWidth.value = newWidth
     }
 
     @CheckResult
-    fun <T> List<T>.replaceAt(
+    private fun <T> List<T>.replaceAt(
         index: Int,
         replace: (T) -> T,
     ): List<T> = this.mapIndexed { i, value -> if (i == index) replace(value) else value }
@@ -412,19 +450,21 @@ class WhiteboardViewModel(
      */
     fun updateBrushColor(newColor: Int) {
         Timber.i("Updating brush color to %d", newColor)
-        val activeIndex = activeBrushIndex.value
-        val updatedBrushes = brushes.value.replaceAt(activeIndex) { it.copy(color = newColor) }
+        val index = activeBrushIndex.value
+        val updatedBrushes = brushes.value.replaceAt(index) { it.copy(color = newColor) }
 
         brushes.value = updatedBrushes
         repository.saveBrushes(brushes.value, isDarkMode)
-        brushColor.value = newColor
+        if (activeTool.value is WhiteboardTool.Brush) {
+            activeTool.value = updatedBrushes[index]
+        }
     }
 
     /**
      * Adds a new brush color to the user's palette.
      */
     fun addBrush(color: Int) {
-        val newBrush = BrushInfo(color = color, width = WhiteboardRepository.DEFAULT_STROKE_WIDTH)
+        val newBrush = WhiteboardTool.Brush(color = color, width = WhiteboardRepository.DEFAULT_STROKE_WIDTH)
         val updatedBrushes = brushes.value + newBrush
         brushes.value = updatedBrushes
         repository.saveBrushes(brushes.value, isDarkMode)
@@ -442,14 +482,18 @@ class WhiteboardViewModel(
         brushes.value = updatedBrushes
         repository.saveBrushes(brushes.value, isDarkMode)
 
-        when {
-            oldActiveIndex == indexToRemove -> {
-                val newIndex = (oldActiveIndex - 1).coerceAtLeast(0)
-                setActiveBrush(newIndex)
+        val newIndex =
+            when {
+                oldActiveIndex == indexToRemove -> (oldActiveIndex - 1).coerceAtLeast(0)
+                oldActiveIndex > indexToRemove -> oldActiveIndex - 1
+                else -> oldActiveIndex
             }
-            oldActiveIndex > indexToRemove -> {
-                setActiveBrush(oldActiveIndex - 1)
-            }
+
+        if (activeTool.value is WhiteboardTool.Brush) {
+            setActiveBrush(newIndex)
+        } else {
+            activeBrushIndex.value = newIndex
+            repository.saveLastActiveBrushIndex(newIndex, isDarkMode)
         }
     }
 

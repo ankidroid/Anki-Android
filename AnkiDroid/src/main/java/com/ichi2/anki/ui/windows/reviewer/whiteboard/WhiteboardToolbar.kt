@@ -155,7 +155,7 @@ class WhiteboardToolbar : LinearLayout {
      * Updates the data in the RecyclerView adapter.
      */
     fun setBrushes(
-        brushes: List<BrushInfo>,
+        brushes: List<WhiteboardTool.Brush>,
         activeIndex: Int,
         isEraserActive: Boolean,
     ) {
