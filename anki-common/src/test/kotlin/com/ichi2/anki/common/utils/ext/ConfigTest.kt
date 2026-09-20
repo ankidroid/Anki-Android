@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.common.utils.ext
 
+import com.ichi2.anki.browser.search.SavedSearch
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.model.CardsOrNotes
 import org.json.JSONObject
@@ -86,6 +87,19 @@ class ConfigTest : InMemoryAnkiTest() {
         assertEquals(0, col.config.flagLabels.length())
         col.config.flagLabels.put("2", "Orange")
         assertEquals(0, col.config.flagLabels.length())
+    }
+
+    @Test
+    fun `saved searches preserve the backend map format and recover from invalid values`() {
+        col.config.savedFilters = listOf(SavedSearch("A", "deck:Default"), SavedSearch("a", "is:new"))
+        assertEquals(mapOf("A" to "deck:Default", "a" to "is:new"), col.config.get<Map<String, String>>("savedFilters"))
+
+        col.config.set("savedFilters", mapOf("external" to "is:due"))
+        assertEquals(listOf(SavedSearch("external", "is:due")), col.config.savedFilters)
+        col.config.set("savedFilters", listOf("invalid"))
+        assertEquals(emptyList(), col.config.savedFilters)
+        col.config.remove("savedFilters")
+        assertEquals(emptyList(), col.config.savedFilters)
     }
 
     @Test

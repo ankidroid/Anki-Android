@@ -3,7 +3,7 @@
 package com.ichi2.anki.browser.search
 
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.libanki.Config
+import com.ichi2.anki.common.utils.ext.savedFilters
 import timber.log.Timber
 
 /**
@@ -72,18 +72,3 @@ object SavedSearches {
     /** Removes all saved searches from the Anki collection */
     suspend fun clear() = saveToConfig(emptyList())
 }
-
-/**
- * The list of saved searches in the Anki Collection
- *
- * Ordering is NOT preserved in Anki Desktop. Searches are ordered based on the name and are
- * case-sensitive
- */
-var Config.savedFilters: List<SavedSearch>
-    get() =
-        get<Map<String, String>>("savedFilters")
-            .orEmpty()
-            .map { (key, value) -> SavedSearch(name = key, query = value) }
-    set(value) {
-        set("savedFilters", value.toMap())
-    }
