@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/action_schedule_reminders"
-        android:title="@string/schedule_reminders_do_not_translate"
+        android:title="@string/schedule_reminders_title"
         android:visibility="gone"
         android:icon="@drawable/ic_notifications"
         ankidroid:showAsAction="always"/>
