@@ -1,5 +1,4 @@
 /*
- Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
  Copyright (c) 2026 lukstbit <52494258+lukstbit@users.noreply.github.com>
 
  This program is free software; you can redistribute it and/or modify it under
