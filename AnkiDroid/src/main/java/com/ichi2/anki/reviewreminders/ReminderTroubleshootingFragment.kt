@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.android.getColorFromAttr
@@ -141,13 +142,13 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
     private fun setupExternalActivityToolbar() {
         binding.troubleshootingToolbar.isVisible = false
         requireAnkiActivity().apply {
-            // TODO: Move to string resources
-            setToolbarText(title = "Troubleshooting")
+            setToolbarText(title = TR.errorsTroubleshootingButton())
             invalidateMenu()
         }
     }
 
     private fun setupInternalFragmentToolbar() {
+        binding.troubleshootingToolbar.title = TR.errorsTroubleshootingButton()
         binding.troubleshootingToolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
@@ -162,21 +163,21 @@ class ReminderTroubleshootingFragment : Fragment(R.layout.fragment_reminder_trou
                         Triple(
                             R.drawable.ic_cancel_24,
                             context.getColor(android.R.color.holo_red_dark),
-                            "Reminders are unavailable.",
+                            context.getString(R.string.reminder_troubleshooting_summary_error),
                         )
 
                     SummaryStatus.Warning ->
                         Triple(
                             R.drawable.ic_warning_24,
                             getColorFromAttr(context, R.attr.reminderTroubleshootingWarning),
-                            "Reminders may not work correctly.",
+                            context.getString(R.string.reminder_troubleshooting_summary_warning),
                         )
 
                     SummaryStatus.Ok ->
                         Triple(
                             R.drawable.ic_check_circle_24,
                             getColorFromAttr(context, R.attr.reminderTroubleshootingOk),
-                            "Your reminders should work as expected.",
+                            context.getString(R.string.reminder_troubleshooting_summary_ok),
                         )
                 }
             binding.summaryIcon.setImageResource(iconRes)
