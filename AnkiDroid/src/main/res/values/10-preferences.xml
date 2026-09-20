@@ -219,9 +219,15 @@
     <!-- #######################################################################################
          ################################## Review reminders ###################################
          ####################################################################################### -->
-    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
     <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
+
+    <!-- Entry points -->
+    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
+
+    <!-- Schedule reminders screen -->
+    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
+    <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
 
     <!-- Notification content -->

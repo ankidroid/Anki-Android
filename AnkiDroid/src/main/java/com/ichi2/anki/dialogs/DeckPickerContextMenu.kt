@@ -96,7 +96,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
                     BROWSE_CARDS -> getString(R.string.browse_cards)
                     EDIT_DESCRIPTION -> getString(R.string.edit_deck_description)
                     ADD_CARD -> TR.actionsAdd()
-                    SCHEDULE_REMINDERS -> getString(R.string.schedule_reminders_do_not_translate)
+                    SCHEDULE_REMINDERS -> getString(R.string.schedule_reminders_title)
                 }
             }
     }
