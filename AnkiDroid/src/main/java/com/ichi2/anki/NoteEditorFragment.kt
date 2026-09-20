@@ -96,9 +96,6 @@ import com.ichi2.anki.common.utils.HashUtil
 import com.ichi2.anki.common.utils.android.digit
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
-import com.ichi2.anki.common.utils.ext.AddingDefaultsMode
-import com.ichi2.anki.common.utils.ext.addingDefaultsMode
-import com.ichi2.anki.common.utils.ext.currentDeckId
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
@@ -790,7 +787,6 @@ class NoteEditorFragment :
             }
         }
         val getTextFromSearchView = requireArguments().getString(EXTRA_TEXT_FROM_SEARCH_VIEW)
-        setDid(editorNote)
         setNote(editorNote, FieldChangeType.onActivityCreation(shouldReplaceNewlines()))
         if (addNote) {
             noteTypeSpinner!!.onItemSelectedListener = SetNoteTypeListener()
@@ -2191,34 +2187,7 @@ class NoteEditorFragment :
         return fieldText.toString()
     }
 
-    private fun setDid(note: Note?) {
-        fun calculateDeckId(): DeckId {
-            if (deckId != 0L) return deckId
-            if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.currentDeckId()
-            }
-
-            if (getColUnsafe.config.addingDefaultsMode == AddingDefaultsMode.DECIDE_BY_NOTE_TYPE) {
-                return getColUnsafe.notetypes.current().let {
-                    Timber.d("Adding to deck of note type, noteType: %s", it.name)
-                    return@let it.did
-                }
-            }
-
-            val currentDeckId = getColUnsafe.config.currentDeckId
-            return if (getColUnsafe.decks.isFiltered(currentDeckId)) {
-                /*
-                 * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
-                 * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
-                 * selected previously in the activity.
-                 */
-                1
-            } else {
-                currentDeckId
-            }
-        }
-
-        deckId = calculateDeckId()
+    private fun updateDeckName() {
         launchCatchingTask {
             val selectedDeckName = withCol { decks.name(deckId) }
             view?.findViewById<TextView>(R.id.note_deck_name)?.text = selectedDeckName
@@ -2241,7 +2210,7 @@ class NoteEditorFragment :
         }
         // nb: setOnItemSelectedListener and populateEditFields need to occur after this
         setNoteTypePosition()
-        setDid(note)
+        updateDeckName()
         updateTags()
         updateCards(editorNote!!.notetype)
         updateToolbar()
