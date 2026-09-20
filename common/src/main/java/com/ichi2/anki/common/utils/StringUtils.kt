@@ -162,3 +162,18 @@ fun String.firstGraphemeOrNull(): String? {
     if (end == BreakIterator.DONE || end == 0) return null
     return this.substring(0, end)
 }
+
+/**
+ * Split a string in two parts at the first occurrence of the given delimiter.
+ * If the delimiter is not found, the first part will be the original string,
+ * and the second part will be an empty string.
+ *
+ * Usage: `val (beforeArg, afterArg) = translatableStringWithArg.partition("%s")`
+ */
+fun String.partition(delimiter: String): Pair<String, String> =
+    this.split(delimiter, limit = 2).let {
+        when (it.size) {
+            2 -> Pair(it[0], it[1])
+            else -> Pair(this, "")
+        }
+    }
