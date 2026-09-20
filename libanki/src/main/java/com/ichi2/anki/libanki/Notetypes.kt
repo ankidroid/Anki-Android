@@ -164,6 +164,10 @@ class Notetypes(
         col.config.set("curModel", notetype.id)
     }
 
+    fun setCurrent(nid: NoteTypeId) {
+        col.config.set("curModel", nid)
+    }
+
     /*
     # Retrieving and creating models
     #############################################################
