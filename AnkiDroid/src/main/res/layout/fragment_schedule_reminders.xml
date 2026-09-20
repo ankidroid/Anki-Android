@@ -57,10 +57,9 @@
         android:drawSelectorOnTop="true"
         android:paddingBottom="84dp"
         android:scrollbars="vertical"
-        android:contentDescription="List of scheduled review reminders"
+        android:contentDescription="@string/schedule_reminders_list_content_description"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_schedule_reminders"
-        tools:ignore="HardcodedText" />
+        tools:listitem="@layout/item_schedule_reminders" />
 
     <LinearLayout
         android:id="@+id/no_reminders_placeholder"
