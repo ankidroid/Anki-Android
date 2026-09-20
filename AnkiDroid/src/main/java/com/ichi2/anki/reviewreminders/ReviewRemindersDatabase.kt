@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
+import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
@@ -447,9 +448,7 @@ object ReviewRemindersDatabase {
             if (errorString.isEmpty()) return
 
             context.showError(
-                message =
-                    "An error occurred while loading your review reminders, corrupted reminders have been deleted. " +
-                        "Details:\n\n${errorString.ellipsize(1000)}",
+                message = context.getString(R.string.review_reminders_load_error) + "\n\n" + errorString.ellipsize(1000),
                 crashReportData = null, // Crash reports are sent when the error is first encountered
             )
             Prefs.reviewReminderDeserializationErrors = ""
