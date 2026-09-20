@@ -31,7 +31,7 @@ import java.util.regex.Pattern
 @KotlinCleanup("lots to do")
 class Note : Cloneable {
     /**
-     * Should only be mutated by addNote()
+     * Should only be mutated by [Collection.addNote] or [Collection.addNotes].
      */
     var id: NoteId = 0L
 
