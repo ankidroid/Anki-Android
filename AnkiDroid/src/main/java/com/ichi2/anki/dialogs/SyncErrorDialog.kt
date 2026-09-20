@@ -4,17 +4,22 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
 import android.os.Message
+import android.provider.Settings
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.R
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_CONNECTION_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_MEDIA_SYNC_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_BASIC_CHECK_ERROR
+import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CLOCK_OFF
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_RESOLUTION
@@ -26,7 +31,11 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYN
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.openUrl
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.setupEnterKeyHandler
 import com.ichi2.utils.titleWithHelpIcon
+import timber.log.Timber
+import java.text.DateFormat
 
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener {
@@ -162,6 +171,26 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     }.setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                     .create()
             }
+            DIALOG_SYNC_CLOCK_OFF -> {
+                dialog
+                    .setPositiveButton(R.string.open_settings, null)
+                    .setNegativeButton(R.string.dialog_cancel, null)
+                    .create()
+                    .apply {
+                        // Override the default handler so the dialog remains open if no date-settings activity exists.
+                        setOnShowListener {
+                            positiveButton.setOnClickListener {
+                                try {
+                                    startActivity(Intent(Settings.ACTION_DATE_SETTINGS))
+                                    this@SyncErrorDialog.dismiss()
+                                } catch (e: ActivityNotFoundException) {
+                                    Timber.w(e, "No app can show date and time settings")
+                                }
+                            }
+                        }
+                        setupEnterKeyHandler()
+                    }
+            }
         }
     }
 
@@ -182,6 +211,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 DIALOG_SYNC_CORRUPT_COLLECTION,
                 DIALOG_SYNC_BASIC_CHECK_ERROR,
                 -> res().getString(R.string.sync_error)
+                DIALOG_SYNC_CLOCK_OFF -> res().getString(R.string.vague_error)
             }
 
     /**
@@ -218,6 +248,12 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     val dialogMessage = res().getString(R.string.sync_corrupt_database, repairUrl)
                     joinSyncMessages(dialogMessage, syncMessage)
                 }
+                DIALOG_SYNC_CLOCK_OFF ->
+                    res().getString(
+                        R.string.sync_clock_off_with_current_time,
+                        requireArguments().getString(DIALOG_MESSAGE_KEY).orEmpty(),
+                        DateFormat.getDateTimeInstance().format(TimeManager.time.currentDate),
+                    )
                 else -> requireArguments().getString(DIALOG_MESSAGE_KEY)
             }
 
@@ -281,6 +317,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         DIALOG_MEDIA_SYNC_ERROR(8),
         DIALOG_SYNC_CORRUPT_COLLECTION(9),
         DIALOG_SYNC_BASIC_CHECK_ERROR(10),
+        DIALOG_SYNC_CLOCK_OFF(11),
         ;
 
         companion object {
