@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.notetype
 
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
-import com.ichi2.testutils.dispatchInsets
-import com.ichi2.utils.dp
+import com.ichi2.testutils.scrollToEnd
+import com.ichi2.testutils.simulateKeyboard
 import org.junit.Test
 
 class ManageNotetypesScreenshotTest : ScreenshotTest() {
@@ -24,12 +20,8 @@ class ManageNotetypesScreenshotTest : ScreenshotTest() {
                     .expandActionView()
                 advanceRobolectricLooper()
                 activity.simulateKeyboard()
-                advanceRobolectricLooper()
 
-                val list = activity.binding.noteTypesList
-                list.scrollToPosition(list.adapter!!.itemCount - 1)
-                while (list.canScrollVertically(1)) list.scrollBy(0, 50)
-                advanceRobolectricLooper()
+                activity.binding.noteTypesList.scrollToEnd()
                 captureScreen("keyboard_scrolled_to_bottom")
 
                 val currentState = activity.viewModel.state.value
@@ -59,21 +51,5 @@ class ManageNotetypesScreenshotTest : ScreenshotTest() {
         ActivityScenario.launch<ManageNotetypes>(intent).use { scenario ->
             scenario.onActivity(block)
         }
-    }
-
-    /** Shows the keyboard's bounds as a translucent overlay. */
-    private fun ManageNotetypes.simulateKeyboard() {
-        val keyboardHeight = 300.dp
-        dispatchInsets(navBarBottom = 48.dp, imeBottom = keyboardHeight)
-        val decor = window.decorView as ViewGroup
-        val overlay = View(this).apply { setBackgroundColor(0x80000000.toInt()) }
-        decor.addView(
-            overlay,
-            FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                keyboardHeight.toPx(this),
-                Gravity.BOTTOM,
-            ),
-        )
     }
 }
