@@ -17,7 +17,7 @@
 
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
+    <string name="CardEditorNoteDeck" comment="Label of the field choosing which deck a note's cards go into, in the note editor.">Deck:</string>
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
