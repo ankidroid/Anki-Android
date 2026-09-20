@@ -444,10 +444,9 @@ context(fragment: ReminderTroubleshootingFragment)
 private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
     val context = fragment.requireContext()
 
-    // TODO: move labels to string resources
     fun requestNotificationPermission(): ResolveCheckAction? =
         ResolveCheckAction(
-            label = "Grant permission",
+            label = context.getString(R.string.reminder_troubleshooting_action_grant_permission),
             logDescription = "requesting POST_NOTIFICATIONS via system dialog or app settings",
         ) {
             fragment.attemptToEnableNotifications(fragment.notificationPermissionLauncher)
@@ -456,7 +455,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
     fun requestReminderNotifChannelPermission(): ResolveCheckAction? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null
         return ResolveCheckAction(
-            label = "Enable notification channel",
+            label = context.getString(R.string.reminder_troubleshooting_action_enable_notification_channel),
             logDescription = "opening app notification settings screen",
         ) {
             fragment.openAppNotificationsSettingsScreen(highlightedChannel = NotificationChannel.REVIEW_REMINDERS)
@@ -468,7 +467,7 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
 
         return if (Permissions.canRequestIgnoreBatteryOptimizations(context)) {
             ResolveCheckAction(
-                label = "Disable battery optimization",
+                label = context.getString(R.string.reminder_troubleshooting_action_disable_battery_optimization),
                 logDescription = "opening ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
             ) {
                 try {
@@ -484,20 +483,29 @@ private fun TroubleshootingCheck.resolveAction(): ResolveCheckAction? {
                 }
             }
         } else {
-            ResolveCheckAction(label = "Open battery settings", logDescription = "opening ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS") {
+            ResolveCheckAction(
+                label = context.getString(R.string.reminder_troubleshooting_action_open_battery_settings),
+                logDescription = "opening ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS",
+            ) {
                 openBatteryOptimizationList()
             }
         }
     }
 
     fun openBatterySaverSettings() =
-        ResolveCheckAction(label = "Open battery settings", logDescription = "opening ACTION_BATTERY_SAVER_SETTINGS") {
+        ResolveCheckAction(
+            label = context.getString(R.string.reminder_troubleshooting_action_open_battery_settings),
+            logDescription = "opening ACTION_BATTERY_SAVER_SETTINGS",
+        ) {
             context.startActivity(Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS))
         }
 
     fun openExactAlarmSettings(): ResolveCheckAction? {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
-        return ResolveCheckAction(label = "Grant permission", logDescription = "opening ACTION_REQUEST_SCHEDULE_EXACT_ALARM") {
+        return ResolveCheckAction(
+            label = context.getString(R.string.reminder_troubleshooting_action_grant_permission),
+            logDescription = "opening ACTION_REQUEST_SCHEDULE_EXACT_ALARM",
+        ) {
             context.startActivity(
                 Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
                     data = Uri.fromParts("package", context.packageName, null)
