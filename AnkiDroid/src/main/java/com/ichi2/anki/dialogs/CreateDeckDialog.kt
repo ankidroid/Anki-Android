@@ -166,9 +166,10 @@ class CreateDeckDialog(
 
     fun createDeck(deckName: String) {
         if (Decks.isValidDeckName(deckName)) {
-            createNewDeck(deckName)
-            // 11668: Display feedback if a deck is created
-            displayFeedback(context.getString(R.string.deck_created))
+            if (createNewDeck(deckName)) {
+                // 11668: Display feedback if a deck is created
+                displayFeedback(context.getString(R.string.deck_created))
+            }
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
@@ -186,6 +187,7 @@ class CreateDeckDialog(
             onNewDeckCreated(newDeckId)
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             Timber.w(filteredAncestor)
+            displayFeedback(filteredAncestor.localizedMessage ?: filteredAncestor.message ?: "", Snackbar.LENGTH_LONG)
             return false
         }
         return true

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
@@ -99,6 +100,68 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertionCalled()
             }
             createDeckDialog.createDeck(deckNameWithQuotes)
+        }
+    }
+
+    @Test
+    fun `creating a child of a filtered deck shows an error`() {
+        addDynamicDeck("Filtered Deck 1")
+        val deckCount = col.decks.count()
+        withCreateDeckDialog(DeckDialogType.DECK) {
+            onNewDeckCreated = { fail("the deck was not created") }
+            showDialog().apply {
+                input = "Filtered Deck 1::Child"
+                positiveButton.performClick()
+            }
+        }
+        Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+        assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+        activityScenario.onActivity { activity ->
+            assertThat(
+                activity.latestSnackbarText(),
+                equalTo(TR.errorsFilteredParentDeck()),
+            )
+        }
+    }
+
+    @Test
+    fun `creating a descendant of a filtered deck with non-activity context shows an error`() {
+        addDynamicDeck("Filtered Deck 1")
+        val deckCount = col.decks.count()
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(ContextWrapper(activity), "Create deck", DeckDialogType.DECK, null)
+            dialog.onNewDeckCreated = { fail("the deck was not created") }
+            dialog.createDeck("filtered deck 1::Parent::Child")
+
+            assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+            assertThat(
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(TR.errorsFilteredParentDeck()),
+            )
+        }
+    }
+
+    @Test
+    fun `creating a subdeck below a filtered deck shows an error`() {
+        val parentId = addDeck("Parent")
+        addDynamicDeck("Parent::Filtered")
+        val deckCount = col.decks.count()
+        withCreateDeckDialog(DeckDialogType.SUB_DECK, parentId) {
+            onNewDeckCreated = { fail("the deck was not created") }
+            showDialog().apply {
+                input = "Filtered::Child"
+                positiveButton.performClick()
+            }
+        }
+        Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+        assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
+        activityScenario.onActivity { activity ->
+            assertThat(
+                activity.latestSnackbarText(),
+                equalTo(TR.errorsFilteredParentDeck()),
+            )
         }
     }
 
