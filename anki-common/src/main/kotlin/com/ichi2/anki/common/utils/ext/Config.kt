@@ -3,6 +3,9 @@
 package com.ichi2.anki.common.utils.ext
 
 import anki.config.ConfigKey
+import com.ichi2.anki.common.utils.configProperty
+import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
+import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.USE_CURRENT_DECK
 import com.ichi2.anki.libanki.Config
 
 /**
@@ -22,15 +25,7 @@ enum class AddingDefaultsMode {
 /**
  * @see AddingDefaultsMode
  */
-var Config.addingDefaultsMode: AddingDefaultsMode
-    get() =
-        if (getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-            AddingDefaultsMode.USE_CURRENT_DECK
-        } else {
-            AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
-        }
-    set(value) =
-        setBool(
-            ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK,
-            value == AddingDefaultsMode.USE_CURRENT_DECK,
-        )
+var Config.addingDefaultsMode by configProperty(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK).mapped(
+    decode = { if (it) USE_CURRENT_DECK else DECIDE_BY_NOTE_TYPE },
+    encode = { it == USE_CURRENT_DECK },
+)
