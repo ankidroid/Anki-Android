@@ -62,6 +62,8 @@ import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isGone
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import anki.frontend.SetSchedulingStatesRequest
@@ -527,7 +529,20 @@ open class Reviewer :
         // the card and its overlays reach the bottom of the screen when the answer buttons
         // are shown above them
         clearInsets(findViewById(R.id.flashcard), top = contentTop, bottom = cardBottom)
-        clearInsets(findViewById(R.id.touch_layer), top = contentTop, bottom = cardBottom)
+        // Touches are forwarded to the WebView in the touch layer's coordinates.
+        // So the layer insets need to match the WebView
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.touch_layer)) { view, insets ->
+            val bars = insets.bars()
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                updateMargins(
+                    left = bars.left,
+                    top = contentTop?.invoke(insets) ?: 0,
+                    right = bars.right,
+                    bottom = cardBottom(insets),
+                )
+            }
+            insets
+        }
         clearInsets(findViewById(R.id.whiteboard), top = contentTop, bottom = cardBottom)
 
         clearInsets(colorPalette, bottom = whiteboardPaletteBottom)
