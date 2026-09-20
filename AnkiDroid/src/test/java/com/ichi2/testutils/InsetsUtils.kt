@@ -207,25 +207,20 @@ fun Activity.simulateSystemBars(
  *
  * @param keyboardHeight the height of the keyboard, measured from the bottom of the screen
  * @param navBarBottom the height of the navigation bar, which the keyboard covers
+ * @return the keyboard overlay, which can be removed before dispatching keyboard-hidden insets
  */
 fun Activity.simulateKeyboard(
     keyboardHeight: Dp = 300.dp,
     navBarBottom: Dp = 48.dp,
-) {
-    val context: Context = this
-    val insets =
-        WindowInsetsCompat
-            .Builder()
-            .setInsets(statusBars(), insetsOf(top = 24.dp))
-            .setInsets(navigationBars(), insetsOf(bottom = navBarBottom))
-            .setInsets(ime(), insetsOf(bottom = keyboardHeight))
-            .build()
-    ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+): View {
+    dispatchInsets(navBarBottom = navBarBottom, imeBottom = keyboardHeight)
 
     val decor = window.decorView as ViewGroup
+    val overlay = View(this).apply { setBackgroundColor(0x80000000.toInt()) }
     decor.addView(
-        View(this).apply { setBackgroundColor(0x80000000.toInt()) },
-        FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, keyboardHeight.toPx(context), Gravity.BOTTOM),
+        overlay,
+        FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, keyboardHeight.toPx(this), Gravity.BOTTOM),
     )
     advanceRobolectricLooper()
+    return overlay
 }
