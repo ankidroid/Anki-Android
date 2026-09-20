@@ -216,11 +216,19 @@
     <string name="media" maxLength="41">Media</string>
     <string name="misc" maxLength="41">Misc</string>
 
-    <!-- Review reminders -->
+    <!-- #######################################################################################
+         ################################## Review reminders ###################################
+         ####################################################################################### -->
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Add reminder</string>
     <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
     <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">You have no review reminders</string>
+
+    <!-- Notification content -->
+    <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
+        <item quantity="one">%d card due</item>
+        <item quantity="other">%d cards due</item>
+    </plurals>
 
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Select tags</string>

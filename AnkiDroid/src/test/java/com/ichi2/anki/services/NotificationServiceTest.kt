@@ -131,6 +131,38 @@ class NotificationServiceTest : RobolectricTest() {
         }
 
     @Test
+    fun `notification description is singular when one card is due`() =
+        runTest {
+            val did = addDeck("Deck", setAsSelected = true).withNotes(count = 1)
+            val reviewReminder = createTestReminder(deckId = did)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            val notif = slot<Notification>()
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNotifSent(reviewReminder, slot = notif)
+            assertThat(notif.captured.extras.getString(Notification.EXTRA_TEXT), equalTo("1 card due"))
+        }
+
+    @Test
+    fun `notification description is plural when several cards are due`() =
+        runTest {
+            val did = addDeck("Deck", setAsSelected = true).withNotes(count = 2)
+            val reviewReminder = createTestReminder(deckId = did)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            val notif = slot<Notification>()
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNotifSent(reviewReminder, slot = notif)
+            assertThat(notif.captured.extras.getString(Notification.EXTRA_TEXT), equalTo("2 cards due"))
+        }
+
+    @Test
     fun `triggering with non-existent deck should not fire notification but schedule next`() =
         runTest {
             val did1 = addDeck("Deck")

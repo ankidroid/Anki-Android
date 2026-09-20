@@ -225,7 +225,12 @@ class NotificationService : AnkiBroadcastReceiver() {
                         "It's time to study \"$deckName\"" // quotation marks to separate user-defined deck names from official app text
                     }
                 }
-            val description = "$dueCardsTotal cards due"
+            val description =
+                context.resources.getQuantityString(
+                    R.plurals.review_reminder_notification_cards_due,
+                    dueCardsTotal,
+                    dueCardsTotal,
+                )
 
             fireReviewReminderNotification(context, reviewReminder, title, description, onClickIntent)
         }
