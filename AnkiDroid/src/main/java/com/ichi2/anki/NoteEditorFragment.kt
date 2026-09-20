@@ -2588,10 +2588,8 @@ class NoteEditorFragment :
         currentDeck.put("mid", newId)
         getColUnsafe.decks.save(currentDeck)
 
-        // Update deck
-        if (getColUnsafe.config.addingDefaultsMode == AddingDefaultsMode.DECIDE_BY_NOTE_TYPE) {
-            deckId = getColUnsafe.defaultsForAdding().deckId
-        }
+        // Preserves the editor's deck when the new note type has no remembered destination.
+        getColUnsafe.defaultDeckForNoteType(newId)?.let { deckId = it }
 
         refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
         setDuplicateFieldStyles()
