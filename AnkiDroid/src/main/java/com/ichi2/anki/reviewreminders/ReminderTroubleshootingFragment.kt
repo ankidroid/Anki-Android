@@ -284,10 +284,11 @@ private class TroubleshootingChecksAdapter(
         val tintColor = check.result.tintColor(context)
         val lastIndex = itemCount - 1
 
-        holder.binding.title.text = check.title()
-        holder.binding.statusName.text = check.statusName()
+        val titleText = with(context) { check.title() }
+        holder.binding.title.text = titleText
+        holder.binding.statusName.text = with(context) { check.statusName() }
 
-        val explanationText = check.explanation()
+        val explanationText = with(context) { check.explanation() }
         holder.binding.explanation.text = explanationText
         holder.binding.explanation.isVisible = explanationText != null
 
@@ -315,7 +316,7 @@ private class TroubleshootingChecksAdapter(
             holder.binding.actionLink.text = resolveAction.label
             val clickListener =
                 View.OnClickListener {
-                    Timber.i("Launching fix for '%s': %s", check.title(), resolveAction.logDescription)
+                    Timber.i("Launching fix for '%s': %s", titleText, resolveAction.logDescription)
                     resolveAction.action()
                 }
             holder.binding.itemContainer.setOnClickListener(clickListener)
@@ -346,54 +347,75 @@ private class TroubleshootingChecksAdapter(
     }
 }
 
-// TODO: move to string resources
+context(context: Context)
 private fun TroubleshootingCheck.title(): String =
-    when (this) {
-        is TroubleshootingCheck.NotificationPermission -> "Notification permission"
-        is TroubleshootingCheck.NotificationChannelEnabled -> "Notification channel"
-        is TroubleshootingCheck.DoNotDisturbOff -> "Do not disturb"
-        is TroubleshootingCheck.UnrestrictedOptimizationEnabled -> "Battery optimization"
-        is TroubleshootingCheck.PowerSavingModeOff -> "Power saving mode"
-        is TroubleshootingCheck.ExactAlarmPermission -> "Alarms & reminders permission"
-    }
+    context.getString(
+        when (this) {
+            is TroubleshootingCheck.NotificationPermission -> R.string.reminder_troubleshooting_check_notification_permission
+            is TroubleshootingCheck.NotificationChannelEnabled -> R.string.reminder_troubleshooting_check_notification_channel
+            is TroubleshootingCheck.DoNotDisturbOff -> R.string.reminder_troubleshooting_check_do_not_disturb
+            is TroubleshootingCheck.UnrestrictedOptimizationEnabled -> R.string.reminder_troubleshooting_check_battery_optimization
+            is TroubleshootingCheck.PowerSavingModeOff -> R.string.reminder_troubleshooting_check_power_saving_mode
+            is TroubleshootingCheck.ExactAlarmPermission -> R.string.reminder_troubleshooting_check_exact_alarm_permission
+        },
+    )
 
-// TODO: move to string resources
-private fun TroubleshootingCheck.statusName(): String? =
-    when (this) {
-        is TroubleshootingCheck.NotificationPermission -> if (result == CheckResult.Passed) "Granted" else "Denied"
-        is TroubleshootingCheck.NotificationChannelEnabled -> if (result == CheckResult.Passed) "Enabled" else "Disabled"
-        is TroubleshootingCheck.DoNotDisturbOff -> if (result == CheckResult.Passed) "Off" else "On"
-        is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
-            when (result) {
-                is CheckResult.Passed -> "Unrestricted"
-                is CheckResult.Warning -> "Optimized"
-                is CheckResult.Failed -> "Restricted"
-                else -> null
-            }
-        is TroubleshootingCheck.PowerSavingModeOff -> if (result == CheckResult.Passed) "Off" else "On"
-        is TroubleshootingCheck.ExactAlarmPermission -> if (result == CheckResult.Passed) "Granted" else "Denied"
-    }
+context(context: Context)
+private fun TroubleshootingCheck.statusName(): String? {
+    val passed = result == CheckResult.Passed
+    val statusRes =
+        when (this) {
+            is TroubleshootingCheck.NotificationPermission,
+            is TroubleshootingCheck.ExactAlarmPermission,
+            ->
+                if (passed) {
+                    R.string.reminder_troubleshooting_status_granted
+                } else {
+                    R.string.reminder_troubleshooting_status_denied
+                }
+            is TroubleshootingCheck.NotificationChannelEnabled -> if (passed) R.string.enabled else R.string.disabled
+            is TroubleshootingCheck.DoNotDisturbOff,
+            is TroubleshootingCheck.PowerSavingModeOff,
+            ->
+                if (passed) {
+                    R.string.reminder_troubleshooting_status_off
+                } else {
+                    R.string.reminder_troubleshooting_status_on
+                }
+            is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
+                when (result) {
+                    is CheckResult.Passed -> R.string.reminder_troubleshooting_status_unrestricted
+                    is CheckResult.Warning -> R.string.reminder_troubleshooting_status_optimized
+                    is CheckResult.Failed -> R.string.reminder_troubleshooting_status_restricted
+                    else -> null
+                }
+        }
+    return statusRes?.let { context.getString(it) }
+}
 
-// TODO: move to string resources
-private fun TroubleshootingCheck.explanation(): String? =
-    when (this) {
-        // no need for an explanation: the 'grant permission' action should be sufficient
-        is TroubleshootingCheck.NotificationPermission -> null
-        is TroubleshootingCheck.NotificationChannelEnabled ->
-            if (result.hasIssue) "The review reminder notification channel must be enabled" else null
-        is TroubleshootingCheck.DoNotDisturbOff ->
-            if (result.hasIssue) "Do Not Disturb may mute reminder notifications" else null
-        is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
-            when (result) {
-                is CheckResult.Warning -> "Battery optimization may delay reminders"
-                is CheckResult.Failed -> "Background usage is disabled. Reminders may not be delivered"
-                else -> null
-            }
-        is TroubleshootingCheck.PowerSavingModeOff ->
-            if (result.hasIssue) "Power saving mode may prevent timely delivery of reminders" else null
-        is TroubleshootingCheck.ExactAlarmPermission ->
-            if (result.hasIssue) "Required to schedule reminders at exact times" else null
-    }
+context(context: Context)
+private fun TroubleshootingCheck.explanation(): String? {
+    val explanationRes =
+        when (this) {
+            // no need for an explanation: the 'grant permission' action should be sufficient
+            is TroubleshootingCheck.NotificationPermission -> null
+            is TroubleshootingCheck.NotificationChannelEnabled ->
+                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_notification_channel else null
+            is TroubleshootingCheck.DoNotDisturbOff ->
+                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_do_not_disturb else null
+            is TroubleshootingCheck.UnrestrictedOptimizationEnabled ->
+                when (result) {
+                    is CheckResult.Warning -> R.string.reminder_troubleshooting_explanation_battery_optimized
+                    is CheckResult.Failed -> R.string.reminder_troubleshooting_explanation_battery_restricted
+                    else -> null
+                }
+            is TroubleshootingCheck.PowerSavingModeOff ->
+                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_power_saving_mode else null
+            is TroubleshootingCheck.ExactAlarmPermission ->
+                if (result.hasIssue) R.string.reminder_troubleshooting_explanation_exact_alarm else null
+        }
+    return explanationRes?.let { context.getString(it) }
+}
 
 private fun CheckResult.iconRes(): Int =
     when (this) {
