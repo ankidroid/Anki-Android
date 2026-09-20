@@ -222,7 +222,7 @@ class NotificationService : AnkiBroadcastReceiver() {
                         val fullDeckName = reviewReminder.scope.getDeckName()
                         val deckName =
                             Decks.basename(fullDeckName) // don't show the full path with "::" included
-                        "It's time to study $deckName"
+                        "It's time to study \"$deckName\"" // quotation marks to separate user-defined deck names from official app text
                     }
                 }
             val description = "$dueCardsTotal cards due"
