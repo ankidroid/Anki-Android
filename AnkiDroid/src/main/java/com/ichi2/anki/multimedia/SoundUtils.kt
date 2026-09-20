@@ -1,7 +1,6 @@
 /*
  *  Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com>
  *  Copyright (c) 2014 Timothy rae <perceptualchaos2@gmail.com>
- *  Copyright (c) 2025 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software

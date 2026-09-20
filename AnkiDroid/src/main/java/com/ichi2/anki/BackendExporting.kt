@@ -1,5 +1,4 @@
 // SPDX-FileCopyrightText: 2023 lukstbit <52494258+lukstbit@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 David Allison <davidallisongithub@gmail.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
