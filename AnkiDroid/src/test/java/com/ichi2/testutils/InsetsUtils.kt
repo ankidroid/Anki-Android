@@ -155,12 +155,14 @@ fun Activity.dispatchInsets(
  * * less for gesture navigation.
  * * [HIDDEN_GESTURE_BAR] if the gesture indicator is hidden, in which case no band is drawn:
  *   nothing marks the area on a real device either.
+ * @param navBarRight the width of a side navigation bar in landscape
  * @param bottomCornerRadius the radius of both bottom rounded display corners
  */
 @SuppressLint("RtlHardcoded") // insets and cutouts are physical: not layout-direction relative
 fun Activity.simulateSystemBars(
     cutoutLeft: Dp = 0.dp,
     navBarBottom: Dp = 48.dp,
+    navBarRight: Dp = 0.dp,
     bottomCornerRadius: Dp = 0.dp,
 ) {
     val statusBarHeight = 24.dp
@@ -170,7 +172,7 @@ fun Activity.simulateSystemBars(
             .Builder()
             .setInsets(statusBars(), insetsOf(top = statusBarHeight))
             // workaround for 'systemWindowInsets', so snackbars match a real device
-            .setInsets(navigationBars(), insetsOf(left = cutoutLeft, bottom = navBarBottom))
+            .setInsets(navigationBars(), insetsOf(left = cutoutLeft, right = navBarRight, bottom = navBarBottom))
             .setInsets(displayCutout(), insetsOf(left = cutoutLeft))
             .apply {
                 // set even when zero: Robolectric's WindowInsets.Builder leaks rounded corners between tests
@@ -187,6 +189,9 @@ fun Activity.simulateSystemBars(
             add(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, statusBarHeight.toPx(context), Gravity.TOP))
             if (navBarBottom.dp > 0) {
                 add(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, navBarBottom.toPx(context), Gravity.BOTTOM))
+            }
+            if (navBarRight.dp > 0) {
+                add(FrameLayout.LayoutParams(navBarRight.toPx(context), FrameLayout.LayoutParams.MATCH_PARENT, Gravity.RIGHT))
             }
             if (cutoutLeft.dp > 0) {
                 add(FrameLayout.LayoutParams(cutoutLeft.toPx(context), FrameLayout.LayoutParams.MATCH_PARENT, Gravity.LEFT))

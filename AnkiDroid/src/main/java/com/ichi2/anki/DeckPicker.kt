@@ -678,6 +678,28 @@ open class DeckPicker :
             )
         }
 
+        val bottomNavigation = findViewById<View?>(R.id.bottom_navigation)
+        var systemBarBottomInset = 0
+        var imeBottomInset = 0
+
+        fun updateBottomContentInset() {
+            val navigationInset =
+                if (bottomNavigation?.isVisible == true) {
+                    // The measured height includes the system navigation inset. Keep the standard
+                    // content height as a fallback until the first layout pass completes.
+                    maxOf(
+                        bottomNavigation.height,
+                        systemBarBottomInset + BOTTOM_NAV_HEIGHT_DP.dp.toPx(this),
+                    )
+                } else {
+                    systemBarBottomInset
+                }
+            val bottomContentInset = maxOf(navigationInset, imeBottomInset)
+            deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = bottomContentInset)
+            floatingActionButtonBinding.root.updatePadding(bottom = bottomContentInset)
+            setRecyclerViewBottomPaddingAbove(listAnchor())
+        }
+
         deckPickerBinding.decksFadeWrapper.setup(window)
         deckPickerBinding.decksFadeWrapper.anchorView = deckPickerBinding.reviewSummaryTextView
         ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { toolbar, insets ->
@@ -700,17 +722,13 @@ open class DeckPicker :
                 left = bars.left,
                 right = if (fragmented) 0 else bars.right,
             )
-            deckPickerBinding.reviewSummaryTextView.updatePadding(bottom = withKeyboard.bottom)
-
-            val bottomNavView = findViewById<View?>(R.id.bottom_navigation)
-            val bottomNavOffset = if (bottomNavView?.isVisible == true) BOTTOM_NAV_HEIGHT_DP.dp.toPx(this) else 0
-            // the keyboard covers the bottom navigation: clear whichever is taller
-            floatingActionButtonBinding.root.updatePadding(
-                bottom = maxOf(bars.bottom + bottomNavOffset, withKeyboard.bottom),
-            )
-
-            setRecyclerViewBottomPaddingAbove(listAnchor())
+            systemBarBottomInset = bars.bottom
+            imeBottomInset = withKeyboard.bottom
+            updateBottomContentInset()
             insets
+        }
+        bottomNavigation?.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            updateBottomContentInset()
         }
         floatingActionButtonBinding.fabMain.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
             setRecyclerViewBottomPaddingAbove(v)

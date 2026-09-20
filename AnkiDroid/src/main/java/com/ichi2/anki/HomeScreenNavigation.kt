@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat.Type.navigationBars
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.updateLayoutParams
@@ -55,10 +56,11 @@ fun setupBottomNavigation() {
         }
     deckPicker.onBackPressedDispatcher.addCallback(deckPicker, bottomNavBackCallback)
 
-    // Handle system navigation bar insets for the bottom nav
+    // Keep navigation controls clear of system bars and display cutouts while its background
+    // continues edge-to-edge.
     ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, insets ->
-        val navBars = insets.getInsets(navigationBars())
-        view.updatePadding(bottom = navBars.bottom)
+        val bars = insets.getInsets(systemBars() or displayCutout())
+        view.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
         insets
     }
 
