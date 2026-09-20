@@ -34,7 +34,6 @@ import com.ichi2.anki.reviewreminders.reminderLogPrefix
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.getParcelableCompat
-import com.ichi2.anki.utils.remainingTime
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -226,10 +225,7 @@ class NotificationService : AnkiBroadcastReceiver() {
                         "It's time to study $deckName"
                     }
                 }
-
-            val eta = withCol { sched.eta(dueCardsCount, false) }
-            val remainingTimeString = remainingTime(context, (eta * 60).toLong())
-            val description = "$dueCardsTotal cards due, $remainingTimeString"
+            val description = "$dueCardsTotal cards due"
 
             fireReviewReminderNotification(context, reviewReminder, title, description, onClickIntent)
         }
