@@ -281,6 +281,11 @@
     <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid's battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">Background usage is disabled. Reminders may not be delivered</string>
     <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">Power saving mode may prevent timely delivery of reminders</string>
     <string name="reminder_troubleshooting_explanation_exact_alarm" comment="Explains that AnkiDroid cannot schedule alarms at exact times unless the exact-alarm permission is granted.">Required to schedule reminders at exact times</string>
+    <!-- Troubleshooting check actions -->
+    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">Grant permission</string>
+    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">Enable notification channel</string>
+    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Disable battery optimization</string>
+    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Open battery settings</string>
 
     <!-- Notification content -->
     <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
