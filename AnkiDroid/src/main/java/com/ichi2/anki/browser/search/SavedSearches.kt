@@ -7,22 +7,6 @@ import com.ichi2.anki.libanki.Config
 import timber.log.Timber
 
 /**
- * A named query for the Card Browser
- *
- * Selecting a saved search quickly allows a user to either:
- * - search the given query
- * - add additional terms to the query before searching
- *
- * @see SavedSearches
- */
-data class SavedSearch(
-    val name: String,
-    val query: String,
-) {
-    fun normalize() = SavedSearch(name = this.name, query = this.query.trim())
-}
-
-/**
  * Manages saved searches (named search queries in the Card Browser)
  *
  * Named 'Saved Searches' in Anki Desktop
@@ -103,5 +87,3 @@ var Config.savedFilters: List<SavedSearch>
     set(value) {
         set("savedFilters", value.toMap())
     }
-
-fun List<SavedSearch>.toMap(): Map<String, String> = associate { it.name to it.query }
