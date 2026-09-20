@@ -110,7 +110,7 @@
     <string name="gestures_four_finger_tap" maxLength="41">Dotyk štyrmi prstami</string>
     <string name="gestures_shake" maxLength="41">Pri zatrasení</string>
     <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s“</string>
-    <string name="card_browser_enable_external_context_menu_summary">Povoliť globálne kontextové menu pre ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu_summary">Povoliť globálne kontextové menu pre „%s“</string>
     <string name="double_scrolling_gap" maxLength="41">Dvojitý posun</string>
     <string name="double_scrolling_gap_summ">Zdvojnásobiť posúvanie s eReader</string>
     <string name="swipe_sensitivity" maxLength="41">Citlivosť posunu</string>
@@ -248,7 +248,7 @@
     <string name="about_contributors_description"><![CDATA[Títo sú naši fantastický <a href=\"%1$s\">dobrovoľníci a prispievatelia</a>. Môžete tiež pomôcť programovaním, prekladaním, príspevkami a <a href=\"%2$s\">ďalším</a>!]]></string>
     <string name="license">Licencia</string>
     <string name="license_description"><![CDATA[AnkiDroid je vydaný pod licenciami <a href=\"%1$s\">GPL-3.0</a> a <a href=\"%2$s\">AGPL-3.0</a>, so zdrojovým kódom dostupným <a href=\"%3$s\">na GitHube</a>]]></string>
-    <string name="other_licenses"><![CDATA[AnkiDroid tiež používa knižnice ikony tretích strán,  ktoré sú licencované pod rôznymi open source <a href=\"%1$s\">licenciami</a>]]></string>
+    <string name="other_licenses"><![CDATA[AnkiDroid tiež používa knižnice a ikony tretích strán, ktoré sú licencované pod rôznymi open source <a href=\"%1$s\">licenciami</a>]]></string>
     <string name="donate_description"><![CDATA[Môžete podporiť vývoj AnkiDroid <a href=\"%1$s\">príspevkom</a>. Akúkoľvek sumu si hlboko vážime.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Pridať gesto</string>
@@ -294,7 +294,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pre vývojárov</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povoliť vývojárske nastavenia</string>
     <string name="disable_dev_options">Zakázať vývojárske nastavenia</string>
-    <string name="dev_options_warning">Prosím buďte si istý pred povolovaním vývojárskych nastavení. Tieto nastavenia sú nebezpečné a mohli by poškodiť aplikáciu alebo poškodiť vašu kolekciu.\n\nVšimnite si že tieto nastavenie nie sú vhodné pre väčšinu používateľov a preto nie sú preložené, takže sú v Angličtine.</string>
+    <string name="dev_options_warning">Prosím uistite sa pred povolovaním vývojárskych nastavení. Tieto nastavenia sú nebezpečné a mohli by poškodiť aplikáciu alebo poškodiť vašu kolekciu.\n\nVšimnite si že tieto nastavenia nie sú vhodné pre väčšinu používateľov a preto nie sú preložené, takže sú v Angličtine.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->

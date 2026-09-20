@@ -253,7 +253,7 @@
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">有効なメールアドレスを入力してください</string>
     <string name="password_empty">パスワードが必要です</string>
-    <string name="back_pressed_once">Go back again to exit</string>
+    <string name="back_pressed_once">もう一度「戻る」操作で終了</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">デッキをダウンロード</string>
@@ -262,7 +262,7 @@
     <string name="cancel_download">ダウンロードをキャンセル</string>
     <string name="cancel_download_question_title">ダウンロードをキャンセルしますか？</string>
     <string name="downloading_file">%s をダウンロード中</string>
-    <string name="import_deck">Import deck</string>
+    <string name="import_deck">デッキをインポート</string>
     <string name="something_wrong">問題が発生しました。もう一度やり直してください。</string>
     <string name="download_failed">ダウンロードに失敗しました</string>
     <string name="deck_download_progress_message">ダウンロード中、他のアプリを使用できます</string>
@@ -341,9 +341,9 @@
     <string name="orphan_note_message">このカードタイプを削除すると、カードが無いノートが生じます。</string>
     <string name="voice_not_supported">読み上げ音声がサポートされていません。別の音声を試すか、音声エンジンをインストールしてください。</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">デッキリスト</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">デッキを削除（確認なし）</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ノート編集画面</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">ノートタイプを選択</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">タグを編集</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
@@ -364,7 +364,7 @@
     <string name="set_due_date_date_range">Date range</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">プロファイルを切り替える</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">プロファイルを編集</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">プロファイルを削除</string>
 </resources>

@@ -47,10 +47,10 @@
     <string name="disable_stylus">Tắt tính năng viết bằng bút cảm ứng</string>
     <string name="eraser" maxLength="28">Eraser</string>
     <string name="add_brush" maxLength="28">Add brush</string>
-    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Left</string>
-    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Bottom</string>
-    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Right</string>
-    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">More options</string>
+    <string name="whiteboard_align_left" comment="Option to align the whiteboard toolbar on the left" maxLength="28">Trái</string>
+    <string name="whiteboard_align_bottom" comment="Option to align the whiteboard toolbar on the bottom" maxLength="28">Dưới</string>
+    <string name="whiteboard_align_right" comment="Option to align the whiteboard toolbar on the right" maxLength="28">Phải</string>
+    <string name="whiteboard_more_options" comment="Tooltip of the whiteboard \'More\' button" maxLength="28">Thêm những lựa chọn</string>
     <string name="whiteboard_remove_brush_message">Are you sure you want to remove this brush from your palette?</string>
     <string name="whiteboard_ink_eraser" comment="Title of the whiteboard Ink eraser">Ink</string>
     <string name="whiteboard_stroke_eraser" comment="Title of the whiteboard Stroke eraser">Stroke</string>
@@ -69,13 +69,13 @@
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
     <string name="webview_crash_unknown">Lỗi không xác định</string>
     <string name="webview_crash_unknwon_detailed">Lỗi nội bộ trong webview</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">Hết bộ nhớ</string>
     <string name="webview_crash_oom_details">WebView đã bị ngắt bởi hệ thống. Việc này thường xảy ra khi ứng dụng hết bộ nhớ vì font chữ hoặc file media quá lớn.</string>
     <string name="webview_crash_nonfatal">Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView rendering failure</string>
     <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
-    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Slide to cancel</string>
+    <string name="slide_to_cancel" comment="Message shown when pressing the record button">Trượt để hủy</string>
     <string name="filter_by_flags" maxLength="41">Cờ</string>
     <!-- filtered deck options -->
     <string name="filtered_option_delay_again">Delay for again</string>
@@ -167,8 +167,8 @@
     <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
     <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
-    <string name="tag_already_exists">Tag already exists</string>
-    <string name="error_name_exists">Name already exists</string>
+    <string name="tag_already_exists">Tag đã tồn tại</string>
+    <string name="error_name_exists">Tên đã tồn tại</string>
     <string name="warning_find_and_replace">Consider backing up your collection from DeckPicker before using this option!</string>
     <!-- Time spans -->
     <!-- Currently only used if exporting APKG fails -->
@@ -189,7 +189,7 @@
     <string name="white_board_eraser_enabled">Đã kích hoạt tẩy</string>
     <string name="white_board_eraser_disabled">Đã tắt tẩy</string>
     <string comment="Progress amount e.g. \'28 MB/141 MB\'. %1$s is the current amount, %2$s is the max." name="progress_amount_bytes">%1$s/%2$s</string>
-    <string name="media_file_size_warning_title">Media too large</string>
+    <string name="media_file_size_warning_title">Đa phương tiện quá nặng</string>
     <string name="media_file_size_warning_message" comment="1$s: File name, 2$s: File size, 3$s: The size limit (e.g. 100MB)">Tệp \"%1$s\" (%2$s) vượt quá giới hạn %3$s của AnkiWeb và không thể đồng bộ. Vẫn thêm vào?</string>
     <string name="media_file_size_add_anyway">Vẫn thêm</string>
     <!-- Whiteboard save image message in the Study Screen -->
@@ -203,7 +203,7 @@
     <string name="valid_js_api_version">Phiên bản API AnkiDroid JS không hợp lệ. Liên hệ với nhà phát triển %s hoặc xem wiki</string>
     <string name="update_js_api_version">Đã có bản cập nhật AnkiDroid JS API. Liên hệ với nhà phát triển %s hoặc xem wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Hiển thị</string>
-    <string name="anki_js_error_code">(Error code: %d)</string>
+    <string name="anki_js_error_code">(Mã lỗi: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Đã sao chép vào bộ nhớ tạm</string>
     <string name="about_ankidroid_error_copy_debug_info">Không thể sao chép thông tin debug.</string>
@@ -223,7 +223,7 @@
     <string name="insert_horizontal_line">Insert horizontal line</string>
     <string name="insert_heading">Insert heading</string>
     <string name="format_font_size">Thay đổi cỡ chữ</string>
-    <string name="insert_mathjax">Insert MathJax equation</string>
+    <string name="insert_mathjax">Chèn công thức MathJax</string>
     <string name="note_editor_toolbar_icon">Chữ trên nút</string>
     <string name="before_text">HTML before selection</string>
     <string name="after_text">HTML after selection</string>
@@ -243,7 +243,7 @@
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
     <!-- Dialog hints -->
     <string name="dialog_hint_url">URL</string>
-    <string name="dialog_hint_certificate">Certificate</string>
+    <string name="dialog_hint_certificate">Chứng chỉ</string>
     <!-- IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -258,11 +258,11 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">Tải bộ thẻ xuống</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">Mở trong trình duyệt</string>
-    <string name="try_again">Try again</string>
+    <string name="try_again">Thử lại</string>
     <string name="cancel_download">Hủy tải xuống</string>
     <string name="cancel_download_question_title">Hủy tải xuống?</string>
     <string name="downloading_file">Đang tải xuống %s</string>
-    <string name="import_deck">Import deck</string>
+    <string name="import_deck">Nhập bộ thẻ</string>
     <string name="something_wrong">Đã xảy ra lỗi, vui lòng thử lại</string>
     <string name="download_failed">Tải xuống thất bại</string>
     <string name="deck_download_progress_message">Bạn được phép sử dụng những ứng dụng khác khi đang tải.</string>
@@ -297,7 +297,7 @@
     <string name="intro_ankidroid_tagline_one">Học ít</string>
     <string name="intro_ankidroid_tagline_two">Nhớ nhiều hơn</string>
     <string name="intro_short_ankidroid_explanation">Trình lập lịch thẻ Anki giúp bạn học hiệu quả hơn bằng cách tập trung vào những kiến thức bạn còn chưa vững và ghi nhớ những kiến thức bạn đã nắm vững</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Bắt đầu</string>
     <string name="intro_sync_from_ankiweb">Đồng bộ từ AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid chưa được khởi tạo. Vui lòng mở AnkiDroid và thử lại</string>
@@ -337,7 +337,7 @@
     <string name="play_recording">Phát</string>
     <string name="next_recording" comment="Description of a button to go to the next recording">Tiếp theo</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot delete card type</string>
+    <string name="orphan_note_title">Không thể xoá loại thẻ</string>
     <string name="orphan_note_message">Việc xóa loại thẻ này sẽ để lại một số ghi chú không có thẻ nào liên kết.</string>
     <string name="voice_not_supported">Giọng nói không được hỗ trợ. Hãy thử cái khác hoặc cài đặt một công cụ giọng nói.</string>
     <!--Keyboard shortcuts dialog-->

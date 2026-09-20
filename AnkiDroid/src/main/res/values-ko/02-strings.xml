@@ -165,7 +165,7 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">설정</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">학습 옵션</string>
     <string name="select_tts" maxLength="28">TTS 언어 설정</string>
-    <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 덱입니다. 카드들은 복습 후 자동으로 원래의 카드 덱으로 돌아가게 됩니다. 카드 덱 목록에서 이 카드 덱을 지운다면 남아 있는 모든 카드는 원래의 카드 덱으로 돌아가게 됩니다.</string>
+    <string name="dyn_deck_desc">이 특수 덱은 정규 학습 일정 외에 따로 복습하기 위한 덱입니다. 복습이 끝난 카드는 자동으로 원래 있던 덱으로 돌아갑니다. 이 덱을 덱 목록에서 삭제하면 남아있는 카드들은 모두 원래 덱으로 돌아갑니다.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
     <string name="tag_already_exists">태그가 이미 존재합니다</string>
@@ -366,6 +366,6 @@
     <string comment="Shown when retrying a running action" name="already_in_progress">이미 실행중입니다</string>
     <!-- Switch profiles screen -->
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">프로필 편집</string>
     <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
 </resources>

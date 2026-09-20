@@ -45,8 +45,8 @@
     <string name="model_field_editor_changing">Cập nhật các trường</string>
     <string name="model_field_editor_sort_field">Sắp xếp theo trường này</string>
     <!-- Card type -->
-    <string name="delete_card_type" maxLength="28">Delete card type</string>
-    <string name="add_card_type" maxLength="28">Add card type</string>
+    <string name="delete_card_type" maxLength="28">Xoá loại thẻ</string>
+    <string name="add_card_type" maxLength="28">Thêm loại thẻ</string>
     <!--Warnings-->
     <string name="model_delete_warning">Bạn có chắc chắn muốn xóa loại ghi chú này không?</string>
     <!--
