@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.compose.theme.AnkiDroidTheme
 
 /**
@@ -22,7 +23,13 @@ import com.ichi2.compose.theme.AnkiDroidTheme
  * preference_headers.xml launches it by class name.
  */
 class SwitchProfilesFragment : Fragment() {
-    private val viewModel: SwitchProfilesViewModel by viewModels()
+    private val viewModel: SwitchProfilesViewModel by viewModels {
+        SwitchProfilesViewModel.factory(
+            checkNotNull(AnkiDroidApp.instance.profileManager) {
+                "the profile environment failed to load, see ProfileManager.attachError"
+            },
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
