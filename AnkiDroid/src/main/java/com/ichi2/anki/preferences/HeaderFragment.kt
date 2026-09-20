@@ -103,9 +103,9 @@ class HeaderFragment : SettingsFragment() {
                 if (Prefs.newReviewRemindersEnabled) {
                     indexItem()
                         .withKey(activity.getString(R.string.pref_review_reminders_screen_key))
-                        .withTitle("Review reminders")
+                        .withTitle(activity.getString(R.string.review_reminders_title))
                         .withResId(R.xml.preferences_review_reminders)
-                        .withSummary("Notifications")
+                        .withSummary(activity.getString(R.string.notification_pref))
                 } else {
                     index(R.xml.preferences_notifications)
                 }

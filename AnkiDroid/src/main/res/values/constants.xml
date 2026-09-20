@@ -300,8 +300,8 @@
     </string-array>
 
     <string-array name="review_reminders_summary_entries">
-        <item>App-wide</item>
-        <item>Deck-specific</item>
+        <item>@string/review_reminders_summary_app_wide</item>
+        <item>@string/review_reminders_summary_deck_specific</item>
     </string-array>
 
     <string-array name="appearance_summary_entries">
