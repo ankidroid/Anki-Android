@@ -21,6 +21,7 @@ import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.libanki.testutils.ext.addNote
 import com.ichi2.anki.libanki.testutils.ext.createBasicNoteType
 import com.ichi2.anki.libanki.testutils.ext.newNote
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
@@ -30,11 +31,99 @@ import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
 
 class CollectionTest : InMemoryAnkiTest() {
+    @Test
+    fun `addNotes adds notes to their requested decks in a single undo step`() {
+        val basicNote =
+            col.newNote(col.notetypes.basic).apply {
+                setItem("Front", "one")
+                setItem("Back", "two")
+                tags.add("basic")
+            }
+        val reversedNote =
+            col.newNote(col.notetypes.basicAndReversed).apply {
+                setItem("Front", "three")
+                setItem("Back", "four")
+                tags.add("reversed")
+            }
+        val requests =
+            listOf(
+                AddNoteRequest(basicNote, Consts.DEFAULT_DECK_ID),
+                AddNoteRequest(reversedNote, addDeck("Other")),
+            )
+
+        val changes = col.addNotes(requests)
+
+        assertTrue(changes.note)
+        assertTrue(changes.card)
+        assertEquals(2, col.noteCount())
+        assertEquals(3, col.cardCount())
+        assertNotEquals(basicNote.id, reversedNote.id)
+        for ((note, deckId) in requests) {
+            assertNotEquals(0L, note.id)
+            val storedNote = col.getNote(note.id)
+            assertEquals(note.fields, storedNote.fields)
+            assertEquals(note.tags, storedNote.tags)
+            assertEquals(note.noteTypeId, storedNote.noteTypeId)
+            assertTrue(note.cards().all { it.did == deckId })
+        }
+        assertEquals(1, basicNote.numberOfCards())
+        assertEquals(2, reversedNote.numberOfCards())
+
+        col.undo()
+        assertEquals(0, col.noteCount())
+        assertEquals(0, col.cardCount())
+
+        col.redo()
+        assertEquals(2, col.noteCount())
+        assertEquals(3, col.cardCount())
+        assertEquals(basicNote.fields, col.getNote(basicNote.id).fields)
+        assertEquals(reversedNote.fields, col.getNote(reversedNote.id).fields)
+    }
+
+    @Test
+    fun `addNotes with no requests leaves the collection unchanged`() {
+        val note = addBasicNote()
+
+        val changes = col.addNotes(emptyList())
+
+        assertFalse(changes.note)
+        assertFalse(changes.card)
+        assertEquals(1, col.noteCount())
+        assertEquals(1, col.cardCount())
+        assertEquals(note.fields, col.getNote(note.id).fields)
+
+        col.undo()
+        assertEquals(0, col.noteCount())
+        assertEquals(0, col.cardCount())
+    }
+
+    @Test
+    fun `addNotes failure rolls back the batch without assigning note IDs`() {
+        val validNote = col.newNote().apply { setItem("Front", "valid") }
+        val invalidNote = col.newNote().apply { fields.removeAt(1) }
+
+        assertThrows(BackendInvalidInputException::class.java) {
+            col.addNotes(
+                listOf(
+                    AddNoteRequest(validNote, Consts.DEFAULT_DECK_ID),
+                    AddNoteRequest(invalidNote, Consts.DEFAULT_DECK_ID),
+                ),
+            )
+        }
+
+        assertEquals(0L, validNote.id)
+        assertEquals(0L, invalidNote.id)
+        assertEquals(0, col.noteCount())
+        assertEquals(0, col.cardCount())
+        assertFalse(col.undoAvailable())
+    }
+
     @Test
     fun editClozeGenerateCardsInSameDeck() {
         // #7781

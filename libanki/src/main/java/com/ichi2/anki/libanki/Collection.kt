@@ -47,7 +47,7 @@ import anki.import_export.ImportAnkiPackageOptions
 import anki.import_export.ImportCsvRequest
 import anki.import_export.ImportResponse
 import anki.import_export.csvMetadataRequest
-import anki.notes.AddNoteRequest
+import anki.notes.addNoteRequest
 import anki.scheduler.stateOrNull
 import anki.search.BrowserColumns
 import anki.search.BrowserRow
@@ -101,6 +101,17 @@ data class ComputedMemoryState(
     val stability: Float? = null,
     val difficulty: Float? = null,
     val decay: Float? = null,
+)
+
+/**
+ * [Upstream Python definition](https://github.com/ankitects/anki/blob/754ce3a25f608010c0249e074e5d7fe95bda035f/pylib/anki/collection.py#L132-L135).
+ *
+ * Converted to the generated protobuf [anki.notes.AddNoteRequest] for backend calls.
+ */
+@LibAnkiAlias("AddNoteRequest")
+data class AddNoteRequest(
+    val note: Note,
+    val deckId: DeckId,
 )
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -671,17 +682,31 @@ class Collection(
         return out.changes
     }
 
+    /**
+     * Add notes in a single undoable operation, updating their IDs on success.
+     *
+     * - [`pylib` implementation](https://github.com/ankitects/anki/blob/754ce3a25f608010c0249e074e5d7fe95bda035f/pylib/anki/collection.py#L544-L558)
+     *
+     * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException if any notes are invalid.
+     * The batch is rolled back if this occurs.
+     */
     @LibAnkiAlias("add_notes")
-    @RustCleanup("Implement")
-    @Deprecated("Needs implementation", level = DeprecationLevel.HIDDEN)
-    fun addNotes(requests: List<AddNoteRequest>): OpChanges? = TODO()
-//    {
-//        val out = backend.addNotes(requests = requests)
-//        for ((idx, request) in requests.withIndex()) {
-//            request.note!!.id = out.getNids(idx)
-//        }
-//        return out.changes
-//    }
+    fun addNotes(requests: List<AddNoteRequest>): OpChanges {
+        val out =
+            backend.addNotes(
+                requests =
+                    requests.map { request ->
+                        addNoteRequest {
+                            note = request.note.toBackendNote()
+                            deckId = request.deckId
+                        }
+                    },
+            )
+        for ((idx, request) in requests.withIndex()) {
+            request.note.id = out.getNids(idx)
+        }
+        return out.changes
+    }
 
     @LibAnkiAlias("remove_notes")
     @RustCleanup("remove cids and pass in []")
