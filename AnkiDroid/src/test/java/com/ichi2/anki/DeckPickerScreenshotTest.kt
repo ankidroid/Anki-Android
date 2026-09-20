@@ -6,15 +6,20 @@ import android.content.Intent
 import android.view.View
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.android.view.locationInWindow
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.lastItemView
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateKeyboard
+import com.ichi2.utils.dp
 import kotlinx.coroutines.flow.first
 import org.junit.After
 import org.junit.Before
@@ -58,6 +63,24 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
         withDeckPicker(deckCount = 30) { deckPicker ->
             deckPicker.simulateEdgeToEdge()
             captureScreen("edgeToEdge_30_decks")
+        }
+
+    @Test
+    fun snackbar_follows_keyboard_visibility() =
+        withDeckPicker(deckCount = 30) { deckPicker ->
+            // Deck creation displays feedback before the dialog's keyboard closes.
+            deckPicker.dispatchInsets(navBarBottom = 48.dp, imeBottom = 300.dp)
+            advanceRobolectricLooper()
+            val snackbar = checkNotNull(deckPicker.showSnackbar(TR.errorsFilteredParentDeck(), Snackbar.LENGTH_INDEFINITE))
+            advanceRobolectricLooper()
+
+            deckPicker.dispatchInsets(navBarBottom = 48.dp)
+            advanceRobolectricLooper()
+            captureScreen("snackbar_keyboard_closed")
+
+            deckPicker.simulateKeyboard()
+            captureScreen("snackbar_keyboard_open")
+            snackbar.dismiss()
         }
 
     /** Ensure that 'studied today' overlaying a deck name works when the IME is open */

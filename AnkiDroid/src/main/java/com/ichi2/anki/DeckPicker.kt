@@ -309,6 +309,8 @@ open class DeckPicker :
         }
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = floatingActionButtonBinding.fabMain.takeIf { it.isVisible }
+        // Follow the FAB as it moves when the keyboard opens or closes.
+        isAnchorViewLayoutListenerEnabled = true
         addCallback(activeSnackbarCallback)
     }
 
