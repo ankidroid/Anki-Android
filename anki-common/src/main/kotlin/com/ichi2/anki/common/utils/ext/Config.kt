@@ -111,3 +111,9 @@ var Config.browserSortCardsColumn by jsonConfigProperty<String>(BrowserConfig.CA
 
 /** Column key used to sort the browser in notes mode. */
 var Config.browserSortNotesColumn by jsonConfigProperty<String>(BrowserConfig.NOTES_SORT_COLUMN_KEY).orDefault("noteFld")
+
+/** Whether the cards-mode browser sort is reversed. */
+var Config.browserSortCardsBackwards by jsonConfigProperty<Boolean>(BrowserConfig.CARDS_SORT_BACKWARDS_KEY).orDefault(false)
+
+/** Whether the notes-mode browser sort is reversed. */
+var Config.browserSortNotesBackwards by jsonConfigProperty<Boolean>(BrowserConfig.NOTES_SORT_BACKWARDS_KEY).orDefault(false)
