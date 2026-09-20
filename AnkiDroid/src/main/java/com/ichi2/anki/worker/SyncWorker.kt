@@ -38,8 +38,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
+
+/**
+ * Held while a background collection sync runs. A profile switch holds it until
+ * the process dies, so a sync cannot start part way through a restart.
+ */
+val syncLock = Mutex()
 
 /**
  * Syncs collection and media in the background.
@@ -69,6 +76,10 @@ class SyncWorker(
 
     override suspend fun doWork(): Result {
         Timber.v("SyncWorker::doWork")
+        return syncLock.withLockUnlessSwitching { doWorkHoldingLock() }
+    }
+
+    private suspend fun doWorkHoldingLock(): Result {
         trySetForeground(getForegroundInfo())
 
         val hkey =
