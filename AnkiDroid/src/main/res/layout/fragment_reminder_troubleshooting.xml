@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
-        app:title="Troubleshooting" />
+        tools:title="Troubleshooting" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -93,10 +93,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Different devices have different notification restriction settings. Check your system settings or search online if issues persist."
+                    android:text="@string/reminder_troubleshooting_footer"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"
-                    tools:ignore="HardcodedText" />
+                    android:textColor="?android:attr/textColorSecondary" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/copy_debug_info"
