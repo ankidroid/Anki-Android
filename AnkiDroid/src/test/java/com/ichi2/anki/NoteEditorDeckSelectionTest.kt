@@ -310,4 +310,21 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
             assertEquals(basic.id, col.defaultsForAdding().notetypeId)
             assertEquals(1, col.noteCount())
         }
+
+    @Test
+    fun `restored selection takes precedence over the original destination`() =
+        runTest {
+            useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
+            val a = addDeck("Original A", setAsSelected = true)
+            val b = addDeck("Chosen B")
+            val controller =
+                startActivityControllerNormallyOpenCollectionWithIntent(
+                    NoteEditorActivity::class.java,
+                    NoteEditorDestination.AddNote(a).toIntent(),
+                )
+            controller.get().getNoteEditorFragment().select(b)
+            controller.recreate()
+            advanceRobolectricLooper()
+            assertEquals(b, controller.get().getNoteEditorFragment().deckId)
+        }
 }

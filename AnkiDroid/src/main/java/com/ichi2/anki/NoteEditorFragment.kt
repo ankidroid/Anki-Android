@@ -97,6 +97,7 @@ import com.ichi2.anki.common.utils.android.digit
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
+import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
@@ -757,7 +758,6 @@ class NoteEditorFragment :
             deckTextView.setText(CommonString.CardEditorCardDeck)
         }
 
-        deckId = requireArguments().getLong(EXTRA_DID, deckId)
         if (addNote) {
             // Initialize both selections from the same defaults
             // https://github.com/ankitects/anki/blob/754ce3a25f608010c0249e074e5d7fe95bda035f/qt/aqt/addcards_legacy.py#L91-L108
@@ -765,6 +765,8 @@ class NoteEditorFragment :
             if (selectedNoteTypeId?.let { col.notetypes.get(it) } == null) {
                 selectedNoteTypeId = defaults.notetypeId
             }
+            // A restored selection takes precedence over the original launch destination.
+            deckId = deckId.ifZero { requireArguments().getLong(EXTRA_DID) }
             val deck = col.decks.getLegacy(deckId)
             if (deck == null || deck.isFiltered) {
                 deckId = defaults.deckId
