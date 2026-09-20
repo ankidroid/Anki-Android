@@ -4,6 +4,7 @@ package com.ichi2.anki.cardviewer
 
 import android.media.MediaPlayer
 import android.net.Uri
+import android.webkit.WebResourceRequest
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.getMediaBaseUrl
@@ -71,17 +72,17 @@ import java.io.Closeable
 class CardMediaPlayer : Closeable {
     private val soundTagPlayer: SoundTagPlayer
     private val ttsPlayer: Deferred<TtsPlayer>
-    private val mediaErrorListener: MediaErrorListener
+    private val mAudioPlayingErrorListener: AudioPlayingErrorListener
 
     @VisibleForTesting
-    constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, mediaErrorListener: MediaErrorListener) {
+    constructor(soundTagPlayer: SoundTagPlayer, ttsPlayer: Deferred<TtsPlayer>, audioPlayingErrorListener: AudioPlayingErrorListener) {
         this.soundTagPlayer = soundTagPlayer
         this.ttsPlayer = ttsPlayer
-        this.mediaErrorListener = mediaErrorListener
+        this.mAudioPlayingErrorListener = audioPlayingErrorListener
     }
 
-    constructor(javascriptEvaluator: JavascriptEvaluator, mediaErrorListener: MediaErrorListener) {
-        this.mediaErrorListener = mediaErrorListener
+    constructor(javascriptEvaluator: JavascriptEvaluator, audioPlayingErrorListener: AudioPlayingErrorListener) {
+        this.mAudioPlayingErrorListener = audioPlayingErrorListener
         this.soundTagPlayer =
             SoundTagPlayer(
                 soundUriBase = getMediaBaseUrl(getMediaDirectory(appContext)),
@@ -228,6 +229,8 @@ class CardMediaPlayer : Closeable {
 
     /**
      * Obtains all the [AvTag]s for the [cardSide] and plays them sequentially
+
+     * @param isAutomaticPlayback Whether the playback started due to ankidroid settings and not due to an explicit user request.
      */
     private suspend fun playAllAvTagsInternal(
         cardSide: CardSide,
@@ -257,6 +260,8 @@ class CardMediaPlayer : Closeable {
 
     /**
      * Plays the provided [tag] and returns whether playback should continue
+     *
+     * @param isAutomaticPlayback Whether the playback started due to ankidroid settings and not due to an explicit user request.
      * @return whether playback should continue: `true`: continue, `false`: stop playback
      */
     private suspend fun play(
@@ -267,10 +272,10 @@ class CardMediaPlayer : Closeable {
             suspend fun play() {
                 ensureActive()
                 when (tag) {
-                    is SoundOrVideoTag -> soundTagPlayer.play(tag, mediaErrorListener)
+                    is SoundOrVideoTag -> soundTagPlayer.play(tag, mAudioPlayingErrorListener)
                     is TTSTag -> {
                         awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
-                            mediaErrorListener.onTtsError(it, isAutomaticPlayback)
+                            mAudioPlayingErrorListener.onTtsError(it, isAutomaticPlayback)
                         }
                     }
                 }
@@ -315,6 +320,9 @@ class CardMediaPlayer : Closeable {
             SingleCardSide.FRONT -> playAllForSide(CardSide.QUESTION)
         }
 
+    /**
+     * @param isAutomaticPlayback Whether the playback started due to ankidroid settings and not due to an explicit user request.
+     */
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
         val player =
             withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS) {
@@ -323,7 +331,7 @@ class CardMediaPlayer : Closeable {
         if (player == null) {
             Timber.v("timeout waiting for TTS Player")
             val error = AndroidTtsError.InitTimeout
-            mediaErrorListener.onTtsError(error, isAutomaticPlayback)
+            mAudioPlayingErrorListener.onTtsError(error, isAutomaticPlayback)
         }
         return player
     }
@@ -366,10 +374,24 @@ private fun Deferred<Closeable>.close(logPrefix: String) {
     }
 }
 
-interface MediaErrorListener {
+/**
+ * Listener for errors that relates to audio and video playing (media and TTS).
+ */
+interface AudioPlayingErrorListener {
+    /**
+     * Informs the listener that there is a non-specified error while attempting to play [uri].
+     * @return What to do next regarding media playing
+     */
     @CheckResult
     fun onError(uri: Uri): MediaErrorBehavior
 
+    /**
+     * Informs the listener that there was an error playing a media.
+     *
+     * See [MediaPlayer.OnErrorListener] for the first three parameters.
+     * @param uri The URI of the media that the player tried to play during the error.
+     * @return What to do next regarding media playing
+     */
     @CheckResult
     fun onMediaPlayerError(
         mp: MediaPlayer?,
@@ -378,9 +400,34 @@ interface MediaErrorListener {
         uri: Uri,
     ): MediaErrorBehavior
 
+    /**
+     * Informs the listener that there was a TTS error.
+     *
+     * @param error The error for which the listener is notified.
+     * @param isAutomaticPlayback Whether the playback started due to ankidroid settings and not due to an explicit user request.
+     */
     fun onTtsError(
         error: TtsPlayer.TtsError,
         isAutomaticPlayback: Boolean,
+    )
+}
+
+interface MediaErrorListener : AudioPlayingErrorListener {
+    /**
+     * Called to inform the handler that a new card side is displayed.
+     */
+    fun onCardSideChange()
+
+    /**
+     * Must be called to inform the handler that a media was not found.
+     * The media can be either local (it is expected to be in collection.media folder) or online.
+     *
+     * @param request The request that failed to be processed
+     * @param onFailure The callback to execute to inform the user of this error.
+     */
+    fun onMediaNotFoundError(
+        request: WebResourceRequest,
+        onFailure: (String) -> Unit,
     )
 }
 

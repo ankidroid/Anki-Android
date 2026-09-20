@@ -11,6 +11,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnErrorListener
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.MediaErrorHandler
+import com.ichi2.anki.cardviewer.MediaErrorListener
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.TtsPlayer
@@ -33,7 +34,7 @@ abstract class CardViewerViewModel(
     override val onError = MutableSharedFlow<String>()
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
-    val mediaErrorHandler =
+    val mediaErrorHandler: MediaErrorListener =
         MediaErrorHandler(
             onMediaError = { viewModelScope.launch { onMediaError.emit(it) } },
             onTtsError = { viewModelScope.launch { onTtsError.emit(it) } },
@@ -46,7 +47,7 @@ abstract class CardViewerViewModel(
     protected val cardMediaPlayer =
         CardMediaPlayer(
             javascriptEvaluator = { launchCatchingIO { eval.emit(it) } },
-            mediaErrorListener = mediaErrorHandler,
+            audioPlayingErrorListener = mediaErrorHandler,
         ).also {
             addCloseable(it)
         }
@@ -114,6 +115,7 @@ abstract class CardViewerViewModel(
     protected open suspend fun showQuestion() {
         Timber.v("showQuestion")
         showingAnswer.emit(false)
+        mediaErrorHandler.onCardSideChange()
 
         val card = currentCard.await()
         val questionData = withCol { card.question(this) }

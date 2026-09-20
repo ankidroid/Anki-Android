@@ -72,17 +72,17 @@ class SoundTagPlayer(
 
     /**
      * @throws MediaException if the file does not exist, or if media playing fails
-     * @param mediaErrorListener handles a sound error and returns how to continue playing sounds
+     * @param audioPlayingErrorListener handles a sound error and returns how to continue playing sounds
      */
     suspend fun play(
         tag: SoundOrVideoTag,
-        mediaErrorListener: MediaErrorListener?,
+        audioPlayingErrorListener: AudioPlayingErrorListener?,
     ) {
         val tagType = tag.getType()
         suspendCancellableCoroutine { continuation ->
             Timber.d("Playing SoundOrVideoTag")
             when (tagType) {
-                SoundOrVideoTag.Type.AUDIO -> playSound(continuation, tag, mediaErrorListener)
+                SoundOrVideoTag.Type.AUDIO -> playSound(continuation, tag, audioPlayingErrorListener)
                 SoundOrVideoTag.Type.VIDEO -> playVideo(continuation, tag)
             }
         }
@@ -100,7 +100,7 @@ class SoundTagPlayer(
     private fun playSound(
         continuation: CancellableContinuation<Unit>,
         tag: SoundOrVideoTag,
-        mediaErrorListener: MediaErrorListener?,
+        audioPlayingErrorListener: AudioPlayingErrorListener?,
     ) {
         requireNewMediaPlayer().apply {
             continuation.invokeOnCancellation {
@@ -127,7 +127,7 @@ class SoundTagPlayer(
                 Timber.w("Media error %d", what)
                 abandonAudioFocus()
                 val continuationBehavior =
-                    mediaErrorListener?.onMediaPlayerError(mp, what, extra, soundUri) ?: MediaErrorBehavior.CONTINUE_MEDIA
+                    audioPlayingErrorListener?.onMediaPlayerError(mp, what, extra, soundUri) ?: MediaErrorBehavior.CONTINUE_MEDIA
                 // 15103: setOnErrorListener can be invoked after task cancellation
                 if (!continuation.isCompleted) {
                     continuation.resumeWithException(MediaException(continuationBehavior))
@@ -139,7 +139,7 @@ class SoundTagPlayer(
                 awaitSetDataSource(soundUri.toString())
             } catch (e: Exception) {
                 continuation.ensureActive()
-                val continuationBehavior = mediaErrorListener?.onError(soundUri) ?: MediaErrorBehavior.CONTINUE_MEDIA
+                val continuationBehavior = audioPlayingErrorListener?.onError(soundUri) ?: MediaErrorBehavior.CONTINUE_MEDIA
                 val exception = MediaException(continuationBehavior, e)
                 return continuation.resumeWithException(exception)
             }

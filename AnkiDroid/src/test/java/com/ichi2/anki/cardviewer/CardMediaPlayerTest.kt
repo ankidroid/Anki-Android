@@ -275,7 +275,7 @@ fun CardMediaPlayerTest.runSoundPlayerTest(
         CardMediaPlayer(
             soundTagPlayer = tagPlayer,
             ttsPlayer = CompletableDeferred(ttsPlayer),
-            mediaErrorListener = mockk(),
+            audioPlayingErrorListener = mockk(),
         )
     cardMediaPlayer.setOnMediaGroupCompletedListener(onMediaGroupCompleted)
     assertThat("can play sounds", cardMediaPlayer.isEnabled)

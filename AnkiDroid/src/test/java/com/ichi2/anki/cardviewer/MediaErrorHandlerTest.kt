@@ -58,35 +58,35 @@ class MediaErrorHandlerTest {
 
     @Test
     fun firstTimeOnNewCardSends() {
-        processFailure(getValidRequest("example.jpg"))
+        onMediaNotFoundError(getValidRequest("example.jpg"))
         assertThat(timesCalled, equalTo(1))
         assertThat(fileNames, contains("example.jpg"))
     }
 
     @Test
     fun twoCallsOnSameSideCallsOnce() {
-        processFailure(getValidRequest("example.jpg"))
-        processFailure(getValidRequest("example2.jpg"))
+        onMediaNotFoundError(getValidRequest("example.jpg"))
+        onMediaNotFoundError(getValidRequest("example2.jpg"))
         assertThat(timesCalled, equalTo(1))
         assertThat(fileNames, contains("example.jpg"))
     }
 
     @Test
     fun callAfterFlipIsShown() {
-        processFailure(getValidRequest("example.jpg"))
+        onMediaNotFoundError(getValidRequest("example.jpg"))
         sut.onCardSideChange()
-        processFailure(getValidRequest("example2.jpg"))
+        onMediaNotFoundError(getValidRequest("example2.jpg"))
         assertThat(timesCalled, equalTo(2))
         assertThat(fileNames, contains("example.jpg", "example2.jpg"))
     }
 
     @Test
     fun thirdCallIsIgnored() {
-        processFailure(getValidRequest("example.jpg"))
+        onMediaNotFoundError(getValidRequest("example.jpg"))
         sut.onCardSideChange()
-        processFailure(getValidRequest("example2.jpg"))
+        onMediaNotFoundError(getValidRequest("example2.jpg"))
         sut.onCardSideChange()
-        processFailure(getValidRequest("example3.jpg"))
+        onMediaNotFoundError(getValidRequest("example3.jpg"))
         assertThat(timesCalled, equalTo(2))
         assertThat(fileNames, contains("example.jpg", "example2.jpg"))
     }
@@ -94,15 +94,15 @@ class MediaErrorHandlerTest {
     @Test
     fun invalidRequestIsIgnored() {
         val invalidRequest = getInvalidRequest("example.jpg")
-        processFailure(invalidRequest)
+        onMediaNotFoundError(invalidRequest)
         assertThat(timesCalled, equalTo(0))
     }
 
-    private fun processFailure(
+    private fun onMediaNotFoundError(
         invalidRequest: WebResourceRequest,
         consumer: (String) -> Unit = defaultHandler(),
     ) {
-        sut.processFailure(invalidRequest, consumer)
+        sut.onMediaNotFoundError(invalidRequest, consumer)
     }
 
     private fun processMissingMedia(
@@ -114,7 +114,7 @@ class MediaErrorHandlerTest {
 
     @Test
     fun uiFailureDoesNotCrash() {
-        processFailure(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
+        onMediaNotFoundError(getValidRequest("example.jpg")) { throw RuntimeException("expected") }
         assertThat("Irrelevant assert to stop lint warnings", timesCalled, equalTo(0))
     }
 
