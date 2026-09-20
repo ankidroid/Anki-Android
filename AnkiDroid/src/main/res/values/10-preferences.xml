@@ -288,6 +288,9 @@
     <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Open battery settings</string>
 
     <!-- Notification content -->
+    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">It\'s time to study your cards</string>
+    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app's own text.">It\'s time to study \"%s\"</string>
+    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like '1h', '5m', etc.">Snooze %s</string>
     <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
         <item quantity="one">%d card due</item>
         <item quantity="other">%d cards due</item>

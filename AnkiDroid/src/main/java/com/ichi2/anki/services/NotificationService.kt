@@ -217,12 +217,12 @@ class NotificationService : AnkiBroadcastReceiver() {
 
             val title =
                 when (reviewReminder.scope) {
-                    is ReviewReminderScope.Global -> "It's time to study your cards"
+                    is ReviewReminderScope.Global -> context.getString(R.string.review_reminder_notification_title_all_decks)
                     is ReviewReminderScope.DeckSpecific -> {
                         val fullDeckName = reviewReminder.scope.getDeckName()
                         val deckName =
                             Decks.basename(fullDeckName) // don't show the full path with "::" included
-                        "It's time to study \"$deckName\"" // quotation marks to separate user-defined deck names from official app text
+                        context.getString(R.string.review_reminder_notification_title_deck, deckName)
                     }
                 }
             val description =
@@ -272,8 +272,10 @@ class NotificationService : AnkiBroadcastReceiver() {
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true) // Dismiss on click
                     .setTicker(title) // Accessibility
-                    .addAction("Snooze 5m", fiveMinuteSnooze)
-                    .addAction("Snooze 1h", oneHourSnooze)
+                    .addAction(
+                        context.getString(R.string.review_reminder_notification_snooze_button, 5.minutes.toString()),
+                        fiveMinuteSnooze,
+                    ).addAction(context.getString(R.string.review_reminder_notification_snooze_button, 1.hours.toString()), oneHourSnooze)
                     // Vibration and priority are set here for backwards compatibility; they are set via channel for API 33+
                     .setVibrate(longArrayOf(0, 500))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
