@@ -20,7 +20,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ActionBarStyle"
             android:background="?attr/appBarColor"
-            app:title="Add / edit review reminder" />
+            tools:title="Add / edit review reminder" />
 
         <ScrollView
             android:id="@+id/add_edit_reminder_scrollview"
@@ -48,9 +48,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Time:"
-                        android:textSize="18sp"
-                        tools:ignore="HardcodedText" />
+                        android:text="@string/add_edit_reminder_time_label"
+                        android:textSize="18sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/add_edit_reminder_time_button"
@@ -60,8 +59,7 @@
                         app:cornerRadius="8dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="12:00"
-                        tools:ignore="HardcodedText" />
+                        tools:text="12:00" />
 
                 </LinearLayout>
 
@@ -77,9 +75,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Deck:"
-                        android:textSize="18sp"
-                        tools:ignore="HardcodedText" />
+                        android:text="@string/add_edit_reminder_deck_label"
+                        android:textSize="18sp" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/add_edit_reminder_deck_name"
@@ -125,8 +122,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textSize="18sp"
-                            android:text="Advanced settings"
-                            tools:ignore="HardcodedText" />
+                            android:text="@string/add_edit_reminder_advanced_label" />
 
                     </LinearLayout>
 
@@ -158,16 +154,14 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:textSize="16sp"
-                                    android:text="Card threshold:"
-                                    tools:ignore="HardcodedText" />
+                                    android:text="@string/add_edit_reminder_card_threshold_label" />
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/add_edit_reminder_card_threshold_description"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:text="Do not send me notifications if there are less than this many cards due"
-                                    tools:ignore="HardcodedText" />
+                                    android:text="@string/add_edit_reminder_card_threshold_description" />
 
                             </LinearLayout>
 
@@ -205,8 +199,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Only notify me if no reviews have been done today"
-                                tools:ignore="HardcodedText" />
+                                android:text="@string/add_edit_reminder_only_notify_if_no_reviews_label" />
 
                         </LinearLayout>
 

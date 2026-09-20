@@ -219,8 +219,6 @@
     <!-- #######################################################################################
          ################################## Review reminders ###################################
          ####################################################################################### -->
-    <string name="add_review_reminder" comment="Title of the screen for creating a new review reminder">Add review reminder</string>
-    <string name="edit_review_reminder" comment="Title of the screen for editing an existing review reminder">Edit review reminder</string>
 
     <!-- Entry points -->
     <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
@@ -240,6 +238,20 @@
     <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
     <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Successfully deleted review reminder</string>
     <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Successfully edited review reminder</string>
+
+    <!-- Add / edit reminder dialog -->
+    <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">Add review reminder</string>
+    <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">Edit review reminder</string>
+    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
+    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deck:</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Advanced settings</string>
+    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
+    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
+    <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
+    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
+    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
+    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
+    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
 
     <!-- Notification content -->
     <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
