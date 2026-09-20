@@ -78,8 +78,10 @@ import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendException.BackendFatalError
 import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.io.File
@@ -661,6 +663,21 @@ class Collection(
     @LibAnkiAlias("new_note")
     fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
 
+    /**
+     * Adds the provided note to deck: [deckId].
+     *
+     * Updates:
+     * - [defaultDeckForNoteType] if 'Decide by Note Type' is set.
+     * - [defaultsForAdding] for [deckId], OR if 'Decide by Note Type' is set.
+     *
+     * Unchanged:
+     * - [Decks.selected]
+     *
+     * @return An [OpChangesWithCount], where the count is the number of generated **cards**.
+     * @throws BackendInvalidInputException if the note type is missing, the number of fields does
+     * not match the note type, or card generation needs a fallback and Default is missing or filtered.
+     * @throws BackendFatalError if [Note.id] is nonzero.
+     */
     @LibAnkiAlias("add_note")
     fun addNote(
         note: Note,
