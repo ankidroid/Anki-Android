@@ -45,8 +45,8 @@
     <string name="pref_cat_advanced" maxLength="41">Tuỳ chọn nâng cao</string>
     <string name="pref_cat_workarounds" maxLength="41">Nền tảng công việc xung quanh</string>
     <string name="pref_cat_plugins" maxLength="41">Các bổ sung plugins</string>
-    <string name="pref_cat_editing" maxLength="41">Editing</string>
-    <string name="pref_cat_security" maxLength="41">Security</string>
+    <string name="pref_cat_editing" maxLength="41">Chỉnh sửa</string>
+    <string name="pref_cat_security" maxLength="41">Bảo mật</string>
     <!-- Card template JavaScript API permissions -->
     <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
     <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
@@ -203,7 +203,7 @@
          bạn có thể sử dụng máy chủ của riêng mình để đồng bộ hóa.
          Nếu không được thiết lập, máy chủ AnkiWeb mặc định sẽ được sử dụng thay thế.
          <a href="%s">Tìm hiểu thêm</a>]]></string>
-    <string name="custom_sync_server_base_url_title" maxLength="41">Sync URL</string>
+    <string name="custom_sync_server_base_url_title" maxLength="41">Đồng bộ URL</string>
     <string name="custom_sync_certificate_title" maxLength="41">Chứng chỉ gốc tùy chỉnh (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Bàn phím</string>
@@ -354,7 +354,7 @@
     <string name="show_answer_buttons" maxLength="41">Show answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Ẩn các nút \"Khó\' và \'Dễ\'</string>
     <string name="reviewer_frame_style" maxLength="41">Frame style</string>
-    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Card</string>
+    <string name="reviewer_frame_style_card" maxLength="41" comment="Style name of the \'Card\' card frame of the Study Screen">Thẻ</string>
     <string name="reviewer_frame_style_box" maxLength="41" comment="Style name of the \'Box\' card frame of the Study Screen">Box</string>
     <string name="reviewer_toolbar_top" maxLength="41" comment="Setting to put the toolbar on the top of the study screen">Trên cùng</string>
     <string name="reviewer_toolbar_bottom" maxLength="41" comment="Setting to put the toolbar on the bottom of the study screen">Dưới cùng</string>
@@ -366,8 +366,8 @@
     <string name="new_study_screen_summ"><![CDATA[Màn hình học tập đã được cải tiến sẽ thay thế màn hình hiện tại. Một số tính năng của màn hình cũ đã được thay đổi hoặc loại bỏ. Vui lòng gửi <a href="%1$s">phản hồi</a> hoặc <a href="%2$s">báo lỗi</a> nếu có.]]></string>
     <string name="show_answer_feedback" maxLength="41">Show answer feedback</string>
     <string name="screen" maxLength="41">Screen</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Only answer</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Flip and answer</string>
+    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Chỉ trả lời</string>
+    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Lật và trả lời</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Mở cài đặt</string>
     <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>

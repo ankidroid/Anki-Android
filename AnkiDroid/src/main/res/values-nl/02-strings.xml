@@ -265,7 +265,7 @@
     <string name="cancel_download">Annuleer download</string>
     <string name="cancel_download_question_title">Annuleer download?</string>
     <string name="downloading_file">Aan het downloaden %s</string>
-    <string name="import_deck">Import deck</string>
+    <string name="import_deck">Importeer leerset</string>
     <string name="something_wrong">Er is iets mis gegaan, probeer het alstublief opnieuw.</string>
     <string name="download_failed">Download mislukt</string>
     <string name="deck_download_progress_message">U kunt andere apps gebruiken terwijl de download bezig is</string>
@@ -302,7 +302,7 @@
     <string name="intro_ankidroid_tagline_one">Studeer minder</string>
     <string name="intro_ankidroid_tagline_two">Meer onthouden</string>
     <string name="intro_short_ankidroid_explanation">De kaartplanner van Anki\'s bespaart tijd door je zwakste herinneringen te versterken en je sterkste te bewaren</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Aan de slag</string>
     <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is nog niet geïnitialiseerd. Open AnkiDroid en probeer het opnieuw</string>
@@ -347,11 +347,11 @@
     <string name="orphan_note_message">Als je dit kaarttype verwijdert, zullen sommige notities geen kaarten meer hebben.</string>
     <string name="voice_not_supported">Stem niet ondersteund. Kies een andere of installeer een stempakket.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck picker</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Set kiezer</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Set verwijderen zonder bevestiging</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Notitie editor</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Selecteer notitietype</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Label bewerker</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Bewerk front-sjabloon</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
@@ -371,6 +371,6 @@
     <string comment="Shown when retrying a running action" name="already_in_progress">Actie wordt al uitgevoerd</string>
     <!-- Switch profiles screen -->
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Profiel bewerken</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Profiel verwijderen:</string>
 </resources>

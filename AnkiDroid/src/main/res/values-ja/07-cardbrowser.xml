@@ -104,8 +104,8 @@
     <string name="sort_pill_label_numeric_descending" comment="SortPill reverse half marker for numeric columns. Use a 1-char glyph that suggests the largest value.">9</string>
     <!-- SortPill accessibility descriptions, used by TalkBack. The host should prepend the
          column name (e.g. "Front, ascending"); these strings are the direction half. -->
-    <string name="sort_pill_a11y_ascending" comment="SortPill accessibility: ascending half">Ascending</string>
-    <string name="sort_pill_a11y_descending" comment="SortPill accessibility: descending half">Descending</string>
+    <string name="sort_pill_a11y_ascending" comment="SortPill accessibility: ascending half">昇順</string>
+    <string name="sort_pill_a11y_descending" comment="SortPill accessibility: descending half">降順</string>
     <string name="sort_pill_a11y_selected" comment="SortPill accessibility: state announcement when this half is the active sort direction">Selected</string>
     <string name="card_browser_order_section_unavailable" comment="Header: browser columns that cannot be sorted (e.g. Question)">Unavailable</string>
     <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the \'Question/Answer\' column is not sortable.">Card content can\'t be sorted. Use Sort Field</string>

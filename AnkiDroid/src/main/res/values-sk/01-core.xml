@@ -159,10 +159,10 @@
     <string name="create_new_collection">Create a new collection</string>
     <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_screen_headline">AnkiDroid potrebuje niektoré povolenia aby fungoval.</string>
     <string name="permissions_screen_optional_headline" comment="Explains that there are optional permissions that can be granted to AnkiDroid.">AnkiDroid works best with these permissions</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
+    <string name="storage_access_title">Prístup k úložisku</string>
+    <string name="storage_access_summary">Ukladá vašu kolekciu na bezpečné miesto, ktoré nebude vymazané po odinštalovaní aplikácie.</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after. See [android.permission.MANAGE_EXTERNAL_STORAGE] on https://developer.android.com/training/data-storage/manage-all-files for context.">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
     <string name="microphone" comment="Title of the microphone permission in the permissions explanation screen.">Microphone</string>

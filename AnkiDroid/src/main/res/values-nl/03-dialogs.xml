@@ -70,7 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Afsluiten</string>
     <string name="dialog_continue">Doorgaan</string>
     <string name="dialog_processing">Verwerking&#8230;</string>
-    <string name="dialog_allow">Allow</string>
+    <string name="dialog_allow">Toestaan</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Maak</string>
     <string name="dialog_positive_delete" maxLength="28">Verwijder</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -105,7 +105,7 @@
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Toestemming voor audio-opname geweigerd</string>
     <string name="permission_denied">Toegang geweigerd</string>
-    <string name="microphone_permission_denied_message">Microphone permission denied. Please grant it in the app settings.</string>
+    <string name="microphone_permission_denied_message">Toegang tot de microfoon is geweigerd. Geef toegang in de instellingen van de app.</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_continue_anyway">Toch doorgaan</string>
     <string name="integrity_check_insufficient_space">Controle van de database gebruikt een grote hoeveelheid tijdelijke geheugen.\n\nHet wordt sterk aanbevolen dat u ten minste %s vrije ruimte op uw toestel hebt voordat u verder gaat.</string>
@@ -259,10 +259,10 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">De naam van het notitietype%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Van</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">Tot</string>
     <!-- Add profile dialog -->
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profielnaam</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profielnaam mag niet leeg zijn</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profielnaam moet %1$d tekens of minder zijn</string>
 </resources>

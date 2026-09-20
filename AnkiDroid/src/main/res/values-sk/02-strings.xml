@@ -245,7 +245,7 @@
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Budete musieť použiť iManager, aby umožnil AnkiDroid pridávať zástupcov</string>
-    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Allow ‘Home screen shortcuts’ in system settings for %s to add shortcuts</string>
+    <string name="create_shortcut_error_miui" comment="Keep the message as short, as this is shown in a toast. %s is the app name: \'AnkiDroid\'">Povoľte „odkazy domovskej obrazovky“ v systémových nastaveniach pre %s, kvôli pridávaniu skratiek</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaša domovská obrazovka neumožňuje, aby AnkiDroid pridal zástupcov</string>
     <string name="create_shortcut_error">Chyba pri pridávaní odkazu: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Písať vety s veľkým začiatočným písmenom</string>
@@ -309,13 +309,13 @@
         <item quantity="other">%d note types selected</item>
     </plurals>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="intro_ankidroid_tagline_one">Uč sa menej</string>
+    <string name="intro_ankidroid_tagline_two">Pamätaj si viacej</string>
+    <string name="intro_short_ankidroid_explanation">Plánovač kartičiek Anki šetrí čas posilňovaním vašich najslabších spomienok a udržiavaním tých najsilnejších.</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Začni</string>
+    <string name="intro_sync_from_ankiweb">Synchronizovať s AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid ešte nie je inicializovaný. Prosím otvorte AnkiDroid a skúste to znovu.</string>
     <!-- Deck Creation -->
     <string name="deck_created">Balíček bol vytvorený</string>
     <string name="deck_renamed">Balíček bol premenovaný</string>

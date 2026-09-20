@@ -162,7 +162,7 @@
     <string name="instant_card" comment="Used in the Android system context menu/share dialog to quickly create a note. This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. ">Thêm nhanh</string>
     <!-- Internet Permissions -->
     <string name="internet_access_title" comment="used for notifying user to unable internet access">Internet</string>
-    <string name="permission_access_summary">Required for the app to work</string>
+    <string name="permission_access_summary">Cần thiết để ứng dụng hoạt động</string>
     <string name="permission_required_message">Vui lòng cấp cho AnkiDroid quyền ‘%s’ để tiếp tục</string>
     <!-- Multiple profile -->
     <string name="add_profile">Add profile</string>
