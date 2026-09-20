@@ -101,12 +101,12 @@ import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
 import com.ichi2.anki.browser.search.getIcon
 import com.ichi2.anki.browser.search.iconRes
-import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.common.ALL_DECKS_ID
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.ext.ifNotZero
+import com.ichi2.anki.common.utils.ext.savedFilters
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog

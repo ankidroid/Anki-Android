@@ -8,6 +8,8 @@ package com.ichi2.anki.browser.search
  * Selecting a saved search quickly allows a user to either:
  * - search the given query
  * - add additional terms to the query before searching
+ *
+ * @see com.ichi2.anki.common.utils.ext.savedFilters
  */
 data class SavedSearch(
     val name: String,
