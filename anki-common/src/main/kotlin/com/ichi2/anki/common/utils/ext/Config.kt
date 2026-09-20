@@ -11,6 +11,7 @@ import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.USE_CURRENT_DECK
 import com.ichi2.anki.common.utils.jsonConfigProperty
 import com.ichi2.anki.common.utils.orDefault
+import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.Config
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
@@ -104,3 +105,9 @@ var Config.savedFilters by jsonConfigProperty<Map<String, String>>("savedFilters
     decode = { values -> values.map { (name, query) -> SavedSearch(name, query) } },
     encode = { values -> values.toMap() },
 )
+
+/** Column key used to sort the browser in cards mode. */
+var Config.browserSortCardsColumn by jsonConfigProperty<String>(BrowserConfig.CARDS_SORT_COLUMN_KEY).orDefault("noteFld")
+
+/** Column key used to sort the browser in notes mode. */
+var Config.browserSortNotesColumn by jsonConfigProperty<String>(BrowserConfig.NOTES_SORT_COLUMN_KEY).orDefault("noteFld")
