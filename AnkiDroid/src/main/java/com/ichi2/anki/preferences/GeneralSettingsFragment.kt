@@ -12,6 +12,8 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.AddingDefaultsMode
+import com.ichi2.anki.common.utils.ext.addingDefaultsMode
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.launchCatchingTask
@@ -32,16 +34,10 @@ class GeneralSettingsFragment : SettingsFragment() {
         initializeLanguagePref()
 
         // Deck for new cards
-        // Represents in the collections pref "addToCur": i.e.
-        // if true, then add note to current decks, otherwise let the note type's configuration decide
-        // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
         requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
-            launchCatchingTask {
-                val valueIndex = if (withCol { config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK) }) 0 else 1
-                setValueIndex(valueIndex)
-            }
+            launchCatchingTask { value = withCol { config.addingDefaultsMode }.toPreferenceValue() }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, "0" == newValue) } }
+                launchCatchingTask { withCol { config.addingDefaultsMode = newValue.toAddingDefaultsMode() } }
             }
         }
         // Paste PNG
@@ -103,3 +99,12 @@ class GeneralSettingsFragment : SettingsFragment() {
         }
     }
 }
+
+private fun AddingDefaultsMode.toPreferenceValue(): String =
+    when (this) {
+        AddingDefaultsMode.USE_CURRENT_DECK -> "0"
+        AddingDefaultsMode.DECIDE_BY_NOTE_TYPE -> "1"
+    }
+
+private fun String.toAddingDefaultsMode(): AddingDefaultsMode =
+    if (this == "0") AddingDefaultsMode.USE_CURRENT_DECK else AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
