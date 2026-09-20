@@ -27,7 +27,11 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.io.Serializable
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
@@ -60,6 +64,38 @@ class CardTemplateNotetypeTest : RobolectricTest() {
             Assert.fail("Should have caught an exception here because the file is missing")
         } catch (e: IOException) {
             // this is expected
+        }
+    }
+
+    @Test
+    fun testTemplateChangeSerialization() {
+        // Create a list of changes with both ADD and DELETE types
+        val original =
+            arrayListOf(
+                TemplateChange(0, ADD),
+                TemplateChange(1, DELETE),
+                TemplateChange(2, ADD),
+            )
+
+        // Serialize the list to bytes (this is what Bundle.putSerializable does)
+        val byteOutput = ByteArrayOutputStream()
+        ObjectOutputStream(byteOutput).use {
+            it.writeObject(original)
+        }
+        val bytes = byteOutput.toByteArray()
+
+        // Deserialize back from bytes (this is what Bundle.getSerializable does)
+        @Suppress("UNCHECKED_CAST")
+        val deserialized =
+            ObjectInputStream(ByteArrayInputStream(bytes)).use {
+                it.readObject()
+            } as ArrayList<TemplateChange>
+
+        // Verify the deserialized data matches the original
+        Assert.assertEquals("list size should match", original.size, deserialized.size)
+        for (i in original.indices) {
+            Assert.assertEquals("ordinal at $i", original[i].ordinal, deserialized[i].ordinal)
+            Assert.assertEquals("type at $i", original[i].type, deserialized[i].type)
         }
     }
 
