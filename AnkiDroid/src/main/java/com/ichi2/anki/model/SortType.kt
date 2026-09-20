@@ -9,6 +9,8 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnKey
+import com.ichi2.anki.common.utils.ext.browserSortCardsColumn
+import com.ichi2.anki.common.utils.ext.browserSortNotesColumn
 import com.ichi2.anki.libanki.BrowserConfig
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes.NOTES
@@ -50,13 +52,18 @@ sealed class SortType : Parcelable {
         when (this) {
             is NoOrdering -> Prefs.cardBrowserNoSorting = true
             is CollectionOrdering -> {
-                val isNotesMode = cardsOrNotes == NOTES
-
-                val sortKey = BrowserConfig.sortColumnKey(isNotesMode)
-                val reverseKey = BrowserConfig.sortBackwardsKey(isNotesMode)
-
-                withCol { config.set(sortKey, this@SortType.key.value) }
-                withCol { config.set(reverseKey, this@SortType.reverse) }
+                withCol {
+                    when (cardsOrNotes) {
+                        CardsOrNotes.CARDS -> {
+                            config.browserSortCardsColumn = this@SortType.key.value
+                            config.set(BrowserConfig.CARDS_SORT_BACKWARDS_KEY, this@SortType.reverse)
+                        }
+                        NOTES -> {
+                            config.browserSortNotesColumn = this@SortType.key.value
+                            config.set(BrowserConfig.NOTES_SORT_BACKWARDS_KEY, this@SortType.reverse)
+                        }
+                    }
+                }
 
                 Prefs.cardBrowserNoSorting = false
             }
@@ -103,16 +110,21 @@ var PrefsRepository.cardBrowserNoSorting: Boolean
         putBoolean(R.string.pref_browser_no_sorting, value)
     }
 
-private suspend fun getBrowserColumnKey(cardsOrNotes: CardsOrNotes): String {
-    val isNotesMode = cardsOrNotes == NOTES
-    val sortKey = BrowserConfig.sortColumnKey(isNotesMode)
+private suspend fun getBrowserColumnKey(cardsOrNotes: CardsOrNotes): String =
+    withCol {
+        if (cardsOrNotes == NOTES) config.browserSortNotesColumn else config.browserSortCardsColumn
+    }
 
-    return withCol { config.get<String>(sortKey) } ?: "noteFld"
-}
-
-private suspend fun getSortBackwards(cardsOrNotes: CardsOrNotes): Boolean {
-    val isNotesMode = cardsOrNotes == NOTES
-    val sortBackwardsKey = BrowserConfig.sortBackwardsKey(isNotesMode)
-
-    return withCol { config.get<Boolean>(sortBackwardsKey) } ?: false
-}
+private suspend fun getSortBackwards(cardsOrNotes: CardsOrNotes): Boolean =
+    withCol {
+        if (cardsOrNotes ==
+            NOTES
+        ) {
+            (config.get<Boolean>(BrowserConfig.NOTES_SORT_BACKWARDS_KEY) ?: false)
+        } else {
+            (
+                config.get<Boolean>(BrowserConfig.CARDS_SORT_BACKWARDS_KEY)
+                    ?: false
+            )
+        }
+    }
