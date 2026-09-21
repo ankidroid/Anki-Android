@@ -82,7 +82,6 @@ class IntentHandler : AbstractIntentHandler() {
             LaunchType.FILE_IMPORT ->
                 runIfStoragePermissions {
                     handleFileImport(intent, reloadIntent, action)
-                    finish()
                 }
             LaunchType.TEXT_IMPORT ->
                 runIfStoragePermissions {
@@ -221,6 +220,7 @@ class IntentHandler : AbstractIntentHandler() {
         if (!hasShownAppIntro()) {
             Timber.i("Trying to import a file when the app was not started at all")
             showThemedToast(this, R.string.app_not_initialized_new, false)
+            finish()
             return
         }
         val importResult = handleFileImport(this, intent)
