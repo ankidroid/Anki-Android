@@ -30,6 +30,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
+import java.io.File
 import java.io.Serializable
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -61,7 +62,7 @@ class MultimediaActivity :
     override val analyticsScreenName: String
         get() = intent.getStringExtra(EXTRA_FRAGMENT_NAME)?.substringAfterLast('.') ?: super.analyticsScreenName
 
-    private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
+    private val Intent.multimediaArgsFile: File?
         get() = extras?.getSerializableCompat(EXTRA_FRAGMENT_ARGS)
 
     private val Intent.mediaOptionsExtra: Serializable?
@@ -98,7 +99,7 @@ class MultimediaActivity :
             FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
                 arguments =
                     Bundle().apply {
-                        putSerializable(EXTRA_FRAGMENT_ARGS, intent.multimediaArgsExtra)
+                        putSerializable(EXTRA_FRAGMENT_ARGS, intent.multimediaArgsFile)
                         putSerializable(EXTRA_MEDIA_OPTIONS, intent.mediaOptionsExtra)
                     }
             }
@@ -153,7 +154,7 @@ class MultimediaActivity :
             mediaOptions: Serializable? = null,
         ): Intent =
             Intent(context, MultimediaActivity::class.java).apply {
-                putExtra(EXTRA_FRAGMENT_ARGS, arguments)
+                putExtra(EXTRA_FRAGMENT_ARGS, arguments?.let { MultimediaArgsStorage.create(context).save(it) })
                 putExtra(EXTRA_FRAGMENT_NAME, fragmentClass.jvmName)
                 putExtra(EXTRA_MEDIA_OPTIONS, mediaOptions)
             }

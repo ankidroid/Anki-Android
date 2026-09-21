@@ -59,6 +59,8 @@ abstract class MultimediaFragment(
 
     val viewModel: MultimediaViewModel by viewModels()
 
+    private val argsStorage by lazy { MultimediaArgsStorage.create(requireContext()) }
+
     protected var ankiCacheDirectory: String? = null
 
     protected var indexValue: Int = 0
@@ -72,7 +74,15 @@ abstract class MultimediaFragment(
         savedInstanceState: Bundle?,
     ): View? {
         val multimediaActivityExtra =
-            arguments?.getSerializableCompat<MultimediaActivityExtra>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)
+            try {
+                arguments
+                    ?.getSerializableCompat<File>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)
+                    ?.let(argsStorage::read)
+            } catch (e: Exception) {
+                Timber.w(e, "Unable to load multimedia arguments")
+                showErrorDialog()
+                return null
+            }
         if (multimediaActivityExtra != null) {
             indexValue = multimediaActivityExtra.index
             field = multimediaActivityExtra.field
@@ -83,6 +93,14 @@ abstract class MultimediaFragment(
         }
 
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Keep the input while the fragment can be restored after recreation or process death.
+        if (isRemoving || activity?.isFinishing == true) {
+            arguments?.getSerializableCompat<File>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)?.delete()
+        }
     }
 
     @NeedsTest("test discard dialog shown in case there are changes")
@@ -188,8 +206,8 @@ abstract class MultimediaFragment(
 
     /**
      * Creates and shows an AlertDialog with an error message
-     * from the application's resources. The dialog includes an "OK" button that,
-     * when clicked, finishes the current activity.
+     * from the application's resources. Acknowledging or cancelling the dialog finishes
+     * the current activity.
      */
     fun showErrorDialog(errorMessage: String? = null) {
         AlertDialog.Builder(requireContext()).show {
@@ -197,6 +215,7 @@ abstract class MultimediaFragment(
             setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
                 requireActivity().finish()
             }
+            setOnCancelListener { requireActivity().finish() }
         }
     }
 

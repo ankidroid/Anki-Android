@@ -8,16 +8,25 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.multimedia.MultimediaArgsStorage
+import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaResult
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.noteeditor.NoteEditorMultimediaController.Companion.STATE_KEY_IMAGE_CACHE
+import com.ichi2.anki.throwOnShowError
+import io.mockk.every
+import io.mockk.mockkConstructor
+import io.mockk.verify
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowDialog
 import java.io.File
+import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class NoteEditorMultimediaControllerTest : RobolectricTest() {
@@ -25,6 +34,30 @@ class NoteEditorMultimediaControllerTest : RobolectricTest() {
     fun `controller is reachable from the hosted fragment`() {
         val noteEditor = openNoteEditor()
         assertThat(noteEditor.multimediaController, notNullValue())
+    }
+
+    @Test
+    fun `argument write failure shows an error and preserves the note editor`() {
+        val noteEditor = openNoteEditor()
+        noteEditor.setField(0, "front")
+        noteEditor.multimediaController.handleActions(0)
+        advanceRobolectricLooper()
+        throwOnShowError = false
+        // Directory permissions cannot reliably force a write failure on every platform.
+        mockkConstructor(MultimediaArgsStorage::class) {
+            every { anyConstructed<MultimediaArgsStorage>().save(any()) } throws IOException("Unable to write multimedia arguments")
+
+            noteEditor.multimediaViewModel.setMultimediaAction(MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING)
+            advanceRobolectricLooper()
+            verify(exactly = 1) { anyConstructed<MultimediaArgsStorage>().save(any()) }
+        }
+
+        val dialog = ShadowDialog.getLatestDialog()
+        assertThat(dialog, notNullValue())
+        assertThat(dialog.isShowing, equalTo(true))
+        assertThat(noteEditor.requireActivity().isFinishing, equalTo(false))
+        assertThat(noteEditor.editFieldAt(0)!!.text.toString(), equalTo("front"))
+        assertThat(shadowOf(noteEditor.requireActivity()).nextStartedActivity, equalTo(null))
     }
 
     @Test
