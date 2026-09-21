@@ -4,6 +4,7 @@ package com.ichi2.anki.dialogs.help
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragment
+import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.action.ViewActions.click
@@ -147,6 +148,33 @@ class HelpDialogTest {
             onView(withText(R.string.help_title_using_ankidroid))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun `Help menu survives recreating its view`() {
+        withHelpDialog { scenario ->
+            onView(withText(R.string.help_title_community)).inRoot(isDialog()).check(matches(isDisplayed()))
+
+            scenario.moveToState(Lifecycle.State.CREATED)
+            scenario.moveToState(Lifecycle.State.RESUMED)
+
+            onView(withText(R.string.help_title_community)).inRoot(isDialog()).check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    fun `Help submenu and back navigation survive recreating the view`() {
+        withHelpDialog { scenario ->
+            onView(withText(R.string.help_title_community)).inRoot(isDialog()).perform(click())
+            onView(withText(R.string.help_item_discord)).inRoot(isDialog()).check(matches(isDisplayed()))
+
+            scenario.moveToState(Lifecycle.State.CREATED)
+            scenario.moveToState(Lifecycle.State.RESUMED)
+
+            onView(withText(R.string.help_item_discord)).inRoot(isDialog()).check(matches(isDisplayed()))
+            pressBackUnconditionally()
+            onView(withText(R.string.help_title_community)).inRoot(isDialog()).check(matches(isDisplayed()))
         }
     }
 

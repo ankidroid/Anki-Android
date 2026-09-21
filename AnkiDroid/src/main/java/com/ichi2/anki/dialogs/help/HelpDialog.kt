@@ -55,6 +55,9 @@ class HelpDialog : AnalyticsDialogFragment() {
             .title(requireArguments().getInt(ARG_MENU_TITLE))
             .customView(binding.root)
             .createAndApply {
+                // Child fragments can recreate their views before onStart() shows the dialog.
+                // Install the content now so their fragment_container is already available.
+                create()
                 // the dialog captures the BACK call so we manually pop the inner FragmentManager
                 // if there's a second page
                 onBackPressedDispatcher.addCallback(this@HelpDialog, true) {
