@@ -18,6 +18,9 @@ fun showDialogFragmentImpl(
     manager: FragmentManager,
     newFragment: DialogFragment,
 ) {
+    // A pending dismissal can destroy the previous dialog before this transaction removes it.
+    manager.executePendingTransactions()
+
     // DialogFragment.show() will take care of adding the fragment
     // in a transaction. We also want to remove any currently showing
     // dialog, so make our own transaction and take care of that here.
