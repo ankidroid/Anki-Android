@@ -59,6 +59,7 @@ jobs:
           run_id: ${{ github.event.workflow_run.id }}
           name: screenshot-diff
           path: screenshot-diff
+          if_no_artifact_found: ignore # the artifact is not uploaded if there are no diffs
       - id: check-if-there-are-valid-files
         name: Check if there are valid files
         shell: bash
