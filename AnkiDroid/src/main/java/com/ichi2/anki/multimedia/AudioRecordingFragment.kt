@@ -58,6 +58,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { isGranted ->
+            if (view == null) return@registerForActivityResult
             if (isGranted) {
                 Timber.d("Audio permission granted")
                 initializeAudioRecorder()
