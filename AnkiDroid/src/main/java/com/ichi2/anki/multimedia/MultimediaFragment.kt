@@ -6,8 +6,10 @@ package com.ichi2.anki.multimedia
 import android.net.Uri
 import android.os.Bundle
 import android.text.format.Formatter
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
@@ -64,6 +66,25 @@ abstract class MultimediaFragment(
     protected lateinit var note: IMultimediaEditableNote
     protected var imageUri: Uri? = null
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        val multimediaActivityExtra =
+            arguments?.getSerializableCompat<MultimediaActivityExtra>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)
+        if (multimediaActivityExtra != null) {
+            indexValue = multimediaActivityExtra.index
+            field = multimediaActivityExtra.field
+            note = multimediaActivityExtra.note
+            if (multimediaActivityExtra.imageUri != null) {
+                imageUri = multimediaActivityExtra.imageUri.toUri()
+            }
+        }
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     @NeedsTest("test discard dialog shown in case there are changes")
     override fun onViewCreated(
         view: View,
@@ -73,24 +94,6 @@ abstract class MultimediaFragment(
         setupEdgeToEdge(view)
 
         requireAnkiActivity().setToolbarText(title = title)
-
-        if (arguments != null) {
-            Timber.d("Getting MultimediaActivityExtra values from arguments")
-            @Suppress("USELESS_CAST")
-            val multimediaActivityExtra =
-                arguments?.getSerializableCompat<MultimediaActivityExtra>(
-                    MultimediaActivity.EXTRA_FRAGMENT_ARGS,
-                )
-
-            if (multimediaActivityExtra != null) {
-                indexValue = multimediaActivityExtra.index
-                field = multimediaActivityExtra.field
-                note = multimediaActivityExtra.note
-                if (multimediaActivityExtra.imageUri != null) {
-                    imageUri = multimediaActivityExtra.imageUri.toUri()
-                }
-            }
-        }
 
         val backCallback =
             object : OnBackPressedCallback(

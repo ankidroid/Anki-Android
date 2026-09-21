@@ -93,6 +93,7 @@ class MultimediaImageFragment :
      */
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             hasStartedImageSelection = false
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
@@ -122,6 +123,7 @@ class MultimediaImageFragment :
      */
     private val drawingActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
                     // If user didn't draw, return the indexValue as a result and finish the activity
@@ -143,6 +145,7 @@ class MultimediaImageFragment :
     @NeedsTest("Works fine without permission as we use Camera as feature")
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
+            if (view == null) return@registerForActivityResult
             hasStartedImageSelection = false
             when {
                 !isPictureTaken && viewModel.currentMultimediaUri.value == null -> {
@@ -164,6 +167,7 @@ class MultimediaImageFragment :
     /** Launches an activity to crop the image, using the [ImageCropper] */
     private val imageCropperLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             hasStartedImageSelection = false
             when (result.resultCode) {
                 Activity.RESULT_OK -> {
