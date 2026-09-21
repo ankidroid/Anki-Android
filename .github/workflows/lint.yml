@@ -57,7 +57,7 @@ jobs:
       - name: Run Lint Debug
         # "lintAll" opts in all modules in 1 flavor to lint, pinning :AnkiDroid to lintFullDebug
         # update workflows/README.md when modifying this line
-        run: ./gradlew lintAll ktLintCheck lint-rules:test --daemon
+        run: ./gradlew lintAll ktlintCheck lint-rules:test --daemon
 
   # update workflows/README.md when modifying commands
   lintJavascript:
