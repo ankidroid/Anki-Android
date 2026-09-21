@@ -423,19 +423,28 @@ tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
-    // Resolve the directory at configuration time, which is Gradle Configuration Cache compatible
-    def resultsDir = layout.buildDirectory.dir("outputs/androidTest-results/connected/flavors/play")
+    // Resolve the directory at configuration time, which is Gradle Configuration Cache compatible.
+    // The build type segment must track the variant the connected test task runs under, so it is
+    // derived from the same property that names that task.
+    def buildType = rootProject.androidTestVariantName.toLowerCase(Locale.ROOT)
+    def resultsDir = layout.buildDirectory.dir("outputs/androidTest-results/connected/${buildType}/flavors/play")
     doLast {
         // androidTest currently creates one .xml file per emulator with aggregate results in this dir
         File folder = resultsDir.get().asFile
         File[] listOfFiles = folder.listFiles({ d, f -> f ==~ /.*.xml/ } as FilenameFilter)
+        // No results at all is the same failure this guard exists to catch, and it is how the guard
+        // itself goes unnoticed if the results layout moves again
+        if (!listOfFiles) {
+            throw new GradleScriptException("No androidTest result files in " + folder + " - the connected test run reported success without producing results.", null)
+        }
         for (File file : listOfFiles) {
-            // The aggregate results file currently contains a line with this pattern holding test count
-            String[] matches = file.readLines().findAll { it.contains('<testsuite') }
-            if (matches.length != 1) {
-                throw new GradleScriptException("Unable to determine count of tests executed for " + file.name + ". Regex pattern out of date?", null)
+            // The root element carries the aggregate count for one device, across any number of
+            // nested per-class <testsuite> elements
+            def declaredTests = new groovy.xml.XmlSlurper().parse(file).@tests.text()
+            if (!declaredTests.isInteger()) {
+                throw new GradleScriptException("Unable to determine count of tests executed for " + file.name + ". Results format changed?", null)
             }
-            if (!(matches[0] ==~ /.* tests="\d+" .*/) || matches[0].contains('tests="0"')) {
+            if (declaredTests.toInteger() == 0) {
                 throw new GradleScriptException("androidTest executed 0 tests for " + file.name + " - Probably a bug with the emulator. Try another image.", null)
             }
         }
