@@ -63,7 +63,7 @@ class ImageField :
 
     override val formattedValue: String
         get() {
-            val file = mediaFile!!
+            val file = mediaFile ?: return ""
             return formatImageFileName(file)
         }
 

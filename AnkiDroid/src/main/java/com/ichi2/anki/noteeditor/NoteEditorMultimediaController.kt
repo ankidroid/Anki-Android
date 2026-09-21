@@ -249,6 +249,8 @@ internal class NoteEditorMultimediaController(
 
                 val fieldEditText = fragment.editFieldAt(index) ?: return@launchCatchingTask
                 val formattedValue = field.formattedValue
+                // An empty media result must not replace selected text or mark the note changed.
+                if (field.type != EFieldType.TEXT && formattedValue.isNullOrEmpty()) return@launchCatchingTask
                 if (field.type === EFieldType.TEXT) {
                     fieldEditText.setText(formattedValue)
                 } else if (fieldEditText.text != null) {
