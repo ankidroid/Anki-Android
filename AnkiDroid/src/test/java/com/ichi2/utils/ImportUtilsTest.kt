@@ -11,25 +11,102 @@ import android.net.Uri
 import androidx.annotation.CheckResult
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.utils.ImportUtils.FileImporter
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import org.robolectric.Shadows.shadowOf
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
+import kotlin.test.assertIs
 
+/** Tests for [ImportUtils]. */
 @RunWith(AndroidJUnit4::class)
 class ImportUtilsTest : RobolectricTest() {
+    private lateinit var originalCrashReporter: CrashReporter
+    private val crashReporter = mock(CrashReporter::class.java)
+
+    @Before
+    fun captureCrashReports() {
+        originalCrashReporter = CrashReportService.getReporter()
+        CrashReportService.setReporter(crashReporter)
+    }
+
+    @After
+    fun restoreCrashReporter() {
+        CrashReportService.setReporter(originalCrashReporter)
+    }
+
+    @Test
+    fun `missing source file returns an import failure without a crash report`() {
+        val uri = "content://import/deleted.apkg".toUri()
+        val missingFile = File(tempFolder.root, "deleted.apkg")
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) { missingFile.inputStream() }
+
+        val result = importerWithFileName("deleted.apkg").handleFileImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        val failure = assertIs<ImportResult.Failure>(result)
+        assertIs<FileNotFoundException>(failure.exception)
+        assertEquals(targetContext.getString(R.string.import_error_copy_to_cache_title), failure.title)
+        verifyNoInteractions(crashReporter)
+    }
+
+    @Test
+    fun `unexpected source errors are still reported`() {
+        val uri = "content://import/broken.apkg".toUri()
+        val exception = IOException("Provider failed")
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) { throw exception }
+
+        val result = importerWithFileName("broken.apkg").handleFileImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        assertEquals(exception, assertIs<ImportResult.Failure>(result).exception)
+        verify(crashReporter).sendExceptionReport(exception, "ImportUtils", null, false)
+    }
+
+    @Test
+    fun `file not found while reading an open source is still reported`() {
+        val uri = "content://import/unreadable.apkg".toUri()
+        val exception = FileNotFoundException("Read failed after opening")
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) {
+            object : InputStream() {
+                override fun read(): Int = throw exception
+            }
+        }
+
+        val result = importerWithFileName("unreadable.apkg").handleFileImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        assertEquals(exception, assertIs<ImportResult.Failure>(result).exception)
+        verify(crashReporter).sendExceptionReport(exception, "ImportUtils", null, false)
+    }
+
+    private fun importerWithFileName(fileName: String): FileImporter =
+        object : FileImporter() {
+            override fun getFileNameFromContentProvider(
+                context: Context,
+                data: Uri,
+            ): String = fileName
+        }
+
     @Test
     fun cjkNamesAreConvertedToUnicode() {
         // NOTE: I don't know whether this still needs to exist, but it was added as this previously crashes

@@ -36,6 +36,8 @@ import kotlinx.coroutines.launch
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.Locale
@@ -252,7 +254,7 @@ object ImportUtils {
             val tempOutDir: String = Uri.fromFile(checkFile).encodedPath!!
 
             copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
-                CrashReportService.sendExceptionReport(details.exceptionForReport, "ImportUtils")
+                details.exceptionForReport?.let { CrashReportService.sendExceptionReport(it, "ImportUtils") }
                 return ImportResult.Failure(
                     title = details.buildTitle(context),
                     humanReadableMessage = details.buildHumanReadableMessage(context),
@@ -404,13 +406,31 @@ object ImportUtils {
             tempPath: String,
         ): CacheFileResult =
             try {
-                context.contentResolver.openInputStreamSafe(data)?.use { input ->
-                    CompatHelper.compat.copyFile(input, tempPath)
-                    CacheFileResult.Success(tempPath)
+                context.contentResolver.openInputStreamSafe(data)?.let { input ->
+                    copyToCache(input, tempPath)
                 } ?: run {
                     Timber.w("Content provider crashed")
                     CacheFileResult.ContentProviderCrashed
                 }
+            } catch (e: FileNotFoundException) {
+                // The selected file may have been deleted since the provider returned its URI.
+                Timber.w(e, "Import source file is unavailable")
+                CacheFileResult.SourceFileUnavailable(e)
+            } catch (e: Exception) {
+                Timber.w("Could not open import source")
+                CacheFileResult.Error(e)
+            }
+
+        /**
+         * Returns [CacheFileResult.Error] for any [Exception] while copying or closing [input].
+         */
+        private fun copyToCache(
+            input: InputStream,
+            tempPath: String,
+        ): CacheFileResult =
+            try {
+                input.use { CompatHelper.compat.copyFile(it, tempPath) }
+                CacheFileResult.Success(tempPath)
             } catch (e: Exception) {
                 Timber.w("Could not copy file to %s", tempPath)
                 CacheFileResult.Error(e)
@@ -425,6 +445,10 @@ object ImportUtils {
                 val exception: Exception,
             ) : CacheFileResult()
 
+            data class SourceFileUnavailable(
+                val exception: FileNotFoundException,
+            ) : CacheFileResult()
+
             data object ContentProviderCrashed : CacheFileResult()
 
             fun asErrorDetails(): CacheErrorDetails? =
@@ -435,6 +459,11 @@ object ImportUtils {
                             exceptionForReport = exception,
                             userFacingException = exception,
                         )
+                    is SourceFileUnavailable ->
+                        CacheErrorDetails(
+                            exceptionForReport = null,
+                            userFacingException = exception,
+                        )
                     is ContentProviderCrashed ->
                         CacheErrorDetails(
                             exceptionForReport = ManuallyReportedException("Content provider crashed"),
@@ -443,7 +472,7 @@ object ImportUtils {
                 }
 
             data class CacheErrorDetails(
-                val exceptionForReport: Exception,
+                val exceptionForReport: Exception?,
                 val userFacingException: Exception?,
             ) {
                 fun buildTitle(context: Context) = context.getString(R.string.import_error_copy_to_cache_title)
