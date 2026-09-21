@@ -103,7 +103,7 @@ class ReviewRemindersTest : InstrumentedTest() {
             openAddDialog()
             selectDeck(deckName)
             selectTime(time)
-            onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
+            openAdvancedSettings()
             onView(withId(R.id.add_edit_reminder_card_threshold_input)).perform(scrollTo(), replaceText("5"), closeSoftKeyboard())
             onView(withId(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)).perform(scrollTo(), click())
             onView(withId(android.R.id.button1)).perform(click())
@@ -119,7 +119,7 @@ class ReviewRemindersTest : InstrumentedTest() {
         withReminders(scope = ReviewReminderScope.DeckSpecific(deckId), reminderCount = 1) {
             assertReminderRow(storedReminders().single(), deckName)
             onView(withId(R.id.reminders_list_time_text)).perform(click())
-            onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
+            openAdvancedSettings()
             onView(withId(R.id.add_edit_reminder_card_threshold_input)).check(matches(withText("5")))
             onView(withId(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)).check(matches(isChecked()))
         }
@@ -157,8 +157,10 @@ class ReviewRemindersTest : InstrumentedTest() {
             assertReminderRow(original, "Original deck")
             onView(withId(R.id.reminders_list_time_text)).perform(click())
             onView(withId(R.id.add_edit_reminder_deck_name)).checkWithTimeout(matches(withText("Original deck")))
-            onView(withId(R.id.add_edit_reminder_time_button)).check(matches(withText(original.time.toFormattedString(testContext))))
-            onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
+            onView(
+                withId(R.id.add_edit_reminder_time_button),
+            ).checkWithTimeout(matches(withText(original.time.toFormattedString(testContext))))
+            openAdvancedSettings()
             onView(withId(R.id.add_edit_reminder_card_threshold_input)).check(matches(withText("2")))
             onView(withId(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)).check(matches(not(isChecked())))
 
@@ -186,7 +188,7 @@ class ReviewRemindersTest : InstrumentedTest() {
         withReminders(scope = destinationScope, reminderCount = 1) {
             assertReminderRow(storedReminders().single(), destinationDeckName)
             onView(withId(R.id.reminders_list_time_text)).perform(click())
-            onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
+            openAdvancedSettings()
             onView(withId(R.id.add_edit_reminder_card_threshold_input)).check(matches(withText("7")))
             onView(withId(R.id.add_edit_reminder_only_notify_if_no_reviews_checkbox)).check(matches(isChecked()))
         }
@@ -339,6 +341,28 @@ class ReviewRemindersTest : InstrumentedTest() {
         onView(withText("Delete this reminder?")).check(matches(isDisplayed()))
     }
 
+    /**
+     * The picker does not reliably open in clock mode, so toggling unconditionally can leave it in
+     * the mode we did not want and the text inputs never appear.
+     */
+    private fun switchTimePickerToKeyboardMode() {
+        if (!timePickerIsInKeyboardMode()) {
+            onView(withId(MaterialR.id.material_timepicker_mode_button)).perform(click())
+        }
+        onView(withId(MaterialR.id.material_hour_text_input)).checkWithTimeout(matches(isDisplayed()))
+    }
+
+    private fun timePickerIsInKeyboardMode(): Boolean =
+        runCatching {
+            onView(withId(MaterialR.id.material_hour_text_input)).check(matches(isDisplayed()))
+        }.isSuccess
+
+    /** Expanding the advanced section travels through the view model, so wait for its content. */
+    private fun openAdvancedSettings() {
+        onView(withId(R.id.add_edit_reminder_advanced_dropdown)).perform(click())
+        onView(withId(R.id.add_edit_reminder_card_threshold_input)).checkWithTimeout(matches(isDisplayed()))
+    }
+
     private fun selectDeck(deckName: String) {
         onView(withId(R.id.add_edit_reminder_deck_name)).perform(click())
         onView(withText(deckName)).checkWithTimeout(matches(isDisplayed()))
@@ -349,7 +373,7 @@ class ReviewRemindersTest : InstrumentedTest() {
     /** Uses the time picker's keyboard mode; the selected time is in the morning. */
     private fun selectTime(time: ReviewReminderTime) {
         onView(withId(R.id.add_edit_reminder_time_button)).perform(click())
-        onView(withId(MaterialR.id.material_timepicker_mode_button)).perform(click())
+        switchTimePickerToKeyboardMode()
         onView(allOf(isAssignableFrom(EditText::class.java), isDescendantOfA(withId(MaterialR.id.material_hour_text_input))))
             .perform(replaceText(time.hour.toString()), closeSoftKeyboard())
         onView(allOf(isAssignableFrom(Chip::class.java), isDescendantOfA(withId(MaterialR.id.material_minute_text_input))))
@@ -360,7 +384,9 @@ class ReviewRemindersTest : InstrumentedTest() {
             onView(allOf(withId(MaterialR.id.material_clock_period_am_button), isDisplayed())).perform(click())
         }
         onView(withId(MaterialR.id.material_timepicker_ok_button)).perform(click())
-        onView(withId(R.id.add_edit_reminder_time_button)).check(matches(withText(time.toFormattedString(testContext))))
+        // The time picker is layered over this dialog rather than replacing it, so let the window
+        // stack settle before the caller interacts with the dialog underneath
+        onView(withId(R.id.add_edit_reminder_time_button)).checkWithTimeout(matches(withText(time.toFormattedString(testContext))))
     }
 
     private fun storedReminders(): List<ReviewReminder> = runBlocking { ReviewRemindersDatabase.getAllReminders().getRemindersList() }
