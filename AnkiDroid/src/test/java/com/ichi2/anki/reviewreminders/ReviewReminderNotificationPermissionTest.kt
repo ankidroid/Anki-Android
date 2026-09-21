@@ -13,6 +13,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.windows.permissions.PermissionsBottomSheet
 import com.ichi2.testutils.positiveButton
+import com.ichi2.testutils.rules.OverridePropertyRule
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -20,6 +21,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
@@ -27,27 +29,22 @@ import org.robolectric.Shadows.shadowOf
 /** Tests AnkiDroid's permission sheet without changing the device's notification permission. */
 @RunWith(AndroidJUnit4::class)
 class ReviewReminderNotificationPermissionTest : RobolectricTest() {
-    private var originalReminderRequestShown = false
-    private var originalPermissionRequested = false
-    private var originalLegacySheetShown = false
+    @get:Rule
+    val notificationPreferences =
+        OverridePropertyRule(
+            Prefs::reminderNotifsRequestShown to false,
+            Prefs::notificationsPermissionRequested to false,
+            Prefs::notificationsBottomSheetShownBelowAPI33 to false,
+        )
 
     @Before
     fun setUpReminders() {
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
-        originalReminderRequestShown = Prefs.reminderNotifsRequestShown
-        originalPermissionRequested = Prefs.notificationsPermissionRequested
-        originalLegacySheetShown = Prefs.notificationsBottomSheetShownBelowAPI33
-        Prefs.reminderNotifsRequestShown = false
-        Prefs.notificationsPermissionRequested = false
-        Prefs.notificationsBottomSheetShownBelowAPI33 = false
         shadowOf(targetContext.getSystemService<NotificationManager>()!!).setNotificationsEnabled(false)
     }
 
     @After
     fun tearDownReminders() {
-        Prefs.reminderNotifsRequestShown = originalReminderRequestShown
-        Prefs.notificationsPermissionRequested = originalPermissionRequested
-        Prefs.notificationsBottomSheetShownBelowAPI33 = originalLegacySheetShown
         ReviewRemindersDatabase.remindersSharedPrefs.edit { clear() }
     }
 
