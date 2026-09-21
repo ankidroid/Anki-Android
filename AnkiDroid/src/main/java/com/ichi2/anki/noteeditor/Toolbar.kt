@@ -28,6 +28,7 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.graphics.createBitmap
@@ -68,7 +69,9 @@ class Toolbar : FrameLayout {
     var formatListener: TextFormatListener? = null
     private val toolbar: LinearLayout
     private val toolbarLayout: LinearLayout
-    private val scrollView: HorizontalScrollView
+
+    @VisibleForTesting
+    internal val scrollView: HorizontalScrollView
 
     /** A list of buttons, typically user-defined which modify text + selection */
     private val customButtons: MutableList<View> = ArrayList()

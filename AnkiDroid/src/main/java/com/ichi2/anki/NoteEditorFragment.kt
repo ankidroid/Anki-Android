@@ -217,7 +217,8 @@ class NoteEditorFragment :
     DispatchKeyEventListener,
     MenuProvider,
     ShortcutGroupProvider {
-    private val binding by viewBinding(FragmentNoteEditorBinding::bind)
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentNoteEditorBinding::bind)
 
     private var bottomInsetPx = 0
 

@@ -9,14 +9,16 @@ import android.widget.FrameLayout
 import androidx.core.view.RoundedCornerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.noteeditor.toIntent
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.insetsOf
 import com.ichi2.utils.dp
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 
@@ -49,6 +51,20 @@ class NoteEditorScreenshotTest : ScreenshotTest() {
         withNoteEditor { activity ->
             activity.simulateSideNavigationBar()
             captureScreen("landscape")
+        }
+    }
+
+    @Test
+    fun `gesture navigation corners do not leak into landscape insets`() {
+        RuntimeEnvironment.setQualifiers("+land")
+        withNoteEditor { activity ->
+            // WindowInsets.Builder shares rounded corners: model a gesture test running first.
+            activity.simulateGestureNavigationBar()
+            activity.simulateSideNavigationBar()
+
+            val toolbar = activity.noteEditorFragment.binding.editorToolbar.scrollView
+            assertThat(toolbar.paddingLeft, equalTo(0))
+            assertThat(toolbar.paddingRight, equalTo(0))
         }
     }
 
@@ -128,16 +144,8 @@ class NoteEditorScreenshotTest : ScreenshotTest() {
     /** As [simulateNavigationBar], but landscape: a side navigation bar and an opposite cutout */
     private fun NoteEditorActivity.simulateSideNavigationBar() {
         val navBarWidth = 48.dp
-        val insets =
-            with(targetContext) {
-                WindowInsetsCompat
-                    .Builder()
-                    .setInsets(statusBars(), insetsOf(top = 24.dp))
-                    .setInsets(navigationBars(), insetsOf(right = navBarWidth))
-                    .setInsets(displayCutout(), insetsOf(left = 32.dp))
-                    .build()
-            }
-        ViewCompat.dispatchApplyWindowInsets(window.decorView, insets)
+        // The shared helper also resets rounded corners leaked by other tests.
+        dispatchInsets(navBarRight = navBarWidth, cutoutLeft = 32.dp)
         addOverlay(navBarWidth.toPx(targetContext), FrameLayout.LayoutParams.MATCH_PARENT, Gravity.END)
     }
 
