@@ -421,6 +421,51 @@ tasks.register('installGitHook', Copy) {
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
+// A device can report sys.boot_completed while user 0 is still RUNNING_LOCKED, which happens
+// routinely on an AVD with a startup PIN that was booted headless. Credential encrypted storage is
+// unavailable until it unlocks, so AnkiDroidApp.onCreate throws while reading preferences and every
+// test dies before it runs. Checked up front because the run otherwise costs minutes to tell us
+// nothing, and reports zero tests rather than a failure.
+abstract class AssertDevicesUnlocked extends DefaultTask {
+    @InputFile
+    abstract RegularFileProperty getAdbExecutable()
+
+    @javax.inject.Inject
+    abstract ExecOperations getExecOperations()
+
+    @TaskAction
+    void assertDevicesUnlocked() {
+        def adb = adbExecutable.get().asFile.absolutePath
+        def locked = []
+        for (String line : adbOutput(adb, 'devices').readLines()) {
+            if (!(line ==~ /\S+\tdevice/)) {
+                continue
+            }
+            def serial = line.split('\t')[0]
+            if (adbOutput(adb, '-s', serial, 'shell', 'dumpsys', 'user').contains('RUNNING_LOCKED')) {
+                locked.add(serial)
+            }
+        }
+        if (locked) {
+            throw new GradleScriptException("Device(s) " + locked.join(', ') + " have booted but are still locked, so every test would fail in Application.onCreate. Unlock the screen - an AVD with a startup PIN stays locked until the PIN is entered.", null)
+        }
+    }
+
+    private String adbOutput(String adb, String... args) {
+        def output = new ByteArrayOutputStream()
+        execOperations.exec {
+            it.commandLine([adb, *args])
+            it.standardOutput = output
+        }
+        return output.toString()
+    }
+}
+tasks.register('assertDevicesUnlocked', AssertDevicesUnlocked) {
+    adbExecutable.set(androidComponents.sdkComponents.adb)
+    // Device state is not an input Gradle can track, so never consider this task up to date
+    outputs.upToDateWhen { false }
+}
+
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
     // Resolve the directory at configuration time, which is Gradle Configuration Cache compatible
@@ -443,6 +488,7 @@ tasks.register('assertNonzeroAndroidTests') {
 }
 afterEvaluate {
     tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").configure {
+        dependsOn('assertDevicesUnlocked')
         finalizedBy('assertNonzeroAndroidTests')
     }
 
