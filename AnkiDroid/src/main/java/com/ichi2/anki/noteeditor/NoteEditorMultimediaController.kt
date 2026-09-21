@@ -11,7 +11,6 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.BundleCompat
-import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.MediaRegistration
 import com.ichi2.anki.NoteEditorFragment
@@ -31,7 +30,6 @@ import com.ichi2.utils.ContentResolverUtil
 import com.ichi2.utils.openInputStreamSafe
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
@@ -59,9 +57,9 @@ internal class NoteEditorMultimediaController(
     fun handleActions(fieldIndex: Int) {
         actionJob?.cancel()
         actionJob =
-            fragment.lifecycleScope.launch {
+            fragment.launchCatchingTask {
                 val note = fragment.getCurrentMultimediaEditableNote()
-                if (note.isEmpty) return@launch
+                if (note.isEmpty) return@launchCatchingTask
 
                 fragment.multimediaViewModel.multimediaAction.first { action ->
                     Timber.i("Selected multimedia action: %s", action)

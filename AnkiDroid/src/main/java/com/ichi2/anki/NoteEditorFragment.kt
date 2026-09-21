@@ -818,7 +818,7 @@ class NoteEditorFragment :
             contents?.let { setEditFieldTexts(it) }
             tags?.let { setTags(it) }
             // If the activity was called to handle an image addition, launch a coroutine to process the image intent.
-            if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { multimediaController.handleImageIntent(intent) }
+            if (caller == NoteEditorCaller.ADD_IMAGE) launchCatchingTask { multimediaController.handleImageIntent(intent) }
         } else {
             // Intercept spinner clicks to launch ChangeNoteTypeDialog instead of spinner dropdown
             noteTypeSpinner!!.setOnTouchListener { _, event ->
