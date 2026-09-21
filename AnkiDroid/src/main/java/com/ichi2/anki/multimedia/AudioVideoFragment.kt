@@ -64,6 +64,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      */
     private val pickMediaLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (view == null) return@registerForActivityResult
             when {
                 result.resultCode != Activity.RESULT_OK || result.data == null -> {
                     Timber.d("Uri is empty or Result not OK")
@@ -366,13 +367,13 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     override fun onDestroyView() {
         super.onDestroyView()
         Timber.d("Releasing media player")
-        mediaPlayer.release()
+        if (::mediaPlayer.isInitialized) mediaPlayer.release()
     }
 
     override fun onStop() {
         super.onStop()
         Timber.d("Stopping media player")
-        mediaPlayer.playWhenReady = false
+        if (::mediaPlayer.isInitialized) mediaPlayer.playWhenReady = false
     }
 
     companion object {
