@@ -51,6 +51,7 @@ import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.logging.logActivityCreation
 import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
+import com.ichi2.anki.multimedia.MultimediaArgsStorage
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -74,6 +75,7 @@ import com.ichi2.widget.WidgetNotificationScheduler
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.restoreRecurringAlarms
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -172,6 +174,7 @@ open class AnkiDroidApp :
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
             return
         }
+        launchCacheCleanup()
         if (AdaptionUtil.isUserATestClient) {
             showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
         }
@@ -215,6 +218,16 @@ open class AnkiDroidApp :
         appLifecycleObserver = null
         super.onTerminate()
     }
+
+    /** Schedules cache maintenance and logs its duration without delaying startup. */
+    private fun launchCacheCleanup() =
+        applicationScope.launch(Dispatchers.IO) {
+            runCatching {
+                measureTime("cacheCleanup") {
+                    MultimediaArgsStorage.create(this@AnkiDroidApp).removeExpiredFiles()
+                }
+            }.onFailure { Timber.w(it, "Unable to clean up expired cache files") }
+        }
 
     /**
      * @param debugTraceSqlCalls Log all SQL statements executed by the backend.
