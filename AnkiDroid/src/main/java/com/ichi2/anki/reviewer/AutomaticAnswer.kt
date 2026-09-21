@@ -9,7 +9,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.HandlerUtils
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckConfig
@@ -289,7 +288,6 @@ class AutomaticAnswerSettings(
         /**
          * Obtains the options for [AutomaticAnswer] in the deck config
          */
-        @NeedsTest("ensure question setting maps to question parameter")
         fun queryOptions(
             col: Collection,
             selectedDid: DeckId,
