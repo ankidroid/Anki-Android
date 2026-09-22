@@ -7,6 +7,7 @@ import fi.iki.elonen.NanoHTTPD
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
+import java.io.DataInputStream
 
 open class AnkiServer(
     private val postHandler: PostRequestHandler,
@@ -23,8 +24,8 @@ open class AnkiServer(
             Method.POST -> {
                 val uri = session.uri
                 Timber.d("POST: Requested %s", uri)
+                // NanoHTTPD closes the connection on body read failures by default
                 val inputBytes = getSessionBytes(session)
-
                 try {
                     val data = runBlocking { postHandler.handlePostRequest(PostRequestUri(uri), inputBytes) }
                     buildResponse(data)
@@ -65,7 +66,7 @@ open class AnkiServer(
         fun getSessionBytes(session: IHTTPSession): ByteArray {
             val contentLength = session.headers["content-length"]!!.toInt()
             val bytes = ByteArray(contentLength)
-            session.inputStream.read(bytes, 0, contentLength)
+            DataInputStream(session.inputStream).readFully(bytes)
             return bytes
         }
     }
