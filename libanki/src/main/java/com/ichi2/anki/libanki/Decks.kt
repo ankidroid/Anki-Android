@@ -220,6 +220,9 @@ class Decks(
         )
     }
 
+    /**
+     * Returns the root node of the deck tree without counts as it uses the browser collapsed state.
+     */
     @LibAnkiAlias("deck_tree")
     @Suppress("unused")
     fun deckTree(): DeckTreeNode = col.backend.deckTree(now = 0)
