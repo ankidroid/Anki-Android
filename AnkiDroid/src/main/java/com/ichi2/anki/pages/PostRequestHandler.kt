@@ -147,6 +147,12 @@ val uiMethods =
         },
         "importCsv" to { bytes -> lifecycleScope.async { importCsvRaw(bytes) } },
         "importAnkiPackage" to { bytes -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
+        "importDialogRequireClose" to { _ ->
+            lifecycleScope.async {
+                finish()
+                byteArrayOf()
+            }
+        },
         "addImageOcclusionNote" to { bytes ->
             lifecycleScope.async {
                 withCol { addImageOcclusionNoteRaw(bytes) }
