@@ -3,6 +3,7 @@
 package com.ichi2.anki.workarounds
 
 import android.content.Context
+import android.print.PrintDocumentAdapter
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.webkit.CookieManager
@@ -25,17 +26,26 @@ open class SafeWebViewLayout :
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    private enum class WebViewState {
+        ACTIVE,
+        DESTROYED,
+    }
+
     private var webView: WebView = createWebView()
+
+    private var webViewState = WebViewState.ACTIVE
 
     var scrollBars: Int = webView.scrollBarStyle
         set(value) {
-            webView.scrollBarStyle = value
             field = value
+            if (warnIfNotActive("scrollBars setter")) return
+            webView.scrollBarStyle = value
         }
 
     @NeedsTest("Verify background color applies to inner WebView")
     override fun setBackgroundColor(color: Int) {
         super.setBackgroundColor(color)
+        if (warnIfNotActive("setBackgroundColor")) return
         webView.setBackgroundColor(color)
     }
 
@@ -45,6 +55,7 @@ open class SafeWebViewLayout :
         addView(webView, webViewLayoutParams)
     }
 
+    // Not guarded when not [WebViewState.ACTIVE]: callers rarely use these after destroy and a no-op is impossible.
     val settings: WebSettings get() = webView.settings
 
     @Suppress("DEPRECATION")
@@ -52,12 +63,14 @@ open class SafeWebViewLayout :
 
     @MainThread
     fun setWebViewClient(webViewClient: SafeWebViewClient) {
+        if (warnIfNotActive("setWebViewClient")) return
         webViewClient.setOnRenderProcessGoneListener(this)
         webView.webViewClient = webViewClient
     }
 
     @MainThread
     fun setWebChromeClient(webChromeClient: WebChromeClient) {
+        if (warnIfNotActive("setWebChromeClient")) return
         webView.webChromeClient = webChromeClient
     }
 
@@ -65,18 +78,27 @@ open class SafeWebViewLayout :
     fun evaluateJavascript(
         script: String,
         resultCallback: ((String) -> Unit)? = null,
-    ) = webView.evaluateJavascript(script) { callback ->
-        resultCallback?.invoke(callback)
+    ) {
+        if (warnIfNotActive("evaluateJavascript")) return
+        webView.evaluateJavascript(script) { callback ->
+            resultCallback?.invoke(callback)
+        }
     }
 
     @MainThread
     fun addJavascriptInterface(
         javascriptInterface: Any,
         name: String,
-    ) = webView.addJavascriptInterface(javascriptInterface, name)
+    ) {
+        if (warnIfNotActive("addJavascriptInterface")) return
+        webView.addJavascriptInterface(javascriptInterface, name)
+    }
 
     @MainThread
-    fun loadUrl(url: String) = webView.loadUrl(url)
+    fun loadUrl(url: String) {
+        if (warnIfNotActive("loadUrl")) return
+        webView.loadUrl(url)
+    }
 
     @MainThread
     fun loadDataWithBaseURL(
@@ -85,49 +107,111 @@ open class SafeWebViewLayout :
         mimeType: String?,
         encoding: String?,
         historyUrl: String?,
-    ) = webView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
+    ) {
+        if (warnIfNotActive("loadDataWithBaseURL")) return
+        webView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
+    }
 
-    fun setAcceptThirdPartyCookies(accept: Boolean) = CookieManager.getInstance().setAcceptThirdPartyCookies(webView, accept)
-
-    @MainThread
-    fun goBack() = webView.goBack()
-
-    @MainThread
-    fun pageUp() = webView.pageUp(false)
-
-    @MainThread
-    fun pageDown() = webView.pageDown(false)
+    fun setAcceptThirdPartyCookies(accept: Boolean) {
+        if (warnIfNotActive("setAcceptThirdPartyCookies")) return
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, accept)
+    }
 
     @MainThread
-    fun reload() = webView.reload()
+    fun goBack() {
+        if (warnIfNotActive("goBack")) return
+        webView.goBack()
+    }
 
     @MainThread
-    fun focusOnWebView() = webView.requestFocus()
+    fun pageUp(): Boolean {
+        if (warnIfNotActive("pageUp")) return false
+        return webView.pageUp(false)
+    }
 
     @MainThread
-    fun destroy() = webView.destroy()
+    fun pageDown(): Boolean {
+        if (warnIfNotActive("pageDown")) return false
+        return webView.pageDown(false)
+    }
+
+    @MainThread
+    fun reload() {
+        if (warnIfNotActive("reload")) return
+        webView.reload()
+    }
+
+    @MainThread
+    fun focusOnWebView() {
+        if (warnIfNotActive("focusOnWebView")) return
+        webView.requestFocus()
+    }
+
+    @MainThread
+    fun destroy() {
+        if (warnIfNotActive("destroy")) return
+        webView.destroy()
+        webViewState = WebViewState.DESTROYED
+    }
 
     @MainThread
     fun scrollVerticallyBy(y: Int) {
+        if (warnIfNotActive("scrollVerticallyBy")) return
         if (webView.canScrollVertically(y)) {
             webView.scrollBy(0, y)
         }
     }
 
     @MainThread
-    fun createPrintDocumentAdapter(documentName: String) = webView.createPrintDocumentAdapter(documentName)
+    fun createPrintDocumentAdapter(documentName: String): PrintDocumentAdapter? {
+        if (warnIfNotActive("createPrintDocumentAdapter")) return null
+        return webView.createPrintDocumentAdapter(documentName)
+    }
 
-    override fun setOnScrollChangeListener(l: OnScrollChangeListener?) = webView.setOnScrollChangeListener(l)
+    override fun setOnScrollChangeListener(l: OnScrollChangeListener?) {
+        if (warnIfNotActive("setOnScrollChangeListener")) return
+        webView.setOnScrollChangeListener(l)
+    }
 
+    /**
+     * Replaces the terminated inner [WebView] after a render process crash when recreation is possible.
+     *
+     * When recreation is skipped (layout not in a usable fragment state), the terminated
+     * [WebView] is destroyed and not replaced; further calls on this layout are guarded no-ops.
+     */
     override fun onRenderProcessGone(webView: WebView) {
+        // Always remove and destroy the terminated WebView first. Android requires this even when
+        // we skip recreation (e.g. fragment view already gone). See:
+        // https://developer.android.com/develop/ui/views/layout/webapps/handle-termination
         removeView(webView)
         webView.destroy()
+
+        val fragment =
+            try {
+                findFragment<Fragment>()
+            } catch (e: IllegalStateException) {
+                Timber.w(e, "skipping WebView recreation; layout is not attached to a Fragment")
+                webViewState = WebViewState.DESTROYED
+                return
+            }
+        if (fragment.view == null) {
+            Timber.w("skipping WebView recreation; fragment view is gone")
+            webViewState = WebViewState.DESTROYED
+            return
+        }
 
         this.webView = createWebView()
         addView(this.webView, webViewLayoutParams)
 
-        val fragment = findFragment<Fragment>()
         (fragment as? OnWebViewRecreatedListener)?.onWebViewRecreated(this.webView)
+    }
+
+    private fun warnIfNotActive(methodName: String): Boolean {
+        if (webViewState != WebViewState.ACTIVE) {
+            Timber.w("$methodName called after WebView was destroyed")
+            return true
+        }
+        return false
     }
 
     override fun onAttachedToWindow() {
@@ -169,7 +253,10 @@ open class SafeWebViewLayout :
      */
     @MainThread
     fun safeDestroy() {
+        if (warnIfNotActive("safeDestroy")) return
         destroyWebView(webView, this)
+        // Mark destroyed even if [destroyWebView] partially failed; using a partially torn-down WebView is unsafe.
+        webViewState = WebViewState.DESTROYED
     }
 
     companion object {
