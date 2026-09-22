@@ -131,7 +131,7 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
             analytics =
                 GoogleAnalytics.builder {
                     measurementId = analyticsContext.getString(R.string.ga_trackingId)
-                    apiSecret = BuildConfig.ANALYTICS_API_KEY
+                    apiSecret = analyticsContext.getString(R.string.ga_api_secret)
                     appName = analyticsContext.getString(R.string.app_name)
                     appVersion = BuildConfig.VERSION_NAME
                     enabled = optIn

@@ -146,7 +146,8 @@ android {
         }
 
         def apiKey = properties.getProperty("ANALYTICS_API_KEY") ?: System.getenv("ANALYTICS_API_KEY") ?: "DUMMY_API_XXX"
-        buildConfigField "String", "ANALYTICS_API_KEY", "\"${apiKey}\""
+        // Keep credentials out of BuildConfig: ACRA collects its fields through reflection.
+        resValue "string", "ga_api_secret", apiKey
     }
     signingConfigs {
         release {
