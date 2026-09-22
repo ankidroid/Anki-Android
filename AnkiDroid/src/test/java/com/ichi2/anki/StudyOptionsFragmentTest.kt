@@ -81,7 +81,7 @@ class StudyOptionsFragmentTest : RobolectricTest() {
             )
         scenario.onFragment { fragment ->
 
-            runBlocking { fragment.viewModel.refreshData().join() }
+            runBlocking { fragment.viewModel.refreshData() }
             assertIs<StudyOptionsState.Empty>(fragment.viewModel.state)
         }
         withNullCollection {

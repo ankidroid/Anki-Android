@@ -8,6 +8,7 @@ import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.testutils.ensureOpsExecuted
 import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
@@ -30,7 +31,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
     fun `refreshData - empty deck shows Empty state`() =
         runTest {
             col
-            viewModel.refreshData().join()
+            viewModel.refreshData()
             assertIs<StudyOptionsState.Empty>(viewModel.state)
         }
 
@@ -39,7 +40,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote("Front", "Back")
 
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             val state = viewModel.state
             assertIs<StudyOptionsState.StudyOptions>(state)
@@ -55,7 +56,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
 
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             assertFalse(viewModel.isFilteredDeck)
         }
@@ -71,7 +72,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
                 }
             }
 
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             assertIs<StudyOptionsState.Congrats>(viewModel.state)
         }
@@ -83,11 +84,11 @@ class StudyOptionsViewModelTest : RobolectricTest() {
             viewModel.flowOfState.test {
                 assertIs<StudyOptionsState.Loading>(awaitItem())
 
-                viewModel.refreshData().join()
+                viewModel.refreshData()
                 assertIs<StudyOptionsState.Empty>(awaitItem())
 
                 addBasicNote()
-                viewModel.refreshData().join()
+                viewModel.refreshData()
                 assertIs<StudyOptionsState.StudyOptions>(awaitItem())
             }
         }
@@ -97,7 +98,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             repeat(5) { addBasicNote("Front $it", "Back $it") }
 
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             val state = assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
             assertEquals(5, state.data.newCardsToday)
@@ -109,7 +110,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
 
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             val state = assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
             assertEquals("Default", state.deckName)
@@ -169,7 +170,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         runTest {
             addBasicNote()
 
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             assertFalse(viewModel.haveBuried)
         }
@@ -184,7 +185,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
                 sched.buryCards(listOf(card.id), true)
             }
 
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             val state = assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
             assertTrue(state.data.buriedNew > 0, "expected buried new cards")
@@ -195,7 +196,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
     fun `refreshData - returns early without throwing when collection is closed`() =
         runTest {
             withNullCollection {
-                viewModel.refreshData().join()
+                viewModel.refreshData()
             }
         }
 
@@ -205,7 +206,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
             withNullCollection {
                 assertIs<StudyOptionsState.Loading>(viewModel.state)
 
-                viewModel.refreshData().join()
+                viewModel.refreshData()
 
                 assertIs<StudyOptionsState.Loading>(viewModel.state)
             }
@@ -215,14 +216,14 @@ class StudyOptionsViewModelTest : RobolectricTest() {
     fun `refreshData - does not clobber a populated state when collection becomes closed`() =
         runTest {
             addBasicNote("Front", "Back")
-            viewModel.refreshData().join()
+            viewModel.refreshData()
             val populatedState = assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
             val populatedDeckId = viewModel.selectedDeckId
             val populatedIsFiltered = viewModel.isFilteredDeck
             val populatedHaveBuried = viewModel.haveBuried
 
             withNullCollection {
-                viewModel.refreshData().join()
+                viewModel.refreshData()
                 assertEquals(populatedState, viewModel.state)
                 assertEquals(populatedDeckId, viewModel.selectedDeckId)
                 assertEquals(populatedIsFiltered, viewModel.isFilteredDeck)
@@ -236,7 +237,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
             withNullCollection {
                 viewModel.flowOfState.test {
                     assertIs<StudyOptionsState.Loading>(awaitItem())
-                    viewModel.refreshData().join()
+                    viewModel.refreshData()
                     expectNoEvents()
                 }
             }
@@ -246,7 +247,7 @@ class StudyOptionsViewModelTest : RobolectricTest() {
     fun `refreshData - safe under multiple rapid calls when collection is closed`() =
         runTest {
             withNullCollection {
-                val jobs = (1..10).map { viewModel.refreshData() }
+                val jobs = (1..10).map { launch { viewModel.refreshData() } }
                 jobs.joinAll()
 
                 assertIs<StudyOptionsState.Loading>(viewModel.state)
@@ -257,12 +258,12 @@ class StudyOptionsViewModelTest : RobolectricTest() {
     fun `refreshData - resumes correctly after the collection becomes available again`() =
         runTest {
             withNullCollection {
-                viewModel.refreshData().join()
+                viewModel.refreshData()
                 assertIs<StudyOptionsState.Loading>(viewModel.state)
             }
 
             addBasicNote("Front", "Back")
-            viewModel.refreshData().join()
+            viewModel.refreshData()
 
             assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
         }
@@ -271,9 +272,9 @@ class StudyOptionsViewModelTest : RobolectricTest() {
     fun `refreshData - mutating operations stay safe when collection is closed`() =
         runTest {
             withNullCollection {
-                viewModel.refreshData().join()
-                viewModel.refreshData().join()
-                viewModel.refreshData().join()
+                viewModel.refreshData()
+                viewModel.refreshData()
+                viewModel.refreshData()
                 assertIs<StudyOptionsState.Loading>(viewModel.state)
             }
         }

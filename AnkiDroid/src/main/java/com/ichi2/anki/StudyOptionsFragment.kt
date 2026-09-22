@@ -34,6 +34,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.backend.stripHTMLScriptAndStyleTags
@@ -50,6 +51,7 @@ import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.CollectionMediaImageGetter
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
@@ -309,7 +311,7 @@ class StudyOptionsFragment :
 
     fun refreshInterface() {
         Timber.d("Refreshing StudyOptionsFragment")
-        viewModel.refreshData()
+        viewModel.viewModelScope.launch { viewModel.refreshData() }
     }
 
     private fun rebuildUi(state: StudyOptionsState) {
