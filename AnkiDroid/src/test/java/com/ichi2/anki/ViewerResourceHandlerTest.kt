@@ -38,6 +38,20 @@ class ViewerResourceHandlerTest : RobolectricTest() {
         assertNull(response, "a request escaping the media directory must not be served")
     }
 
+    @Test
+    fun `MathJax implementation is available at the backend URL`() {
+        val response = ViewerResourceHandler(targetContext).shouldInterceptRequest(request("/_anki/js/vendor/mathjax/tex-chtml-full.js"))
+
+        val expected = readAssetText("backend/js/vendor/mathjax/tex-chtml-full.js")
+        assertEquals(expected, assertNotNull(response).data.bufferedReader().use { it.readText() })
+    }
+
+    private fun readAssetText(path: String): String =
+        targetContext.assets
+            .open(path)
+            .bufferedReader()
+            .use { it.readText() }
+
     private fun request(path: String): WebResourceRequest =
         mock {
             on { url } doReturn "http://127.0.0.1$path".toUri()
