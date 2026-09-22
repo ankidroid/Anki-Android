@@ -10,6 +10,7 @@ runKtlint () {
     # * renaming `diff` variable to `diff_path`.
     # * changing the path of the diff file (to ensure in case of failure that we don't overwrite the file)
     # * storing the diff under `git rev-parse --git-dir` so worktrees work; abort if stash fails
+    # * never deleting the recovery patch after a failed stash/restore (see #17593)
     ######## KTLINT-GRADLE HOOK START ########
 
     CHANGED_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $NF ~ /\.kts?$/ { print $NF }')"
@@ -22,18 +23,25 @@ runKtlint () {
     echo "Running ktlint over these files:"
     echo "$CHANGED_FILES"
 
+    # Snapshot unstaged work before ktlint mutates the tree. Keep that patch on any
+    # stash/restore failure: #17593 lost hours of in-flight edits when an earlier
+    # hook version discarded the only recovery copy after a partial apply.
     git_dir=$(git rev-parse --git-dir)
     date=$(date +%y%m%d_%H%M%S)
     diff_path="$git_dir/unstaged-ktlint-git-hook-$date.diff"
     if ! git diff --color=never > "$diff_path"; then
-        echo "Failed to save unstaged changes before ktlint."
-        rm -f "$diff_path"
+        echo "Failed to save unstaged changes before ktlint." >&2
+        echo "Commit aborted. Any partial snapshot is kept at: $diff_path" >&2
         return 1
     fi
     if [ -s "$diff_path" ]; then
         if ! git apply -R "$diff_path"; then
-            echo "Failed to stash unstaged changes before ktlint."
-            rm -f "$diff_path"
+            # Intentionally keep $diff_path: git apply -R can delete files before
+            # failing (e.g. unwritable paths), and removing the patch then destroys
+            # the only recovery copy — the #17593 failure mode.
+            echo "Failed to stash unstaged changes before ktlint." >&2
+            echo "Commit aborted. Your unstaged edits are still saved in: $diff_path" >&2
+            echo "Reapply with: git apply --ignore-whitespace \"$diff_path\"" >&2
             return 1
         fi
     fi
