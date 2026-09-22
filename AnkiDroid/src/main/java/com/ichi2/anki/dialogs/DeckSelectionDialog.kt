@@ -53,6 +53,7 @@ import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.REQUEST_SELECT_DECK
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.sched.DeckNode
 import com.ichi2.anki.model.SelectableDeck
@@ -508,7 +509,7 @@ fun Fragment.registerDeckSelectedHandler(
  * @param allowMultipleSelection if selection of multiple decks is permitted
  * @param allowAll shows 'All decks' option if true
  * @param allowFiltered shows filtered decks if true
- * @param skipEmptyDefault if true, hides the 'Default' deck if it's empty
+ * @param skipEmptyDefault if true, hides the 'Default' deck if it has no cards or subdecks
  */
 fun Fragment.startDeckSelection(
     title: String? = null,
@@ -527,7 +528,8 @@ fun Fragment.startDeckSelection(
                     withCol {
                         decks.allNamesAndIds(
                             includeFiltered = allowFiltered,
-                            skipEmptyDefault = skipEmptyDefault,
+                            // Parent decks must remain selectable so users can include their subdecks.
+                            skipEmptyDefault = skipEmptyDefault && decks.children(DEFAULT_DECK_ID).isEmpty(),
                         )
                     }
                 val decks: MutableList<SelectableDeck> =
@@ -565,7 +567,7 @@ fun Fragment.startDeckSelection(
  * @param allowMultipleSelection if selection of multiple decks is permitted
  * @param allowAll shows 'All decks' option if true
  * @param allowFiltered shows filtered decks if true
- * @param skipEmptyDefault if true, hides the 'Default' if it's empty
+ * @param skipEmptyDefault if true, hides the 'Default' deck if it has no cards or subdecks
  */
 fun AnkiActivity.startDeckSelection(
     title: String? = null,
@@ -583,7 +585,8 @@ fun AnkiActivity.startDeckSelection(
                     withCol {
                         decks.allNamesAndIds(
                             includeFiltered = allowFiltered,
-                            skipEmptyDefault = skipEmptyDefault,
+                            // Parent decks must remain selectable so users can include their subdecks.
+                            skipEmptyDefault = skipEmptyDefault && decks.children(DEFAULT_DECK_ID).isEmpty(),
                         )
                     }
                 val decks: MutableList<SelectableDeck> =
