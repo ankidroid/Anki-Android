@@ -73,7 +73,8 @@ private const val SVG_IMAGE = "image/svg+xml"
 class MultimediaImageFragment :
     MultimediaFragment(R.layout.fragment_multimedia_image),
     OnWebViewRecreatedListener {
-    private val binding by viewBinding(FragmentMultimediaImageBinding::bind)
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentMultimediaImageBinding::bind)
 
     /** The image on screen, re-rendered if the WebView's render process dies */
     private var previewedImage: Uri? = null
