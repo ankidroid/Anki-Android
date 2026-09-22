@@ -155,6 +155,33 @@ class DeckPickerInsetsTest : RobolectricTest() {
             )
         }
 
+    @Test
+    fun `recyclerView padding resets when keyboard is closed`() =
+        withDeckPicker(deckCount = 2) { deckPicker ->
+            deckPicker.dispatchInsets(navBarBottom = 48.dp)
+            deckPicker.layoutForTest()
+            val initialPadding = deckPicker.deckPickerBinding.decks.paddingBottom
+
+            deckPicker.dispatchInsets(navBarBottom = 48.dp, imeBottom = 300.dp)
+            deckPicker.layoutForTest()
+            val keyboardPadding = deckPicker.deckPickerBinding.decks.paddingBottom
+            assertThat(
+                "recyclerView bottom padding should increase while keyboard is open",
+                keyboardPadding,
+                greaterThan(initialPadding),
+            )
+
+            deckPicker.dispatchInsets(navBarBottom = 48.dp)
+            deckPicker.layoutForTest()
+            val closedPadding = deckPicker.deckPickerBinding.decks.paddingBottom
+
+            assertThat(
+                "recyclerView bottom padding should reset to initial after keyboard closes",
+                closedPadding,
+                equalTo(initialPadding),
+            )
+        }
+
     /** The bottom margin raising the FAB above the 'Studied X cards' line. */
     private val DeckPicker.fabBottomMargin: Int
         get() = (floatingActionButtonBinding.fabLinearLayout.layoutParams as MarginLayoutParams).bottomMargin

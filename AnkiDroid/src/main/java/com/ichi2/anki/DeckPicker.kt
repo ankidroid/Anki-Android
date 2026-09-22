@@ -711,11 +711,17 @@ open class DeckPicker :
                 bottom = maxOf(bars.bottom + bottomNavOffset, withKeyboard.bottom),
             )
 
-            setRecyclerViewBottomPaddingAbove(listAnchor())
             insets
         }
+        floatingActionButtonBinding.root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            if (listAnchor() === floatingActionButtonBinding.fabMain) {
+                setRecyclerViewBottomPaddingAbove(floatingActionButtonBinding.fabMain)
+            }
+        }
         floatingActionButtonBinding.fabMain.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
-            setRecyclerViewBottomPaddingAbove(v)
+            if (listAnchor() === v) {
+                setRecyclerViewBottomPaddingAbove(v)
+            }
         }
         deckPickerBinding.reviewSummaryTextView.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
             // exclude paddingBottom: it holds the edge-to-edge inset, which is already applied
