@@ -112,11 +112,59 @@ class ProgressObserverTest : RobolectricTest() {
         op.cancel()
     }
 
+    @Test
+    fun `newInstance respects cancellable flag`() {
+        val nonCancellable = LoadingDialogFragment.newInstance("msg", cancellable = false)
+        assertEquals(false, nonCancellable.isCancelable)
+
+        val cancellable = LoadingDialogFragment.newInstance("msg", cancellable = true)
+        assertEquals(true, cancellable.isCancelable)
+    }
+
+    @Test
+    fun `dialog is not cancellable when op does not provide onCancel`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
+
+        val gate = CompletableDeferred<Unit>()
+        val op = launchOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+
+        val dialogFragment = activity.loadingDialog() as? DialogFragment
+        assertNotNull(dialogFragment)
+        assertEquals(false, dialogFragment.isCancelable)
+
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        op.cancel()
+    }
+
+    @Test
+    fun `dialog is cancellable when op provides onCancel`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
+
+        val gate = CompletableDeferred<Unit>()
+        val op = launchOp(gate, onCancel = {})
+        idleMainLooper(SHOW_DELAY * 2)
+
+        val dialogFragment = activity.loadingDialog() as? DialogFragment
+        assertNotNull(dialogFragment)
+        assertEquals(true, dialogFragment.isCancelable)
+
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        op.cancel()
+    }
+
     private fun launchOp(
         gate: CompletableDeferred<Unit>,
         message: String = "op",
+        onCancel: (() -> Unit)? = null,
     ) = CoroutineScope(Dispatchers.Unconfined).launch {
-        progressManager.withProgress(message = message) { gate.await() }
+        progressManager.withProgress(message = message, onCancel = onCancel) { gate.await() }
     }
 
     private fun startActivity(): ActivityController<EmptyAnkiActivity> =
