@@ -5,6 +5,8 @@ package com.ichi2.anki.pages
 import android.webkit.WebView
 import androidx.core.view.children
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.deck_config.UpdateDeckConfigsMode
+import anki.deck_config.UpdateDeckConfigsRequest
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.SingleFragmentActivity
@@ -17,6 +19,9 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /** Test for [DeckOptions] */
 @RunWith(AndroidJUnit4::class)
@@ -39,7 +44,60 @@ class DeckOptionsTest : RobolectricTest() {
         }
     }
 
-    private fun withDeckOptions(block: DeckOptions.() -> Unit) {
+    @Test
+    fun `optimizing all presets saves without closing options`() =
+        runTest {
+            withDeckOptions {
+                updateDeckConfigs(UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_COMPUTE_ALL_PARAMS, newPerDay = 42)
+
+                assertFalse(requireActivity().isFinishing)
+                assertEquals(42, newCardsPerDay)
+            }
+        }
+
+    @Test
+    fun `normal save closes options`() =
+        runTest {
+            withDeckOptions {
+                updateDeckConfigs(UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_NORMAL, newPerDay = 42)
+
+                assertTrue(requireActivity().isFinishing)
+                assertEquals(42, newCardsPerDay)
+            }
+        }
+
+    private val newCardsPerDay: Int
+        get() =
+            col.backend
+                .getDeckConfigsForUpdate(Consts.DEFAULT_DECK_ID)
+                .allConfigList
+                .single()
+                .config.config.newPerDay
+
+    private suspend fun DeckOptions.updateDeckConfigs(
+        mode: UpdateDeckConfigsMode,
+        newPerDay: Int,
+    ) {
+        val data = col.backend.getDeckConfigsForUpdate(Consts.DEFAULT_DECK_ID)
+        val config =
+            data.allConfigList
+                .single()
+                .config
+                .toBuilder()
+        config.setConfig(config.config.toBuilder().setNewPerDay(newPerDay))
+        val request =
+            UpdateDeckConfigsRequest
+                .newBuilder()
+                .setTargetDeckId(Consts.DEFAULT_DECK_ID)
+                .setMode(mode)
+                .setFsrs(true)
+                .addConfigs(config)
+                .build()
+                .toByteArray()
+        requireActivity().updateDeckConfigsRaw(request)
+    }
+
+    private inline fun withDeckOptions(block: DeckOptions.() -> Unit) {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
                 SingleFragmentActivity::class.java,
