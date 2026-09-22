@@ -47,8 +47,6 @@ fun stdHtml(
     val jsAssets: List<String> =
         listOf(
             "backend/js/jquery.min.js",
-            "backend/js/mathjax.js",
-            "backend/js/vendor/mathjax/tex-chtml-full.js",
             "backend/js/reviewer.js",
             "scripts/ankidroid-cardviewer.js",
         ) + extraJsAssets

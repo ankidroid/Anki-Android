@@ -10,6 +10,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
@@ -63,7 +64,10 @@ class PreviewerFragment :
             }
         }
     }
-    private val binding by viewBinding(FragmentPreviewerBinding::bind)
+
+    @VisibleForTesting
+    internal val binding by viewBinding(FragmentPreviewerBinding::bind)
+
     override val webViewLayout: SafeWebViewLayout get() = binding.webViewLayout
 
     override val baseSnackbarBuilder: SnackbarBuilder
