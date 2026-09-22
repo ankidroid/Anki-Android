@@ -20,6 +20,7 @@ dependencies {
     testImplementation(libs.hamcrest)
     testImplementation(libs.junit.platform.launcher)
     testImplementation(kotlin("test"))
+    testImplementation(libs.kotlinx.coroutines.test)
 
     testFixturesImplementation(libs.hamcrest)
     testFixturesImplementation(libs.androidx.annotation)
