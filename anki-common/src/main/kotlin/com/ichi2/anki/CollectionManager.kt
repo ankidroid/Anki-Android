@@ -20,6 +20,7 @@ import com.ichi2.anki.CollectionManager.withQueue
 import com.ichi2.anki.backend.createDatabaseUsingRustBackend
 import com.ichi2.anki.common.android.ApplicationContextInitializer
 import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.coroutines.recordCoroutineCaller
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.storage.StorageDecision
@@ -143,7 +144,22 @@ object CollectionManager {
      * @throws SystemStorageException if startup failed to choose a default collection path
      * ([CollectionHelper.systemStorageFailure])
      */
-    suspend fun <T> withCol(
+    suspend inline fun <T> withCol(
+        @WorkerThread noinline block: Collection.() -> T,
+    ): T =
+        // this method must be inline for recordCoroutineCaller
+        recordCoroutineCaller {
+            @Suppress("DEPRECATION_ERROR")
+            withColInternal(block)
+        }
+
+    /** Published only for inlined [withCol] calls; direct calls would bypass caller tracing. */
+    @PublishedApi
+    @Deprecated(
+        message = "Call withCol instead.",
+        level = DeprecationLevel.ERROR,
+    )
+    internal suspend fun <T> withColInternal(
         @WorkerThread block: Collection.() -> T,
     ): T =
         withQueue {
