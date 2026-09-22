@@ -20,9 +20,11 @@ import com.ichi2.anki.browser.search.SearchFilters
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.requireChildFragment
 import com.ichi2.anki.getVisibleRows
+import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.settings.Prefs
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.sameInstance
@@ -173,6 +175,22 @@ class CardBrowserFragmentTest : RobolectricTest() {
                 assertThat(search.editText.selectionStart, equalTo(query.length))
                 assertThat(search.editText.selectionEnd, equalTo(query.length))
             }
+        }
+
+    @Test
+    fun `filtered deck search escapes the deck name`() =
+        withCardBrowserFragment {
+            val deckId = addDeck("Chapter_1")
+            activityViewModel.searchRequestFlow.update { request ->
+                request.copyFilters { it.copy(decks = listOf(DeckNameId("Chapter_1", deckId))) }
+            }
+
+            // '_' is a single character wildcard, so an unescaped name also matches 'Chapter11'
+            assertThat(buildDeckNameSearch(), equalTo("""deck:Chapter\_1"""))
+
+            val selected = addBasicNote("In Chapter_1").apply { moveToDeck("Chapter_1") }
+            addBasicNote("In Chapter11").apply { moveToDeck("Chapter11") }
+            assertThat(col.findCards(buildDeckNameSearch()!!), equalTo(listOf(selected.firstCard().id)))
         }
 
     @Test
