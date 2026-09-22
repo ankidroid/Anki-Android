@@ -65,6 +65,7 @@ class AllActivitiesRecreationTest : RobolectricTest() {
 
     @Test
     fun `activity is recreated from its saved state`() {
+        ensureCollectionLoadIsSynchronous()
         val controller = launcher.build(targetContext)
         saveControllerForCleanup(controller)
 
