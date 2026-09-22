@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.first
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.robolectric.shadows.ShadowDialog
 
 /**
  * Screenshot tests for [DeckPicker]
@@ -63,6 +64,22 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
         withDeckPicker(deckCount = 30) { deckPicker ->
             deckPicker.simulateEdgeToEdge()
             captureScreen("edgeToEdge_30_decks")
+        }
+
+    @Test
+    fun deck_list_after_dismissing_create_deck_dialog() =
+        withDeckPicker(deckCount = 12) { deckPicker ->
+            deckPicker.simulateEdgeToEdge()
+            deckPicker.showCreateDeckDialog()
+            deckPicker.dispatchInsets(navBarBottom = 48.dp, imeBottom = 300.dp)
+            advanceRobolectricLooper()
+
+            ShadowDialog.getLatestDialog().cancel()
+            deckPicker.dispatchInsets(navBarBottom = 48.dp)
+            advanceRobolectricLooper()
+            deckPicker.deckPickerBinding.decks.scrollToEnd()
+
+            captureScreen("deck_list_after_dismissing_create_deck_dialog")
         }
 
     @Test

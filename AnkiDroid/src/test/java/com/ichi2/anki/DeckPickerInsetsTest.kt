@@ -22,12 +22,36 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 
 /**
- * Edge-to-edge inset handling for the [DeckPicker] FAB.
+ * Edge-to-edge inset handling for the [DeckPicker] FAB and deck list.
  *
  * See issue 21241: the FAB shifted when returning from Settings.
  */
 @RunWith(AndroidJUnit4::class)
 class DeckPickerInsetsTest : RobolectricTest() {
+    @Test
+    fun `deck list padding follows a dialog keyboard opening and closing`() =
+        withDeckPicker(deckCount = 2) { deckPicker ->
+            deckPicker.dispatchInsets(navBarBottom = 48.dp)
+            deckPicker.layoutForTest()
+            val list = deckPicker.deckPickerBinding.decks
+            val restingPadding = list.paddingBottom
+
+            repeat(2) {
+                // A dialog opens the keyboard while the deck picker's FAB remains visible.
+                deckPicker.dispatchInsets(navBarBottom = 48.dp, imeBottom = 300.dp)
+                deckPicker.layoutForTest()
+                assertThat(
+                    "the deck list must gain clearance while the keyboard is open",
+                    list.paddingBottom,
+                    greaterThan(restingPadding),
+                )
+
+                deckPicker.dispatchInsets(navBarBottom = 48.dp)
+                deckPicker.layoutForTest()
+                assertThat("the keyboard must not leave extra space below the decks", list.paddingBottom, equalTo(restingPadding))
+            }
+        }
+
     @Test
     fun `FAB is above the navigation bar`() =
         withDeckPicker(deckCount = 2) { deckPicker ->
