@@ -711,17 +711,16 @@ open class DeckPicker :
                 bottom = maxOf(bars.bottom + bottomNavOffset, withKeyboard.bottom),
             )
 
-            setRecyclerViewBottomPaddingAbove(listAnchor())
             insets
         }
-        floatingActionButtonBinding.fabMain.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ ->
-            setRecyclerViewBottomPaddingAbove(v)
+        // Insets move the FAB's ancestors without changing the FAB's bounds within its parent.
+        // Wait until the whole hierarchy is laid out before reading positions in the window.
+        deckPickerBinding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            setRecyclerViewBottomPaddingAbove(listAnchor())
         }
         deckPickerBinding.reviewSummaryTextView.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
             // exclude paddingBottom: it holds the edge-to-edge inset, which is already applied
             raiseFabAboveSummary(view.height - view.paddingBottom)
-            // a hidden FAB has no layout passes to follow: the list rests above the summary line
-            if (listAnchor() === view) setRecyclerViewBottomPaddingAbove(view)
         }
         // The summary is hidden until the collection loads.
         // Assume the summary takes up a single line, so it does not 'jump' up on load
