@@ -180,6 +180,11 @@ open class SafeWebViewLayout :
      * [WebView] is destroyed and not replaced; further calls on this layout are guarded no-ops.
      */
     override fun onRenderProcessGone(webView: WebView) {
+        if (webView !== this.webView) {
+            destroyWebView(webView)
+            return
+        }
+
         // Always remove and destroy the terminated WebView first. Android requires this even when
         // we skip recreation (e.g. fragment view already gone). See:
         // https://developer.android.com/develop/ui/views/layout/webapps/handle-termination
