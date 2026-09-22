@@ -42,11 +42,10 @@ class StudyOptionsViewModel : ViewModel() {
      * Refreshes the deck statistics, deck name, description, and menu-state flags from
      * the collection.
      */
-    fun refreshData(): Job =
-        viewModelScope.launch {
-            if (!CollectionManager.isOpenUnsafe()) return@launch
-            withCol { updateStateFromCollection() }
-        }
+    suspend fun refreshData() {
+        if (!CollectionManager.isOpenUnsafe()) return
+        withCol { updateStateFromCollection() }
+    }
 
     suspend fun rebuildCram() {
         Timber.d("doInBackground - RebuildCram")
