@@ -88,6 +88,8 @@ open class AnkiDroidApp :
     /** An exception if AnkiDroidApp fails to load  */
     private var fatalInitializationError: FatalInitializationError? = null
 
+    private var appLifecycleObserver: AppLifecycleObserver? = null
+
     @LegacyNotifications("The widget triggers notifications by posting null to this, but we plan to stop relying on the widget")
     private val notifications = MutableLiveData<Void?>()
 
@@ -199,6 +201,18 @@ open class AnkiDroidApp :
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         setupTextToSpeech()
         setupCustomFieldFilters()
+    }
+
+    override fun onTerminate() {
+        // WARN: onTerminate is not called on production Android devices, only emulated environments
+
+        // Robolectric creates an application per test, but ProcessLifecycleOwner survives between tests.
+        // It never emits ON_DESTROY, so remove the observer here to release this application.
+        appLifecycleObserver?.let { observer ->
+            ProcessLifecycleOwner.get().lifecycle.removeObserver(observer)
+        }
+        appLifecycleObserver = null
+        super.onTerminate()
     }
 
     /**
@@ -345,12 +359,10 @@ open class AnkiDroidApp :
 
     private fun setupAppLifecycleObserver() =
         setup("setupAppLifecycleObserver") {
-            val appLifecycleObserver = AppLifecycleObserver(applicationContext)
-
-            ProcessLifecycleOwner
-                .get()
-                .lifecycle
-                .addObserver(appLifecycleObserver)
+            appLifecycleObserver =
+                AppLifecycleObserver(applicationContext).also { observer ->
+                    ProcessLifecycleOwner.get().lifecycle.addObserver(observer)
+                }
         }
 
     /**
