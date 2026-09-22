@@ -2,7 +2,6 @@
 // SPDX-FileCopyrightText: Copyright (c) 2013 Zaur Molotnikov <qutorial@gmail.com>
 // SPDX-FileCopyrightText: Copyright (c) 2013 Nicolas Rauol <nicolas.rauol@gmail.com>
 // SPDX-FileCopyrightText: Copyright (c) 2013 Flavio Lerda <flerda@gmail.com>
-// SPDX-FileCopyrightText: Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
 // SPDX-FileCopyrightText: Copyright (c) 2025 Ashish Yadav <mailtoashish693@gmail.com>
 package com.ichi2.anki.recorder
 
