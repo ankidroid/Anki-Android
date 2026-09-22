@@ -2,15 +2,25 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.testutils.ext.triggerDeckNotFoundInLimitsMap
 import com.ichi2.testutils.launchFragmentInContainer
+import com.ichi2.testutils.withFragment
+import com.ichi2.utils.neutralButton
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 /**
  * Fragment-level coverage for the closed-collection scenarios on tablets, where
@@ -19,6 +29,27 @@ import kotlin.test.assertIs
  */
 @RunWith(AndroidJUnit4::class)
 class StudyOptionsFragmentTest : RobolectricTest() {
+    /** Issue 21981: a refresh must offer recovery when the deck hierarchy is corrupt. */
+    @Test
+    fun `corrupt deck hierarchy offers Check database instead of crashing`() =
+        runTest {
+            triggerDeckNotFoundInLimitsMap()
+            throwOnShowError = false
+
+            withStudyOptions {
+                val dialog = assertIs<AlertDialog>(ShadowDialog.getLatestDialog())
+                assertTrue(dialog.isShowing)
+                assertEquals("deck not found in limits map", getAlertDialogText(checkDismissed = true))
+                assertEquals(TR.sentenceCase.checkDatabase, dialog.neutralButton?.text)
+
+                dialog.dismiss()
+                col.fixIntegrity()
+                refreshAndAwait()
+                val state = assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
+                assertEquals(1, state.data.newCardsToday)
+            }
+        }
+
     @Test
     fun `fragment reaches RESUMED with a closed collection`() {
         withNullCollection {
@@ -92,5 +123,19 @@ class StudyOptionsFragmentTest : RobolectricTest() {
                 fragment.onPrepareMenu(menu)
             }
         }
+    }
+
+    private fun TestScope.withStudyOptions(block: StudyOptionsFragment.() -> Unit) =
+        launchFragmentInContainer<StudyOptionsFragment>().use { scenario ->
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+            scenario.withFragment(block)
+        }
+
+    context(scope: TestScope)
+    private fun StudyOptionsFragment.refreshAndAwait() {
+        refreshInterface()
+        scope.advanceUntilIdle()
+        advanceRobolectricLooper()
     }
 }
