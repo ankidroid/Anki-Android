@@ -24,6 +24,10 @@
 # -dontobfuscate
 
 # Used through Reflection
+# ACRA reads BuildConfig fields through reflection.
+-keep class com.ichi2.anki.BuildConfig {
+    public static <fields>;
+}
 -keep class com.ichi2.anki.**.*Fragment { *; }
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
 -keep class androidx.core.app.ActivityCompat$* { *; }
