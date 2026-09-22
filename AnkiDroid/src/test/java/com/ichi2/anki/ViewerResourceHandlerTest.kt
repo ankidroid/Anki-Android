@@ -39,6 +39,14 @@ class ViewerResourceHandlerTest : RobolectricTest() {
     }
 
     @Test
+    fun `MathJax configuration is available at the backend URL`() {
+        val response = ViewerResourceHandler(targetContext).shouldInterceptRequest(request("/_anki/js/mathjax.js"))
+
+        val expected = readAssetText("backend/js/mathjax.js")
+        assertEquals(expected, assertNotNull(response).data.bufferedReader().use { it.readText() })
+    }
+
+    @Test
     fun `MathJax implementation is available at the backend URL`() {
         val response = ViewerResourceHandler(targetContext).shouldInterceptRequest(request("/_anki/js/vendor/mathjax/tex-chtml-full.js"))
 
