@@ -421,11 +421,19 @@ tasks.register('installGitHook', Copy) {
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
-// A device can report sys.boot_completed while user 0 is still RUNNING_LOCKED, which happens
-// routinely on an AVD with a startup PIN that was booted headless. Credential encrypted storage is
-// unavailable until it unlocks, so AnkiDroidApp.onCreate throws while reading preferences and every
-// test dies before it runs. Checked up front because the run otherwise costs minutes to tell us
-// nothing, and reports zero tests rather than a failure.
+// Fail fast when an emulator's primary user (user 0) is still locked after boot.
+//
+// Purpose: detect Play / Google-apis AVDs that have an account with a startup PIN or
+// screen lock. Those report sys.boot_completed while user 0 stays RUNNING_LOCKED, so
+// credential-encrypted storage is unavailable, AnkiDroidApp.onCreate crashes reading
+// preferences, and the connected suite reports a confusing zero-test "success" after
+// minutes of work. This check stops that before install.
+//
+// Scope (intentionally narrow so local multi-device setups keep working):
+// - Only user 0 (secondary profiles being locked must not fail the build).
+// - Device set matches AGP connected tests: ANDROID_SERIAL (comma-separated, same as
+//   ConnectedDeviceProvider) when set; otherwise all devices in CI, or emulator-* only
+//   outside CI (a locked physical phone left plugged in is ignored locally).
 abstract class AssertDevicesUnlocked extends DefaultTask {
     @InputFile
     abstract RegularFileProperty getAdbExecutable()
@@ -436,27 +444,38 @@ abstract class AssertDevicesUnlocked extends DefaultTask {
     @TaskAction
     void assertDevicesUnlocked() {
         def adb = adbExecutable.get().asFile.absolutePath
-        // ANDROID_SERIAL selects the device connected tests will use; honor it so a locked sibling
-        // device cannot block a targeted run. Outside CI, ignore physical devices by default - a
-        // developer often leaves a locked phone plugged in while testing on an emulator.
-        def onlySerial = System.getenv('ANDROID_SERIAL')
-        def checkPhysicalDevices = System.getenv('CI') == 'true' || onlySerial
-        def locked = []
+        // Mirror AGP ConnectedDeviceProvider: System.getenv("ANDROID_SERIAL") split on ','
+        // (com.android.build.gradle.internal.testing.ConnectedDeviceProvider). adb itself
+        // documents ANDROID_SERIAL as a single serial; AGP additionally accepts a list.
+        def serialFilter = parseAndroidSerialFilter(System.getenv('ANDROID_SERIAL'))
+        def onlineSerials = []
         for (String line : adbOutput(adb, 'devices').readLines()) {
             if (!(line ==~ /\S+\tdevice/)) {
                 continue
             }
-            def serial = line.split('\t')[0]
-            if (onlySerial) {
-                if (serial != onlySerial) {
-                    continue
-                }
-            } else if (!checkPhysicalDevices && !(serial ==~ /emulator-.*/)) {
-                continue
+            onlineSerials.add(line.split('\t')[0])
+        }
+
+        def serialsToCheck
+        if (serialFilter != null) {
+            def missing = serialFilter.findAll { !onlineSerials.contains(it) }
+            if (missing) {
+                throw new GradleScriptException(
+                    "ANDROID_SERIAL lists device(s) not connected (or not in 'device' state): " +
+                        missing.join(', ') + ". Connected: " + (onlineSerials ? onlineSerials.join(', ') : "(none)") + ".",
+                    null,
+                )
             }
-            // Only user 0 matters for Application.onCreate / credential-encrypted storage. A locked
-            // secondary profile must not fail the build. Match the Started users state entry exactly
-            // so "10=RUNNING_LOCKED" cannot false-positive via the "0=RUNNING_LOCKED" substring.
+            serialsToCheck = serialFilter
+        } else if (System.getenv('CI') == 'true') {
+            serialsToCheck = onlineSerials
+        } else {
+            // Local default: only emulators. A locked phone plugged in must not block an AVD run.
+            serialsToCheck = onlineSerials.findAll { it ==~ /emulator-.*/ }
+        }
+
+        def locked = []
+        for (String serial : serialsToCheck) {
             if (isUser0Locked(adbOutput(adb, '-s', serial, 'shell', 'dumpsys', 'user'))) {
                 locked.add(serial)
             }
@@ -464,18 +483,51 @@ abstract class AssertDevicesUnlocked extends DefaultTask {
         if (locked) {
             throw new GradleScriptException(
                 "Device(s) " + locked.join(', ') + " have booted but user 0 is still locked, so every " +
-                "test would fail in Application.onCreate. Unlock the screen (an AVD with a startup PIN " +
-                "stays locked until the PIN is entered), or set ANDROID_SERIAL to an unlocked device.",
+                    "test would fail in Application.onCreate. Unlock the screen (a Play AVD with an " +
+                    "account + startup PIN stays locked until the PIN is entered), or set ANDROID_SERIAL " +
+                    "to an unlocked device.",
                 null,
             )
         }
     }
 
-    /** True when dumpsys user reports user 0 as RUNNING_LOCKED. */
+    /**
+     * Parse ANDROID_SERIAL the way AGP ConnectedDeviceProvider does: comma-separated serials.
+     * Returns null when unset/blank (meaning "no filter"). Trims entries and drops empties so
+     * accidental whitespace around commas still matches adb device serials.
+     */
+    static List<String> parseAndroidSerialFilter(String androidSerialEnv) {
+        if (androidSerialEnv == null || androidSerialEnv.isEmpty()) {
+            return null
+        }
+        def serials = androidSerialEnv.split(',').collect { it.trim() }.findAll { it }
+        if (!serials) {
+            return null
+        }
+        return serials
+    }
+
+    /**
+     * True when dumpsys user reports user 0 as locked.
+     * Handles both modern dumps (`Started users state: [0=RUNNING_UNLOCKED]`) and Android 11
+     * dumps (`Started users state: {0=1, 10=3}`), where UserState.STATE_RUNNING_LOCKED = 1 and
+     * STATE_RUNNING_UNLOCKED = 3 (frameworks/base/.../am/UserState.java). Match the user-0 entry
+     * exactly so a locked secondary profile (e.g. 10=RUNNING_LOCKED / 10=1) cannot false-positive,
+     * including via the "0=RUNNING_LOCKED" substring inside "10=RUNNING_LOCKED".
+     */
     static boolean isUser0Locked(String dumpsysUser) {
-        def matcher = dumpsysUser =~ /Started users state: \[([^\]]*)\]/
-        if (matcher.find()) {
-            return matcher.group(1).split(',').collect { it.trim() }.contains('0=RUNNING_LOCKED')
+        def matcher = dumpsysUser =~ /Started users state: [\[{]([^\]}]*)[\]}]/
+        if (!matcher.find()) {
+            return false
+        }
+        for (String entry : matcher.group(1).split(',')) {
+            def parts = entry.trim().split('=', 2)
+            if (parts.length != 2 || parts[0] != '0') {
+                continue
+            }
+            def state = parts[1]
+            // Numeric (API 30 dumps) or named (newer dumps). STATE_RUNNING_LOCKED = 1.
+            return state == 'RUNNING_LOCKED' || state == '1'
         }
         return false
     }
