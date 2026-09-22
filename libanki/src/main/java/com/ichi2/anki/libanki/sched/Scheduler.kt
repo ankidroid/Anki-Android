@@ -470,6 +470,16 @@ open class Scheduler(
         return tree
     }
 
+    /**
+     * Returns the root node of the tree of decks.
+     *
+     * Note: [includeCounts] also affects which collapsed/expanded state is used:
+     * - If true: computes card counts and uses the study/reviewer collapsed state.
+     * - If false: skips counts and uses the browser collapsed state.
+     *
+     * @param includeCounts a flag which helps decide whether we calculate counts of cards and which state to use among the Reviewer and Browser.
+     * @return The root node of the deckTree.
+     */
     fun deckTree(includeCounts: Boolean): DeckNode = DeckNode(col.backend.deckTree(now = if (includeCounts) time.intTime() else 0), "")
 
     fun deckLimit(): String = Utils.ids2str(col.decks.active())
