@@ -946,7 +946,12 @@ class NoteEditorFragment :
                     requireActivity().packageName + ".apkgfileprovider",
                     it,
                 )
-            cameraLauncher.launch(photoURI)
+            try {
+                cameraLauncher.launch(photoURI)
+            } catch (_: ActivityNotFoundException) {
+                Timber.w("No app found to handle image capture")
+                activity?.showSnackbar(R.string.activity_start_failed)
+            }
         }
     }
 
