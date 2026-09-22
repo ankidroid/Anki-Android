@@ -106,7 +106,7 @@ object BackgroundImage {
             val drawable =
                 withContext(Dispatchers.IO) {
                     // 6608 - OOM should be catchable here.
-                    Drawable.createFromPath(imgFile.absolutePath)
+                    decodeDeckPickerBackground(context, imgFile, size.width, size.height)
                 }
             if (drawable != null) ResolveResult.Ready(drawable) else ResolveResult.None
         } catch (e: OutOfMemoryError) {
