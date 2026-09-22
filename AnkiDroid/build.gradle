@@ -429,14 +429,26 @@ tasks.named('preBuild').configure { dependsOn('installGitHook') }
 // preferences, and the connected suite reports a confusing zero-test "success" after
 // minutes of work. This check stops that before install.
 //
-// Scope (intentionally narrow so local multi-device setups keep working):
+// Scope:
 // - Only user 0 (secondary profiles being locked must not fail the build).
-// - Device set matches AGP connected tests: ANDROID_SERIAL (comma-separated, same as
-//   ConnectedDeviceProvider) when set; otherwise all devices in CI, or emulator-* only
-//   outside CI (a locked physical phone left plugged in is ignored locally).
+// - Device set and selector precedence exactly match AGP connected tests:
+//   task --serial, connectedCheck --serial, ANDROID_SERIAL, then every online device.
 abstract class AssertDevicesUnlocked extends DefaultTask {
     @InputFile
     abstract RegularFileProperty getAdbExecutable()
+
+    /** --serial values supplied directly to connectedPlay<Variant>AndroidTest. */
+    @Input
+    abstract ListProperty<String> getDirectSerials()
+
+    /** --serial values inherited from connectedCheck. */
+    @Input
+    abstract ListProperty<String> getConnectedCheckSerials()
+
+    /** ANDROID_SERIAL, tracked as task input for configuration-cache correctness. */
+    @Input
+    @Optional
+    abstract Property<String> getAndroidSerialEnv()
 
     @javax.inject.Inject
     abstract ExecOperations getExecOperations()
@@ -444,10 +456,12 @@ abstract class AssertDevicesUnlocked extends DefaultTask {
     @TaskAction
     void assertDevicesUnlocked() {
         def adb = adbExecutable.get().asFile.absolutePath
-        // Mirror AGP ConnectedDeviceProvider: System.getenv("ANDROID_SERIAL") split on ','
-        // (com.android.build.gradle.internal.testing.ConnectedDeviceProvider). adb itself
-        // documents ANDROID_SERIAL as a single serial; AGP additionally accepts a list.
-        def serialFilter = parseAndroidSerialFilter(System.getenv('ANDROID_SERIAL'))
+        def selection = selectSerials(
+            directSerials.present,
+            directSerials.getOrElse([]),
+            connectedCheckSerials.getOrElse([]),
+            androidSerialEnv.getOrNull(),
+        )
         def onlineSerials = []
         for (String line : adbOutput(adb, 'devices').readLines()) {
             if (!(line ==~ /\S+\tdevice/)) {
@@ -456,24 +470,39 @@ abstract class AssertDevicesUnlocked extends DefaultTask {
             onlineSerials.add(line.split('\t')[0])
         }
 
-        def serialsToCheck
-        if (serialFilter != null) {
-            def missing = serialFilter.findAll { !onlineSerials.contains(it) }
-            if (missing) {
+        if (!onlineSerials) {
+            throw new GradleScriptException("No online devices found.", null)
+        }
+
+        def serialsToCheck = onlineSerials
+        if (selection.serials != null) {
+            // Match AGP's intended multiset behavior for task-option lists: each online device
+            // consumes one requested serial. Repeating the same --serial twice therefore leaves
+            // one unmatched and fails.
+            //
+            // AGP 9.4 implements that by mutating targetSerials in
+            // DeviceProviderInstrumentTestTask.getFilteredDevices(). That list comes from
+            // ListProperty.get() (an ImmutableList), so connectedPlay*AndroidTest --serial
+            // currently crashes with UnsupportedOperationException at ImmutableCollection.remove
+            // before tests run. Reproduced on this repo with and without this preflight; no
+            // public Issue Tracker ID found as of 2026-09-22. ANDROID_SERIAL still works because
+            // that path never calls getFilteredDevices(). This preflight copies into an ArrayList
+            // so we do not inherit the same crash.
+            def unmatched = new ArrayList<String>(selection.serials)
+            for (String onlineSerial : onlineSerials) {
+                unmatched.remove(onlineSerial)
+            }
+            if (unmatched) {
                 throw new GradleScriptException(
-                    "ANDROID_SERIAL lists device(s) not connected (or not in 'device' state): " +
-                        missing.join(', ') + ". Connected: " + (onlineSerials ? onlineSerials.join(', ') : "(none)") + ".",
+                    selection.source + " lists device(s) not connected (or not in 'device' state): " +
+                        unmatched.join(', ') + ". Connected: " + onlineSerials.join(', ') + ".",
                     null,
                 )
             }
-            serialsToCheck = serialFilter
-        } else if (System.getenv('CI') == 'true') {
-            serialsToCheck = onlineSerials
-        } else {
-            // Local default: only emulators. A locked phone plugged in must not block an AVD run.
-            serialsToCheck = onlineSerials.findAll { it ==~ /emulator-.*/ }
+            serialsToCheck = selection.serials.unique()
         }
 
+        logger.info("Checking user-0 unlock state on ${serialsToCheck} selected by ${selection.source}")
         def locked = []
         for (String serial : serialsToCheck) {
             if (isUser0Locked(adbOutput(adb, '-s', serial, 'shell', 'dumpsys', 'user'))) {
@@ -484,27 +513,39 @@ abstract class AssertDevicesUnlocked extends DefaultTask {
             throw new GradleScriptException(
                 "Device(s) " + locked.join(', ') + " have booted but user 0 is still locked, so every " +
                     "test would fail in Application.onCreate. Unlock the screen (a Play AVD with an " +
-                    "account + startup PIN stays locked until the PIN is entered), or set ANDROID_SERIAL " +
-                    "to an unlocked device.",
+                    "account + startup PIN stays locked until the PIN is entered), or select an unlocked " +
+                    "device with --serial / ANDROID_SERIAL.",
                 null,
             )
         }
     }
 
     /**
-     * Parse ANDROID_SERIAL the way AGP ConnectedDeviceProvider does: comma-separated serials.
-     * Returns null when unset/blank (meaning "no filter"). Trims entries and drops empties so
-     * accidental whitespace around commas still matches adb device serials.
+     * Select serials using AGP DeviceProviderInstrumentTestTask.getTargetSerials() + run().
+     *
+     * Presence of the direct --serial ListProperty wins even when the list is empty: AGP then
+     * skips connectedCheck --serial and consults ANDROID_SERIAL only because the target list is
+     * empty. Groovy-truth on the list contents would wrongly fall through to connectedCheck.
+     * ANDROID_SERIAL is Splitter.on(',').split with no trim (ConnectedDeviceProvider).
+     * A null serial list means AGP will run against every online device.
      */
-    static List<String> parseAndroidSerialFilter(String androidSerialEnv) {
-        if (androidSerialEnv == null || androidSerialEnv.isEmpty()) {
-            return null
+    static Map selectSerials(
+        boolean directSerialsPresent,
+        List<String> directSerials,
+        List<String> connectedCheckSerials,
+        String androidSerialEnv
+    ) {
+        def targetSerials = directSerialsPresent ? directSerials : connectedCheckSerials
+        def source = directSerialsPresent ? 'Task --serial' : 'connectedCheck --serial'
+        if (targetSerials) {
+            return [source: source, serials: targetSerials]
         }
-        def serials = androidSerialEnv.split(',').collect { it.trim() }.findAll { it }
-        if (!serials) {
-            return null
+        if (androidSerialEnv != null && !androidSerialEnv.isEmpty()) {
+            // AGP uses Sets.newHashSet(Splitter.on(',').split(androidSerialEnv)).
+            def serials = androidSerialEnv.split(',', -1).toList().unique()
+            return [source: 'ANDROID_SERIAL', serials: serials]
         }
-        return serials
+        return [source: 'connected devices', serials: null]
     }
 
     /**
@@ -543,6 +584,9 @@ abstract class AssertDevicesUnlocked extends DefaultTask {
 }
 tasks.register('assertDevicesUnlocked', AssertDevicesUnlocked) {
     adbExecutable.set(androidComponents.sdkComponents.adb)
+    // No convention([]) on the --serial lists: AGP getTargetSerials() keys off isPresent(),
+    // and an empty convention would make the direct property look intentionally set.
+    androidSerialEnv.set(providers.environmentVariable('ANDROID_SERIAL'))
     // Device state is not an input Gradle can track, so never consider this task up to date
     outputs.upToDateWhen { false }
 }
@@ -577,10 +621,21 @@ tasks.register('assertNonzeroAndroidTests') {
     }
 }
 afterEvaluate {
-    tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").configure {
-        dependsOn('assertDevicesUnlocked')
-        finalizedBy('assertNonzeroAndroidTests')
+    def connectedTest = tasks.named("connectedPlay${rootProject.androidTestVariantName}AndroidTest").get()
+    // Keep the preflight device set in lockstep with AGP's connected-test selection. The nested
+    // properties include task --serial and connectedCheck --serial after Gradle parses command-line
+    // task options; AGP applies the same precedence in getTargetSerials().
+    //
+    // Reading these properties does not cause AGP's --serial crash. That crash is inside AGP 9.4
+    // DeviceProviderInstrumentTestTask.getFilteredDevices(), which calls List.remove on the
+    // ImmutableList returned by ListProperty.get(). Reproduced without this wiring; no public
+    // tracker ID found as of 2026-09-22. Use ANDROID_SERIAL until AGP copies the list first.
+    tasks.named('assertDevicesUnlocked').configure {
+        directSerials.set(connectedTest.testRunnerFactory.deviceSerialValues)
+        connectedCheckSerials.set(connectedTest.testRunnerFactory.connectedCheckDeviceSerials)
     }
+    connectedTest.dependsOn('assertDevicesUnlocked')
+    connectedTest.finalizedBy('assertNonzeroAndroidTests')
 
     // AGP bug: when testFixtures is enabled on an application module, the androidTest R8 task's
     // TESTED_CODE scope only includes the app's dependency artifacts, not the app's own compiled
