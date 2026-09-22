@@ -35,6 +35,9 @@ class ViewerResourceHandler(
         }
 
         try {
+            if (path == "/_anki/js/mathjax.js") {
+                return WebResourceResponse(guessMimeType(path), null, assetManager.open("backend/js/mathjax.js"))
+            }
             if (path.startsWith(MATHJAX_PATH_PREFIX)) {
                 // Asset names use forward slashes, including when tests run on Windows.
                 val mathjaxAssetPath = "backend/js/vendor/mathjax/${path.removePrefix(MATHJAX_PATH_PREFIX)}"
