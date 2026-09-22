@@ -91,6 +91,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         }
         return AlertDialog
             .Builder(requireActivity())
+            .setTitle(TR.actionsExport())
             .setView(binding.root)
             .negativeButton(R.string.dialog_cancel)
             .positiveButton(text = TR.actionsExport()) {
