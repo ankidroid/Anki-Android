@@ -24,6 +24,7 @@ class LoadingDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = layoutInflater.inflate(R.layout.fragment_loading, null)
         val canBeCancelled = arguments?.getBoolean(KEY_CANCELLABLE) ?: true
+        isCancelable = canBeCancelled
         dialogView.findViewById<TextView>(R.id.text).text =
             arguments?.getString(KEY_MESSAGE) ?: getString(R.string.dialog_processing)
         return AlertDialog
@@ -55,6 +56,7 @@ class LoadingDialogFragment : DialogFragment() {
                     putString(KEY_MESSAGE, message)
                     putBoolean(KEY_CANCELLABLE, cancellable)
                 }
+            isCancelable = cancellable
         }
     }
 }
