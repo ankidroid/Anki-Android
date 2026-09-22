@@ -436,19 +436,48 @@ abstract class AssertDevicesUnlocked extends DefaultTask {
     @TaskAction
     void assertDevicesUnlocked() {
         def adb = adbExecutable.get().asFile.absolutePath
+        // ANDROID_SERIAL selects the device connected tests will use; honor it so a locked sibling
+        // device cannot block a targeted run. Outside CI, ignore physical devices by default - a
+        // developer often leaves a locked phone plugged in while testing on an emulator.
+        def onlySerial = System.getenv('ANDROID_SERIAL')
+        def checkPhysicalDevices = System.getenv('CI') == 'true' || onlySerial
         def locked = []
         for (String line : adbOutput(adb, 'devices').readLines()) {
             if (!(line ==~ /\S+\tdevice/)) {
                 continue
             }
             def serial = line.split('\t')[0]
-            if (adbOutput(adb, '-s', serial, 'shell', 'dumpsys', 'user').contains('RUNNING_LOCKED')) {
+            if (onlySerial) {
+                if (serial != onlySerial) {
+                    continue
+                }
+            } else if (!checkPhysicalDevices && !(serial ==~ /emulator-.*/)) {
+                continue
+            }
+            // Only user 0 matters for Application.onCreate / credential-encrypted storage. A locked
+            // secondary profile must not fail the build. Match the Started users state entry exactly
+            // so "10=RUNNING_LOCKED" cannot false-positive via the "0=RUNNING_LOCKED" substring.
+            if (isUser0Locked(adbOutput(adb, '-s', serial, 'shell', 'dumpsys', 'user'))) {
                 locked.add(serial)
             }
         }
         if (locked) {
-            throw new GradleScriptException("Device(s) " + locked.join(', ') + " have booted but are still locked, so every test would fail in Application.onCreate. Unlock the screen - an AVD with a startup PIN stays locked until the PIN is entered.", null)
+            throw new GradleScriptException(
+                "Device(s) " + locked.join(', ') + " have booted but user 0 is still locked, so every " +
+                "test would fail in Application.onCreate. Unlock the screen (an AVD with a startup PIN " +
+                "stays locked until the PIN is entered), or set ANDROID_SERIAL to an unlocked device.",
+                null,
+            )
         }
+    }
+
+    /** True when dumpsys user reports user 0 as RUNNING_LOCKED. */
+    static boolean isUser0Locked(String dumpsysUser) {
+        def matcher = dumpsysUser =~ /Started users state: \[([^\]]*)\]/
+        if (matcher.find()) {
+            return matcher.group(1).split(',').collect { it.trim() }.contains('0=RUNNING_LOCKED')
+        }
+        return false
     }
 
     private String adbOutput(String adb, String... args) {
