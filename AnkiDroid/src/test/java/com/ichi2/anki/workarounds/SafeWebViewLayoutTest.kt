@@ -4,6 +4,7 @@ package com.ichi2.anki.workarounds
 
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.FrameLayout
 import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
@@ -104,6 +105,125 @@ class SafeWebViewLayoutTest : RobolectricTest() {
                 shadowOf(webView).lastLoadedUrl,
                 equalTo(null),
             )
+        }
+    }
+
+    @Test
+    fun `reattaching after intentional destroy does not recover inner WebView`() {
+        withMultimediaWebView { layout, _ ->
+            val parent = layout.parent as ViewGroup
+            val deadWebView = layout.getChildAt(0) as WebView
+            layout.destroy()
+            assertThat("destroy leaves the dead WebView attached", layout.childCount, equalTo(1))
+
+            parent.removeView(layout)
+            parent.addView(layout)
+            assertThat(layout.childCount, equalTo(1))
+            assertThat(
+                "intentional destroy is terminal; same dead WebView remains",
+                layout.getChildAt(0),
+                sameInstance(deadWebView),
+            )
+
+            layout.loadUrl("https://blocked-after-intentional-destroy.example/")
+            assertThat(
+                shadowOf(deadWebView).lastLoadedUrl,
+                equalTo(null),
+            )
+        }
+    }
+
+    @Test
+    fun `destroy after crash cleanup prevents recovery on reattach`() {
+        assertOwnerTeardownPreventsRecovery { destroy() }
+    }
+
+    @Test
+    fun `safeDestroy after crash cleanup prevents recovery on reattach`() {
+        assertOwnerTeardownPreventsRecovery { safeDestroy() }
+    }
+
+    @Test
+    fun `recovery is skipped when orphaned layout reattaches outside fragment view`() {
+        launchFragmentInContainer<SafeWebViewLayoutHostFragment>().use { scenario ->
+            lateinit var layout: SafeWebViewLayout
+            lateinit var staleFragmentRoot: ViewGroup
+            lateinit var deadWebView: WebView
+
+            scenario.onFragment { fragment ->
+                staleFragmentRoot = fragment.requireView() as ViewGroup
+                layout = SafeWebViewLayout(fragment.requireContext())
+                staleFragmentRoot.addView(layout)
+                deadWebView = layout.getChildAt(0) as WebView
+                staleFragmentRoot.removeView(layout)
+                layout.onRenderProcessGone(deadWebView)
+                assertThat(layout.childCount, equalTo(0))
+            }
+
+            scenario.recreate()
+
+            scenario.onFragment { fragment ->
+                val currentFragmentRoot = fragment.requireView()
+                staleFragmentRoot.addView(
+                    layout,
+                    FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                    ),
+                )
+                (currentFragmentRoot.parent as ViewGroup).addView(staleFragmentRoot)
+
+                assertThat(layout.childCount, equalTo(0))
+                layout.loadUrl("https://blocked.example/")
+                assertThat(
+                    "loadUrl no-ops when recovery is skipped for orphaned layout",
+                    shadowOf(deadWebView).lastLoadedUrl,
+                    equalTo(null),
+                )
+                assertThat(layout.childCount, equalTo(0))
+            }
+        }
+    }
+
+    @Test
+    fun `reattaching layout after skipped recreation recovers inner WebView`() {
+        withMultimediaWebView { layout, _ ->
+            val webView = layout.getChildAt(0) as WebView
+            val parent = layout.parent as ViewGroup
+            parent.removeView(layout)
+            layout.onRenderProcessGone(webView)
+            assertThat(layout.childCount, equalTo(0))
+
+            parent.addView(layout)
+            assertThat(layout.childCount, equalTo(1))
+
+            val recoveryUrl = "https://recovery.example/"
+            layout.loadUrl(recoveryUrl)
+            val recoveredWebView = layout.getChildAt(0) as WebView
+            assertThat(
+                "loadUrl works again after reattachment recovery",
+                shadowOf(recoveredWebView).lastLoadedUrl,
+                equalTo(recoveryUrl),
+            )
+        }
+    }
+
+    private fun assertOwnerTeardownPreventsRecovery(teardown: SafeWebViewLayout.() -> Unit) {
+        withMultimediaWebView { layout, _ ->
+            val webView = layout.getChildAt(0) as WebView
+            val parent = layout.parent as ViewGroup
+            parent.removeView(layout)
+            assertThat(layout.isAttachedToWindow, equalTo(false))
+
+            layout.onRenderProcessGone(webView)
+            assertThat(shadowOf(webView).wasDestroyCalled(), equalTo(true))
+            assertThat(layout.childCount, equalTo(0))
+
+            layout.teardown()
+            parent.addView(layout)
+
+            assertThat(layout.isAttachedToWindow, equalTo(true))
+            assertThat("owner teardown must prevent crash recovery", layout.childCount, equalTo(0))
         }
     }
 

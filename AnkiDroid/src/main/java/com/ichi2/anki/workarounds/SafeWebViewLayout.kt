@@ -12,6 +12,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.annotation.MainThread
+import androidx.core.view.ancestors
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import com.ichi2.anki.BuildConfig
@@ -28,7 +29,8 @@ open class SafeWebViewLayout :
 
     private enum class WebViewState {
         ACTIVE,
-        DESTROYED,
+        DESTROYED_RECOVERABLE,
+        DESTROYED_TERMINAL,
     }
 
     private var webView: WebView = createWebView()
@@ -149,9 +151,17 @@ open class SafeWebViewLayout :
 
     @MainThread
     fun destroy() {
-        if (warnIfNotActive("destroy")) return
-        webView.destroy()
-        webViewState = WebViewState.DESTROYED
+        when (webViewState) {
+            WebViewState.ACTIVE -> webView.destroy()
+            // Crash cleanup already destroyed the native WebView; promote to terminal so reattach
+            // does not recover.
+            WebViewState.DESTROYED_RECOVERABLE -> Unit
+            WebViewState.DESTROYED_TERMINAL -> {
+                Timber.w("destroy called after WebView was destroyed")
+                return
+            }
+        }
+        webViewState = WebViewState.DESTROYED_TERMINAL
     }
 
     @MainThread
@@ -176,8 +186,9 @@ open class SafeWebViewLayout :
     /**
      * Replaces the terminated inner [WebView] after a render process crash when recreation is possible.
      *
-     * When recreation is skipped (layout not in a usable fragment state), the terminated
-     * [WebView] is destroyed and not replaced; further calls on this layout are guarded no-ops.
+     * When recreation is skipped (layout not in a usable fragment/window state), the terminated
+     * [WebView] is destroyed and not replaced; further calls on this layout are guarded until
+     * [onAttachedToWindow] recreates the inner [WebView] from [WebViewState.DESTROYED_RECOVERABLE].
      */
     override fun onRenderProcessGone(webView: WebView) {
         if (webView !== this.webView) {
@@ -196,24 +207,42 @@ open class SafeWebViewLayout :
                 findFragment<Fragment>()
             } catch (e: IllegalStateException) {
                 Timber.w(e, "skipping WebView recreation; layout is not attached to a Fragment")
-                webViewState = WebViewState.DESTROYED
+                webViewState = WebViewState.DESTROYED_RECOVERABLE
                 return
             }
         if (fragment.view == null) {
             Timber.w("skipping WebView recreation; fragment view is gone")
-            webViewState = WebViewState.DESTROYED
+            webViewState = WebViewState.DESTROYED_RECOVERABLE
             return
         }
         if (!isAttachedToWindow) {
             Timber.w("skipping WebView recreation; layout is not attached to a window")
-            webViewState = WebViewState.DESTROYED
+            webViewState = WebViewState.DESTROYED_RECOVERABLE
             return
         }
 
-        this.webView = createWebView()
-        addView(this.webView, webViewLayoutParams)
+        recreateInnerWebView(fragment)
+    }
 
+    private fun recreateInnerWebView(fragment: Fragment) {
+        val previousWebView = this.webView
+        if (previousWebView.parent == this) {
+            removeView(previousWebView)
+        }
+        this.webView = createWebView()
+        webViewState = WebViewState.ACTIVE
+        addView(this.webView, webViewLayoutParams)
         (fragment as? OnWebViewRecreatedListener)?.onWebViewRecreated(this.webView)
+    }
+
+    private fun tryRecoverDestroyedWebViewIfNeeded(fragment: Fragment) {
+        if (webViewState != WebViewState.DESTROYED_RECOVERABLE) return
+        val fragmentView = fragment.view ?: return
+        if (this === fragmentView || ancestors.any { it === fragmentView }) {
+            recreateInnerWebView(fragment)
+        } else {
+            Timber.w("skipping WebView recovery; layout is not in the fragment's current view hierarchy")
+        }
     }
 
     private fun warnIfNotActive(methodName: String): Boolean {
@@ -234,6 +263,10 @@ open class SafeWebViewLayout :
                 // findFragment throws if the View is not attached to a Fragment.
                 // This can happen in scenarios like Android Studio previews
                 // or if the view is added directly to an Activity.
+                if (webViewState == WebViewState.DESTROYED_RECOVERABLE) {
+                    Timber.w(e, "SafeWebViewLayout not attached to a Fragment; skipping WebView recovery")
+                    return
+                }
                 if (BuildConfig.DEBUG && !isInEditMode) {
                     throw IllegalStateException(
                         "SafeWebViewLayout must be used within a Fragment",
@@ -253,7 +286,10 @@ open class SafeWebViewLayout :
             } else {
                 Timber.w("Fragment does not implement OnWebViewRecreatedListener. WebView recreation may not be handled")
             }
+            return
         }
+
+        tryRecoverDestroyedWebViewIfNeeded(fragment)
     }
 
     /**
@@ -263,10 +299,21 @@ open class SafeWebViewLayout :
      */
     @MainThread
     fun safeDestroy() {
-        if (warnIfNotActive("safeDestroy")) return
-        destroyWebView(webView, this)
-        // Mark destroyed even if [destroyWebView] partially failed; using a partially torn-down WebView is unsafe.
-        webViewState = WebViewState.DESTROYED
+        when (webViewState) {
+            WebViewState.ACTIVE -> {
+                destroyWebView(webView, this)
+                // Mark destroyed even if [destroyWebView] partially failed; using a partially torn-down
+                // WebView is unsafe.
+            }
+            // Crash cleanup already destroyed the native WebView; promote to terminal so reattach
+            // does not recover.
+            WebViewState.DESTROYED_RECOVERABLE -> Unit
+            WebViewState.DESTROYED_TERMINAL -> {
+                Timber.w("safeDestroy called after WebView was destroyed")
+                return
+            }
+        }
+        webViewState = WebViewState.DESTROYED_TERMINAL
     }
 
     companion object {
