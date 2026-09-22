@@ -868,14 +868,15 @@ open class DeckPicker :
         }
 
         fun onDeckListChanged(deckList: FlattenedDeckList) {
+            // Filtering must not recreate the study options fragment: its menu invalidation closes search.
             deckListAdapter.submit(
                 data = deckList.data,
                 hasSubDecks = deckList.hasSubDecks,
             )
-            tryShowStudyOptionsPanel()
         }
 
         fun onFocusedDeckChanged(deckId: DeckId?) {
+            if (deckId != null) tryShowStudyOptionsPanel()
             val position = deckId?.let { viewModel.findDeckPosition(it) } ?: 0
 
             // Skip centering if the deck is already on screen.
@@ -891,6 +892,7 @@ open class DeckPicker :
 
         fun onDecksReloaded(param: Unit) {
             hideProgressBar()
+            tryShowStudyOptionsPanel()
         }
 
         fun onStartupResponse(response: StartupResponse) {
