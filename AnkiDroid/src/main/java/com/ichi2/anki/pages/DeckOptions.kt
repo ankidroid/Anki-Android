@@ -14,6 +14,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import anki.collection.ComputeParamsProgress
 import anki.collection.OpChanges
+import anki.deck_config.UpdateDeckConfigsMode
+import anki.deck_config.UpdateDeckConfigsRequest
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -343,7 +345,14 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
             }
         }
     undoableOp { OpChanges.parseFrom(output) }
-    withContext(Dispatchers.Main) { finish() }
+    withContext(Dispatchers.Main) {
+        if (UpdateDeckConfigsRequest.parseFrom(input).mode == UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_COMPUTE_ALL_PARAMS) {
+            // Reload so the page uses the newly optimized parameters.
+            requireDeckOptionsFragment().webViewLayout.reload()
+        } else {
+            finish()
+        }
+    }
     return output
 }
 

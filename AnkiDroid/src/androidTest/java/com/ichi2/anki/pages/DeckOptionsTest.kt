@@ -6,6 +6,7 @@ import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -15,6 +16,7 @@ import com.ichi2.anki.testutil.waitUntil
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
+import org.json.JSONObject
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -60,6 +62,52 @@ class DeckOptionsTest : InstrumentedTest() {
     fun defaultDoubleTapIntervalKeepsPageTimeout() {
         withDeckOptions {
             assertFalse(tapParametersThreeTimes(gapMs = 750), "parameters remain locked")
+        }
+    }
+
+    @Test
+    fun optimizingAllPresetsSavesAndReloadsOptions() {
+        withDeckOptions {
+            saveAndOptimize(newPerDay = 43)
+
+            waitUntil(timeout = 30.seconds, message = { "optimization did not save the changed limit" }) {
+                newCardsPerDay == 43
+            }
+            waitUntil(timeout = 30.seconds, message = { "options did not reload after optimization" }) {
+                evaluateJavascript(
+                    "globalThis.beforeOptimization === undefined && Array.from(document.querySelectorAll('input[type=number]')).find(input => input.offsetParent !== null)?.value === '43'",
+                ) ==
+                    "true"
+            }
+            assertFalse(requireActivity().isFinishing)
+        }
+    }
+
+    private val newCardsPerDay: Int
+        get() =
+            col.backend
+                .getDeckConfigsForUpdate(Consts.DEFAULT_DECK_ID)
+                .allConfigList
+                .first()
+                .config.config.newPerDay
+
+    private fun DeckOptions.saveAndOptimize(newPerDay: Int) {
+        val script =
+            """
+            globalThis.beforeOptimization = true;
+            window.confirm = () => true;
+            const input = Array.from(document.querySelectorAll('input[type="number"]')).find(input => input.offsetParent !== null);
+            input.focus();
+            input.value = '$newPerDay';
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            Array.from(document.querySelectorAll('button'))
+                .find(button => button.textContent.trim() === ${JSONObject.quote(TR.deckConfigSaveAndOptimize())}).click();
+            """.trimIndent()
+        // The action navigates away from its JavaScript context, which can discard the
+        // evaluation callback. Observe the persisted settings and the new page instead.
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            webViewLayout.evaluateJavascript(script)
         }
     }
 
