@@ -15,7 +15,8 @@ class PageWebViewClientAssetTest : PageWebViewClientTestBase() {
     fun `only the page server can serve bundled pages and assets`() =
         withStatistics { view, client ->
             val pageUrl = assertNotNull(view.url).toUri()
-            val assetUrl = pageUrl.buildUpon().path("/_app/env.js").build()
+            // Use a real file in the backend.
+            val assetUrl = pageUrl.buildUpon().path("/_app/version.json").build()
             for (url in listOf(pageUrl, assetUrl)) {
                 assertNotNull(client.shouldInterceptRequest(view, request(url.toString())), url.toString()).data.close()
 
