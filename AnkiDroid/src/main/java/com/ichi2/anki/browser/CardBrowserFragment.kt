@@ -54,6 +54,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import anki.collection.OpChanges
+import anki.search.searchNode
 import com.google.android.material.chip.Chip
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -1711,13 +1712,20 @@ class CardBrowserFragment :
      * deck in the form of "deck:A". If the selected deck is "All Decks" then return a general deck
      * search string.
      */
-    private suspend fun buildDeckNameSearch(): String? =
+    @VisibleForTesting
+    suspend fun buildDeckNameSearch(): String? =
         if (activityViewModel.deckId == ALL_DECKS_ID) {
             "deck:_*"
         } else {
-            activityViewModel.deckId?.let {
-                // decks.name() returns 'no deck' if a deck doesn't exist for that did
-                "\"deck:${withCol { decks.get(it, default = true)?.name }}\""
+            activityViewModel.deckId?.let { deckId ->
+                withCol {
+                    // decks.get() returns the default deck if a deck doesn't exist for that did
+                    decks.get(deckId, default = true)?.name?.let { deckName ->
+                        // let the backend escape characters which are special to the search
+                        // syntax, such as the '_' wildcard in a deck named 'Chapter_1'
+                        buildSearchString(listOf(searchNode { deck = deckName }))
+                    }
+                }
             }
         }
 
