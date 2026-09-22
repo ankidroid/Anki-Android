@@ -204,6 +204,11 @@ open class SafeWebViewLayout :
             webViewState = WebViewState.DESTROYED
             return
         }
+        if (!isAttachedToWindow) {
+            Timber.w("skipping WebView recreation; layout is not attached to a window")
+            webViewState = WebViewState.DESTROYED
+            return
+        }
 
         this.webView = createWebView()
         addView(this.webView, webViewLayoutParams)

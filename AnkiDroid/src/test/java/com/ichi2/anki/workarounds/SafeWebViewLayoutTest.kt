@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.workarounds
 
+import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -11,6 +12,7 @@ import com.ichi2.anki.multimedia.MultimediaImageFragment
 import com.ichi2.testutils.launchFragmentInContainer
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -78,6 +80,31 @@ class SafeWebViewLayoutTest : RobolectricTest() {
             layout.webViewDestroyCallCount,
             equalTo(1),
         )
+    }
+
+    @Test
+    fun `onRenderProcessGone skips recreation when layout is not attached to window`() {
+        withMultimediaWebView { layout, fragment ->
+            val webView = layout.getChildAt(0) as WebView
+            val parent = layout.parent as ViewGroup
+            parent.removeView(layout)
+            assertThat(fragment.view, notNullValue())
+            assertThat(layout.isAttachedToWindow, equalTo(false))
+
+            layout.onRenderProcessGone(webView)
+
+            assertThat(shadowOf(webView).wasDestroyCalled(), equalTo(true))
+            assertThat(webView.parent, equalTo(null))
+            assertThat(layout.childCount, equalTo(0))
+
+            val blockedUrl = "https://blocked.example/"
+            layout.loadUrl(blockedUrl)
+            assertThat(
+                "loadUrl no-ops while WebView is destroyed",
+                shadowOf(webView).lastLoadedUrl,
+                equalTo(null),
+            )
+        }
     }
 
     private fun withMultimediaWebView(block: (SafeWebViewLayout, MultimediaImageFragment) -> Unit) {
