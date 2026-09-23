@@ -27,6 +27,7 @@ import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.security.DangerousJsApiPermission
@@ -425,11 +426,10 @@ open class AnkiDroidJsAPI(
                     if (noteId != currentCard.nid) {
                         permissions.requirePermission(DangerousJsApiPermission.MODIFY_TAGS)
                     }
-                    val note =
-                        getColUnsafe.getNote(noteId).apply {
-                            addTag(tag)
-                        }
-                    getColUnsafe.updateNote(note)
+                    undoableOp {
+                        val note = getNote(noteId).apply { addTag(tag) }
+                        updateNote(note)
+                    }
                     convertToByteArray(apiContract, true)
                 }
 
@@ -437,15 +437,15 @@ open class AnkiDroidJsAPI(
                     val jsonObject = JSONObject(apiParams)
                     val noteId = currentCard.nid
                     val tags = jsonObject.getJSONArray("tags")
-                    withCol {
+                    undoableOp {
                         fun Note.setTagsFromList(tagList: List<String>) {
                             val sanitizedTags = tagList.map { it.trim() }
                             val spaces = "\\s|\u3000".toRegex()
                             if (sanitizedTags.any { it.contains(spaces) }) {
                                 throw IllegalArgumentException("Tags cannot contain spaces")
                             }
-                            val tagsAsString = this@withCol.tags.join(sanitizedTags)
-                            setTagsFromStr(this@withCol, tagsAsString)
+                            val tagsAsString = this@undoableOp.tags.join(sanitizedTags)
+                            setTagsFromStr(this@undoableOp, tagsAsString)
                         }
 
                         val note =
