@@ -691,7 +691,7 @@ class Decks(
         did: DeckId,
         subdeckName: String?,
     ): String? {
-        if (subdeckName.isNullOrEmpty()) {
+        if (subdeckName.isNullOrBlank()) {
             return null
         }
         val newName = subdeckName.replace("\"".toRegex(), "")
