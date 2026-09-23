@@ -187,7 +187,9 @@ open class AnkiDroidJsAPI(
         returnDefaultValues: Boolean = true,
     ) = withContext(Dispatchers.Main) {
         // the method will call to set the card supplied data and is valid version for each api request
-        val apiContract = parseJsApiContract(bytes)!!
+        val apiContract =
+            parseJsApiContract(bytes)
+                ?: return@withContext ApiResult.failure("Invalid API contract").toString().toByteArray()
         // if api not init or is api not called from reviewer then return default -1
         // also other action will not be modified
         if (!apiContract.isValid or returnDefaultValues) {
