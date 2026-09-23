@@ -27,6 +27,14 @@ class NoteTypeFieldEditorScreenshotTest : ScreenshotTest() {
             captureScreen("delete_field_dialog")
         }
 
+    @Test
+    fun repositionFieldDialog() =
+        withNoteTypeFieldEditor { activity ->
+            activity.handleAction(NoteTypeFieldEditorContextMenuAction.Reposition)
+            advanceRobolectricLooper()
+            captureScreen("reposition_field_dialog")
+        }
+
     private fun withNoteTypeFieldEditor(block: (NoteTypeFieldEditor) -> Unit) {
         val notetype = getCurrentDatabaseNoteTypeCopy("Basic")
         val intent =
