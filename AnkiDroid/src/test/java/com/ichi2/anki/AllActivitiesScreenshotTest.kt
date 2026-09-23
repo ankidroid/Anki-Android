@@ -137,6 +137,8 @@ class AllActivitiesScreenshotTest : ScreenshotTest() {
                     Info::class.java,
                     // NoteEditorScreenshotTest
                     NoteEditorActivity::class.java,
+                    // NoteTypeFieldEditorScreenshotTest
+                    NoteTypeFieldEditor::class.java,
                 )
             return ActivityList
                 .allActivitiesAndIntents()
