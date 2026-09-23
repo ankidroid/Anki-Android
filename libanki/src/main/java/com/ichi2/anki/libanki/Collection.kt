@@ -76,6 +76,7 @@ import com.ichi2.anki.libanki.sched.DummyScheduler
 import com.ichi2.anki.libanki.sched.Scheduler
 import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
+import com.ichi2.anki.libanki.utils.capitalizePy
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendFatalError
 import net.ankiweb.rsdroid.BackendException.BackendSearchException
@@ -653,12 +654,17 @@ class Collection(
 
     @CheckResult
     @LibAnkiAlias("nextID")
-    @RustCleanup("Python returns 'Any' - may fail for Double?")
-    @Deprecated("not implemented", level = DeprecationLevel.HIDDEN)
     fun nextId(
         type: String,
         inc: Boolean = true,
-    ): Long = TODO()
+    ): Long {
+        val cType = "next" + type.capitalizePy()
+        val id = config.get(cType) ?: 1L
+        if (inc) {
+            config.set(cType, id + 1L)
+        }
+        return id
+    }
 
     /*
      * Notes

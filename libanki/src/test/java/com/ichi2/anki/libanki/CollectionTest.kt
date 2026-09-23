@@ -361,4 +361,20 @@ class CollectionTest : InMemoryAnkiTest() {
     fun `get all columns`() {
         assertThat(col.allBrowserColumns(), not(hasSize(0)))
     }
+
+    @Test
+    fun `nextId new type`() {
+        assertEquals(1L, col.nextId(type = "someType"))
+    }
+
+    @Test
+    fun `nextId when inc is false`() {
+        assertEquals(1L, col.nextId(type = "someType", inc = false))
+    }
+
+    @Test
+    fun `nextId increments by default`() {
+        assertEquals(1L, col.nextId(type = "someType"))
+        assertEquals(2L, col.nextId(type = "someType"))
+    }
 }

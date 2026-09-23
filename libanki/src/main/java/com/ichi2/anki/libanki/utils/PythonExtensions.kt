@@ -136,3 +136,5 @@ fun <T : JSONObjectHolder> len(templates: JSONContainer<T>) = templates.jsonArra
 
 // Changed signature from `copy.deepcopy(clone_from)`
 fun DeckConfig.deepClone() = this.copy(jsonObject = this.jsonObject.deepClone())
+
+internal fun String.capitalizePy(): String = if (isEmpty()) this else first().titlecase() + drop(1).lowercase()
