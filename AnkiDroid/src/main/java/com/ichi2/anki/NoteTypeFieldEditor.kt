@@ -299,6 +299,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
                     it.setArgs(
                         title = fieldName,
                         message = resources.getString(R.string.field_delete_warning),
+                        positiveButtonText = getString(R.string.dialog_positive_delete),
                     )
                     it.setConfirm(confirm)
                     showDialogFragment(it)
