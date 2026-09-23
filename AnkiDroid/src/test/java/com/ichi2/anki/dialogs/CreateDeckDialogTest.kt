@@ -237,6 +237,17 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     @Test
+    fun `subdeck name may not be blank`() {
+        val parentId = addDeck("Parent")
+        testDialog(DeckDialogType.SUB_DECK, parentId) {
+            input = "   "
+            assertThat("Create is disabled if the subdeck name is blank", positiveButton.isEnabled, equalTo(false))
+            input = "Child"
+            assertThat("Create is enabled if the subdeck name is not blank", positiveButton.isEnabled, equalTo(true))
+        }
+    }
+
+    @Test
     fun searchDecksIconVisibilityDeckCreationTest() =
         runTest {
             // await deckpicker
@@ -456,6 +467,25 @@ class CreateDeckDialogTest : RobolectricTest() {
             dialog.createDeck("   ")
             Shadows.shadowOf(Looper.getMainLooper()).idle()
 
+            assertThat(
+                "Snackbar should show invalid name error for blank name",
+                activity.latestSnackbarText(),
+                equalTo(getResourceString(R.string.invalid_deck_name)),
+            )
+        }
+    }
+
+    @Test
+    fun `createSubDeck with a blank name does not create a deck`() {
+        val parentId = addDeck("Parent")
+        val deckCount = col.decks.count()
+        activityScenario.onActivity { activity ->
+            val dialog = CreateDeckDialog(activity, "Create subdeck", DeckDialogType.SUB_DECK, parentId)
+            dialog.onNewDeckCreated = { fail("the deck was not created") }
+            dialog.createSubDeck(parentId, "   ")
+            Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+            assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
             assertThat(
                 "Snackbar should show invalid name error for blank name",
                 activity.latestSnackbarText(),
