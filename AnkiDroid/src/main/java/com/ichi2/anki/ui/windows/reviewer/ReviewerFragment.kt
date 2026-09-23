@@ -685,6 +685,10 @@ class ReviewerFragment :
         fun resetZoom() {
             val factor = initialScale / scale
             if (abs(factor - 1f) < 0.001f) return
+            // zoomBy is asynchronous. Keep _showQuestion/_showAnswer queued until the renderer
+            // has reset its visual viewport, otherwise zoom completion can undo answer anchoring.
+            val pageScale = initialScale / resources.displayMetrics.density
+            webViewLayout.evaluateJavascript("ankidroid.waitForZoomReset($pageScale);")
             webViewLayout.zoomBy(factor.coerceIn(0.01f, 100f))
         }
 

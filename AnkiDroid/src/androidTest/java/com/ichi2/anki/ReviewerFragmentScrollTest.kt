@@ -118,6 +118,46 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
         }
     }
 
+    /** Force answer rendering to race ahead of the native zoom reset. */
+    @Test
+    fun answerRenderingWaitsForZoomReset() {
+        addTallClozeCard("answer")
+
+        withReviewer {
+            waitForCloze("[...]")
+            val originalScale = pageScale
+            zoomIn()
+            scrollDown()
+
+            evaluateScript(
+                """
+                window.zoomResetQueued = false;
+                _queueAction(() => { window.zoomResetQueued = true; });
+                ankidroid.waitForZoomReset($originalScale);
+                _showAnswer("$SPACER<hr id='answer'>answer$SPACER", 'card');
+                """.trimIndent(),
+            )
+            waitUntil(message = { "Previous card updates did not finish" }) {
+                evaluateScript("window.zoomResetQueued") == "true"
+            }
+            // The answer must still be pending after the queued JavaScript microtasks:
+            // we deliberately have not requested the native zoom reset yet.
+            assertEquals(
+                "false",
+                evaluateScript("document.getElementById('answer') !== null"),
+                "answer rendered before the zoom reset",
+            )
+
+            InstrumentationRegistry.getInstrumentation().runOnMainSync {
+                zoomBy(0.5f)
+            }
+            waitForScale(originalScale)
+            waitUntil(message = { "Answer anchor was not scrolled into view after the delayed zoom reset" }) {
+                evaluateScript("Math.abs(document.getElementById('answer')?.getBoundingClientRect().top) <= 1") == "true"
+            }
+        }
+    }
+
     @Test
     fun answerAnchorTakesPrecedenceOverScrollPosition() {
         addNoteUsingBasicNoteType("${SPACER}question", "answer$SPACER").firstCard(col).update { did = testDeckId }
