@@ -35,7 +35,7 @@ androidxBenchmark = "1.5.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidxBrowser = "1.10.0"
 # https://developer.android.com/jetpack/compose/bom/bom-mapping
-androidxComposeBillOfMaterials = "2026.06.01"
+androidxComposeBillOfMaterials = "2026.09.00"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidxConstraintlayout = "2.2.2"
 # https://developer.android.com/jetpack/androidx/releases/core
