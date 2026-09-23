@@ -65,10 +65,17 @@ open class AnkiDroidJsAPI(
     private val permissions = AppPermissions(context) { msg -> host.showSnackbar(msg) }
 
     // Text to speech
-    private val talker = JavaScriptTTS()
+    private val talkerDelegate = lazy { JavaScriptTTS() }
+    private val talker by talkerDelegate
 
     // Speech to Text
-    private val speechRecognizer = JavaScriptSTT(context)
+    private val speechRecognizerDelegate = lazy { JavaScriptSTT(context) }
+    private val speechRecognizer by speechRecognizerDelegate
+
+    fun close() {
+        if (talkerDelegate.isInitialized()) talker.close()
+        if (speechRecognizerDelegate.isInitialized()) speechRecognizer.close()
+    }
 
     open fun convertToByteArray(
         apiContract: ApiContract,
