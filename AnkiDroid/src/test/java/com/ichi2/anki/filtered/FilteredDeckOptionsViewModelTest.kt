@@ -6,6 +6,7 @@ package com.ichi2.anki.filtered
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.decks.Deck
+import anki.decks.Deck.Filtered.SearchTerm.Order
 import anki.decks.DeckKt.FilteredKt.searchTerm
 import anki.decks.DeckKt.filtered
 import anki.decks.filteredDeckForUpdate
@@ -33,6 +34,74 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class FilteredDeckOptionsViewModelTest : RobolectricTest() {
+    @Test
+    fun `retrievability orders are hidden without FSRS`() =
+        runTest {
+            withCol { config.set("fsrs", false) }
+            val labels = withCol { sched.filteredDeckOrderLabels() }
+            withViewModel {
+                assertFalse(labels[Order.RETRIEVABILITY_ASCENDING.number] in current.cardOptions.map { it.label })
+                assertFalse(labels[Order.RETRIEVABILITY_DESCENDING.number] in current.cardOptions.map { it.label })
+            }
+        }
+
+    @Test
+    fun `saved retrievability orders fall back to random without FSRS`() =
+        runTest {
+            withCol { config.set("fsrs", true) }
+            val did = createTestFilteredDeck(Order.RETRIEVABILITY_ASCENDING, Order.RETRIEVABILITY_DESCENDING)
+            withCol { config.set("fsrs", false) }
+            val randomLabel = withCol { sched.filteredDeckOrderLabels()[Order.RANDOM.number] }
+            withViewModel(did) {
+                assertEquals(randomLabel, current.cardOptions[current.filter1State.index].label)
+                assertEquals(randomLabel, current.cardOptions[current.filter2State!!.index].label)
+                onAllowEmptyChange(true)
+                build()
+                assertInstanceOf<DeckBuilt>(state.value)
+            }
+            val terms = withCol { sched.getOrCreateFilteredDeck(did).config.searchTermsList }
+            assertEquals(listOf(Order.RANDOM, Order.RANDOM), terms.map { it.order })
+        }
+
+    @Test
+    fun `retrievability orders survive editing and recreation with FSRS`() =
+        runTest {
+            withCol { config.set("fsrs", true) }
+            val did = createTestFilteredDeck(Order.RETRIEVABILITY_ASCENDING, Order.RETRIEVABILITY_DESCENDING)
+            val labels = withCol { sched.filteredDeckOrderLabels() }
+            withRestoredViewModel(did) {
+                assertEquals(labels[Order.RETRIEVABILITY_ASCENDING.number], current.cardOptions[current.filter1State.index].label)
+                assertEquals(labels[Order.RETRIEVABILITY_DESCENDING.number], current.cardOptions[current.filter2State!!.index].label)
+                onAllowEmptyChange(true)
+                build()
+                assertInstanceOf<DeckBuilt>(state.value)
+            }
+            val terms = withCol { sched.getOrCreateFilteredDeck(did).config.searchTermsList }
+            assertEquals(listOf(Order.RETRIEVABILITY_ASCENDING, Order.RETRIEVABILITY_DESCENDING), terms.map { it.order })
+        }
+
+    @Test
+    fun `relative overdueness keeps its enum value when FSRS orders are hidden`() =
+        runTest {
+            withCol { config.set("fsrs", false) }
+            val did = createTestFilteredDeck()
+            withViewModel(did) {
+                val row = current.cardOptions.indexOfFirst { it.order == Order.RELATIVE_OVERDUENESS }
+                assertTrue(row >= 0)
+                onCardsOptionsChange(FilterIndex.First, row)
+                onCardsOptionsChange(FilterIndex.Second, row)
+                onAllowEmptyChange(true)
+                build()
+                assertInstanceOf<DeckBuilt>(state.value)
+            }
+            val terms = withCol { sched.getOrCreateFilteredDeck(did).config.searchTermsList }
+            assertEquals(listOf(Order.RELATIVE_OVERDUENESS, Order.RELATIVE_OVERDUENESS), terms.map { it.order })
+            withViewModel(did) {
+                assertEquals(Order.RELATIVE_OVERDUENESS, current.cardOptions[current.filter1State.index].order)
+                assertEquals(Order.RELATIVE_OVERDUENESS, current.cardOptions[current.filter2State!!.index].order)
+            }
+        }
+
     @Test
     fun `building a filtered deck with no cards fails unless allow empty is checked`() =
         runTest {
@@ -339,7 +408,7 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                 assertTrue(hasUnsavedChanges.value)
                 onLimitChange(FilterIndex.First, "5")
                 assertFalse(hasUnsavedChanges.value)
-                onCardsOptionsChange(FilterIndex.First, 10)
+                onCardsOptionsChange(FilterIndex.First, 5)
                 assertTrue(hasUnsavedChanges.value)
                 onCardsOptionsChange(FilterIndex.First, 1)
                 assertFalse(hasUnsavedChanges.value)
@@ -357,7 +426,7 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                 assertTrue(hasUnsavedChanges.value)
                 onLimitChange(FilterIndex.Second, "5")
                 assertFalse(hasUnsavedChanges.value)
-                onCardsOptionsChange(FilterIndex.Second, 10)
+                onCardsOptionsChange(FilterIndex.Second, 5)
                 assertTrue(hasUnsavedChanges.value)
                 onCardsOptionsChange(FilterIndex.Second, 1)
                 assertFalse(hasUnsavedChanges.value)
@@ -482,7 +551,10 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
         }
 
     /** Note: created filtered deck has the second filter enabled by default */
-    private suspend fun createTestFilteredDeck(): DeckId {
+    private suspend fun createTestFilteredDeck(
+        firstOrder: Order = Order.forNumber(1),
+        secondOrder: Order = Order.forNumber(1),
+    ): DeckId {
         addDeck("A", true)
         addNoteToDeckA { flagCardForNote(this, Flag.RED) }
         addNoteToDeckA { flagCardForNote(this, Flag.GREEN) }
@@ -497,18 +569,14 @@ class FilteredDeckOptionsViewModelTest : RobolectricTest() {
                             searchTerm {
                                 search = "flag:1"
                                 limit = 5
-                                order =
-                                    Deck.Filtered.SearchTerm.Order
-                                        .forNumber(1)
+                                order = firstOrder
                             },
                         )
                         searchTerms.add(
                             searchTerm {
                                 search = "flag:2"
                                 limit = 5
-                                order =
-                                    Deck.Filtered.SearchTerm.Order
-                                        .forNumber(1)
+                                order = secondOrder
                             },
                         )
                     }
