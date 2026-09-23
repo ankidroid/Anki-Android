@@ -24,7 +24,8 @@
 # -dontobfuscate
 
 # Used through Reflection
-# ACRA reads BuildConfig fields through reflection.
+# Prevent R8 static class merging from pulling in unrelated holders with primitive array fields.
+# ACRA crashes handling these int[] arrays, leaving BuildConfig as 'N/A'
 -keep class com.ichi2.anki.BuildConfig {
     public static <fields>;
 }
