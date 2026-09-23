@@ -51,6 +51,7 @@ import com.ichi2.anki.databinding.FragmentReviewerBinding
 import com.ichi2.anki.dialogs.showDeckOptionsSelectionDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.jsapi.legacy.attach
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -125,7 +126,7 @@ class ReviewerFragment :
     override fun onLoadInitialHtml(): String =
         stdHtml(
             context = requireContext(),
-            extraJsAssets = listOf("scripts/ankidroid-reviewer.js"),
+            extraJsAssets = listOf("scripts/ankidroid-reviewer.js", "scripts/js-api.js"),
             nightMode = Themes.isNightTheme,
         )
 
@@ -156,6 +157,8 @@ class ReviewerFragment :
         binding.backButton.setOnClickListener {
             requireActivity().finish()
         }
+
+        viewModel.legacyJsApi.attach(this)
 
         setupBindings()
         setupImmersiveMode()
