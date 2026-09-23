@@ -136,6 +136,7 @@ class FilteredDeckOptionsViewModel(
         cardOptionIndex: Int,
     ) {
         Timber.i("Filtered deck filter($filterIndex) cards options index changing to $cardOptionIndex")
+        if (cardOptionIndex !in currentState().cardOptions.indices) return
         if (currentFilterState(filterIndex)?.index == cardOptionIndex) return
         updateCurrentFilterState(filterIndex) { copy(index = cardOptionIndex) }
         hasUnsavedChanges.update { wasStateModified() }
@@ -383,10 +384,12 @@ class FilteredDeckOptionsViewModel(
     private fun Collection.safeBackendDataQuery(did: DeckId): Result<Pair<FilteredDeckForUpdate, List<FilteredDeckOrder>>> =
         try {
             val filteredDeckForUpdate = sched.getOrCreateFilteredDeck(did)
+            val fsrsEnabled = config.get<Boolean>("fsrs") ?: false
             val cardsOptions =
                 sched
                     .filteredDeckOrderLabels()
                     .mapIndexed { index, label -> FilteredDeckOrder(Order.forNumber(index), label) }
+                    .filter { fsrsEnabled || it.order !in FSRS_ONLY_ORDERS }
             Result.success(Pair(filteredDeckForUpdate, cardsOptions))
         } catch (ex: Exception) {
             Result.failure(ex)
@@ -418,7 +421,9 @@ class FilteredDeckOptionsViewModel(
         defaultSearch1: String? = null,
         defaultSearch2: String? = null,
     ): FilteredDeckOptions {
-        fun indexOf(order: Order): Int = cardsOptions.indexOfFirst { it.order == order }
+        fun indexOf(order: Order): Int =
+            cardsOptions.indexOfFirst { it.order == order }.takeIf { it >= 0 }
+                ?: cardsOptions.indexOfFirst { it.order == Order.RANDOM }
 
         val firstFilter = config.getSearchTerms(0)
         val secondFilter = if (config.searchTermsCount > 1) config.getSearchTerms(1) else null
@@ -486,6 +491,8 @@ class FilteredDeckOptionsViewModel(
         }
 
     companion object {
+        private val FSRS_ONLY_ORDERS = setOf(Order.RETRIEVABILITY_ASCENDING, Order.RETRIEVABILITY_DESCENDING)
+
         /** Key used to store/retrieve our state in [SavedStateHandle]. */
         private const val ARG_DATA = "arg_data"
 
