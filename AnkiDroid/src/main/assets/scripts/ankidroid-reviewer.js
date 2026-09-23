@@ -1,6 +1,24 @@
 "use strict";
 globalThis.ankidroid = globalThis.ankidroid || {};
 
+/** Hold card rendering until the renderer has applied the native zoom reset. */
+globalThis.ankidroid.waitForZoomReset = function (scale) {
+    _queueAction(
+        () =>
+            new Promise(resolve => {
+                const viewport = window.visualViewport;
+                function onResize() {
+                    if (Math.abs(viewport.scale - scale) >= 0.001) return;
+                    viewport.removeEventListener("resize", onResize);
+                    resolve();
+                }
+                viewport.addEventListener("resize", onResize);
+                // The reset may have completed before this queued action runs.
+                onResize();
+            }),
+    );
+};
+
 globalThis.ankidroid.userAction = function (number) {
     try {
         let userJs = globalThis[`userJs${number}`];
