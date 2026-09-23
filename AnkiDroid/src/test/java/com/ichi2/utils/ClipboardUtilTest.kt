@@ -10,7 +10,7 @@ import android.content.ContextWrapper
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.utils.ClipboardUtil.AUDIO_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES
@@ -146,7 +146,7 @@ class ClipboardUtilTest {
         assertTrue(context.copyToClipboard(TruncatedString.from("hello")))
         assertThat(
             ShadowToast.getTextOfLatestToast(),
-            equalTo(context.getString(R.string.about_ankidroid_successfully_copied_debug_info)),
+            equalTo(context.getString(CommonString.about_ankidroid_successfully_copied_debug_info)),
         )
     }
 
@@ -163,7 +163,7 @@ class ClipboardUtilTest {
         assertFalse(contextWithClipboard(null).copyToClipboard(TruncatedString.from("hello")))
         assertThat(
             ShadowToast.getTextOfLatestToast(),
-            equalTo(context.getString(R.string.failed_to_copy)),
+            equalTo(context.getString(CommonString.failed_to_copy)),
         )
     }
 
@@ -177,7 +177,7 @@ class ClipboardUtilTest {
         assertFalse(contextWithClipboard(throwingClipboard).copyToClipboard(TruncatedString.from("hello")))
         assertThat(
             ShadowToast.getTextOfLatestToast(),
-            equalTo(context.getString(R.string.failed_to_copy)),
+            equalTo(context.getString(CommonString.failed_to_copy)),
         )
     }
 

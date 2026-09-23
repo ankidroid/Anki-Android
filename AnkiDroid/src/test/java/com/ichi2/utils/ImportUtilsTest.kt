@@ -11,7 +11,7 @@ import android.net.Uri
 import androidx.annotation.CheckResult
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
@@ -67,7 +67,7 @@ class ImportUtilsTest : RobolectricTest() {
 
         val failure = assertIs<ImportResult.Failure>(result)
         assertIs<FileNotFoundException>(failure.exception)
-        assertEquals(targetContext.getString(R.string.import_error_copy_to_cache_title), failure.title)
+        assertEquals(targetContext.getString(CommonString.import_error_copy_to_cache_title), failure.title)
         verifyNoInteractions(crashReporter)
     }
 

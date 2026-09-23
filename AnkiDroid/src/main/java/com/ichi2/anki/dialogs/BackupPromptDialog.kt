@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -117,21 +118,21 @@ class BackupPromptDialog private constructor(
         this.alertDialog =
             AlertDialog.Builder(windowContext).create {
                 setIcon(if (isLoggedIn) R.drawable.ic_baseline_backup_24 else R.drawable.ic_backup_restore)
-                title(R.string.backup_your_collection)
-                message(R.string.backup_collection_message)
-                positiveButton(if (isLoggedIn) R.string.button_sync else R.string.button_backup) {
+                title(CommonString.backup_your_collection)
+                message(CommonString.backup_collection_message)
+                positiveButton(if (isLoggedIn) CommonString.button_sync else CommonString.button_backup) {
                     Timber.i("User selected 'backup'")
                     onBackup()
                     performBackup()
                 }
                 if (allowUserToPermanentlyDismissDialog) {
-                    checkBoxPrompt(R.string.button_do_not_show_again, isCheckedDefault = false) { checked ->
+                    checkBoxPrompt(CommonString.button_do_not_show_again, isCheckedDefault = false) { checked ->
                         Timber.d("Don't show again checked: %b", checked)
                         userCheckedDoNotShowAgain = checked
                         alertDialog.positiveButton.isEnabled = !checked
                     }
                 }
-                negativeButton(R.string.button_backup_later) { onDismiss() }
+                negativeButton(CommonString.button_backup_later) { onDismiss() }
                 cancelable(false)
             }
     }
@@ -169,7 +170,7 @@ class BackupPromptDialog private constructor(
         fun getPermanentlyDismissDialogMessageOrImmediatelyDismiss(context: Context): Int? {
             if (userIsPromptedToDeleteCollectionOnUninstall(context)) {
                 Timber.d("User's collection may be deleted on uninstall")
-                return R.string.dismiss_backup_warning_new_user // message stating collection will be deleted (new user/migrated)
+                return CommonString.dismiss_backup_warning_new_user // message stating collection will be deleted (new user/migrated)
             }
 
             // Full build users/users on old Androids will see this dialog, but only if they are syncing
@@ -192,7 +193,7 @@ class BackupPromptDialog private constructor(
                 Timber.d("User will lose access to their collection")
                 // message stating collection will be made inaccessible
                 // (existing user, not migrated)
-                R.string.dismiss_backup_warning_upgrade
+                CommonString.dismiss_backup_warning_upgrade
             } else {
                 // A user is on a Play Store Build. They are on a version of Android with storage restrictions
                 // Their collection is in a 'legacy' location but they are not going to lose access to their collection when they uninstall
@@ -200,7 +201,7 @@ class BackupPromptDialog private constructor(
                 Timber.w("getPermanentlyDismissDialogMessage: unexpected state")
                 CrashReportService.sendExceptionReport(IllegalStateException("unexpected state"), "getPermanentlyDismissDialogMessage")
                 // assume this is a mistake and show a scary confirmation prompt
-                R.string.dismiss_backup_warning_new_user // message stating collection will be deleted
+                CommonString.dismiss_backup_warning_new_user // message stating collection will be deleted
             }
         }
 
@@ -218,11 +219,11 @@ class BackupPromptDialog private constructor(
             }
 
             AlertDialog.Builder(context).show {
-                title(R.string.dismiss_backup_warning_title)
+                title(CommonString.dismiss_backup_warning_title)
                 message(message)
                 setIcon(R.drawable.ic_warning)
-                positiveButton(R.string.dialog_cancel) { onCancel() }
-                negativeButton(R.string.button_disable_reminder) { onDisableReminder() }
+                positiveButton(CommonString.dialog_cancel) { onCancel() }
+                negativeButton(CommonString.button_disable_reminder) { onDisableReminder() }
             }
         }
     }

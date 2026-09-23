@@ -8,7 +8,7 @@ import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.compat.CompatHelper
@@ -361,5 +361,5 @@ object LanguageUtil {
      * Uses ListFormatter on API 26+ to dynamically get the locale-specific separator
      */
     fun getListSeparator(context: Context): String =
-        CompatHelper.compat.getListSeparator(context, context.getString(R.string.list_separator))
+        CompatHelper.compat.getListSeparator(context, context.getString(CommonString.list_separator))
 }

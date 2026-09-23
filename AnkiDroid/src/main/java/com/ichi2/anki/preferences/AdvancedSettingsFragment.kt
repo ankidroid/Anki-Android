@@ -13,6 +13,7 @@ import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
@@ -49,12 +50,12 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
 
             AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.permission_denied)
-                setMessage(R.string.microphone_permission_denied_message)
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setTitle(CommonString.permission_denied)
+                setMessage(CommonString.microphone_permission_denied_message)
+                setPositiveButton(CommonString.dialog_ok) { _, _ ->
                     openAppSettingsScreen()
                 }
-                setNegativeButton(R.string.dialog_cancel, null)
+                setNegativeButton(CommonString.dialog_cancel, null)
             }
         }
 
@@ -78,9 +79,9 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     // TODO: Request MANAGE_EXTERNAL_STORAGE
                     Timber.e(e, "Could not initialize directory: %s", newPath)
                     AlertDialog.Builder(requireContext()).show {
-                        setTitle(R.string.dialog_collection_path_not_dir)
-                        setPositiveButton(R.string.dialog_ok) { _, _ -> }
-                        setNegativeButton(R.string.reset_custom_buttons) { _, _ ->
+                        setTitle(CommonString.dialog_collection_path_not_dir)
+                        setPositiveButton(CommonString.dialog_ok) { _, _ -> }
+                        setNegativeButton(CommonString.reset_custom_buttons) { _, _ ->
                             text = getDefaultAnkiDroidDirectory(requireContext()).absolutePath
                         }
                     }
@@ -94,13 +95,13 @@ class AdvancedSettingsFragment : SettingsFragment() {
             if (!(isChecked as Boolean)) return@setOnPreferenceChangeListener true
             AlertDialog.Builder(requireContext()).show {
                 setIcon(R.drawable.ic_warning)
-                setMessage(R.string.readtext_deprecation_warn)
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> ttsPref.isChecked = false }
-                setNeutralButton(R.string.scoped_storage_learn_more) { _, _ ->
+                setMessage(CommonString.readtext_deprecation_warn)
+                setNegativeButton(CommonString.dialog_cancel) { _, _ -> ttsPref.isChecked = false }
+                setNeutralButton(CommonString.scoped_storage_learn_more) { _, _ ->
                     ttsPref.isChecked = false
                     requireContext().openUrl(R.string.link_tts)
                 }
-                setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                setPositiveButton(CommonString.dialog_ok) { _, _ -> }
                 setOnCancelListener { ttsPref.isChecked = false }
             }
             return@setOnPreferenceChangeListener true
@@ -109,15 +110,15 @@ class AdvancedSettingsFragment : SettingsFragment() {
         // Configure "Reset languages" preference
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).show {
-                setTitle(R.string.reset_languages)
+                setTitle(CommonString.reset_languages)
                 setIcon(R.drawable.ic_warning)
-                setMessage(R.string.reset_languages_question)
-                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                setMessage(CommonString.reset_languages_question)
+                setPositiveButton(CommonString.dialog_ok) { _, _ ->
                     if (MetaDB.resetLanguages(requireContext())) {
-                        showSnackbar(R.string.reset_confirmation)
+                        showSnackbar(CommonString.reset_confirmation)
                     }
                 }
-                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
             }
             false
         }

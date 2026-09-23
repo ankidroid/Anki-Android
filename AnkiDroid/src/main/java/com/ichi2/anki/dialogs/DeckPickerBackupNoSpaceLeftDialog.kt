@@ -6,8 +6,8 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.BackupManager
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
-import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.utils.create
@@ -22,9 +22,9 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
         return AlertDialog
             .Builder(requireContext())
             .create {
-                title(R.string.storage_almost_full_title)
-                message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
-                positiveButton(R.string.dialog_ok) {
+                title(CommonString.storage_almost_full_title)
+                message(text = res.getString(CommonString.storage_warning, space / 1024 / 1024))
+                positiveButton(CommonString.dialog_ok) {
                     (activity as DeckPicker).finish()
                 }
             }.apply {

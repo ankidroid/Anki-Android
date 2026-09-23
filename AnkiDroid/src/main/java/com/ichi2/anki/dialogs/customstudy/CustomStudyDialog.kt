@@ -35,6 +35,8 @@ import anki.scheduler.customStudyRequest
 import anki.search.SearchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.asyncIO
@@ -191,7 +193,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         if (item.checkAvailability != null) {
             val defaults = withProgress { deferredDefaults.await() }
             if (!item.checkAvailability(defaults)) {
-                showSnackbar(getString((R.string.studyoptions_no_cards_due)))
+                showSnackbar(getString((CommonString.studyoptions_no_cards_due)))
                 return
             }
         }
@@ -336,9 +338,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
             } else if (contextMenuOption == STUDY_AHEAD) {
-                getString(R.string.dialog_positive_create)
+                getString(CommonString.dialog_positive_create)
             } else {
-                getString(R.string.dialog_ok)
+                getString(CommonString.dialog_ok)
             }
 
         // Set material dialog parameters
@@ -359,7 +361,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                     paddingTop = verticalPadding,
                     paddingBottom = verticalPadding,
                 ).positiveButton(text = positiveBtnLabel, click = null)
-                .negativeButton(R.string.dialog_cancel) {
+                .negativeButton(CommonString.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
                 }.create()
 
@@ -445,7 +447,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
     /** Sets the suffix of the days input: `[1] day`, `[3] days` */
     private fun setSuffixText(days: Int) {
-        binding.detailsEditText2Layout.suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, days)
+        binding.detailsEditText2Layout.suffixText = resources.getQuantityString(CommonPlurals.set_due_date_label_suffix, days)
     }
 
     /** Enables 'Create' only if some cards would be reviewed ahead by [days] */
@@ -454,7 +456,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         days: Int?,
     ) {
         if (days == null || days == 0) {
-            binding.detailsEditText2Layout.error = if (days == 0) getString(R.string.minimum_value_is, 1) else null
+            binding.detailsEditText2Layout.error = if (days == 0) getString(CommonString.minimum_value_is, 1) else null
             dialog.positiveButton.isEnabled = false
             return
         }
@@ -566,12 +568,12 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         get() {
             val res = resources
             return when (selectedSubDialog) {
-                EXTEND_NEW -> res.getString(R.string.custom_study_new_extend)
-                EXTEND_REV -> res.getString(R.string.custom_study_rev_extend)
-                STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
-                STUDY_AHEAD -> res.getString(R.string.custom_study_ahead_description)
-                STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
-                STUDY_TAGS -> res.getString(R.string.custom_study_tags)
+                EXTEND_NEW -> res.getString(CommonString.custom_study_new_extend)
+                EXTEND_REV -> res.getString(CommonString.custom_study_rev_extend)
+                STUDY_FORGOT -> res.getString(CommonString.custom_study_forgotten)
+                STUDY_AHEAD -> res.getString(CommonString.custom_study_ahead_description)
+                STUDY_PREVIEW -> res.getString(CommonString.custom_study_preview)
+                STUDY_TAGS -> res.getString(CommonString.custom_study_tags)
                 null -> ""
             }
         }

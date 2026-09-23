@@ -33,6 +33,7 @@ import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
@@ -144,7 +145,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                     "audio/*",
                     // #9226: allows ogg on Android 8
                     arrayOf("audio/*", "application/ogg"),
-                    R.string.multimedia_editor_popup_audio_clip,
+                    CommonString.multimedia_editor_popup_audio_clip,
                 )
             }
 
@@ -153,7 +154,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 openMediaChooser(
                     "video/*",
                     emptyArray(),
-                    R.string.multimedia_editor_popup_video_clip,
+                    CommonString.multimedia_editor_popup_video_clip,
                 )
             }
         }
@@ -408,7 +409,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         context: Context,
     ): String =
         when (mediaOption) {
-            AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)
-            VIDEO_CLIP -> context.getString(R.string.multimedia_editor_popup_video_clip)
+            AUDIO_CLIP -> context.getString(CommonString.multimedia_editor_popup_audio_clip)
+            VIDEO_CLIP -> context.getString(CommonString.multimedia_editor_popup_video_clip)
         }
 }

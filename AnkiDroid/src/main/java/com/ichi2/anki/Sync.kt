@@ -144,7 +144,7 @@ private suspend fun handleNormalSync(
                 }
             },
             onCancel = ::cancelSync,
-            manualCancelButton = R.string.dialog_cancel,
+            manualCancelButton = CommonString.dialog_cancel,
         ) {
             withColExclusive(
                 operation = CollectionOperation.SYNC,
@@ -176,7 +176,7 @@ private suspend fun handleNormalSync(
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
             // scheduler version may have changed
             withCol { _loadScheduler() }
-            val message = if (syncMedia) R.string.col_synced_media_in_background else R.string.sync_database_acknowledge
+            val message = if (syncMedia) CommonString.col_synced_media_in_background else CommonString.sync_database_acknowledge
             deckPicker.showSyncLogMessage(message, output.serverMessage)
             deckPicker.refreshState()
             if (syncMedia) {
@@ -226,7 +226,7 @@ private suspend fun handleDownload(
         progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync,
-        manualCancelButton = R.string.dialog_cancel,
+        manualCancelButton = CommonString.dialog_cancel,
     ) {
         withColExclusive(
             operation = CollectionOperation.FULL_DOWNLOAD,
@@ -251,7 +251,7 @@ private suspend fun handleDownload(
     }
 
     Timber.i("Full Download Completed")
-    deckPicker.showSyncLogMessage(R.string.backup_one_way_sync_from_server, "")
+    deckPicker.showSyncLogMessage(CommonString.backup_one_way_sync_from_server, "")
 }
 
 private suspend fun handleUpload(
@@ -264,7 +264,7 @@ private suspend fun handleUpload(
         progressContext = ProgressContext.ofBytes(context = deckPicker).copy(separator = "\n"),
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync,
-        manualCancelButton = R.string.dialog_cancel,
+        manualCancelButton = CommonString.dialog_cancel,
     ) {
         withColExclusive(
             operation = CollectionOperation.FULL_UPLOAD,
@@ -283,7 +283,7 @@ private suspend fun handleUpload(
         }
     }
     Timber.i("Full Upload Completed")
-    deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
+    deckPicker.showSyncLogMessage(CommonString.sync_log_uploading_message, "")
 }
 
 fun cancelMediaSync(backend: Backend) {
@@ -314,7 +314,7 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
                 .Builder(deckPicker)
                 .setTitle(with(deckPicker) { TR.sentenceCase.mediaSyncLog })
                 .setMessage("")
-                .setPositiveButton(R.string.dialog_continue) { _, _ ->
+                .setPositiveButton(CommonString.dialog_continue) { _, _ ->
                     scope.cancel()
                 }.setNegativeButton(TR.syncAbortButton()) { _, _ ->
                     isAborted = true

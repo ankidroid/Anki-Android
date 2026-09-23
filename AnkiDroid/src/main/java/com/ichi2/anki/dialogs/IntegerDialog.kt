@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs
 import android.os.Bundle
 import android.text.InputType
 import androidx.appcompat.app.AlertDialog
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.snackbar.showSnackbar
@@ -61,8 +62,8 @@ open class IntegerDialog : AnalyticsDialogFragment() {
             .Builder(requireActivity())
             .show {
                 title(text = requireArguments().getString("title"))
-                positiveButton(R.string.dialog_ok)
-                negativeButton(R.string.dialog_cancel)
+                positiveButton(CommonString.dialog_ok)
+                negativeButton(CommonString.dialog_cancel)
                 setMessage(requireArguments().getString("content"))
                 setView(R.layout.dialog_generic_text_input)
             }.input(
@@ -79,7 +80,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
                     } catch (e: Exception) {
                         Timber.w(e)
                         // TODO: find a good place in the foreground to show snackbar
-                        showSnackbar(R.string.something_wrong)
+                        showSnackbar(CommonString.something_wrong)
                         return@input
                     }
 

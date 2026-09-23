@@ -6,7 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationManagerCompat
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.utils.TruncatedString
@@ -26,7 +26,7 @@ class CopyToClipboardReceiver : BroadcastReceiver() {
         val text =
             intent.getStringExtra(EXTRA_SYNC_ERROR_LOG) ?: run {
                 Timber.w("CopyToClipboardReceiver: no error log found")
-                showThemedToast(context, R.string.something_wrong, shortLength = true)
+                showThemedToast(context, CommonString.something_wrong, shortLength = true)
                 return
             }
         // only dismiss the notification once the text is safely on the clipboard

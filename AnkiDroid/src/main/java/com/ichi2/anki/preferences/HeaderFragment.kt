@@ -12,6 +12,7 @@ import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.compat.CompatHelper
@@ -40,7 +41,7 @@ class HeaderFragment : SettingsFragment() {
         requirePreference<HeaderPreference>(R.string.pref_sync_screen_key).summary =
             HeaderPreference.buildHeaderSummary(
                 TR.sentenceCase.ankiWebAccount,
-                getString(R.string.automatic_sync_choice),
+                getString(CommonString.automatic_sync_choice),
             )
 
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
@@ -98,7 +99,7 @@ class HeaderFragment : SettingsFragment() {
                 index(R.xml.preferences_reviewing)
                 index(R.xml.preferences_sync)
                 index(R.xml.preferences_custom_sync_server)
-                    .addBreadcrumb(R.string.pref_cat_sync)
+                    .addBreadcrumb(CommonString.pref_cat_sync)
 
                 if (Prefs.newReviewRemindersEnabled) {
                     indexItem()
@@ -117,11 +118,11 @@ class HeaderFragment : SettingsFragment() {
                 }
                 index(R.xml.preferences_controls)
                 index(R.xml.preferences_reviewer_controls)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
-                    .addBreadcrumb(activity.getString(R.string.pref_controls_reviews_tab))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_controls))
+                    .addBreadcrumb(activity.getString(CommonString.pref_controls_reviews_tab))
                 index(R.xml.preferences_previewer_controls)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
-                    .addBreadcrumb(activity.getString(R.string.pref_controls_previews_tab))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_controls))
+                    .addBreadcrumb(activity.getString(CommonString.pref_controls_previews_tab))
                 index(R.xml.preferences_accessibility)
                 index(R.xml.preferences_backup_limits)
                 ignorePreference(activity.getString(R.string.pref_backups_help_key))
@@ -129,40 +130,40 @@ class HeaderFragment : SettingsFragment() {
                     .withKey(activity.getString(R.string.reschedule_command_key))
                     .withTitle(setDuePreferenceTitle)
                     .withResId(R.xml.preferences_controls)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_controls))
                     .addBreadcrumb(setDuePreferenceTitle)
                 // Some strings can't be indexed from the XML document as they are loaded from the back-end. We add them manually.
                 indexItem()
                     .withKey(activity.getString(R.string.anki_card_external_context_menu_key))
                     .withTitle(
                         activity.getString(
-                            R.string.card_browser_enable_external_context_menu,
-                            activity.getString(R.string.context_menu_anki_card_label),
+                            CommonString.card_browser_enable_external_context_menu,
+                            activity.getString(CommonString.context_menu_anki_card_label),
                         ),
                     ).withSummary(
                         activity.getString(
-                            R.string.card_browser_enable_external_context_menu_summary,
-                            activity.getString(R.string.context_menu_anki_card_label),
+                            CommonString.card_browser_enable_external_context_menu_summary,
+                            activity.getString(CommonString.context_menu_anki_card_label),
                         ),
                     ).withResId(R.xml.preferences_general)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_general))
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_general))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_system_wide))
 
                 indexItem()
                     .withKey(activity.getString(R.string.card_browser_external_context_menu_key))
                     .withTitle(
                         activity.getString(
-                            R.string.card_browser_enable_external_context_menu,
-                            activity.getString(R.string.card_browser_context_menu),
+                            CommonString.card_browser_enable_external_context_menu,
+                            activity.getString(CommonString.card_browser_context_menu),
                         ),
                     ).withSummary(
                         activity.getString(
-                            R.string.card_browser_enable_external_context_menu_summary,
-                            activity.getString(R.string.card_browser_context_menu),
+                            CommonString.card_browser_enable_external_context_menu_summary,
+                            activity.getString(CommonString.card_browser_context_menu),
                         ),
                     ).withResId(R.xml.preferences_general)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_general))
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_system_wide))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_general))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_system_wide))
 
                 if (!Prefs.isNewStudyScreenEnabled) {
                     indexItem()
@@ -171,17 +172,17 @@ class HeaderFragment : SettingsFragment() {
                             TR.preferencesShowPlayButtonsOnCardsWith(),
                         ).withResId(R.xml.preferences_appearance)
                         .addBreadcrumb(TR.preferencesAppearance())
-                        .addBreadcrumb(activity.getString(R.string.pref_cat_reviewer))
+                        .addBreadcrumb(activity.getString(CommonString.pref_cat_reviewer))
                 }
 
                 indexItem()
                     .withKey(activity.getString(R.string.one_way_sync_key))
                     .withTitle(
-                        activity.getString(R.string.one_way_sync_title),
+                        activity.getString(CommonString.one_way_sync_title),
                     ).withSummary(TR.preferencesOnNextSyncForceChangesIn())
                     .withResId(R.xml.preferences_sync)
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_sync))
-                    .addBreadcrumb(activity.getString(R.string.pref_cat_advanced))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_sync))
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_advanced))
             }
 
             // Some preferences and categories are only shown conditionally,

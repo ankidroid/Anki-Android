@@ -13,9 +13,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
@@ -335,7 +335,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "error is displayed",
                 getInputTextLayout().error?.toString(),
-                equalTo(getResourceString(R.string.error_name_exists)),
+                equalTo(getResourceString(CommonString.error_name_exists)),
             )
             assertThat("rename is disabled", positiveButton.isEnabled, equalTo(false))
         }
@@ -442,7 +442,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertThat(
                     "Snackbar should confirm deck creation for valid name",
                     activity.latestSnackbarText(),
-                    equalTo(getResourceString(R.string.deck_created)),
+                    equalTo(getResourceString(CommonString.deck_created)),
                 )
             }
         }
@@ -459,7 +459,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Snackbar should show invalid name error for blank name",
                 activity.latestSnackbarText(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
             )
         }
     }
@@ -475,7 +475,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should confirm deck creation for valid name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.deck_created)),
+                equalTo(getResourceString(CommonString.deck_created)),
             )
         }
     }
@@ -491,7 +491,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should show invalid name error for blank name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
             )
         }
     }
@@ -508,7 +508,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 assertThat(
                     "Snackbar should confirm rename for valid name",
                     activity.latestSnackbarText(),
-                    equalTo(getResourceString(R.string.deck_renamed)),
+                    equalTo(getResourceString(CommonString.deck_renamed)),
                 )
             }
         }
@@ -526,7 +526,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Snackbar should show invalid name error for blank name",
                 activity.latestSnackbarText(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
             )
         }
     }
@@ -549,7 +549,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should confirm rename for valid name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.deck_renamed)),
+                equalTo(getResourceString(CommonString.deck_renamed)),
             )
         }
     }
@@ -572,7 +572,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             assertThat(
                 "Toast should show invalid name error for blank name",
                 ShadowToast.getTextOfLatestToast(),
-                equalTo(getResourceString(R.string.invalid_deck_name)),
+                equalTo(getResourceString(CommonString.invalid_deck_name)),
             )
         }
     }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.BrowserColumnSelectionFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -94,8 +95,8 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
         return MaterialAlertDialogBuilder(requireContext()).create {
             setView(binding.root)
             setTitle(TR.sentenceCase.browserOptions)
-            positiveButton(R.string.save) { saveChanges() }
-            negativeButton(R.string.dialog_cancel)
+            positiveButton(CommonString.save) { saveChanges() }
+            negativeButton(CommonString.dialog_cancel)
         }
     }
 

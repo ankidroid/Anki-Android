@@ -10,6 +10,7 @@ import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode
@@ -56,11 +57,12 @@ class GeneralSettingsFragment : SettingsFragment() {
         }
         // Anki card context menu
         requirePreference<SwitchPreferenceCompat>(R.string.anki_card_external_context_menu_key).apply {
-            title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
+            title =
+                getString(CommonString.card_browser_enable_external_context_menu, getString(CommonString.context_menu_anki_card_label))
             summary =
                 getString(
-                    R.string.card_browser_enable_external_context_menu_summary,
-                    getString(R.string.context_menu_anki_card_label),
+                    CommonString.card_browser_enable_external_context_menu_summary,
+                    getString(CommonString.context_menu_anki_card_label),
                 )
             setOnPreferenceChangeListener { newValue ->
                 AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue)
@@ -68,8 +70,12 @@ class GeneralSettingsFragment : SettingsFragment() {
         }
         // Card browser context menu
         requirePreference<SwitchPreferenceCompat>(R.string.card_browser_external_context_menu_key).apply {
-            title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
-            summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
+            title = getString(CommonString.card_browser_enable_external_context_menu, getString(CommonString.card_browser_context_menu))
+            summary =
+                getString(
+                    CommonString.card_browser_enable_external_context_menu_summary,
+                    getString(CommonString.card_browser_context_menu),
+                )
             setOnPreferenceChangeListener { newValue ->
                 CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue)
             }
@@ -80,7 +86,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         val sortedLanguages = LanguageUtil.APP_LANGUAGES.toSortedMap(java.lang.String.CASE_INSENSITIVE_ORDER)
         val systemLocale = getSystemLocale()
         requirePreference<ListPreference>(R.string.pref_language_key).apply {
-            entries = arrayOf(getStringByLocale(R.string.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
+            entries = arrayOf(getStringByLocale(CommonString.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
             entryValues = arrayOf(LanguageUtil.SYSTEM_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
             setOnPreferenceChangeListener { selectedLanguage ->
                 LanguageUtil.setDefaultBackendLanguages(selectedLanguage)

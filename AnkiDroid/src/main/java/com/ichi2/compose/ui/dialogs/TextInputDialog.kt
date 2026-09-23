@@ -36,7 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.compose.ui.preview.ThemePreviews
 
@@ -58,7 +58,7 @@ fun TextInputDialog(
     confirmText: String,
     onConfirm: (String) -> Unit,
     onDismissRequest: () -> Unit,
-    dismissText: String = stringResource(R.string.dialog_cancel),
+    dismissText: String = stringResource(CommonString.dialog_cancel),
     initialText: String = "",
     maxLengthCounter: Int? = null,
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,

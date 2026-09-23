@@ -37,6 +37,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.behavior.HideViewOnScrollBehavior
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
@@ -125,17 +127,17 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                     if (userAcceptsSchemaChange()) {
                         val selection =
                             viewModel.selectedNoteTypes.joinToString { it.name }
-                        getString(R.string.model_delete_multiple_warning, selection)
+                        getString(CommonString.model_delete_multiple_warning, selection)
                     } else {
                         return@launchCatchingTask
                     }
                 AlertDialog.Builder(this@ManageNotetypes).show {
-                    title(R.string.dialog_positive_delete)
+                    title(CommonString.dialog_positive_delete)
                     message(text = deleteMessage)
-                    positiveButton(R.string.dialog_positive_delete) {
+                    positiveButton(CommonString.dialog_positive_delete) {
                         viewModel.deleteSelectedNoteTypes()
                     }
-                    negativeButton(R.string.dialog_cancel)
+                    negativeButton(CommonString.dialog_cancel)
                 }
             }
         }
@@ -147,7 +149,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                     if (state.message != null) {
                         val snackbarMessage =
                             when (state.message) {
-                                UserMessage.DeletingLastModel -> getString(R.string.toast_last_model)
+                                UserMessage.DeletingLastModel -> getString(CommonString.toast_last_model)
                             }
                         showSnackbar(snackbarMessage)
                         viewModel.clearMessage()
@@ -199,7 +201,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             }
             AlertDialog.Builder(this).show {
                 message(text = state.error.source.message)
-                positiveButton(R.string.close) { viewModel.refreshNoteTypes() }
+                positiveButton(CommonString.close) { viewModel.refreshNoteTypes() }
             }
             viewModel.clearError()
             return
@@ -225,7 +227,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         val selectedCount = state.noteTypes.count { it.isSelected }
         binding.selectedLabel.text =
             resources.getQuantityString(
-                R.plurals.note_types_selected,
+                CommonPlurals.note_types_selected,
                 selectedCount,
                 selectedCount,
             )
@@ -279,8 +281,8 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                 AlertDialog
                     .Builder(this@ManageNotetypes)
                     .show {
-                        title(R.string.rename_model)
-                        positiveButton(R.string.rename) {
+                        title(CommonString.rename_model)
+                        positiveButton(CommonString.rename) {
                             val userInput =
                                 (it as AlertDialog)
                                     .getInputField()
@@ -290,7 +292,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                             if (userInput.isEmpty()) return@positiveButton
                             viewModel.rename(state.id, userInput)
                         }
-                        negativeButton(R.string.dialog_cancel)
+                        negativeButton(CommonString.dialog_cancel)
                         setView(R.layout.dialog_generic_text_input)
                     }.input(
                         hint = TR.deckConfigNamePrompt(),
@@ -310,7 +312,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
                                 dialog.positiveButton.isEnabled = false
                                 return@input
                             } else if (isDuplicate && !isUnchanged) {
-                                dialog.getInputTextLayout().error = getString(R.string.error_name_exists)
+                                dialog.getInputTextLayout().error = getString(CommonString.error_name_exists)
                                 dialog.positiveButton.isEnabled = false
                                 return@input
                             }
@@ -329,17 +331,17 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         launchCatchingTask {
             @StringRes val messageResourceId: Int? =
                 if (userAcceptsSchemaChange()) {
-                    R.string.model_delete_warning
+                    CommonString.model_delete_warning
                 } else {
                     return@launchCatchingTask
                 }
             AlertDialog.Builder(this@ManageNotetypes).show {
-                title(R.string.model_browser_delete)
+                title(CommonString.model_browser_delete)
                 message(messageResourceId)
-                positiveButton(R.string.dialog_positive_delete) {
+                positiveButton(CommonString.dialog_positive_delete) {
                     viewModel.delete(state.id)
                 }
-                negativeButton(R.string.dialog_cancel)
+                negativeButton(CommonString.dialog_cancel)
             }
         }
     }

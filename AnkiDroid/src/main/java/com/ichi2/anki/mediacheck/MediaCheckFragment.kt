@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.utils.android.getColorFromAttr
@@ -149,7 +151,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                 launchCatchingTask {
                     viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).join()
                     showResultDialog(
-                        R.string.check_media_tags_added,
+                        CommonString.check_media_tags_added,
                         TR.browsingNotesUpdated(viewModel.taggedFiles),
                     )
                 }
@@ -182,8 +184,8 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private fun deleteConfirmationDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckDeleteUnusedConfirm())
-            positiveButton(R.string.dialog_positive_delete) { handleDeleteConfirmation() }
-            negativeButton(R.string.dialog_cancel)
+            positiveButton(CommonString.dialog_positive_delete) { handleDeleteConfirmation() }
+            negativeButton(CommonString.dialog_cancel)
         }
     }
 
@@ -203,9 +205,9 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
      */
     private fun showDeletionResult() {
         showResultDialog(
-            R.string.delete_media_result_title,
+            CommonString.delete_media_result_title,
             resources.getQuantityString(
-                R.plurals.delete_media_result_message,
+                CommonPlurals.delete_media_result_message,
                 viewModel.deletedFiles,
                 viewModel.deletedFiles,
             ),
@@ -215,7 +217,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private fun showTrashRestoredDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckTrashRestored())
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(CommonString.dialog_ok) {
                 requireActivity().finish()
             }
             cancelable(false)
@@ -225,7 +227,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     private fun showTrashDeletedDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckTrashEmptied())
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(CommonString.dialog_ok) {
                 requireActivity().finish()
             }
             cancelable(false)
@@ -239,7 +241,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         AlertDialog.Builder(requireContext()).show {
             title(titleRes)
             message(text = message)
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(CommonString.dialog_ok) {
                 requireActivity().finish()
             }
             cancelable(false)
@@ -255,7 +257,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 private val MediaCheckProgress.messageRes: Int
     get() =
         when (this) {
-            MediaCheckProgress.CHECKING_MEDIA -> R.string.check_media_message
-            MediaCheckProgress.ADDING_TAGS -> R.string.check_media_adding_missing_tag
-            MediaCheckProgress.DELETING_MEDIA -> R.string.delete_media_message
+            MediaCheckProgress.CHECKING_MEDIA -> CommonString.check_media_message
+            MediaCheckProgress.ADDING_TAGS -> CommonString.check_media_adding_missing_tag
+            MediaCheckProgress.DELETING_MEDIA -> CommonString.delete_media_message
         }

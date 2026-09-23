@@ -27,6 +27,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
@@ -173,12 +174,12 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
          */
         private fun redirectUserToSignUpOrLogin() {
             // inform the user they need to log in as they've hit a rate limit
-            showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
+            showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE) {
                 if (isLoggedIn()) return@showSnackbar
 
                 // If a user is not logged in inside AnkiDroid, assume they have no AnkiWeb account
                 // and give them the option to sign up
-                setAction(R.string.sign_up) {
+                setAction(CommonString.sign_up) {
                     binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
                 }
             }
@@ -222,7 +223,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         //
         // statusBarStyle matches the status bar theme of the rest of the app
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
-        setTitle(R.string.download_deck)
+        setTitle(CommonString.download_deck)
         setupEdgeToEdge()
 
         binding.webviewToolbar.setTitleTextColor(getColor(R.color.white))

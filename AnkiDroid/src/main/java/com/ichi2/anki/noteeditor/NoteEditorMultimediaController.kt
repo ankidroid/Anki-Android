@@ -12,9 +12,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.BundleCompat
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.MediaRegistration
 import com.ichi2.anki.NoteEditorFragment
-import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.exception.MediaSizeLimitExceededException
@@ -92,7 +92,7 @@ internal class NoteEditorMultimediaController(
 
         if (imageUri == null) {
             Timber.d("NoteEditor:: Image Uri is null")
-            fragment.showSnackbar(R.string.something_wrong)
+            fragment.showSnackbar(CommonString.something_wrong)
             return
         }
 
@@ -109,7 +109,7 @@ internal class NoteEditorMultimediaController(
         val cachedImagePath = copyUriToInternalCache(imageUri)
         if (cachedImagePath == null) {
             Timber.w("Failed to cache image")
-            fragment.showSnackbar(R.string.something_wrong)
+            fragment.showSnackbar(CommonString.something_wrong)
             return
         }
         val cachedUri = Uri.fromFile(File(fragment.requireContext().cacheDir, cachedImagePath))

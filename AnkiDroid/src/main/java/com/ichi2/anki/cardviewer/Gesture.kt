@@ -5,7 +5,7 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonString
 
 /**
  * https://www.fileformat.info/info/unicode/char/235d/index.htm (similar to a finger)
@@ -29,24 +29,24 @@ enum class Gesture(
     @get:JvmName("getResourceId") val resourceId: Int,
     private val displayPrefix: String = GESTURE_PREFIX,
 ) {
-    SWIPE_UP(R.string.gestures_swipe_up),
-    SWIPE_DOWN(R.string.gestures_swipe_down),
-    SWIPE_LEFT(R.string.gestures_swipe_left),
-    SWIPE_RIGHT(R.string.gestures_swipe_right),
-    DOUBLE_TAP(R.string.gestures_double_tap),
-    TAP_TOP_LEFT(R.string.gestures_corner_tap_top_left),
-    TAP_TOP(R.string.gestures_tap_top),
-    TAP_TOP_RIGHT(R.string.gestures_corner_tap_top_right),
-    TAP_LEFT(R.string.gestures_tap_left),
-    TAP_CENTER(R.string.gestures_corner_tap_middle_center),
-    TAP_RIGHT(R.string.gestures_tap_right),
-    TAP_BOTTOM_LEFT(R.string.gestures_corner_tap_bottom_left),
-    TAP_BOTTOM(R.string.gestures_tap_bottom),
-    TAP_BOTTOM_RIGHT(R.string.gestures_corner_tap_bottom_right),
-    TWO_FINGER_TAP(R.string.gestures_two_finger_tap),
-    THREE_FINGER_TAP(R.string.gestures_three_finger_tap),
-    FOUR_FINGER_TAP(R.string.gestures_four_finger_tap),
-    SHAKE(R.string.gestures_shake, SHAKE_GESTURE_PREFIX),
+    SWIPE_UP(CommonString.gestures_swipe_up),
+    SWIPE_DOWN(CommonString.gestures_swipe_down),
+    SWIPE_LEFT(CommonString.gestures_swipe_left),
+    SWIPE_RIGHT(CommonString.gestures_swipe_right),
+    DOUBLE_TAP(CommonString.gestures_double_tap),
+    TAP_TOP_LEFT(CommonString.gestures_corner_tap_top_left),
+    TAP_TOP(CommonString.gestures_tap_top),
+    TAP_TOP_RIGHT(CommonString.gestures_corner_tap_top_right),
+    TAP_LEFT(CommonString.gestures_tap_left),
+    TAP_CENTER(CommonString.gestures_corner_tap_middle_center),
+    TAP_RIGHT(CommonString.gestures_tap_right),
+    TAP_BOTTOM_LEFT(CommonString.gestures_corner_tap_bottom_left),
+    TAP_BOTTOM(CommonString.gestures_tap_bottom),
+    TAP_BOTTOM_RIGHT(CommonString.gestures_corner_tap_bottom_right),
+    TWO_FINGER_TAP(CommonString.gestures_two_finger_tap),
+    THREE_FINGER_TAP(CommonString.gestures_three_finger_tap),
+    FOUR_FINGER_TAP(CommonString.gestures_four_finger_tap),
+    SHAKE(CommonString.gestures_shake, SHAKE_GESTURE_PREFIX),
     ;
 
     fun toDisplayString(context: Context): String =
