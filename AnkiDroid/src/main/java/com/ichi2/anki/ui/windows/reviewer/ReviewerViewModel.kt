@@ -24,6 +24,7 @@ import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.DeckOptionsEntry
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.StatisticsDestination
+import com.ichi2.anki.jsapi.legacy.LegacyJsApiBridge
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
@@ -111,6 +112,8 @@ class ReviewerViewModel(
     val pageUpFlow = MutableSharedFlow<Unit>()
     val pageDownFlow = MutableSharedFlow<Unit>()
     val statesMutationEvalFlow = MutableSharedFlow<String>()
+
+    val legacyJsApi = LegacyJsApiBridge()
 
     private val stateMutationKey = repository.generateStateMutationKey()
     private val stateMutationJs: Deferred<String> = asyncIO { repository.getCustomSchedulingJs() }
@@ -441,6 +444,7 @@ class ReviewerViewModel(
         uri: PostRequestUri,
         bytes: ByteArray,
     ): ByteArray {
+        uri.jsApiMethodName?.let { return legacyJsApi.handleRequest(it, bytes) }
         when (uri.ankidroidMethodName) {
             "focusin" -> {
                 isInputFocused = true
