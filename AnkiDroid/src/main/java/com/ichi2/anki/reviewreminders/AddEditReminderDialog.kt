@@ -319,8 +319,9 @@ class AddEditReminderDialog : DialogFragment() {
 
         val confirmationDialog = ConfirmationDialog()
         confirmationDialog.setArgs(
-            getString(CommonString.add_edit_reminder_delete_confirmation_title),
-            getString(CommonString.add_edit_reminder_delete_confirmation_message),
+            title = getString(CommonString.add_edit_reminder_delete_confirmation_title),
+            message = getString(CommonString.add_edit_reminder_delete_confirmation_message),
+            positiveButtonText = getString(CommonString.dialog_positive_delete),
         )
         confirmationDialog.setConfirm {
             setFragmentResult(
