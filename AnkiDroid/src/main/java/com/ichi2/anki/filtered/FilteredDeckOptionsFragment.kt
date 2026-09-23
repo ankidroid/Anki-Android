@@ -368,7 +368,7 @@ class FilteredDeckOptionsFragment : Fragment(R.layout.fragment_filtered_deck_opt
 
     /** Sets the adapter and selection for cards [Spinner] only if options are available */
     private fun Spinner.setAdapterIfNeeded(
-        cardOptions: List<String>,
+        cardOptions: List<FilteredDeckOrder>,
         selectedPosition: Int,
     ) {
         if (cardOptions.isNotEmpty()) {

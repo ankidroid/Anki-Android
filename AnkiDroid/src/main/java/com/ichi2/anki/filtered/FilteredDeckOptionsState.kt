@@ -17,9 +17,9 @@
 package com.ichi2.anki.filtered
 
 import android.os.Parcelable
+import anki.decks.Deck.Filtered.SearchTerm.Order
 import anki.decks.FilteredDeckForUpdate
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.sched.Scheduler
 import kotlinx.parcelize.Parcelize
 
 sealed interface FilteredDeckOptionsState
@@ -70,8 +70,8 @@ data class FilteredDeckOptions(
      * thrown when building/rebuilding results in an empty deck.
      */
     val allowEmpty: Boolean = true,
-    /** The list if options for cards selection, output of [Scheduler.filteredDeckOrderLabels] */
-    val cardOptions: List<String> = emptyList(),
+    /** Available sort orders, which need not occupy consecutive protobuf enum values. */
+    val cardOptions: List<FilteredDeckOrder> = emptyList(),
     /** The state for the first filter, which is always available */
     val filter1State: SearchTermState = SearchTermState(),
     /**
@@ -101,6 +101,14 @@ data class FilteredDeckOptions(
     val browserQuery: String? = null,
 ) : Parcelable,
     FilteredDeckOptionsState
+
+@Parcelize
+data class FilteredDeckOrder(
+    val order: Order,
+    val label: String,
+) : Parcelable {
+    override fun toString(): String = label
+}
 
 /** True if the user is allowed to build/rebuild, false otherwise */
 val FilteredDeckOptions.isBuildingAllowed: Boolean
