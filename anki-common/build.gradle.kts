@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     testFixturesImplementation(project(":common:android"))
+    testFixturesImplementation(project(":libanki"))
     testFixturesImplementation(libs.androidx.core.ktx)
     testFixturesImplementation(libs.androidx.test.core)
     // The Kotlin Compose Compiler plugin attaches to every Kotlin compilation in the

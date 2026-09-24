@@ -13,6 +13,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.waitUntil
+import com.ichi2.testutils.ext.defaultDeckNewCardsPerDay
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
@@ -71,7 +72,7 @@ class DeckOptionsTest : InstrumentedTest() {
             saveAndOptimize(newPerDay = 43)
 
             waitUntil(timeout = 30.seconds, message = { "optimization did not save the changed limit" }) {
-                newCardsPerDay == 43
+                col.defaultDeckNewCardsPerDay == 43
             }
             waitUntil(timeout = 30.seconds, message = { "options did not reload after optimization" }) {
                 evaluateJavascript(
@@ -82,14 +83,6 @@ class DeckOptionsTest : InstrumentedTest() {
             assertFalse(requireActivity().isFinishing)
         }
     }
-
-    private val newCardsPerDay: Int
-        get() =
-            col.backend
-                .getDeckConfigsForUpdate(Consts.DEFAULT_DECK_ID)
-                .allConfigList
-                .first()
-                .config.config.newPerDay
 
     private fun DeckOptions.saveAndOptimize(newPerDay: Int) {
         val script =

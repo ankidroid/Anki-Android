@@ -13,6 +13,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.ext.clear
+import com.ichi2.testutils.ext.defaultDeckNewCardsPerDay
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.junit.After
@@ -51,7 +52,7 @@ class DeckOptionsTest : RobolectricTest() {
                 updateDeckConfigs(UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_COMPUTE_ALL_PARAMS, newPerDay = 42)
 
                 assertFalse(requireActivity().isFinishing)
-                assertEquals(42, newCardsPerDay)
+                assertEquals(42, col.defaultDeckNewCardsPerDay)
             }
         }
 
@@ -62,17 +63,9 @@ class DeckOptionsTest : RobolectricTest() {
                 updateDeckConfigs(UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_NORMAL, newPerDay = 42)
 
                 assertTrue(requireActivity().isFinishing)
-                assertEquals(42, newCardsPerDay)
+                assertEquals(42, col.defaultDeckNewCardsPerDay)
             }
         }
-
-    private val newCardsPerDay: Int
-        get() =
-            col.backend
-                .getDeckConfigsForUpdate(Consts.DEFAULT_DECK_ID)
-                .allConfigList
-                .single()
-                .config.config.newPerDay
 
     private suspend fun DeckOptions.updateDeckConfigs(
         mode: UpdateDeckConfigsMode,
