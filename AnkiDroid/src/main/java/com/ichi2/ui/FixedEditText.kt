@@ -39,6 +39,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
@@ -50,6 +53,19 @@ open class FixedEditText : AppCompatEditText {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    /**
+     * Request raw keyboard input without disabling this view's cursor or input connection.
+     *
+     * Call [InputMethodManager.restartInput] after changing this flag if the keyboard is
+     * already connected.
+     *
+     * @see applyNoSuggest
+     */
+    var noSuggest: Boolean = false
+
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? =
+        super.onCreateInputConnection(outAttrs).applyNoSuggest(outAttrs, noSuggest)
 
     init {
         val highlightColor =
