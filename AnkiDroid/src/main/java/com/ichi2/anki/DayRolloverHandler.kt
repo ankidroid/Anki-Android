@@ -27,6 +27,7 @@ import android.content.Intent.ACTION_TIMEZONE_CHANGED
 import android.content.Intent.ACTION_TIME_CHANGED
 import android.content.Intent.ACTION_TIME_TICK
 import android.content.IntentFilter
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import anki.collection.OpChanges
@@ -43,6 +44,8 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 
 /**
@@ -59,6 +62,8 @@ import timber.log.Timber
  * precise).
  */
 object DayRolloverHandler : AnkiBroadcastReceiver() {
+    private val timeChangeMutex = Mutex()
+
     /** @see Scheduler.dayCutoff */
     private var lastCutoff: EpochSeconds? = null
 
@@ -78,8 +83,6 @@ object DayRolloverHandler : AnkiBroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        // potential race condition if a timezone/tick change occur simultaneously
-        // the outcome would be two calls to notifySubscribers, which is acceptable
         Timber.v("received ${intent.action}")
         // launch coroutine as we need access to `col.sched`
         applicationScope.launchCatching(Dispatchers.IO, errorMessageHandler = { msg ->
@@ -93,29 +96,32 @@ object DayRolloverHandler : AnkiBroadcastReceiver() {
         }
     }
 
-    private suspend fun handleTimeChange() {
-        val currentCutoff = withOpenColOrNull { sched.dayCutoff }
-        if (currentCutoff == null) {
-            // assumption: if the collection is not open, queue status will be updated
-            // by the act of opening the collection, missing an event is acceptable
-            Timber.w("could not check/update day rollover: collection not open")
-            return
-        }
+    @VisibleForTesting
+    internal suspend fun handleTimeChange() =
+        // Concurrent initial events must not mistake another event's initialization for a rollover.
+        timeChangeMutex.withLock {
+            val currentCutoff = withOpenColOrNull { sched.dayCutoff }
+            if (currentCutoff == null) {
+                // assumption: if the collection is not open, queue status will be updated
+                // by the act of opening the collection, missing an event is acceptable
+                Timber.w("could not check/update day rollover: collection not open")
+                return@withLock
+            }
 
-        // Anki Desktop: instead of comparing the current time to the cutoff,
-        // it detects if a change to the cutoff has occurred
-        // https://github.com/ankitects/anki/blob/edd38ca06730d7fc16804f52ce10f6bc54c3d145/qt/aqt/main.py#L508-L528
-        if (lastCutoff == currentCutoff) return
+            // Anki Desktop: instead of comparing the current time to the cutoff,
+            // it detects if a change to the cutoff has occurred
+            // https://github.com/ankitects/anki/blob/edd38ca06730d7fc16804f52ce10f6bc54c3d145/qt/aqt/main.py#L508-L528
+            if (lastCutoff == currentCutoff) return@withLock
 
-        Timber.i("day cutoff changed %d -> %d", lastCutoff, currentCutoff)
-        // Re-arm the wall-clock alarm whenever the cutoff changes
-        DayRolloverAlarm.scheduleNext(appContext)
-        // we do not want to send a "study queues changes" message initially
-        if (lastCutoff != null) {
-            handleDayRollover()
+            Timber.i("day cutoff changed %d -> %d", lastCutoff, currentCutoff)
+            // Re-arm the wall-clock alarm whenever the cutoff changes
+            DayRolloverAlarm.scheduleNext(appContext)
+            // we do not want to send a "study queues changes" message initially
+            if (lastCutoff != null) {
+                handleDayRollover()
+            }
+            this.lastCutoff = currentCutoff
         }
-        this.lastCutoff = currentCutoff
-    }
 
     private fun handleDayRollover() {
         Timber.i("day rollover occurred")
