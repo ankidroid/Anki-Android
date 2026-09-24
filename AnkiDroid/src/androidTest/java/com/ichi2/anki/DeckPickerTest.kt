@@ -20,11 +20,9 @@ import android.annotation.SuppressLint
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.ichi2.anki.TestUtils.activityInstance
 import com.ichi2.anki.TestUtils.isTablet
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
@@ -33,7 +31,7 @@ import com.ichi2.anki.testutil.discardPreliminaryViews
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.tapOnCountLayouts
-import org.hamcrest.Matchers.instanceOf
+import com.ichi2.anki.testutil.useResumedActivity
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Rule
@@ -65,11 +63,10 @@ class DeckPickerTest : InstrumentedTest() {
         // Go to RecyclerView item having "Test Deck" and click on the counts layout
         tapOnCountLayouts("Default")
 
-        // Check if currently open Activity is StudyOptionsActivity
-        assertThat(
-            activityInstance,
-            instanceOf(StudyOptionsActivity::class.java),
-        )
+        // ActivityScenarioRule only owns DeckPicker. Close Study Options before collection cleanup.
+        useResumedActivity<StudyOptionsActivity> {
+            onView(withId(R.id.studyoptions_frame)).check(matches(isDisplayed()))
+        }
     }
 
     @Test
