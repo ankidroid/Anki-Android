@@ -140,7 +140,6 @@ class StandardSearchFragment :
                         )
                     }
                 }
-            binding.cardStateChip.chipIcon = ContextCompat.getDrawable(requireContext(), it.cardStates.firstOrNull().iconRes)
 
             binding.flagsChip.text =
                 formatChipDescription(
