@@ -3,21 +3,9 @@
 
 set -euo pipefail
 
-# Issue 22033: ADB reported "device offline" after sys.boot_completed=1.
-# The underlying cause is unknown; fixing it would likely remove the need for retries.
-# Retries may help if the disconnect is transient; this is unverified in CI.
-# Only use for commands safe to repeat: a failed ADB call may already have
-# executed the command on the device.
+# Only use for shell commands safe to repeat, such as reading or setting a value.
 retry_repeatable_adb_shell_cmd() {
-  local attempt output
-  for ((attempt = 1; attempt <= 5; attempt++)); do
-    if output=$(adb shell "$@"); then
-      printf '%s\n' "$output"
-      return 0
-    fi
-    sleep 1
-  done
-  return 1
+  bash "$(dirname "${BASH_SOURCE[0]}")/adb_retry.sh" "$@"
 }
 
 # Both CI images use BE2A.250530.026.F3. Revisit this workaround when that changes.
