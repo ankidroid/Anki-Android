@@ -169,7 +169,7 @@
                     app:boxStrokeWidth="0dp"
                     app:endIconMode="clear_text">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.ichi2.ui.TypeAnswerEditText
                         android:id="@+id/type_answer_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
