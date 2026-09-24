@@ -6,80 +6,107 @@ import android.os.LocaleList
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.testutils.ext.requireInputConnection
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import org.robolectric.ParameterizedRobolectricTestRunner as Parameterized
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(Parameterized::class)
 class TypeAnswerEditTextTest : RobolectricTest() {
-    @Test
-    fun `nosuggest preserves a real editor and Done action in both answer fields`() {
-        withAnswerFields { field, setNoSuggest ->
-            setNoSuggest(true)
-            val info = EditorInfo()
-            val connection = assertNotNull(field.onCreateInputConnection(info))
-
-            // TYPE_NULL on the view itself makes this false, suppressing the cursor and preventing
-            // the keyboard from reopening after a tap or returning from the keyboard picker.
-            assertTrue(field.onCheckIsTextEditor())
-            assertEquals(INPUT_TYPE, field.inputType)
-            assertEquals(InputType.TYPE_NULL, info.inputType)
-            assertEquals(EditorInfo.IME_ACTION_DONE, info.imeOptions and EditorInfo.IME_MASK_ACTION)
-            assertEquals(LocaleList.forLanguageTags("fr"), info.hintLocales)
-
-            connection.commitText("été", 1)
-            assertEquals("été", field.text.toString())
-            var done = false
-            field.setOnEditorActionListener { _, actionId, _ ->
-                done = actionId == EditorInfo.IME_ACTION_DONE
-                done
-            }
-            connection.performEditorAction(EditorInfo.IME_ACTION_DONE)
-            assertTrue(done)
-        }
+    enum class AnswerField {
+        FIXED_EDIT_TEXT,
+        TYPE_ANSWER_EDIT_TEXT,
     }
 
-    @Test
-    fun `moving to a normal answer restores its keyboard without losing text or selection`() {
-        withAnswerFields { field, setNoSuggest ->
-            setNoSuggest(true)
-            field.setText("été")
-            field.setSelection(1)
-            assertNotNull(field.onCreateInputConnection(EditorInfo()))
+    @JvmField // required for Parameter
+    @Parameterized.Parameter
+    var answerField = AnswerField.FIXED_EDIT_TEXT
 
-            setNoSuggest(false)
-            val info = EditorInfo()
-            assertNotNull(field.onCreateInputConnection(info))
-            assertEquals(INPUT_TYPE, info.inputType)
-            assertEquals("été", field.text.toString())
-            assertEquals(1, field.selectionStart)
-            assertEquals(1, info.initialSelStart)
-        }
-    }
+    private lateinit var field: EditText
 
-    private fun withAnswerFields(block: (EditText, (Boolean) -> Unit) -> Unit) {
+    @Before
+    fun setUpAnswerField() {
         targetContext.setTheme(DayTheme.LIGHT.styleResId)
-        val legacy = FixedEditText(targetContext)
-        val material = TypeAnswerEditText(targetContext, null)
-        for (field in listOf(legacy, material)) {
-            field.inputType = INPUT_TYPE
-            field.imeOptions = EditorInfo.IME_ACTION_DONE
-            field.imeHintLocales = LocaleList.forLanguageTags("fr")
-            block(field) { enabled ->
-                when (field) {
-                    is FixedEditText -> field.noSuggest = enabled
-                    is TypeAnswerEditText -> field.noSuggest = enabled
-                }
+        field =
+            when (answerField) {
+                AnswerField.FIXED_EDIT_TEXT -> FixedEditText(targetContext)
+                AnswerField.TYPE_ANSWER_EDIT_TEXT -> TypeAnswerEditText(targetContext, null)
+            }.apply {
+                inputType = INPUT_TYPE
+                imeOptions = EditorInfo.IME_ACTION_DONE
+                imeHintLocales = LocaleList.forLanguageTags("fr")
+                setNoSuggest(true)
             }
+    }
+
+    @Test
+    fun `nosuggest preserves the editor and keyboard metadata`() {
+        val info = EditorInfo()
+        field.requireInputConnection(info)
+
+        // TYPE_NULL on the view itself makes this false, suppressing the cursor and preventing
+        // the keyboard from reopening after a tap or returning from the keyboard picker.
+        assertTrue(field.onCheckIsTextEditor())
+        assertEquals(INPUT_TYPE, field.inputType)
+        assertEquals(InputType.TYPE_NULL, info.inputType)
+        assertEquals(EditorInfo.IME_ACTION_DONE, info.imeOptions and EditorInfo.IME_MASK_ACTION)
+        assertEquals(LocaleList.forLanguageTags("fr"), info.hintLocales)
+    }
+
+    @Test
+    fun `nosuggest accepts accented text from the keyboard`() {
+        field.requireInputConnection().commitText("été", 1)
+
+        assertEquals("été", field.text.toString())
+    }
+
+    @Test
+    fun `nosuggest delivers the Done action`() {
+        var receivedAction: Int? = null
+        field.setOnEditorActionListener { _, actionId, _ ->
+            receivedAction = actionId
+            true
+        }
+
+        field.requireInputConnection().performEditorAction(EditorInfo.IME_ACTION_DONE)
+
+        assertEquals(EditorInfo.IME_ACTION_DONE, receivedAction)
+    }
+
+    @Test
+    fun `disabling nosuggest restores keyboard metadata without losing text or selection`() {
+        field.setText("été")
+        field.setSelection(1)
+        field.requireInputConnection()
+
+        field.setNoSuggest(false)
+        val info = EditorInfo()
+        field.requireInputConnection(info)
+
+        assertEquals(INPUT_TYPE, info.inputType)
+        assertEquals("été", field.text.toString())
+        assertEquals(1, field.selectionStart)
+        assertEquals(1, info.initialSelStart)
+    }
+
+    private fun EditText.setNoSuggest(enabled: Boolean) {
+        when (this) {
+            is FixedEditText -> noSuggest = enabled
+            is TypeAnswerEditText -> noSuggest = enabled
+            else -> error("Unsupported answer field: $this")
         }
     }
 
     companion object {
         private const val INPUT_TYPE = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+
+        @Parameterized.Parameters(name = "{0}")
+        @JvmStatic // required for Parameters
+        fun answerFields(): Collection<AnswerField> = AnswerField.entries
     }
 }
