@@ -26,6 +26,8 @@ on:
     # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
     branches-ignore:
       - 'gh-readonly-queue/**'
+      # Dependabot branches are already checked by the pull_request trigger.
+      - 'dependabot/**'
   merge_group:
 
 permissions:
