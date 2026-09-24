@@ -5,8 +5,11 @@ package com.ichi2.anki
 
 import android.app.Application
 import android.content.Intent
+import android.text.InputType
 import android.view.Menu
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.core.os.BundleCompat
@@ -21,6 +24,7 @@ import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand.ANSWER_AGAIN
+import com.ichi2.anki.cardviewer.ViewerCommand.ANSWER_EASY
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.MockTime
@@ -44,6 +48,9 @@ import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.addNoSuggestNote
+import com.ichi2.testutils.ext.assertImeInputType
+import com.ichi2.testutils.ext.requireInputConnection
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
@@ -65,6 +72,27 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
+    @Test
+    fun `nosuggest supports Done and resets for the next typing card`() =
+        runTest {
+            targetContext.sharedPrefs().edit { putBoolean("useInputTag", false) }
+            val noSuggestCard = col.addNoSuggestNote().firstCard()
+            val normalCard = addBasicWithTypingNote("Normal question", "Answer").firstCard()
+            val reviewer = startReviewer()
+            val field = reviewer.findViewById<EditText>(R.id.answer_field)
+            assertEquals(noSuggestCard.id, reviewer.currentCardId)
+            field.assertImeInputType(InputType.TYPE_NULL)
+
+            field.requireInputConnection().performEditorAction(EditorInfo.IME_ACTION_DONE)
+            advanceRobolectricLooper()
+            assertTrue(reviewer.isDisplayingAnswer)
+
+            reviewer.executeCommand(ANSWER_EASY)
+            advanceRobolectricLooper()
+            assertEquals(normalCard.id, reviewer.currentCardId)
+            field.assertImeInputType(field.inputType)
+        }
 
     @Ignore("flaky")
     @Test
