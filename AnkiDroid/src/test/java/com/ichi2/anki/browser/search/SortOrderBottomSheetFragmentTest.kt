@@ -2,7 +2,7 @@
 
 package com.ichi2.anki.browser.search
 
-import androidx.core.os.bundleOf
+import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
@@ -48,9 +48,9 @@ class SortOrderBottomSheetFragmentTest : RobolectricTest() {
         val viewModelFactory = SingleViewModelFactory.create(createCardBrowserViewModel())
 
         val fragmentArgs =
-            bundleOf(
-                ARG_CURRENT_SORT_TYPE to currentSortType,
-            )
+            Bundle().apply {
+                putParcelable(ARG_CURRENT_SORT_TYPE, currentSortType)
+            }
         launchFragment(fragmentArgs) {
             SortOrderBottomSheetFragment(viewModelFactory)
         }.use { scenario ->

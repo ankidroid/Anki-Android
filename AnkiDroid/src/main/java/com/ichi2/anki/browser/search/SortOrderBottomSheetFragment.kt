@@ -11,7 +11,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
@@ -447,7 +446,7 @@ class SortOrderBottomSheetFragment(
 
                 Timber.i("creating SortOrderBottomSheetFragment with %s", sortData)
 
-                arguments = bundleOf(ARG_CURRENT_SORT_TYPE to sortData)
+                arguments = Bundle().apply { putParcelable(ARG_CURRENT_SORT_TYPE, sortData) }
             }
     }
 }

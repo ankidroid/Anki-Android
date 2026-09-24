@@ -2,10 +2,10 @@
 
 package com.ichi2.anki.workarounds
 
+import android.os.Bundle
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.FrameLayout
-import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
@@ -229,7 +229,7 @@ class SafeWebViewLayoutTest : RobolectricTest() {
 
     private fun withMultimediaWebView(block: (SafeWebViewLayout, MultimediaImageFragment) -> Unit) {
         launchFragmentInContainer<MultimediaImageFragment>(
-            bundleOf(EXTRA_MEDIA_OPTIONS to MultimediaImageFragment.ImageOptions.GALLERY),
+            Bundle().apply { putSerializable(EXTRA_MEDIA_OPTIONS, MultimediaImageFragment.ImageOptions.GALLERY) },
         ).use { scenario ->
             scenario.onFragment { fragment ->
                 block(fragment.binding.multimediaWebView, fragment)
