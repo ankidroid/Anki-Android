@@ -2,11 +2,16 @@
 
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.text.InputType
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import androidx.core.content.edit
+import androidx.core.content.getSystemService
 import androidx.fragment.app.DialogFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
@@ -20,6 +25,9 @@ import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.singleDayText
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
+import com.ichi2.testutils.RecordingInputMethodManager
+import com.ichi2.testutils.ext.addNoSuggestNote
+import com.ichi2.testutils.ext.createInputConnection
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.After
@@ -27,9 +35,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
+import org.robolectric.shadow.api.Shadow
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
@@ -95,6 +107,60 @@ class ReviewerFragmentTest : RobolectricTest() {
 
             withReviewer {
                 assertRenderingLayerType(View.LAYER_TYPE_NONE)
+            }
+        }
+
+    @Test
+    fun `nosuggest supports Done`() =
+        runTest {
+            targetContext.sharedPrefs().edit { putBoolean("useInputTag", false) }
+            col.addNoSuggestNote()
+            withReviewer {
+                val field = binding.typeAnswerEditText
+                assertTrue(field.onCheckIsTextEditor())
+                assertNotEquals(InputType.TYPE_NULL, field.inputType)
+                val info = EditorInfo()
+                val connection = field.createInputConnection(info)
+                assertEquals(InputType.TYPE_NULL, info.inputType)
+
+                connection.performEditorAction(EditorInfo.IME_ACTION_DONE)
+                advanceUntilIdle()
+                assertTrue(viewModel.showingAnswer.value)
+            }
+        }
+
+    @Test
+    @Config(shadows = [RecordingInputMethodManager::class])
+    fun `nosuggest resets for the next typing card`() =
+        runTest {
+            targetContext.sharedPrefs().edit { putBoolean("useInputTag", false) }
+            val noSuggestCard = col.addNoSuggestNote().firstCard()
+            val normalCard = addBasicWithTypingNote("Normal question", "Answer").firstCard()
+            withReviewer {
+                val field = binding.typeAnswerEditText
+                val originalInputType = field.inputType
+                val inputMethodManager = Shadow.extract<RecordingInputMethodManager>(field.context.getSystemService<InputMethodManager>())
+                assertEquals(noSuggestCard.id, viewModel.getCardId())
+                assertTrue(field.onCheckIsTextEditor())
+                assertNotEquals(InputType.TYPE_NULL, field.inputType)
+                val noSuggestInfo = EditorInfo()
+                field.createInputConnection(noSuggestInfo)
+                assertEquals(InputType.TYPE_NULL, noSuggestInfo.inputType)
+
+                viewModel.onShowAnswer()
+                advanceUntilIdle()
+                assertTrue(viewModel.showingAnswer.value)
+
+                inputMethodManager.restartedViews.clear()
+                viewModel.answerCard(Rating.EASY)
+                advanceUntilIdle()
+                assertEquals(normalCard.id, viewModel.getCardId())
+                assertContains(inputMethodManager.restartedViews, field)
+                assertTrue(field.onCheckIsTextEditor())
+                assertEquals(originalInputType, field.inputType)
+                val normalInfo = EditorInfo()
+                field.createInputConnection(normalInfo)
+                assertEquals(originalInputType, normalInfo.inputType)
             }
         }
 
