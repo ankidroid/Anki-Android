@@ -45,7 +45,7 @@ androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
 androidxExifinterface = "1.4.2"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidxFragmentKtx = "1.9.0"
+androidxFragmentKtx = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
 androidxLifecycleProcess = "2.10.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
