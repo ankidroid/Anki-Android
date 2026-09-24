@@ -109,7 +109,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Касание тремя пальцами</string>
     <string name="gestures_four_finger_tap" maxLength="41">Касание четырьмя пальцами</string>
     <string name="gestures_shake" maxLength="41">Потрясти устройство</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Пункт «%s» в меню</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Добавляет пункт «%s» в контекстное меню системы</string>
     <string name="double_scrolling_gap" maxLength="41">Двойная прокрутка</string>
     <string name="double_scrolling_gap_summ">Удвоить дистанцию прокрутки на читалках</string>

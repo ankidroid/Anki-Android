@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Lexoni dhe shkruani në bazën e të dhënave AnkiDroid</string>
     <string name="read_write_permission_description">aksesoni shënimet, kartat, llojet e shënimeve dhe kuvertat ekzistuese, si dhe krijoni të reja</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Shfletuesi i kartave</string>
-    <string name="context_menu_anki_card_label">Karta Anki</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Koleksionet nuk mund të kombinohen.\nCilin koleksion dëshironi të mbani?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

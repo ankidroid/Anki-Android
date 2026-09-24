@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">AnkiDroid ਡੇਟਾਬੇਸ ਨੂੰ ਪੜ੍ਹੋ ਅਤੇ ਲਿਖੋ</string>
     <string name="read_write_permission_description">ਮੌਜੂਦਾ ਨੋਟਸ, ਕਾਰਡ, ਨੋਟ ਕਿਸਮਾਂ ਅਤੇ ਡੇਕ ਤੱਕ ਪਹੁੰਚ ਕਰੋ, ਨਾਲ ਹੀ ਨਵੇਂ ਬਣਾਓ</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ</string>
-    <string name="context_menu_anki_card_label">ਅੰਕੀ ਕਾਰਡ</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">ਸੰਗ੍ਰਹਿ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ ਹਨ।\nਤੁਸੀਂ ਕਿਹੜਾ ਸੰਗ੍ਰਹਿ ਰੱਖਣਾ ਚਾਹੋਗੇ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

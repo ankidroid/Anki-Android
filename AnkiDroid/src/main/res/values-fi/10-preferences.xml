@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Kolmesorminen napautus</string>
     <string name="gestures_four_finger_tap" maxLength="41">Neljäsorminen napautus</string>
     <string name="gestures_shake" maxLength="41">Ravista laitetta</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">\"%s\" -valikko</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Ota \"%s\" -valikko käyttöön koko sovelluksessa</string>
     <string name="double_scrolling_gap" maxLength="41">Kaksoisvieritys</string>
     <string name="double_scrolling_gap_summ">Kaksinkertaista vieritysaskeleen koko eReaderin kanssa</string>

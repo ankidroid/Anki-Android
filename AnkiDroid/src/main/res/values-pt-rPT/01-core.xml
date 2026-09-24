@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>
     <string name="read_write_permission_description">aceder às notas, fichas, tipos de nota e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Explorador de fichas</string>
-    <string name="context_menu_anki_card_label">Ficha Anki</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">As colecções não podem ser combinadas.\nQue colecção quer manter?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

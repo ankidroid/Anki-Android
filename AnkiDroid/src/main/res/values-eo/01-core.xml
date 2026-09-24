@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Legi kaj skribi al la datumbazo de AnkiDroid</string>
     <string name="read_write_permission_description">aliri ekzistajn notojn, kartojn, nototipojn kaj kartarojn, kaj krei novajn</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kart-foliumilo</string>
-    <string name="context_menu_anki_card_label">Anki-karto</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Ne povas kombini la kolektojn.\nKiun kolekton vi volas konservi?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

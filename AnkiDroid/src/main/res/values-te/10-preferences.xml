@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">షేక్ పరికరం</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' మెను</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">ప్రపంచవ్యాప్తంగా \'%s\' సందర్భ మెనుని ప్రారంభిస్తుంది</string>
     <string name="double_scrolling_gap" maxLength="41">డబుల్ స్క్రోలింగ్</string>
     <string name="double_scrolling_gap_summ">eReader తో డబుల్ స్క్రోల్ స్పేస్</string>

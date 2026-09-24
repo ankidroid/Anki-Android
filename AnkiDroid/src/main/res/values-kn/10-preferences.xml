@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">ಸಾಧನವನ್ನು ಅಲ್ಲಾಡಿಸಿ</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' ಮೆನು</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">ಜಾಗತಿಕವಾಗಿ \'%s\' ಸಂದರ್ಭ ಮೆನುವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸುತ್ತದೆ</string>
     <string name="double_scrolling_gap" maxLength="41">ಡಬಲ್ ಸ್ಕ್ರೋಲಿಂಗ್</string>
     <string name="double_scrolling_gap_summ">eReader ನೊಂದಿಗೆ ಸ್ಕ್ರಾಲ್ ದೂರವನ್ನು ದ್ವಿಗುಣಗೊಳಿಸಿ</string>

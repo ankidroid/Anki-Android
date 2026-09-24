@@ -137,8 +137,8 @@
     <string name="read_write_permission_label">Читати й записувати в базу даних AnkiDroid</string>
     <string name="read_write_permission_description">доступ до наявних карток, колод, записів та їх типів, а також створення нових</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Переглядач карток</string>
-    <string name="context_menu_anki_card_label">Anki картка</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Колекції не можна поєднати.\nЯку колекцію Ви хочете зберегти?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

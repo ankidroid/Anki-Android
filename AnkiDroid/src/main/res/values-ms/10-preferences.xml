@@ -106,7 +106,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Shake device</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Dayakan menu konteks ‘%s’ secara global</string>
     <string name="double_scrolling_gap" maxLength="41">Tatal dua kali</string>
     <string name="double_scrolling_gap_summ">Jarak tatal ganda dua untuk e-pembaca</string>

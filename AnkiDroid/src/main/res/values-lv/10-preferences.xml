@@ -108,7 +108,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Kratīt ierīci</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">\"%s\" izvēlne</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Iespējo \"%s\" konteksta izvēlni</string>
     <string name="double_scrolling_gap" maxLength="41">Divkārša ritināšana</string>
     <string name="double_scrolling_gap_summ">Divkāršot ritināšanas attālumu ar e-lasītāju</string>

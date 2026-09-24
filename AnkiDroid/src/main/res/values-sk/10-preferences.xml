@@ -109,7 +109,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Dotyk tromi prstami</string>
     <string name="gestures_four_finger_tap" maxLength="41">Dotyk štyrmi prstami</string>
     <string name="gestures_shake" maxLength="41">Pri zatrasení</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s“</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Povoliť globálne kontextové menu pre „%s“</string>
     <string name="double_scrolling_gap" maxLength="41">Dvojitý posun</string>
     <string name="double_scrolling_gap_summ">Zdvojnásobiť posúvanie s eReader</string>

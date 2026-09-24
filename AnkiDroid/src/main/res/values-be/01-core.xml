@@ -137,8 +137,8 @@
     <string name="read_write_permission_label">Чытанне і запіс у базу даных AnkiDroid</string>
     <string name="read_write_permission_description">доступ да існуючых нататак, картак, тыпаў нататак і калод, а таксама стварэнне новых</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Аглядальнік картак</string>
-    <string name="context_menu_anki_card_label">Картка Anki</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Гэтыя калекцыі не могуць быць аб\'яднаны.\nЯкую калекцыю вы хочаце пакінуць?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

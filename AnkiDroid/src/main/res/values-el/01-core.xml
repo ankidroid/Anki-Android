@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Ανάγνωση και εγγραφή στη βάση δεδομένων του AnkiDroid</string>
     <string name="read_write_permission_description">πρόσβαση σε υπάρχουσες σημειώσεις, κάρτες, τύπους σημειώσεων και τράπουλες, καθώς και δημιουργία νέων</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Ευρετήριο καρτών</string>
-    <string name="context_menu_anki_card_label">Κάρτα Anki</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Οι συλλογές δεν μπορούν να συνδυαστούν.\nΠοια συλλογή θέλετε να κρατήσετε;</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

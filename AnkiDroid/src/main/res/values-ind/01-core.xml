@@ -122,8 +122,8 @@
     <string name="read_write_permission_label">Baca dan tulis ke basisdata AnkiDroid</string>
     <string name="read_write_permission_description">mengakses catatan yang ada, kartu, tipe catatan, dan dek, serta membuat yang baru</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Peramban Kartu</string>
-    <string name="context_menu_anki_card_label">Kartu Anki</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Koleksi tidak dapat digabungkan. \nBagian mana yang ingin Anda pertahankan?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

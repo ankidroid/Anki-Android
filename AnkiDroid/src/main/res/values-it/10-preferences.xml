@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Tocco a tre dita</string>
     <string name="gestures_four_finger_tap" maxLength="41">Tocco a quattro dita</string>
     <string name="gestures_shake" maxLength="41">Agita il dispositivo</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Menù «%s»</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Abilita il menù contestuale «%s» globalmente</string>
     <string name="double_scrolling_gap" maxLength="41">Doppio scorrimento</string>
     <string name="double_scrolling_gap_summ">Raddoppia il divario di scorrimento con eReader</string>

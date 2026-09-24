@@ -52,9 +52,9 @@
     <string name="custom_study_new_extend">Zvýšiť/znížiť („-3”) dnešný limit nových kartičiek o</string>
     <string name="custom_study_rev_extend">Zvýšiť/znížiť („-3”) dnešný limit kartičiek na zopakovanie o</string>
     <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
+    <string name="custom_study_ahead_description">Zopakovať kartičky na skúšanie za:</string>
     <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
-    <string name="custom_study_tags">Select x cards from the deck:</string>
+    <string name="custom_study_tags">Vybrať x kartičiek z balíčka:</string>
     <string name="storage_full_title">Úložisko je plné</string>
     <string name="storage_almost_full_title">Úložisko je takmer plné</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nedostatok miesta</string>
@@ -258,12 +258,12 @@
     <!--Change Note Type Dialog Fragment-->
     <string name="card_numbers_unchanged">Card numbers will remain unchanged</string>
     <!-- Subset of TR.changeNotetypeToFromCloze -->
-    <string name="extra_cloze_deletions_removed">If changing to a regular note type, and there are more cloze deletions than available card templates, any extra cards will be removed.</string>
+    <string name="extra_cloze_deletions_removed">Pri zmene na bežný typ poznámky a ak je tam viacej doplňovacích miest ako dostupných šablón kartičiek, akékoľvek nadbytočné karty budú odstránené.</string>
     <string name="different_note_types_selected">Please select notes from only one notetype.</string>
     <string name="error_no_changes_to_save">No changes to save</string>
     <string name="choose_color">Vybrať farbu</string>
     <!-- Special Fields -->
-    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Fields</string>
+    <string name="standard_fields_tab_header" comment="Tab header for inserting non-special fields: {{Front}}">Polia</string>
     <string name="special_fields_tab_header" comment="Tab header for inserting special fields: {{Deck}}">Special</string>
     <string name="special_field_example_suffix"><![CDATA[: ‘<b>%1$s</b>’]]></string>
     <string name="special_field_front_side_help">The front template content. Audio is not automatically played</string>
@@ -275,8 +275,8 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">The name of the card template%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">The name of the note type%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Z</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">Na</string>
     <!-- Add profile dialog -->
     <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
     <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>

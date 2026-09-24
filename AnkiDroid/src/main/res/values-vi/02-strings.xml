@@ -248,12 +248,12 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <string name="invalid_value" comment="Error message in IncrementerNumberRangePreference when input is not a valid number">Giá trị không hợp lệ</string>
-    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Maximum value is %d</string>
-    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Minimum value is %d</string>
+    <string name="maximum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the maximum allowed value">Giá trị tối đa là %d</string>
+    <string name="minimum_value_is" comment="Error message in IncrementerNumberRangePreference. %d is the minimum allowed value">Giá trị tối thiểu là %d</string>
     <!-- Used for credential empty warning message -->
     <string name="invalid_email">Nhập email hợp lệ</string>
     <string name="password_empty">Bắt buộc có mật khẩu</string>
-    <string name="back_pressed_once">Go back again to exit</string>
+    <string name="back_pressed_once">Quay lại lần nữa để thoát</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Tải bộ thẻ xuống</string>

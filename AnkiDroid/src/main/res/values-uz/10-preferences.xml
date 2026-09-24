@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Uch barmoq bilan bosish</string>
     <string name="gestures_four_finger_tap" maxLength="41">Toʻrt barmoq bilan bosish</string>
     <string name="gestures_shake" maxLength="41">Qurilmani silkitish</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menyusi</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">“%s” kontekst menyusini ilova miqyosda yoqadi</string>
     <string name="double_scrolling_gap" maxLength="41">Tez aylantirish</string>
     <string name="double_scrolling_gap_summ">Agar siz eReader bilan aylanma masofani ikki baravar oshirishni istasangiz, buni yoqing</string>

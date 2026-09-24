@@ -109,7 +109,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Націск трыма пальцамі</string>
     <string name="gestures_four_finger_tap" maxLength="41">Націск чатырма пальцамі</string>
     <string name="gestures_shake" maxLength="41">Патрасіце прыладу</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Меню «%s»</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Уключыць кантэкстнае меню «%s» у сістэме</string>
     <string name="double_scrolling_gap" maxLength="41">Падвоеная прагортка</string>
     <string name="double_scrolling_gap_summ">Падвоены разрыў прагорткі ў eReader</string>

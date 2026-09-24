@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Lees en skryf na die AnkiDroid databasis</string>
     <string name="read_write_permission_description">toegang tot bestaande notas, kaarte, notatipes en pakke, sowel as om nuwe te skep</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kaart blaaier</string>
-    <string name="context_menu_anki_card_label">Anki kaart</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Die versamelings kan nie gekombineer word nie.\nWatter versameligs wil jy hou?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

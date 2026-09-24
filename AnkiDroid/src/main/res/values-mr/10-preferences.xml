@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">शेक डिव्हाइस</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ मेनू</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">जागतिक स्तरावर ‘%s’ संदर्भ मेनू सक्षम करते</string>
     <string name="double_scrolling_gap" maxLength="41">डबल स्क्रोलिंग</string>
     <string name="double_scrolling_gap_summ">EReader सह स्क्रोल अंतर दुप्पट करा</string>
