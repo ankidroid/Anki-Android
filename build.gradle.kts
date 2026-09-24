@@ -3,6 +3,7 @@ import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
 import com.ichi2.anki.gradle.GitHubActionsTestListener
 import com.ichi2.anki.gradle.TestSummaryService
+import com.ichi2.anki.gradle.configureRobolectricJvm
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.buildconfiguration.tasks.UpdateDaemonJvm
@@ -79,6 +80,8 @@ subprojects {
 
                 it.maxHeapSize = "${unitTestForkMaxHeapGb}g"
                 it.minHeapSize = "1g"
+
+                it.configureRobolectricJvm()
 
                 it.useJUnitPlatform()
                 it.testLogging {
