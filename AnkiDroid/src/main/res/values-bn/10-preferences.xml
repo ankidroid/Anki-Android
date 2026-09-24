@@ -108,7 +108,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">ডিভাইস ঝাঁকান</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">\'%s\' মেনু</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">বিশ্বব্যাপী \'%s\' প্রসঙ্গ মেনু সক্রিয় করে</string>
     <string name="double_scrolling_gap" maxLength="41">ডাবল স্ক্রলিং</string>
     <string name="double_scrolling_gap_summ">eReader এর সাথে স্ক্রোল ব্যবধান দ্বিগুণ করুন</string>

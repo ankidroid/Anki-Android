@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೇಟಾಬೇಸ್‌ಗೆ ಓದಿ ಮತ್ತು ಬರೆಯಿರಿ</string>
     <string name="read_write_permission_description">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟಿಪ್ಪಣಿಗಳು, ಕಾರ್ಡ್‌ಗಳು, ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳು ಮತ್ತು ಡೆಕ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಿ, ಹಾಗೆಯೇ ಹೊಸದನ್ನು ರಚಿಸಿ</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ಕಾರ್ಡ್ ಬ್ರೌಸರ್</string>
-    <string name="context_menu_anki_card_label">ಅಂಕಿ ಕಾರ್ಡ್</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">ಸಂಗ್ರಹಣೆಗಳನ್ನು ಸಂಯೋಜಿಸಲಾಗುವುದಿಲ್ಲ. \nನೀವು ಯಾವ ಸಂಗ್ರಹವನ್ನು ಇಡಲು ಬಯಸುತ್ತೀರಿ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">ಆಂಕಿಡ್ರಾಯ್ಡ್</string>

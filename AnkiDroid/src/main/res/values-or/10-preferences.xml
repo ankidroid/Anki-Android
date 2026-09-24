@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">ତିନି-ଆଙ୍ଗୁଳି ସ୍ପର୍ଶ</string>
     <string name="gestures_four_finger_tap" maxLength="41">ଚାରି-ଆଙ୍ଗୁଳି ସ୍ପର୍ଶ</string>
     <string name="gestures_shake" maxLength="41">ଡିଵାଇସ୍ ଝାଙ୍କିଲେ</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ ମେନୁ</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
     <string name="double_scrolling_gap" maxLength="41">ଦ୍ୱିଗୁଣ ସ୍କ୍ରୋଲିଂ</string>
     <string name="double_scrolling_gap_summ">eReaderରେ ସ୍କ୍ରୋଲ୍ ଫାଙ୍କକୁ ଦୁଇଗୁଣ କରନ୍ତୁ</string>

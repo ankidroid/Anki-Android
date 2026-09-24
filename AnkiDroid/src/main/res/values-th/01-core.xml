@@ -122,8 +122,8 @@
     <string name="read_write_permission_label">อ่านและเขียน ลงใน ฐานข้อมูล AnkiDroid\"</string>
     <string name="read_write_permission_description">เข้าถึงโน้ต, การ์ด, ชนิดโน้ต และชุดการ์ดที่มีอยู่ รวมถึงสร้างรายการใหม่ๆ ได้</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ตัวเรียกดูการ์ด</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">ไม่สามารถรวมคอลเลกชันเข้าด้วยกันได้ \n คุณต้องการเก็บคอลเลกชันไหนไว้?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

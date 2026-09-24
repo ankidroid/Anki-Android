@@ -108,7 +108,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">הקשה בשלוש אצבעות</string>
     <string name="gestures_four_finger_tap" maxLength="41">הקשה בארבע אצבעות</string>
     <string name="gestures_shake" maxLength="41">נער את המכשיר</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">תפריט %s</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">מאפשר את תפריט ההקשר \'%s\' גלובלית במערכת</string>
     <string name="double_scrolling_gap" maxLength="41">גלילה כפולה</string>
     <string name="double_scrolling_gap_summ">הכפל את פער הגלילה עם eReader</string>

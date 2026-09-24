@@ -132,8 +132,8 @@
     <string name="read_write_permission_label">Читати и писати у бази података AnkiDroid</string>
     <string name="read_write_permission_description">Приступи постојећим белешкама, картицама, типовима белешки и сетовима и креирај нове</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Прегледач картица</string>
-    <string name="context_menu_anki_card_label">Анки картица</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Ове колекције није могуће објединити.\nЖелиш ли да сачуваш једну од њих?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

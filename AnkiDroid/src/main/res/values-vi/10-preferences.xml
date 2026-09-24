@@ -106,7 +106,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Chạm bằng ba ngón tay</string>
     <string name="gestures_four_finger_tap" maxLength="41">Chạm bằng bốn ngón tay</string>
     <string name="gestures_shake" maxLength="41">Lắc thiết bị</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu ‘%s’</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>
     <string name="double_scrolling_gap" maxLength="41">Bấm phím scrolling (chuột giữa) hai lần</string>
     <string name="double_scrolling_gap_summ">bấm hai lần chuột giữa với eReader</string>

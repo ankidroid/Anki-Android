@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Tri-fingra frapeto</string>
     <string name="gestures_four_finger_tap" maxLength="41">Kvar-fingra frapeto</string>
     <string name="gestures_shake" maxLength="41">Skui aparaton</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Menuo “%s”</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
     <string name="double_scrolling_gap" maxLength="41">Duobla rulumado</string>
     <string name="double_scrolling_gap_summ">Duobligi distancon de rulumado kun elektronika legilo</string>

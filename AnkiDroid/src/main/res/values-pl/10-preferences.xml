@@ -109,7 +109,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Pacnięcie trzema palcami</string>
     <string name="gestures_four_finger_tap" maxLength="41">Pacnięcie czterema palcami</string>
     <string name="gestures_shake" maxLength="41">Potrząśnij urządzeniem</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">Menu „%s”</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalnie</string>
     <string name="double_scrolling_gap" maxLength="41">Podwójne przewijanie</string>
     <string name="double_scrolling_gap_summ">Podwójny skok suwaka na eReaderze</string>
@@ -269,8 +269,8 @@
     <string name="toggle_auto_advance" maxLength="28">Przełącz auto-postęp</string>
     <string name="enable_auto_advance" maxLength="28">Enable auto advance</string>
     <string name="disable_auto_advance" maxLength="28">Disable auto advance</string>
-    <string name="enable_voice_recording" maxLength="28">Enable voice recording</string>
-    <string name="disable_voice_recording" maxLength="28">Disable voice recording</string>
+    <string name="enable_voice_recording" maxLength="28">Włącz nagrywanie dźwięku</string>
+    <string name="disable_voice_recording" maxLength="28">Wyłącz nagrywanie dźwięku</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Wybierz stronę karty</string>
     <string name="card_side_question">Pytanie</string>

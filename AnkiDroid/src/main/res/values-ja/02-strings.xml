@@ -203,7 +203,7 @@
     <string name="valid_js_api_version">AnkiDroid JS API のバージョンが無効です。開発者の %s に連絡するか、Wikiで確認してみてください。</string>
     <string name="update_js_api_version">AnkiDroid JS API が更新されました。開発者の %s に連絡するか、Wikiで確認してみてください。</string>
     <string name="reviewer_invalid_api_version_visit_documentation">ビュー</string>
-    <string name="anki_js_error_code">(Error code: %d)</string>
+    <string name="anki_js_error_code">(エラーコード: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">クリップボードにコピーしました</string>
     <string name="about_ankidroid_error_copy_debug_info">デバッグ情報をクリップボードにコピー中にエラーが発生しました</string>
@@ -297,7 +297,7 @@
     <string name="intro_ankidroid_tagline_one">負担は小さく</string>
     <string name="intro_ankidroid_tagline_two">成果は大きく</string>
     <string name="intro_short_ankidroid_explanation">Ankiは、記憶を定着させ強化するのに適したスケジュールでカードを表示する間隔反復学習システムです。AnkiDroidでAnkiの効率的な学習をお楽しみください</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">始める</string>
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroidがまだ起動していません。AnkiDroidを開いてから、もう一度やり直してください</string>
@@ -346,22 +346,22 @@
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ノート編集画面</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">ノートタイプを選択</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">タグを編集</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card template editor</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">カードテンプレートエディタ</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">表面テンプレートを編集</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">裏面テンプレートを編集</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">スタイルを編集</string>
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">テンプレートをMarkdowin形式でコピー</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">カードブラウザ用の表示設定を編集</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ユーザーアクション %s はこのノートタイプに設定されていません。設定してください</string>
-    <string name="feature_not_supported_by_study_screen">This card has features that are not yet supported by the new study screen.</string>
+    <string name="feature_not_supported_by_study_screen">このカードには、新しい学習画面ではまだサポートされていない機能があります。</string>
     <string name="directory_inaccessible_info">アクセスを回復する方法の詳細を %s で確認するか、設定画面に移動してコレクションフォルダを更新してください。</string>
     <!-- Scheduler Upgrade Required Dialog title-->
     <string name="scheduler_upgrade_required_dialog_title" comment="Shown in a dialog when user has imported a collection using a very old version of the Anki spaced repetition scheduler">スケジューラをアップグレードする必要があります</string>
     <!-- Whitespace is OK -->
     <string name="list_separator" comment="The character and spacing to display between elements of a list, for example \', \' in \'Apple, Banana, Cherry" tools:ignore="TranslationTypo">, </string>
     <!--Set up date-->
-    <string name="set_due_date_day" comment="Used for setting due date">Day</string>
-    <string name="set_due_date_date_range">Date range</string>
+    <string name="set_due_date_day" comment="Used for setting due date">日</string>
+    <string name="set_due_date_date_range">期間</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
     <!-- Switch profiles screen -->
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">プロファイルを切り替える</string>

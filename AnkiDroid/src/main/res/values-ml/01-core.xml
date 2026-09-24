@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">AnkiDroid ഡാറ്റാബേസ് വായിച്ച് എഴുതുക</string>
     <string name="read_write_permission_description">നിലവിലുള്ള കുറിപ്പുകൾ, കാർഡുകൾ, കുറിപ്പ് തരങ്ങൾ, ഡെക്കുകൾ എന്നിവ ആക്സസ് ചെയ്യുന്നതിനൊപ്പം പുതിയവ സൃഷ്ടിക്കുക</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">കാർഡ് ബ്രൗസർ</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">ശേഖരങ്ങൾ സംയോജിപ്പിക്കാൻ കഴിയില്ല.\nഏത് ശേഖരമാണ് നിങ്ങൾ സൂക്ഷിക്കാൻ ആഗ്രഹിക്കുന്നത്?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

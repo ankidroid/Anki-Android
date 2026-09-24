@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">წაკითხვა და ჩაწერა AnkiDroid-ის მონაცემთა ბაზაში</string>
     <string name="read_write_permission_description">წვდომა არსებულ შენიშვნებთან, ბარათებთან, შენიშვნის ტიპებთან და დასტებთან, ასევე ახალი ბარათების შექმნასთან</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ბარათების საძიებო</string>
-    <string name="context_menu_anki_card_label">Anki-ბარათი</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">კოლექციები ვერ შეერთდება.\nრომელი კოლექციის დატოვება გსურთ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

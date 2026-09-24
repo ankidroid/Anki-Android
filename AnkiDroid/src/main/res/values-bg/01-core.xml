@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Четене и писане в базата от данни на AnkiDroid</string>
     <string name="read_write_permission_description">достъп до съществуващи бележки, карти, типове бележки и тестета, както и създаване на нови</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Браузър за карти</string>
-    <string name="context_menu_anki_card_label">карта Anki</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Колекциите не могат да бъдат обединени.\nКоя от тях искате да запазите?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">डिवाइस हिलाओ</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ मेन्यू</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">विश्व स्तर पर \'%s\' संदर्भ मेनू को सक्षम करता है</string>
     <string name="double_scrolling_gap" maxLength="41">डबल स्क्रॉल</string>
     <string name="double_scrolling_gap_summ">ई-रीडर के साथ स्क्रॉल गैप डबल</string>

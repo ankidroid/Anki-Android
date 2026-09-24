@@ -137,8 +137,8 @@
     <string name="read_write_permission_label">Čítať a písať do databázy AnkiDroid</string>
     <string name="read_write_permission_description">prístup k existujúcim poznámkam, kartičkám, typom poznámok, balíčkom ako aj vytváranie nových</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Prehliadač kartičiek</string>
-    <string name="context_menu_anki_card_label">Anki kartička</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Kolekcie sa nedajú skombinovať.\nKtorú kolekciu chcete ponechať?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

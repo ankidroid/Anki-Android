@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">بخوان و به پایگاه داده AnkiDroid پیام بده</string>
     <string name="read_write_permission_description">دسترسی به یادداشت‌ها، کارت‌ها، انواع یادداشت‌ها و دسته‌های موجود، و همچنین ایجاد موارد جدید</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">مرورگر کارت</string>
-    <string name="context_menu_anki_card_label">کارت آنکی</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">مجموعه‌ها نمی‌توانند ترکیب شوند.\nکدام مجموعه را می‌خواهید نگه دارید؟</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">انکی دروید</string>

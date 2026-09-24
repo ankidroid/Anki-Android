@@ -122,8 +122,8 @@
     <string name="read_write_permission_label">AnkiDroid 데이터베이스 읽고 쓰기</string>
     <string name="read_write_permission_description">기존의 노트, 카드, 노트 유형, 덱에 접근하여 새로운 항목 생성하기</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">카드 탐색기</string>
-    <string name="context_menu_anki_card_label">Anki 카드</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">컬렉션을 합칠 수 없습니다.\n어떤 컬렉션을 유지하시겠습니까?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">AnkiDroid ساندانىنى ئوقۇيدۇ ۋە يازىدۇ</string>
     <string name="read_write_permission_description">مەۋجۇت خاتىرە، كارتا، خاتىرە تۈرى ۋە دەستىنى زىيارەت قىلىپلا قالماي يەنە يېڭىسىنى قۇرىدۇ</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">كارتا كۆرگۈچ</string>
-    <string name="context_menu_anki_card_label">Anki كارتا</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">توپلامنى بىرلەشتۈرگىلى بولمايدۇ.\nقايسى توپلامنى ساقلاپ قالىسىز؟</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

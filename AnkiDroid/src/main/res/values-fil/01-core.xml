@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Basahin at isulat sa database ng AnkiDroid</string>
     <string name="read_write_permission_description">i-access ang mga umiiral na tala, kard, mga uri ng tala, at mga deck, pati na rin ang gumawa ng mga bago</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Hindi maipagsama ang mga koleksyon.\nAlin sa mga koleksyon ang nais mong panatilihin?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

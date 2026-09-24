@@ -109,7 +109,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Three-finger tap</string>
     <string name="gestures_four_finger_tap" maxLength="41">Four-finger tap</string>
     <string name="gestures_shake" maxLength="41">Pakratykite prietaisą</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ Meniu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Visuotinai įjungiamas kontekstinis meniu \'%s\'</string>
     <string name="double_scrolling_gap" maxLength="41">Dvigubas slinkimas</string>
     <string name="double_scrolling_gap_summ">Padvigubinkite slinkimo tarpą naudodami el. knygų skaityklę</string>

@@ -132,8 +132,8 @@
     <string name="read_write_permission_label">Citește și scrie în baza de date a AnkiDroid</string>
     <string name="read_write_permission_description">accesați notițe, cărți, tipuri de notițe, și pachete și creați altele noi</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Browser de cărți</string>
-    <string name="context_menu_anki_card_label">Cartonaș Anki</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Colecțiile nu pot fi combinate.\nCe colecție doriți să păstrați?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
