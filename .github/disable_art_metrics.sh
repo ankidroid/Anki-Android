@@ -5,7 +5,7 @@ set -euo pipefail
 
 # Only use for shell commands safe to repeat, such as reading or setting a value.
 retry_repeatable_adb_shell_cmd() {
-  bash "$(dirname "${BASH_SOURCE[0]}")/adb_retry.sh" "$@"
+  bash "$(dirname "${BASH_SOURCE[0]}")/adb_retry.sh" shell "$@"
 }
 
 # Both CI images use BE2A.250530.026.F3. Revisit this workaround when that changes.
