@@ -34,6 +34,7 @@ import com.ichi2.anki.reviewreminders.reminderLogPrefix
 import com.ichi2.anki.runGloballyWithTimeout
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.getParcelableCompat
+import com.ichi2.utils.LanguageUtil.withUnicodeIsolation
 import com.ichi2.widget.WidgetStatus
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -222,7 +223,10 @@ class NotificationService : AnkiBroadcastReceiver() {
                         val fullDeckName = reviewReminder.scope.getDeckName()
                         val deckName =
                             Decks.basename(fullDeckName) // don't show the full path with "::" included
-                        context.getString(R.string.review_reminder_notification_title_deck, deckName)
+                        context.getString(
+                            R.string.review_reminder_notification_title_deck,
+                            withUnicodeIsolation(deckName),
+                        )
                     }
                 }
             val description =

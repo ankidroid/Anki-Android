@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.services
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
@@ -160,6 +161,27 @@ class NotificationServiceTest : RobolectricTest() {
 
             verifyNotifSent(reviewReminder, slot = notif)
             assertThat(notif.captured.extras.getString(Notification.EXTRA_TEXT), equalTo("2 cards due"))
+        }
+
+    @Test
+    @SuppressLint("BidiSpoofing")
+    fun `notification title isolates bidi control characters in deck name`() =
+        runTest {
+            // an unclosed RTL embedding would otherwise move the closing quote: 'It's time to study "French", you silly person'
+            val did = addDeck("French‫‎, you silly person", setAsSelected = true).withNotes(count = 1)
+            val reviewReminder = createTestReminder(deckId = did)
+            ReviewRemindersDatabase.insertReminder(reviewReminder)
+
+            val notif = slot<Notification>()
+
+            TimeManager.resetWith(today)
+            attemptNotif(reviewReminder)
+
+            verifyNotifSent(reviewReminder, slot = notif)
+            assertThat(
+                notif.captured.extras.getString(Notification.EXTRA_TITLE),
+                equalTo("It's time to study \"⁨French‫‎, you silly person⁩\""),
+            )
         }
 
     @Test
