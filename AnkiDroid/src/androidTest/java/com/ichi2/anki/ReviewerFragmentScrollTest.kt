@@ -2,6 +2,7 @@
 
 package com.ichi2.anki
 
+import android.webkit.WebView
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -290,7 +291,18 @@ class ReviewerFragmentScrollTest : InstrumentedTest() {
     private val SafeWebViewLayout.pageScale: Double
         get() = evaluateScript("window.visualViewport.scale").toDouble()
 
+    @Suppress("DEPRECATION") // Native zoom limits indicate whether WebView has applied the viewport.
+    private val SafeWebViewLayout.canZoomIn: Boolean
+        get() {
+            var canZoom = false
+            InstrumentationRegistry.getInstrumentation().runOnMainSync {
+                canZoom = (getChildAt(0) as WebView).canZoomIn()
+            }
+            return canZoom
+        }
+
     private fun SafeWebViewLayout.zoomIn() {
+        waitUntil(message = { "WebView did not become ready to zoom" }) { canZoomIn }
         val originalScale = pageScale
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
             zoomBy(2f)
