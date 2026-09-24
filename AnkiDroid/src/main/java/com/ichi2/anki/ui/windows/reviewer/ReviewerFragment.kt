@@ -269,8 +269,6 @@ class ReviewerFragment :
         val isHtmlTypeAnswerEnabled = Prefs.isHtmlTypeAnswerEnabled
         lifecycleScope.launch {
             val autoFocusTypeAnswer = Prefs.autoFocusTypeAnswer
-            // Default `inputType` from the layout, restored when `{{nosuggest}}` is unused (#10352)
-            val defaultInputType = binding.typeAnswerEditText.inputType
 
             /**
              * Sync keyboard suggestions and `imeHintLocales` on the answer field to match
