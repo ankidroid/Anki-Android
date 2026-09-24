@@ -1786,7 +1786,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.70.0"
     "@typescript-eslint/parser": "npm:^8.70.0"
     axios: "npm:^1.20.0"
-    dotenv: "npm:^17.4.2"
+    dotenv: "npm:^18.0.1"
     eslint: "npm:^10.11.0"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-config-standard: "npm:^17.1.0"
@@ -2512,10 +2512,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^17.4.2":
-  version: 17.4.2
-  resolution: "dotenv@npm:17.4.2"
-  checksum: 10c0/164f8e77a646c8446867d5b588d26ea6005c8ea7c5eb41cf926f6113d23f2191355f6e0cfd95ea9bab98394a5b0a3f1e51a8399711b666fe55cc7b0bd745f942
+"dotenv@npm:^18.0.1":
+  version: 18.0.1
+  resolution: "dotenv@npm:18.0.1"
+  bin:
+    dotenv: dist/index.cjs
+  checksum: 10c0/85f1f3e7e666ea59a50bb9cdcafa989529519e03c3d0bc396ff25fb226930d79beb256210c910a6ffceaa081c35aba7d1c058e667b796dfc0c2cecda9790ce64
   languageName: node
   linkType: hard
 
