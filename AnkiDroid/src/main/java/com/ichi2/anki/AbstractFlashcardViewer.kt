@@ -23,7 +23,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.text.InputType
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.KeyEvent
@@ -742,14 +741,13 @@ abstract class AbstractFlashcardViewer :
 
     /**
      * Apply or restore the `{{nosuggest:type:}}` flag set on [answerField].
+     *
+     * @see FixedEditText.noSuggest
      */
     private fun applyTypeAnswerSuggestionFlags(noSuggest: Boolean) {
         val field = answerField ?: return
-        // see ReviewerFragment for why `TYPE_NULL` was selected
-        val targetInputType =
-            if (noSuggest) InputType.TYPE_NULL else (defaultAnswerFieldInputType ?: field.inputType)
-        if (field.inputType != targetInputType) {
-            field.inputType = targetInputType
+        if (field.noSuggest != noSuggest) {
+            field.noSuggest = noSuggest
             getSystemService<InputMethodManager>()?.restartInput(field)
         }
     }

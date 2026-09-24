@@ -37,8 +37,11 @@ package com.ichi2.ui
 
 import android.content.Context
 import android.graphics.Canvas
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.graphics.toColorInt
 import com.google.android.material.color.MaterialColors
@@ -50,6 +53,18 @@ open class FixedEditText : AppCompatEditText {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    /**
+     * Request raw keyboard input without disabling this view's cursor or input connection.
+     *
+     * @see TypeAnswerEditText.noSuggest
+     */
+    var noSuggest: Boolean = false
+
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? =
+        super.onCreateInputConnection(outAttrs).also { connection ->
+            if (connection != null && noSuggest) outAttrs.inputType = InputType.TYPE_NULL
+        }
 
     init {
         val highlightColor =
