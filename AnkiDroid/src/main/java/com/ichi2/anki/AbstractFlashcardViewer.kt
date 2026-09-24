@@ -241,9 +241,6 @@ abstract class AbstractFlashcardViewer :
     private var touchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
 
-    /** Layout-provided default `inputType` for [answerField], captured once and used to restore
-     *  state when moving off a card that used `{{nosuggest:type:}}`. See issue #10352. */
-    private var defaultAnswerFieldInputType: Int? = null
     protected var flipCardLayout: FrameLayout? = null
     private var easeButtonsLayout: LinearLayout? = null
 
@@ -994,10 +991,7 @@ abstract class AbstractFlashcardViewer :
             val params = flipCardLayout!!.layoutParams
             params.height = initialFlipCardHeight * 2
         }
-        answerField =
-            findViewById<FixedEditText>(R.id.answer_field).also { answerField ->
-                defaultAnswerFieldInputType = answerField.inputType
-            }
+        answerField = findViewById(R.id.answer_field)
         initControls()
 
         // Position answer buttons
