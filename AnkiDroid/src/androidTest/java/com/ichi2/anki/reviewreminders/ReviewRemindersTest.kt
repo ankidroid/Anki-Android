@@ -14,6 +14,8 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
@@ -25,6 +27,7 @@ import com.google.android.material.chip.Chip
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.TestUtils.clickChildViewWithId
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.tests.InstrumentedTest
@@ -366,7 +369,13 @@ class ReviewRemindersTest : InstrumentedTest() {
     private fun selectDeck(deckName: String) {
         onView(withId(R.id.add_edit_reminder_deck_name)).perform(click())
         onView(withText(deckName)).checkWithTimeout(matches(isDisplayed()))
-        onView(withText(deckName)).perform(click())
+        // .click() can open "Create subdeck", so invoke the handler directly
+        onView(withId(R.id.decks)).perform(
+            actionOnItem<RecyclerView.ViewHolder>(
+                hasDescendant(withText(deckName)),
+                clickChildViewWithId(R.id.DeckPickerHoriz),
+            ),
+        )
         onView(withId(R.id.add_edit_reminder_deck_name)).checkWithTimeout(matches(withText(deckName)))
     }
 
