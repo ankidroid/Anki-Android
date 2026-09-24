@@ -1188,7 +1188,10 @@ class CardBrowserFragment :
             cardStateChip?.chipIcon =
                 ContextCompat.getDrawable(requireContext(), filters.cardStates.firstOrNull().iconRes)?.also {
                     if (filters.cardStates.isEmpty()) {
-                        DrawableCompat.setTint(it, MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0))
+                        DrawableCompat.setTint(
+                            it.mutate(),
+                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
+                        )
                     }
                 }
             cardStateChip?.hasCheckedBackground = filters.cardStates.any()
@@ -1203,7 +1206,10 @@ class CardBrowserFragment :
             flagsChip?.chipIcon =
                 ContextCompat.getDrawable(requireContext(), filters.flags.firstOrNull().iconRes)?.also {
                     if (filters.flags.isEmpty()) {
-                        DrawableCompat.setTint(it, MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0))
+                        DrawableCompat.setTint(
+                            it.mutate(),
+                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
+                        )
                     }
                 }
             flagsChip?.hasCheckedBackground = filters.flags.any()
