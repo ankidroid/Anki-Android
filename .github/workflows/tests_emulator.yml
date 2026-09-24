@@ -176,7 +176,7 @@ jobs:
           script: |
             touch adb-log.txt
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
-            adb logcat --clear
+            bash .github/adb_retry.sh logcat --clear
             echo "Generated AVD snapshot for caching."
 
         # This step is separate so pure install time may be calculated as a step
@@ -200,10 +200,10 @@ jobs:
           script: |
             touch adb-log.txt
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
-            $ANDROID_HOME/platform-tools/adb shell su root "setprop ctl.restart zygote"
+            bash .github/adb_retry.sh shell su root "setprop ctl.restart zygote"
             sleep 10
             sleep $FIRST_BOOT_DELAY
-            adb logcat --clear
+            bash .github/adb_retry.sh logcat --clear
             echo "First boot warmup completed."
 
       - name: Run Emulator Tests
@@ -223,8 +223,8 @@ jobs:
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
             bash .github/disable_art_metrics.sh
             # Fix "Speech Recognition and Synthesis from Google keeps stopping" causing RootViewWithoutFocusException  
-            adb shell settings put global hide_error_dialogs 1
-            adb emu screenrecord start --time-limit 1800 video.webm
+            bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
+            bash .github/adb_retry.sh emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 

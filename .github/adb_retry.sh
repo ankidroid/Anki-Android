@@ -3,21 +3,29 @@
 
 set -euo pipefail
 
-# Issue 22033: ADB reported "device offline" after sys.boot_completed=1.
-# The underlying cause is unknown; fixing it would likely remove the need for retries.
-# Retries may help if the disconnect is transient; this is unverified in CI.
-# Only use for commands safe to repeat: a failed ADB call may already have
-# executed the command on the device.
-retry_repeatable_adb_shell_cmd() {
-  local attempt output
-  for ((attempt = 1; attempt <= 5; attempt++)); do
-    if output=$(adb shell "$@"); then
-      printf '%s\n' "$output"
-      return 0
-    fi
-    sleep 1
-  done
-  return 1
-}
+# ADB can report the device offline just after boot (#22033/#22042).
+# Retry only connection failures reported before the command is dispatched.
+# Only use for short-lived commands: stderr is captured until they exit.
+stderr_file=$(mktemp)
+trap 'rm -f "$stderr_file"' EXIT
 
-retry_repeatable_adb_shell_cmd "$@"
+for ((attempt = 1; attempt <= 5; attempt++)); do
+  # Keep retry messages out of stdout so getprop results remain usable.
+  if adb "$@" 2>"$stderr_file"; then
+    cat "$stderr_file" >&2
+    exit 0
+  else
+    adb_status=$?
+  fi
+  cat "$stderr_file" >&2
+
+  if ((attempt == 5)); then
+    exit "$adb_status"
+  fi
+  case "$(<"$stderr_file")" in
+    "adb: device offline"|"error: device offline") ;;
+    *) exit "$adb_status" ;;
+  esac
+  printf 'ADB device offline; retrying in 1 second (attempt %s/5).\n' "$((attempt + 1))" >&2
+  sleep 1
+done
