@@ -2,7 +2,9 @@
 
 package com.ichi2.anki.pages
 
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
+import androidx.core.net.toUri
 import androidx.core.view.children
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.deck_config.UpdateDeckConfigsMode
@@ -19,6 +21,8 @@ import org.hamcrest.Matchers.containsString
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
 import org.robolectric.Shadows.shadowOf
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -42,6 +46,49 @@ class DeckOptionsTest : RobolectricTest() {
 
             assertThat(lastEvaluatedJavascript, containsString("setParameterUnlockClickTimeoutMs"))
             assertThat(lastEvaluatedJavascript, containsString("800"))
+        }
+    }
+
+    @Test
+    fun `javascript can reload the current deck options page`() {
+        withDeckOptions {
+            val webView = webViewLayout.children.filterIsInstance<WebView>().single()
+            val pageUrl =
+                webView
+                    .url!!
+                    .toUri()
+                    .buildUpon()
+                    .fragment(null)
+                    .build()
+            val request = mock<WebResourceRequest> { on { url } doReturn pageUrl }
+
+            for (fragment in listOf(null, "night")) {
+                webView.loadUrl(
+                    pageUrl
+                        .buildUpon()
+                        .fragment(fragment)
+                        .build()
+                        .toString(),
+                )
+                assertFalse(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request), "fragment: $fragment")
+            }
+        }
+    }
+
+    @Test
+    fun `links to other local pages still open externally`() {
+        withDeckOptions {
+            val webView = webViewLayout.children.filterIsInstance<WebView>().single()
+            val otherPage =
+                webView
+                    .url!!
+                    .toUri()
+                    .buildUpon()
+                    .path("/graphs")
+                    .build()
+            val request = mock<WebResourceRequest> { on { url } doReturn otherPage }
+
+            assertTrue(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request))
         }
     }
 

@@ -21,6 +21,7 @@ import org.json.JSONObject
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -74,11 +75,17 @@ class DeckOptionsTest : InstrumentedTest() {
             waitUntil(timeout = 30.seconds, message = { "optimization did not save the changed limit" }) {
                 col.defaultDeckNewCardsPerDay == 43
             }
+            val optionsReloaded = AtomicBoolean(false)
             waitUntil(timeout = 30.seconds, message = { "options did not reload after optimization" }) {
-                evaluateJavascript(
-                    "globalThis.beforeOptimization === undefined && Array.from(document.querySelectorAll('input[type=number]')).find(input => input.offsetParent !== null)?.value === '43'",
-                ) ==
-                    "true"
+                // Reloading can discard an evaluation callback. Retry without waiting for each one.
+                InstrumentationRegistry.getInstrumentation().runOnMainSync {
+                    webViewLayout.evaluateJavascript(
+                        "globalThis.beforeOptimization === undefined && Array.from(document.querySelectorAll('input[type=number]')).find(input => input.offsetParent !== null)?.value === '43'",
+                    ) {
+                        if (it == "true") optionsReloaded.set(true)
+                    }
+                }
+                optionsReloaded.get()
             }
             assertFalse(requireActivity().isFinishing)
         }
