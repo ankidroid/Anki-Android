@@ -7,15 +7,19 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
+import android.content.ComponentName
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.provider.MediaStore
 import android.util.SparseArray
 import android.view.View
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -314,6 +318,7 @@ class NoteEditorTest : RobolectricTest() {
 
     @Test
     fun testHandleMultimediaActionsDisplaysBottomSheet() {
+        installCameraApp()
         val intent = NoteEditorDestination.AddNote().toIntent()
         ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
@@ -325,6 +330,18 @@ class NoteEditorTest : RobolectricTest() {
                 onView(withId(R.id.multimedia_action_recording)).inRoot(isDialog()).check(matches(isDisplayed()))
                 onView(withId(R.id.multimedia_action_video)).inRoot(isDialog()).check(matches(isDisplayed()))
                 onView(withId(R.id.multimedia_action_camera)).inRoot(isDialog()).check(matches(isDisplayed()))
+            }
+        }
+    }
+
+    @Test
+    fun `multimedia camera option is hidden without a camera app`() {
+        val intent = NoteEditorDestination.AddNote().toIntent()
+        ActivityScenario.launchActivityForResult<NoteEditorActivity>(intent).use { scenario ->
+            scenario.onNoteEditor { noteEditor ->
+                noteEditor.showMultimediaBottomSheet()
+
+                onView(withId(R.id.multimedia_action_camera)).inRoot(isDialog()).check(matches(not(isDisplayed())))
             }
         }
     }
@@ -547,6 +564,19 @@ class NoteEditorTest : RobolectricTest() {
             val position = requireNotNull(noteTypeSpinner!!.getItemIndex(otherOcclusion.name)) { "could not find ${otherOcclusion.name}" }
             noteTypeSpinner!!.setSelection(position)
         }
+    }
+
+    @Test
+    fun `image occlusion camera button is hidden without a camera app`() {
+        val editor = getNoteEditorAdding(NoteType.IMAGE_OCCLUSION).build()
+        assertFalse(editor.occlusionCameraButton.isVisible, "camera button visible")
+    }
+
+    @Test
+    fun `image occlusion camera button is shown with a camera app`() {
+        installCameraApp()
+        val editor = getNoteEditorAdding(NoteType.IMAGE_OCCLUSION).build()
+        assertTrue(editor.occlusionCameraButton.isVisible, "camera button visible")
     }
 
     @Test
@@ -900,6 +930,14 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
+    private fun installCameraApp() {
+        val camera = ComponentName("com.android.camera2", "com.android.camera.CaptureActivity")
+        shadowOf(targetContext.packageManager).apply {
+            addActivityIfNotPresent(camera)
+            addIntentFilterForActivity(camera, IntentFilter(MediaStore.ACTION_IMAGE_CAPTURE).apply { addCategory(Intent.CATEGORY_DEFAULT) })
+        }
+    }
+
     private fun getCopyNoteIntent(editor: NoteEditorFragment): Bundle {
         val editorShadow = shadowOf(editor.requireActivity())
         editor.copyNote()
@@ -1070,6 +1108,9 @@ private class NoteEditorFieldAccessor(
 
 private val NoteEditorFragment.fields: NoteEditorFieldAccessor
     get() = NoteEditorFieldAccessor(this)
+
+private val NoteEditorFragment.occlusionCameraButton: View
+    get() = requireView().findViewById(R.id.CameraForOcclusionButton)
 
 private fun NoteEditorFragment.isSticky(index: Int) = this.toggleStickyText.containsKey(index)
 

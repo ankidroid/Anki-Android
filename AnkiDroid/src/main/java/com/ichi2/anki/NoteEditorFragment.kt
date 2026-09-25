@@ -131,6 +131,7 @@ import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaResult
 import com.ichi2.anki.multimedia.MultimediaResultContract
+import com.ichi2.anki.multimedia.MultimediaUtils.canTakePicture
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
@@ -700,6 +701,7 @@ class NoteEditorFragment :
 
             imageSelectionForOcclusionLabel?.text = TR.notetypesImage() + ":"
 
+            cameraForOcclusionButton?.isVisible = requireContext().canTakePicture()
             cameraForOcclusionButton?.setOnClickListener {
                 Timber.i("Camera button clicked")
                 dispatchCameraEvent()
