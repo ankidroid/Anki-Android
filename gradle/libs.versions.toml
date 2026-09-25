@@ -116,7 +116,7 @@ okhttp = "5.5.0"
 # https://github.com/protocolbuffers/protobuf/releases
 protobufKotlinLite = "4.36.2"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
-robolectric = "4.16.1"
+robolectric = "4.17"
 # https://github.com/takahirom/roborazzi/releases
 roborazzi = "1.75.0"
 searchpreference = "2.7.3"
