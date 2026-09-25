@@ -453,7 +453,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     /**
      * Whether the deck has new cards added in the last [days] days.
      *
-     * Upstream: https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py
+     * Upstream: https://github.com/ankitects/anki/blob/acaeee91fa853e4a7a78dcddbb832d009ec3529a/qt/aqt/customstudy.py
      */
     private suspend fun hasPreviewCards(days: Int): Boolean =
         withCol {
