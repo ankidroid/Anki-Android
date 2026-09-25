@@ -42,7 +42,7 @@ tasks.register('robolectricSdkDownload') {
     description = "Downloads all robolectric SDK dependencies into mavenLocal, for use with offline robolectric"
 }
 
-// Generate the configuration and actual copy tasks.
+// Use separate configurations so Gradle retains every SDK version instead of selecting the newest.
 robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
     // the final part of this `-i<number>` comes from PREINSTRUMENTED_VERSION in upstream DefaultSdkProvider
     def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i7"
