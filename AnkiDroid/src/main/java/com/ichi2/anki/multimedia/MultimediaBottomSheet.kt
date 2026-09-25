@@ -20,6 +20,7 @@ package com.ichi2.anki.multimedia
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -32,6 +33,7 @@ import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_A
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_IMAGE_FILE
 import com.ichi2.anki.multimedia.MultimediaBottomSheet.MultimediaAction.SELECT_VIDEO_FILE
+import com.ichi2.anki.multimedia.MultimediaUtils.canTakePicture
 import dev.androidbroadcast.vbpd.viewBinding
 
 /**
@@ -64,6 +66,7 @@ class MultimediaBottomSheet : BottomSheetDialogFragment(R.layout.fragment_bottom
         setupListener(binding.multimediaActionRecording, SELECT_AUDIO_RECORDING)
         setupListener(binding.multimediaActionVideo, SELECT_VIDEO_FILE)
         setupListener(binding.multimediaActionCamera, OPEN_CAMERA)
+        binding.multimediaActionCamera.isVisible = requireContext().canTakePicture()
     }
 
     override fun onStart() {

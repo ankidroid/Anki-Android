@@ -19,6 +19,7 @@ package com.ichi2.anki.multimedia
 
 import android.content.ContentUris
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.CancellationSignal
 import android.os.Environment
@@ -29,6 +30,7 @@ import androidx.core.net.toUri
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
+import com.ichi2.utils.IntentUtil
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -191,6 +193,8 @@ object MultimediaUtils {
             storageDir,
         )
     }
+
+    fun Context.canTakePicture(): Boolean = IntentUtil.canOpenIntent(this, Intent(MediaStore.ACTION_IMAGE_CAPTURE))
 
     /**
      * Creates a cached file with the specified filename and directory.
