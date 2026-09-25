@@ -5,15 +5,19 @@ package com.ichi2.testutils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.view.View.MeasureSpec
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
 import org.robolectric.RuntimeEnvironment
 import timber.log.Timber
 import kotlin.math.ceil
+import com.google.android.material.R as MaterialR
 
 /** [block] runs with a runtime qualifier emulating a split-pane display */
 fun withSplitPaneUi(block: () -> Unit) = withQualifier("sw700dp", block)
@@ -85,6 +89,25 @@ fun <A : Activity> launchForFullHeightScreenshot(
     }
 }
 
+/**
+ * Lays out the whole bottom sheet at its current width, preserving orientation resources.
+ *
+ * Use after any device-sized screenshots. Capture the returned view directly, as it may extend
+ * beyond the screen. Activity screenshots can use [launchForFullHeightScreenshot] instead.
+ */
+fun BottomSheetDialogFragment.layoutForFullHeightScreenshot(list: RecyclerView): View {
+    val sheet = requireDialog().findViewById<View>(MaterialR.id.design_bottom_sheet)
+    sheet.measure(
+        MeasureSpec.makeMeasureSpec(sheet.width, MeasureSpec.EXACTLY),
+        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+    )
+    sheet.layout(0, 0, sheet.measuredWidth, sheet.measuredHeight)
+    // Newly created MaterialButtons finish updating their labels and icons before drawing.
+    sheet.viewTreeObserver.dispatchOnPreDraw()
+    list.checkFitsFullHeightScreenshot()
+    return sheet
+}
+
 private fun <A : Activity> launchAndCheckListFits(
     intent: Intent,
     listView: (A) -> RecyclerView,
@@ -96,12 +119,15 @@ private fun <A : Activity> launchAndCheckListFits(
             setup(activity)
             advanceRobolectricLooper() // apply layout changes from setup
             val list = listView(activity)
-            check(!list.canScrollVertically(1)) {
-                "${activity::class.simpleName}: list does not fit a ${activity.resources.configuration.screenHeightDp}dp screen"
-            }
+            list.checkFitsFullHeightScreenshot()
             block(activity, list)
         }
     }
+}
+
+private fun RecyclerView.checkFitsFullHeightScreenshot() {
+    check(childCount == requireNotNull(adapter).itemCount) { "Full-height screenshot must lay out every list item" }
+    check(!canScrollVertically(-1) && !canScrollVertically(1)) { "Full-height screenshot must show the entire list" }
 }
 
 private fun setScreenHeight(height: Dp) {
