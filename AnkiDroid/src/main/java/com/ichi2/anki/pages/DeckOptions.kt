@@ -187,6 +187,8 @@ class DeckOptions : PageFragment() {
             ): Boolean {
                 // #16715: ensure that the fragment can't be used for general web browsing
                 val host = request?.url?.host ?: return shouldOverrideUrlLoading(view, request)
+                // Allow JavaScript to reload this page, including when night mode adds a fragment.
+                if (request.url.toString().substringBefore('#') == view?.url?.substringBefore('#')) return false
                 return if (ankiManualHostRegex.matches(host)) {
                     super.shouldOverrideUrlLoading(view, request)
                 } else {
@@ -275,7 +277,29 @@ class DeckOptions : PageFragment() {
         webViewIsReady = true
         webViewLayout.isVisible = true
         pageLoadingIndicator.isVisible = false
+        trackSaveCompletion()
         setParameterUnlockClickTimeout()
+    }
+
+    /** Track receipt of the full save response, so reloading cannot abort it. */
+    private fun trackSaveCompletion() {
+        webViewLayout.evaluateJavascript(
+            """
+            (() => {
+                const originalFetch = window.fetch;
+                window.fetch = (input, init) => {
+                    const response = originalFetch(input, init);
+                    if (input !== "/_anki/updateDeckConfigs") return response;
+                    const completed = response.then(async (response) => {
+                        await response.clone().arrayBuffer();
+                        return response;
+                    });
+                    anki.deckOptionsSaveCompleted = completed;
+                    return completed;
+                };
+            })();
+            """.trimIndent(),
+        )
     }
 
     /**
@@ -347,8 +371,11 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) {
         if (UpdateDeckConfigsRequest.parseFrom(input).mode == UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_COMPUTE_ALL_PARAMS) {
-            // Reload so the page uses the newly optimized parameters.
-            requireDeckOptionsFragment().webViewLayout.reload()
+            // This HTTP request has not returned to the page yet. Wait for its response body
+            // before reloading, otherwise fetch can fail and display an alert that blocks navigation.
+            requireDeckOptionsFragment().webViewLayout.evaluateJavascript(
+                "anki.deckOptionsSaveCompleted.then(() => window.location.reload())",
+            )
         } else {
             finish()
         }
