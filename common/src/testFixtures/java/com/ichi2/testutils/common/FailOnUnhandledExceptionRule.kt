@@ -4,6 +4,7 @@ package com.ichi2.testutils.common
 
 import org.junit.rules.TestRule
 import org.junit.runner.Description
+import org.junit.runners.model.MultipleFailureException
 import org.junit.runners.model.Statement
 import org.slf4j.LoggerFactory
 
@@ -43,15 +44,19 @@ class FailOnUnhandledExceptionRule : TestRule {
                     uncaughtException = throwable
                 }
 
+                val failures = mutableListOf<Throwable>()
                 try {
                     base.evaluate()
+                } catch (failure: Throwable) {
+                    failures.add(failure)
                 } finally {
                     logger.trace("test: removing exception handler override")
                     Thread.setDefaultUncaughtExceptionHandler(exceptionHandler)
                 }
 
-                // throw instead of asserting to get the full stack trace
-                uncaughtException?.let { throw IllegalStateException("unhandled exception", it) }
+                // Preserve uncaught exceptions even when an assertion or assumption also failed.
+                uncaughtException?.let { failures.add(IllegalStateException("unhandled exception", it)) }
+                MultipleFailureException.assertEmpty(failures)
             }
         }
     }
