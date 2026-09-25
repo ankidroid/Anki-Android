@@ -52,6 +52,22 @@ abstract class ScreenshotTest : RobolectricTest() {
 
     enum class DeviceConfig { PHONE, TABLET, FOLDABLE, DESKTOP }
 
+    /**
+     * Devices always covered by the annotated class, in addition to the `-Pdevice` selection.
+     *
+     * Usage:
+     *
+     * ```kt
+     * @IncludeDevices(TABLET)
+     * class TestClass : ScreenshotTest() {
+     * ```
+     */
+    @Target(AnnotationTarget.CLASS)
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class IncludeDevices(
+        vararg val value: DeviceConfig,
+    )
+
     @TestParameter(valuesProvider = ThemeProvider::class)
     lateinit var theme: ThemeConfig
 
@@ -180,7 +196,13 @@ abstract class ScreenshotTest : RobolectricTest() {
             if ("all" in requestedDevices) {
                 return DeviceConfig.entries
             }
-            return DeviceConfig.entries.filter { requestedDevices.contains(it.name.lowercase()) }
+            val includedDevices =
+                context
+                    ?.testClass()
+                    ?.getAnnotation(IncludeDevices::class.java)
+                    ?.value
+                    .orEmpty()
+            return DeviceConfig.entries.filter { it in includedDevices || requestedDevices.contains(it.name.lowercase()) }
         }
     }
 }
