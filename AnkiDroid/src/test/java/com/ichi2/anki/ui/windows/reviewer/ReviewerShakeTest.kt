@@ -22,8 +22,8 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.SensorBuilder
 import org.robolectric.shadows.SensorEventBuilder
-import org.robolectric.shadows.ShadowSensor
 import org.robolectric.shadows.ShadowSensorManager
 import org.robolectric.shadows.ShadowSystemClock
 import java.time.Duration
@@ -43,7 +43,7 @@ class ReviewerShakeTest : RobolectricTest() {
         }
         sensors =
             shadowOf(targetContext.getSystemService<SensorManager>()).apply {
-                addSensor(ShadowSensor.newInstance(Sensor.TYPE_ACCELEROMETER))
+                addSensor(SensorBuilder.newBuilder().setType(Sensor.TYPE_ACCELEROMETER).build())
             }
     }
 
@@ -109,10 +109,8 @@ class ReviewerShakeTest : RobolectricTest() {
         repeat(5) {
             val event =
                 SensorEventBuilder
-                    .newBuilder()
-                    .setSensor(getSensorList(Sensor.TYPE_ACCELEROMETER).single())
+                    .newBuilder(getSensorList(Sensor.TYPE_ACCELEROMETER).single(), floatArrayOf(20f, 0f, 0f))
                     .setTimestamp(SystemClock.elapsedRealtimeNanos())
-                    .setValues(floatArrayOf(20f, 0f, 0f))
                     .build()
             sendSensorEventToListeners(event)
             ShadowSystemClock.advanceBy(Duration.ofMillis(100))
