@@ -15,8 +15,8 @@ import com.ichi2.anki.FragmentLifecycleFixture.Transition.REMOVE
 import com.ichi2.testutils.FragmentCoroutineTracker
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
@@ -31,7 +31,6 @@ import kotlin.test.assertTrue
 
 /** Startup lifecycle stress tests for Issue 22065; not navigation reproductions for every screen. */
 @RunWith(ParameterizedRobolectricTestRunner::class)
-@Ignore("Issue 22065: known lifecycle failures; enable passing cases separately")
 class FragmentCoroutineLifecycleTest(
     private val fixture: FragmentLifecycleFixture,
 ) : RobolectricTest() {
@@ -112,6 +111,7 @@ class FragmentCoroutineLifecycleTest(
         if (transition != REMOVE) {
             assumeTrue("$fixture has no fragment view", fixture.hasFragmentView)
         }
+        assumeFalse("Known startup failure: $fixture during $transition (Issue 22065)", transition in fixture.knownFailures)
         withHost { activity, fragment ->
             // Main.immediate queues nested launches until this outer coroutine finishes.
             // This lets the test destroy the fragment/view before its startup work runs.
