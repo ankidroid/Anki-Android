@@ -9,6 +9,11 @@ import androidx.activity.ComponentDialog
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.core.os.BundleCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.doOnAttach
+import androidx.core.view.updatePadding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -95,6 +100,7 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.dialog_browser_co
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        applyInsets()
 
         if (savedInstanceState == null) {
             launchCatchingTask {
@@ -136,6 +142,20 @@ class BrowserColumnSelectionFragment : DialogFragment(R.layout.dialog_browser_co
             Timber.d("navigation up clicked")
             onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    private fun applyInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { view, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.recyclerView) { view, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
+            insets
+        }
+        binding.root.doOnAttach { ViewCompat.requestApplyInsets(it) }
     }
 
     override fun setupDialog(
