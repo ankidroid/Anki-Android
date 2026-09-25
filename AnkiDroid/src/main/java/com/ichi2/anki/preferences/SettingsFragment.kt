@@ -14,6 +14,7 @@ import androidx.core.view.ViewGroupCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -82,13 +83,23 @@ abstract class SettingsFragment :
         }
 
         ViewGroupCompat.installCompatInsetsDispatch(binding.root)
+        val initialScrimVisibleHeightTrigger = binding.collapsingToolbarLayout.scrimVisibleHeightTrigger
+        var previousTopInset = 0
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
             val bars = insets.getInsets(systemBars() or displayCutout() or ime())
             view.updatePadding(
                 left = bars.left,
                 right = bars.right,
             )
-            binding.appbar.updatePadding(top = bars.top)
+            val topInsetChange = bars.top - previousTopInset
+            if (topInsetChange != 0) {
+                binding.toolbar.updatePadding(top = bars.top)
+                binding.toolbar.updateLayoutParams { height += topInsetChange }
+                binding.collapsingToolbarLayout.updateLayoutParams { height += topInsetChange }
+                // The scrim must still appear at the same scroll offset, even with a tall cutout.
+                binding.collapsingToolbarLayout.scrimVisibleHeightTrigger = initialScrimVisibleHeightTrigger + bars.top
+                previousTopInset = bars.top
+            }
             listView.updatePadding(bottom = bars.bottom)
             insets
         }
