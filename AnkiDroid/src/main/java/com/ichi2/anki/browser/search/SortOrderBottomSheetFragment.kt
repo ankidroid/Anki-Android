@@ -44,6 +44,16 @@ private typealias Reverse = Boolean?
 /**
  * A [BottomSheetDialogFragment] allowing selection of the sort order of the Card Browser
  *
+ * Entitled "Choose display order"
+ *
+ * The fragment displays a list of columns which can be sorted by:
+ * Active, then Available, and allows a user to sort  on each column in either an ascending or
+ * descending order.
+ *
+ * Columns have [sort types][ColumnType] which are displayed (text, numerical, dates etc...)
+ *
+ * 'No sorting' is also offered as an option.
+ *
  * @param viewModelProviderFactory A factory producing a [CardBrowserViewModel]
  */
 class SortOrderBottomSheetFragment(
