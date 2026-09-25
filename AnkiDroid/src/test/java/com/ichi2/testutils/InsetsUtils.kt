@@ -8,6 +8,7 @@ import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.FrameLayout
 import androidx.core.graphics.Insets
 import androidx.core.view.RoundedCornerCompat
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.utils.Dp
 import com.ichi2.utils.dp
@@ -157,7 +159,6 @@ fun Activity.dispatchInsets(
  *   nothing marks the area on a real device either.
  * @param bottomCornerRadius the radius of both bottom rounded display corners
  */
-@SuppressLint("RtlHardcoded") // insets and cutouts are physical: not layout-direction relative
 fun Activity.simulateSystemBars(
     cutoutLeft: Dp = 0.dp,
     navBarBottom: Dp = 48.dp,
@@ -179,21 +180,33 @@ fun Activity.simulateSystemBars(
                     setRoundedCorner(position, RoundedCornerCompat(position, radius, radius, radius))
                 }
             }.build()
-    ViewCompat.dispatchApplyWindowInsets(findViewById(android.R.id.content), insets)
+    window.simulateSystemBars(insets, insetTarget = findViewById(android.R.id.content))
+}
 
-    val decor = window.decorView as ViewGroup
+/**
+ * Injects [insets] into an activity or dialog window and marks the system bars and display cutout
+ * with translucent bands. Use [windowInsetsOf] to build the insets.
+ *
+ * @param insetTarget defaults to the decor; use the content view to bypass platform decor handling.
+ */
+@SuppressLint("RtlHardcoded") // insets and cutouts are physical: not layout-direction relative
+fun Window.simulateSystemBars(
+    insets: WindowInsetsCompat,
+    insetTarget: View = decorView,
+) {
+    ViewCompat.dispatchApplyWindowInsets(insetTarget, insets)
+
+    val decor = decorView as ViewGroup
+    val bars = insets.getInsets(systemBars() or displayCutout())
     val bands =
-        buildList {
-            add(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, statusBarHeight.toPx(context), Gravity.TOP))
-            if (navBarBottom.dp > 0) {
-                add(FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, navBarBottom.toPx(context), Gravity.BOTTOM))
-            }
-            if (cutoutLeft.dp > 0) {
-                add(FrameLayout.LayoutParams(cutoutLeft.toPx(context), FrameLayout.LayoutParams.MATCH_PARENT, Gravity.LEFT))
-            }
-        }
-    bands.forEach { params ->
-        decor.addView(View(this).apply { setBackgroundColor(0x80000000.toInt()) }, params)
+        listOf(
+            FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, bars.top, Gravity.TOP),
+            FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, bars.bottom, Gravity.BOTTOM),
+            FrameLayout.LayoutParams(bars.left, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.LEFT),
+            FrameLayout.LayoutParams(bars.right, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.RIGHT),
+        )
+    bands.filter { it.width != 0 && it.height != 0 }.forEach { params ->
+        decor.addView(View(context).apply { setBackgroundColor(0x80000000.toInt()) }, params)
     }
     advanceRobolectricLooper()
 }
