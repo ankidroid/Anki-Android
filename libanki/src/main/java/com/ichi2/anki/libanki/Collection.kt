@@ -760,9 +760,17 @@ class Collection(
     fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
 
     /**
-     * Get starting deck and notetype for add screen.
-     * An option in the preferences controls whether this will be based on the current deck
-     * or current notetype.
+     * Returns the initial deck and note type for the Add screen.
+     *
+     * Use both values together. For note-type changes, prefer [defaultDeckForNoteType].
+     *
+     * Selection behavior based on [ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK]:
+     * - **Enabled**: Prioritizes the deck, then its last recorded note type (fallback: current or first available).
+     * - **Disabled**: Prioritizes the current note type (or first available), then its last recorded valid deck.
+     *
+     * Deck fallback chain: Selected non-filtered deck -> [currentReviewCard]'s deck -> [Default][Decks.getDefault].
+     *
+     * @see <a href="https://github.com/ankitects/anki/blob/e64c6b1aee3e8d668fb8bbe084beada8e070d985/rslib/src/adding.rs#L13-L97">Upstream defaults_for_adding</a>
      */
     @CheckResult
     @LibAnkiAlias("defaults_for_adding")
@@ -772,12 +780,18 @@ class Collection(
     }
 
     /**
-     * If 'change deck depending on notetype' is enabled in the preferences,
-     * return the last deck used with the provided notetype, if any..
+     * Returns the last requested deck recorded by [addNote] for [noteTypeId], if that deck still
+     * exists and is not filtered.
+     *
+     * Returns `null` in [current-deck mode][ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK] or when
+     * there is no usable recorded deck; the editor should then keep its current deck.
+     *
+     * The note type's existence is not checked.
+     *
+     * @see <a href="https://github.com/ankitects/anki/blob/e64c6b1aee3e8d668fb8bbe084beada8e070d985/rslib/src/adding.rs#L99-L116">Upstream default_deck_for_notetype</a>
      */
     @CheckResult
     @LibAnkiAlias("default_deck_for_notetype")
-    @RustCleanup("check if the == 0L logic is necessary")
     fun defaultDeckForNoteType(noteTypeId: NoteTypeId): DeckId? {
         if (config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
             return null
