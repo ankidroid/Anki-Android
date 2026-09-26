@@ -9,6 +9,7 @@ import com.ichi2.anki.scheduling.SetDueDateViewModel.DateRange
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.common.assertThrows
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -36,7 +37,9 @@ class SetDueDateViewModelTest : JvmTest() {
             assertThat(viewModel.calculateDaysParameter(), equalTo(null))
             assertThat("keyboard submission is also guarded", viewModel.updateDueDateAsync().await(), equalTo(null))
 
-            viewModel.init(cardIds = listOf(1, 2), fsrsEnabled = true)
+            col.config.set("fsrs", true)
+            viewModel.init(cardIds = listOf(1, 2))
+            advanceUntilIdle()
 
             assertTrue(viewModel.isValid, "existing input becomes valid once the scheduler setting is known")
             assertThat(viewModel.calculateDaysParameter(), equalTo(SetDueDateDays("3!")))
@@ -173,8 +176,10 @@ class SetDueDateViewModelTest : JvmTest() {
         fsrsEnabled: Boolean = false,
         testBody: suspend SetDueDateViewModel.() -> Unit,
     ) = runTest {
+        col.config.set("fsrs", fsrsEnabled)
         val viewModel = SetDueDateViewModel()
-        viewModel.init(cardIds, fsrsEnabled = fsrsEnabled)
+        viewModel.init(cardIds)
+        advanceUntilIdle()
         testBody(viewModel)
     }
 }
