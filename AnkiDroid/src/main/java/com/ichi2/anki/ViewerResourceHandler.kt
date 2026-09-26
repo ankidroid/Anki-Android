@@ -13,11 +13,9 @@ import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
-import java.nio.file.Paths
-import kotlin.io.path.pathString
 
 private const val RANGE_HEADER = "Range"
-private const val MATHJAX_PATH_PREFIX = "/_anki/js/vendor/mathjax"
+private const val MATHJAX_PATH_PREFIX = "/_anki/js/vendor/mathjax/"
 
 class ViewerResourceHandler(
     context: Context,
@@ -37,13 +35,12 @@ class ViewerResourceHandler(
         }
 
         try {
+            if (path == "/_anki/js/mathjax.js") {
+                return WebResourceResponse(guessMimeType(path), null, assetManager.open("backend/js/mathjax.js"))
+            }
             if (path.startsWith(MATHJAX_PATH_PREFIX)) {
-                val mathjaxAssetPath =
-                    Paths
-                        .get(
-                            "backend/js/vendor/mathjax",
-                            path.removePrefix(MATHJAX_PATH_PREFIX),
-                        ).pathString
+                // Asset names use forward slashes, including when tests run on Windows.
+                val mathjaxAssetPath = "backend/js/vendor/mathjax/${path.removePrefix(MATHJAX_PATH_PREFIX)}"
                 val inputStream = assetManager.open(mathjaxAssetPath)
                 return WebResourceResponse(guessMimeType(path), null, inputStream)
             }
