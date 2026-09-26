@@ -780,12 +780,18 @@ class Collection(
     }
 
     /**
-     * If 'change deck depending on notetype' is enabled in the preferences,
-     * return the last deck used with the provided notetype, if any..
+     * Returns the last requested deck recorded by [addNote] for [noteTypeId], if that deck still
+     * exists and is not filtered.
+     *
+     * Returns `null` in [current-deck mode][ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK] or when
+     * there is no usable recorded deck; the editor should then keep its current deck.
+     *
+     * The note type's existence is not checked.
+     *
+     * @see <a href="https://github.com/ankitects/anki/blob/e64c6b1aee3e8d668fb8bbe084beada8e070d985/rslib/src/adding.rs#L99-L116">Upstream default_deck_for_notetype</a>
      */
     @CheckResult
     @LibAnkiAlias("default_deck_for_notetype")
-    @RustCleanup("check if the == 0L logic is necessary")
     fun defaultDeckForNoteType(noteTypeId: NoteTypeId): DeckId? {
         if (config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
             return null
