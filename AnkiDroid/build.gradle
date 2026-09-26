@@ -1,3 +1,5 @@
+import com.ichi2.anki.gradle.VersionCodeTasks
+
 plugins {
     // Gradle plugin portal
     alias(libs.plugins.tripletPlay)
@@ -371,6 +373,15 @@ android {
         resources {
             excludes += ['META-INF/DEPENDENCIES']
         }
+    }
+}
+
+// register `validateVersionCode` with our (potentially new versionCode).
+androidComponents.finalizeDsl { androidDsl ->
+    def validation = VersionCodeTasks.registerValidationTask(project, androidDsl.defaultConfig.versionCode)
+    // handle all 'publish' calls, even if run directly
+    tasks.matching { it.name.startsWith("publish") }.configureEach {
+        dependsOn(validation)
     }
 }
 
