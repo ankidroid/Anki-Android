@@ -472,4 +472,10 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
     <string name="related_settings_title" comment="Title of the section for related settings">Related settings</string>
+
+    <!-- External Directory Selection Preference -->
+    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
+    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
+    <string name="pref_directory_not_writable">Directory is not writable</string>
 </resources>
