@@ -236,8 +236,8 @@ class AddEditReminderDialog : DialogFragment() {
             val value: Int? = text.toString().toIntOrNull()
             binding.addEditReminderCardThresholdInputWrapper.error =
                 when {
-                    (value == null) -> "Please enter a whole number of cards"
-                    (value < 0) -> "The threshold must be at least 0"
+                    (value == null) -> getString(R.string.add_edit_reminder_card_threshold_error_not_a_number)
+                    (value < 0) -> getString(R.string.add_edit_reminder_card_threshold_error_negative)
                     else -> null
                 }
             viewModel.setCardTriggerThreshold(value ?: 0)
@@ -318,8 +318,8 @@ class AddEditReminderDialog : DialogFragment() {
 
         val confirmationDialog = ConfirmationDialog()
         confirmationDialog.setArgs(
-            "Delete this reminder?",
-            "This action cannot be undone.",
+            getString(R.string.add_edit_reminder_delete_confirmation_title),
+            getString(R.string.add_edit_reminder_delete_confirmation_message),
         )
         confirmationDialog.setConfirm {
             setFragmentResult(

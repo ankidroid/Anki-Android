@@ -368,6 +368,10 @@ class TranslationTest : RobolectricTest() {
         private val IGNORED_BACKEND_TRANSLATIONS =
             setOf(
                 "launcherOff", // "Off" - unrelated to R.string.full_screen_off
+                "launcherOn", // "On" - unrelated to R.string.reminder_troubleshooting_status_on
+                // "Advanced Settings" - this upstream string is Title Case; R.string.add_edit_reminder_advanced_label
+                // is both unrelated and sentence case (per AnkiDroid convention)
+                "deckConfigAdvancedSettings",
             )
     }
 }

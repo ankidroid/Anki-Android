@@ -362,4 +362,10 @@ object LanguageUtil {
      */
     fun getListSeparator(context: Context): String =
         CompatHelper.compat.getListSeparator(context, context.getString(R.string.list_separator))
+
+    /**
+     * Wraps the provided string in Unicode isolation markers (FSI and PDI) to ensure bidirectional markers
+     * within the string are isolated.
+     */
+    fun withUnicodeIsolation(s: String): String = "\u2068$s\u2069"
 }

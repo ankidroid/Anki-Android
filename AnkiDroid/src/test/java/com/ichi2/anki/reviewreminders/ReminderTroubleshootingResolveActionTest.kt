@@ -11,6 +11,7 @@ import androidx.core.net.toUri
 import androidx.core.view.children
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.databinding.ItemTroubleshootingCheckBinding
 import com.ichi2.testutils.withRequestIgnoreBatteryOptimizationsInManifest
@@ -88,7 +89,9 @@ class ReminderTroubleshootingResolveActionTest : RobolectricTest() {
 
 /** The displayed 'Battery optimization' check */
 private val ReminderTroubleshootingFragment.batteryOptimizationCheck: ItemTroubleshootingCheckBinding
-    get() =
-        binding.checksList.children
+    get() {
+        val title = requireContext().getString(R.string.reminder_troubleshooting_check_battery_optimization)
+        return binding.checksList.children
             .map { ItemTroubleshootingCheckBinding.bind(it) }
-            .single { it.title.text.toString() == "Battery optimization" }
+            .single { it.title.text.toString() == title }
+    }
