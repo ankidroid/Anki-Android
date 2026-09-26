@@ -49,7 +49,6 @@ import com.ichi2.anki.libanki.utils.len
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
-import org.json.JSONArray
 import java.util.LinkedList
 
 // public exports
@@ -201,24 +200,20 @@ class Decks(
 
     @LibAnkiAlias("new_deck_legacy")
     @RustCleanup("doesn't match upstream")
-    private fun newDeckLegacy(filtered: Boolean): Deck {
-        val deck = BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))
-        return Deck(
+    private fun newDeckLegacy(filtered: Boolean) =
+        Deck(BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))).apply {
             if (filtered) {
                 // until migrating to the dedicated method for creating filtered decks,
                 // we need to ensure the default config matches legacy expectations
-                val terms = deck.getJSONArray("terms").getJSONArray(0)
-                terms.put(0, "")
-                terms.put(2, 0)
-                deck.put("terms", JSONArray(listOf(terms)))
-                deck.put("browserCollapsed", false)
-                deck.put("collapsed", false)
-                deck
-            } else {
-                deck
-            },
-        )
-    }
+                firstFilter.apply {
+                    search = ""
+                    order = 0
+                }
+                secondFilter = null
+                browserCollapsed = false
+                collapsed = false
+            }
+        }
 
     /**
      * Returns the root node of the deck tree without counts as it uses the browser collapsed state.
@@ -701,7 +696,7 @@ class Decks(
             return null
         }
         val deck = getLegacy(did) ?: return null
-        return deck.getString("name") + DECK_SEPARATOR + subdeckName
+        return deck.name + DECK_SEPARATOR + subdeckName
     }
 
     @NotInPyLib
