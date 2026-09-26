@@ -96,6 +96,12 @@ if [ "$PUBLIC" != "public" ]; then
   sed -i -e s/versionCode="$PREVIOUS_CODE"/versionCode="$GUESSED_CODE"/g $GRADLEFILE
 fi
 
+# Validate the resulting versionCode before committing or tagging the release.
+if ! ./gradlew :AnkiDroid:validateVersionCode --no-configuration-cache
+then
+  exit 1
+fi
+
 # If any changes go in during the release process, pushing fails, so push immediately.
 # Worst case this burns a version number despite a failure later, and we have a version/tag
 # that never launched. That's better than having to manually patch up build.gradle.kts and push a tag
