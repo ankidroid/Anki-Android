@@ -47,6 +47,9 @@ jobs:
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
+      - name: Test build logic
+        run: ./gradlew -p buildSrc test --daemon
+
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
