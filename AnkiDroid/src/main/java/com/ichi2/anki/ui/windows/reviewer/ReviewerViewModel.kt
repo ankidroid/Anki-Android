@@ -110,6 +110,7 @@ class ReviewerViewModel(
     val pageUpFlow = MutableSharedFlow<Unit>()
     val pageDownFlow = MutableSharedFlow<Unit>()
     val statesMutationEvalFlow = MutableSharedFlow<String>()
+    val gestureEventFlow = MutableSharedFlow<RawGesture>()
 
     override val server: AnkiServer = AnkiServer(this, repository.getServerPort()).also { it.start() }
     private val stateMutationKey = repository.generateStateMutationKey()
@@ -437,6 +438,7 @@ class ReviewerViewModel(
         }
     }
 
+    @NeedsTest("Verify gesture payloads are parsed and emitted to gestureEventFlow")
     override suspend fun handlePostRequest(
         uri: PostRequestUri,
         bytes: ByteArray,
@@ -452,6 +454,14 @@ class ReviewerViewModel(
             }
             "statesMutated" -> {
                 onStateMutationCallback()
+                return byteArrayOf()
+            }
+            "multiFingerTap" -> {
+                gestureEventFlow.emit(RawGesture.MultiTouch(bytes))
+                return byteArrayOf()
+            }
+            "tapOrSwipe" -> {
+                gestureEventFlow.emit(RawGesture.TapOrSwipe(bytes))
                 return byteArrayOf()
             }
         }
