@@ -1034,10 +1034,13 @@ class CardBrowserFragment :
             cardsAdapter.notifyDataSetChanged()
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
             if (searchState is SearchState.Completed) {
-                legacySubtitle?.text = searchState.formatCardCount(resources)
                 onSearchCompleted(searchState)
                 invalidateMenu()
             }
+        }
+
+        fun onLastCompletedSearchChanged(search: SearchState.Completed) {
+            legacySubtitle?.text = search.formatCardCount(resources)
         }
 
         fun onSelectedRowsChanged(rows: Set<Any>) {
@@ -1258,6 +1261,7 @@ class CardBrowserFragment :
         activityViewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         activityViewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
         activityViewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
+        activityViewModel.flowOfLastCompletedSearch.filterNotNull().launchCollectionInLifecycleScope(::onLastCompletedSearchChanged)
         activityViewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         activityViewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
         activityViewModel.flowOfToggleSelectionState.launchCollectionInLifecycleScope(::onToggleSelectionStateUpdated)
