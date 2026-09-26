@@ -22,7 +22,6 @@ import androidx.core.net.toUri
 import androidx.core.view.ContentInfoCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.children
 import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SdkSuppress
 import anki.backend.backendError
@@ -473,6 +472,11 @@ class DeckPickerTest : RobolectricTest() {
     private fun DeckPicker.longPressDeck(name: String): View {
         val decks = deckPickerBinding.decks
         val adapter = decks.adapter as DeckAdapter
+        // Background list diffs can finish after the initial main looper drain.
+        advanceRobolectricLooperUntil(lazyMessage = { "Deck '$name' was not laid out" }) {
+            val position = adapter.currentList.indexOfFirst { it.lastDeckNameComponent == name }
+            position >= 0 && decks.findViewHolderForAdapterPosition(position) != null
+        }
         val deck = adapter.currentList.single { it.lastDeckNameComponent == name }
         val position = adapter.currentList.indexOf(deck)
         decks.findViewHolderForAdapterPosition(position)!!.itemView.performLongClick()
@@ -819,14 +823,9 @@ class DeckPickerTest : RobolectricTest() {
             assertThat("deck focus is set", viewModel.focusedDeck, equalTo(emptyDeck))
 
             // ACT: open up the Deck Context Menu
-            val deckToClick =
-                deckPickerBinding.decks.children.single {
-                    it.findViewById<TextView>(R.id.deck_name).text == "With Cards"
-                }
-            deckToClick.performLongClick()
+            longPressDeck("With Cards")
 
             // ASSERT
-            advanceRobolectricLooper() // ensure that 'focusedDeck' is current
             assertThat("unbury is visible: one card is buried", col.sched.haveBuried())
             assertThat("deck focus has changed", viewModel.focusedDeck, equalTo(deckWithCards))
         }
