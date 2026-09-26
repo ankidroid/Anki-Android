@@ -7,9 +7,11 @@ import android.view.WindowManager
 import android.widget.EditText
 import androidx.core.content.getSystemService
 import androidx.core.view.allViews
+import androidx.core.view.drawToBitmap
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.RoborazziOptions
+import com.github.takahirom.roborazzi.captureRoboImage
 import com.github.takahirom.roborazzi.captureScreenRoboImage
 import com.github.takahirom.roborazzi.provideRoborazziContext
 import com.google.testing.junit.testparameterinjector.TestParameter
@@ -51,6 +53,22 @@ abstract class ScreenshotTest : RobolectricTest() {
     enum class ThemeConfig { LIGHT, PLAIN, DARK, BLACK, EINK }
 
     enum class DeviceConfig { PHONE, TABLET, FOLDABLE, DESKTOP }
+
+    /**
+     * Devices always covered by the annotated class, in addition to the `-Pdevice` selection.
+     *
+     * Usage:
+     *
+     * ```kt
+     * @IncludeDevices(TABLET)
+     * class TestClass : ScreenshotTest() {
+     * ```
+     */
+    @Target(AnnotationTarget.CLASS)
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class IncludeDevices(
+        vararg val value: DeviceConfig,
+    )
 
     @TestParameter(valuesProvider = ThemeProvider::class)
     lateinit var theme: ThemeConfig
@@ -125,7 +143,24 @@ abstract class ScreenshotTest : RobolectricTest() {
      * Writes to /diffs/ if there is an issue.
      */
     @OptIn(ExperimentalRoborazziApi::class)
-    protected fun captureScreen(name: String) {
+    protected fun captureScreen(name: String) =
+        capture(name) { filePath, options ->
+            captureScreenRoboImage(filePath = filePath, roborazziOptions = options)
+        }
+
+    /** Captures a laid-out view, including content extending beyond the screen. */
+    protected fun captureView(
+        name: String,
+        view: View,
+    ) = capture(name) { filePath, options ->
+        view.drawToBitmap().captureRoboImage(filePath = filePath, roborazziOptions = options)
+    }
+
+    @OptIn(ExperimentalRoborazziApi::class)
+    private fun capture(
+        name: String,
+        captureImage: (String, RoborazziOptions) -> Unit,
+    ) {
         // Note: this.javaClass should not be used inside a lambda, as 'this' will be unnamed
         val classDir = "build/outputs/roborazzi/${this.javaClass.simpleName}"
         val diffDir = File("$classDir/diffs")
@@ -134,9 +169,9 @@ abstract class ScreenshotTest : RobolectricTest() {
         val baseline = File(classDir, fileName)
         disableScrollbarFading()
         restartTextCursorBlink()
-        captureScreenRoboImage(
-            filePath = baseline.path,
-            roborazziOptions = provideRoborazziContext().options.withCompareOutputDir(diffDir.path),
+        captureImage(
+            baseline.path,
+            provideRoborazziContext().options.withCompareOutputDir(diffDir.path),
         )
 
         // copy the baseline into /diffs (if it exists)
@@ -180,7 +215,13 @@ abstract class ScreenshotTest : RobolectricTest() {
             if ("all" in requestedDevices) {
                 return DeviceConfig.entries
             }
-            return DeviceConfig.entries.filter { requestedDevices.contains(it.name.lowercase()) }
+            val includedDevices =
+                context
+                    ?.testClass()
+                    ?.getAnnotation(IncludeDevices::class.java)
+                    ?.value
+                    .orEmpty()
+            return DeviceConfig.entries.filter { it in includedDevices || requestedDevices.contains(it.name.lowercase()) }
         }
     }
 }
