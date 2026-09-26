@@ -3,7 +3,6 @@
  * Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
  * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
- * Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
