@@ -15,6 +15,7 @@ import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.annotation.CheckResult
+import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -62,9 +63,7 @@ import com.ichi2.utils.title
 import com.ichi2.utils.titleWithHelpIcon
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -267,24 +266,18 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
 
         private const val RESULT_SUBMIT_DUE_DATE = "SubmitDueDate"
 
-        // Only accessed on the main thread.
-        private val pendingActivities = mutableSetOf<FragmentActivity>()
-
         /** Keeps the existing dialog and its input when another request arrives. */
-        suspend fun show(
+        @MainThread
+        fun show(
             activity: FragmentActivity,
             cardIds: List<CardId>,
-        ) = withContext(Dispatchers.Main.immediate) {
-            if (activity.supportFragmentManager.fragments.any { it is SetDueDateDialog } || !pendingActivities.add(activity)) {
-                Timber.d("Ignoring 'set due date' request: dialog is already open or being prepared")
-                return@withContext
+        ) {
+            if (activity.supportFragmentManager.fragments.any { it is SetDueDateDialog }) {
+                Timber.d("Ignoring 'set due date' request: dialog is already open")
+                return
             }
-            try {
-                val dialog = newInstance(activity.externalCacheDir ?: activity.cacheDir, cardIds)
-                activity.showDialogFragment(dialog)
-            } finally {
-                pendingActivities.remove(activity)
-            }
+            val dialog = newInstance(activity.externalCacheDir ?: activity.cacheDir, cardIds)
+            activity.showDialogFragment(dialog)
         }
 
         @VisibleForTesting
