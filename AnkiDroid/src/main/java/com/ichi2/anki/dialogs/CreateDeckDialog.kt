@@ -161,7 +161,13 @@ class CreateDeckDialog(
         deckName: String?,
     ) {
         val deckNameWithParentName = getColUnsafe.decks.getSubdeckName(did, deckName)
-        createDeck(deckNameWithParentName!!)
+        if (deckNameWithParentName == null) {
+            Timber.d("CreateDeckDialog::createSubDeck - Not creating invalid subdeck name '%s'", deckName)
+            displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
+            shownDialog?.dismiss()
+            return
+        }
+        createDeck(deckNameWithParentName)
     }
 
     fun createDeck(deckName: String) {
