@@ -1598,7 +1598,7 @@ class NoteEditorFragment :
 
         val args =
             TemplatePreviewerArguments(
-                notetypeFile = NotetypeFile(requireContext(), editorNote!!.notetype),
+                notetypeProvider = NoteTypeProvider.Id(editorNote!!.noteTypeId),
                 fields = fields,
                 tags = tags,
                 id = editorNote!!.id,
