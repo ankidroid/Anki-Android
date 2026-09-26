@@ -593,6 +593,16 @@ tasks.register('assertDevicesUnlocked', AssertDevicesUnlocked) {
     outputs.upToDateWhen { false }
 }
 
+tasks.register('recordAndroidTestSummary', com.ichi2.anki.gradle.RecordAndroidTestSummaryTask) {
+    def buildType = rootProject.androidTestVariantName.toLowerCase(Locale.ROOT)
+    resultsDir.set(layout.buildDirectory.dir("outputs/androidTest-results/connected/${buildType}/flavors/play"))
+    suiteDisplayName.set(":AnkiDroid:connectedPlay${rootProject.androidTestVariantName}AndroidTest")
+    def serviceRegistration = gradle.sharedServices.registrations.findByName("testSummaryService")
+    if (serviceRegistration != null) {
+        testSummaryService.set(serviceRegistration.service)
+    }
+}
+
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
     // Resolve the directory at configuration time, which is Gradle Configuration Cache compatible.
@@ -637,7 +647,10 @@ afterEvaluate {
         connectedCheckSerials.set(connectedTest.testRunnerFactory.connectedCheckDeviceSerials)
     }
     connectedTest.dependsOn('assertDevicesUnlocked')
-    connectedTest.finalizedBy('assertNonzeroAndroidTests')
+    connectedTest.finalizedBy('recordAndroidTestSummary', 'assertNonzeroAndroidTests')
+    tasks.named('assertNonzeroAndroidTests').configure {
+        mustRunAfter('recordAndroidTestSummary')
+    }
 
     // AGP bug: when testFixtures is enabled on an application module, the androidTest R8 task's
     // TESTED_CODE scope only includes the app's dependency artifacts, not the app's own compiled
