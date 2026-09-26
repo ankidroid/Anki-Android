@@ -5,6 +5,7 @@ package com.ichi2.anki
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.NoteTypeFieldEditorContextMenuAction
+import com.ichi2.testutils.simulateKeyboard
 import org.junit.Test
 
 /**
@@ -17,6 +18,13 @@ class NoteTypeFieldEditorScreenshotTest : ScreenshotTest() {
     fun base() =
         withNoteTypeFieldEditor {
             captureScreen("base")
+        }
+
+    @Test
+    fun keyboardOpen() =
+        withNoteTypeFieldEditor { activity ->
+            activity.simulateKeyboard()
+            captureScreen("keyboard_open")
         }
 
     @Test
