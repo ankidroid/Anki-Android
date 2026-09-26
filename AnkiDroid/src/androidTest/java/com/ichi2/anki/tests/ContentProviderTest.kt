@@ -25,6 +25,7 @@ import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
+import com.ichi2.anki.libanki.FilteredDeck
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
@@ -977,8 +978,8 @@ class ContentProviderTest : InstrumentedTest() {
         // Move the card into a filtered deck so due is replaced and the original due is kept in oDue.
         val filteredDeckId = col.decks.newFiltered("Raw due filtered deck")
         testDeckIds.add(filteredDeckId)
-        val filteredDeck = checkNotNull(col.decks.getLegacy(filteredDeckId))
-        filteredDeck.getJSONArray("terms").getJSONArray(0).put(0, "cid:${card.id}")
+        val filteredDeck = checkNotNull(col.decks.getLegacy(filteredDeckId)) as FilteredDeck
+        filteredDeck.firstFilter.search = "cid:${card.id}"
         col.decks.save(filteredDeck)
         col.sched.rebuildFilteredDeck(filteredDeckId)
         card.load(col)
@@ -1776,7 +1777,7 @@ class ContentProviderTest : InstrumentedTest() {
                 assertNotNull("Check that the deck we received actually exists", deck)
                 assertEquals(
                     "Check that the received deck has the correct name",
-                    deck.getString("name"),
+                    deck.name,
                     deckName,
                 )
             }
@@ -1810,7 +1811,7 @@ class ContentProviderTest : InstrumentedTest() {
                 )
                 assertEquals(
                     "Check that received deck name equals real deck name",
-                    realDeck.getString("name"),
+                    realDeck.name,
                     returnedDeckName,
                 )
             }

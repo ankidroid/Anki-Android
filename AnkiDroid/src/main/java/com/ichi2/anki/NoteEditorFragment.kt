@@ -124,6 +124,8 @@ import com.ichi2.anki.libanki.Note.ClozeUtils
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
+import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.anki.libanki.RegularDeck
 import com.ichi2.anki.libanki.Utils
 import com.ichi2.anki.libanki.clozeNumbersInNote
 import com.ichi2.anki.model.CardStateFilter
@@ -2584,8 +2586,8 @@ class NoteEditorFragment :
         }
 
         getColUnsafe.notetypes.setCurrent(noteType)
-        val currentDeck = getColUnsafe.decks.current()
-        currentDeck.put("mid", newId)
+        val currentDeck = getColUnsafe.decks.current() as RegularDeck
+        currentDeck.noteTypeId = newId
         getColUnsafe.decks.save(currentDeck)
 
         // Update deck

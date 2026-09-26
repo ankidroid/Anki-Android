@@ -22,6 +22,7 @@ import com.ichi2.anki.libanki.addNotetype
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.testutils.ext.addNote
+import com.ichi2.anki.libanki.FilteredDeck
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -199,8 +200,8 @@ interface AnkiTest {
         return try {
             col.decks.newFiltered(name).also { did ->
                 if (search == null) return@also
-                val deck = col.decks.getLegacy(did)!!
-                deck.getJSONArray("terms").getJSONArray(0).put(0, search)
+                val deck = col.decks.getLegacy(did)!! as FilteredDeck
+                deck.firstFilter.search = search
                 col.decks.save(deck)
                 col.sched.rebuildFilteredDeck(did)
             }
