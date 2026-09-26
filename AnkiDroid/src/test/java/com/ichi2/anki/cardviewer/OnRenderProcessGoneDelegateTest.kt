@@ -59,6 +59,56 @@ class OnRenderProcessGoneDelegateTest {
     }
 
     @Test
+    fun crashLoopWhileFinishingDoesNotShowDialog_issue6244() {
+        val mock = viewer
+        val delegate = getInstance(mock)
+        callOnRenderProcessGone(delegate)
+
+        // finish() can be called before the lifecycle drops below STARTED.
+        doReturn(true).whenever(mock).isFinishing
+        callOnRenderProcessGone(delegate)
+
+        assertThat(delegate.displayedDialog, equalTo(false))
+        verify(mock, times(2)).destroyWebViewFrame()
+        verify(mock, times(1)).recreateWebViewFrame()
+        verify(mock, times(1)).displayCardQuestion()
+        verify(mock.writeLock, times(2)).unlock()
+    }
+
+    @Test
+    fun crashWhileFinishingOnlyDestroysWebView() {
+        val mock = viewer
+        val delegate = getInstance(mock)
+        doReturn(true).whenever(mock).isFinishing
+
+        callOnRenderProcessGone(delegate)
+
+        assertThat(delegate.displayedToast, equalTo(false))
+        assertThat(delegate.displayedDialog, equalTo(false))
+        verify(mock).destroyWebViewFrame()
+        verify(mock, never()).recreateWebViewFrame()
+        verify(mock, never()).displayCardQuestion()
+        verify(mock.writeLock).unlock()
+    }
+
+    @Test
+    fun crashAfterDestructionDoesNotRecreateWebView() {
+        // An activity can be destroyed without finishing, e.g. during a configuration change.
+        val mock = getViewer(Lifecycle.State.DESTROYED)
+        val delegate = getInstance(mock)
+        doReturn(true).whenever(mock).isDestroyed
+
+        callOnRenderProcessGone(delegate)
+
+        verify(mock).destroyWebViewFrame()
+        verify(mock, never()).recreateWebViewFrame()
+        verify(mock, never()).displayCardQuestion()
+        assertThat(delegate.displayedToast, equalTo(false))
+        assertThat(delegate.displayedDialog, equalTo(false))
+        verify(mock.writeLock).unlock()
+    }
+
+    @Test
     fun secondCallDoesNothingIfMinimised() {
         val mock = minimisedViewer
         val delegate = getInstance(mock)
@@ -142,6 +192,8 @@ class OnRenderProcessGoneDelegateTest {
         doReturn(mockWebView).whenever(mock).webView
         doReturn(mock(Card::class.java)).whenever(mock).currentCard
         doReturn(lifecycleOf(state)).whenever(mock).lifecycle
+        doReturn(false).whenever(mock).isFinishing
+        doReturn(false).whenever(mock).isDestroyed
         doNothing().whenever(mock).destroyWebViewFrame()
         doNothing().whenever(mock).recreateWebViewFrame()
         doNothing().whenever(mock).displayCardQuestion()
