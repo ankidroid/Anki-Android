@@ -283,6 +283,9 @@ open class DeckPicker :
         get() = binding.studyoptionsFragment != null
         set(_) = throw UnsupportedOperationException()
 
+    override val analyticsScreenName: String
+        get() = selectedBottomNavItem()?.analyticsScreenName ?: super.analyticsScreenName
+
     // Short animation duration from system
     private var shortAnimDuration = 0
 
