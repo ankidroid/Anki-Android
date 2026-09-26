@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle
@@ -18,7 +19,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.anki.browser.IdsFile
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
@@ -52,7 +52,6 @@ import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-@NeedsTest("set interval to same value visibility with FSRS")
 @RunWith(AndroidJUnit4::class)
 class SetDueDateDialogTest : RobolectricTest() {
     @Test
@@ -208,6 +207,15 @@ class SetDueDateDialogTest : RobolectricTest() {
         }
 
     @Test
+    fun `loading FSRS forces the interval to match the due date`() = assertSchedulerLoading(fsrsEnabled = true)
+
+    @Test
+    fun `loading SM-2 allows changing the interval`() = assertSchedulerLoading(fsrsEnabled = false)
+
+    @Test
+    fun `unavailable scheduler setting falls back to SM-2`() = assertSchedulerLoading(fsrsEnabled = null)
+
+    @Test
     fun `cancelled caller leaves no ids file behind`() =
         runTest {
             val cardIds = List(2) { addBasicNote().firstCard().id }
@@ -283,6 +291,23 @@ class SetDueDateDialogTest : RobolectricTest() {
                 val dialog = assertNotNull(activity.currentDialog)
                 assertEquals(cardIds, dialog.cardIds)
                 assertTrue(dialog.requireDialog().isShowing)
+            }
+        }
+
+    private fun assertSchedulerLoading(fsrsEnabled: Boolean?) =
+        withActivity { activity ->
+            val cardIds = listOf(addBasicNote().firstCard().id)
+            withPausedLoading(fsrsEnabled) { finishLoading ->
+                finishLoading.complete(Unit)
+                SetDueDateDialog.show(activity, cardIds)
+                advanceRobolectricLooper()
+                val dialog = assertNotNull(activity.currentDialog)
+                dialog.singleDayText.setText("3")
+
+                assertTrue(dialog.positiveButtonIsEnabled)
+                assertEquals(fsrsEnabled != true, dialog.changeInterval.isVisible)
+                assertEquals(fsrsEnabled == true, dialog.changeInterval.isChecked)
+                assertEquals(SetDueDateDays(if (fsrsEnabled == true) "3!" else "3"), dialog.viewModel.calculateDaysParameter())
             }
         }
 
