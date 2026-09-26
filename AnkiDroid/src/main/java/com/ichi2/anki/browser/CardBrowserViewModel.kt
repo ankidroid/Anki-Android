@@ -78,6 +78,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
@@ -149,6 +150,15 @@ class CardBrowserViewModel(
             extraBufferCapacity = 1,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
+
+    val flowOfLastCompletedSearch: StateFlow<SearchState.Completed?> =
+        flowOfSearchState
+            .filterIsInstance<SearchState.Completed>()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Eagerly,
+                initialValue = null,
+            )
 
     /**
      * Commands to drive the note editor either in a fragment or a standalone activity

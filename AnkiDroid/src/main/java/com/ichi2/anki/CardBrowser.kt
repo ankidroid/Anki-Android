@@ -84,6 +84,7 @@ import com.ichi2.anki.utils.ext.onAllFragmentsLoaded
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.utils.AndroidUiUtils.hideKeyboard
 import com.ichi2.utils.LanguageUtil
+import kotlinx.coroutines.flow.filterNotNull
 import timber.log.Timber
 
 @Suppress("LeakingThis")
@@ -484,7 +485,6 @@ open class CardBrowser :
                     }
                 }
                 is SearchState.Completed -> {
-                    findViewById<TextView>(R.id.subtitle)?.text = searchState.formatCardCount(resources)
                     // HACK: required now we use MenuProvider for searches
                     // this causes a very brief flicker, as we call `setQuery` to restore the menu state
                     searchView?.post { searchView?.clearFocus() }
@@ -493,6 +493,10 @@ open class CardBrowser :
                     showError(searchState.error, crashReportData = null)
                 }
             }
+        }
+
+        fun onLastCompletedSearchChanged(search: SearchState.Completed) {
+            findViewById<TextView>(R.id.subtitle)?.text = search.formatCardCount(resources)
         }
 
         fun onNoteEditorCommand(command: NoteEditorCommand) {
@@ -531,6 +535,7 @@ open class CardBrowser :
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
+        viewModel.flowOfLastCompletedSearch.filterNotNull().launchCollectionInLifecycleScope(::onLastCompletedSearchChanged)
         viewModel.flowOfNoteEditorCommand.launchCollectionInLifecycleScope(::onNoteEditorCommand)
     }
 
