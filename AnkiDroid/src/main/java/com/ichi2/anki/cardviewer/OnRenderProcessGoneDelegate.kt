@@ -56,6 +56,13 @@ open class OnRenderProcessGoneDelegate(
             Timber.e("WebView Renderer process terminated. Crashed: %b", detail.didCrash())
             target.destroyWebViewFrame()
 
+            // #6244: finish() can invalidate the window before the lifecycle drops below STARTED.
+            if (target.isFinishing || target.isDestroyed) {
+                // don't show a dialog in this case
+                Timber.w("Activity is finishing or destroyed; skipping WebView recovery/crash dialog")
+                return true
+            }
+
             // Only show one message per branch
             when {
                 !canRecoverFromWebViewRendererCrash() -> {
