@@ -32,7 +32,7 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
             val mappableBindings = action.getBindings(sharedPrefs)
             for (mappableBinding in mappableBindings) {
                 when (val binding = mappableBinding.binding) {
-                    is Binding.KeyBinding -> {
+                    is Binding.KeyBinding<*> -> {
                         if (binding in keyMap) {
                             (keyMap[binding] as MutableList).add(action to mappableBinding)
                         } else {
@@ -49,7 +49,6 @@ class BindingMap<B : MappableBinding, A : MappableAction<B>>(
                             gestureMap[binding.gesture] = mutableListOf(action to mappableBinding)
                         }
                     }
-                    else -> {}
                 }
             }
         }
