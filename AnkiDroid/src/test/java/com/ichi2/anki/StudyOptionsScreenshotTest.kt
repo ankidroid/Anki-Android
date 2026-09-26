@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import com.ichi2.testutils.insetsOf
+import com.ichi2.testutils.simulateKeyboard
 import com.ichi2.utils.dp
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
@@ -28,6 +29,13 @@ class StudyOptionsScreenshotTest : ScreenshotTest() {
         withStudyOptions { activity ->
             activity.simulateNavigationBar()
             captureScreen("with_counts")
+        }
+
+    @Test
+    fun studyOptionsKeyboardOpen() =
+        withStudyOptions { activity ->
+            activity.simulateKeyboard()
+            captureScreen("keyboard_open")
         }
 
     /**

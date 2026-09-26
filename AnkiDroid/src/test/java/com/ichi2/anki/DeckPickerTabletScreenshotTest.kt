@@ -3,6 +3,7 @@
 package com.ichi2.anki
 
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.simulateKeyboard
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -23,6 +24,13 @@ class DeckPickerTabletScreenshotTest : ScreenshotTest() {
     fun tearDownBackup() {
         BackupManagerTestUtilities.reset()
     }
+
+    @Test
+    fun deckOverviewKeyboardOpen() =
+        withDeckPicker(deckCount = 1, withCards = true) { deckPicker ->
+            deckPicker.simulateKeyboard()
+            captureScreen("keyboard_open")
+        }
 
     @Test
     fun deckPickerWith30Decks() =

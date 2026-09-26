@@ -24,6 +24,7 @@ import androidx.core.text.parseAsHtml
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.doOnAttach
 import androidx.core.view.isVisible
@@ -125,13 +126,13 @@ class StudyOptionsFragment :
         refreshInterface()
     }
 
-    /** Keeps the content clear of the system bars and any display cutout. */
+    /** Keeps the content clear of the system bars, display cutout and keyboard. */
     private fun setupContentInsets(view: View) {
         view.doOnApplyWindowInsets { v, insets, _ ->
             // Both hosts display this fragment below a toolbar, so don't update the top padding.
             // Note: the left-padding is 0 when fragmented - handled by DeckPicker
-            val bars = insets.getInsets(systemBars() or displayCutout())
-            v.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
+            val contentInsets = insets.getInsets(systemBars() or displayCutout() or ime())
+            v.updatePadding(left = contentInsets.left, right = contentInsets.right, bottom = contentInsets.bottom)
         }
         // the view may be added after the insets were dispatched (returning from the review
         // reminders screen), so request them again
