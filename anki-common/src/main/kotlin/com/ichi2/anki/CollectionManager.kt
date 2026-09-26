@@ -36,6 +36,8 @@ import com.ichi2.anki.libanki.Storage.collection
 import com.ichi2.anki.libanki.importCollectionPackage
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -121,7 +123,9 @@ object CollectionManager {
     ): T {
         if (isRobolectric && useTestMutex) {
             // #16253 Robolectric Windows: `withContext(queue)` is insufficient for serial execution
+            val context = currentCoroutineContext()
             return testMutex.withLock {
+                context.ensureActive()
                 this@CollectionManager.block()
             }
         }
