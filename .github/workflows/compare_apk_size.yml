@@ -1,115 +1,115 @@
 name: APK Size Comparison
 
 on:
-  workflow_dispatch:
-    inputs:
-      prNumber:
-        description: "You want to measure the impact of PR number:"
-        required: true
-        type: number
+  workflow_run:
+    workflows:
+      - "Emulator Tests"
+    types:
+      - completed
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.inputs.prNumber }}
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id }}
   cancel-in-progress: true
 
-
-permissions:
-  contents: read
-  pull-requests: write
-
+permissions: {}
 
 jobs:
   sizeCheck:
     name: APK Size Check
-    timeout-minutes: 30
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    timeout-minutes: 5
     runs-on: ubuntu-latest
-    env:
-      KEYSTORENAME: keystore
-      KEYSTOREPWD: testpass
-      KEYPWD: testpass
-      KEYALIAS: nrkeystorealias
+    permissions:
+      actions: read
+      pull-requests: write
     steps:
-      - name: Configure JDK
-        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+      - name: Download PR APK size
+        uses: dawidd6/action-download-artifact@d63b86af1b34672e53c440b1b83979861906bad7 # v24
         with:
-          distribution: "jetbrains"
-          java-version: "21"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: apk-size
+          run_id: ${{ github.event.workflow_run.id }}
+          path: pr
 
-      - name: Test Credential Prep
-        run: |
-          export KEYSTOREPATH=$HOME/$KEYSTORENAME
-          echo "KEYSTOREPATH=$KEYSTOREPATH" >> $GITHUB_ENV
-          echo y | keytool -genkeypair -dname "cn=AnkiDroid, ou=ankidroid, o=AnkiDroid, c=US" -alias $KEYALIAS -keypass $KEYPWD -keystore $KEYSTOREPATH -storepass $KEYSTOREPWD -keyalg RSA -validity 20000
+      - name: Download main APK size
+        uses: dawidd6/action-download-artifact@d63b86af1b34672e53c440b1b83979861906bad7 # v24
+        with:
+          name: apk-size
+          workflow: tests_emulator.yml
+          workflow_conclusion: success
+          branch: main
+          path: main
+          if_no_artifact_found: ignore
+
+      - name: Compare APK sizes
+        id: compare
         shell: bash
+        run: |
+          if [[ ! -f main/apk-size.txt ]]; then
+            echo "No successful main APK-size baseline is available yet."
+            echo "has_baseline=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
 
-      - name: Checkout PR
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          ref: 'refs/pull/${{ github.event.inputs.prNumber }}/head'
+          old_size=$(<main/apk-size.txt)
+          new_size=$(<pr/apk-size.txt)
+          if [[ ! "$old_size" =~ ^[0-9]+$ || ! "$new_size" =~ ^[0-9]+$ || "$old_size" -eq 0 ]]; then
+            echo "APK size artifacts did not contain valid byte counts."
+            exit 1
+          fi
+          difference=$((new_size - old_size))
+          percent=$(awk -v difference="$difference" -v old_size="$old_size" 'BEGIN { printf "%.2f", difference * 100 / old_size }')
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
-        timeout-minutes: 5
-        with:
-          # Use open source provider: https://github.com/gradle/actions/blob/main/docs/setup-gradle.md#basic-caching
-          cache-provider: basic
-          cache-read-only: true
+          {
+            echo "old_size=$old_size"
+            echo "new_size=$new_size"
+            echo "difference=$difference"
+            echo "percent=$percent"
+            echo "has_baseline=true"
+          } >> "$GITHUB_OUTPUT"
 
-      - name: Assemble PR APK
-        # This makes sure we fetch gradle network resources with a retry
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
-        with:
-          timeout_minutes: 10
-          retry_wait_seconds: 60
-          max_attempts: 3
-          command: ./gradlew :AnkiDroid:assemblePlayRelease --daemon
-
-      - name: Get PR APK size
-        run: echo NEWSIZE=`ls -lrt AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk | awk '{print $5}'` >> $GITHUB_ENV
-
-      - name: Checkout Baseline for PR
-        # we want to checkout the base for this PR on main, not just main - as main moves over time
-        # and we want to know the isolated affect of this PR regardless of when the workflow executes
-        run: git checkout `git merge-base origin/main HEAD`
-
-      - name: Assemble Baseline APK
-        # This makes sure we fetch gradle network resources with a retry
-        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
-        with:
-          timeout_minutes: 10
-          retry_wait_seconds: 60
-          max_attempts: 3
-          command: ./gradlew :AnkiDroid:assemblePlayRelease --daemon
-
-      - name: Get Baseline APK size
-        run: echo OLDSIZE=`ls -lrt AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk | awk '{print $5}'` >> $GITHUB_ENV
-
-      - name: Post comment
+      - name: Comment APK size comparison
+        if: steps.compare.outputs.has_baseline == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          OLD_SIZE: ${{ steps.compare.outputs.old_size }}
+          NEW_SIZE: ${{ steps.compare.outputs.new_size }}
+          DIFFERENCE: ${{ steps.compare.outputs.difference }}
+          PERCENT: ${{ steps.compare.outputs.percent }}
         with:
           script: |
-            var inputs = ${{ toJSON(inputs) }}
-            let prNumber = inputs['prNumber'];
+            const prNumber = context.payload.workflow_run.pull_requests[0].number;
+            const marker = '<!-- apk-size-comparison -->';
+            const oldSize = Number(process.env.OLD_SIZE);
+            const newSize = Number(process.env.NEW_SIZE);
+            const difference = Number(process.env.DIFFERENCE);
+            const percent = process.env.PERCENT;
+            const body = `${marker}
+            **APK size comparison**
 
-            async function getPullRequest() {
-                return await github.rest.pulls.get({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    pull_number: prNumber,
-                });
-            }
-            const pullRequestData = await getPullRequest();
+            Main: ${oldSize.toLocaleString()} bytes
+            PR: ${newSize.toLocaleString()} bytes
+            Difference: ${difference.toLocaleString()} bytes (${percent}%)`;
 
-            async function addComment(prNumber, oldSize, newSize) {
-              return await github.rest.issues.createComment({
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+            const existing = comments.find(comment => comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: prNumber,
-                body: `${oldSize.toLocaleString()}: Old APK size
-                      ${newSize.toLocaleString()}: New APK size`
-              })
+                body,
+              });
             }
-            await addComment(prNumber, process.env.OLDSIZE, process.env.NEWSIZE);

@@ -1,4 +1,4 @@
-name: 🛠️ Emulator Tests
+name: Emulator Tests
 
 on:
   workflow_dispatch:
@@ -90,6 +90,9 @@ jobs:
     name: Android Emulator Test (${{ matrix.api-level }}, ${{ matrix.arch }}, ${{ matrix.target }}, ${{ matrix.first-boot-delay }}, ${{ matrix.iteration }})
     runs-on: ubuntu-latest
     needs: matrix_prep
+    permissions:
+      contents: read
+      actions: write
     timeout-minutes: 75
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -281,6 +284,32 @@ jobs:
 
           # Use the zipalign tool
           $ZIPALIGN_PATH -c -P 16 -v 4 $APK_PATH
+
+      - name: Record APK size
+        if: >-
+          matrix.iteration == 0 &&
+          matrix.api-level == 36 &&
+          matrix.arch == 'x86_64' &&
+          matrix.target == 'google_apis' &&
+          (github.event_name == 'pull_request' ||
+          (github.event_name == 'push' && github.ref == 'refs/heads/main'))
+        run: |
+          APK_PATH="AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk"
+          stat -c '%s' "$APK_PATH" > apk-size.txt
+
+      - name: Upload APK size
+        if: >-
+          matrix.iteration == 0 &&
+          matrix.api-level == 36 &&
+          matrix.arch == 'x86_64' &&
+          matrix.target == 'google_apis' &&
+          (github.event_name == 'pull_request' ||
+          (github.event_name == 'push' && github.ref == 'refs/heads/main'))
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: apk-size
+          path: apk-size.txt
+          retention-days: 30
 
       - name: Upload Test Report
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
