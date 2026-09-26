@@ -6,7 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.util.LayoutDirection
 import androidx.annotation.AnimRes
-import com.ichi2.anki.R
+import com.ichi2.anki.ankicommon.R
 import com.ichi2.anki.common.ui.TransitionDirection
 import com.ichi2.anki.compat.CompatHelper
 
