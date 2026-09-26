@@ -44,6 +44,7 @@ class RenameCardTypeDialog {
                     validator = { text ->
                         val name = CardTypeName.fromString(text)
                         when {
+                            name.value.replace("\"", "").isBlank() -> ValidationResult.REJECTED
                             currentName == name -> ValidationResult.REJECTED
                             !existingNames.contains(name) -> ValidationResult.VALID
                             else -> ValidationResult.error(context.getString(CommonString.error_name_exists))
