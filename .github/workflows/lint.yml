@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 1
+          fetch-depth: 2
 
       - name: Configure JDK
         uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
@@ -49,6 +49,12 @@ jobs:
 
       - name: Test build logic
         run: ./gradlew -p buildSrc test --daemon
+
+      # Reject versionCode decreases and increases over 100,000.
+      - name: Validate versionCode
+        env:
+          VERSION_CODE_BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before }}
+        run: tools/validate-version-code.sh "$VERSION_CODE_BASE"
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
