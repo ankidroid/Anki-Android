@@ -7,8 +7,11 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -16,16 +19,17 @@ import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
-import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.ActivityInfoBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
@@ -46,6 +50,9 @@ class Info :
     AnkiActivity(R.layout.activity_info),
     BaseSnackbarBuilderProvider {
     private val binding by viewBinding(ActivityInfoBinding::bind)
+    private var currentWebView: WebView? = null
+    private var renderCrashCount = 0
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = binding.buttons
@@ -63,24 +70,8 @@ class Info :
         setViewBinding(binding)
         enableToolbar()
         applyInsets()
-        if (BuildConfig.SHOW_DONATE_LINKS) {
-            binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
-        } else {
-            binding.donate.isVisible = false
-        }
+        binding.donate.setOnClickListener { openUrl(R.string.link_opencollective_donate) }
         title = "$appName v$pkgVersionName"
-        binding.webView.webChromeClient =
-            object : WebChromeClient() {
-                override fun onProgressChanged(
-                    view: WebView,
-                    progress: Int,
-                ) {
-                    // Hide the progress indicator when the page has finished loaded
-                    if (progress == 100) {
-                        binding.progressBar.visibility = View.GONE
-                    }
-                }
-            }
         binding.leftButton.run {
             if (canOpenMarketUri()) {
                 setText(R.string.info_rate)
@@ -94,42 +85,70 @@ class Info :
                 visibility = View.GONE
             }
         }
-        val onBackPressedCallback =
+        onBackPressedCallback =
             object : OnBackPressedCallback(false) {
                 override fun handleOnBackPressed() {
-                    if (binding.webView.canGoBack()) binding.webView.goBack()
+                    val webView = currentWebView ?: binding.webView
+                    if (webView.canGoBack()) webView.goBack()
                 }
             }
-        // Apply Theme colors
-        val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
-        val backgroundColor = typedArray.getColor(0, -1)
-        val textColor = typedArray.getColor(1, -1).toRGBHex()
-
-        val anchorTextThemeColor = getColorFromAttr(this, android.R.attr.colorAccent)
-        val anchorTextColor = anchorTextThemeColor.toRGBHex()
-
-        binding.webView.setBackgroundColor(backgroundColor)
-        binding.webView.settings.allowFileAccess = true
-        binding.webView.settings.allowContentAccess = true
-        setRenderWorkaround(this)
         binding.rightButton.run {
             text = getString(R.string.dialog_continue)
             setOnClickListener { close() }
         }
+        currentWebView = binding.webView
+        setupWebView(binding.webView)
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setupWebView(webView: WebView) {
+        // Apply Theme colors
+        val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
+        val backgroundColor = typedArray.getColor(0, -1)
+        val textColor = typedArray.getColor(1, -1).toRGBHex()
+        typedArray.recycle()
+
+        val anchorTextThemeColor = getColorFromAttr(this, android.R.attr.colorAccent)
+        val anchorTextColor = anchorTextThemeColor.toRGBHex()
         val background = backgroundColor.toRGBHex()
-        binding.webView.loadUrl("/android_asset/changelog.html")
-        binding.webView.settings.javaScriptEnabled = true
-        binding.webView.webViewClient =
+
+        webView.setBackgroundColor(backgroundColor)
+        webView.settings.allowFileAccess = true
+        webView.settings.allowContentAccess = true
+        setRenderWorkaround(this)
+
+        webView.webChromeClient =
+            object : WebChromeClient() {
+                override fun onProgressChanged(
+                    view: WebView,
+                    progress: Int,
+                ) {
+                    if (progress == 100) {
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
+            }
+
+        webView.loadUrl("/android_asset/changelog.html")
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient =
             object : WebViewClient() {
+                @RequiresApi(Build.VERSION_CODES.O)
+                override fun onRenderProcessGone(
+                    view: WebView,
+                    detail: RenderProcessGoneDetail,
+                ): Boolean {
+                    Timber.w("onRenderProcessGone (didCrash %b)", detail.didCrash())
+                    recoverWebView(view)
+                    return true
+                }
+
                 override fun onPageFinished(
                     view: WebView,
                     url: String,
                 ) {
-                /* The order of below javascript code must not change (this order works both in debug and release mode)
-                 *  or else it will break in any one mode.
-                 */
                     @Suppress("ktlint:standard:max-line-length")
-                    binding.webView.loadUrl(
+                    view.loadUrl(
                         """javascript:document.body.style.setProperty("color", "$textColor");
                             x=document.getElementsByTagName("a");
                             for(i=0; i<x.length; i++){
@@ -142,14 +161,6 @@ class Info :
                             }
                             document.body.style.setProperty("background", "$background");""",
                     )
-                    if (!BuildConfig.SHOW_DONATE_LINKS) {
-                        // remove donation links, keeping the text
-                        binding.webView.evaluateJavascript(
-                            """document.querySelectorAll('a[href*="opencollective.com"]')
-                                .forEach((a) => a.replaceWith(...a.childNodes));""",
-                            null,
-                        )
-                    }
                 }
 
                 override fun shouldOverrideUrlLoading(
@@ -176,6 +187,28 @@ class Info :
                 }
             }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    private fun recoverWebView(view: WebView) {
+        val parent = view.parent as? ViewGroup ?: return
+        val index = parent.indexOfChild(view)
+        val params = view.layoutParams
+        SafeWebViewLayout.destroyWebView(view, parent)
+
+        if (renderCrashCount >= 2) {
+            Timber.e("WebView render process crash loop in Info")
+            return
+        }
+        renderCrashCount++
+
+        val newWebView =
+            WebView(this).apply {
+                id = R.id.web_view
+                layoutParams = params
+            }
+        parent.addView(newWebView, index)
+        currentWebView = newWebView
+        setupWebView(newWebView)
     }
 
     /**
