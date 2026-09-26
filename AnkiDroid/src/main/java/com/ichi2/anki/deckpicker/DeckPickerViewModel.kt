@@ -27,7 +27,6 @@ import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
-import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
@@ -196,10 +195,15 @@ class DeckPickerViewModel :
     fun deleteDeck(did: DeckId) =
         viewModelScope.launch {
             val deckName = withCol { decks.getLegacy(did)!!.name }
-            val changes = undoableOp { decks.remove(listOf(did)) }
-            // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
-            // to match and avoid unnecessary scrolls in `renderPage()`.
-            focusedDeck = Consts.DEFAULT_DECK_ID
+            val changes =
+                undoableOp {
+                    removeDeckAndSelectAdjacent(
+                        deckId = did,
+                        visibleDeckIds = flowOfDeckList.value.data.map { it.did },
+                        filter = flowOfCurrentDeckFilter.value,
+                    )
+                }
+            focusedDeck = withCol { decks.selected() }
 
             deckDeletedNotification.emit(
                 DeckDeletionResult(deckName = deckName, cardsDeleted = changes.count),
