@@ -11,7 +11,10 @@ import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.servicelayer.getFSRSStatus
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -45,6 +48,8 @@ class SetDueDateViewModel : ViewModel() {
     /** Whether FSRS is enabled, or `null` while the scheduler setting is loading. */
     val fsrsEnabled: StateFlow<Boolean?>
         field = MutableStateFlow<Boolean?>(null)
+
+    private var loadJob: Job? = null
 
     /** Whether the user can set [updateIntervalToMatchDueDate] */
     val canSetUpdateIntervalToMatchDueDate
@@ -111,18 +116,25 @@ class SetDueDateViewModel : ViewModel() {
      */
     val currentInterval = MutableStateFlow<ReviewIntervalDays?>(null)
 
-    fun init(
-        cardIds: List<CardId>,
-        fsrsEnabled: Boolean,
-    ) {
+    fun init(cardIds: List<CardId>) {
+        loadJob?.cancel()
         this.cardIds = cardIds
-        Timber.d("fsrsEnabled : %b", fsrsEnabled)
-        if (fsrsEnabled) {
-            Timber.d("updateIntervalToMatchDueDate forced to true: FSRS is enabled")
-            updateIntervalToMatchDueDate = true
-        }
-        this.fsrsEnabled.value = fsrsEnabled
+        fsrsEnabled.value = null
         refreshIsValid()
+
+        loadJob =
+            viewModelScope.launch {
+                val enabled = getFSRSStatus() ?: false.also { Timber.w("FSRS Status error") }
+                // getFSRSStatus swallows cancellation. An earlier load must not update a reopened dialog.
+                ensureActive()
+                Timber.d("fsrsEnabled : %b", enabled)
+                if (enabled) {
+                    Timber.d("updateIntervalToMatchDueDate forced to true: FSRS is enabled")
+                    updateIntervalToMatchDueDate = true
+                }
+                fsrsEnabled.value = enabled
+                refreshIsValid()
+            }
 
         initCurrentInterval(cardIds)
     }
