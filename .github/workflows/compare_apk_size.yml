@@ -71,7 +71,7 @@ jobs:
 
       - name: Comment APK size comparison
         if: steps.compare.outputs.has_baseline == 'true'
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f71010f7c # v9.0.0
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
           OLD_SIZE: ${{ steps.compare.outputs.old_size }}
           NEW_SIZE: ${{ steps.compare.outputs.new_size }}
