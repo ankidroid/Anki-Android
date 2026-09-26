@@ -1,22 +1,26 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.preferences
 
+import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
+import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.ext.clear
 import com.ichi2.testutils.launchForFullHeightScreenshot
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateSystemBars
+import com.ichi2.testutils.withWritePermissions
 import com.ichi2.utils.dp
 import org.junit.After
 import org.junit.Test
@@ -45,6 +49,55 @@ class PreferencesScreenshotTest : ScreenshotTest() {
             captureScreen("HeaderFragment_landscape")
         }
     }
+
+    @Test
+    fun headerFragmentToolbarCollapseAndExpand() =
+        withPreferencesActivity(HeaderFragment::class) { activity ->
+            activity.simulateSystemBars()
+            val appbar = activity.findViewById<AppBarLayout>(R.id.appbar)
+            appbar.setExpanded(false, false)
+            advanceRobolectricLooper()
+            captureScreen("HeaderFragment_toolbar_collapsed")
+
+            appbar.setExpanded(true, false)
+            advanceRobolectricLooper()
+            captureScreen("HeaderFragment_toolbar_expanded")
+        }
+
+    @Test
+    fun settingsPanelSystemBarsChange() =
+        withWritePermissions {
+            withPreferencesActivity(GeneralSettingsFragment::class) { activity ->
+                val name = "GeneralSettingsFragment_sdk${Build.VERSION.SDK_INT}"
+                val appbar = activity.settingsFragment!!.requireView().findViewById<AppBarLayout>(R.id.appbar)
+                appbar.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout).scrimAnimationDuration = 0
+                activity.dispatchInsets(navBarBottom = 24.dp)
+                appbar.setExpanded(false, false)
+                advanceRobolectricLooper()
+                captureScreen("${name}_collapsed")
+
+                activity.dispatchInsets(barsVisible = false, navBarStableBottom = 24.dp)
+                advanceRobolectricLooper()
+                captureScreen("${name}_fullscreen_collapsed")
+
+                appbar.setExpanded(true, false)
+                advanceRobolectricLooper()
+                captureScreen("${name}_fullscreen_expanded")
+
+                activity.dispatchInsets(barsVisible = false, cutoutTop = 48.dp, navBarStableBottom = 24.dp)
+                advanceRobolectricLooper()
+                captureScreen("${name}_fullscreen_cutout")
+
+                appbar.setExpanded(false, false)
+                advanceRobolectricLooper()
+                captureScreen("${name}_fullscreen_cutout_collapsed")
+
+                appbar.setExpanded(true, false)
+                activity.dispatchInsets(navBarBottom = 24.dp)
+                advanceRobolectricLooper()
+                captureScreen("${name}_system_bars_restored")
+            }
+        }
 
     @Test
     fun headerFragmentGestureBarHiddenScrolledToBottom() =
