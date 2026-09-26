@@ -75,6 +75,15 @@ subprojects {
                 isIncludeAndroidResources = true
             }
             androidExtension.testOptions.unitTests.all {
+                // Resolve SDKs before forking tests: Robolectric's shared download lock races on Windows (Issue 22069).
+                it.dependsOn(":AnkiDroid:robolectricSdkDownload")
+                val robolectricDependencies = project(":AnkiDroid").layout.buildDirectory.file("robolectric-deps.properties")
+                it.inputs.file(robolectricDependencies)
+                it.systemProperty(
+                    "robolectric-deps.properties",
+                    robolectricDependencies.get().asFile.absolutePath,
+                )
+
                 // tell backend to avoid rollover time, and disable interval fuzzing
                 it.environment("ANKI_TEST_MODE", "1")
 

@@ -1,5 +1,6 @@
 /**
- * Downloads all android-all-instrumented dependencies and copies them to the mavenLocal() repository
+ * Downloads android-all-instrumented dependencies into Gradle's cache for offline Robolectric.
+ * Writes a properties file pointing to the cached jars, so worktrees do not need their own copies.
  *
  * Once applied to your gradle project, can be executed with ./gradlew robolectricSdkDownload
  */
@@ -13,11 +14,8 @@
 // Note: the PREINSTRUMENTED_VERSION constant is what you put on the end of the artifact
 
 // Only the versions currently used in AnkiDroid Robolectric tests are active, the rest are commented out
-// To update these versions, open a terminal in the Anki-Android directory and perform the following steps:
-//   1. Run `rm -r ~/.m2` to delete the .m2 directory in your home directory.
-//   2. Run `./gradlew jacocoUnitTestReport` to run all unit tests.
-//   3. Run `find ~/.m2 -type d -name '*-robolectric-*'`.
-//   4. Update the lines below to match the output from `find`.
+// When updating Robolectric, match these versions to DefaultSdkProvider and PREINSTRUMENTED_VERSION.
+// Run `./gradlew jacocoUnitTestReport` to check that all SDKs used by the tests are included.
 def robolectricAndroidSdkVersions = [
 //        [androidVersion: "6.0.1_r3", frameworkSdkBuildVersion: "r1"],
 //        [androidVersion: "7.0.0_r1", frameworkSdkBuildVersion: "r1"],
@@ -36,13 +34,13 @@ def robolectricAndroidSdkVersions = [
         [androidVersion: "16", frameworkSdkBuildVersion: "13921718"], // current targetSdk
 ]
 
-// Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks
-tasks.register('robolectricSdkDownload') {
+def robolectricSdkDownload = tasks.register('robolectricSdkDownload', WriteProperties) {
     group = "Dependencies"
-    description = "Downloads all robolectric SDK dependencies into mavenLocal, for use with offline robolectric"
+    description = "Downloads Robolectric SDKs and writes their cached paths for offline tests"
+    destinationFile = layout.buildDirectory.file("robolectric-deps.properties")
 }
 
-// Generate the configuration and actual copy tasks.
+// Use separate configurations so Gradle retains every SDK version instead of selecting the newest.
 robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
     // the final part of this `-i<number>` comes from PREINSTRUMENTED_VERSION in upstream DefaultSdkProvider
     def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i7"
@@ -52,24 +50,10 @@ robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
     def sdkConfig = configurations.create(version)
     dependencies.add(version, "org.robolectric:android-all-instrumented:${version}")
 
-    // An ArtifactView on the existing configuration gives us the POM alongside the JAR so
-    // maven local has both.
-    def sdkPomFiles = sdkConfig.incoming.artifactView {
-        attributes {
-            attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, "pom")
-        }
-        // if the POM can't be resolved, return an empty collection rather than failing the build
-        lenient = true
-    }.files
-
-    def mavenLocalFile = new File(this.repositories.mavenLocal().url)
-    def mavenRobolectric = new File(mavenLocalFile, "org/robolectric/android-all-instrumented/${version}")
-    // Copying all files downloaded for the created configuration into maven local.
-    tasks.register("robolectricSdkDownload-${version}", Copy) {
-        from sdkConfig
-        from sdkPomFiles
-        into mavenRobolectric
+    robolectricSdkDownload.configure {
+        inputs.files(sdkConfig).withPropertyName(version)
+        property("org.robolectric:android-all-instrumented:${version}",
+                sdkConfig.elements.map { it.iterator().next().asFile.absolutePath })
     }
-    robolectricSdkDownload.configure { dependsOn "robolectricSdkDownload-${version}" }
 }
 
