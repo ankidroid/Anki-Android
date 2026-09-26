@@ -328,7 +328,7 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.ReviewInfo.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 val selectedDeckBeforeQuery = col.decks.selected()
-                var deckIdOfTemporarilySelectedDeck: Long = -1
+                var deckIdOfTemporarilySelectedDeck: DeckId = -1
                 var limit = 1 // the number of scheduled cards to return
                 var selectionArgIndex = 0
 
