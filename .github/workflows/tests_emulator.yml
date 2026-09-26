@@ -222,13 +222,12 @@ jobs:
           # update workflows/README.md when modifying this script
           script: |
             touch adb-log.txt
-            $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
             bash .github/disable_art_metrics.sh
             # Fix "Speech Recognition and Synthesis from Google keeps stopping" causing RootViewWithoutFocusException  
             bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
             bash .github/adb_retry.sh emu screenrecord start --time-limit 1800 video.webm
             sleep 5
-            ./gradlew uninstallAll jacocoAndroidTestReport --daemon
+            bash .github/with_emulator_log.sh adb-log.txt ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
       - name: Report Emulator Test Results
         if: always() && hashFiles('AnkiDroid/build/outputs/androidTest-results/connected/**/TEST-*.xml') != ''
