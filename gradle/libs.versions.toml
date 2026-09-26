@@ -23,33 +23,33 @@ ktlint = '1.8.0'
 # https://developer.android.com/build/releases/past-releases
 # Pinned to 9.0.1 until building androidTest in release mode circular dependency issue resolved
 # Upstream reference https://issuetracker.google.com/issues/491718901
-androidGradlePlugin = "9.4.0"
+androidGradlePlugin = "9.4.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.12.4"
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidxAnnotation = "1.10.0"
+androidxAnnotation = "1.11.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidxAppCompat = "1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/benchmark
-androidxBenchmark = "1.4.1"
+androidxBenchmark = "1.5.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidxBrowser = "1.10.0"
 # https://developer.android.com/jetpack/compose/bom/bom-mapping
-androidxComposeBillOfMaterials = "2026.06.01"
+androidxComposeBillOfMaterials = "2026.09.00"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 androidxConstraintlayout = "2.2.2"
 # https://developer.android.com/jetpack/androidx/releases/core
-androidxCoreKtx = "1.17.0"
+androidxCoreKtx = "1.19.1"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
 androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
 androidxExifinterface = "1.4.2"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidxFragmentKtx = "1.9.0"
+androidxFragmentKtx = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-androidxLifecycleProcess = "2.10.0"
+androidxLifecycleProcess = "2.11.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.11.0"
+androidxMedia3 = "1.11.1"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/profileinstaller
@@ -57,7 +57,7 @@ androidxProfileinstaller = "1.4.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
 androidxRecyclerview = "1.4.0"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
-androidxSqlite = "2.7.0"
+androidxSqlite = "2.7.1"
 # https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
 androidxSwipeRefreshLayout = "1.2.0"
 # https://developer.android.com/jetpack/androidx/releases/test
@@ -69,13 +69,13 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.16.0"
 # https://developer.android.com/jetpack/androidx/releases/work
-androidxWork = "2.11.2"
+androidxWork = "2.12.0"
 # https://github.com/ankidroid/Anki-Android-Backend/
 ankiBackend = '0.1.68-anki26.05'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 # https://github.com/skydoves/ColorPickerView/releases
-colorPickerView = "2.4.0"
+colorPickerView = "2.5.0"
 # https://commons.apache.org/proper/commons-collections/changes.html
 commonsCollections4 = "4.6.0"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
@@ -112,13 +112,13 @@ mockitoInline = "5.2.0"
 mockitoKotlin = "6.3.0"
 mockk = "1.14.11"
 nanohttpd = "2.3.1"
-okhttp = "5.4.0"
+okhttp = "5.5.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.36.1"
+protobufKotlinLite = "4.36.2"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
-robolectric = "4.16.1"
+robolectric = "4.17"
 # https://github.com/takahirom/roborazzi/releases
-roborazzi = "1.74.0"
+roborazzi = "1.75.0"
 searchpreference = "2.7.3"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
@@ -127,11 +127,11 @@ slackKeeper = "0.16.1"
 slf4j = "2.0.19"
 slf4jTimber = "3.1"
 # https://github.com/google/TestParameterInjector/blob/main/CHANGELOG.md
-testParameterInjector = "1.22"
+testParameterInjector = "1.23"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "4.0.0"
+triplet = "4.1.1"
 turbine = "1.2.1"
 
 [libraries]
