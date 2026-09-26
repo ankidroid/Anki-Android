@@ -104,6 +104,10 @@ fun DeckPicker.handleNewSync(
                 // auth failed; log out
                 updateLogin("", "")
                 throw exc
+            } catch (exc: BackendSyncException) {
+                if (!exc.isClockOffException()) throw exc
+                showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_SYNC_CLOCK_OFF, exc.localizedMessage)
+                return@launchCatchingTask
             }
             withCol { notetypes.clearCache() }
             notifySubscribersAllValuesChanged(deckPicker)
@@ -115,6 +119,14 @@ fun DeckPicker.handleNewSync(
         }
     }
 }
+
+/** The backend currently exposes ClockIncorrect as a localized sync error message. */
+private fun BackendSyncException.isClockOffException(): Boolean =
+    try {
+        message == TR.syncClockOff()
+    } catch (_: Throwable) {
+        false
+    }
 
 fun updateLogin(
     username: String,
