@@ -1127,11 +1127,10 @@ open class Reviewer :
         }
     }
 
-    private fun showDueDateDialog() =
-        launchCatchingTask {
-            Timber.i("showing due date dialog")
-            SetDueDateDialog.show(this@Reviewer, listOf(currentCardId!!))
-        }
+    private fun showDueDateDialog() {
+        Timber.i("showing due date dialog")
+        SetDueDateDialog.show(this, listOf(currentCardId!!))
+    }
 
     private fun showResetCardDialog() {
         Timber.i("showResetCardDialog() Reset progress button pressed")

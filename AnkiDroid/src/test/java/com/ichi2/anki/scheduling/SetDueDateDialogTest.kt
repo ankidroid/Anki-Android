@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.Lifecycle
@@ -18,7 +19,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
 import com.ichi2.anki.browser.IdsFile
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
@@ -30,12 +30,6 @@ import io.mockk.coEvery
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
@@ -44,7 +38,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import java.io.File
-import kotlin.coroutines.coroutineContext
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -52,7 +45,6 @@ import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-@NeedsTest("set interval to same value visibility with FSRS")
 @RunWith(AndroidJUnit4::class)
 class SetDueDateDialogTest : RobolectricTest() {
     @Test
@@ -208,41 +200,28 @@ class SetDueDateDialogTest : RobolectricTest() {
         }
 
     @Test
-    fun `cancelled caller leaves no ids file behind`() =
-        runTest {
-            val cardIds = List(2) { addBasicNote().firstCard().id }
-            val cacheDir = File(targetContext.cacheDir, "set-due-date-cancelled").also { it.mkdirs() }
-
-            CoroutineScope(coroutineContext + Job())
-                .async {
-                    coroutineContext.cancel()
-                    SetDueDateDialog.newInstance(cacheDir, cardIds)
-                }
-            advanceUntilIdle()
-
-            assertThat(cacheDir.listFiles()?.size, equalTo(0))
-        }
+    fun `loading FSRS forces the interval to match the due date`() = assertSchedulerLoading(fsrsEnabled = true)
 
     @Test
-    fun `concurrent requests return without waiting for dialog preparation`() =
+    fun `loading SM-2 allows changing the interval`() = assertSchedulerLoading(fsrsEnabled = false)
+
+    @Test
+    fun `unavailable scheduler setting falls back to SM-2`() = assertSchedulerLoading(fsrsEnabled = null)
+
+    @Test
+    fun `show and duplicate requests return without waiting for loading`() =
         withActivity { activity ->
             val firstCardIds = listOf(addBasicNote().firstCard().id)
             val secondCardIds = listOf(addBasicNote().firstCard().id)
             withPausedLoading { finishLoading ->
-                val first = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, firstCardIds) }
-                val second = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, secondCardIds) }
-
-                assertFalse(first.isCompleted)
-                assertTrue(second.isCompleted, "duplicate requests return without waiting")
-
-                finishLoading.complete(Unit)
-                first.await()
-                second.await()
+                SetDueDateDialog.show(activity, firstCardIds)
+                SetDueDateDialog.show(activity, secondCardIds)
                 advanceRobolectricLooper()
 
                 assertEquals(firstCardIds, assertNotNull(activity.currentDialog).cardIds)
                 assertEquals(1, activity.supportFragmentManager.backStackEntryCount)
                 assertEquals(1, activity.dueDateFiles.size)
+                finishLoading.complete(Unit)
             }
         }
 
@@ -268,21 +247,52 @@ class SetDueDateDialogTest : RobolectricTest() {
         }
 
     @Test
-    fun `cancelled preparation allows another dialog request`() =
+    fun `dialog can be dismissed and reopened while loading`() =
         withActivity { activity ->
-            val cardIds = listOf(addBasicNote().firstCard().id)
-            withPausedLoading { finishLoading ->
-                val request = async(start = CoroutineStart.UNDISPATCHED) { SetDueDateDialog.show(activity, cardIds) }
-                assertFalse(request.isCompleted)
-                request.cancelAndJoin()
+            val firstCardIds = listOf(addBasicNote().firstCard().id)
+            val secondCardIds = listOf(addBasicNote().firstCard().id)
+            withPausedLoading(fsrsEnabled = true) { finishLoading ->
+                SetDueDateDialog.show(activity, firstCardIds)
+                advanceRobolectricLooper()
+                assertNotNull(activity.currentDialog).dismiss()
+                advanceRobolectricLooper()
+                assertNull(activity.currentDialog)
+                assertTrue(activity.dueDateFiles.isEmpty())
 
+                coEvery { getFSRSStatus() } returns false
+                SetDueDateDialog.show(activity, secondCardIds)
                 finishLoading.complete(Unit)
-                SetDueDateDialog.show(activity, cardIds)
+                advanceUntilIdle()
                 advanceRobolectricLooper()
 
                 val dialog = assertNotNull(activity.currentDialog)
-                assertEquals(cardIds, dialog.cardIds)
+                assertEquals(secondCardIds, dialog.cardIds)
                 assertTrue(dialog.requireDialog().isShowing)
+                assertTrue(dialog.changeInterval.isVisible)
+                assertFalse(dialog.viewModel.fsrsEnabled.value!!)
+            }
+        }
+
+    private fun assertSchedulerLoading(fsrsEnabled: Boolean?) =
+        withActivity { activity ->
+            val cardIds = listOf(addBasicNote().firstCard().id)
+            withPausedLoading(fsrsEnabled) { finishLoading ->
+                SetDueDateDialog.show(activity, cardIds)
+                advanceRobolectricLooper()
+                val dialog = assertNotNull(activity.currentDialog)
+                dialog.singleDayText.setText("3")
+                assertFalse(dialog.positiveButtonIsEnabled, "cannot save before the scheduler setting is loaded")
+                assertFalse(dialog.changeInterval.isVisible)
+                assertNull(dialog.viewModel.updateDueDateAsync().await(), "keyboard submission cannot save while loading")
+
+                finishLoading.complete(Unit)
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+
+                assertTrue(dialog.positiveButtonIsEnabled)
+                assertEquals(fsrsEnabled != true, dialog.changeInterval.isVisible)
+                assertEquals(fsrsEnabled == true, dialog.changeInterval.isChecked)
+                assertEquals(SetDueDateDays(if (fsrsEnabled == true) "3!" else "3"), dialog.viewModel.calculateDaysParameter())
             }
         }
 
@@ -317,7 +327,7 @@ class SetDueDateDialogTest : RobolectricTest() {
         }
     }
 
-    private suspend fun setDueDateArgs(cardIds: List<CardId>): Bundle =
+    private fun setDueDateArgs(cardIds: List<CardId>): Bundle =
         SetDueDateDialog
             .newInstance(targetContext.externalCacheDir ?: targetContext.cacheDir, cardIds)
             .requireArguments()
