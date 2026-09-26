@@ -6,6 +6,7 @@ package com.ichi2.anki.dialogs
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -21,8 +22,13 @@ import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.text.BidiFormatter
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -59,6 +65,7 @@ import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.InitStatus
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.withProgress
+import com.ichi2.themes.Themes
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.boldList
 import kotlinx.coroutines.flow.filterNotNull
@@ -99,6 +106,7 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = DialogChangeNoteTypeBinding.bind(view)
+        setupEdgeToEdge(binding)
 
         binding.toolbar.title = TR.sentenceCase.changeNoteType
         binding.toolbar.setNavigationOnClickListener { dismiss() }
@@ -128,6 +136,23 @@ class ChangeNoteTypeDialog : AnalyticsDialogFragment(R.layout.dialog_change_note
                     }
                 }
             }
+        }
+    }
+
+    private fun setupEdgeToEdge(binding: DialogChangeNoteTypeBinding) {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { toolbarContainer, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            toolbarContainer.updatePadding(left = bars.left, top = bars.top, right = bars.right)
+            insets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.changeNoteTypeLayout) { content, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            content.updatePadding(left = bars.left, right = bars.right, bottom = bars.bottom)
+            insets
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            val window = dialog?.window ?: return
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !Themes.isNightTheme
         }
     }
 

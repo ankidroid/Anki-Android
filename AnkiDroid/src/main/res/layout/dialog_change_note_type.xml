@@ -11,25 +11,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <FrameLayout
+        android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        app:navigationIcon="@drawable/close_icon"
-        app:titleTextAppearance="@style/TextAppearance.AnkiDroid.TopAppBar.Title"
-        tools:title="Change note type">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="8dp"
-            android:text="@string/save"
-            android:visibility="gone"
-            tools:visibility="visible" />
-    </com.google.android.material.appbar.MaterialToolbar>
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/close_icon"
+            app:titleTextAppearance="@style/TextAppearance.AnkiDroid.TopAppBar.Title"
+            tools:title="Change note type">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:text="@string/save"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/change_note_type_loading_layout"
