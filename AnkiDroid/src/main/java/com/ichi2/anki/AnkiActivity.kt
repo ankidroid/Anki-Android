@@ -106,6 +106,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentBuilder
+import com.ichi2.anki.ankicommon.R as AnkiCommonR
 import com.ichi2.anki.common.android.R as CommonR
 
 @UiThread
@@ -485,8 +486,8 @@ open class AnkiActivity(
         val builder =
             CustomTabsIntentBuilder(customTabActivityHelper.session)
                 .setShowTitle(true)
-                .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
-                .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
+                .setStartAnimations(this, AnkiCommonR.anim.slide_right_in, AnkiCommonR.anim.slide_left_out)
+                .setExitAnimations(this, AnkiCommonR.anim.slide_left_in, AnkiCommonR.anim.slide_right_out)
                 .setCloseButtonIcon(
                     BitmapFactory.decodeResource(
                         this.resources,

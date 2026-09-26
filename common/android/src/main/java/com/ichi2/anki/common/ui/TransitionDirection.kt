@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * Direction of an Activity transition animation.
  *
- * Consumed by `ActivityTransitionAnimation` (AnkiDroid app module) to choose
+ * Consumed by `ActivityTransitionAnimation` (`:anki-common`) to choose
  * the appropriate slide/fade animation. Lives here so navigation destinations
  * in lower modules can pass a direction across the module boundary.
  */
