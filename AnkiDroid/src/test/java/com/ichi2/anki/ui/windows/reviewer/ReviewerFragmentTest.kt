@@ -2,9 +2,12 @@
 
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.text.InputType
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -16,6 +19,9 @@ import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.singleDayText
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
+import com.ichi2.testutils.ext.addNoSuggestNote
+import com.ichi2.testutils.ext.assertImeInputType
+import com.ichi2.testutils.ext.requireInputConnection
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
@@ -34,6 +40,28 @@ import kotlin.test.assertTrue
 @RunWith(AndroidJUnit4::class)
 class ReviewerFragmentTest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
+    @Test
+    fun `nosuggest supports Done and resets for the next typing card`() =
+        runTest {
+            targetContext.sharedPrefs().edit { putBoolean("useInputTag", false) }
+            val noSuggestCard = col.addNoSuggestNote().firstCard()
+            val normalCard = addBasicWithTypingNote("Normal question", "Answer").firstCard()
+            withReviewer {
+                val field = binding.typeAnswerEditText
+                assertEquals(noSuggestCard.id, viewModel.getCardId())
+                field.assertImeInputType(InputType.TYPE_NULL)
+
+                field.requireInputConnection().performEditorAction(EditorInfo.IME_ACTION_DONE)
+                advanceUntilIdle()
+                assertTrue(viewModel.showingAnswer.value)
+
+                viewModel.answerCard(Rating.EASY)
+                advanceUntilIdle()
+                assertEquals(normalCard.id, viewModel.getCardId())
+                field.assertImeInputType(field.inputType)
+            }
+        }
 
     @Test
     fun `shaking does not stack set due date dialogs`() = assertShakeDoesNotStackDialogs(ViewerAction.RESCHEDULE_NOTE)
