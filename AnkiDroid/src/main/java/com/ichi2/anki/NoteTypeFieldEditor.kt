@@ -22,6 +22,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -103,7 +104,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
         enableToolbar()
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
-            val constraints = insets.getInsets(systemBars() or displayCutout())
+            val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
             binding.toolbarContainer.updatePadding(left = constraints.left, right = constraints.right, top = constraints.top)
             binding.btnAdd.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = constraints.bottom + 32.dp.toPx(this@NoteTypeFieldEditor)
