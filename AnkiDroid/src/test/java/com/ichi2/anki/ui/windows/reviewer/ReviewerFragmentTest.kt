@@ -2,9 +2,12 @@
 
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.view.View
+import android.webkit.WebView
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -15,9 +18,11 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.singleDayText
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -34,6 +39,64 @@ import kotlin.test.assertTrue
 @RunWith(AndroidJUnit4::class)
 class ReviewerFragmentTest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
+    @After
+    fun resetSoftwareRendering() {
+        Prefs.sharedPrefs.edit {
+            remove(Prefs.key(R.string.disable_hardware_render_key))
+        }
+    }
+
+    @Test
+    fun `software rendering is applied to the study screen when enabled`() =
+        runTest {
+            addBasicNote()
+            Prefs.useSoftwareRendering = true
+
+            withReviewer {
+                assertRenderingLayerType(View.LAYER_TYPE_SOFTWARE)
+            }
+        }
+
+    @Test
+    fun `software rendering is reapplied after the WebView is recreated`() =
+        runTest {
+            addBasicNote()
+            Prefs.useSoftwareRendering = true
+
+            withReviewer {
+                val webViewLayout = binding.webViewLayout
+                val originalWebView = assertIs<WebView>(webViewLayout.getChildAt(0))
+                webViewLayout.onRenderProcessGone(originalWebView)
+
+                assertNotSame(originalWebView, webViewLayout.getChildAt(0))
+                assertRenderingLayerType(View.LAYER_TYPE_SOFTWARE)
+            }
+        }
+
+    @Test
+    fun `default rendering is preserved when software rendering is disabled`() =
+        runTest {
+            addBasicNote()
+            Prefs.useSoftwareRendering = false
+
+            withReviewer {
+                assertRenderingLayerType(View.LAYER_TYPE_NONE)
+            }
+        }
+
+    @Test
+    fun `default rendering is preserved when the rendering preference is unset`() =
+        runTest {
+            addBasicNote()
+            Prefs.sharedPrefs.edit {
+                remove(Prefs.key(R.string.disable_hardware_render_key))
+            }
+
+            withReviewer {
+                assertRenderingLayerType(View.LAYER_TYPE_NONE)
+            }
+        }
 
     @Test
     fun `shaking does not stack set due date dialogs`() = assertShakeDoesNotStackDialogs(ViewerAction.RESCHEDULE_NOTE)
@@ -112,6 +175,13 @@ class ReviewerFragmentTest : RobolectricTest() {
                 assertFalse(reopenedTags.isChecked("unconfirmed"))
             }
         }
+
+    private fun ReviewerFragment.assertRenderingLayerType(expected: Int) {
+        assertEquals(expected, requireView().layerType, "study screen root")
+        assertEquals(expected, binding.backButton.layerType, "toolbar button")
+        assertEquals(expected, binding.answerArea.layerType, "answer buttons")
+        assertEquals(expected, assertIs<WebView>(binding.webViewLayout.getChildAt(0)).layerType, "card WebView")
+    }
 
     private suspend fun TestScope.openEditTags(reviewer: ReviewerFragment): TagsDialog {
         reviewer.viewModel.executeAction(ViewerAction.TAG)
