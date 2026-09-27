@@ -95,18 +95,19 @@ object TagsUtil {
     fun compareTag(
         lhs: String,
         rhs: String,
+    ): Int = compareTag(lhs.split("::"), rhs.split("::"))
+
+    /** Compare already split tags without allocating their parts for each comparison. */
+    internal fun compareTag(
+        lhs: List<String>,
+        rhs: List<String>,
     ): Int {
-        val lhsIt = lhs.split("::").asSequence().iterator()
-        val rhsIt = rhs.split("::").asSequence().iterator()
-        while (lhsIt.hasNext() && rhsIt.hasNext()) {
-            val cmp = lhsIt.next().compareTo(rhsIt.next(), true)
+        for (index in 0 until minOf(lhs.size, rhs.size)) {
+            val cmp = lhs[index].compareTo(rhs[index], true)
             if (cmp != 0) {
                 return cmp
             }
         }
-        if (!lhsIt.hasNext() && !rhsIt.hasNext()) {
-            return 0
-        }
-        return if (lhsIt.hasNext()) 1 else -1
+        return lhs.size.compareTo(rhs.size)
     }
 }
