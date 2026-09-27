@@ -48,6 +48,7 @@ sealed class ImageOcclusionArgs : Parcelable {
     /**
      * A [JSONObject] containing options for loading the [image occlusion page][ImageOcclusion].
      * This includes the type of operation ("add" or "edit"), and relevant IDs and paths.
+     * IDs are decimal strings so JavaScript can convert them to bigint without losing precision.
      *
      * See 'IOMode' in https://github.com/ankitects/anki/blob/main/ts/routes/image-occlusion/lib.ts
      */
@@ -57,12 +58,12 @@ sealed class ImageOcclusionArgs : Parcelable {
                 JSONObject().also {
                     it.put("kind", "add")
                     it.put("imagePath", this.imagePath)
-                    it.put("notetypeId", this.noteTypeId)
+                    it.put("notetypeId", this.noteTypeId.toString())
                 }
             is Edit ->
                 JSONObject().also {
                     it.put("kind", "edit")
-                    it.put("noteId", this.noteId)
+                    it.put("noteId", this.noteId.toString())
                 }
         }
 }
