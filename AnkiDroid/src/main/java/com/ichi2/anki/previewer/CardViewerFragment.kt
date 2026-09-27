@@ -190,6 +190,8 @@ abstract class CardViewerFragment(
             scrollBars = View.SCROLLBARS_OUTSIDE_OVERLAY
             setAcceptThirdPartyCookies(true)
             with(settings) {
+                // Scale the whole card with CSS instead; text-only zoom breaks MathJax layout.
+                textZoom = 100
                 javaScriptEnabled = true
                 loadWithOverviewMode = true
                 builtInZoomControls = true

@@ -40,6 +40,9 @@ fun stdHtml(
     val canvasColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.colorBackground).toRGBHex()
     val fgColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.textColor).toRGBHex()
     val colors = ":root$rootNightMode { --canvas: $canvasColor; --fg: $fgColor; }"
+    // Preserve the system font size while scaling text and em-based layout together.
+    val fontScale = context.resources.configuration.fontScale
+    val fontScaleCss = if (fontScale != 1f) "html { zoom: $fontScale }" else ""
 
     val jsAssets: List<String> =
         listOf(
@@ -65,6 +68,7 @@ fun stdHtml(
             <style>
                 .night-mode button { --canvas: #606060; --fg: #eee; }
                 $colors
+                $fontScaleCss
             </style>
         </head>
         <body class="${bodyClass()}">

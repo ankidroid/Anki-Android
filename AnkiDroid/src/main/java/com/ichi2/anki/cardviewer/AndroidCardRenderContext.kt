@@ -118,7 +118,7 @@ class AndroidCardRenderContext(
             typeAnswer: TypeAnswer,
         ): AndroidCardRenderContext {
             val preferences = context.sharedPrefs()
-            val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences)
+            val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences, context.resources.configuration.fontScale)
             val cardHtmlTemplate = CardTemplate.load(context)
             val showAudioPlayButtons = !col.config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS)
             return AndroidCardRenderContext(
