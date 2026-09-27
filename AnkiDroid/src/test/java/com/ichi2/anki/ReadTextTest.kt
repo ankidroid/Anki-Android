@@ -16,19 +16,36 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.speech.tts.TextToSpeech
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.ReadText.closeForTests
 import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
 import com.ichi2.anki.reviewer.CardSide
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockkObject
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.test.runCurrent
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.Implementation
+import org.robolectric.annotation.Implements
+import org.robolectric.shadows.ShadowTextToSpeech
+import java.util.Locale
+import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
 class ReadTextTest : RobolectricTest() {
@@ -86,6 +103,106 @@ class ReadTextTest : RobolectricTest() {
         initializeTextToSpeech(targetContext)
         releaseTts(mock(Context::class.java))
         assertThat(isTextToSpeechShutdown, equalTo(false))
+    }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `reviewer TTS waits for cached languages without blocking the callback`() =
+        runTest {
+            val (viewer, lifecycle) = createViewer()
+            val locales = CompletableDeferred<List<Locale>>()
+            try {
+                mockkObject(TtsVoices) {
+                    coEvery { TtsVoices.availableLocales() } coAnswers { locales.await() }
+                    initializeTextToSpeech(viewer)
+
+                    shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+                    verify(viewer, never()).ttsInitialized()
+
+                    locales.complete(listOf(Locale.US))
+                    runCurrent()
+                    verify(viewer).ttsInitialized()
+                    coVerify { TtsVoices.availableLocales() }
+                }
+            } finally {
+                lifecycle.currentState = Lifecycle.State.DESTROYED
+            }
+        }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `releasing TTS cancels the reviewer wait without cancelling discovery`() = assertWaitCancelled { viewer, _ -> releaseTts(viewer) }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `destroying the reviewer cancels its wait without cancelling discovery`() =
+        assertWaitCancelled { _, lifecycle -> lifecycle.currentState = Lifecycle.State.DESTROYED }
+
+    private fun assertWaitCancelled(stop: (AbstractFlashcardViewer, LifecycleRegistry) -> Unit) =
+        runTest {
+            val (viewer, lifecycle) = createViewer()
+            val locales = CompletableDeferred<List<Locale>>()
+            try {
+                mockkObject(TtsVoices) {
+                    coEvery { TtsVoices.availableLocales() } coAnswers { locales.await() }
+                    initializeTextToSpeech(viewer)
+                    shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+
+                    stop(viewer, lifecycle)
+                    runCurrent()
+                    assertFalse(locales.isCancelled)
+                    locales.complete(listOf(Locale.US))
+                    runCurrent()
+
+                    verify(viewer, never()).ttsInitialized()
+                }
+            } finally {
+                lifecycle.currentState = Lifecycle.State.DESTROYED
+            }
+        }
+
+    @Test
+    @Config(shadows = [NoLanguageQueryTextToSpeech::class])
+    fun `an old TTS callback cannot initialize its replacement`() =
+        runTest {
+            val (viewer, lifecycle) = createViewer()
+            try {
+                mockkObject(TtsVoices) {
+                    coEvery { TtsVoices.availableLocales() } returns listOf(Locale.US)
+                    initializeTextToSpeech(viewer)
+                    val oldCallback = shadowOf(textToSpeech).onInitListener
+                    initializeTextToSpeech(viewer)
+
+                    oldCallback.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+                    verify(viewer, never()).ttsInitialized()
+
+                    shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
+                    runCurrent()
+                    verify(viewer).ttsInitialized()
+                }
+            } finally {
+                lifecycle.currentState = Lifecycle.State.DESTROYED
+            }
+        }
+
+    @Implements(TextToSpeech::class)
+    class NoLanguageQueryTextToSpeech : ShadowTextToSpeech() {
+        @Implementation
+        fun getDefaultEngine(): String = "reviewer.engine"
+
+        @Implementation
+        fun getAvailableLanguages(): Set<Locale> = throw AssertionError("Reviewer must use the startup language cache")
+    }
+
+    private fun createViewer(): Pair<AbstractFlashcardViewer, LifecycleRegistry> {
+        val viewer = mock(AbstractFlashcardViewer::class.java)
+        val lifecycle = LifecycleRegistry(viewer)
+        `when`(viewer.lifecycle).thenReturn(lifecycle)
+        lifecycle.currentState = Lifecycle.State.RESUMED
+        return viewer to lifecycle
     }
 
     private val isTextToSpeechShutdown: Boolean

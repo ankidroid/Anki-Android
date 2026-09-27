@@ -107,7 +107,7 @@ object TtsVoices {
      *
      * @return The list of available languages, or an empty list if an error occurred
      */
-    private suspend fun availableLocales(): List<Locale> {
+    internal suspend fun availableLocales(): List<Locale> {
         if (this::availableLocaleData.isInitialized) {
             return this.availableLocaleData
         }
