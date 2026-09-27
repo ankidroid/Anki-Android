@@ -37,12 +37,12 @@ class ReadTextPickerTest : RobolectricTest() {
             val refreshed = CompletableDeferred<List<Locale>>()
             try {
                 mockkObject(TtsVoices) {
-                    coEvery { TtsVoices.availableLocales() } returns listOf(Locale.US)
+                    coEvery { TtsVoices.localesForEngine(any()) } returns listOf(Locale.US)
                     ReadText.initializeTts(viewer, mockk(relaxed = true))
                     shadowOf(ReadText.textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
                     runCurrent()
 
-                    coEvery { TtsVoices.availableLocales() } coAnswers { refreshed.await() }
+                    coEvery { TtsVoices.localesForEngine(any()) } coAnswers { refreshed.await() }
                     ReadText.selectTts("text", 1, 0, CardSide.QUESTION)
                     runCurrent()
                     ReadText.releaseTts(viewer)
@@ -69,7 +69,7 @@ class ReadTextPickerTest : RobolectricTest() {
             var languages = listOf(Locale.US)
             try {
                 mockkObject(TtsVoices) {
-                    coEvery { TtsVoices.availableLocales() } coAnswers { languages }
+                    coEvery { TtsVoices.localesForEngine(any()) } coAnswers { languages }
                     ReadText.initializeTts(viewer, mockk(relaxed = true))
                     shadowOf(ReadText.textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
                     runCurrent()

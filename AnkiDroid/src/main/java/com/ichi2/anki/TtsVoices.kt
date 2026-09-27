@@ -22,21 +22,22 @@ package com.ichi2.anki
 
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
-import com.ichi2.anki.TtsVoices.availableLocaleData
-import com.ichi2.anki.TtsVoices.availableLocales
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.i18n.normalize
 import com.ichi2.anki.i18n.toAnkiTwoLetterCode
 import com.ichi2.anki.libanki.TemplateManager
 import com.ichi2.anki.libanki.TtsVoice
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.util.Locale
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
 
 /**
@@ -51,13 +52,16 @@ object TtsVoices {
     // A new instance of this list is not required if the app language changes: .displayName returns
     // the new values
 
-    /** An immutable list of locales available for TTS */
+    /** Published before scanning other engines, so legacy TTS need not wait for them. */
+    private val engineLocaleData = AtomicReference(CompletableDeferred<EngineLocales>())
+
+    /** An immutable list of locales available across all TTS engines. */
     private lateinit var availableLocaleData: List<Locale>
 
     /** An immutable list of voices available for TTS */
     private lateinit var availableVoices: Set<AndroidTtsVoice>
 
-    /** A job which populates [availableLocaleData] */
+    /** A job which populates both the default-engine languages and all available voices. */
     private var buildLocalesJob: Job? = null
 
     /**
@@ -97,7 +101,33 @@ object TtsVoices {
     suspend fun refresh() {
         launchBuildLocalesJob()
         buildLocalesJob?.join()
-        loadTtsVoicesData()
+        val defaultLocales = CompletableDeferred<EngineLocales>()
+        loadTtsVoicesData(defaultLocales)
+        engineLocaleData.set(defaultLocales)
+    }
+
+    /**
+     * Returns cached languages for the reviewer's engine, suspending until ready.
+     * If the default engine has changed since startup, query that engine on a separate connection.
+     */
+    internal suspend fun localesForEngine(engine: String?): List<Locale> {
+        launchBuildLocalesJob()
+        val cached = engineLocaleData.get()
+        val result = cached.await()
+        if (result.engine == engine) return result.locales
+
+        val locales =
+            withContext(ioDispatcher) {
+                val tts = createTts(engine) ?: return@withContext emptyList()
+                try {
+                    readLocales(tts)
+                } finally {
+                    tts.shutdown()
+                }
+            }
+        // A refresh may have published newer data while this query was in flight.
+        engineLocaleData.compareAndSet(cached, CompletableDeferred(EngineLocales(engine, locales)))
+        return locales
     }
 
     /**
@@ -132,11 +162,11 @@ object TtsVoices {
     }
 
     /**
-     * Launches a [Job] to populate the list of available locales for use in TTS
+     * Launches a [Job] to populate the default-engine languages and all available voices
      *
      * This is run in the background, without blocking the main thread
      *
-     * [availableLocales] awaits the result of this function
+     * Legacy TTS does not wait for the full voice scan.
      */
     fun launchBuildLocalesJob() {
         if (this::availableLocaleData.isInitialized || buildLocalesJob != null) {
@@ -147,46 +177,82 @@ object TtsVoices {
         Timber.d("launching job")
         // This is intended to be a global singleton outside the lifecycle of a specific activity
         // Most of the time of execution is waiting for the TTS Engine to initialize
+        val defaultLocales = engineLocaleData.get()
         buildLocalesJob =
             applicationScope.launch(Dispatchers.IO) {
                 Timber.d("executing job")
-                loadTtsVoicesData()
+                loadTtsVoicesData(defaultLocales)
                 buildLocalesJob = null
-                Timber.d("%d TTS Voices available", availableLocaleData.size)
+                Timber.d("%d TTS Voices available", availableVoices.size)
             }
     }
 
-    /**
-     * Populates [availableVoices] and [availableLocaleData] with the voices and locales available
-     * across every installed TTS engine (#18737), not just the user's default engine.
-     */
-    private suspend fun loadTtsVoicesData() {
-        val (voices, locales) = loadVoices(::createTts)
+    private suspend fun loadTtsVoicesData(defaultLocales: CompletableDeferred<EngineLocales>) {
+        val (voices, locales) = loadVoices(defaultLocales, ::createTts)
         availableVoices = voices
         availableLocaleData = locales
     }
 
-    internal suspend fun loadVoices(createTts: suspend (String?) -> TextToSpeech?): Pair<Set<AndroidTtsVoice>, List<Locale>> {
+    /**
+     * Publishes default-engine languages before collecting voices from every installed engine.
+     * Both queries run in the startup job's IO context.
+     */
+    internal suspend fun loadVoices(
+        defaultLocales: CompletableDeferred<EngineLocales>,
+        createTts: suspend (String?) -> TextToSpeech?,
+    ): Pair<Set<AndroidTtsVoice>, List<Locale>> {
         // A default-engine instance is needed first to enumerate the installed engines
-        val probeTts = createTts(null)
+        val probeTts =
+            try {
+                createTts(null)
+            } catch (e: Exception) {
+                // Do not leave a reviewer waiting forever if discovery fails before publishing languages.
+                defaultLocales.completeExceptionally(e)
+                throw e
+            }
         if (probeTts == null) {
             Timber.e("Unable to build list of TTS Voices")
+            defaultLocales.complete(EngineLocales(null, emptyList()))
             return emptySet<AndroidTtsVoice>() to emptyList()
         }
 
         val enginePackages =
             try {
+                val engine = probeTts.defaultEngine
+                defaultLocales.complete(EngineLocales(engine, readLocales(probeTts)))
                 // `engines` lists every installed engine; include the default defensively
-                (probeTts.engines.map { it.name } + listOfNotNull(probeTts.defaultEngine)).distinct()
+                try {
+                    (probeTts.engines.map { it.name } + listOfNotNull(engine)).distinct()
+                } catch (e: Exception) {
+                    Timber.w(e, "unable to list TTS engines")
+                    listOfNotNull(engine)
+                }
             } catch (e: Exception) {
-                Timber.w(e, "unable to list TTS engines")
-                listOfNotNull(probeTts.defaultEngine)
+                defaultLocales.completeExceptionally(e)
+                throw e
             } finally {
                 probeTts.shutdown()
             }
 
         return loadVoicesFromEngines(enginePackages) { engine -> createTts(engine) }
     }
+
+    internal data class EngineLocales(
+        val engine: String?,
+        val locales: List<Locale>,
+    )
+
+    private fun readLocales(tts: TextToSpeech): List<Locale> =
+        try {
+            // Normalize engine-provided locales before displaying them, then remove aliases.
+            tts.availableLanguages
+                .orEmpty()
+                .map { it.normalize() }
+                .distinct()
+        } catch (e: Exception) {
+            Timber.w(e, "unable to read TTS languages")
+            emptyList()
+        }
 
     /**
      * Loads the voices and locales available across the provided [enginePackages].
