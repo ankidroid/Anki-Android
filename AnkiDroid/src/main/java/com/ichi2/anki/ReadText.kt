@@ -41,6 +41,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.Locale
@@ -63,6 +64,7 @@ object ReadText {
     private var completionListener: ReadTextListener? = null
     private var initializationJob: Job? = null
     private var initialization: Any? = null
+    private var ttsEngine: String? = null
     private var languageSelectionJob: Job? = null
 
     private fun speak(
@@ -111,10 +113,11 @@ object ReadText {
     ) {
         val context = flashCardViewer.get() as? AbstractFlashcardViewer ?: return
         val initialization = this.initialization ?: return
+        val engine = ttsEngine
         languageSelectionJob?.cancel()
         languageSelectionJob =
             context.launchCatchingTask {
-                val locales = TtsVoices.availableLocales()
+                val locales = TtsVoices.localesForEngine(engine)
                 if (this@ReadText.initialization !== initialization) return@launchCatchingTask
                 showTtsDialog(text, did, ord, qa, locales)
             }
@@ -320,8 +323,10 @@ object ReadText {
                         (context as AbstractFlashcardViewer).launchCatchingTask {
                             // Discovery may need more callbacks on the main thread, so suspend this
                             // reviewer instead of blocking the Android initialization callback.
-                            val locales = TtsVoices.availableLocales()
+                            val engine = withContext(ioDispatcher) { initializedTts.defaultEngine }
+                            val locales = TtsVoices.localesForEngine(engine)
                             if (this@ReadText.initialization !== initialization) return@launchCatchingTask
+                            ttsEngine = engine
                             initializedTts.setOnUtteranceProgressListener(utteranceProgressListener(context, listener))
                             if (locales.isNotEmpty()) {
                                 Timber.d("TTS initialized and available languages found")
@@ -433,6 +438,7 @@ object ReadText {
         initializationJob = null
         languageSelectionJob?.cancel()
         languageSelectionJob = null
+        ttsEngine = null
     }
 
     interface ReadTextListener {
