@@ -81,6 +81,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.ext.window
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.themes.Themes
+import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.utils.dp
 import com.ichi2.utils.show
 import com.squareup.seismic.ShakeDetector
@@ -246,6 +247,13 @@ class ReviewerFragment :
         if (Prefs.keepScreenOn) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
+
+        setRenderWorkaround(requireActivity())
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        super.onWebViewRecreated(webView)
+        setRenderWorkaround(requireActivity())
     }
 
     private fun setupTypeAnswer() {
