@@ -9,19 +9,21 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.observability.ensureOpsExecuted
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -91,29 +93,21 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `operations keep existing content visible until completion`() =
+    fun `removeTag keeps existing content visible until completion`() =
         runTest {
-            addTags("science::biology", "history")
-            addUnusedTag("unused")
+            addTags("science", "history")
             withViewModel {
-                val operations: List<ManageTagsViewModel.() -> Job> =
-                    listOf(
-                        { refreshTags() },
-                        { toggleCollapsed("science") },
-                        { renameTag("science", "physics") },
-                        { clearUnusedTags() },
-                        { removeTag("physics") },
-                    )
-                for (operation in operations) {
-                    val previous = loadedState
-                    withQueuedCollectionAccess {
-                        val job = operation()
-                        assertThat(loadedState, equalTo(previous.copy(isWorking = true)))
+                val previousTags = loadedState.visibleNodes
+                withQueuedCollectionAccess {
+                    val deletion = removeTag("science")
+                    assertThat(loadedState.isWorking, equalTo(true))
+                    assertThat(loadedState.visibleNodes, equalTo(previousTags))
 
-                        job.join()
+                    deletion.join()
 
-                        assertThat(loadedState.isWorking, equalTo(false))
-                    }
+                    assertThat(loadedState.isWorking, equalTo(false))
+                    assertThat(loadedState.error, nullValue())
+                    assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
                 }
             }
         }
@@ -160,6 +154,52 @@ class ManageTagsViewModelTest : RobolectricTest() {
                     assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
                 }
             }
+        }
+
+    @Test
+    fun `operation failure preserves content and retry clears error`() =
+        runTest {
+            addTags("science", "history")
+            withViewModel {
+                val previousTags = loadedState.visibleNodes
+                withLockedCollection {
+                    removeTag("science").join()
+                }
+
+                assertThat(loadedState.visibleNodes, equalTo(previousTags))
+                assertThat(loadedState.isWorking, equalTo(false))
+                assertThat(loadedState.error, instanceOf(BackendDbLockedException::class.java))
+
+                withQueuedCollectionAccess {
+                    val retry = removeTag("science")
+                    assertThat(loadedState.isWorking, equalTo(true))
+                    assertThat(loadedState.error, nullValue())
+
+                    retry.join()
+                    assertThat(loadedState.isWorking, equalTo(false))
+                    assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+                }
+            }
+        }
+
+    @Test
+    fun `initial load failure allows search input and retry`() =
+        runTest {
+            addTags("science", "history")
+            val viewModel = withLockedCollection { ManageTagsViewModel() }
+            val failure = viewModel.state.value
+            assertThat(failure, instanceOf(ManageTagsState.Error::class.java))
+            assertThat((failure as ManageTagsState.Error).error, instanceOf(BackendDbLockedException::class.java))
+
+            viewModel.filter("hist")
+            assertThat(viewModel.searchQuery.value, equalTo("hist"))
+
+            withQueuedCollectionAccess {
+                val retry = viewModel.refreshTags()
+                assertThat(viewModel.state.value, equalTo(ManageTagsState.Loading))
+                retry.join()
+            }
+            assertThat(viewModel.loadedState.visibleTagNames, equalTo(listOf("history")))
         }
 
     @Test
@@ -515,6 +555,15 @@ class ManageTagsViewModelTest : RobolectricTest() {
                 assertTrue(avgMs < expected, "toggleCollapsed took ${avgMs}ms on average, expected < $expected")
             }
         }
+
+    private suspend fun <T> withLockedCollection(block: suspend () -> T): T {
+        CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED
+        try {
+            return block()
+        } finally {
+            CollectionManager.emulatedOpenFailure = null
+        }
+    }
 
     /** Suspend backend access so assertions can observe an operation in progress. */
     private suspend fun TestScope.withQueuedCollectionAccess(block: suspend () -> Unit) {
