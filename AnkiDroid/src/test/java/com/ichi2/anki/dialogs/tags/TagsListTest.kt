@@ -523,6 +523,50 @@ class TagsListTest {
     }
 
     @Test
+    fun `sort updates ordering after checking and unchecking tags`() {
+        val tags = TagsList(listOf("c", "b", "a"), emptyList())
+        tags.sort()
+
+        tags.check("C")
+        tags.sort()
+        assertEquals(listOf("c", "a", "b"), tags.copyOfAllTagList())
+
+        tags.uncheck("c")
+        tags.sort()
+        assertEquals(listOf("a", "b", "c"), tags.copyOfAllTagList())
+    }
+
+    @Test
+    fun `sort updates ordering when a branch becomes indeterminate`() {
+        val tags = TagsList(listOf("a", "b::child"), emptyList())
+        tags.sort()
+
+        tags.check("B::child")
+        tags.sort()
+        assertEquals(listOf("b", "b::child", "a"), tags.copyOfAllTagList())
+
+        tags.uncheck("b::child")
+        tags.uncheck("b")
+        tags.sort()
+        assertEquals(listOf("a", "b", "b::child"), tags.copyOfAllTagList())
+
+        tags.setIndeterminate("B")
+        tags.sort()
+        assertEquals(listOf("b", "b::child", "a"), tags.copyOfAllTagList())
+    }
+
+    @Test
+    fun `sort updates ordering after selecting all tags`() {
+        val tags = TagsList(listOf("c", "b", "a"), listOf("c"))
+        tags.sort()
+        assertEquals(listOf("c", "a", "b"), tags.copyOfAllTagList())
+
+        tags.toggleAllCheckedStatuses()
+        tags.sort()
+        assertEquals(listOf("a", "b", "c"), tags.copyOfAllTagList())
+    }
+
+    @Test
     fun `sort includes newly added ancestors and preserves case insensitive uniqueness`() {
         val tags = TagsList(listOf("z", "a"), listOf("z"))
         tags.sort()
