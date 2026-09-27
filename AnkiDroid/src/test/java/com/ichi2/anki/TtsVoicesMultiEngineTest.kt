@@ -74,7 +74,6 @@ class TtsVoicesMultiEngineTest {
                     setOf(ENGINE_A, ENGINE_B),
                     allVoices
                         .await()
-                        .first
                         .map { it.engine }
                         .toSet(),
                 )
@@ -88,7 +87,7 @@ class TtsVoicesMultiEngineTest {
     fun `a failed default engine completes both caches with no voices`() =
         runTest {
             val defaultLocales = CompletableDeferred<TtsVoices.EngineLocales>()
-            val (voices, _) = TtsVoices.loadVoices(defaultLocales) { null }
+            val voices = TtsVoices.loadVoices(defaultLocales) { null }
 
             assertTrue(defaultLocales.isCompleted)
             assertEquals(emptyList(), defaultLocales.await().locales)
@@ -101,7 +100,7 @@ class TtsVoicesMultiEngineTest {
             val defaultLocales = CompletableDeferred<TtsVoices.EngineLocales>()
             val probe = probeTts()
             every { probe.availableLanguages } throws IllegalStateException("Language query failed")
-            val (voices, _) =
+            val voices =
                 TtsVoices.loadVoices(defaultLocales) { engine ->
                     when (engine) {
                         null -> probe
