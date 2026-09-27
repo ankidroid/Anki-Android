@@ -40,6 +40,10 @@ class ManageTagsViewModel : ViewModel() {
     val state: StateFlow<ManageTagsState>
         field = MutableStateFlow<ManageTagsState>(ManageTagsState.Loading)
 
+    /** Search field contents, available even while tags are loading or failed to load. */
+    val searchQuery: StateFlow<String>
+        field = MutableStateFlow("")
+
     private val _events = Channel<DisplayMessage>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
@@ -63,10 +67,9 @@ class ManageTagsViewModel : ViewModel() {
      * of having a filtered tag selected.
      */
     fun filter(query: String) {
-        if (tagList.isEmpty()) return
+        searchQuery.value = query
         updateState { loaded ->
             loaded.copy(
-                searchQuery = query,
                 visibleNodes = computeVisibleNodes(query),
             )
         }
@@ -109,7 +112,7 @@ class ManageTagsViewModel : ViewModel() {
                     tagList.map {
                         if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
                     }
-                updateState { it.copy(visibleNodes = computeVisibleNodes(it.searchQuery)) }
+                updateState { it.copy(visibleNodes = computeVisibleNodes(searchQuery.value)) }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -151,13 +154,12 @@ class ManageTagsViewModel : ViewModel() {
             _events.send(DisplayMessage(ClearedUnusedTags(result.count)))
         }
 
-    private suspend fun loadTags(searchQuery: String) {
+    private suspend fun loadTags() {
         Timber.i("Loading tags from collection")
         tagList = flattenTree(withCol { tags.tree() })
         state.value =
             ManageTagsState.Content(
-                visibleNodes = computeVisibleNodes(searchQuery),
-                searchQuery = searchQuery,
+                visibleNodes = computeVisibleNodes(searchQuery.value),
             )
     }
 
@@ -166,12 +168,11 @@ class ManageTagsViewModel : ViewModel() {
      * On failure, transitions to [Error]
      */
     private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job {
-        val previousLoaded = state.value as? ManageTagsState.Content
         state.value = ManageTagsState.Loading
         return viewModelScope.launch {
             try {
                 block()
-                loadTags(searchQuery = previousLoaded?.searchQuery ?: "")
+                loadTags()
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -195,10 +196,7 @@ class ManageTagsViewModel : ViewModel() {
         state.update { current ->
             when (current) {
                 is ManageTagsState.Content -> transform(current)
-                else -> {
-                    Timber.w("updateState called while in %s; ignoring", current::class.simpleName)
-                    current
-                }
+                else -> current
             }
         }
     }
@@ -319,7 +317,6 @@ sealed class ManageTagsState {
 
     data class Content(
         val visibleNodes: List<TagListItemState>,
-        val searchQuery: String = "",
     ) : ManageTagsState()
 
     data class Error(
