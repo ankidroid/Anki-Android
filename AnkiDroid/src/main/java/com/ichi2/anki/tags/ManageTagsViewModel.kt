@@ -13,6 +13,7 @@ import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,6 +50,8 @@ class ManageTagsViewModel : ViewModel() {
 
     /** Cached flat list of all tags, rebuilt when the backend tree changes */
     private var tagList: List<TagListItemState> = emptyList()
+
+    private var tagOperation: Job? = null
 
     init {
         refreshTags()
@@ -160,15 +163,27 @@ class ManageTagsViewModel : ViewModel() {
      * Sets [ManageTagsState.Loading], runs [block], then [reloads][loadTags].
      * On failure, transitions to [Error].
      */
-    private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job {
-        state.value = ManageTagsState.Loading
-        return launchTagOperation {
+    private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job =
+        launchTagOperation {
+            state.value = ManageTagsState.Loading
             block()
             loadTags()
         }
-    }
 
-    private fun launchTagOperation(block: suspend () -> Unit): Job = viewModelScope.launch { runTagOperation(block) }
+    /** Starts an operation, or returns the unfinished operation's job without starting another. */
+    private fun launchTagOperation(block: suspend () -> Unit): Job {
+        val currentOperation = tagOperation
+        if (currentOperation != null && !currentOperation.isCompleted) {
+            return currentOperation
+        }
+
+        // set 'tagOperation' before executing
+        val operation = viewModelScope.launch(start = CoroutineStart.LAZY) { runTagOperation(block) }
+        tagOperation = operation
+        // calls from observers will now find this job
+        operation.start()
+        return operation
+    }
 
     /** Handles failures consistently for both tag mutations and expand/collapse operations. */
     private suspend fun runTagOperation(block: suspend () -> Unit) {

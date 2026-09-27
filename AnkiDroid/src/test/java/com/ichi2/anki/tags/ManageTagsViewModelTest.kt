@@ -4,12 +4,14 @@ package com.ichi2.anki.tags
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.observability.ensureOpsExecuted
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.setMain
 import org.hamcrest.MatcherAssert.assertThat
@@ -18,6 +20,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.system.measureTimeMillis
@@ -82,6 +85,32 @@ class ManageTagsViewModelTest : RobolectricTest() {
                 refreshTags()
                 assertThat(searchQuery.value, equalTo("sci"))
                 assertThat(loadedState.visibleTagNames, equalTo(listOf("science")))
+            }
+        }
+
+    @Test
+    fun `operations requested while busy do not mutate tags`() =
+        runTest {
+            addTags("science::biology", "history")
+            addUnusedTag("unused")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    val refresh = refreshTags()
+                    assertThat(refresh.isCompleted, equalTo(false))
+
+                    assertThat(removeTag("science"), sameInstance(refresh))
+                    assertThat(renameTag("history", "past"), sameInstance(refresh))
+                    assertThat(clearUnusedTags(), sameInstance(refresh))
+                    assertThat(toggleCollapsed("science"), sameInstance(refresh))
+                    assertThat(refreshTags(), sameInstance(refresh))
+
+                    refresh.join()
+                }
+                assertThat(loadedState.visibleTagNames, containsInAnyOrder("science", "history", "unused"))
+                assertThat(loadedState.visibleNodes.single { it.fullTagName == "science" }.collapsed, equalTo(true))
+
+                removeTag("science").join()
+                assertThat(loadedState.visibleTagNames, containsInAnyOrder("history", "unused"))
             }
         }
 
@@ -417,6 +446,16 @@ class ManageTagsViewModelTest : RobolectricTest() {
                 assertTrue(avgMs < expected, "toggleCollapsed took ${avgMs}ms on average, expected < $expected")
             }
         }
+
+    /** Suspend backend access so assertions can observe an operation in progress. */
+    private suspend fun TestScope.withQueuedCollectionAccess(block: suspend () -> Unit) {
+        val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
+        try {
+            block()
+        } finally {
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
 
     private suspend fun withViewModel(block: suspend ManageTagsViewModel.() -> Unit) = ManageTagsViewModel().block()
 
