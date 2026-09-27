@@ -29,7 +29,7 @@
     <string name="note_message">Not kaydedildi</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">Kart destesi:</string>
-    <string name="CardEditorNoteDeck">Deste:</string>
+    <string name="CardEditorNoteDeck" comment="Label of the field choosing which deck a note\'s cards go into, in the note editor.">Deste:</string>
     <string name="CardEditorModel">Tür:</string>
     <string name="CardEditorTags">Etiketler: %1$s</string>
     <string name="CardEditorCards">Kartlar: %1$s</string>
@@ -220,6 +220,8 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Yazı tipi boyutu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Araç çubuğunu göster</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
     <string name="format_insert_bold">Kalın olarak şekillendir</string>
     <string name="format_insert_italic">İtalik olarak şekillendir</string>
     <string name="format_insert_underline">Altı çizili olarak şekillendir</string>
