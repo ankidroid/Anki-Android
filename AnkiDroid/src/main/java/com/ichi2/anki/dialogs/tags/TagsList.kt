@@ -266,18 +266,28 @@ class TagsList(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
+        // Splitting tags and looking up root selection inside the comparator repeats this work
+        // for every comparison. Compute the keys once per tag instead.
+        val sortKeys =
+            allTags.associateWith { tag ->
+                val root = getTagRoot(tag)
+                SortKey(tag.split("::"), isChecked(root) || isIndeterminate(root))
+            }
         allTags.sortWith { lhs, rhs ->
-            val lhsRoot = getTagRoot(lhs)
-            val rhsRoot = getTagRoot(rhs)
-            val lhsChecked = isChecked(lhsRoot) || isIndeterminate(lhsRoot)
-            val rhsChecked = isChecked(rhsRoot) || isIndeterminate(rhsRoot)
-            if (lhsChecked != rhsChecked) {
-                if (lhsChecked) -1 else 1
+            val lhsKey = sortKeys.getValue(lhs)
+            val rhsKey = sortKeys.getValue(rhs)
+            if (lhsKey.isSelected != rhsKey.isSelected) {
+                if (lhsKey.isSelected) -1 else 1
             } else {
-                compareTag(lhs, rhs)
+                compareTag(lhsKey.parts, rhsKey.parts)
             }
         }
     }
+
+    private class SortKey(
+        val parts: List<String>,
+        val isSelected: Boolean,
+    )
 
     /**
      * @return Iterator over all tags
