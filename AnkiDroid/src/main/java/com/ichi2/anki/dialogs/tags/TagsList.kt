@@ -55,6 +55,9 @@ class TagsList(
      */
     private val allTags: UniqueArrayList<String>
 
+    /** Tags or selection have changed since the last sort. */
+    private var needsSort = true
+
     init {
         this.checkedTags.addAll(checkedTags)
         this.allTags = from(allTags, java.lang.String.CASE_INSENSITIVE_ORDER)
@@ -119,6 +122,7 @@ class TagsList(
         if (!allTags.add(tag)) {
             return false
         }
+        needsSort = true
         addAncestors(tag)
         return true
     }
@@ -143,6 +147,7 @@ class TagsList(
         if (!checkedTags.add(tag)) {
             return false
         }
+        needsSort = true
         if (processAncestors) {
             markAncestorsIndeterminate(tag)
         }
@@ -156,7 +161,13 @@ class TagsList(
      * @return true if the tag changed its check status
      * false if the tag was already unchecked or not in the list
      */
-    fun uncheck(tag: String): Boolean = indeterminateTags.remove(tag) || checkedTags.remove(tag)
+    fun uncheck(tag: String): Boolean {
+        val changed = indeterminateTags.remove(tag) || checkedTags.remove(tag)
+        if (changed) {
+            needsSort = true
+        }
+        return changed
+    }
 
     /**
      * Mark a tag as indeterminate tag
@@ -170,7 +181,11 @@ class TagsList(
             return false
         }
         checkedTags.remove(tag)
-        return indeterminateTags.add(tag)
+        val changed = indeterminateTags.add(tag)
+        if (changed) {
+            needsSort = true
+        }
+        return changed
     }
 
     /**
@@ -181,6 +196,7 @@ class TagsList(
      * @return true if this tag list changed as a result of the call
      */
     fun toggleAllCheckedStatuses(): Boolean {
+        needsSort = true
         indeterminateTags.clear()
         if (allTags.size == checkedTags.size) {
             checkedTags.clear()
@@ -266,6 +282,9 @@ class TagsList(
      * A tag priors to another one if its root tag is checked or indeterminate while the other one's is not
      */
     fun sort() {
+        if (!needsSort) {
+            return
+        }
         // Splitting tags and looking up root selection inside the comparator repeats this work
         // for every comparison. Compute the keys once per tag instead.
         val sortKeys =
@@ -282,6 +301,7 @@ class TagsList(
                 compareTag(lhsKey.parts, rhsKey.parts)
             }
         }
+        needsSort = false
     }
 
     private class SortKey(
