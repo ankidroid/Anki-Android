@@ -227,8 +227,47 @@ fun View.showSnackbar(
         snackbar.anchorView = null
     }
 
+    snackbar.retainUntilShown(rootView)
     snackbar.show()
     return snackbar
+}
+
+/**
+ * Keeps the latest pending snackbar alive on [host] until shown or dismissed.
+ *
+ * Workaround to fix losing a pending snackbar after a GC (#22076).
+ *
+ * See [SnackbarManager.show and SnackbarRecord](https://github.com/material-components/material-components-android/blob/1.14.0/lib/java/com/google/android/material/snackbar/SnackbarManager.java).
+ */
+private fun Snackbar.retainUntilShown(host: View) {
+    host.retainPendingSnackbar(this)
+    addCallback(
+        object : Snackbar.Callback() {
+            override fun onShown(snackbar: Snackbar) = release(snackbar)
+
+            override fun onDismissed(
+                snackbar: Snackbar,
+                event: Int,
+            ) = release(snackbar)
+
+            private fun release(snackbar: Snackbar) {
+                host.releasePendingSnackbar(snackbar)
+                snackbar.removeCallback(this)
+            }
+        },
+    )
+}
+
+/** Stores a strong reference to [snackbar] on this view, replacing any previously retained snackbar. */
+private fun View.retainPendingSnackbar(snackbar: Snackbar) {
+    setTag(R.id.pending_snackbar, snackbar)
+}
+
+/** Releases the strong reference to [snackbar] only if it is still the retained snackbar. */
+private fun View.releasePendingSnackbar(snackbar: Snackbar) {
+    // A callback from an older snackbar must not release its replacement.
+    if (getTag(R.id.pending_snackbar) !== snackbar) return
+    setTag(R.id.pending_snackbar, null)
 }
 
 /**
