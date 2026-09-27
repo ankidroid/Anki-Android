@@ -29,7 +29,7 @@
     <string name="note_message">Note saved</string>
     <!-- Note editor screen -->
     <string name="CardEditorCardDeck">ପତ୍ର କେରୀ:</string>
-    <string name="CardEditorNoteDeck">କେରୀ:</string>
+    <string name="CardEditorNoteDeck" comment="Label of the field choosing which deck a note\'s cards go into, in the note editor.">କେରୀ:</string>
     <string name="CardEditorModel">ପ୍ରକାର:</string>
     <string name="CardEditorTags">ଟ୍ୟାଗ୍: %1$s</string>
     <string name="CardEditorCards">ପତ୍ର: %1$s</string>
@@ -220,6 +220,8 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">ଫଣ୍ଟ ଆକାର</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ଉପକରଣ-ଦଣ୍ଡିକା ଦେଖାଇବା</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
     <string name="format_insert_bold">Format as bold</string>
     <string name="format_insert_italic">Format as italic</string>
     <string name="format_insert_underline">Format as underline</string>

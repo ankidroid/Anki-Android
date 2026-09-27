@@ -134,7 +134,7 @@
     <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">언어 설정</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">일부 다국어 키보드(예: Gboard)는 텍스트를 편집할 때 언어를 자동으로 변경할 수 있습니다.\n\n사용 중인 키보드에서 언어가 변경되지 않는다면, 키보드 제조사에 \"setImeHintLocales\" 기능 지원을 요청해 주세요.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid 사용법</string>
     <string name="help_item_ankidroid_manual">AnkiDroid 매뉴얼</string>
