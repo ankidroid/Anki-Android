@@ -1061,6 +1061,8 @@ abstract class AbstractFlashcardViewer :
             MyWebView(this).apply {
                 scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
                 with(settings) {
+                    // Scale the whole card with CSS instead; text-only zoom breaks MathJax layout.
+                    textZoom = 100
                     displayZoomControls = false
                     builtInZoomControls = true
                     setSupportZoom(true)
