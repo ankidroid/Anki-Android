@@ -7,7 +7,11 @@ import androidx.test.filters.MediumTest
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.observability.ensureOpsExecuted
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
@@ -76,7 +80,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
             withViewModel {
                 filter("sci")
                 refreshTags()
-                assertThat(loadedState.searchQuery, equalTo("sci"))
+                assertThat(searchQuery.value, equalTo("sci"))
                 assertThat(loadedState.visibleTagNames, equalTo(listOf("science")))
             }
         }
@@ -96,7 +100,72 @@ class ManageTagsViewModelTest : RobolectricTest() {
             withViewModel {
                 filter("sci")
                 assertThat(loadedState.visibleTagNames, equalTo(listOf("science")))
-                assertThat(loadedState.searchQuery, equalTo("sci"))
+                assertThat(searchQuery.value, equalTo("sci"))
+            }
+        }
+
+    @Test
+    fun `filter updates query in an empty collection`() =
+        runTest {
+            withViewModel {
+                filter("sci")
+                assertThat(searchQuery.value, equalTo("sci"))
+                assertThat(loadedState.visibleNodes, hasSize(0))
+
+                addTags("science", "history")
+                refreshTags()
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("science")))
+            }
+        }
+
+    @Test
+    fun `filter during initial loading applies latest query when tags arrive`() =
+        runTest {
+            addTags("science", "history")
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            withViewModel {
+                assertThat(state.value, equalTo(ManageTagsState.Loading))
+                filter("sci")
+                filter("hist")
+                assertThat(searchQuery.value, equalTo("hist"))
+
+                runCurrent()
+
+                assertThat(searchQuery.value, equalTo("hist"))
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+            }
+        }
+
+    @Test
+    fun `filter during refresh is not overwritten when refresh completes`() =
+        runTest {
+            addTags("science", "history")
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            withViewModel {
+                runCurrent()
+                filter("sci")
+                val refresh = refreshTags()
+                filter("hist")
+                assertThat(searchQuery.value, equalTo("hist"))
+
+                refresh.join()
+
+                assertThat(searchQuery.value, equalTo("hist"))
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+            }
+        }
+
+    @Test
+    fun `filter can be cleared after deleting the last tag`() =
+        runTest {
+            addTags("science")
+            withViewModel {
+                filter("sci")
+                removeTag("science")
+                filter("")
+
+                assertThat(searchQuery.value, equalTo(""))
+                assertThat(loadedState.visibleNodes, hasSize(0))
             }
         }
 
