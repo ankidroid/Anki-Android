@@ -506,6 +506,22 @@ class TagsListTest {
         )
     }
 
+    @Test
+    fun `sort includes newly added ancestors and preserves case insensitive uniqueness`() {
+        val tags = TagsList(listOf("z", "a"), listOf("z"))
+        tags.sort()
+
+        assertTrue(tags.add("B::child"))
+        tags.sort()
+        assertEquals(listOf("z", "a", "B", "B::child"), tags.copyOfAllTagList())
+        assertFalse("Sorting must preserve case insensitive uniqueness", tags.add("b::CHILD"))
+
+        assertTrue(tags.check("b::CHILD"))
+        tags.sort()
+        assertEquals(listOf("B", "B::child", "z", "a"), tags.copyOfAllTagList())
+        assertFalse("Sorting must preserve case insensitive uniqueness", tags.add("Z"))
+    }
+
     @Test // #8807
     @Ignore(
         "Collections.singletonList() triggers infinite recursion. " +
