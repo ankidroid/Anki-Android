@@ -66,9 +66,13 @@ class ReviewerShakeTest : RobolectricTest() {
                     }
 
                     scenario.recreate()
-                    advanceRobolectricLooper()
+                    scenario.withSetDueDate {
+                        assertEquals(listOf(cardId), cardIds)
+                        // The next shake must open a new dialog, not find the restored one.
+                        dismissNow()
+                    }
+                    assertEquals(1, sensors.listeners.size)
                 }
-                assertEquals(1, sensors.listeners.size)
             }
             assertEquals(0, sensors.listeners.size)
         }
