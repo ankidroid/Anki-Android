@@ -160,12 +160,10 @@ class ManageTagsViewModel : ViewModel() {
     }
 
     /**
-     * Sets [ManageTagsState.Loading], runs [block], then [reloads][loadTags].
-     * On failure, transitions to [Error].
+     * Runs [block], then [reloads][loadTags], keeping any existing content visible.
      */
     private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job =
         launchTagOperation {
-            state.value = ManageTagsState.Loading
             block()
             loadTags()
         }
@@ -185,8 +183,17 @@ class ManageTagsViewModel : ViewModel() {
         return operation
     }
 
-    /** Handles failures consistently for both tag mutations and expand/collapse operations. */
+    /**
+     * Keeps existing content visible while an operation runs, clearing progress on completion.
+     * Uses [ManageTagsState.Loading] when no content is available. Failures transition to [Error].
+     */
     private suspend fun runTagOperation(block: suspend () -> Unit) {
+        state.update { current ->
+            when (current) {
+                is ManageTagsState.Content -> current.copy(isWorking = true)
+                is ManageTagsState.Loading, is Error -> ManageTagsState.Loading
+            }
+        }
         try {
             block()
         } catch (e: CancellationException) {
@@ -194,6 +201,8 @@ class ManageTagsViewModel : ViewModel() {
         } catch (e: Exception) {
             Timber.w(e, "Tag operation failed")
             state.value = Error(e)
+        } finally {
+            updateState { it.copy(isWorking = false) }
         }
     }
 
@@ -332,6 +341,8 @@ sealed class ManageTagsState {
 
     data class Content(
         val visibleNodes: List<TagListItemState>,
+        /** `true` while a tag operation runs, allowing the UI to show progress without hiding the list. */
+        val isWorking: Boolean = false,
     ) : ManageTagsState()
 
     data class Error(

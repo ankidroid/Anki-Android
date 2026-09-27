@@ -9,6 +9,8 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.observability.ensureOpsExecuted
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -89,6 +91,34 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `operations keep existing content visible until completion`() =
+        runTest {
+            addTags("science::biology", "history")
+            addUnusedTag("unused")
+            withViewModel {
+                val operations: List<ManageTagsViewModel.() -> Job> =
+                    listOf(
+                        { refreshTags() },
+                        { toggleCollapsed("science") },
+                        { renameTag("science", "physics") },
+                        { clearUnusedTags() },
+                        { removeTag("physics") },
+                    )
+                for (operation in operations) {
+                    val previous = loadedState
+                    withQueuedCollectionAccess {
+                        val job = operation()
+                        assertThat(loadedState, equalTo(previous.copy(isWorking = true)))
+
+                        job.join()
+
+                        assertThat(loadedState.isWorking, equalTo(false))
+                    }
+                }
+            }
+        }
+
+    @Test
     fun `operations requested while busy do not mutate tags`() =
         runTest {
             addTags("science::biology", "history")
@@ -111,6 +141,45 @@ class ManageTagsViewModelTest : RobolectricTest() {
 
                 removeTag("science").join()
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("history", "unused"))
+            }
+        }
+
+    @Test
+    fun `search updates visible content while refresh is running`() =
+        runTest {
+            addTags("science", "history")
+            withViewModel {
+                withQueuedCollectionAccess {
+                    val refresh = refreshTags()
+                    filter("hist")
+
+                    assertThat(loadedState.isWorking, equalTo(true))
+                    assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+
+                    refresh.join()
+                    assertThat(loadedState.visibleTagNames, equalTo(listOf("history")))
+                }
+            }
+        }
+
+    @Test
+    fun `cancelled operation clears progress and permits another operation`() =
+        runTest {
+            addTags("science", "history")
+            withViewModel {
+                val previous = loadedState
+                withQueuedCollectionAccess {
+                    val deletion = removeTag("science")
+                    assertThat(loadedState.isWorking, equalTo(true))
+
+                    deletion.cancelAndJoin()
+
+                    assertThat(loadedState, equalTo(previous))
+                    val refresh = refreshTags()
+                    assertThat(loadedState.isWorking, equalTo(true))
+                    refresh.join()
+                    assertThat(loadedState, equalTo(previous))
+                }
             }
         }
 
