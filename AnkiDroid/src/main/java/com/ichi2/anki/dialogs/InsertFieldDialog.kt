@@ -4,6 +4,7 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.Spanned
 import android.view.LayoutInflater
@@ -14,6 +15,10 @@ import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.core.text.parseAsHtml
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat.Type.displayCutout
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,6 +42,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SpecialField
 import com.ichi2.anki.model.SpecialFields
 import com.ichi2.anki.utils.ext.requireString
+import com.ichi2.themes.Themes
 import dev.androidbroadcast.vbpd.viewBinding
 import org.jetbrains.annotations.VisibleForTesting
 
@@ -63,6 +69,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = DialogInsertFieldBinding.bind(view)
+        setupEdgeToEdge(binding)
 
         binding.toolbar.title = getString(R.string.card_template_editor_select_field)
         binding.toolbar.setNavigationOnClickListener { dismiss() }
@@ -103,6 +110,18 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
                 )
                 dismiss()
             }
+        }
+    }
+
+    private fun setupEdgeToEdge(binding: DialogInsertFieldBinding) {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val bars = insets.getInsets(systemBars() or displayCutout())
+            view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            insets
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            val window = dialog?.window ?: return
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = !Themes.isNightTheme
         }
     }
 
