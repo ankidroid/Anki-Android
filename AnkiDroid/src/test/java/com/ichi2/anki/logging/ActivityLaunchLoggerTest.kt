@@ -25,6 +25,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -76,7 +77,7 @@ class ActivityLaunchLoggerTest {
 
         activity.logActivityCreation(Bundle().apply { putString(privateText, privateText) })
 
-        val message = messages.single()
+        val message = assertNotNull(messages.singleOrNull(), "Expected one log message; captured: $messages")
         for (privateValue in listOf(privateText, "private-referrer", "private.caller.package", "1234567")) {
             assertFalse(message.contains(privateValue), "Launch diagnostics leaked $privateValue")
         }
@@ -96,7 +97,7 @@ class ActivityLaunchLoggerTest {
 
         mockActivity(intent).logActivityCreation(null)
 
-        val message = messages.single()
+        val message = assertNotNull(messages.singleOrNull(), "Expected one log message; captured: $messages")
         assertTrue(message.contains(Intent.ACTION_VIEW))
         assertTrue(message.contains(Intent.CATEGORY_LAUNCHER))
         assertTrue(message.contains(EXTRA_FRAGMENT_NAME))
