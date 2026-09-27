@@ -507,6 +507,22 @@ class TagsListTest {
     }
 
     @Test
+    fun `sort keeps selected branches first and compares hierarchy parts ignoring case`() {
+        val tags =
+            TagsList(
+                listOf("Zoo", "alpha!", "ALPHA::bbbz", "Alpha::bbb::leaf", "alpha::BBB", "Beta::z", "beta::A"),
+                listOf("BETA::a", "Zoo"),
+            )
+
+        tags.sort()
+
+        assertEquals(
+            listOf("Beta", "beta::A", "Beta::z", "Zoo", "ALPHA", "alpha::BBB", "Alpha::bbb::leaf", "ALPHA::bbbz", "alpha!"),
+            tags.copyOfAllTagList(),
+        )
+    }
+
+    @Test
     fun `sort includes newly added ancestors and preserves case insensitive uniqueness`() {
         val tags = TagsList(listOf("z", "a"), listOf("z"))
         tags.sort()
