@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.text.InputFilter
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
@@ -68,6 +69,7 @@ import com.ichi2.utils.cancelable
 import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.customView
 import com.ichi2.utils.dp
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.setPaddingRelative
@@ -284,10 +286,16 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         @SuppressLint("InflateParams")
         binding = FragmentCustomStudyBinding.inflate(requireActivity().layoutInflater)
 
-        binding.detailsText1.text = text1
+        val isExtendLimits = contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV
         // 'review ahead' has a dialog title, so the empty label would only add a blank line
-        binding.detailsText1.isVisible = contextMenuOption != STUDY_AHEAD
+        binding.detailsText1.isVisible = contextMenuOption != STUDY_AHEAD && !isExtendLimits
         binding.detailsText2.text = text2
+        binding.detailsAvailableCards.text = text1
+        binding.detailsAvailableCards.isVisible = isExtendLimits
+        binding.detailsDecrementButton.isVisible = isExtendLimits
+        binding.detailsIncrementButton.isVisible = isExtendLimits
+        binding.detailsDecrementButton.setOnClickListener { stepUserInputValue(-1) }
+        binding.detailsIncrementButton.setOnClickListener { stepUserInputValue(1) }
 
         binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
         binding.cardsStateSelector.apply {
@@ -323,8 +331,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             setSelectAllOnFocus(true)
             requestFocus()
             // a user may enter a negative value when extending limits
-            if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
+            if (isExtendLimits) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+                gravity = Gravity.CENTER
             }
             if (contextMenuOption == STUDY_AHEAD) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER
@@ -337,6 +346,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 TR.sentenceCase.chooseTags
             } else if (contextMenuOption == STUDY_AHEAD) {
                 getString(R.string.dialog_positive_create)
+            } else if (isExtendLimits) {
+                getString(R.string.custom_study_increase)
             } else {
                 getString(R.string.dialog_ok)
             }
@@ -351,6 +362,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 .apply {
                     if (contextMenuOption == STUDY_AHEAD) {
                         title(text = contextMenuOption.getTitle(resources))
+                    } else if (isExtendLimits) {
+                        title(text = getString(R.string.custom_study_extend_limits_title))
                     }
                 }.customView(
                     view = binding.root,
@@ -446,6 +459,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     /** Sets the suffix of the days input: `[1] day`, `[3] days` */
     private fun setSuffixText(days: Int) {
         binding.detailsEditText2Layout.suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, days)
+    }
+
+    private fun stepUserInputValue(delta: Int) {
+        binding.detailsEditText2.setText(((userInputValue ?: 0) + delta).toString())
+        binding.detailsEditText2.moveCursorToEnd()
     }
 
     /** Enables 'Create' only if some cards would be reviewed ahead by [days] */
