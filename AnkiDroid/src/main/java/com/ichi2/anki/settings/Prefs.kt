@@ -391,6 +391,7 @@ open class PrefsRepository(
 
     // **************************************** Advanced **************************************** //
 
+    var useSoftwareRendering by booleanPref(R.string.disable_hardware_render_key, defaultValue = false)
     val isHtmlTypeAnswerEnabled by booleanPref(R.string.use_input_tag_key, defaultValue = false)
     var useFixedPortInReviewer by booleanPref(R.string.use_fixed_port_pref_key, false)
     var allowTemplatesToRecordAudio by booleanPref(R.string.pref_allow_template_audio_recording, false)
