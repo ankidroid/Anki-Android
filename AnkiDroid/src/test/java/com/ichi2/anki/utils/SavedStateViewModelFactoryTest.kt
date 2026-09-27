@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.parcelledCopy
+import com.ichi2.testutils.saveState
 import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
@@ -40,6 +42,26 @@ class SavedStateViewModelFactoryTest(
             val unfiltered = ViewModelProvider(owner)["unfiltered", TestViewModel::class.java]
             assertEquals(42L, unfiltered.state.get<Long>("id"))
             assertEquals("payload", unfiltered.state.get<String>("unrelated"))
+        }
+    }
+
+    @Test
+    fun `process death restores handle and flow values instead of launch arguments`() {
+        val intent = Intent().putExtra("id", 42L).putExtra("unrelated", "payload")
+        val savedState =
+            Robolectric.buildActivity(FragmentActivity::class.java, intent).setup().use { controller ->
+                val original = ViewModelProvider(owner(controller.get()), factory)[TestViewModel::class.java]
+                original.state["id"] = 43L
+                original.state.getMutableStateFlow("new_ui_state", "initial value").value = "edited value"
+                controller.saveState().parcelledCopy(javaClass.classLoader)
+            }
+
+        Robolectric.buildActivity(FragmentActivity::class.java, intent).setup(savedState).use { controller ->
+            val restored = ViewModelProvider(owner(controller.get()), factory)[TestViewModel::class.java]
+
+            assertEquals(setOf("id", "new_ui_state"), restored.state.keys())
+            assertEquals(43L, restored.state.get<Long>("id"))
+            assertEquals("edited value", restored.state.getStateFlow("new_ui_state", "initial value").value)
         }
     }
 
