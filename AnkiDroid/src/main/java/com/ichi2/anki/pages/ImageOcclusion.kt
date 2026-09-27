@@ -108,9 +108,8 @@ class ImageOcclusion : PageFragment(R.layout.page_image_occlusion) {
                             globalThis.anki.imageOcclusion.mode = mode;
                         })();
                         """.trimIndent(),
-                    ) {
-                        super.onPageFinished(view, url)
-                    }
+                        null,
+                    )
                 }
             }
         }
