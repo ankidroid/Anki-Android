@@ -161,13 +161,17 @@ object TtsVoices {
      * across every installed TTS engine (#18737), not just the user's default engine.
      */
     private suspend fun loadTtsVoicesData() {
+        val (voices, locales) = loadVoices(::createTts)
+        availableVoices = voices
+        availableLocaleData = locales
+    }
+
+    internal suspend fun loadVoices(createTts: suspend (String?) -> TextToSpeech?): Pair<Set<AndroidTtsVoice>, List<Locale>> {
         // A default-engine instance is needed first to enumerate the installed engines
-        val probeTts = createTts()
+        val probeTts = createTts(null)
         if (probeTts == null) {
             Timber.e("Unable to build list of TTS Voices")
-            availableVoices = emptySet()
-            availableLocaleData = emptyList()
-            return
+            return emptySet<AndroidTtsVoice>() to emptyList()
         }
 
         val enginePackages =
@@ -181,9 +185,7 @@ object TtsVoices {
                 probeTts.shutdown()
             }
 
-        val (voices, locales) = loadVoicesFromEngines(enginePackages) { engine -> createTts(engine) }
-        availableVoices = voices
-        availableLocaleData = locales
+        return loadVoicesFromEngines(enginePackages) { engine -> createTts(engine) }
     }
 
     /**
