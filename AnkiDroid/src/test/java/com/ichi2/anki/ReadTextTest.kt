@@ -100,7 +100,7 @@ class ReadTextTest : RobolectricTest() {
             val locales = CompletableDeferred<List<Locale>>()
             try {
                 mockkObject(TtsVoices) {
-                    coEvery { TtsVoices.availableLocales() } coAnswers { locales.await() }
+                    coEvery { TtsVoices.localesForEngine(any()) } coAnswers { locales.await() }
                     initializeTextToSpeech(viewer)
 
                     shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
@@ -110,7 +110,7 @@ class ReadTextTest : RobolectricTest() {
                     locales.complete(listOf(Locale.US))
                     runCurrent()
                     verify(viewer).ttsInitialized()
-                    coVerify { TtsVoices.availableLocales() }
+                    coVerify { TtsVoices.localesForEngine("reviewer.engine") }
                 }
             } finally {
                 lifecycle.currentState = Lifecycle.State.DESTROYED
@@ -132,7 +132,7 @@ class ReadTextTest : RobolectricTest() {
             val locales = CompletableDeferred<List<Locale>>()
             try {
                 mockkObject(TtsVoices) {
-                    coEvery { TtsVoices.availableLocales() } coAnswers { locales.await() }
+                    coEvery { TtsVoices.localesForEngine(any()) } coAnswers { locales.await() }
                     initializeTextToSpeech(viewer)
                     shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.SUCCESS)
                     runCurrent()
@@ -157,7 +157,7 @@ class ReadTextTest : RobolectricTest() {
             val (viewer, lifecycle) = createViewer()
             try {
                 mockkObject(TtsVoices) {
-                    coEvery { TtsVoices.availableLocales() } returns listOf(Locale.US)
+                    coEvery { TtsVoices.localesForEngine(any()) } returns listOf(Locale.US)
                     initializeTextToSpeech(viewer)
                     val oldCallback = shadowOf(textToSpeech).onInitListener
                     initializeTextToSpeech(viewer)

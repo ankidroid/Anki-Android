@@ -6,14 +6,23 @@ package com.ichi2.anki
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.i18n.normalize
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Locale
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * Regression tests for #18737: voices should be listed from every installed TTS engine,
@@ -23,6 +32,110 @@ import java.util.Locale
  */
 @RunWith(AndroidJUnit4::class)
 class TtsVoicesMultiEngineTest {
+    @Test
+    @Suppress("DEPRECATION") // Engine-provided variants may not be valid BCP 47 tags.
+    fun `default languages are deduplicated after normalization`() =
+        runTest {
+            val aliases = setOf(Locale("en", "GB", "f00"), Locale("en", "GB", "f01"))
+            val defaultLocales = CompletableDeferred<TtsVoices.EngineLocales>()
+            val probe = probeTts()
+            every { probe.availableLanguages } returns aliases
+
+            TtsVoices.loadVoices(defaultLocales) { engine -> if (engine == null) probe else null }
+
+            assertEquals(listOf(Locale.UK.normalize()), defaultLocales.await().locales)
+        }
+
+    @Test
+    fun `default languages are ready while another engine is still initializing`() =
+        runTest {
+            val defaultLocales = CompletableDeferred<TtsVoices.EngineLocales>()
+            val otherEngine = CompletableDeferred<TextToSpeech>()
+            val defaultTts = fakeTts(setOf(fakeVoice("a", Locale.US)), setOf(Locale.US))
+            val allVoices =
+                async {
+                    TtsVoices.loadVoices(defaultLocales) { engine ->
+                        when (engine) {
+                            null -> probeTts()
+                            ENGINE_A -> defaultTts
+                            ENGINE_B -> otherEngine.await()
+                            else -> error("Unexpected engine: $engine")
+                        }
+                    }
+                }
+            try {
+                runCurrent()
+                assertTrue(defaultLocales.isCompleted)
+                assertEquals(listOf(Locale.US.normalize()), defaultLocales.await().locales)
+                assertFalse(allVoices.isCompleted)
+
+                otherEngine.complete(fakeTts(setOf(fakeVoice("b", Locale.FRANCE)), setOf(Locale.FRANCE)))
+                assertEquals(
+                    setOf(ENGINE_A, ENGINE_B),
+                    allVoices
+                        .await()
+                        .first
+                        .map { it.engine }
+                        .toSet(),
+                )
+                assertEquals(listOf(Locale.US.normalize()), defaultLocales.await().locales)
+            } finally {
+                allVoices.cancel()
+            }
+        }
+
+    @Test
+    fun `a failed default engine completes both caches with no voices`() =
+        runTest {
+            val defaultLocales = CompletableDeferred<TtsVoices.EngineLocales>()
+            val (voices, _) = TtsVoices.loadVoices(defaultLocales) { null }
+
+            assertTrue(defaultLocales.isCompleted)
+            assertEquals(emptyList(), defaultLocales.await().locales)
+            assertEquals(emptySet(), voices)
+        }
+
+    @Test
+    fun `a default language query error does not stop scanning other engines`() =
+        runTest {
+            val defaultLocales = CompletableDeferred<TtsVoices.EngineLocales>()
+            val probe = probeTts()
+            every { probe.availableLanguages } throws IllegalStateException("Language query failed")
+            val (voices, _) =
+                TtsVoices.loadVoices(defaultLocales) { engine ->
+                    when (engine) {
+                        null -> probe
+                        ENGINE_B -> fakeTts(setOf(fakeVoice("b", Locale.FRANCE)), setOf(Locale.FRANCE))
+                        else -> null
+                    }
+                }
+
+            assertTrue(defaultLocales.isCompleted)
+            assertEquals(emptyList(), defaultLocales.await().locales)
+            assertEquals(setOf(ENGINE_B), voices.map { it.engine }.toSet())
+        }
+
+    @Test
+    fun `unexpected discovery failure does not leave default languages pending`() =
+        runTest {
+            val defaultLocales = CompletableDeferred<TtsVoices.EngineLocales>()
+            assertFailsWith<IllegalStateException> {
+                TtsVoices.loadVoices(defaultLocales) { throw IllegalStateException("Discovery failed") }
+            }
+
+            assertTrue(defaultLocales.isCompleted)
+            assertFailsWith<IllegalStateException> { defaultLocales.await() }
+        }
+
+    private fun probeTts(): TextToSpeech =
+        fakeTts(emptySet(), setOf(Locale.US)).apply {
+            every { defaultEngine } returns ENGINE_A
+            every { engines } returns
+                listOf(ENGINE_A, ENGINE_B).map { engine ->
+                    TextToSpeech.EngineInfo().apply { name = engine }
+                }
+        }
+
     @Test
     fun `voices are aggregated across multiple engines`() =
         runBlocking {
