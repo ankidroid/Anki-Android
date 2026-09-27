@@ -19,8 +19,18 @@ dependencies {
     implementation("com.android.tools.build:gradle:${libs.versions.androidGradlePlugin.get()}")
     // Force the catalog version of KGP, otherwise it's overridden by AGP.
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
+
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 configure<KtlintExtension> {
     version.set(libs.versions.ktlint.get())
+    filter {
+        exclude { it.file.path.contains("generated") || it.file.path.contains("build") }
+    }
 }
