@@ -149,7 +149,7 @@ class TtsVoicesMultiEngineTest {
                     engineLanguages = setOf(Locale.forLanguageTag("fr-FR")),
                 )
 
-            val (voices, _) =
+            val voices =
                 TtsVoices.loadVoicesFromEngines(listOf(ENGINE_A, ENGINE_B)) { engine ->
                     when (engine) {
                         ENGINE_A -> ttsA
@@ -173,7 +173,7 @@ class TtsVoicesMultiEngineTest {
                     engineLanguages = setOf(Locale.forLanguageTag("de-DE")),
                 )
 
-            val (voices, _) =
+            val voices =
                 TtsVoices.loadVoicesFromEngines(listOf(ENGINE_A, ENGINE_B)) { engine ->
                     // ENGINE_A 'fails' to initialise (returns null) and must not abort the scan
                     if (engine == ENGINE_B) workingTts else null
