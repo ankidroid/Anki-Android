@@ -114,7 +114,7 @@ open class AnkiActivity(
 ) : AppCompatActivity(contentLayoutId ?: 0),
     ShortcutGroupProvider,
     AnkiActivityProvider {
-    val exportReadyViewModel by viewModels<ExportReadyViewModel>()
+    val exportReadyViewModel by viewModels<ExportReadyViewModel> { ExportReadyViewModel.factory }
 
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.

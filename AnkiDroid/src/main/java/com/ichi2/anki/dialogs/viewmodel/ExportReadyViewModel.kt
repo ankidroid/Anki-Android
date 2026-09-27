@@ -3,10 +3,11 @@
 package com.ichi2.anki.dialogs.viewmodel
 
 import android.os.Parcelable
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.dialogs.ExportReadyDialog
+import com.ichi2.anki.utils.ViewModelSavedStateHandle
+import com.ichi2.anki.utils.savedStateViewModelFactory
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -18,7 +19,7 @@ import timber.log.Timber
  * @see AnkiActivity
  */
 class ExportReadyViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: ViewModelSavedStateHandle,
 ) : ViewModel() {
     val exportReadyDestination: StateFlow<ExportReadyParams?>
         field = savedStateHandle.getMutableStateFlow(ARG_EXPORT_READY_PARAMS, null)
@@ -41,6 +42,8 @@ class ExportReadyViewModel(
     ) : Parcelable
 
     companion object {
+        val factory = savedStateViewModelFactory(create = ::ExportReadyViewModel)
+
         private const val ARG_EXPORT_READY_PARAMS = "arg_export_ready_params"
     }
 }
