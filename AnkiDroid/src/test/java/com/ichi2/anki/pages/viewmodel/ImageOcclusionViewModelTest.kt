@@ -28,6 +28,7 @@ import org.junit.jupiter.api.assertNull
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.properties.Delegates.notNull
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 /**
@@ -39,6 +40,13 @@ import kotlin.test.assertNotNull
 @Category(EmptyApplicationCategory::class)
 class ImageOcclusionViewModelTest : JvmTest() {
     private var deckIdToSwitchTo by notNull<DeckId>()
+
+    @Test
+    fun `IDs beyond JavaScript number precision are serialized as decimal strings`() {
+        val id = 9007199254740993L
+        assertEquals(id.toString(), ImageOcclusionArgs.Edit(id).toImageOcclusionMode().get("noteId"))
+        assertEquals(id.toString(), ImageOcclusionArgs.Add("/image.png", id, 1).toImageOcclusionMode().get("notetypeId"))
+    }
 
     @Before
     override fun setUp() {
@@ -140,7 +148,7 @@ class ImageOcclusionViewModelTest : JvmTest() {
             {
                 "kind": "add",
                 "imagePath":  "/",
-                "notetypeId": 12 
+                "notetypeId": "12"
             }
         """
 
@@ -154,7 +162,7 @@ class ImageOcclusionViewModelTest : JvmTest() {
         val expected = """
             {
                 "kind": "edit",
-                "noteId": 12 
+                "noteId": "12"
             }
         """
 

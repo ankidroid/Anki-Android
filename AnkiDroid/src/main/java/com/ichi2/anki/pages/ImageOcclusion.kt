@@ -96,7 +96,19 @@ class ImageOcclusion : PageFragment(R.layout.page_image_occlusion) {
             ) {
                 super.onPageFinished(view, url)
                 viewModel.args.toImageOcclusionMode().let { options ->
-                    view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
+                    view?.evaluateJavascript(
+                        """
+                        (() => {
+                            const mode = $options;
+                            if (mode.kind === "add") {
+                                mode.notetypeId = BigInt(mode.notetypeId);
+                            } else {
+                                mode.noteId = BigInt(mode.noteId);
+                            }
+                            globalThis.anki.imageOcclusion.mode = mode;
+                        })();
+                        """.trimIndent(),
+                    ) {
                         super.onPageFinished(view, url)
                     }
                 }
