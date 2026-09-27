@@ -183,7 +183,7 @@ object TtsVoices {
                 probeTts.shutdown()
             }
 
-        return loadVoicesFromEngines(enginePackages) { engine -> createTts(engine) }.first
+        return loadVoicesFromEngines(enginePackages) { engine -> createTts(engine) }
     }
 
     internal data class EngineLocales(
@@ -204,35 +204,28 @@ object TtsVoices {
         }
 
     /**
-     * Loads the voices and locales available across the provided [enginePackages].
+     * Loads the voices available across the provided [enginePackages].
      *
      * Each engine is initialised independently so a single misbehaving engine cannot prevent the
      * others from being listed.
      *
      * @param createTts builds a [TextToSpeech] bound to the provided engine package, or `null` on failure
-     * @return the union of all voices, and the union of all normalized locales, across [enginePackages]
+     * @return the union of all voices across [enginePackages]
      */
     internal suspend fun loadVoicesFromEngines(
         enginePackages: List<String>,
         createTts: suspend (engine: String) -> TextToSpeech?,
-    ): Pair<Set<AndroidTtsVoice>, List<Locale>> {
+    ): Set<AndroidTtsVoice> {
         val voices = mutableSetOf<AndroidTtsVoice>()
-        val locales = mutableSetOf<Locale>()
         for (engine in enginePackages) {
             val tts = createTts(engine)
             if (tts == null) {
                 Timber.w("Unable to initialize TTS engine: %s", engine)
                 continue
             }
-            // Samsung TextToSpeech engine returns locales with a displayName of "GBR,DEFAULT"/"GBR,f00"
-            // so normalize them before displaying them to users
-            // sample of problematic data: language = "eng", region = "GBR", variant = "f00"
             try {
                 tts.voices?.let { engineVoices ->
                     voices += engineVoices.map { it.toTtsVoice(engine) }
-                }
-                tts.availableLanguages?.let { engineLocales ->
-                    locales += engineLocales.map { it.normalize() }
                 }
             } catch (e: Exception) {
                 Timber.w(e, "error reading voices from TTS engine: %s", engine)
@@ -240,7 +233,7 @@ object TtsVoices {
                 tts.shutdown()
             }
         }
-        return voices to locales.toList()
+        return voices
     }
 
     /**
