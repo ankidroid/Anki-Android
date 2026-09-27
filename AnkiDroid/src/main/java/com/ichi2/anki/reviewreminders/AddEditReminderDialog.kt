@@ -318,8 +318,9 @@ class AddEditReminderDialog : DialogFragment() {
 
         val confirmationDialog = ConfirmationDialog()
         confirmationDialog.setArgs(
-            "Delete this reminder?",
-            "This action cannot be undone.",
+            title = "Delete this reminder?",
+            message = "This action cannot be undone.",
+            positiveButtonText = getString(R.string.dialog_positive_delete),
         )
         confirmationDialog.setConfirm {
             setFragmentResult(

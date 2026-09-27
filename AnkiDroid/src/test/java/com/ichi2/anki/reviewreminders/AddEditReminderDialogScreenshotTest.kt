@@ -5,6 +5,7 @@ package com.ichi2.anki.reviewreminders
 
 import android.provider.Settings
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.ScreenshotTest
@@ -40,6 +41,16 @@ class AddEditReminderDialogScreenshotTest : ScreenshotTest() {
             binding.addEditReminderAdvancedDropdown.performClick()
             advanceRobolectricLooper()
             captureScreen("edit_mode_advanced_open")
+        }
+    }
+
+    @Test
+    fun `delete confirmation dialog`() {
+        val reminder = ReviewReminder.createReviewReminder(time = ReviewReminderTime(9, 0))
+        withReminderDialog(DialogMode.Edit(reminder)) {
+            (requireDialog() as AlertDialog).getButton(AlertDialog.BUTTON_NEGATIVE).performClick()
+            advanceRobolectricLooper()
+            captureScreen("delete_confirmation_dialog")
         }
     }
 
