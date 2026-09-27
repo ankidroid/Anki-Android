@@ -10,7 +10,6 @@ import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.observability.ensureOpsExecuted
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
@@ -375,13 +374,12 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `toggleCollapsed on unknown tag sends UnexpectedError`() =
+    fun `toggleCollapsed on unknown tag queues UnexpectedError`() =
         runTest {
             addTags("science")
             withViewModel {
                 toggleCollapsed("nonexistent")
-                val event = events.first()
-                assertIs<UserMessage.UnexpectedError>(event.message)
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.UnexpectedError))
             }
         }
 
@@ -453,43 +451,70 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `clearUnusedTags sends event with count`() =
+    fun `clearUnusedTags queues message with count`() =
         runTest {
             addTags("used")
             addUnusedTag("unused")
             withViewModel {
                 clearUnusedTags()
-                val event = events.first()
-                val message = assertIs<UserMessage.ClearedUnusedTags>(event.message)
-                assertThat(message.count, equalTo(1))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.ClearedUnusedTags(1)))
             }
         }
 
     @Test
-    fun `removeTag sends event with affected note count`() =
+    fun `removeTag queues message with affected note count`() =
         runTest {
             // add 'science to 2 notes - ensure that the return value is the notes affected
             addTags("science")
             addTags("science")
             withViewModel {
                 removeTag("science")
-                val event = events.first()
-                val message = assertIs<UserMessage.TagRemoved>(event.message)
-                assertThat(message.notesAffected, equalTo(2))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagRemoved(2)))
             }
         }
 
     @Test
-    fun `renameTag sends event with affected note count`() =
+    fun `renameTag queues message with affected note count`() =
         runTest {
             // add 'science to 2 notes - ensure that the return value is the notes affected
             addTags("science")
             addTags("science")
             withViewModel {
                 renameTag("science", "physics")
-                val event = events.first()
-                val message = assertIs<UserMessage.TagRenamed>(event.message)
-                assertThat(message.notesAffected, equalTo(2))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagRenamed(2)))
+            }
+        }
+
+    @Test
+    fun `messageShown removes the displayed message`() =
+        runTest {
+            addTags("science")
+            withViewModel {
+                removeTag("science").join()
+
+                messageShown(pendingMessages.value.single().id)
+
+                assertThat(pendingMessages.value, hasSize(0))
+            }
+        }
+
+    @Test
+    fun `pending messages survive refresh failures and retries`() =
+        runTest {
+            addTags("science", "history")
+            withViewModel {
+                removeTag("science").join()
+                val pending = pendingMessages.value
+                withLockedCollection {
+                    refreshTags().join()
+                }
+                assertThat(loadedState.error, instanceOf(BackendDbLockedException::class.java))
+                assertThat(pendingMessages.value, equalTo(pending))
+
+                refreshTags().join()
+                filter("hist")
+                assertThat(loadedState.error, nullValue())
+                assertThat(pendingMessages.value, equalTo(pending))
             }
         }
 

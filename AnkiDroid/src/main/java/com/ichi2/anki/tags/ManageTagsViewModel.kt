@@ -12,13 +12,13 @@ import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.MessageId
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -35,7 +35,7 @@ import anki.tags.TagTreeNode as BackendTagTreeNode
  * @see Tags for backend functions.
  * @see TagListItemState for display.
  * @see ManageTagsState for UI state.
- * @see events for one-shot events.
+ * @see pendingMessages for messages awaiting display.
  */
 class ManageTagsViewModel : ViewModel() {
     val state: StateFlow<ManageTagsState>
@@ -45,8 +45,10 @@ class ManageTagsViewModel : ViewModel() {
     val searchQuery: StateFlow<String>
         field = MutableStateFlow("")
 
-    private val _events = Channel<DisplayMessage>(Channel.BUFFERED)
-    val events = _events.receiveAsFlow()
+    private val messageQueue = MessageQueue<UserMessage>()
+
+    /** Messages in display order. Collecting does not consume them; acknowledge with [messageShown]. */
+    val pendingMessages = messageQueue.messages
 
     /** Cached flat list of all tags, rebuilt when the backend tree changes */
     private var tagList: List<TagListItemState> = emptyList()
@@ -78,6 +80,9 @@ class ManageTagsViewModel : ViewModel() {
         }
     }
 
+    /** Acknowledges that the UI has finished displaying a message. */
+    fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
+
     /** Returns the visible node for [tag], or null with a warning if not found or not loaded */
     private fun findVisibleNode(tag: TagName): TagListItemState? {
         val loaded = state.value as? ManageTagsState.Content
@@ -104,7 +109,7 @@ class ManageTagsViewModel : ViewModel() {
         launchTagOperation {
             val node =
                 findVisibleNode(tag) ?: run {
-                    _events.send(DisplayMessage(UserMessage.UnexpectedError))
+                    messageQueue.enqueue(UserMessage.UnexpectedError)
                     return@launchTagOperation
                 }
             val newCollapsed = !node.collapsed
@@ -124,7 +129,7 @@ class ManageTagsViewModel : ViewModel() {
     fun removeTag(tag: TagName) =
         launchTagOpAndRefresh {
             val result = undoableOp { tags.remove(tag) }
-            _events.send(DisplayMessage(TagRemoved(result.count)))
+            messageQueue.enqueue(TagRemoved(result.count))
         }
 
     /**
@@ -136,18 +141,18 @@ class ManageTagsViewModel : ViewModel() {
         newName: TagName,
     ) = launchTagOpAndRefresh {
         val result = undoableOp { tags.rename(oldName, newName) }
-        _events.send(DisplayMessage(TagRenamed(result.count)))
+        messageQueue.enqueue(TagRenamed(result.count))
     }
 
     /**
-     * Removes tags not present on any note. Emits a [ClearedUnusedTags] event with the count.
+     * Removes tags not present on any note. Queues a [ClearedUnusedTags] message with the count.
      * @see Tags.clearUnusedTags
      */
     fun clearUnusedTags() =
         launchTagOpAndRefresh {
             val result = undoableOp { tags.clearUnusedTags() }
             Timber.i("Deleted %d unused tags", result.count)
-            _events.send(DisplayMessage(ClearedUnusedTags(result.count)))
+            messageQueue.enqueue(ClearedUnusedTags(result.count))
         }
 
     private suspend fun loadTags() {
@@ -356,10 +361,6 @@ sealed class ManageTagsState {
         val error: Throwable,
     ) : ManageTagsState()
 }
-
-data class DisplayMessage(
-    val message: UserMessage,
-)
 
 sealed interface UserMessage {
     /** @param notesAffected number of notes the tag was removed from */
