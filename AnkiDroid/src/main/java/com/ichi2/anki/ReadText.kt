@@ -304,49 +304,53 @@ object ReadText {
                         ankiActivityContext?.showSnackbar(R.string.no_tts_available_message)
                         Timber.w("TTS initialized but no available languages found")
                     }
-                    textToSpeech!!.setOnUtteranceProgressListener(
-                        object : UtteranceProgressListener() {
-                            override fun onDone(arg0: String) {
-                                listener.onDone(questionAnswer)
-                            }
-
-                            override fun onError(
-                                utteranceId: String?,
-                                errorCode: Int,
-                            ) {
-                                Timber.v(
-                                    "Android TTS failed: %s (%d). Check logcat for error. " +
-                                        "Indicates a problem with Android TTS engine.",
-                                    errorToDeveloperString(errorCode),
-                                    errorCode,
-                                )
-                                @StringRes val helpUrl = R.string.link_faq_tts
-                                val ankiActivity = context as AnkiActivity
-                                ankiActivity.mayOpenUrl(helpUrl)
-                                // TODO: We can do better in this UI now we have a reason for failure
-                                ankiActivity.showSnackbar(R.string.no_tts_available_message) {
-                                    setAction(R.string.help) { openTtsHelpUrl(helpUrl) }
-                                }
-                            }
-
-                            @Suppress("DeprecatedCallableAddReplaceWith")
-                            @Deprecated("")
-                            override fun onError(utteranceId: String) {
-                                // required for UtteranceProgressListener, but also deprecated
-                                Timber.e("onError(string) should not have been called")
-                            }
-
-                            override fun onStart(arg0: String) {
-                                // no nothing
-                            }
-                        },
-                    )
+                    textToSpeech!!.setOnUtteranceProgressListener(utteranceProgressListener(context, listener))
                 } else {
                     showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                     Timber.w("TTS not successfully initialized")
                 }
             }
     }
+
+    private fun utteranceProgressListener(
+        context: Context,
+        listener: ReadTextListener,
+    ): UtteranceProgressListener =
+        object : UtteranceProgressListener() {
+            override fun onDone(arg0: String) {
+                listener.onDone(questionAnswer)
+            }
+
+            override fun onError(
+                utteranceId: String?,
+                errorCode: Int,
+            ) {
+                Timber.v(
+                    "Android TTS failed: %s (%d). Check logcat for error. " +
+                        "Indicates a problem with Android TTS engine.",
+                    errorToDeveloperString(errorCode),
+                    errorCode,
+                )
+                @StringRes val helpUrl = R.string.link_faq_tts
+                val ankiActivity = context as AnkiActivity
+                ankiActivity.mayOpenUrl(helpUrl)
+                // TODO: We can do better in this UI now we have a reason for failure
+                ankiActivity.showSnackbar(R.string.no_tts_available_message) {
+                    setAction(R.string.help) { openTtsHelpUrl(helpUrl) }
+                }
+            }
+
+            @Suppress("DeprecatedCallableAddReplaceWith")
+            @Deprecated("")
+            override fun onError(utteranceId: String) {
+                // required for UtteranceProgressListener, but also deprecated
+                Timber.e("onError(string) should not have been called")
+            }
+
+            override fun onStart(arg0: String) {
+                // no nothing
+            }
+        }
 
     fun errorToDeveloperString(errorCode: Int): String =
         when (errorCode) {
