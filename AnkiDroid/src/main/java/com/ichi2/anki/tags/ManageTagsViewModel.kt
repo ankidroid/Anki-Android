@@ -98,27 +98,20 @@ class ManageTagsViewModel : ViewModel() {
      * @see Tags.setCollapsed
      */
     fun toggleCollapsed(tag: TagName) =
-        viewModelScope.launch {
-            try {
-                val node =
-                    findVisibleNode(tag) ?: run {
-                        _events.send(DisplayMessage(UserMessage.UnexpectedError))
-                        return@launch
-                    }
-                val newCollapsed = !node.collapsed
-                withCol { tags.setCollapsed(tag, newCollapsed) }
-                // Update the in-memory list with the new collapsed state
-                tagList =
-                    tagList.map {
-                        if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
-                    }
-                updateState { it.copy(visibleNodes = computeVisibleNodes(searchQuery.value)) }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to toggle collapsed state")
-                state.value = Error(e)
-            }
+        launchTagOperation {
+            val node =
+                findVisibleNode(tag) ?: run {
+                    _events.send(DisplayMessage(UserMessage.UnexpectedError))
+                    return@launchTagOperation
+                }
+            val newCollapsed = !node.collapsed
+            withCol { tags.setCollapsed(tag, newCollapsed) }
+            // Update the in-memory list with the new collapsed state
+            tagList =
+                tagList.map {
+                    if (it.fullTag == tag) it.copy(collapsed = newCollapsed) else it
+                }
+            updateState { it.copy(visibleNodes = computeVisibleNodes(searchQuery.value)) }
         }
 
     /**
@@ -165,20 +158,27 @@ class ManageTagsViewModel : ViewModel() {
 
     /**
      * Sets [ManageTagsState.Loading], runs [block], then [reloads][loadTags].
-     * On failure, transitions to [Error]
+     * On failure, transitions to [Error].
      */
     private fun launchTagOpAndRefresh(block: suspend () -> Unit = { }): Job {
         state.value = ManageTagsState.Loading
-        return viewModelScope.launch {
-            try {
-                block()
-                loadTags()
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                Timber.w(e, "launchTagOperation failed")
-                state.value = Error(e)
-            }
+        return launchTagOperation {
+            block()
+            loadTags()
+        }
+    }
+
+    private fun launchTagOperation(block: suspend () -> Unit): Job = viewModelScope.launch { runTagOperation(block) }
+
+    /** Handles failures consistently for both tag mutations and expand/collapse operations. */
+    private suspend fun runTagOperation(block: suspend () -> Unit) {
+        try {
+            block()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.w(e, "Tag operation failed")
+            state.value = Error(e)
         }
     }
 
