@@ -10,6 +10,7 @@ import anki.card_rendering.emptyCardsReport
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.DeleteDeckConfirmationRequest
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
@@ -27,6 +28,68 @@ import kotlin.test.assertEquals
 @RunWith(AndroidJUnit4::class)
 class DeckPickerViewModelTest : RobolectricTest() {
     private val viewModel = DeckPickerViewModel()
+
+    @Test
+    fun `delete confirmation uses focused deck and includes cards in subdecks`() =
+        runTest {
+            val deckId = addDeck("Parent")
+            val childDeckId = addDeck("Parent::Child")
+            val parentCard = addBasicNote("Parent card").firstCard()
+            val childCard = addBasicNote("Child card").firstCard()
+            addBasicNote("Unrelated card")
+            col.setDeck(listOf(parentCard.id), deckId)
+            col.setDeck(listOf(childCard.id), childDeckId)
+            selectDefaultDeck()
+            viewModel.focusedDeck = deckId
+
+            viewModel.flowOfDeleteDeckConfirmation.test {
+                viewModel.requestDeleteDeckConfirmation().join()
+
+                assertEquals(DeleteDeckConfirmationRequest(deckId, "Parent", 2, false), awaitItem())
+                assertEquals(deckId, col.decks.byName("Parent")?.id)
+                assertEquals(childDeckId, col.decks.byName("Parent::Child")?.id)
+                assertEquals(3, col.cardCount())
+            }
+        }
+
+    @Test
+    fun `delete confirmation identifies filtered decks without returning their cards`() =
+        runTest {
+            val note = addBasicNote()
+            val deckId = moveAllCardsToFilteredDeck(note)
+            viewModel.focusedDeck = deckId
+
+            viewModel.flowOfDeleteDeckConfirmation.test {
+                viewModel.requestDeleteDeckConfirmation().join()
+
+                assertEquals(DeleteDeckConfirmationRequest(deckId, "Filtered", 1, true), awaitItem())
+                assertEquals(deckId, col.decks.byName("Filtered")?.id)
+                assertEquals(deckId, note.firstCard().did)
+            }
+        }
+
+    @Test
+    fun `delete confirmation supports an empty deck`() =
+        runTest {
+            val deckId = addDeck("Empty")
+            viewModel.focusedDeck = deckId
+
+            viewModel.flowOfDeleteDeckConfirmation.test {
+                viewModel.requestDeleteDeckConfirmation().join()
+
+                assertEquals(DeleteDeckConfirmationRequest(deckId, "Empty", 0, false), awaitItem())
+            }
+        }
+
+    @Test
+    fun `delete confirmation without a focused deck emits nothing`() =
+        runTest {
+            viewModel.flowOfDeleteDeckConfirmation.test {
+                viewModel.requestDeleteDeckConfirmation().join()
+
+                expectNoEvents()
+            }
+        }
 
     @Test
     fun `empty cards - flow`() =
