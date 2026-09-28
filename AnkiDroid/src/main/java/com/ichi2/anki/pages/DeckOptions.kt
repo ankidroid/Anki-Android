@@ -303,8 +303,13 @@ class DeckOptions : PageFragment() {
         }
 
         @JavascriptInterface
-        fun finished() {
+        fun finished(success: Boolean) {
             launchCatchingTask {
+                if (!success) {
+                    // Keep the edited form on screen so the user can retry.
+                    reloadRequested = false
+                    return@launchCatchingTask
+                }
                 if (!reloadRequested || view == null) return@launchCatchingTask
 
                 reloadRequested = false
@@ -326,15 +331,30 @@ class DeckOptions : PageFragment() {
                     const originalFetch = window.fetch;
 
                     async function readSaveBody(readBlob) {
-                        const body = await readBlob();
-                        ankidroidSave.finished();
-                        return body;
+                        try {
+                            const body = await readBlob();
+                            ankidroidSave.finished(true);
+                            return body;
+                        } catch (error) {
+                            ankidroidSave.finished(false);
+                            throw error; // Leave error reporting to the frontend.
+                        }
                     }
 
                     window.fetch = async (input, init) => {
                         if (input !== "/_anki/updateDeckConfigs") return originalFetch(input, init);
 
-                        const response = await originalFetch(input, init);
+                        let response;
+                        try {
+                            response = await originalFetch(input, init);
+                        } catch (error) {
+                            ankidroidSave.finished(false);
+                            throw error;
+                        }
+                        if (!response.ok) {
+                            ankidroidSave.finished(false);
+                            return response;
+                        }
 
                         // fetch() only waits for headers. Anki's postProto reads the body with
                         // blob(); keep navigation blocked until that read actually completes.
