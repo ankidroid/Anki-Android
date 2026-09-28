@@ -21,6 +21,23 @@ class VersionCodeTest {
     }
 
     @Test
+    fun `ignores task property setters when reading the app version code`() {
+        val script =
+            """
+            android {
+                defaultConfig {
+                    versionCode = 22600100
+                }
+            }
+            tasks.register('writeReleaseMetadata', WriteReleaseMetadata) {
+                versionCode.set(android.defaultConfig.versionCode)
+            }
+            """.trimIndent()
+
+        assertEquals(22600100, VersionCode.read(script))
+    }
+
+    @Test
     fun `rejects missing ambiguous and unsupported versionCode declarations`() {
         for (script in listOf(
             "",

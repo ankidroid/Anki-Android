@@ -1,4 +1,5 @@
 import com.ichi2.anki.gradle.VersionCodeTasks
+import com.ichi2.anki.gradle.WriteReleaseMetadata
 
 plugins {
     // Gradle plugin portal
@@ -377,8 +378,18 @@ android {
     }
 }
 
-// register `validateVersionCode` with our (potentially new versionCode).
+// register release tasks using the finalized version configuration.
 androidComponents.finalizeDsl { androidDsl ->
+    // output versionName etc... to `build/outputs/release-metadata.json` for use in CI
+    tasks.register('writeReleaseMetadata', WriteReleaseMetadata) {
+        group = 'release'
+        description = 'Writes the configured release version and type as JSON.'
+        versionName.set(androidDsl.defaultConfig.versionName)
+        versionCode.set(androidDsl.defaultConfig.versionCode)
+        outputFile.set(layout.buildDirectory.file('outputs/release-metadata.json'))
+    }
+
+    // register `validateVersionCode` with the finalized version code.
     def validation = VersionCodeTasks.registerValidationTask(project, androidDsl.defaultConfig.versionCode)
     // handle all 'publish' calls, even if run directly
     tasks.matching { it.name.startsWith("publish") }.configureEach {
