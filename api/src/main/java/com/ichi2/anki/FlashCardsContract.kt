@@ -635,6 +635,8 @@ public object FlashCardsContract {
      * ```
      */
     public object Card {
+        public const val CONTENT_URI_SEGMENT: String = "cards"
+
         /**
          * The ID of the card in the Anki database.
          */
@@ -970,7 +972,9 @@ public object FlashCardsContract {
          * for all other requested columns. Rows already loaded may still contain the earlier values.
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
+
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         /**
          * Default columns returned by queries.
