@@ -611,6 +611,8 @@ public object FlashCardsContract {
      * ```
      */
     public object Card {
+        public const val CONTENT_URI_SEGMENT: String = "cards"
+
         /**
          * The ID of the card in the Anki database.
          */
@@ -941,7 +943,9 @@ public object FlashCardsContract {
          * For examples on how to use the URI for queries see the overview in [FlashCardsContract].
          */
         @JvmField // required for Java API
-        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
+
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         @JvmField // required for Java API
         public val DEFAULT_PROJECTION: Array<String> =
