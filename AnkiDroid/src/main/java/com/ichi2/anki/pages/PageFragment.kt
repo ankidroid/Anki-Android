@@ -113,7 +113,7 @@ abstract class PageFragment(
     }
 
     private fun setupWebView(savedInstanceState: Bundle?) {
-        val pageWebViewClient = onCreateWebViewClient(savedInstanceState)
+        val pageWebViewClient = onCreateWebViewClient(savedInstanceState).apply { serverUrl = server.baseUrl().toUri() }
         webViewLayout.apply {
             setAcceptThirdPartyCookies(true)
             with(settings) {

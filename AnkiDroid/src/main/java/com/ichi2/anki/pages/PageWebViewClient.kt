@@ -3,6 +3,7 @@
 package com.ichi2.anki.pages
 
 import android.graphics.Bitmap
+import android.net.Uri
 import android.webkit.ValueCallback
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -22,7 +23,24 @@ import java.io.IOException
  * Base WebViewClient to be used on [PageFragment]
  */
 open class PageWebViewClient : SafeWebViewClient() {
+    /**
+     * The URL of the trusted local server.
+     *
+     * Allows us to distinguish our URLs from URLs served by other origins.
+     *
+     * Without this, another app could host on localhost, and we could not tell them apart:
+     *
+     * - http://127.0.0.1:12345/graphs
+     * - http://127.0.0.1:22345/graphs
+     *
+     * SECURITY: Set this via [PageFragment], this must never be inferred from page navigation.
+     */
+    internal var serverUrl: Uri? = null
+
     val onPageFinishedCallbacks: MutableList<OnPageFinishedCallback> = mutableListOf()
+
+    private fun isInternalUrl(url: Uri): Boolean =
+        serverUrl?.let { url.scheme == it.scheme && url.encodedAuthority == it.encodedAuthority } == true
 
     override fun shouldInterceptRequest(
         view: WebView,
