@@ -4,6 +4,7 @@ package com.ichi2.anki.pages
 
 import androidx.core.content.edit
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.test.core.app.ActivityScenario
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.CollectionManager.TR
@@ -15,6 +16,8 @@ import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.waitUntil
 import com.ichi2.testutils.ext.defaultDeckNewCardsPerDay
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import org.json.JSONObject
@@ -72,6 +75,60 @@ class DeckOptionsTest : InstrumentedTest() {
         withDeckOptions {
             saveAndOptimize(newPerDay = 43)
             assertSavedAndReloaded(newPerDay = 43)
+        }
+    }
+
+    @Test
+    fun optimizingAllPresetsWaitsForSlowSave() {
+        withDelayedSave {
+            saveAndOptimize(newPerDay = 43)
+            assertSavedAndReloaded(newPerDay = 43)
+        }
+    }
+
+    @Test
+    fun failedOptimizationKeepsEditsAndAllowsRetry() {
+        val originalLimit = col.defaultDeckNewCardsPerDay
+        withDelayedSave(failFirstAttempt = true) {
+            // Capture the error without leaving a dialog blocking the retry.
+            evaluateJavascript("window.alert = message => { globalThis.saveError = String(message); }")
+            saveAndOptimize(newPerDay = 43)
+
+            waitForPageCondition(
+                condition = "globalThis.saveError?.includes('Optimization failed for test') === true",
+                message = "save error was not displayed",
+            )
+            assertEquals("true", evaluateJavascript("globalThis.beforeOptimization === true"), "failed save reloaded the page")
+            assertEquals(originalLimit, col.defaultDeckNewCardsPerDay)
+
+            saveAndOptimize(newPerDay = 43)
+            assertSavedAndReloaded(newPerDay = 43)
+        }
+    }
+
+    /** Exercise a pending response, optionally rejecting the first save so the test can retry. */
+    private fun withDelayedSave(
+        failFirstAttempt: Boolean = false,
+        block: DeckOptions.() -> Unit,
+    ) {
+        val originalHandler = uiMethods.getValue("updateDeckConfigs")
+        var failNextSave = failFirstAttempt
+        uiMethods["updateDeckConfigs"] = { input ->
+            val activity = this
+            lifecycleScope.async {
+                // explicitly reproduce the reload race
+                delay(1.seconds)
+                if (failNextSave) {
+                    failNextSave = false
+                    error("Optimization failed for test")
+                }
+                originalHandler.invoke(activity, input).await()
+            }
+        }
+        try {
+            withDeckOptions(block)
+        } finally {
+            uiMethods["updateDeckConfigs"] = originalHandler
         }
     }
 

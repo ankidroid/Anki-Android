@@ -35,6 +35,7 @@ import com.ichi2.anki.withProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicInteger
 
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 @NeedsTest("17905: pressing back before the webpage is ready closes the screen")
@@ -190,8 +191,9 @@ class DeckOptions : PageFragment() {
             ): Boolean {
                 // #16715: ensure that the fragment can't be used for general web browsing
                 val host = request?.url?.host ?: return shouldOverrideUrlLoading(view, request)
-                // Allow JavaScript to reload this page, including when night mode adds a fragment.
-                if (request.url.toString().substringBefore('#') == view?.url?.substringBefore('#')) return false
+                if (request.url.toString().substringBefore('#') == view?.url?.substringBefore('#')) {
+                    return saveAndOptimizeReload.deferReloadIfSaving()
+                }
                 return if (ankiManualHostRegex.matches(host)) {
                     super.shouldOverrideUrlLoading(view, request)
                 } else {
@@ -289,13 +291,37 @@ class DeckOptions : PageFragment() {
         saveAndOptimizeReload.requestReload()
     }
 
-    /** Tracks the page consuming its save response before reloading. */
+    /**
+     * AnkiDroid workaround for the frontend reloading before its save response has been read.
+     *
+     * 1. The fetch wrapper calls [started] before the frontend can request a reload.
+     * 2. [requestReload] schedules navigation; [deferReloadIfSaving] holds premature frontend reloads.
+     * 3. Reading the response body calls [finished]: success releases the reload; failure cancels it.
+     *
+     * Remove this when the bundled frontend awaits state.save() before reloading.
+     */
     inner class SaveAndOptimizeReload {
+        // JavaScript bridge calls run on a WebView thread; navigation callbacks run on main.
+        private val pendingSaves = AtomicInteger()
         private var reloadRequested = false // Accessed only on the main thread.
 
         fun onPageReady() {
+            pendingSaves.set(0)
             reloadRequested = false
             trackSaveResponse()
+        }
+
+        @JavascriptInterface
+        fun started() {
+            // Do this synchronously: posting to main could let the reload arrive first.
+            pendingSaves.incrementAndGet()
+        }
+
+        /** Called on main. Returning true keeps the current document and its request alive. */
+        fun deferReloadIfSaving(): Boolean {
+            if (pendingSaves.get() == 0) return false
+            requestReload()
+            return true
         }
 
         fun requestReload() {
@@ -304,13 +330,14 @@ class DeckOptions : PageFragment() {
 
         @JavascriptInterface
         fun finished(success: Boolean) {
+            pendingSaves.decrementAndGet()
             launchCatchingTask {
                 if (!success) {
                     // Keep the edited form on screen so the user can retry.
                     reloadRequested = false
                     return@launchCatchingTask
                 }
-                if (!reloadRequested || view == null) return@launchCatchingTask
+                if (pendingSaves.get() != 0 || !reloadRequested || view == null) return@launchCatchingTask
 
                 reloadRequested = false
                 webViewLayout.reload()
@@ -343,6 +370,7 @@ class DeckOptions : PageFragment() {
 
                     window.fetch = async (input, init) => {
                         if (input !== "/_anki/updateDeckConfigs") return originalFetch(input, init);
+                        ankidroidSave.started();
 
                         let response;
                         try {
@@ -437,6 +465,8 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) {
         if (UpdateDeckConfigsRequest.parseFrom(input).mode == UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_COMPUTE_ALL_PARAMS) {
+            // Anki 26.05 relies on us to request a reload; 26.09 also requests one from JavaScript.
+            // Both requests share a flag, so the page reloads once, after reading this response.
             requireDeckOptionsFragment().reloadAfterSave()
         } else {
             finish()
