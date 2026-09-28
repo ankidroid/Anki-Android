@@ -83,6 +83,7 @@ jobs:
             // Goal is to run enough iterations on all systems that we have confidence there are no flakes
             if (context.eventName === "schedule") {
               const iterationCount = 15
+              iterationArray = []
               for (let i = 1; i <= iterationCount; i++) {
                 iterationArray.push(i);
               }
