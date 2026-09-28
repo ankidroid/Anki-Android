@@ -116,6 +116,7 @@ import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.jsapi.legacy.LegacyReviewerJsApiHost
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
@@ -193,7 +194,7 @@ abstract class AbstractFlashcardViewer :
     private var replayOnTtsInit = false
 
     @VisibleForTesting
-    val jsApi by lazy { AnkiDroidJsAPI(this) }
+    val jsApi by lazy { AnkiDroidJsAPI(LegacyReviewerJsApiHost(this)) }
 
     private var tagsDialogFactory: TagsDialogFactory? = null
 

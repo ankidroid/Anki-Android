@@ -121,6 +121,8 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     @ErrorOrSuccess
     fun stop(): Int = tts.stop()
 
+    fun close() = tts.shutdown()
+
     companion object {
         private const val TTS_SUCCESS = TextToSpeech.SUCCESS
         private const val TTS_ERROR = TextToSpeech.ERROR
