@@ -120,6 +120,7 @@ class DeckPickerViewModel :
      * @see DeckDeletionResult
      */
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>(extraBufferCapacity = 1)
+    val flowOfDeleteDeckConfirmation = MutableSharedFlow<DeleteDeckConfirmationRequest>(extraBufferCapacity = 1)
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
@@ -184,6 +185,33 @@ class DeckPickerViewModel :
 
     // TODO: Use a sensible default rather than null
     val flowOfOptionsMenuState = MutableStateFlow<OptionsMenuState?>(null)
+
+    data class DeleteDeckConfirmationRequest(
+        val deckId: DeckId,
+        val deckName: String,
+        val totalCards: Int,
+        val isFilteredDeck: Boolean,
+    )
+
+    /** Prepares a confirmation dialog for deleting the focused deck. */
+    fun requestDeleteDeckConfirmation() =
+        launchCatchingIO {
+            val deckId =
+                focusedDeck ?: run {
+                    Timber.w("no focused deck")
+                    return@launchCatchingIO
+                }
+            val request =
+                withCol {
+                    DeleteDeckConfirmationRequest(
+                        deckId = deckId,
+                        deckName = decks.name(deckId),
+                        totalCards = decks.cardCount(deckId, includeSubdecks = true),
+                        isFilteredDeck = decks.isFiltered(deckId),
+                    )
+                }
+            flowOfDeleteDeckConfirmation.emit(request)
+        }
 
     /**
      * Deletes the provided deck, child decks. and all cards inside.
