@@ -47,7 +47,7 @@ open class PageWebViewClient : SafeWebViewClient() {
         request: WebResourceRequest,
     ): WebResourceResponse? {
         val path = request.url.path
-        if (request.method != "GET" || path == null) return null
+        if (request.method != "GET" || path == null || !isInternalUrl(request.url)) return null
         if (path == "/favicon.png") {
             return WebResourceResponse("image/x-icon", null, ByteArrayInputStream(byteArrayOf()))
         }
@@ -55,7 +55,7 @@ open class PageWebViewClient : SafeWebViewClient() {
         val assetPath =
             if (path.startsWith("/_app/")) {
                 "backend/sveltekit/app/${path.substring(6)}"
-            } else if (isSvelteKitPage(path.substring(1))) {
+            } else if (isSvelteKitPage(path.removePrefix("/"))) {
                 "backend/sveltekit/index.html"
             } else {
                 return null
