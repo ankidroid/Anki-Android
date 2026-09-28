@@ -46,6 +46,7 @@ class DeckOptions : PageFragment() {
         "deck-options/$deckId"
     }
     private var webViewIsReady = false
+    private val saveAndOptimizeReload = SaveAndOptimizeReload()
 
     /**
      * Callback enabled when the manual is opened in the deck options.
@@ -278,29 +279,49 @@ class DeckOptions : PageFragment() {
         webViewIsReady = true
         webViewLayout.isVisible = true
         pageLoadingIndicator.isVisible = false
-        trackSaveCompletion()
+        saveAndOptimizeReload.onPageReady()
         setParameterUnlockClickTimeout()
     }
 
-    /** Track receipt of the full save response, so reloading cannot abort it. */
-    private fun trackSaveCompletion() {
-        webViewLayout.evaluateJavascript(
-            """
-            (() => {
-                const originalFetch = window.fetch;
-                window.fetch = (input, init) => {
-                    const response = originalFetch(input, init);
-                    if (input !== "/_anki/updateDeckConfigs") return response;
-                    const completed = response.then(async (response) => {
-                        await response.clone().arrayBuffer();
-                        return response;
-                    });
-                    anki.deckOptionsSaveCompleted = completed;
-                    return completed;
-                };
-            })();
-            """.trimIndent(),
-        )
+    /** Request a reload after Save & Optimize's response has reached the page. Called on main. */
+    fun reloadAfterSave() {
+        saveAndOptimizeReload.requestReload()
+    }
+
+    /** Coordinates Save & Optimize's save response and subsequent page reload. */
+    inner class SaveAndOptimizeReload {
+        fun onPageReady() {
+            trackSaveResponse()
+        }
+
+        fun requestReload() {
+            // This HTTP request has not returned to the page yet. Wait for its response body
+            // before reloading, otherwise fetch can fail and display an alert that blocks navigation.
+            webViewLayout.evaluateJavascript(
+                "anki.deckOptionsSaveCompleted.then(() => window.location.reload())",
+            )
+        }
+
+        /** Track receipt of the full save response, so reloading cannot abort it. */
+        private fun trackSaveResponse() {
+            webViewLayout.evaluateJavascript(
+                """
+                (() => {
+                    const originalFetch = window.fetch;
+                    window.fetch = (input, init) => {
+                        const response = originalFetch(input, init);
+                        if (input !== "/_anki/updateDeckConfigs") return response;
+                        const completed = response.then(async (response) => {
+                            await response.clone().arrayBuffer();
+                            return response;
+                        });
+                        anki.deckOptionsSaveCompleted = completed;
+                        return completed;
+                    };
+                })();
+                """.trimIndent(),
+            )
+        }
     }
 
     /**
@@ -372,11 +393,7 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) {
         if (UpdateDeckConfigsRequest.parseFrom(input).mode == UpdateDeckConfigsMode.UPDATE_DECK_CONFIGS_MODE_COMPUTE_ALL_PARAMS) {
-            // This HTTP request has not returned to the page yet. Wait for its response body
-            // before reloading, otherwise fetch can fail and display an alert that blocks navigation.
-            requireDeckOptionsFragment().webViewLayout.evaluateJavascript(
-                "anki.deckOptionsSaveCompleted.then(() => window.location.reload())",
-            )
+            requireDeckOptionsFragment().reloadAfterSave()
         } else {
             finish()
         }
