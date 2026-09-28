@@ -8,8 +8,14 @@ import sys
 
 
 def main():
+    connected_test = ":AnkiDroid:connectedPlayReleaseAndroidTest"
     subprocess.run(
-        ["./gradlew", "uninstallAll", "jacocoAndroidTestReport", "--daemon"],
+        ["./gradlew", "uninstallAll", connected_test,
+         "-Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true", "--daemon"],
+        check=True,
+    )
+    subprocess.run(
+        ["./gradlew", ":AnkiDroid:jacocoAndroidTestReport", "-x", connected_test, "--daemon"],
         check=True,
     )
 
