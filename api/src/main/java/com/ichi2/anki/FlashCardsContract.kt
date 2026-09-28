@@ -284,6 +284,7 @@ public object FlashCardsContract {
                 )
 
         @JvmField // required for Java API
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
         public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
@@ -422,6 +423,7 @@ public object FlashCardsContract {
                 )
 
         @JvmField // required for Java API
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
         public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
@@ -513,6 +515,7 @@ public object FlashCardsContract {
                 )
 
         @JvmField // required for Java API
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
         public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
     }
 
@@ -956,6 +959,7 @@ public object FlashCardsContract {
                 )
 
         @JvmField // required for Java API
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
         public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
@@ -1143,6 +1147,7 @@ public object FlashCardsContract {
                 )
 
         @JvmField // required for Java API
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
         public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
@@ -1297,6 +1302,7 @@ public object FlashCardsContract {
                 )
 
         @JvmField // required for Java API
+        @Deprecated("Use DEFAULT_COLUMNS for an independent array", replaceWith = ReplaceWith("DEFAULT_COLUMNS"))
         public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**

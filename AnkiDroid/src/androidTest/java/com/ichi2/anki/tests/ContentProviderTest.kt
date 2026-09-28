@@ -853,7 +853,7 @@ class ContentProviderTest : InstrumentedTest() {
             true,
         )
 
-        assertSingleCardProjection(card, null, FlashCardsContract.Card.DEFAULT_PROJECTION.toList()) {
+        assertSingleCardProjection(card, null, FlashCardsContract.Card.DEFAULT_COLUMNS.toList()) {
             assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.ORIGINAL_POSITION))
             assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.RAW_CUSTOM_DATA))
             assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.FSRS_STABILITY))
@@ -1038,7 +1038,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cursor = contentResolver.cursorFor(cardUri)
 
         cursor.use {
-            assertEquals(FlashCardsContract.Card.DEFAULT_PROJECTION.toList(), it.columnNames.toList())
+            assertEquals(FlashCardsContract.Card.DEFAULT_COLUMNS.toList(), it.columnNames.toList())
             assertTrue("default projection cursor should contain a row", it.moveToFirst())
 
             assertEquals(-1, it.getColumnIndex(FlashCardsContract.Card.RAW_QUEUE))
@@ -1265,9 +1265,9 @@ class ContentProviderTest : InstrumentedTest() {
             )
             while (it.moveToNext()) {
                 // Check that it's possible to leave out columns from the projection
-                for (i in FlashCardsContract.Note.DEFAULT_PROJECTION.indices) {
+                for (i in FlashCardsContract.Note.DEFAULT_COLUMNS.indices) {
                     val projection =
-                        removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i)
+                        removeFromProjection(FlashCardsContract.Note.DEFAULT_COLUMNS, i)
                     val noteId =
                         it.getString(it.getColumnIndex(FlashCardsContract.Note._ID))
                     val noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId)
@@ -1311,8 +1311,8 @@ class ContentProviderTest : InstrumentedTest() {
     fun testQueryNotesProjection() {
         val cr = contentResolver
         // Query all available notes
-        for (i in FlashCardsContract.Note.DEFAULT_PROJECTION.indices) {
-            val projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i)
+        for (i in FlashCardsContract.Note.DEFAULT_COLUMNS.indices) {
+            val projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_COLUMNS, i)
             cr
                 .query(
                     FlashCardsContract.Note.CONTENT_URI,
@@ -1375,7 +1375,7 @@ class ContentProviderTest : InstrumentedTest() {
             cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2))
             cr.update(uri, cv, null, null)
             cr
-                .query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null)
+                .query(uri, FlashCardsContract.Note.DEFAULT_COLUMNS, null, null, null)
                 .use { noteCursor ->
                     assertNotNull(
                         "Check that there is a valid cursor for detail data after update",
@@ -1755,7 +1755,7 @@ class ContentProviderTest : InstrumentedTest() {
             contentResolver
                 .query(
                     FlashCardsContract.Deck.CONTENT_ALL_URI,
-                    FlashCardsContract.Deck.DEFAULT_PROJECTION,
+                    FlashCardsContract.Deck.DEFAULT_COLUMNS,
                     null,
                     null,
                     null,
