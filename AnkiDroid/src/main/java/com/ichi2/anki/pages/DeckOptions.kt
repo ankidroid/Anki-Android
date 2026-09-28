@@ -30,7 +30,6 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.updateDeckConfigsRaw
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.settings.Prefs
-import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -178,8 +177,6 @@ class DeckOptions : PageFragment() {
         activity?.onBackPressedDispatcher?.addCallback(this, onBackFromManual)
 
         return object : PageWebViewClient() {
-            private val ankiManualHostRegex = Regex("^docs\\.ankiweb\\.net$")
-
             /** @see onWebViewReady */
             override fun onShowWebView(webView: WebView) {
                 // no-op: handled in onVebViewReady
@@ -190,15 +187,18 @@ class DeckOptions : PageFragment() {
                 request: WebResourceRequest?,
             ): Boolean {
                 // #16715: ensure that the fragment can't be used for general web browsing
-                val host = request?.url?.host ?: return shouldOverrideUrlLoading(view, request)
-                if (request.url.toString().substringBefore('#') == view?.url?.substringBefore('#')) {
-                    return saveAndOptimizeReload.deferReloadIfSaving()
+                val url = request?.url ?: return true
+                if (
+                    request.isForMainFrame &&
+                    url.toString().substringBefore('#') == view?.url?.substringBefore('#') &&
+                    saveAndOptimizeReload.deferReloadIfSaving()
+                ) {
+                    return true
                 }
-                return if (ankiManualHostRegex.matches(host)) {
-                    super.shouldOverrideUrlLoading(view, request)
+                return if (request.isForMainFrame && url.scheme == "https" && url.encodedAuthority == "docs.ankiweb.net") {
+                    false
                 } else {
-                    openUrl(request.url)
-                    true
+                    super.shouldOverrideUrlLoading(view, request)
                 }
             }
         }.apply {

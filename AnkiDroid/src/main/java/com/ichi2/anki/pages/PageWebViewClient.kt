@@ -11,6 +11,7 @@ import android.webkit.WebView
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.AssetHelper.guessMimeType
@@ -41,6 +42,25 @@ open class PageWebViewClient : SafeWebViewClient() {
 
     private fun isInternalUrl(url: Uri): Boolean =
         serverUrl?.let { url.scheme == it.scheme && url.encodedAuthority == it.encodedAuthority } == true
+
+    /**
+     * Keeps bundled routes in this WebView and opens external HTTP(S) main-frame links outside it.
+     *
+     * WebView skips this callback for POST navigations and app-initiated [WebView.loadUrl] calls.
+     */
+    override fun shouldOverrideUrlLoading(
+        view: WebView?,
+        request: WebResourceRequest?,
+    ): Boolean {
+        val url = request?.url ?: return true
+        if (isInternalUrl(url)) {
+            return !isSvelteKitPage(url.path.orEmpty().removePrefix("/"))
+        }
+        if (request.isForMainFrame && url.scheme in listOf("http", "https")) {
+            view?.context?.openUrl(url)
+        }
+        return true
+    }
 
     override fun shouldInterceptRequest(
         view: WebView,

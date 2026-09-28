@@ -2,10 +2,7 @@
 
 package com.ichi2.anki.pages
 
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
 import androidx.core.net.toUri
-import androidx.core.view.children
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.deck_config.UpdateDeckConfigsMode
 import anki.deck_config.UpdateDeckConfigsRequest
@@ -14,23 +11,34 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.assertNoActivityStarted
+import com.ichi2.testutils.assertOpenedUrl
 import com.ichi2.testutils.ext.clear
 import com.ichi2.testutils.ext.defaultDeckNewCardsPerDay
+import com.ichi2.testutils.mockWebResourceRequest
+import com.ichi2.testutils.registerWebBrowser
+import com.ichi2.testutils.webView
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
 import org.robolectric.Shadows.shadowOf
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /** Test for [DeckOptions] */
 @RunWith(AndroidJUnit4::class)
 class DeckOptionsTest : RobolectricTest() {
+    private val manualUrl = "https://docs.ankiweb.net/deck-options.html#daily-limits".toUri()
+
+    @Before
+    fun registerBrowser() = targetContext.registerWebBrowser()
+
     @After
     override fun tearDown() {
         super.tearDown()
@@ -52,15 +60,14 @@ class DeckOptionsTest : RobolectricTest() {
     @Test
     fun `javascript can reload the current deck options page`() {
         withDeckOptions {
-            val webView = webViewLayout.children.filterIsInstance<WebView>().single()
+            val webView = webViewLayout.webView
             val pageUrl =
-                webView
-                    .url!!
+                assertNotNull(webView.url)
                     .toUri()
                     .buildUpon()
                     .fragment(null)
                     .build()
-            val request = mock<WebResourceRequest> { on { url } doReturn pageUrl }
+            val request = mockWebResourceRequest(pageUrl.toString())
 
             for (fragment in listOf(null, "night")) {
                 webView.loadUrl(
@@ -71,24 +78,96 @@ class DeckOptionsTest : RobolectricTest() {
                         .toString(),
                 )
                 assertFalse(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request), "fragment: $fragment")
+                targetContext.assertNoActivityStarted("fragment: $fragment")
             }
         }
     }
 
     @Test
-    fun `links to other local pages still open externally`() {
+    fun `reloading the current page waits for the save response`() {
         withDeckOptions {
-            val webView = webViewLayout.children.filterIsInstance<WebView>().single()
+            onWebViewReady()
+            val webView = webViewLayout.webView
+            val shadow = shadowOf(webView)
+            val save = assertIs<DeckOptions.SaveAndOptimizeReload>(shadow.getJavascriptInterface("ankidroidSave"))
+            val pageUrl = assertNotNull(webView.url).substringBefore('#')
+            webView.loadUrl("$pageUrl#night")
+            val request = mockWebResourceRequest(pageUrl)
+
+            save.started()
+            assertTrue(shadow.webViewClient.shouldOverrideUrlLoading(webView, request))
+            assertEquals(0, shadow.reloadInvocations)
+            targetContext.assertNoActivityStarted()
+
+            save.finished(true)
+            advanceRobolectricLooper()
+
+            assertEquals(1, shadow.reloadInvocations)
+            assertFalse(shadow.webViewClient.shouldOverrideUrlLoading(webView, request))
+            targetContext.assertNoActivityStarted()
+        }
+    }
+
+    @Test
+    fun `links to other bundled pages remain internal`() {
+        withDeckOptions {
+            val webView = webViewLayout.webView
             val otherPage =
-                webView
-                    .url!!
+                assertNotNull(webView.url)
                     .toUri()
                     .buildUpon()
                     .path("/graphs")
                     .build()
-            val request = mock<WebResourceRequest> { on { url } doReturn otherPage }
+            val request = mockWebResourceRequest(otherPage.toString())
+
+            assertFalse(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request))
+            targetContext.assertNoActivityStarted()
+        }
+    }
+
+    @Test
+    fun `HTTPS manual links remain internal`() {
+        withDeckOptions {
+            val webView = webViewLayout.webView
+            val request = mockWebResourceRequest(manualUrl.toString())
+
+            assertFalse(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request))
+            targetContext.assertNoActivityStarted()
+        }
+    }
+
+    @Test
+    fun `links outside the HTTPS manual origin open externally`() {
+        withDeckOptions {
+            val webView = webViewLayout.webView
+            val otherOrigins =
+                listOf(
+                    manualUrl.buildUpon().scheme("http").build(),
+                    manualUrl.buildUpon().encodedAuthority("docs.ankiweb.net:444").build(),
+                    manualUrl.buildUpon().encodedAuthority("docs.ankiweb.net.example.org").build(),
+                    manualUrl.buildUpon().encodedAuthority("user@docs.ankiweb.net").build(),
+                    manualUrl.buildUpon().encodedAuthority("docs.ankiweb.net@example.org").build(),
+                )
+            for (url in otherOrigins) {
+                val request = mockWebResourceRequest(url.toString())
+                assertTrue(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request), url.toString())
+                targetContext.assertOpenedUrl(url)
+
+                webView.loadUrl(url.toString())
+                assertTrue(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request), "reload: $url")
+                targetContext.assertOpenedUrl(url)
+            }
+        }
+    }
+
+    @Test
+    fun `manual subframes are blocked without launching an activity`() {
+        withDeckOptions {
+            val webView = webViewLayout.webView
+            val request = mockWebResourceRequest(manualUrl.toString(), mainFrame = false)
 
             assertTrue(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request))
+            targetContext.assertNoActivityStarted()
         }
     }
 
@@ -149,9 +228,5 @@ class DeckOptionsTest : RobolectricTest() {
 
     /** The last JavaScript evaluated by the WebView of [DeckOptions] */
     private val DeckOptions.lastEvaluatedJavascript: String?
-        get() =
-            webViewLayout.children
-                .filterIsInstance<WebView>()
-                .single()
-                .let { shadowOf(it).lastEvaluatedJavascript }
+        get() = shadowOf(webViewLayout.webView).lastEvaluatedJavascript
 }
