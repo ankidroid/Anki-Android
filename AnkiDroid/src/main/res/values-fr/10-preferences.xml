@@ -443,9 +443,15 @@ Elles ne sont pas destinées à la plupart des utilisateurs et restent en anglai
     <string name="new_study_screen_summ"><![CDATA[L\'écran de révision amélioré qui succédera à l\'actuel. Quelques caractéristiques de l\'ancien écran ont été modifiées ou retirées. Merci de nous signaler tout <a href="%1$s">feedback</a> ou <a href="%2$s">bugs</a>.]]></string>
     <string name="show_answer_feedback" maxLength="41">Montrer la réaction de réponse</string>
     <string name="screen" maxLength="41">Écran</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">Répondre uniquement</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">Retourner et répondre</string>
+    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
+    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Skip</string>
+    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Assign</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Aller aux paramètres</string>
     <string name="related_settings_title" comment="Title of the section for related settings">Paramètres associés</string>
+    <!-- External Directory Selection Preference -->
+    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
+    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
+    <string name="pref_directory_not_writable">Directory is not writable</string>
 </resources>

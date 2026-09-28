@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Αύξηση / μείωση (“-3”) σημερινού ορίου επαναλήψεων κατά</string>
     <string name="custom_study_forgotten">Επανάληψη ξεχασμένων καρτών στις τελευταίες x μέρες:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Επιλέξτε x κάρτες από την τράπουλα:</string>
     <string name="storage_full_title">Γεμάτος χώρος αποθήκευσης</string>
     <string name="storage_almost_full_title">Χώρος αποθήκευσης σχεδόν πλήρης</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Αντικατάσταση</string>
     <string name="dialog_positive_repair">Επισκευή</string>
     <string name="dialog_positive_replace">Αντικατάσταση</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Η καθορισμένη διαδρομή δεν ήταν ένας έγκυρος κατάλογος</string>
     <string name="dialog_invalid_custom_certificate">Το κείμενο που εισέρθηκε δεν αντιπροσωπεί σε έγκυρο πιστοποιητικό Χ509 του κωδικού PEM.</string>
     <string name="dialog_invalid_custom_certificate_title">Σφάλμα ανάλυσης πιστοποιητικού</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Έλεγχος πολυμέσων&#8230;</string>
     <string name="check_media_adding_missing_tag">Προσθήκη ετικετών&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Διαγραφή πολυμέσων&#8230;</string>
     <string name="delete_media_result_title">Αποτέλεσμα διαγραφής</string>
     <plurals name="delete_media_result_message">

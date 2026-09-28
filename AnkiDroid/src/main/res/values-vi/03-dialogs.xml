@@ -47,7 +47,7 @@
     <string name="custom_study_rev_extend">Tăng / giảm (“-3”) giới hạn ôn tập của ngày hôm nay lên</string>
     <string name="custom_study_forgotten">Ôn lại các thẻ đã quên trong x ngày trước:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Xem trước thẻ mới được thêm vào x ngày trước:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Chọn x thẻ từ bộ thẻ:</string>
     <string name="storage_full_title">Bộ nhớ đầy</string>
     <string name="storage_almost_full_title">Bộ nhớ gần đầy</string>
@@ -76,6 +76,7 @@
     <string name="dialog_positive_overwrite">Ghi đè</string>
     <string name="dialog_positive_repair">Sửa chữa</string>
     <string name="dialog_positive_replace">Thay thế</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Đường dẫn đã chỉ định không phải thư mục hợp lệ</string>
     <string name="dialog_invalid_custom_certificate">Dòng văn bản được cung cấp không phải là chứng chỉ X509 được mã hóa PEM hợp lệ</string>
     <string name="dialog_invalid_custom_certificate_title">Lỗi phân tích chứng chỉ</string>
@@ -84,7 +85,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Đang kiểm tra tệp đa phương tiện&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Đang xóa phương tiện&#8230;</string>
     <string name="delete_media_result_title">Kết quả xóa</string>
     <plurals name="delete_media_result_message">

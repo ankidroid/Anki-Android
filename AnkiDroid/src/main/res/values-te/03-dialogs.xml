@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">నేటి సమీక్ష పరిమితిని పెంచడం/తగ్గించడం (\"-3\").</string>
     <string name="custom_study_forgotten">గత x రోజుల్లో రిజిస్టర్డ్ కార్డులను మర్చిపోయారు:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">గత x రోజులలో జోడించిన కొత్త కార్డులను ప్రివ్యూ చేయండి:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">నిల్వ నిండింది</string>
     <string name="storage_almost_full_title">నిల్వ దాదాపు నిండింది</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">తిరిగి వ్రాయండి</string>
     <string name="dialog_positive_repair">బాగు చేయు</string>
     <string name="dialog_positive_replace">పునఃస్థాపించుము</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">పేర్కొన్న మార్గం చెల్లుబాటు అయ్యే డైరెక్టరీ కాదు</string>
     <string name="dialog_invalid_custom_certificate">అందించిన వచనం చెల్లుబాటు అయ్యే PEM-ఎన్‌కోడ్ చేసిన X509 ప్రమాణపత్రానికి పరిష్కారం కాదు</string>
     <string name="dialog_invalid_custom_certificate_title">సర్టిఫికెట్‌ని అన్వయించడంలో లోపం</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">మీడియాను తనిఖీ చేస్తోంది&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">మీడియాను తీసివేస్తోంది&#8230;</string>
     <string name="delete_media_result_title">తొలగింపు ఫలితం</string>
     <plurals name="delete_media_result_message">

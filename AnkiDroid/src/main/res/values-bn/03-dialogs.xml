@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">আজকের পর্যালোচনা সীমা বাড়ান/কমান (“-3”)</string>
     <string name="custom_study_forgotten">গত x দিনে ভুলে যাওয়া কার্ডগুলি পর্যালোচনা করুন:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">গত x দিনে যোগ করা নতুন কার্ডের পূর্বরূপ দেখুন:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">স্টোরেজ পূর্ণ</string>
     <string name="storage_almost_full_title">স্টোরেজ প্রায় পূর্ণ</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">ওভাররাইট করুন</string>
     <string name="dialog_positive_repair">মেরামত</string>
     <string name="dialog_positive_replace">প্রতিস্থাপন</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">নির্দিষ্ট পথ একটি বৈধ ডিরেক্টরি ছিল না</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">শংসাপত্র পার্সিং ত্রুটি৷</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">মিডিয়া পরীক্ষা করা হচ্ছে&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">মিডিয়া মুছে ফেলা হচ্ছে&#8230;</string>
     <string name="delete_media_result_title">মুছে ফেলার ফলাফল</string>
     <plurals name="delete_media_result_message">

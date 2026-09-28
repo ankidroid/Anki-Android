@@ -53,7 +53,7 @@
     <string name="custom_study_rev_extend">Збільшення/зменшення («-3») сьогоднішнього ліміту на повторення</string>
     <string name="custom_study_forgotten">Повторити картки забуті за останні x днів:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Переглянути нові картки додані за останні x днів:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Вибрати x карток з колоди:</string>
     <string name="storage_full_title">Сховище заповнено</string>
     <string name="storage_almost_full_title">Сховище майже заповнено</string>
@@ -82,6 +82,7 @@
     <string name="dialog_positive_overwrite">Перезаписати</string>
     <string name="dialog_positive_repair">Виправити</string>
     <string name="dialog_positive_replace">Замінити</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Вказаний шлях не є дійсним</string>
     <string name="dialog_invalid_custom_certificate">Наданий текст не перетворюється на дійсний сертифікат X509 з PEM-кодуванням</string>
     <string name="dialog_invalid_custom_certificate_title">Помилка парсингу сертифікату</string>
@@ -90,7 +91,7 @@
     <string name="check_media_warning">У випадку великих медіа-колекцій це може забрати багато часу. Продовжити?</string>
     <string name="check_media_message">Перевіряємо мультимедіа&#8230;</string>
     <string name="check_media_adding_missing_tag">Додавання тегів&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Видалення медіа&#8230;</string>
     <string name="delete_media_result_title">Результат видалення</string>
     <plurals name="delete_media_result_message">

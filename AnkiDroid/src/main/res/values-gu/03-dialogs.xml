@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">આજની સમીક્ષા મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_forgotten">છેલ્લા x દિવસમાં ભૂલી ગયેલા કાર્ડની સમીક્ષા કરો:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">છેલ્લા x દિવસમાં ઉમેરાયેલા નવા કાર્ડ્સનું પૂર્વાવલોકન કરો:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">સ્ટોરેજ ભરાઈ ગયું</string>
     <string name="storage_almost_full_title">સ્ટોરેજ લગભગ ભરાઈ ગયું છે</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">ઓવરરાઇટ કરો</string>
     <string name="dialog_positive_repair">સમારકામ</string>
     <string name="dialog_positive_replace">બદલો</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">ઉલ્લેખિત પાથ માન્ય ડિરેક્ટરી ન હતી</string>
     <string name="dialog_invalid_custom_certificate">પ્રદાન કરેલ ટેક્સ્ટ માન્ય PEM-એનકોડેડ X509 પ્રમાણપત્રને ઉકેલતું નથી</string>
     <string name="dialog_invalid_custom_certificate_title">પ્રમાણપત્રનું પદચ્છેદન કરવામાં ભૂલ</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">મીડિયા તપાસી રહ્યું છે&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">મીડિયા ડિલીટ કરી રહ્યાં છીએ&#8230;</string>
     <string name="delete_media_result_title">કાઢી નાખવાનું પરિણામ</string>
     <plurals name="delete_media_result_message">

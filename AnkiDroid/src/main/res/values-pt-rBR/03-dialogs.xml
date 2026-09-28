@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Aumentar/diminuir (\"-3\") o limite de revisões de hoje.</string>
     <string name="custom_study_forgotten">Revisar cards esquecidos nos últimos x dias:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Visualizar novos cards adicionados nos últimos x dias:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Selecione x cards do baralho:</string>
     <string name="storage_full_title">Armazenamento cheio</string>
     <string name="storage_almost_full_title">Armazenamento quase cheio</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Sobrescrever</string>
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituir</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">O caminho especificado não era um diretório válido</string>
     <string name="dialog_invalid_custom_certificate">O texto fornecido não corresponde a um certificado X509 codificado em PEM</string>
     <string name="dialog_invalid_custom_certificate_title">Erro na análise do certificado.</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Coleções de mídias grandes podem levar muito tempo. Prosseguir?</string>
     <string name="check_media_message">Verificando mídia&#8230;</string>
     <string name="check_media_adding_missing_tag">Adicionando tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Excluindo mídia&#8230;</string>
     <string name="delete_media_result_title">Resultado da exclusão</string>
     <plurals name="delete_media_result_message">

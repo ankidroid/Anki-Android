@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Rrit/zvogëlo (“-3”) kufirin e sotëm të rishikimit me</string>
     <string name="custom_study_forgotten">Rishikoni kartat e harruara në x ditët e fundit:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Shikoni paraprakisht kartat e reja të shtuara në x ditët e fundit:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Magazinimi plot</string>
     <string name="storage_almost_full_title">Magazinimi pothuajse i mbushur</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Mbishkruaj</string>
     <string name="dialog_positive_repair">Riparim</string>
     <string name="dialog_positive_replace">Zëvendëso</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Rruga e specifikuar nuk ishte një drejtori e vlefshme</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Po kontrollon median&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Po fshin median&#8230;</string>
     <string name="delete_media_result_title">Rezultati i fshirjes</string>
     <plurals name="delete_media_result_message">

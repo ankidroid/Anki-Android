@@ -53,7 +53,7 @@
     <string name="custom_study_rev_extend">Zvýšit/snížit („-3“) dnešní limit opakování o</string>
     <string name="custom_study_forgotten">Opakovat zapomenuté karty z posledních x dnů:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Vybrat x karet z balíčku:</string>
     <string name="storage_full_title">Úložiště je plné</string>
     <string name="storage_almost_full_title">Úložiště téměř plné</string>
@@ -82,6 +82,7 @@
     <string name="dialog_positive_overwrite">Přepsat</string>
     <string name="dialog_positive_repair">Opravit</string>
     <string name="dialog_positive_replace">Nahradit</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
     <string name="dialog_invalid_custom_certificate">Zadaný text neposkytuje platný certifikát X509 v kódování PEM.</string>
     <string name="dialog_invalid_custom_certificate_title">Chyba zpracování certifikátu</string>
@@ -90,7 +91,7 @@
     <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií? Pokračovat?</string>
     <string name="check_media_message">Kontrolují se multimédia&#8230;</string>
     <string name="check_media_adding_missing_tag">Přidávání štítků&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Odstraňují se multimédia&#8230;</string>
     <string name="delete_media_result_title">Výsledek odstraňování</string>
     <plurals name="delete_media_result_message">

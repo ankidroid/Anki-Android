@@ -47,7 +47,7 @@
     <string name="custom_study_rev_extend">오늘의 복습 제한을 (“-3”) 만큼 증가/감소시키기</string>
     <string name="custom_study_forgotten">최근 x일 동안 잊혀진 복습 카드:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">최근 x일 내에 추가된 카드 미리 학습하기:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">카드 묶음으로부터 선택된 카드 수:</string>
     <string name="storage_full_title">저장 공간이 가득 찼습니다.</string>
     <string name="storage_almost_full_title">저장공간이 거의 가득 찼습니다.</string>
@@ -76,6 +76,7 @@
     <string name="dialog_positive_overwrite">덮어쓰기</string>
     <string name="dialog_positive_repair">복구</string>
     <string name="dialog_positive_replace">대체</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">지정된 경로가 올바르지 않습니다.</string>
     <string name="dialog_invalid_custom_certificate">포함된 텍스트가 올바른 PEM 인코딩된 X509 인증서를 가지고 있지 않습니다</string>
     <string name="dialog_invalid_custom_certificate_title">인증서 인식 오류</string>
@@ -84,7 +85,7 @@
     <string name="check_media_warning">미디어가 클 경우 시간이 오래 걸릴 수 있습니다. 계속할까요?</string>
     <string name="check_media_message">미디어 점검 중&#8230;</string>
     <string name="check_media_adding_missing_tag">태그 추가 중&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">미디어 삭제 중&#8230;</string>
     <string name="delete_media_result_title">삭제 결과</string>
     <plurals name="delete_media_result_message">

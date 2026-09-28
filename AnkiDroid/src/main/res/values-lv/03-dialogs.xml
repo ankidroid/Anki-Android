@@ -51,7 +51,7 @@
     <string name="custom_study_rev_extend">Palielināt/samazināt (\"-3\") šodienas izskatīšanas ierobežojumu par</string>
     <string name="custom_study_forgotten">Parskatīt kartītes, kas ir aizmirstas pēdējās x dienās:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Priekškatīt jaunās kartītes, kas pievienotas pēdējās x dienās:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Atlasīt x kavas kartītes:</string>
     <string name="storage_full_title">Krātuve pilna</string>
     <string name="storage_almost_full_title">Krātuve gandrīz pilna</string>
@@ -80,6 +80,7 @@
     <string name="dialog_positive_overwrite">Aizvietot</string>
     <string name="dialog_positive_repair">Labot</string>
     <string name="dialog_positive_replace">Aizstāt</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Norādītais ceļš nenorāda uz derīgu mapi</string>
     <string name="dialog_invalid_custom_certificate">Norādītais tekstst nesatur derīgu ar PEM šifrētu X509 sertifikātu</string>
     <string name="dialog_invalid_custom_certificate_title">Kļūda sertifikāta apstrādāšanā</string>
@@ -88,7 +89,7 @@
     <string name="check_media_warning">Tas var aizņemt ilgu laiku, ja ir lieli informācijas nesēju krājumi. Turpināt?</string>
     <string name="check_media_message">Pārbauda informācijas nesējus&#8230;</string>
     <string name="check_media_adding_missing_tag">Pievieno birkas&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Izdzēš informācijas nesējus&#8230;</string>
     <string name="delete_media_result_title">Izdzēšanas iznākums</string>
     <plurals name="delete_media_result_message">

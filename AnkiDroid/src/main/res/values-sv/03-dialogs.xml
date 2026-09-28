@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Öka/minska (“-3”) dagens repetitionsgräns med</string>
     <string name="custom_study_forgotten">Repetera kort som är glömda under de senaste x dagarna:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Välj x kort från kortleken:</string>
     <string name="storage_full_title">Lagring full</string>
     <string name="storage_almost_full_title">Lagring nästan full</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Skriv över</string>
     <string name="dialog_positive_repair">Reparera</string>
     <string name="dialog_positive_replace">Ersätt</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Den valda sökvägen är ogiltig</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Kunde inte tolka certifikatet</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Detta kan ta lång tid med stora mediasamlingar. Fortsätt?</string>
     <string name="check_media_message">Kontrollerar media&#8230;</string>
     <string name="check_media_adding_missing_tag">Lägger till taggar&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Tar bort media&#8230;</string>
     <string name="delete_media_result_title">Raderingsresultat</string>
     <plurals name="delete_media_result_message">

@@ -47,7 +47,7 @@
     <string name="custom_study_rev_extend">將今天的複習卡片上限新增/減少(“-3”)</string>
     <string name="custom_study_forgotten">過去 x 天內忘記的複習卡:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">預覽過去 x 天新增的卡片:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">在牌組中選擇 x 張卡</string>
     <string name="storage_full_title">存儲已滿</string>
     <string name="storage_almost_full_title">存儲空間幾乎滿了</string>
@@ -76,6 +76,7 @@
     <string name="dialog_positive_overwrite">覆蓋</string>
     <string name="dialog_positive_repair">修復</string>
     <string name="dialog_positive_replace">取代</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">所選的路徑不是有效路徑</string>
     <string name="dialog_invalid_custom_certificate">提供的文字無法解析為有效的 PEM 編碼 X509 憑證</string>
     <string name="dialog_invalid_custom_certificate_title">證書解析錯誤</string>
@@ -84,7 +85,7 @@
     <string name="check_media_warning">由於較大的媒體檔案，這可能會花比較久的時間。確定繼續？</string>
     <string name="check_media_message">正在檢查媒體&#8230;</string>
     <string name="check_media_adding_missing_tag">添加標籤&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">刪除媒體中&#8230;</string>
     <string name="delete_media_result_title">克漏字結果</string>
     <plurals name="delete_media_result_message">

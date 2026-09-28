@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Heutigen Tageshöchstwerts für Wiederholungskarten erhöhen („3“) oder verringern („-3“) um</string>
     <string name="custom_study_forgotten">Karten wiederholen, die in den letzten x Tagen vergessen wurden:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Wählen Sie x Karten aus dem Stapel aus:</string>
     <string name="storage_full_title">Speicher voll</string>
     <string name="storage_almost_full_title">Speicher fast voll</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Überschreiben</string>
     <string name="dialog_positive_repair">Reparieren</string>
     <string name="dialog_positive_replace">Ersetzen</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Der angegebene Pfad ist kein gültiges Verzeichnis</string>
     <string name="dialog_invalid_custom_certificate">Der angegebene text ergibt kein gültiges PEM-codiertes X509-zertifikat</string>
     <string name="dialog_invalid_custom_certificate_title">Fehler beim parsen des Zertifikats</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Das kann mit großen Mediensammlungen lange dauern. Fortfahren?</string>
     <string name="check_media_message">Medien werden überprüft &#8230;</string>
     <string name="check_media_adding_missing_tag">Schlagworte werden hinzugefügt&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Medien werden gelöscht &#8230;</string>
     <string name="delete_media_result_title">Löschergebnis</string>
     <plurals name="delete_media_result_message">

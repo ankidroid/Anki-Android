@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">𐌽𐌹𐌿𐌾𐍉𐍃 𐌺𐌰𐍂𐍄𐍉𐍃 𐍆𐌰𐌿𐍂𐌰𐍃𐌰𐌹𐍈𐌰𐌽 𐌹𐌽 𐌰𐍆𐍄𐌿𐌼𐌹𐍃𐍄𐌰𐌹𐌼 𐍇 𐌳𐌰𐌲𐌰𐌼:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">𐍅𐌰𐌻𐌴𐌹 x 𐌺𐌰𐍂𐍄𐍉𐍃 𐌺𐌰𐍂𐍄𐌰𐌷𐌿𐌶𐌳𐌹𐍃:</string>
     <string name="storage_full_title">𐍂𐌿𐌼 𐌹𐍃𐍄 𐍆𐌿𐌻𐌻</string>
     <string name="storage_almost_full_title">𐌻𐌹𐍃𐌰 𐌽𐌴𐍈𐌰 𐍆𐌿𐌻𐌻𐌰</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">𐌿𐍆𐌰𐍂𐌼𐌴𐌻𐌾𐌰𐌽</string>
     <string name="dialog_positive_repair">𐌲𐌰𐌱𐍉𐍄𐌾𐌰𐌽</string>
     <string name="dialog_positive_replace">𐌼𐌹𐌸𐍃𐌰𐍄𐌾𐌰𐌽</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">𐌻𐌰𐌹𐌳𐌰 𐍃𐌴𐌹 𐌲𐌰𐍂𐌰𐌹𐌷𐍄𐌹𐌳𐌰 𐌽𐌹 𐍅𐌰𐍃 𐌳𐌹𐍂𐌰𐌹𐌺𐍄𐌰𐌿𐍂𐌹 𐍂𐌰𐌹𐌷𐍄</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">𐌿𐍃𐍃𐍉𐌺𐌾𐌰𐌽𐌳𐌰 𐌼𐌰𐌹𐌳𐌾𐌰&#8230;</string>
     <string name="check_media_adding_missing_tag">𐌱𐌹𐌰𐌿𐌺𐌰𐌽𐌳𐌰 𐍃𐍉𐌺𐌽𐌹𐍅𐌰𐌿𐍂𐌳𐌰&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">𐌿𐍃𐌵𐌹𐍃𐍄𐌾𐌰𐌽𐌳𐌰 𐌼𐌰𐌹𐌳𐌾𐌰𐌼&#8230;</string>
     <string name="delete_media_result_title">𐍄𐌰𐌿𐌹 𐌿𐍃𐌵𐌹𐍃𐍄𐌰𐌹𐍃</string>
     <plurals name="delete_media_result_message">

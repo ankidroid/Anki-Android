@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Augmentation/diminution (« -3 ») de la limite de révision d\'aujourd\'hui de</string>
     <string name="custom_study_forgotten">Revoir les cartes oubliées dans les x derniers jours :</string>
     <string name="custom_study_ahead_description">Revoir les cartes dues dans le prochain :</string>
-    <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Sélectionnez x cartes du paquet :</string>
     <string name="storage_full_title">Stockage plein</string>
     <string name="storage_almost_full_title">Il n\'y a presque plus d\'espace libre</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Écraser</string>
     <string name="dialog_positive_repair">Réparer</string>
     <string name="dialog_positive_replace">Remplacer</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Le chemin indiqué ne mène pas à un répertoire valide</string>
     <string name="dialog_invalid_custom_certificate">Le texte fourni ne correspond pas à un certificat X509 encodé en PEM valide</string>
     <string name="dialog_invalid_custom_certificate_title">Erreur lors de l’analyse du certificat</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Cela peut prendre beaucoup de temps avec les grandes collections de médias. Continuer?</string>
     <string name="check_media_message">Vérification des médias&#8230;</string>
     <string name="check_media_adding_missing_tag">Ajout d\'étiquettes&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Suppression du média&#8230;</string>
     <string name="delete_media_result_title">Résultat de la suppression</string>
     <plurals name="delete_media_result_message">

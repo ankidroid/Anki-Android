@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">დღევანდელი გადახედვების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
     <string name="custom_study_forgotten">გასულ x დღეში დავიწყებული ბარათების გადახედვა:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">ბოლო x დღეში დამატებული ბარათების წინასწარ ნახვა:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">მეხსიერება სავსეა</string>
     <string name="storage_almost_full_title">მეხსიერება თითქმის გავსებულია</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">ჩანაცვლება</string>
     <string name="dialog_positive_repair">შეკეთება</string>
     <string name="dialog_positive_replace">ჩანაცვლება</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">შეცდომა სერტიფიკატის პარსინგისას</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">მედიაფაილების შემოწმება&#8230;</string>
     <string name="check_media_adding_missing_tag">იარლიყების დამატება&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">მიმდინარეობს მედიაფაილების წაშლა&#8230;</string>
     <string name="delete_media_result_title">წაშლის შედეგი</string>
     <plurals name="delete_media_result_message">

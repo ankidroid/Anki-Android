@@ -47,7 +47,7 @@
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_forgotten">直近 x 日間で「やり直し」を選んだカードを再学習</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">直近 x 日間で追加した習得未開始の新規カードを予習</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">デッキから抽出する枚数：</string>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
@@ -76,6 +76,7 @@
     <string name="dialog_positive_overwrite">上書きする</string>
     <string name="dialog_positive_repair">修復</string>
     <string name="dialog_positive_replace">上書き</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
     <string name="dialog_invalid_custom_certificate">提供されたテキストをPEMエンコードしても有効な X.509証明書になりません</string>
     <string name="dialog_invalid_custom_certificate_title">証明書の解析エラー</string>
@@ -84,7 +85,7 @@
     <string name="check_media_warning">メディア（画像・音声・動画）ファイルが多いと、チェックに長い時間がかかる場合があります。続行しますか？</string>
     <string name="check_media_message">メディアをチェックしています&#8230;</string>
     <string name="check_media_adding_missing_tag">タグを追加しています&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">メディアを削除中&#8230;</string>
     <string name="delete_media_result_title">削除結果</string>
     <plurals name="delete_media_result_message">

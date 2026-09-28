@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Bugünün gözden geçirme sınırını şu kadar arttırın/azaltın (“-3”)</string>
     <string name="custom_study_forgotten">Son x gündeki unutulan kartları izle:</string>
     <string name="custom_study_ahead_description">Şu kadar zaman içinde sırası gelecek kartları çalış:</string>
-    <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Desteden x kart seç:</string>
     <string name="storage_full_title">Depolama alanı dolu</string>
     <string name="storage_almost_full_title">Depolama alanı nerdeyse dolu</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Üzerine Yaz</string>
     <string name="dialog_positive_repair">Onar</string>
     <string name="dialog_positive_replace">Değiştir</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Belirtilen konum geçerli bir dizin değildi.</string>
     <string name="dialog_invalid_custom_certificate">Verilen metin geçerli bir PEM-kodlanmış X509 sertifikasına çözümlenmiyor</string>
     <string name="dialog_invalid_custom_certificate_title">Sertifika çözümlemesinde hata</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun zaman alabilir. Devam edilsin mi?</string>
     <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
     <string name="check_media_adding_missing_tag">Etiketler ekleniyor&#8230;</string>
-    <string name="check_media_tags_added">Etiketleme sonuçları</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Medya siliniyor&#8230;</string>
     <string name="delete_media_result_title">Silme sonuçları</string>
     <plurals name="delete_media_result_message">
