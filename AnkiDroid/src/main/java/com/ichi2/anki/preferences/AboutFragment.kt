@@ -48,8 +48,14 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         get() {
             val contributorsLink = getString(R.string.link_contributors)
             val contributingGuideLink = getString(R.string.link_contribution)
+            val strRes =
+                if (BuildConfig.SHOW_DONATE_LINKS) {
+                    CommonString.about_contributors_description
+                } else {
+                    CommonString.about_contributors_description_no_donate
+                }
             return getString(
-                CommonString.about_contributors_description,
+                strRes,
                 contributorsLink,
                 contributingGuideLink,
             ).parseAsHtml()
