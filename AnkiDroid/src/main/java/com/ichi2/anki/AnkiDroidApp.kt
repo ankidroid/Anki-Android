@@ -70,6 +70,7 @@ import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
+import com.ichi2.utils.startUpWebView
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetNotificationScheduler
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
@@ -179,8 +180,6 @@ open class AnkiDroidApp :
             showThemedToast(this.applicationContext, getString(R.string.user_is_a_robot), false)
         }
 
-        setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled)
-
         setupContextMenus()
 
         setup("makeBackendUsable") { makeBackendUsable(this) }
@@ -192,6 +191,7 @@ open class AnkiDroidApp :
         if (!checkWebViewAvailable()) {
             return
         }
+        setupWebView()
 
         // Forget the last deck that was used in the CardBrowser
         CardBrowser.clearLastDeckId()
@@ -472,6 +472,21 @@ open class AnkiDroidApp :
             NoSuggestFilter.ensureApplied()
         }
     }
+
+    /**
+     * Starts asynchronously loading the WebView on a background thread.
+     *
+     * TODO: This only handles a subset of WebView init, and will not produce a performance
+     *  improvement until this pattern is used for all WebView init.
+     */
+    private fun setupWebView() =
+        setup("setupWebView") {
+            startUpWebView(
+                context = this,
+                onSuccess = { setWebContentsDebuggingEnabled(Prefs.isWebDebugEnabled) },
+                onFailure = { e -> Timber.w(e, "startUpWebView") },
+            )
+        }
 
     /**
      * @return the app version, OS version and device model, provided when syncing.
