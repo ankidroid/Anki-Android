@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
                     android:textColor="?android:attr/textColorSecondary"
-                    tools:text="These are our awesome contributors. You can help AnkiDroid too by programming, translating, donating and more!"
+                    tools:text="These are our awesome contributors. You can help AnkiDroid too by programming, translating and more!"
                     />
 
                 <TextView
