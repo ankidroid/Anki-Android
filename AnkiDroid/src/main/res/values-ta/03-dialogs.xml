@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">இன்றைய மதிப்பாய்வு வரம்பை அதிகரிக்கவும்/குறைக்கவும் (\"-3\").</string>
     <string name="custom_study_forgotten">கடந்த x நாட்களில் மறக்கப்பட்ட மதிப்பாய்வு அட்டைகள்:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">கடந்த x நாட்களில் சேர்க்கப்பட்ட புதிய கார்டுகளின் மாதிரிக்காட்சி:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">சேமிப்பு நிரம்பியது</string>
     <string name="storage_almost_full_title">சேமிப்பு கிட்டத்தட்ட நிரம்பிவிட்டது</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">மேலெழுதவும்</string>
     <string name="dialog_positive_repair">பழுது</string>
     <string name="dialog_positive_replace">மாற்றம்</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">குறிப்பிடப்பட்ட பாதை சரியான கோப்பகமாக இல்லை</string>
     <string name="dialog_invalid_custom_certificate">வழங்கப்பட்ட உரை சரியான PEM-குறியீடு செய்யப்பட்ட X509 சான்றிதழில் தீர்க்கப்படாது</string>
     <string name="dialog_invalid_custom_certificate_title">சான்றிதழைப் பாகுபடுத்துவதில் பிழை</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">மீடியாவைச் சரிபார்க்கிறது&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">மீடியாவை நீக்குகிறது&#8230;</string>
     <string name="delete_media_result_title">நீக்குதல் முடிவு</string>
     <plurals name="delete_media_result_message">

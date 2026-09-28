@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">ಇಂದಿನ ಚೆಕ್ ಮಿತಿಯನ್ನು ಹೆಚ್ಚಿಸಿ/ಕಡಿಮೆ ಮಾಡಿ (\"-3\").</string>
     <string name="custom_study_forgotten">ಕಳೆದ x ದಿನಗಳಲ್ಲಿ ಮರೆತಿರುವ ರಿವ್ಯೂ ಕಾರ್ಡ್‌ಗಳು:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">ಕಳೆದ x ದಿನಗಳಲ್ಲಿ ಸೇರಿಸಲಾದ ಹೊಸ ಕಾರ್ಡ್‌ಗಳ ಪೂರ್ವವೀಕ್ಷಣೆ:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">ಸಂಗ್ರಹಣೆ ತುಂಬಿದೆ</string>
     <string name="storage_almost_full_title">ಸಂಗ್ರಹಣೆಯು ಬಹುತೇಕ ಪೂರ್ಣವಾಗಿದೆ</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">ತಿದ್ದಿ ಬರೆಯಿರಿ</string>
     <string name="dialog_positive_repair">ದುರಸ್ತಿ</string>
     <string name="dialog_positive_replace">ಬದಲಾವಣೆ</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">ನಿರ್ದಿಷ್ಟಪಡಿಸಿದ ಮಾರ್ಗವು ಮಾನ್ಯವಾದ ಡೈರೆಕ್ಟರಿಯಾಗಿರಲಿಲ್ಲ</string>
     <string name="dialog_invalid_custom_certificate">ಒದಗಿಸಿದ ಪಠ್ಯವು ಮಾನ್ಯವಾದ PEM-ಎನ್‌ಕೋಡ್ ಮಾಡಿದ X509 ಪ್ರಮಾಣಪತ್ರವನ್ನು ಪರಿಹರಿಸುವುದಿಲ್ಲ</string>
     <string name="dialog_invalid_custom_certificate_title">ಪ್ರಮಾಣಪತ್ರವನ್ನು ಪಾರ್ಸಿಂಗ್ ಮಾಡುವಲ್ಲಿ ದೋಷ</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">ಮಾಧ್ಯಮವನ್ನು ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">ಮಾಧ್ಯಮವನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="delete_media_result_title">ಅಳಿಸುವಿಕೆ ಫಲಿತಾಂಶ</string>
     <plurals name="delete_media_result_message">

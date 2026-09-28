@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Augmenta/disminueix (\"-3\") el límit d\'avui de revisions a</string>
     <string name="custom_study_forgotten">Revisa les fitxes oblidades en els darrers x dies:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Sobreescriure</string>
     <string name="dialog_positive_repair">Repara</string>
     <string name="dialog_positive_replace">Reemplaça</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">El camí especificat no era un directori vàlid</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Comprovant multimèdia&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Suprimint medis&#8230;</string>
     <string name="delete_media_result_title">Resultat de la supressió</string>
     <plurals name="delete_media_result_message">

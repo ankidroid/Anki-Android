@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Verhoog/verlaag (“-3”) vandag se nuwe hersieningslimiet met</string>
     <string name="custom_study_forgotten">Hersien kaarte wat in die laaste x dae vergeet is</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Voorskou nuwe kaarte wat in die laaste x dae bygevoeg is:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">Stoor is vol</string>
     <string name="storage_almost_full_title">Stoor is amper vol</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Oorskryf</string>
     <string name="dialog_positive_repair">Herstel</string>
     <string name="dialog_positive_replace">Vervang</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Die gespesifiseerde pad was nie \'n geldige gids nie.</string>
     <string name="dialog_invalid_custom_certificate">Die verskafde teks los nie op na \'n geldige PEM-gekodeerde X509 sertifikaat nie.</string>
     <string name="dialog_invalid_custom_certificate_title">Fout met die ontleding van sertifikaat</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Media word nagegaan&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Media word uitgevee&#8230;</string>
     <string name="delete_media_result_title">Verwyderingsresultaat</string>
     <plurals name="delete_media_result_message">

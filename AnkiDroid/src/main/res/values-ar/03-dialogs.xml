@@ -57,7 +57,7 @@
     <string name="custom_study_rev_extend">إضافة/طرح (مثلًا «-٣») إلى حد المراجعات لهذا اليوم</string>
     <string name="custom_study_forgotten">راجع البطاقات المنسية في آخر س يوم:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">إختر س بطاقة من الرزمة:</string>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
     <string name="storage_almost_full_title">ذاكرة التخزين ممتلئة تقريبًا</string>
@@ -86,6 +86,7 @@
     <string name="dialog_positive_overwrite">استبدال</string>
     <string name="dialog_positive_repair">إصلاح</string>
     <string name="dialog_positive_replace">استبدال</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">المسار المحدد ليس مجلدًا صالحًا</string>
     <string name="dialog_invalid_custom_certificate">لا يُحال النص المُدخل إلى شهادة «X509» مشفرة ب«PEM» صالحة.</string>
     <string name="dialog_invalid_custom_certificate_title">حدث خطأ في تحليل الشهادة</string>
@@ -94,7 +95,7 @@
     <string name="check_media_warning">قد يستغرق هذا وقتًا طويلًا مع مجموعات الوسائط الكبيرة. أتود الاستمرار؟</string>
     <string name="check_media_message">يتم فحص الوسائط&#8230;</string>
     <string name="check_media_adding_missing_tag">تجري إضافة الوسوم&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">جار حذف الوسائط&#8230;</string>
     <string name="delete_media_result_title">نتيجة الحذف</string>
     <plurals name="delete_media_result_message">

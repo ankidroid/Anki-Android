@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱨᱤᱵᱷᱤᱣ ᱞᱤᱢᱤᱴ</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">ᱥᱴᱳᱨᱮᱡ ᱯᱩᱨᱤ</string>
     <string name="storage_almost_full_title">ᱥᱴᱳᱨᱮᱡ ᱜᱮ ᱯᱩᱨᱤ</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">ᱚᱞ ᱪᱮᱛᱟᱱ ᱚᱞ</string>
     <string name="dialog_positive_repair">ᱡᱩᱛᱨᱟᱹᱣ</string>
     <string name="dialog_positive_replace">ᱥᱟᱦᱟ</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">ᱦᱚᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱩᱫᱩᱫᱩᱜ ᱵᱟᱭ ᱴᱷᱤᱠ ᱟᱟ</string>
     <string name="dialog_invalid_custom_certificate">ᱮᱢ ᱟᱠᱟᱱ ᱴᱮᱠᱥᱴ ᱫᱚ PEM-encoded X509 ᱥᱟᱨᱴᱤᱯᱷᱤᱠᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱦᱟᱹᱴᱤᱧ ᱟᱠᱟᱱᱟ</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">ᱢᱤᱰᱤᱭᱟ ᱜᱮᱫ ᱜᱤᱰᱤᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="delete_media_result_title">ᱜᱮᱫ ᱜᱤᱰᱤ‌ ᱛᱮᱞᱟ</string>
     <plurals name="delete_media_result_message">

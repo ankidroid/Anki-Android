@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Aumentar/diminuír (\"-3\") o límite de repasos actual en</string>
     <string name="custom_study_forgotten">Repasar as tarxetas esquecidas nos últimos x días:</string>
     <string name="custom_study_ahead_description">Repasar as tarxetas pendentes nos vindeiros:</string>
-    <string name="custom_study_preview">Amosar as tarxetas novas engadidas nos últimos x días:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Seleccionar x tarxetas da baralla:</string>
     <string name="storage_full_title">Almacenamento cheo</string>
     <string name="storage_almost_full_title">Almacenamento case cheo</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Substituír</string>
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituír</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">A ruta especificada non é un cartafol válido</string>
     <string name="dialog_invalid_custom_certificate">O texto proporcionado non corresponde a un certificado X509 codificado nun formato PEM válido</string>
     <string name="dialog_invalid_custom_certificate_title">Erro na análise do certificado</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Isto pode levar moito tempo con coleccións multimedia grandes. Queres continuar?</string>
     <string name="check_media_message">Verificando multimedia&#8230;</string>
     <string name="check_media_adding_missing_tag">Engadindo etiquetas&#8230;</string>
-    <string name="check_media_tags_added">Resultados das etiquetas</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Eliminando multimedia&#8230;</string>
     <string name="delete_media_result_title">Resultado da eliminación</string>
     <plurals name="delete_media_result_message">

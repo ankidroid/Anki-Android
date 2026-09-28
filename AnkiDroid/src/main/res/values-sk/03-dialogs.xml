@@ -53,7 +53,7 @@
     <string name="custom_study_rev_extend">Zvýšiť/znížiť („-3”) dnešný limit kartičiek na zopakovanie o</string>
     <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>
     <string name="custom_study_ahead_description">Zopakovať kartičky na skúšanie za:</string>
-    <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Vybrať x kartičiek z balíčka:</string>
     <string name="storage_full_title">Úložisko je plné</string>
     <string name="storage_almost_full_title">Úložisko je takmer plné</string>
@@ -82,6 +82,7 @@
     <string name="dialog_positive_overwrite">Prepísať</string>
     <string name="dialog_positive_repair">Opraviť</string>
     <string name="dialog_positive_replace">Nahradiť</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Špecifikovaná cesta nebola platným adresárom</string>
     <string name="dialog_invalid_custom_certificate">Zadaný text neodpovedá požadovanému certifikátu X509 kódovanom vo formáte PEM.</string>
     <string name="dialog_invalid_custom_certificate_title">Chyba pri dekódovaní certifikátu</string>
@@ -90,7 +91,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">Kontrola multimédií&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Médiá sa vymazávajú&#8230;</string>
     <string name="delete_media_result_title">Výsledok vymazania</string>
     <plurals name="delete_media_result_message">

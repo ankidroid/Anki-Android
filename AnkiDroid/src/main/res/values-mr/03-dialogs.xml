@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">आजची पुनरावलोकन मर्यादा वाढवा / कमी करा (“-3”)</string>
     <string name="custom_study_forgotten">गेल्या x दिवसात विसरलेल्या कार्डांचे पुनरावलोकन करा:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">शेवटच्या x दिवसात जोडलेल्या नवीन कार्डांचे पूर्वावलोकन करा:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Select x cards from the deck:</string>
     <string name="storage_full_title">स्टोरेज भरले आहे</string>
     <string name="storage_almost_full_title">स्टोरेज जवळजवळ भरले आहे</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">अधिलिखित</string>
     <string name="dialog_positive_repair">दुरुस्ती</string>
     <string name="dialog_positive_replace">पुनर्स्थित करा</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ वैध निर्देशिका नाही</string>
     <string name="dialog_invalid_custom_certificate">प्रदान केलेला मजकूर वैध PEM-एनकोड केलेल्या X509 प्रमाणपत्राचे निराकरण करत नाही</string>
     <string name="dialog_invalid_custom_certificate_title">प्रमाणपत्र पार्स करताना त्रुटी</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">मीडिया तपासत आहे&#8230;</string>
     <string name="check_media_adding_missing_tag">Adding tags&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">मीडिया हटवित आहे&#8230;</string>
     <string name="delete_media_result_title">हटविण्याचा निकाल</string>
     <plurals name="delete_media_result_message">

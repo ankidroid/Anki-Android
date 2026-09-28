@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Aumentare/diminuire (“-3”) il limite odierno di revisioni di</string>
     <string name="custom_study_forgotten">Ripeti carte dimenticate negli ultimi x giorni:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Anteprima carte nuove aggiunte negli ultimi x giorni:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Seleziona x carte casualmente dal mazzo:</string>
     <string name="storage_full_title">Spazio di archiviazione pieno</string>
     <string name="storage_almost_full_title">Spazio di archiviazione quasi pieno</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Sovrascrivi</string>
     <string name="dialog_positive_repair">Ripara</string>
     <string name="dialog_positive_replace">Sostituisci</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Il percorso specificato non era una cartella valida</string>
     <string name="dialog_invalid_custom_certificate">Il testo fornito non si risolve con un certificato X509 codificato in PEM valido</string>
     <string name="dialog_invalid_custom_certificate_title">Errore durante l\'analisi del certificato</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Potrebbe richiedere molto tempo per collezioni multimediali di grandi dimensioni. Procedere?</string>
     <string name="check_media_message">Controllo i media&#8230;</string>
     <string name="check_media_adding_missing_tag">Aggiungi etichetta</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Eliminando media&#8230;</string>
     <string name="delete_media_result_title">Eliminazione risultato</string>
     <plurals name="delete_media_result_message">

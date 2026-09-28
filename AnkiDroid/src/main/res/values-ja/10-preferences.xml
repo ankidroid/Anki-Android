@@ -221,9 +221,9 @@
          ################################## Review reminders ###################################
          ####################################################################################### -->
     <!-- Entry points -->
-    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
-    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">App-wide</string>
-    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
+    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">学習リマインダー</string>
+    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">コレクション全体</string>
+    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">特定のデッキ</string>
     <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
     <!-- Schedule reminders screen -->
     <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
@@ -284,11 +284,11 @@
     <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Disable battery optimization</string>
     <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Open battery settings</string>
     <!-- Notification content -->
-    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">It\'s time to study your cards</string>
-    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">It\'s time to study \"%s\"</string>
-    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">Snooze %s</string>
+    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">学習する時間です</string>
+    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">%s を学習する時間です</string>
+    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">%s スヌーズ</string>
     <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
-        <item quantity="other">%d cards due</item>
+        <item quantity="other">%d枚の課題</item>
     </plurals>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">タグを選択</string>
@@ -438,9 +438,15 @@
     <string name="new_study_screen_summ"><![CDATA[現行の学習画面の後継となる、改良された学習画面。現行画面のいくつかの機能は変更または削除されました。ぜひ<a href="%1$s">ご意見・ご感想</a>をお寄せください。<a href="%2$s">不具合</a>がある場合もお知らせいただければ幸いです。]]></string>
     <string name="show_answer_feedback" maxLength="41">回答選択時にフィードバック（目印）を表示</string>
     <string name="screen" maxLength="41">画面枠</string>
-    <string name="only_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to only answer the card">回答のみ</string>
-    <string name="flip_and_answer" maxLength="41" comment="Configuration of the \'Answer\' commands to answer the card if on the answer side, and flip it if on the question side">表面では解答を表示</string>
+    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
+    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Skip</string>
+    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Assign</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
     <string name="related_settings_title" comment="Title of the section for related settings">関連設定</string>
+    <!-- External Directory Selection Preference -->
+    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
+    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
+    <string name="pref_directory_not_writable">Directory is not writable</string>
 </resources>

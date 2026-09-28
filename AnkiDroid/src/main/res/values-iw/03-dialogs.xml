@@ -52,7 +52,7 @@
     <string name="custom_study_rev_extend">הוספה/הורדה(“-3”) הגבלת חזרות להיום ב</string>
     <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">בחר x קלפים מהחפיסה:</string>
     <string name="storage_full_title">האיחסון מלא</string>
     <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
@@ -81,6 +81,7 @@
     <string name="dialog_positive_overwrite">שכתוב</string>
     <string name="dialog_positive_repair">תיקון</string>
     <string name="dialog_positive_replace">החלפה</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">הנתיב שצוין אינו תיקייה תקנית</string>
     <string name="dialog_invalid_custom_certificate">הטקסט שסופק אינו מתאים לאישור X509 תקין מקודד ב-PEM</string>
     <string name="dialog_invalid_custom_certificate_title">שגיאה בניתוח האישור</string>
@@ -89,7 +90,7 @@
     <string name="check_media_warning">This may take a long time with large media collections. Proceed?</string>
     <string name="check_media_message">קבצי המדיה בבדיקה&#8230;</string>
     <string name="check_media_adding_missing_tag">הוספת תגיות&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">המדיה נמחקת&#8230;</string>
     <string name="delete_media_result_title">תוצאת מחיקה</string>
     <plurals name="delete_media_result_message">

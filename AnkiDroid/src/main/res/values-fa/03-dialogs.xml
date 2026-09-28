@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">محدودیت تعداد مرور های امروز را کم/زیاد (\"-۳\") کن به این اندازه</string>
     <string name="custom_study_forgotten">مرور کارت های فراموش شده در x روز گذشته:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">انتخاب x کارت از دسته کارت ها:</string>
     <string name="storage_full_title">حافظه</string>
     <string name="storage_almost_full_title">اوکی</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">رونويسي کردن</string>
     <string name="dialog_positive_repair">اصلاح</string>
     <string name="dialog_positive_replace">جایگزین کردن</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
     <string name="dialog_invalid_custom_certificate">متن ارائه شده به یک گواهی X509 کدگذاری شده با PEM معتبر تبدیل نمی‌شود</string>
     <string name="dialog_invalid_custom_certificate_title">خطا در تجزیه گواهی</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">با مجموعه‌های رسانه‌ای حجیم، این کار ممکن است بسیار زمان‌بر باشد. آیا ادامه می‌دهید؟</string>
     <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
     <string name="check_media_adding_missing_tag">در حال اضافه کردن تگ ها&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">حذف رسانه&#8230;</string>
     <string name="delete_media_result_title">نتیجه حذف</string>
     <plurals name="delete_media_result_message">

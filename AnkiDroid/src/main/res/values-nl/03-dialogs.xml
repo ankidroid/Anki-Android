@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">De nieuwe overhoringslimiet van vandaag verhogen/verlagen (\"-3\") met</string>
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>
     <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
+    <string name="custom_study_preview">Preview new cards added in the last:</string>
     <string name="custom_study_tags">Selecteer x aantal kaarten van de deck</string>
     <string name="storage_full_title">Opslag vol</string>
     <string name="storage_almost_full_title">Opslag is bijna vol</string>
@@ -78,6 +78,7 @@
     <string name="dialog_positive_overwrite">Overschrijven</string>
     <string name="dialog_positive_repair">Repareer</string>
     <string name="dialog_positive_replace">Vervangen</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">Het opgegeven pad was geen geldige map</string>
     <string name="dialog_invalid_custom_certificate">De opgegeven tekst wordt niet omgezet in een geldig PEM-gecodeerd X509-certificaat</string>
     <string name="dialog_invalid_custom_certificate_title">Fout bij het parseren van certificaat</string>
@@ -86,7 +87,7 @@
     <string name="check_media_warning">Dit kan lang duren bij grote media-collecties. Doorgaan?</string>
     <string name="check_media_message">Media controleren&#8230;</string>
     <string name="check_media_adding_missing_tag">Tags aan het toevoegen&#8230;</string>
-    <string name="check_media_tags_added">Tagging results</string>
+    <string name="check_media_tags_added">Tags added</string>
     <string name="delete_media_message">Verwijdering van media&#8230;</string>
     <string name="delete_media_result_title">Resultaat van verwijdering</string>
     <plurals name="delete_media_result_message">
