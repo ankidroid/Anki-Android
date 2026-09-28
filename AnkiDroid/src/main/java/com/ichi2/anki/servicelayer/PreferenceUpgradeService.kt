@@ -36,7 +36,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.preferences.reviewer.ViewerAction
 import com.ichi2.anki.reviewer.Binding
-import com.ichi2.anki.reviewer.Binding.Companion.keyCode
+import com.ichi2.anki.reviewer.Binding.KeyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
@@ -364,7 +364,7 @@ object PreferenceUpgradeService {
                 oldGesturePreferenceKey: String,
                 volumeKeyCode: Int,
             ) {
-                upgradeBinding(preferences, oldGesturePreferenceKey, keyCode(volumeKeyCode))
+                upgradeBinding(preferences, oldGesturePreferenceKey, KeyCode(volumeKeyCode))
             }
 
             private fun upgradeGestureToBinding(
@@ -734,14 +734,19 @@ object PreferenceUpgradeService {
             override fun upgrade(preferences: SharedPreferences) {
                 for (key in keys) {
                     val value = preferences.getString(key, null) ?: continue
-                    val bindings = fromPreferenceString(value)
-                    val unknown = bindings.filter { it.binding is Binding.UnknownBinding }
-                    if (unknown.isEmpty()) continue
-                    val newBindings = bindings - unknown
+                    val (newBindings, error) = parseBindingsAndError(value)
+                    if (!error) continue
                     preferences.edit {
                         putString(key, newBindings.toPreferenceString())
                     }
                 }
+            }
+
+            /** The list of bindings, and whether there are bindings that could not be interpreted. */
+            private fun parseBindingsAndError(prefString: String): Pair<List<ReviewerBinding>, Boolean> {
+                val substringCount = MappableBinding.getPreferenceSubstrings(prefString).size
+                val bindings = ReviewerBinding.fromPreferenceString(prefString)
+                return bindings to (substringCount != bindings.size)
             }
         }
 
