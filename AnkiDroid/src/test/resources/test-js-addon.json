@@ -5,11 +5,9 @@
         "version": "1.1.1",
         "description": "Show progress bar in AnkiDroid, this package may not be used in node_modules. For using this addon view. https://github.com/ankidroid/Anki-Android/pull/9232",
         "main": "index.js",
-        "ankidroidJsApi": "0.0.3",
+        "ankidroidJsApi": "0.0.4",
         "addonType": "reviewer",
-        "keywords": [
-            "ankidroid-js-addon"
-        ],
+        "keywords": ["ankidroid-js-addon"],
         "author": {
             "name": "krmanik",
             "email": "infinyte01@gmail.com",
@@ -31,11 +29,9 @@
         "version": "1.0.1",
         "description": "This addon will listed in Addon Browser. Also AddonInfo.isValidAnkiDroidAddon return true for this package. For more view. https://github.com/ankidroid/Anki-Android/pull/9232",
         "main": "index.js",
-        "ankidroidJsApi": "0.0.3",
+        "ankidroidJsApi": "0.0.4",
         "addonType": "reviewer",
-        "keywords": [
-            "ankidroid-js-addon"
-        ],
+        "keywords": ["ankidroid-js-addon"],
         "author": {
             "name": "krmanik",
             "email": "infinyte01@gmail.com",

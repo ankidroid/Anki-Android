@@ -1,6 +1,6 @@
 /*
  * AnkiDroid JavaScript API
- * Version: 0.0.3
+ * Version: 0.0.4
  */
 
 /**
@@ -76,6 +76,12 @@ const jsApiList = {
     ankiGetNoteTags: "getNoteTags",
 };
 
+/**
+ * Endpoints which returned the unparsed response body in API 0.0.3,
+ * the oldest version still accepted (see MINIMUM_JS_API_VERSION).
+ */
+const rawResponseEndpoints = ["nextTime1", "nextTime2", "nextTime3", "nextTime4", "deckName"];
+
 class AnkiDroidJS {
     constructor({ developer, version }) {
         this.developer = developer;
@@ -107,7 +113,7 @@ class AnkiDroidJS {
             }
 
             const responseData = await response.text();
-            if (endpoint.includes("nextTime") || endpoint.includes("deckName")) {
+            if (this.version === "0.0.3" && rawResponseEndpoints.includes(endpoint)) {
                 return responseData;
             }
             return JSON.parse(responseData);
