@@ -42,11 +42,13 @@ import com.ichi2.anki.databinding.ActivityHomescreenBinding
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.utils.input
+import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.libanki.DeckId
@@ -106,6 +108,7 @@ import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
@@ -265,6 +268,40 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker {
             viewModel.deleteDeck(did).join()
             assertThat("deck was deleted", col.decks.count(), equalTo(1))
+        }
+    }
+
+    @Test
+    fun `Delete shortcut requests confirmation only in tablet layout`() {
+        val deckName = "Deck to delete"
+        val deckId = addDeck(deckName, setAsSelected = true)
+        col.setDeck(listOf(addBasicNote().firstCard().id), deckId)
+
+        deckPicker {
+            val handled = onKeyUp(KeyEvent.KEYCODE_DEL, KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
+            if (!fragmented) {
+                assertFalse(handled)
+                assertTrue(supportFragmentManager.fragments.none { it is DeckPickerConfirmDeleteDeckDialog })
+                return@deckPicker
+            }
+
+            assertTrue(handled)
+            advanceRobolectricLooperUntil {
+                supportFragmentManager.fragments.any { it is DeckPickerConfirmDeleteDeckDialog && it.dialog?.isShowing == true }
+            }
+            val dialog =
+                supportFragmentManager.fragments
+                    .filterIsInstance<DeckPickerConfirmDeleteDeckDialog>()
+                    .single()
+                    .requireDialog() as AlertDialog
+            assertEquals(getString(R.string.delete_deck_title), dialog.title)
+            assertThat(dialog.message, containsString(deckName))
+            assertEquals(deckId, col.decks.byName(deckName)?.id)
+            assertEquals(1, col.cardCount())
+
+            dialog.performPositiveClick()
+            advanceRobolectricLooperUntil { col.decks.byName(deckName) == null }
+            assertEquals(0, col.cardCount())
         }
     }
 
