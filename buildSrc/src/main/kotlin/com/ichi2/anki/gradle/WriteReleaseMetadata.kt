@@ -37,6 +37,10 @@ abstract class WriteReleaseMetadata : DefaultTask() {
     @get:OutputFile
     abstract val outputFile: RegularFileProperty
 
+    init {
+        outputFile.convention(project.layout.buildDirectory.file("outputs/release-metadata.json"))
+    }
+
     @TaskAction
     fun writeMetadata() {
         val code = versionCode.get()
