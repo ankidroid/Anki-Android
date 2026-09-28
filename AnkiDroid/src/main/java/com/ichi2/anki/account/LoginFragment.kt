@@ -23,9 +23,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.CollectionManager.TR
@@ -34,6 +35,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.account.AccountActivity.Companion.START_FROM_DECKPICKER
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.getEndpoint
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.bottomCornerClearance
@@ -41,13 +43,8 @@ import com.ichi2.anki.utils.ext.isCompactWidth
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.hideKeyboard
 import com.ichi2.anki.utils.openUrl
-import com.ichi2.anki.withProgress
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.Permissions
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -94,6 +91,45 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         initObservers()
     }
 
+    private fun initLoginSuccessDialogResultListener() {
+        /** @see DeckPicker.onNewIntent */
+        fun openDeckPickerAndSync() {
+            Timber.i("Opening Deck Picker for Sync")
+            val intent =
+                DeckPicker.getIntent(
+                    requireContext(),
+                    autoSync = true,
+                )
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        fun showLoggedInView() {
+            Timber.i("Showing LoggedIn view")
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.popBackStack(
+                null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE,
+            )
+            fragmentManager.commit {
+                replace(R.id.fragment_container, LoggedInFragment())
+            }
+            Permissions.requestNotificationPermissionsForSyncing(requireActivity())
+        }
+
+        parentFragmentManager.setFragmentResultListener(
+            LoginSuccessDialogFragment.REQUEST_KEY,
+            viewLifecycleOwner,
+        ) { _, bundle ->
+            when (LoginSuccessDialogFragment.actionFrom(bundle)) {
+                LoginSuccessDialogFragment.Action.SYNC -> openDeckPickerAndSync()
+                LoginSuccessDialogFragment.Action.CONTINUE -> showLoggedInView()
+                null -> {}
+            }
+        }
+    }
+
     /** Applies edge-to-edge insets for the screen */
     private fun setupEdgeToEdge(view: View) {
         val toolbarContainer = view.findViewById<View>(R.id.toolbar_container)
@@ -130,6 +166,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         initUsernameListeners()
         initPasswordListeners()
         initButtonListeners()
+        initLoginSuccessDialogResultListener()
     }
 
     private fun initUsernameListeners() {
@@ -226,29 +263,32 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loginState.collect { state ->
-                when (state) {
-                    is LoginState.Success -> {
-                        Timber.i("Login Successful")
-                        val activity = requireActivity()
-                        val isForResult = arguments?.getBoolean(START_FROM_DECKPICKER) ?: false
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginFlow.collect { state ->
+                    when (state) {
+                        is Login.Success -> {
+                            Timber.i("Login Successful")
+                            val activity = requireActivity()
+                            val isForResult = arguments?.getBoolean(START_FROM_DECKPICKER) ?: false
 
-                        // If the user explicitly came from a sync prompt (onboarding/pressing sync)
-                        // then their intent was to sync after login success
-                        if (isForResult) {
-                            activity.setResult(RESULT_OK)
-                            activity.finish()
-                            return@collect
+                            // If the user explicitly came from a sync prompt (onboarding/pressing sync)
+                            // then their intent was to sync after login success
+                            if (isForResult) {
+                                activity.setResult(RESULT_OK)
+                                activity.finish()
+                                return@collect
+                            }
+                            showLoginSuccessDialog()
                         }
-                        showLoginSuccessDialog()
+                        is Login.Error -> {
+                            showSnackbar(text = state.exception.message.toString())
+                        }
                     }
-                    is LoginState.Error -> {
-                        showSnackbar(text = state.exception.message.toString())
-                    }
-                    is LoginState.Idle -> { /* Not needed */ }
                 }
             }
         }
+
+        observeProgress(viewModel) { getString(R.string.sign_in) }
     }
 
     /**
@@ -258,42 +298,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
      * * **Negative:** continues to [LoggedInFragment]
      */
     private fun showLoginSuccessDialog() {
-        /** @see LoggedInFragment */
-        fun showLoggedInView() {
-            Timber.i("Showing LoggedIn view")
-            val fragmentManager = requireActivity().supportFragmentManager
-            fragmentManager.popBackStack(
-                null,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE,
-            )
-            fragmentManager.commit {
-                replace(R.id.fragment_container, LoggedInFragment())
-            }
-            Permissions.requestNotificationPermissionsForSyncing(requireActivity())
-        }
-
-        /** @see DeckPicker.onNewIntent */
-        fun openDeckPickerAndSync() {
-            Timber.i("Opening Deck Picker for Sync")
-            val intent =
-                DeckPicker.getIntent(
-                    requireContext(),
-                    autoSync = true,
-                )
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-
-        MaterialAlertDialogBuilder(requireContext()).show {
-            Timber.i("Showing dialog: 'Sync now?'")
-            setTitle(R.string.login_successful)
-            setIcon(R.drawable.ic_sync)
-            setMessage(R.string.sync_now)
-            positiveButton(R.string.button_sync) { openDeckPickerAndSync() }
-            negativeButton(R.string.dialog_continue) { showLoggedInView() }
-            setOnCancelListener { showLoggedInView() }
-        }
+        showDialogFragment(LoginSuccessDialogFragment())
     }
 
     private fun attemptLogin() {
@@ -312,23 +317,11 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
         password: String,
     ) {
         val endpoint = getEndpoint()
-
-        lifecycleScope.launch {
-            requireActivity().withProgress(
-                extractProgress = {
-                    text = getString(R.string.sign_in)
-                },
-                onCancel = { backend -> backend.setWantsAbort() },
-            ) {
-                viewModel.handleLogin(
-                    username,
-                    password,
-                    endpoint,
-                )
-
-                viewModel.loginState.first { it is LoginState.Success || it is LoginState.Error }
-            }
-        }
+        viewModel.handleLogin(
+            username,
+            password,
+            endpoint,
+        )
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
