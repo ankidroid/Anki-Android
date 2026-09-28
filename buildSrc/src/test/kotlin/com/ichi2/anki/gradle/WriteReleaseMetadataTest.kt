@@ -78,7 +78,6 @@ class WriteReleaseMetadataTest {
         return task.apply {
             versionName.set(name)
             versionCode.set(code)
-            outputFile.set(project.layout.buildDirectory.file("outputs/release-metadata.json"))
         }
     }
 }

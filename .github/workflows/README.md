@@ -23,3 +23,13 @@ Alternately, you may run the actions on your fork of `Anki-Android`.
 ## Other Workflows
 
 These are typically run by maintainers. See the [Maintenance guide](https://github.com/ankidroid/Anki-Android/wiki/Maintenance-guide)
+
+### Automatic publish
+
+An automatic alpha publish is performed every Monday at 04:30 UTC. This publish is skipped if:
+
+* A publish occurred fewer than 7 UTC calendar days ago.
+* The app is not in alpha.
+* There were no commits since the last release.
+
+An alpha published on Monday does not block the following Monday's release, regardless of the time it finished.

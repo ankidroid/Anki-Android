@@ -88,7 +88,7 @@ jobs:
       - name: Prettify AnkiDroid javascript code
         uses: creyD/prettier_action@8c18391fdc98ed0d884c6345f03975edac71b8f0 # v4.6
         with:
-          prettier_options: --check AnkiDroid/**/*.js
+          prettier_options: --check AnkiDroid/**/*.js .github/check_alpha_release.js
           dry: True
 
       - name: Install Localization
