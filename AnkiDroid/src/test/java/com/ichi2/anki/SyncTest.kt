@@ -15,6 +15,7 @@ import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
@@ -131,6 +132,34 @@ class SyncTest : RobolectricTest() {
 
             assertFalse(dialog.isShowing)
             assertNull(shadowOf(this).nextStartedActivity)
+        }
+
+    @Test
+    fun `collection too large uses database check dialog`() =
+        deckPicker {
+            val message = CollectionManager.TR.syncUploadTooLarge("150 MB (uncompressed)")
+
+            val dialog =
+                failSync(
+                    BackendSyncException(
+                        backendError {
+                            this.message = message
+                        },
+                    ),
+                )
+
+            assertEquals(
+                message,
+                dialog.findViewById<TextView>(android.R.id.message)?.text?.toString(),
+            )
+            assertEquals(
+                getString(R.string.dialog_ok),
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).text,
+            )
+            assertEquals(
+                CollectionManager.TR.sentenceCase.checkDatabase,
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).text,
+            )
         }
 
     @Test

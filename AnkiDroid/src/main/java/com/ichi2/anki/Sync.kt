@@ -115,9 +115,23 @@ fun DeckPicker.handleNewSync(
                 updateLogin("", "")
                 throw exc
             } catch (exc: BackendSyncException) {
-                if (!exc.isClockOffException()) throw exc
-                showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_SYNC_CLOCK_OFF, exc.localizedMessage)
-                return@launchCatchingTask
+                if (exc.isClockOffException()) {
+                    showSyncErrorDialog(
+                        SyncErrorDialog.Type.DIALOG_SYNC_CLOCK_OFF,
+                        exc.localizedMessage,
+                    )
+                    return@launchCatchingTask
+                }
+
+                if (exc.isCollectionTooLargeException()) {
+                    showSyncErrorDialog(
+                        SyncErrorDialog.Type.DIALOG_COLLECTION_TOO_LARGE,
+                        exc.localizedMessage,
+                    )
+                    return@launchCatchingTask
+                }
+
+                throw exc
             }
             withCol { notetypes.clearCache() }
             notifySubscribersAllValuesChanged(deckPicker)
@@ -134,6 +148,19 @@ fun DeckPicker.handleNewSync(
 private fun BackendSyncException.isClockOffException(): Boolean =
     try {
         message == TR.syncClockOff()
+    } catch (_: Throwable) {
+        false
+    }
+
+private fun BackendSyncException.isCollectionTooLargeException(): Boolean =
+    try {
+        message
+            ?.trim()
+            ?.substringBefore('\n') ==
+            TR
+                .syncUploadTooLarge("")
+                .trim()
+                .substringBefore('\n')
     } catch (_: Throwable) {
         false
     }
