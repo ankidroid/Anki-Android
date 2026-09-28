@@ -262,21 +262,29 @@ public object FlashCardsContract {
         public const val FLAGS: String = "flags"
         public const val DATA: String = "data"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    GUID,
+                    MID,
+                    MOD,
+                    USN,
+                    TAGS,
+                    FLDS,
+                    SFLD,
+                    CSUM,
+                    FLAGS,
+                    DATA,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                GUID,
-                MID,
-                MOD,
-                USN,
-                TAGS,
-                FLDS,
-                SFLD,
-                CSUM,
-                FLAGS,
-                DATA,
-            )
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for a note.
@@ -393,20 +401,28 @@ public object FlashCardsContract {
          */
         public const val DECK_ID: String = "deck_id"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    NAME,
+                    FIELD_NAMES,
+                    NUM_CARDS,
+                    CSS,
+                    DECK_ID,
+                    SORT_FIELD_INDEX,
+                    TYPE,
+                    LATEX_POST,
+                    LATEX_PRE,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                NAME,
-                FIELD_NAMES,
-                NUM_CARDS,
-                CSS,
-                DECK_ID,
-                SORT_FIELD_INDEX,
-                TYPE,
-                LATEX_POST,
-                LATEX_PRE,
-            )
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for a note type.
@@ -481,18 +497,23 @@ public object FlashCardsContract {
         public const val CARD_COUNT: String = "card_count"
 
         /**
-         * Default columns that are returned when querying the ...models/#/templates URI.
+         * Default columns returned when querying the ...models/#/templates URI.
          */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    MODEL_ID,
+                    ORD,
+                    NAME,
+                    QUESTION_FORMAT,
+                    ANSWER_FORMAT,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                MODEL_ID,
-                ORD,
-                NAME,
-                QUESTION_FORMAT,
-                ANSWER_FORMAT,
-            )
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
     }
 
     /**
@@ -916,18 +937,26 @@ public object FlashCardsContract {
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    _ID,
+                    NOTE_ID,
+                    CARD_ORD,
+                    CARD_NAME,
+                    DECK_ID,
+                    QUESTION,
+                    ANSWER,
+                    FLAGS,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                _ID,
-                NOTE_ID,
-                CARD_ORD,
-                CARD_NAME,
-                DECK_ID,
-                QUESTION,
-                ANSWER,
-                FLAGS,
-            )
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for a card.
@@ -1098,15 +1127,23 @@ public object FlashCardsContract {
          */
         public const val SUSPEND: String = "suspended"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    NOTE_ID,
+                    CARD_ORD,
+                    BUTTON_COUNT,
+                    NEXT_REVIEW_TIMES,
+                    MEDIA_FILES,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                NOTE_ID,
-                CARD_ORD,
-                BUTTON_COUNT,
-                NEXT_REVIEW_TIMES,
-                MEDIA_FILES,
-            )
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for ReviewInfo.
@@ -1243,16 +1280,24 @@ public object FlashCardsContract {
          */
         public const val DECK_DESC: String = "deck_desc"
 
+        /**
+         * Default columns returned by queries.
+         */
+        @get:JvmName("getDefaultColumns")
+        @JvmStatic // required for Java API
+        public val DEFAULT_COLUMNS: Array<String>
+            get() =
+                arrayOf(
+                    DECK_NAME,
+                    DECK_ID,
+                    DECK_COUNTS,
+                    OPTIONS,
+                    DECK_DYN,
+                    DECK_DESC,
+                )
+
         @JvmField // required for Java API
-        public val DEFAULT_PROJECTION: Array<String> =
-            arrayOf(
-                DECK_NAME,
-                DECK_ID,
-                DECK_COUNTS,
-                OPTIONS,
-                DECK_DYN,
-                DECK_DESC,
-            )
+        public val DEFAULT_PROJECTION: Array<String> = DEFAULT_COLUMNS
 
         /**
          * MIME type used for Deck.
