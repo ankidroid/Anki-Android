@@ -44,6 +44,17 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
     @VisibleForTesting
     val binding by viewBinding(FragmentAboutBinding::bind)
 
+    private val aboutContributorsSpannable: CharSequence
+        get() {
+            val contributorsLink = getString(R.string.link_contributors)
+            val contributingGuideLink = getString(R.string.link_contribution)
+            return getString(
+                CommonString.about_contributors_description,
+                contributorsLink,
+                contributingGuideLink,
+            ).parseAsHtml()
+        }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -65,10 +76,8 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         binding.appLogo.setOnClickListener(DeveloperOptionsSecretClickListener(this))
 
         // Contributors text
-        val contributorsLink = getString(R.string.link_contributors)
-        val contributingGuideLink = getString(R.string.link_contribution)
         binding.contributorsDescription.apply {
-            text = getString(CommonString.about_contributors_description, contributorsLink, contributingGuideLink).parseAsHtml()
+            text = aboutContributorsSpannable
             movementMethod = LinkMovementMethod.getInstance()
         }
 
