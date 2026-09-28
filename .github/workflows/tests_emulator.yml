@@ -241,7 +241,7 @@ jobs:
             bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
             bash .github/adb_retry.sh emu screenrecord start --time-limit 1800 video.webm
             sleep 5
-            bash .github/with_emulator_log.sh adb-log.txt ./gradlew uninstallAll jacocoAndroidTestReport --daemon
+            bash .github/with_emulator_log.sh adb-log.txt python3 .github/run_emulator_tests.py
 
       - name: Report Emulator Test Results
         if: always() && hashFiles('AnkiDroid/build/outputs/androidTest-results/connected/**/TEST-*.xml') != ''
