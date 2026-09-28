@@ -8,8 +8,10 @@ object VersionCode {
     // Consume whole comments atomically so dots inside them cannot look like chained calls.
     private const val WHITESPACE_OR_COMMENTS = """(?>\s|//[^\r\n]*|/\*[\s\S]*?\*/)*"""
 
+    // Ignore task property access such as versionCode.set(...).
     // Include chained calls across whitespace/comments so a numeric prefix cannot pass as a literal.
-    private val assignment = Regex("""^\h*versionCode\b\h*=?\s*([^\r\n]+(?:\R$WHITESPACE_OR_COMMENTS\.[^\r\n]*)*)""", RegexOption.MULTILINE)
+    private val assignment =
+        Regex("""^\h*versionCode\b(?!\h*\.)\h*=?\s*([^\r\n]+(?:\R$WHITESPACE_OR_COMMENTS\.[^\r\n]*)*)""", RegexOption.MULTILINE)
     private val literal = Regex("""([1-9][0-9]*)\h*;?\h*(?://.*)?""")
 
     /**
