@@ -18,7 +18,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import org.hamcrest.MatcherAssert.assertThat
@@ -432,11 +431,11 @@ class CollectionLeaseTest : RobolectricTest() {
         dispatcher: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1),
         block: suspend CoroutineScope.() -> Unit,
     ) {
-        CollectionManager.setTestDispatcher(dispatcher, useReentrantLock = false)
+        val previousDispatcher = CollectionManager.setTestDispatcher(dispatcher, useReentrantLock = false)
         try {
             coroutineScope(block)
         } finally {
-            CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
+            CollectionManager.setTestDispatcher(previousDispatcher)
         }
     }
 }
