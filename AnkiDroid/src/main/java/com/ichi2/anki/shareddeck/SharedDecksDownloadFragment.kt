@@ -30,7 +30,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
@@ -195,11 +194,11 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     private fun render(state: SharedDecksDownloadUiState) {
-        // not done in the broadcast receiver that recorded this state: the receiver can run
-        // while the activity is backgrounded, and FragmentManager work would throw there
+        // the receiver records LoginRequired but defers its handling to here: the receiver
+        // can run while the activity is backgrounded, where FragmentManager work would throw
         if (state.phase == DownloadPhase.LoginRequired) {
             Timber.i("Download requires login, returning to shared decks")
-            showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE)
+            (activity as SharedDecksActivity).showLoginRequiredSnackbar()
             // return to the shared decks WebView, where the user can log in
             parentFragmentManager.popBackStack()
             return
