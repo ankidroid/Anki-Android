@@ -11,11 +11,15 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.backendError
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.testutils.ext.reopenWithLanguage
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
@@ -25,6 +29,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import java.text.DateFormat
 import kotlin.test.assertEquals
@@ -137,7 +142,7 @@ class SyncTest : RobolectricTest() {
     @Test
     fun `collection too large uses database check dialog`() =
         deckPicker {
-            val message = CollectionManager.TR.syncUploadTooLarge("150 MB")
+            val message = TR.syncUploadTooLarge("150 MB")
 
             val dialog =
                 failSync(
@@ -154,11 +159,38 @@ class SyncTest : RobolectricTest() {
             )
             assertEquals(
                 getString(R.string.dialog_ok),
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).text,
+                dialog.positiveButton.text,
             )
             assertEquals(
-                CollectionManager.TR.sentenceCase.checkDatabase,
-                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).text,
+                TR.sentenceCase.checkDatabase,
+                dialog.negativeButton.text,
+            )
+        }
+
+    @Test
+    @Config(qualifiers = "or")
+    fun `collection too large error is detected in Odia`() =
+        deckPicker {
+            col.reopenWithLanguage("or")
+
+            val message = TR.syncUploadTooLarge("150 MB")
+
+            val dialog =
+                failSync(
+                    BackendSyncException(
+                        backendError {
+                            this.message = message
+                        },
+                    ),
+                )
+
+            assertEquals(
+                getString(R.string.dialog_ok),
+                dialog.positiveButton.text,
+            )
+            assertEquals(
+                TR.sentenceCase.checkDatabase,
+                dialog.negativeButton.text,
             )
         }
 
