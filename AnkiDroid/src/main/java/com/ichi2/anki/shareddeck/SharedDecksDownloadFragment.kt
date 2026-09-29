@@ -33,6 +33,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
@@ -44,6 +45,7 @@ import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.utils.ImportUtils
@@ -175,7 +177,26 @@ class SharedDecksDownloadFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         downloadManager = (activity as SharedDecksActivity).downloadManager
         registerDownloadReceiver()
+        observeLoginRequired()
         downloadFile(fileToBeDownloaded)
+    }
+
+    /**
+     * Handles the [DownloadPhase.LoginRequired] phase: shows the login prompt and returns to
+     * the shared decks WebView, where the user can log in.
+     *
+     * Handled in this collector rather than in the broadcast receiver which records the
+     * state: the receiver can fire while the activity is backgrounded, where
+     * FragmentManager work would throw, while this only runs while the screen is showing.
+     */
+    private fun observeLoginRequired() {
+        viewModel.uiState.launchCollectionInLifecycleScope { state ->
+            if (state.phase == DownloadPhase.LoginRequired) {
+                Timber.i("Download requires login, returning to shared decks")
+                showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE)
+                parentFragmentManager.popBackStack()
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -331,8 +352,15 @@ class SharedDecksDownloadFragment : Fragment() {
                         // Return if download was not successful.
                         if (it.getInt(columnStatusIndex) != DownloadManager.STATUS_SUCCESSFUL) {
                             Timber.i("Download could not be successful, update UI")
-                            Timber.d("Status code -> ${it.getIntOrNull(columnStatusIndex)}, reason ${it.getIntOrNull(columnReasonIndex)}")
-                            onDownloadFinished(isSuccessful = false)
+                            val reason = it.getIntOrNull(columnReasonIndex)
+                            Timber.d("Status code -> ${it.getIntOrNull(columnStatusIndex)}, reason $reason")
+                            // DownloadManager reports the HTTP status code in COLUMN_REASON for 4xx/5xx
+                            // failures: AnkiWeb replies 429 when an anonymous user has used up its
+                            // download limit, asking them to log in (19876)
+                            onDownloadFinished(
+                                isSuccessful = false,
+                                isRateLimited = reason == SharedDecksActivity.HTTP_STATUS_TOO_MANY_REQUESTS,
+                            )
                             return null
                         }
 
@@ -519,6 +547,7 @@ class SharedDecksDownloadFragment : Fragment() {
     private fun onDownloadFinished(
         isSuccessful: Boolean,
         isInvalidDeckFile: Boolean = false,
+        isRateLimited: Boolean = false,
     ) {
         if (!isSuccessful) {
             if (isInvalidDeckFile) {
@@ -529,11 +558,21 @@ class SharedDecksDownloadFragment : Fragment() {
                     activity?.onBackPressedDispatcher?.onBackPressed()
                 }
             } else {
-                Timber.i("Download failed, offer a retry")
-                if (isVisible) {
-                    context?.let { showThemedToast(it, CommonString.something_wrong, false) }
+                // A 429 from AnkiWeb is only actionable for a logged-out user; a logged-in
+                // user seeing 'Daily limit exceeded' can only retry tomorrow
+                if (isRateLimited && !isLoggedInToAnkiWeb()) {
+                    Timber.i("Download failed: AnkiWeb requires login to download more decks")
+                    // discard the failed download: the login path offers no retry button,
+                    // so nothing else would remove it (or its failed-download notification)
+                    downloadManager.remove(downloadId)
+                    viewModel.onLoginRequired()
+                } else {
+                    Timber.i("Download failed, offer a retry")
+                    if (isVisible) {
+                        context?.let { showThemedToast(it, CommonString.something_wrong, false) }
+                    }
+                    viewModel.onDownloadFailed()
                 }
-                viewModel.onDownloadFailed()
             }
         }
 
