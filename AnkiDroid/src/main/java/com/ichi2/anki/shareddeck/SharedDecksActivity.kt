@@ -113,25 +113,9 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             return true
         }
 
-        private val cookieManager: CookieManager by lazy {
-            CookieManager.getInstance()
-        }
-
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         internal val isLoggedInToAnkiWeb: Boolean
-            get() {
-                try {
-                    // cookies are null after the user logs out, or if the site is first visited
-                    val cookies = cookieManager.getCookie("https://ankiweb.net") ?: return false
-                    // ankiweb currently (2024-09-25) sets two cookies:
-                    // * `ankiweb`, which is base64-encoded JSON
-                    // * `has_auth`, which is 1
-                    return cookies.contains("has_auth=1")
-                } catch (e: Exception) {
-                    Timber.w(e, "Could not determine login status")
-                    return false
-                }
-            }
+            get() = isLoggedInToAnkiWeb()
 
         override fun onReceivedHttpError(
             view: WebView?,
@@ -165,24 +149,10 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         /**
          * Redirects the user to a login page
          *
-         * A message is shown informing the user they need to log in to download more decks
-         *
-         * If the user has not logged in **inside AnkiDroid** then the message provides
-         * the user with an action to sign up
-         *
          * The redirect is not performed if [redirectTimes] is 3 or more
          */
         private fun redirectUserToSignUpOrLogin() {
-            // inform the user they need to log in as they've hit a rate limit
-            showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE) {
-                if (isLoggedIn()) return@showSnackbar
-
-                // If a user is not logged in inside AnkiDroid, assume they have no AnkiWeb account
-                // and give them the option to sign up
-                setAction(CommonString.sign_up) {
-                    binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
-                }
-            }
+            showLoginRequiredSnackbar()
 
             // redirect user to /account/login
             // TODO: the result of login is typically redirecting the user to their decks
@@ -199,6 +169,22 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         }
     }
 
+    /**
+     * Tells the user they need to log in to download more decks, with a sign-up action for
+     * users without an AnkiDroid login.
+     */
+    internal fun showLoginRequiredSnackbar() {
+        showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE) {
+            if (isLoggedIn()) return@showSnackbar
+
+            // If a user is not logged in inside AnkiDroid, assume they have no AnkiWeb account
+            // and give them the option to sign up
+            setAction(CommonString.sign_up) {
+                binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
+            }
+        }
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal val webViewClient = SharedDeckWebViewClient()
 
@@ -206,7 +192,6 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         const val SHARED_DECKS_DOWNLOAD_FRAGMENT = "SharedDecksDownloadFragment"
         const val DOWNLOAD_FILE = "DownloadFile"
 
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val HTTP_STATUS_TOO_MANY_REQUESTS = 429
     }
 
@@ -344,3 +329,21 @@ data class DownloadFile(
                     .toString()
             }
 }
+
+/**
+ * Whether the WebView's cookies indicate a logged-in AnkiWeb session.
+ *
+ * Used to tell a download failure caused by AnkiWeb's download limit for anonymous users
+ * apart from other failures: only a logged-out user can fix a 429 by logging in.
+ */
+internal fun isLoggedInToAnkiWeb(): Boolean =
+    try {
+        // ankiweb currently (2024-09-25) sets two cookies:
+        // * `ankiweb`, which is base64-encoded JSON
+        // * `has_auth`, which is 1
+        // cookies are null after the user logs out, or if the site is first visited
+        CookieManager.getInstance().getCookie("https://ankiweb.net")?.contains("has_auth=1") == true
+    } catch (e: Exception) {
+        Timber.w(e, "Could not determine login status")
+        false
+    }
