@@ -66,7 +66,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         observeProgress(viewModel) { progress -> getString(progress.messageRes) }
-        viewModel.checkMedia()
+        launchCatchingTask { viewModel.checkMedia().await() }
 
         lifecycleScope.launch {
             viewModel.mediaCheckResult.collectLatest { result ->
@@ -149,7 +149,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
             setOnClickListener {
                 launchCatchingTask {
-                    viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).join()
+                    viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).await()
                     showResultDialog(
                         CommonString.check_media_tags_added,
                         TR.browsingNotesUpdated(viewModel.taggedFiles),
@@ -169,14 +169,14 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
     private fun confirmMediaRestore() {
         launchCatchingTask {
-            viewModel.restoreTrash().join()
+            viewModel.restoreTrash().await()
             showTrashRestoredDialog()
         }
     }
 
     private fun deleteTrash() {
         launchCatchingTask {
-            viewModel.deleteTrash().join()
+            viewModel.deleteTrash().await()
             showTrashDeletedDialog()
         }
     }
@@ -191,7 +191,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
 
     private fun handleDeleteConfirmation() {
         launchCatchingTask {
-            viewModel.deleteUnusedMedia().join()
+            viewModel.deleteUnusedMedia().await()
             showDeletionResult()
         }
     }
