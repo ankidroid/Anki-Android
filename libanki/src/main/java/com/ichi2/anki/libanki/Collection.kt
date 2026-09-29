@@ -434,6 +434,7 @@ class Collection(
      * @throws BackendException if a previous unawaited backup failed. Its original exception is
      * rethrown before attempting another backup.
      */
+    @CheckResult
     @LibAnkiAlias("create_backup")
     fun createBackup(
         backupFolder: String,

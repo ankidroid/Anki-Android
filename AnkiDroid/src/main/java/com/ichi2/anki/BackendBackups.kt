@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import androidx.annotation.CheckResult
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.libanki.Collection
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +33,7 @@ import net.ankiweb.rsdroid.BackendException
  * @throws BackendException if backup creation or completion fails. See [Collection.createBackup]
  * for full exception details.
  */
+@CheckResult
 suspend fun performBackupInBackground(force: Boolean = false): Boolean {
     // Wait a second to allow the deck list to finish loading first, or it
     // will hang until the first stage of the backup completes.
