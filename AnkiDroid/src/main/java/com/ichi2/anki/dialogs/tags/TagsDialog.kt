@@ -97,16 +97,16 @@ class TagsDialog : AnalyticsDialogFragment {
 
     @VisibleForTesting
     val viewModel: TagsDialogViewModel by viewModels {
-        val idsFile = requireArguments().requireParcelable<IdsFile>(ARG_TAGS_FILE)
-        val noteIds = idsFile.getIds()
-        val checkedTags =
-            requireNotNull(requireArguments().getStringArrayList(ARG_CHECKED_TAGS)) {
-                "$ARG_CHECKED_TAGS is required"
-            }
-        val type = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java)
-        val isCustomStudying = type != null && type == DialogType.CUSTOM_STUDY
         viewModelFactory {
             initializer {
+                val idsFile = requireArguments().requireParcelable<IdsFile>(ARG_TAGS_FILE)
+                val noteIds = idsFile.getIds()
+                val checkedTags =
+                    requireNotNull(requireArguments().getStringArrayList(ARG_CHECKED_TAGS)) {
+                        "$ARG_CHECKED_TAGS is required"
+                    }
+                val type = BundleCompat.getParcelable(requireArguments(), ARG_DIALOG_TYPE, DialogType::class.java)
+                val isCustomStudying = type != null && type == DialogType.CUSTOM_STUDY
                 TagsDialogViewModel(
                     noteIds = noteIds,
                     checkedTags = checkedTags,
