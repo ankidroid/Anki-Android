@@ -518,12 +518,24 @@ object CollectionManager {
 
     /**
      * Replace the collection with the provided colpkg file if it is valid.
+     * On success, leave the replacement collection closed; callers must reopen it, for example with [withCol].
+     * On failure, try to reopen the original collection before rethrowing the import error.
+     * If reopening also fails, attach that failure as a suppressed exception to the import error.
      */
     suspend fun importColpkg(colpkgPath: String) {
         withQueue {
             ensureClosedInner()
             ensureBackendInner()
-            importCollectionPackage(backend!!, collectionPathInValidFolder(), colpkgPath)
+            try {
+                importCollectionPackage(backend!!, collectionPathInValidFolder(), colpkgPath)
+            } catch (importError: Exception) {
+                try {
+                    ensureOpenInner()
+                } catch (reopenError: Exception) {
+                    importError.addSuppressed(reopenError)
+                }
+                throw importError
+            }
         }
     }
 
