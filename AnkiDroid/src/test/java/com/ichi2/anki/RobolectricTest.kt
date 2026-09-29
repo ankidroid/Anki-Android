@@ -53,8 +53,6 @@ import com.ichi2.testutils.grantPermissions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
@@ -497,10 +495,16 @@ open class RobolectricTest :
         ioDispatcher = dispatcher
     }
 
-    override suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
-        (collectionManager as? ProductionCollectionManager)
-            ?.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
-        testBody()
+    override fun withTestDispatcher(
+        dispatcher: TestDispatcher,
+        block: () -> Unit,
+    ) {
+        val previousDispatcher = CollectionManager.setTestDispatcher(dispatcher)
+        try {
+            block()
+        } finally {
+            CollectionManager.setTestDispatcher(previousDispatcher)
+        }
     }
 }
 

@@ -406,17 +406,26 @@ interface AnkiTest {
         Dispatchers.setMain(dispatcher)
         setupTestDispatcher(dispatcher)
 
-        repeat(times) {
-            if (times != 1) Timber.d("------ Executing test $it/$times ------")
-            kotlinx.coroutines.test.runTest(context + scheduler, dispatchTimeout) {
-                runTestInner(testBody)
+        withTestDispatcher(dispatcher) {
+            repeat(times) {
+                if (times != 1) Timber.d("------ Executing test $it/$times ------")
+                kotlinx.coroutines.test.runTest(context + scheduler, dispatchTimeout, testBody)
             }
         }
     }
 
-    /** Runs [testBody], supporting [TestScope]-specific setup & teardown */
-    suspend fun TestScope.runTestInner(testBody: suspend TestScope.() -> Unit) {
-        testBody()
+    /**
+     * Override hook for dispatcher setup and cleanup around the complete coroutine test.
+     *
+     * By default, just runs [block]. Android tests override this to install [dispatcher] in
+     * CollectionManager and restore it afterward. [block] includes completion of child coroutines.
+     */
+    @Suppress("UNUSED_PARAMETER") // The dispatcher is used by overrides.
+    fun withTestDispatcher(
+        dispatcher: TestDispatcher,
+        block: () -> Unit,
+    ) {
+        block()
     }
 
     val Notetypes.basic
