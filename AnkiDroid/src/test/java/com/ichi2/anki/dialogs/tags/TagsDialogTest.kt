@@ -20,10 +20,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -36,7 +34,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.lessThan
-import org.hamcrest.core.IsNull
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -60,10 +57,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
             val tag = "zzzz"
             f.addTag(tag)
 
@@ -94,10 +88,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
             val tag = "e"
             f.addTag(tag)
 
@@ -130,10 +121,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
 
             // workaround robolectric recyclerView issue
             // update recycler
@@ -185,10 +173,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
 
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
@@ -230,10 +215,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
             val tag = "common::sport::football::small"
             f.addTag(tag)
 
@@ -283,10 +265,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
             val tag = "common::::careless"
             f.addTag(tag)
 
@@ -332,10 +311,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
             val adapter = recycler.adapter!! as TagsArrayAdapter
             adapter.filter.filter("tennis")
 
@@ -372,10 +348,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
 
             fun updateLayout() {
                 recycler.measure(0, 0)
@@ -419,10 +392,7 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-
-            val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_list)!!
+            val recycler = f.binding.tagsList
 
             fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
@@ -536,9 +506,9 @@ class TagsDialogTest : RobolectricTest() {
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
         runTagsDialogScenario(args, factory) { f: TagsDialog ->
-            val dialog = f.dialog as AlertDialog?
-            assertThat(dialog, IsNull.notNullValue())
-            val editText = f.getSearchView()!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)!!
+            val toolbar = f.binding.toolbar.root
+            val searchView = toolbar.menu.findItem(R.id.tags_dialog_action_filter).actionView!!
+            val editText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)!!
 
             editText.setText("hello ")
             Assert.assertEquals(
@@ -590,9 +560,8 @@ class TagsDialogTest : RobolectricTest() {
                 .withTestArguments(TagsDialog.DialogType.FILTER_BY_TAG, arrayListOf(), allTags)
                 .requireArguments()
         runTagsDialogScenario(args) { f: TagsDialog ->
-            val dialog = f.requireDialog()
-            val recycler: RecyclerView = dialog.findViewById(R.id.tags_list)!!
-            val content = dialog.findViewById<View>(R.id.toolbar)!!.parent as View
+            val recycler = f.binding.tagsList
+            val content = f.binding.root
 
             content.measure(
                 View.MeasureSpec.makeMeasureSpec(500, View.MeasureSpec.EXACTLY),

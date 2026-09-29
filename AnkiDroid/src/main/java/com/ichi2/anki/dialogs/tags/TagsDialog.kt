@@ -85,7 +85,10 @@ class TagsDialog : AnalyticsDialogFragment {
         CUSTOM_STUDY,
     }
 
-    private lateinit var binding: DialogTagsBinding
+    @VisibleForTesting
+    internal lateinit var binding: DialogTagsBinding
+        private set
+
     private var type: DialogType? = null
     internal val isEditingTags: Boolean get() = type == DialogType.EDIT_TAGS
     private var tagsArrayAdapter: TagsArrayAdapter? = null
@@ -476,9 +479,6 @@ class TagsDialog : AnalyticsDialogFragment {
             binding.tagsDialogSnackbar.showSnackbar(feedbackText)
         }
     }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    internal fun getSearchView(): AccessibleSearchView? = toolbarSearchView
 
     companion object {
         const val ARG_TAGS_FILE = "tagsFile"
