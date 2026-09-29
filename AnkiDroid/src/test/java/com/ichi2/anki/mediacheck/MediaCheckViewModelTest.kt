@@ -6,8 +6,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.progress.ViewModelProgress
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.setMain
@@ -41,7 +41,7 @@ class MediaCheckViewModelTest : RobolectricTest() {
     fun `deleteUnusedMedia reports progress and trashes the unused files`() =
         runViewModelTest {
             val file = addUnusedMediaFile("unused.png")
-            viewModel.checkMedia().join()
+            viewModel.checkMedia().await()
 
             viewModel.assertProgressAround(MediaCheckProgress.DELETING_MEDIA) { viewModel.deleteUnusedMedia() }
 
@@ -53,7 +53,7 @@ class MediaCheckViewModelTest : RobolectricTest() {
     fun `tagMissing reports progress and tags the notes with missing media`() =
         runViewModelTest {
             val note = addBasicNote("""<img src="missing.png">""", "back")
-            viewModel.checkMedia().join()
+            viewModel.checkMedia().await()
 
             viewModel.assertProgressAround(MediaCheckProgress.ADDING_TAGS) { viewModel.tagMissing("missing") }
 
@@ -63,11 +63,11 @@ class MediaCheckViewModelTest : RobolectricTest() {
 
     private suspend fun MediaCheckViewModel.assertProgressAround(
         message: MediaCheckProgress,
-        op: () -> Job,
+        op: () -> Deferred<Unit>,
     ) {
         progressManager.progress.test {
             assertIs<ViewModelProgress.Idle>(awaitItem())
-            op().join()
+            op().await()
             val active = assertIs<ViewModelProgress.Active<MediaCheckProgress>>(awaitItem())
             assertEquals(message, active.message)
             assertIs<ViewModelProgress.Idle>(awaitItem())
