@@ -363,7 +363,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 val tags = viewModel.tags.await()
                 val didChange = tags.toggleAllCheckedStatuses()
                 if (didChange) {
-                    tagsArrayAdapter?.notifyDataSetChanged()
+                    tagsArrayAdapter?.notifyCheckedStatusesChanged()
                     view?.showMaxTagSelectedNotice(tags)
                 }
             }
