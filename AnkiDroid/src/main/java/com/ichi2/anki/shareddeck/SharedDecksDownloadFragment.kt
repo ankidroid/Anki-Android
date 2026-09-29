@@ -33,7 +33,6 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.material.color.MaterialColors
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
@@ -193,7 +192,7 @@ class SharedDecksDownloadFragment : Fragment() {
         viewModel.uiState.launchCollectionInLifecycleScope { state ->
             if (state.phase == DownloadPhase.LoginRequired) {
                 Timber.i("Download requires login, returning to shared decks")
-                showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE)
+                (activity as SharedDecksActivity).showLoginRequiredSnackbar()
                 parentFragmentManager.popBackStack()
             }
         }
