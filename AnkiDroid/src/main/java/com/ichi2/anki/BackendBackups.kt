@@ -17,10 +17,19 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import net.ankiweb.rsdroid.BackendException
 
+/**
+ * Attempts a backup and awaits its completion.
+ *
+ * @param force Bypass the minimum backup interval. Unchanged collections are still skipped.
+ * @throws BackendException if backup creation or completion fails. See [Collection.createBackup]
+ * for full exception details.
+ */
 suspend fun performBackupInBackground(force: Boolean = false) {
     // Wait a second to allow the deck list to finish loading first, or it
     // will hang until the first stage of the backup completes.

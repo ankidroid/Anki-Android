@@ -78,10 +78,13 @@ import com.ichi2.anki.libanki.utils.LibAnkiAlias
 import com.ichi2.anki.libanki.utils.NotInPyLib
 import com.ichi2.anki.libanki.utils.capitalizePy
 import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.BackendException
+import net.ankiweb.rsdroid.BackendException.BackendDbException
 import net.ankiweb.rsdroid.BackendException.BackendFatalError
 import net.ankiweb.rsdroid.BackendException.BackendSearchException
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
+import net.ankiweb.rsdroid.exceptions.BackendIoException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.io.File
@@ -408,17 +411,28 @@ class Collection(
      */
 
     /**
-     * (Maybe) create a colpkg backup, while keeping the collection open. If the
-     * configured backup interval has not elapsed, and force=false, no backup will be created,
-     * and this routine will return false.
+     * (Maybe) create a colpkg backup, while keeping the collection open.
      *
-     * There must not be an active transaction.
-     *
-     * If `waitForCompletion` is true, block until the backup completes. Otherwise this routine
-     * returns quickly, and the backup can be awaited on a background thread with awaitBackupCompletion()
-     * to check for success.
+     * Any active database transaction must be committed or rolled back before creating a backup.
      *
      * Backups are automatically expired according to the user's settings.
+     *
+     * @param force Bypass the configured minimum backup interval. Unchanged collections are
+     * still skipped, even when this is `true`.
+     * @param waitForCompletion If `true`, block until the backup completes and propagate any failure.
+     * Otherwise, a `true` return value only means the backup started; call [awaitBackupCompletion]
+     * on a background thread to wait for completion and receive any background failure.
+     * @return `false` if the collection has not changed since the last backup, or if [force] is
+     * `false` and the minimum backup interval has not elapsed. Otherwise, `true`.
+     * A `false` result indicates a skipped backup; failures throw instead.
+     * @throws BackendDbException if a database transaction is active, reading collection metadata
+     * fails, the write-ahead log cannot be flushed into the database before copying it, or creating
+     * the backup's temporary compatibility database fails.
+     * @throws BackendIoException if the collection file or backup directory cannot be read,
+     * or backup/temporary files cannot be created or written, for example because of missing
+     * permissions or insufficient disk space.
+     * @throws BackendException if a previous unawaited backup failed. Its original exception is
+     * rethrown before attempting another backup.
      */
     @LibAnkiAlias("create_backup")
     fun createBackup(
@@ -441,7 +455,10 @@ class Collection(
      * failed, and the status has not yet been checked. On failure, an error is only returned
      * once; subsequent calls are a no-op until another backup is run.
      *
-     * @throws Exception if backup creation failed, no-op after first throw
+     * @throws BackendException propagates the backup task's original exception, such as
+     * [BackendIoException] if the backup archive cannot be written or the backup directory cannot
+     * be read, or [BackendDbException] if creating the temporary compatibility database fails.
+     * The failure is reported only once; subsequent calls are a no-op until another backup runs.
      */
     @LibAnkiAlias("await_backup_completion")
     fun awaitBackupCompletion() {
