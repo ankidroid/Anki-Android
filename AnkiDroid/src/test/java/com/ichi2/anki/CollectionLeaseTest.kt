@@ -8,10 +8,10 @@ import com.ichi2.anki.CollectionManager.tryWithCol
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withColExclusive
 import com.ichi2.anki.CollectionManager.withLeaseForTest
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.coroutineScope
@@ -27,12 +27,11 @@ import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -296,35 +295,29 @@ class CollectionLeaseTest : RobolectricTest() {
         }
 
     @Test
-    fun `cancelling an overlapping operation preserves the running lease`() =
+    fun `cancelling an overlapping operation preserves the owning lease`() =
         runTest {
-            withCollectionQueue {
-                val entered = CountDownLatch(1)
-                val release = CountDownLatch(1)
+            withCollectionQueue(StandardTestDispatcher(testScheduler)) {
+                val release = CompletableDeferred<Unit>()
                 val first =
-                    launch(start = CoroutineStart.UNDISPATCHED) {
-                        withColExclusive(CollectionOperation.SYNC) {
-                            entered.countDown()
-                            assertTrue(release.await(10, TimeUnit.SECONDS), "test did not release sync")
+                    async(start = CoroutineStart.UNDISPATCHED) {
+                        withLeaseForTest(CollectionOperation.SYNC) {
+                            release.await()
                         }
                     }
-                try {
-                    assertTrue(entered.await(5, TimeUnit.SECONDS), "sync did not enter the queue")
-                    val lease = collectionLease!!
-                    val second =
-                        launch(start = CoroutineStart.UNDISPATCHED) {
-                            withColExclusive(CollectionOperation.FULL_DOWNLOAD) {
-                                error("cancelled operation must not run")
-                            }
+                val lease = assertNotNull(collectionLease)
+                val second =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        withColExclusive(CollectionOperation.FULL_DOWNLOAD) {
+                            error("cancelled operation must not run")
                         }
-                    assertSame(lease, collectionLease, "a waiting operation must not replace the owner")
-                    second.cancelAndJoin()
-                    assertSame(lease, collectionLease, "cancelling a waiter must not clear the owner")
-                    assertThat(tryWithCol { error("sync still holds the queue") }, nullValue())
-                } finally {
-                    release.countDown()
-                }
-                first.join()
+                    }
+                assertSame(lease, collectionLease, "a waiting operation must not replace the owner")
+                second.cancelAndJoin()
+                assertSame(lease, collectionLease, "cancelling a waiter must not clear the owner")
+                assertThat(tryWithCol { error("sync still holds the lease") }, nullValue())
+                release.complete(Unit)
+                first.await()
                 assertThat(collectionLease, nullValue())
             }
         }
@@ -332,35 +325,29 @@ class CollectionLeaseTest : RobolectricTest() {
     @Test
     fun `cancelling a queued lease skips its block without aborting the running operation`() =
         runTest {
-            withCollectionQueue {
-                val entered = CountDownLatch(1)
-                val release = CountDownLatch(1)
-                launch(start = CoroutineStart.UNDISPATCHED) {
-                    withCol {
-                        entered.countDown()
-                        assertTrue(release.await(10, TimeUnit.SECONDS), "test did not release collection")
-                    }
-                }
-                var abortCalls = 0
-                var blockRan = false
-                try {
-                    assertTrue(entered.await(5, TimeUnit.SECONDS), "brief operation did not enter the queue")
-                    val queued =
-                        launch(start = CoroutineStart.UNDISPATCHED) {
-                            withColExclusive(CollectionOperation.SYNC, onCancel = { abortCalls++ }) {
-                                blockRan = true
-                            }
+            withCollectionQueue(StandardTestDispatcher(testScheduler)) {
+                // Brief work suspends on queue dispatch; the next launch publishes its lease.
+                // When the scheduler resumes brief work, it cancels the lease before it can run.
+                val brief =
+                    async(start = CoroutineStart.UNDISPATCHED) {
+                        withCol {
+                            assertNotNull(collectionLease, "lease must be published before brief work runs").cancel()
                         }
-                    collectionLease!!.cancel()
-                    release.countDown()
-                    queued.join()
-                    assertTrue(queued.isCancelled, "Cancel must cancel the queued coroutine")
-                    assertFalse(blockRan, "a cancelled lease must not enter its block")
-                    assertEquals(0, abortCalls, "backend cancellation belongs only to a running lease")
-                    assertThat(collectionLease, nullValue())
-                } finally {
-                    release.countDown()
-                }
+                    }
+                val queued =
+                    launch(start = CoroutineStart.UNDISPATCHED) {
+                        withColExclusive(
+                            CollectionOperation.SYNC,
+                            onCancel = { error("a queued lease must not abort running work") },
+                        ) {
+                            error("a cancelled lease must not enter its block")
+                        }
+                    }
+
+                brief.await()
+                queued.join()
+                assertTrue(queued.isCancelled, "Cancel must cancel the queued coroutine")
+                assertThat(collectionLease, nullValue())
             }
         }
 
@@ -381,29 +368,23 @@ class CollectionLeaseTest : RobolectricTest() {
     @Test
     fun `overlapping operations acquire distinct leases in order`() =
         runTest {
-            withCollectionQueue {
-                val entered = CountDownLatch(1)
-                val release = CountDownLatch(1)
+            withCollectionQueue(StandardTestDispatcher(testScheduler)) {
+                val release = CompletableDeferred<Unit>()
                 val first =
                     async(start = CoroutineStart.UNDISPATCHED) {
-                        withColExclusive(CollectionOperation.SYNC) {
-                            entered.countDown()
-                            assertTrue(release.await(10, TimeUnit.SECONDS), "test did not release sync")
-                            collectionLease!!
+                        withLeaseForTest(CollectionOperation.SYNC) {
+                            release.await()
+                            assertNotNull(collectionLease)
                         }
                     }
+                val lease = assertNotNull(collectionLease)
                 val second =
-                    try {
-                        assertTrue(entered.await(5, TimeUnit.SECONDS), "sync did not enter the queue")
-                        val lease = collectionLease!!
-                        async(start = CoroutineStart.UNDISPATCHED) {
-                            withColExclusive(CollectionOperation.FULL_DOWNLOAD) { collectionLease!! }
-                        }.also {
-                            assertSame(lease, collectionLease, "sync retains ownership until completion")
-                        }
-                    } finally {
-                        release.countDown()
+                    async(start = CoroutineStart.UNDISPATCHED) {
+                        withColExclusive(CollectionOperation.FULL_DOWNLOAD) { assertNotNull(collectionLease) }
                     }
+                assertSame(lease, collectionLease, "sync retains ownership until completion")
+                assertFalse(second.isCompleted, "the overlapping operation must wait for the owner")
+                release.complete(Unit)
                 assertEquals(CollectionOperation.SYNC, first.await().operation)
                 assertEquals(CollectionOperation.FULL_DOWNLOAD, second.await().operation)
                 assertThat(collectionLease, nullValue())
@@ -429,7 +410,7 @@ class CollectionLeaseTest : RobolectricTest() {
 
     /** Exercise the withContext queue, and restore Robolectric's lock before teardown. */
     private suspend fun TestScope.withCollectionQueue(
-        dispatcher: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1),
+        dispatcher: CoroutineDispatcher,
         block: suspend CoroutineScope.() -> Unit,
     ) {
         CollectionManager.setTestDispatcher(dispatcher, useReentrantLock = false)
