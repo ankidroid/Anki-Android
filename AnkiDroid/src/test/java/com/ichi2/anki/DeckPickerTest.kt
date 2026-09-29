@@ -294,7 +294,7 @@ class DeckPickerTest : RobolectricTest() {
                     .filterIsInstance<DeckPickerConfirmDeleteDeckDialog>()
                     .single()
                     .requireDialog() as AlertDialog
-            assertEquals(getString(R.string.delete_deck_title), dialog.title)
+            assertEquals(getString(CommonString.delete_deck_title), dialog.title)
             assertThat(dialog.message, containsString(deckName))
             assertEquals(deckId, col.decks.byName(deckName)?.id)
             assertEquals(1, col.cardCount())
