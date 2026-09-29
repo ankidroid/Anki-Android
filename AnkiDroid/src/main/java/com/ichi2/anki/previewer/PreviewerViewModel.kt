@@ -8,7 +8,6 @@ import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.asyncIO
-import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.NoteEditorDestination
@@ -31,6 +30,7 @@ import timber.log.Timber
 
 class PreviewerViewModel(
     savedStateHandle: SavedStateHandle,
+    @VisibleForTesting val selectedCardIds: List<Long>,
 ) : CardViewerViewModel(savedStateHandle),
     ChangeManager.Subscriber {
     val currentIndex =
@@ -41,9 +41,6 @@ class PreviewerViewModel(
     val backSideOnly = savedStateHandle.getMutableStateFlow(KEY_BACKSIDE_ONLY, false)
     val isMarked = MutableStateFlow(false)
     val flag: MutableStateFlow<Flag> = MutableStateFlow(Flag.NONE)
-
-    @VisibleForTesting
-    val selectedCardIds: List<Long> = savedStateHandle.require<IdsFile>(PreviewerFragment.CARD_IDS_FILE_ARG).getIds()
 
     val isBackButtonEnabled =
         combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->

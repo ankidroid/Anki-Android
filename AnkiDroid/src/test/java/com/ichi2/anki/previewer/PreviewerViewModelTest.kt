@@ -6,13 +6,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Flag
-import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
 import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
@@ -28,8 +25,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PreviewerViewModelTest : JvmTest() {
-    private val idsFile: IdsFile = mockk()
-
     private lateinit var viewModel: PreviewerViewModel
 
     private fun TestScope.onNextButtonClick() {
@@ -60,15 +55,12 @@ class PreviewerViewModelTest : JvmTest() {
                 val note = addBasicNote()
                 note.cards().map { it.id }
             }
-        every { idsFile.getIds() } returns cardIds
-
         val savedStateHandle =
             SavedStateHandle().apply {
                 set(PreviewerFragment.CURRENT_INDEX_ARG, 0)
-                set(PreviewerFragment.CARD_IDS_FILE_ARG, idsFile)
             }
 
-        viewModel = spyk(PreviewerViewModel(savedStateHandle))
+        viewModel = spyk(PreviewerViewModel(savedStateHandle, cardIds))
         // the default implementation requires the Collection media directory,
         // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
         coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
