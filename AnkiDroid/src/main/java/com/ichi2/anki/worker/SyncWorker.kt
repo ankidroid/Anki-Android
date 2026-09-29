@@ -33,9 +33,8 @@ import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.trySetForeground
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -115,29 +114,31 @@ class SyncWorker(
         syncMedia: Boolean,
     ) {
         Timber.v("SyncWorker::syncCollection")
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-        val monitor =
-            scope.launch {
-                val backend = CollectionManager.getBackend()
-                var syncProgress: Progress.NormalSync? = null
-                while (true) {
-                    val progress = backend.latestProgress() // avoid sending repeated notifications
-                    if (progress.hasNormalSync() && syncProgress != progress.normalSync) {
-                        syncProgress = progress.normalSync
-                        val text = syncProgress.run { "$added\n$removed" }
-                        notify(getProgressNotification(text))
-                    }
-                    delay(SyncMediaWorker.NOTIFICATION_UPDATE_RATE_MS)
-                }
-            }
         val response =
-            try {
-                withCol {
-                    syncCollection(auth, syncMedia = false)
+            coroutineScope {
+                val monitor =
+                    launch(Dispatchers.IO) {
+                        val backend = CollectionManager.getBackend()
+                        var syncProgress: Progress.NormalSync? = null
+                        while (true) {
+                            val progress = backend.latestProgress() // avoid sending repeated notifications
+                            if (progress.hasNormalSync() && syncProgress != progress.normalSync) {
+                                syncProgress = progress.normalSync
+                                val text = syncProgress.run { "$added\n$removed" }
+                                notify(getProgressNotification(text))
+                            }
+                            delay(SyncMediaWorker.NOTIFICATION_UPDATE_RATE_MS)
+                        }
+                    }
+                try {
+                    withCol {
+                        syncCollection(auth, syncMedia = false)
+                    }
+                } finally {
+                    Timber.d("Collection sync completed. Cancelling monitor...")
+                    // this doesn't wait for completion; the outer `coroutineScope` does.
+                    monitor.cancel()
                 }
-            } finally {
-                Timber.d("Collection sync completed. Cancelling monitor...")
-                monitor.cancel()
             }
         Timber.i("Sync required: %s", response.required)
         when (response.required) {
