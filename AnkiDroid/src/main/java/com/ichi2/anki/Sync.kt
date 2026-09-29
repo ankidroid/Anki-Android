@@ -245,11 +245,15 @@ private suspend fun handleDownload(
             onCancel = ::cancelSync,
         ) {
             try {
-                createBackup(
-                    BackupManager.getBackupDirectoryFromCollection(colDb),
-                    force = true,
-                    waitForCompletion = true,
-                )
+                val created =
+                    createBackup(
+                        BackupManager.getBackupDirectoryFromCollection(colDb),
+                        force = true,
+                        waitForCompletion = true,
+                    )
+                if (!created) {
+                    Timber.i("Sync: Backup skipped before full download: collection unchanged")
+                }
                 close(downgrade = false, forFullSync = true)
                 fullUploadOrDownload(auth, upload = false, serverUsn = mediaUsn)
             } finally {
