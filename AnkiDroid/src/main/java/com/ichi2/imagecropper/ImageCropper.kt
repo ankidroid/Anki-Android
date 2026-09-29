@@ -178,6 +178,7 @@ class ImageCropper :
                 if (Build.VERSION.SDK_INT >= 30) {
                     Bitmap.CompressFormat.WEBP_LOSSLESS
                 } else {
+                    @Suppress("DEPRECATION") // WEBP: deprecated in API 30, the only option below it
                     Bitmap.CompressFormat.WEBP
                 }
             }
