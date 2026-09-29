@@ -12,7 +12,7 @@ class CollectionTooLargeScreenshotTest : ScreenshotTest() {
     @Test
     fun `collection too large dialog`() =
         withDeckPicker(deckCount = 0) { deckPicker ->
-            val message = CollectionManager.TR.syncUploadTooLarge("150 MB (uncompressed)")
+            val message = CollectionManager.TR.syncUploadTooLarge("150 MB")
 
             deckPicker.showSyncErrorDialog(
                 SyncErrorDialog.Type.DIALOG_COLLECTION_TOO_LARGE,

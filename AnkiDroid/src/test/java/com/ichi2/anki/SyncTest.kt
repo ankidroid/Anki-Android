@@ -137,7 +137,7 @@ class SyncTest : RobolectricTest() {
     @Test
     fun `collection too large uses database check dialog`() =
         deckPicker {
-            val message = CollectionManager.TR.syncUploadTooLarge("150 MB (uncompressed)")
+            val message = CollectionManager.TR.syncUploadTooLarge("150 MB")
 
             val dialog =
                 failSync(
