@@ -6,14 +6,17 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.utils.OnlyOnce.Method.UNIT_TEST
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runCurrent
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/** Tests for [OnlyOnce] */
 @RunWith(AndroidJUnit4::class)
 class OnlyOnceTest : RobolectricTest() {
     @Test
@@ -50,6 +53,21 @@ class OnlyOnceTest : RobolectricTest() {
             preventMultipleExecutions(wait = true) { i++ }
             preventMultipleExecutions(wait = true) { i++ }
             assertThat(i, equalTo(2))
+        }
+
+    @Test
+    fun `cancelled run does not block`() =
+        runTest {
+            val job = launch { awaitCancellation() }
+            preventSimultaneousExecutions(UNIT_TEST) { job }
+            runCurrent()
+
+            job.cancel()
+            advanceUntilIdle()
+
+            var i = 0
+            preventMultipleExecutions(wait = true) { i++ }
+            assertThat(i, equalTo(1))
         }
 
     // catch the exception here otherwise the test scope will catch it and throw it, safe as we expect the exception

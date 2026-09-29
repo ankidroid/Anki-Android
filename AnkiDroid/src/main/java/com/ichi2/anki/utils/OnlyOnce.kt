@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.utils
 
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -11,12 +12,16 @@ import timber.log.Timber
  * Prevent multiple instances of a method being executed simultaneously
  */
 object OnlyOnce {
-    private val blockedFunctions = mutableSetOf<Any>()
+    private val blockedFunctions = mutableSetOf<Method>()
 
     enum class Method {
         ANSWER_CARD,
         UNIT_TEST,
     }
+
+    @get:VisibleForTesting
+    internal val pendingMethods: Set<Method>
+        get() = blockedFunctions.toSet()
 
     /**
      * Prevents multiple instances of a method being executed simultaneously
