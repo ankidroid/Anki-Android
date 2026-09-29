@@ -8,6 +8,8 @@ import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
+import android.webkit.CookieManager
+import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
@@ -30,8 +32,10 @@ import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
+import org.robolectric.shadows.ShadowToast
 import java.io.File
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -41,6 +45,10 @@ import kotlin.test.assertTrue
 /** Tests for [SharedDecksDownloadFragment] */
 @RunWith(AndroidJUnit4::class)
 class SharedDecksDownloadFragmentTest : RobolectricTest() {
+    companion object {
+        private const val HTTP_TOO_MANY_REQUESTS = 429
+    }
+
     @Test
     fun `completed download opens the existing file for import`() {
         val download = completedDownload()
@@ -206,6 +214,81 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         assertTrue(retryButton.isVisible)
     }
 
+    /** 19876: AnkiWeb returns 429 to anonymous users downloading a second deck, asking them to log in */
+    @Test
+    fun `rate limited download while logged out prompts login instead of showing a generic error`() {
+        val download = startDownload()
+
+        download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
+        shadowOf(Looper.getMainLooper()).idle()
+
+        val snackbarText =
+            download
+                .activity
+                .findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        assertEquals(
+            download.activity.getString(R.string.shared_decks_login_required),
+            snackbarText?.text,
+        )
+        assertFalse(download.fragment.binding.tryDownloadAgainButton.isVisible)
+        assertNull(ShadowToast.getLatestToast())
+        // nothing else removes the failed download on this path, so the fragment must
+        verify(download.activity.downloadManager).remove(1L)
+    }
+
+    /** A logged-in user is also rate limited sometimes ('Daily limit exceeded'), and cannot log in to fix it */
+    @Test
+    fun `rate limited download while logged in offers retry`() {
+        CookieManager.getInstance().setCookie("https://ankiweb.net", "has_auth=1")
+        val download = startDownload()
+
+        download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
+
+        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+    }
+
+    /** Only 429 gets the login treatment; other HTTP failures keep the generic retry screen */
+    @Test
+    fun `other http download failures offer retry`() {
+        val download = startDownload()
+
+        download.complete(status = DownloadManager.STATUS_FAILED, reason = 500)
+
+        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+    }
+
+    /** The failure broadcast can arrive while the activity is backgrounded: the login prompt
+     * must wait until the user returns, since FragmentManager work would throw there */
+    @Test
+    fun `rate limited failure while backgrounded defers the login prompt until resume`() {
+        val controller = Robolectric.buildActivity(SharedDecksActivity::class.java, Intent()).create()
+        saveControllerForCleanup(controller)
+        controller.start().resume().visible()
+        val download = setupDownload(controller.get())
+        controller.stop() // the user backgrounds the app while the download runs
+
+        download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
+        shadowOf(Looper.getMainLooper()).idle()
+
+        assertNull(
+            download
+                .activity
+                .findViewById<TextView>(com.google.android.material.R.id.snackbar_text),
+        )
+
+        controller.start().resume()
+        shadowOf(Looper.getMainLooper()).idle()
+
+        val snackbarText =
+            download
+                .activity
+                .findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        assertEquals(
+            download.activity.getString(R.string.shared_decks_login_required),
+            snackbarText?.text,
+        )
+    }
+
     @Test
     fun `removing the download fragment prevents late completion from starting an import`() {
         val download = startDownload()
@@ -281,6 +364,10 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
     private fun startDownload(): Download {
         val activity = startActivityNormallyOpenCollectionWithIntent(SharedDecksActivity::class.java, Intent())
+        return setupDownload(activity)
+    }
+
+    private fun setupDownload(activity: SharedDecksActivity): Download {
         activity.downloadManager =
             mock {
                 on { enqueue(any()) } doReturn 1L
@@ -327,10 +414,11 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         fun complete(
             downloadId: Long = 1L,
             status: Int = DownloadManager.STATUS_SUCCESSFUL,
+            reason: Int = 0,
             completedFile: File = file,
             localUri: Uri? = Uri.fromFile(completedFile),
         ) {
-            whenever(activity.downloadManager.query(any())).thenAnswer { downloadCursor(status, localUri) }
+            whenever(activity.downloadManager.query(any())).thenAnswer { downloadCursor(status, reason, localUri) }
             withFileProvider {
                 activity.sendBroadcast(
                     Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadId),
@@ -364,6 +452,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
     private fun downloadCursor(
         status: Int,
+        reason: Int = 0,
         localUri: Uri? = null,
     ): MatrixCursor =
         MatrixCursor(
@@ -374,5 +463,5 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
                 DownloadManager.COLUMN_REASON,
                 DownloadManager.COLUMN_LOCAL_URI,
             ),
-        ).apply { addRow(arrayOf<Any?>(100L, 100L, status, 0, localUri?.toString())) }
+        ).apply { addRow(arrayOf<Any?>(100L, 100L, status, reason, localUri?.toString())) }
 }

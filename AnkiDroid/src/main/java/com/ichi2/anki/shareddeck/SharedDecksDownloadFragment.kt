@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
@@ -194,6 +195,15 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     private fun render(state: SharedDecksDownloadUiState) {
+        // not done in the broadcast receiver that recorded this state: the receiver can run
+        // while the activity is backgrounded, and FragmentManager work would throw there
+        if (state.phase == DownloadPhase.LoginRequired) {
+            Timber.i("Download requires login, returning to shared decks")
+            showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE)
+            // return to the shared decks WebView, where the user can log in
+            parentFragmentManager.popBackStack()
+            return
+        }
         binding.downloadingTitle.text = state.fileName?.let { getString(CommonString.downloading_file, it) }
         binding.downloadPercentageText.text =
             when {
@@ -343,8 +353,15 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                         // Return if download was not successful.
                         if (it.getInt(columnStatusIndex) != DownloadManager.STATUS_SUCCESSFUL) {
                             Timber.i("Download could not be successful, update UI")
-                            Timber.d("Status code -> ${it.getIntOrNull(columnStatusIndex)}, reason ${it.getIntOrNull(columnReasonIndex)}")
-                            onDownloadFinished(isSuccessful = false)
+                            val reason = it.getIntOrNull(columnReasonIndex)
+                            Timber.d("Status code -> ${it.getIntOrNull(columnStatusIndex)}, reason $reason")
+                            // DownloadManager reports the HTTP status code in COLUMN_REASON for 4xx/5xx
+                            // failures: AnkiWeb replies 429 when an anonymous user has used up its
+                            // download limit, asking them to log in (19876)
+                            onDownloadFinished(
+                                isSuccessful = false,
+                                isRateLimited = reason == SharedDecksActivity.HTTP_STATUS_TOO_MANY_REQUESTS,
+                            )
                             return null
                         }
 
@@ -533,6 +550,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private fun onDownloadFinished(
         isSuccessful: Boolean,
         isInvalidDeckFile: Boolean = false,
+        isRateLimited: Boolean = false,
     ) {
         if (!isSuccessful) {
             if (isInvalidDeckFile) {
@@ -543,11 +561,24 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     activity?.onBackPressedDispatcher?.onBackPressed()
                 }
             } else {
-                Timber.i("Download failed, offer a retry")
-                if (isVisible) {
-                    context?.let { showThemedToast(it, CommonString.something_wrong, false) }
+                // A 429 from AnkiWeb is only actionable for a logged-out user; a logged-in
+                // user seeing "Daily limit exceeded" can only retry tomorrow
+                if (isRateLimited && !isLoggedInToAnkiWeb()) {
+                    Timber.i("Download failed: AnkiWeb requires login to download more decks")
+                    // discard the failed download: the login path offers no retry button,
+                    // so nothing else would remove it (or its failed-download notification)
+                    downloadManager.remove(downloadId)
+                    // runs in a broadcast receiver, which can fire while the activity is
+                    // backgrounded: record the state here, and render() (only collected
+                    // while the screen is showing) shows the prompt and returns to the WebView
+                    viewModel.onLoginRequired()
+                } else {
+                    Timber.i("Download failed, offer a retry")
+                    if (isVisible) {
+                        context?.let { showThemedToast(it, R.string.something_wrong, false) }
+                    }
+                    viewModel.onDownloadFailed()
                 }
-                viewModel.onDownloadFailed()
             }
         }
 
