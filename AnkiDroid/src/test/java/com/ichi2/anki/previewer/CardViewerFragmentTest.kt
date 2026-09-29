@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.previewer
 
-import android.content.DialogInterface
 import android.os.Build
 import android.view.ViewGroup
 import android.webkit.PermissionRequest
@@ -17,6 +16,8 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
@@ -61,7 +62,7 @@ class CardViewerFragmentTest : RobolectricTest() {
             chromeClient.onPermissionRequest(second)
 
             verify(second).deny()
-            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+            clickAlertDialogButton { positiveButton }
             verify(first).grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
             verify(second, never()).grant(any())
         }
@@ -76,7 +77,7 @@ class CardViewerFragmentTest : RobolectricTest() {
 
         withCardViewerChromeClient { chromeClient ->
             chromeClient.onPermissionRequest(first)
-            clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, true)
+            clickAlertDialogButton { negativeButton }
             verify(first).deny()
 
             val dialogCount = ShadowDialog.getShownDialogs().size

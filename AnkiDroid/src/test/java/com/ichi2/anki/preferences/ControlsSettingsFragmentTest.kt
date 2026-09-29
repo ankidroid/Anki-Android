@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.preferences
 
-import android.content.DialogInterface
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
@@ -15,6 +14,8 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.preferences.ReviewerControlPreference
 import com.ichi2.testutils.HamcrestUtils
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
@@ -51,7 +52,7 @@ class ControlsSettingsFragmentTest : RobolectricTest() {
         withControlsSettings {
             val binding = Binding.GestureInput(Gesture.SWIPE_UP)
             answerPref.setBinding(binding)
-            clickAlertDialogButton(DialogInterface.BUTTON_NEGATIVE, checkDismissed = true)
+            clickAlertDialogButton { negativeButton }
 
             val showAnswerBindings = showAnswerPref.getMappableBindings().map { Pair(it.binding, it.side) }
             val answerBindings = answerPref.getMappableBindings().map { Pair(it.binding, it.side) }
@@ -65,7 +66,7 @@ class ControlsSettingsFragmentTest : RobolectricTest() {
         withControlsSettings {
             val binding = Binding.GestureInput(Gesture.SWIPE_UP)
             answerPref.setBinding(binding)
-            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, checkDismissed = true)
+            clickAlertDialogButton { positiveButton }
 
             val showAnswerBindings = showAnswerPref.getMappableBindings().map { Pair(it.binding, it.side) }
             val answerBindings = answerPref.getMappableBindings().map { Pair(it.binding, it.side) }
