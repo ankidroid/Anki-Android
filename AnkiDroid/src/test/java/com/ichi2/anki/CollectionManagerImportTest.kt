@@ -20,6 +20,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class CollectionManagerImportTest : RobolectricTest() {
@@ -76,7 +77,7 @@ class CollectionManagerImportTest : RobolectricTest() {
         runTest {
             val note = addBasicNote("backed up", "answer")
             val backupDirectory = tempFolder.newFolder("backups")
-            col.createBackup(backupDirectory.path, force = true, waitForCompletion = true)
+            assertTrue(col.createBackup(backupDirectory.path, force = true, waitForCompletion = true))
             val files = assertNotNull(backupDirectory.listFiles(), "Unable to list backup directory: $backupDirectory")
             val backups = files.filter { it.extension == "colpkg" }
             assertEquals(1, backups.size, "Expected one collection backup in $backupDirectory; found ${files.map { it.name }}")
