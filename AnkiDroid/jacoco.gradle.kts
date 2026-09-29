@@ -89,6 +89,25 @@ fun builtInKotlincClassDir(variant: String): String {
 val flavorClassDir = builtInKotlincClassDir("play${rootProject.androidTestVariantName}")
 val moduleClassDir = builtInKotlincClassDir(rootProject.androidTestVariantName.lowercase())
 
+// Narrow coverage roots: a fileTree over the whole build/ dir makes Gradle treat every
+// sibling task output under build/ as an undeclared input (e.g. lintFullDebug + this report).
+val unitTestCoverageDirs = listOf("outputs/unit_test_code_coverage", "jacoco")
+val androidTestCoverageDirs = listOf("outputs/code_coverage")
+
+fun Project.coverageFileTree(
+    relativeDirs: List<String>,
+    includes: List<String>,
+) = files(
+    relativeDirs.map { relativeDir ->
+        fileTree(
+            mapOf(
+                "dir" to layout.buildDirectory.dir(relativeDir),
+                "includes" to includes,
+            ),
+        )
+    },
+)
+
 // Our merge report task
 tasks.register<JacocoReport>("jacocoTestReport") {
     val htmlOutDir =
@@ -120,12 +139,8 @@ tasks.register<JacocoReport>("jacocoTestReport") {
     sourceDirectories.setFrom(project.files(mainSrc))
     classDirectories.setFrom(project.files(kotlinClasses))
     executionData.setFrom(
-        project.fileTree(
-            mapOf(
-                "dir" to project.layout.buildDirectory,
-                "includes" to listOf("**/*.exec", "**/*.ec"),
-            ),
-        ),
+        project.coverageFileTree(unitTestCoverageDirs, listOf("**/*.exec")),
+        project.coverageFileTree(androidTestCoverageDirs, listOf("**/*.ec")),
     )
     dependsOn("testPlayDebugUnitTest")
     dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
@@ -208,16 +223,7 @@ fun includeUnitTestCoverage(
             ),
         ),
     )
-    report.executionData.from(
-        project.files(
-            project.fileTree(
-                mapOf(
-                    "dir" to project.layout.buildDirectory,
-                    "includes" to listOf("**/*.exec"),
-                ),
-            ),
-        ),
-    )
+    report.executionData.from(project.coverageFileTree(unitTestCoverageDirs, listOf("**/*.exec")))
 }
 
 // A connected android tests only report task
@@ -250,14 +256,7 @@ tasks.register<JacocoReport>("jacocoAndroidTestReport") {
 
     sourceDirectories.setFrom(project.files(mainSrc))
     classDirectories.setFrom(project.files(kotlinClasses))
-    executionData.setFrom(
-        project.fileTree(
-            mapOf(
-                "dir" to project.layout.buildDirectory,
-                "includes" to listOf("**/*.ec"),
-            ),
-        ),
-    )
+    executionData.setFrom(project.coverageFileTree(androidTestCoverageDirs, listOf("**/*.ec")))
     dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
 }
 
