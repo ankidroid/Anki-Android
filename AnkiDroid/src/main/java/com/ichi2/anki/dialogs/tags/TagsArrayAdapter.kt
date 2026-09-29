@@ -224,6 +224,12 @@ class TagsArrayAdapter(
         tags.sort()
     }
 
+    /** Refresh cached subtree counts after bulk selection changes */
+    fun notifyCheckedStatusesChanged() {
+        buildTagTree("")
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

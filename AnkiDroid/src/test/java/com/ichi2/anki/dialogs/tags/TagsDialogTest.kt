@@ -29,6 +29,9 @@ import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
+import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
+import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
+import com.ichi2.ui.CheckBoxTriStates.State.UNCHECKED
 import com.ichi2.utils.ListUtil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -103,6 +106,28 @@ class TagsDialogTest : RobolectricTest() {
             Assert.assertTrue(newTagItemItem.isChecked)
             Assert.assertNotEquals(tag, lastItem.text)
             Assert.assertFalse(lastItem.isChecked)
+        }
+    }
+
+    @Test
+    fun `unchecking parent after check all keeps it indeterminate`() {
+        withTagsAfterTogglingAll(arrayListOf("1")) { parent, child ->
+            parent.performClick()
+            assertThat(parent.state, equalTo(INDETERMINATE))
+            assertThat(child.state, equalTo(CHECKED))
+
+            child.performClick()
+            assertThat(parent.state, equalTo(UNCHECKED))
+        }
+    }
+
+    @Test
+    fun `uncheck all clears the indeterminate cycle for parents`() {
+        withTagsAfterTogglingAll(arrayListOf("1", "1::2")) { parent, child ->
+            parent.performClick()
+            parent.performClick()
+            assertThat(parent.state, equalTo(UNCHECKED))
+            assertThat(child.state, equalTo(UNCHECKED))
         }
     }
 
@@ -614,6 +639,27 @@ class TagsDialogTest : RobolectricTest() {
         TagsDialog(ParametersUtils.whatever())
             .withTestArguments(TagsDialog.DialogType.EDIT_TAGS, arrayListOf(), listOf("a"))
             .requireArguments()
+
+    private fun withTagsAfterTogglingAll(
+        checkedTags: ArrayList<String>,
+        block: (parent: CheckBoxTriStates, child: CheckBoxTriStates) -> Unit,
+    ) {
+        val args =
+            TagsDialog()
+                .withTestArguments(TagsDialog.DialogType.EDIT_TAGS, checkedTags, listOf("1", "1::2"))
+                .requireArguments()
+        runTagsDialogScenario(args) { fragment ->
+            val toolbar = fragment.binding.toolbar.root
+            toolbar.menu.performIdentifierAction(R.id.tags_dialog_action_select_all, 0)
+
+            val recycler = fragment.binding.tagsList
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            val parent = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0).checkBoxView
+            val child = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 1).checkBoxView
+            block(parent, child)
+        }
+    }
 
     // these are called 'withTestArguments' due to "extension is shadowed by a member" warnings
     // this is needed so we can pass in 'targetContext' for context.cacheDir
