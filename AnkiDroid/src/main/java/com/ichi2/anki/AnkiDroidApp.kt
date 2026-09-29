@@ -52,6 +52,7 @@ import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.logging.logActivityCreation
 import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
 import com.ichi2.anki.multimedia.MultimediaArgsStorage
+import com.ichi2.anki.multiprofile.isPhoenixProcess
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -130,6 +131,10 @@ open class AnkiDroidApp :
      */
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     override fun onCreate() {
+        if (isPhoenixProcess()) {
+            super.onCreate()
+            return
+        }
         initAnkiBackend(debugTraceSqlCalls = false)
         super.onCreate()
         if (!setupAnkiDroidApp()) {

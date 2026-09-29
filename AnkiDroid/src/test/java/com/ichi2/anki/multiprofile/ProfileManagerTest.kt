@@ -236,6 +236,27 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `switching the profile persists synchronously so it survives the process kill`() {
+        val registry = RecordingPreferences(context.getSharedPreferences(PROFILE_REGISTRY_FILENAME, Context.MODE_PRIVATE))
+        val wrapper =
+            object : ContextWrapper(context) {
+                override fun getApplicationContext(): Context? = null
+
+                override fun getSharedPreferences(
+                    name: String,
+                    mode: Int,
+                ): SharedPreferences = if (name == PROFILE_REGISTRY_FILENAME) registry else super.getSharedPreferences(name, mode)
+            }
+        val manager = ProfileManager.create(wrapper)
+        registry.editors.clear()
+
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(ProfileId("p_other")) }
+
+        assertEquals("apply() is async and is lost when the process is killed", 1, registry.editors.sumOf { it.commits })
+        assertEquals(0, registry.editors.sumOf { it.applies })
+    }
+
+    @Test
     fun `ProfileId DEFAULT must be strictly 'default' to preserve legacy compatibility`() {
         assertEquals("default", ProfileId.DEFAULT.value)
     }
@@ -609,6 +630,31 @@ class ProfileManagerTest {
     }
 
     /** Stubs [CookieManager.getInstance]. [completesRemoval] fires the cookie removal callback. */
+    private class RecordingEditor(
+        private val delegate: SharedPreferences.Editor,
+    ) : SharedPreferences.Editor by delegate {
+        var commits = 0
+        var applies = 0
+
+        override fun commit(): Boolean {
+            commits++
+            return delegate.commit()
+        }
+
+        override fun apply() {
+            applies++
+            delegate.apply()
+        }
+    }
+
+    private class RecordingPreferences(
+        private val delegate: SharedPreferences,
+    ) : SharedPreferences by delegate {
+        val editors = mutableListOf<RecordingEditor>()
+
+        override fun edit(): SharedPreferences.Editor = RecordingEditor(delegate.edit()).also { editors += it }
+    }
+
     private fun mockCookieManager(completesRemoval: Boolean = true): CookieManager {
         mockkStatic(CookieManager::class)
         val cookieManager = mockk<CookieManager>(relaxed = true)
