@@ -1459,10 +1459,12 @@ open class DeckPicker :
 
     private fun createBackup() {
         launchCatchingTask {
-            withProgress(message = TR.sentenceCase.creatingBackup) {
-                performBackupInBackground(true)
-            }
-            showThemedToast(this@DeckPicker, TR.profilesBackupCreated(), false)
+            val created =
+                withProgress(message = TR.sentenceCase.creatingBackup) {
+                    performBackupInBackground(true)
+                }
+            val message = if (created) TR.profilesBackupCreated() else TR.profilesBackupUnchanged()
+            showThemedToast(this@DeckPicker, message, false)
         }
     }
 

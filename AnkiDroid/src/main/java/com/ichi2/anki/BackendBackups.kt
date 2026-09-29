@@ -27,14 +27,16 @@ import net.ankiweb.rsdroid.BackendException
  * Attempts a backup and awaits its completion.
  *
  * @param force Bypass the minimum backup interval. Unchanged collections are still skipped.
+ * @return `true` if a backup completed successfully; `false` if the collection has not changed
+ * since the last backup, or if [force] is `false` and the minimum backup interval has not elapsed.
  * @throws BackendException if backup creation or completion fails. See [Collection.createBackup]
  * for full exception details.
  */
-suspend fun performBackupInBackground(force: Boolean = false) {
+suspend fun performBackupInBackground(force: Boolean = false): Boolean {
     // Wait a second to allow the deck list to finish loading first, or it
     // will hang until the first stage of the backup completes.
     delay(1000)
-    createBackup(force = force)
+    return createBackup(force = force)
 }
 
 fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiActivity, Activity : ImportColpkgListener {
@@ -53,17 +55,19 @@ fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiAc
     }
 }
 
-private suspend fun createBackup(force: Boolean) {
-    withCol {
-        // this two-step approach releases the backend lock after the initial copy
-        createBackup(
-            BackupManager.getBackupDirectoryFromCollection(colDb),
-            force,
-            waitForCompletion = false,
-        )
-    }
+private suspend fun createBackup(force: Boolean): Boolean {
+    val created =
+        withCol {
+            // this two-step approach releases the backend lock after the initial copy
+            createBackup(
+                BackupManager.getBackupDirectoryFromCollection(colDb),
+                force,
+                waitForCompletion = false,
+            )
+        }
     // move this outside 'withCol' to avoid blocking
     withContext(Dispatchers.IO) {
         CollectionManager.getBackend().awaitBackupCompletion()
     }
+    return created
 }
