@@ -8,7 +8,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
-import androidx.activity.addCallback
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -336,6 +335,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(CommonString.restore_backup_title)
                     message(text = message)
                     positiveButton(CommonString.dialog_continue) {
+                        // Cancelling backup selection should return to the deck list, not this warning.
+                        dismiss()
                         showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
                     }
                     negativeButton(CommonString.dialog_cancel)
@@ -416,22 +417,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     cancelable(false)
                 }
-            }
-        }
-    }
-
-    override fun setupDialog(
-        dialog: Dialog,
-        style: Int,
-    ) {
-        super.setupDialog(dialog, style)
-
-        if (requireDialogType() == DIALOG_RESTORE_BACKUP) {
-            // we don't want to go back to DIALOG_CONFIRM_RESTORE_BACKUP if back is pressed
-            // instead, close all dialogs and return to the DeckPicker
-            (dialog as AlertDialog).onBackPressedDispatcher.addCallback(this, true) {
-                Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
-                requireActivity().dismissAllDialogFragments()
             }
         }
     }
