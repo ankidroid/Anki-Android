@@ -203,7 +203,7 @@ class TagsArrayAdapter(
 
     /**
      * Whether there exists visible nested tag.
-     * Recalculated everytime [buildTagTree] is called.
+     * Recalculated everytime [rebuildTagTree] is called.
      */
     private var hasVisibleNestedTag: Boolean
 
@@ -226,7 +226,7 @@ class TagsArrayAdapter(
 
     /** Refresh cached subtree counts after bulk selection changes */
     fun notifyCheckedStatusesChanged() {
-        buildTagTree("")
+        rebuildTagTree()
         notifyDataSetChanged()
     }
 
@@ -338,7 +338,7 @@ class TagsArrayAdapter(
     override fun getItemCount(): Int = treeRoot.subtreeSize
 
     /**
-     * Build the tag tree. The tags have been sorted using the hierarchical comparator
+     * Rebuild the tag tree. The tags have been sorted using the hierarchical comparator
      * [TagsUtil.compareTag], which leads to a DFN order. Use a stack to build the tree without
      * recursion.
      * The initial expand states are inherited through [tagToIsExpanded].
@@ -347,7 +347,7 @@ class TagsArrayAdapter(
      * @param expandTarget The target tag to expand. Do nothing if it is empty or not found.
      */
     @NeedsTest("#18481 - case insensitivity")
-    private fun buildTagTree(expandTarget: String) {
+    private fun rebuildTagTree(expandTarget: String = "") {
         // init mapping for newly added tags
         filteredList.forEach {
             if (!tagToIsExpanded.containsKey(it)) {
@@ -453,7 +453,7 @@ class TagsArrayAdapter(
             filteredList.clear()
             filteredList.addAll(results)
             sortData()
-            buildTagTree(expandTarget)
+            rebuildTagTree(expandTarget)
             expandTarget = String()
             notifyDataSetChanged()
         }
@@ -475,7 +475,7 @@ class TagsArrayAdapter(
         // set the initial expand state according to its checked state
         tags.forEach { tagToIsExpanded[it] = tags.isChecked(it) || tags.isIndeterminate(it) }
         hasVisibleNestedTag = false
-        buildTagTree(String())
+        rebuildTagTree()
     }
 
     companion object {
