@@ -2,12 +2,11 @@
 
 package com.ichi2.anki
 
-import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.test.StandardTestDispatcher
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.shadows.ShadowBuild
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -17,9 +16,9 @@ class CollectionManagerStackTraceTest : RobolectricTest() {
     @Test
     fun `opening failure records the withCol caller`() =
         runTest {
-            val originalFingerprint = Build.FINGERPRINT
-            // Exercise the real dispatcher switch: Robolectric's synchronous queue retains the caller.
-            ShadowBuild.setFingerprint("collection-stack-trace-test")
+            // Queue collection access so the failure occurs after the caller suspends.
+            val previousQueue =
+                CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
             try {
                 CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED
 
@@ -29,7 +28,8 @@ class CollectionManagerStackTraceTest : RobolectricTest() {
                 val caller = failure.suppressed.single()
                 assertTrue(caller.stackTrace.any { it.methodName == "requestCollection" })
             } finally {
-                ShadowBuild.setFingerprint(originalFingerprint)
+                CollectionManager.emulatedOpenFailure = null
+                CollectionManager.setTestDispatcher(previousQueue)
             }
         }
 
