@@ -373,7 +373,8 @@ private fun Actions(
         verticalArrangement = Arrangement.spacedBy(dimensions.space100),
     ) {
         when (phase) {
-            DownloadPhase.Downloading ->
+            // transient: the fragment shows the login prompt and leaves this screen
+            DownloadPhase.Downloading, DownloadPhase.LoginRequired ->
                 FilledTonalButton(
                     onClick = onCancelClick,
                     colors =
