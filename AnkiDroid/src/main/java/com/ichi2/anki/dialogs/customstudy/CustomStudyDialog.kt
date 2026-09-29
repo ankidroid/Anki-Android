@@ -336,11 +336,27 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 setSuffixText(defaultValue.toInt())
             }
         }
+        binding.decreaseButton.setOnClickListener {
+            val currentValue =
+                binding.detailsEditText2.text
+                    .toString()
+                    .toIntOrNull() ?: 0
+            binding.detailsEditText2.setText((currentValue - 1).toString())
+        }
+        binding.increaseButton.setOnClickListener {
+            val currentValue =
+                binding.detailsEditText2.text
+                    .toString()
+                    .toIntOrNull() ?: 0
+            binding.detailsEditText2.setText((currentValue + 1).toString())
+        }
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
             } else if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                 getString(CommonString.dialog_positive_create)
+            } else if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
+                getString(R.string.custom_study_increase)
             } else {
                 getString(CommonString.dialog_ok)
             }
@@ -355,6 +371,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 .apply {
                     if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                         title(text = contextMenuOption.getTitle(resources))
+                    } else if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
+                        title(text = getString(R.string.custom_study_extend_limits_title))
                     }
                 }.customView(
                     view = binding.root,
