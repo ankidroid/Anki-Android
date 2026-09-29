@@ -41,6 +41,7 @@ import com.ichi2.anki.libanki.testutils.InMemoryCollectionManagerWithMediaFolder
 import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.utils.OnlyOnce
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.NoLiveRobolectricActivitiesRule
@@ -227,6 +228,11 @@ open class RobolectricTest :
         WorkManagerTestInitHelper.closeWorkDatabase()
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
+        val pendingMethods = OnlyOnce.pendingMethods
+        Assert.assertTrue(
+            "OnlyOnce operations still pending after ${testName.methodName}: $pendingMethods. Await them before ending the test.",
+            pendingMethods.isEmpty(),
+        )
         println("""-- completed test "${testName.methodName}"""")
     }
 
