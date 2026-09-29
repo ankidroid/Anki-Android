@@ -12,6 +12,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.os.Looper
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AlertDialog
@@ -219,15 +220,15 @@ open class RobolectricTest :
     }
 
     /**
-     * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
+     * Click [button] on the latest AlertDialog and process its click handler.
      */
     protected fun clickAlertDialogButton(
-        button: Int,
-        @Suppress("SameParameterValue") checkDismissed: Boolean,
+        checkDismissed: Boolean = true,
+        button: AlertDialog.() -> Button,
     ) {
         val dialog = getLatestAlertDialog()
 
-        dialog.getButton(button).performClick()
+        dialog.button().performClick()
         // Need to run UI thread tasks to actually run the onClickHandler
         ShadowLooper.runUiThreadTasks()
 
