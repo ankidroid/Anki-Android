@@ -33,6 +33,7 @@ import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -241,7 +242,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         assertThat("Displaying answer", viewer.isDisplayingAnswer, equalTo(true))
 
-        viewer.executeCommand(ViewerCommand.ANSWER_EASY)
+        viewer.executeCommandAndWaitForFinish(ViewerCommand.ANSWER_EASY)
 
         assertThat(viewer.answered, notNullValue())
     }
@@ -412,6 +413,15 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 }
 
 fun AbstractFlashcardViewer.loadInitialCard() = launchCatchingTask { updateCardAndRedraw() }
+
+/** Lets the final answer release its global lock before test teardown. */
+private fun AbstractFlashcardViewer.executeCommandAndWaitForFinish(command: ViewerCommand) {
+    // Drain media callbacks before the final answer clears currentCard.
+    runBlocking { cardMediaPlayer.stop() }
+    RobolectricTest.advanceRobolectricLooper()
+    executeCommand(command)
+    RobolectricTest.advanceRobolectricLooperUntil { isFinishing }
+}
 
 val AbstractFlashcardViewer.typedInputText get() = typeAnswer!!.input
 val AbstractFlashcardViewer.correctTypedAnswer get() = typeAnswer!!.correct
