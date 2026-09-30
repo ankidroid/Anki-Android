@@ -7,6 +7,8 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -28,9 +30,37 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class FindAndReplaceDialogFragmentTest : RobolectricTest() {
+    @Test
+    fun `missing selection dismisses find and replace`() = assertUnavailableSelection { assertTrue(delete()) }
+
+    @Test
+    fun `truncated selection dismisses find and replace`() = assertUnavailableSelection { writeBytes(byteArrayOf(0)) }
+
+    private fun assertUnavailableSelection(changeFile: IdsFile.() -> Unit) =
+        runTest {
+            val file = IdsFile(targetContext.cacheDir, listOf(addBasicNote().id)).apply(changeFile)
+            val fragment =
+                FindAndReplaceDialogFragment().apply {
+                    arguments = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) }
+                }
+            Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+                controller.get().setTheme(R.style.Theme_Light)
+                val activity = controller.setup().get()
+                activity.setContentView(CoordinatorLayout(activity).apply { id = R.id.root_layout })
+                fragment.show(activity.supportFragmentManager, "find-replace")
+                advanceRobolectricLooper()
+                advanceUntilIdle()
+                advanceRobolectricLooper()
+                assertNull(activity.supportFragmentManager.findFragmentByTag("find-replace"))
+            }
+        }
+
     @Test
     fun `with no selected notes 'only selected notes' check box is not actionable`() =
         runTest {

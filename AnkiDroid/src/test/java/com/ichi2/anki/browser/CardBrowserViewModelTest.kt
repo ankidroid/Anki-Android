@@ -1799,6 +1799,23 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `corrupt multiselect state file results in an empty selection`() {
+        val handle = SavedStateHandle()
+        runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
+            selectRowAtPosition(1)
+            handle[STATE_MULTISELECT_VALUES] = generateExpensiveSavedState()
+        }
+
+        // A negative count must be treated as corrupt data, not a programming error.
+        handle.multiselectStateFile!!.writeBytes(ByteArray(4) { -1 })
+
+        runViewModelTest(savedStateHandle = handle, initMode = InitMode.NO_DELAY) {
+            assertThat("no rows are selected", selectedRows, empty())
+            assertThat("multiselect mode is preserved", isInMultiSelectMode, equalTo(true))
+        }
+    }
+
+    @Test
     fun `multiselect state is kept if saved before the selection is restored`() {
         val handle = SavedStateHandle()
         runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
