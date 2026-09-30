@@ -13,6 +13,7 @@ import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.testutil.waitForPageCondition
 import com.ichi2.anki.testutil.waitUntil
 import com.ichi2.testutils.ext.defaultDeckNewCardsPerDay
 import kotlinx.coroutines.CompletableDeferred
@@ -24,7 +25,6 @@ import org.json.JSONObject
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -67,6 +67,51 @@ class DeckOptionsTest : InstrumentedTest() {
     fun defaultDoubleTapIntervalKeepsPageTimeout() {
         withDeckOptions {
             assertFalse(tapParametersThreeTimes(gapMs = 750), "parameters remain locked")
+        }
+    }
+
+    /** Issue 21923: empty/default FSRS parameters caused a panic and poisoned later backend calls. */
+    @Test
+    fun helpMeDecideSimulatesWithDefaultParameters() {
+        val note = addNoteUsingBasicNoteType()
+        try {
+            val config = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID).jsonObject
+            for (key in listOf("fsrsWeights", "fsrsParams5", "fsrsParams6")) {
+                assertEquals(0, config.getJSONArray(key).length(), "$key must use the defaults")
+            }
+            withDeckOptions {
+                val helpMeDecide = JSONObject.quote(TR.deckConfigFsrsDesiredRetentionHelpMeDecideExperimental())
+                evaluateJavascript(
+                    """
+                    Array.from(document.querySelectorAll('button'))
+                        .find(button => button.textContent.trim() === $helpMeDecide).click();
+                    """.trimIndent(),
+                )
+                waitForPageCondition("document.querySelector('.modal.show') !== null", "simulator did not open")
+                evaluateJavascript(
+                    """
+                    (() => {
+                        const days = document.querySelector('.modal.show input[type="number"]');
+                        days.value = '30';
+                        days.dispatchEvent(new Event('input', { bubbles: true }));
+                        days.dispatchEvent(new Event('change', { bubbles: true }));
+                    })();
+                    """.trimIndent(),
+                )
+                evaluateJavascript(
+                    """
+                    Array.from(document.querySelectorAll('.modal.show button'))
+                        .find(button => button.textContent.trim() === ${JSONObject.quote(TR.deckConfigSimulate())}).click();
+                    """.trimIndent(),
+                )
+                waitForPageCondition(
+                    "document.querySelector('.modal.show svg .lines path')?.getAttribute('d')?.length > 0",
+                    "simulation did not produce a graph",
+                )
+            }
+            assertTrue(col.sched.counts().count() > 0, "backend remains usable after simulation")
+        } finally {
+            col.backend.removeNotes(noteIds = listOf(note.id), cardIds = emptyList())
         }
     }
 
@@ -151,23 +196,6 @@ class DeckOptionsTest : InstrumentedTest() {
             message = "options did not reload after optimization",
         )
         assertFalse(requireActivity().isFinishing)
-    }
-
-    /** Poll across page reloads, which can discard an individual JavaScript evaluation callback. */
-    private fun DeckOptions.waitForPageCondition(
-        condition: String,
-        message: String,
-    ) {
-        val satisfied = AtomicBoolean(false)
-        waitUntil(timeout = 30.seconds, message = { message }) {
-            // Reloading can discard an evaluation callback. Retry without waiting for each one.
-            InstrumentationRegistry.getInstrumentation().runOnMainSync {
-                webViewLayout.evaluateJavascript(condition) {
-                    if (it == "true") satisfied.set(true)
-                }
-            }
-            satisfied.get()
-        }
     }
 
     private fun DeckOptions.saveAndOptimize(newPerDay: Int) {
