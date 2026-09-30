@@ -30,6 +30,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ankiActivity
 import com.ichi2.anki.backend.DatabaseCorruption
 import com.ichi2.anki.backend.getDatabaseVersion
+import com.ichi2.anki.common.destinations.PreferencesDestination
+import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
@@ -354,12 +356,15 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DB_LOCKED -> {
-                // If the database is locked, all we can do is ask the user to exit.
                 alertDialog.show {
                     title(CommonString.database_locked_title)
                     message(text = message)
                     positiveButton(CommonString.close) {
                         closeCollectionAndFinish()
+                    }
+                    // the user can change the 'AnkiDroid directory' to resolve the conflict
+                    neutralButton(CommonString.settings) {
+                        navigate(PreferencesDestination.Advanced)
                     }
                     cancelable(false)
                 }
@@ -600,7 +605,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(CommonString.check_db_warning)
                 DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(CommonString.restore_backup)
                 DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(CommonString.backup_full_sync_from_server_question)
-                DIALOG_DB_LOCKED -> res().getString(CommonString.database_locked_summary)
+                DIALOG_DB_LOCKED -> res().getString(CommonString.database_locked_summary_new, res().getString(CommonString.col_path))
                 INCOMPATIBLE_DB_VERSION -> {
                     var databaseVersion = -1
                     try {
