@@ -3,7 +3,7 @@
 package com.ichi2.anki
 
 import android.content.Intent
-import androidx.core.os.bundleOf
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.EmptyAnkiActivity
@@ -34,7 +34,11 @@ class AnkiActivitySavedStateTest : RobolectricTest() {
         fun savedSize(payload: ByteArray): Int =
             savedStateSize(
                 SingleFragmentActivity::class.java,
-                SingleFragmentActivity.getIntent(targetContext, Fragment::class, bundleOf("payload" to payload)),
+                SingleFragmentActivity.getIntent(
+                    targetContext,
+                    Fragment::class,
+                    Bundle().apply { putByteArray("payload", payload) },
+                ),
             )
 
         val payload = ByteArray(300_000)
