@@ -70,6 +70,7 @@ class NotificationServiceTest : RobolectricTest() {
 
     @After
     override fun tearDown() {
+        CollectionManager.emulatedOpenFailure = null
         super.tearDown()
         unmockkAll()
         TimeManager.reset()
