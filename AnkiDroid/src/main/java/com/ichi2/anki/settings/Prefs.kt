@@ -15,6 +15,7 @@ import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.preferences.AnimationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
+import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
 import com.ichi2.anki.settings.enums.FrameStyle
@@ -28,14 +29,20 @@ import kotlin.reflect.KProperty
 
 // TODO move this to `com.ichi2.anki.preferences`
 //  after the UI classes of that package are moved to `com.ichi2.anki.ui.preferences`
-object Prefs : PrefsRepository(AnkiDroidApp.sharedPrefs(), AnkiDroidApp.appResources)
+// Use a provider to avoid retaining SharedPreferences from a previous Robolectric test.
+object Prefs : PrefsRepository(AnkiDroidApp.sharedPreferencesProvider, AnkiDroidApp.appResources)
 
 // TODO: enforce that `preferences.xml` is used
-open class PrefsRepository(
-    val sharedPrefs: SharedPreferences,
+open class PrefsRepository protected constructor(
+    private val preferences: SharedPreferencesProvider,
     private val resources: Resources,
 ) : AnimationPreferences {
+    constructor(sharedPrefs: SharedPreferences, resources: Resources) : this(SharedPreferencesProvider { sharedPrefs }, resources)
+
     constructor(context: Context) : this(context.sharedPrefs(), context.resources)
+
+    val sharedPrefs: SharedPreferences
+        get() = preferences.sharedPrefs()
 
     @VisibleForTesting
     fun key(
