@@ -1284,9 +1284,20 @@ class Collection(
         return out
     }
 
-    @Deprecated("Not implemented")
     @LibAnkiAlias("op_made_changes")
-    fun opMadeChanges(changes: OpChanges): Nothing = TODO()
+    fun opMadeChanges(changes: OpChanges): Boolean =
+        changes.card ||
+            changes.note ||
+            changes.deck ||
+            changes.tag ||
+            changes.notetype ||
+            changes.config ||
+            changes.deckConfig ||
+            changes.mtime ||
+            changes.browserTable ||
+            changes.browserSidebar ||
+            changes.studyQueues ||
+            changes.noteText
 
     /**
      * Return undo status if undo available on backend.

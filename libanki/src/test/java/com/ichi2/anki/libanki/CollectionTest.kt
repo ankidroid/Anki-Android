@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.libanki
 
+import anki.collection.OpChanges
 import anki.notes.NoteFieldsCheckResponse
 import anki.notetypes.StockNotetype
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
@@ -376,5 +377,32 @@ class CollectionTest : InMemoryAnkiTest() {
     fun `nextId increments by default`() {
         assertEquals(1L, col.nextId(type = "someType"))
         assertEquals(2L, col.nextId(type = "someType"))
+    }
+
+    @Test
+    fun `opChanges when any field is true`() {
+        val setters =
+            OpChanges.Builder::class.java.declaredMethods.filter {
+                it.name.startsWith("set") && it.name != "setKind" &&
+                    it.parameterTypes.singleOrNull() == Boolean::class.javaPrimitiveType
+            }
+
+        assertTrue("Should find boolean setters", setters.isNotEmpty())
+
+        setters.forEach { setter ->
+            val changes = OpChanges.newBuilder().apply { setter.invoke(this, true) }.build()
+            val name = setter.name.drop(3).replaceFirstChar { it.lowercase() }
+
+            assertTrue("Missing '$name' in hasChanges()", col.opMadeChanges(changes))
+        }
+    }
+
+    @Test
+    fun `opChanges when all fields are false`() {
+        val changes = OpChanges.getDefaultInstance()
+        assertFalse(
+            "hasChanges() should return false for a default (all false) OpChanges instance",
+            col.opMadeChanges(changes),
+        )
     }
 }
