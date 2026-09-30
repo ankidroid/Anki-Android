@@ -53,6 +53,7 @@ class ActivityStartupUndecidedStorageTest : RobolectricTest() {
     @Test
     fun `startup is crash-free when storage is undecided`() {
         val controller = launcher!!.build(targetContext)
+        saveControllerForCleanup(controller)
         // mirrors Android: an activity which finishes during onCreate (e.g. redirectToMainEntryPoint)
         // does not receive the remaining lifecycle callbacks; controller.setup() would force them
         controller.create()

@@ -24,7 +24,9 @@ class IntentHandlerTest {
         val intent = Intent("com.ichi2.anki.COPY_DEBUG_INFO")
 
         assertDoesNotThrow {
-            Robolectric.buildActivity(IntentHandler::class.java, intent).create()
+            Robolectric.buildActivity(IntentHandler::class.java, intent).use { controller ->
+                controller.create()
+            }
         }
     }
 

@@ -24,18 +24,19 @@ class CongratsPageTest : RobolectricTest() {
             val deckId = addDynamicDeck("Filtered", "")
             withCol { sched.emptyFilteredDeck(deckId) }
 
-            val scenario = launchFragmentInContainer<CongratsPage>()
-            scenario.moveToState(Lifecycle.State.CREATED)
+            launchFragmentInContainer<CongratsPage>().use { scenario ->
+                scenario.moveToState(Lifecycle.State.CREATED)
 
-            // rebuild happens while the screen isn't visible - nobody is collecting congratsRefreshState
-            undoableOp { sched.rebuildFilteredDeck(deckId) }
+                // rebuild happens while the screen isn't visible - nobody is collecting congratsRefreshState
+                undoableOp { sched.rebuildFilteredDeck(deckId) }
 
-            scenario.moveToState(Lifecycle.State.RESUMED)
-            advanceUntilIdle()
+                scenario.moveToState(Lifecycle.State.RESUMED)
+                advanceUntilIdle()
 
-            scenario.onFragment { fragment ->
-                val next = shadowOf(fragment.requireActivity()).nextStartedActivity
-                assertEquals(StudyOptionsActivity::class.java.name, next?.component?.className)
+                scenario.onFragment { fragment ->
+                    val next = shadowOf(fragment.requireActivity()).nextStartedActivity
+                    assertEquals(StudyOptionsActivity::class.java.name, next?.component?.className)
+                }
             }
         }
 }

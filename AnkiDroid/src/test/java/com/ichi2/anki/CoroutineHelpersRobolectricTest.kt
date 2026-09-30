@@ -22,14 +22,16 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
      */
     @Test
     fun `launchCatchingTask redirects to main entry point when storage is not configured`() {
-        val activity = Robolectric.buildActivity(FragmentActivity::class.java).create().get()
+        Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+            val activity = controller.create().get()
 
-        activity.launchCatchingTask { throw StorageNotConfiguredException() }
-        advanceRobolectricLooper()
+            activity.launchCatchingTask { throw StorageNotConfiguredException() }
+            advanceRobolectricLooper()
 
-        assertTrue(activity.isFinishing, "activity should finish")
-        val redirect = shadowOf(activity).nextStartedActivity
-        assertNotNull(redirect, "the main entry point should be opened")
-        assertEquals(IntentHandler::class.qualifiedName, redirect.component?.className)
+            assertTrue(activity.isFinishing, "activity should finish")
+            val redirect = shadowOf(activity).nextStartedActivity
+            assertNotNull(redirect, "the main entry point should be opened")
+            assertEquals(IntentHandler::class.qualifiedName, redirect.component?.className)
+        }
     }
 }
