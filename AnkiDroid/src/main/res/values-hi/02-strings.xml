@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">चयनित टेक्स्ट के पहले और बाद में डालने के लिए हटम्ल दर्ज करें\n\nकिसी टूलबार आइटम को संपादित करने या हटाने के लिए उसे देर तक दबाएँ.</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">छवि बहुत बड़ी है, कृपया छवि को मैन्युअल रूप से डालें</string>
     <string name="note_editor_video_too_large">वीडियो फ़ाइल बहुत बड़ी है, कृपया वीडियो को मैन्युअल रूप से डालें</string>
     <string name="note_editor_audio_too_large">ऑडियो फ़ाइल बहुत बड़ी है, कृपया ऑडियो मैन्युअल रूप से डालें</string>

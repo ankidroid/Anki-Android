@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐍃 𐌼𐌹𐌺𐌹𐌻𐌰 𐌹𐌽 𐌿𐍆𐌰𐍂𐌰𐍃𐍃𐌰𐌿 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌴𐌹 𐌸𐍉 𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌼𐌰𐌽𐌽𐌰𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>
     <string name="note_editor_video_too_large">𐌸𐌰𐍄𐌰 𐍆𐌰𐌾𐌻 𐌵𐌹𐍅𐌰𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐌿𐍆𐌰𐍂𐌼𐌹𐌺𐌹𐌻 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽 𐌵𐌹𐍅𐌰𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌷𐌰𐌽𐌳𐌿𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>
     <string name="note_editor_audio_too_large">𐌸𐌰𐍄𐌰 𐍆𐌰𐌾𐌻 𐌰𐍅𐌳𐌾𐍉𐌽𐍃 𐌿𐍆𐌰𐍂𐌼𐌹𐌺𐌹𐌻 𐌹𐍃𐍄, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌹𐌽𐌻𐌰𐌲𐌾𐌰𐌽 𐌰𐍅𐌳𐌾𐍉𐌽 𐌷𐌰𐌽𐌳𐌿𐍅𐌰𐌿𐍂𐌷𐍄𐌰𐌱𐌰</string>

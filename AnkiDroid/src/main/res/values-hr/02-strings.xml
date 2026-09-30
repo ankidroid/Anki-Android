@@ -239,6 +239,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Unesi HTML koji će biti umetnut ispred i iza odabranog teksta\n\nPritisnute dugo na stavku alatne trake kako biste je uredili ili uklonili</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Slika je prevelika, umetnite sliku ručno</string>
     <string name="note_editor_video_too_large">Video datoteka je prevelika, umetnite video ručno</string>
     <string name="note_editor_audio_too_large">Zvučna datoteka je prevelika, umetnite zvuk ručno</string>

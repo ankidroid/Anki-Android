@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Redigera objekt i verktygsfältet</string>
     <string name="toolbar_item_explain_edit_or_remove">Ange HTML som ska infogas före och efter den markerade texten\n\nTryck länge på ett verktyg för att redigera eller ta bort det</string>
     <string name="remove_toolbar_item">Ta bort objekt från verktygsfältet?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Bilden är för stor, lägg till bilden manuellt</string>
     <string name="note_editor_video_too_large">Videofilen är för stor, lägg till videon manuellt</string>
     <string name="note_editor_audio_too_large">Ljudfilen är för stor, lägg till ljudet manuellt</string>

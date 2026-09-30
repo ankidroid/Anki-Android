@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Editar elemento da barra de ferramentas</string>
     <string name="toolbar_item_explain_edit_or_remove">Insire o HTML para introducir antes e despois do texto seleccionado\n\nMantén premido un botón da barra de ferramentas para editalo ou eliminalo</string>
     <string name="remove_toolbar_item">Eliminar elemento da barra de ferramentas?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">A imaxe é moi grande. Insire a imaxe manualmente</string>
     <string name="note_editor_video_too_large">O ficheiro de vídeo é moi grande. Insire o vídeo manualmente</string>
     <string name="note_editor_audio_too_large">O ficheiro de son é moi grande. Insire o son manualmente</string>

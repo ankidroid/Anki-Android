@@ -242,6 +242,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Įveskite HTML, kuris bus įterptas prieš ir po pasirinkto teksto\n\nSpauskite įrankių juostos elementą, kad jį redaguotumėte arba pašalintumėte</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Vaizdas yra per didelis, įdėkite jį rankiniu būdu</string>
     <string name="note_editor_video_too_large">Vaizdo failas yra per didelis, įdėkite vaizdo įrašą rankiniu būdu</string>
     <string name="note_editor_audio_too_large">Garso failas yra per didelis, įdėkite garso įrašą rankiniu būdu</string>

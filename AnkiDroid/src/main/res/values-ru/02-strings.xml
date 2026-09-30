@@ -242,6 +242,8 @@
     <string name="edit_toolbar_item">Редактировать элемент панели</string>
     <string name="toolbar_item_explain_edit_or_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nНажмите и удерживайте элемент панели инструментов, чтобы изменить или удалить его.</string>
     <string name="remove_toolbar_item">Удалить элемент панели инструментов?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Изображение слишком большое. Вставьте изображение вручную</string>
     <string name="note_editor_video_too_large">Видео слишком большое. Вставьте видео вручную</string>
     <string name="note_editor_audio_too_large">Аудио слишком большое. Вставьте аудио вручную</string>

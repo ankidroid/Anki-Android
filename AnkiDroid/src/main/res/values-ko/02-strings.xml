@@ -234,6 +234,8 @@
     <string name="edit_toolbar_item">도구 모음 항목 편집</string>
     <string name="toolbar_item_explain_edit_or_remove">선택된 텍스트 앞뒤로 삽입할 HTML을 입력해주십시오\n\n도구 모음 항목을 길게 눌러 편집 또는 제거합니다.</string>
     <string name="remove_toolbar_item">도구 모음에서 제거할까요?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">이미지가 너무 큽니다. 수동으로 넣어 주세요.</string>
     <string name="note_editor_video_too_large">영상 파일이 너무 큽니다. 수동으로 넣어 주세요.</string>
     <string name="note_editor_audio_too_large">오디오 파일이 너무 큽니다. 수동으로 넣어 주세요.</string>

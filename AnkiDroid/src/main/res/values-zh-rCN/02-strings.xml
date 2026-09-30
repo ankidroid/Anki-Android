@@ -233,6 +233,8 @@
     <string name="edit_toolbar_item">编辑工具栏项目</string>
     <string name="toolbar_item_explain_edit_or_remove">输入要在选定文本之前和之后插入的 HTML\n\n 长按工具栏项目来编辑或删除它</string>
     <string name="remove_toolbar_item">删除工具栏项目？</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">图片过大，请手动插入图像</string>
     <string name="note_editor_video_too_large">视频文件太大，请手动插入视频</string>
     <string name="note_editor_audio_too_large">音频文件太大，请手动插入音频</string>

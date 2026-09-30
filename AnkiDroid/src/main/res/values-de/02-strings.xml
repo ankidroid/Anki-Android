@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Werkzeugleisten Element bearbeiten</string>
     <string name="toolbar_item_explain_edit_or_remove">Geben Sie den HTML-Code ein, der vor und nach dem ausgewählten Text eingefügt werden soll\n\nDrücken Sie lange auf ein Symbol in der Symbolleiste, um es zu entfernen</string>
     <string name="remove_toolbar_item">Werkzeugleisten Element entfernen?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Das Bild ist zu groß, bitte fügen Sie das Bild manuell ein</string>
     <string name="note_editor_video_too_large">Die Videodatei ist zu groß, bitte fügen Sie das Video manuell ein</string>
     <string name="note_editor_audio_too_large">Die Audiodatei ist zu groß, bitte fügen Sie das Audio manuell ein</string>

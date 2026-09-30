@@ -233,6 +233,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Masukkan HTML untuk dimasukkan sebelum dan sesudah teks\n\n yang telah dipilih. Tekan toolbar item beberapa saat untuk mencopotnya.</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Gambar ini terlalu besar, mohon masukkan gambar secara manual</string>
     <string name="note_editor_video_too_large">File video terlalu besar, mohon masukkan video secara manual</string>
     <string name="note_editor_audio_too_large">File audio terlalu besar, mohon masukkan audio secara manual</string>

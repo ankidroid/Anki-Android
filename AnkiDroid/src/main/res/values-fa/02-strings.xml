@@ -238,6 +238,8 @@
     <string name="edit_toolbar_item">ویرایش مورد در نوار ابزار</string>
     <string name="toolbar_item_explain_edit_or_remove">کد HTMLای که میخواهید قبل و بعد نوشته‌تان قرار بگیرد را وارد کنید\n\nبرای ویرایش یا حذف هریک از دکمه‌های نوارابزار، آنرا نگه دارید</string>
     <string name="remove_toolbar_item">آیا گزینه در نوار ابزار حذف شود؟</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">عکس زیادی بزرگ است، لطفا عکس را دستی وارد کنید</string>
     <string name="note_editor_video_too_large">فایل ویدیو زیادی بزرگ است، لطفا ویدیو را دستی وارد کنید</string>
     <string name="note_editor_audio_too_large">فایل صدا زیادی بزرگ است، لطفا صدا را دستی وارد کنید</string>
