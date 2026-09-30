@@ -39,5 +39,11 @@ if (path != ":lint-rules") {
         // > just be enabled in a dependent project; they must also be enabled
         // > in all the libraries the project depends on.)
         enable += "LogConditional"
+
+        // WrongThread is off in this non-Android lint client. lint-release.xml sets it
+        // informational, and checkDependencies rejects raising a disabled library issue.
+        // Informational both enables it and keeps :common:lint from failing the build.
+        // ThreadConstraint is already enabled here.
+        informational += "WrongThread"
     }
 }
