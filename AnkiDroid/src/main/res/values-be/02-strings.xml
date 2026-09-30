@@ -240,6 +240,8 @@
     <string name="edit_toolbar_item">Рэдагаваць элемент панэлі інструментаў</string>
     <string name="toolbar_item_explain_edit_or_remove">Увядзіце HTML, які будзе ўстаўлены да і пасля вылучанага тэксту\n\nДоўгі націск на элемент панэлі інструментаў дазволіць адрэдагаваць або выдаліць яго</string>
     <string name="remove_toolbar_item">Выдаліць элемент панэлі інструментаў?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Занадта вялікі відарыс, паспрабуйце ўставіць відарыс уручную</string>
     <string name="note_editor_video_too_large">Занадта вялікі відэафайл, паспрабуйце ўставіць відэа ўручную</string>
     <string name="note_editor_audio_too_large">Занадта вялікі аўдыяфайл, паспрабуйце ўставіць аўдыя ўручную</string>

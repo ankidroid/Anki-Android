@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">قورال بالداق تۈرىنى تەھرىر</string>
     <string name="toolbar_item_explain_edit_or_remove">تاللانغان تېكىستتىن ئىلگىرى ۋە كېيىن قىستۇرىدىغان HTML كىرگۈزۈلىدۇ\n\nقورال بالداق ئۇزۇن بېسىلسا ئۇنى تەھرىرلىگىلى ياكى چىقىرىۋەتكىلى بولىدۇ</string>
     <string name="remove_toolbar_item">قورال بالداق تۈرىنى چىقىرىۋېتەمدۇ؟</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">سۈرەت بەك چوڭ، سۈرەتنى قولدا قىستۇرۇڭ</string>
     <string name="note_editor_video_too_large">سىن ھۆججىتى بەك چوڭ، سىننى قولدا قىستۇرۇڭ</string>
     <string name="note_editor_audio_too_large">ئۈن ھۆججىتى بەك چوڭ، ئۈننى قولدا قىستۇرۇڭ</string>

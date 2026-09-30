@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Muuda tööriista kirjet</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Kas eemaldada tööriista kirje?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Pildifail on liiga suur. Palun sisesta pilt käsitsi</string>
     <string name="note_editor_video_too_large">Videofail on liiga suur. Palun sisesta video käsitsi</string>
     <string name="note_editor_audio_too_large">Helifail on liiga suur. Palun sisesta heli käsitsi</string>

@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">ఎంచుకున్న వచనానికి ముందు మరియు తర్వాత ఇన్సర్ట్ చేయడానికి HTMLని నమోదు చేయండి\n\nటూల్‌బార్ అంశాన్ని సవరించడానికి లేదా తీసివేయడానికి ఎక్కువసేపు నొక్కండి</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">చిత్రం చాలా పెద్దది, దయచేసి చిత్రాన్ని మాన్యువల్‌గా చొప్పించండి</string>
     <string name="note_editor_video_too_large">వీడియో ఫైల్ చాలా పెద్దది, దయచేసి వీడియోని మాన్యువల్‌గా చొప్పించండి</string>
     <string name="note_editor_audio_too_large">ఆడియో ఫైల్ చాలా పెద్దది, దయచేసి ఆడియోను మాన్యువల్‌గా చొప్పించండి</string>

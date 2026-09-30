@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Modifier un élément de la barre d’outils</string>
     <string name="toolbar_item_explain_edit_or_remove">Entrez le code HTML à insérer avant et après le texte sélectionné\n\nAppuyez longuement sur un élément de la barre d\'outils pour le modifier ou le supprimer</string>
     <string name="remove_toolbar_item">Supprimer l\'élément de la barre d\'outils ?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">L’image est trop grande, veuillez insérer l’image manuellement</string>
     <string name="note_editor_video_too_large">Le fichier vidéo est trop volumineux, insérez la vidéo manuellement.</string>
     <string name="note_editor_audio_too_large">Le fichier audio est trop volumineux, insérez l’audio manuellement.</string>

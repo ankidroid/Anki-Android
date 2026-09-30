@@ -233,6 +233,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Nhập HTML sẽ được chèn vào trước và sau văn bản đã chọn\n\nNhấn và giữ một mục trên thanh công cụ để chỉnh sửa hoặc xóa nó</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Hình ảnh quá lớn, vui lòng chèn hình ảnh theo cách thủ công</string>
     <string name="note_editor_video_too_large">Tập tin video quá lớn, vui lòng chèn video theo cách thủ công</string>
     <string name="note_editor_audio_too_large">Tệp âm thanh quá lớn, vui lòng chèn âm thanh thủ công</string>

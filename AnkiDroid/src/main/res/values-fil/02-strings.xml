@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Magtala ng HTML na ilalagay bago at pagkatapos ng piniling teksto\n\nIdiin ang toolbar item upang baguhin o tanggalin ito</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Ang larawan ay masyadong malaki, pakilagay ang larawan nang mano-mano</string>
     <string name="note_editor_video_too_large">Ang video file ay masyadong malaki, pakilagay ang video nang mano-mano</string>
     <string name="note_editor_audio_too_large">Ang audio file ay masyadong malaki, pakilagay ang audio nang mano-mano</string>

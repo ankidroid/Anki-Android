@@ -236,6 +236,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Kirjoita HTML, joka lisätään ennen ja jälkeen valitun tekstin\n\nPaina työkalupalkin kohdetta pitkään muokataksesi sitä tai poistaaksesi sen</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Kuva on liian suuri, aseta kuva käsin</string>
     <string name="note_editor_video_too_large">Videotiedosto on liian suuri, aseta video käsin</string>
     <string name="note_editor_audio_too_large">Äänitiedosto on liian suuri, aseta ääni käsin</string>

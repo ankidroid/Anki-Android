@@ -239,6 +239,8 @@
     <string name="edit_toolbar_item">Edit toolbar item</string>
     <string name="toolbar_item_explain_edit_or_remove">Jāievada HTML, ko ievietot pirms un pēc iezīmētā teksta\n\nRīkjoslas vienums ilgi jāpiespiež, lai to labotu vai noņemtu</string>
     <string name="remove_toolbar_item">Remove toolbar item?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">Attēls ir pārāk liels, lūgums pašrocīgi ievietot attēlu</string>
     <string name="note_editor_video_too_large">Video datne ir pārāk liela, lūgums pašrocīgi ievietot video</string>
     <string name="note_editor_audio_too_large">Skaņu datne ir pārāk liela, lūgums ievietot skaņu pašrocīgi</string>

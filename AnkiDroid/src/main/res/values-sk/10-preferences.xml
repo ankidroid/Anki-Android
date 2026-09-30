@@ -57,7 +57,7 @@
     <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">Povoliť kartičkám spúšťanie iných aplikácií</string>
-    <string name="allow_card_external_launch_summ">Kartičky môžu otvoriť iné aplikácia vo vašom zariadení, potencionálne spúšťajúc nechcenú aktivitu.\nPonechajte vypnuté s výnimkou že veríte všetkým kartičkám a šablónam vo vašej kolekcii.</string>
+    <string name="allow_card_external_launch_summ">Kartičky môžu otvoriť iné aplikácie vo vašom zariadení, potencionálne spúšťajúc nechcenú aktivitu.\nPonechajte vypnuté s výnimkou že veríte všetkým kartičkám a šablónam vo vašej kolekcii.</string>
     <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Hrúbka ťahu</string>

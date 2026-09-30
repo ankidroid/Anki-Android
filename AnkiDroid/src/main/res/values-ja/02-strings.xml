@@ -233,6 +233,8 @@
     <string name="edit_toolbar_item">アイテムを編集</string>
     <string name="toolbar_item_explain_edit_or_remove">選択した文字列の前後に挿入するHTMLをそれぞれ入力してください\n\n作成したツールバーアイテムを編集または削除したい場合は、そのアイテムのボタンを長押ししてください</string>
     <string name="remove_toolbar_item">このツールバーアイテムを削除しますか？</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">画像が大きすぎます。手動で画像を挿入してください</string>
     <string name="note_editor_video_too_large">動画ファイルが大きすぎます。手動で動画を挿入してください</string>
     <string name="note_editor_audio_too_large">音声ファイルが大きすぎます。手動で音声を挿入してください</string>

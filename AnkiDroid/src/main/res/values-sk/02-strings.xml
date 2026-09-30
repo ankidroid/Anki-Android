@@ -242,6 +242,8 @@
     <string name="edit_toolbar_item">Upraviť položku lišty nástrojov</string>
     <string name="toolbar_item_explain_edit_or_remove">Vložte HTML, ktorý má byť pred a po označenom texte\n\nPodržte dlho položku nástrojovej lišty na jej úpravu alebo vymazanie</string>
     <string name="remove_toolbar_item">Vymazať položku lišty nástrojov?</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
     <string name="note_editor_video_too_large">Video súbor je príliš veľký, prosím vložte video ručne.</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
