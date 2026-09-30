@@ -84,10 +84,12 @@ class PermissionsTest {
 
     @Test
     fun `openAppSettingsScreen is a no-op if no app can show the app settings screen`() {
-        val realActivity = Robolectric.buildActivity(Activity::class.java).setup().get()
-        // throw when resolving `ACTION_APPLICATION_DETAILS_SETTINGS`
-        shadowOf(realActivity.application).checkActivities(true)
-        assertDoesNotThrow { realActivity.openAppSettingsScreen() }
+        Robolectric.buildActivity(Activity::class.java).use { controller ->
+            val realActivity = controller.setup().get()
+            // throw when resolving `ACTION_APPLICATION_DETAILS_SETTINGS`
+            shadowOf(realActivity.application).checkActivities(true)
+            assertDoesNotThrow { realActivity.openAppSettingsScreen() }
+        }
     }
 
     @Test

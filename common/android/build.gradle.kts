@@ -31,7 +31,9 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.junit)
 
+    testFixturesImplementation(libs.androidx.appcompat)
     testFixturesImplementation(libs.androidx.test.core)
     testFixturesImplementation(libs.jakewharton.timber)
+    testFixturesImplementation(libs.junit.vintage.engine)
     testFixturesImplementation(libs.robolectric)
 }

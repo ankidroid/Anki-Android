@@ -29,7 +29,11 @@ class StartupGuardsTest : RobolectricTest() {
         CollectionHelper.storageDecisionTestOverride = null
     }
 
-    private fun buildActivity(): Activity = Robolectric.buildActivity(Activity::class.java).create().get()
+    private fun buildActivity(): Activity {
+        val controller = Robolectric.buildActivity(Activity::class.java).create()
+        saveControllerForCleanup(controller)
+        return controller.get()
+    }
 
     @Test
     fun `passes when storage is decided and accessible`() {

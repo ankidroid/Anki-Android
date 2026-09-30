@@ -55,8 +55,8 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     override fun tearDown() {
-        super.tearDown()
         activityScenario.closeQuietly()
+        super.tearDown()
     }
 
     @Test

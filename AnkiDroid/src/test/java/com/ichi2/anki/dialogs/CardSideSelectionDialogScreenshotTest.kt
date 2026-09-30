@@ -9,8 +9,10 @@ import org.robolectric.Robolectric.buildActivity
 class CardSideSelectionDialogScreenshotTest : ScreenshotTest() {
     @Test
     fun testCardSideSelectionDialogAppearance() {
-        val activity = buildActivity(FragmentActivity::class.java).setup().get()
-        CardSideSelectionDialog.displayInstance(activity) {}
-        captureScreen("dialog")
+        buildActivity(FragmentActivity::class.java).use { controller ->
+            val activity = controller.setup().get()
+            CardSideSelectionDialog.displayInstance(activity) {}
+            captureScreen("dialog")
+        }
     }
 }

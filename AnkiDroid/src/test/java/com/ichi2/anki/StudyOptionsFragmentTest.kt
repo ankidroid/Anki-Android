@@ -55,8 +55,10 @@ class StudyOptionsFragmentTest : RobolectricTest() {
         withNullCollection {
             launchFragmentInContainer<StudyOptionsFragment>(
                 initialState = Lifecycle.State.RESUMED,
-            ).onFragment { fragment ->
-                assertEquals(Lifecycle.State.RESUMED, fragment.lifecycle.currentState)
+            ).use { scenario ->
+                scenario.onFragment { fragment ->
+                    assertEquals(Lifecycle.State.RESUMED, fragment.lifecycle.currentState)
+                }
             }
         }
     }
@@ -66,9 +68,9 @@ class StudyOptionsFragmentTest : RobolectricTest() {
         withNullCollection {
             launchFragmentInContainer<StudyOptionsFragment>(
                 initialState = Lifecycle.State.STARTED,
-            ).run {
-                moveToState(Lifecycle.State.RESUMED)
-                onFragment { fragment ->
+            ).use { scenario ->
+                scenario.moveToState(Lifecycle.State.RESUMED)
+                scenario.onFragment { fragment ->
                     assertEquals(Lifecycle.State.RESUMED, fragment.lifecycle.currentState)
                 }
             }
@@ -80,9 +82,9 @@ class StudyOptionsFragmentTest : RobolectricTest() {
         withNullCollection {
             launchFragmentInContainer<StudyOptionsFragment>(
                 initialState = Lifecycle.State.RESUMED,
-            ).run {
-                recreate()
-                onFragment { fragment ->
+            ).use { scenario ->
+                scenario.recreate()
+                scenario.onFragment { fragment ->
                     assertEquals(Lifecycle.State.RESUMED, fragment.lifecycle.currentState)
                 }
             }
@@ -94,10 +96,12 @@ class StudyOptionsFragmentTest : RobolectricTest() {
         withNullCollection {
             launchFragmentInContainer<StudyOptionsFragment>(
                 initialState = Lifecycle.State.RESUMED,
-            ).onFragment { fragment ->
-                val menu = MenuBuilder(fragment.requireContext())
-                fragment.onCreateMenu(menu, fragment.requireActivity().menuInflater)
-                fragment.onPrepareMenu(menu)
+            ).use { scenario ->
+                scenario.onFragment { fragment ->
+                    val menu = MenuBuilder(fragment.requireContext())
+                    fragment.onCreateMenu(menu, fragment.requireActivity().menuInflater)
+                    fragment.onPrepareMenu(menu)
+                }
             }
         }
     }
@@ -106,21 +110,20 @@ class StudyOptionsFragmentTest : RobolectricTest() {
     fun `onPrepareMenu does not crash when collection closes after population`() {
         col
 
-        val scenario =
-            launchFragmentInContainer<StudyOptionsFragment>(
-                initialState = Lifecycle.State.RESUMED,
-            )
-        scenario.onFragment { fragment ->
-
-            runBlocking { fragment.viewModel.refreshData() }
-            assertIs<StudyOptionsState.Empty>(fragment.viewModel.state)
-        }
-        withNullCollection {
+        launchFragmentInContainer<StudyOptionsFragment>(
+            initialState = Lifecycle.State.RESUMED,
+        ).use { scenario ->
             scenario.onFragment { fragment ->
-                @Suppress("RestrictedApi")
-                val menu = MenuBuilder(fragment.requireContext())
-                fragment.onCreateMenu(menu, fragment.requireActivity().menuInflater)
-                fragment.onPrepareMenu(menu)
+                runBlocking { fragment.viewModel.refreshData() }
+                assertIs<StudyOptionsState.Empty>(fragment.viewModel.state)
+            }
+            withNullCollection {
+                scenario.onFragment { fragment ->
+                    @Suppress("RestrictedApi")
+                    val menu = MenuBuilder(fragment.requireContext())
+                    fragment.onCreateMenu(menu, fragment.requireActivity().menuInflater)
+                    fragment.onPrepareMenu(menu)
+                }
             }
         }
     }
