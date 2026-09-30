@@ -16,6 +16,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
+import com.ichi2.anki.testutil.AvoidDayRolloverRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ensureWebViewIsSupported
 import com.ichi2.anki.testutil.grantPermissions
@@ -36,6 +37,9 @@ import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerFragmentTest : InstrumentedTest() {
+    @get:Rule(order = 0)
+    val avoidDayRollover = AvoidDayRolloverRule()
+
     @get:Rule
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
 

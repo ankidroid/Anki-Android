@@ -20,6 +20,7 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
+import com.ichi2.anki.testutil.AvoidDayRolloverRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.closeBackupCollectionDialogIfExists
 import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
@@ -39,6 +40,9 @@ import java.util.UUID
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : InstrumentedTest() {
+    @get:Rule(order = 0)
+    val avoidDayRollover = AvoidDayRolloverRule()
+
     // Launch IntroductionActivity instead of DeckPicker activity because in CI
     // builds, it seems to create IntroductionActivity after the DeckPicker,
     // causing the DeckPicker activity to be destroyed. As a consequence, this
@@ -46,7 +50,7 @@ class ReviewerTest : InstrumentedTest() {
     // with an already destroyed activity. By launching IntroductionActivity, we
     // ensure that IntroductionActivity is launched first and navigate to the
     // DeckPicker -> Reviewer activities
-    @get:Rule
+    @get:Rule(order = 1)
     val activityScenarioRule = ActivityScenarioRule(IntroductionActivity::class.java)
 
     @get:Rule
@@ -162,8 +166,8 @@ class ReviewerTest : InstrumentedTest() {
         deckName: String,
         block: () -> Unit,
     ) {
-        // The activity rule only owns IntroductionActivity. Close both launched activities before
-        // the collection is torn down.
+        // The activity rule only owns IntroductionActivity. Close both activities before restoring
+        // rollover, so neither can refresh against a collection that is being torn down.
         useResumedActivity<DeckPicker> {
             clickOnDeckWithName(deckName)
             // Adding cards directly to the database while in the Deck Picker screen
