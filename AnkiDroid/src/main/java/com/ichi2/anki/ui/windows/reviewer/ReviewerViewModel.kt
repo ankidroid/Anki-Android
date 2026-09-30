@@ -67,6 +67,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
+import kotlin.time.Duration.Companion.seconds
 import com.ichi2.anki.common.destinations.Destination as NavigateDestination
 
 class ReviewerViewModel(
@@ -217,7 +218,7 @@ class ReviewerViewModel(
         } else {
             typedAnswerResult.complete("")
         }
-        typedAnswer = withTimeoutOrNull(1000L) {
+        typedAnswer = withTimeoutOrNull(1.seconds) {
             typedAnswerResult.await()
         } ?: ""
 

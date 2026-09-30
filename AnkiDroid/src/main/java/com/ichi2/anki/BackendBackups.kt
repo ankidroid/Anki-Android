@@ -25,6 +25,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.BackendException
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Attempts a backup and awaits its completion.
@@ -39,7 +40,7 @@ import net.ankiweb.rsdroid.BackendException
 suspend fun performBackupInBackground(force: Boolean = false): Boolean {
     // Wait a second to allow the deck list to finish loading first, or it
     // will hang until the first stage of the backup completes.
-    delay(1000)
+    delay(1.seconds)
     return createBackup(force = force)
 }
 

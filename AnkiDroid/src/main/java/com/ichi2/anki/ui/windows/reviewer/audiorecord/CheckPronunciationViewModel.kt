@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class CheckPronunciationViewModel(
     private val audioRecorder: AudioRecorder = AudioRecorder(appContext),
@@ -120,7 +121,7 @@ class CheckPronunciationViewModel(
             viewModelScope.launch {
                 while (isPlaying) {
                     playbackProgressFlow.emit(audioPlayer.currentPosition)
-                    delay(50L)
+                    delay(50.milliseconds)
                 }
             }
     }

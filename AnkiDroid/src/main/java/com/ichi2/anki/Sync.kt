@@ -37,6 +37,7 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
+import kotlin.time.Duration.Companion.milliseconds
 
 object SyncPreferences {
     const val CURRENT_SYNC_URI = "currentSyncUri"
@@ -348,7 +349,7 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
                 }
                 val text = resp.progress.run { "$added\n$removed\n$checked" }
                 dialog.setMessage(text)
-                delay(100)
+                delay(100.milliseconds)
             }
             showMessage(if (isAborted) TR.syncMediaAborted() else TR.syncMediaComplete())
         } catch (_: BackendInterruptedException) {

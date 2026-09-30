@@ -9,7 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.work.testing.TestListenableWorkerBuilder
 import androidx.work.testing.WorkManagerTestInitHelper
 import anki.sync.syncAuth
-import com.ichi2.anki.NOTIFICATION_MIN_DELAY_MS
+import com.ichi2.anki.NOTIFICATION_MIN_DELAY
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.testutils.EmptyApplication
 import com.ichi2.utils.TruncatedString
@@ -38,7 +38,7 @@ class SyncMediaWorkerTest {
     @Test
     @Suppress("SimplifyBooleanWithConstants")
     fun `notification update delay is not lower than min delay`() {
-        assert(SyncMediaWorker.NOTIFICATION_UPDATE_RATE_MS >= NOTIFICATION_MIN_DELAY_MS)
+        assert(SyncMediaWorker.NOTIFICATION_UPDATE_RATE >= NOTIFICATION_MIN_DELAY)
     }
 
     // Issue 18937: an unset protobuf string must not become an explicitly empty URL in work data.

@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.milliseconds
 
 @RunWith(AndroidJUnit4::class)
 @Config(shadows = [ReadTextTest.NoLanguageQueryTextToSpeech::class])
@@ -49,7 +50,7 @@ class ReadTextPickerTest : RobolectricTest() {
                     assertFalse(refreshed.isCancelled)
                     refreshed.complete(listOf(Locale.FRANCE))
                     runCurrent()
-                    advanceTimeBy(500)
+                    advanceTimeBy(500.milliseconds)
                     runCurrent()
                     shadowOf(Looper.getMainLooper()).idleFor(500, TimeUnit.MILLISECONDS)
 
@@ -78,7 +79,7 @@ class ReadTextPickerTest : RobolectricTest() {
                     languages = listOf(Locale.FRANCE)
                     ReadText.selectTts("text", 1, 0, CardSide.QUESTION)
                     runCurrent()
-                    advanceTimeBy(500)
+                    advanceTimeBy(500.milliseconds)
                     runCurrent()
                     shadowOf(Looper.getMainLooper()).idleFor(500, TimeUnit.MILLISECONDS)
 
