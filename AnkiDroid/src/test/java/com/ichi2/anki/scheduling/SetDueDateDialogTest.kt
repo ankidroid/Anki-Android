@@ -15,6 +15,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
@@ -37,6 +38,7 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.shadows.ShadowToast
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -182,6 +184,24 @@ class SetDueDateDialogTest : RobolectricTest() {
             }
 
             assertThat("removed once dismissed", idsFile.exists(), equalTo(false))
+        }
+
+    @Test
+    fun `missing selection dismisses due date dialog`() =
+        withActivity { activity ->
+            val card = addBasicNote().firstCard()
+            val originalDue = card.due
+            val args = setDueDateArgs(listOf(card.id))
+            assertTrue(args.requireParcelable<IdsFile>(SetDueDateDialog.ARG_IDS_FILE).delete())
+            val fragment = SetDueDateDialog().apply { arguments = args }
+            fragment.show(activity.supportFragmentManager, "due-date")
+            advanceRobolectricLooper()
+            assertNull(activity.supportFragmentManager.findFragmentByTag("due-date"))
+            assertThat(col.getCard(card.id).due, equalTo(originalDue))
+            assertThat(
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(targetContext.getString(CommonString.something_wrong)),
+            )
         }
 
     @Test
