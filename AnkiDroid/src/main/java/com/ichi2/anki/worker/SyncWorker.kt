@@ -130,7 +130,7 @@ class SyncWorker(
                                 val text = syncProgress.run { "$added\n$removed" }
                                 notify(getProgressNotification(text))
                             }
-                            delay(SyncMediaWorker.NOTIFICATION_UPDATE_RATE_MS)
+                            delay(SyncMediaWorker.NOTIFICATION_UPDATE_RATE)
                         }
                     }
                 try {

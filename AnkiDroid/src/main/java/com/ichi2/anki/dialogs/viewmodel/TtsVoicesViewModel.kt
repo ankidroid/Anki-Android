@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * @see [com.ichi2.anki.dialogs.TtsVoicesDialogFragment]
@@ -157,7 +158,7 @@ class TtsVoicesViewModel : ViewModel() {
                 // and don't perform updates when no changes occur
                 Timber.v("voice list refreshed")
                 ttsVoiceListStatus.emit(LoadVoiceStatus.Success(voices))
-                delay(2_000)
+                delay(2.seconds)
             }
         }
         addCloseable {

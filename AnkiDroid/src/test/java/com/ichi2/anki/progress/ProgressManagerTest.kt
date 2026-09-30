@@ -12,6 +12,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.milliseconds
 
 class ProgressManagerTest {
     @Test
@@ -459,7 +460,7 @@ class ProgressManagerTest {
                                 if (pendingShow == null && dialogShownAt == null) {
                                     pendingShow =
                                         launch {
-                                            kotlinx.coroutines.delay(600)
+                                            kotlinx.coroutines.delay(600.milliseconds)
                                             dialogShownAt = testScheduler.currentTime
                                             pendingShow = null
                                         }
@@ -475,7 +476,7 @@ class ProgressManagerTest {
                         // Stream of updates every 100ms would defeat the delay
                         // under the old collectLatest pattern.
                         repeat(10) { i ->
-                            kotlinx.coroutines.delay(100)
+                            kotlinx.coroutines.delay(100.milliseconds)
                             updateProgress(message = "step $i")
                         }
                         done.await()
@@ -483,7 +484,7 @@ class ProgressManagerTest {
                 }
 
             // After 600ms of total time, the dialog should have shown exactly once.
-            testScheduler.advanceTimeBy(700)
+            testScheduler.advanceTimeBy(700.milliseconds)
             val shownAt = dialogShownAt
             assertTrue(shownAt != null, "dialog must have been shown by now")
             assertTrue(

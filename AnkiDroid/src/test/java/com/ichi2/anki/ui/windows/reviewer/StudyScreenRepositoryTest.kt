@@ -20,6 +20,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.net.ServerSocket
 import kotlin.test.assertNotSame
+import kotlin.time.Duration.Companion.milliseconds
 
 class StudyScreenRepositoryTest {
     private val sharedPrefs: SharedPreferences = SPMockBuilder().createSharedPreferences()
@@ -128,7 +129,7 @@ class StudyScreenRepositoryTest {
         runTest {
             val repository = StudyScreenRepository(prefs)
             val first = repository.generateStateMutationKey()
-            delay(10)
+            delay(10.milliseconds)
             val second = repository.generateStateMutationKey()
             assertNotSame(first, second)
         }

@@ -66,6 +66,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.IOException
+import kotlin.time.Duration.Companion.milliseconds
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -223,7 +224,7 @@ class TagsDialog : AnalyticsDialogFragment {
         lifecycleScope.launch {
             val showProgressJob =
                 launch {
-                    delay(600)
+                    delay(600.milliseconds)
                     withContext(Dispatchers.Main) {
                         binding.loadingContainer.visibility = View.VISIBLE
                         viewModel.initProgress

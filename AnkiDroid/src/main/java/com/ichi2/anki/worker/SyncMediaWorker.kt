@@ -40,6 +40,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Held while a media sync runs. A profile switch holds it until the process dies,
@@ -73,7 +75,7 @@ class SyncMediaWorker(
             val backend = CollectionManager.getColUnsafe().backend
             backend.syncMedia(auth)
 
-            delay(1000) // avoid notifications if sync occurs too quickly
+            delay(1.seconds) // avoid notifications if sync occurs too quickly
             if (backend.mediaSyncStatus().active) {
                 Timber.i("Showing SyncMediaWorker's notification")
                 trySetForeground(getForegroundInfo())
@@ -132,7 +134,7 @@ class SyncMediaWorker(
                 val notificationText = syncProgress.run { "$added $removed $checked" }
                 notify(getProgressNotification(notificationText))
             }
-            delay(NOTIFICATION_UPDATE_RATE_MS)
+            delay(NOTIFICATION_UPDATE_RATE)
         }
     }
 
@@ -195,7 +197,7 @@ class SyncMediaWorker(
     }
 
     companion object {
-        const val NOTIFICATION_UPDATE_RATE_MS = 500L
+        val NOTIFICATION_UPDATE_RATE = 500.milliseconds
 
         fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
             val constraints =

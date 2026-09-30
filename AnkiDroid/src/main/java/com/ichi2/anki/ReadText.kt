@@ -45,6 +45,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.Locale
+import kotlin.time.Duration.Companion.milliseconds
 
 object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -182,7 +183,7 @@ object ReadText {
                 }
         }
         // Give the user a chance to preview the card. The delay is cancelled with the reviewer.
-        delay(500)
+        delay(500.milliseconds)
         try {
             dialog.show()
         } catch (e: BadTokenException) {
