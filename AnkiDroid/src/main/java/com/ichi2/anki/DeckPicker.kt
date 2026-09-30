@@ -1513,6 +1513,7 @@ open class DeckPicker :
         // Due to the App Introduction, this may be called before permission has been granted.
         if (syncOnResume && hasCollectionStoragePermissions()) {
             syncOnResume = false
+            intent.removeExtra(INTENT_SYNC_FROM_LOGIN)
             Timber.i("Performing Sync on Resume")
             Permissions.requestNotificationPermissionsForSyncing(this)
             sync()
@@ -1530,7 +1531,7 @@ open class DeckPicker :
         outState.putBoolean("mIsFABOpen", floatingActionMenu.isFABOpen)
         importColpkgListener?.let {
             if (it is DatabaseRestorationListener) {
-                outState.getString("dbRestorationPath", it.newAnkiDroidDirectory.absolutePath)
+                outState.putString("dbRestorationPath", it.newAnkiDroidDirectory.absolutePath)
             }
         }
         outState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
