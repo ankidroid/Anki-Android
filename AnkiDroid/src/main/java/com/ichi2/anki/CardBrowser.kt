@@ -127,8 +127,8 @@ open class CardBrowser :
 
     val menuHost: MenuHost?
         get() =
-            if (useSearchView) {
-                if (this::cardBrowserFragment.isInitialized) cardBrowserFragment else null
+            if (this::cardBrowserFragment.isInitialized && useSearchView) {
+                cardBrowserFragment
             } else {
                 null
             }
