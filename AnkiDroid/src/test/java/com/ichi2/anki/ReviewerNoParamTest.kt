@@ -181,6 +181,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     fun noDrawerConflictsBeforeOnCreate() {
         enableGestureSetting()
         val controller = Robolectric.buildActivity(Reviewer::class.java, Intent())
+        saveControllerForCleanup(controller)
         try {
             assertThat("no conflicts before onCreate", controller.get().hasDrawerSwipeConflicts(), equalTo(false))
         } finally {

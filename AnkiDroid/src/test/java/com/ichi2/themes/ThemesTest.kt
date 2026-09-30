@@ -21,6 +21,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RuntimeEnvironment
 import kotlin.test.assertFailsWith
+import com.ichi2.testutils.Robolectric as RobolectricActivities
 
 @RunWith(AndroidJUnit4::class)
 class ThemesTest : RobolectricTest() {
@@ -31,15 +32,22 @@ class ThemesTest : RobolectricTest() {
      */
     @Test
     fun `decor view access before setTheme fails fast`() {
+        // create() throws before the controller leaves INITIAL, so ActivityController.close() would
+        // no-op and leave the activity registered — register for tearDown's fallback cleanup.
+        val controller = Robolectric.buildActivity(EarlyDecorViewInitActivity::class.java)
+        saveControllerForCleanup(controller)
         val exception =
             assertFailsWith<IllegalStateException> {
-                Robolectric.buildActivity(EarlyDecorViewInitActivity::class.java).create()
+                controller.create()
             }
         assertThat(exception.message, containsString("setTheme"))
     }
 
     @Test
     fun `window background follows the night theme - issue 21520`() {
+        // Check for leftovers before applying the night theme, which can recreate retained
+        // AppCompat activities.
+        RobolectricActivities.assertNoLiveActivities("ThemesTest before setQualifiers(+night)")
         RuntimeEnvironment.setQualifiers("+night")
         PrefsRepository(targetContext).apply {
             appTheme = AppTheme.NIGHT
@@ -70,7 +78,9 @@ class ThemesTest : RobolectricTest() {
      */
     @Test
     fun `recreated activity with an existing decor view does not fail - issue 21548`() {
-        Robolectric.buildActivity(EarlyDecorViewInitActivity::class.java).create(Bundle())
+        Robolectric.buildActivity(EarlyDecorViewInitActivity::class.java).use { controller ->
+            controller.create(Bundle())
+        }
     }
 
     /** simulates e.g. an [androidx.activity.enableEdgeToEdge] call before `super.onCreate` */

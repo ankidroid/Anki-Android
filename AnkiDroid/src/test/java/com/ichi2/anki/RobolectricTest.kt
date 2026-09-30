@@ -42,6 +42,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.NoLiveRobolectricActivitiesRule
 import com.ichi2.testutils.ProductionCollectionManager
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
@@ -77,6 +78,7 @@ import kotlin.test.assertNotNull
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
+import com.ichi2.testutils.Robolectric as RobolectricActivities
 
 open class RobolectricTest :
     AnkiTest,
@@ -105,6 +107,15 @@ open class RobolectricTest :
 
     @get:Rule
     val tempFolder = TemporaryFolder()
+
+    /**
+     * After all `@After` methods, fail if any Robolectric activities are still live.
+     * Retained AppCompat delegates can recreate activities on later night-mode changes.
+     *
+     * Low [Rule.order] so this wraps other rules and always runs after their cleanup.
+     */
+    @get:Rule(order = Int.MIN_VALUE)
+    val noLiveActivities = NoLiveRobolectricActivitiesRule()
 
     override val collectionManager: TestCollectionManager by lazy {
         when (getCollectionStorageMode()) {
@@ -174,12 +185,12 @@ open class RobolectricTest :
         throwOnShowError = false
         // If you don't clean up your ActivityControllers you will get OOM errors
         for (controller in controllersForCleanup) {
-            Timber.d("Calling destroy on controller %s", controller.get().toString())
             try {
-                controller.destroy()
-            } catch (e: Exception) {
-                // Any exception here is likely because the test code already destroyed it, which is fine
-                // No exception here should halt test execution since tests are over anyway.
+                Timber.d("Closing controller %s", controller.get())
+                RobolectricActivities.closeActivity(controller)
+            } catch (failure: Throwable) {
+                // Let subclass @After methods and other rules finish cleanup before reporting.
+                noLiveActivities.recordCleanupFailure(failure)
             }
         }
         controllersForCleanup.clear()
