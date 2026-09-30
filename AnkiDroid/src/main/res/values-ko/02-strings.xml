@@ -112,7 +112,7 @@
     <!-- Timebox -->
     <string name="timebox_reached_title">목표 학습 시간에 도달했습니다.</string>
     <plurals name="timebox_reached">
-        <item quantity="other">%2$s분 동안 카드 %1$d개를 복습했습니다</item>
+        <item quantity="other">%2$s 동안 카드 %1$d개를 복습했습니다</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">

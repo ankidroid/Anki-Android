@@ -229,13 +229,13 @@
     <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">リマインダーを追加</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">学習のリマインダーがありません</string>
-    <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
-    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Notification settings</string>
+    <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">トラブルシューティング</string>
+    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">アプリの通知設定</string>
     <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
     <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deck not found</string>
-    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Reminders are unavailable</string>
-    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Fix</string>
-    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
+    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">リマインダーが機能していません</string>
+    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">設定変更</string>
+    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">新しい学習リマインダーが正常に追加されました</string>
     <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Successfully deleted review reminder</string>
     <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Successfully edited review reminder</string>
     <!-- Add / edit reminder dialog -->
@@ -252,37 +252,37 @@
     <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
     <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
     <!-- Reminder troubleshooting screen -->
-    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Reminders are unavailable.</string>
-    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Reminders may not work correctly.</string>
-    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Your reminders should work as expected.</string>
+    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">リマインダーが機能していません。</string>
+    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">リマインダーが正常に動作しない可能性があります。</string>
+    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">リマインダーは正常に動作するはずです。</string>
     <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
     <!-- Troubleshooting check titles -->
-    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Notification permission</string>
-    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Notification channel</string>
-    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Do not disturb</string>
-    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Battery optimization</string>
-    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Power saving mode</string>
+    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">通知の許可</string>
+    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">通知チャンネル</string>
+    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">サイレントモード</string>
+    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">バッテリーの最適化</string>
+    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">省電力モード</string>
     <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
     <!-- Troubleshooting check statuses -->
-    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Granted</string>
-    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">Denied</string>
-    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">On</string>
-    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">Off</string>
-    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">Unrestricted</string>
-    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">Optimized</string>
-    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">Restricted</string>
+    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">許可済み</string>
+    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">許可されていません</string>
+    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">オン</string>
+    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">オフ</string>
+    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">このアプリには適用されていません</string>
+    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">このアプリにも適用しています</string>
+    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">このアプリの使用を制限しています</string>
     <!-- Troubleshooting check explanations -->
-    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">The review reminder notification channel must be enabled</string>
+    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">「学習リマインダー」というカテゴリーの通知を許可する必要があります</string>
     <string name="reminder_troubleshooting_explanation_do_not_disturb" comment="Explains why review reminders may need Do Not Disturb to be disabled to work correctly.">Do Not Disturb may mute reminder notifications</string>
-    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">Battery optimization may delay reminders</string>
-    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">Background usage is disabled. Reminders may not be delivered</string>
-    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">Power saving mode may prevent timely delivery of reminders</string>
+    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">バッテリーの最適化により、リマインダーが遅延する可能性があります</string>
+    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">バックグラウンドでの使用が制限されています。リマインダーが配信されない可能性があります。</string>
+    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">省電力モードによってリマインダーの通知が遅れる可能性があります</string>
     <string name="reminder_troubleshooting_explanation_exact_alarm" comment="Explains that AnkiDroid cannot schedule alarms at exact times unless the exact-alarm permission is granted.">Required to schedule reminders at exact times</string>
     <!-- Troubleshooting check actions -->
-    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">Grant permission</string>
-    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">Enable notification channel</string>
-    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Disable battery optimization</string>
-    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Open battery settings</string>
+    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">許可を与える</string>
+    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">上記カテゴリの通知を許可</string>
+    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">このアプリには適用しない</string>
+    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">バッテリー設定を開く</string>
     <!-- Notification content -->
     <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">学習する時間です</string>
     <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">%s を学習する時間です</string>
