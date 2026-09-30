@@ -6,14 +6,12 @@ package com.ichi2.anki
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withResourceName
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -36,7 +34,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import java.lang.AssertionError
 import java.util.UUID
 
 @RunWith(AndroidJUnit4::class)
@@ -174,23 +171,11 @@ class ReviewerTest : InstrumentedTest() {
     private fun clickShowAnswerAndAnswerGood() {
         clickShowAnswer()
         ensureAnswerButtonsAreDisplayed()
-        try {
-            // ...on the command line it has resource name "good_button"...
-            onView(withResourceName("good_button")).perform(click())
-        } catch (e: NoMatchingViewException) {
-            // ...but in Android Studio it has resource name "flashcard_layout_ease3" !?
-            onView(withResourceName("flashcard_layout_ease3")).perform(click())
-        }
+        onView(withId(R.id.flashcard_layout_ease3)).perform(click())
     }
 
     private fun clickShowAnswer() {
-        try {
-            // ... on the command line, it has resource name "show_answer"...
-            onView(withResourceName("show_answer")).perform(click())
-        } catch (e: NoMatchingViewException) {
-            // ... but in Android Studio it has resource name "flashcard_layout_flip" !?
-            onView(withResourceName("flashcard_layout_flip")).perform(click())
-        }
+        onView(withId(R.id.flashcard_layout_flip)).perform(click())
     }
 
     private fun ensureAnswerButtonsAreDisplayed() {
@@ -198,19 +183,10 @@ class ReviewerTest : InstrumentedTest() {
         // the messages to be passed in and out of the WebView when evaluating
         // the custom JS scheduler code. The ease buttons are hidden until the
         // custom scheduler has finished running
-        try {
-            // ...on the command line it has resource name "good_button"...
-            onView(withResourceName("good_button")).checkWithTimeout(
-                matches(isDisplayed()),
-                100,
-            )
-        } catch (e: AssertionError) {
-            // ...but in Android Studio it has resource name "flashcard_layout_ease3" !?
-            onView(withResourceName("flashcard_layout_ease3")).checkWithTimeout(
-                matches(isDisplayed()),
-                100,
-            )
-        }
+        onView(withId(R.id.flashcard_layout_ease3)).checkWithTimeout(
+            matches(isDisplayed()),
+            100,
+        )
     }
 
     private fun disableNewReviewer() {
