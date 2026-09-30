@@ -52,12 +52,12 @@
     <string name="pref_cat_editing" maxLength="41">Upravovanie</string>
     <string name="pref_cat_security" maxLength="41">Zabezpečenie</string>
     <!-- Card template JavaScript API permissions -->
-    <string name="allow_dangerous_js_api_title" maxLength="41">Globally allow dangerous JavaScript APIs</string>
-    <string name="allow_dangerous_js_api_summ">Allows any card or template to read and modify other cards, or your Anki collection data.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="allow_dangerous_js_api_title" maxLength="41">Globálne povoliť nebezpečné JS API</string>
+    <string name="allow_dangerous_js_api_summ">Umožňuje akejkoľvek kartičke alebo šablóne čítať a meniť kartičky alebo údaje vašej Anki kolekcie.\nPonechajte vypnuté s výnimkou že veríte všetkým kartičkám a šablónam vo vašej kolekcii.</string>
     <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
-    <string name="allow_card_external_launch_title" maxLength="41">Allow cards to launch other apps</string>
-    <string name="allow_card_external_launch_summ">Cards can open other apps on your device, triggering potentially unwanted actions.\nLeave off unless you trust all cards and templates in your collection.</string>
+    <string name="allow_card_external_launch_title" maxLength="41">Povoliť kartičkám spúšťanie iných aplikácií</string>
+    <string name="allow_card_external_launch_summ">Kartičky môžu otvoriť iné aplikácia vo vašom zariadení, potencionálne spúšťajúc nechcenú aktivitu.\nPonechajte vypnuté s výnimkou že veríte všetkým kartičkám a šablónam vo vašej kolekcii.</string>
     <string name="card_external_launch_denied_snackbar">Security: Card blocked from launching another app.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Hrúbka ťahu</string>
@@ -147,9 +147,9 @@
     <string name="select_locale_title">Zvoliť jazyk</string>
     <string name="software_render" maxLength="41">Vypnúť hardvérové renderovanie kartičky</string>
     <string name="software_render_summ">Hardvérové renderovanie je rýchlejšie, ale môže spôsobiť problémy, najmä na Android 8/8.1. Ak nemôžete vidieť časti užívateľského rozhrania pri opakovaní kartičiek, skúste toto nastavenie.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable single-field edit mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">Zakázať režim úpravy jedného poľa</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Povoliť kontextové menu doplňovačky pri horizontálnom zobrazení.</string>
     <string name="vertical_centering" maxLength="41">Zarovnanie na stred</string>
     <string name="vertical_centering_summ">Vycentrovať obsah kartičiek vertikálne</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas oneskorenia dvojitého dotyku</string>
@@ -160,8 +160,8 @@
     <string name="show_estimates_summ">Zobraziť čas ďalšieho opakovania nad tlačidlami odpovedí</string>
     <string name="show_large_answer_buttons" maxLength="41">Ukázať veľké tlačidla pre odpovede</string>
     <string name="show_large_answer_buttons_summ">Ukázať tlačidlá odpovede vo dvoch riadkoch</string>
-    <string name="remove_animations" maxLength="41">Remove animations</string>
-    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
+    <string name="remove_animations" maxLength="41">Odstrániť animácie</string>
+    <string name="remove_animations_summary">Je povolené aj ak sú animácie odstránené systémovými nastaveniami</string>
     <string name="show_top_bar" maxLength="41">Zobraziť hornú lištu</string>
     <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Zobraziť zostávajúce</string>
@@ -310,7 +310,7 @@
     <string name="analytics_title" maxLength="41">Zdieľať používanie prvkov</string>
     <string name="analytics_summ">Môžete prispieť pre AnkiDroid tak, že umožníte vývojovému tímu sledovať, ktoré prvky sa používajú</string>
     <string name="note_editor_replace_newlines" maxLength="41">Nahradiť nové riadky s HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the note editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="note_editor_replace_newlines_summ">Pri upravovaní poznámky zmení všetky prvky &lt;br&gt; na nové riadky počas upravovania kartičky.</string>
     <string name="type_in_answer_focus" maxLength="41">Vybrať „napíšte odpoveď“</string>
     <string name="type_in_answer_focus_summ">Automaticky vyberie pole „napíšte odpoveď“ na obrazovke študovania.</string>
     <!-- About -->
@@ -358,8 +358,8 @@
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
     <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
-    <string name="allow_templates_to_record_audio" maxLength="41">Allow templates to record audio</string>
-    <string name="template_is_trying_to_record_audio">This template is trying to record audio</string>
+    <string name="allow_templates_to_record_audio" maxLength="41">Povoliť šablónam nahrávať zvuk</string>
+    <string name="template_is_trying_to_record_audio">Táto šablóna sa pokúša nahrávať zvuk</string>
     <string name="pref_fixed_port_title" maxLength="41">localStorage na obrazovke študovania</string>
     <string name="pref_fixed_port_summary">Povoliť JavaScript localStorage (lokálne úložisko) použitím fixného portu servera na obrazovke študovania</string>
     <!-- Developer options -->

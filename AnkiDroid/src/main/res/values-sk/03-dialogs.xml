@@ -134,7 +134,7 @@
     <string name="error_deleting_image">Chyba pri odstránení obrázka</string>
     <string name="failed_to_apply_background_image">Nepodarilo sa použiť obrázok pozadia %s</string>
     <string name="background_image_too_large">Pozadie Deck Picker je príliš veľké</string>
-    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Maximum image size %d MB allowed</string>
+    <string name="image_max_size_allowed" comment="Consider keeping the unbreakable space after the digit">Najväčšia povolená veľkosť obrázka je %d MB</string>
     <string name="image_dimensions_too_large">Rozmery obrázka sú priveľké (%1$d x %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->

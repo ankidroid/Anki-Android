@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">بۈگۈنكى تەكرارلايدىغان كارتا چېكىنى («3-»)ئاشۇرىدۇ/كېمەيتىدۇ</string>
     <string name="custom_study_forgotten">ئۆتكەن x كۈندە ئۇنتۇلغان كارتىنى تەكرارلايدۇ:</string>
     <string name="custom_study_ahead_description">كېيىنكى كارتىنى تەكرارلاش مۆھلىتى:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_preview">يېقىنقى كۈندە قوشقان يېڭى كارتىنى ئالدىن كۆزىتىدۇ:</string>
     <string name="custom_study_tags">دەستىدىن x كارتا تاللىنىدۇ:</string>
     <string name="storage_full_title">ساقلىغۇچ لىق</string>
     <string name="storage_almost_full_title">ساقلىغۇچ ئاساسەن لىق</string>
@@ -78,7 +78,7 @@
     <string name="dialog_positive_overwrite">قاپلا</string>
     <string name="dialog_positive_repair">تۈزەت</string>
     <string name="dialog_positive_replace">ئالماشتۇر</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nچېسلا ۋە ۋاقىتنى توغرىلاپ ياكى ئاپتوماتىك چېسلا ۋە ۋاقىتنى قوزغىتىپ ئاندىن قايتا قەدەمداشلاڭ.\n\nئۈسكۈنىڭىزنىڭ نۆۋەتتىكى ۋاقتى: %2$s</string>
     <string name="dialog_collection_path_not_dir">بەلگىلەنگەن يول ئىناۋەتلىك مۇندەرىجە ئەمەس</string>
     <string name="dialog_invalid_custom_certificate">تەمىنلەنگەن تېكىستنى ئىناۋەتلىك PEM كودىنىڭ X509 گۇۋاھنامىسىنى بىر تەرەپ قىلالمىدى</string>
     <string name="dialog_invalid_custom_certificate_title">گۇۋاھنامە يېشىش خاتالىقى</string>
@@ -87,7 +87,7 @@
     <string name="check_media_warning">چوڭ ۋاسىتە توپلىمىغا ئۇزۇن ۋاقىت كېتىشى مۇمكىن. داۋاملاشتۇرامدۇ؟</string>
     <string name="check_media_message">ۋاسىتە تەكشۈرۈۋاتىدۇ&#8230;</string>
     <string name="check_media_adding_missing_tag">بەلگە قوش&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">بەلگە قوشۇلدى</string>
     <string name="delete_media_message">ۋاسىتە ئۆچۈرۈۋاتىدۇ&#8230;</string>
     <string name="delete_media_result_title">ئۆچۈرۈش نەتىجىسى</string>
     <plurals name="delete_media_result_message">
