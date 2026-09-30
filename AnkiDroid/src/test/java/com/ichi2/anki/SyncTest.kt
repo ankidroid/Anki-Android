@@ -18,6 +18,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.ext.reopenWithLanguage
+import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.runBlocking
@@ -29,7 +30,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import java.text.DateFormat
 import kotlin.test.assertEquals
@@ -142,7 +142,7 @@ class SyncTest : RobolectricTest() {
     @Test
     fun `collection too large uses database check dialog`() =
         deckPicker {
-            val message = TR.syncUploadTooLarge("150 MB")
+            val message = TR.syncUploadTooLarge("300.14 MB > 300.00 MB")
 
             val dialog =
                 failSync(
@@ -168,30 +168,28 @@ class SyncTest : RobolectricTest() {
         }
 
     @Test
-    @Config(qualifiers = "or")
-    fun `collection too large error is detected in Odia`() =
+    fun `collection too large error is detected in all backend languages`() =
         deckPicker {
-            col.reopenWithLanguage("or")
+            for (language in LanguageUtil.BACKEND_LANGS) {
+                col.reopenWithLanguage(language)
 
-            val message = TR.syncUploadTooLarge("150 MB")
+                val message = TR.syncUploadTooLarge("123456789 > 314572800")
 
-            val dialog =
-                failSync(
-                    BackendSyncException(
-                        backendError {
-                            this.message = message
-                        },
-                    ),
+                val dialog =
+                    failSync(
+                        BackendSyncException(
+                            backendError {
+                                this.message = message
+                            },
+                        ),
+                    )
+
+                assertEquals(
+                    TR.sentenceCase.checkDatabase,
+                    dialog.negativeButton.text,
+                    "Failed to detect collection-too-large for language: $language",
                 )
-
-            assertEquals(
-                getString(R.string.dialog_ok),
-                dialog.positiveButton.text,
-            )
-            assertEquals(
-                TR.sentenceCase.checkDatabase,
-                dialog.negativeButton.text,
-            )
+            }
         }
 
     @Test
