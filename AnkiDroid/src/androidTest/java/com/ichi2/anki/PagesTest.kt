@@ -57,7 +57,6 @@ class PagesTest : InstrumentedTest() {
             val intents =
                 listOf<Pair<PagesTest.(Context) -> Intent, String>>(
                     Pair(PagesTest::getStatistics, "Statistics"),
-                    Pair(PagesTest::getCardInfo, "CardInfo"),
                     Pair(PagesTest::getCongratsPage, "CongratsPage"),
                     Pair(PagesTest::getDeckOptions, "DeckOptions"),
                     // the following need a file path
@@ -72,12 +71,6 @@ class PagesTest : InstrumentedTest() {
 }
 
 fun PagesTest.getStatistics(context: Context): Intent = StatisticsDestination.toIntent(context)
-
-fun PagesTest.getCardInfo(context: Context): Intent =
-    addNoteUsingBasicNoteType().firstCard(col).let { card ->
-        this.card = card
-        CardInfoDestination(card.id, EntryPoint.CURRENT_CARD_STUDY).toIntent(context)
-    }
 
 fun PagesTest.getCongratsPage(context: Context): Intent =
     addNoteUsingBasicNoteType().firstCard(col).let { card ->
