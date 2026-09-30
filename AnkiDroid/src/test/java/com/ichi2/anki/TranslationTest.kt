@@ -14,15 +14,31 @@ import com.ichi2.testutils.getBackendNonArgStrings
 import com.ichi2.testutils.getTranslatableXmlStrings
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
 import kotlin.test.fail
 
 /**
- * Ensures that translatable strings defined in the app's XML resource files
+ * Ensures that translatable strings defined in our XML resource files
  * (01-core, 02-strings, etc.) do not duplicate strings already available
  * from the backend via [GeneratedTranslations]/[TR].
  */
 @RunWith(AndroidJUnit4::class) // TODO: no Android dependencies; could be JvmTest
 class TranslationTest : RobolectricTest() {
+    @Test
+    fun `CrowdIn-managed files do not reappear in this module`() {
+        val staleFiles =
+            File("src/main/res")
+                .listFiles { dir -> dir.name == "values" || dir.name.startsWith("values-") }!!
+                .flatMap { dir -> dir.listFiles()?.toList() ?: emptyList() }
+                .filter { file -> file.name.matches(Regex("\\d+-.*\\.xml")) }
+        if (staleFiles.isNotEmpty()) {
+            fail(
+                "CrowdIn-managed string files belong in common/android/src/main/res, not AnkiDroid/src/main/res:\n" +
+                    staleFiles.joinToString("\n"),
+            )
+        }
+    }
+
     @Test
     fun `translatable strings do not duplicate GeneratedTranslations`() =
         runTest {
@@ -136,7 +152,7 @@ class TranslationTest : RobolectricTest() {
             xmlResources: List<XmlStringResource>,
             trMethods: List<BackendTranslation>,
         ): String {
-            val rStrings = xmlResources.map { "R.string.${it.name}" }.distinct().sorted()
+            val rStrings = xmlResources.map { "CommonString.${it.name}" }.distinct().sorted()
             val trNames = trMethods.map { "TR.${it.methodName}()" }.distinct().sorted()
 
             val indent = " ".repeat("\"$text\", ".length)
@@ -171,142 +187,142 @@ class TranslationTest : RobolectricTest() {
         private val BASELINE_DUPLICATES =
             setOf(
                 // example usages:
-                // "Add",                        // R.string.import_message_add, R.string.menu_add
-                // "General",                    // R.string.deck_conf_general, R.string.pref_cat_general
+                // "Add",                        // CommonString.import_message_add, CommonString.menu_add
+                // "General",                    // CommonString.deck_conf_general, CommonString.pref_cat_general
                 //                               // TR.preferencesGeneral()
                 //                               // TR.schedulingGeneral()
-                "Add", // R.string.import_message_add, R.string.menu_add
+                "Add", // CommonString.import_message_add, CommonString.menu_add
                 // TR.actionsAdd()
-                "Add tag", // R.string.add_tag | TR.editingTagsAdd()
-                "Advanced", // R.string.pref_cat_advanced | TR.deckConfigAdvancedTitle()
-                "Again", // R.string.ease_button_again
+                "Add tag", // CommonString.add_tag | TR.editingTagsAdd()
+                "Advanced", // CommonString.pref_cat_advanced | TR.deckConfigAdvancedTitle()
+                "Again", // CommonString.ease_button_again
                 // TR.browsingAgainToday()
                 // TR.studyingAgain()
-                "All", // R.string.hide_system_bars_all_bars | TR.statisticsTrueRetentionAll()
-                "Always", // R.string.sync_media_always
+                "All", // CommonString.hide_system_bars_all_bars | TR.statisticsTrueRetentionAll()
+                "Always", // CommonString.sync_media_always
                 // TR.preferencesAlways()
                 // TR.importingUpdateAlways()
-                "Answer", // R.string.card_side_answer | TR.browsingAnswer()
-                "Back", // R.string.back_field_name, R.string.previewer_back
+                "Answer", // CommonString.card_side_answer | TR.browsingAnswer()
+                "Back", // CommonString.back_field_name, CommonString.previewer_back
                 // TR.notetypesBackField()
-                "Cancel", // R.string.dialog_cancel
+                "Cancel", // CommonString.dialog_cancel
                 // TR.actionsCancel()
                 // TR.syncCancelButton()
-                "Card", // R.string.card, R.string.reviewer_frame_style_card
+                "Card", // CommonString.card, CommonString.reviewer_frame_style_card
                 // TR.browsingCard()
-                "Cards", // R.string.show_cards
+                "Cards", // CommonString.show_cards
                 // TR.browsingCards()
                 // TR.editingCards()
                 // TR.notetypesCards()
-                "Close", // R.string.close | TR.actionsClose()
-                "Collapse", // R.string.collapse
+                "Close", // CommonString.close | TR.actionsClose()
+                "Collapse", // CommonString.collapse
                 // TR.editingCollapse()
                 // TR.browsingSidebarCollapse()
                 // TR.changeNotetypeCollapse()
-                "Continue", // R.string.dialog_continue | TR.studyingContinue()
-                "Copied to clipboard", // R.string.about_ankidroid_successfully_copied_debug_info
+                "Continue", // CommonString.dialog_continue | TR.studyingContinue()
+                "Copied to clipboard", // CommonString.about_ankidroid_successfully_copied_debug_info
                 // TR.aboutCopiedToClipboard()
                 // TR.errorsCopiedToClipboard()
-                "Dark", // R.string.night_theme_dark | TR.preferencesThemeDark()
-                "Delete", // R.string.dialog_positive_delete
+                "Dark", // CommonString.night_theme_dark | TR.preferencesThemeDark()
+                "Delete", // CommonString.dialog_positive_delete
                 // TR.actionsDelete()
                 // TR.editingImageOcclusionDelete()
                 // TR.emptyCardsDeleteButton()
-                "Description", // R.string.deck_description_field_hint
+                "Description", // CommonString.deck_description_field_hint
                 // TR.fieldsDescription()
                 // TR.schedulingDescription()
-                "Discard", // R.string.discard | TR.actionsDiscard()
-                "Due", // R.string.tags_dialog_option_due_cards
+                "Discard", // CommonString.discard | TR.actionsDiscard()
+                "Due", // CommonString.tags_dialog_option_due_cards
                 // TR.decksReviewHeader()
                 // TR.statisticsDueCount()
                 // TR.statisticsDueDate()
                 // TR.browsingSidebarDueToday()
-                "Easy", // R.string.ease_button_easy | TR.studyingEasy()
-                "Editing", // R.string.pref_cat_editing | TR.preferencesEditing()
-                "Empty", // R.string.empty_cram_label | TR.studyingEmpty()
-                "Error", // R.string.import_title_error, R.string.pref__etc__summary__error
-                // R.string.pref__widget_text__error, R.string.vague_error
+                "Easy", // CommonString.ease_button_easy | TR.studyingEasy()
+                "Editing", // CommonString.pref_cat_editing | TR.preferencesEditing()
+                "Empty", // CommonString.empty_cram_label | TR.studyingEmpty()
+                "Error", // CommonString.import_title_error, CommonString.pref__etc__summary__error
+                // CommonString.pref__widget_text__error, CommonString.vague_error
                 // TR.qtMiscError()
-                "Expand", // R.string.expand
+                "Expand", // CommonString.expand
                 // TR.editingExpand()
                 // TR.browsingSidebarExpand()
                 // TR.changeNotetypeExpand()
-                "Fields", // R.string.standard_fields_tab_header
+                "Fields", // CommonString.standard_fields_tab_header
                 // TR.editingFields()
                 // TR.notetypesFields()
                 // TR.changeNotetypeFields()
-                "Flags", // R.string.filter_by_flags | TR.browsingSidebarFlags()
-                "Flip", // R.string.image_cropper_action_flip | TR.cardTemplatesFlip()
-                "General", // R.string.deck_conf_general, R.string.pref_cat_general
+                "Flags", // CommonString.filter_by_flags | TR.browsingSidebarFlags()
+                "Flip", // CommonString.image_cropper_action_flip | TR.cardTemplatesFlip()
+                "General", // CommonString.deck_conf_general, CommonString.pref_cat_general
                 // TR.preferencesGeneral()
                 // TR.schedulingGeneral()
-                "Good", // R.string.ease_button_good | TR.studyingGood()
-                "Hard", // R.string.ease_button_hard | TR.studyingHard()
-                "Help", // R.string.help | TR.actionsHelp()
-                "Language", // R.string.language | TR.preferencesLanguage()
-                "Later", // R.string.button_backup_later | TR.schedulingUpdateLaterButton()
-                "Learn More", // R.string.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
-                "Learn ahead limit", // R.string.learn_cutoff | TR.preferencesLearnAheadLimit()
-                "Light", // R.string.day_theme_light | TR.preferencesThemeLight()
-                "Media", // R.string.media
+                "Good", // CommonString.ease_button_good | TR.studyingGood()
+                "Hard", // CommonString.ease_button_hard | TR.studyingHard()
+                "Help", // CommonString.help | TR.actionsHelp()
+                "Language", // CommonString.language | TR.preferencesLanguage()
+                "Later", // CommonString.button_backup_later | TR.schedulingUpdateLaterButton()
+                "Learn More", // CommonString.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
+                "Learn ahead limit", // CommonString.learn_cutoff | TR.preferencesLearnAheadLimit()
+                "Light", // CommonString.day_theme_light | TR.preferencesThemeLight()
+                "Media", // CommonString.media
                 // TR.editingMedia()
                 // TR.preferencesMedia()
-                "Never", // R.string.sync_media_never | TR.importingUpdateNever()
-                "New", // R.string.tags_dialog_option_new_cards
+                "Never", // CommonString.sync_media_never | TR.importingUpdateNever()
+                "New", // CommonString.tags_dialog_option_new_cards
                 // TR.actionsNew()
                 // TR.changeNotetypeNew()
                 // TR.statisticsCountsNewCards()
-                "Note", // R.string.note
+                "Note", // CommonString.note
                 // TR.browsingNote()
                 // TR.preferencesNote()
                 // TR.notetypesOcclusionNote()
-                "Notes", // R.string.show_notes | TR.browsingNotes()
-                "OK", // R.string.dialog_ok
+                "Notes", // CommonString.show_notes | TR.browsingNotes()
+                "OK", // CommonString.dialog_ok
                 // TR.customStudyOk()
                 // TR.helpOk()
-                "Open", // R.string.open | TR.profilesOpen()
-                "Options", // R.string.error_handling_options, R.string.study_options
+                "Open", // CommonString.open | TR.profilesOpen()
+                "Options", // CommonString.error_handling_options, CommonString.study_options
                 // TR.actionsOptions()
                 // TR.notetypesOptions()
                 // TR.cardTemplatesPreviewSettings()
-                "Preview", // R.string.card_editor_preview_card
+                "Preview", // CommonString.card_editor_preview_card
                 // TR.actionsPreview()
                 // TR.cardTemplatesPreviewBox()
-                "Question", // R.string.card_side_question | TR.browsingQuestion()
-                "Record audio", // R.string.multimedia_editor_popup_audio | TR.editingRecordAudio()
-                "Redo", // R.string.redo | TR.undoRedo()
-                "Rename", // R.string.rename | TR.actionsRename()
-                "Reposition", // R.string.card_editor_reposition_card, R.string.card_template_reposition_template
+                "Question", // CommonString.card_side_question | TR.browsingQuestion()
+                "Record audio", // CommonString.multimedia_editor_popup_audio | TR.editingRecordAudio()
+                "Redo", // CommonString.redo | TR.undoRedo()
+                "Rename", // CommonString.rename | TR.actionsRename()
+                "Reposition", // CommonString.card_editor_reposition_card, CommonString.card_template_reposition_template
                 // TR.actionsReposition()
-                "Reschedule", // R.string.card_editor_reschedule_card | TR.browsingReschedule()
-                "Reviews", // R.string.pref_controls_reviews_tab
+                "Reschedule", // CommonString.card_editor_reschedule_card | TR.browsingReschedule()
+                "Reviews", // CommonString.pref_controls_reviews_tab
                 // TR.schedulingReviews()
                 // TR.cardStatsReviewCount()
                 // TR.deckConfigFsrsSimulatorRadioCount()
                 // TR.statisticsReviewsTitle()
-                "Save", // R.string.save
+                "Save", // CommonString.save
                 // TR.actionsSave()
                 // TR.deckConfigSaveButton()
-                "Scheduling", // R.string.pref_cat_scheduling | TR.preferencesScheduling()
-                "Search", // R.string.card_browser_cram_search, R.string.card_browser_search_hint
-                // R.string.deck_conf_cram_search
+                "Scheduling", // CommonString.pref_cat_scheduling | TR.preferencesScheduling()
+                "Search", // CommonString.card_browser_cram_search, CommonString.card_browser_search_hint
+                // CommonString.deck_conf_cram_search
                 // TR.actionsSearch()
                 // TR.statisticsRangeSearch()
-                "Select", // R.string.select
+                "Select", // CommonString.select
                 // TR.actionsSelect()
                 // TR.customStudySelect()
                 // TR.editingImageOcclusionSelectTool()
-                "Show remaining card count", // R.string.show_progress_summ | TR.preferencesShowRemainingCardCount()
-                "Study", // R.string.studyoptions_start | TR.decksStudy()
-                "Sync", // R.string.button_sync, R.string.pref_cat_sync
+                "Show remaining card count", // CommonString.show_progress_summ | TR.preferencesShowRemainingCardCount()
+                "Study", // CommonString.studyoptions_start | TR.decksStudy()
+                "Sync", // CommonString.button_sync, CommonString.pref_cat_sync
                 // TR.qtMiscSync()
-                "Synchronization", // R.string.sync_title | TR.preferencesTabSynchronisation()
-                "Tags", // R.string.card_details_tags
+                "Synchronization", // CommonString.sync_title | TR.preferencesTabSynchronisation()
+                "Tags", // CommonString.card_details_tags
                 // TR.editingTags()
                 // TR.browsingSidebarTags()
-                "Theme", // R.string.app_theme | TR.preferencesTheme()
-                "Timebox time limit", // R.string.time_limit | TR.preferencesTimeboxTimeLimit()
-                "Undo", // R.string.undo | TR.undoUndo()
+                "Theme", // CommonString.app_theme | TR.preferencesTheme()
+                "Timebox time limit", // CommonString.time_limit | TR.preferencesTimeboxTimeLimit()
+                "Undo", // CommonString.undo | TR.undoUndo()
             )
 
         /**
@@ -328,14 +344,14 @@ class TranslationTest : RobolectricTest() {
         private val BASELINE_CASE_INSENSITIVE_DUPLICATES =
             setOf(
                 // example usages:
-                // "Add field",          // R.string.model_field_editor_add | TR.fieldsAddField()
-                // "Check media",        // R.string.check_media
+                // "Add field",          // CommonString.model_field_editor_add | TR.fieldsAddField()
+                // "Check media",        // CommonString.check_media
                 //                       // TR.mediaCheckCheckMediaAction()
                 //                       // TR.mediaCheckWindowTitle()
-                "Answer buttons", // R.string.answer_buttons | TR.statisticsAnswerButtonsTitle()
-                "Follow system", // R.string.theme_follow_system | TR.preferencesThemeFollowSystem()
-                "Select all", // R.string.card_browser_select_all | TR.editingImageOcclusionSelectAll()
-                "Show answer", // R.string.show_answer
+                "Answer buttons", // CommonString.answer_buttons | TR.statisticsAnswerButtonsTitle()
+                "Follow system", // CommonString.theme_follow_system | TR.preferencesThemeFollowSystem()
+                "Select all", // CommonString.card_browser_select_all | TR.editingImageOcclusionSelectAll()
+                "Show answer", // CommonString.show_answer
                 // TR.studyingShowAnswer()
                 // TR.deckConfigQuestionActionShowAnswer()
             )
@@ -352,9 +368,9 @@ class TranslationTest : RobolectricTest() {
          */
         private val ANDROID_MANIFEST_STRINGS =
             setOf(
-                "Add note", // R.string.menu_add_note | TR.actionsAddNote()
-                "Image Occlusion", // R.string.image_occlusion | TR.notetypesImageOcclusionName()
-                "Manage note types", // R.string.model_browser_label
+                "Add note", // CommonString.menu_add_note | TR.actionsAddNote()
+                "Image Occlusion", // CommonString.image_occlusion | TR.notetypesImageOcclusionName()
+                "Manage note types", // CommonString.model_browser_label
                 // TR.browsingManageNoteTypes()
                 // TR.qtMiscManageNoteTypes()
             )
@@ -367,9 +383,9 @@ class TranslationTest : RobolectricTest() {
          */
         private val IGNORED_BACKEND_TRANSLATIONS =
             setOf(
-                "launcherOff", // "Off" - unrelated to R.string.full_screen_off
-                "launcherOn", // "On" - unrelated to R.string.reminder_troubleshooting_status_on
-                // "Advanced Settings" - this upstream string is Title Case; R.string.add_edit_reminder_advanced_label
+                "launcherOff", // "Off" - unrelated to CommonString.full_screen_off
+                "launcherOn", // "On" - unrelated to CommonString.reminder_troubleshooting_status_on
+                // "Advanced Settings" - this upstream string is Title Case; CommonString.add_edit_reminder_advanced_label
                 // is both unrelated and sentence case (per AnkiDroid convention)
                 "deckConfigAdvancedSettings",
             )

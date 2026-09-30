@@ -23,7 +23,7 @@ export const credentialsConst: Credentials = {
 
 export const PROJECT_ID = 720;
 
-const RES_DIR = "../../../AnkiDroid/src/main/res";
+const RES_DIR = "../../../common/android/src/main/res";
 const DOCS_MARKET_DIR = "../../../docs/marketing/localized_description";
 
 export const TEMP_DIR = path.join(__dirname, "../temp_dir");
