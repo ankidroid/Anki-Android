@@ -103,9 +103,9 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
                 if (selectedIndex != 0 && !binding.deckSelector.isEnabled) return@positiveButton
                 when (ExportConfiguration.from(selectedIndex)) {
                     ExportConfiguration.Collection -> handleCollectionExport()
-                    ExportConfiguration.Apkg -> handleAnkiPackageExport()
-                    ExportConfiguration.Notes -> handleNotesInPlainTextExport()
-                    ExportConfiguration.Cards -> handleCardsInPlainTextExport()
+                    ExportConfiguration.Apkg -> withExportLimit(::handleAnkiPackageExport)
+                    ExportConfiguration.Notes -> withExportLimit(::handleNotesInPlainTextExport)
+                    ExportConfiguration.Cards -> withExportLimit(::handleCardsInPlainTextExport)
                 }
             }.create()
     }
@@ -262,8 +262,12 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         requireAnkiActivity().exportCollectionPackage(exportPath, includeMedia, legacy)
     }
 
-    private fun handleAnkiPackageExport() {
-        val limits = buildExportLimit()
+    private fun withExportLimit(export: (ExportLimit) -> Unit) {
+        val exportLimit = buildExportLimit()
+        export(exportLimit)
+    }
+
+    private fun handleAnkiPackageExport(exportLimit: ExportLimit) {
         val exportPath =
             File(
                 getExportRootFile(),
@@ -274,7 +278,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             withScheduling = binding.apkgIncludeSchedule.isChecked,
             withDeckConfigs = binding.apkgIncludeDeckConfigs.isChecked,
             withMedia = binding.apkgIncludeMedia.isChecked,
-            limit = limits,
+            limit = exportLimit,
             legacy = binding.apkgExportLegacy.isChecked,
         )
     }
@@ -296,8 +300,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         return filename.value
     }
 
-    private fun handleNotesInPlainTextExport() {
-        val exportLimit = buildExportLimit()
+    private fun handleNotesInPlainTextExport(exportLimit: ExportLimit) {
         val exportPath =
             File(
                 getExportRootFile(),
@@ -314,8 +317,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
         )
     }
 
-    private fun handleCardsInPlainTextExport() {
-        val exportLimit = buildExportLimit()
+    private fun handleCardsInPlainTextExport(exportLimit: ExportLimit) {
         val exportPath =
             File(
                 getExportRootFile(),
