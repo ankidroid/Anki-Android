@@ -39,6 +39,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.DialogTagsBinding
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
@@ -65,6 +66,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
+import java.io.IOException
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -175,6 +177,15 @@ class TagsDialog : AnalyticsDialogFragment {
             " filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
     )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Resolve the selection before creating any controls that could submit an operation.
+        try {
+            viewModel
+        } catch (e: IOException) {
+            Timber.w(e, "Failed to read tag dialog IDs")
+            showThemedToast(requireContext(), CommonString.something_wrong, false)
+            dismiss()
+            return super.onCreateDialog(savedInstanceState)
+        }
         binding = DialogTagsBinding.inflate(layoutInflater)
 
         val positiveText =
