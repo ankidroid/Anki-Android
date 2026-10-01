@@ -6,7 +6,6 @@ package com.ichi2.anki
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import anki.collection.Progress
-import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
 import com.google.android.material.snackbar.Snackbar
@@ -19,6 +18,9 @@ import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChan
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.sync.fullUploadOrDownload
+import com.ichi2.anki.sync.syncCollection
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
@@ -60,7 +62,7 @@ fun syncAuth(): SyncAuth? {
                 this.endpoint = resolvedEndpoint
             }
             this.ioTimeoutSecs = Prefs.networkTimeoutSecs
-        }
+        }.let(::SyncAuth)
     }
 }
 
@@ -169,11 +171,7 @@ private suspend fun handleNormalSync(
     if (output.hasNewEndpoint() && output.newEndpoint.isNotEmpty()) {
         Timber.i("sync endpoint updated")
         Prefs.currentSyncUri = output.newEndpoint
-        auth2 =
-            syncAuth {
-                this.hkey = auth.hkey
-                endpoint = output.newEndpoint
-            }
+        auth2 = auth.withEndpoint(output.newEndpoint)
     }
     val mediaUsn =
         if (syncMedia) {

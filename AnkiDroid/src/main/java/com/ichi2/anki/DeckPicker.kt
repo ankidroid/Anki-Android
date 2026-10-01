@@ -176,6 +176,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
+import com.ichi2.anki.sync.syncStatus
 import com.ichi2.anki.ui.BottomFadeFrameLayout
 import com.ichi2.anki.ui.ResizablePaneManager
 import com.ichi2.anki.ui.animations.fadeIn

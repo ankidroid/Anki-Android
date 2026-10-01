@@ -40,6 +40,7 @@ import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.performBackupInBackground
 import com.ichi2.anki.reviewreminders.ScheduleRemindersDestination
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.syncStatus
 import com.ichi2.anki.syncAuth
 import com.ichi2.anki.utils.Destination
 import kotlinx.coroutines.Dispatchers

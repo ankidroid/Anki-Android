@@ -19,7 +19,6 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import anki.collection.Progress
-import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
 import com.ichi2.anki.CollectionManager
@@ -33,6 +32,8 @@ import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.sync.syncCollection
 import com.ichi2.anki.utils.ext.trySetForeground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -80,7 +81,7 @@ class SyncWorker(
                 inputData.getString(ENDPOINT_KEY)?.let {
                     endpoint = it
                 }
-            }
+            }.let(::SyncAuth)
         val shouldSyncMedia = inputData.getBoolean(SYNC_MEDIA_KEY, false)
 
         try {
@@ -150,10 +151,7 @@ class SyncWorker(
                 val syncAuth =
                     if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
                         Prefs.currentSyncUri = response.newEndpoint
-                        syncAuth {
-                            hkey = auth.hkey
-                            endpoint = response.newEndpoint
-                        }
+                        auth.withEndpoint(response.newEndpoint)
                     } else {
                         auth
                     }

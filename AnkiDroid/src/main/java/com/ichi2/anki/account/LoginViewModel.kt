@@ -21,11 +21,11 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import anki.sync.SyncAuth
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.SyncAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -109,7 +109,7 @@ class LoginViewModel : ViewModel() {
         endpoint: String?,
     ): SyncAuth =
         withCol {
-            syncLogin(username, password, endpoint)
+            SyncAuth(syncLogin(username, password, endpoint))
         }
 
     private fun updateLogin(
