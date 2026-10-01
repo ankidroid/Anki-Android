@@ -163,8 +163,7 @@ open class RobolectricTest :
 
         WorkManagerTestInitHelper.initializeTestWorkManager(targetContext, config)
 
-        // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionManager.setColForTests(null)
+        CollectionManager.closeCollectionBlocking()
 
         maybeSetupBackend()
 
@@ -374,7 +373,6 @@ open class RobolectricTest :
     /** Call this method in your test if you to test behavior with a null collection  */
     protected fun enableNullCollection() {
         CollectionManager.closeCollectionBlocking()
-        CollectionManager.setColForTests(null)
         CollectionManager.emulatedOpenFailure = CollectionOpenFailure.LOCKED
     }
 
