@@ -8,6 +8,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -85,8 +86,8 @@ class StudyOptionsFragmentTest : RobolectricTest() {
     /** Issue 22348: replacing the tablet panel can detach it before its initial refresh starts. */
     @Test
     @Config(qualifiers = "xlarge")
-    fun `replacing study options before its refresh starts exposes lifecycle misuse`() =
-        assertLifecycleFailure("not attached to an activity") {
+    fun `replacing study options before its refresh starts skips the stale refresh`() =
+        runTest {
             setIntroductionSlidesShown(true)
             addBasicNote()
             val controller = Robolectric.buildActivity(DeckPicker::class.java).setup()
@@ -151,6 +152,28 @@ class StudyOptionsFragmentTest : RobolectricTest() {
             assertSame(activity, fragment.activity)
             assertSame(initialState, fragment.viewModel.state)
         }
+
+    /** Issue 22065: the host can replace the fragment before its queued refresh starts. */
+    @Test
+    fun `refresh queued by view creation is skipped after synchronous replacement`() {
+        withNullCollection {
+            val controller = Robolectric.buildActivity(FragmentActivity::class.java).setup()
+            saveControllerForCleanup(controller)
+            val activity = controller.get()
+            val first = StudyOptionsFragment()
+            val second = StudyOptionsFragment()
+
+            activity.lifecycleScope.launch {
+                activity.supportFragmentManager.commitNow { replace(android.R.id.content, first) }
+                activity.supportFragmentManager.commitNow { replace(android.R.id.content, second) }
+            }
+            advanceRobolectricLooper()
+
+            assertNull(first.activity)
+            assertSame(second, activity.supportFragmentManager.findFragmentById(android.R.id.content))
+            assertTrue(second.isAdded)
+        }
+    }
 
     /** Issue 21981: a refresh must offer recovery when the deck hierarchy is corrupt. */
     @Test

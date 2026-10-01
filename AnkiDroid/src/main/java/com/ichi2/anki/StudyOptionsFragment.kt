@@ -356,7 +356,7 @@ class StudyOptionsFragment :
 
     fun refreshInterface() {
         Timber.d("Refreshing StudyOptionsFragment")
-        launchCatchingTask { viewModel.refreshData() }
+        launchCatchingViewTask { viewModel.refreshData() }
     }
 
     private fun rebuildUi(state: StudyOptionsState) {
