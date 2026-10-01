@@ -11,8 +11,12 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionIn
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionInfoCompat.SELECTION_MODE_MULTIPLE
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionInfoCompat.SELECTION_MODE_NONE
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionItemInfoCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionItemInfoCompat.SORT_DIRECTION_ASCENDING
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionItemInfoCompat.SORT_DIRECTION_DESCENDING
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionItemInfoCompat.SORT_DIRECTION_NONE
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.model.SortType
 
 /** The headings and scrolling rows belong to a single accessibility table. */
 internal fun View.setBrowserTableAccessibility(viewModel: CardBrowserViewModel) {
@@ -30,10 +34,23 @@ internal fun View.setBrowserTableAccessibility(viewModel: CardBrowserViewModel) 
     }
 }
 
-internal fun View.setBrowserHeadingAccessibility(columnIndex: Int) {
+internal fun View.setBrowserHeadingAccessibility(
+    columnIndex: Int,
+    columnKey: String,
+    sortType: () -> SortType,
+) {
     setAccessibilityInfo {
+        val ordering = sortType() as? SortType.CollectionOrdering
+        val direction =
+            when {
+                ordering == null || ordering.key.value != columnKey -> SORT_DIRECTION_NONE
+                ordering.reverse -> SORT_DIRECTION_DESCENDING
+                else -> SORT_DIRECTION_ASCENDING
+            }
         isHeading = true
-        setCellInfo(row = 0, column = columnIndex)
+        setCellInfo(row = 0, column = columnIndex) {
+            setSortDirection(direction)
+        }
     }
 }
 

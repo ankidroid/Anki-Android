@@ -5,15 +5,21 @@ package com.ichi2.anki.browser
 import android.view.View
 import android.view.accessibility.AccessibilityManager
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionItemInfoCompat.SORT_DIRECTION_ASCENDING
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionItemInfoCompat.SORT_DIRECTION_DESCENDING
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.CollectionItemInfoCompat.SORT_DIRECTION_NONE
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.CardBrowserColumn.DECK
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
+import com.ichi2.anki.model.SortType
 import kotlinx.coroutines.flow.first
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
@@ -27,6 +33,34 @@ class BrowserAccessibilityTest : RobolectricTest() {
         // RecyclerView only installs its item accessibility delegates when accessibility is enabled.
         shadowOf(targetContext.getSystemService(AccessibilityManager::class.java)).setEnabled(true)
     }
+
+    @Test
+    @Config(sdk = [37])
+    @Ignore(
+        "Native backend classloader conflict: https://github.com/ankidroid/Anki-Android-Backend/pull/713; make this class sdk 37 when fixed",
+    )
+    fun `headings expose current sort and clear the previous column`() =
+        withCardBrowserFragment {
+            setColumns(SFLD, DECK)
+            assertSortDirections(SORT_DIRECTION_ASCENDING, SORT_DIRECTION_NONE)
+
+            activityViewModel.setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true)).join()
+            assertSortDirections(SORT_DIRECTION_DESCENDING, SORT_DIRECTION_NONE)
+
+            // Changing only the column must also refresh accessibility metadata.
+            activityViewModel.setSortType(SortType.CollectionOrdering(BrowserColumnKey("deck"), reverse = true)).join()
+            assertSortDirections(SORT_DIRECTION_NONE, SORT_DIRECTION_DESCENDING)
+
+            // Hiding the sorted column must not assign its direction to another heading.
+            setColumns(SFLD)
+            assertSortDirections(SORT_DIRECTION_NONE)
+
+            setColumns(DECK, SFLD)
+            assertSortDirections(SORT_DIRECTION_DESCENDING, SORT_DIRECTION_NONE)
+
+            activityViewModel.setSortType(SortType.NoOrdering).join()
+            assertSortDirections(SORT_DIRECTION_NONE, SORT_DIRECTION_NONE)
+        }
 
     @Test
     fun `headings and cells share table coordinates`() = checkTableCoordinates(useSearchView = false)
@@ -84,6 +118,15 @@ class BrowserAccessibilityTest : RobolectricTest() {
             unboundHolder.columnViews.forEach { cell ->
                 assertNull(cell.accessibilityInfo().collectionItemInfo, "An unbound cell has no table position")
             }
+        }
+    }
+
+    private fun CardBrowserFragment.assertSortDirections(vararg expected: Int) {
+        advanceRobolectricLooper()
+        assertEquals(expected.size, browserColumnHeadings.childCount)
+        expected.forEachIndexed { index, direction ->
+            val item = assertNotNull(browserColumnHeadings.getChildAt(index).accessibilityInfo().collectionItemInfo)
+            assertEquals(direction, item.sortDirection, "column $index")
         }
     }
 
