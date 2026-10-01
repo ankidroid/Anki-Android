@@ -49,7 +49,7 @@ abstract class InMemoryAnkiTest : AnkiTest {
             }
             return _col!!
         }
-    override val collectionManager = InMemoryCollectionManager()
+    override val collectionManager: TestCollectionManager = InMemoryCollectionManager()
 
     private var _col: Collection? = null
 

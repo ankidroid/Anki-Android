@@ -104,6 +104,7 @@ import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
+import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertInstanceOf
@@ -1403,7 +1404,13 @@ class CardBrowserViewModelTest : JvmTest() {
             col.reopenWithLanguage("de")
             onReinit()
 
+            assertThat(col, sameInstance(CollectionManager.withCol { this }))
             assertThat("German", firstHeading(), equalTo("Sortierfeld"))
+            assertThat(
+                "Changing the backend language keeps the collection in memory",
+                CollectionManager.withCol { db.queryString("select file from pragma_database_list where name = 'main'") },
+                equalTo(""),
+            )
         }
 
     @Test

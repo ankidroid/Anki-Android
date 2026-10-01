@@ -5,9 +5,11 @@ package com.ichi2.testutils
 
 import androidx.annotation.CallSuper
 import com.ichi2.anki.ioDispatcher
+import com.ichi2.anki.libanki.CollectionFiles
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
+import com.ichi2.testutils.rules.CollectionStorageRule
 import kotlinx.coroutines.test.TestDispatcher
 import org.junit.Before
 import org.junit.Rule
@@ -16,6 +18,13 @@ open class JvmTest : InMemoryAnkiTest() {
     /** Allows [com.ichi2.testutils.common.Flaky] to annotate tests in subclasses */
     @get:Rule
     val ignoreFlakyTests = IgnoreFlakyTestsInCIRule()
+
+    @get:Rule
+    val collectionStorage = CollectionStorageRule { CollectionFiles.InMemory }
+
+    override val collectionManager = ProductionCollectionManager
+
+    override val col get() = collectionManager.getColUnsafe()
 
     @Before
     @CallSuper
