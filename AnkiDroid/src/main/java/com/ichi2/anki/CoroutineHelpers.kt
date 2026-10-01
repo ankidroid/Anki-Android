@@ -17,8 +17,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
@@ -243,22 +245,24 @@ fun Fragment.launchCatchingTask(
     block: suspend CoroutineScope.() -> Unit,
 ): Job =
     lifecycle.coroutineScope.launch {
-        // It's a bug to call this if the activity is invalid or finishing.
-        val validActivity =
-            kotlin
-                .runCatching {
-                    requireActivity(simpleName = true).also { activity ->
-                        check(!activity.isFinishing) {
-                            "Cannot launch task for ${this@launchCatchingTask.javaClass.simpleName}: activity is finishing"
-                        }
-                    }
-                }.getOrElse {
-                    Timber.w(it, "Fragment.launchCatchingTask")
-                    if (isRobolectric) throw it
-                    return@launch
-                }
+        val validActivity = validActivityForTask() ?: return@launch
         validActivity.runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
+
+private fun Fragment.validActivityForTask(): FragmentActivity? =
+    // It's a bug to call this if the activity is invalid or finishing.
+    kotlin
+        .runCatching {
+            requireActivity(simpleName = true).also { activity ->
+                check(!activity.isFinishing) {
+                    "Cannot launch task for ${this@validActivityForTask.javaClass.simpleName}: activity is finishing"
+                }
+            }
+        }.getOrElse {
+            Timber.w(it, "Fragment.launchCatchingTask")
+            if (isRobolectric) throw it
+            null
+        }
 
 /**
  * [Fragment.requireActivity], with a short stable name so crash reports can be grouped together.
@@ -274,6 +278,26 @@ fun Fragment.requireActivity(simpleName: Boolean): FragmentActivity =
     } else {
         requireActivity()
     }
+
+/**
+ * Like [Fragment.launchCatchingTask], but tied to the current view's lifecycle.
+ * Skips [block] if the view is destroyed before the job starts.
+ *
+ * @return the launched job, or `null` if the fragment has no view.
+ */
+fun Fragment.launchCatchingViewTask(
+    errorMessage: String? = null,
+    skipCrashReport: ((Exception) -> Boolean)? = null,
+    block: suspend CoroutineScope.() -> Unit,
+): Job? {
+    val owner = viewLifecycleOwnerLiveData.value ?: return null
+    return owner.lifecycleScope.launch {
+        // A synchronous replacement can destroy the view before lifecycleScope registers cancellation.
+        if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return@launch
+        val validActivity = validActivityForTask() ?: return@launch
+        validActivity.runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
+    }
+}
 
 /**
  * Displays an error dialog with title 'Error' and provided [message].
