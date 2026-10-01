@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.testutils.JvmTest
@@ -35,7 +36,7 @@ class BrowserOptionsRepositoryTest : JvmTest() {
                 repository.setIgnoreAccentsInSearch(false)
                 first.join()
 
-                assertFalse(col.config.ignoreAccentsInSearch, "The latest saved value should be persisted")
+                assertFalse(withCol { config.ignoreAccentsInSearch }, "The latest saved value should be persisted")
                 assertFalse(repository.ignoreAccentsInSearch.value, "The flow should match the latest saved value")
             }
         }
@@ -54,7 +55,11 @@ class BrowserOptionsRepositoryTest : JvmTest() {
                 repository.setCardsOrNotes(CardsOrNotes.CARDS)
                 first.join()
 
-                assertEquals(CardsOrNotes.CARDS, CardsOrNotes.fromCollection(col), "The latest saved value should be persisted")
+                assertEquals(
+                    CardsOrNotes.CARDS,
+                    withCol { CardsOrNotes.fromCollection(this) },
+                    "The latest saved value should be persisted",
+                )
                 assertEquals(CardsOrNotes.CARDS, repository.cardsOrNotes.value, "The flow should match the latest saved value")
             }
         }
