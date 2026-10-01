@@ -195,6 +195,9 @@ class HeaderFragment : SettingsFragment() {
                 if (BuildConfig.DEBUG) {
                     searchConfiguration.ignorePreference(activity.getString(R.string.developer_options_enabled_by_user_key))
                 }
+                if (!activity.resources.getBoolean(R.bool.bottom_navigation_available)) {
+                    searchConfiguration.ignorePreference(activity.getString(R.string.dev_bottom_nav_key))
+                }
             }
 
             // From [HeaderFragment.onCreatePreferences]

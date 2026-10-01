@@ -54,6 +54,7 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addNoSuggestNote
 import com.ichi2.testutils.ext.createInputConnection
+import com.ichi2.testutils.withBooleanPreference
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
@@ -68,6 +69,7 @@ import org.junit.Assume.assumeTrue
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.shadow.api.Shadow
@@ -144,6 +146,24 @@ class ReviewerTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun `saved bottom nav preference does not show a back icon on split pane layouts`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            RuntimeEnvironment.setQualifiers("sw600dp")
+            val reviewer = startReviewer(withCards = 1)
+            assertFalse(reviewer.resources.getBoolean(R.bool.bottom_navigation_available))
+            assertTrue(reviewer.drawerToggle.isDrawerIndicatorEnabled)
+        }
+
+    @Test
+    fun `saved bottom nav preference shows a back icon on large single pane layouts`() =
+        withBooleanPreference(R.string.dev_bottom_nav_key, true) {
+            RuntimeEnvironment.setQualifiers("sw480dp-large")
+            val reviewer = startReviewer(withCards = 1)
+            assertTrue(reviewer.resources.getBoolean(R.bool.bottom_navigation_available))
+            assertFalse(reviewer.drawerToggle.isDrawerIndicatorEnabled)
+        }
 
     @Test
     fun testOnSelectedTags() {

@@ -247,7 +247,7 @@ open class Reviewer :
         if (!ensureStorageIsReady()) {
             return
         }
-        if (Prefs.devBottomNavEnabled) {
+        if (Prefs.devBottomNavEnabled && resources.getBoolean(R.bool.bottom_navigation_available)) {
             showBackIcon()
         }
         colorPalette = findViewById(R.id.whiteboard_editor)
