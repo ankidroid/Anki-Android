@@ -41,11 +41,34 @@ jobs:
             }
 
             async function findUnfinishedMergeGroupRuns(branch) {
-              const runs = await github.paginate(github.rest.actions.listWorkflowRunsForRepo, {
-                ...context.repo, branch, event: 'merge_group', per_page: 100,
-              });
-              return runs.filter(run =>
-                run.event === 'merge_group' && run.head_branch === branch && run.status !== 'completed');
+              const runs = new Map();
+              let discoveryError;
+
+              // Poll three times to reduce the impact of stale API results.
+              // Known defect: all three scans can omit unfinished runs, potentially missing
+              // the entire group. Cleanup can then report success without cancelling them.
+              // There is no automatic follow-up cleanup, so missed runs can continue
+              // consuming runner capacity.
+              // TODO(2026-10-01): Remove when resolved: https://github.com/orgs/community/discussions/206725
+              for (let scan = 0; scan < 3; scan++) {
+                if (scan > 0) await delay(10000);
+                try {
+                  const discovered = await github.paginate(github.rest.actions.listWorkflowRunsForRepo, {
+                    ...context.repo, branch, event: 'merge_group', per_page: 100,
+                  });
+                  for (const run of discovered) {
+                    if (run.event === 'merge_group' && run.head_branch === branch && run.status !== 'completed') {
+                      runs.set(run.id, run);
+                    }
+                  }
+                  discoveryError = undefined;
+                } catch (error) {
+                  discoveryError = error;
+                  core.warning(`Discovery failed: ${error.message}`);
+                }
+              }
+              if (discoveryError) core.setFailed(`Could not finish discovering runs: ${discoveryError.message}`);
+              return runs.values();
             }
 
             async function getCancellationStatus(runId) {
