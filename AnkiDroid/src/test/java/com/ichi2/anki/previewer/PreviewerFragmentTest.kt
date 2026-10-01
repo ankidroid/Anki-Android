@@ -6,6 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
@@ -49,6 +50,27 @@ class PreviewerFragmentTest : RobolectricTest() {
                         }
                     }
                 }
+        }
+    }
+
+    @Test
+    fun `missing selection closes previewer`() = assertUnavailableSelection { assertTrue(delete()) }
+
+    @Test
+    fun `truncated selection closes previewer`() = assertUnavailableSelection { writeBytes(readBytes().dropLast(1).toByteArray()) }
+
+    @Test
+    fun `empty selection closes previewer`() {
+        assertUnavailableSelection { writeBytes(byteArrayOf(0, 0, 0, 0)) }
+    }
+
+    private fun assertUnavailableSelection(changeFile: IdsFile.() -> Unit) {
+        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col)).apply(changeFile)
+        val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
+        Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
+            val activity = controller.setup().get()
+            assertTrue(activity.isFinishing)
+            assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
         }
     }
 

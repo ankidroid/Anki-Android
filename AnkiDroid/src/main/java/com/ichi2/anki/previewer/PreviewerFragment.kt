@@ -30,6 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.FragmentPreviewerBinding
 import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
 import com.ichi2.anki.reviewer.BindingMap
@@ -47,6 +48,7 @@ import com.ichi2.utils.performClickIfEnabled
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.IOException
 
 class PreviewerFragment :
@@ -66,6 +68,7 @@ class PreviewerFragment :
                     } catch (e: IOException) {
                         throw UnavailableSelectionException(e)
                     }
+                if (ids.isEmpty()) throw UnavailableSelectionException()
                 PreviewerViewModel(handle, ids)
             }
         }
@@ -92,6 +95,16 @@ class PreviewerFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        try {
+            viewModel
+        } catch (e: UnavailableSelectionException) {
+            Timber.w(e, "Failed to read previewer IDs")
+            showThemedToast(requireContext(), CommonString.something_wrong, false)
+            // The activity may still lay out this view before finishing. Its slider has no range yet.
+            view.isVisible = false
+            requireActivity().finish()
+            return
+        }
         super.onViewCreated(view, savedInstanceState)
         val cardsCount = viewModel.cardsCount()
 
@@ -288,7 +301,7 @@ class PreviewerFragment :
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN) return false
+        if (event.action != KeyEvent.ACTION_DOWN || !::bindingMap.isInitialized) return false
         return bindingMap.onKeyDown(event)
     }
 
