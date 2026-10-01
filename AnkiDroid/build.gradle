@@ -307,11 +307,6 @@ android {
 
     testOptions {
         animationsDisabled = true
-        kotlin {
-            compilerOptions {
-                freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
-            }
-        }
         unitTests {
             all { test ->
                 test.useJUnitPlatform {
