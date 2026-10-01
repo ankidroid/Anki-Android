@@ -32,6 +32,8 @@ import com.ichi2.anki.libanki.testutils.ext.newNote
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
+import com.ichi2.testutils.parcelledCopy
+import com.ichi2.testutils.saveState
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
 import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
@@ -76,6 +78,29 @@ class TagsDialogTest : RobolectricTest() {
             assertNull(activity.supportFragmentManager.findFragmentByTag("tags"))
             assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
             Mockito.verifyNoInteractions(listener)
+        }
+    }
+
+    @Test
+    fun `restoring after selection loss dismisses tags dialog`() {
+        val fragment = TagsDialog().withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, listOf(addBasicNote().id))
+        val file = fragment.requireArguments().requireParcelable<IdsFile>(TagsDialog.ARG_TAGS_FILE)
+        val savedState =
+            Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+                controller.get().setTheme(R.style.Theme_Light)
+                val activity = controller.setup().get()
+                fragment.show(activity.supportFragmentManager, "tags")
+                advanceRobolectricLooper()
+                controller.saveState().parcelledCopy(FragmentActivity::class.java.classLoader)
+            }
+        assertTrue(file.delete())
+        ShadowToast.reset()
+        Robolectric.buildActivity(FragmentActivity::class.java).use { controller ->
+            controller.get().setTheme(R.style.Theme_Light)
+            val activity = controller.setup(savedState).get()
+            advanceRobolectricLooper()
+            assertNull(activity.supportFragmentManager.findFragmentByTag("tags"))
+            assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
         }
     }
 
