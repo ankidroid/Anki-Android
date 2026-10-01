@@ -33,12 +33,10 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.CollectionFiles
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.testutils.AnkiTest
-import com.ichi2.anki.libanki.testutils.InMemoryCollectionManager
-import com.ichi2.anki.libanki.testutils.InMemoryCollectionManagerWithMediaFolder
-import com.ichi2.anki.libanki.testutils.TestCollectionManager
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.utils.OnlyOnce
@@ -50,6 +48,7 @@ import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
 import com.ichi2.testutils.grantPermissions
+import com.ichi2.testutils.rules.CollectionStorageRule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -110,6 +109,17 @@ open class RobolectricTest :
     @get:Rule
     val tempFolder = TemporaryFolder()
 
+    // Run inside tempFolder so in-memory collections can use its media directory.
+    @get:Rule(order = 0)
+    val collectionStorage =
+        CollectionStorageRule {
+            when (getCollectionStorageMode()) {
+                ON_DISK -> null
+                IN_MEMORY_WITH_MEDIA -> CollectionFiles.InMemoryWithMedia(tempFolder.newFolder())
+                IN_MEMORY_NO_FOLDERS -> CollectionFiles.InMemory
+            }
+        }
+
     /**
      * After all `@After` methods, fail if any Robolectric activities are still live.
      * Retained AppCompat delegates can recreate activities on later night-mode changes.
@@ -119,14 +129,7 @@ open class RobolectricTest :
     @get:Rule(order = Int.MIN_VALUE)
     val noLiveActivities = NoLiveRobolectricActivitiesRule()
 
-    override val collectionManager: TestCollectionManager by lazy {
-        when (getCollectionStorageMode()) {
-            ON_DISK -> ProductionCollectionManager as TestCollectionManager
-            // tempFolder.newFolder() requires `lazy { }`
-            IN_MEMORY_WITH_MEDIA -> InMemoryCollectionManagerWithMediaFolder(tempFolder.newFolder())
-            IN_MEMORY_NO_FOLDERS -> InMemoryCollectionManager()
-        }
-    }
+    override val collectionManager = ProductionCollectionManager
 
     protected open fun getCollectionStorageMode(): CollectionStorageMode = IN_MEMORY_NO_FOLDERS
 
