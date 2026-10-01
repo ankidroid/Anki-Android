@@ -47,6 +47,7 @@ import com.ichi2.utils.performClickIfEnabled
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class PreviewerFragment :
     CardViewerFragment(R.layout.fragment_previewer),
@@ -59,7 +60,12 @@ class PreviewerFragment :
             initializer {
                 val handle = createSavedStateHandle()
                 // Read before constructing the ViewModel, which immediately loads the first card.
-                val ids = handle.require<IdsFile>(CARD_IDS_FILE_ARG).getIds()
+                val ids =
+                    try {
+                        handle.require<IdsFile>(CARD_IDS_FILE_ARG).getIds()
+                    } catch (e: IOException) {
+                        throw UnavailableSelectionException(e)
+                    }
                 PreviewerViewModel(handle, ids)
             }
         }
@@ -285,6 +291,11 @@ class PreviewerFragment :
         if (event.action != KeyEvent.ACTION_DOWN) return false
         return bindingMap.onKeyDown(event)
     }
+
+    /** Distinguishes selection failures from I/O failures during ViewModel construction. */
+    private class UnavailableSelectionException(
+        cause: IOException? = null,
+    ) : Exception("Unable to load preview selection", cause)
 
     companion object {
         /** Index of the card to be first displayed among the IDs provided by [CARD_IDS_FILE_ARG] */
