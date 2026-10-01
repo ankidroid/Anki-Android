@@ -66,6 +66,11 @@ subprojects {
         version.set(ktlintVersion)
     }
 
+    tasks.withType<Test>().configureEach {
+        // Stop on the first test failure in the merge queue; keep all results for other runs.
+        failFast = providers.environmentVariable("GITHUB_EVENT_NAME").orNull == "merge_group"
+    }
+
     afterEvaluate {
         plugins.withType<com.android.build.gradle.BasePlugin> {
             // com.android.lint [BasePlugin] has no `android` extension
