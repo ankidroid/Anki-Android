@@ -7,10 +7,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.SUCCESS_KEY
 import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
+import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.testutils.ext.BASIC_NOTE_TYPE_NAME
 import com.ichi2.anki.libanki.testutils.ext.setFlag
+import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.testutils.getString
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
@@ -215,6 +217,32 @@ class AnkiDroidJsAPITest : RobolectricTest() {
                 getDataFromRequest("isInNightMode", jsapi),
                 equalTo(formatApiResult(reviewer.isInNightMode)),
             )
+        }
+
+    @Test
+    fun fullscreenModeApiSetsEachModeExplicitly() =
+        runTest {
+            addDeck("Test", setAsSelected = true)
+            addBasicNote("foo", "bar")
+
+            val reviewer = startReviewer()
+            val jsapi = reviewer.jsApi
+            val prefs = targetContext.sharedPrefs()
+
+            val modes =
+                listOf(
+                    "setFullscreenButtonsAndMenu" to FullScreenMode.BUTTONS_AND_MENU,
+                    "setFullscreenButtonsOnly" to FullScreenMode.BUTTONS_ONLY,
+                    "setFullscreenAllGone" to FullScreenMode.FULLSCREEN_ALL_GONE,
+                )
+
+            modes.forEach { (method, mode) ->
+                assertThat(
+                    getDataFromRequest(method, jsapi),
+                    equalTo(formatApiResult(true)),
+                )
+                assertEquals(mode, FullScreenMode.fromPreference(prefs))
+            }
         }
 
     @Test
