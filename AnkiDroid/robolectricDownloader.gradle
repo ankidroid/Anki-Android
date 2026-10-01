@@ -32,6 +32,7 @@ def robolectricAndroidSdkVersions = [
         [androidVersion: "15", frameworkSdkBuildVersion: "13954326"],
         // TODO: check TarArchiveInputStream.forEachEntry when this is updated
         [androidVersion: "16", frameworkSdkBuildVersion: "13921718"], // current targetSdk
+        [androidVersion: "17", frameworkSdkBuildVersion: "15733970"],
 ]
 
 def robolectricSdkDownload = tasks.register('robolectricSdkDownload', WriteProperties) {
