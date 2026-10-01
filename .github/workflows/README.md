@@ -29,7 +29,7 @@ These are typically run by maintainers. See the [Maintenance guide](https://gith
 GitHub can leave jobs running after their merge group has been removed.
 
 `cancel_merge_queue_runs.yml` is triggered when a temporary merge queue branch is deleted.
-The workflow cancels unfinished runs for that branch.
+The workflow cancels unfinished runs for unmerged groups.
 
 ### Automatic publish
 
