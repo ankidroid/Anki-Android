@@ -31,6 +31,7 @@ import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.SortOrder
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.security.AppPermissions
 import com.ichi2.anki.security.DangerousJsApiPermission
 import com.ichi2.anki.security.DangerousJsPermissionDeniedException
@@ -379,6 +380,9 @@ open class AnkiDroidJsAPI(
                 }
 
                 "isInFullscreen" -> convertToByteArray(apiContract, activity.isFullscreen)
+                "setFullscreenButtonsAndMenu" -> setFullscreenMode(FullScreenMode.BUTTONS_AND_MENU, apiContract)
+                "setFullscreenButtonsOnly" -> setFullscreenMode(FullScreenMode.BUTTONS_ONLY, apiContract)
+                "setFullscreenAllGone" -> setFullscreenMode(FullScreenMode.FULLSCREEN_ALL_GONE, apiContract)
                 "isTopbarShown" -> convertToByteArray(apiContract, activity.prefShowTopbar)
                 "isInNightMode" -> convertToByteArray(apiContract, activity.isInNightMode)
                 "enableHorizontalScrollbar" -> {
@@ -531,10 +535,6 @@ open class AnkiDroidJsAPI(
                 }
 
                 "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
-                "toggleFullscreen" -> {
-                    val result = if (activity is Reviewer) activity.toggleFullScreen() else false
-                    convertToByteArray(apiContract, result)
-                }
                 else -> {
                     showDeveloperContact(
                         ANKI_JS_ERROR_CODE_ERROR,
@@ -546,6 +546,14 @@ open class AnkiDroidJsAPI(
         } catch (_: DangerousJsPermissionDeniedException) {
             return@withContext convertToByteArray(apiContract, false)
         }
+    }
+
+    private fun setFullscreenMode(
+        mode: FullScreenMode,
+        apiContract: ApiContract,
+    ): ByteArray {
+        val result = if (activity is Reviewer) activity.setFullscreenMode(mode) else false
+        return convertToByteArray(apiContract, result)
     }
 
     private fun processAction(
