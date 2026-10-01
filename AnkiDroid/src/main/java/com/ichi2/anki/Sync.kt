@@ -142,19 +142,11 @@ private fun BackendSyncException.isClockOffException(): Boolean =
         false
     }
 
-private fun BackendSyncException.isCollectionTooLargeException(): Boolean =
-    try {
-        val marker = "__DETAILS__"
-        val template = TR.syncUploadTooLarge(marker).trim()
-        val actual = message?.trim() ?: return false
+private val collectionTooLargeDetailsRegex =
+    Regex("""\b\d+(?:\.\d{2})?(?: MB)? > \d+(?:\.\d{2})?(?: MB)?\b""")
 
-        val parts = template.split(marker)
-        parts.size == 2 &&
-            actual.startsWith(parts[0]) &&
-            actual.endsWith(parts[1])
-    } catch (_: Throwable) {
-        false
-    }
+private fun BackendSyncException.isCollectionTooLargeException(): Boolean =
+    message?.let { collectionTooLargeDetailsRegex.containsMatchIn(it) } == true
 
 fun updateLogin(
     username: String,

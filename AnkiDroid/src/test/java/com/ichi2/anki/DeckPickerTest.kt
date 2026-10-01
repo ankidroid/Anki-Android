@@ -1267,6 +1267,11 @@ class DeckPickerTest : RobolectricTest() {
         var databaseErrorDialog: DatabaseErrorDialogType? = null
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
+        var integrityCheckCalled = false
+
+        override fun integrityCheck() {
+            integrityCheckCalled = true
+        }
 
         override fun showDatabaseErrorDialog(
             errorDialogType: DatabaseErrorDialogType,

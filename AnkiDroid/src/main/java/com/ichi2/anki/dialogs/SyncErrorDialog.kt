@@ -195,11 +195,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_COLLECTION_TOO_LARGE -> {
                 dialog
-                    .setPositiveButton(CommonString.dialog_ok) { _, _ -> }
-                    .setNegativeButton(TR.sentenceCase.checkDatabase) { _, _ ->
+                    .setPositiveButton(TR.sentenceCase.checkDatabase) { _, _ ->
                         requireSyncErrorDialogListener().integrityCheck()
                         activity?.dismissAllDialogFragments()
-                    }.create()
+                    }.setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
+                    .create()
             }
         }
     }
