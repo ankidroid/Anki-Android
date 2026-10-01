@@ -587,12 +587,16 @@ open class DeckPicker :
         setupPullToSync()
         // Setup the FloatingActionButtons
         floatingActionMenu =
-            DeckPickerFloatingActionMenu(this, binding, this).apply {
+            DeckPickerFloatingActionMenu(
+                context = this,
+                homescreenBinding = binding,
+                deckPicker = this,
                 toggleListener =
                     FloatingActionBarToggleListener { isOpening ->
                         closeFloatingActionBarBackPressCallback.isEnabled = isOpening
-                    }
-            }
+                    },
+                initiallyOpen = savedInstanceState?.getBoolean("mIsFABOpen") == true,
+            )
 
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
@@ -1193,7 +1197,9 @@ open class DeckPicker :
         }
 
         Timber.d("onCreateOptionsMenu()")
-        floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+        if (isDrawerOpen) {
+            floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+        }
         // Fragments own their menus: each fragment registers a MenuProvider against this
         // activity (see StudyOptionsFragment), and the menu host dispatches creation,
         // preparation and selection to them. This activity never drives a fragment's menu.
@@ -1544,7 +1550,6 @@ open class DeckPicker :
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        floatingActionMenu.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
         savedInstanceState.getString("dbRestorationPath")?.let { path ->
             val path = File(path)
             CollectionHelper.ankiDroidDirectoryOverride = path

@@ -109,6 +109,7 @@ import timber.log.Timber
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertNotSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
@@ -965,6 +966,38 @@ class DeckPickerTest : RobolectricTest() {
                 equalTo(false),
             )
         }
+
+    @Test
+    fun `expanded FAB menu is restored after recreation`() {
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            lateinit var originalActivity: DeckPicker
+            scenario.onActivity { deckPicker ->
+                originalActivity = deckPicker
+                deckPicker.floatingActionMenu.showFloatingActionMenu()
+            }
+
+            scenario.recreate()
+            advanceRobolectricLooper()
+
+            scenario.onActivity { deckPicker ->
+                assertNotSame(originalActivity, deckPicker)
+                assertTrue(deckPicker.floatingActionMenu.isFABOpen)
+                with(deckPicker.floatingActionButtonBinding) {
+                    assertEquals(View.VISIBLE, addSharedButton.visibility)
+                    assertEquals(View.VISIBLE, addDeckButton.visibility)
+                    assertEquals(View.VISIBLE, addFilteredDeckButton.visibility)
+                }
+
+                deckPicker.invalidateOptionsMenu()
+                advanceRobolectricLooper()
+                assertTrue(deckPicker.floatingActionMenu.isFABOpen)
+
+                deckPicker.onBackPressedDispatcher.onBackPressed()
+
+                assertFalse(deckPicker.floatingActionMenu.isFABOpen)
+            }
+        }
+    }
 
     @Test
     fun `expanding the FAB menu shows the correct labels`() =
