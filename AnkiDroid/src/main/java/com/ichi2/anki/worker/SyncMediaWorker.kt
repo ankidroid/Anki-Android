@@ -22,7 +22,6 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import anki.sync.MediaSyncProgress
-import anki.sync.SyncAuth
 import anki.sync.syncAuth
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
@@ -33,6 +32,8 @@ import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.receiver.CopyToClipboardReceiver
+import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.anki.sync.syncMedia
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.ext.trySetForeground
 import com.ichi2.utils.TruncatedString
@@ -63,12 +64,12 @@ class SyncMediaWorker(
                     inputData.getString(ENDPOINT_KEY)?.let {
                         endpoint = it
                     }
-                }
+                }.let(::SyncAuth)
 
             // The collection must be open, but we should not block collection operations while
             // `syncMedia` is executing, the app should be usable during a background media sync
             val backend = CollectionManager.getColUnsafe().backend
-            backend.syncMedia(input = auth)
+            backend.syncMedia(auth)
 
             delay(1000) // avoid notifications if sync occurs too quickly
             if (backend.mediaSyncStatus().active) {
