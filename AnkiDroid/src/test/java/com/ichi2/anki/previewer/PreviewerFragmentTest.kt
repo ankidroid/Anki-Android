@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.previewer
 
+import android.view.KeyEvent
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
@@ -12,6 +13,8 @@ import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.parcelledCopy
+import com.ichi2.testutils.saveState
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -71,6 +74,25 @@ class PreviewerFragmentTest : RobolectricTest() {
             val activity = controller.setup().get()
             assertTrue(activity.isFinishing)
             assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
+        }
+    }
+
+    @Test
+    fun `restoring after selection loss closes previewer and accepts key dispatch`() {
+        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col))
+        val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
+        val savedState =
+            Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
+                controller.setup()
+                controller.saveState().parcelledCopy(CardViewerActivity::class.java.classLoader)
+            }
+        assertTrue(file.delete())
+        ShadowToast.reset()
+        Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
+            val activity = controller.setup(savedState).get()
+            assertTrue(activity.isFinishing)
+            assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
+            activity.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT))
         }
     }
 
