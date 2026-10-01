@@ -287,6 +287,9 @@ open class DeckPicker :
     override val analyticsScreenName: String
         get() = selectedBottomNavItem()?.analyticsScreenName ?: super.analyticsScreenName
 
+    internal val bottomNavigationEnabled: Boolean
+        get() = Prefs.devBottomNavEnabled && !fragmented
+
     // Short animation duration from system
     private var shortAnimDuration = 0
 
@@ -542,7 +545,7 @@ open class DeckPicker :
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer()
-        if (Prefs.devBottomNavEnabled && !fragmented) {
+        if (bottomNavigationEnabled) {
             disableDrawerSwipe()
             disableDrawerIndicator()
         }
@@ -573,7 +576,7 @@ open class DeckPicker :
                 },
             )
         deckPickerBinding.decks.adapter = deckListAdapter
-        if (Prefs.devBottomNavEnabled) {
+        if (bottomNavigationEnabled) {
             deckPickerBinding.decks.addItemDecoration(
                 DeckHierarchyLinesDecoration(this, deckListAdapter),
             )
@@ -1621,7 +1624,7 @@ open class DeckPicker :
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (!Prefs.devBottomNavEnabled || fragmented || event.action != KeyEvent.ACTION_DOWN || !event.isAltPressed) {
+        if (!bottomNavigationEnabled || event.action != KeyEvent.ACTION_DOWN || !event.isAltPressed) {
             return super.dispatchKeyEvent(event)
         }
 
@@ -2361,7 +2364,7 @@ open class DeckPicker :
             fun bottomNavShortcut(
                 keys: String,
                 destination: NavigationItem,
-            ) = if (Prefs.devBottomNavEnabled && !fragmented) shortcut(keys, destination.shortcutLabel) else null
+            ) = if (bottomNavigationEnabled) shortcut(keys, destination.shortcutLabel) else null
 
             return ShortcutGroup(
                 listOfNotNull(
