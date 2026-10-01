@@ -5,7 +5,9 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.testutils.BackupManagerTestUtilities
-import com.ichi2.testutils.ext.menu
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,8 +25,8 @@ class DeckPickerBackupTest : RobolectricTest() {
     }
 
     @Test
-    fun `create backup reports when collection is unchanged`() {
-        withDeckPicker(deckCount = 0, withCards = true) { deckPicker ->
+    fun `create backup reports when collection is unchanged`() =
+        withBackupDeckPicker { deckPicker ->
             assertTrue(
                 col.createBackup(
                     BackupManager.getBackupDirectoryFromCollection(col.colDb),
@@ -33,26 +35,32 @@ class DeckPickerBackupTest : RobolectricTest() {
                 ),
             )
 
-            deckPicker.createBackupFromMenu()
+            deckPicker.createBackupAndWait()
 
             assertEquals(TR.profilesBackupUnchanged(), ShadowToast.getTextOfLatestToast())
             assertEquals(1, BackupManager.getBackups(col.colDb).size)
         }
-    }
 
     @Test
-    fun `create backup reports success after writing backup`() {
-        withDeckPicker(deckCount = 0, withCards = true) { deckPicker ->
-            deckPicker.createBackupFromMenu()
+    fun `create backup reports success after writing backup`() =
+        withBackupDeckPicker { deckPicker ->
+            deckPicker.createBackupAndWait()
 
             assertEquals(TR.profilesBackupCreated(), ShadowToast.getTextOfLatestToast())
             assertEquals(1, BackupManager.getBackups(col.colDb).size)
         }
-    }
 
-    private fun DeckPicker.createBackupFromMenu() {
+    private fun withBackupDeckPicker(block: suspend (DeckPicker) -> Unit) =
+        runTest {
+            // Dispatch the IO continuation back to the test thread before updating the UI.
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            lateinit var deckPicker: DeckPicker
+            withDeckPicker(deckCount = 0, withCards = true) { deckPicker = it }
+            block(deckPicker)
+        }
+
+    private suspend fun DeckPicker.createBackupAndWait() {
         ShadowToast.reset()
-        assertTrue(onOptionsItemSelected(menu().findItem(R.id.action_create_backup)))
-        advanceRobolectricLooperUntil { ShadowToast.getTextOfLatestToast() != null }
+        createBackup().join()
     }
 }
