@@ -1457,7 +1457,8 @@ open class DeckPicker :
         }
     }
 
-    private fun createBackup() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal fun createBackup(): Job =
         launchCatchingTask {
             val created =
                 withProgress(message = TR.sentenceCase.creatingBackup) {
@@ -1466,7 +1467,6 @@ open class DeckPicker :
             val message = if (created) TR.profilesBackupCreated() else TR.profilesBackupUnchanged()
             showThemedToast(this@DeckPicker, message, false)
         }
-    }
 
     private fun showMediaCheckDialog() {
         Timber.i("showing media check dialog")
