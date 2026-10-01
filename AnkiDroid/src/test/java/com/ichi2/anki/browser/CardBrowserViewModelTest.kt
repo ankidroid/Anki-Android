@@ -2219,40 +2219,50 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
-    fun `flowOfReverseDirection updates from setSortType`() =
+    fun `flowOfSortType tracks column, direction and cleared sorting`() =
         runViewModelTest {
-            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true))
-            assertEquals(true, flowOfReverseDirection.value)
-
-            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = false))
-            assertEquals(false, flowOfReverseDirection.value)
+            val reversed = SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true)
+            val changedColumn = reversed.copy(key = BrowserColumnKey("deck"))
+            for (sort in listOf(reversed, changedColumn, reversed.copy(reverse = false), SortType.NoOrdering)) {
+                setSortType(sort).join()
+                assertEquals(sort, flowOfSortType.value)
+            }
         }
 
     @Test
-    fun `flowOfReverseDirection is null for NoOrdering`() =
-        runViewModelTest {
-            setSortType(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true))
-            assertEquals(true, flowOfReverseDirection.value)
-
-            setSortType(SortType.NoOrdering)
-            assertEquals(null, flowOfReverseDirection.value)
-        }
-
-    @Test
-    fun `flowOfReverseDirection initialized from collection config - reversed`() {
+    fun `flowOfSortType initialized from collection config`() {
+        col.config.set("sortType", "deck")
         col.config.set("sortBackwards", true)
 
         runViewModelTest(initMode = InitMode.NO_DELAY) {
-            assertEquals(true, flowOfReverseDirection.value)
+            assertEquals(SortType.CollectionOrdering(BrowserColumnKey("deck"), reverse = true), flowOfSortType.value)
         }
     }
 
     @Test
-    fun `flowOfReverseDirection initialized as null when NoOrdering`() {
+    fun `flowOfSortType initialized as NoOrdering when sorting is disabled`() {
         Prefs.cardBrowserNoSorting = true
 
         runViewModelTest(initMode = InitMode.NO_DELAY) {
-            assertEquals(null, flowOfReverseDirection.value)
+            assertEquals(SortType.NoOrdering, flowOfSortType.value)
+        }
+    }
+
+    @Test
+    fun `flowOfSortType follows cards and notes mode`() {
+        val cardsSort = SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = true)
+        val notesSort = SortType.CollectionOrdering(BrowserColumnKey("deck"), reverse = false)
+        col.config.set("sortType", cardsSort.key.value)
+        col.config.set("sortBackwards", cardsSort.reverse)
+        col.config.set("noteSortType", notesSort.key.value)
+        col.config.set("browserNoteSortBackwards", notesSort.reverse)
+
+        runViewModelTest(initMode = InitMode.NO_DELAY) {
+            assertEquals(cardsSort, flowOfSortType.value)
+            setCardsOrNotes(CardsOrNotes.NOTES).join()
+            assertEquals(notesSort, flowOfSortType.value)
+            setCardsOrNotes(CardsOrNotes.CARDS).join()
+            assertEquals(cardsSort, flowOfSortType.value)
         }
     }
 
@@ -2263,11 +2273,11 @@ class CardBrowserViewModelTest : JvmTest() {
 
         runViewModelTest(initMode = InitMode.NO_DELAY) {
             setCardsOrNotes(CardsOrNotes.NOTES).join()
-            assertEquals(true, flowOfReverseDirection.value)
+            assertEquals(SortType.CollectionOrdering(BrowserColumnKey("noteCrt"), reverse = true), flowOfSortType.value)
             assertEquals(SortChangeNotification.CollectionOrdering("Created", ColumnType.DATE, reverse = true), flowOfCurrentSort.value)
 
             setCardsOrNotes(CardsOrNotes.CARDS).join()
-            assertEquals(false, flowOfReverseDirection.value)
+            assertEquals(SortType.CollectionOrdering(BrowserColumnKey("noteFld"), reverse = false), flowOfSortType.value)
             assertEquals(SortChangeNotification.CollectionOrdering("Sort Field", ColumnType.TEXT, reverse = false), flowOfCurrentSort.value)
         }
     }

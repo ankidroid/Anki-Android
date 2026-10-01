@@ -101,11 +101,6 @@ import java.util.Collections
 import kotlin.math.max
 import kotlin.math.min
 
-/**
- * Whether the current sort is reversed (descending). `true` if reversed.
- */
-typealias ReverseDirection = Boolean
-
 // TODO: move the tag computation to ViewModel
 
 /**
@@ -229,12 +224,8 @@ class CardBrowserViewModel(
 
     val flowOfScrollRequest = MutableSharedFlow<RowSelection>()
 
-    /**
-     * Whether the current sort is reversed (descending).
-     *
-     * `null` when no sort is applied ([SortType.NoOrdering]).
-     */
-    val flowOfReverseDirection: MutableStateFlow<ReverseDirection?> = MutableStateFlow(null)
+    /** The active sort column and direction, or [SortType.NoOrdering]. */
+    val flowOfSortType = MutableStateFlow<SortType>(SortType.NoOrdering)
 
     /** Emits each time the user changes the sort order, with data for a snackbar */
     val flowOfSortTypeChanged = MutableSharedFlow<SortChangeNotification>()
@@ -599,6 +590,7 @@ class CardBrowserViewModel(
             .onEach { cardsOrNotes ->
                 Timber.d("loading columns for %s mode", cardsOrNotes)
                 updateActiveColumns(BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes))
+                if (initCompleted) refreshSortState()
             }.launchIn(viewModelScope)
 
         viewModelScope.launch {
@@ -1038,7 +1030,7 @@ class CardBrowserViewModel(
 
     private fun updateSortState(sortType: SortType): SortChangeNotification {
         val notification = buildSortChangeNotification(sortType)
-        flowOfReverseDirection.value = (sortType as? SortType.CollectionOrdering)?.reverse
+        flowOfSortType.value = sortType
         flowOfCurrentSort.value = notification
         return notification
     }

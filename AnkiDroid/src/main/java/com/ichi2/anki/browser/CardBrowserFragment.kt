@@ -129,6 +129,7 @@ import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.progress.observeProgress
@@ -1230,7 +1231,8 @@ class CardBrowserFragment :
             searchViewModel.syncState(search)
         }
 
-        fun reverseDirectionChanged(reverse: ReverseDirection?) {
+        fun sortTypeChanged(sortType: SortType) {
+            val reverse = (sortType as? SortType.CollectionOrdering)?.reverse
             sortChip?.scaleY = if (reverse == false || reverse == null) 1.0f else -1.0f
         }
 
@@ -1270,7 +1272,7 @@ class CardBrowserFragment :
             sortChip?.contentDescription = sort?.let(::describeSort) ?: getString(CommonString.card_browser_change_display_order_title)
         }
 
-        activityViewModel.flowOfReverseDirection.launchCollectionInLifecycleScope(::reverseDirectionChanged)
+        activityViewModel.flowOfSortType.launchCollectionInLifecycleScope(::sortTypeChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfPaneRow.launchCollectionInLifecycleScope(::onPaneRowChanged)
