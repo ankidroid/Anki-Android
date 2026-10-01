@@ -18,6 +18,7 @@ jobs:
     timeout-minutes: 5
     permissions:
       actions: write
+      contents: read
     steps:
       # SECURITY: never check out PR code here, use an inline script.
       - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -29,8 +30,10 @@ jobs:
             const candidateRuns = await findUnfinishedMergeGroupRuns(deletedBranch);
             for (const run of candidateRuns) {
               try {
-                core.info(`Cancelling ${run.id}: ${run.name}`);
-                await github.rest.actions.cancelWorkflowRun({ ...context.repo, run_id: run.id });
+                const outcome = await cancelObsoleteRun(run);
+
+                // The branch may have been requeued and its runs may be needed again.
+                if (outcome === 'branch-recreated') return;
               } catch (error) {
                 core.setFailed(`Could not clean up run ${run.id}: ${error.message}`);
               }
@@ -42,4 +45,26 @@ jobs:
               });
               return runs.filter(run =>
                 run.event === 'merge_group' && run.head_branch === branch && run.status !== 'completed');
+            }
+
+            async function getCancellationStatus(runId) {
+              const { data: run } = await github.rest.actions.getWorkflowRun({ ...context.repo, run_id: runId });
+              if (run.status === 'completed' || run.run_attempt !== 1) return 'ineligible';
+
+              try {
+                await github.rest.git.getRef({ ...context.repo, ref: `heads/${deletedBranch}` });
+              } catch (error) {
+                if (error.status === 404) return 'eligible';
+                throw error;
+              }
+              core.info('Skipping cleanup: the queue branch exists again.');
+              return 'branch-recreated';
+            }
+
+            async function cancelObsoleteRun(run) {
+              const status = await getCancellationStatus(run.id);
+              if (status !== 'eligible') return status;
+
+              core.info(`Cancelling ${run.id}: ${run.name}`);
+              await github.rest.actions.cancelWorkflowRun({ ...context.repo, run_id: run.id });
             }
