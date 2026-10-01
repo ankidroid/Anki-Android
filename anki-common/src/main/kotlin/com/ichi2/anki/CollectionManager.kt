@@ -93,6 +93,10 @@ object CollectionManager {
     @VisibleForTesting
     var emulatedOpenFailure: CollectionOpenFailure? = null
 
+    /** Storage for collections opened in tests, including after closing and reopening. */
+    @VisibleForTesting
+    var collectionFilesTestOverride: CollectionFiles? = null
+
     private val testMutex = ReentrantLock()
 
     private var useTestMutex = true
@@ -391,7 +395,7 @@ object CollectionManager {
         ensureBackendInner()
         emulatedOpenFailure?.triggerFailure()
         if (collection == null || collection!!.dbClosed) {
-            val collectionPath = collectionPathInValidFolder()
+            val collectionPath = collectionFilesTestOverride ?: collectionPathInValidFolder()
             collection =
                 collection(
                     collectionFiles = collectionPath,
