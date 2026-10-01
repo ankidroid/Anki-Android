@@ -1083,6 +1083,7 @@ class CardBrowserFragment :
                 val columnView = layoutInflater.inflate(R.layout.view_browser_column_heading, browserColumnHeadings, false) as TextView
 
                 columnView.text = column.label
+                columnView.setBrowserHeadingAccessibility()
 
                 // Attach click listener to open the selection dialog
                 columnView.setOnClickListener {
