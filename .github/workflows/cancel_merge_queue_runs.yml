@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+name: Cancel Obsolete Merge Queue Runs
+
+# `merge_group: destroyed` identifies the merge group and reason for removal,
+# but is not documented as a supported Actions trigger. Use `delete` instead.
+on:
+  # GitHub deletes the temporary branch when a merge group is discarded.
+  delete:
+
+permissions: {}
+
+jobs:
+  cancel:
+    if: >-
+      github.event.ref_type == 'branch' &&
+      startsWith(github.event.ref, 'gh-readonly-queue/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      # SECURITY: never check out PR code here, use an inline script.
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const deletedBranch = context.payload.ref;
+
+            // Collect unfinished merge-group workflow runs for this deleted branch.
+            const candidateRuns = await findUnfinishedMergeGroupRuns(deletedBranch);
+            for (const run of candidateRuns) {
+              try {
+                core.info(`Cancelling ${run.id}: ${run.name}`);
+                await github.rest.actions.cancelWorkflowRun({ ...context.repo, run_id: run.id });
+              } catch (error) {
+                core.setFailed(`Could not clean up run ${run.id}: ${error.message}`);
+              }
+            }
+
+            async function findUnfinishedMergeGroupRuns(branch) {
+              const runs = await github.paginate(github.rest.actions.listWorkflowRunsForRepo, {
+                ...context.repo, branch, event: 'merge_group', per_page: 100,
+              });
+              return runs.filter(run =>
+                run.event === 'merge_group' && run.head_branch === branch && run.status !== 'completed');
+            }

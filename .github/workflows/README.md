@@ -24,6 +24,13 @@ Alternately, you may run the actions on your fork of `Anki-Android`.
 
 These are typically run by maintainers. See the [Maintenance guide](https://github.com/ankidroid/Anki-Android/wiki/Maintenance-guide)
 
+### Merge queue cancellation
+
+GitHub can leave jobs running after their merge group has been removed.
+
+`cancel_merge_queue_runs.yml` is triggered when a temporary merge queue branch is deleted.
+The workflow cancels unfinished runs for that branch.
+
 ### Automatic publish
 
 An automatic alpha publish is performed every Monday at 04:30 UTC. This publish is skipped if:
