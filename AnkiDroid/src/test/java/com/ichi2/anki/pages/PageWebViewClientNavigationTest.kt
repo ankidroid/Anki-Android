@@ -83,7 +83,7 @@ class PageWebViewClientNavigationTest : PageWebViewClientTestBase() {
         }
 
     @Test
-    fun `local paths outside bundled pages are blocked without launching an activity`() =
+    fun `unbundled local paths are blocked`() =
         withStatistics { view, client ->
             val pageUrl = assertNotNull(view.url).toUri()
             for (path in listOf("/", "/unknown", "/graphs-other", "/_anki/test", "/_app/env.js")) {
