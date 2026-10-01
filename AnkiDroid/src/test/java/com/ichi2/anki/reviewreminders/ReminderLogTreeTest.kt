@@ -32,7 +32,9 @@ class ReminderLogTreeTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        tree = Timber.forest().filterIsInstance<ReminderLogTree>().single()
+        // Own the tree: application initialization may have planted zero or multiple reminder trees.
+        Timber.forest().filterIsInstance<ReminderLogTree>().forEach(Timber::uproot)
+        tree = ReminderLogTree(targetContext).also { Timber.plant(it) }
         tree.logFile.delete()
         temporaryFile.delete()
     }
