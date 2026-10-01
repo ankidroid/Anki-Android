@@ -13,7 +13,6 @@ import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
-import java.io.File
 
 /**
  * Trimmed down version of `com.ichi2.anki.CollectionManager` which can be used without a reference
@@ -26,21 +25,6 @@ interface TestCollectionManager {
      * Close the currently cached backend and discard it. Saves and closes the collection if open.
      */
     suspend fun discardBackend()
-}
-
-/**
- * Lightweight CollectionManager: on-disk media folder, in-memory DB, and no media DB
- */
-@VisibleForTesting
-class InMemoryCollectionManagerWithMediaFolder(
-    val mediaFolder: File,
-) : InMemoryCollectionManager() {
-    init {
-        Timber.d("using temp in-memory folder for testing: %s", mediaFolder)
-    }
-
-    override val collectionFiles: CollectionFiles
-        get() = CollectionFiles.InMemoryWithMedia(mediaFolder)
 }
 
 /**
