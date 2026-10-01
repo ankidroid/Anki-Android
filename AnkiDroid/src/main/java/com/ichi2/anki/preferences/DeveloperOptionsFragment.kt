@@ -45,6 +45,8 @@ class DeveloperOptionsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         setupEnableDeveloperOptions()
+        requirePreference<SwitchPreferenceCompat>(R.string.dev_bottom_nav_key).isVisible =
+            resources.getBoolean(R.bool.bottom_navigation_available)
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
             // If we don't delete the limiter data, our test crash may not go through,
