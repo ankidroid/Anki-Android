@@ -18,8 +18,9 @@ class SyncAuth(
     val hkey: String
         get() = proto.hkey
 
-    val endpoint: String
-        get() = proto.endpoint
+    /** Null selects the default AnkiWeb server. */
+    val endpoint: String?
+        get() = proto.endpoint.takeIf { proto.hasEndpoint() }
 
     fun toProto(): anki.sync.SyncAuth = proto
 

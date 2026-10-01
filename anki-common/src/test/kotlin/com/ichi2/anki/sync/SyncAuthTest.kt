@@ -26,4 +26,26 @@ class SyncAuthTest {
         assertThat(updated.ioTimeoutSecs, equalTo(proto.ioTimeoutSecs))
         assertThat(auth.endpoint, equalTo(proto.endpoint))
     }
+
+    @Test
+    fun `default and custom endpoints map correctly without changing credentials`() {
+        val customEndpoint = "https://sync.example.com/"
+        for ((inputEndpoint, expectedEndpoint) in listOf(null to null, customEndpoint to customEndpoint)) {
+            val proto =
+                syncAuth {
+                    hkey = "test"
+                    inputEndpoint?.let { endpoint = it }
+                    ioTimeoutSecs = 123
+                }
+
+            val auth = SyncAuth(proto)
+            val backendAuth = auth.toProto()
+
+            assertThat(auth.endpoint, equalTo(expectedEndpoint))
+            assertThat(backendAuth.hasEndpoint(), equalTo(expectedEndpoint != null))
+            assertThat(backendAuth.endpoint, equalTo(expectedEndpoint ?: ""))
+            assertThat(backendAuth.hkey, equalTo(proto.hkey))
+            assertThat(backendAuth.ioTimeoutSecs, equalTo(proto.ioTimeoutSecs))
+        }
+    }
 }
