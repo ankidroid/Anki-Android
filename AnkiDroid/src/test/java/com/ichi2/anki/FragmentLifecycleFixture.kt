@@ -44,7 +44,7 @@ class FragmentLifecycleFixture(
 
 fun fragmentLifecycleFixtures(): List<FragmentLifecycleFixture> =
     listOf(
-        FragmentLifecycleFixture("StudyOptions", knownFailures = setOf(REMOVE)) { StudyOptionsFragment() },
+        FragmentLifecycleFixture("StudyOptions") { StudyOptionsFragment() },
         FragmentLifecycleFixture("AppearanceSettings", knownFailures = setOf(REMOVE)) { AppearanceSettingsFragment() },
         FragmentLifecycleFixture("GeneralSettings", knownFailures = setOf(REMOVE)) { GeneralSettingsFragment() },
         FragmentLifecycleFixture("ReviewerOptions", knownFailures = setOf(REMOVE)) { ReviewerOptionsFragment() },

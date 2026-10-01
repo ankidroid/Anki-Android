@@ -49,6 +49,20 @@ fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
     }
 }
 
+/**
+ * Collects while the fragment's current view is started. Call from [Fragment.onViewCreated].
+ */
+context(fragment: Fragment)
+fun <T> Flow<T>.launchCollectionInViewLifecycleScope(block: suspend (T) -> Unit): Job {
+    // Capture the owner before launching: the view may be destroyed or recreated before the job starts.
+    val owner = fragment.viewLifecycleOwner
+    return owner.lifecycleScope.launch {
+        owner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            this@launchCollectionInViewLifecycleScope.collect(block)
+        }
+    }
+}
+
 // Workaround a bug in overload resolution. Replace with the following when the compiler is fixed:
 //  state: Lifecycle.State = Lifecycle.State.STARTED
 context(activity: AnkiActivity)
