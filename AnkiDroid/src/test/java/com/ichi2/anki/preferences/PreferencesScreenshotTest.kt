@@ -28,6 +28,9 @@ import org.robolectric.RuntimeEnvironment
 import kotlin.reflect.KClass
 
 class PreferencesScreenshotTest : ScreenshotTest() {
+    // Backup settings check that the collection directory exists before loading their values.
+    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
+
     @After
     override fun tearDown() {
         super.tearDown()
