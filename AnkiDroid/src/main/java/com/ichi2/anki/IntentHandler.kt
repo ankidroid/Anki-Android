@@ -51,6 +51,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import kotlin.math.max
@@ -66,6 +67,7 @@ import kotlin.math.min
 class IntentHandler : AbstractIntentHandler() {
     // A delayed work query must not reopen DeckPicker after this activity is dismissed.
     private val syncIntentScope = MainScope()
+    private val importScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
@@ -122,6 +124,7 @@ class IntentHandler : AbstractIntentHandler() {
     }
 
     override fun onDestroy() {
+        importScope.cancel()
         syncIntentScope.cancel()
         super.onDestroy()
     }
@@ -249,24 +252,28 @@ class IntentHandler : AbstractIntentHandler() {
             finish()
             return
         }
-        val importResult = prepareImport(this, intent)
-        if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
-            deleteDownloadedDeck(intent.data)
-        }
-        when (importResult) {
-            is ImportResult.Success -> {
-                openImport(importResult)
-                if (importResult.file !is ImportResolution.Text) {
-                    deleteImportedDeck(intent.data?.path)
-                    reloadIntent.action = action
-                    reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(reloadIntent)
-                }
-                finish()
+        importScope.launch {
+            val importResult = withContext(ioDispatcher) { prepareImport(this@IntentHandler, intent) }
+            // finish() may precede onDestroy(), which cancels the import scope.
+            if (isFinishing) return@launch
+            if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
+                deleteDownloadedDeck(intent.data)
             }
-            is ImportResult.Failure -> {
-                Timber.i("File import failed")
-                showImportUnsuccessfulDialog(this, importResult, true)
+            when (importResult) {
+                is ImportResult.Success -> {
+                    openImport(importResult)
+                    if (importResult.file !is ImportResolution.Text) {
+                        deleteImportedDeck(intent.data?.path)
+                        reloadIntent.action = action
+                        reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(reloadIntent)
+                    }
+                    finish()
+                }
+                is ImportResult.Failure -> {
+                    Timber.i("File import failed")
+                    showImportUnsuccessfulDialog(this@IntentHandler, importResult, true)
+                }
             }
         }
     }
