@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.cardviewer
 
+import android.app.Activity
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.webkit.WebView
@@ -17,6 +18,7 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.testutil.AvoidDayRolloverRule
@@ -27,6 +29,7 @@ import com.ichi2.anki.testutil.ensureWebViewIsSupported
 import com.ichi2.anki.testutil.focusInput
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
+import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -34,13 +37,18 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.util.UUID
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
-/** Checks the legacy reviewer's HTML, script loading, and WebView keyboard support together. */
+/** Checks the real reviewers' HTML, script loading, and WebView keyboard support together. */
 @RunWith(Parameterized::class)
 class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
     @JvmField // required for Parameter
     @Parameterized.Parameter
+    var newReviewer = false
+
+    @JvmField // required for Parameter
+    @Parameterized.Parameter(1)
     var autoFocus = false
 
     @get:Rule
@@ -72,7 +80,7 @@ class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
         originalPreferences =
             listOf(newReviewerKey, "useInputTag", "autoFocusTypeInAnswer", doubleTapKey).associateWith { preferences.all[it] }
         preferences.edit {
-            putBoolean(newReviewerKey, false)
+            putBoolean(newReviewerKey, newReviewer)
             putBoolean("useInputTag", true)
             putBoolean("autoFocusTypeInAnswer", autoFocus)
             // These tests intentionally grade immediately after Done.
@@ -167,7 +175,7 @@ class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
                 keyboard.perform("done")
                 webView.awaitJavascript("document.querySelector('#typeans .typeGood')?.textContent === 'été'")
                 if (question != "Third") {
-                    onView(withId(R.id.flashcard_layout_ease3))
+                    onView(withId(if (newReviewer) R.id.good_button else R.id.flashcard_layout_ease3))
                         .also { it.checkWithTimeout(matches(isDisplayed())) }
                         .perform(click())
                 }
@@ -192,10 +200,16 @@ class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
     }
 
     private fun withReviewer(block: (WebView) -> Unit) {
-        ActivityScenario.launch<Reviewer>(Reviewer.getIntent(testContext)).use { scenario ->
+        ActivityScenario.launch<Activity>(Reviewer.getIntent(testContext)).use { scenario ->
             lateinit var webView: WebView
             scenario.onActivity { activity ->
-                webView = assertNotNull(activity.webView)
+                webView =
+                    if (newReviewer) {
+                        val fragment = assertIs<ReviewerFragment>(assertIs<CardViewerActivity>(activity).fragment)
+                        assertIs<TypeAnswerWebView>(fragment.binding.webViewLayout.getChildAt(0))
+                    } else {
+                        assertNotNull(assertIs<Reviewer>(activity).webView)
+                    }
             }
             webView.awaitJavascript("document.getElementById('typeans') !== null")
             block(webView)
@@ -204,7 +218,7 @@ class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
 
     companion object {
         @JvmStatic // required for Parameters
-        @Parameterized.Parameters(name = "autoFocus={0}")
-        fun focusModes() = listOf(false, true)
+        @Parameterized.Parameters(name = "newReviewer={0}, autoFocus={1}")
+        fun reviewers() = listOf(arrayOf(false, false), arrayOf(false, true), arrayOf(true, false), arrayOf(true, true))
     }
 }

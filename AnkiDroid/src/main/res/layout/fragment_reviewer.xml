@@ -91,7 +91,7 @@
             android:layout_weight="1"
             android:layout_marginHorizontal="@dimen/reviewer_side_margin">
 
-            <com.ichi2.anki.workarounds.SafeWebViewLayout
+            <com.ichi2.anki.cardviewer.TypeAnswerWebViewLayout
                 android:id="@+id/web_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
