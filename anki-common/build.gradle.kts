@@ -47,7 +47,7 @@ dependencies {
 
     testFixturesImplementation(project(":common:android"))
     testFixturesImplementation(project(":libanki"))
-    testFixturesImplementation(libs.androidx.core.ktx)
+    testFixturesImplementation(libs.androidx.core)
     testFixturesImplementation(libs.androidx.test.core)
     testFixturesImplementation(libs.jakewharton.timber)
     testFixturesImplementation(libs.kotlin.test)
