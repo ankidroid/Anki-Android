@@ -22,6 +22,8 @@ import android.os.Environment
 import android.view.View
 import android.view.Window
 import androidx.annotation.AnimRes
+import androidx.core.view.ContentInfoCompat
+import kotlinx.coroutines.Job
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -68,6 +70,12 @@ import kotlin.time.Duration
  * [CompatV29] in order to use [Environment.DIRECTORY_PICTURES], need not be implemented again in [CompatV26].
  */
 interface Compat {
+    /** Keeps the dropped content's URI permissions alive until [job] completes. */
+    fun retainDropPermissions(
+        payload: ContentInfoCompat,
+        job: Job,
+    )
+
     fun setTooltipTextByContentDescription(view: View)
 
     fun vibrate(

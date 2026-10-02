@@ -2076,7 +2076,7 @@ class DeckPickerTest : RobolectricTest() {
     }
 
     @Test
-    fun draggingUnsupportedFileShowsSnackbarError() =
+    fun draggingUnsupportedFileShowsImportError() =
         deckPicker {
             val clipData = android.content.ClipData.newRawUri("unsupported", "file:///path/to/image.jpg".toUri())
             val payload =
@@ -2085,14 +2085,9 @@ class DeckPickerTest : RobolectricTest() {
                     .build()
             ViewCompat.performReceiveContent(findViewById(R.id.pull_to_sync_wrapper), payload)
 
-            val snackbar = showSnackbar(getString(CommonString.import_log_no_apkg))
-            assertThat("snackbar must be shown for unsupported file drop", snackbar, notNullValue())
-
-            val snackbarText = snackbar?.text
-            assertThat(
-                snackbarText,
-                equalTo(getString(CommonString.import_log_no_apkg)),
-            )
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            assertThat(dialog.isShowing, equalTo(true))
+            assertThat(dialog.title, equalTo(getString(CommonString.import_title_error)))
         }
 }
 

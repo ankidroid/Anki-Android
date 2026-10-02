@@ -22,6 +22,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -42,7 +43,7 @@ fun interface ImportColpkgListener {
 }
 
 /** Shared by the file pickers and drag-and-drop. File I/O completes before displaying any UI. */
-fun AnkiActivity.onSelectedFileToImport(data: Intent) {
+fun AnkiActivity.onSelectedFileToImport(data: Intent): Job =
     lifecycleScope.launch {
         val result =
             withProgress(message = getString(CommonString.import_preparing_file)) {
@@ -53,7 +54,6 @@ fun AnkiActivity.onSelectedFileToImport(data: Intent) {
             is ImportResult.Success -> openImport(result)
         }
     }
-}
 
 fun Activity.openCsvImporter(path: String) {
     val stackBuilder = TaskStackBuilder.create(this)

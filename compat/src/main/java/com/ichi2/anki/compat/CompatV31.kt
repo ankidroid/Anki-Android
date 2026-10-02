@@ -9,11 +9,22 @@ import android.media.MediaRecorder
 import android.os.VibrationEffect
 import android.os.VibratorManager
 import androidx.annotation.RequiresApi
+import androidx.core.view.ContentInfoCompat
+import kotlinx.coroutines.Job
+import java.lang.ref.Reference
 import kotlin.time.Duration
 
 /** Implementation of [Compat] for SDK level 31  */
 @RequiresApi(31)
 open class CompatV31 : CompatV30() {
+    override fun retainDropPermissions(
+        payload: ContentInfoCompat,
+        job: Job,
+    ) {
+        // Android 12+ ties drop permissions to the payload's lifetime.
+        job.invokeOnCompletion { Reference.reachabilityFence(payload) }
+    }
+
     override fun vibrate(
         context: Context,
         duration: Duration,

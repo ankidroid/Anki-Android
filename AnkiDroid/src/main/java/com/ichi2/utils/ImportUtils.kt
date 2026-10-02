@@ -27,7 +27,6 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
-import com.ichi2.anki.openImport
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -46,20 +45,6 @@ import java.util.Locale
 object ImportUtils {
     // A filename should be shortened if over this threshold
     private const val FILE_NAME_SHORTENING_THRESHOLD = 100
-
-    /**
-     * Resolve and cache the source, then start the text importer or store a package confirmation.
-     *
-     * Import UI is dispatched on the main thread. Background callers may return before dispatch
-     * completes. Package confirmations wait for DeckPicker to resume if it is not already resumed.
-     *
-     * @return The resolved source metadata and cached path, or details of a preparation or launch
-     * failure. Success does not mean that the file's contents have been imported.
-     */
-    fun handleFileImport(
-        activity: Activity,
-        intent: Intent,
-    ): ImportResult = FileImporter().handleFileImport(activity, intent)
 
     /** Resolve the source and select its importer without copying files or starting UI. */
     fun resolveImport(
@@ -126,62 +111,6 @@ object ImportUtils {
 
     @SuppressWarnings("WeakerAccess")
     open class FileImporter {
-        /** See [ImportUtils.handleFileImport] for the UI and error handling contract. */
-        fun handleFileImport(
-            activity: Activity,
-            intent: Intent,
-        ): ImportResult {
-            Timber.i("IntentHandler/ User requested to view a file")
-            val extras = if (intent.extras == null) "none" else intent.extras!!.keySet().joinToString(", ")
-            Timber.i("Intent: %s. Data: %s", intent, extras)
-            return try {
-                val uri = getDataUri(intent)
-                if (uri == null) {
-                    ImportResult.Failure(activity.getString(CommonString.import_error_handle_exception))
-                } else {
-                    handleContentProviderFile(activity, uri, intent)
-                }
-            } catch (e: Exception) {
-                CrashReportService.sendExceptionReport(e, "handleFileImport")
-                Timber.e(e, "failed to handle import intent")
-                ImportResult.Failure(
-                    humanReadableMessage = activity.getString(CommonString.import_error_handle_exception, e.localizedMessage),
-                    exception = e,
-                )
-            }
-        }
-
-        /**
-         * Prepare the source, then start the text importer or store a package confirmation.
-         * Uses [intent] when supplied, otherwise creates an intent from [importPathUri].
-         *
-         * Preparation failures are returned. On the main thread, exceptions from starting the importer
-         * or storing a confirmation propagate to the caller; [handleFileImport] converts them into [ImportResult.Failure].
-         */
-        fun handleContentProviderFile(
-            activity: Activity,
-            importPathUri: Uri,
-            intent: Intent? = null,
-        ): ImportResult =
-            prepareImport(activity, intent ?: Intent().setData(importPathUri)).also { result ->
-                if (result is ImportResult.Success) {
-                    activity.openImport(result)
-                }
-            }
-
-        fun isValidImportType(
-            context: Context,
-            importPathUri: Uri,
-        ): Boolean {
-            val fileName = getFileNameFromContentProvider(context, importPathUri)
-            return when {
-                isDeckPackage(fileName) -> true
-                isCollectionPackage(fileName) -> true
-                isValidTextOrDataFile(context, importPathUri) -> true
-                else -> false
-            }
-        }
-
         fun resolveImport(
             context: Context,
             intent: Intent,

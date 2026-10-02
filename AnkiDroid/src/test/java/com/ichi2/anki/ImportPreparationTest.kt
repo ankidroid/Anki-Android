@@ -36,13 +36,14 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-/** The legacy adapter must report both preparation and launch failures to its caller. */
+/** Preparation reports copy failures; UI dispatch uses the prepared path. */
 @RunWith(AndroidJUnit4::class)
-class ImportAdapterTest : RobolectricTest() {
+class ImportPreparationTest : RobolectricTest() {
     private lateinit var originalCrashReporter: CrashReporter
     private val crashReporter = mock<CrashReporter>()
 
@@ -63,7 +64,7 @@ class ImportAdapterTest : RobolectricTest() {
         val missingFile = File(tempFolder.root, "deleted.csv")
         val uri = textSource("deleted.csv") { missingFile.inputStream() }
 
-        val result = ImportUtils.handleFileImport(activity, Intent(Intent.ACTION_VIEW, uri))
+        val result = ImportUtils.prepareImport(activity, Intent(Intent.ACTION_VIEW, uri))
 
         val failure = assertIs<ImportResult.Failure>(result)
         assertIs<FileNotFoundException>(failure.exception)
@@ -83,7 +84,7 @@ class ImportAdapterTest : RobolectricTest() {
                 }
             }
 
-        val result = ImportUtils.handleFileImport(activity, Intent(Intent.ACTION_VIEW, uri))
+        val result = ImportUtils.prepareImport(activity, Intent(Intent.ACTION_VIEW, uri))
 
         val failure = assertIs<ImportResult.Failure>(result)
         assertEquals(exception, failure.exception)
@@ -99,9 +100,9 @@ class ImportAdapterTest : RobolectricTest() {
         val contents = "front,back\nhello,world\n"
         val uri = textSource(fileName) { contents.byteInputStream() }
 
-        val result = ImportUtils.handleFileImport(activity, Intent(Intent.ACTION_VIEW, uri))
+        val result = ImportUtils.prepareImport(activity, Intent(Intent.ACTION_VIEW, uri))
 
-        assertIs<ImportResult.Success>(result)
+        activity.openImport(assertIs<ImportResult.Success>(result))
         val cachedFile = File(activity.cacheDir, fileName)
         assertEquals(contents, cachedFile.readText())
         val intent = assertNotNull(shadowOf(activity).nextStartedActivity)
@@ -127,16 +128,19 @@ class ImportAdapterTest : RobolectricTest() {
     }
 
     @Test
-    fun `failure to launch text importer is returned to the caller`() {
+    fun `failure to launch text importer propagates to the caller`() {
         val activity = spy(importActivity())
         val exception = ActivityNotFoundException("Importer could not be opened")
         doThrow(exception).whenever(activity).startActivities(any(), anyOrNull())
         val uri = textSource("notes.csv") { "front,back".byteInputStream() }
 
-        val result = ImportUtils.handleFileImport(activity, Intent(Intent.ACTION_VIEW, uri))
+        val result = ImportUtils.prepareImport(activity, Intent(Intent.ACTION_VIEW, uri))
 
-        assertEquals(exception, assertIs<ImportResult.Failure>(result).exception)
-        verify(crashReporter).sendExceptionReport(exception, "handleFileImport", null, false)
+        assertEquals(
+            exception,
+            assertFailsWith<ActivityNotFoundException> { activity.openImport(assertIs<ImportResult.Success>(result)) },
+        )
+        verifyNoInteractions(crashReporter)
     }
 
     private fun importActivity(): Activity {
