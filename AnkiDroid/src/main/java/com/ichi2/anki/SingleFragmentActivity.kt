@@ -21,6 +21,7 @@ import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.common.destinations.StudyOptionsDestination
 import com.ichi2.anki.common.destinations.navigate
+import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyAction
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -88,8 +89,15 @@ open class SingleFragmentActivity :
             return
         }
 
+        val fragment = createFragment()
+        if (fragment == null) {
+            Timber.w("'%s' extra not provided, finishing", EXTRA_FRAGMENT_NAME)
+            showThemedToast(this, R.string.something_wrong, false)
+            finish()
+            return
+        }
         supportFragmentManager.commit {
-            replace(R.id.fragment_container, createFragment(), FRAGMENT_TAG)
+            replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
         }
 
         setFragmentResultListener(CustomStudyAction.REQUEST_KEY) { _, bundle ->
@@ -113,9 +121,8 @@ open class SingleFragmentActivity :
         }
     }
 
-    protected open fun createFragment(): Fragment {
-        val fragmentClassName =
-            requireNotNull(intent.getStringExtra(EXTRA_FRAGMENT_NAME)) { "'$EXTRA_FRAGMENT_NAME' extra should be provided" }
+    protected open fun createFragment(): Fragment? {
+        val fragmentClassName = intent.getStringExtra(EXTRA_FRAGMENT_NAME) ?: return null
         Timber.d("Creating fragment %s", fragmentClassName)
         return FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
             arguments = intent.getBundleExtra(EXTRA_FRAGMENT_ARGS)
