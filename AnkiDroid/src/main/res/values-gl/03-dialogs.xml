@@ -49,7 +49,7 @@
     <string name="custom_study_rev_extend">Aumentar/diminuír (\"-3\") o límite de repasos actual en</string>
     <string name="custom_study_forgotten">Repasar as tarxetas esquecidas nos últimos x días:</string>
     <string name="custom_study_ahead_description">Repasar as tarxetas pendentes nos vindeiros:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_preview">Previsualizar as tarxetas novas engadidas nos últimos:</string>
     <string name="custom_study_tags">Seleccionar x tarxetas da baralla:</string>
     <string name="storage_full_title">Almacenamento cheo</string>
     <string name="storage_almost_full_title">Almacenamento case cheo</string>
@@ -87,7 +87,7 @@
     <string name="check_media_warning">Isto pode levar moito tempo con coleccións multimedia grandes. Queres continuar?</string>
     <string name="check_media_message">Verificando multimedia&#8230;</string>
     <string name="check_media_adding_missing_tag">Engadindo etiquetas&#8230;</string>
-    <string name="check_media_tags_added">Tags added</string>
+    <string name="check_media_tags_added">Etiquetas engadidas</string>
     <string name="delete_media_message">Eliminando multimedia&#8230;</string>
     <string name="delete_media_result_title">Resultado da eliminación</string>
     <plurals name="delete_media_result_message">

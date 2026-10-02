@@ -24,7 +24,7 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
-    <string name="enabled" comment="Generic label for something that is turned on">Enabled</string>
+    <string name="enabled" comment="Generic label for something that is turned on">Etkin</string>
     <string name="disabled" comment="Generic label for something that is turned off">Devredışı</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d dk</item>
@@ -108,7 +108,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">Üç parmakla dokunma</string>
     <string name="gestures_four_finger_tap" maxLength="41">Dört parmakla dokunma</string>
     <string name="gestures_shake" maxLength="41">Cihazı salla</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menüsü</string>
     <string name="card_browser_enable_external_context_menu_summary">\"%s\" durum menüsünü uygulama çapında etkinleştirir</string>
     <string name="double_scrolling_gap" maxLength="41">Hızlı kaydırma</string>
     <string name="double_scrolling_gap_summ">eOkuyucu\'yla kaydırma mesafesini iki katına çıkarmak istiyorsanız bunu etkinleştirin</string>
@@ -223,7 +223,7 @@
          ####################################################################################### -->
     <!-- Entry points -->
     <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
-    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">App-wide</string>
+    <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">Uygulama geneli</string>
     <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
     <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
     <!-- Schedule reminders screen -->
@@ -231,9 +231,9 @@
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Hatırlatıcı ekle</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Çalışma hatırlatıcınız yok</string>
     <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
-    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Notification settings</string>
+    <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Bildirim ayarları</string>
     <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
-    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deck not found</string>
+    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deste bulunamadı</string>
     <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Reminders are unavailable</string>
     <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Fix</string>
     <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
@@ -243,15 +243,15 @@
     <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">Çalışma hatırlatıcısı ekle</string>
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">Çalışma hatırlatıcısını değiştir</string>
     <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
-    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deck:</string>
-    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Advanced settings</string>
+    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deste:</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Gelişmiş ayarlar</string>
     <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
     <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
     <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
     <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
-    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
-    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
+    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Bu hatırlatıcı silinsin mi?</string>
+    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">Bu eylem geri alınamaz.</string>
     <!-- Reminder troubleshooting screen -->
     <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Reminders are unavailable.</string>
     <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Reminders may not work correctly.</string>
@@ -259,16 +259,16 @@
     <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
     <!-- Troubleshooting check titles -->
     <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Notification permission</string>
-    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Notification channel</string>
+    <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Bildirim kanalı</string>
     <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Do not disturb</string>
-    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Battery optimization</string>
-    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Power saving mode</string>
+    <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Pil optimizasyonu</string>
+    <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Güç tasarruf modu</string>
     <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
     <!-- Troubleshooting check statuses -->
     <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Granted</string>
     <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">Denied</string>
-    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">On</string>
-    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">Off</string>
+    <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">Açık</string>
+    <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">Kapalı</string>
     <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">Unrestricted</string>
     <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">Optimized</string>
     <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">Restricted</string>
@@ -447,8 +447,8 @@
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
     <string name="related_settings_title" comment="Title of the section for related settings">İlgili ayarlar</string>
     <!-- External Directory Selection Preference -->
-    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
-    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
+    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Ayarlanmamış</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Özel yol</string>
     <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
-    <string name="pref_directory_not_writable">Directory is not writable</string>
+    <string name="pref_directory_not_writable">Dizin yazılabilir değil</string>
 </resources>
