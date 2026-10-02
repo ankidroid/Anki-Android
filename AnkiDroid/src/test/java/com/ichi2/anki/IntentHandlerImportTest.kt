@@ -43,7 +43,7 @@ class IntentHandlerImportTest : RobolectricTest() {
     @Test
     fun `import failure stays visible until dismissed`() {
         val failure = ImportResult.Failure("The selected file is no longer available")
-        every { ImportUtils.handleFileImport(any(), any()) } returns failure
+        every { ImportUtils.prepareImport(any(), any()) } returns failure
 
         val activity = launchImport()
 
@@ -59,7 +59,7 @@ class IntentHandlerImportTest : RobolectricTest() {
 
     @Test
     fun `successful import finishes the intent handler`() {
-        every { ImportUtils.handleFileImport(any(), any()) } returns
+        every { ImportUtils.prepareImport(any(), any()) } returns
             ImportResult.Success(
                 ImportResolution.DeckPackage(ImportResolution.Source("content://import/deck.apkg".toUri(), "deck.apkg")),
                 "/cache/deck.apkg",
@@ -69,14 +69,31 @@ class IntentHandlerImportTest : RobolectricTest() {
     }
 
     @Test
+    fun `package import failure from a text intent stays visible until dismissed`() {
+        val failure = ImportResult.Failure("The selected file is no longer available")
+        every { ImportUtils.prepareImport(any(), any()) } returns failure
+
+        val activity = launchImport("text/plain")
+
+        val dialog = assertIs<AlertDialog>(ShadowDialog.getLatestDialog())
+        assertEquals(failure.humanReadableMessage, dialog.message)
+        assertTrue(dialog.isShowing)
+        assertFalse(activity.isFinishing)
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+        shadowOf(Looper.getMainLooper()).idle()
+        assertTrue(activity.isFinishing)
+    }
+
+    @Test
     fun `import before introduction finishes the intent handler`() {
         setIntroductionSlidesShown(false)
 
         assertTrue(launchImport().isFinishing)
     }
 
-    private fun launchImport(): IntentHandler {
-        val intent = Intent(Intent.ACTION_VIEW, "content://import/deck.apkg".toUri())
+    private fun launchImport(mimeType: String? = null): IntentHandler {
+        val intent = Intent(Intent.ACTION_VIEW).setDataAndType("content://import/deck.apkg".toUri(), mimeType)
         val controller = Robolectric.buildActivity(IntentHandler::class.java, intent)
         saveControllerForCleanup(controller)
         return controller.create().get()

@@ -104,17 +104,17 @@ class IntentHandlerTest {
     }
 
     @Test
-    fun textImportIntentReturnsTextImport() {
-        testIntentType("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT)
-        testIntentType("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT)
-        testIntentType("content://valid", "text/csv", LaunchType.TEXT_IMPORT)
-        testIntentType("content://valid", "text/tsv", LaunchType.TEXT_IMPORT)
+    fun textAttachmentsAreResolvedAsFileImports() {
+        testIntentType("content://valid", "text/tab-separated-values", LaunchType.FILE_IMPORT)
+        testIntentType("content://valid", "text/comma-separated-values", LaunchType.FILE_IMPORT)
+        testIntentType("content://valid", "text/csv", LaunchType.FILE_IMPORT)
+        testIntentType("content://valid", "text/tsv", LaunchType.FILE_IMPORT)
 
-        // Test for ACTION_SEND with file streams (should still be TEXT_IMPORT)
-        testIntentTypeWithStream("content://valid", "text/tab-separated-values", LaunchType.TEXT_IMPORT)
-        testIntentTypeWithStream("content://valid", "text/comma-separated-values", LaunchType.TEXT_IMPORT)
-        testIntentTypeWithStream("content://valid", "text/csv", LaunchType.TEXT_IMPORT)
-        testIntentTypeWithStream("content://valid", "text/tsv", LaunchType.TEXT_IMPORT)
+        // Test for ACTION_SEND with file streams (should still be FILE_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/tab-separated-values", LaunchType.FILE_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/comma-separated-values", LaunchType.FILE_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/csv", LaunchType.FILE_IMPORT)
+        testIntentTypeWithStream("content://valid", "text/tsv", LaunchType.FILE_IMPORT)
     }
 
     @Test
@@ -143,7 +143,7 @@ class IntentHandlerTest {
 
         val launchType = getLaunchType(intent)
 
-        // Should NOT be TEXT_IMPORT (which would trigger CSV import and fail)
+        // Shared note content must not be resolved as a file attachment.
         // Should be SHARED_TEXT (which launches note editor directly)
         assertThat(launchType, equalTo(LaunchType.SHARED_TEXT))
     }
