@@ -15,6 +15,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.cardviewer.appendNoSuggestAttributes
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.CardInfoDestination
@@ -631,12 +632,18 @@ class ReviewerViewModel(
         text: String,
         typeAnswer: TypeAnswer,
     ): String {
+        val keyboardAttributes =
+            buildString {
+                if (typeAnswer.noSuggest) appendNoSuggestAttributes()
+            }
+
         @Suppress("XmlDeprecatedElement") // upstream uses `<center>`
         @Language("HTML")
         val repl =
             """
             <center>
             <input type="text" id="typeans" onkeydown="ankidroid.onTypeAnswerKeyDown(event);" 
+               $keyboardAttributes
                style="font-family: '${typeAnswer.font}'; font-size: ${typeAnswer.fontSize}px;">
             </center>
             """.trimIndent()

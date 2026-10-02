@@ -3,12 +3,14 @@
 package com.ichi2.anki.cardviewer
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import androidx.core.content.getSystemService
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.ui.applyNoSuggest
 
 /** Applies `nosuggest` to the focused HTML answer field's keyboard connection. */
@@ -46,4 +48,12 @@ open class TypeAnswerWebView(
         destroyed = true
         super.destroy()
     }
+}
+
+/** Uses the same keyboard support when the new reviewer recreates its WebView after a crash. */
+class TypeAnswerWebViewLayout(
+    context: Context,
+    attrs: AttributeSet?,
+) : SafeWebViewLayout(context, attrs) {
+    override fun createWebView(): WebView = TypeAnswerWebView(context)
 }

@@ -17,6 +17,7 @@ import anki.scheduler.CardAnswer.Rating
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.cardviewer.TypeAnswerWebView
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -70,6 +71,20 @@ class ReviewerFragmentTest : RobolectricTest() {
             remove(Prefs.key(R.string.disable_hardware_render_key))
         }
     }
+
+    @Test
+    fun `recreated WebView retains keyboard support`() =
+        runTest {
+            addBasicWithTypingNote("front", "back")
+            withReviewer {
+                val layout = binding.webViewLayout
+                val original = assertIs<TypeAnswerWebView>(layout.getChildAt(0))
+                layout.onRenderProcessGone(original)
+                val replacement = assertIs<TypeAnswerWebView>(layout.getChildAt(0))
+                assertNotSame(original, replacement)
+                assertNotNull(shadowOf(replacement).getJavascriptInterface("AnkiDroidKeyboard"))
+            }
+        }
 
     @Test
     fun `software rendering is applied to the study screen when enabled`() =
