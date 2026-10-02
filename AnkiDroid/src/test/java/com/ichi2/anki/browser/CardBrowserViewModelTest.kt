@@ -2190,6 +2190,22 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `sort state follows the cards or notes mode`() {
+        col.config.set("noteSortType", "noteCrt")
+        col.config.set("browserNoteSortBackwards", true)
+
+        runViewModelTest(initMode = InitMode.NO_DELAY) {
+            setCardsOrNotes(CardsOrNotes.NOTES).join()
+            assertEquals(true, flowOfReverseDirection.value)
+            assertEquals(SortChangeNotification.CollectionOrdering("Created", ColumnType.DATE, reverse = true), flowOfCurrentSort.value)
+
+            setCardsOrNotes(CardsOrNotes.CARDS).join()
+            assertEquals(false, flowOfReverseDirection.value)
+            assertEquals(SortChangeNotification.CollectionOrdering("Sort Field", ColumnType.TEXT, reverse = false), flowOfCurrentSort.value)
+        }
+    }
+
     private fun assertDate(str: String?) {
         // 2025-01-09 @ 18:06
         assertNotNull(str)
