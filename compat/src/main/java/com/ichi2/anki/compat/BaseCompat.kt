@@ -29,7 +29,9 @@ import android.view.WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.AnimRes
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.ContentInfoCompat
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
+import kotlinx.coroutines.Job
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -45,6 +47,13 @@ import kotlin.time.Duration
 @KotlinCleanup("add extension method logging file.delete() failure" + "Fix Deprecation")
 @Suppress("Deprecation")
 open class BaseCompat : Compat {
+    override fun retainDropPermissions(
+        payload: ContentInfoCompat,
+        job: Job,
+    ) {
+        // Before Android 12, the activity retains drop permissions.
+    }
+
     // Until API26, tooltips cannot be defined declaratively in layouts
     override fun setTooltipTextByContentDescription(view: View) {
         TooltipCompat.setTooltipText(view, view.contentDescription)

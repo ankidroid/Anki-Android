@@ -118,6 +118,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.dp
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.contextmenu.DeckPickerMenuContentProvider
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
@@ -214,7 +215,6 @@ import com.ichi2.themes.Themes
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
-import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils
@@ -1033,20 +1033,8 @@ open class DeckPicker :
 
             val clip = uriContent?.clip ?: return@OnReceiveContentListener remaining
             val uri = clip.getItemAt(0).uri
-            if (!ImportUtils.FileImporter().isValidImportType(this, uri)) {
-                showSnackbar(CommonString.import_log_no_apkg)
-                return@OnReceiveContentListener remaining
-            }
-
-            try {
-                // Intent is nullable because `clip.getItemAt(0).intent` always returns null
-                ImportUtils.FileImporter().handleContentProviderFile(this, uri, Intent().setData(uri))
-                onResume()
-            } catch (e: Exception) {
-                Timber.w(e)
-                CrashReportService.sendExceptionReport(e, "DeckPicker::onReceiveContent")
-                return@OnReceiveContentListener remaining
-            }
+            val importJob = onSelectedFileToImport(Intent().setData(uri))
+            compat.retainDropPermissions(payload, importJob)
 
             return@OnReceiveContentListener remaining
         }
