@@ -147,7 +147,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                     )
 
-                deckView.setOnClickPendingIntent(R.id.deckName, pendingIntent)
+                deckView.setOnClickPendingIntent(R.id.widget_deck_row, pendingIntent)
                 remoteViews.addView(R.id.deckCollection, deckView)
             }
 
