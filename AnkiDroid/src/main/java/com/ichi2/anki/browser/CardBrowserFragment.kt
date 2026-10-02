@@ -932,6 +932,12 @@ class CardBrowserFragment :
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        // Search update flows can be missed while the note editor is open.
+        cardsAdapter.refreshRows()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         if (::cardsListView.isInitialized) {
@@ -948,7 +954,7 @@ class CardBrowserFragment :
     private fun setupFlows() {
         fun onIsTruncatedChanged(isTruncated: Boolean) = cardsAdapter.notifyDataSetChanged()
 
-        fun cardsUpdatedChanged(unit: Unit) = cardsAdapter.notifyDataSetChanged()
+        fun cardsUpdatedChanged(unit: Unit) = cardsAdapter.refreshRows()
 
         fun onColumnsChanged(columnCollection: BrowserColumnCollection) {
             Timber.d("columns changed")
@@ -1031,7 +1037,7 @@ class CardBrowserFragment :
         }
 
         fun searchStateChanged(searchState: SearchState) {
-            cardsAdapter.notifyDataSetChanged()
+            cardsAdapter.refreshRows()
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
             if (searchState is SearchState.Completed) {
                 legacySubtitle?.text = searchState.formatCardCount(resources)
