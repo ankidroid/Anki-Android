@@ -252,6 +252,8 @@ also changes the interval of the card"
     <string name="compress">Compress</string>
 
     <!-- Tts playback error dialog -->
+    <string name="tts_no_engine_title">No text-to-speech engine installed</string>
+    <string name="tts_no_engine_message">Android supports custom text-to-speech engines. Install an app that includes one.</string>
     <string name="tts_error_dialog_title">Language not supported</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
