@@ -1415,6 +1415,20 @@ class CardBrowserViewModelTest : JvmTest() {
             )
         }
 
+    @Suppress("SpellCheckingInspection")
+    @Test
+    fun `current sort - language change`() =
+        runViewModelTest {
+            fun sortField(label: String) = SortChangeNotification.CollectionOrdering(label, ColumnType.TEXT, reverse = false)
+
+            assertEquals(sortField("Sort Field"), flowOfCurrentSort.value, "English")
+
+            col.reopenWithLanguage("de")
+            onReinit()
+
+            assertEquals(sortField("Sortierfeld"), flowOfCurrentSort.value, "German")
+        }
+
     @Test
     fun `deck name with quotes is properly escaped in search query`() =
         runViewModelTest {
