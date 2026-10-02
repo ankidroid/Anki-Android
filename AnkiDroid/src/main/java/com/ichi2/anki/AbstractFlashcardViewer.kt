@@ -2785,7 +2785,8 @@ abstract class AbstractFlashcardViewer :
         const val DEFAULT_DOUBLE_TAP_TIME_INTERVAL = 200
 
         /** Handle providing help for "Image Not Found"  */
-        internal val mediaErrorHandler = MediaErrorHandler()
+        @set:VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        internal var mediaErrorHandler = MediaErrorHandler()
 
         // Android design spec for the size of the status bar.
         private const val NO_GESTURE_BORDER_DIP = 24
