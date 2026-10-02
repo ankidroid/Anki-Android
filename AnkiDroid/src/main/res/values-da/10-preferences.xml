@@ -312,6 +312,7 @@
     <string name="pref_cat_about_title" maxLength="41">Om</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[Disse er vores fantastiske <a href=\"%1$s\">bidragsydere</a>. Du kan også hjælpe AnkiDroid ved at programmere, oversætte, donere og <a href=\"%2$s\">mere</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">License</string>
     <string name="license_description"><![CDATA[AnkiDroid er udgivet under <a href=\"%1$s\">GPL-3.0</a> og <a href=\"%2$s\">AGPL-3.0</a> licenser med kildekoden tilgængelig <a href=\"%3$s\">på GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>

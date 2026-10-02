@@ -312,6 +312,7 @@
     <string name="pref_cat_about_title" maxLength="41">𐌱𐌹</string>
     <string name="contributors_title">𐌷𐌹𐌻𐍀𐌰𐌽𐌳𐌰𐌽𐍃</string>
     <string name="about_contributors_description"><![CDATA[𐌸𐌰𐌹 𐍃𐌹𐌽𐌳 <a href=\"%1$s\">𐌷𐌹𐌻𐍀𐌰𐌽𐌳𐌰𐌽𐍃</a> 𐌲𐍉𐌳𐌰𐌹 𐍆𐌹𐌻𐌿 𐌿𐌽𐍃𐌰𐍂𐌰𐌹. 𐌾𐌰𐌷 𐌸𐌿 𐌼𐌰𐌲𐍄 𐌷𐌹𐌻𐍀𐌰𐌽 𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳𐌹𐍃 𐍆𐌰𐌿𐍂𐌰𐌼𐌴𐌻𐌴𐌹𐌽𐌰𐌹, 𐍃𐌺𐌴𐌹𐍂𐌴𐌹𐌽𐌰𐌹, 𐌰𐌽𐌳𐍃𐍄𐌰𐌻𐌳𐌰𐌽 𐌾𐌰𐌷 <a href=\"%2$s\">𐌼𐌰𐌹𐍃</a>! ]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">𐌰𐌽𐌳𐌻𐌴𐍄</string>
     <string name="license_description"><![CDATA[𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌿𐍃𐌼𐌴𐍂𐌹𐌸 𐌹𐍃𐍄 𐌿𐍆 <a href=\"%1$s\">GPL-3.0</a> 𐌾𐌰𐌷 <a href=\"%2$s\">AGPL-3.0</a> 𐌰𐌽𐌳𐌻𐌴𐍄𐌰𐌼, 𐌼𐌹𐌸 𐌺𐍉𐌳𐌰𐌿 𐌱𐍂𐌿𐌽𐌽𐌹𐌽𐍃 𐍅𐌹𐍃𐌰𐌽𐌳𐌹𐌽 <a href=\"%3$s\">𐌰𐍄 𐌲𐌹𐍄𐌷𐌰𐌱</a>]]></string>
     <string name="other_licenses"><![CDATA[𐌰𐌽𐌺𐌴𐌹𐌳𐍂𐌰𐌿𐌳 𐌾𐌰𐌷 𐌱𐍂𐌿𐌺𐌴𐌹𐌸 𐌱𐍉𐌺𐌰𐌷𐌿𐍃𐌴 𐌾𐌰𐌷 𐌻𐌴𐌹𐍄𐌹𐌻𐌰𐍄𐌰𐌹𐌺𐌽𐌴 𐌰𐌽𐌸𐌰𐍂𐌰𐌹𐌶𐌴, 𐍅𐌹𐍃𐌰𐌽𐌳𐍉𐌽𐌰 𐌿𐍆 

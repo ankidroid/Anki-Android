@@ -310,6 +310,7 @@
     <string name="contributors_title">ಕೊಡುಗೆದಾರರು</string>
     <string name="about_contributors_description"><![CDATA[ಇವರು ನಮ್ಮ ಅದ್ಭುತ <a href=\"%1$s\">ಕೊಡುಗೆದಾರರು</a>. ಪ್ರೋಗ್ರಾಮಿಂಗ್, ಅನುವಾದ, ದೇಣಿಗೆ ಮತ್ತು <a href=\"%2$s\">ಇನ್ನಷ್ಟು</a> ಮೂಲಕ ನೀವು AnkiDroid ಗೆ ಸಹಾಯ ಮಾಡಬಹುದು!
 ]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">ಪರವಾನಗಿ</string>
     <string name="license_description"><![CDATA[AnkiDroid ಅನ್ನು <a href=\"%1$s\">GPL-3.0</a> ಮತ್ತು <a href=\"%2$s\">AGPL-3.0</a> ಪರವಾನಗಿಗಳ ಮೂಲ ಕೋಡ್ ಅಡಿಯಲ್ಲಿ ಬಿಡುಗಡೆ ಮಾಡಲಾಗಿದೆ < href=\"%3$s\">GitHub</a> ನಲ್ಲಿ ಲಭ್ಯವಿದೆ
 ]]></string>

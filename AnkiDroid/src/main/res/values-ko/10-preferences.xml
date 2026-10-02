@@ -307,6 +307,7 @@
     <string name="pref_cat_about_title" maxLength="41">정보</string>
     <string name="contributors_title">기여자들</string>
     <string name="about_contributors_description"><![CDATA[우리의 멋진 <a href=\"%1$s\">기여자</a>들입니다. 프로그래밍, 번역 기부와 <a href=\"%2$s\">그밖의 다양한 방법</a>으로 AnkiDroid를 도와주실 수 있습니다!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">라이센스</string>
     <string name="license_description"><![CDATA[AnkiDroid는  <a href=\"%1$s\">GPL-3.0</a>과 <a href=\"%2$s\">AGPL-3.0</a> 라이선스 하에 배포됩니다. 소스코드는 <a href=\"%3$s\">GitHub</a>에서 확인할 수 있습니다.]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid 제3 자 라이브러리와 아이콘을 사용합니다. 각 항목은 오픈 소스 <a href=\"%1$s\">라이선스</a>를 따릅니다.]]></string>

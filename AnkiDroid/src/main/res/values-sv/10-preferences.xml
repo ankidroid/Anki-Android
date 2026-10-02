@@ -311,6 +311,7 @@
     <string name="pref_cat_about_title" maxLength="41">Om appen</string>
     <string name="contributors_title">Bidragsgivare</string>
     <string name="about_contributors_description"><![CDATA[Dessa är våra fantastiska <a href=\"%1$s\">bidragsgivare</a>. Du kan också hjälpa AnkiDroid genom att utveckla, översätta, donera och <a href=\"%2$s\">mer</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">Programvarulicens</string>
     <string name="license_description"><![CDATA[AnkiDroid släpps under licenserna <a href=\"%1$s\">GPL-3.0</a> och <a href=\"%2$s\">AGPL-3.0</a>, med källkoden tillgänglig <a href=\"%3$s\">på GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
