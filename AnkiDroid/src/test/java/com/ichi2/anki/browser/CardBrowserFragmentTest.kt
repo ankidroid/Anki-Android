@@ -9,8 +9,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
+import com.google.android.material.chip.Chip
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
@@ -48,7 +51,33 @@ class CardBrowserFragmentTest : RobolectricTest() {
             val offenders = shortcuts.shortcuts.map { it.label }.filterNot { it.isSentenceCase }
             assertThat("shortcut labels should be Sentence case, not Title Case", offenders, empty())
         }
+
+    @Test
+    fun `sort chip describes the saved sort order`() {
+        col.config.set("sortType", "noteCrt")
+        col.config.set("sortBackwards", true)
+
+        withCardBrowserFragment(useSearchView = true) {
+            advanceRobolectricLooper()
+            assertThat(sortChipDescription, equalTo("Sort by Created · Newest first"))
+        }
+    }
+
+    @Test
+    fun `sort chip description follows sort changes`() =
+        withCardBrowserFragment(useSearchView = true) {
+            activityViewModel.setSortType(SortType.CollectionOrdering(BrowserColumnKey("cardEase"), reverse = false)).join()
+            advanceRobolectricLooper()
+            assertThat(sortChipDescription, equalTo("Sort by Ease · Low to high"))
+
+            activityViewModel.setSortType(SortType.NoOrdering).join()
+            advanceRobolectricLooper()
+            assertThat(sortChipDescription, equalTo("No sorting"))
+        }
 }
+
+private val CardBrowserFragment.sortChipDescription: String?
+    get() = requireView().findViewById<Chip>(R.id.sort_chip).contentDescription?.toString()
 
 private val capitalizedFollowingWord = Regex("""\s\p{Lu}\p{Ll}""")
 
