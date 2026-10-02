@@ -1222,6 +1222,7 @@ open class DeckPicker :
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
         updateSearchVisibilityFromState(menu)
+        restoreSearchState(menu)
         // ...then launch a task to possibly update the visible icons.
         // Store the job so that tests can easily await it. In the future
         // this may be better done by injecting a custom test scheduler
@@ -1230,6 +1231,7 @@ open class DeckPicker :
             launchCatchingTask {
                 viewModel.refreshMenuState()
                 updateSearchVisibilityFromState(menu)
+                restoreSearchState(menu)
                 updateDeckRelatedMenuItems(menu)
                 updateMenuFromState(menu)
             }
@@ -1269,6 +1271,7 @@ open class DeckPicker :
                 // When SearchItem is expanded
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                     Timber.i("DeckPicker:: SearchItem opened")
+                    viewModel.updateDeckSearchExpanded(true)
                     // Hide the floating action button if it is visible
                     floatingActionMenu.hideFloatingActionButton()
                     activeSnackBar?.anchorView = null
@@ -1278,6 +1281,18 @@ open class DeckPicker :
                 // When SearchItem is collapsed
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                     Timber.i("DeckPicker:: SearchItem closed")
+                    // Menu recreation also collapses its old action view.
+                    item.actionView?.post {
+                        if (
+                            !isDestroyed &&
+                            !isChangingConfigurations &&
+                            toolbarSearchItem === item &&
+                            !item.isActionViewExpanded
+                        ) {
+                            viewModel.updateDeckSearchExpanded(false)
+                            viewModel.updateDeckFilter("")
+                        }
+                    }
                     // Show the floating action button if it is hidden
                     floatingActionMenu.showFloatingActionButton()
                     activeSnackBar?.anchorView = floatingActionButtonBinding.fabMain
@@ -1286,7 +1301,8 @@ open class DeckPicker :
             },
         )
 
-        (menuItem.actionView as AccessibleSearchView).run {
+        val searchView = menuItem.actionView as AccessibleSearchView
+        searchView.run {
             queryHint = getString(CommonString.search_decks)
             setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
@@ -1296,13 +1312,36 @@ open class DeckPicker :
                     }
 
                     override fun onQueryTextChange(newText: String): Boolean {
-                        viewModel.updateDeckFilter(newText)
+                        if (newText.isNotEmpty()) {
+                            viewModel.updateDeckFilter(newText)
+                        } else {
+                            // Ignore empty callbacks from a replaced action view.
+                            searchView.post {
+                                if (
+                                    !isDestroyed &&
+                                    toolbarSearchView === searchView &&
+                                    menuItem.isActionViewExpanded &&
+                                    searchView.query.isEmpty()
+                                ) {
+                                    viewModel.updateDeckFilter("")
+                                }
+                            }
+                        }
                         return true
                     }
                 },
             )
         }
         searchDecksIcon = menuItem
+    }
+
+    private fun restoreSearchState(menu: Menu) {
+        val searchItem = menu.findItem(R.id.deck_picker_action_filter)
+        if (viewModel.isDeckSearchExpanded && searchItem.isVisible) {
+            val searchView = searchItem.actionView as AccessibleSearchView
+            searchView.setQuery(viewModel.deckSearchQuery, false)
+            searchItem.expandActionView()
+        }
     }
 
     fun updateMenuFromState(menu: Menu) {
