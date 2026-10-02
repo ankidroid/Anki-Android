@@ -1,6 +1,9 @@
 name: 🛠️ Emulator Tests
 
 on:
+  schedule:
+    # Weekly emulator coverage, Monday at 03:17 UTC.
+    - cron: '17 3 * * 1'
   workflow_dispatch:
     inputs:
       iterations:
@@ -21,7 +24,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || 'ci' }}
   cancel-in-progress: true
 
 jobs:
@@ -54,15 +57,6 @@ jobs:
                 iterationArray.push(i);
               }
               console.log('iterationArray is: ' + iterationArray)
-            }
-
-            // If we are running on a schedule it's our periodic passive scan for flakes
-            // Goal is to run enough iterations on all systems that we have confidence there are no flakes
-            if (context.eventName === "schedule") {
-              const iterationCount = 15
-              for (let i = 0; i < iterationCount; i++) {
-                iterationArray.push(i);
-              }
             }
 
             // TODO Refactor to make these dynamic with a minSdk/max bracket only on schedule, not push
