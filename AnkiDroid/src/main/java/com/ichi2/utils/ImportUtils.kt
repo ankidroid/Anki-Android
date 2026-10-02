@@ -147,11 +147,12 @@ object ImportUtils {
             val filename = validateFileName(providedName)
             val source = ImportResolution.Source(uri, filename)
             return when {
+                // Providers and sending apps can label binary Anki packages as text.
+                isCollectionPackage(filename) -> ImportResolution.CollectionPackage(source)
+                isDeckPackage(filename) -> ImportResolution.DeckPackage(source)
                 getExtension(filename).lowercase() in listOf("csv", "tsv", "txt") ||
                     intent.resolveMimeType() in MimeTypeUtils.CSV_TSV_MIME_TYPES || isValidTextOrDataFile(context, uri) ->
                     ImportResolution.Text(source)
-                isCollectionPackage(filename) -> ImportResolution.CollectionPackage(source)
-                isDeckPackage(filename) -> ImportResolution.DeckPackage(source)
                 isAnkiDatabase(filename) ->
                     ImportResolution.Failure(ImportResult.Failure(context.getString(CommonString.import_error_load_imported_database)))
                 else ->
