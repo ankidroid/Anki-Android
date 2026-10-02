@@ -61,6 +61,7 @@ import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
+import com.ichi2.anki.startup.configureBackendTemporaryDirectory
 import com.ichi2.anki.startup.ensureCollectionPathSet
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
@@ -626,7 +627,7 @@ open class AnkiDroidApp :
             if (Build.FINGERPRINT == "robolectric") return
 
             // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
-            Os.setenv("TMPDIR", context.cacheDir.path, false)
+            configureBackendTemporaryDirectory(context)
             // Load backend library
             System.loadLibrary("rsdroid")
         }
