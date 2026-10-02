@@ -12,9 +12,11 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.SizeF
+import android.util.TypedValue
 import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.RemoteViews
+import android.widget.TextView
 import androidx.core.os.BundleCompat
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
@@ -178,7 +180,11 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 // font scaling, fallback fonts (such as emoji), and vertical padding.
                 val row = deckView.apply(context, null)
                 row.measure(widthSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
-                if (usedHeight + row.measuredHeight > availableHeight) break
+                if (usedHeight + row.measuredHeight > availableHeight) {
+                    if (usedHeight > 0) break
+                    // Keep one usable row when a large font cannot fit at the minimum widget height.
+                    deckView.fitSingleRow(row, widthSpec, availableHeight.toInt())
+                }
                 usedHeight += row.measuredHeight
 
                 val isEmptyDeck = deck.newCount == 0 && deck.reviewCount == 0 && deck.learnCount == 0
@@ -203,6 +209,37 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             }
 
             return remoteViews
+        }
+
+        /** Shrink the first row only when its configured text size cannot fit in the widget. */
+        private fun RemoteViews.fitSingleRow(
+            row: View,
+            widthSpec: Int,
+            height: Int,
+        ) {
+            val textViews = listOf(R.id.deckName, R.id.deckNew, R.id.deckLearn, R.id.deckDue).map { row.findViewById<TextView>(it) }
+            val originalSizes = textViews.map { it.textSize }
+            val largestTextSize = originalSizes.max()
+
+            fun measureAtScale(scale: Float) {
+                textViews.zip(originalSizes).forEach { (view, textSize) ->
+                    view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * scale)
+                }
+                row.measure(widthSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED))
+            }
+
+            // Find the largest fitting scale to within one pixel, preserving the relative text sizes.
+            var minScale = 0f
+            var maxScale = 1f
+            while ((maxScale - minScale) * largestTextSize > 1f) {
+                val scale = (minScale + maxScale) / 2
+                measureAtScale(scale)
+                if (row.measuredHeight <= height) minScale = scale else maxScale = scale
+            }
+            measureAtScale(minScale)
+            for (view in textViews) {
+                setTextViewTextSize(view.id, TypedValue.COMPLEX_UNIT_PX, view.textSize)
+            }
         }
 
         private fun showEmptyCollection(
