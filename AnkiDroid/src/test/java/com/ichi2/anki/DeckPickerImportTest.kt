@@ -42,8 +42,6 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowContentResolver
 import java.io.File
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -75,28 +73,27 @@ class DeckPickerImportTest : RobolectricTest() {
     }
 
     @Test
-    fun `selected package displays one confirmation with its cached path`() {
-        val activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
-        val fileName = "deck name.apkg"
-        val uri = "content://import/document/123".toUri()
-        // FileProvider's Android path handling depends on the host filesystem.
-        val provider = mock<ContentProvider>()
-        whenever(provider.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)).thenAnswer {
-            MatrixCursor(arrayOf(OpenableColumns.DISPLAY_NAME)).apply { addRow(arrayOf(fileName)) }
+    fun `selected package displays one confirmation with its cached path`() =
+        runTest {
+            val activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+            val fileName = "deck name.apkg"
+            val uri = "content://import/document/123".toUri()
+            // FileProvider's Android path handling depends on the host filesystem.
+            val provider = mock<ContentProvider>()
+            whenever(provider.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)).thenAnswer {
+                MatrixCursor(arrayOf(OpenableColumns.DISPLAY_NAME)).apply { addRow(arrayOf(fileName)) }
+            }
+            ShadowContentResolver.registerProviderInternal("import", provider)
+            shadowOf(activity.contentResolver).registerInputStreamSupplier(uri) { "package contents".byteInputStream() }
+            val cachedPath = Uri.fromFile(File(activity.cacheDir, fileName)).encodedPath!!
+            try {
+                activity.onSelectedFileToImport(Intent(Intent.ACTION_VIEW, uri))
+                advanceRobolectricLooper()
+                activity.assertSingleImportConfirmation(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, cachedPath)
+            } finally {
+                File(cachedPath).delete()
+            }
         }
-        ShadowContentResolver.registerProviderInternal("import", provider)
-        shadowOf(activity.contentResolver).registerInputStreamSupplier(uri) { "package contents".byteInputStream() }
-        val cachedPath = Uri.fromFile(File(activity.cacheDir, fileName)).encodedPath!!
-        val executor = Executors.newSingleThreadExecutor()
-        try {
-            executor.submit { activity.onSelectedPackageToImport(Intent(Intent.ACTION_VIEW, uri)) }.get(10, TimeUnit.SECONDS)
-            advanceRobolectricLooper()
-            activity.assertSingleImportConfirmation(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, cachedPath)
-        } finally {
-            executor.shutdownNow()
-            File(cachedPath).delete()
-        }
-    }
 
     @Test
     fun `prepared deck waits for resume and selects Add from its resolved type`() {

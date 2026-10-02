@@ -401,13 +401,7 @@ open class DeckPicker :
             ActivityResultContracts.StartActivityForResult(),
             DeckPickerActivityResultCallback {
                 if (it.resultCode == RESULT_OK) {
-                    lifecycleScope.launch {
-                        withProgress(message = getString(CommonString.import_preparing_file)) {
-                            withContext(Dispatchers.IO) {
-                                onSelectedPackageToImport(it.data!!)
-                            }
-                        }
-                    }
+                    onSelectedFileToImport(it.data!!)
                 }
             },
         )
@@ -417,7 +411,7 @@ open class DeckPicker :
             ActivityResultContracts.StartActivityForResult(),
             DeckPickerActivityResultCallback {
                 if (it.resultCode == RESULT_OK) {
-                    onSelectedCsvForImport(it.data!!)
+                    onSelectedFileToImport(it.data!!)
                 }
             },
         )

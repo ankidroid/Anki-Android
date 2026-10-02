@@ -7,7 +7,7 @@ import android.content.Intent
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
-import com.ichi2.anki.common.annotations.NeedsTest
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.common.destinations.CsvImporterDestination
 import com.ichi2.anki.common.destinations.addNextIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -22,12 +22,14 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 
 // see also:
 // ImportFileSelectionFragment - selects 'APKG/COLPKG/CSV' and opens a file picker
-// onSelectedPackageToImport/onSelectedCsvForImport
+// onSelectedFileToImport - prepares a resolved source, then opens its import UI
 // importUtils - copying selected file into local cache
 // ImportDialog - confirmation screen after file copied to cache
 //    * ImportDialogListener - AnkiActivity implementation of handler for the confirmation screen
@@ -39,25 +41,18 @@ fun interface ImportColpkgListener {
     fun onImportColpkg(colpkgPath: String?)
 }
 
-@NeedsTest("successful import from the app menu")
-fun AnkiActivity.onSelectedPackageToImport(data: Intent) {
-    when (val importResult = ImportUtils.handleFileImport(this, data)) {
-        is ImportResult.Failure ->
-            runOnUiThread {
-                ImportUtils.showImportUnsuccessfulDialog(this, importResult, exitActivity = false)
+/** Shared by the file pickers and drag-and-drop. File I/O completes before displaying any UI. */
+fun AnkiActivity.onSelectedFileToImport(data: Intent) {
+    lifecycleScope.launch {
+        val result =
+            withProgress(message = getString(CommonString.import_preparing_file)) {
+                withContext(ioDispatcher) { ImportUtils.prepareImport(this@onSelectedFileToImport, data) }
             }
-        is ImportResult.Success -> {
-            // a Message was posted, don't wait for onResume to process it
-            if (this.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                dialogHandler.popMessage()?.let { dialogHandler.sendStoredMessage(it) }
-            }
+        when (result) {
+            is ImportResult.Failure -> ImportUtils.showImportUnsuccessfulDialog(this@onSelectedFileToImport, result, exitActivity = false)
+            is ImportResult.Success -> openImport(result)
         }
     }
-}
-
-fun Activity.onSelectedCsvForImport(data: Intent) {
-    val path = ImportUtils.getFileCachedCopy(this, data) ?: return
-    openCsvImporter(path)
 }
 
 fun Activity.openCsvImporter(path: String) {
