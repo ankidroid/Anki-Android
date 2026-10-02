@@ -852,7 +852,11 @@ class CardBrowserViewModel(
                 }
         }
 
-    fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch { browserOptionsRepository.setCardsOrNotes(newValue) }
+    fun setCardsOrNotes(newValue: CardsOrNotes) =
+        viewModelScope.launch {
+            browserOptionsRepository.setCardsOrNotes(newValue)
+            refreshSortState()
+        }
 
     fun setTruncated(value: Boolean) = viewModelScope.launch { browserOptionsRepository.setIsTruncated(value) }
 
