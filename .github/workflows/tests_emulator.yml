@@ -66,6 +66,11 @@ jobs:
             // try different architectures, targets, delays etc
             let arch = ['x86_64'];
             let target = ['google_apis', 'google_apis_ps16k'];
+            // Keep the 16 KB emulator off the per-change CI path.
+            // Scheduled and manual runs exercise both targets.
+            if (context.eventName !== 'schedule' && context.eventName !== 'workflow_dispatch') {
+              target = ['google_apis'];
+            }
             let firstBootDelay = [600];
 
             return {
