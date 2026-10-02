@@ -323,6 +323,7 @@
     <string name="pref_cat_about_title" maxLength="41">حول</string>
     <string name="contributors_title">مساهمون</string>
     <string name="about_contributors_description"><![CDATA[هؤلاء هم <a href=\"%1$s\">متطوعونا</a> الرائعون. تستطيع مساعدة آنكي درويد أيضًا بالبرمجة والترجمة والتبرع و<a href=\"%2$s\">المزيد</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">الرخصة</string>
     <string name="license_description"><![CDATA[آنكي درويد مرخص تحت رخصتي <a href=\"%1$s\">GPL-3.0</a> و<a href=\"%2$s\">AGPL-3.0</a>، وتتوفر الشفرة المصدرية على <a href=\"%3$s\">GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[يستخدم آنكي درويد أيضًا مكتبات وأيقونات من طرف ثالث وهي مرخصة تحت <a href=\"%1$s\">رخص</a> متنوعة مفتوحة المصدر.]]></string>

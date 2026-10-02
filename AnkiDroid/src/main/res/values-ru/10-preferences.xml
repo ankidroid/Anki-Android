@@ -316,6 +316,7 @@
     <string name="pref_cat_about_title" maxLength="41">О программе</string>
     <string name="contributors_title">Участники</string>
     <string name="about_contributors_description"><![CDATA[Это наши потрясающие <a href=\"%1$s\">участники</a>. Вы также можете помочь AnkiDroid программируя, делая переводы, пожертвования <a href=\"%2$s\">и другое</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">Лицензия</string>
     <string name="license_description"><![CDATA[AnkiDroid выпущен на условиях лицензий <a href=\"%1$s\">GPL-3.0</a> и <a href=\"%2$s\">AGPL-3.0</a> с исходным кодом <a href=\"%3$s\">на GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid также использует сторонние библиотеки и иконки, которые лицензированы под различными лицензиями <a href=\"%1$s\">с открытым исходным кодом</a>]]></string>

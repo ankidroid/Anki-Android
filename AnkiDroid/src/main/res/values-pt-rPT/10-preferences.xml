@@ -312,6 +312,7 @@
     <string name="pref_cat_about_title" maxLength="41">Sobre</string>
     <string name="contributors_title">Colaboradores</string>
     <string name="about_contributors_description"><![CDATA[Estes são os nossos espectaculares <a href=\"%1$s\">colaboradores</a>. Também pode ajudar o AnkiDroid, ao programar, traduzir, doar ou <a href=\"%2$s\">doutras formas</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">Licença</string>
     <string name="license_description"><![CDATA[O AnkiDroid é publicado sob as licenças <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a> , com o código-fonte disponível <a href=\"%3$s\">no GitHub</a>.]]></string>
     <string name="other_licenses"><![CDATA[O AnkiDroid usa bibliotecas e ícones de terceiros, licenciados sob várias <a href=\"%1$s\">licenças</a> de código aberto]]></string>

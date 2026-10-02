@@ -310,6 +310,7 @@
     <string name="pref_cat_about_title" maxLength="41">AnkiDroid haqida</string>
     <string name="contributors_title">Hissa qoʻshganlar</string>
     <string name="about_contributors_description"><![CDATA[Bular bizning ajoyib <a href=\"%1$s\">hissa qoʻshuvchilarimiz</a>. Siz ham dasturlash, tarjima qilish, xayriya qilish va <a href=\"%2$s\">boshqa yoʻllar</a> orqali AnkiDroidʼga yordam berishingiz mumkin!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">Litsenziya</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> va <a href=\"%2$s\">AGPL-3.0</a> litsenziyalari ostida chiqarilgan, dastur kodi <a href=\"%3$s\">GitHubda</a> mavjud]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid, shuningdek, turli ochiq kodli <a href=\"%1$s\">litsenziyalar</a> asosida tarqatilgan uchinchi tomon kutubxonalari va piktogrammalaridan foydalanadi.]]></string>

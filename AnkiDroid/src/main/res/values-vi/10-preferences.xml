@@ -306,6 +306,7 @@
     <string name="pref_cat_about_title" maxLength="41">Giới thiệu</string>
     <string name="contributors_title">Những người đóng góp</string>
     <string name="about_contributors_description"><![CDATA[Đây là <a href=\"%1$s\">cộng tác viên tuyệt vời của chúng tôi</a>. Bạn có thể hỗ trợ AnkiDroid bằng cách lập trình, dịch thuật, quyên góp và <a href=\"%2$s\">hơn thế nữa</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">Giấy phép</string>
     <string name="license_description"><![CDATA[AnkiDroid được phát hành theo giấy phép <a href=\"%1$s\">GPL-3.0</a> và <a href=\"%2$s\">AGPL-3.0</a>, với mã nguồn có sẵn <a href=\"%3$s\">trên GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid cũng sử dụng các thư viện và biểu tượng từ bên thứ ba, được cấp phép theo nhiều <a href=\"%1$s\">giấy phép mã nguồn mở</a> khác nhau.]]></string>

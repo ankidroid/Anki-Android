@@ -310,6 +310,7 @@
     <string name="pref_cat_about_title" maxLength="41">Névjegy</string>
     <string name="contributors_title">Közreműködők</string>
     <string name="about_contributors_description"><![CDATA[Ők a mi csodálatos <a href=\"%1$s\"> közreműködőink </a>. Te is segíthethetsz az AnkiDroidnak programozással, fordítással, adományozással és sok <a href=\"%2$s\">mással</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">Licensz</string>
     <string name="license_description"><![CDATA[Az AnkiDroid a <a href=\"%1$s\">GPL-3.</a> és az <a href=\"%2$s\">AGPL-3.0</a> licenc alatt lett kiadva. A forráskód <a href=\"%3$s\"> GitHubon</a> érhető el.]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid also uses third-party libraries and icons, which are licensed under various open source <a href=\"%1$s\">licenses</a>]]></string>
