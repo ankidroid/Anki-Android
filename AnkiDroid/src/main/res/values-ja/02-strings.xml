@@ -69,7 +69,7 @@
     <string name="leech_notification">このカードに \"leech\" (苦戦、忘却多発) というタグを付けました</string>
     <string name="webview_crash_unknown">原因不明のエラー</string>
     <string name="webview_crash_unknwon_detailed">これはWebViewの内部エラーによって引き起こされました。</string>
-    <string name="webview_crash_oom">Out of memory</string>
+    <string name="webview_crash_oom">メモリが不足しています</string>
     <string name="webview_crash_oom_details">WebViewはシステムによって終了されました。これは通常、アプリケーションがメモリ不足時に発生します。多くの場合、データ量の多いフォントやメディアが原因です。</string>
     <string name="webview_crash_nonfatal">WebViewレンダラーがクラッシュしました。原因: %s</string>
     <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
@@ -327,7 +327,7 @@
     <string name="shared_decks_login_required">さらにデッキをダウンロードするにはログインしてください</string>
     <string name="deck_description_field_hint">デッキ説明文</string>
     <string name="deck_description_saved">説明を更新しました</string>
-    <string name="format_deck_description_as_markdown">Format as Markdown</string>
+    <string name="format_deck_description_as_markdown">Markdown形式でフォーマット</string>
     <string name="help_button_content_description">「%s」のヘルプを開く</string>
     <string name="failed_to_copy">コピーに失敗しました</string>
     <plurals name="unbury_cards_feedback">

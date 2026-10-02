@@ -220,8 +220,8 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Yazı tipi boyutu</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Araç çubuğunu göster</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Önizlemeyi göster</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Önizlemeyi gizle</string>
     <string name="format_insert_bold">Kalın olarak şekillendir</string>
     <string name="format_insert_italic">İtalik olarak şekillendir</string>
     <string name="format_insert_underline">Altı çizili olarak şekillendir</string>
@@ -237,7 +237,7 @@
     <string name="toolbar_item_explain_edit_or_remove">Seçili yazıdan önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu öğesini değiştirmek ya da kaldırmak için basılı tutun</string>
     <string name="remove_toolbar_item">Araç çubuğu öğesi kaldırılsın mı?</string>
     <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
-    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
+    <string name="before_after_text_requirement_error">En az bir HTML alanı gereklidir.</string>
     <string name="note_editor_image_too_large">Bu resim fazla büyük, lütfen resmi elle ekleyin</string>
     <string name="note_editor_video_too_large">Bu video dosyası fazla büyük, lütfen videoyu elle ekleyin</string>
     <string name="note_editor_audio_too_large">Bu ses dosyası fazla büyük, lütfen sesi elle ekleyin</string>

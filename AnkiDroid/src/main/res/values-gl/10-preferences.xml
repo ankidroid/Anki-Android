@@ -443,8 +443,8 @@
     <string name="show_answer_feedback" maxLength="41">Amosar explicación da resposta</string>
     <string name="screen" maxLength="41">Pantalla</string>
     <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
-    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Skip</string>
-    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Assign</string>
+    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Omitir</string>
+    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Atribuír</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configuración</string>
     <string name="related_settings_title" comment="Title of the section for related settings">Configuracións relacionadas</string>

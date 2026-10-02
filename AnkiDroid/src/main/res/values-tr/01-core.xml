@@ -127,7 +127,7 @@
     <string name="read_write_permission_label">AnkiDroid veritabanına okut ve yaz</string>
     <string name="read_write_permission_description">varolan notlara, kartlara, not türlerine ve destelere erişmek, ve yenilerini oluşturmak</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Kart tarayıcısı</string>
     <string name="context_menu_anki_card_label">Anki card</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Koleksiyonlar birleştirilemiyor.\nHangi koleksiyonu tutmak istersiniz?</string>

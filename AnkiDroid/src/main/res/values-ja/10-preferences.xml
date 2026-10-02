@@ -107,7 +107,7 @@
     <string name="gestures_three_finger_tap" maxLength="41">3点同時タップ</string>
     <string name="gestures_four_finger_tap" maxLength="41">4点同時タップ</string>
     <string name="gestures_shake" maxLength="41">デバイスを振る</string>
-    <string name="card_browser_enable_external_context_menu" maxLength="41">‘%s’ menu</string>
+    <string name="card_browser_enable_external_context_menu" maxLength="41">メニュー項目に「%s」を追加</string>
     <string name="card_browser_enable_external_context_menu_summary">AnkiDroidおよび他のアプリ（ウェブブラウザなど）で、文字列を選択した際に表示されるコンテキストメニューに「%s」という項目を追加します</string>
     <string name="double_scrolling_gap" maxLength="41">ダブルスクロール</string>
     <string name="double_scrolling_gap_summ">eReader とのスクロールのギャップを 2 倍にする場合、これを有効にします</string>
@@ -437,7 +437,7 @@
     <string name="new_study_screen" maxLength="41">新しい学習画面</string>
     <string name="new_study_screen_summ"><![CDATA[現行の学習画面の後継となる、改良された学習画面。現行画面のいくつかの機能は変更または削除されました。ぜひ<a href="%1$s">ご意見・ご感想</a>をお寄せください。<a href="%2$s">不具合</a>がある場合もお知らせいただければ幸いです。]]></string>
     <string name="show_answer_feedback" maxLength="41">回答選択時にフィードバック（目印）を表示</string>
-    <string name="screen" maxLength="41">画面枠</string>
+    <string name="screen" maxLength="41">画面</string>
     <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
     <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Skip</string>
     <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Assign</string>
@@ -448,5 +448,5 @@
     <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
     <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
     <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
-    <string name="pref_directory_not_writable">Directory is not writable</string>
+    <string name="pref_directory_not_writable">ディレクトリが書き込み可能ではありません</string>
 </resources>
