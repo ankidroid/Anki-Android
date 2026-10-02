@@ -68,20 +68,24 @@ fun Activity.openCsvImporter(path: String) {
     stackBuilder.startActivities()
 }
 
-/**
- * Open prepared text immediately, or store a package confirmation for the caller or onResume.
- */
+/** Open a prepared import on the UI thread. */
 fun Activity.openImport(result: ImportResult.Success) {
-    val message =
-        when (result.file) {
-            is ImportResolution.DeckPackage -> ImportUtils.CollectionImportAdd(result.path)
-            is ImportResolution.CollectionPackage -> ImportUtils.CollectionImportReplace(result.path)
-            is ImportResolution.Text -> {
-                openCsvImporter(result.path)
-                return
+    runOnUiThread {
+        val message =
+            when (result.file) {
+                is ImportResolution.DeckPackage -> ImportUtils.CollectionImportAdd(result.path)
+                is ImportResolution.CollectionPackage -> ImportUtils.CollectionImportReplace(result.path)
+                is ImportResolution.Text -> {
+                    openCsvImporter(result.path)
+                    return@runOnUiThread
+                }
             }
+        DialogHandler.storeMessage(message.toMessage())
+        // IntentHandler leaves the message for DeckPicker; a resumed picker can display it now.
+        if (this is AnkiActivity && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            dialogHandler.popMessage()?.let { dialogHandler.sendStoredMessage(it) }
         }
-    DialogHandler.storeMessage(message.toMessage())
+    }
 }
 
 fun AnkiActivity.showImportDialog(

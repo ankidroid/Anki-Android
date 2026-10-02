@@ -50,8 +50,8 @@ object ImportUtils {
     /**
      * Resolve and cache the source, then start the text importer or store a package confirmation.
      *
-     * Text importer launch happens before this method returns. Package confirmations must be
-     * dispatched by the caller or by DeckPicker when it resumes.
+     * Import UI is dispatched on the main thread. Background callers may return before dispatch
+     * completes. Package confirmations wait for DeckPicker to resume if it is not already resumed.
      *
      * @return The resolved source metadata and cached path, or details of a preparation or launch
      * failure. Success does not mean that the file's contents have been imported.
@@ -155,8 +155,8 @@ object ImportUtils {
          * Prepare the source, then start the text importer or store a package confirmation.
          * Uses [intent] when supplied, otherwise creates an intent from [importPathUri].
          *
-         * Preparation failures are returned. Exceptions from starting the importer or storing a
-         * confirmation propagate to the caller; [handleFileImport] converts them into [ImportResult.Failure].
+         * Preparation failures are returned. On the main thread, exceptions from starting the importer
+         * or storing a confirmation propagate to the caller; [handleFileImport] converts them into [ImportResult.Failure].
          */
         fun handleContentProviderFile(
             activity: Activity,
