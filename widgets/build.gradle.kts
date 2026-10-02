@@ -18,7 +18,7 @@ dependencies {
     implementation(project(":libanki"))
 
     implementation(libs.androidx.annotation)
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core)
     implementation(libs.androidx.recyclerview)
     implementation(libs.google.material)
     implementation(libs.jakewharton.timber)
