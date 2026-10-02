@@ -159,9 +159,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             // this should be improved
 
             if (redirectTimes++ < 3) {
-                val url = getString(R.string.shared_decks_login_url)
-                Timber.i("HTTP 429, redirecting to login: '$url'")
-                binding.webView.loadUrl(url)
+                redirectToLogin()
             } else {
                 // Ensure that we do not have an infinite redirect
                 Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
@@ -183,6 +181,13 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                 binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
             }
         }
+    }
+
+    /** Loads the AnkiWeb login page in the WebView, where the user can log in. */
+    internal fun redirectToLogin() {
+        val url = getString(R.string.shared_decks_login_url)
+        Timber.i("HTTP 429, redirecting to login: '$url'")
+        binding.webView.loadUrl(url)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
