@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import android.webkit.CookieManager
+import android.webkit.WebView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.compose.ui.semantics.SemanticsActions
@@ -23,6 +24,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
 import com.ichi2.utils.openInputStreamSafe
 import org.junit.Assert.assertEquals
@@ -311,6 +313,23 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         assertEquals(
             download.activity.getString(CommonString.shared_decks_login_required),
             snackbarText?.text,
+        )
+    }
+
+    /** An AnkiDroid login exists (no sign-up action on the snackbar) but the WebView has no
+     * AnkiWeb session: the user still needs a way in, so the WebView must open its login page */
+    @Test
+    fun `rate limited download with an AnkiDroid login redirects the WebView to the login page`() {
+        Prefs.hkey = "test-hkey"
+        val download = startDownload()
+
+        download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
+        shadowOf(Looper.getMainLooper()).idle()
+
+        val webView = download.activity.findViewById<WebView>(R.id.web_view)
+        assertEquals(
+            getResourceString(R.string.shared_decks_login_url),
+            shadowOf(webView).lastLoadedUrl,
         )
     }
 
