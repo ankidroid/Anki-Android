@@ -88,6 +88,8 @@ import java.io.IOException
 //  to avoid potential OOM for large queries.
 //  Tracked in: https://github.com/ankidroid/Anki-Android/issues/20253
 class CardContentProvider : ContentProvider() {
+    private val applicationStartup = ContentProviderStartup()
+
     companion object {
         // URI types
         private const val NOTES = 1000
@@ -175,6 +177,7 @@ class CardContentProvider : ContentProvider() {
         // Initialize content provider on startup.
         Timber.d("CardContentProvider: onCreate")
         AnkiDroidApp.makeBackendUsable(context!!)
+        applicationStartup.onProviderCreate()
         return true
     }
 
@@ -219,6 +222,7 @@ class CardContentProvider : ContentProvider() {
      */
     private fun getColUnsafe(): Collection =
         try {
+            applicationStartup.awaitCompletion()
             CollectionManager.getColUnsafe()
         } catch (e: StorageNotConfiguredException) {
             // StorageNotConfiguredException is not supported by Parcel.writeException
