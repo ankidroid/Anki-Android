@@ -2433,6 +2433,8 @@ abstract class AbstractFlashcardViewer :
             error: WebResourceError,
         ) {
             super.onReceivedError(view, request, error)
+            Timber.w("WebView error received")
+            Timber.d("WebView error %d (%s): %s %s", error.errorCode, error.description, request.method, request.url)
             mediaErrorHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename,
@@ -2446,6 +2448,14 @@ abstract class AbstractFlashcardViewer :
             errorResponse: WebResourceResponse,
         ) {
             super.onReceivedHttpError(view, request, errorResponse)
+            Timber.w("WebView HTTP error received")
+            Timber.d(
+                "WebView HTTP error %d (%s): %s %s",
+                errorResponse.statusCode,
+                errorResponse.reasonPhrase,
+                request.method,
+                request.url,
+            )
             mediaErrorHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
                     filename,
