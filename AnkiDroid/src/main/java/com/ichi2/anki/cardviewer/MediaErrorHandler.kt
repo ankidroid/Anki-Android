@@ -9,6 +9,7 @@ import android.webkit.WebResourceRequest
 import androidx.annotation.VisibleForTesting
 import androidx.core.net.toFile
 import com.ichi2.anki.libanki.TtsPlayer
+import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.LOCALHOST
 import timber.log.Timber
 import java.io.File
@@ -91,6 +92,11 @@ class MediaErrorHandler : MediaErrorListener {
         // As we don't yet check the error data, we don't know.
         // Therefore limit this feature to the common case of local files, which should always work.
         if (url.host != LOCALHOST) return
+
+        // API requests can fail during card replacement; they are not missing media files.
+        if (url.path?.startsWith(ANKIDROID_JS_PREFIX) == true) {
+            return
+        }
 
         try {
             val filename = URLUtil.guessFileName(url.toString(), null, null)

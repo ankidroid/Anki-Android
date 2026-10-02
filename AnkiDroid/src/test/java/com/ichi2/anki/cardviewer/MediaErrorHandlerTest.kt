@@ -115,6 +115,46 @@ class MediaErrorHandlerTest {
         assertThat(timesCalled, equalTo(0))
     }
 
+    @Test
+    fun jsApiFailuresAreNotReportedAsMissingMedia() {
+        for (method in listOf("POST", "GET", "OPTIONS")) {
+            for (endpoint in listOf("cardDue", "cardMod", "ttsSetLanguage", "showAnswer?test=1")) {
+                processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/$endpoint", method))
+                assertThat("$method $endpoint", timesCalled, equalTo(0))
+            }
+        }
+    }
+
+    @Test
+    fun jsApiFailureDoesNotHideMissingMediaOnSameSide() {
+        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardDue", "POST"))
+        processFailure(getValidRequest("example.jpg"))
+        assertThat(fileNames, contains("example.jpg"))
+    }
+
+    @Test
+    fun jsApiFailuresDoNotConsumeMissingMediaLimit() {
+        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardDue", "POST"))
+        sut.onCardSideChange()
+        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardMod", "POST"))
+        sut.onCardSideChange()
+        processFailure(getValidRequest("example.jpg"))
+        sut.onCardSideChange()
+        processFailure(getValidRequest("example2.jpg"))
+        sut.onCardSideChange()
+        processFailure(getValidRequest("example3.jpg"))
+        assertThat(fileNames, contains("example.jpg", "example2.jpg"))
+    }
+
+    @Test
+    fun mediaWithApiLikeNamesIsStillReported() {
+        processFailure(getWebResourceRequest("http://127.0.0.1:40001/jsapi/cardDue", "POST"))
+        processFailure(getValidRequest("cardDue.bin"))
+        sut.onCardSideChange()
+        processFailure(getValidRequest("jsapi.jpg"))
+        assertThat(fileNames, contains("cardDue.bin", "jsapi.jpg"))
+    }
+
     private fun processFailure(
         invalidRequest: WebResourceRequest,
         consumer: (String) -> Unit = defaultHandler(),
@@ -182,7 +222,10 @@ class MediaErrorHandlerTest {
         return getWebResourceRequest(url)
     }
 
-    private fun getWebResourceRequest(url: String): WebResourceRequest =
+    private fun getWebResourceRequest(
+        url: String,
+        method: String = "GET",
+    ): WebResourceRequest =
         object : WebResourceRequest {
             override fun getUrl(): Uri = url.toUri()
 
@@ -192,7 +235,7 @@ class MediaErrorHandlerTest {
 
             override fun hasGesture(): Boolean = false
 
-            override fun getMethod(): String? = null
+            override fun getMethod(): String = method
 
             override fun getRequestHeaders(): Map<String, String>? = null
         }
