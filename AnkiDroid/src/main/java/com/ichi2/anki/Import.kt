@@ -49,6 +49,8 @@ fun AnkiActivity.onSelectedFileToImport(data: Intent): Job =
             withProgress(message = getString(CommonString.import_preparing_file)) {
                 withContext(ioDispatcher) { ImportUtils.prepareImport(this@onSelectedFileToImport, data) }
             }
+        // finish() may precede onDestroy(), which cancels the lifecycle scope.
+        if (isFinishing) return@launch
         when (result) {
             is ImportResult.Failure -> ImportUtils.showImportUnsuccessfulDialog(this@onSelectedFileToImport, result, exitActivity = false)
             is ImportResult.Success -> openImport(result)

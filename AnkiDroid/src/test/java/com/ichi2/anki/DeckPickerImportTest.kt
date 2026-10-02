@@ -23,6 +23,8 @@ import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.junit.After
@@ -43,7 +45,9 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowContentResolver
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
@@ -92,6 +96,45 @@ class DeckPickerImportTest : RobolectricTest() {
                 activity.assertSingleImportConfirmation(ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM, cachedPath)
             } finally {
                 File(cachedPath).delete()
+            }
+        }
+
+    @Test
+    fun `finishing picker before text preparation completes suppresses navigation`() =
+        runTest {
+            val activity = startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+            val fileName = "queued-notes.csv"
+            val uri = "content://import/document/123".toUri()
+            val provider = mock<ContentProvider>()
+            whenever(provider.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)).thenAnswer {
+                MatrixCursor(arrayOf(OpenableColumns.DISPLAY_NAME)).apply { addRow(arrayOf(fileName)) }
+            }
+            ShadowContentResolver.registerProviderInternal("import", provider)
+            val contents = "front,back\nhello,world\n"
+            var sourceOpened = false
+            shadowOf(activity.contentResolver).registerInputStreamSupplier(uri) {
+                sourceOpened = true
+                contents.byteInputStream()
+            }
+            val ioScheduler = TestCoroutineScheduler()
+            ioDispatcher = StandardTestDispatcher(ioScheduler)
+            val cachedFile = File(activity.cacheDir, fileName)
+            try {
+                val job = activity.onSelectedFileToImport(Intent(Intent.ACTION_VIEW, uri))
+                assertFalse(sourceOpened, "Preparation must still be queued")
+
+                activity.finish()
+                ioScheduler.runCurrent()
+                shadowOf(Looper.getMainLooper()).idle()
+
+                assertTrue(activity.isFinishing)
+                assertFalse(activity.isDestroyed, "Exercise the window before destruction cancels the lifecycle scope")
+                assertTrue(job.isCompleted)
+                assertTrue(sourceOpened)
+                assertEquals(contents, cachedFile.readText())
+                assertNull(shadowOf(activity).nextStartedActivity, "A dismissed picker must not reopen the import UI")
+            } finally {
+                cachedFile.delete()
             }
         }
 
