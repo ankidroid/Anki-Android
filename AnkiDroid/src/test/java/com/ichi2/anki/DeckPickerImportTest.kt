@@ -127,13 +127,12 @@ class DeckPickerImportTest : RobolectricTest() {
         val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
         val activity = controller.get()
 
+        controller.pause().stop()
         activity.openImport(result)
         advanceRobolectricLooper()
-        assertTrue(activity.importConfirmations.isEmpty(), "The caller or onResume must dispatch the stored confirmation")
+        assertTrue(activity.importConfirmations.isEmpty(), "A stopped activity must wait for onResume to dispatch the stored confirmation")
 
         controller
-            .pause()
-            .stop()
             .start()
             .resume()
             .visible()
