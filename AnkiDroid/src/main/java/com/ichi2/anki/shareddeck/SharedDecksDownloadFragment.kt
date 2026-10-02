@@ -198,8 +198,11 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         // can run while the activity is backgrounded, where FragmentManager work would throw
         if (state.phase == DownloadPhase.LoginRequired) {
             Timber.i("Download requires login, returning to shared decks")
-            (activity as SharedDecksActivity).showLoginRequiredSnackbar()
-            // return to the shared decks WebView, where the user can log in
+            val sharedDecksActivity = activity as SharedDecksActivity
+            sharedDecksActivity.showLoginRequiredSnackbar()
+            // return to the shared decks WebView, opened on its login page, so the
+            // prompt is actionable even without a sign-up action
+            sharedDecksActivity.redirectToLogin()
             parentFragmentManager.popBackStack()
             return
         }
