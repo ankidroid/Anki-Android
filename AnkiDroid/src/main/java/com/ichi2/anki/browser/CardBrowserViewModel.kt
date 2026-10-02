@@ -239,6 +239,9 @@ class CardBrowserViewModel(
     /** Emits each time the user changes the sort order, with data for a snackbar */
     val flowOfSortTypeChanged = MutableSharedFlow<SortChangeNotification>()
 
+    val flowOfCurrentSort: StateFlow<SortChangeNotification?>
+        field = MutableStateFlow<SortChangeNotification?>(null)
+
     /**
      * A map from column backend key to backend column definition
      *
@@ -611,7 +614,7 @@ class CardBrowserViewModel(
             setSelectedDeck(initialDeckId)
             refreshBackendColumns()
 
-            flowOfReverseDirection.update { (SortType.build(cardsOrNotes) as? SortType.CollectionOrdering)?.reverse }
+            refreshSortState()
 
             Timber.i("initCompleted")
 
@@ -679,6 +682,7 @@ class CardBrowserViewModel(
         // if the language has changed, the backend column labels may have changed
         viewModelScope.launch {
             refreshBackendColumns()
+            refreshSortState()
         }
     }
 
@@ -998,14 +1002,8 @@ class CardBrowserViewModel(
 
             sortType.save(cardsOrNotes)
 
-            flowOfReverseDirection.update {
-                when (sortType) {
-                    is SortType.NoOrdering -> null
-                    is SortType.CollectionOrdering -> sortType.reverse
-                }
-            }
-
-            flowOfSortTypeChanged.emit(buildSortChangeNotification(sortType))
+            val notification = updateSortState(sortType)
+            flowOfSortTypeChanged.emit(notification)
 
             launchSearchForCards()
         }
@@ -1029,6 +1027,17 @@ class CardBrowserViewModel(
                 )
             }
         }
+
+    private suspend fun refreshSortState() {
+        updateSortState(SortType.build(cardsOrNotes))
+    }
+
+    private fun updateSortState(sortType: SortType): SortChangeNotification {
+        val notification = buildSortChangeNotification(sortType)
+        flowOfReverseDirection.value = (sortType as? SortType.CollectionOrdering)?.reverse
+        flowOfCurrentSort.value = notification
+        return notification
+    }
 
     /**
      * Updates the backend with a new collection of columns
