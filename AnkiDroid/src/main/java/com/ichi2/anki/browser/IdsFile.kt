@@ -16,6 +16,11 @@ import java.io.IOException
  * Temporary file containing cards or note IDs to be passed in a Bundle.
  *
  * It avoids [android.os.TransactionTooLargeException] when passing a big amount of data.
+ *
+ * For activity saved-state files, use [com.ichi2.anki.common.utils.ext.onPermanentDismissal] to
+ * clear state.
+ *
+ * Do not use `ViewModel.onCleared()`; see `onPermanentDismissal`.
  */
 class IdsFile(
     path: String,
