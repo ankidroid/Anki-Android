@@ -159,7 +159,6 @@ class TagsDialog : AnalyticsDialogFragment {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        resizeWhenSoftInputShown(requireActivity().window)
 
         type = requireArguments().requireParcelable(ARG_DIALOG_TYPE)
         isCancelable = true
