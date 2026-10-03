@@ -47,7 +47,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
-import com.ichi2.utils.DisplayUtils.resizeDialogWhenSoftInputShown
+import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.customView
 import com.ichi2.utils.getInputField
@@ -309,11 +309,7 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     private fun Dialog.updateSoftInputMode(configuration: Configuration) {
-        if (configuration.screenHeightDp < COMPACT_HEIGHT_DP) {
-            window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        } else {
-            resizeDialogWhenSoftInputShown(this)
-        }
+        setDialogKeyboardResize(this, resize = configuration.screenHeightDp >= COMPACT_HEIGHT_DP)
     }
 
     private fun radioButtonIdToCardState(id: Int) =

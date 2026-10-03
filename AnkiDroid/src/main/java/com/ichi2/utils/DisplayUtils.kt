@@ -9,6 +9,7 @@ import android.graphics.Point
 import android.os.Build
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.ichi2.anki.compat.CompatHelper
 
 object DisplayUtils {
     @Suppress("DEPRECATION") // #9333: defaultDisplay & getSize
@@ -38,14 +39,15 @@ object DisplayUtils {
     }
 
     /**
-     * Keep a floating dialog above the keyboard by letting the window manager resize it.
+     * Fit a floating dialog above the keyboard, or pan to its focused input when [resize] is false.
      *
-     * The API 30 replacement (edge-to-edge with IME insets on the content view) is for
-     * non-floating windows. Floating dialogs still rely on decor fitting to constrain their
-     * height. Activities should handle IME insets in their own layout instead (Issue 7110).
+     * Activities with edge-to-edge content should handle IME insets in their own layout.
      */
-    @Suppress("DEPRECATION") // Floating dialogs still need SOFT_INPUT_ADJUST_RESIZE.
-    fun resizeDialogWhenSoftInputShown(dialog: Dialog) {
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    fun setDialogKeyboardResize(
+        dialog: Dialog,
+        resize: Boolean = true,
+    ) {
+        val window = dialog.window ?: return
+        CompatHelper.compat.setDialogKeyboardResize(window, resize)
     }
 }

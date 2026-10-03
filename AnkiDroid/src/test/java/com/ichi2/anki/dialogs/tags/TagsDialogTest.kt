@@ -15,9 +15,11 @@
  */
 package com.ichi2.anki.dialogs.tags
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -718,19 +720,20 @@ class TagsDialogTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "w411dp-h914dp")
-    @Suppress("DEPRECATION")
-    fun `keyboard resizes the dialog on a tall screen`() {
+    fun `keyboard fits the dialog using IME insets on a tall screen`() {
         runTagsDialogScenario(editTagsArguments()) { f: TagsDialog ->
-            assertThat(f.softInputAdjustment, equalTo(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE))
+            assertThat(f.softInputAdjustment, equalTo(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING))
+            assertThat(f.fitsKeyboardInsets, equalTo(true))
         }
     }
 
     @Test
     @Config(qualifiers = "w411dp-h914dp")
-    fun `rotating to a short screen pans the dialog 22082`() {
+    fun `rotation switches between fitting the IME and panning 22082`() {
         runTagsDialogScenario(editTagsArguments()) { f: TagsDialog ->
+            val portrait = Configuration(f.resources.configuration)
             val landscape =
-                Configuration(f.resources.configuration).apply {
+                Configuration(portrait).apply {
                     screenWidthDp = 914
                     screenHeightDp = 411
                     orientation = Configuration.ORIENTATION_LANDSCAPE
@@ -738,8 +741,17 @@ class TagsDialogTest : RobolectricTest() {
             f.onConfigurationChanged(landscape)
 
             assertThat(f.softInputAdjustment, equalTo(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN))
+            assertThat(f.fitsKeyboardInsets, equalTo(false))
+
+            f.onConfigurationChanged(portrait)
+            assertThat(f.softInputAdjustment, equalTo(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING))
+            assertThat(f.fitsKeyboardInsets, equalTo(true))
         }
     }
+
+    @get:SuppressLint("NewApi") // These dialog tests run on the target SDK (API 30+).
+    private val TagsDialog.fitsKeyboardInsets: Boolean
+        get() = requireDialog().window!!.attributes.fitInsetsTypes and WindowInsets.Type.ime() != 0
 
     private val TagsDialog.softInputAdjustment: Int
         get() = requireDialog().window!!.attributes.softInputMode and WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
