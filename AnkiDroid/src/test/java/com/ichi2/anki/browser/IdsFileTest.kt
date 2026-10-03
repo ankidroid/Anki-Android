@@ -8,6 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
+import java.io.DataOutputStream
 import java.io.IOException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -48,5 +49,17 @@ class IdsFileTest {
         val file = IdsFile(temporaryFolder.root, emptyList())
         file.writeBytes(byteArrayOf(0, 0))
         assertFailsWith<IOException> { file.getIds() }
+    }
+
+    @Test
+    fun `incomplete selections are rejected before allocating the declared count`() {
+        val file = IdsFile(temporaryFolder.root, emptyList())
+        for (count in listOf(2, Int.MAX_VALUE)) {
+            DataOutputStream(file.outputStream()).use {
+                it.writeInt(count)
+                it.writeLong(1L)
+            }
+            assertFailsWith<IOException>("count: $count") { file.getIds() }
+        }
     }
 }
