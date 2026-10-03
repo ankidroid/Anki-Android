@@ -30,7 +30,7 @@ import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.positiveButton
 
 /** Marker class to be used in preferences */
-class IncrementerNumberRangePreferenceCompat :
+open class IncrementerNumberRangePreferenceCompat :
     NumberRangePreferenceCompat,
     DialogFragmentProvider {
     @Suppress("unused")
