@@ -17,6 +17,7 @@ import com.google.android.material.materialswitch.MaterialSwitch
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.common.utils.ext.setBitFlag
 import com.ichi2.anki.databinding.ItemScheduleRemindersBinding
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -131,12 +132,7 @@ class ScheduleRemindersAdapter(
         textView: TextView,
         setStrikethrough: Boolean,
     ) {
-        textView.paintFlags =
-            if (setStrikethrough) {
-                textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            } else {
-                textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-            }
+        textView.paintFlags = textView.paintFlags.setBitFlag(Paint.STRIKE_THRU_TEXT_FLAG, enabled = setStrikethrough)
     }
 
     /**
