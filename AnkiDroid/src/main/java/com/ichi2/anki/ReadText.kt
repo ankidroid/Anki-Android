@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.i18n.getIso3LanguageOrNull
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Collection
@@ -337,7 +338,9 @@ object ReadText {
                             }
                         }
                 } else {
-                    showThemedToast(context, context.getString(CommonString.no_tts_available_message), false)
+                    if (ankiActivityContext == null || !TtsPlaybackErrorDialog.showMissingEngineDialogIfNeeded(ankiActivityContext)) {
+                        showThemedToast(context, context.getString(CommonString.no_tts_available_message), false)
+                    }
                     Timber.w("TTS not successfully initialized")
                 }
             }

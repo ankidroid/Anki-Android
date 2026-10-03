@@ -20,6 +20,9 @@
 
 package com.ichi2.anki
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
 import com.ichi2.anki.common.android.appContext
@@ -70,6 +73,16 @@ object TtsVoices {
      */
     var ttsEngine: String? = null
         private set
+
+    /** Returns whether the system has any installed TTS services. */
+    fun hasInstalledEngine(context: Context): Boolean {
+        val engines =
+            context.packageManager.queryIntentServices(
+                Intent(TextToSpeech.Engine.INTENT_ACTION_TTS_SERVICE),
+                PackageManager.MATCH_DEFAULT_ONLY,
+            )
+        return engines.isNotEmpty()
+    }
 
     suspend fun refresh() {
         launchBuildLocalesJob()
