@@ -89,7 +89,8 @@ fun getEndpoint(): String? {
  */
 fun isLoggedIn(): Boolean = !Prefs.hkey.isNullOrEmpty()
 
-fun millisecondsSinceLastSync() = TimeManager.time.intTimeMS() - Prefs.lastSyncTime
+/** Elapsed milliseconds since the last manual or automatic sync attempt. */
+fun millisecondsSinceLastSyncAttempt() = TimeManager.time.intTimeMS() - Prefs.lastSyncTime
 
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
@@ -138,8 +139,6 @@ fun DeckPicker.handleNewSync(
             notifySubscribersAllValuesChanged(deckPicker)
             refreshState()
         } finally {
-            // Always update last sync time to prevent infinite retry loops
-            // when sync fails (e.g., collection too large). See issue #19776
             setLastSyncTimeToNow()
         }
     }
@@ -431,6 +430,7 @@ fun DeckPicker.showSyncLogMessage(
     }
 }
 
+/** Starts the retry delay after every sync attempt, regardless of outcome. */
 fun setLastSyncTimeToNow() {
     Prefs.lastSyncTime = TimeManager.time.intTimeMS()
 }
