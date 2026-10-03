@@ -42,13 +42,15 @@ class TagsList(
     /**
      * A Set containing the currently selected tags
      */
-    private val checkedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
+    private val checkedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
-     * A Set containing the tags with indeterminate state.
-     * For a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags.
+     * Tags present on some notes, plus unchecked ancestors of selected tags.
      */
     private val indeterminateTags: MutableSet<String>
+
+    /** Tags present on some notes whose own selection has not been changed by the user. */
+    private val partiallySelectedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
      * List of all available tags
@@ -72,6 +74,7 @@ class TagsList(
             indeterminateTags.retainAll(uncheckedSet)
             this.checkedTags.removeAll(indeterminateTags)
         }
+        partiallySelectedTags.addAll(indeterminateTags)
         prepareTagHierarchy()
     }
 
@@ -111,6 +114,17 @@ class TagsList(
      */
     fun isIndeterminate(tag: String): Boolean = indeterminateTags.contains(tag)
 
+    /** Whether the tag itself is partially selected, independently of its descendants. */
+    internal fun isPartiallySelected(tag: String): Boolean = partiallySelectedTags.contains(tag)
+
+    /** Checks the complete selection, including descendants hidden by the dialog's filter. */
+    internal fun hasSelectedDescendants(tag: String): Boolean {
+        val prefix = "$tag::"
+        // Descendants are contiguous in these case-insensitive sets; only the first candidate is needed.
+        return checkedTags.ceiling(prefix)?.startsWith(prefix, ignoreCase = true) == true ||
+            partiallySelectedTags.ceiling(prefix)?.startsWith(prefix, ignoreCase = true) == true
+    }
+
     /**
      * Adds a tag to the list if it is not already present.
      * If the tag is hierarchical, its ancestors will also be added temporarily.
@@ -144,6 +158,7 @@ class TagsList(
             return false
         }
         indeterminateTags.remove(tag)
+        partiallySelectedTags.remove(tag)
         if (!checkedTags.add(tag)) {
             return false
         }
@@ -162,6 +177,7 @@ class TagsList(
      * false if the tag was already unchecked or not in the list
      */
     fun uncheck(tag: String): Boolean {
+        partiallySelectedTags.remove(tag)
         val changed = indeterminateTags.remove(tag) || checkedTags.remove(tag)
         if (changed) {
             needsSort = true
@@ -198,6 +214,7 @@ class TagsList(
     fun toggleAllCheckedStatuses(): Boolean {
         needsSort = true
         indeterminateTags.clear()
+        partiallySelectedTags.clear()
         if (allTags.size == checkedTags.size) {
             checkedTags.clear()
             return true
@@ -236,6 +253,9 @@ class TagsList(
      */
     fun copyOfIndeterminateTagList(): List<String> = ArrayList(indeterminateTags)
 
+    /** Tags whose original per-note selection must be preserved when saving, excluding display-only ancestors. */
+    internal fun copyOfPartiallySelectedTagList(): List<String> = ArrayList(partiallySelectedTags)
+
     /**
      * @return return a copy of all tags list
      */
@@ -249,7 +269,9 @@ class TagsList(
         for (tag in allTags) {
             addAncestors(tag)
         }
-        for (tag in checkedTags) {
+        // Partially selected descendants also need their ancestors prioritized and expanded.
+        // Take a snapshot because marking ancestors modifies indeterminateTags.
+        for (tag in checkedTags + indeterminateTags) {
             markAncestorsIndeterminate(tag)
         }
     }

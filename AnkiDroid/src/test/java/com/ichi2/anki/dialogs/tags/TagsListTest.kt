@@ -507,6 +507,51 @@ class TagsListTest {
     }
 
     @Test
+    fun `selected descendant lookup ignores case and respects hierarchy boundaries`() {
+        val tags =
+            TagsList(
+                allTags = listOf("B", "B::child::leaf", "B::childish", "Bother::leaf"),
+                checkedTags = listOf("B", "B::child::leaf", "B::childish", "Bother::leaf"),
+                uncheckedTags = listOf("B::child::leaf"),
+            )
+
+        assertTrue(tags.hasSelectedDescendants("b"))
+        assertTrue(tags.hasSelectedDescendants("b::CHILD"))
+        assertFalse(actual = tags.hasSelectedDescendants("B::childish"))
+
+        tags.uncheck("b::child::LEAF")
+        assertFalse(actual = tags.hasSelectedDescendants("B::child"))
+        assertTrue(tags.hasSelectedDescendants("B"))
+
+        tags.uncheck("B::childish")
+        assertFalse(actual = tags.hasSelectedDescendants("B"))
+        assertTrue(tags.hasSelectedDescendants("Bother"))
+    }
+
+    @Test
+    fun `sort brings partially selected hierarchical tags to the top`() {
+        // Issue 15278: the selected notes have different hierarchical tags.
+        val tags =
+            TagsList(
+                allTags = listOf("aaa", "B::B", "C::child::leaf", "C::other"),
+                checkedTags = listOf("B::B", "C::child::leaf"),
+                uncheckedTags = listOf("aaa", "B::B", "C::child::leaf", "C::other"),
+            )
+
+        tags.sort()
+
+        assertEquals(
+            listOf("B", "B::B", "C", "C::child", "C::child::leaf", "C::other", "aaa"),
+            tags.copyOfAllTagList(),
+        )
+        assertEquals(emptyList<String>(), tags.copyOfCheckedTagList())
+        assertEquals(
+            listOf("B", "B::B", "C", "C::child", "C::child::leaf"),
+            tags.copyOfIndeterminateTagList(),
+        )
+    }
+
+    @Test
     fun `sort keeps selected branches first and compares hierarchy parts ignoring case`() {
         val tags =
             TagsList(
