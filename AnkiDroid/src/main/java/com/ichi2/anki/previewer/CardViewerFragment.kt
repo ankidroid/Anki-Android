@@ -361,6 +361,8 @@ abstract class CardViewerFragment(
             request: WebResourceRequest,
             error: WebResourceError,
         ) {
+            Timber.w("WebView error received")
+            Timber.d("WebView error %d (%s): %s %s", error.errorCode, error.description, request.method, request.url)
             viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
                 showMediaErrorSnackbar(filename)
             }
