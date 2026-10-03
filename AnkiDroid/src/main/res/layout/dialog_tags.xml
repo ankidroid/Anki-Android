@@ -56,7 +56,7 @@
     </LinearLayout>
 
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/options_group"
@@ -65,16 +65,23 @@
         <com.ichi2.ui.FixedTextView android:id="@+id/no_tags_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:text="@string/no_tags"
             android:visibility="gone"/>
 
-        <androidx.recyclerview.widget.RecyclerView android:id="@+id/tags_list"
-            android:scrollbars="vertical"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tags_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="none"
             tools:listitem="@layout/item_tag" />
-    </FrameLayout>
+
+        <com.ichi2.anki.ui.RecyclerFastScroller
+            android:id="@+id/tags_scroller"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="wrap_content"
