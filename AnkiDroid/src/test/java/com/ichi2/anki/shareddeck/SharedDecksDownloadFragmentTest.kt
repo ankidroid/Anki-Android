@@ -8,17 +8,23 @@ import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
+import androidx.annotation.StringRes
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.core.content.FileProvider
-import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
 import com.ichi2.utils.openInputStreamSafe
 import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mockStatic
@@ -41,6 +47,9 @@ import kotlin.test.assertTrue
 /** Tests for [SharedDecksDownloadFragment] */
 @RunWith(AndroidJUnit4::class)
 class SharedDecksDownloadFragmentTest : RobolectricTest() {
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
+
     @Test
     fun `completed download opens the existing file for import`() {
         val download = completedDownload()
@@ -68,19 +77,17 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
         // Manually importing again must also use the completed download's file.
         download.withFileProvider {
-            download.fragment.binding.importSharedDeckButton
-                .performClick()
+            importButton.performSemanticsAction(SemanticsActions.OnClick)
         }
         val retryIntent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
         assertEquals(intent.data, retryIntent.data)
 
         assertTrue(completedFile.delete())
-        download.fragment.binding.importSharedDeckButton
-            .performClick()
+        importButton.performSemanticsAction(SemanticsActions.OnClick)
         shadowOf(Looper.getMainLooper()).idle()
 
         assertNull(shadowOf(download.activity).nextStartedActivity)
-        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+        retryButton.assertExists()
     }
 
     @Test
@@ -93,7 +100,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         download.complete(completedFile = completedFile)
 
         assertNull(shadowOf(download.activity).nextStartedActivity)
-        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+        retryButton.assertExists()
     }
 
     @Test
@@ -104,7 +111,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         download.complete(localUri = null)
 
         assertNull(shadowOf(download.activity).nextStartedActivity)
-        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+        retryButton.assertExists()
     }
 
     @Test
@@ -118,8 +125,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         assertNull(shadowOf(download.activity).nextStartedActivity)
 
         download.withFileProvider {
-            download.fragment.binding.importSharedDeckButton
-                .performClick()
+            importButton.performSemanticsAction(SemanticsActions.OnClick)
         }
         val manualIntent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
         assertEquals(intent.data, manualIntent.data)
@@ -132,9 +138,8 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         assertNull(shadowOf(download.activity).nextStartedActivity)
 
         whenever(download.activity.downloadManager.enqueue(any())).thenReturn(2L)
-        val retryButton = download.fragment.binding.tryDownloadAgainButton
-        assertTrue(retryButton.isVisible)
-        retryButton.performClick()
+        retryButton.assertExists()
+        retryButton.performSemanticsAction(SemanticsActions.OnClick)
         download.file.writeText("downloaded again")
 
         download.complete(downloadId = 1L)
@@ -149,21 +154,18 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         val download = completedDownload()
         assertNotNull(shadowOf(download.activity).nextStartedActivity)
         assertTrue(download.file.delete())
-        download.fragment.binding.importSharedDeckButton
-            .performClick()
+        importButton.performSemanticsAction(SemanticsActions.OnClick)
         shadowOf(Looper.getMainLooper()).idle()
 
         whenever(download.activity.downloadManager.enqueue(any())).thenReturn(2L)
-        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
-        download.fragment.binding.tryDownloadAgainButton
-            .performClick()
+        retryButton.assertExists()
+        retryButton.performSemanticsAction(SemanticsActions.OnClick)
         val completedFile = File(download.file.parentFile, "blank-1.apkg").apply { writeText("new deck") }
         download.complete(downloadId = 2L, completedFile = completedFile)
         val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
 
         download.withFileProvider {
-            download.fragment.binding.importSharedDeckButton
-                .performClick()
+            importButton.performSemanticsAction(SemanticsActions.OnClick)
         }
 
         val manualIntent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
@@ -180,10 +182,9 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         download.complete()
 
         assertNull(shadowOf(download.activity).nextStartedActivity)
-        val retryButton = download.fragment.binding.tryDownloadAgainButton
-        assertTrue(retryButton.isVisible)
+        retryButton.assertExists()
 
-        retryButton.performClick()
+        retryButton.performSemanticsAction(SemanticsActions.OnClick)
         verify(download.activity.downloadManager).remove(1L)
         download.file.writeText("downloaded again")
         download.complete()
@@ -197,13 +198,11 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         assertNotNull(shadowOf(download.activity).nextStartedActivity)
         assertTrue(download.file.delete())
 
-        download.fragment.binding.importSharedDeckButton
-            .performClick()
+        importButton.performSemanticsAction(SemanticsActions.OnClick)
         shadowOf(Looper.getMainLooper()).idle()
 
         assertNull(shadowOf(download.activity).nextStartedActivity)
-        val retryButton = download.fragment.binding.tryDownloadAgainButton
-        assertTrue(retryButton.isVisible)
+        retryButton.assertExists()
     }
 
     @Test
@@ -233,8 +232,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     @Test
     fun `destroying the view dismisses the download cancellation dialog`() {
         val download = startDownload()
-        download.fragment.binding.cancelDownloadButton
-            .performClick()
+        cancelButton.performSemanticsAction(SemanticsActions.OnClick)
         val dialog = assertNotNull(ShadowDialog.getLatestDialog())
         assertTrue(dialog.isShowing)
 
@@ -272,6 +270,14 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         val url = "https://ankiweb.net/svc/shared/download-deck/"
         assertEquals("https://ankiweb.net/shared/decks/", targetContext.getDeckPageUri(url))
     }
+
+    private val importButton get() = button(CommonString.import_deck)
+    private val retryButton get() = button(CommonString.try_again)
+    private val cancelButton get() = button(CommonString.cancel_download)
+
+    private fun button(
+        @StringRes text: Int,
+    ) = composeRule.onNodeWithText(targetContext.getString(text))
 
     private fun completedDownload(): Download =
         startDownload().apply {
