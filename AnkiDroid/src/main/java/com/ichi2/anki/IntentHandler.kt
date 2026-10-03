@@ -37,6 +37,7 @@ import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
+import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils.handleFileImport
@@ -47,6 +48,9 @@ import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
@@ -61,6 +65,9 @@ import kotlin.math.min
  * @author Tim
  */
 class IntentHandler : AbstractIntentHandler() {
+    // A delayed work query must not reopen DeckPicker after this activity is dismissed.
+    private val syncIntentScope = MainScope()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -77,7 +84,8 @@ class IntentHandler : AbstractIntentHandler() {
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
         val launchType = getLaunchType(intent)
         // TODO block the UI with some kind of ProgressDialog instead of cancelling the sync work
-        if (requiresCollectionAccess(launchType)) {
+        // A sync intent must not interrupt an existing sync; handleSyncIntent ignores duplicates.
+        if (launchType != LaunchType.SYNC && requiresCollectionAccess(launchType)) {
             if (WorkManager.isInitialized()) {
                 SyncWorker.cancel(this)
             } else {
@@ -117,6 +125,11 @@ class IntentHandler : AbstractIntentHandler() {
                 finish()
             }
         }
+    }
+
+    override fun onDestroy() {
+        syncIntentScope.cancel()
+        super.onDestroy()
     }
 
     private fun copyDebugInfoToClipboard(intent: Intent) {
@@ -211,11 +224,23 @@ class IntentHandler : AbstractIntentHandler() {
         action: String?,
     ) {
         Timber.i("Handling Sync Intent")
-        sendDoSyncMsg()
-        reloadIntent.action = action
-        reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(reloadIntent)
-        finish()
+        syncIntentScope.launch {
+            val existingSync = WorkManager.getInstance(this@IntentHandler).getWorkInfosForUniqueWorkFlow(UniqueWorkNames.SYNC).first()
+            // finish() may be called before onDestroy() cancels the query.
+            if (isFinishing) return@launch
+            val foregroundSync = CollectionManager.collectionLease?.operation?.isSync == true
+            if (foregroundSync || existingSync.any { !it.state.isFinished }) {
+                // Opening DeckPicker would also access the collection while the existing sync is using it.
+                Timber.w("Ignoring sync intent: collection sync is already pending or running")
+                finish()
+                return@launch
+            }
+            sendDoSyncMsg()
+            reloadIntent.action = action
+            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(reloadIntent)
+            finish()
+        }
     }
 
     private fun handleFileImport(
