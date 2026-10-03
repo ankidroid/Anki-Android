@@ -23,6 +23,9 @@ import android.provider.MediaStore
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.AnimRes
 import androidx.appcompat.widget.TooltipCompat
@@ -53,6 +56,18 @@ open class BaseCompat : Compat {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
         )
+    }
+
+    override fun setDialogKeyboardResize(
+        window: Window,
+        resize: Boolean,
+    ) {
+        window.setSoftInputAdjustment(if (resize) SOFT_INPUT_ADJUST_RESIZE else SOFT_INPUT_ADJUST_PAN)
+    }
+
+    /** Changes the adjustment mode while preserving keyboard visibility settings. */
+    protected fun Window.setSoftInputAdjustment(adjustment: Int) {
+        setSoftInputMode((attributes.softInputMode and SOFT_INPUT_MASK_ADJUST.inv()) or adjustment)
     }
 
     // Until API36, SHOW_IMPLICIT marks the request as one the system may ignore

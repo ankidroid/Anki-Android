@@ -21,7 +21,7 @@ import com.ichi2.anki.databinding.DialogLocaleSelectionBinding
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.ui.AccessibleSearchView
-import com.ichi2.utils.DisplayUtils.resizeDialogWhenSoftInputShown
+import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import com.ichi2.utils.TypedFilter
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
@@ -55,7 +55,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         style: Int,
     ) {
         super.setupDialog(dialog, style)
-        resizeDialogWhenSoftInputShown(dialog)
+        setDialogKeyboardResize(dialog)
         // this is required for the keyboard to appear: https://stackoverflow.com/a/10133603/
         dialog.window?.clearFlags(FLAG_NOT_FOCUSABLE or FLAG_ALT_FOCUSABLE_IM)
     }

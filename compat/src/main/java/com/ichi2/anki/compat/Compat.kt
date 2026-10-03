@@ -81,6 +81,20 @@ interface Compat {
     fun hideStatusBar(window: Window)
 
     /**
+     * Fit a floating dialog above the keyboard, or pan to its focused input when [resize] is false.
+     *
+     * On API 30+, fit the whole window to IME insets so its background and buttons stay above the
+     * keyboard. On older APIs, use the legacy soft input adjustment mode.
+     *
+     * [window] must belong to a floating dialog. Activities with edge-to-edge content should handle
+     * IME insets in their own layout.
+     */
+    fun setDialogKeyboardResize(
+        window: Window,
+        resize: Boolean,
+    )
+
+    /**
      * Request that the current input method's soft input area be shown to the
      * user, if needed.
      *
