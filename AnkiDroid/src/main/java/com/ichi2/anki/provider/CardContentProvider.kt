@@ -84,9 +84,6 @@ import java.io.IOException
  *
  */
 
-// TODO: Consider streaming Cursor results instead of materializing all rows
-//  to avoid potential OOM for large queries.
-//  Tracked in: https://github.com/ankidroid/Anki-Android/issues/20253
 class CardContentProvider : ContentProvider() {
     companion object {
         // URI types
@@ -442,21 +439,13 @@ class CardContentProvider : ContentProvider() {
                 // Fast path: Only if _id is requested
                 val onlyRequestingId = columns.singleOrNull() == FlashCardsContract.Card._ID
 
-                if (onlyRequestingId) {
-                    // Return IDs without fetching card objects
-                    val rv = MatrixCursor(columns, cardIds.size)
-                    for (cardId in cardIds) {
-                        rv.newRow().add(cardId)
+                LazyCursor(columns, cardIds.size) { position, row ->
+                    val cardId = cardIds[position]
+                    if (onlyRequestingId) {
+                        row.newRow().add(cardId)
+                    } else {
+                        addCardToCursor(col.getCard(cardId), row, col, columns)
                     }
-                    rv
-                } else {
-                    // Get all requested fields
-                    val rv = MatrixCursor(columns, cardIds.size)
-                    for (cardId in cardIds) {
-                        val card = col.getCard(cardId)
-                        addCardToCursor(card, rv, col, columns)
-                    }
-                    rv
                 }
             }
             CARD_ID -> {
