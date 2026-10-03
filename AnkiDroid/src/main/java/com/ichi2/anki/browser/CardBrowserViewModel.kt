@@ -496,6 +496,11 @@ class CardBrowserViewModel(
      */
     private var pendingSelectionRestore: List<CardOrNoteId>
 
+    /**
+     * The file backing the most recently saved [STATE_MULTISELECT_VALUES], until replaced or the activity finishes.
+     */
+    private var multiselectStateFile: IdsFile? = null
+
     val flowOfColumnHeadings: StateFlow<List<ColumnHeading>> =
         combine(flowOfActiveColumns, flowOfCardsOrNotes, flowOfAllColumns) { activeColumns, cardsOrNotes, allColumns ->
             if (allColumns.isEmpty()) return@combine emptyList()
@@ -545,6 +550,7 @@ class CardBrowserViewModel(
             savedStateHandle.get<Bundle>(STATE_MULTISELECT_VALUES)?.let { bundle ->
                 BundleCompat.getParcelable(bundle, STATE_MULTISELECT_VALUES, IdsFile::class.java)
             }
+        multiselectStateFile = idsFile
         pendingSelectionRestore =
             try {
                 idsFile?.getIds()?.map { CardOrNoteId(it) }
@@ -623,10 +629,31 @@ class CardBrowserViewModel(
     fun generateExpensiveSavedState() =
         Bundle().apply {
             // a restored selection not yet applied to the rows is still the selection to save
-            val selection = pendingSelectionRestore.ifEmpty { selectedRows.toList() }
-            if (selection.isEmpty()) return@apply
-            putParcelable(STATE_MULTISELECT_VALUES, IdsFile(cacheDir, selection.map { it.cardOrNoteId }, "multiselect-values"))
+            saveMultiselectState(pendingSelectionRestore.ifEmpty { selectedRows.toList() })
         }
+
+    private fun Bundle.saveMultiselectState(selection: List<CardOrNoteId>) {
+        // Write the replacement before deleting the previous snapshot, so write failures preserve it.
+        val idsFile =
+            if (selection.isEmpty()) {
+                null
+            } else {
+                IdsFile(cacheDir, selection.map { it.cardOrNoteId }, "multiselect-values")
+            }
+        multiselectStateFile?.removeSafely("CardBrowserViewModel")
+        multiselectStateFile = idsFile
+        if (idsFile != null) putParcelable(STATE_MULTISELECT_VALUES, idsFile)
+    }
+
+    /**
+     * Delete the file backing the last saved selection when the activity is permanently dismissed.
+     *
+     * Call from [com.ichi2.anki.common.utils.ext.onPermanentDismissal], never from [onCleared].
+     */
+    internal fun deleteSavedSelectionFile() {
+        multiselectStateFile?.removeSafely("CardBrowserViewModel")
+        multiselectStateFile = null
+    }
 
     /**
      * Called if `onCreate` is called again, which may be due to the collection being reopened
