@@ -27,9 +27,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.FragmentMediaCheckBinding
-import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.progress.observeProgress
+import com.ichi2.anki.runCatching
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.MessageId
+import com.ichi2.anki.utils.acknowledgeOnDismiss
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -66,7 +70,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
         observeProgress(viewModel) { progress -> getString(progress.messageRes) }
-        launchCatchingTask { viewModel.checkMedia().await() }
+        viewModel.checkMedia()
 
         lifecycleScope.launch {
             viewModel.mediaCheckResult.collectLatest { result ->
@@ -78,6 +82,8 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                 }
             }
         }
+
+        observeMessages(viewModel.pendingMessages, ::showMessage)
 
         setupButtonListeners()
     }
@@ -104,11 +110,11 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
                     when (menuItem.itemId) {
                         R.id.action_restore_trash -> {
-                            confirmMediaRestore()
+                            viewModel.restoreTrash()
                             true
                         }
                         R.id.action_empty_trash -> {
-                            deleteTrash()
+                            viewModel.deleteTrash()
                             true
                         }
                         else -> false
@@ -148,13 +154,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
             text = TR.sentenceCase.tagMissing
 
             setOnClickListener {
-                launchCatchingTask {
-                    viewModel.tagMissing(TR.mediaCheckMissingMediaTag()).await()
-                    showResultDialog(
-                        CommonString.check_media_tags_added,
-                        TR.browsingNotesUpdated(viewModel.taggedFiles),
-                    )
-                }
+                viewModel.tagMissing(tag = TR.mediaCheckMissingMediaTag())
             }
         }
 
@@ -167,84 +167,48 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
         }
     }
 
-    private fun confirmMediaRestore() {
-        launchCatchingTask {
-            viewModel.restoreTrash().await()
-            showTrashRestoredDialog()
-        }
-    }
-
-    private fun deleteTrash() {
-        launchCatchingTask {
-            viewModel.deleteTrash().await()
-            showTrashDeletedDialog()
-        }
-    }
-
     private fun deleteConfirmationDialog() {
         AlertDialog.Builder(requireContext()).show {
             message(text = TR.mediaCheckDeleteUnusedConfirm())
-            positiveButton(CommonString.dialog_positive_delete) { handleDeleteConfirmation() }
+            positiveButton(CommonString.dialog_positive_delete) { viewModel.deleteUnusedMedia() }
             negativeButton(CommonString.dialog_cancel)
         }
     }
 
-    private fun handleDeleteConfirmation() {
-        launchCatchingTask {
-            viewModel.deleteUnusedMedia().await()
-            showDeletionResult()
-        }
-    }
-
-    /**
-     * Displays the result of a media deletion operation and updates stored trash statistics.
-     *
-     * This function retrieves the previously stored trash information (if any),
-     * combines it with the current deletion statistics from the ViewModel, and
-     * updates the stored values accordingly.
-     */
-    private fun showDeletionResult() {
-        showResultDialog(
-            CommonString.delete_media_result_title,
-            resources.getQuantityString(
-                CommonPlurals.delete_media_result_message,
-                viewModel.deletedFiles,
-                viewModel.deletedFiles,
-            ),
-        )
-    }
-
-    private fun showTrashRestoredDialog() {
-        AlertDialog.Builder(requireContext()).show {
-            message(text = TR.mediaCheckTrashRestored())
-            positiveButton(CommonString.dialog_ok) {
-                requireActivity().finish()
+    private suspend fun showMessage(pending: MessageQueue.Message<MediaCheckMessage>) {
+        when (val message = pending.message) {
+            is MediaCheckMessage.TagsAdded ->
+                showResultDialog(
+                    pending.id,
+                    CommonString.check_media_tags_added,
+                    TR.browsingNotesUpdated(message.notesUpdated),
+                )
+            is MediaCheckMessage.MediaDeleted ->
+                showResultDialog(
+                    pending.id,
+                    CommonString.delete_media_result_title,
+                    resources.getQuantityString(CommonPlurals.delete_media_result_message, message.count, message.count),
+                )
+            MediaCheckMessage.TrashEmptied -> showResultDialog(pending.id, message = TR.mediaCheckTrashEmptied())
+            MediaCheckMessage.TrashRestored -> showResultDialog(pending.id, message = TR.mediaCheckTrashRestored())
+            is MediaCheckMessage.Failed -> {
+                requireActivity().runCatching { throw message.exception }
+                viewModel.messageShown(pending.id)
             }
-            cancelable(false)
-        }
-    }
-
-    private fun showTrashDeletedDialog() {
-        AlertDialog.Builder(requireContext()).show {
-            message(text = TR.mediaCheckTrashEmptied())
-            positiveButton(CommonString.dialog_ok) {
-                requireActivity().finish()
-            }
-            cancelable(false)
         }
     }
 
     private fun showResultDialog(
-        titleRes: Int,
+        id: MessageId,
+        @StringRes titleRes: Int? = null,
         message: String,
     ) {
         AlertDialog.Builder(requireContext()).show {
-            title(titleRes)
+            titleRes?.let { title(it) }
             message(text = message)
-            positiveButton(CommonString.dialog_ok) {
-                requireActivity().finish()
-            }
+            positiveButton(CommonString.dialog_ok) { requireActivity().finish() }
             cancelable(false)
+            acknowledgeOnDismiss(id, viewModel::messageShown)
         }
     }
 

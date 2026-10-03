@@ -25,10 +25,14 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.progress.HasProgress
 import com.ichi2.anki.progress.ProgressManager
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.MessageId
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /** The operation [MediaCheckViewModel] is running, shown as a progress message by the UI. */
 enum class MediaCheckProgress {
@@ -37,7 +41,25 @@ enum class MediaCheckProgress {
     DELETING_MEDIA,
 }
 
-// TODO: handle errors in the ViewModel instead of returning a Deferred for the UI to await
+/** The outcome of a [MediaCheckViewModel] operation, which the UI shows and then acknowledges. */
+sealed interface MediaCheckMessage {
+    data class TagsAdded(
+        val notesUpdated: Int,
+    ) : MediaCheckMessage
+
+    data class MediaDeleted(
+        val count: Int,
+    ) : MediaCheckMessage
+
+    data object TrashEmptied : MediaCheckMessage
+
+    data object TrashRestored : MediaCheckMessage
+
+    data class Failed(
+        val exception: Exception,
+    ) : MediaCheckMessage
+}
+
 @NeedsTest("Test the media check process i.e. the buttons and views")
 class MediaCheckViewModel :
     ViewModel(),
@@ -47,50 +69,58 @@ class MediaCheckViewModel :
     val mediaCheckResult: StateFlow<CheckMediaResponse?>
         field = MutableStateFlow<CheckMediaResponse?>(null)
 
-    private val deletedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
-    private val taggedFilesCount: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val messageQueue = MessageQueue<MediaCheckMessage>()
 
-    val deletedFiles: Int
-        get() = deletedFilesCount.value
+    val pendingMessages = messageQueue.messages
 
-    val taggedFiles: Int
-        get() = taggedFilesCount.value
+    fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
 
-    fun tagMissing(tag: String): Deferred<Unit> =
-        viewModelScope.async {
-            progressManager.withProgress(message = MediaCheckProgress.ADDING_TAGS) {
-                val taggedNotes =
-                    undoableOp {
-                        tags.bulkAdd(mediaCheckResult.value?.missingMediaNotesList ?: listOf(), tag)
-                    }
-                taggedFilesCount.value = taggedNotes.count
-            }
+    fun tagMissing(tag: String): Job =
+        launchOperation(MediaCheckProgress.ADDING_TAGS) {
+            val taggedNotes =
+                undoableOp {
+                    tags.bulkAdd(mediaCheckResult.value?.missingMediaNotesList ?: listOf(), tag)
+                }
+            messageQueue.enqueue(MediaCheckMessage.TagsAdded(taggedNotes.count))
         }
 
-    fun checkMedia(): Deferred<Unit> =
-        viewModelScope.async {
-            progressManager.withProgress(message = MediaCheckProgress.CHECKING_MEDIA) {
-                mediaCheckResult.value = withCol { media.check() }
-            }
+    fun checkMedia(): Job =
+        launchOperation(MediaCheckProgress.CHECKING_MEDIA) {
+            mediaCheckResult.value = withCol { media.check() }
         }
 
-    fun deleteTrash(): Deferred<Unit> =
-        viewModelScope.async {
-            progressManager.withProgress { withCol { media.emptyTrash() } }
+    fun deleteTrash(): Job =
+        launchOperation {
+            withCol { media.emptyTrash() }
+            messageQueue.enqueue(MediaCheckMessage.TrashEmptied)
         }
 
-    fun restoreTrash(): Deferred<Unit> =
-        viewModelScope.async {
-            progressManager.withProgress { withCol { media.restoreTrash() } }
+    fun restoreTrash(): Job =
+        launchOperation {
+            withCol { media.restoreTrash() }
+            messageQueue.enqueue(MediaCheckMessage.TrashRestored)
         }
 
     // TODO: investigate: the underlying implementation exposes progress, which we do not yet handle.
-    fun deleteUnusedMedia(): Deferred<Unit> =
-        viewModelScope.async {
-            progressManager.withProgress(message = MediaCheckProgress.DELETING_MEDIA) {
-                val unused = mediaCheckResult.value?.unusedList ?: listOf()
-                withCol { media.trashFiles(unused) }
-                deletedFilesCount.value = unused.size
+    fun deleteUnusedMedia(): Job =
+        launchOperation(MediaCheckProgress.DELETING_MEDIA) {
+            val unused = mediaCheckResult.value?.unusedList ?: listOf()
+            withCol { media.trashFiles(unused) }
+            messageQueue.enqueue(MediaCheckMessage.MediaDeleted(unused.size))
+        }
+
+    private fun launchOperation(
+        progress: MediaCheckProgress? = null,
+        block: suspend () -> Unit,
+    ): Job =
+        viewModelScope.launch {
+            try {
+                progressManager.withProgress(message = progress) { block() }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w("Media check operation failed")
+                messageQueue.enqueue(MediaCheckMessage.Failed(e))
             }
         }
 }
