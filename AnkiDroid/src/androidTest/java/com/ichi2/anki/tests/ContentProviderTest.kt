@@ -410,6 +410,29 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     @Test
+    fun testSearchCards_deletedCardRetainsIdWithNullFields() {
+        val note = addTempClozeNote("{{c1::A}} {{c2::B}}")
+        val cardIds = col.findCards("nid:${note.id}")
+        val cursor =
+            contentResolver.query(FlashCardsContract.Card.CONTENT_URI, null, "nid:${note.id}", null, null)
+        assertThat(cursor, notNullValue())
+        cursor!!.use {
+            col.removeNotes(noteIds = listOf(note.id))
+            assertThat(it.count, equalTo(cardIds.size))
+            val idColumn = it.getColumnIndexOrThrow(FlashCardsContract.Card._ID)
+            val returnedIds = mutableListOf<Long>()
+            while (it.moveToNext()) {
+                returnedIds.add(it.getLong(idColumn))
+                for (column in 0 until it.columnCount) {
+                    if (column == idColumn) continue
+                    assertThat("${it.getColumnName(column)} should be null", it.isNull(column), equalTo(true))
+                }
+            }
+            assertThat(returnedIds.toSet(), equalTo(cardIds.toSet()))
+        }
+    }
+
+    @Test
     fun testSearchCards_unknownColumnThrowsFromQuery() {
         // Validate the projection even when the search has no results.
         for (query in listOf("", "cid:0")) {

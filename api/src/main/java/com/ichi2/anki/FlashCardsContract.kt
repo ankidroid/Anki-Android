@@ -939,6 +939,8 @@ public object FlashCardsContract {
          *
          * For card searches, the matching card IDs and result count are fixed when the query runs.
          * Other fields are loaded lazily and may reflect changes made while the cursor is open.
+         * If a card is deleted before its row is loaded, the row retains its [_ID] and returns `null`
+         * for all other requested columns. Rows already loaded may still contain the earlier values.
          */
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
