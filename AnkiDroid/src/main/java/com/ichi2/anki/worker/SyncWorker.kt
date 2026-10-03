@@ -102,12 +102,13 @@ class SyncWorker(
             }
             Timber.d("SyncWorker: showing failure notification")
             return Result.failure()
+        } finally {
+            setLastSyncTimeToNow()
         }
         Timber.d("SyncWorker: cancelling progress notification (sync completed)")
         notificationManager?.cancel(NotificationId.SYNC)
 
         Timber.d("SyncWorker: success")
-        setLastSyncTimeToNow()
         return Result.success()
     }
 
