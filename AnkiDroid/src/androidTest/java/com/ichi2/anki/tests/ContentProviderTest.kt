@@ -410,6 +410,25 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     @Test
+    fun testSearchCards_unknownColumnThrowsFromQuery() {
+        // Validate the projection even when the search has no results.
+        for (query in listOf("", "cid:0")) {
+            val exception =
+                assertThrows<UnsupportedOperationException> {
+                    contentResolver
+                        .query(
+                            FlashCardsContract.Card.CONTENT_URI,
+                            arrayOf(FlashCardsContract.Card._ID, "not_a_column"),
+                            query,
+                            null,
+                            null,
+                        )?.close()
+                }
+            assertThat(exception.message, containsString("not_a_column"))
+        }
+    }
+
+    @Test
     fun testQueryCardById() {
         val card = getFirstCardFromScheduler(col)
 
