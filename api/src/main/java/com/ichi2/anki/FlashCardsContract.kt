@@ -936,6 +936,9 @@ public object FlashCardsContract {
         /**
          * The content:// style URI for cards. Can be used to search for cards or access specific cards.
          * For examples on how to use the URI for queries see the overview in [FlashCardsContract].
+         *
+         * For card searches, the matching card IDs and result count are fixed when the query runs.
+         * Other fields are loaded lazily and may reflect changes made while the cursor is open.
          */
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
