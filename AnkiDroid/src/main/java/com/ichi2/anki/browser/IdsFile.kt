@@ -10,6 +10,7 @@ import java.io.DataOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * Temporary file containing cards or note IDs to be passed in a Bundle.
@@ -33,9 +34,19 @@ class IdsFile(
         }
     }
 
+    /**
+     * Reads the Ids in the file. This may be an empty list.
+     *
+     * @throws IOException if the file is missing or corrupt.
+     */
     fun getIds(): List<Long> =
-        DataInputStream(FileInputStream(this)).use { inputStream ->
+        FileInputStream(this).use { fileStream ->
+            val inputStream = DataInputStream(fileStream.buffered())
             val size = inputStream.readInt()
+            // Reject incomplete selections before allocating the list.
+            if (fileStream.channel.size() < Int.SIZE_BYTES + size.toLong() * Long.SIZE_BYTES) {
+                throw IOException("Truncated IDs file: $name")
+            }
             List(size) { inputStream.readLong() }
         }
 
