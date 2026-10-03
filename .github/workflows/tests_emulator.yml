@@ -1,6 +1,9 @@
 name: 🛠️ Emulator Tests
 
 on:
+  schedule:
+    # Weekly emulator coverage, Monday at 03:17 UTC.
+    - cron: '17 3 * * 1'
   workflow_dispatch:
     inputs:
       iterations:
@@ -21,7 +24,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'schedule' && 'scheduled' || 'ci' }}
   cancel-in-progress: true
 
 jobs:
@@ -56,15 +59,6 @@ jobs:
               console.log('iterationArray is: ' + iterationArray)
             }
 
-            // If we are running on a schedule it's our periodic passive scan for flakes
-            // Goal is to run enough iterations on all systems that we have confidence there are no flakes
-            if (context.eventName === "schedule") {
-              const iterationCount = 15
-              for (let i = 0; i < iterationCount; i++) {
-                iterationArray.push(i);
-              }
-            }
-
             // TODO Refactor to make these dynamic with a minSdk/max bracket only on schedule, not push
             let apiLevel = [36];
 
@@ -72,6 +66,11 @@ jobs:
             // try different architectures, targets, delays etc
             let arch = ['x86_64'];
             let target = ['google_apis', 'google_apis_ps16k'];
+            // Keep the 16 KB emulator off the per-change CI path.
+            // Scheduled and manual runs exercise both targets.
+            if (context.eventName !== 'schedule' && context.eventName !== 'workflow_dispatch') {
+              target = ['google_apis'];
+            }
             let firstBootDelay = [600];
 
             return {
@@ -138,17 +137,16 @@ jobs:
           # Comment this and the with: above out for performance testing on a branch
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
-        # This appears to be 'Cache Size: ~1230 MB (1290026823 B)' based on watching action logs
-        # Repo limit is 10GB; branch caches are independent; branches may read default branch cache.
-        # We don't want branches to evict main branch snapshot, so save on main, read-only all else
+        # Cache only the per-change emulator: the 16 KB snapshot costs about 2.5 GiB.
       - name: AVD cache
+        if: matrix.target == 'google_apis'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v2-${{ github.event.inputs.clearCaches }}
+          key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v2-
           restore-keys: |
             avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v2
 
@@ -191,9 +189,9 @@ jobs:
             "${ANDROID_HOME:?}/system-images/android-${SDK_API_LEVEL:?}/${SDK_TARGET:?}/${SDK_ARCH:?}/.installer"
 
       - name: AVD Boot and Snapshot Creation
-        # Only generate a snapshot for saving if we are on main branch with a cache miss
+        # Warm up the uncached 16 KB emulator on every run; otherwise only on main cache misses.
         # Comment the if out to generate snapshots on branch for performance testing
-        if: "${{ github.event.inputs.clearCaches != '' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
+        if: "${{ matrix.target == 'google_apis_ps16k' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
           api-level: ${{ matrix.api-level }}
@@ -212,10 +210,10 @@ jobs:
 
         # This step is separate so pure install time may be calculated as a step
       - name: Emulator Snapshot After Firstboot Warmup
-        # Only generate a snapshot for saving if we are on main branch with a cache miss
+        # Always warm up the 16 KB emulator. The default emulator only needs it on main cache misses.
         # Switch the if statements via comment if generating snapshots for performance testing
         # if: matrix.first-boot-delay != '0'
-        if: "${{ github.event.inputs.clearCaches != '' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
+        if: "${{ matrix.target == 'google_apis_ps16k' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
         env:
           FIRST_BOOT_DELAY: ${{ matrix.first-boot-delay }}
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
