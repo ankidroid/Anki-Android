@@ -243,6 +243,33 @@ class TagsDialogTest : RobolectricTest() {
     }
 
     @Test
+    fun `partially selected hierarchical tags are visible at the top`() {
+        val first = addBasicNote("first")
+        val second = addBasicNote("second")
+        val unrelated = addBasicNote("unrelated")
+        col.tags.bulkAdd(listOf(first.id), "B::B")
+        col.tags.bulkAdd(listOf(second.id), "C::child::leaf")
+        col.tags.bulkAdd(listOf(unrelated.id), "aaa")
+        val args =
+            TagsDialog()
+                .withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, listOf(first.id, second.id))
+                .requireArguments()
+
+        runTagsDialogScenario(args) { fragment ->
+            val recycler = fragment.binding.tagsList
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            val expected = listOf("B", "B::B", "C", "C::child", "C::child::leaf", "aaa")
+            assertEquals(expected.size, recycler.adapter!!.itemCount)
+            expected.forEachIndexed { index, tag ->
+                val holder = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, index)
+                assertEquals(tag, holder.text)
+                assertEquals(if (tag == "aaa") UNCHECKED else INDETERMINATE, holder.checkboxState)
+            }
+        }
+    }
+
+    @Test
     fun test_checked_unchecked_indeterminate() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val expectedAllTags = listOf("a", "b", "d", "e")

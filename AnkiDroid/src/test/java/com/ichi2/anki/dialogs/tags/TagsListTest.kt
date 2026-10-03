@@ -507,6 +507,29 @@ class TagsListTest {
     }
 
     @Test
+    fun `sort brings partially selected hierarchical tags to the top`() {
+        // Issue 15278: the selected notes have different hierarchical tags.
+        val tags =
+            TagsList(
+                allTags = listOf("aaa", "B::B", "C::child::leaf", "C::other"),
+                checkedTags = listOf("B::B", "C::child::leaf"),
+                uncheckedTags = listOf("aaa", "B::B", "C::child::leaf", "C::other"),
+            )
+
+        tags.sort()
+
+        assertEquals(
+            listOf("B", "B::B", "C", "C::child", "C::child::leaf", "C::other", "aaa"),
+            tags.copyOfAllTagList(),
+        )
+        assertEquals(emptyList<String>(), tags.copyOfCheckedTagList())
+        assertEquals(
+            listOf("B", "B::B", "C", "C::child", "C::child::leaf"),
+            tags.copyOfIndeterminateTagList(),
+        )
+    }
+
+    @Test
     fun `sort keeps selected branches first and compares hierarchy parts ignoring case`() {
         val tags =
             TagsList(

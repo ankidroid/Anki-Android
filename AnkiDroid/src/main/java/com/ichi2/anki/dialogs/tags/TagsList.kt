@@ -258,7 +258,9 @@ class TagsList(
         for (tag in allTags) {
             addAncestors(tag)
         }
-        for (tag in checkedTags) {
+        // Partially selected descendants also need their ancestors prioritized and expanded.
+        // Take a snapshot because marking ancestors modifies indeterminateTags.
+        for (tag in checkedTags + indeterminateTags) {
             markAncestorsIndeterminate(tag)
         }
     }
