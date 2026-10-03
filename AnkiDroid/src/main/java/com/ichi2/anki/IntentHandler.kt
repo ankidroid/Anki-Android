@@ -33,6 +33,7 @@ import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
@@ -460,7 +461,7 @@ class IntentHandler : AbstractIntentHandler() {
                 val millisecondsSinceLastSyncAttempt = millisecondsSinceLastSyncAttempt()
                 val limited = millisecondsSinceLastSyncAttempt < INTENT_SYNC_MIN_INTERVAL
                 if (!limited && !hkey.isNullOrEmpty() && NetworkUtils.isOnline) {
-                    deckPicker.sync()
+                    startBackgroundSync(deckPicker)
                 } else {
                     val err = res.getString(CommonString.sync_error)
                     if (limited) {
@@ -484,6 +485,14 @@ class IntentHandler : AbstractIntentHandler() {
                     }
                 }
                 deckPicker.finish()
+            }
+
+            private fun startBackgroundSync(deckPicker: DeckPicker) {
+                if (MeteredSyncPolicy.shouldBlock()) {
+                    Timber.i("Ignoring sync intent: metered sync is disabled")
+                    return
+                }
+                deckPicker.sync()
             }
 
             override fun toMessage(): Message = emptyMessage(this.what)
