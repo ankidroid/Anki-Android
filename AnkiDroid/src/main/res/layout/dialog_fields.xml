@@ -10,12 +10,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="8dp"
+    android:paddingBottom="16dp"
     android:fadeScrollbars="false">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="16dp">
+        android:paddingTop="16dp">
 
         <!-- Field Removal Text Container-->
         <com.google.android.material.textview.MaterialTextView
