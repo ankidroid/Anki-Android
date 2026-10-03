@@ -246,6 +246,13 @@ open class PrefsRepository protected constructor(
     var hkey by stringPref(R.string.hkey_key)
     var currentSyncUri by stringPref(R.string.current_sync_uri_key)
 
+    /**
+     * End time of the last manual or automatic sync attempt, in epoch milliseconds.
+     * Rate-limits foreground auto-sync and sync intents, including failed, canceled and no-change attempts.
+     *
+     * If a request is blocked before starting (rate limit; metered connection etc...) do not update it,
+     * so it can try again once the block is lifted.
+     */
     var lastSyncTime by longPref(R.string.last_sync_time_key, defaultValue = 0L)
 
     val shouldFetchMedia: ShouldFetchMedia

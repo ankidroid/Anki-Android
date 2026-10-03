@@ -451,15 +451,15 @@ class IntentHandler : AbstractIntentHandler() {
                 val deckPicker = activity.requireDeckPickerOrShowError() ?: return
                 val res = deckPicker.resources
                 val hkey = Prefs.hkey
-                val millisecondsSinceLastSync = millisecondsSinceLastSync()
-                val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
+                val millisecondsSinceLastSyncAttempt = millisecondsSinceLastSyncAttempt()
+                val limited = millisecondsSinceLastSyncAttempt < INTENT_SYNC_MIN_INTERVAL
                 if (!limited && !hkey.isNullOrEmpty() && NetworkUtils.isOnline) {
                     deckPicker.sync()
                 } else {
                     val err = res.getString(CommonString.sync_error)
                     if (limited) {
                         val remainingTimeInSeconds =
-                            max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
+                            max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSyncAttempt) / 1000, 1)
                         // getQuantityString needs an int
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
                         val message =
