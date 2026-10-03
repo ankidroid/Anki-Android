@@ -128,6 +128,12 @@ abstract class ScreenshotTest : RobolectricTest() {
         }
     }
 
+    /** Applies the orientation and returns its component of the screenshot filename. */
+    protected fun setOrientation(landscape: Boolean): String {
+        if (landscape) RuntimeEnvironment.setQualifiers("+land")
+        return if (landscape) "landscape" else "portrait"
+    }
+
     /** Pixel-class phone in portrait */
     protected fun setPhoneQualifiers() = RuntimeEnvironment.setQualifiers(RobolectricDeviceQualifiers.MediumPhone)
 
