@@ -229,6 +229,7 @@ open class RobolectricTest :
         }
         WorkManagerTestInitHelper.closeWorkDatabase()
         Dispatchers.resetMain()
+        ioDispatcher = Dispatchers.IO
         runBlocking { CollectionManager.discardBackend() }
         val pendingMethods = OnlyOnce.pendingMethods
         Assert.assertTrue(
