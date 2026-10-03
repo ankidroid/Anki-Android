@@ -54,6 +54,8 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.notNullValue
 import org.json.JSONObject.NULL
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -364,6 +366,46 @@ class ContentProviderTest : InstrumentedTest() {
 
             it.moveToFirst()
             assertEquals("correct card id", card.id, it.getLong(0))
+        }
+    }
+
+    @Test
+    fun testSearchCards_fillWindowCopiesAllRows() {
+        val note = addTempClozeNote("{{c1::A}} {{c2::B}}")
+        val cursor =
+            contentResolver.query(FlashCardsContract.Card.CONTENT_URI, null, "nid:${note.id}", null, null)
+        assertThat(cursor, notNullValue())
+        cursor!!.use {
+            val initialPosition = it.position
+            CursorWindow("test").use { window ->
+                cursorFillWindow(it, 0, window)
+                assertThat(it.position, equalTo(initialPosition))
+                assertThat(window.numRows, equalTo(2))
+                val noteIdColumn = it.getColumnIndexOrThrow(FlashCardsContract.Card.NOTE_ID)
+                assertThat(window.getLong(0, noteIdColumn), equalTo(note.id))
+                assertThat(window.getLong(1, noteIdColumn), equalTo(note.id))
+            }
+        }
+    }
+
+    @Test
+    fun testSearchCards_randomAccessIsStable() {
+        val note = addTempClozeNote("{{c1::A}} {{c2::B}}")
+        val cursor =
+            contentResolver.query(FlashCardsContract.Card.CONTENT_URI, null, "nid:${note.id}", null, null)
+        assertThat(cursor, notNullValue())
+        cursor!!.use {
+            fun rowAt(position: Int): List<String?> {
+                assertThat(it.moveToPosition(position), equalTo(true))
+                return (0 until it.columnCount).map { column -> it.getString(column) }
+            }
+
+            val forwards = (0 until it.count).map { position -> rowAt(position) }
+            assertThat(forwards, hasSize(2))
+            for (position in it.count - 1 downTo 0) {
+                assertThat(rowAt(position), equalTo(forwards[position]))
+            }
+            assertThat(rowAt(0), equalTo(forwards[0]))
         }
     }
 

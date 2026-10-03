@@ -8,12 +8,13 @@ import android.database.MatrixCursor
 /**
  * A cursor that loads rows on demand and retains at most one loaded row.
  *
- * Creating the cursor or reading its count does not load any rows. Moving to a different valid
- * position calls [loadRow], which must add exactly one row to the supplied [MatrixCursor].
- * The previous row is discarded, so returning to it calls [loadRow] again and may yield updated
- * values. Android can copy rows into a cursor window without this cursor retaining all the results.
+ * Creating the cursor, reading its count, and moving between positions do not load any rows.
+ * Reading a column calls [loadRow], which must add exactly one row to the supplied [MatrixCursor].
+ * Further reads at the same position reuse that row. Moving discards it, so reading it again after
+ * moving away calls [loadRow] again and may yield updated values. Android can copy rows into a
+ * cursor window without this cursor retaining all the results.
  *
- * For example, defer fetching card details until the cursor moves to a result:
+ * For example, defer fetching card details until a result is read:
  * ```kotlin
  * val cursor = LazyCursor(arrayOf("_id", "reps"), cardIds.size) { position, row ->
  *     val card = col.getCardOrNull(cardIds[position])
@@ -24,8 +25,9 @@ import android.database.MatrixCursor
 internal class LazyCursor(
     private val columns: Array<String>,
     private val rowCount: Int,
-    private var loadRow: ((Int, MatrixCursor) -> Unit)?,
+    loadRow: (Int, MatrixCursor) -> Unit,
 ) : AbstractCursor() {
+    private var loadRow: ((Int, MatrixCursor) -> Unit)? = loadRow
     private var row: MatrixCursor? = null
 
     override fun getCount(): Int = rowCount
@@ -39,9 +41,16 @@ internal class LazyCursor(
         check(!isClosed)
         row?.close()
         row = null
+        return true
+    }
+
+    private fun currentRow(): MatrixCursor {
+        check(!isClosed)
+        checkPosition()
+        row?.let { return it }
         val next = MatrixCursor(columns, 1)
         try {
-            loadRow!!(newPosition, next)
+            loadRow!!(position, next)
             check(next.count == 1)
             next.moveToFirst()
             row = next
@@ -49,13 +58,7 @@ internal class LazyCursor(
             next.close()
             throw e
         }
-        return true
-    }
-
-    private fun currentRow(): MatrixCursor {
-        check(!isClosed)
-        checkPosition()
-        return checkNotNull(row)
+        return next
     }
 
     override fun getString(column: Int): String? = currentRow().getString(column)
