@@ -469,6 +469,7 @@ class IntentHandler : AbstractIntentHandler() {
                             max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSyncAttempt) / 1000, 1)
                         // getQuantityString needs an int
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
+                        Timber.i("Ignoring sync intent: rate limited for another %d seconds", remaining)
                         val message =
                             res.getQuantityString(
                                 CommonPlurals.sync_automatic_sync_needs_more_time,
@@ -477,6 +478,7 @@ class IntentHandler : AbstractIntentHandler() {
                             )
                         deckPicker.showSimpleNotification(err, message, NotificationChannel.SYNC)
                     } else {
+                        Timber.i("Ignoring sync intent: %s", if (hkey.isNullOrEmpty()) "not logged in" else "offline")
                         deckPicker.showSimpleNotification(
                             err,
                             res.getString(CommonString.youre_offline),
@@ -492,7 +494,16 @@ class IntentHandler : AbstractIntentHandler() {
                     Timber.i("Ignoring sync intent: metered sync is disabled")
                     return
                 }
-                deckPicker.sync()
+                val auth = syncAuth()
+                if (auth == null) {
+                    Timber.i("Ignoring sync intent: no sync credentials")
+                    return
+                }
+
+                // Keep collection and media sync running after DeckPicker finishes.
+                val syncMedia = shouldFetchMedia()
+                Timber.i("Enqueuing background sync from intent (syncMedia=%s)", syncMedia)
+                SyncWorker.start(deckPicker, auth, syncMedia = syncMedia)
             }
 
             override fun toMessage(): Message = emptyMessage(this.what)
