@@ -28,7 +28,7 @@ value class ReviewReminderSchemaVersion(
  * has the same fields as the old version of [ReviewReminder], then implement the [migrate] method which
  * transforms old [ReviewReminder]s to new [ReviewReminder]s. Also ensure that the previous [ReviewReminderSchema]
  * in the migration version chain ([ReviewRemindersDatabase.oldReviewReminderSchemasForMigration]) has its [migrate] method
- * edited to return instances of the newly-created [ReviewReminderSchema]. Then, increment [ReviewRemindersDatabase.schemaVersion].
+ * edited to return instances of the newly-created schema. Then, increment [ReviewRemindersDatabase.schemaVersion].
  *
  * Data classes implementing this interface should be marked as @Serializable. Any new types defined for ReviewReminderSchemas
  * should also be marked as @Serializable.
@@ -63,7 +63,7 @@ data class ReviewReminderSchemaV1(
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean = false,
 ) : ReviewReminderSchema {
-    override fun migrate(): ReviewReminderSchema =
+    override fun migrate(): ReviewReminderSchemaV2 =
         ReviewReminderSchemaV2(
             id = id,
             time = time,
@@ -88,7 +88,7 @@ data class ReviewReminderSchemaV2(
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean,
 ) : ReviewReminderSchema {
-    override fun migrate(): ReviewReminderSchema =
+    override fun migrate(): ReviewReminder =
         ReviewReminder.createReviewReminder(
             time = time,
             cardTriggerThreshold = cardTriggerThreshold,
@@ -121,7 +121,7 @@ object TestingReviewReminderMigrationSettings {
         val did: DeckId,
         val enabled: Boolean = true,
     ) : ReviewReminderSchema {
-        override fun migrate(): ReviewReminderSchema =
+        override fun migrate(): ReviewReminderTestSchemaVersionTwo =
             ReviewReminderTestSchemaVersionTwo(
                 id = this.id,
                 time = VersionTwoDataClasses.ReviewReminderTime(hour, minute),
