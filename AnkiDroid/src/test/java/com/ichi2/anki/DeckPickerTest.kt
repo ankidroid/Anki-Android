@@ -1006,6 +1006,37 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
+    fun `bottom navigation features are disabled on tablets`() =
+        withBottomNavigationEnabled {
+            deckPicker {
+                assumeTrue("Running on tablet", fragmented)
+
+                assertThat(Prefs.devBottomNavEnabled, equalTo(true))
+                assertThat(bottomNavigationEnabled, equalTo(false))
+                assertThat(resources.getBoolean(R.bool.bottom_navigation_available), equalTo(false))
+                val bottomNavigation = ActivityHomescreenBinding.bind(findViewById(R.id.root_layout)).bottomNavigation
+                assertThat(bottomNavigation, nullValue())
+                assertThat(deckPickerBinding.decks.itemDecorationCount, equalTo(0))
+            }
+        }
+
+    @Test
+    fun `bottom navigation follows the single pane layout on large screens`() =
+        withBottomNavigationEnabled {
+            assumeTrue("Only run once", qualifiers == "normal")
+            RuntimeEnvironment.setQualifiers("sw480dp-large")
+            deckPicker {
+                assertThat(fragmented, equalTo(false))
+                assertThat(Prefs.devBottomNavEnabled, equalTo(true))
+                assertThat(bottomNavigationEnabled, equalTo(true))
+                assertThat(resources.getBoolean(R.bool.bottom_navigation_available), equalTo(true))
+                assertThat(binding.bottomNavigation, notNullValue())
+                assertThat(binding.bottomNavigation!!.visibility, equalTo(View.VISIBLE))
+                assertThat(deckPickerBinding.decks.itemDecorationCount, equalTo(1))
+            }
+        }
+
+    @Test
     fun `bottom navigation has correct labels`() =
         withBottomNavigationEnabled {
             assumeTrue("Not running on tablet", qualifiers != "xlarge")
