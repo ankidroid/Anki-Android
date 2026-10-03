@@ -468,6 +468,9 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.Card.DEFAULT_COLUMNS
                 val query = selection ?: ""
 
+                // validate the columns
+                columns.forEach { cardColumnAccessor(it) }
+
                 val cardIds =
                     try {
                         col.findCards(query)
