@@ -23,6 +23,15 @@ enum class CollectionOperation {
     CHECK_DATABASE,
     CHECK_MEDIA,
     EMPTY_CARDS,
+    ;
+
+    /** Whether this operation syncs the collection, including full uploads and downloads. */
+    val isSync: Boolean
+        get() =
+            when (this) {
+                SYNC, FULL_DOWNLOAD, FULL_UPLOAD -> true
+                IMPORT_COLLECTION_PACKAGE, CHECK_DATABASE, CHECK_MEDIA, EMPTY_CARDS -> false
+            }
 }
 
 /**
