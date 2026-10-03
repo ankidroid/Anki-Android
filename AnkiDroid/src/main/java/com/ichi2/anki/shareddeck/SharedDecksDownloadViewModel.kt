@@ -48,6 +48,12 @@ class SharedDecksDownloadViewModel : ViewModel() {
         Timber.i("download failed")
         uiState.update { it.copy(phase = DownloadPhase.Failed, percent = 0f) }
     }
+
+    /** The download hit AnkiWeb's download limit for a logged-out user, so a login is needed. */
+    fun onLoginRequired() {
+        Timber.i("login required to download more decks")
+        uiState.update { it.copy(phase = DownloadPhase.LoginRequired) }
+    }
 }
 
 /** Everything the download screen shows. */
@@ -69,6 +75,10 @@ enum class DownloadPhase {
 
     /** Failed. Try again and Open in browser are offered. */
     Failed,
+
+    /** The download hit AnkiWeb's limit for anonymous users. A login prompt is shown and the
+     * screen returns to the shared decks WebView, where the user can log in. */
+    LoginRequired,
 }
 
 /** Whole numbers for 0 and 100, one decimal place in between, so the common cases read cleanly. */

@@ -74,6 +74,12 @@ class SharedDecksDownloadViewModelTest {
     }
 
     @Test
+    fun `onLoginRequired enters the login required phase`() {
+        viewModel.onLoginRequired()
+        assertThat(state.phase, equalTo(DownloadPhase.LoginRequired))
+    }
+
+    @Test
     fun `retrying after a failure puts the screen back to downloading`() {
         viewModel.onDownloadStarted("deck.apkg")
         viewModel.onWaitingForNetwork(true)
