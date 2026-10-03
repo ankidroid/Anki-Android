@@ -744,6 +744,7 @@ class TagsDialogTest : RobolectricTest() {
         FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onFragment { tagsDialog: TagsDialog ->
+                advanceRobolectricLooperUntil { tagsDialog.binding.tagsList.adapter != null }
                 block(tagsDialog)
             }
         }
