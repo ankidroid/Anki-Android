@@ -18,6 +18,7 @@ package com.ichi2.anki.servicelayer
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.exception.StorageAccessException
+import net.ankiweb.rsdroid.BackendException.BackendSchedulerUpgradeRequiredException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncServerMessageException
@@ -93,6 +94,7 @@ object ThrowableFilterService {
         when (t) {
             is BackendNetworkException -> return true
             is BackendSyncException -> return true
+            is BackendSchedulerUpgradeRequiredException -> return true
             is StorageAccessException -> return true
         }
         Timber.v("exceptionIsUnwanted - exception was wanted")
