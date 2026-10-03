@@ -45,10 +45,12 @@ class TagsList(
     private val checkedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
-     * A Set containing the tags with indeterminate state.
-     * For a tag to be in indeterminate state it should be present in checkedTags and also in uncheckedTags.
+     * Tags present on some notes, plus unchecked ancestors of selected tags.
      */
     private val indeterminateTags: MutableSet<String>
+
+    /** Tags present on some notes whose own selection has not been changed by the user. */
+    private val partiallySelectedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
      * List of all available tags
@@ -69,6 +71,7 @@ class TagsList(
             indeterminateTags.retainAll(uncheckedSet)
             this.checkedTags.removeAll(indeterminateTags)
         }
+        partiallySelectedTags.addAll(indeterminateTags)
         prepareTagHierarchy()
     }
 
@@ -140,6 +143,7 @@ class TagsList(
             return false
         }
         indeterminateTags.remove(tag)
+        partiallySelectedTags.remove(tag)
         if (!checkedTags.add(tag)) {
             return false
         }
@@ -156,7 +160,10 @@ class TagsList(
      * @return true if the tag changed its check status
      * false if the tag was already unchecked or not in the list
      */
-    fun uncheck(tag: String): Boolean = indeterminateTags.remove(tag) || checkedTags.remove(tag)
+    fun uncheck(tag: String): Boolean {
+        partiallySelectedTags.remove(tag)
+        return indeterminateTags.remove(tag) || checkedTags.remove(tag)
+    }
 
     /**
      * Mark a tag as indeterminate tag
@@ -182,6 +189,7 @@ class TagsList(
      */
     fun toggleAllCheckedStatuses(): Boolean {
         indeterminateTags.clear()
+        partiallySelectedTags.clear()
         if (allTags.size == checkedTags.size) {
             checkedTags.clear()
             return true
@@ -219,6 +227,9 @@ class TagsList(
      * @return return a copy of checked tags
      */
     fun copyOfIndeterminateTagList(): List<String> = ArrayList(indeterminateTags)
+
+    /** Tags whose original per-note selection must be preserved when saving, excluding display-only ancestors. */
+    internal fun copyOfPartiallySelectedTagList(): List<String> = ArrayList(partiallySelectedTags)
 
     /**
      * @return return a copy of all tags list

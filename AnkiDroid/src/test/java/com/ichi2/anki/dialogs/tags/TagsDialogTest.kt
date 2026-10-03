@@ -28,6 +28,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.testutils.ext.newNote
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
@@ -46,6 +47,56 @@ import timber.log.Timber
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest : RobolectricTest() {
+    @Test
+    fun `confirming removal of a parent does not preserve its display state`() {
+        confirmTags(listOf("B B::child"), parentClicks = 1, selected = listOf("B::child"), preserved = emptyList())
+    }
+
+    @Test
+    fun `confirming unchanged partial selection preserves the original parent tag`() {
+        confirmTags(listOf("B B::child", "B::child"), parentClicks = 0, selected = listOf("B::child"), preserved = listOf("B"))
+    }
+
+    @Test
+    fun `confirming an overridden partial parent does not restore its original selection`() {
+        confirmTags(listOf("B B::child", "B::child"), parentClicks = 2, selected = listOf("B::child"), preserved = emptyList())
+    }
+
+    @Test
+    fun `confirming a partial child does not export a synthetic parent`() {
+        confirmTags(listOf("B::child", ""), parentClicks = 0, selected = emptyList(), preserved = listOf("B::child"))
+    }
+
+    /** Opens the dialog for the supplied notes, clicks the parent tag, and verifies the confirmed selection. */
+    private fun confirmTags(
+        noteTags: List<String>,
+        parentClicks: Int,
+        selected: List<String>,
+        preserved: List<String>,
+    ) {
+        val ids =
+            noteTags.mapIndexed { index, tags ->
+                addBasicNote("note $index").id.also { col.tags.bulkAdd(listOf(it), tags) }
+            }
+        val listener = Mockito.mock(TagsDialogListener::class.java)
+        val args = TagsDialog().withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, ids).requireArguments()
+        FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, TagsDialogFactory(listener)).use { scenario ->
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onFragment { fragment ->
+                val dialog = fragment.requireDialog() as AlertDialog
+                val recycler = dialog.findViewById<RecyclerView>(R.id.tags_list)!!
+                advanceRobolectricLooperUntil { recycler.adapter != null }
+                recycler.measure(0, 0)
+                recycler.layout(0, 0, 100, 1000)
+                val parent = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+                repeat(parentClicks) { parent.checkBoxView.performClick() }
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+                advanceRobolectricLooper()
+                Mockito.verify(listener).onSelectedTags(selected, preserved, CardStateFilter.ALL_CARDS)
+            }
+        }
+    }
+
     // regression test #8762
     // test for #8763
     @Test
