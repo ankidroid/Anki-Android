@@ -23,12 +23,14 @@ import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
+import org.hamcrest.Matchers.sameInstance
 import org.hamcrest.TypeSafeMatcher
 import org.intellij.lang.annotations.Language
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.reflect.full.declaredMemberFunctions
 import kotlin.reflect.full.memberProperties
 import kotlin.time.Duration.Companion.days
 
@@ -454,6 +456,49 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 .last(),
             equalTo(ReviewReminder::class),
         )
+    }
+
+    /**
+     * If this test has failed, a [ReviewReminderSchema.migrate] method does not return the next schema
+     * in [ReviewRemindersDatabase.oldReviewReminderSchemasForMigration]. Each schema must migrate to exactly
+     * the next version, and must declare that version as the narrowed return type of its [ReviewReminderSchema.migrate].
+     * When adding a new schema, remember to repoint the previous schema's [ReviewReminderSchema.migrate] to it.
+     */
+    @Test
+    fun `each schema migrates to the next schema in the chain`() {
+        val chain = ReviewRemindersDatabase.oldReviewReminderSchemasForMigration
+        assertThat(
+            chain.keys.map { it.value },
+            equalTo((1..ReviewRemindersDatabase.schemaVersion.value).toList()),
+        )
+        chain.values.zipWithNext().forEach { (schema, nextSchema) ->
+            val migrateReturnType =
+                schema.declaredMemberFunctions
+                    .single { it.name == "migrate" }
+                    .returnType
+                    .classifier
+            assertThat(
+                "${schema.simpleName}.migrate() should return ${nextSchema.simpleName}",
+                migrateReturnType,
+                equalTo(nextSchema),
+            )
+        }
+    }
+
+    /**
+     * [ReviewReminder] is the latest schema, so its [ReviewReminder.migrate] should declare [ReviewReminder]
+     * as its return type and return the same instance unchanged.
+     */
+    @Test
+    fun `ReviewReminder migrates to itself`() {
+        val migrateReturnType =
+            ReviewReminder::class
+                .declaredMemberFunctions
+                .single { it.name == "migrate" }
+                .returnType
+                .classifier
+        assertThat(migrateReturnType, equalTo(ReviewReminder::class))
+        assertThat(reviewReminderOne.migrate(), sameInstance(reviewReminderOne))
     }
 
     /**
