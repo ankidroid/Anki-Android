@@ -10,7 +10,9 @@ import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.rules.CollectionStorageRule
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 
@@ -31,6 +33,13 @@ open class JvmTest : InMemoryAnkiTest() {
     override fun setUp() {
         super.setUp()
         ChangeManager.resetForTesting()
+    }
+
+    @After
+    @CallSuper
+    override fun tearDown() {
+        super.tearDown()
+        ioDispatcher = Dispatchers.IO
     }
 
     override fun setupTestDispatcher(dispatcher: TestDispatcher) {
