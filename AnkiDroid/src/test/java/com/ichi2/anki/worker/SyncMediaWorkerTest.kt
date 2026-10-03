@@ -47,9 +47,10 @@ class SyncMediaWorkerTest {
         val auth = SyncAuth(syncAuth { hkey = "test" })
 
         val input = SyncMediaWorker.getWorkRequest(auth).workSpec.input
+        val restoredAuth = input.toSyncAuth()!!
 
-        assertThat(input.getString("endpoint"), nullValue())
-        assertThat(input.getString("hkey"), equalTo("test"))
+        assertThat(restoredAuth.endpoint, nullValue())
+        assertThat(restoredAuth.hkey, equalTo("test"))
     }
 
     // https://github.com/ankidroid/Anki-Android/issues/20826

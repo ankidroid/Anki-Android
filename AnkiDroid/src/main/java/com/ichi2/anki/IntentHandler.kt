@@ -32,9 +32,11 @@ import com.ichi2.anki.exception.SystemStorageException
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.MimeTypeUtils
 import com.ichi2.anki.worker.SyncWorker
+import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils.handleFileImport
@@ -45,6 +47,9 @@ import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.TruncatedString
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
@@ -59,6 +64,9 @@ import kotlin.math.min
  * @author Tim
  */
 class IntentHandler : AbstractIntentHandler() {
+    // A delayed work query must not reopen DeckPicker after this activity is dismissed.
+    private val syncIntentScope = MainScope()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         super.onCreate(savedInstanceState)
@@ -72,7 +80,8 @@ class IntentHandler : AbstractIntentHandler() {
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
         val launchType = getLaunchType(intent)
         // TODO block the UI with some kind of ProgressDialog instead of cancelling the sync work
-        if (requiresCollectionAccess(launchType)) {
+        // A sync intent must not interrupt an existing sync; handleSyncIntent ignores duplicates.
+        if (launchType != LaunchType.SYNC && requiresCollectionAccess(launchType)) {
             // # 18899
             if (WorkManager.isInitialized()) {
                 SyncWorker.cancel(this)
@@ -110,6 +119,11 @@ class IntentHandler : AbstractIntentHandler() {
                 finish()
             }
         }
+    }
+
+    override fun onDestroy() {
+        syncIntentScope.cancel()
+        super.onDestroy()
     }
 
     private fun copyDebugInfoToClipboard(intent: Intent) {
@@ -204,11 +218,22 @@ class IntentHandler : AbstractIntentHandler() {
         action: String?,
     ) {
         Timber.i("Handling Sync Intent")
-        sendDoSyncMsg()
-        reloadIntent.action = action
-        reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(reloadIntent)
-        finish()
+        syncIntentScope.launch {
+            val existingSync = WorkManager.getInstance(this@IntentHandler).getWorkInfosForUniqueWorkFlow(UniqueWorkNames.SYNC).first()
+            // finish() may be called before onDestroy() cancels the query.
+            if (isFinishing) return@launch
+            if (existingSync.any { !it.state.isFinished }) {
+                // Opening DeckPicker would also access the collection while the worker is using it.
+                Timber.w("Ignoring sync intent: background collection sync is already pending or running")
+                finish()
+                return@launch
+            }
+            sendDoSyncMsg()
+            reloadIntent.action = action
+            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(reloadIntent)
+            finish()
+        }
     }
 
     private fun handleFileImport(
@@ -451,17 +476,18 @@ class IntentHandler : AbstractIntentHandler() {
                 val deckPicker = activity.requireDeckPickerOrShowError() ?: return
                 val res = deckPicker.resources
                 val hkey = Prefs.hkey
-                val millisecondsSinceLastSync = millisecondsSinceLastSync()
-                val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
+                val millisecondsSinceLastSyncAttempt = millisecondsSinceLastSyncAttempt()
+                val limited = millisecondsSinceLastSyncAttempt < INTENT_SYNC_MIN_INTERVAL
                 if (!limited && !hkey.isNullOrEmpty() && NetworkUtils.isOnline) {
-                    deckPicker.sync()
+                    startBackgroundSync(deckPicker)
                 } else {
                     val err = res.getString(CommonString.sync_error)
                     if (limited) {
                         val remainingTimeInSeconds =
-                            max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
+                            max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSyncAttempt) / 1000, 1)
                         // getQuantityString needs an int
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
+                        Timber.i("Ignoring sync intent: rate limited for another %d seconds", remaining)
                         val message =
                             res.getQuantityString(
                                 CommonPlurals.sync_automatic_sync_needs_more_time,
@@ -470,6 +496,7 @@ class IntentHandler : AbstractIntentHandler() {
                             )
                         deckPicker.showSimpleNotification(err, message, NotificationChannel.SYNC)
                     } else {
+                        Timber.i("Ignoring sync intent: %s", if (hkey.isNullOrEmpty()) "not logged in" else "offline")
                         deckPicker.showSimpleNotification(
                             err,
                             res.getString(CommonString.youre_offline),
@@ -478,6 +505,23 @@ class IntentHandler : AbstractIntentHandler() {
                     }
                 }
                 deckPicker.finish()
+            }
+
+            private fun startBackgroundSync(deckPicker: DeckPicker) {
+                if (MeteredSyncPolicy.shouldBlock()) {
+                    Timber.i("Ignoring sync intent: metered sync is disabled")
+                    return
+                }
+                val auth = syncAuth()
+                if (auth == null) {
+                    Timber.i("Ignoring sync intent: no sync credentials")
+                    return
+                }
+
+                // Keep collection and media sync running after DeckPicker finishes.
+                val syncMedia = shouldFetchMedia()
+                Timber.i("Enqueuing background sync from intent (syncMedia=%s)", syncMedia)
+                SyncWorker.start(deckPicker, auth, syncMedia = syncMedia)
             }
 
             override fun toMessage(): Message = emptyMessage(this.what)

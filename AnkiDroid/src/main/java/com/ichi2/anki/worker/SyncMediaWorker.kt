@@ -12,7 +12,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
-import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
 import androidx.work.NetworkType
@@ -22,7 +21,6 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import anki.sync.MediaSyncProgress
-import anki.sync.syncAuth
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
@@ -58,13 +56,7 @@ class SyncMediaWorker(
         Timber.v("SyncMediaWorker::doWork")
 
         try {
-            val auth =
-                syncAuth {
-                    hkey = inputData.getString(HKEY_KEY)!!
-                    inputData.getString(ENDPOINT_KEY)?.let {
-                        endpoint = it
-                    }
-                }.let(::SyncAuth)
+            val auth = requireNotNull(inputData.toSyncAuth())
 
             // The collection must be open, but we should not block collection operations while
             // `syncMedia` is executing, the app should be usable during a background media sync
@@ -193,8 +185,6 @@ class SyncMediaWorker(
     }
 
     companion object {
-        private const val HKEY_KEY = "hkey"
-        private const val ENDPOINT_KEY = "endpoint"
         const val NOTIFICATION_UPDATE_RATE_MS = 500L
 
         fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
@@ -204,15 +194,8 @@ class SyncMediaWorker(
                     .setRequiredNetworkType(NetworkType.CONNECTED)
                     .build()
 
-            val data =
-                Data
-                    .Builder()
-                    .putString(HKEY_KEY, auth.hkey)
-                    .putString(ENDPOINT_KEY, auth.endpoint)
-                    .build()
-
             return OneTimeWorkRequestBuilder<SyncMediaWorker>()
-                .setInputData(data)
+                .setInputData(auth.toWorkData())
                 .setConstraints(constraints)
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build()

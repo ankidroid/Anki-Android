@@ -20,7 +20,6 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import anki.collection.Progress
 import anki.sync.SyncCollectionResponse
-import anki.sync.syncAuth
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -72,16 +71,7 @@ class SyncWorker(
         Timber.v("SyncWorker::doWork")
         trySetForeground(getForegroundInfo())
 
-        val hkey =
-            inputData.getString(HKEY_KEY)
-                ?: return Result.failure()
-        val auth =
-            syncAuth {
-                this.hkey = hkey
-                inputData.getString(ENDPOINT_KEY)?.let {
-                    endpoint = it
-                }
-            }.let(::SyncAuth)
+        val auth = inputData.toSyncAuth() ?: return Result.failure()
         val shouldSyncMedia = inputData.getBoolean(SYNC_MEDIA_KEY, false)
 
         try {
@@ -102,12 +92,13 @@ class SyncWorker(
             }
             Timber.d("SyncWorker: showing failure notification")
             return Result.failure()
+        } finally {
+            setLastSyncTimeToNow()
         }
         Timber.d("SyncWorker: cancelling progress notification (sync completed)")
         notificationManager?.cancel(NotificationId.SYNC)
 
         Timber.d("SyncWorker: success")
-        setLastSyncTimeToNow()
         return Result.success()
     }
 
@@ -229,8 +220,6 @@ class SyncWorker(
     }
 
     companion object {
-        private const val HKEY_KEY = "hkey"
-        private const val ENDPOINT_KEY = "endpoint"
         private const val SYNC_MEDIA_KEY = "syncMedia"
 
         fun start(
@@ -247,8 +236,7 @@ class SyncWorker(
             val data =
                 Data
                     .Builder()
-                    .putString(HKEY_KEY, syncAuth.hkey)
-                    .putString(ENDPOINT_KEY, syncAuth.endpoint)
+                    .putAll(syncAuth.toWorkData())
                     .putBoolean(SYNC_MEDIA_KEY, syncMedia)
                     .build()
 
