@@ -218,6 +218,27 @@ data class ReviewReminder private constructor(
             profileID,
             onlyNotifyIfNoReviews,
         )
+
+        /**
+         * Creates a review reminder from the latest outdated schema. Should only be used for migration.
+         * Must be changed when the schema is updated.
+         *
+         * This method is necessary for schema migration because migrated review reminders should retain
+         * their original ID. Otherwise, review reminder alarms associated with the old ID will remain active
+         * and become orphaned. Note that this method must be located here because the constructor of [ReviewReminder]
+         * (and hence access to the [id] field) is private.
+         */
+        fun createViaMigration(latestOutdatedSchema: ReviewReminderSchemaV2) =
+            ReviewReminder(
+                id = latestOutdatedSchema.id,
+                time = latestOutdatedSchema.time,
+                cardTriggerThreshold = latestOutdatedSchema.cardTriggerThreshold,
+                scope = latestOutdatedSchema.scope,
+                enabled = latestOutdatedSchema.enabled,
+                latestNotifTime = TimeManager.time.calendar().timeInMillis,
+                profileID = latestOutdatedSchema.profileID,
+                onlyNotifyIfNoReviews = latestOutdatedSchema.onlyNotifyIfNoReviews,
+            )
     }
 
     /**

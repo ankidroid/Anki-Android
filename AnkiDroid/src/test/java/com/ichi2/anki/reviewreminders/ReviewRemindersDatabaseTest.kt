@@ -15,8 +15,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
-import org.hamcrest.Description
-import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
@@ -24,7 +22,6 @@ import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.sameInstance
-import org.hamcrest.TypeSafeMatcher
 import org.intellij.lang.annotations.Language
 import org.junit.After
 import org.junit.Before
@@ -37,7 +34,7 @@ import kotlin.time.Duration.Companion.days
 /**
  * If tests in this file have failed, it may be because you have updated [ReviewReminder]!
  * Please read the documentation of [ReviewReminder] carefully and ensure you have implemented
- * a proper migration method to the new schema. See [TestingReviewReminderMigrationSettings] for examples.
+ * a proper migration method to the new schema. See the past schema migrations for examples.
  */
 @RunWith(AndroidJUnit4::class)
 class ReviewRemindersDatabaseTest : RobolectricTest() {
@@ -53,43 +50,49 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     private val appScope = ReviewReminderScope.Global
 
     private val emptyReminderGroup = ReviewReminderGroup()
-    private val reviewReminderOne =
+    private val reviewReminderOne by lazy {
         ReviewReminder.createReviewReminder(
             ReviewReminderTime(9, 0),
             ReviewReminderCardTriggerThreshold(5),
             scope1,
             false,
         )
-    private val reviewReminderTwo =
+    }
+    private val reviewReminderTwo by lazy {
         ReviewReminder.createReviewReminder(
             ReviewReminderTime(10, 30),
             ReviewReminderCardTriggerThreshold(10),
             scope1,
         )
-    private val reviewReminderThree =
+    }
+    private val reviewReminderThree by lazy {
         ReviewReminder.createReviewReminder(
             ReviewReminderTime(10, 30),
             ReviewReminderCardTriggerThreshold(10),
             scope2,
             true,
         )
-    private val reviewReminderFour =
+    }
+    private val reviewReminderFour by lazy {
         ReviewReminder.createReviewReminder(
             ReviewReminderTime(12, 30),
             ReviewReminderCardTriggerThreshold(20),
             scope2,
         )
-    private val reviewReminderFive =
+    }
+    private val reviewReminderFive by lazy {
         ReviewReminder.createReviewReminder(
             ReviewReminderTime(9, 0),
             ReviewReminderCardTriggerThreshold(5),
         )
-    private val reviewReminderSix =
+    }
+    private val reviewReminderSix by lazy {
         ReviewReminder.createReviewReminder(
             ReviewReminderTime(10, 30),
             ReviewReminderCardTriggerThreshold(10),
         )
-    private val allTestReminders =
+    }
+    private val allTestReminders by lazy {
         listOf(
             reviewReminderOne,
             reviewReminderTwo,
@@ -98,16 +101,19 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             reviewReminderFive,
             reviewReminderSix,
         )
+    }
 
     @Before
     override fun setUp() {
         super.setUp()
+        TimeManager.resetWith(today)
         clearRemindersState()
     }
 
     @After
     override fun tearDown() {
         super.tearDown()
+        TimeManager.reset()
         clearRemindersState()
     }
 
@@ -393,44 +399,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         }
 
     /**
-     * When review reminders are migrated to the new schema, the reminders' IDs and latestNotifTimes will be recreated from scratch.
-     * Thus, validation that our tests succeeded should ignore these fields.
-     * This custom Hamcrest matcher performs this validation using reflection.
-     */
-    private fun containsEqualReviewRemindersExcludingVolatileFields(
-        expected: Collection<ReviewReminder>,
-    ): Matcher<Iterable<ReviewReminder>> =
-        object : TypeSafeMatcher<Iterable<ReviewReminder>>() {
-            override fun describeTo(description: Description) {
-                description.appendValue(expected)
-            }
-
-            override fun matchesSafely(actual: Iterable<ReviewReminder>): Boolean {
-                val volatileFields = setOf("id", "latestNotifTime")
-
-                val expectedSet =
-                    expected
-                        .map { e ->
-                            ReviewReminder::class
-                                .memberProperties
-                                .filterNot { it.name in volatileFields }
-                                .associateWith { it.get(e) }
-                        }.toSet()
-
-                val actualSet =
-                    actual
-                        .map { a ->
-                            ReviewReminder::class
-                                .memberProperties
-                                .filterNot { it.name in volatileFields }
-                                .associateWith { it.get(a) }
-                        }.toSet()
-
-                return expectedSet == actualSet
-            }
-        }
-
-    /**
      * If this test has failed, please ensure the review reminder schema version and old schemas in the review reminder
      * migration chain are set correctly. If you've written a new migration, please also write a new test in this file
      * to prove your migration works!
@@ -626,15 +594,12 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                     ReviewRemindersDatabase.getRemindersForScope(ReviewReminderScope.Global)
                 }
 
-            // We ignore ID because the migration process will generate new review reminders from scratch during the migration
-            // ID is a private, inaccessible property
-            // Instead, we only check that the ID matches the key in the map; all other properties can be compared normally
             retrievedReminders.forEach { (id, reminder) ->
                 assertThat(id, equalTo(reminder.id))
             }
             assertThat(
                 retrievedReminders.getRemindersList(),
-                containsEqualReviewRemindersExcludingVolatileFields(
+                equalTo(
                     casesInScope.map { it.expectedOutput },
                 ),
             )
@@ -646,106 +611,6 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             equalTo(groupedByScope.size),
         )
     }
-
-    @Test
-    fun `review reminder schema migration works`() =
-        runTest {
-            // Save existing mocks
-            val savedOldReviewReminderSchemasForMigration = ReviewRemindersDatabase.oldReviewReminderSchemasForMigration
-            val savedSchemaVersion = ReviewRemindersDatabase.schemaVersion
-            // Inject mocks
-            ReviewRemindersDatabase.schemaVersion = ReviewReminderSchemaVersion(3)
-            ReviewRemindersDatabase.oldReviewReminderSchemasForMigration =
-                mapOf(
-                    ReviewReminderSchemaVersion(1) to TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne::class,
-                    ReviewReminderSchemaVersion(2) to TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo::class,
-                    ReviewReminderSchemaVersion(3) to ReviewReminder::class,
-                )
-
-            assertMigrationsWork(
-                // To spice things up, some will be version one...
-                MigrationTestCase(
-                    inputVersion = ReviewReminderSchemaVersion(1),
-                    input =
-                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                            id = ReviewReminderId(0),
-                            hour = 9,
-                            minute = 0,
-                            cardTriggerThreshold = 5,
-                            did = did1,
-                            enabled = false,
-                        ),
-                    expectedOutput = reviewReminderOne,
-                ),
-                MigrationTestCase(
-                    inputVersion = ReviewReminderSchemaVersion(1),
-                    input =
-                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                            id = ReviewReminderId(1),
-                            hour = 10,
-                            minute = 30,
-                            cardTriggerThreshold = 10,
-                            did = did1,
-                        ),
-                    expectedOutput = reviewReminderTwo,
-                ),
-                // ...and some will be version two...
-                MigrationTestCase(
-                    inputVersion = ReviewReminderSchemaVersion(2),
-                    input =
-                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo(
-                            id = ReviewReminderId(2),
-                            time = TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(10, 30),
-                            snoozeAmount = 1,
-                            cardTriggerThreshold = 10,
-                            did = did2,
-                            enabled = true,
-                        ),
-                    expectedOutput = reviewReminderThree,
-                ),
-                MigrationTestCase(
-                    inputVersion = ReviewReminderSchemaVersion(2),
-                    input =
-                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionTwo(
-                            id = ReviewReminderId(3),
-                            time = TestingReviewReminderMigrationSettings.VersionTwoDataClasses.ReviewReminderTime(12, 30),
-                            snoozeAmount = 1,
-                            cardTriggerThreshold = 20,
-                            did = did2,
-                        ),
-                    expectedOutput = reviewReminderFour,
-                ),
-                // ...and some will be app-wide for good measure
-                MigrationTestCase(
-                    inputVersion = ReviewReminderSchemaVersion(1),
-                    input =
-                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                            id = ReviewReminderId(4),
-                            hour = 9,
-                            minute = 0,
-                            cardTriggerThreshold = 5,
-                            did = -1L,
-                        ),
-                    expectedOutput = reviewReminderFive,
-                ),
-                MigrationTestCase(
-                    inputVersion = ReviewReminderSchemaVersion(1),
-                    input =
-                        TestingReviewReminderMigrationSettings.ReviewReminderTestSchemaVersionOne(
-                            id = ReviewReminderId(5),
-                            hour = 10,
-                            minute = 30,
-                            cardTriggerThreshold = 10,
-                            did = -1L,
-                        ),
-                    expectedOutput = reviewReminderSix,
-                ),
-            )
-
-            // Reset mocks
-            ReviewRemindersDatabase.schemaVersion = savedSchemaVersion
-            ReviewRemindersDatabase.oldReviewReminderSchemasForMigration = savedOldReviewReminderSchemasForMigration
-        }
 
     @Test
     fun `review reminder v1 to v2 migration works`() =
