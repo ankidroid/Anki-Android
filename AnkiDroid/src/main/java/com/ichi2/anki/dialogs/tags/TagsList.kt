@@ -42,7 +42,7 @@ class TagsList(
     /**
      * A Set containing the currently selected tags
      */
-    private val checkedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
+    private val checkedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
      * Tags present on some notes, plus unchecked ancestors of selected tags.
@@ -50,7 +50,7 @@ class TagsList(
     private val indeterminateTags: MutableSet<String>
 
     /** Tags present on some notes whose own selection has not been changed by the user. */
-    private val partiallySelectedTags: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
+    private val partiallySelectedTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
 
     /**
      * List of all available tags
@@ -113,6 +113,17 @@ class TagsList(
      * @return whether the tag is indeterminate or not
      */
     fun isIndeterminate(tag: String): Boolean = indeterminateTags.contains(tag)
+
+    /** Whether the tag itself is partially selected, independently of its descendants. */
+    internal fun isPartiallySelected(tag: String): Boolean = partiallySelectedTags.contains(tag)
+
+    /** Checks the complete selection, including descendants hidden by the dialog's filter. */
+    internal fun hasSelectedDescendants(tag: String): Boolean {
+        val prefix = "$tag::"
+        // Descendants are contiguous in these case-insensitive sets; only the first candidate is needed.
+        return checkedTags.ceiling(prefix)?.startsWith(prefix, ignoreCase = true) == true ||
+            partiallySelectedTags.ceiling(prefix)?.startsWith(prefix, ignoreCase = true) == true
+    }
 
     /**
      * Adds a tag to the list if it is not already present.

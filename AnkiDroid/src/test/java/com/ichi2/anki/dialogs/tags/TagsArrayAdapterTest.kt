@@ -20,7 +20,6 @@ class TagsArrayAdapterTest {
             level = parent.level + 1,
             subtreeSize = 1,
             isExpanded = true,
-            subtreeCheckedCnt = 0,
             vh = null,
         )
 
@@ -32,7 +31,6 @@ class TagsArrayAdapterTest {
             level = -1,
             subtreeSize = 0,
             isExpanded = true,
-            subtreeCheckedCnt = 0,
             vh = null,
         )
 
