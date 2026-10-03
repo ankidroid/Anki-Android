@@ -11,7 +11,7 @@
           4. Copy the Measurement ID shown at the top of the stream details
 
         The matching Measurement Protocol api_secret is read at build time as
-        BuildConfig.ANALYTICS_API_KEY (see AnkiDroid/build.gradle). Create it
+        BuildConfig.ANALYTICS_API_KEY (see AnkiDroid/build.gradle.kts). Create it
         under the same Data Stream -> Measurement Protocol API secrets.
     -->
     <string name="ga_trackingId" translatable="false">G-XY625S5VVE</string>

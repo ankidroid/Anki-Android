@@ -118,7 +118,7 @@ them into AnkiDroid like so:
 | Value | Where it goes |
 |---|---|
 | Measurement ID (`G-XXXXXXXX`) | `AnkiDroid/src/main/res/values/analytic_constants.xml` → `ga_trackingId` |
-| API secret | `local.properties` → `ANALYTICS_API_KEY=...` (read at compile time into `BuildConfig.ANALYTICS_API_KEY`, see [`AnkiDroid/build.gradle`](../../AnkiDroid/build.gradle)) |
+| API secret | `local.properties` → `ANALYTICS_API_KEY=...` (read at compile time into `BuildConfig.ANALYTICS_API_KEY`, see [`AnkiDroid/build.gradle.kts`](../../AnkiDroid/build.gradle.kts)) |
 
 Builds without an `ANALYTICS_API_KEY` fall back to `DUMMY_API_XXX`, which GA
 rejects at ingest contributor builds can't accidentally write to our
