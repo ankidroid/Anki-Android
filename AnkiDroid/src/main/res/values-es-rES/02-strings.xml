@@ -272,6 +272,11 @@
     <string name="import_deck">Import deck</string>
     <string name="something_wrong">Ha ocurrido un error, por favor inténtalo de nuevo</string>
     <string name="download_failed">Descarga fallida</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
+    <string name="download_speed_label">Speed</string>
+    <string name="download_time_left_label">Time left</string>
     <string name="deck_download_progress_message">Puedes usar otras aplicaciones mientras se ejecuta la descarga</string>
     <string name="check_network">Por favor revisa tu conexión de red</string>
     <string name="external_storage_unavailable">Descarga abortada, el almacenamiento externo no está disponible</string>

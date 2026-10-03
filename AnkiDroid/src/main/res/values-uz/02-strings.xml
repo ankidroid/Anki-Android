@@ -272,6 +272,11 @@
     <string name="import_deck">Dastani import qilish</string>
     <string name="something_wrong">Nimadir xato ketdi, iltimos, qayta urinib koʻring</string>
     <string name="download_failed">Yuklab olib boʻlmadi</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
+    <string name="download_speed_label">Speed</string>
+    <string name="download_time_left_label">Time left</string>
     <string name="deck_download_progress_message">Yuklab olish jarayonida boshqa ilovalardan foydalanishingiz mumkin</string>
     <string name="check_network">Iltimos, tarmoqqa ulanganingizni tekshiring</string>
     <string name="external_storage_unavailable">Yuklab olish toʻxtatildi, tashqi xotira mavjud emas</string>

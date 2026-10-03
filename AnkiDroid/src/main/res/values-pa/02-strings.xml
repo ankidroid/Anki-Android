@@ -272,6 +272,11 @@
     <string name="import_deck">Import deck</string>
     <string name="something_wrong">ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ, ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
     <string name="download_failed">ਡਾਊਨਲੋਡ ਅਸਫਲ ਰਿਹਾ</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
+    <string name="download_speed_label">Speed</string>
+    <string name="download_time_left_label">Time left</string>
     <string name="deck_download_progress_message">ਜਦੋਂ ਡਾਊਨਲੋਡ ਚੱਲ ਰਿਹਾ ਹੋਵੇ ਤਾਂ ਤੁਸੀਂ ਹੋਰ ਐਪਸ ਦੀ ਵਰਤੋਂ ਕਰ ਸਕਦੇ ਹੋ</string>
     <string name="check_network">ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ</string>
     <string name="external_storage_unavailable">ਡਾਊਨਲੋਡ ਅਧੂਰਾ ਛੱਡਿਆ ਗਿਆ, ਕੋਈ ਬਾਹਰੀ ਸਟੋਰੇਜ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
