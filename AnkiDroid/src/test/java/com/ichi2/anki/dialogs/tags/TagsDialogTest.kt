@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
@@ -29,6 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.libanki.testutils.ext.newNote
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
@@ -57,6 +59,55 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest : RobolectricTest() {
+    @Test
+    fun `confirming removal of a parent does not preserve its display state`() {
+        confirmTags(listOf("B B::child"), parentClicks = 1, selected = listOf("B::child"), preserved = emptyList())
+    }
+
+    @Test
+    fun `confirming unchanged partial selection preserves the original parent tag`() {
+        confirmTags(listOf("B B::child", "B::child"), parentClicks = 0, selected = listOf("B::child"), preserved = listOf("B"))
+    }
+
+    @Test
+    fun `confirming an overridden partial parent does not restore its original selection`() {
+        confirmTags(listOf("B B::child", "B::child"), parentClicks = 2, selected = listOf("B::child"), preserved = emptyList())
+    }
+
+    @Test
+    fun `confirming a partial child does not export a synthetic parent`() {
+        confirmTags(listOf("B::child", ""), parentClicks = 0, selected = emptyList(), preserved = listOf("B::child"))
+    }
+
+    /** Opens the dialog for the supplied notes, clicks the parent tag, and verifies the confirmed selection. */
+    private fun confirmTags(
+        noteTags: List<String>,
+        parentClicks: Int,
+        selected: List<String>,
+        preserved: List<String>,
+    ) {
+        val ids =
+            noteTags.mapIndexed { index, tags ->
+                addBasicNote("note $index").id.also { col.tags.bulkAdd(listOf(it), tags) }
+            }
+        val listener = Mockito.mock(TagsDialogListener::class.java)
+        val args = TagsDialog().withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, ids).requireArguments()
+        FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, TagsDialogFactory(listener)).use { scenario ->
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onFragment { fragment ->
+                advanceRobolectricLooperUntil { fragment.binding.tagsList.adapter != null }
+                val recycler = fragment.binding.tagsList
+                recycler.measure(0, 0)
+                recycler.layout(0, 0, 100, 1000)
+                val parent = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, 0)
+                repeat(parentClicks) { parent.checkBoxView.performClick() }
+                (fragment.requireDialog() as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE).performClick()
+                advanceRobolectricLooper()
+                Mockito.verify(listener).onSelectedTags(selected, preserved, CardStateFilter.ALL_CARDS)
+            }
+        }
+    }
+
     @Test
     fun `missing selection dismisses tags dialog without submitting`() = assertUnavailableSelection { assertTrue(delete()) }
 

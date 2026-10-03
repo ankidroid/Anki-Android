@@ -294,7 +294,7 @@ class TagsDialog : AnalyticsDialogFragment {
             val tags = viewModel.tags.await()
             tagsDialogListener.onSelectedTags(
                 tags.copyOfCheckedTagList(),
-                tags.copyOfIndeterminateTagList(),
+                tags.copyOfPartiallySelectedTagList(),
                 selectedOption,
             )
         }
