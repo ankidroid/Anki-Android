@@ -2,13 +2,14 @@
 
 package com.ichi2.utils
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Insets
 import android.graphics.Point
 import android.os.Build
-import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.ichi2.anki.compat.CompatHelper
 
 object DisplayUtils {
     @Suppress("DEPRECATION") // #9333: defaultDisplay & getSize
@@ -37,10 +38,16 @@ object DisplayUtils {
         return getDisplayDimensions(wm)
     }
 
-    /** Allow the window to be resized when an input method is shown,
-     * so that its contents are not covered by the input method */
-    @Suppress("DEPRECATION") // 7110: SOFT_INPUT_ADJUST_RESIZE
-    fun resizeWhenSoftInputShown(window: Window) {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    /**
+     * Fit a floating dialog above the keyboard, or pan to its focused input when [resize] is false.
+     *
+     * Activities with edge-to-edge content should handle IME insets in their own layout.
+     */
+    fun setDialogKeyboardResize(
+        dialog: Dialog,
+        resize: Boolean = true,
+    ) {
+        val window = dialog.window ?: return
+        CompatHelper.compat.setDialogKeyboardResize(window, resize)
     }
 }

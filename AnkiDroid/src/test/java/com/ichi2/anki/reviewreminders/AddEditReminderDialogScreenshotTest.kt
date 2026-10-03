@@ -44,6 +44,25 @@ class AddEditReminderDialogScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun `card threshold entry`(
+        @TestParameter landscape: Boolean,
+    ) {
+        val orientation = setOrientation(landscape)
+        withReminderDialog(DialogMode.Add(ReviewReminderScope.Global)) {
+            binding.addEditReminderAdvancedDropdown.performClick()
+            binding.addEditReminderCardThresholdInput.apply {
+                requestFocus()
+                setText("25")
+                setSelection(text!!.length)
+            }
+            advanceRobolectricLooper()
+            binding.addEditReminderScrollview.fullScroll(View.FOCUS_DOWN)
+            advanceRobolectricLooper()
+            captureScreen("${orientation}_card_threshold_entry")
+        }
+    }
+
+    @Test
     fun `time picker`(
         @TestParameter use24HourClock: Boolean,
     ) {

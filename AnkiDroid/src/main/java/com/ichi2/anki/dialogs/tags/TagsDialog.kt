@@ -13,7 +13,6 @@ import android.text.InputType
 import android.text.Spanned
 import android.view.MenuItem
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.RadioGroup
@@ -48,7 +47,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
-import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.customView
 import com.ichi2.utils.getInputField
@@ -161,7 +160,6 @@ class TagsDialog : AnalyticsDialogFragment {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        resizeWhenSoftInputShown(requireActivity().window)
 
         type = requireArguments().requireParcelable(ARG_DIALOG_TYPE)
         isCancelable = true
@@ -266,7 +264,7 @@ class TagsDialog : AnalyticsDialogFragment {
             positiveButton?.isEnabled = true
         }
 
-        dialog.window?.updateSoftInputMode(resources.configuration)
+        dialog.updateSoftInputMode(resources.configuration)
 
         return dialog
     }
@@ -307,15 +305,11 @@ class TagsDialog : AnalyticsDialogFragment {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        dialog?.window?.updateSoftInputMode(newConfig)
+        dialog?.updateSoftInputMode(newConfig)
     }
 
-    private fun Window.updateSoftInputMode(configuration: Configuration) {
-        if (configuration.screenHeightDp < COMPACT_HEIGHT_DP) {
-            setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        } else {
-            resizeWhenSoftInputShown(this)
-        }
+    private fun Dialog.updateSoftInputMode(configuration: Configuration) {
+        setDialogKeyboardResize(this, resize = configuration.screenHeightDp >= COMPACT_HEIGHT_DP)
     }
 
     private fun radioButtonIdToCardState(id: Int) =
