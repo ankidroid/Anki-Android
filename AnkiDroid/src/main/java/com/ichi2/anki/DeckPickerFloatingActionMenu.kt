@@ -24,6 +24,8 @@ class DeckPickerFloatingActionMenu(
     private val context: Context,
     homescreenBinding: ActivityHomescreenBinding,
     private val deckPicker: DeckPicker,
+    private val toggleListener: FloatingActionBarToggleListener,
+    initiallyOpen: Boolean,
 ) {
     // TODO: refactor this to decouple with Homescreen & DeckPicker
     private val binding: IncludeFloatingAddButtonBinding = homescreenBinding.deckPickerPane.floatingActionButton
@@ -43,8 +45,7 @@ class DeckPickerFloatingActionMenu(
     private val addWhiteIcon: Int = R.drawable.ic_add
 
     var isFABOpen = false
-
-    var toggleListener: FloatingActionBarToggleListener? = null
+        private set
 
     @Suppress("unused")
     val isFragmented: Boolean
@@ -52,7 +53,7 @@ class DeckPickerFloatingActionMenu(
 
     @VisibleForTesting
     fun showFloatingActionMenu() {
-        toggleListener?.onBeginToggle(isOpening = true)
+        toggleListener.onBeginToggle(isOpening = true)
         deckPicker.activeSnackBar?.dismiss()
         linearLayout.alpha = 0.5f
         studyOptionsFrame?.let { it.alpha = 0.5f }
@@ -111,7 +112,7 @@ class DeckPickerFloatingActionMenu(
      * want to show any type of rise and shrink animation for the FAB so we put the value `false` for the parameter.
      */
     fun closeFloatingActionMenu(applyRiseAndShrinkAnimation: Boolean) {
-        toggleListener?.onBeginToggle(isOpening = false)
+        toggleListener.onBeginToggle(isOpening = false)
         if (applyRiseAndShrinkAnimation) {
             linearLayout.alpha = 1f
             studyOptionsFrame?.let { it.alpha = 1f }
@@ -401,6 +402,10 @@ class DeckPickerFloatingActionMenu(
                 }
             }
         binding.fabMain.setOnClickListener(fabMainClickListener)
+
+        if (initiallyOpen) {
+            showFloatingActionMenu()
+        }
     }
 
     /**
