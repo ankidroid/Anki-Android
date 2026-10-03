@@ -43,9 +43,10 @@ class IdsFile(
         FileInputStream(this).use { fileStream ->
             val inputStream = DataInputStream(fileStream.buffered())
             val size = inputStream.readInt()
-            // Reject incomplete selections before allocating the list.
-            if (fileStream.channel.size() < Int.SIZE_BYTES + size.toLong() * Long.SIZE_BYTES) {
-                throw IOException("Truncated IDs file: $name")
+            // Check before allocating: a corrupt count must not cause an enormous allocation,
+            // and a partial selection must never be used to perform an operation.
+            if (size < 0 || fileStream.channel.size() != Int.SIZE_BYTES + size.toLong() * Long.SIZE_BYTES) {
+                throw IOException("Invalid IDs file length or count: $name")
             }
             List(size) { inputStream.readLong() }
         }
