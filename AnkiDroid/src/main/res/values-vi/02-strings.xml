@@ -269,6 +269,11 @@
     <string name="import_deck">Nhập bộ thẻ</string>
     <string name="something_wrong">Đã xảy ra lỗi, vui lòng thử lại</string>
     <string name="download_failed">Tải xuống thất bại</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
+    <string name="download_speed_label">Speed</string>
+    <string name="download_time_left_label">Time left</string>
     <string name="deck_download_progress_message">Bạn được phép sử dụng những ứng dụng khác khi đang tải.</string>
     <string name="check_network">Vui lòng kiểm tra kết nối mạng của bạn</string>
     <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>

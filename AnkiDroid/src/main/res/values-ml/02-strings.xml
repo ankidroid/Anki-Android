@@ -272,6 +272,11 @@
     <string name="import_deck">Import deck</string>
     <string name="something_wrong">എന്തോ കുഴപ്പം സംഭവിച്ചു, വീണ്ടും ശ്രമിക്കുക</string>
     <string name="download_failed">ഡൗൺലോഡ് പരാജയപ്പെട്ടു</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
+    <string name="download_speed_label">Speed</string>
+    <string name="download_time_left_label">Time left</string>
     <string name="deck_download_progress_message">ഡൗൺലോഡ് പ്രവർത്തിക്കുമ്പോൾ നിങ്ങൾക്ക് മറ്റ് ആപ്പുകൾ ഉപയോഗിക്കാം</string>
     <string name="check_network">നിങ്ങളുടെ നെറ്റ്‌വർക്ക് കണക്ഷൻ പരിശോധിക്കുക</string>
     <string name="external_storage_unavailable">ഡൗൺലോഡ് നിർത്തലാക്കി, ബാഹ്യ സംഭരണം ലഭ്യമല്ല</string>

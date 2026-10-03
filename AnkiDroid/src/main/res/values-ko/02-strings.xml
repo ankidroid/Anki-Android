@@ -270,6 +270,11 @@
     <string name="import_deck">덱 가져오기</string>
     <string name="something_wrong">오류가 발생했습니다. 다시 시도해 주세요.</string>
     <string name="download_failed">다운로드 실패</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
+    <string name="download_speed_label">Speed</string>
+    <string name="download_time_left_label">Time left</string>
     <string name="deck_download_progress_message">다운로드하는 동안 다른 앱을 이용하실 수 있습니다.</string>
     <string name="check_network">네트워크 연결 상태를 확인해 주세요.</string>
     <string name="external_storage_unavailable">다운로드가 중단되었습니다. 외부 저장 공간을 사용할 수 없습니다.</string>
