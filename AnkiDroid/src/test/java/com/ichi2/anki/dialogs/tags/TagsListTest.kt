@@ -507,6 +507,28 @@ class TagsListTest {
     }
 
     @Test
+    fun `selected descendant lookup ignores case and respects hierarchy boundaries`() {
+        val tags =
+            TagsList(
+                allTags = listOf("B", "B::child::leaf", "B::childish", "Bother::leaf"),
+                checkedTags = listOf("B", "B::child::leaf", "B::childish", "Bother::leaf"),
+                uncheckedTags = listOf("B::child::leaf"),
+            )
+
+        assertTrue(tags.hasSelectedDescendants("b"))
+        assertTrue(tags.hasSelectedDescendants("b::CHILD"))
+        assertFalse(actual = tags.hasSelectedDescendants("B::childish"))
+
+        tags.uncheck("b::child::LEAF")
+        assertFalse(actual = tags.hasSelectedDescendants("B::child"))
+        assertTrue(tags.hasSelectedDescendants("B"))
+
+        tags.uncheck("B::childish")
+        assertFalse(actual = tags.hasSelectedDescendants("B"))
+        assertTrue(tags.hasSelectedDescendants("Bother"))
+    }
+
+    @Test
     fun `sort brings partially selected hierarchical tags to the top`() {
         // Issue 15278: the selected notes have different hierarchical tags.
         val tags =
