@@ -38,6 +38,20 @@ class TagsArrayAdapter(
         val binding: ItemTagBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         internal lateinit var node: TagTreeNode
+            private set
+
+        internal fun bindNode(node: TagTreeNode) {
+            clearNodeBinding()
+            this.node = node
+            node.vh = this
+        }
+
+        internal fun clearNodeBinding() {
+            // If a note already has a replacement holder, preserve its binding.
+            if (::node.isInitialized && node.vh === this) {
+                node.vh = null
+            }
+        }
 
         @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
         val text: String
@@ -264,8 +278,7 @@ class TagsArrayAdapter(
         position: Int,
     ) {
         val binding = holder.binding
-        holder.node = getVisibleTagTreeNode(position)!!
-        holder.node.vh = holder
+        holder.bindNode(getVisibleTagTreeNode(position)!!)
         holder.itemView.tag = holder.node.tag
 
         if (hasVisibleNestedTag) {
@@ -289,6 +302,11 @@ class TagsArrayAdapter(
             binding.checkBoxView.state = if (tags.isChecked(holder.node.tag)) CHECKED else UNCHECKED
         }
         holder.node.updateCheckBoxCycleStyle(tags)
+    }
+
+    override fun onViewRecycled(holder: ViewHolder) {
+        holder.clearNodeBinding()
+        super.onViewRecycled(holder)
     }
 
     /**
