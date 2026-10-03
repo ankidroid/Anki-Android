@@ -2,11 +2,11 @@
 
 package com.ichi2.utils
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Insets
 import android.graphics.Point
 import android.os.Build
-import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
 
@@ -37,10 +37,15 @@ object DisplayUtils {
         return getDisplayDimensions(wm)
     }
 
-    /** Allow the window to be resized when an input method is shown,
-     * so that its contents are not covered by the input method */
-    @Suppress("DEPRECATION") // 7110: SOFT_INPUT_ADJUST_RESIZE
-    fun resizeWhenSoftInputShown(window: Window) {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    /**
+     * Keep a floating dialog above the keyboard by letting the window manager resize it.
+     *
+     * The API 30 replacement (edge-to-edge with IME insets on the content view) is for
+     * non-floating windows. Floating dialogs still rely on decor fitting to constrain their
+     * height. Activities should handle IME insets in their own layout instead (Issue 7110).
+     */
+    @Suppress("DEPRECATION") // Floating dialogs still need SOFT_INPUT_ADJUST_RESIZE.
+    fun resizeDialogWhenSoftInputShown(dialog: Dialog) {
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 }
