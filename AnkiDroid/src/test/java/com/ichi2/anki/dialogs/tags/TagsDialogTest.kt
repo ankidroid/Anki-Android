@@ -32,6 +32,8 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
+import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
+import com.ichi2.ui.CheckBoxTriStates.State.UNCHECKED
 import com.ichi2.utils.ListUtil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -44,6 +46,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.robolectric.annotation.Config
 import timber.log.Timber
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class TagsDialogTest : RobolectricTest() {
@@ -163,6 +166,33 @@ class TagsDialogTest : RobolectricTest() {
             Assert.assertTrue(newTagItemItem.isChecked)
             Assert.assertNotEquals(tag, lastItem.text)
             Assert.assertFalse(lastItem.isChecked)
+        }
+    }
+
+    @Test
+    fun `partially selected hierarchical tags are visible at the top`() {
+        val first = addBasicNote("first")
+        val second = addBasicNote("second")
+        val unrelated = addBasicNote("unrelated")
+        col.tags.bulkAdd(listOf(first.id), "B::B")
+        col.tags.bulkAdd(listOf(second.id), "C::child::leaf")
+        col.tags.bulkAdd(listOf(unrelated.id), "aaa")
+        val args =
+            TagsDialog()
+                .withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, listOf(first.id, second.id))
+                .requireArguments()
+
+        runTagsDialogScenario(args) { fragment ->
+            val recycler = fragment.binding.tagsList
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            val expected = listOf("B", "B::B", "C", "C::child", "C::child::leaf", "aaa")
+            assertEquals(expected.size, recycler.adapter!!.itemCount)
+            expected.forEachIndexed { index, tag ->
+                val holder = RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, index)
+                assertEquals(tag, holder.text)
+                assertEquals(if (tag == "aaa") UNCHECKED else INDETERMINATE, holder.checkboxState)
+            }
         }
     }
 
