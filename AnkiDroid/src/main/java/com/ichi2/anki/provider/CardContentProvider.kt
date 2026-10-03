@@ -118,6 +118,16 @@ class CardContentProvider : ContentProvider() {
          */
         private val defaultNoteProjectionDbAccess = FlashCardsContract.Note.DEFAULT_COLUMNS
 
+        private fun cardName(
+            card: Card,
+            col: Collection,
+        ): String =
+            try {
+                card.template(col).name
+            } catch (je: JSONException) {
+                throw IllegalArgumentException("Card is using an invalid template", je)
+            }
+
         private fun sanitizeNoteProjection(projection: Array<String>?): Array<String> {
             if (projection.isNullOrEmpty()) {
                 return defaultNoteProjectionDbAccess
@@ -1188,12 +1198,7 @@ class CardContentProvider : ContentProvider() {
         col: Collection,
         columns: Array<String>,
     ) {
-        val cardName: String =
-            try {
-                currentCard.template(col).name
-            } catch (je: JSONException) {
-                throw IllegalArgumentException("Card is using an invalid template", je)
-            }
+        val cardName = cardName(currentCard, col)
         val question = currentCard.renderOutput(col).questionWithFixedSoundTags()
         val answer = currentCard.renderOutput(col).answerWithFixedSoundTags()
         val rb = rv.newRow()
