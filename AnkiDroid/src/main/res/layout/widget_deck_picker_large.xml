@@ -24,7 +24,7 @@
         android:id="@+id/deckCollection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_centerVertical="true"
         android:background="@drawable/widget_deck_picker_rounded_background"
         android:orientation="vertical">
 
