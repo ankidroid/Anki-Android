@@ -32,6 +32,7 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
+import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
 import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
 import com.ichi2.ui.CheckBoxTriStates.State.UNCHECKED
 import com.ichi2.utils.ListUtil
@@ -183,7 +184,7 @@ class TagsDialogTest : RobolectricTest() {
                 .requireArguments()
 
         runTagsDialogScenario(args) { fragment ->
-            val recycler = fragment.binding.tagsList
+            val recycler = fragment.requireDialog().findViewById<RecyclerView>(R.id.tags_list)!!
             recycler.measure(0, 0)
             recycler.layout(0, 0, 100, 1000)
             val expected = listOf("B", "B::B", "C", "C::child", "C::child::leaf", "aaa")
@@ -193,6 +194,105 @@ class TagsDialogTest : RobolectricTest() {
                 assertEquals(tag, holder.text)
                 assertEquals(if (tag == "aaa") UNCHECKED else INDETERMINATE, holder.checkboxState)
             }
+        }
+    }
+
+    @Test
+    fun `unchecking a partially selected child clears its parent and allows rechecking`() {
+        withPartiallySelectedTags("B::B") { holders ->
+            val parent = holders.getValue("B")
+            val child = holders.getValue("B::B")
+            child.checkBoxView.performClick()
+            assertEquals(UNCHECKED, child.checkboxState)
+            assertEquals(UNCHECKED, parent.checkboxState)
+
+            child.checkBoxView.performClick()
+            assertEquals(CHECKED, child.checkboxState)
+            assertEquals(INDETERMINATE, parent.checkboxState)
+
+            child.checkBoxView.performClick()
+            assertEquals(UNCHECKED, parent.checkboxState)
+        }
+    }
+
+    @Test
+    fun `parent stays indeterminate until all partially selected children are unchecked`() {
+        withPartiallySelectedTags("B::one B::two") { holders ->
+            val parent = holders.getValue("B")
+            holders.getValue("B::one").checkBoxView.performClick()
+            assertEquals(INDETERMINATE, parent.checkboxState)
+            holders.getValue("B::two").checkBoxView.performClick()
+            assertEquals(UNCHECKED, parent.checkboxState)
+        }
+    }
+
+    @Test
+    fun `unchecking a partially selected descendant clears every ancestor`() {
+        withPartiallySelectedTags("B::child::leaf") { holders ->
+            holders.getValue("B::child::leaf").checkBoxView.performClick()
+            assertEquals(UNCHECKED, holders.getValue("B::child").checkboxState)
+            assertEquals(UNCHECKED, holders.getValue("B").checkboxState)
+        }
+    }
+
+    @Test
+    fun `unchecking a child preserves a parent tag present on some notes`() {
+        withPartiallySelectedTags("B B::child") { holders ->
+            val parent = holders.getValue("B")
+            holders.getValue("B::child").checkBoxView.performClick()
+            assertEquals(INDETERMINATE, parent.checkboxState)
+            parent.checkBoxView.performClick()
+            assertEquals(UNCHECKED, parent.checkboxState)
+        }
+    }
+
+    @Test
+    fun `explicitly changing a partially selected parent replaces its original selection`() {
+        withPartiallySelectedTags("B B::child") { holders ->
+            val parent = holders.getValue("B")
+            parent.checkBoxView.performClick()
+            assertEquals(CHECKED, parent.checkboxState)
+            parent.checkBoxView.performClick()
+            assertEquals(INDETERMINATE, parent.checkboxState)
+            holders.getValue("B::child").checkBoxView.performClick()
+            assertEquals(UNCHECKED, parent.checkboxState)
+        }
+    }
+
+    @Test
+    fun `unchecking a fully selected child preserves partially selected siblings`() {
+        withPartiallySelectedTags("B::one B::two", "B::one") { holders ->
+            val parent = holders.getValue("B")
+            holders.getValue("B::one").checkBoxView.performClick()
+            assertEquals(INDETERMINATE, parent.checkboxState)
+            assertEquals(INDETERMINATE, holders.getValue("B::two").checkboxState)
+            holders.getValue("B::two").checkBoxView.performClick()
+            assertEquals(UNCHECKED, parent.checkboxState)
+        }
+    }
+
+    private fun withPartiallySelectedTags(
+        tags: String,
+        secondTags: String = "",
+        block: (Map<String, TagsArrayAdapter.ViewHolder>) -> Unit,
+    ) {
+        val first = addBasicNote("first")
+        val second = addBasicNote("second")
+        col.tags.bulkAdd(listOf(first.id), tags)
+        col.tags.bulkAdd(listOf(second.id), secondTags)
+        val args =
+            TagsDialog()
+                .withArguments(targetContext, TagsDialog.DialogType.EDIT_TAGS, listOf(first.id, second.id))
+                .requireArguments()
+        runTagsDialogScenario(args) { fragment ->
+            val recycler = fragment.requireDialog().findViewById<RecyclerView>(R.id.tags_list)!!
+            recycler.measure(0, 0)
+            recycler.layout(0, 0, 100, 1000)
+            val holders =
+                (0 until recycler.adapter!!.itemCount)
+                    .map { RecyclerViewUtils.viewHolderAt<TagsArrayAdapter.ViewHolder>(recycler, it) }
+                    .associateBy { it.text }
+            block(holders)
         }
     }
 

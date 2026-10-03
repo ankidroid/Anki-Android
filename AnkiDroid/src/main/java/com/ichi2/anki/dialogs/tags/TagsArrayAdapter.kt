@@ -62,9 +62,6 @@ class TagsArrayAdapter(
      * we want to save the [isExpanded] state of child tags, even if the parent is not expanded.
      * When we expand a tag, we do not want to walk the tree to determine how many nodes were added or removed.
      * @param isExpanded whether the node is expanded or not
-     * @param subtreeCheckedCnt The number of checked nodes in the subtree (self included). This exists
-     * because we want to dynamically turn a checkbox from unchecked into indeterminate if at least one of its
-     * descendants is checked, or from indeterminate to unchecked if all of its descendants are unchecked.
      * @param vh The reference to currently bound [ViewHolder]. A node bound with some [ViewHolder] must have [vh] nonnull.
      * @see onBindViewHolder for the binding
      */
@@ -75,7 +72,6 @@ class TagsArrayAdapter(
         val level: Int,
         var subtreeSize: Int,
         var isExpanded: Boolean,
-        var subtreeCheckedCnt: Int,
         var vh: ViewHolder?,
     ) {
         /**
@@ -119,38 +115,31 @@ class TagsArrayAdapter(
 
         /**
          * Set the cycle style of the node's [vh]'s checkbox.
-         * For nodes without checked descendants: CHECKED -> UNCHECKED -> CHECKED -> ...
-         * For nodes with checked descendants: CHECKED -> INDETERMINATE -> CHECKED -> ...
+         * For nodes without selected descendants: CHECKED -> UNCHECKED -> CHECKED -> ...
+         * For nodes with checked or indeterminate descendants: CHECKED -> INDETERMINATE -> CHECKED -> ...
          *
          * @param tags The [TagsList] that manages tags.
          */
         fun updateCheckBoxCycleStyle(tags: TagsList) {
-            val realSubtreeCnt = subtreeCheckedCnt - if (tags.isChecked(tag)) 1 else 0
-            val hasDescendantChecked = realSubtreeCnt > 0
-            vh?.binding?.checkBoxView?.cycleIndeterminateToChecked = hasDescendantChecked
-            vh?.binding?.checkBoxView?.cycleCheckedToIndeterminate = hasDescendantChecked
+            val hasSelectedDescendants = tags.hasSelectedDescendants(tag)
+            vh?.binding?.checkBoxView?.cycleIndeterminateToChecked = hasSelectedDescendants
+            vh?.binding?.checkBoxView?.cycleCheckedToIndeterminate = hasSelectedDescendants
         }
 
         /**
-         * When the checkbox of the node changes, update [subtreeCheckedCnt]s of itself and its ancestors.
-         * If the checkbox is INDETERMINATE now, it must be CHECKED before according to the checkbox cycle style.
-         * @see updateCheckBoxCycleStyle
-         *
-         * Update the checkbox to INDETERMINATE if it was UNCHECK and now [subtreeCheckedCnt] > 0.
-         * Update the checkbox to UNCHECK if it was INDETERMINATE and now [subtreeCheckedCnt] == 0.
+         * Update ancestor states from the complete selection, independently of which nodes are visible.
+         * Preserve tags present on some notes even when their last selected descendant is cleared.
          *
          * @param tags The [TagsList] that manages tags.
          */
         fun onCheckStateChanged(tags: TagsList) {
-            val delta = if (checkBoxState == CHECKED) 1 else -1
-
             fun update(node: TagTreeNode) {
-                node.subtreeCheckedCnt += delta
-                if (node.checkBoxState == UNCHECKED && node.subtreeCheckedCnt > 0) {
+                val hasSelectedDescendants = tags.hasSelectedDescendants(node.tag)
+                if (!tags.isChecked(node.tag) && hasSelectedDescendants) {
                     tags.setIndeterminate(node.tag)
                     node.checkBoxState = INDETERMINATE
                 }
-                if (node.checkBoxState == INDETERMINATE && node.subtreeCheckedCnt == 0) {
+                if (tags.isIndeterminate(node.tag) && !tags.isPartiallySelected(node.tag) && !hasSelectedDescendants) {
                     tags.uncheck(node.tag)
                     node.checkBoxState = UNCHECKED
                 }
@@ -221,6 +210,12 @@ class TagsArrayAdapter(
 
     fun sortData() {
         tags.sort()
+    }
+
+    /** Refresh the tag tree and checkbox states after bulk selection changes. */
+    fun notifyCheckedStatusesChanged() {
+        buildTagTree("")
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -353,14 +348,13 @@ class TagsArrayAdapter(
         }
         hasVisibleNestedTag = false
         val stack = Stack<TagTreeNode>()
-        treeRoot = TagTreeNode("", null, ArrayList(), -1, 0, true, 0, null)
+        treeRoot = TagTreeNode("", null, ArrayList(), -1, 0, true, null)
         stack.add(treeRoot)
         tagToNode.clear()
 
         fun stackPopAndPushUp() {
             val popped = stack.pop()
             stack.peek().subtreeSize += popped.getContributeSize()
-            stack.peek().subtreeCheckedCnt += popped.subtreeCheckedCnt
         }
         for (tag in filteredList) {
             // root will never be popped
@@ -373,7 +367,7 @@ class TagsArrayAdapter(
             }
             val parent = stack.peek()
             val node =
-                TagTreeNode(tag, parent, ArrayList(), parent.level + 1, 1, tagToIsExpanded[tag]!!, if (tags.isChecked(tag)) 1 else 0, null)
+                TagTreeNode(tag, parent, ArrayList(), parent.level + 1, 1, tagToIsExpanded[tag]!!, null)
             parent.children.add(node)
             tagToNode[tag] = node
             stack.add(node)
