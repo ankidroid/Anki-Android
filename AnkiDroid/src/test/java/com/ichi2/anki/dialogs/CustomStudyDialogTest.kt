@@ -118,75 +118,77 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
 
     @Test
-    fun `previous value for 'increase new card limit' is suggested`() {
-        // add cards to be sure we can extend successfully. Needs to be > 20
-        repeat(23) {
-            addBasicNote()
+    fun `previous value for 'increase new card limit' is suggested`() =
+        runTest {
+            // add cards to be sure we can extend successfully. Needs to be > 20
+            repeat(23) {
+                addBasicNote()
+            }
+            val newExtendByValue = 1
+
+            assertThat("'new' default value", defaultsOfDefaultDeck.extendNew.initialValue, equalTo(0))
+
+            // extend limits with a value of '1'
+            withCustomStudyFragment(
+                args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_NEW),
+            ) { dialogFragment: CustomStudyDialog ->
+
+                onSubscreenEditText()
+                    .perform(replaceText(newExtendByValue.toString()))
+
+                dialogFragment.submitSubscreenData()
+            }
+
+            // ensure backend is updated
+            assertThat(
+                "'new' updated value",
+                defaultsOfDefaultDeck.extendNew.initialValue,
+                equalTo(newExtendByValue),
+            )
+
+            // ensure 'newExtendByValue' is used by our UI
+            withCustomStudyFragment(
+                args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_NEW),
+            ) {
+                onSubscreenEditText()
+                    .check(matches(withText(newExtendByValue.toString())))
+            }
         }
-        val newExtendByValue = 1
-
-        assertThat("'new' default value", defaultsOfDefaultDeck.extendNew.initialValue, equalTo(0))
-
-        // extend limits with a value of '1'
-        withCustomStudyFragment(
-            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_NEW),
-        ) { dialogFragment: CustomStudyDialog ->
-
-            onSubscreenEditText()
-                .perform(replaceText(newExtendByValue.toString()))
-
-            dialogFragment.submitSubscreenData()
-        }
-
-        // ensure backend is updated
-        assertThat(
-            "'new' updated value",
-            defaultsOfDefaultDeck.extendNew.initialValue,
-            equalTo(newExtendByValue),
-        )
-
-        // ensure 'newExtendByValue' is used by our UI
-        withCustomStudyFragment(
-            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_NEW),
-        ) {
-            onSubscreenEditText()
-                .check(matches(withText(newExtendByValue.toString())))
-        }
-    }
 
     @Test
-    fun `previous value for 'increase review card limit' is suggested`() {
-        // Reduce review limit to 0, so we can successfully extend with just 1 review card.
-        updateDeckConfig(Consts.DEFAULT_DECK_ID) { rev.perDay = 0 }
-        addRevBasicNoteDueToday("Review", "Today")
+    fun `previous value for 'increase review card limit' is suggested`() =
+        runTest {
+            // Reduce review limit to 0, so we can successfully extend with just 1 review card.
+            updateDeckConfig(Consts.DEFAULT_DECK_ID) { rev.perDay = 0 }
+            addRevBasicNoteDueToday("Review", "Today")
 
-        val reviewExtendByValue = 1
-        assertThat("'review' default value", defaultsOfDefaultDeck.extendReview.initialValue, equalTo(0))
+            val reviewExtendByValue = 1
+            assertThat("'review' default value", defaultsOfDefaultDeck.extendReview.initialValue, equalTo(0))
 
-        // Extend reviews by 'reviewExtendByValue'.
-        withCustomStudyFragment(
-            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV),
-        ) { dialogFragment: CustomStudyDialog ->
-            onSubscreenEditText()
-                .perform(replaceText(reviewExtendByValue.toString()))
-            dialogFragment.submitSubscreenData()
+            // Extend reviews by 'reviewExtendByValue'.
+            withCustomStudyFragment(
+                args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV),
+            ) { dialogFragment: CustomStudyDialog ->
+                onSubscreenEditText()
+                    .perform(replaceText(reviewExtendByValue.toString()))
+                dialogFragment.submitSubscreenData()
+            }
+
+            // Ensure backend is updated.
+            assertThat(
+                "'review' updated value",
+                defaultsOfDefaultDeck.extendReview.initialValue,
+                equalTo(reviewExtendByValue),
+            )
+
+            // Ensure 'reviewExtendByValue' is used in our UI.
+            withCustomStudyFragment(
+                args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV),
+            ) {
+                onSubscreenEditText()
+                    .check(matches(withText(reviewExtendByValue.toString())))
+            }
         }
-
-        // Ensure backend is updated.
-        assertThat(
-            "'review' updated value",
-            defaultsOfDefaultDeck.extendReview.initialValue,
-            equalTo(reviewExtendByValue),
-        )
-
-        // Ensure 'reviewExtendByValue' is used in our UI.
-        withCustomStudyFragment(
-            args = argumentsDisplayingSubscreen(ContextMenuOption.EXTEND_REV),
-        ) {
-            onSubscreenEditText()
-                .check(matches(withText(reviewExtendByValue.toString())))
-        }
-    }
 
     @Test
     fun `creating a tags custom session uses selected card state`() =

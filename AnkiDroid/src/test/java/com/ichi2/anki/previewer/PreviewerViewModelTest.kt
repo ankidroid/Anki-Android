@@ -13,8 +13,10 @@ import io.mockk.coEvery
 import io.mockk.spyk
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.withTimeout
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -22,6 +24,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class PreviewerViewModelTest : JvmTest() {
@@ -64,6 +67,7 @@ class PreviewerViewModelTest : JvmTest() {
         // the default implementation requires the Collection media directory,
         // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
         coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
+        runBlocking { withTimeout(10.seconds) { viewModel.currentCard.await() } }
     }
 
     @After

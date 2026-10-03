@@ -43,6 +43,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperUntil
 import com.ichi2.anki.browser.BrowserColumnKey
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter.Companion.LINES_VISIBLE_WHEN_COLLAPSED
@@ -501,8 +502,8 @@ class CardBrowserTest : RobolectricTest() {
             }
 
         ActivityScenario.launch<CardBrowser>(deepLink).use { scenario ->
-            advanceRobolectricLooper()
             scenario.onActivity { browser ->
+                browser.waitForSearchResults()
                 assertThat("the deep link's search is applied", browser.viewModel.searchTerms, equalTo("dog"))
                 assertThat("only the matching note is shown", browser.viewModel.rowCount, equalTo(1))
             }
@@ -518,8 +519,8 @@ class CardBrowserTest : RobolectricTest() {
         fun CardBrowser.subtitle() = findViewById<TextView>(R.id.subtitle).text.toString()
 
         ActivityScenario.launch(CardBrowser::class.java).use { scenario ->
-            advanceRobolectricLooper()
             scenario.onActivity { browser ->
+                browser.waitForSearchResults()
                 assertThat("card count before recreation", browser.subtitle(), equalTo("2 cards shown"))
             }
 
@@ -2271,10 +2272,10 @@ fun getBrowserWithNotes(
             test.addBasicNote(i.toString(), "back")
         }
     }
-    return test.startRegularActivity<CardBrowser>(Intent()).also {
-        advanceRobolectricLooper() // may be a fix for flaky tests
-    }
+    return test.startRegularActivity<CardBrowser>(Intent()).also { it.waitForSearchResults() }
 }
+
+fun CardBrowser.waitForSearchResults() = advanceRobolectricLooperUntil { viewModel.searchJob?.isCompleted == true }
 
 context(test: RobolectricTest)
 fun withCardBrowser(
