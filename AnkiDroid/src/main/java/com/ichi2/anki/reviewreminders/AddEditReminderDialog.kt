@@ -39,7 +39,7 @@ import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.showDialogFragment
-import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
+import com.ichi2.utils.DisplayUtils.resizeDialogWhenSoftInputShown
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
@@ -125,7 +125,7 @@ class AddEditReminderDialog : DialogFragment() {
         setUpCardThresholdInput()
         setUpOnlyNotifyIfNoReviewsCheckbox()
 
-        dialog.window?.let { resizeWhenSoftInputShown(it) }
+        resizeDialogWhenSoftInputShown(dialog)
         return dialog
     }
 
