@@ -13,6 +13,7 @@ import io.mockk.coEvery
 import io.mockk.spyk
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.After
@@ -64,6 +65,7 @@ class PreviewerViewModelTest : JvmTest() {
         // the default implementation requires the Collection media directory,
         // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
         coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
+        runBlocking { viewModel.currentCard.await() }
     }
 
     @After
