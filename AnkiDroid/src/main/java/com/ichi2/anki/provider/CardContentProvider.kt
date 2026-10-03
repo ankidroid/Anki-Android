@@ -52,6 +52,7 @@ import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
@@ -489,7 +490,22 @@ class CardContentProvider : ContentProvider() {
                     if (onlyRequestingId) {
                         row.newRow().add(cardId)
                     } else {
-                        addCardToCursor(col.getCard(cardId), row, col, columns)
+                        val currentCol = getColUnsafe()
+                        val card =
+                            try {
+                                currentCol.getCard(cardId)
+                            } catch (e: BackendNotFoundException) {
+                                Timber.d(e, "card %d was deleted after the query returned", cardId)
+                                null
+                            }
+                        if (card != null) {
+                            addCardToCursor(card, row, currentCol, columns)
+                        } else {
+                            val rb = row.newRow()
+                            for (column in columns) {
+                                rb.add(if (column == FlashCardsContract.Card._ID) cardId else null)
+                            }
+                        }
                     }
                 }
             }
