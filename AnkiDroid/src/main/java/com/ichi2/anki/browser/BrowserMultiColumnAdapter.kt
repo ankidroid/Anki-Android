@@ -29,6 +29,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.utils.android.darkenColor
 import com.ichi2.anki.common.utils.android.lightenColorAbsolute
 import com.ichi2.anki.common.utils.ext.replaceWith
+import com.ichi2.anki.common.utils.ext.setBitFlag
 import com.ichi2.anki.databinding.ItemCardBrowserBinding
 import com.ichi2.anki.databinding.ViewBrowserColumnCellBinding
 import com.ichi2.themes.Themes
@@ -198,12 +199,7 @@ class BrowserMultiColumnAdapter(
         }
 
         private fun TextView.setStrikeThrough(strikeThrough: Boolean) {
-            paintFlags =
-                if (strikeThrough) {
-                    paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                } else {
-                    paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                }
+            paintFlags = paintFlags.setBitFlag(Paint.STRIKE_THRU_TEXT_FLAG, enabled = strikeThrough)
         }
 
         private fun TextView.setupTextSize() {
