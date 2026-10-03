@@ -27,7 +27,7 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     // Rerun the path guard if the app build file is moved.
-    inputs.files("../AnkiDroid/build.gradle")
+    inputs.files("../AnkiDroid/build.gradle.kts")
 }
 
 configure<KtlintExtension> {
