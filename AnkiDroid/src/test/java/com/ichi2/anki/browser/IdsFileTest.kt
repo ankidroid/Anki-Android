@@ -62,4 +62,16 @@ class IdsFileTest {
             assertFailsWith<IOException>("count: $count") { file.getIds() }
         }
     }
+
+    @Test
+    fun `negative counts and trailing data cannot be read`() {
+        val file = IdsFile(temporaryFolder.root, emptyList())
+        for (count in listOf(-1, 0)) {
+            DataOutputStream(file.outputStream()).use {
+                it.writeInt(count)
+                it.writeLong(1L)
+            }
+            assertFailsWith<IOException>("count: $count") { file.getIds() }
+        }
+    }
 }
