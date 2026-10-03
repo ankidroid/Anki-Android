@@ -33,12 +33,13 @@ open class PageChromeClient : WebChromeClient() {
         } catch (e: IllegalStateException) {
             // window count is over max!!
             Timber.w(e, "onJsAlert: message ignored")
-            // we want to know what went wrong
-            CrashReportService.sendExceptionReport("$url: $message", "onJsAlert:windowCount")
-            return false
+            // Report without opening a consent dialog while the window limit is exhausted.
+            CrashReportService.sendExceptionReport(e, "onJsAlert:windowCount", additionalInfo = "$url: $message", onlyIfSilent = true)
+            // Returning false asks WebView to show another dialog, which can fail for the same reason.
+            result?.cancel()
         } catch (e: WindowManager.BadTokenException) {
-            Timber.w(e, "onJsAlert")
-            return false
+            Timber.w(e, "onJsAlert: activity destroyed?")
+            result?.cancel()
         }
 
         return true
@@ -58,9 +59,14 @@ open class PageChromeClient : WebChromeClient() {
                 negativeButton(CommonString.dialog_cancel) { result?.cancel() }
                 cancelable(false)
             }
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "onJsConfirm: message ignored")
+            // Report without opening a consent dialog while the window limit is exhausted.
+            CrashReportService.sendExceptionReport(e, "onJsConfirm:windowCount", additionalInfo = "$url: $message", onlyIfSilent = true)
+            result?.cancel()
         } catch (e: WindowManager.BadTokenException) {
             Timber.w(e, "onJsConfirm")
-            return false // unhandled - shown in WebView
+            result?.cancel()
         }
         return true
     }
