@@ -11,10 +11,14 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.backendError
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
@@ -131,6 +135,90 @@ class SyncTest : RobolectricTest() {
 
             assertFalse(dialog.isShowing)
             assertNull(shadowOf(this).nextStartedActivity)
+        }
+
+    @Test
+    fun `collection too large uses database check dialog`() =
+        deckPickerEx {
+            val message = TR.syncUploadTooLarge("300.14 MB > 300.00 MB")
+
+            val dialog =
+                failSync(
+                    BackendSyncException(
+                        backendError {
+                            this.message = message
+                        },
+                    ),
+                )
+
+            assertEquals(
+                message,
+                dialog.findViewById<TextView>(android.R.id.message)?.text?.toString(),
+            )
+            assertEquals(
+                TR.sentenceCase.checkDatabase,
+                dialog.positiveButton.text,
+            )
+            assertEquals(
+                getString(R.string.dialog_cancel),
+                dialog.negativeButton.text,
+            )
+
+            dialog.positiveButton.performClick()
+            advanceRobolectricLooper()
+
+            assertFalse(dialog.isShowing)
+            assertTrue(integrityCheckCalled)
+        }
+
+    @Test
+    fun `collection too large error is detected from raw byte backend message`() =
+        deckPicker {
+            val message =
+                "Some localized backend message: 123456789 > 314572800"
+
+            val dialog =
+                failSync(
+                    BackendSyncException(
+                        backendError {
+                            this.message = message
+                        },
+                    ),
+                )
+
+            assertEquals(
+                TR.sentenceCase.checkDatabase,
+                dialog.positiveButton.text,
+            )
+        }
+
+    @Test
+    fun `collection too large error is detected from localized backend message`() =
+        deckPicker {
+            val message =
+                "AnkiWebକୁ ପଠାଇବା ପାଇଁ ଆପଣଙ୍କ ସଂଗ୍ରହ ଫାଇଲ୍ ବହୁତ ବଡ଼ ଅଟେ। " +
+                    "ଆପଣ ଯେକୌଣସି ଅବାଞ୍ଛିତ ଡେକ୍ ଅପସାରଣ କରି ଏହାର ଆକାର ହ୍ରାସ କରିପାରିବେ " +
+                    "(ବୈକଳ୍ପିକ ଭାବରେ ସେଗୁଡ଼ିକୁ ପ୍ରଥମେ ରପ୍ତାନି କରନ୍ତୁ), " +
+                    "ଏବଂ ତାପରେ ଫାଇଲ୍ ଆକାର ସଙ୍କୁଚିତ କରିବାକୁ ଡାଟାବେସ୍ ଯାଞ୍ଚ ବ୍ୟବହାର କରିପାରିବେ। " +
+                    "(300.14 MB > 300.00 MB)"
+
+            val dialog =
+                failSync(
+                    BackendSyncException(
+                        backendError {
+                            this.message = message
+                        },
+                    ),
+                )
+
+            assertEquals(
+                message,
+                dialog.findViewById<TextView>(android.R.id.message)?.text?.toString(),
+            )
+            assertEquals(
+                TR.sentenceCase.checkDatabase,
+                dialog.positiveButton.text,
+            )
         }
 
     @Test
