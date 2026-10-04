@@ -1,5 +1,5 @@
-// SPDX-FileCopyrightText: 2023 lukstbit <52494258+lukstbit@users.noreply.github.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki
 
 import anki.import_export.ExportLimit

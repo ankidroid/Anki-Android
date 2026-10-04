@@ -1,5 +1,5 @@
-// SPDX-FileCopyrightText: 2026 lukstbit <52494258+lukstbit@users.noreply.github.com>
 // SPDX-License-Identifier: GPL-3.0-or-later
+
 package com.ichi2.anki.dialogs.viewmodel
 
 import android.os.Parcelable

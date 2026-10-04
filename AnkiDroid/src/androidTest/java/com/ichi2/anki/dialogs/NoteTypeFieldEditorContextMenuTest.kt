@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// SPDX-FileCopyrightText: Copyright (c) 2022 lukstbit <lukstbit@users.noreply.github.com>
 
 package com.ichi2.anki.dialogs
 
