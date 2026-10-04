@@ -46,6 +46,7 @@ import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.withCollapsedWhitespace
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
@@ -249,6 +250,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
             tagsArrayAdapter = TagsArrayAdapter(tags) { binding.root.showMaxTagSelectedNotice(tags) }
             binding.tagsList.adapter = tagsArrayAdapter
+            binding.tagsList.attachFastScroller(R.id.tags_scroller)
             if (tags.isEmpty) {
                 binding.noTagsTextView.visibility = View.VISIBLE
             }
