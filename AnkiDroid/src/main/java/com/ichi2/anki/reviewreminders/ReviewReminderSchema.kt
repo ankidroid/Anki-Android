@@ -154,5 +154,36 @@ data class ReviewReminderSchemaV3(
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean,
 ) : ReviewReminderSchema {
+    override fun migrate(): ReviewReminderSchemaV4 =
+        ReviewReminderSchemaV4(
+            id = id,
+            time = time,
+            cardTriggerThreshold = cardTriggerThreshold,
+            scope =
+                when (scope) {
+                    is ReviewReminderPreV4Classes.ReviewReminderScope.Global -> ReviewReminderScope.Global
+                    is ReviewReminderPreV4Classes.ReviewReminderScope.DeckSpecific -> ReviewReminderScope.DeckSpecific(scope.did)
+                },
+            enabled = enabled,
+            latestNotifTime = latestNotifTime,
+            profileID = profileID,
+            onlyNotifyIfNoReviews = onlyNotifyIfNoReviews,
+        )
+}
+
+/**
+ * Version 4 of [ReviewReminderSchema]. Updated to Version 5 by adding [ReviewReminder.thresholdFilter].
+ */
+@Serializable
+data class ReviewReminderSchemaV4(
+    override val id: ReviewReminderId,
+    val time: ReviewReminderTime,
+    val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
+    val scope: ReviewReminderScope,
+    var enabled: Boolean,
+    var latestNotifTime: EpochMilliseconds,
+    val profileID: String,
+    val onlyNotifyIfNoReviews: Boolean,
+) : ReviewReminderSchema {
     override fun migrate(): ReviewReminder = ReviewReminder.createViaMigration(this)
 }
