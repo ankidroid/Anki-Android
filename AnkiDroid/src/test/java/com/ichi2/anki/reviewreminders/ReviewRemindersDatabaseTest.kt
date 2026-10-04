@@ -10,12 +10,12 @@ import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.settings.Prefs
-import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.serializer
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
@@ -398,6 +398,30 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             )
         }
 
+    @Test
+    fun `scope cachedDeckName is not persisted`() =
+        runTest {
+            val did = addDeck("Original")
+            val scope = ReviewReminderScope.DeckSpecific(did)
+            scope.getDeckName() // fill cache
+            ReviewRemindersDatabase.insertReminder(
+                ReviewReminder.createReviewReminder(
+                    time = ReviewReminderTime(9, 0),
+                    scope = scope,
+                ),
+            )
+
+            // Preference should not contain cachedDeckName
+            val rawPref = ReviewRemindersDatabase.remindersSharedPrefs.getString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did, null)!!
+            assertThat(rawPref, not(containsString("cachedDeckName")))
+
+            // Should not persist after retrieval
+            col.decks.rename(col.decks.get(did)!!, "Renamed")
+            val retrievedReminder = ReviewRemindersDatabase.getRemindersForScope(scope)
+            val retrievedScope = retrievedReminder.getRemindersList().single().scope as ReviewReminderScope.DeckSpecific
+            assertThat(retrievedScope.getDeckName(), equalTo("Renamed"))
+        }
+
     /**
      * If this test has failed, please ensure the review reminder schema version and old schemas in the review reminder
      * migration chain are set correctly. If you've written a new migration, please also write a new test in this file
@@ -408,14 +432,14 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
      */
     @Test
     fun `current schema version points to ReviewReminder`() {
-        assertThat(ReviewRemindersDatabase.schemaVersion.value, equalTo(3))
+        assertThat(ReviewRemindersDatabase.schemaVersion.value, equalTo(4))
         assertThat(
             ReviewRemindersDatabase
                 .oldReviewReminderSchemasForMigration
                 .keys
                 .last()
                 .value,
-            equalTo(3),
+            equalTo(4),
         )
         assertThat(
             ReviewRemindersDatabase
@@ -486,12 +510,13 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         val rawString =
             """
             {
-            "version":3,
+            "version":4,
             "remindersMapJson":"{\"22\":{\"id\":22,\"time\":{\"hour\":14,\"minute\":16},\"cardTriggerThreshold\":1,\"scope\":{\"type\":\"com.ichi2.anki.reviewreminders.ReviewReminderScope.Global\"},\"enabled\":true,\"latestNotifTime\":1771193761002,\"profileID\":\"\",\"onlyNotifyIfNoReviews\":false}}"
             }
             """.trimIndent()
 
         val storedReviewReminderGroup = Json.decodeFromString<ReviewRemindersDatabase.StoredReviewReminderGroup>(rawString)
+        assertThat(storedReviewReminderGroup.version, equalTo(ReviewRemindersDatabase.schemaVersion))
         val mapSerializer = MapSerializer(ReviewReminderId.serializer(), ReviewReminder.serializer())
         Json.decodeFromString(mapSerializer, storedReviewReminderGroup.remindersMapJson)
     }
@@ -527,22 +552,20 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
 
     /**
      * A single test case for migration testing.
+     *
+     * @param inputVersion the version of the schema that the input JSON string represents.
+     * @param inputJson the JSON string representing a [ReviewReminder] in the exact format that it
+     * was persisted in SharedPreferences for the given [inputVersion].
+     * @param expectedOutput the expected [ReviewReminder] object after migration to the latest schema version.
+     *
      * @see assertMigrationsWork
      */
     private data class MigrationTestCase(
         val inputVersion: ReviewReminderSchemaVersion,
-        val input: ReviewReminderSchema,
+        val inputJson: String,
         val expectedOutput: ReviewReminder,
     )
 
-    /**
-     * Helper function for performing migrations and asserting they work as expected.
-     *
-     * In order to create a unified helper function for doing this which can accept arbitrary subclasses
-     * of [ReviewReminderSchema] and get their serializers at runtime, we need to opt into
-     * the internal serialization API. Since this is a test-only function, this should be acceptable.
-     */
-    @OptIn(InternalSerializationApi::class)
     private suspend fun assertMigrationsWork(vararg testCases: MigrationTestCase) {
         // Group
         val groupedByScope =
@@ -557,21 +580,31 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         groupedByScope.forEach { (did, casesInScope) ->
             // Reading and writing is done per scope, so all test cases in a scope will have the same input version
             if (casesInScope.map { it.inputVersion }.toSet().size != 1) {
-                throw IllegalArgumentException("All test cases in a scope must have the same input version and type")
+                throw IllegalArgumentException("All test cases in a scope must have the same input version")
             }
             val version = casesInScope.first().inputVersion
-            val inputType = ReviewRemindersDatabase.oldReviewReminderSchemasForMigration[version]!!
 
-            // We need an unchecked runtime cast to allow this helper to operate on arbitrary subclasses of ReviewReminderSchema
-            @Suppress("UNCHECKED_CAST")
-            val inputSerializer = inputType.serializer() as KSerializer<Any>
-            val mapSerializer = MapSerializer(ReviewReminderId.serializer(), inputSerializer)
-
-            val inputMap = casesInScope.associate { it.input.id to it.input }
+            val inputJsonForScope =
+                buildString {
+                    append("{")
+                    casesInScope.forEachIndexed { index, testCase ->
+                        val inputId =
+                            Json
+                                .parseToJsonElement(testCase.inputJson)
+                                .jsonObject
+                                .getValue("id")
+                                .jsonPrimitive.content
+                        append("\"$inputId\":${testCase.inputJson}")
+                        if (index < casesInScope.size - 1) {
+                            append(",")
+                        }
+                    }
+                    append("}")
+                }
             val packagedInput =
                 ReviewRemindersDatabase.StoredReviewReminderGroup(
                     version,
-                    Json.encodeToString(mapSerializer, inputMap),
+                    remindersMapJson = inputJsonForScope,
                 )
 
             val key =
@@ -598,9 +631,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 assertThat(id, equalTo(reminder.id))
             }
             assertThat(
-                retrievedReminders.getRemindersList(),
+                retrievedReminders.getRemindersList().toSet(),
                 equalTo(
-                    casesInScope.map { it.expectedOutput },
+                    casesInScope.map { it.expectedOutput }.toSet(),
                 ),
             )
         }
@@ -610,6 +643,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             ReviewRemindersDatabase.remindersSharedPrefs.all.size,
             equalTo(groupedByScope.size),
         )
+        assertThat(Prefs.reviewReminderDeserializationErrors, equalTo(""))
     }
 
     @Test
@@ -618,15 +652,10 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             assertMigrationsWork(
                 MigrationTestCase(
                     inputVersion = ReviewReminderSchemaVersion(1),
-                    input =
-                        ReviewReminderSchemaV1(
-                            id = ReviewReminderId(0),
-                            time = ReviewReminderTime(9, 0),
-                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(5),
-                            scope = scope1,
-                            enabled = true,
-                            profileID = "",
-                        ),
+                    inputJson =
+                        """
+                        {"id":0,"time":{"hour":9,"minute":0},"cardTriggerThreshold":5,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific","did":$did1},"enabled":true,"profileID":""}
+                        """.trimIndent(),
                     expectedOutput =
                         ReviewReminder.createReviewReminder(
                             time = ReviewReminderTime(9, 0),
@@ -639,16 +668,10 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ),
                 MigrationTestCase(
                     inputVersion = ReviewReminderSchemaVersion(1),
-                    input =
-                        ReviewReminderSchemaV1(
-                            id = ReviewReminderId(1),
-                            time = ReviewReminderTime(10, 30),
-                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
-                            scope = ReviewReminderScope.Global,
-                            enabled = false,
-                            profileID = "",
-                            onlyNotifyIfNoReviews = true,
-                        ),
+                    inputJson =
+                        """
+                        {"id":1,"time":{"hour":10,"minute":30},"cardTriggerThreshold":10,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.Global"},"enabled":false,"profileID":"","onlyNotifyIfNoReviews":true}
+                        """.trimIndent(),
                     expectedOutput =
                         ReviewReminder.createReviewReminder(
                             time = ReviewReminderTime(10, 30),
@@ -668,16 +691,10 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             assertMigrationsWork(
                 MigrationTestCase(
                     inputVersion = ReviewReminderSchemaVersion(2),
-                    input =
-                        ReviewReminderSchemaV2(
-                            id = ReviewReminderId(0),
-                            time = ReviewReminderTime(10, 30),
-                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(10),
-                            scope = ReviewReminderScope.Global,
-                            enabled = true,
-                            profileID = "",
-                            onlyNotifyIfNoReviews = false,
-                        ),
+                    inputJson =
+                        """
+                        {"id":0,"time":{"hour":10,"minute":30},"cardTriggerThreshold":10,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.Global"},"enabled":true,"profileID":"","onlyNotifyIfNoReviews":false}
+                        """.trimIndent(),
                     expectedOutput =
                         ReviewReminder.createReviewReminder(
                             time = ReviewReminderTime(10, 30),
@@ -690,16 +707,10 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 ),
                 MigrationTestCase(
                     inputVersion = ReviewReminderSchemaVersion(2),
-                    input =
-                        ReviewReminderSchemaV2(
-                            id = ReviewReminderId(1),
-                            time = ReviewReminderTime(12, 0),
-                            cardTriggerThreshold = ReviewReminderCardTriggerThreshold(20),
-                            scope = scope2,
-                            enabled = false,
-                            profileID = "",
-                            onlyNotifyIfNoReviews = true,
-                        ),
+                    inputJson =
+                        """
+                        {"id":1,"time":{"hour":12,"minute":0},"cardTriggerThreshold":20,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific","did":$did2},"enabled":false,"profileID":"","onlyNotifyIfNoReviews":true}
+                        """.trimIndent(),
                     expectedOutput =
                         ReviewReminder.createReviewReminder(
                             time = ReviewReminderTime(12, 0),
@@ -711,5 +722,54 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                         ),
                 ),
             )
+        }
+
+    @Test
+    fun `review reminder v3 to v4 migration works`() =
+        runTest {
+            assertMigrationsWork(
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(3),
+                    inputJson =
+                        """
+                        {"id":0,"time":{"hour":9,"minute":15},"cardTriggerThreshold":3,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific","did":$did1,"cachedDeckName":"Old Name"},"enabled":true,"latestNotifTime":1771193761002,"profileID":"","onlyNotifyIfNoReviews":true}
+                        """.trimIndent(),
+                    expectedOutput =
+                        ReviewReminder
+                            .createReviewReminder(
+                                time = ReviewReminderTime(9, 15),
+                                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(3),
+                                scope = scope1,
+                                enabled = true,
+                                profileID = "",
+                                onlyNotifyIfNoReviews = true,
+                            ).apply { latestNotifTime = 1771193761002 },
+                ),
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(3),
+                    inputJson =
+                        """
+                        {"id":1,"time":{"hour":21,"minute":0},"cardTriggerThreshold":0,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.Global"},"enabled":false,"latestNotifTime":1771193762000,"profileID":"","onlyNotifyIfNoReviews":false}
+                        """.trimIndent(),
+                    expectedOutput =
+                        ReviewReminder
+                            .createReviewReminder(
+                                time = ReviewReminderTime(21, 0),
+                                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
+                                scope = ReviewReminderScope.Global,
+                                enabled = false,
+                                profileID = "",
+                                onlyNotifyIfNoReviews = false,
+                            ).apply { latestNotifTime = 1771193762000 },
+                ),
+            )
+
+            // Ensure the private cached deck name is gone
+            val rewrittenDeckSpecific =
+                Json.decodeFromString<ReviewRemindersDatabase.StoredReviewReminderGroup>(
+                    ReviewRemindersDatabase.remindersSharedPrefs.getString(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1, null)!!,
+                )
+            assertThat(rewrittenDeckSpecific.version, equalTo(ReviewRemindersDatabase.schemaVersion))
+            assertThat(rewrittenDeckSpecific.remindersMapJson, not(containsString("cachedDeckName")))
         }
 }
