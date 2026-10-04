@@ -10,6 +10,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.EpochMilliseconds
+import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -95,6 +96,31 @@ value class ReviewReminderCardTriggerThreshold(
     init {
         require(threshold >= 0) { "Card trigger threshold must be >= 0" }
     }
+}
+
+/**
+ * A filter specifying which types of cards to count towards the [ReviewReminderCardTriggerThreshold].
+ *
+ * @param countNew Whether new cards are counted when checking the threshold.
+ * @param countLrn Whether learning cards are counted when checking the threshold.
+ * @param countRev Whether review cards are counted when checking the threshold.
+ */
+@Serializable
+@Parcelize
+data class ReviewReminderThresholdFilter(
+    val countNew: Boolean = true,
+    val countLrn: Boolean = true,
+    val countRev: Boolean = true,
+) : Parcelable {
+    /**
+     * Filters the given [inputCounts] according to this filter's settings and returns the resulting [Counts].
+     */
+    fun filterCounts(inputCounts: Counts): Counts =
+        Counts(
+            new = if (countNew) inputCounts.new else 0,
+            lrn = if (countLrn) inputCounts.lrn else 0,
+            rev = if (countRev) inputCounts.rev else 0,
+        )
 }
 
 /**
@@ -195,6 +221,7 @@ data class ReviewReminder private constructor(
     var latestNotifTime: EpochMilliseconds,
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean,
+    val thresholdFilter: ReviewReminderThresholdFilter,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -210,6 +237,7 @@ data class ReviewReminder private constructor(
             enabled: Boolean = true,
             profileID: String = "",
             onlyNotifyIfNoReviews: Boolean = false,
+            thresholdFilter: ReviewReminderThresholdFilter = ReviewReminderThresholdFilter(),
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
@@ -219,6 +247,7 @@ data class ReviewReminder private constructor(
             latestNotifTime = TimeManager.time.calendar().timeInMillis,
             profileID,
             onlyNotifyIfNoReviews,
+            thresholdFilter,
         )
 
         /**
@@ -230,23 +259,17 @@ data class ReviewReminder private constructor(
          * and become orphaned. Note that this method must be located here because the constructor of [ReviewReminder]
          * (and hence access to the [id] field) is private.
          */
-        fun createViaMigration(latestOutdatedSchema: ReviewReminderSchemaV3) =
+        fun createViaMigration(latestOutdatedSchema: ReviewReminderSchemaV4) =
             ReviewReminder(
                 id = latestOutdatedSchema.id,
                 time = latestOutdatedSchema.time,
                 cardTriggerThreshold = latestOutdatedSchema.cardTriggerThreshold,
-                scope =
-                    when (latestOutdatedSchema.scope) {
-                        is ReviewReminderPreV4Classes.ReviewReminderScope.Global -> ReviewReminderScope.Global
-                        is ReviewReminderPreV4Classes.ReviewReminderScope.DeckSpecific ->
-                            ReviewReminderScope.DeckSpecific(
-                                did = latestOutdatedSchema.scope.did,
-                            )
-                    },
+                scope = latestOutdatedSchema.scope,
                 enabled = latestOutdatedSchema.enabled,
                 latestNotifTime = latestOutdatedSchema.latestNotifTime,
                 profileID = latestOutdatedSchema.profileID,
                 onlyNotifyIfNoReviews = latestOutdatedSchema.onlyNotifyIfNoReviews,
+                thresholdFilter = ReviewReminderThresholdFilter(),
             )
     }
 
