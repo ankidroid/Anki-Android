@@ -27,6 +27,13 @@ class AnalyticsEventTest {
                 Pinned(AnalyticsEvent.SettingChanged("prefKey", 3), "Setting", "Changed setting", label = "prefKey", value = 3),
             AnalyticsEvent.CrashReported::class to
                 Pinned(AnalyticsEvent.CrashReported("installId"), "ACRA Crash Handler", "Crash reported", label = "installId"),
+            AnalyticsEvent.PotentiallyDeadCode::class to
+                Pinned(
+                    AnalyticsEvent.PotentiallyDeadCode("SomeClass.fallback"),
+                    "PotentiallyDeadCode",
+                    "Executed",
+                    label = "SomeClass.fallback",
+                ),
             AnalyticsEvent.WidgetEnabled::class to
                 Pinned(AnalyticsEvent.WidgetEnabled("SomeWidget"), "Widget", "enabled", label = "SomeWidget"),
             AnalyticsEvent.WidgetDisabled::class to
@@ -102,6 +109,7 @@ class AnalyticsEventTest {
                 AnalyticsEvent.SettingTapped("a") to AnalyticsEvent.SettingTapped("b"),
                 AnalyticsEvent.SettingChanged("a", 1) to AnalyticsEvent.SettingChanged("b", 2),
                 AnalyticsEvent.CrashReported("a") to AnalyticsEvent.CrashReported("b"),
+                AnalyticsEvent.PotentiallyDeadCode("a") to AnalyticsEvent.PotentiallyDeadCode("b"),
                 AnalyticsEvent.WidgetEnabled("a") to AnalyticsEvent.WidgetEnabled("b"),
                 AnalyticsEvent.WidgetDisabled("a") to AnalyticsEvent.WidgetDisabled("b"),
             )
