@@ -377,6 +377,8 @@ object SentenceCase {
  * 'Sentence case' strings.
  *
  * Sentence case is a material design guideline
+ *
+ * NOTE: in composable code use [trCase] extension.
  */
 @Suppress("UnusedReceiverParameter")
 val GeneratedTranslations.sentenceCase get() = SentenceCase
