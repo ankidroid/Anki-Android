@@ -3,7 +3,11 @@
 
 package com.ichi2.anki.reviewreminders
 
+import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.reviewreminders.ReviewRemindersDatabase.StoredReviewReminderGroup
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -32,30 +36,6 @@ value class ReviewReminderSchemaVersion(
  * Data classes implementing this interface should be marked as @Serializable. Any new types defined for ReviewReminderSchemas
  * should also be marked as @Serializable.
  *
- * Note that if a migration involves renaming a data class field, you need to maintain a namespaced version of the old data class
- * so that the serializer can distinguish between the old and new data classes. For instance, if you are renaming
- * `ReviewReminderTime.timeHour` to `ReviewReminderTime.hour`, create the following:
- *
- * ```kotlin
- * object OldDataClasses {
- *     @Serializable
- *     data class ReviewReminderTime(
- *         val timeHour: Int,
- *         val timeMinute: Int,
- *     )
- * }
- * ```
- *
- * This class will be serialized into "ReviewReminderTime(timeHour=#, timeMinute=#)", and is nested because it will otherwise conflict
- * with the updated definition of [ReviewReminderTime], which is serialized as "ReviewReminderTime(hour=#, minute=#)".
- * When we read the outdated schema from the disk, we need to tell the deserializer that it is reading a
- * OldDataClasses.ReviewReminderTime rather than a [ReviewReminderTime], even though the class names are the same.
- * With the above in place, you can then use this namespaced data class to construct the new schema in [migrate]:
- *
- * ```kotlin
- * time = ReviewReminderTime(this.time.timeHour, this.time.timeMinute)
- * ```
- *
  * @see [ReviewRemindersDatabase.performSchemaMigration].
  * @see [ReviewReminder]
  */
@@ -79,6 +59,36 @@ sealed interface ReviewReminderSchema {
 }
 
 /**
+ * The Version 3 -> Version 4 migration fixed a bug where the cachedDeckName field of [ReviewReminderScope.DeckSpecific]
+ * was being serialized and persisted to SharedPreferences. However, since this involves a change to an existing data class,
+ * we must still maintain a namespaced version of the old data class so that the serializer can distinguish between the old and new data classes.
+ * To ensure these classes interact with serialization like they did in old versions, the up-to-date SerialName is specified.
+ */
+object ReviewReminderPreV4Classes {
+    @Serializable
+    sealed class ReviewReminderScope {
+        @Serializable
+        @SerialName("com.ichi2.anki.reviewreminders.ReviewReminderScope.Global")
+        data object Global : ReviewReminderScope()
+
+        /**
+         * This class will be serialized into "DeckSpecific(did=#, cachedDeckName=#)", and is nested because it will otherwise conflict
+         * with the updated definition of [ReviewReminderScope.DeckSpecific], which is serialized as "DeckSpecific(did=#)".
+         * When we read the outdated schema from the disk, we need to tell the deserializer that it is reading a
+         * ReviewReminderPreV4Classes.DeckSpecific rather than a [ReviewReminderScope.DeckSpecific], even though the class names are the same.
+         */
+        @Serializable
+        @SerialName("com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific")
+        data class DeckSpecific(
+            val did: DeckId,
+        ) : ReviewReminderScope() {
+            @Suppress("unused") // Only used for migration serialization.
+            private var cachedDeckName: String? = null
+        }
+    }
+}
+
+/**
  * Version 1 of [ReviewReminderSchema]. Updated to Version 2 by adding [ReviewReminder.onlyNotifyIfNoReviews].
  */
 @Serializable
@@ -86,7 +96,7 @@ data class ReviewReminderSchemaV1(
     override val id: ReviewReminderId,
     val time: ReviewReminderTime,
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
-    val scope: ReviewReminderScope,
+    val scope: ReviewReminderPreV4Classes.ReviewReminderScope,
     var enabled: Boolean,
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean = false,
@@ -111,8 +121,36 @@ data class ReviewReminderSchemaV2(
     override val id: ReviewReminderId,
     val time: ReviewReminderTime,
     val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
-    val scope: ReviewReminderScope,
+    val scope: ReviewReminderPreV4Classes.ReviewReminderScope,
     var enabled: Boolean,
+    val profileID: String,
+    val onlyNotifyIfNoReviews: Boolean,
+) : ReviewReminderSchema {
+    override fun migrate(): ReviewReminderSchemaV3 =
+        ReviewReminderSchemaV3(
+            id = id,
+            time = time,
+            cardTriggerThreshold = cardTriggerThreshold,
+            scope = scope,
+            enabled = enabled,
+            latestNotifTime = TimeManager.time.calendar().timeInMillis,
+            profileID = profileID,
+            onlyNotifyIfNoReviews = onlyNotifyIfNoReviews,
+        )
+}
+
+/**
+ * Version 3 of [ReviewReminderSchema]. Updated to Version 4 by fixing a bug where the [ReviewReminderScope.DeckSpecific.cachedDeckName]
+ * field was persisted to SharedPreferences, which is not necessary and can cause issues if the deck name changes.
+ */
+@Serializable
+data class ReviewReminderSchemaV3(
+    override val id: ReviewReminderId,
+    val time: ReviewReminderTime,
+    val cardTriggerThreshold: ReviewReminderCardTriggerThreshold,
+    val scope: ReviewReminderPreV4Classes.ReviewReminderScope,
+    var enabled: Boolean,
+    var latestNotifTime: EpochMilliseconds,
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean,
 ) : ReviewReminderSchema {

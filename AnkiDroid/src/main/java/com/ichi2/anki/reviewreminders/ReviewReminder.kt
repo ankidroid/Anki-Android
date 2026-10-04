@@ -14,6 +14,7 @@ import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import timber.log.Timber
 import java.util.Calendar
 import kotlin.time.Duration.Companion.hours
@@ -122,6 +123,7 @@ sealed class ReviewReminderScope : Parcelable {
         val did: DeckId,
     ) : ReviewReminderScope() {
         @IgnoredOnParcel
+        @Transient
         private var cachedDeckName: String? = null
 
         /**
@@ -228,14 +230,21 @@ data class ReviewReminder private constructor(
          * and become orphaned. Note that this method must be located here because the constructor of [ReviewReminder]
          * (and hence access to the [id] field) is private.
          */
-        fun createViaMigration(latestOutdatedSchema: ReviewReminderSchemaV2) =
+        fun createViaMigration(latestOutdatedSchema: ReviewReminderSchemaV3) =
             ReviewReminder(
                 id = latestOutdatedSchema.id,
                 time = latestOutdatedSchema.time,
                 cardTriggerThreshold = latestOutdatedSchema.cardTriggerThreshold,
-                scope = latestOutdatedSchema.scope,
+                scope =
+                    when (latestOutdatedSchema.scope) {
+                        is ReviewReminderPreV4Classes.ReviewReminderScope.Global -> ReviewReminderScope.Global
+                        is ReviewReminderPreV4Classes.ReviewReminderScope.DeckSpecific ->
+                            ReviewReminderScope.DeckSpecific(
+                                did = latestOutdatedSchema.scope.did,
+                            )
+                    },
                 enabled = latestOutdatedSchema.enabled,
-                latestNotifTime = TimeManager.time.calendar().timeInMillis,
+                latestNotifTime = latestOutdatedSchema.latestNotifTime,
                 profileID = latestOutdatedSchema.profileID,
                 onlyNotifyIfNoReviews = latestOutdatedSchema.onlyNotifyIfNoReviews,
             )
