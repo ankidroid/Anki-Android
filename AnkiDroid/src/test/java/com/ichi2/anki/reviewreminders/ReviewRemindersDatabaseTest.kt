@@ -12,8 +12,10 @@ import com.ichi2.anki.libanki.EpochMilliseconds
 import com.ichi2.anki.settings.Prefs
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -436,14 +438,14 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
      */
     @Test
     fun `current schema version points to ReviewReminder`() {
-        assertThat(ReviewRemindersDatabase.schemaVersion.value, equalTo(4))
+        assertThat(ReviewRemindersDatabase.schemaVersion.value, equalTo(5))
         assertThat(
             ReviewRemindersDatabase
                 .oldReviewReminderSchemasForMigration
                 .keys
                 .last()
                 .value,
-            equalTo(4),
+            equalTo(5),
         )
         assertThat(
             ReviewRemindersDatabase
@@ -511,13 +513,31 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
     @Test
     fun `raw ReviewReminder string can be deserialized without throwing`() {
         @Language("JSON")
-        val rawString =
+        val remindersMapJson =
             """
             {
-            "version":4,
-            "remindersMapJson":"{\"22\":{\"id\":22,\"time\":{\"hour\":14,\"minute\":16},\"cardTriggerThreshold\":1,\"scope\":{\"type\":\"com.ichi2.anki.reviewreminders.ReviewReminderScope.Global\"},\"enabled\":true,\"latestNotifTime\":1771193761002,\"profileID\":\"\",\"onlyNotifyIfNoReviews\":false}}"
+              "24": {
+                "id": 24,
+                "time": { "hour": 23, "minute": 38 },
+                "cardTriggerThreshold": 1,
+                "scope": {
+                  "type": "com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific",
+                  "did": 1788806653166
+                },
+                "enabled": false,
+                "latestNotifTime": 1790927620897,
+                "profileID": "",
+                "onlyNotifyIfNoReviews": false,
+                "thresholdFilter": {}
+              }
             }
             """.trimIndent()
+
+        val rawString =
+            buildJsonObject {
+                put("version", 5)
+                put("remindersMapJson", remindersMapJson)
+            }.toString()
 
         val storedReviewReminderGroup = Json.decodeFromString<ReviewRemindersDatabase.StoredReviewReminderGroup>(rawString)
         assertThat(storedReviewReminderGroup.version, equalTo(ReviewRemindersDatabase.schemaVersion))
@@ -544,6 +564,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 "latestNotifTime" to EpochMilliseconds::class,
                 "profileID" to String::class,
                 "onlyNotifyIfNoReviews" to Boolean::class,
+                "thresholdFilter" to ReviewReminderThresholdFilter::class,
             )
 
         val actualPropertiesWithTypes =
@@ -778,5 +799,58 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 )
             assertThat(rewrittenDeckSpecific.version, equalTo(ReviewRemindersDatabase.schemaVersion))
             assertThat(rewrittenDeckSpecific.remindersMapJson, not(containsString("cachedDeckName")))
+        }
+
+    @Test
+    fun `review reminder v4 to v5 migration works`() =
+        runTest {
+            assertMigrationsWork(
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(4),
+                    inputJson =
+                        """
+                        {"id":0,"time":{"hour":9,"minute":15},"cardTriggerThreshold":3,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.DeckSpecific","did":$did1},"enabled":true,"latestNotifTime":1771193761002,"profileID":"","onlyNotifyIfNoReviews":true}
+                        """.trimIndent(),
+                    expectedOutput =
+                        ReviewReminder
+                            .createReviewReminder(
+                                time = ReviewReminderTime(9, 15),
+                                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(3),
+                                scope = scope1,
+                                enabled = true,
+                                profileID = "",
+                                onlyNotifyIfNoReviews = true,
+                                thresholdFilter =
+                                    ReviewReminderThresholdFilter(
+                                        countNew = true,
+                                        countLrn = true,
+                                        countRev = true,
+                                    ),
+                            ).apply { latestNotifTime = 1771193761002 },
+                ),
+                MigrationTestCase(
+                    inputVersion = ReviewReminderSchemaVersion(4),
+                    inputJson =
+                        """
+                        {"id":1,"time":{"hour":21,"minute":0},"cardTriggerThreshold":0,"scope":{"type":"com.ichi2.anki.reviewreminders.ReviewReminderScope.Global"},"enabled":false,"latestNotifTime":1771193762000,"profileID":"","onlyNotifyIfNoReviews":false}
+                        """.trimIndent(),
+                    expectedOutput =
+                        ReviewReminder
+                            .createReviewReminder(
+                                time = ReviewReminderTime(21, 0),
+                                cardTriggerThreshold = ReviewReminderCardTriggerThreshold(0),
+                                scope = ReviewReminderScope.Global,
+                                enabled = false,
+                                profileID = "",
+                                onlyNotifyIfNoReviews = false,
+                                thresholdFilter =
+                                    ReviewReminderThresholdFilter(
+                                        countNew = true,
+                                        countLrn = true,
+                                        countRev = true,
+                                    ),
+                            ).apply { latestNotifTime = 1771193762000 },
+                ),
+            )
         }
 }
