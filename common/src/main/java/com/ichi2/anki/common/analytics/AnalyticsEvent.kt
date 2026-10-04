@@ -36,6 +36,14 @@ sealed class AnalyticsEvent(
         val installId: String,
     ) : AnalyticsEvent("ACRA Crash Handler", "Crash reported", label = installId)
 
+    /**
+     * A path believed to be unreachable was executed. Keep its fallback until evidence supports removal.
+     * [location] must be a stable, developer-defined identifier, never user data.
+     */
+    data class PotentiallyDeadCode(
+        val location: String,
+    ) : AnalyticsEvent("PotentiallyDeadCode", "Executed", label = location)
+
     /** A home screen widget was added. [widgetName] is the provider class name. */
     data class WidgetEnabled(
         val widgetName: String,
