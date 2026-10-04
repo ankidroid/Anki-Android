@@ -128,7 +128,7 @@ class StudyScreenRepositoryTest {
         runTest {
             val repository = StudyScreenRepository(prefs)
             val first = repository.generateStateMutationKey()
-            delay(10)
+            delay(10.milliseconds)
             val second = repository.generateStateMutationKey()
             assertNotSame(first, second)
         }

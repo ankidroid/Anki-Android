@@ -459,7 +459,7 @@ class ProgressManagerTest {
                                 if (pendingShow == null && dialogShownAt == null) {
                                     pendingShow =
                                         launch {
-                                            kotlinx.coroutines.delay(600)
+                                            kotlinx.coroutines.delay(600.milliseconds)
                                             dialogShownAt = testScheduler.currentTime
                                             pendingShow = null
                                         }
@@ -475,7 +475,7 @@ class ProgressManagerTest {
                         // Stream of updates every 100ms would defeat the delay
                         // under the old collectLatest pattern.
                         repeat(10) { i ->
-                            kotlinx.coroutines.delay(100)
+                            kotlinx.coroutines.delay(100.milliseconds)
                             updateProgress(message = "step $i")
                         }
                         done.await()

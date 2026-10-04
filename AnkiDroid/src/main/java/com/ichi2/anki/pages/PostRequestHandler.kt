@@ -37,6 +37,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.time.Duration.Companion.milliseconds
 
 interface PostRequestHandler {
     suspend fun handlePostRequest(
@@ -216,7 +217,7 @@ suspend fun FragmentActivity?.handleUiPostRequest(
             undoableOp { OpChanges.parseFrom(data) }
             launchCatchingTask {
                 // Allow time for toast message to appear before closing editor
-                delay(1000)
+                delay(1000.milliseconds)
                 setResult(Activity.RESULT_OK)
                 finish()
             }
@@ -226,7 +227,7 @@ suspend fun FragmentActivity?.handleUiPostRequest(
             undoableOp { OpChanges.parseFrom(data) }
             launchCatchingTask {
                 // Allow time for toast message to appear before closing editor
-                delay(1000)
+                delay(1000.milliseconds)
                 setResult(NoteEditorFragment.RESULT_UPDATED_IO_NOTE)
                 finish()
             }

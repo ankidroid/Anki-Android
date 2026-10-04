@@ -60,7 +60,7 @@ class AudioTimerTest {
 
     private fun TestScope.advanceTime(duration: Duration) {
         fakeClock.advance(duration)
-        advanceTimeBy(duration.inWholeMilliseconds)
+        advanceTimeBy(duration.inWholeMilliseconds.milliseconds)
     }
 
     private fun TestScope.createTimer(

@@ -35,12 +35,15 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.sync.syncCollection
 import com.ichi2.anki.utils.ext.trySetForeground
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Syncs collection and media in the background.
@@ -116,6 +119,23 @@ class SyncWorker(
         syncMedia: Boolean,
     ) {
         Timber.v("SyncWorker::syncCollection")
+
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        val monitor =
+            scope.launch {
+                val backend = CollectionManager.getBackend()
+                var syncProgress: Progress.NormalSync? = null
+                while (true) {
+                    val progress = backend.latestProgress() // avoid sending repeated notifications
+                    if (progress.hasNormalSync() && syncProgress != progress.normalSync) {
+                        syncProgress = progress.normalSync
+                        val text = syncProgress.run { "$added\n$removed" }
+                        notify(getProgressNotification(text))
+                    }
+                    delay(SyncMediaWorker.NOTIFICATION_UPDATE_RATE_MS.milliseconds)
+                }
+            }
+
         val response =
             coroutineScope {
                 val monitor =

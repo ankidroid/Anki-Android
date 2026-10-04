@@ -22,7 +22,9 @@ import com.ichi2.anki.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+
 import net.ankiweb.rsdroid.BackendException
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Attempts a backup and awaits its completion.
@@ -37,8 +39,9 @@ import net.ankiweb.rsdroid.BackendException
 suspend fun performBackupInBackground(force: Boolean = false): Boolean {
     // Wait a second to allow the deck list to finish loading first, or it
     // will hang until the first stage of the backup completes.
-    delay(1000)
+    delay(1000.milliseconds)
     return createBackup(force = force)
+
 }
 
 fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiActivity, Activity : ImportColpkgListener {

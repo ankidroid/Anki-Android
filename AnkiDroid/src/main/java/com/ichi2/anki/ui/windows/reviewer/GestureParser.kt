@@ -16,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.abs
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Parses gestures like taps and swipes based on coordinate data passed within an [Uri].
@@ -98,7 +99,7 @@ class GestureParser(
                 // Potential single tap. Schedule it to run after a delay.
                 singleTapJob =
                     scope.launch {
-                        delay(doubleTapTimeout)
+                        delay(doubleTapTimeout.milliseconds)
                         block(getTap(data, webViewState))
                     }
             }

@@ -39,6 +39,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 import java.io.Closeable
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Handles the two ways an Anki card defines sound:
@@ -317,7 +318,7 @@ class CardMediaPlayer : Closeable {
 
     private suspend fun awaitTtsPlayer(isAutomaticPlayback: Boolean): TtsPlayer? {
         val player =
-            withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS) {
+            withTimeoutOrNull(TTS_PLAYER_TIMEOUT_MS.milliseconds) {
                 ttsPlayer.await()
             }
         if (player == null) {

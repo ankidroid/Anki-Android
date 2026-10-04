@@ -72,6 +72,7 @@ import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 /** Overridable reference to [Dispatchers.IO]. Useful if tests can't use it */
@@ -423,7 +424,7 @@ suspend fun <T> withProgressDialog(
         var dialogIsOurs = false
         val dialogJob =
             launch {
-                delay(delayMillis)
+                delay(delayMillis.milliseconds)
                 if (!AnkiDroidApp.instance.progressDialogShown) {
                     Timber.i(
                         """Displaying progress dialog: ${delayMillis}ms elapsed; 
@@ -489,7 +490,7 @@ private suspend fun ProgressContext.monitorProgress(
         withContext(Dispatchers.Main) {
             state.updateUi()
         }
-        delay(100)
+        delay(100.milliseconds)
     }
 }
 

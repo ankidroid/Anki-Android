@@ -41,6 +41,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
+import kotlin.time.Duration.Companion.milliseconds
 
 class SyncMediaWorker(
     context: Context,
@@ -71,7 +72,7 @@ class SyncMediaWorker(
             val backend = CollectionManager.getColUnsafe().backend
             backend.syncMedia(auth)
 
-            delay(1000) // avoid notifications if sync occurs too quickly
+            delay(1000.milliseconds) // avoid notifications if sync occurs too quickly
             if (backend.mediaSyncStatus().active) {
                 Timber.i("Showing SyncMediaWorker's notification")
                 trySetForeground(getForegroundInfo())
@@ -130,7 +131,7 @@ class SyncMediaWorker(
                 val notificationText = syncProgress.run { "$added $removed $checked" }
                 notify(getProgressNotification(notificationText))
             }
-            delay(NOTIFICATION_UPDATE_RATE_MS)
+            delay(NOTIFICATION_UPDATE_RATE_MS.milliseconds)
         }
     }
 
