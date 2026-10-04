@@ -143,6 +143,7 @@ import com.ichi2.anki.ui.RecyclerFastScroller
 import com.ichi2.anki.ui.attachFastScroller
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.undoAndShowSnackbar
+import com.ichi2.anki.updateBottomNavOnScroll
 import com.ichi2.anki.utils.bottomCornerClearance
 import com.ichi2.anki.utils.ext.addPrepareMenuProvider
 import com.ichi2.anki.utils.ext.getParcelableCompat
@@ -340,6 +341,19 @@ class CardBrowserFragment :
             view.findViewById<RecyclerView>(R.id.card_browser_list).apply {
                 attachFastScroller(R.id.browser_scroller)
                 clipToPadding = false
+                // Upward scrolls in the embedded browser do not reliably reach the bottom bar's
+                // scroll behavior, so drive the bar directly from the list.
+                addOnScrollListener(
+                    object : RecyclerView.OnScrollListener() {
+                        override fun onScrolled(
+                            recyclerView: RecyclerView,
+                            dx: Int,
+                            dy: Int,
+                        ) {
+                            updateBottomNavOnScroll(dy)
+                        }
+                    },
+                )
             }
         applyContentInsets(view)
         DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
