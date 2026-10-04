@@ -275,6 +275,7 @@ object CollectionManager {
 
     /**
      * Translations provided by the Rust backend/Anki desktop code.
+     * NOTE: in composable code use the [com.ichi2.anki.ui.internationalization.tr] extension.
      */
     val TR: Translations
         get() {
