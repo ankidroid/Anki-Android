@@ -61,6 +61,9 @@ import kotlin.math.min
 class IntentHandler : AbstractIntentHandler() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return
+        }
         super.onCreate(savedInstanceState)
         val intent = intent
         Timber.v(intent.toString())
