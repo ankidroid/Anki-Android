@@ -6,6 +6,9 @@ package com.ichi2.anki.shareddeck
 
 import android.text.format.DateUtils
 import android.text.format.Formatter
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,6 +45,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -72,6 +76,18 @@ private val MaxContentWidth = 600.dp
 private val ProgressRingSize = 240.dp
 private val ProgressRingStroke = 10.dp
 private val InfoBadgeSize = 28.dp
+private val ProgressAnimationSpec =
+    SpringSpec(
+        dampingRatio = Spring.DampingRatioLowBouncy,
+        stiffness = Spring.StiffnessMediumLow,
+        visibilityThreshold = 1 / 1000f,
+    )
+private val PercentTextAnimationSpec =
+    SpringSpec(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMediumLow,
+        visibilityThreshold = 1 / 1000f,
+    )
 
 /** Stateless download screen. State lives in [SharedDecksDownloadViewModel]. */
 @Composable
@@ -156,8 +172,20 @@ private fun ProgressRing(
                 )
             }
         }
+    val percent = state.percent
+    val targetProgress = ((percent ?: 0f) / 100f).coerceIn(0f, 1f)
+    val animatedProgress by animateFloatAsState(
+        targetValue = targetProgress,
+        animationSpec = ProgressAnimationSpec,
+        label = "DownloadProgress",
+    )
+    val animatedPercent by animateFloatAsState(
+        targetValue = targetProgress * 100f,
+        animationSpec = PercentTextAnimationSpec,
+        label = "DownloadPercentText",
+    )
+
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        val percent = state.percent
         if (percent == null) {
             CircularProgressIndicator(
                 modifier = indicatorModifier,
@@ -166,7 +194,7 @@ private fun ProgressRing(
             )
         } else {
             CircularProgressIndicator(
-                progress = { (percent / 100f).coerceIn(0f, 1f) },
+                progress = { animatedProgress },
                 modifier = indicatorModifier,
                 strokeWidth = ProgressRingStroke,
                 trackColor = trackColor,
@@ -177,7 +205,7 @@ private fun ProgressRing(
                 state.phase == DownloadPhase.Failed -> RingLabel(stringResource(CommonString.download_failed))
                 percent == null -> RingLabel(TR.syncDownloadingFromAnkiweb())
                 else -> {
-                    PercentageText(percent)
+                    PercentageText(animatedPercent)
                     downloadSizeText(state.downloadedBytes, state.totalBytes)?.let {
                         Text(
                             text = it,
@@ -208,8 +236,8 @@ private fun RingLabel(text: String) {
 /** The percentage in the ring, with a smaller % sign. */
 @Composable
 private fun PercentageText(percent: Float) {
-    val text = stringResource(CommonString.percentage, formatDownloadPercent(percent))
     val style = MaterialTheme.typography.displayLarge
+    val text = stringResource(CommonString.percentage, formatDownloadPercent(percent))
     val sign = text.indexOf('%')
     Text(
         text =
