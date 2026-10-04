@@ -3,6 +3,7 @@
 package com.ichi2.anki
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Looper.getMainLooper
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.preferences.PreferencesActivity
@@ -19,7 +20,9 @@ import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.shadows.ShadowToast
 import java.util.stream.Collectors
+import kotlin.test.assertNull
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class ActivityStartupUnderBackupTest : RobolectricTest() {
@@ -35,8 +38,6 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
 
     @Before
     fun before() {
-        notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
-        notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(
             PreferencesActivity::class.java.simpleName,
             "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
@@ -84,6 +85,13 @@ $stackTrace""",
         // But we get the main idea: onCreate() doesn't throw an exception and is handled.
         // and onDestroy() is also called in the real implementation on my phone.
         assertThat("If a backup was taking place, the activity should be finishing", controller.get()!!.isFinishing, equalTo(true))
+        if (controller.get() is AbstractIntentHandler) {
+            assertNull(shadowOf(controller.get()).nextStartedActivity, "The intent must not be dispatched during backup recovery")
+            assertThat(
+                ShadowToast.getTextOfLatestToast(),
+                equalTo(targetContext.getString(CommonString.ankidroid_cannot_open_after_backup_try_again)),
+            )
+        }
         controller.destroy()
         assertThat(
             "If a backup was taking place, the activity should be destroyed successfully",
@@ -110,6 +118,12 @@ $stackTrace""",
                 .stream()
                 .map { x: ActivityLaunchParam ->
                     arrayOf(x, x.simpleName)
-                }.collect(Collectors.toList())
+                }.collect(Collectors.toList()) +
+                listOf(Intent.ACTION_MAIN, "com.ichi2.anki.DO_SYNC").map { action ->
+                    arrayOf(
+                        ActivityLaunchParam.get(IntentHandler::class.java) { Intent(action) },
+                        "IntentHandler $action",
+                    )
+                }
     }
 }

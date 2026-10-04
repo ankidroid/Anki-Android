@@ -19,6 +19,9 @@ import timber.log.Timber
  */
 class IntentHandler2 : AbstractIntentHandler() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (showedActivityFailedScreen(savedInstanceState)) {
+            return
+        }
         super.onCreate(savedInstanceState)
         Timber.v(intent.toString())
         if (NoteEditorFragment.intentLaunchedWithImage(intent)) {
