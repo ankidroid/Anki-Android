@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Βάση Δεδομένων Κλειδωμένη</string>
-    <string name="database_locked_summary">Η βάση δεδομένων του AnkiDroid χρησιμοποιείται από κάποια άλλη εφαρμογή. Κλείστε την άλλη εφαρμογή και στη συνέχεια, ανοίξτε ξανά το AnkiDroid.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Ασύμβατη έκδοση βάσης δεδομένων.</string>
     <string name="incompatible_database_version_summary">Η βάση δεδομένων είναι μια πιο προηγμένη έκδοση από αυτή με την οποία το AnkiDroid μπορεί να λειτουργήσει. Αναβάθμιση του AnkiDroid ή υποβάθμιση της βάσης δεδομένων για να την ανοίξετε\n\nΥποστηριζόμενη έκδοση: %1$d\nΈκδοση Βάσης Δεδομένων: %2$d\n\nΟι παρακάτω επιλογές επαναφοράς θα αντικαταστήσουν την τρέχουσα συλλογή σας, ενδεχομένως με συμβατή έκδοση βάσης δεδομένων:</string>
     <!-- Deck Picker Background-->

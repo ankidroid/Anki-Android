@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Baza e të dhënave është e kyçur</string>
-    <string name="database_locked_summary">Baza e të dhënave AnkiDroid është në përdorim nga një aplikacion tjetër. Mbyllni aplikacionin tjetër dhe rihapni AnkiDroid.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Versioni i papajtueshëm i bazës së të dhënave</string>
     <string name="incompatible_database_version_summary">Baza e të dhënave është një version më i avancuar sesa mund të punojë ky version i AnkiDroid. Përmirësoni AnkiDroid ose ulni bazën e të dhënave për ta hapur atë\n\nVersioni i mbështetur: %1$d\nVersioni i bazës së të dhënave: %2$d\n\nOpsionet e mëposhtme të rivendosjes do të mbishkruajnë koleksionin tuaj aktual, ndoshta me një version të përputhshëm të bazës së të dhënave:</string>
     <!-- Deck Picker Background-->

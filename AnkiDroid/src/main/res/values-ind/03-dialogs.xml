@@ -114,7 +114,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Basisdata terkunci</string>
-    <string name="database_locked_summary">Basisdata AnkiDroid sedang dipakai aplikasi lain. Harap tutup aplikasi yang lain lalu buka AnkiDroid lagi.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Versi Database tidak sesuai</string>
     <string name="incompatible_database_version_summary">Versi basis data lebih unggul dari versi basis data yang AnkiDroid gunakan. Perbarui AnkiDroid atau ganti ke versi lebih lama untuk membukanya\n\nVersi yang didukung: %1$d\nVersi basis data: %2$d\n\nOpsi pengembalian berikut ini akan mengganti koleksi yang Anda miliki sekarang, kemungkinan dengan koleksi yang sesuai dengan versi basis data:</string>
     <!-- Deck Picker Background-->

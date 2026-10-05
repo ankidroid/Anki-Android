@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Adatbázis zárolva</string>
-    <string name="database_locked_summary">Az AnkiDroid adatbázist egy másik alkalmazás használja. Kérjük zárja be ezt az alkalmazást, majd nyissa meg újra az AnkiDroidot.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Nem megfelelő adatbázis verzió</string>
     <string name="incompatible_database_version_summary">Az adatbázis verziója fejlettebb, mint amit az AnkiDroid ezen verziója támogat. Frissítsd az AnkiDroid-ot vagy válts egy régebbi adatbázis verzióra.\n\nTámogatott verzió: %1$d\nAdatbázis verziója: %2$d\n\nA következő visszaállítási opciók felülírják a jelenlegi gyűjteményt, lehetőleg egy támogatott adatbázis verzióra:</string>
     <!-- Deck Picker Background-->

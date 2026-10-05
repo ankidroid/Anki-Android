@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Maʼlumotlar bazasi qulflandi</string>
-    <string name="database_locked_summary">AnkiDroid maʼlumotlar bazasi boshqa dastur tomonidan foydalanilmoqda. Iltimos, oʻsha ilovani yoping va AnkiDroidʼni boshqatdan oching.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Mos kelmaydigan maʼlumotlar bazasi versiyasi</string>
     <string name="incompatible_database_version_summary">Maʼlumotlar bazasi versiyasi AnkiDroid ishlay oladigan versiyadan ancha yuqori. Ochish uchun AnkiDroidʼni yangilang yoki maʼlumotlar baza versiyasini tushiring\n\nQoʻllab-quvvatlanadigan versiya: %1$d\nMaʼlumotlar bazasi versiyasi: %2$d\n\nQuyidagi tiklash variantlar mavjud kolleksiyangizni mos keladigan maʼlumotlar bazasi versiyasi bilan qayta yozishi mumkin:</string>
     <!-- Deck Picker Background-->

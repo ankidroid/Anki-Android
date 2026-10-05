@@ -49,7 +49,7 @@
     <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden</string>
     <string name="card_browser_list_my_searches_successful_save">Suche wurde gespeichert</string>
     <string name="card_browser_list_my_searches_successful_deleted">Suche gelöscht</string>
-    <string name="no_note_to_edit">Keine notiz zum bearbeiten</string>
+    <string name="no_note_to_edit">Keine Notiz zum Bearbeiten</string>
     <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
     <string name="card_browser_change_display_order" maxLength="28">Anzeigereihenfolge ändern</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Suchen</string>
@@ -78,7 +78,7 @@
         <item quantity="other">%d Karten gelöscht</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Schlagwörter-dialog bearbeiten</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Schlagwörter-Dialog bearbeiten</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Bestellungsdialog anzeigen</string>
     <!-- Manage columns dialog -->
     <string name="browse_manage_columns_main_heading">Spalten</string>
@@ -93,15 +93,15 @@
     <string name="card_browser_see_more">Mehr Anzeigen</string>
     <string name="card_browser_see_less">Weniger Anzeigen</string>
     <!-- Sort Order -->
-    <string name="card_browser_order_no_sorting_title" comment="Title of the \'no sorting\' row in the Choose Display Order bottom sheet">No sorting</string>
-    <string name="card_browser_order_no_sorting_subtitle" comment="Subtitle for the \'no sorting\' row noting that no-sort is faster than sorted queries">Faster</string>
-    <string name="card_browser_order_snackbar_sort_by" comment="Snackbar shown after sort changes. %1$s is the column name (e.g. \'Card Type\')">Sort by %1$s</string>
-    <string name="card_browser_order_subtitle_text_ascending" comment="Sort direction subtitle for text columns when ascending (A before Z)">A–Z</string>
-    <string name="card_browser_order_subtitle_text_descending" comment="Sort direction subtitle for text columns when descending (Z before A)">Z–A</string>
-    <string name="card_browser_order_subtitle_numeric_ascending" comment="Sort direction subtitle for numeric columns when ascending (smallest value first)">Low to high</string>
-    <string name="card_browser_order_subtitle_numeric_descending" comment="Sort direction subtitle for numeric columns when descending (largest value first)">High to low</string>
-    <string name="card_browser_order_subtitle_date_ascending" comment="Sort direction subtitle for date columns when ascending (oldest entry first)">Oldest first</string>
-    <string name="card_browser_order_subtitle_date_descending" comment="Sort direction subtitle for date columns when descending (newest entry first)">Newest first</string>
+    <string name="card_browser_order_no_sorting_title" comment="Title of the \'no sorting\' row in the Choose Display Order bottom sheet">Keine Sortierung</string>
+    <string name="card_browser_order_no_sorting_subtitle" comment="Subtitle for the \'no sorting\' row noting that no-sort is faster than sorted queries">Schneller</string>
+    <string name="card_browser_order_snackbar_sort_by" comment="Snackbar shown after sort changes. %1$s is the column name (e.g. \'Card Type\')">Sortieren nach %1$s</string>
+    <string name="card_browser_order_subtitle_text_ascending" comment="Sort direction subtitle for text columns when ascending (A before Z)">A-Z</string>
+    <string name="card_browser_order_subtitle_text_descending" comment="Sort direction subtitle for text columns when descending (Z before A)">Z-A</string>
+    <string name="card_browser_order_subtitle_numeric_ascending" comment="Sort direction subtitle for numeric columns when ascending (smallest value first)">Niedrig bis hoch</string>
+    <string name="card_browser_order_subtitle_numeric_descending" comment="Sort direction subtitle for numeric columns when descending (largest value first)">Hoch bis niedrig</string>
+    <string name="card_browser_order_subtitle_date_ascending" comment="Sort direction subtitle for date columns when ascending (oldest entry first)">Ältestes zuerst</string>
+    <string name="card_browser_order_subtitle_date_descending" comment="Sort direction subtitle for date columns when descending (newest entry first)">Neuestes zuerst</string>
     <!-- SortPill labels: a single character on each half hinting at the direction.
          Translators: pick the first/last character of your locale\'s sort order. -->
     <string name="sort_pill_label_text_ascending" comment="SortPill standard half marker for text columns. Use a 1-char glyph that suggests the start of the alphabet.">A</string>
@@ -110,10 +110,10 @@
     <string name="sort_pill_label_numeric_descending" comment="SortPill reverse half marker for numeric columns. Use a 1-char glyph that suggests the largest value.">9</string>
     <!-- SortPill accessibility descriptions, used by TalkBack. The host should prepend the
          column name (e.g. "Front, ascending"); these strings are the direction half. -->
-    <string name="sort_pill_a11y_ascending" comment="SortPill accessibility: ascending half">Ascending</string>
-    <string name="sort_pill_a11y_descending" comment="SortPill accessibility: descending half">Descending</string>
-    <string name="sort_pill_a11y_selected" comment="SortPill accessibility: state announcement when this half is the active sort direction">Selected</string>
-    <string name="card_browser_order_section_unavailable" comment="Header: browser columns that cannot be sorted (e.g. Question)">Unavailable</string>
-    <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the \'Question/Answer\' column is not sortable.">Card content can\'t be sorted. Use Sort Field</string>
-    <string name="card_browser_order_subtitle_cards_mode_only" comment="Fix for trying to sort on FSRS columns in Notes mode">Only available in cards mode</string>
+    <string name="sort_pill_a11y_ascending" comment="SortPill accessibility: ascending half">Aufsteigend</string>
+    <string name="sort_pill_a11y_descending" comment="SortPill accessibility: descending half">Absteigend</string>
+    <string name="sort_pill_a11y_selected" comment="SortPill accessibility: state announcement when this half is the active sort direction">Ausgewählt</string>
+    <string name="card_browser_order_section_unavailable" comment="Header: browser columns that cannot be sorted (e.g. Question)">Nicht verfügbar</string>
+    <string name="card_browser_order_subtitle_use_sort_field" comment="Fix for when the \'Question/Answer\' column is not sortable.">Karteninhalt kann nicht sortiert werden. Nutze das Sortierungfeld</string>
+    <string name="card_browser_order_subtitle_cards_mode_only" comment="Fix for trying to sort on FSRS columns in Notes mode">Nur verfügbar im Kartenmodus</string>
 </resources>

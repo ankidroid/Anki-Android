@@ -70,7 +70,7 @@
     <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Verlassen</string>
     <string name="dialog_continue">Weiter</string>
     <string name="dialog_processing">Wird verarbeitet &#8230;</string>
-    <string name="dialog_allow">Allow</string>
+    <string name="dialog_allow">Erlauben</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Erstellen</string>
     <string name="dialog_positive_delete" maxLength="28">Löschen</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Datenbank gesperrt</string>
-    <string name="database_locked_summary">Die AnkiDroid-Datenbank wird von einer anderen Anwendung verwendet. Bitte schließen Sie die andere Anwendung und öffnen Sie AnkiDroid erneut.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Inkompatible Datenbankversion</string>
     <string name="incompatible_database_version_summary">Die Datenbank ist eine fortgeschrittenere Version, als diese Version von AnkiDroid verwenden kann. Aktualisieren Sie AnkiDroid oder downgraden Sie die Datenbank um sie zu öffnen\n\nUnterstützte Version: %1$d\nDatenbankversion: %2$d\n\nDie folgenden Wiederherstellungsmöglichkeiten überschreiben Ihre aktuelle Sammlung, möglicherweise mit einer kompatiblen Datenbankversion:</string>
     <!-- Deck Picker Background-->
@@ -260,10 +260,10 @@
     <string name="special_field_card_help" comment="%s: either blank or \' %s\'">Der Name der Karten Vorlage%s</string>
     <string name="special_field_type_help" comment="%s: either blank or \' %s\'">Der Name des Notiztypen%s</string>
     <!-- Change Note Type Dialog -->
-    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">From</string>
-    <string name="change_note_type_to" comment="Label indicating the new note type to change to">To</string>
+    <string name="change_note_type_from" comment="Label indicating the original note type before changing it">Von</string>
+    <string name="change_note_type_to" comment="Label indicating the new note type to change to">Zu</string>
     <!-- Add profile dialog -->
-    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profile name</string>
-    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Profile name can’t be empty</string>
-    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Profile name must be %1$d characters or fewer</string>
+    <string name="profile_name" comment="Label of the text field where the user types the name of a new profile">Profilname</string>
+    <string name="profile_name_empty_error" comment="Error shown when the user leaves the profile name empty">Der Profilname darf nicht leer sein</string>
+    <string name="profile_name_too_long_error" comment="Error shown when a profile name exceeds the maximum length. %1$d is the maximum number of characters">Der Profilname darf nur maximal %1$d Zeichen lang sein</string>
 </resources>

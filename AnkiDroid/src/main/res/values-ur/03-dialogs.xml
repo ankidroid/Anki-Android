@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">ڈیٹا بیس مقفل</string>
-    <string name="database_locked_summary">AnkiDroid ڈیٹا بیس ایک اور ایپلیکیشن کے زیر استعمال ہے۔ براہ کرم دوسری ایپلیکیشن بند کریں پھر AnkiDroid کو دوبارہ کھولیں۔</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">غیر مطابقت پذیر ڈیٹا بیس ورژن</string>
     <string name="incompatible_database_version_summary">ڈیٹا بیس AnkiDroid کے اس ورژن سے زیادہ جدید ورژن ہے جس کے ساتھ کام کیا جا سکتا ہے۔ AnkiDroid کو اپ گریڈ کریں یا اسے کھولنے کے لیے ڈیٹا بیس کو ڈاؤن گریڈ کریں\n\nتعاون یافتہ ورژن: %1$d\nڈیٹا بیس ورژن: %2$d\n\n درج ذیل بحالی کے اختیارات آپ کے موجودہ مجموعہ کو اوور رائٹ کر دیں گے، ممکنہ طور پر ایک مطابقت پذیر ڈیٹا بیس ورژن کے ساتھ:</string>
     <!-- Deck Picker Background-->

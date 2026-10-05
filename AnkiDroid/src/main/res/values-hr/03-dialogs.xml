@@ -120,7 +120,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Baza podataka zaključana</string>
-    <string name="database_locked_summary">Druga aplikacija koristi AnkiDroid bazu podataka. Zatvorite drugu aplikaciju ze zatim ponovno otvorite AnkiDroid.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Nekompatibilna verzija baze podataka</string>
     <string name="incompatible_database_version_summary">Verzija baze podataka je naprednija od one s kojom trenutna verzija AnkiDroida može rukovati. Ažurirajte AnkiDroid ili smanjite verziju baze podataka kako biste je otvorili\n\nPodržana verzija:%1$d\nVerzija baze podataka: %2$d\n\nSljedeće postavke za obnovu će pregaziti vašu trenutnu kolekciju, potencijalno s kompatibilnom verzijom baze podatka:</string>
     <!-- Deck Picker Background-->

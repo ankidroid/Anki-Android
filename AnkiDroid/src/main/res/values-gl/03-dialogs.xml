@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Base de datos bloqueada</string>
-    <string name="database_locked_summary">Outra aplicación está utilizando a base de datos do AnkiDroid. Pecha a outra aplicación e reabre o AnkiDroid</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Versión da base de datos incompatíbel</string>
     <string name="incompatible_database_version_summary">A base de datos é dunha versión máis avanzada da que esta versión do AnkiDroid pode manexar. Actualiza o AnkiDroid ou reverte a versión da base de datos para abrila.\n\nVersión compatíbel: %1$d\nVersión da base de datos: %2$d\n\nAs seguintes opcións de restauración sobrescribirán a túa colección actual, posibelmente cunha versión compatible da base de datos:</string>
     <!-- Deck Picker Background-->
