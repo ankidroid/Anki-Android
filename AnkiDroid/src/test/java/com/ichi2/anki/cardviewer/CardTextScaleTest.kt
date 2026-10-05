@@ -66,7 +66,12 @@ class CardTextScaleTest : RobolectricTest() {
     @Test
     fun `previewer disables text-only zoom including after WebView recreation`() {
         val note = addBasicNote()
-        val intent = PreviewerFragment.getIntent(targetContext, IdsFile(createTransientDirectory(), note.cardIds(col)), 0)
+        val intent =
+            PreviewerFragment.getIntent(
+                targetContext,
+                IdsFile(createTransientDirectory(), note.cardIds(col), IdsFile.Purpose.PREVIEW),
+                0,
+            )
         Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
             controller.setup()
             val activity = controller.get()

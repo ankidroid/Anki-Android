@@ -43,7 +43,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
 
     private fun assertUnavailableSelection(changeFile: IdsFile.() -> Unit) =
         runTest {
-            val file = IdsFile(targetContext.cacheDir, listOf(addBasicNote().id)).apply(changeFile)
+            val file = IdsFile(targetContext.cacheDir, listOf(addBasicNote().id), IdsFile.Purpose.PREVIEW).apply(changeFile)
             val fragment =
                 FindAndReplaceDialogFragment().apply {
                     arguments = Bundle().apply { putParcelable(FindAndReplaceDialogFragment.ARG_IDS, file) }
@@ -104,7 +104,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
     fun `'selected notes only' status is correct after fragment restore`() =
         runTest {
             val note = createFindReplaceTestNote("A", "kart", "kilogram")
-            val file = IdsFile(targetContext.cacheDir, listOf(note.id))
+            val file = IdsFile(targetContext.cacheDir, listOf(note.id), IdsFile.Purpose.PREVIEW)
             FragmentScenario
                 .launch(
                     fragmentClass = FindAndReplaceDialogFragment::class.java,
@@ -144,7 +144,7 @@ class FindAndReplaceDialogFragmentTest : RobolectricTest() {
         noteIds: List<NoteId>,
         action: FindAndReplaceDialogFragment.() -> Unit,
     ) {
-        val file = IdsFile(targetContext.cacheDir, noteIds)
+        val file = IdsFile(targetContext.cacheDir, noteIds, IdsFile.Purpose.PREVIEW)
         FragmentScenario
             .launch(
                 fragmentClass = FindAndReplaceDialogFragment::class.java,
