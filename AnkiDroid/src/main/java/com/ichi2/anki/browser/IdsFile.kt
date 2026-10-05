@@ -76,8 +76,8 @@ class IdsFile(
         FIND_AND_REPLACE(prefix = "find-replace", preferExternalCache = false),
         TAGS(prefix = "ids", preferExternalCache = false),
         PREVIEW(prefix = "ids", preferExternalCache = false),
-        EXPORT(prefix = "export", preferExternalCache = true),
-        SET_DUE_DATE(prefix = "set-due-date", preferExternalCache = true),
+        EXPORT(prefix = "export", preferExternalCache = false),
+        SET_DUE_DATE(prefix = "set-due-date", preferExternalCache = false),
     }
 
     companion object {
