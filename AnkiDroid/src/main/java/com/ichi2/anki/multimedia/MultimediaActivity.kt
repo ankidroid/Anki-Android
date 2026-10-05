@@ -10,8 +10,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -26,6 +28,8 @@ import com.ichi2.anki.settings.enums.NightTheme
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.compose.theme.AnkiDroidTheme
+import com.ichi2.compose.ui.components.HeroToolbarActionButton
 import com.ichi2.themes.Themes
 import com.ichi2.utils.FragmentFactoryUtils
 import dev.androidbroadcast.vbpd.viewBinding
@@ -84,6 +88,7 @@ class MultimediaActivity :
         }
         setupEdgeToEdge()
         setSupportActionBar(binding.toolbar)
+        setupToolbarActions()
 
         // avoid recreating the fragment on configuration changes
         if (savedInstanceState != null) {
@@ -111,6 +116,23 @@ class MultimediaActivity :
         binding.toolbar.setNavigationOnClickListener {
             Timber.d("MultimediaActivity:: Back pressed")
             onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun setupToolbarActions() {
+        binding.toolbarActions.isVisible = intent.getStringExtra(EXTRA_FRAGMENT_NAME) == MultimediaImageFragment::class.jvmName
+        if (!binding.toolbarActions.isVisible) return
+
+        binding.toolbarActions.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AnkiDroidTheme {
+                    HeroToolbarActionButton(onClick = {
+                        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as? MultimediaImageFragment
+                        fragment?.onDone()
+                    })
+                }
+            }
         }
     }
 
