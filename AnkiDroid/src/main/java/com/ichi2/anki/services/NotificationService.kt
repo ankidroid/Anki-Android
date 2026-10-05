@@ -205,10 +205,13 @@ class NotificationService : AnkiBroadcastReceiver() {
                     }
                 }
             val dueCardsTotal = dueCardsCount.count()
-            if (dueCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
+            val consideredCardsCount = reviewReminder.thresholdFilter.filterCounts(dueCardsCount)
+            val consideredCardsTotal = consideredCardsCount.count()
+
+            if (consideredCardsTotal < reviewReminder.cardTriggerThreshold.threshold) {
                 Timber.i(
                     "${reminderLogPrefix(reviewReminder.id)} skip: Aborting notification due to cardTriggerThreshold " +
-                        "(due: $dueCardsTotal, threshold: ${reviewReminder.cardTriggerThreshold.threshold})",
+                        "(due: $dueCardsCount, considered: $consideredCardsCount, threshold: ${reviewReminder.cardTriggerThreshold.threshold})",
                 )
                 return
             }
