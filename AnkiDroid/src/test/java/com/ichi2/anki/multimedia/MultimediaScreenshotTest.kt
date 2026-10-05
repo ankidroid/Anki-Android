@@ -67,7 +67,7 @@ class MultimediaScreenshotTest : ScreenshotTest() {
             advanceRobolectricLooper()
             captureScreen("image_editor_error")
 
-            val controls = activity.findViewById<View>(R.id.action_done)
+            val controls = activity.findViewById<View>(R.id.image_actions)
             val controlsBounds = Rect().also { controls.getGlobalVisibleRect(it) }
             val snackbarBounds = Rect().also { snackbar.view.getGlobalVisibleRect(it) }
             assertTrue(

@@ -20,10 +20,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
@@ -45,6 +48,7 @@ import com.ichi2.anki.utils.ext.toBase64Png
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
+import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.utils.BitmapUtil
@@ -58,7 +62,6 @@ import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -190,56 +193,39 @@ class MultimediaImageFragment :
             }
         }
 
-    /**
-     * Lazily initialized instance of MultimediaMenu.
-     * The instance is created only when first accessed.
-     */
-    private val multimediaMenu by lazy {
-        MultimediaMenuProvider(
-            menuResId = R.menu.multimedia_menu,
-            onCreateMenuCondition = { menu ->
-
-                setMenuItemIcon(menu.findItem(R.id.action_restart), R.drawable.ic_replace_image)
-                lifecycleScope.launch {
-                    viewModel.currentMultimediaUri.collectLatest { uri ->
-                        menu.findItem(R.id.action_crop).isVisible = uri != null
-                    }
-                }
-            },
-        ) { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_crop -> {
-                    viewModel.saveMultimediaForRevert(
-                        imagePath = viewModel.currentMultimediaPath.value,
-                        imageUri = viewModel.currentMultimediaUri.value,
-                    )
-                    requestCrop()
-                    true
-                }
-
-                R.id.action_restart -> {
-                    when (selectedImageOptions) {
-                        ImageOptions.GALLERY -> {
-                            openGallery()
-                        }
-
-                        ImageOptions.CAMERA -> {
+    private fun setupImageActions() {
+        binding.imageActions.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AnkiDroidTheme {
+                    val imageUri by viewModel.currentMultimediaUri.collectAsStateWithLifecycle()
+                    ImageEditorToolbar(
+                        hasImage = imageUri != null,
+                        onReplace = ::replaceImage,
+                        onCrop = {
                             viewModel.saveMultimediaForRevert(
                                 imagePath = viewModel.currentMultimediaPath.value,
                                 imageUri = viewModel.currentMultimediaUri.value,
                             )
-                            dispatchCamera()
-                        }
-
-                        ImageOptions.DRAWING -> {
-                            openDrawingCanvas()
-                        }
-                    }
-                    true
+                            requestCrop()
+                        },
+                    )
                 }
-
-                else -> false
             }
+        }
+    }
+
+    private fun replaceImage() {
+        when (selectedImageOptions) {
+            ImageOptions.GALLERY -> openGallery()
+            ImageOptions.CAMERA -> {
+                viewModel.saveMultimediaForRevert(
+                    imagePath = viewModel.currentMultimediaPath.value,
+                    imageUri = viewModel.currentMultimediaUri.value,
+                )
+                dispatchCamera()
+            }
+            ImageOptions.DRAWING -> openDrawingCanvas()
         }
     }
 
@@ -264,7 +250,7 @@ class MultimediaImageFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setupMenu(multimediaMenu)
+        setupImageActions()
 
         setupWebView()
         handleImageUri()
