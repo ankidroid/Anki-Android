@@ -47,7 +47,7 @@ class CardViewerMathJaxTest : InstrumentedTest() {
     ) {
         ensureWebViewIsSupported()
         val note = addNoteUsingBasicNoteType(front)
-        val idsFile = IdsFile(testContext.cacheDir, listOf(note.firstCard(col).id))
+        val idsFile = IdsFile(testContext.cacheDir, listOf(note.firstCard(col).id), IdsFile.Purpose.PREVIEW)
         val intent = PreviewerFragment.getIntent(testContext, idsFile, currentIndex = 0)
         try {
             ActivityScenario.launch<CardViewerActivity>(intent).use(block)

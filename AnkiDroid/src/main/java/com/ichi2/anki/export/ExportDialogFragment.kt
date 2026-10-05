@@ -472,7 +472,7 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
             type: ExportType,
             ids: List<Long>,
         ) = ExportDialogFragment().apply {
-            val idsFile = IdsFile(idsFileDirectory, ids, "export")
+            val idsFile = IdsFile(idsFileDirectory, ids, IdsFile.Purpose.EXPORT)
 
             arguments =
                 Bundle().apply {
