@@ -123,7 +123,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Duomenų bazė užrakinta</string>
-    <string name="database_locked_summary">\"AnkiDroid\" duomenų bazę naudoja kita programa. Uždarykite kitą programą ir vėl atidarykite \"AnkiDroid\".</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Nesuderinama duomenų bazės versija</string>
     <string name="incompatible_database_version_summary">Duomenų bazė yra pažangesnė versija, nei su kuria gali dirbti ši \"AnkiDroid\" versija. Atnaujinkite \"AnkiDroid\" arba sumažinkite duomenų bazės lygį, kad ją atidarytumėte\n\nPalaikoma versija: %1$d\nDomenų bazės versija: %2$d\n\nNurodytos atkūrimo parinktys perrašys jūsų dabartinę kolekciją, galbūt su suderinama duomenų bazės versija:</string>
     <!-- Deck Picker Background-->

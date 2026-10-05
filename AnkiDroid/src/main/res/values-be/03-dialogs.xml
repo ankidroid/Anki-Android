@@ -123,7 +123,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">База даных заблакаваная</string>
-    <string name="database_locked_summary">База даных AnkiDroid выкарыстоўваецца іншай праграмай. Закрыйце ўсе праграмы ўсе пабочныя праграмы і перазапусціце AnkiDroid.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Несумяшчальная версія базы даных</string>
     <string name="incompatible_database_version_summary">База даных была створана ў больш новай версіі праграмы і ў дадзены час з ёй немагчыма працаваць. Паспрабуйце абнавіць AnkiDroid або панізіць версію базы даных, каб адкрыць яе\n\nВерсія, якая падтрымліваецца: %1$d\nВерсія базы даных:%2$d\n\nНаступныя  параметры аднаўлення перазапішуць вашу бягучую калекцыю, магчыма з сумяшчальнай версіяй базы даных.</string>
     <!-- Deck Picker Background-->

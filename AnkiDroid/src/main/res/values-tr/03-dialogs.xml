@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Veritabanı kilitli</string>
-    <string name="database_locked_summary">AnkiDroid veritabanı başka bir uygulama tarafından kullanılıyor. Lütfen diğer uygulamayı kapatın ve ardından AnkiDroid\'i yeniden açın.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Uyumsuz Veritabanı Sürümü</string>
     <string name="incompatible_database_version_summary">Veritabanı, AnkiDroid\'in bu sürümünün çalışabileceğinden daha gelişmiş bir sürümdür. Açmak için AnkiDroid\'i yükseltin veya veritabanını düşürün\n\nDesteklenen sürüm: %1$d\nVeritabanı sürümü: %2$d\n\nAşağıdaki geri yükleme seçenekleri, muhtemelen uyumlu bir veritabanı sürümüyle mevcut koleksiyonunuzun üzerine yazacaktır:</string>
     <!-- Deck Picker Background-->

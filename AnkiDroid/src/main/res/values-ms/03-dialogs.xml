@@ -114,7 +114,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Pangkalan Data Dikunci</string>
-    <string name="database_locked_summary">Pangkalan data AnkiDroid sedang digunakan oleh aplikasi lain. Sila tutup aplikasi tersebut kemudian buka semula AnkiDroid.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Versi Pangkalan Data Tidak Serasi</string>
     <string name="incompatible_database_version_summary">Pangkalan data memiliki versi lebih lanjut daripada versi AnkiDoird yang boleh digunakannya. Naik taraf AnkiDroid atau turun taraf pangkalan data untuk membukanya.\n\nVersi disokong: %1$d\nVersi pangkalan data: %2$d\n\nPilihan pemulihan berikut akan tulis ganti koleksi anda, mungkin dengan versi pangkalan data yang serasi:</string>
     <!-- Deck Picker Background-->

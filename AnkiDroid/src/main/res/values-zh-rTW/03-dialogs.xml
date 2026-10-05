@@ -114,7 +114,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">資料庫已鎖定</string>
-    <string name="database_locked_summary">AnkiDroid 的資料庫正在被其他應用程式使用中。請關閉其他程式再重新開啟 AnkiDroid。</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">不相容的資料庫版本</string>
     <string name="incompatible_database_version_summary">該資料庫比此版本的 AnkiDroid 可以使用的更高。升級 AnkiDroid 或降級資料庫以開啟它\n\n支援的版本：%1$d\n資料庫版本：%2$d\n\n以下還原選項將覆蓋您當前的集合，通過使用可能相容的資料庫版本：</string>
     <!-- Deck Picker Background-->

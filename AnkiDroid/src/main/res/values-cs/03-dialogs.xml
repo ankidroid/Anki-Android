@@ -123,7 +123,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Databáze uzamčena</string>
-    <string name="database_locked_summary">Databázi AnkiDroid používá jiná aplikace. Zavřete prosím druhou aplikaci a znovu otevřete AnkiDroid.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Nekompatibilní verze databáze</string>
     <string name="incompatible_database_version_summary">Databáze je pokročilejší verze, než se kterou může tato verze AnkiDroid pracovat. Aktualizujte AnkiDroid nebo ponižte databázi, abyste ji otevřeli\n\nPodporovaná verze: %1$d\nVerze databáze: %2$d\n\nNásledující možnosti obnovení přepíšou vaši současnou kolekci snad kompatibilní verzí databáze:</string>
     <!-- Deck Picker Background-->

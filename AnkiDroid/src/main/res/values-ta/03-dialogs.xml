@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">தரவுத்தளம் பூட்டப்பட்டது</string>
-    <string name="database_locked_summary">AnkiDroid தரவுத்தளமானது மற்றொரு பயன்பாட்டினால் பயன்பாட்டில் உள்ளது. தயவுசெய்து மற்ற பயன்பாட்டை மூடிவிட்டு AnkiDroid ஐ மீண்டும் திறக்கவும்.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">பொருந்தாத தரவுத்தள பதிப்பு</string>
     <string name="incompatible_database_version_summary">AnkiDroid இன் இந்த பதிப்பு வேலை செய்யக்கூடியதை விட தரவுத்தளமானது மிகவும் மேம்பட்ட பதிப்பாகும். AnkiDroid ஐ மேம்படுத்தவும் அல்லது அதைத் திறக்க தரவுத்தளத்தை தரமிறக்கவும்\n\nஆதரிக்கப்படும் பதிப்பு: %1$d\nடேட்டாபேஸ் பதிப்பு: %2$d\n\nபின்வரும் மீட்டெடுப்பு விருப்பங்கள் உங்கள் தற்போதைய சேகரிப்பை மேலெழுதும், ஒருவேளை இணக்கமான தரவுத்தள பதிப்பில்:</string>
     <!-- Deck Picker Background-->

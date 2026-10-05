@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">ഡാറ്റാബേസ് ലോക്കുചെയ്തു</string>
-    <string name="database_locked_summary">മറ്റൊരു ആപ്ലിക്കേഷൻ AnkiDroid ഡാറ്റാബേസ് ഉപയോഗത്തിലാണ്. ദയവായി മറ്റ് ആപ്ലിക്കേഷൻ അടച്ച് അങ്കിഡ്രോയിഡ് വീണ്ടും തുറക്കുക.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">അനുയോജ്യമല്ലാത്ത ഡാറ്റാബേസ് പതിപ്പ്</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->

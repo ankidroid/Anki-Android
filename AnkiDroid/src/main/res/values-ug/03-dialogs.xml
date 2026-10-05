@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">ساندان قۇلۇپلانغان</string>
-    <string name="database_locked_summary">AnkiDroid سانداننى باشقا بىر ئەپ ئىشلىتىۋاتىدۇ. باشقا ئەپنى تاقاپ ئاندىن AnkiDroid نى قايتا ئېچىڭ.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">ماسلاشمايدىغان ساندان نەشرى</string>
     <string name="incompatible_database_version_summary">بۇ ساندان AnkiDroid تا ئىشلەيدىغان نەشرىدىن ئالىي نەشرى ئىكەن. ئۇنى ئېچىش ئۈچۈن AnkiDroid نى يۈكسەلتىڭ ياكى ساندان نەشرىنى تۆۋەنلىتىڭ\n\nقوللايدىغان نەشرى: %1$d\nساندان نەشرى: %2$d\n\nتۆۋەندىكى ئەسلىگە كەلتۈرۈش تاللانمىسى نۆۋەتتىكى توپلامنى قاپلىۋېتىدۇ، ماسلىشىشى مۇمكىن بولغان ساندان نەشرى:</string>
     <!-- Deck Picker Background-->

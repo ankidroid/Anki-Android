@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">دیتابیس قفل است</string>
-    <string name="database_locked_summary">نرم‌افزاری دیگر در حال استفاده از دیتابیس آنکی‌دروید است. لطفاً نرم افزار دیگر را ببندید سپس آنکی‌دروید را باز کنید.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">نسخه پایگاه داده ناسازگار است</string>
     <string name="incompatible_database_version_summary">نسخه ی پایگاه داده پیشرفته‌تر از نسخه ای است که AnkiDroid توانایی کار کردن با آن را دارد. یا AnkiDroid را ارتقاء دهید یا درجه پایگاه داده را پایین آورید\n\nنسخه های همایت شده: %1$d\nنسخه پایگاه داده: %2$d\n\nگزینه های بازگرداندن زیر مجموعه شما را بازنویسی میکنند، ممکن تر با نسخه پایگاه داده سازگار:</string>
     <!-- Deck Picker Background-->

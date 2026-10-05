@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱞᱚᱠ ᱮᱱᱟ</string>
-    <string name="database_locked_summary">AnkiDroid ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱚᱞᱜᱟ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱠᱟᱢᱤ ᱨᱮ ᱟᱜᱩᱭᱮᱫᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ AnkiDroid ᱵᱚᱸᱫ ᱠᱟᱛᱮ ᱯᱦᱮᱨ ᱥᱮ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ ᱾</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">ᱵᱟᱝ ᱴᱷᱤᱠ ᱵᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱨᱥᱟᱹᱱ</string>
     <string name="incompatible_database_version_summary">ᱰᱟᱴᱟᱵᱮᱥ ᱫᱚ ᱱᱚᱶᱟ AnkiDroid ᱵᱷᱟᱹᱥᱚᱱ ᱠᱷᱚᱱ ᱡᱟᱹᱛᱤ ᱮᱰᱵᱷᱟᱱᱥ ᱜᱮᱭᱟ ᱾ ᱠᱷᱚᱞᱟ ᱞᱟᱹᱜᱤᱫᱽ ᱰᱟᱴᱟᱵᱮᱥ ᱟᱹᱯᱜᱮᱰ ᱟᱨ ᱵᱟᱝ ᱰᱟᱩᱱᱜᱨᱮᱰ ᱢᱮ\n\n ᱥᱟᱹᱯᱚᱴ ᱵᱷᱟᱹᱨᱥᱚᱱᱺ %1$d\n ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱᱺ %2$d\n\n ᱱᱚᱶᱟ ᱠᱚ ᱨᱤᱥᱴᱚᱨ ᱚᱯᱥᱚᱱ ᱠᱚ ᱟᱢᱟᱜᱽ ᱱᱤᱛᱚᱜᱼᱟᱜ ᱛᱩᱢᱟᱹ ᱥᱟᱞᱟᱜᱽ ᱫᱩᱦᱲᱟᱹ ᱚᱞᱚᱜᱚᱜ ᱠᱚᱢᱯᱟᱴᱤᱵᱟᱹᱞ ᱰᱟᱴᱟᱵᱮᱥ ᱵᱷᱟᱹᱥᱚᱱ ᱥᱟᱞᱟᱜᱽ ᱛᱮᱺ</string>
     <!-- Deck Picker Background-->

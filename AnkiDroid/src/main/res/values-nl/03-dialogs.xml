@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Database vergrendeld</string>
-    <string name="database_locked_summary">De AnkiDroid-database is in gebruik door een andere applicatie. Sluit de andere applicatie en open vervolgens AnkiDroid opnieuw.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">Incompatibele databaseversie</string>
     <string name="incompatible_database_version_summary">De database is een meer geavanceerde versie dan deze versie van AnkiDroid mee kan werken. Upgrade AnkiDroid of downgrade de database om het te openen\n\nOndersteunde versie: %1$d\nDatabaseversie: %2$d\n\nDe volgende herstelopties zullen uw huidige collectie overschrijven, eventueel met een compatibele databaseversie:</string>
     <!-- Deck Picker Background-->

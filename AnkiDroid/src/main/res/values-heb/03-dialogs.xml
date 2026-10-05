@@ -121,7 +121,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">מסד הנתונים ננעל</string>
-    <string name="database_locked_summary">מסד הנתונים של AnkiDroid נמצא בשימוש על ידי יישום אחר. אנא סגור את היישום השני ואז פתח מחדש את AnkiDroid.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">גרסת מסד נתונים לא תואמת</string>
     <string name="incompatible_database_version_summary">מסד הנתונים הוא גרסה מתקדמת יותר ממה שגרסה זו של AnkiDroid יכולה לעבוד איתה. שדרג את AnkiDroid או שדרג לאחור את מסד הנתונים כדי לפתוח אותו\n\nגרסה נתמכת: %1$d\nגרסת מסד נתונים: %2$d\n\nאפשרויות השחזור הבאות יחליפו את האוסף הנוכחי שלך, אולי עם גרסת מסד נתונים תואמת:</string>
     <!-- Deck Picker Background-->

@@ -129,7 +129,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">تم قفل قاعدة البيانات</string>
-    <string name="database_locked_summary">قاعدة بيانات آنكي درويد قَيد الاستخدام من قبل تطبيق آخر. الرجاء إغلاق ذاك التطبيق وفتح آنكي درويد مجددًا.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
     <string name="incompatible_database_version_title">إصدار قاعدة بيانات غير متوافق</string>
     <string name="incompatible_database_version_summary">إصدار قاعدة البيانات يفوق أعلى إصدار يعمل مع آنكي دوريد. حدِّث آنكي درويد أو خفِّض إصدار قاعدة البيانات لفتحها.\n\nالإصدار المدعوم: %1$d\nإصدار قاعدة البيانات: %2$d\n\nخيارات الاسترجاع التالية يحتمل أن تستبدل بمجموعتك الحالية نسخةً ذات إصدار قاعدة بيانات متوافق:</string>
     <!-- Deck Picker Background-->
