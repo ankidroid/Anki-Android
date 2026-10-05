@@ -125,7 +125,7 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_description">ڕێگەپێدان بە گەشتن بە تێبینییەکان ،کارتەکان ،جۆری تێبینییەکان ،و دەستەکان ،لەگەڵ دروستکردنی هی نوێ</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
     <string name="context_menu_anki_card_label">Anki card</string>
