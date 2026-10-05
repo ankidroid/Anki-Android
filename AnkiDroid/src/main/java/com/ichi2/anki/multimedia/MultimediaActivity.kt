@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
@@ -14,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
@@ -130,14 +130,8 @@ class MultimediaActivity :
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        // if action_done exists in a fragment, use that as the anchor view
-
-        // This is a minor hack architecturally: AudioRecordingController should request that
-        // the host fragment/activity opens a snackbar, so the activity doesn't need knowledge
-        // of the layout of its hosted fragments
-
-        // If this doesn't work, anchorView remains null
-        anchorView = findViewById<MaterialButton>(R.id.action_done)
+        // Keep error messages above the editor's bottom controls.
+        anchorView = findViewById<View>(R.id.image_actions) ?: findViewById<View>(R.id.action_done)
     }
 
     companion object {
