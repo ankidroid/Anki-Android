@@ -1908,6 +1908,20 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `saving multiselect state recreates an evicted snapshot directory`() {
+        val directory = File(createTransientDirectory(), "idsfiles").apply { mkdirs() }
+        runViewModelTest(notes = 2, initMode = InitMode.NO_DELAY, cacheDir = directory) {
+            selectRowAtPosition(1)
+            generateExpensiveSavedState()
+            assertTrue(directory.deleteRecursively())
+
+            val replacement = assertNotNull(generateExpensiveSavedState().multiselectStateFile)
+
+            assertEquals(selectedRows.map { it.cardOrNoteId }, replacement.getIds())
+        }
+    }
+
+    @Test
     fun `failed replacement preserves restored multiselect state file`() {
         val handle = SavedStateHandle()
         runViewModelTest(savedStateHandle = handle, notes = 2, initMode = InitMode.NO_DELAY) {
@@ -1917,11 +1931,11 @@ class CardBrowserViewModelTest : JvmTest() {
         val restoredFile = assertNotNull(handle.multiselectStateFile)
         val savedIds = restoredFile.getIds()
 
-        // A missing cache directory makes the replacement write fail without affecting the old file.
+        // A file at the directory path prevents replacement without affecting the old snapshot.
         runViewModelTest(
             savedStateHandle = handle,
             initMode = InitMode.NO_DELAY,
-            cacheDir = File(createTransientDirectory(), "missing"),
+            cacheDir = File(createTransientDirectory(), "blocked").apply { writeText("occupied") },
         ) {
             assertThat("selection is restored", selectedRows, hasSize(1))
             assertFailsWith<IOException> { generateExpensiveSavedState() }
