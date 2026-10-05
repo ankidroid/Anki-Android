@@ -10,8 +10,8 @@ import android.os.Bundle
 import android.os.Looper
 import android.webkit.CookieManager
 import android.webkit.WebView
-import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -27,9 +27,10 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
-import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
 import com.ichi2.utils.openInputStreamSafe
+import com.ichi2.utils.positiveButton
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -314,14 +315,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
         shadowOf(Looper.getMainLooper()).idle()
 
-        val snackbarText =
-            download
-                .activity
-                .findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        assertEquals(
-            download.activity.getString(CommonString.shared_decks_login_required),
-            snackbarText?.text,
-        )
+        assertLoginPromptShown()
         retryButton.assertDoesNotExist()
         assertNull(ShadowToast.getLatestToast())
         // nothing else removes the failed download on this path, so the fragment must
@@ -352,40 +346,26 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
         shadowOf(Looper.getMainLooper()).idle()
 
-        assertNull(
-            download
-                .activity
-                .findViewById<TextView>(com.google.android.material.R.id.snackbar_text),
-        )
+        assertNull(ShadowDialog.getLatestDialog())
 
         controller.start().resume()
         shadowOf(Looper.getMainLooper()).idle()
 
-        val snackbarText =
-            download
-                .activity
-                .findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-        assertEquals(
-            download.activity.getString(CommonString.shared_decks_login_required),
-            snackbarText?.text,
-        )
+        assertLoginPromptShown()
     }
 
-    /** An AnkiDroid login exists (no sign-up action on the snackbar) but the WebView has no
-     * AnkiWeb session: the user still needs a way in, so the WebView must open its login page */
     @Test
-    fun `rate limited download with an AnkiDroid login redirects the WebView to the login page`() {
-        Prefs.hkey = "test-hkey"
+    fun `rate limited download opens the login page only once the user taps log in`() {
         val download = startDownload()
+        val webView = download.activity.findViewById<WebView>(R.id.web_view)
 
         download.complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_TOO_MANY_REQUESTS)
         shadowOf(Looper.getMainLooper()).idle()
+        assertEquals(getResourceString(R.string.shared_decks_url), shadowOf(webView).lastLoadedUrl)
 
-        val webView = download.activity.findViewById<WebView>(R.id.web_view)
-        assertEquals(
-            getResourceString(R.string.shared_decks_login_url),
-            shadowOf(webView).lastLoadedUrl,
-        )
+        clickAlertDialogButton { positiveButton }
+
+        assertEquals(getResourceString(R.string.shared_decks_login_url), shadowOf(webView).lastLoadedUrl)
     }
 
     @Test
@@ -425,6 +405,11 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     private fun button(
         @StringRes text: Int,
     ) = composeRule.onNodeWithText(targetContext.getString(text))
+
+    private fun assertLoginPromptShown() {
+        val dialog = assertNotNull(ShadowDialog.getLatestDialog() as? AlertDialog)
+        assertEquals(getResourceString(CommonString.shared_decks_ankiweb_login_limit), dialog.message)
+    }
 
     private fun completedDownload(): Download =
         startDownload().apply {
