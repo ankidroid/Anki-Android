@@ -1703,7 +1703,7 @@ class CardBrowserFragment :
         val (type, selectedIds) = activityViewModel.querySelectionExportData() ?: return
         ExportDialogFragment
             .newInstance(
-                IdsFile.getDirectory(requireContext(), IdsFile.Purpose.EXPORT),
+                IdsFile.getDirectory(requireContext()),
                 type,
                 selectedIds,
             ).show(parentFragmentManager, "exportDialog")

@@ -69,22 +69,17 @@ class IdsFile(
     enum class Purpose(
         /** Uniquely identifies snapshots by filename: `multiselect-values123456789.tmp` */
         val prefix: String,
-        /** Whether to use `context.externalCacheDir` or `context.cacheDir` */
-        val preferExternalCache: Boolean,
     ) {
-        SELECTION(prefix = "multiselect-values", preferExternalCache = false),
-        FIND_AND_REPLACE(prefix = "find-replace", preferExternalCache = false),
-        TAGS(prefix = "ids", preferExternalCache = false),
-        PREVIEW(prefix = "ids", preferExternalCache = false),
-        EXPORT(prefix = "export", preferExternalCache = false),
-        SET_DUE_DATE(prefix = "set-due-date", preferExternalCache = false),
+        SELECTION(prefix = "multiselect-values"),
+        FIND_AND_REPLACE(prefix = "find-replace"),
+        TAGS(prefix = "ids"),
+        PREVIEW(prefix = "ids"),
+        EXPORT(prefix = "export"),
+        SET_DUE_DATE(prefix = "set-due-date"),
     }
 
     companion object {
-        fun getDirectory(
-            context: Context,
-            purpose: Purpose,
-        ): File = if (purpose.preferExternalCache) context.externalCacheDir ?: context.cacheDir else context.cacheDir
+        fun getDirectory(context: Context): File = context.cacheDir
 
         @JvmField
         @Suppress("unused")
