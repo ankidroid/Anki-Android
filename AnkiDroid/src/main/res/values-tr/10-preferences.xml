@@ -222,75 +222,75 @@
          ################################## Review reminders ###################################
          ####################################################################################### -->
     <!-- Entry points -->
-    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Review reminders</string>
+    <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">Çalışma hatırlatıcıları</string>
     <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">Uygulama geneli</string>
-    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Deck-specific</string>
-    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
+    <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">Desteye özel</string>
+    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">Çalışma hatırlatıcılarınızı yüklerken bir hata oldu, bozuk hatırlatıcılar silindi. Detaylar:</string>
     <!-- Schedule reminders screen -->
-    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
+    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Hatırlatıcı kur</string>
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">Hatırlatıcı ekle</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">Çalışma hatırlatıcınız yok</string>
-    <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Troubleshoot</string>
+    <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">Sorun gider</string>
     <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">Bildirim ayarları</string>
-    <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
+    <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">Kurulmuş çalışma hatırlatıcılarının listesi</string>
     <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deste bulunamadı</string>
-    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Reminders are unavailable</string>
-    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Fix</string>
-    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Successfully added new review reminder</string>
-    <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Successfully deleted review reminder</string>
-    <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Successfully edited review reminder</string>
+    <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">Hatırlatıcılar kullanılamıyor</string>
+    <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">Düzelt</string>
+    <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">Başarılı bir şekilde yeni çalışma hatırlatıcısı eklendi</string>
+    <string name="schedule_reminders_deleted" comment="Pop-up text which confirms a review reminder was deleted.">Başarılı bir şekilde çalışma hatırlatıcısı silindi</string>
+    <string name="schedule_reminders_edited" comment="Pop-up text which confirms an existing review reminder was changed.">Başarılı bir şekilde çalışma hatırlatıcısı düzenlendi</string>
     <!-- Add / edit reminder dialog -->
     <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">Çalışma hatırlatıcısı ekle</string>
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">Çalışma hatırlatıcısını değiştir</string>
-    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
+    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Saat:</string>
     <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deste:</string>
     <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Gelişmiş ayarlar</string>
-    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
-    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
-    <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
-    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
-    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
+    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Kart eşiği:</string>
+    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Çalışılacak bundan az sayıda kart varsa bildirim gönderme</string>
+    <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Sadece bugün hiç çalışmadıysam bildirim gönder</string>
+    <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Lütfen tam bir kart sayısı girin</string>
+    <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">Eşik en az 0 olmalıdır</string>
     <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Bu hatırlatıcı silinsin mi?</string>
     <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">Bu eylem geri alınamaz.</string>
     <!-- Reminder troubleshooting screen -->
-    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Reminders are unavailable.</string>
-    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Reminders may not work correctly.</string>
-    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Your reminders should work as expected.</string>
-    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
+    <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">Hatırlatıcılar kullanılamıyor.</string>
+    <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">Hatırlatıcılar doğru çalışmayabilir.</string>
+    <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">Hatırlatıcılarınız beklendiği gibi çalışıyor olmalı.</string>
+    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Farklı cihazların farklı bildirim kısıtlama ayarları olur. Sistem ayarlarınızı kontrol edin veya sorunlar devam ederse internette araştırın.</string>
     <!-- Troubleshooting check titles -->
-    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Notification permission</string>
+    <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">Bildirim izni</string>
     <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">Bildirim kanalı</string>
-    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Do not disturb</string>
+    <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">Rahatsız etme</string>
     <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">Pil optimizasyonu</string>
     <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">Güç tasarruf modu</string>
-    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
+    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarmlar ve hatırlatıcılar izni</string>
     <!-- Troubleshooting check statuses -->
-    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Granted</string>
-    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">Denied</string>
+    <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">Verilmiş</string>
+    <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">Reddedilmiş</string>
     <string name="reminder_troubleshooting_status_on" comment="Status of a review reminder troubleshooting check: the system setting is active.">Açık</string>
     <string name="reminder_troubleshooting_status_off" comment="Status of a review reminder troubleshooting check: the system setting is not active.">Kapalı</string>
-    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">Unrestricted</string>
-    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">Optimized</string>
-    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">Restricted</string>
+    <string name="reminder_troubleshooting_status_unrestricted" comment="Status of the review reminder battery optimization check: the app may run freely in the background.">Kısıtsız</string>
+    <string name="reminder_troubleshooting_status_optimized" comment="Status of the review reminder battery optimization check: the system may delay the app in the background.">Optimize</string>
+    <string name="reminder_troubleshooting_status_restricted" comment="Status of the review reminder battery optimization check: the app is barred from running in the background.">Kısıtlı</string>
     <!-- Troubleshooting check explanations -->
-    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">The review reminder notification channel must be enabled</string>
-    <string name="reminder_troubleshooting_explanation_do_not_disturb" comment="Explains why review reminders may need Do Not Disturb to be disabled to work correctly.">Do Not Disturb may mute reminder notifications</string>
-    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">Battery optimization may delay reminders</string>
-    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">Background usage is disabled. Reminders may not be delivered</string>
-    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">Power saving mode may prevent timely delivery of reminders</string>
-    <string name="reminder_troubleshooting_explanation_exact_alarm" comment="Explains that AnkiDroid cannot schedule alarms at exact times unless the exact-alarm permission is granted.">Required to schedule reminders at exact times</string>
+    <string name="reminder_troubleshooting_explanation_notification_channel" comment="Explains why review reminders need notification permissions to work correctly.">Çalışma hatırlatıcısı bildirim kanalı açık olmalıdır</string>
+    <string name="reminder_troubleshooting_explanation_do_not_disturb" comment="Explains why review reminders may need Do Not Disturb to be disabled to work correctly.">Rahatsız Etme hatırlatıcı bildirimlerini sessizleştirebilir</string>
+    <string name="reminder_troubleshooting_explanation_battery_optimized" comment="Explains to the user that AnkiDroid\'s battery usage is optimized, and that battery usage may need to be enabled for review reminders to work correctly.">Pil optimizasyonu hatırlatıcıları geciktirebilir</string>
+    <string name="reminder_troubleshooting_explanation_battery_restricted" comment="Explains to the user that AnkiDroid\'s battery usage is restricted, and that battery usage may need to be enabled for review reminders to work correctly.">Arka plan kullanımı kapalı. Hatırlatıcılar gönderilemeyebilir</string>
+    <string name="reminder_troubleshooting_explanation_power_saving_mode" comment="Explains why review reminders may need power saving mode to be disabled to work correctly.">Enerji tasarrufu modu hatırlatıcıların zamanında gelmesini önleyebilir</string>
+    <string name="reminder_troubleshooting_explanation_exact_alarm" comment="Explains that AnkiDroid cannot schedule alarms at exact times unless the exact-alarm permission is granted.">Kesin zamanlı hatırlatıcılar kurmak için gerekir</string>
     <!-- Troubleshooting check actions -->
-    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">Grant permission</string>
-    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">Enable notification channel</string>
-    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Disable battery optimization</string>
-    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Open battery settings</string>
+    <string name="reminder_troubleshooting_action_grant_permission" comment="Button resolving a failing review reminder troubleshooting check by asking for a permission.">İzin ver</string>
+    <string name="reminder_troubleshooting_action_enable_notification_channel" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system notification settings screen.">Bildirim kanalını aç</string>
+    <string name="reminder_troubleshooting_action_disable_battery_optimization" comment="Button resolving a failing review reminder troubleshooting check by asking the user to exempt the app from battery optimization.">Pil optimizasyonunu kapat</string>
+    <string name="reminder_troubleshooting_action_open_battery_settings" comment="Button resolving a failing review reminder troubleshooting check by opening the operating system battery settings screen.">Pil ayarlarını aç</string>
     <!-- Notification content -->
-    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">It\'s time to study your cards</string>
-    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">It\'s time to study \"%s\"</string>
-    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">Snooze %s</string>
+    <string name="review_reminder_notification_title_all_decks" comment="Title of a review reminder notification which is attached to the whole app rather than a single deck.">Kartlarınızı çalışma zamanı</string>
+    <string name="review_reminder_notification_title_deck" comment="Title of a review reminder notification for one deck. The parameter is the deck name; the quotation marks are to clearly separate the user-chosen name from the app\'s own text.">\"%s\" çalışma zamanı</string>
+    <string name="review_reminder_notification_snooze_button" comment="Notification button postponing a review reminder by a certain amount of time. The parameter is a duration like \'1h\', \'5m\', etc.">%s ertele</string>
     <plurals name="review_reminder_notification_cards_due" comment="Body of a review reminder notification. The parameter is the number of cards due.">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d kartın sırası geldi</item>
+        <item quantity="other">%d kartın sırası geldi</item>
     </plurals>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
@@ -310,7 +310,7 @@
     <string name="pref_cat_about_title" maxLength="41">Hakkında</string>
     <string name="contributors_title">Katkıda Bulunanlar</string>
     <string name="about_contributors_description"><![CDATA[İşte uygulamamıza katkıda bulunan müthiş <a href=\"%1$s\">insanlar</a>. Siz de AnkiDroid\'e programlayarak, çevirerek, bağış yaparak ve <a href=\"%2$s\">daha fazla yolla</a> yardım edebilirsiniz!]]></string>
-    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[Bunlar bize <a href=\"%1$s\">katkıda bulunan</a> harika insanlar. Siz de AnkiDroid\'e programlama, çeviri ve <a href=\"%2$s\">daha fazlasını</a> yaparak yardımcı olabilirsiniz!]]></string>
     <string name="license">Lisans</string>
     <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> ve <a href=\"%2$s\">AGPL-3.0</a> lisansları altında yayınlanmaktadır, kaynak kodu <a href=\"%3$s\">GitHub\'da</a> mevcuttur]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid çeşitli açık kaynaklı <a href=\"%1$s\">lisanslar</a> altında üçüncü parti kütüphaneler ve simgeler de kullanır.]]></string>
@@ -441,9 +441,9 @@
     <string name="new_study_screen_summ"><![CDATA[Şu anda varolan çalışma ekranının yerine geçecek olan ekran. Eski ekranın belirli özellikleri değiştirilmiş veya silinmiş bulunuyor. Lütfen herhangi bir <a href="%1$s">geri bildiriminizi</a> veya <a href="%2$s">bulduğunuz hataları</a> bildirin.]]></string>
     <string name="show_answer_feedback" maxLength="41">Cevap geribildirimini göster</string>
     <string name="screen" maxLength="41">Ekran</string>
-    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
-    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Skip</string>
-    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Assign</string>
+    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">\"%1$s\"e de atansın mı?</string>
+    <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Geç</string>
+    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Ata</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
     <string name="related_settings_title" comment="Title of the section for related settings">İlgili ayarlar</string>

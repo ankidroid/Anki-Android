@@ -78,7 +78,7 @@
     <string name="dialog_positive_overwrite">Üzerine Yaz</string>
     <string name="dialog_positive_repair">Onar</string>
     <string name="dialog_positive_replace">Değiştir</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nTarih ve zamanı düzeltin, veya otomatik tarih ve zamanı açın, sonra tekrar senkronize edin.\n\nCihazınızın güncel zamanı: %2$s</string>
     <string name="dialog_collection_path_not_dir">Belirtilen konum geçerli bir dizin değildi.</string>
     <string name="dialog_invalid_custom_certificate">Verilen metin geçerli bir PEM-kodlanmış X509 sertifikasına çözümlenmiyor</string>
     <string name="dialog_invalid_custom_certificate_title">Sertifika çözümlemesinde hata</string>

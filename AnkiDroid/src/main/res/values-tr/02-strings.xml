@@ -236,7 +236,7 @@
     <string name="edit_toolbar_item">Araç çubuğu öğesini düzenle</string>
     <string name="toolbar_item_explain_edit_or_remove">Seçili yazıdan önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu öğesini değiştirmek ya da kaldırmak için basılı tutun</string>
     <string name="remove_toolbar_item">Araç çubuğu öğesi kaldırılsın mı?</string>
-    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Düğme metni gerekiyor</string>
     <string name="before_after_text_requirement_error">En az bir HTML alanı gereklidir.</string>
     <string name="note_editor_image_too_large">Bu resim fazla büyük, lütfen resmi elle ekleyin</string>
     <string name="note_editor_video_too_large">Bu video dosyası fazla büyük, lütfen videoyu elle ekleyin</string>
@@ -275,8 +275,8 @@
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Hız</string>
+    <string name="download_time_left_label">Kalan süre</string>
     <string name="deck_download_progress_message">İndirme devam ederken diğer uygulamaları kullanabilirsiniz</string>
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
     <string name="external_storage_unavailable">İndirme iptal edildi, harici hafıza erişilebilir değil.</string>

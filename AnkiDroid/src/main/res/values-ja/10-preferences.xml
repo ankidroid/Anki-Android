@@ -224,15 +224,15 @@
     <string name="review_reminders_title" maxLength="41" comment="Name of the review reminders feature. Used as a settings screen title, a toolbar title, and the name of the notification channel review reminders are posted to.">学習リマインダー</string>
     <string name="review_reminders_summary_app_wide" comment="The descriptor for reminders that are attached to the whole app rather than a single deck.">コレクション全体</string>
     <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">特定のデッキ</string>
-    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">An error occurred while loading your review reminders, corrupted reminders have been deleted. Details:</string>
+    <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">学習リマインダーの読み込み中にエラーが発生しました。破損したリマインダーは削除されました。詳細:</string>
     <!-- Schedule reminders screen -->
     <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">リマインダーを追加</string>
     <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">学習のリマインダーがありません</string>
     <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">トラブルシューティング</string>
     <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">アプリの通知設定</string>
-    <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">List of scheduled review reminders</string>
-    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">Deck not found</string>
+    <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">スケジュール済みの学習リマインダーの一覧</string>
+    <string name="schedule_reminders_deck_not_found" comment="Shown in place of a deck name when the deck a review reminder points at no longer exists.">デッキが見つかりません</string>
     <string name="schedule_reminders_unavailable" comment="Pop-up text shown when review reminders cannot be delivered at all, such as due to missing permissions.">リマインダーが機能していません</string>
     <string name="schedule_reminders_fix" comment="Text for the button which, when pressed, opens the review reminder troubleshooting screen for fixing issues with review reminders.">設定変更</string>
     <string name="schedule_reminders_added" comment="Pop-up text which confirms a new review reminder was created.">新しい学習リマインダーを追加しました</string>
@@ -241,16 +241,16 @@
     <!-- Add / edit reminder dialog -->
     <string name="add_review_reminder" comment="Title of the dialog for creating a new review reminder.">学習リマインダーを追加</string>
     <string name="edit_review_reminder" comment="Title of the dialog for editing an existing review reminder.">学習リマインダーを編集</string>
-    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">Time:</string>
-    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">Deck:</string>
-    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">Advanced settings</string>
-    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">Card threshold:</string>
-    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">Do not send me notifications if there are less than this many cards due</string>
+    <string name="add_edit_reminder_time_label" comment="Label of the field for choosing what time of day a review reminder fires.">時刻:</string>
+    <string name="add_edit_reminder_deck_label" comment="Label of the field for choosing which deck a review reminder applies to.">デッキ:</string>
+    <string name="add_edit_reminder_advanced_label" comment="Header of the collapsible section holding extra review reminder customization options.">詳細設定</string>
+    <string name="add_edit_reminder_card_threshold_label" comment="Label of the field setting the minimum number of due cards needed before a review reminder fires.">通知の最小枚数:</string>
+    <string name="add_edit_reminder_card_threshold_description" comment="Explanation shown under the card threshold field.">課題のカードがこの枚数より少ない場合は通知しない</string>
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
     <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
     <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
-    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
-    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
+    <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">このリマインダーを削除しますか？</string>
+    <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">この操作は元に戻せません。</string>
     <!-- Reminder troubleshooting screen -->
     <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">リマインダーが機能していません。</string>
     <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">リマインダーが正常に動作しない可能性があります。</string>
