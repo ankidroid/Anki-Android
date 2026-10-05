@@ -112,7 +112,7 @@ typealias ReverseDirection = Boolean
  * ViewModel for [com.ichi2.anki.CardBrowser]
  *
  * @param lastDeckIdRepository returns the last selected ID. See [LastDeckIdRepository]
- * @param idsFileDirectory Temporary location to store data too large to pass via intent
+ * @param idsFileDirectory Location to store data too large to pass via intent. See [IdsFile.getDirectory]
  * @param options Options passed to CardBrowser on startup
  * @param preferences Accessor for `SharedPreferences`
  * @param isFragmented `true` if a NoteEditor side panel is displayed (x-large displays)
@@ -643,7 +643,7 @@ class CardBrowserViewModel(
             if (selection.isEmpty()) {
                 null
             } else {
-                IdsFile(idsFileDirectory, selection.map { it.cardOrNoteId }, "multiselect-values")
+                IdsFile(idsFileDirectory, selection.map { it.cardOrNoteId }, IdsFile.Purpose.SELECTION)
             }
         multiselectStateFile?.removeSafely("CardBrowserViewModel")
         multiselectStateFile = idsFile
@@ -1363,11 +1363,11 @@ class CardBrowserViewModel(
     suspend fun queryPreviewIntentData(): PreviewerDestination {
         // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
         return if (selectedRowCount() > 1) {
-            PreviewerDestination(currentIndex = 0, IdsFile(idsFileDirectory, queryAllSelectedCardIds()))
+            PreviewerDestination(currentIndex = 0, IdsFile(idsFileDirectory, queryAllSelectedCardIds(), IdsFile.Purpose.PREVIEW))
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = indexOfFirstCheckedCard() ?: 0
-            PreviewerDestination(startIndex, IdsFile(idsFileDirectory, queryOneCardIdPerNote()))
+            PreviewerDestination(startIndex, IdsFile(idsFileDirectory, queryOneCardIdPerNote(), IdsFile.Purpose.PREVIEW))
         }
     }
 

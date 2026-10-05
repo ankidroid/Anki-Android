@@ -14,7 +14,7 @@ class PreviewerScreenshotTest : ScreenshotTest() {
         val intent =
             PreviewerFragment.getIntent(
                 targetContext,
-                idsFile = IdsFile(createTransientDirectory(), note.cardIds(col)),
+                idsFile = IdsFile(createTransientDirectory(), note.cardIds(col), IdsFile.Purpose.PREVIEW),
                 currentIndex = 0,
             )
 

@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.browser
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import timber.log.Timber
@@ -27,10 +28,10 @@ class IdsFile(
 ) : File(path),
     Parcelable {
     /**
-     * @param directory parent directory of the file. Generally it should be the cache directory
+     * @param directory parent directory of the file. Generally it should be [getDirectory]
      * @param ids ids to store
      */
-    constructor(directory: File, ids: List<Long>, prefix: String = "ids") : this(path = createTempFile(prefix, ".tmp", directory).path) {
+    constructor(directory: File, ids: List<Long>, purpose: Purpose) : this(path = createTempFile(purpose.prefix, ".tmp", directory).path) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(ids.size)
             for (id in ids) {
@@ -65,7 +66,26 @@ class IdsFile(
         dest.writeString(path)
     }
 
+    enum class Purpose(
+        /** Uniquely identifies snapshots by filename: `multiselect-values123456789.tmp` */
+        val prefix: String,
+        /** Whether to use `context.externalCacheDir` or `context.cacheDir` */
+        val preferExternalCache: Boolean,
+    ) {
+        SELECTION(prefix = "multiselect-values", preferExternalCache = false),
+        FIND_AND_REPLACE(prefix = "find-replace", preferExternalCache = false),
+        TAGS(prefix = "ids", preferExternalCache = false),
+        PREVIEW(prefix = "ids", preferExternalCache = false),
+        EXPORT(prefix = "export", preferExternalCache = true),
+        SET_DUE_DATE(prefix = "set-due-date", preferExternalCache = true),
+    }
+
     companion object {
+        fun getDirectory(
+            context: Context,
+            purpose: Purpose,
+        ): File = if (purpose.preferExternalCache) context.externalCacheDir ?: context.cacheDir else context.cacheDir
+
         @JvmField
         @Suppress("unused")
         val CREATOR =

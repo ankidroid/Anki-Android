@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.pages.Statistics
@@ -141,7 +142,7 @@ private fun ensureBrowserViewModel() {
         deckPicker.viewModelStore,
         CardBrowserViewModel.factory(
             lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
-            idsFileDirectory = deckPicker.cacheDir,
+            idsFileDirectory = IdsFile.getDirectory(deckPicker, IdsFile.Purpose.SELECTION),
             options = null,
             isFragmented = false,
         ),

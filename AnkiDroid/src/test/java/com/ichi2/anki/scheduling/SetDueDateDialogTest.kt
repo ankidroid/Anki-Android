@@ -320,7 +320,12 @@ class SetDueDateDialogTest : RobolectricTest() {
         get() = supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as SetDueDateDialog?
 
     private val FragmentActivity.dueDateFiles: List<File>
-        get() = (externalCacheDir ?: cacheDir).listFiles { _, name -> name.startsWith("set-due-date") }.orEmpty().toList()
+        get() =
+            IdsFile
+                .getDirectory(this, IdsFile.Purpose.SET_DUE_DATE)
+                .listFiles { _, name -> name.startsWith("set-due-date") }
+                .orEmpty()
+                .toList()
 
     private fun withActivity(block: suspend TestScope.(FragmentActivity) -> Unit) =
         runTest {
