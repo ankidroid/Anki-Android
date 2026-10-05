@@ -31,6 +31,7 @@ import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.receiver.CopyToClipboardReceiver
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.sync.syncMedia
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -207,7 +208,7 @@ class SyncMediaWorker(
 
         fun getWorkRequest(
             auth: SyncAuth,
-            networkType: NetworkType = NetworkType.CONNECTED,
+            networkType: NetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true),
             id: UUID = UUID.randomUUID(),
         ): OneTimeWorkRequest {
             val constraints =
@@ -231,7 +232,7 @@ class SyncMediaWorker(
         suspend fun start(
             context: Context,
             auth: SyncAuth,
-            networkType: NetworkType = NetworkType.CONNECTED,
+            networkType: NetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true),
         ) {
             schedulingLock.withLock {
                 Timber.i("Launching background media sync")

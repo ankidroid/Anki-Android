@@ -5,6 +5,7 @@ package com.ichi2.anki
 
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.work.NetworkType
 import anki.collection.Progress
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
@@ -18,6 +19,8 @@ import com.ichi2.anki.observability.ChangeManager.notifySubscribersAllValuesChan
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.MeteredSyncPermission
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.sync.fullUploadOrDownload
 import com.ichi2.anki.sync.syncCollection
@@ -90,17 +93,21 @@ fun millisecondsSinceLastSync() = TimeManager.time.intTimeMS() - Prefs.lastSyncT
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
     syncMedia: Boolean,
+    meteredSyncPermission: MeteredSyncPermission = MeteredSyncPermission.USE_PREFERENCES,
 ) {
     val auth = syncAuth() ?: return
+    val mediaNetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true, permission = meteredSyncPermission)
     val deckPicker = this
     launchCatchingTask {
         try {
             try {
                 when (conflict) {
-                    ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
-                    ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
+                    ConflictResolution.FULL_DOWNLOAD ->
+                        handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
+                    ConflictResolution.FULL_UPLOAD ->
+                        handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict, deckPicker.mediaNetworkTypeOnConflict)
                     null -> {
-                        handleNormalSync(deckPicker, auth, syncMedia)
+                        handleNormalSync(deckPicker, auth, syncMedia, mediaNetworkType)
                     }
                 }
             } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
@@ -148,6 +155,7 @@ private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     syncMedia: Boolean,
+    mediaNetworkType: NetworkType,
 ) {
     Timber.i("Sync: Normal collection sync")
     var auth2 = auth
@@ -191,20 +199,21 @@ private suspend fun handleNormalSync(
             deckPicker.showSyncLogMessage(message, output.serverMessage)
             deckPicker.refreshState()
             if (syncMedia) {
-                SyncMediaWorker.start(deckPicker, auth2)
+                SyncMediaWorker.start(deckPicker, auth2, mediaNetworkType)
             }
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth2, mediaUsn)
+            handleDownload(deckPicker, auth2, mediaUsn, mediaNetworkType)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, auth2, mediaUsn)
+            handleUpload(deckPicker, auth2, mediaUsn, mediaNetworkType)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
             deckPicker.mediaUsnOnConflict = mediaUsn
+            deckPicker.mediaNetworkTypeOnConflict = mediaNetworkType
             deckPicker.showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_RESOLUTION)
         }
 
@@ -231,6 +240,7 @@ private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     mediaUsn: Int?,
+    mediaNetworkType: NetworkType,
 ) {
     Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
@@ -261,7 +271,7 @@ private suspend fun handleDownload(
         }
         deckPicker.refreshState()
         if (mediaUsn != null) {
-            SyncMediaWorker.start(deckPicker, auth)
+            SyncMediaWorker.start(deckPicker, auth, mediaNetworkType)
         }
     }
 
@@ -273,6 +283,7 @@ private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
     mediaUsn: Int?,
+    mediaNetworkType: NetworkType,
 ) {
     Timber.i("Sync: Full collection upload requested")
     deckPicker.withProgress(
@@ -294,7 +305,7 @@ private suspend fun handleUpload(
         }
         deckPicker.refreshState()
         if (mediaUsn != null) {
-            SyncMediaWorker.start(deckPicker, auth)
+            SyncMediaWorker.start(deckPicker, auth, mediaNetworkType)
         }
     }
     Timber.i("Full Upload Completed")
