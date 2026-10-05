@@ -50,6 +50,7 @@ import com.ichi2.compose.ui.preview.ThemePreviews
 @Composable
 internal fun ImageEditorToolbar(
     hasImage: Boolean,
+    @DrawableRes replaceIcon: Int,
     onReplace: () -> Unit,
     onCrop: () -> Unit,
     modifier: Modifier = Modifier,
@@ -61,7 +62,7 @@ internal fun ImageEditorToolbar(
             color = MaterialTheme.colorScheme.surfaceContainer,
         ) {
             Row(modifier = Modifier.padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-                ImageEditorAction(CommonString.dialog_positive_replace, R.drawable.ic_image, onReplace, Modifier.weight(1f))
+                ImageEditorAction(CommonString.dialog_positive_replace, replaceIcon, onReplace, Modifier.weight(1f))
                 ImageEditorDivider()
                 ImageEditorAction(CommonString.crop_button, R.drawable.ic_crop, onCrop, Modifier.weight(1f), enabled = hasImage)
             }
@@ -122,7 +123,7 @@ private fun ImageEditorToolbarPreviewContent(hasImage: Boolean) {
     val themedContext = remember(context, theme) { ContextThemeWrapper(context, theme) }
     CompositionLocalProvider(LocalContext provides themedContext) {
         AnkiDroidTheme {
-            ImageEditorToolbar(hasImage = hasImage, onReplace = {}, onCrop = {})
+            ImageEditorToolbar(hasImage = hasImage, replaceIcon = R.drawable.ic_photo_library, onReplace = {}, onCrop = {})
         }
     }
 }

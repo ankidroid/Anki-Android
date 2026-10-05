@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.compose.theme.AnkiDroidTheme
 import org.junit.Assert.assertEquals
@@ -29,6 +30,7 @@ class ImageEditorToolbarTest : RobolectricTest() {
             AnkiDroidTheme {
                 ImageEditorToolbar(
                     hasImage = true,
+                    replaceIcon = R.drawable.ic_photo_library,
                     onReplace = { actions.add("replace") },
                     onCrop = { actions.add("crop") },
                 )
@@ -44,7 +46,7 @@ class ImageEditorToolbarTest : RobolectricTest() {
         val hasImage = mutableStateOf(false)
         composeRule.setContent {
             AnkiDroidTheme {
-                ImageEditorToolbar(hasImage.value, onReplace = {}, onCrop = {})
+                ImageEditorToolbar(hasImage.value, replaceIcon = R.drawable.ic_photo_library, onReplace = {}, onCrop = {})
             }
         }
         composeRule.onNodeWithText(targetContext.getString(CommonString.dialog_positive_replace)).assertIsEnabled()

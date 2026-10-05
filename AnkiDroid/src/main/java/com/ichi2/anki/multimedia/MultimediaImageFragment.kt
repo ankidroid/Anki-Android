@@ -201,6 +201,12 @@ class MultimediaImageFragment :
                     val imageUri by viewModel.currentMultimediaUri.collectAsStateWithLifecycle()
                     ImageEditorToolbar(
                         hasImage = imageUri != null,
+                        replaceIcon =
+                            when (selectedImageOptions) {
+                                ImageOptions.GALLERY -> R.drawable.ic_photo_library
+                                ImageOptions.CAMERA -> R.drawable.ic_camera
+                                ImageOptions.DRAWING -> R.drawable.ic_draw_filled
+                            },
                         onReplace = ::replaceImage,
                         onCrop = {
                             viewModel.saveMultimediaForRevert(
