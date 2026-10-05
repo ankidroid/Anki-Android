@@ -55,6 +55,20 @@ class MultimediaScreenshotTest : ScreenshotTest() {
         }
 
     @Test
+    fun imageEditorCameraToolbar() =
+        withImage(MultimediaImageFragment.ImageOptions.CAMERA) { activity ->
+            activity.simulateNavigationBar()
+            captureScreen("image_editor_camera")
+        }
+
+    @Test
+    fun imageEditorDrawingToolbar() =
+        withImage(MultimediaImageFragment.ImageOptions.DRAWING) { activity ->
+            activity.simulateNavigationBar()
+            captureScreen("image_editor_drawing")
+        }
+
+    @Test
     fun imageEditorError() =
         withImage { activity ->
             val snackbar =
@@ -76,7 +90,10 @@ class MultimediaScreenshotTest : ScreenshotTest() {
             )
         }
 
-    private fun withImage(block: (MultimediaActivity) -> Unit) {
+    private fun withImage(
+        imageOptions: MultimediaImageFragment.ImageOptions = MultimediaImageFragment.ImageOptions.GALLERY,
+        block: (MultimediaActivity) -> Unit,
+    ) {
         // Each Robolectric test has its own cache directory; discard AndroidX's cached roots.
         ReflectionHelpers.getStaticField<MutableMap<String, Any>>(FileProvider::class.java, "sCache").clear()
         val image = File(targetContext.cacheDir, "image_editor_test.png")
@@ -95,7 +112,7 @@ class MultimediaScreenshotTest : ScreenshotTest() {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
                 MultimediaActivity::class.java,
-                MultimediaImageFragment.getIntent(targetContext, extra, MultimediaImageFragment.ImageOptions.GALLERY),
+                MultimediaImageFragment.getIntent(targetContext, extra, imageOptions),
             )
         advanceRobolectricLooper()
         block(activity)
