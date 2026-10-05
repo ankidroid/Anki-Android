@@ -45,6 +45,7 @@ class MeteredSyncPolicyTest : RobolectricTest() {
 
         assertThat("onDialogShown not called", result.dialogShown, equalTo(false))
         assertThat("onConfirm ran", result.onConfirmCalled, equalTo(true))
+        assertThat(result.permission, equalTo(MeteredSyncPermission.USE_PREFERENCES))
         assertThat("no dialog shown", result.dialog, nullValue())
     }
 
@@ -69,6 +70,7 @@ class MeteredSyncPolicyTest : RobolectricTest() {
         result.clickContinue()
 
         assertThat("onConfirm ran after Continue", result.onConfirmCalled, equalTo(true))
+        assertThat(result.permission, equalTo(MeteredSyncPermission.ALLOW_METERED_SYNC_THIS_TIME))
     }
 
     @Test
@@ -93,6 +95,7 @@ class MeteredSyncPolicyTest : RobolectricTest() {
         assertThat("onConfirm ran immediately", result.onConfirmCalled, equalTo(true))
         assertThat("no dialog shown", result.dialog, nullValue())
         assertThat("onDialogShown not called", result.dialogShown, equalTo(false))
+        assertThat(result.permission, equalTo(MeteredSyncPermission.ALLOW_METERED_SYNC_THIS_TIME))
     }
 
     @Test
@@ -103,6 +106,7 @@ class MeteredSyncPolicyTest : RobolectricTest() {
 
         assertThat("onConfirm ran immediately", result.onConfirmCalled, equalTo(true))
         assertThat("no dialog shown", result.dialog, nullValue())
+        assertThat(result.permission, equalTo(MeteredSyncPermission.ALLOW_METERED_SYNC_THIS_TIME))
     }
 
     @Test
@@ -116,16 +120,16 @@ class MeteredSyncPolicyTest : RobolectricTest() {
     /** Invokes [MeteredSyncPolicy.confirmThen] from a freshly-built activity. */
     private fun attemptMeteredSync(skipPrompt: Boolean = false): MeteredSyncAttemptResult {
         var dialogShown = false
-        var confirmed = false
+        var permission: MeteredSyncPermission? = null
         with(startRegularActivity<EmptyAnkiActivity>()) {
             MeteredSyncPolicy.confirmThen(
                 skipPrompt = skipPrompt,
                 onDialogShown = { dialogShown = true },
-            ) { confirmed = true }
+            ) { permission = it }
         }
         return MeteredSyncAttemptResult(
             dialogShown = dialogShown,
-            isConfirmed = { confirmed },
+            getPermission = { permission },
             dialog = ShadowDialog.getLatestDialog() as? AlertDialog,
         )
     }
@@ -135,14 +139,16 @@ class MeteredSyncPolicyTest : RobolectricTest() {
      *
      * @property dialogShown whether the warning dialog's `onDialogShown` callback fired
      * @property onConfirmCalled whether `onConfirm` has been invoked
+     * @property permission the permission received by `onConfirm`, or `null` before it runs
      * @property dialog the most recently displayed [AlertDialog], or `null` if none was shown
      */
     private class MeteredSyncAttemptResult(
         val dialogShown: Boolean,
-        private val isConfirmed: () -> Boolean,
+        private val getPermission: () -> MeteredSyncPermission?,
         val dialog: AlertDialog?,
     ) {
-        val onConfirmCalled: Boolean get() = isConfirmed()
+        val permission: MeteredSyncPermission? get() = getPermission()
+        val onConfirmCalled: Boolean get() = permission != null
 
         fun clickContinue() = clickDialogButton(DialogInterface.BUTTON_POSITIVE)
 
