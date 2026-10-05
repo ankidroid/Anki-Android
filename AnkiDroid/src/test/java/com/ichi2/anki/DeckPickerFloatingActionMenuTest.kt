@@ -20,7 +20,6 @@ import android.view.View
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.preferences.sharedPrefs
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,7 +33,7 @@ import org.robolectric.annotation.Config
 class DeckPickerFloatingActionMenuTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
-        targetContext.sharedPrefs().edit {
+        getPreferences().edit {
             putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
         }
     }
