@@ -254,7 +254,6 @@ class MultimediaImageFragment :
 
         setupWebView()
         handleImageUri()
-        setupDoneButton()
     }
 
     @NeedsTest("Verify the webview background color is transparent and matches the app theme")
@@ -311,19 +310,17 @@ class MultimediaImageFragment :
         }
     }
 
-    private fun setupDoneButton() {
-        binding.actionDone.setOnClickListener {
-            Timber.d("MultimediaImageFragment:: Done button pressed")
-            if (viewModel.selectedMediaFileSize == 0L) {
-                Timber.d("Image length is not valid")
-                return@setOnClickListener
-            }
-            if (viewModel.selectedMediaFileSize > IMAGE_LIMIT) {
-                showLargeFileCropDialog(viewModel.selectedMediaFileSize)
-                return@setOnClickListener
-            }
-            finishAddingImage()
+    internal fun onDone() {
+        Timber.d("MultimediaImageFragment:: Done button pressed")
+        if (viewModel.selectedMediaFileSize == 0L) {
+            Timber.d("Image length is not valid")
+            return
         }
+        if (viewModel.selectedMediaFileSize > IMAGE_LIMIT) {
+            showLargeFileCropDialog(viewModel.selectedMediaFileSize)
+            return
+        }
+        finishAddingImage()
     }
 
     private fun finishAddingImage() {
