@@ -135,6 +135,11 @@ class AnkiDroidAppTest {
                 assertEquals(frameworkBase.cacheDir, directory.parentFile)
                 val file = IdsFile(directory, listOf(42L), IdsFile.Purpose.PREVIEW)
                 assertEquals(listOf(42L), file.getIds())
+                assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+
+                app.launchCacheCleanup().join()
+
+                assertFalse(file.exists())
             } finally {
                 app.profileManager = manager
             }
@@ -181,6 +186,54 @@ class AnkiDroidAppTest {
 
             verify(exactly = 1) { MultimediaArgsStorage.create(app) }
             assertFalse(recording.exists())
+        }
+
+    @Test
+    fun `multimedia cleanup failure does not prevent ID cleanup`() =
+        runBlocking {
+            profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_multimedia_id_cleanup") }
+            val app = startApplication()
+            val file = IdsFile(IdsFile.getDirectory(app), listOf(1L), IdsFile.Purpose.PREVIEW)
+            assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+            mockkObject(MultimediaArgsStorage.Companion)
+            every { MultimediaArgsStorage.create(any()) } throws IOException("unavailable multimedia storage")
+
+            app.launchCacheCleanup().join()
+
+            verify(exactly = 1) { MultimediaArgsStorage.create(app) }
+            assertFalse(file.exists())
+        }
+
+    @Test
+    fun `voice recording cleanup failure does not prevent ID cleanup`() =
+        runBlocking {
+            profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_voice_id_cleanup") }
+            val app = startApplication()
+            val file = IdsFile(IdsFile.getDirectory(app), listOf(1L), IdsFile.Purpose.PREVIEW)
+            assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+            val recordingsDirectory = VoiceRecorder.recordingsDirectory(app)
+            mockkObject(VoiceRecorder.Companion)
+            every { VoiceRecorder.removeExpiredRecordings(recordingsDirectory, any()) } throws IOException("unavailable recording storage")
+
+            app.launchCacheCleanup().join()
+
+            verify(exactly = 1) { VoiceRecorder.removeExpiredRecordings(recordingsDirectory, any()) }
+            assertFalse(file.exists())
+        }
+
+    @Test
+    fun `explicit cache cleanup uses the active profile's storage`() =
+        runBlocking {
+            for (profile in listOf("default", "p_first", "p_second")) {
+                profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, profile) }
+                val app = startApplication()
+                val directory = IdsFile.getDirectory(app)
+                assertEquals(app.cacheDir, directory.parentFile)
+                val file = IdsFile(directory, listOf(1L), IdsFile.Purpose.PREVIEW)
+                assertTrue(file.setLastModified(TimeManager.time.intTimeMS() - 8.days.inWholeMilliseconds))
+                app.launchCacheCleanup().join()
+                assertFalse(file.exists(), "Cleanup missed $profile")
+            }
         }
 
     private fun startApplication(): AnkiDroidApp =

@@ -5,7 +5,10 @@ package com.ichi2.anki.browser
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.common.android.appContext
+import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.utils.FileUtil
 import timber.log.Timber
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -13,6 +16,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.time.Duration.Companion.days
 
 /**
  * Temporary file containing cards or note IDs to be passed in a Bundle.
@@ -83,6 +87,52 @@ class IdsFile(
 
     companion object {
         private const val DIRECTORY_NAME = "idsfiles"
+
+        /** Maximum age of a saved selection, including files still referenced by saved state. */
+        private val FILE_RETENTION = 7.days
+
+        /**
+         * Deletes snapshots older than [FILE_RETENTION], mostly files abandoned after process death.
+         *
+         * Called at startup on an IO dispatcher.
+         *
+         * Note: There is a slim chance that this will clear active snapshots, so downstream code
+         * must handle this possibility.
+         */
+        fun deleteStaleFiles(context: Context = appContext) {
+            // Do not create the snapshot directory just to clean it.
+            deleteStaleFiles(File(context.cacheDir, DIRECTORY_NAME))
+        }
+
+        @VisibleForTesting
+        internal fun deleteStaleFiles(directory: File) {
+            val cutoff = TimeManager.time.intTimeMS() - FILE_RETENTION.inWholeMilliseconds
+            val deleteCount =
+                FileUtil.listFilesOrEmpty(directory).count { file ->
+                    file.withCleanupErrorHandling {
+                        file.isStale(cutoff) && file.deleteWithLogging()
+                    }
+                }
+            Timber.i("Deleted %d expired ID snapshot(s)", deleteCount)
+        }
+
+        private fun File.isStale(cutoff: Long): Boolean {
+            val modified = lastModified()
+            return isFile && modified > 0 && modified < cutoff
+        }
+
+        private fun File.deleteWithLogging(): Boolean =
+            delete().also { deleted ->
+                if (!deleted) Timber.w("Unable to delete expired ID snapshot: %s", this)
+            }
+
+        private inline fun File.withCleanupErrorHandling(block: () -> Boolean): Boolean =
+            try {
+                block()
+            } catch (e: SecurityException) {
+                Timber.w(e, "Unable to access ID snapshot path: %s", this)
+                false
+            }
 
         /**
          * Returns the cache path for saved selections. The directory is created when writing a snapshot.
