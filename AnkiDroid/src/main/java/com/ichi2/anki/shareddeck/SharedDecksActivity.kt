@@ -20,21 +20,27 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.commit
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.utils.ext.requireSystemService
 import com.ichi2.anki.databinding.ActivitySharedDecksBinding
-import com.ichi2.anki.isLoggedIn
-import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.utils.FileNameAndExtension
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 import java.io.Serializable
@@ -50,6 +56,8 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
     lateinit var downloadManager: DownloadManager
 
     private var shouldHistoryBeCleared = false
+
+    private var loginRequiredDialog: AlertDialog? = null
 
     private val allowedHosts = listOf(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
     private val onBackPressedCallback =
@@ -68,8 +76,6 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal inner class SharedDeckWebViewClient : WebViewClient() {
-        private var redirectTimes = 0
-
         override fun doUpdateVisitedHistory(
             view: WebView?,
             url: String?,
@@ -149,7 +155,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             // The following cases are handled below:
             // "Please log in to download more decks." - on clicking "Download"
             // "Please log in to perform more searches" - on searching
-            redirectUserToSignUpOrLogin()
+            showLoginRequiredDialog()
         }
 
         override fun onReceivedError(
@@ -160,42 +166,6 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             // Set mShouldHistoryBeCleared to false if error occurs since it might have been true
             shouldHistoryBeCleared = false
             super.onReceivedError(view, request, error)
-        }
-
-        /**
-         * Redirects the user to a login page
-         *
-         * A message is shown informing the user they need to log in to download more decks
-         *
-         * If the user has not logged in **inside AnkiDroid** then the message provides
-         * the user with an action to sign up
-         *
-         * The redirect is not performed if [redirectTimes] is 3 or more
-         */
-        private fun redirectUserToSignUpOrLogin() {
-            // inform the user they need to log in as they've hit a rate limit
-            showSnackbar(CommonString.shared_decks_login_required, LENGTH_INDEFINITE) {
-                if (isLoggedIn()) return@showSnackbar
-
-                // If a user is not logged in inside AnkiDroid, assume they have no AnkiWeb account
-                // and give them the option to sign up
-                setAction(CommonString.sign_up) {
-                    binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
-                }
-            }
-
-            // redirect user to /account/login
-            // TODO: the result of login is typically redirecting the user to their decks
-            // this should be improved
-
-            if (redirectTimes++ < 3) {
-                val url = getString(R.string.shared_decks_login_url)
-                Timber.i("HTTP 429, redirecting to login: '$url'")
-                binding.webView.loadUrl(url)
-            } else {
-                // Ensure that we do not have an infinite redirect
-                Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
-            }
         }
     }
 
@@ -208,6 +178,31 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val HTTP_STATUS_TOO_MANY_REQUESTS = 429
+    }
+
+    private fun showLoginRequiredDialog() {
+        if (loginRequiredDialog?.isShowing == true) return
+        Timber.i("HTTP 429, asking the user to log in")
+        loginRequiredDialog =
+            AlertDialog.Builder(this).show {
+                title(CommonString.not_logged_in_title)
+                message(CommonString.shared_decks_ankiweb_login_limit)
+                positiveButton(text = TR.sentenceCase.logIn) { openAnkiWebLogin() }
+                neutralButton(CommonString.sign_up) { openAnkiWebSignUp() }
+                negativeButton(CommonString.dialog_cancel)
+            }
+    }
+
+    private fun openAnkiWebLogin() {
+        Timber.i("Opening the AnkiWeb login page")
+        // TODO: the result of login is typically redirecting the user to their decks
+        // this should be improved
+        binding.webView.loadUrl(getString(R.string.shared_decks_login_url))
+    }
+
+    private fun openAnkiWebSignUp() {
+        Timber.i("Opening the AnkiWeb sign up page")
+        binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
     }
 
     // Show WebView with AnkiWeb shared decks with the functionality to capture downloads and import decks.
@@ -311,6 +306,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
     }
 
     override fun onDestroy() {
+        loginRequiredDialog?.dismiss()
         SafeWebViewLayout.destroyWebView(binding.webView)
         super.onDestroy()
     }
