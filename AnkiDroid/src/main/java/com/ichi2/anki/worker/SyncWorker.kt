@@ -13,7 +13,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
-import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
@@ -31,6 +30,7 @@ import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.sync.syncCollection
 import com.ichi2.anki.utils.ext.trySetForeground
@@ -235,7 +235,7 @@ class SyncWorker(
             val constraints =
                 Constraints
                     .Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiredNetworkType(MeteredSyncPolicy.getNetworkTypeRequiredForSync())
                     .build()
 
             val data =
