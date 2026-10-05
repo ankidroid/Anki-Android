@@ -182,8 +182,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     /**
      * Handles the [DownloadPhase.LoginRequired] phase: shows the login prompt and returns to
-     * the shared decks WebView, opened on its login page, so the prompt is actionable even
-     * without a sign-up action.
+     * the shared decks WebView.
      *
      * Handled in this collector rather than in the broadcast receiver which records the
      * state: the receiver can fire while the activity is backgrounded, where
@@ -193,9 +192,7 @@ class SharedDecksDownloadFragment : Fragment() {
         viewModel.uiState.launchCollectionInLifecycleScope { state ->
             if (state.phase == DownloadPhase.LoginRequired) {
                 Timber.i("Download requires login, returning to shared decks")
-                val sharedDecksActivity = activity as SharedDecksActivity
-                sharedDecksActivity.showLoginRequiredSnackbar()
-                sharedDecksActivity.redirectToLogin()
+                (activity as SharedDecksActivity).showLoginRequiredDialog()
                 parentFragmentManager.popBackStack()
             }
         }
