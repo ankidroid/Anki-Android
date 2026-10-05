@@ -218,11 +218,11 @@ class WhiteboardFragment :
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN) return false
+        if (isHidden || event.action != KeyEvent.ACTION_DOWN) return false
         return bindingMap.onKeyDown(event)
     }
 
-    fun onScreenShake(): Boolean = bindingMap.onGesture(Gesture.SHAKE)
+    fun onScreenShake(): Boolean = !isHidden && bindingMap.onGesture(Gesture.SHAKE)
 
     /**
      * Sets up observers for the ViewModel's flows.
