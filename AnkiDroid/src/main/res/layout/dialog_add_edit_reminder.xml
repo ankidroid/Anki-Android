@@ -137,8 +137,7 @@
                             android:id="@+id/add_edit_reminder_card_threshold_section"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:ignore="UselessParent">
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/add_edit_reminder_card_threshold_label_container"
@@ -180,6 +179,66 @@
                                     android:inputType="number" />
 
                             </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/add_edit_reminder_count_new_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/add_edit_reminder_count_new_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <com.ichi2.ui.FixedTextView
+                                android:id="@+id/add_edit_reminder_count_new_label"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                tools:text="Include new cards for card threshold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/add_edit_reminder_count_lrn_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/add_edit_reminder_count_lrn_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <com.ichi2.ui.FixedTextView
+                                android:id="@+id/add_edit_reminder_count_lrn_label"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                tools:text="Include learn cards for card threshold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/add_edit_reminder_count_rev_section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.checkbox.MaterialCheckBox
+                                android:id="@+id/add_edit_reminder_count_rev_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <com.ichi2.ui.FixedTextView
+                                android:id="@+id/add_edit_reminder_count_rev_label"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                tools:text="Include review cards for card threshold" />
 
                         </LinearLayout>
 
