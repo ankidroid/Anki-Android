@@ -190,7 +190,7 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
             context: Context,
             noteIds: List<NoteId>,
         ): FindAndReplaceDialogFragment {
-            val file = IdsFile(IdsFile.getDirectory(context, IdsFile.Purpose.FIND_AND_REPLACE), noteIds, IdsFile.Purpose.FIND_AND_REPLACE)
+            val file = IdsFile(IdsFile.getDirectory(context), noteIds, IdsFile.Purpose.FIND_AND_REPLACE)
             return FindAndReplaceDialogFragment().apply {
                 arguments =
                     Bundle().apply {
