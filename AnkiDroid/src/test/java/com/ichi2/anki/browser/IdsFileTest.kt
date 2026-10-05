@@ -20,6 +20,7 @@ import java.io.File
 import java.io.IOException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -28,10 +29,12 @@ class IdsFileTest : AndroidTest {
     val temporaryFolder = TemporaryFolder()
 
     @Test
-    fun `getDirectory returns the profile cacheDir`() {
-        val directory = IdsFile.getDirectory()
+    fun `snapshot directory is created only when writing`() {
+        val directory = IdsFile.getDirectory(storageContext)
+        assertEquals(File(storageContext.cacheDir, "idsfiles"), directory)
+        assertFalse(directory.exists())
+        IdsFile(directory, listOf(42L), IdsFile.Purpose.PREVIEW)
         assertTrue(directory.isDirectory)
-        assertEquals(targetContext.cacheDir, directory)
     }
 
     @Test
@@ -131,6 +134,16 @@ class IdsFileTest : AndroidTest {
     }
 
     @Test
+    fun `directory creation fails clearly when a file occupies the path`() {
+        val path = File(storageContext.cacheDir, "idsfiles").apply { writeText("occupied") }
+        val exception =
+            assertFailsWith<IOException> {
+                IdsFile(IdsFile.getDirectory(storageContext), listOf(1L), IdsFile.Purpose.PREVIEW)
+            }
+        assertTrue(exception.message.orEmpty().contains(path.path))
+    }
+
+    @Test
     fun `snapshots are isolated by profile`() {
         val otherProfile =
             ProfileContextWrapper.create(
@@ -140,8 +153,8 @@ class IdsFileTest : AndroidTest {
             )
         val file = IdsFile(IdsFile.getDirectory(storageContext), listOf(9L), IdsFile.Purpose.PREVIEW)
         val otherFile = IdsFile(IdsFile.getDirectory(otherProfile), listOf(10L), IdsFile.Purpose.PREVIEW)
-        assertEquals(storageContext.cacheDir, file.parentFile)
-        assertEquals(otherProfile.cacheDir, otherFile.parentFile)
+        assertEquals(storageContext.cacheDir, file.parentFile!!.parentFile)
+        assertEquals(otherProfile.cacheDir, otherFile.parentFile!!.parentFile)
         assertTrue(file.parentFile != otherFile.parentFile)
     }
 }

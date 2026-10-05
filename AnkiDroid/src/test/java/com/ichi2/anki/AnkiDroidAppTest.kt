@@ -131,7 +131,7 @@ class AnkiDroidAppTest {
             try {
                 app.profileManager = null
                 val directory = IdsFile.getDirectory()
-                assertEquals(frameworkBase.cacheDir, directory)
+                assertEquals(frameworkBase.cacheDir, directory.parentFile)
                 val file = IdsFile(directory, listOf(42L), IdsFile.Purpose.PREVIEW)
                 assertEquals(listOf(42L), file.getIds())
             } finally {
