@@ -3,36 +3,104 @@
 package com.ichi2.anki.multimedia
 
 import android.Manifest.permission.RECORD_AUDIO
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.Rect
+import android.net.Uri
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.content.FileProvider
+import androidx.core.graphics.createBitmap
 import androidx.core.view.RoundedCornerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
+import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.CommonString
+import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
+import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.insetsOf
 import com.ichi2.utils.dp
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.util.ReflectionHelpers
+import java.io.File
+import kotlin.test.assertTrue
 
 /**
  * Screenshot tests for [MultimediaActivity]
  *
- * Hosts [AudioRecordingFragment]: the activity needs a fragment name extra to render anything, and
- * all three multimedia fragments share the same shape, a card filling the screen above an
- * `action_done` button pinned to the bottom.
+ * Covers [AudioRecordingFragment] with different system insets and [MultimediaImageFragment]'s
+ * bottom toolbar with an image selected.
  *
  * `./gradlew :AnkiDroid:verifyRoborazziPlayDebug -Pscreenshot --tests "com.ichi2.anki.multimedia.MultimediaScreenshotTest"`
  */
 class MultimediaScreenshotTest : ScreenshotTest() {
+    /** Captures the existing image controls as a baseline for their Compose migration. */
+    @Test
+    fun imageEditorToolbar() =
+        withImage { activity ->
+            activity.simulateNavigationBar()
+            captureScreen("image_editor")
+        }
+
+    @Test
+    fun imageEditorError() =
+        withImage { activity ->
+            val snackbar =
+                requireNotNull(
+                    activity.showSnackbar(
+                        activity.getString(CommonString.multimedia_editor_something_wrong),
+                        Snackbar.LENGTH_INDEFINITE,
+                    ),
+                )
+            advanceRobolectricLooper()
+            captureScreen("image_editor_error")
+
+            val controls = activity.findViewById<View>(R.id.action_done)
+            val controlsBounds = Rect().also { controls.getGlobalVisibleRect(it) }
+            val snackbarBounds = Rect().also { snackbar.view.getGlobalVisibleRect(it) }
+            assertTrue(
+                snackbarBounds.bottom <= controlsBounds.top,
+                "Errors must leave the image controls visible: snackbar=$snackbarBounds, controls=$controlsBounds",
+            )
+        }
+
+    private fun withImage(block: (MultimediaActivity) -> Unit) {
+        // Each Robolectric test has its own cache directory; discard AndroidX's cached roots.
+        ReflectionHelpers.getStaticField<MutableMap<String, Any>>(FileProvider::class.java, "sCache").clear()
+        val image = File(targetContext.cacheDir, "image_editor_test.png")
+        val bitmap = createBitmap(600, 400)
+        bitmap.eraseColor(Color.rgb(100, 149, 237))
+        image.outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        bitmap.recycle()
+        val field = ImageField().apply { mediaFile = image }
+        val note =
+            MultimediaEditableNote().apply {
+                setNumFields(1)
+                setField(0, field)
+                freezeInitialFieldValues()
+            }
+        val extra = MultimediaActivityExtra(0, field, note, Uri.fromFile(image).toString())
+        val activity =
+            startActivityNormallyOpenCollectionWithIntent(
+                MultimediaActivity::class.java,
+                MultimediaImageFragment.getIntent(targetContext, extra, MultimediaImageFragment.ImageOptions.GALLERY),
+            )
+        advanceRobolectricLooper()
+        block(activity)
+    }
+
     /** 3-button navigation: a tall bottom inset which `action_done` rests above */
     @Test
     fun multimediaPortrait() =
