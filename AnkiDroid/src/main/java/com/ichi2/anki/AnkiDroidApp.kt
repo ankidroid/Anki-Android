@@ -54,6 +54,7 @@ import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.logging.logActivityCreation
 import com.ichi2.anki.model.FieldFilters.NoSuggestFilter
 import com.ichi2.anki.multimedia.MultimediaArgsStorage
+import com.ichi2.anki.multiprofile.ProfileContextWrapper
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.isPhoenixProcess
 import com.ichi2.anki.navigation.initializeNavigator
@@ -135,7 +136,7 @@ open class AnkiDroidApp :
     @set:VisibleForTesting
     var profileManager: ProfileManager? = null
 
-    private val profileContext: Context?
+    private val profileContext: ProfileContextWrapper?
         get() = profileManager?.activeProfileContext
 
     /**

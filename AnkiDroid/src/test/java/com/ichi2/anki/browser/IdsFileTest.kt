@@ -2,22 +2,37 @@
 
 package com.ichi2.anki.browser
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Parcel
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.multiprofile.ProfileContextWrapper
+import com.ichi2.anki.multiprofile.ProfileId
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.targetContext
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import java.io.DataOutputStream
+import java.io.File
 import java.io.IOException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class IdsFileTest {
+class IdsFileTest : AndroidTest {
     @get:Rule
     val temporaryFolder = TemporaryFolder()
+
+    @Test
+    fun `getDirectory returns the profile cacheDir`() {
+        val directory = IdsFile.getDirectory()
+        assertTrue(directory.isDirectory)
+        assertEquals(targetContext.cacheDir, directory)
+    }
 
     @Test
     fun `purposes preserve existing snapshot prefixes`() {
@@ -93,5 +108,40 @@ class IdsFileTest {
             }
             assertFailsWith<IOException>("count: $count") { file.getIds() }
         }
+    }
+
+    private lateinit var storageContext: ProfileContextWrapper
+
+    @Before
+    fun setUpStorage() {
+        val root = temporaryFolder.newFolder("storage")
+        val base =
+            object : ContextWrapper(targetContext) {
+                override fun getApplicationContext(): Context = this
+
+                override fun getNoBackupFilesDir() = File(root, "no_backup").apply { mkdirs() }
+
+                override fun getFilesDir() = File(root, "files").apply { mkdirs() }
+
+                override fun getCacheDir() = File(root, "cache").apply { mkdirs() }
+
+                override fun getExternalCacheDir() = File(root, "external-cache").apply { mkdirs() }
+            }
+        storageContext = ProfileContextWrapper.create(base, ProfileId.DEFAULT, root)
+    }
+
+    @Test
+    fun `snapshots are isolated by profile`() {
+        val otherProfile =
+            ProfileContextWrapper.create(
+                storageContext.baseContext,
+                ProfileId("p_other"),
+                File(storageContext.filesDir.parentFile, "p_other"),
+            )
+        val file = IdsFile(IdsFile.getDirectory(storageContext), listOf(9L), IdsFile.Purpose.PREVIEW)
+        val otherFile = IdsFile(IdsFile.getDirectory(otherProfile), listOf(10L), IdsFile.Purpose.PREVIEW)
+        assertEquals(storageContext.cacheDir, file.parentFile)
+        assertEquals(otherProfile.cacheDir, otherFile.parentFile)
+        assertTrue(file.parentFile != otherFile.parentFile)
     }
 }

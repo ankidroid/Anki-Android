@@ -5,6 +5,7 @@ package com.ichi2.anki.browser
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import com.ichi2.anki.common.android.appContext
 import timber.log.Timber
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -79,7 +80,8 @@ class IdsFile(
     }
 
     companion object {
-        fun getDirectory(context: Context): File = context.cacheDir
+        /** Returns the profile cache for saved selections. Callers must handle evicted snapshots. */
+        fun getDirectory(context: Context = appContext): File = context.cacheDir
 
         @JvmField
         @Suppress("unused")
