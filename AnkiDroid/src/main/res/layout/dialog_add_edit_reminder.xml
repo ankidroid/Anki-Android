@@ -137,8 +137,7 @@
                             android:id="@+id/add_edit_reminder_card_threshold_section"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:ignore="UselessParent">
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:id="@+id/add_edit_reminder_card_threshold_label_container"
@@ -150,6 +149,7 @@
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/add_edit_reminder_card_threshold_label"
+                                    android:labelFor="@id/add_edit_reminder_card_threshold_input"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
@@ -183,6 +183,47 @@
 
                         </LinearLayout>
 
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/add_edit_reminder_count_toward_threshold_heading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="8dp"
+                            android:textSize="16sp"
+                            android:text="@string/add_edit_reminder_count_toward_threshold_heading" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/add_edit_reminder_count_chip_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingHorizontal="16dp"
+                            app:chipSpacingVertical="0dp">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/add_edit_reminder_count_new_chip"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                app:chipStrokeColor="@color/chip_stroke_color_checked_primary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="New" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/add_edit_reminder_count_lrn_chip"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                app:chipStrokeColor="@color/chip_stroke_color_checked_primary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Learning" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/add_edit_reminder_count_rev_chip"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                app:chipStrokeColor="@color/chip_stroke_color_checked_primary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="To Review" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
                         <LinearLayout
                             android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_section"
                             android:layout_width="match_parent"
@@ -196,6 +237,7 @@
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/add_edit_reminder_only_notify_if_no_reviews_label"
+                                android:labelFor="@id/add_edit_reminder_only_notify_if_no_reviews_checkbox"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
