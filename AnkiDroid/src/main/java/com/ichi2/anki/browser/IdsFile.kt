@@ -32,7 +32,9 @@ class IdsFile(
      * @param directory parent directory of the file. Generally it should be [getDirectory]
      * @param ids ids to store
      */
-    constructor(directory: File, ids: List<Long>, purpose: Purpose) : this(path = createTempFile(purpose.prefix, ".tmp", directory).path) {
+    constructor(directory: File, ids: List<Long>, purpose: Purpose) : this(
+        path = createTempFile(purpose.prefix, ".tmp", ensureDirectory(directory)).path,
+    ) {
         DataOutputStream(FileOutputStream(this)).use { outputStream ->
             outputStream.writeInt(ids.size)
             for (id in ids) {
@@ -80,8 +82,20 @@ class IdsFile(
     }
 
     companion object {
-        /** Returns the profile cache for saved selections. Callers must handle evicted snapshots. */
-        fun getDirectory(context: Context = appContext): File = context.cacheDir
+        private const val DIRECTORY_NAME = "idsfiles"
+
+        /**
+         * Returns the cache path for saved selections. The directory is created when writing a snapshot.
+         * Android may evict these files at any age; callers must continue handling missing snapshots.
+         */
+        fun getDirectory(context: Context = appContext): File = File(context.cacheDir, DIRECTORY_NAME)
+
+        private fun ensureDirectory(directory: File): File {
+            if (!directory.isDirectory && !directory.mkdirs() && !directory.isDirectory) {
+                throw IOException("Unable to create ID snapshot directory: $directory")
+            }
+            return directory
+        }
 
         @JvmField
         @Suppress("unused")
