@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.PopupWindow
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
@@ -59,7 +60,8 @@ class WhiteboardFragment :
     Fragment(R.layout.fragment_whiteboard),
     PopupMenu.OnMenuItemClickListener,
     DispatchKeyEventListener {
-    private val viewModel: WhiteboardViewModel by viewModels {
+    @VisibleForTesting
+    internal val viewModel: WhiteboardViewModel by viewModels {
         WhiteboardViewModel.factory(AnkiDroidApp.sharedPrefs())
     }
 
