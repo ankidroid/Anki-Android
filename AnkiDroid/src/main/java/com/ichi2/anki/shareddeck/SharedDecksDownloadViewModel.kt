@@ -62,6 +62,11 @@ class SharedDecksDownloadViewModel : ViewModel() {
         Timber.i("download failed")
         uiState.update { it.copy(phase = DownloadPhase.Failed, percent = 0f, speedBytesPerSecond = 0, secondsRemaining = null) }
     }
+
+    fun onLoginRequired() {
+        Timber.i("download needs an AnkiWeb login")
+        uiState.update { it.copy(phase = DownloadPhase.LoginRequired, percent = 0f, speedBytesPerSecond = 0, secondsRemaining = null) }
+    }
 }
 
 /** Everything the download screen shows. */
@@ -89,6 +94,8 @@ enum class DownloadPhase {
 
     /** Failed. Try again and Open in browser are offered. */
     Failed,
+
+    LoginRequired,
 }
 
 /** Whole numbers for 0 and 100, one decimal place in between, so the common cases read cleanly. */

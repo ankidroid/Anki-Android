@@ -6,6 +6,7 @@ package com.ichi2.anki.shareddeck
 
 import android.text.format.DateUtils
 import android.text.format.Formatter
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -61,6 +62,7 @@ import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.compose.theme.dimensions
 import com.ichi2.compose.ui.preview.ThemePreviews
@@ -78,6 +80,8 @@ fun SharedDecksDownloadScreen(
     onImportClick: () -> Unit,
     onTryAgainClick: () -> Unit,
     onOpenInBrowserClick: () -> Unit,
+    onLogInClick: () -> Unit,
+    onSignUpClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val insets = WindowInsets.systemBars.union(WindowInsets.displayCutout)
@@ -106,7 +110,11 @@ fun SharedDecksDownloadScreen(
             )
             Spacer(Modifier.weight(1f))
             StatCards(state)
-            InfoCard()
+            if (state.phase == DownloadPhase.LoginRequired) {
+                InfoCard(icon = R.drawable.ic_outline_info_24, text = stringResource(CommonString.shared_decks_ankiweb_login_limit))
+            } else {
+                InfoCard(icon = R.drawable.ic_done, text = stringResource(CommonString.deck_download_progress_message))
+            }
             if (state.isWaitingForNetwork) NetworkWarning()
             Actions(
                 phase = state.phase,
@@ -114,6 +122,8 @@ fun SharedDecksDownloadScreen(
                 onImportClick = onImportClick,
                 onTryAgainClick = onTryAgainClick,
                 onOpenInBrowserClick = onOpenInBrowserClick,
+                onLogInClick = onLogInClick,
+                onSignUpClick = onSignUpClick,
             )
         }
     }
@@ -156,6 +166,7 @@ private fun ProgressRing(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             when {
                 state.phase == DownloadPhase.Failed -> RingLabel(stringResource(CommonString.download_failed))
+                state.phase == DownloadPhase.LoginRequired -> RingLabel(stringResource(CommonString.not_logged_in_title))
                 percent == null -> RingLabel(TR.syncDownloadingFromAnkiweb())
                 else -> {
                     PercentageText(percent)
@@ -284,9 +295,12 @@ private fun speedText(
 private fun timeLeftText(secondsRemaining: Long?): String =
     secondsRemaining?.let(DateUtils::formatElapsedTime) ?: stringResource(CommonString.download_time_unknown)
 
-/** Card saying it's fine to use other apps while the download runs. */
+/** Card with an icon and a short message under the stats. */
 @Composable
-private fun InfoCard() {
+private fun InfoCard(
+    @DrawableRes icon: Int,
+    text: String,
+) {
     val dimensions = MaterialTheme.dimensions
     TonalCard(
         modifier =
@@ -308,13 +322,13 @@ private fun InfoCard() {
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_done),
+                    painter = painterResource(icon),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onTertiary,
                 )
             }
             Text(
-                text = stringResource(CommonString.deck_download_progress_message),
+                text = text,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(start = dimensions.sectionGap),
@@ -362,6 +376,8 @@ private fun Actions(
     onImportClick: () -> Unit,
     onTryAgainClick: () -> Unit,
     onOpenInBrowserClick: () -> Unit,
+    onLogInClick: () -> Unit,
+    onSignUpClick: () -> Unit,
 ) {
     val dimensions = MaterialTheme.dimensions
     FlowRow(
@@ -394,6 +410,14 @@ private fun Actions(
                 }
                 TextButton(onClick = onOpenInBrowserClick) {
                     Text(stringResource(CommonString.open_in_browser))
+                }
+            }
+            DownloadPhase.LoginRequired -> {
+                FilledTonalButton(onClick = onLogInClick) {
+                    Text(with(LocalContext.current) { TR.sentenceCase.logIn })
+                }
+                TextButton(onClick = onSignUpClick) {
+                    Text(stringResource(CommonString.sign_up))
                 }
             }
         }
@@ -432,6 +456,8 @@ private fun SharedDecksDownloadScreenPreview(
             onImportClick = {},
             onTryAgainClick = {},
             onOpenInBrowserClick = {},
+            onLogInClick = {},
+            onSignUpClick = {},
         )
     }
 }

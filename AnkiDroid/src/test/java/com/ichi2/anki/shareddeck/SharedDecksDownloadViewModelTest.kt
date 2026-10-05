@@ -103,6 +103,16 @@ class SharedDecksDownloadViewModelTest {
     }
 
     @Test
+    fun `onLoginRequired resets the progress`() {
+        viewModel.onProgress(downloadedBytes = 90, totalBytes = 100, timeMillis = 0)
+        viewModel.onLoginRequired()
+        assertThat(state.phase, equalTo(DownloadPhase.LoginRequired))
+        assertThat(state.percent, equalTo(0f))
+        assertThat(state.speedBytesPerSecond, equalTo(0L))
+        assertThat(state.secondsRemaining, nullValue())
+    }
+
+    @Test
     fun `retrying after a failure puts the screen back to downloading`() {
         viewModel.onDownloadStarted("deck.apkg")
         viewModel.onWaitingForNetwork(true)

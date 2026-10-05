@@ -119,26 +119,6 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             return true
         }
 
-        private val cookieManager: CookieManager by lazy {
-            CookieManager.getInstance()
-        }
-
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        internal val isLoggedInToAnkiWeb: Boolean
-            get() {
-                try {
-                    // cookies are null after the user logs out, or if the site is first visited
-                    val cookies = cookieManager.getCookie("https://ankiweb.net") ?: return false
-                    // ankiweb currently (2024-09-25) sets two cookies:
-                    // * `ankiweb`, which is base64-encoded JSON
-                    // * `has_auth`, which is 1
-                    return cookies.contains("has_auth=1")
-                } catch (e: Exception) {
-                    Timber.w(e, "Could not determine login status")
-                    return false
-                }
-            }
-
         override fun onReceivedHttpError(
             view: WebView?,
             request: WebResourceRequest?,
@@ -150,7 +130,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
             // If a user is logged in, they see: "Daily limit exceeded; please try again tomorrow."
             // We have nothing we can do here
-            if (isLoggedInToAnkiWeb) return
+            if (isLoggedInToAnkiWeb()) return
 
             // The following cases are handled below:
             // "Please log in to download more decks." - on clicking "Download"
@@ -176,7 +156,6 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         const val SHARED_DECKS_DOWNLOAD_FRAGMENT = "SharedDecksDownloadFragment"
         const val DOWNLOAD_FILE = "DownloadFile"
 
-        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val HTTP_STATUS_TOO_MANY_REQUESTS = 429
     }
 
@@ -193,14 +172,14 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             }
     }
 
-    private fun openAnkiWebLogin() {
+    internal fun openAnkiWebLogin() {
         Timber.i("Opening the AnkiWeb login page")
         // TODO: the result of login is typically redirecting the user to their decks
         // this should be improved
         binding.webView.loadUrl(getString(R.string.shared_decks_login_url))
     }
 
-    private fun openAnkiWebSignUp() {
+    internal fun openAnkiWebSignUp() {
         Timber.i("Opening the AnkiWeb sign up page")
         binding.webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
     }
@@ -309,6 +288,20 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         loginRequiredDialog?.dismiss()
         SafeWebViewLayout.destroyWebView(binding.webView)
         super.onDestroy()
+    }
+}
+
+internal fun isLoggedInToAnkiWeb(): Boolean {
+    try {
+        // cookies are null after the user logs out, or if the site is first visited
+        val cookies = CookieManager.getInstance().getCookie("https://ankiweb.net") ?: return false
+        // ankiweb currently (2024-09-25) sets two cookies:
+        // * `ankiweb`, which is base64-encoded JSON
+        // * `has_auth`, which is 1
+        return cookies.contains("has_auth=1")
+    } catch (e: Exception) {
+        Timber.w(e, "Could not determine login status")
+        return false
     }
 }
 

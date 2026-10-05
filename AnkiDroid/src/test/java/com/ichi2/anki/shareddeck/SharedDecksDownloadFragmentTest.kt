@@ -8,20 +8,26 @@ import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
+import android.webkit.CookieManager
+import android.webkit.WebView
 import androidx.annotation.StringRes
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performSemanticsAction
 import androidx.core.content.FileProvider
+import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
+import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.openInputStreamSafe
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -38,6 +44,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowDialog
+import org.robolectric.shadows.ShadowToast
 import java.io.File
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -206,6 +213,46 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `rate limited download asks a logged out user to log in instead of offering retry`() {
+        rateLimitedDownload()
+
+        composeRule.onNodeWithText(targetContext.getString(CommonString.not_logged_in_title)).assertExists()
+        composeRule.onNodeWithText(targetContext.getString(CommonString.shared_decks_ankiweb_login_limit)).assertExists()
+        logInButton.assertExists()
+        signUpButton.assertExists()
+        retryButton.assertDoesNotExist()
+        assertNull(ShadowToast.getLatestToast())
+    }
+
+    @Test
+    fun `log in after a rate limited download opens the AnkiWeb login page`() {
+        val download = rateLimitedDownload()
+
+        logInButton.performSemanticsAction(SemanticsActions.OnClick)
+
+        download.assertReturnedToWebView(R.string.shared_decks_login_url)
+    }
+
+    @Test
+    fun `sign up after a rate limited download opens the AnkiWeb sign up page`() {
+        val download = rateLimitedDownload()
+
+        signUpButton.performSemanticsAction(SemanticsActions.OnClick)
+
+        download.assertReturnedToWebView(R.string.shared_decks_sign_up_url)
+    }
+
+    @Test
+    fun `rate limited download while logged in to AnkiWeb offers retry`() {
+        CookieManager.getInstance().setCookie("https://ankiweb.net", "has_auth=1")
+
+        rateLimitedDownload()
+
+        retryButton.assertExists()
+        logInButton.assertDoesNotExist()
+    }
+
+    @Test
     fun `removing the download fragment prevents late completion from starting an import`() {
         val download = startDownload()
         download.file.writeText("deck contents")
@@ -274,6 +321,8 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     private val importButton get() = button(CommonString.import_deck)
     private val retryButton get() = button(CommonString.try_again)
     private val cancelButton get() = button(CommonString.cancel_download)
+    private val logInButton get() = composeRule.onNodeWithText(with(targetContext) { TR.sentenceCase.logIn })
+    private val signUpButton get() = button(CommonString.sign_up)
 
     private fun button(
         @StringRes text: Int,
@@ -283,6 +332,11 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         startDownload().apply {
             file.writeText("deck contents")
             complete()
+        }
+
+    private fun rateLimitedDownload(): Download =
+        startDownload().apply {
+            complete(status = DownloadManager.STATUS_FAILED, reason = HTTP_STATUS_TOO_MANY_REQUESTS)
         }
 
     private fun startDownload(): Download {
@@ -307,9 +361,11 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
                         )
                     }
             }
-        activity.supportFragmentManager.commitNow {
+        activity.supportFragmentManager.commit {
             add(R.id.shared_decks_fragment_container, fragment)
+            addToBackStack(null)
         }
+        activity.supportFragmentManager.executePendingTransactions()
         shadowOf(Looper.getMainLooper()).idle()
         val request = argumentCaptor<DownloadManager.Request>()
         verify(activity.downloadManager).enqueue(request.capture())
@@ -333,15 +389,25 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         fun complete(
             downloadId: Long = 1L,
             status: Int = DownloadManager.STATUS_SUCCESSFUL,
+            reason: Int = 0,
             completedFile: File = file,
             localUri: Uri? = Uri.fromFile(completedFile),
         ) {
-            whenever(activity.downloadManager.query(any())).thenAnswer { downloadCursor(status, localUri) }
+            whenever(activity.downloadManager.query(any())).thenAnswer { downloadCursor(status, reason, localUri) }
             withFileProvider {
                 activity.sendBroadcast(
                     Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE).putExtra(DownloadManager.EXTRA_DOWNLOAD_ID, downloadId),
                 )
             }
+        }
+
+        fun assertReturnedToWebView(
+            @StringRes url: Int,
+        ) {
+            shadowOf(Looper.getMainLooper()).idle()
+            verify(activity.downloadManager).remove(1L)
+            assertFalse(fragment.isAdded)
+            assertEquals(activity.getString(url), shadowOf(activity.findViewById<WebView>(R.id.web_view)).lastLoadedUrl)
         }
 
         fun withFileProvider(action: () -> Unit) {
@@ -370,6 +436,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
     private fun downloadCursor(
         status: Int,
+        reason: Int = 0,
         localUri: Uri? = null,
     ): MatrixCursor =
         MatrixCursor(
@@ -380,5 +447,5 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
                 DownloadManager.COLUMN_REASON,
                 DownloadManager.COLUMN_LOCAL_URI,
             ),
-        ).apply { addRow(arrayOf<Any?>(100L, 100L, status, 0, localUri?.toString())) }
+        ).apply { addRow(arrayOf<Any?>(100L, 100L, status, reason, localUri?.toString())) }
 }
