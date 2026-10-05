@@ -16,7 +16,10 @@ import anki.sync.SyncCollectionResponse
 import anki.sync.syncCollectionResponse
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.time.MockTime
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -24,6 +27,8 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runCurrent
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -76,6 +81,33 @@ class SyncWorkerTest : RobolectricTest() {
             work.join()
             assertTrue(work.isCancelled)
             assertNull(syncNotification)
+        }
+
+    @Test
+    fun `failed sync advances the retry timestamp`() =
+        runTest {
+            val completedAt = 1_600_000_000_000L
+            TimeManager.resetWith(MockTime(completedAt))
+            Prefs.lastSyncTime = 0
+
+            val work = runSyncWithBlockedProgress(syncError = IllegalStateException("sync failed"))
+
+            assertThat(work.await(), equalTo(Result.failure()))
+            assertThat(Prefs.lastSyncTime, equalTo(completedAt))
+        }
+
+    @Test
+    fun `cancelled sync advances the retry timestamp`() =
+        runTest {
+            val completedAt = 1_600_000_000_000L
+            TimeManager.resetWith(MockTime(completedAt))
+            Prefs.lastSyncTime = 0
+
+            val work = runSyncWithBlockedProgress(cancelWorker = true)
+
+            work.join()
+            assertThat(work.isCancelled, equalTo(true))
+            assertThat(Prefs.lastSyncTime, equalTo(completedAt))
         }
 
     /** Runs sync with a paused progress update, checks cleanup ordering, then releases the update. */
