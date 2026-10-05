@@ -34,7 +34,6 @@
 -keep class androidx.core.app.ActivityCompat$* { *; }
 -keep class androidx.concurrent.futures.** { *; }
 -keep class androidx.appcompat.view.menu.MenuItemImpl { *; } # .utils.ext.MenuItemImpl
--keep class com.ichi2.anki.settings.PrefsRepository { *; } # PrefsRepository.notificationsPermissionRequested
 
 # used via exception.toString()
 -keepnames class * extends java.lang.Throwable
