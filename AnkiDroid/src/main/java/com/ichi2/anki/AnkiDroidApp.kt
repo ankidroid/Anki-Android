@@ -25,6 +25,7 @@ import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.initializeAnalytics
 import com.ichi2.anki.analytics.launchPreviousAnrReporting
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.common.android.Animations
@@ -280,7 +281,7 @@ open class AnkiDroidApp :
         super.onTerminate()
     }
 
-    /** Schedules cache maintenance and logs its duration without delaying startup. */
+    /** Schedules temporary-file maintenance and logs its duration without delaying startup. */
     @VisibleForTesting
     internal fun launchCacheCleanup() =
         applicationScope.launch(Dispatchers.IO) {
@@ -290,6 +291,9 @@ open class AnkiDroidApp :
                 }
                 runCacheCleanup("voiceRecordingsCleanup") {
                     VoiceRecorder.removeExpiredRecordings(VoiceRecorder.recordingsDirectory(this@AnkiDroidApp))
+                }
+                runCacheCleanup("idsFileCleanup") {
+                    IdsFile.deleteStaleFiles(this@AnkiDroidApp)
                 }
             }
         }

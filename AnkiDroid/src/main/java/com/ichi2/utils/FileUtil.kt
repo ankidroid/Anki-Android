@@ -111,6 +111,18 @@ object FileUtil {
     fun listFiles(dir: File): Array<File> =
         dir.listFiles()
             ?: throw IOException("Failed to list the contents of '$dir'")
+
+    /**
+     * Returns [dir]'s children, or an empty array when [File.listFiles] returns `null`
+     * or throws [SecurityException]. Security exceptions are logged.
+     */
+    fun listFilesOrEmpty(dir: File): Array<out File> =
+        try {
+            dir.listFiles().orEmpty()
+        } catch (e: SecurityException) {
+            Timber.w(e, "Unable to list directory: %s", dir)
+            emptyArray()
+        }
 }
 
 /**
