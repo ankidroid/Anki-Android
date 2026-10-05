@@ -323,7 +323,7 @@ class SetDueDateDialogTest : RobolectricTest() {
     private val FragmentActivity.dueDateFiles: List<File>
         get() =
             IdsFile
-                .getDirectory(this)
+                .getDirectory()
                 .listFiles { _, name -> name.startsWith("set-due-date") }
                 .orEmpty()
                 .toList()

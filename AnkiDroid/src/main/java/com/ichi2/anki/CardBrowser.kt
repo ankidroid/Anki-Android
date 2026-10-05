@@ -653,7 +653,7 @@ open class CardBrowser :
         viewModelStore,
         CardBrowserViewModel.factory(
             lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
-            idsFileDirectory = IdsFile.getDirectory(this),
+            idsFileDirectory = IdsFile.getDirectory(),
             options = launchOptions,
             isFragmented = fragmented,
             initialDeckId = intent?.getLongExtra(CardBrowserViewModel.EXTRA_DECK_ID),

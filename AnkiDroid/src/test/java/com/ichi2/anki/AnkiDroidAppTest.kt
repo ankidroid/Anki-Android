@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.multiprofile.ProfileManager
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
@@ -19,6 +20,7 @@ import com.ichi2.anki.multiprofile.isPhoenixProcess
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import kotlinx.coroutines.runBlocking
 import leakcanary.AppWatcher
 import org.junit.After
 import org.junit.Assert.assertTrue
@@ -120,6 +122,22 @@ class AnkiDroidAppTest {
             app.getDir("textures", Context.MODE_PRIVATE),
         ).forEach { assertTrue("$it is outside $profileDir", it.startsWith(profileDir)) }
     }
+
+    @Test
+    fun `ID snapshots use base storage when no profile was loaded`() =
+        runBlocking {
+            val app = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
+            val manager = app.profileManager
+            try {
+                app.profileManager = null
+                val directory = IdsFile.getDirectory()
+                assertEquals(frameworkBase.cacheDir, directory)
+                val file = IdsFile(directory, listOf(42L), IdsFile.Purpose.PREVIEW)
+                assertEquals(listOf(42L), file.getIds())
+            } finally {
+                app.profileManager = manager
+            }
+        }
 
     @Test
     fun `ACRA process skips the profile environment`() {

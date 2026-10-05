@@ -31,7 +31,7 @@ class ProfileManager private constructor(
 ) {
     private val profileContext = context.applicationContext ?: context
 
-    lateinit var activeProfileContext: Context
+    lateinit var activeProfileContext: ProfileContextWrapper
         private set
 
     /**

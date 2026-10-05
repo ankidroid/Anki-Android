@@ -278,7 +278,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                 Timber.d("Ignoring 'set due date' request: dialog is already open")
                 return
             }
-            val dialog = newInstance(IdsFile.getDirectory(activity), cardIds)
+            val dialog = newInstance(IdsFile.getDirectory(), cardIds)
             activity.showDialogFragment(dialog)
         }
 
