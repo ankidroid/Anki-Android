@@ -53,6 +53,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.reviewer.ViewerAction
+import com.ichi2.anki.preferences.reviewer.WhiteboardAction
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.previewer.TypeAnswer
@@ -384,10 +385,13 @@ class ReviewerFragment :
         binding.root.setOnGenericMotionListener { _, event ->
             bindingMap.onGenericMotionEvent(event)
         }
-        if (bindingMap.isBound(Gesture.SHAKE)) {
+        if (isBound(Gesture.SHAKE)) {
             shakeDetector = AnkiShakeDetector.createInstance(requireContext(), this)
         }
     }
+
+    private fun isBound(gesture: Gesture): Boolean =
+        bindingMap.isBound(gesture) || BindingMap(sharedPrefs(), WhiteboardAction.entries).isBound(gesture)
 
     private fun setupAnswerButtons() {
         if (!Prefs.showAnswerButtons) {
