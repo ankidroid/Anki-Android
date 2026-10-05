@@ -26,7 +26,9 @@ import com.ichi2.utils.Permissions.attemptToEnableNotifications
 import com.ichi2.utils.Permissions.openAppSettingsScreen
 import com.ichi2.utils.Permissions.openAppSettingsScreenForPermission
 import com.ichi2.utils.Permissions.requestPermissionThroughDialogOrSettings
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
@@ -44,6 +46,7 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
+import kotlin.reflect.KMutableProperty0
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsTest {
@@ -122,6 +125,29 @@ class PermissionsTest {
         Prefs.notificationsPermissionRequested = true // not first call
         setCanPermissionBeRequested(true)
         triggerPermissionRequest()
+        verifyPermissionWasRequested()
+    }
+
+    @Test
+    fun `canPermissionBeRequested reads the flag without kotlin-reflect`() {
+        val flag = mockk<KMutableProperty0<Boolean>> { every { get() } returns false }
+
+        val canRequest = Permissions.canPermissionBeRequested(fragmentActivity, DUMMY_PERMISSION_STRING, flag)
+
+        assertThat(canRequest, equalTo(true))
+    }
+
+    @Test
+    fun `requestPermissionThroughDialogOrSettings sets the flag without kotlin-reflect`() {
+        val flag =
+            mockk<KMutableProperty0<Boolean>> {
+                every { get() } returns false
+                every { set(any()) } just Runs
+            }
+
+        fragment.requestPermissionThroughDialogOrSettings(fragmentActivity, DUMMY_PERMISSION_STRING, flag, permissionRequestLauncher)
+
+        verify(exactly = 1) { flag.set(true) }
         verifyPermissionWasRequested()
     }
 
