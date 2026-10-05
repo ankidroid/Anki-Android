@@ -2300,7 +2300,7 @@ class CardBrowserViewModelTest : JvmTest() {
         val viewModel =
             CardBrowserViewModel(
                 lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                cacheDir = createTransientDirectory(),
+                idsFileDirectory = createTransientDirectory(),
                 options = options,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
                 isFragmented = false,
@@ -2330,7 +2330,7 @@ class CardBrowserViewModelTest : JvmTest() {
         val viewModel =
             CardBrowserViewModel(
                 lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-                cacheDir = cacheDir,
+                idsFileDirectory = cacheDir,
                 options = options,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
                 isFragmented = isFragmented,
@@ -2367,7 +2367,7 @@ class CardBrowserViewModelTest : JvmTest() {
             val cache = File(createTempDirectory().pathString)
             return CardBrowserViewModel(
                 lastDeckIdRepository = lastDeckIdRepository,
-                cacheDir = cache,
+                idsFileDirectory = cache,
                 options = intent,
                 isFragmented = false,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
@@ -2404,7 +2404,7 @@ private fun runViewModelTest(
     val viewModel =
         CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-            cacheDir = createTransientDirectory(),
+            idsFileDirectory = createTransientDirectory(),
             options = null,
             preferences = AnkiDroidApp.sharedPreferencesProvider,
             isFragmented = false,
@@ -2611,7 +2611,7 @@ fun createCardBrowserViewModel(manualInit: Boolean = true): CardBrowserViewModel
     val viewModel =
         CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
-            cacheDir = createTransientDirectory(),
+            idsFileDirectory = createTransientDirectory(),
             options = null,
             preferences = AnkiDroidApp.sharedPreferencesProvider,
             isFragmented = false,

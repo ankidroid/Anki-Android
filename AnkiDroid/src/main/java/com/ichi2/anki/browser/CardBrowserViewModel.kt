@@ -112,7 +112,7 @@ typealias ReverseDirection = Boolean
  * ViewModel for [com.ichi2.anki.CardBrowser]
  *
  * @param lastDeckIdRepository returns the last selected ID. See [LastDeckIdRepository]
- * @param cacheDir Temporary location to store data too large to pass via intent
+ * @param idsFileDirectory Temporary location to store data too large to pass via intent
  * @param options Options passed to CardBrowser on startup
  * @param preferences Accessor for `SharedPreferences`
  * @param isFragmented `true` if a NoteEditor side panel is displayed (x-large displays)
@@ -123,7 +123,7 @@ typealias ReverseDirection = Boolean
 @NeedsTest("search is called after launch()")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
-    private val cacheDir: File,
+    private val idsFileDirectory: File,
     options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider,
     val isFragmented: Boolean,
@@ -643,7 +643,7 @@ class CardBrowserViewModel(
             if (selection.isEmpty()) {
                 null
             } else {
-                IdsFile(cacheDir, selection.map { it.cardOrNoteId }, "multiselect-values")
+                IdsFile(idsFileDirectory, selection.map { it.cardOrNoteId }, "multiselect-values")
             }
         multiselectStateFile?.removeSafely("CardBrowserViewModel")
         multiselectStateFile = idsFile
@@ -1363,11 +1363,11 @@ class CardBrowserViewModel(
     suspend fun queryPreviewIntentData(): PreviewerDestination {
         // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
         return if (selectedRowCount() > 1) {
-            PreviewerDestination(currentIndex = 0, IdsFile(cacheDir, queryAllSelectedCardIds()))
+            PreviewerDestination(currentIndex = 0, IdsFile(idsFileDirectory, queryAllSelectedCardIds()))
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = indexOfFirstCheckedCard() ?: 0
-            PreviewerDestination(startIndex, IdsFile(cacheDir, queryOneCardIdPerNote()))
+            PreviewerDestination(startIndex, IdsFile(idsFileDirectory, queryOneCardIdPerNote()))
         }
     }
 
@@ -1653,7 +1653,7 @@ class CardBrowserViewModel(
 
         fun factory(
             lastDeckIdRepository: LastDeckIdRepository,
-            cacheDir: File,
+            idsFileDirectory: File,
             isFragmented: Boolean,
             preferencesProvider: SharedPreferencesProvider? = null,
             options: CardBrowserLaunchOptions?,
@@ -1661,7 +1661,7 @@ class CardBrowserViewModel(
             initializer {
                 CardBrowserViewModel(
                     lastDeckIdRepository,
-                    cacheDir,
+                    idsFileDirectory,
                     options,
                     preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider,
                     isFragmented,

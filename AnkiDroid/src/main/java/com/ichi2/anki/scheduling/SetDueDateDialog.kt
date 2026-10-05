@@ -285,13 +285,13 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
         @VisibleForTesting
         @CheckResult
         fun newInstance(
-            cacheDir: File,
+            idsFileDirectory: File,
             cardIds: List<CardId>,
         ): SetDueDateDialog =
             SetDueDateDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putParcelable(ARG_IDS_FILE, IdsFile(cacheDir, cardIds, "set-due-date"))
+                        putParcelable(ARG_IDS_FILE, IdsFile(idsFileDirectory, cardIds, "set-due-date"))
                     }
                 Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
             }
