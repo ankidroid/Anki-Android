@@ -119,7 +119,7 @@ enum class ViewerAction(
     private val defaultBindings: List<ReviewerBinding> get() =
         when (this) {
             UNDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ctrl()))
-            REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true, alt = false)))
+            REDO -> listOf(keycode(KeyEvent.KEYCODE_Z, ModifierKeys(shift = true, ctrl = true)))
             MARK -> listOf(unicode('*'))
             EDIT -> listOf(keycode(KeyEvent.KEYCODE_E))
             ADD_NOTE -> listOf(keycode(KeyEvent.KEYCODE_A))
@@ -135,8 +135,8 @@ enum class ViewerAction(
             BROWSE -> listOf(keycode(KeyEvent.KEYCODE_B))
             STATISTICS -> listOf(keycode(KeyEvent.KEYCODE_T))
             PLAY_MEDIA -> listOf(keycode(KeyEvent.KEYCODE_R))
-            PREVIOUS_CARD_INFO -> listOf(keycode(KeyEvent.KEYCODE_I, ModifierKeys(shift = false, ctrl = true, alt = true)))
-            RESET_PROGRESS -> listOf(keycode(KeyEvent.KEYCODE_N, ModifierKeys(ctrl = true, alt = true, shift = false)))
+            PREVIOUS_CARD_INFO -> listOf(keycode(KeyEvent.KEYCODE_I, ModifierKeys(ctrl = true, alt = true)))
+            RESET_PROGRESS -> listOf(keycode(KeyEvent.KEYCODE_N, ModifierKeys(ctrl = true, alt = true)))
             TOGGLE_FLAG_RED ->
                 listOf(
                     keycode(KeyEvent.KEYCODE_1, ctrl()),
