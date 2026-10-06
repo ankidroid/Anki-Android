@@ -4,12 +4,17 @@ package com.ichi2.anki.pages
 
 /**
  * Bundled SvelteKit routes exposed by AnkiDroid.
+ *
+ * CSP is enabled by default; pages may explicitly disable it for compatibility.
  */
 internal enum class SvelteKitPage(
     val route: String,
+    val disableCsp: Boolean = false,
 ) {
     GRAPHS("graphs"),
-    CONGRATS("congrats"),
+
+    // #22334: `javascript:bridgeCommand` is used by 'Custom Study' and 'Unbury'
+    CONGRATS("congrats", disableCsp = true),
     CARD_INFO("card-info"),
     CHANGE_NOTETYPE("change-notetype"),
     DECK_OPTIONS("deck-options"),
