@@ -94,7 +94,8 @@ class ResizablePaneManager(
                 MotionEvent.ACTION_MOVE -> {
                     v.parent.requestDisallowInterceptTouchEvent(true)
 
-                    val deltaX = event.rawX - initialTouchX
+                    // The first pane is on the right in RTL layouts, so it shrinks when dragging right.
+                    val deltaX = (event.rawX - initialTouchX).invertIfRtl(parentLayout)
                     val totalParentWidth = parentLayout.width.toFloat()
 
                     if (totalParentWidth > 0) { // Avoid division by zero
@@ -161,3 +162,5 @@ class ResizablePaneManager(
         }
     }
 }
+
+private fun Float.invertIfRtl(view: View): Float = if (view.layoutDirection == View.LAYOUT_DIRECTION_RTL) -this else this
