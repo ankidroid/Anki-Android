@@ -54,7 +54,7 @@ open class PageWebViewClient : SafeWebViewClient() {
     ): Boolean {
         val url = request?.url ?: return true
         if (isInternalUrl(url)) {
-            return !isSvelteKitPage(url.path.orEmpty().removePrefix("/"))
+            return SvelteKitPage.fromPath(url.path.orEmpty()) == null
         }
         if (request.isForMainFrame && url.scheme in listOf("http", "https")) {
             view?.context?.openUrl(url)
@@ -72,10 +72,11 @@ open class PageWebViewClient : SafeWebViewClient() {
             return WebResourceResponse("image/x-icon", null, ByteArrayInputStream(byteArrayOf()))
         }
 
+        val page = SvelteKitPage.fromPath(path)
         val assetPath =
             if (path.startsWith("/_app/")) {
                 "backend/sveltekit/app/${path.substring(6)}"
-            } else if (isSvelteKitPage(path.removePrefix("/"))) {
+            } else if (page != null) {
                 "backend/sveltekit/index.html"
             } else {
                 return null
@@ -132,23 +133,6 @@ open class PageWebViewClient : SafeWebViewClient() {
         /* webView is invisible by default to avoid flashes while
          * the page is loaded, and can be made visible again after it finishes loading */
         onShowWebView(view)
-    }
-}
-
-fun isSvelteKitPage(path: String): Boolean {
-    val pageName = path.substringBefore("/")
-    return when (pageName) {
-        "graphs",
-        "congrats",
-        "card-info",
-        "change-notetype",
-        "deck-options",
-        "import-anki-package",
-        "import-csv",
-        "import-page",
-        "image-occlusion",
-        -> true
-        else -> false
     }
 }
 

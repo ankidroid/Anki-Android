@@ -12,6 +12,16 @@ import kotlin.test.assertNull
 @RunWith(AndroidJUnit4::class)
 class PageWebViewClientAssetTest : PageWebViewClientTestBase() {
     @Test
+    fun `unsupported routes do not serve bundled HTML`() =
+        withStatistics { view, client ->
+            val pageUrl = assertNotNull(view.url).toUri()
+            for (path in listOf("/", "/unknown", "/graphs-other", "/editor", "/editor/1", "/preferences")) {
+                val url = pageUrl.buildUpon().path(path).build()
+                assertNull(client.shouldInterceptRequest(view, request(url.toString())), path)
+            }
+        }
+
+    @Test
     fun `only the page server can serve bundled pages and assets`() =
         withStatistics { view, client ->
             val pageUrl = assertNotNull(view.url).toUri()

@@ -16,7 +16,7 @@ import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class PostRequestHandlerTest : RobolectricTest() {
-    // ts_funcs.txt includes imports from every upstream route, including routes outside isSvelteKitPage().
+    // ts_funcs.txt includes imports from every upstream route, including routes outside SvelteKitPage.
     // Exclude only functions whose callers are confined to routes AnkiDroid does not expose.
     // Call sites checked against Anki 26.09.3: https://github.com/ankitects/anki/tree/26.09.3/ts
 
@@ -62,7 +62,7 @@ class PostRequestHandlerTest : RobolectricTest() {
         )
 
     // ts/lib/tslib/profile.ts is imported only by ts/routes/editor and ts/routes/preferences.
-    // Neither route is exposed by isSvelteKitPage().
+    // Neither route is exposed by SvelteKitPage.
     private val editorAndPreferencesFunctions =
         setOf(
             "getConfigJson",
