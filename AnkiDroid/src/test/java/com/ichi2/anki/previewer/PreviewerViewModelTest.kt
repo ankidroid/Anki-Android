@@ -58,12 +58,7 @@ class PreviewerViewModelTest : JvmTest() {
                 val note = addBasicNote()
                 note.cards().map { it.id }
             }
-        val savedStateHandle =
-            SavedStateHandle().apply {
-                set(PreviewerFragment.CURRENT_INDEX_ARG, 0)
-            }
-
-        viewModel = spyk(PreviewerViewModel(savedStateHandle, cardIds))
+        viewModel = spyk(PreviewerViewModel(SavedStateHandle(), cardIds, initialIndex = 0))
         // the default implementation requires the Collection media directory,
         // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
         coEvery { viewModel.prepareCardTextForDisplay(any()) } answers { firstArg() }
