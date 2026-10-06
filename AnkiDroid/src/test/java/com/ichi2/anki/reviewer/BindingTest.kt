@@ -18,6 +18,8 @@ import kotlin.test.assertTrue
 class BindingTest {
     @Test
     fun modifierKeys_Are_Loaded() {
+        // TODO: Stub a nonzero key code or Unicode character and assert that bindings is not empty.
+        // The mock currently produces no bindings, so the assertion loop in testModifierKeys never runs.
         testModifierKeys("shift", KeyEvent::isShiftPressed, Binding.ModifierKeys::shiftMatches)
         testModifierKeys("ctrl", KeyEvent::isCtrlPressed) { k, ctrlPressed -> k.ctrl == ctrlPressed }
         testModifierKeys("alt", KeyEvent::isAltPressed) { k, altPressed -> k.alt == altPressed }
