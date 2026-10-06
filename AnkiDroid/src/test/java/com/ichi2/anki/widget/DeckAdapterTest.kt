@@ -103,6 +103,11 @@ class DeckAdapterTest : RobolectricTest() {
     private fun DeckPicker.deckHolder(deckId: DeckId): DeckAdapter.ViewHolder {
         val decks = deckPickerBinding.decks
         val adapter = decks.adapter as DeckAdapter
+        // Background list diffs can finish after the initial main looper drain.
+        advanceRobolectricLooperUntil(lazyMessage = { "Deck $deckId was not laid out" }) {
+            val position = adapter.currentList.indexOfFirst { it.did == deckId }
+            position >= 0 && decks.findViewHolderForAdapterPosition(position) != null
+        }
         val position = adapter.currentList.indexOfFirst { it.did == deckId }
         return decks.findViewHolderForAdapterPosition(position) as DeckAdapter.ViewHolder
     }
