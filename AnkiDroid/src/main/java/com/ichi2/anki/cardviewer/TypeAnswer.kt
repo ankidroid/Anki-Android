@@ -153,6 +153,14 @@ class TypeAnswer(
                 """<center>
 <input type="text" name="typed" id="typeans" data-focus="$autoFocus" onfocus="taFocus();" oninput='taChange(this);' onKeyPress="return taKey(this, event)" autocomplete="off" """,
             )
+            if (noSuggest) {
+                // in JS: ankidroidNosuggest
+                // see 'Keyboard: setNoSuggest'
+                sb.append("data-ankidroid-nosuggest=\"true\"")
+                sb.append(' ')
+                sb.append("enterkeyhint=\"done\"")
+                sb.append(' ')
+            }
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn't show the input tag there. Do it with standard values here instead.)
             if (font.isNotEmpty() && size > 0) {
