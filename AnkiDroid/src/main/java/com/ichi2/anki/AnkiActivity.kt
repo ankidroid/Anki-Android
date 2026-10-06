@@ -48,9 +48,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DEFAULT_ARGS_KEY
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
@@ -91,6 +94,7 @@ import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ViewModelSavedStateHandle
 import com.ichi2.anki.utils.ext.requireString
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
@@ -116,6 +120,17 @@ open class AnkiActivity(
     ShortcutGroupProvider,
     AnkiActivityProvider {
     val exportReadyViewModel by viewModels<ExportReadyViewModel> { ExportReadyViewModel.factory }
+
+    /**
+     * Supplies [ViewModelSavedStateHandle] without copying intent extras into every handle.
+     * Launch inputs belong in ViewModel constructor parameters.
+     * This also applies to fragments using activityViewModels(), but not fragment-scoped ViewModels.
+     */
+    override val defaultViewModelCreationExtras: CreationExtras
+        get() =
+            MutableCreationExtras(super.defaultViewModelCreationExtras).apply {
+                this[DEFAULT_ARGS_KEY] = Bundle.EMPTY
+            }
 
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
