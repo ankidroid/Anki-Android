@@ -96,7 +96,8 @@ jobs:
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       TEST_RELEASE_BUILD: true
-      EMULATOR_OPTIONS: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+      # Capture startup and kernel logs before ADB is ready; -logcat conflicts with -show-kernel.
+      EMULATOR_OPTIONS: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -verbose -show-kernel
       # API 37 otherwise defaults to 96 MiB and panics during init with an OOM.
       EMULATOR_RAM_SIZE: ${{ matrix.api-level == '37.0' && '2560M' || '' }}
       # Keep the SDK package at 37.0, but ensure the AVD is recognized as API 37.
