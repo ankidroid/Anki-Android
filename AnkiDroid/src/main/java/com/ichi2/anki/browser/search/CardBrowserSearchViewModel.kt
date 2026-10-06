@@ -4,7 +4,6 @@ package com.ichi2.anki.browser.search
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
@@ -14,6 +13,7 @@ import com.ichi2.anki.browser.SearchHistory.SearchHistoryEntry
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.DeckNameId
 import com.ichi2.anki.libanki.NoteTypeNameID
+import com.ichi2.anki.utils.ViewModelSavedStateHandle
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,7 +44,7 @@ import timber.log.Timber
 // The sub-fragments (StandardSearchFragment etc...) need to be able to modify/close the
 // EditText, but should not be coupled directly to the parent SearchView.
 class CardBrowserSearchViewModel(
-    private val savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: ViewModelSavedStateHandle,
 ) : ViewModel() {
     private val searchHistoryManager = SearchHistory()
 
