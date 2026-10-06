@@ -65,7 +65,6 @@ class SyncWorker(
     context: Context,
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
-    private val workManager = WorkManager.getInstance(context)
     private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
     private val notificationManager: NotificationManagerCompat? =
         if (canPostNotifications(context)) {
@@ -173,13 +172,9 @@ class SyncWorker(
         }
     }
 
-    private fun syncMedia(auth: SyncAuth) {
+    private suspend fun syncMedia(auth: SyncAuth) {
         Timber.i("Enqueuing SyncMediaWorker")
-        workManager.enqueueUniqueWork(
-            UniqueWorkNames.SYNC_MEDIA,
-            ExistingWorkPolicy.KEEP,
-            SyncMediaWorker.getWorkRequest(auth),
-        )
+        SyncMediaWorker.start(applicationContext, auth)
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {

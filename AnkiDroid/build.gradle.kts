@@ -773,6 +773,7 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.concurrent.futures.ktx)
     implementation(libs.androidx.core)
     implementation(libs.androidx.draganddrop)
     implementation(libs.androidx.exifinterface)
