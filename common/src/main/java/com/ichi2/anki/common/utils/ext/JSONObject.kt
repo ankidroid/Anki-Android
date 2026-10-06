@@ -159,3 +159,18 @@ fun JSONObject.jsonObjectIterable(): Iterable<JSONObject> =
         .asSequence()
         .map { getJSONObject(it) }
         .asIterable()
+
+/**
+ * @return `null` if the key doesn't exist, or the value is not a long. The long value of the key
+ * otherwise.
+ */
+fun JSONObject.getLongOrNull(key: String): Long? {
+    if (!has(key)) {
+        return null
+    }
+    try {
+        return getLong(key)
+    } catch (ex: Exception) {
+        return null
+    }
+}
