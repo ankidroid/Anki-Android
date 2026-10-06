@@ -99,6 +99,8 @@ import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.getSharedPrefs
+import com.ichi2.testutils.parcelledCopy
+import com.ichi2.testutils.saveState
 import com.ichi2.testutils.withSplitPaneUiAsync
 import com.ichi2.utils.LanguageUtil
 import io.mockk.every
@@ -530,6 +532,34 @@ class CardBrowserTest : RobolectricTest() {
             scenario.onActivity { browser ->
                 assertThat("card count after recreation", browser.subtitle(), equalTo("2 cards shown"))
             }
+        }
+    }
+
+    @Test
+    fun `intent deck is honored once and user selection survives restoration`() {
+        ensureCollectionLoadIsSynchronous()
+        val launchDeck = addDeck("Launch deck")
+        val selectedDeck = addDeck("User selection")
+        val intent = Intent(targetContext, CardBrowser::class.java).putExtra(CardBrowserViewModel.EXTRA_DECK_ID, launchDeck)
+        lateinit var original: CardBrowserViewModel
+        val savedState =
+            Robolectric.buildActivity(CardBrowser::class.java, intent).use { controller ->
+                val browser = controller.setup().get()
+                advanceRobolectricLooperUntil { browser.viewModel.initCompleted }
+                original = browser.viewModel
+                assertEquals(launchDeck, original.deckId)
+
+                original.setSelectedDeck(SelectableDeck.Deck(selectedDeck, "User selection"))
+                advanceRobolectricLooperUntil { original.deckId == selectedDeck }
+                controller.saveState().parcelledCopy(javaClass.classLoader)
+            }
+
+        // Keep the original launch intent, but do not retain its ViewModel.
+        Robolectric.buildActivity(CardBrowser::class.java, intent).use { controller ->
+            val browser = controller.setup(savedState).get()
+            advanceRobolectricLooperUntil { browser.viewModel.initCompleted }
+            assertNotSame(original, browser.viewModel)
+            assertEquals(selectedDeck, browser.viewModel.deckId)
         }
     }
 
