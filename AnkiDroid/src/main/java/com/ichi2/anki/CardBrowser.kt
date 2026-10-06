@@ -219,11 +219,11 @@ open class CardBrowser :
             ResizablePaneManager(
                 parentLayout = requireNotNull(binding.cardBrowserXlView) { "cardBrowserXlView" },
                 divider = requireNotNull(binding.cardBrowserResizingDivider) { "cardBrowserResizingDivider" },
-                leftPane = requireNotNull(binding.cardBrowserFrame) { "cardBrowserFrame" },
-                rightPane = requireNotNull(binding.noteEditorFrame) { "noteEditorFrame" },
+                startPane = requireNotNull(binding.cardBrowserFrame) { "cardBrowserFrame" },
+                endPane = requireNotNull(binding.noteEditorFrame) { "noteEditorFrame" },
                 sharedPrefs = Prefs.getUiConfig(this),
-                leftPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
-                rightPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
+                startPaneWeightKey = PREF_CARD_BROWSER_PANE_WEIGHT,
+                endPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
             )
         } else {
             binding.noteEditorFrame?.isVisible = false

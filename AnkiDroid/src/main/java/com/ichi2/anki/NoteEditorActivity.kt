@@ -185,11 +185,11 @@ class NoteEditorActivity :
             ResizablePaneManager(
                 parentLayout = parentLayout,
                 divider = divider,
-                leftPane = noteEditorPane,
-                rightPane = previewerPane,
+                startPane = noteEditorPane,
+                endPane = previewerPane,
                 sharedPrefs = Prefs.getUiConfig(this),
-                leftPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
-                rightPaneWeightKey = PREF_PREVIEWER_PANE_WEIGHT,
+                startPaneWeightKey = PREF_NOTE_EDITOR_PANE_WEIGHT,
+                endPaneWeightKey = PREF_PREVIEWER_PANE_WEIGHT,
             )
             if (isPreviewerVisible) {
                 // Defer previewer loading to avoid blocking onCreate
