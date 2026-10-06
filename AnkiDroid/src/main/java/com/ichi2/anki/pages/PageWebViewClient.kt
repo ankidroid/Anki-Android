@@ -19,6 +19,7 @@ import com.ichi2.utils.toRGBHex
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * Base WebViewClient to be used on [PageFragment]
@@ -84,7 +85,14 @@ open class PageWebViewClient : SafeWebViewClient() {
 
         try {
             val mimeType = guessMimeType(assetPath)
-            val inputStream = view.context.assets.open(assetPath)
+            val inputStream =
+                view.context.assets.open(assetPath).let { asset ->
+                    if (page?.disableCsp == true) {
+                        removeBundledCsp(asset)
+                    } else {
+                        asset
+                    }
+                }
             val response = WebResourceResponse(mimeType, null, inputStream)
             if ("immutable" in path) {
                 response.responseHeaders = mapOf("Cache-Control" to "max-age=31536000")
@@ -134,6 +142,15 @@ open class PageWebViewClient : SafeWebViewClient() {
          * the page is loaded, and can be made visible again after it finishes loading */
         onShowWebView(view)
     }
+}
+
+private val SVELTEKIT_CSP_META = Regex("""<meta http-equiv="content-security-policy" content="[^"]*">""")
+
+/** Reads and closes [asset], returning the HTML without its bundled CSP meta tag. */
+private fun removeBundledCsp(asset: InputStream): InputStream {
+    val html = asset.bufferedReader().use { reader -> reader.readText() }
+    val htmlWithoutCsp = html.replace(SVELTEKIT_CSP_META, "")
+    return htmlWithoutCsp.byteInputStream()
 }
 
 fun WebView.evaluateAfterDOMContentLoaded(
