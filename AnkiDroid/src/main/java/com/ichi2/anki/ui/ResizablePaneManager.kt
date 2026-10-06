@@ -32,11 +32,11 @@ import timber.log.Timber
 class ResizablePaneManager(
     private val parentLayout: LinearLayout,
     private val divider: View,
-    private val leftPane: View,
-    private val rightPane: View,
+    private val startPane: View,
+    private val endPane: View,
     private val sharedPrefs: SharedPreferences,
-    private val leftPaneWeightKey: String,
-    private val rightPaneWeightKey: String,
+    private val startPaneWeightKey: String,
+    private val endPaneWeightKey: String,
     private val minWeight: Float = 0.5f, // Minimum weight for each pane
     private val dragColor: Int = divider.context.getColor(R.color.drag_divider_color),
     private val idleColor: Int = divider.context.getColor(R.color.idle_divider_color),
@@ -50,8 +50,8 @@ class ResizablePaneManager(
         loadSavedWeights()
 
         var initialTouchX = 0f
-        var initialLeftWeight = 0f
-        var initialRightWeight = 0f
+        var initialStartWeight = 0f
+        var initialEndWeight = 0f
 
         divider.setOnHoverListener { _, event ->
             when (event.action) {
@@ -74,8 +74,8 @@ class ResizablePaneManager(
         }
 
         divider.setOnTouchListener { v, event ->
-            val leftParams = leftPane.layoutParams as LinearLayout.LayoutParams
-            val rightParams = rightPane.layoutParams as LinearLayout.LayoutParams
+            val startParams = startPane.layoutParams as LinearLayout.LayoutParams
+            val endParams = endPane.layoutParams as LinearLayout.LayoutParams
 
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -87,37 +87,37 @@ class ResizablePaneManager(
 
                     v.setBackgroundColor(dragColor)
                     initialTouchX = event.rawX
-                    initialLeftWeight = leftParams.weight
-                    initialRightWeight = rightParams.weight
+                    initialStartWeight = startParams.weight
+                    initialEndWeight = endParams.weight
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
                     v.parent.requestDisallowInterceptTouchEvent(true)
 
-                    // The first pane is on the right in RTL layouts, so it shrinks when dragging right.
+                    // The start pane is on the right in RTL layouts, so it shrinks when dragging right.
                     val deltaX = (event.rawX - initialTouchX).invertIfRtl(parentLayout)
                     val totalParentWidth = parentLayout.width.toFloat()
 
                     if (totalParentWidth > 0) { // Avoid division by zero
-                        val sumOfInitialWeights = initialLeftWeight + initialRightWeight
+                        val sumOfInitialWeights = initialStartWeight + initialEndWeight
 
                         // Calculate the change in weight based on the drag distance
                         val weightDelta = (deltaX / totalParentWidth) * sumOfInitialWeights
 
-                        var newLeftWeight = initialLeftWeight + weightDelta
+                        var newStartWeight = initialStartWeight + weightDelta
 
-                        // Clamp the new weight for the left pane
+                        // Clamp the new weight for the start pane
                         // Ensures it's not too small and not too large (leaving space for the other pane's minWeight)
-                        newLeftWeight = newLeftWeight.coerceIn(minWeight, sumOfInitialWeights - minWeight)
+                        newStartWeight = newStartWeight.coerceIn(minWeight, sumOfInitialWeights - minWeight)
 
-                        val newRightWeight = sumOfInitialWeights - newLeftWeight
+                        val newEndWeight = sumOfInitialWeights - newStartWeight
 
                         // Apply the new weights
-                        leftParams.weight = newLeftWeight
-                        rightParams.weight = newRightWeight
+                        startParams.weight = newStartWeight
+                        endParams.weight = newEndWeight
 
-                        leftPane.layoutParams = leftParams
-                        rightPane.layoutParams = rightParams
+                        startPane.layoutParams = startParams
+                        endPane.layoutParams = endParams
 
                         // Request layout update for the parent
                         parentLayout.requestLayout()
@@ -129,8 +129,8 @@ class ResizablePaneManager(
 
                     // Save the new weights to SharedPreferences
                     sharedPrefs.edit {
-                        putFloat(leftPaneWeightKey, leftParams.weight)
-                        putFloat(rightPaneWeightKey, rightParams.weight)
+                        putFloat(startPaneWeightKey, startParams.weight)
+                        putFloat(endPaneWeightKey, endParams.weight)
                     }
                     true
                 }
@@ -141,19 +141,19 @@ class ResizablePaneManager(
 
     private fun loadSavedWeights() {
         try {
-            val leftParams = leftPane.layoutParams as LinearLayout.LayoutParams
-            val rightParams = rightPane.layoutParams as LinearLayout.LayoutParams
+            val startParams = startPane.layoutParams as LinearLayout.LayoutParams
+            val endParams = endPane.layoutParams as LinearLayout.LayoutParams
 
             // Load saved weights from SharedPreferences
-            val savedLeftWeight = sharedPrefs.getFloat(leftPaneWeightKey, leftParams.weight)
-            val savedRightWeight = sharedPrefs.getFloat(rightPaneWeightKey, rightParams.weight)
+            val savedStartWeight = sharedPrefs.getFloat(startPaneWeightKey, startParams.weight)
+            val savedEndWeight = sharedPrefs.getFloat(endPaneWeightKey, endParams.weight)
 
             // Apply the saved weights
-            leftParams.weight = savedLeftWeight
-            rightParams.weight = savedRightWeight
+            startParams.weight = savedStartWeight
+            endParams.weight = savedEndWeight
 
-            leftPane.layoutParams = leftParams
-            rightPane.layoutParams = rightParams
+            startPane.layoutParams = startParams
+            endPane.layoutParams = endParams
 
             // Request layout update for the parent
             parentLayout.requestLayout()

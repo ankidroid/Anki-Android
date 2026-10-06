@@ -925,11 +925,11 @@ open class DeckPicker :
                         ResizablePaneManager(
                             parentLayout = requireNotNull(binding.deckpickerXlView) { "deckpickerXlView" },
                             divider = requireNotNull(binding.resizingDivider) { "resizingDivider" },
-                            leftPane = deckPickerBinding.root,
-                            rightPane = requireNotNull(binding.studyoptionsFragment) { "studyoptionsFragment" },
+                            startPane = deckPickerBinding.root,
+                            endPane = requireNotNull(binding.studyoptionsFragment) { "studyoptionsFragment" },
                             sharedPrefs = Prefs.getUiConfig(this),
-                            leftPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
-                            rightPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
+                            startPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
+                            endPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
                         )
                     }
                 }
