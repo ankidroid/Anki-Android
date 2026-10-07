@@ -130,7 +130,7 @@ open class AnkiActivity(
     val dialogHandler = DialogHandler(this)
     override val ankiActivity = this
 
-    private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
+    private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper(lifecycleScope)
 
     private lateinit var fileExportPath: String
     private val saveFileLauncher: ActivityResultLauncher<Intent> =
