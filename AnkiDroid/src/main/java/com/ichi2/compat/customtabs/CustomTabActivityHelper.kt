@@ -44,19 +44,12 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     }
 
     /**
-     * Creates or retrieves an exiting CustomTabsSession.
+     * Returns the prepared session, or `null` if none is available.
      *
-     * @return a CustomTabsSession.
+     * Custom tabs can open without a session, so do not wait for this if it is unavailable.
      */
     val session: CustomTabsSession?
-        get() {
-            if (client == null) {
-                customTabsSession = null
-            } else if (customTabsSession == null) {
-                customTabsSession = client!!.newSession(null)
-            }
-            return customTabsSession
-        }
+        get() = customTabsSession
 
     /**
      * Binds the Activity to the Custom Tabs Service.
@@ -130,7 +123,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
                 // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
                 Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits")
             }
-            session
+            customTabsSession = client.newSession(null)
         } catch (e: RuntimeException) {
             // #6142 - A securityException here means that we're not able to load the CustomTabClient at all, whereas
             // the IllegalStateException was a failure, but could be continued from

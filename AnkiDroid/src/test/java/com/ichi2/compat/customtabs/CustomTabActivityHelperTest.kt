@@ -10,12 +10,15 @@ import android.content.pm.ResolveInfo
 import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsSession
 import androidx.core.net.toUri
 import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -46,6 +49,18 @@ class CustomTabActivityHelperTest {
     fun after() {
         CustomTabActivityHelper.resetFailed()
         ReflectionHelpers.setStaticField(CustomTabsHelper::class.java, "sPackageNameToUse", null)
+    }
+
+    @Test
+    fun `reading an unavailable session does not retry browser IPC`() {
+        val client = mock<CustomTabsClient>()
+        val helper = getValidTabHandler()
+        helper.onServiceConnected(client)
+
+        helper.session
+        helper.session
+
+        verify(client, times(1)).newSession(anyOrNull())
     }
 
     @Test
@@ -112,6 +127,21 @@ class CustomTabActivityHelperTest {
         CustomTabActivityHelper().also {
             assertThat("Should not be failed before call", not(it.isFailed))
         }
+
+    @Test
+    fun `warmup illegal state still allows a session`() {
+        val session = mock<CustomTabsSession>()
+        val client =
+            mock<CustomTabsClient> {
+                on { warmup(anyLong()) } doThrow IllegalStateException("Background start restricted")
+                on { newSession(anyOrNull()) } doReturn session
+            }
+        val helper = getValidTabHandler()
+        helper.onServiceConnected(client)
+
+        assertSame(session, helper.session)
+        assertFalse(helper.isFailed)
+    }
 
     @Test
     fun `failed initialization still releases the service binding`() {
