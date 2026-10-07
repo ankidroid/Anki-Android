@@ -294,6 +294,34 @@ class CustomTabActivityHelperTest {
     }
 
     @Test
+    fun `URL preloading does not run on the main thread`() =
+        scope.runTest {
+            val session =
+                mock<CustomTabsSession> {
+                    on { mayLaunchUrl(anyOrNull(), anyOrNull(), anyOrNull()) } doAnswer {
+                        assertNotSame(Looper.getMainLooper().thread, Thread.currentThread())
+                        true
+                    }
+                }
+            val client =
+                mock<CustomTabsClient> {
+                    on { newSession(anyOrNull()) } doReturn session
+                }
+            val helper = CustomTabActivityHelper(this)
+            helper.onServiceConnected(client)
+            coroutineContext.job.children
+                .toList()
+                .joinAll()
+
+            helper.mayLaunchUrl("https://example.com")
+            coroutineContext.job.children
+                .toList()
+                .joinAll()
+
+            verify(session).mayLaunchUrl("https://example.com".toUri(), null, null)
+        }
+
+    @Test
     fun `failed initialization still releases the service binding`() {
         val activity = activityWithBrowser()
         whenever(activity.bindService(any(), any(), any<Int>())).thenReturn(true)
