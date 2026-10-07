@@ -451,15 +451,14 @@ open class AnkiActivity(
         }
     }
 
+    /**
+     * Preloads a URL for future loading.
+     *
+     * @see CustomTabActivityHelper.mayLaunchUrl
+     */
     internal fun mayOpenUrl(
         @StringRes url: Int,
-    ) {
-        val url = getString(url)
-        val success = customTabActivityHelper.mayLaunchUrl(url.toUri(), null, null)
-        if (!success) {
-            Timber.w("Couldn't preload url: %s", url)
-        }
-    }
+    ) = customTabActivityHelper.mayLaunchUrl(getString(url))
 
     /**
      * Opens a URL in a custom tab, with fallback to a browser if no custom tab implementation is available.
