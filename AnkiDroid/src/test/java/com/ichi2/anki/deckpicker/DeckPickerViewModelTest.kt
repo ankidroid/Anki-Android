@@ -7,6 +7,7 @@ import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.card_rendering.EmptyCardsReport
 import anki.card_rendering.emptyCardsReport
+import anki.decks.SetDeckCollapsedRequest
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.RobolectricTest
@@ -16,6 +17,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.observability.ensureOpsExecuted
+import kotlinx.coroutines.flow.first
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -27,7 +29,7 @@ import kotlin.test.assertEquals
 /** Test of [DeckPickerViewModel] */
 @RunWith(AndroidJUnit4::class)
 class DeckPickerViewModelTest : RobolectricTest() {
-    private val viewModel = DeckPickerViewModel()
+    private val viewModel: DeckPickerViewModel by lazy { DeckPickerViewModel() }
 
     @Test
     fun `delete confirmation uses focused deck and includes cards in subdecks`() =
@@ -288,4 +290,52 @@ class DeckPickerViewModelTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun `deleteDeck selects the next visible deck matching the filter`() =
+        runTest {
+            // 'A hidden' is first alphabetically but does not match the filter.
+            // The 'skip empty default' fallback would select it, so this test fails
+            // if the visible deck list or the filter is not applied
+            addDeck("A hidden")
+            val deleted = addDeck("B match", setAsSelected = true)
+            val expected = addDeck("C match")
+
+            viewModel.updateDeckFilter("match")
+            viewModel.reloadDeckCounts().join()
+            // the deck list is built from a flow, so await a value containing the deck to delete
+            viewModel.flowOfDeckList.first { list -> list.data.any { it.did == deleted } }
+
+            ensureOpsExecuted(1) {
+                viewModel.deleteDeck(deleted).join()
+            }
+
+            assertEquals(expected, col.decks.selected(), "a filtered deck list is not respected")
+            assertEquals(expected, viewModel.focusedDeck)
+            assertEquals("Delete Deck", col.undoStatus().undo)
+        }
+
+    @Test
+    fun `deleteDeck does not select the hidden Default when its last child is deleted`() =
+        runTest {
+            val expected = addDeck("Other")
+            // Default is only visible because it is the parent of 'Default::Child'
+            val child = addDeck("Default::Child", setAsSelected = true)
+            // a fresh deck tree reports decks as collapsed: expand Default so its child is visible
+            col.decks.setCollapsed(Consts.DEFAULT_DECK_ID, collapsed = false, SetDeckCollapsedRequest.Scope.REVIEWER)
+
+            viewModel.reloadDeckCounts().join()
+            viewModel.flowOfDeckList.first { list -> list.data.any { it.did == child } }
+
+            ensureOpsExecuted(1) {
+                viewModel.deleteDeck(child).join()
+            }
+
+            assertEquals(
+                expected,
+                col.decks.selected(),
+                "Default is empty after its last child is deleted, so it must not be selected",
+            )
+            assertEquals(expected, viewModel.focusedDeck)
+        }
 }
