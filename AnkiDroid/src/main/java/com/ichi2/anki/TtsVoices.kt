@@ -247,11 +247,6 @@ object TtsVoices {
     suspend fun createTts(engine: String? = null) =
         suspendCancellableCoroutine { continuation ->
             var textToSpeech: TextToSpeech? = null
-            continuation.invokeOnCancellation {
-                Timber.v("TTS creation cancelled")
-                textToSpeech?.stop()
-                textToSpeech?.shutdown()
-            }
             Timber.v("begin TTS creation (engine: %s)", engine)
             val onInit =
                 TextToSpeech.OnInitListener { status ->
@@ -277,6 +272,16 @@ object TtsVoices {
                 } else {
                     TextToSpeech(appContext, onInit, engine)
                 }
+            // Register after construction so cancellation cannot miss the new instance.
+            continuation.invokeOnCancellation {
+                Timber.v("TTS creation cancelled")
+                // Engine calls can block.
+                // Launch on a scope which survives cancellation of the activity.
+                applicationScope.launch(ioDispatcher) {
+                    textToSpeech?.stop()
+                    textToSpeech?.shutdown()
+                }
+            }
         }
 }
 
