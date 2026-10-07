@@ -124,9 +124,16 @@ class CustomTabActivityHelper(
         extras: Bundle? = null,
         otherLikelyBundles: List<Bundle?>? = null,
     ) {
-        val success = session?.mayLaunchUrl(url.toUri(), extras, otherLikelyBundles) == true
-        if (!success) {
-            Timber.w("Couldn't preload url: %s", url)
+        scope.launch {
+            // must be on the main thread
+            val cachedSession = session
+            val success =
+                withContext(ioDispatcher) {
+                    cachedSession?.mayLaunchUrl(url.toUri(), extras, otherLikelyBundles) == true
+                }
+            if (!success) {
+                Timber.w("Couldn't preload url: %s", url)
+            }
         }
     }
 
