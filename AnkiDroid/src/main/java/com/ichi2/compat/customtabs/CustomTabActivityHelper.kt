@@ -9,7 +9,9 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.CheckResult
+import androidx.annotation.UiThread
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
@@ -21,16 +23,31 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.anki.snackbar.showSnackbar
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
  * This is a helper class to manage the connection to the Custom Tabs Service.
+ * @param scope the activity's main-thread lifecycle scope
  */
-class CustomTabActivityHelper : ServiceConnectionCallback {
+@UiThread
+class CustomTabActivityHelper(
+    private val scope: CoroutineScope,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+) : ServiceConnectionCallback {
     private var customTabsSession: CustomTabsSession? = null
     private var client: CustomTabsClient? = null
     private var connection: CustomTabsServiceConnection? = null
     private var customTabsProviderInfo: String? = null
+    private var initializationJob: Job? = null
 
     /**
      * Unbinds the Activity from the Custom Tabs Service.
@@ -114,15 +131,29 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     }
 
     override fun onServiceConnected(client: CustomTabsClient) {
-        try {
-            this.client = client
-            warmup(client)
-            customTabsSession = client.newSession(null)
-        } catch (e: RuntimeException) {
-            handleInitializationFailure(e)
-        }
+        onServiceDisconnected()
+        this.client = client
+        initializationJob =
+            scope.launch {
+                try {
+                    customTabsSession =
+                        withContext(ioDispatcher) {
+                            warmup(client)
+                            // Cancelling cannot interrupt Binder IPC. Don't start another call after stopping.
+                            ensureActive()
+                            client.newSession(null)
+                        }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: RuntimeException) {
+                    // A late failure from a cancelled connection must not disable its replacement.
+                    currentCoroutineContext().ensureActive()
+                    handleInitializationFailure(e)
+                }
+            }
     }
 
+    @WorkerThread
     private fun warmup(client: CustomTabsClient) {
         try {
             client.warmup(0L)
@@ -147,6 +178,8 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     }
 
     override fun onServiceDisconnected() {
+        initializationJob?.cancel()
+        initializationJob = null
         client = null
         customTabsSession = null
     }
