@@ -116,28 +116,34 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     override fun onServiceConnected(client: CustomTabsClient) {
         try {
             this.client = client
-            try {
-                this.client!!.warmup(0L)
-            } catch (e: IllegalStateException) {
-                // Issue 5337 - some browsers like TorBrowser don't adhere to Android 8 background limits
-                // They will crash as they attempt to start services. warmup failure shouldn't be fatal though.
-                Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits")
-            }
+            warmup(client)
             customTabsSession = client.newSession(null)
         } catch (e: RuntimeException) {
-            // #6142 - A securityException here means that we're not able to load the CustomTabClient at all, whereas
-            // the IllegalStateException was a failure, but could be continued from
-            Timber.w(e, "CustomTabsService bind attempt failed, using fallback. %s", customTabsProviderInfo)
-            CrashReportService.sendExceptionReport(
-                e = e,
-                origin = "CustomTabActivityHelper::onServiceConnected",
-                additionalInfo = customTabsProviderInfo,
-                onlyIfSilent = true,
-            )
-            // TODO: https://github.com/ankidroid/Anki-Android/issues/21708
-            // Edge throws on a cold bind. Retry in the future instead of disabling the feature
-            disableCustomTabHandler()
+            handleInitializationFailure(e)
         }
+    }
+
+    private fun warmup(client: CustomTabsClient) {
+        try {
+            client.warmup(0L)
+        } catch (e: IllegalStateException) {
+            // Issue 5337 - some browsers don't adhere to Android 8 background limits.
+            // Warmup failure shouldn't be fatal.
+            Timber.w(e, "Ignoring CustomTabs implementation that doesn't conform to Android 8 background limits")
+        }
+    }
+
+    private fun handleInitializationFailure(e: RuntimeException) {
+        Timber.w(e, "CustomTabsService bind attempt failed, using fallback. %s", customTabsProviderInfo)
+        CrashReportService.sendExceptionReport(
+            e = e,
+            origin = "CustomTabActivityHelper::onServiceConnected",
+            additionalInfo = customTabsProviderInfo,
+            onlyIfSilent = true,
+        )
+        // TODO: https://github.com/ankidroid/Anki-Android/issues/21708
+        // Edge throws on a cold bind. Retry in the future instead of disabling the feature
+        disableCustomTabHandler()
     }
 
     override fun onServiceDisconnected() {
