@@ -72,7 +72,7 @@
     <string name="webview_crash_oom">メモリが不足しています</string>
     <string name="webview_crash_oom_details">WebViewはシステムによって終了されました。これは通常、アプリケーションがメモリ不足時に発生します。多くの場合、データ量の多いフォントやメディアが原因です。</string>
     <string name="webview_crash_nonfatal">WebViewレンダラーがクラッシュしました。原因: %s</string>
-    <string name="webview_crash_fatal">Fatal error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_fatal">致命的なエラー: WebViewレンダラーがクラッシュしました。原因: %s</string>
     <string name="webview_crash_loop_dialog_title">システムのWebViewのレンダリングエラー</string>
     <string name="webview_crash_loop_dialog_content">AndroidシステムのWebViewがカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">左にｽﾗｲﾄﾞでｷｬﾝｾﾙ</string>
@@ -142,7 +142,7 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択したファイルを自動インポートできませんでした。手動でインポートする方法については、ユーザーマニュアルを参照してください。\n%s</string>
     <string name="import_error_copy_to_cache_title">一時ファイルの作成に失敗しました</string>
-    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">This is often caused by a bug in the app you used to select the file. Please try the following fixes:\n\n%s</string>
+    <string name="import_error_copy_to_cache_explanation" comment="The substitution is a list of suggested fixes in bullet point form">これはしばしば、ファイルを選択するために使用したアプリのバグによって引き起こされます。以下の対処方法を試してください:\n\n%s</string>
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
     <string name="export_ready_title">エクスポートの準備完了</string>
     <string name="export_send_no_handlers">Ankiパッケージに対応する他のアプリがありません。ファイルを保存します&#8230;</string>
@@ -273,7 +273,7 @@
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
     <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_time_left_label">残り時間</string>
     <string name="deck_download_progress_message">ダウンロード中、他のアプリを使用できます</string>
     <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="external_storage_unavailable">ダウンロードが中止されました。この外部ストレージは利用できません。</string>
