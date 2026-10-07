@@ -7,12 +7,18 @@ import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.observability.ensureOpsExecuted
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
@@ -21,6 +27,21 @@ import kotlin.test.assertTrue
 @RunWith(AndroidJUnit4::class)
 class StudyOptionsViewModelTest : RobolectricTest() {
     private val viewModel = StudyOptionsViewModel()
+
+    @Test
+    fun `refreshData suspends without blocking the caller while sync holds the collection queue`() =
+        runTest {
+            col
+            withBlockedCollectionQueue { releaseQueue ->
+                val refresh = launch(start = CoroutineStart.UNDISPATCHED) { viewModel.refreshData() }
+                assertFalse(refresh.isCompleted)
+                assertIs<StudyOptionsState.Loading>(viewModel.state)
+
+                releaseQueue()
+                refresh.join()
+                assertIs<StudyOptionsState.Empty>(viewModel.state)
+            }
+        }
 
     @Test
     fun `initial state is Loading`() {
@@ -278,4 +299,29 @@ class StudyOptionsViewModelTest : RobolectricTest() {
                 assertIs<StudyOptionsState.Loading>(viewModel.state)
             }
         }
+
+    /** Hold the production queue as a sync would; restore Robolectric's lock after all work finishes. */
+    private suspend fun withBlockedCollectionQueue(block: suspend CoroutineScope.(releaseQueue: () -> Unit) -> Unit) {
+        val previousQueue = CollectionManager.setTestDispatcher(Dispatchers.IO.limitedParallelism(1), useReentrantLock = false)
+        val queueHeld = CountDownLatch(1)
+        val releaseQueue = CountDownLatch(1)
+        try {
+            coroutineScope {
+                launch(Dispatchers.IO) {
+                    withCol {
+                        queueHeld.countDown()
+                        assertTrue(releaseQueue.await(5, TimeUnit.SECONDS), "caller blocked behind the collection queue")
+                    }
+                }
+                try {
+                    assertTrue(queueHeld.await(5, TimeUnit.SECONDS), "collection queue should be held")
+                    block(releaseQueue::countDown)
+                } finally {
+                    releaseQueue.countDown()
+                }
+            }
+        } finally {
+            CollectionManager.setTestDispatcher(previousQueue)
+        }
+    }
 }

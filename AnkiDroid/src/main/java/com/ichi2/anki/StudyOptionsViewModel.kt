@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
@@ -43,8 +44,7 @@ class StudyOptionsViewModel : ViewModel() {
      * the collection.
      */
     suspend fun refreshData() {
-        if (!CollectionManager.isOpenUnsafe()) return
-        withCol { updateStateFromCollection() }
+        withOpenColOrNull { updateStateFromCollection() }
     }
 
     suspend fun rebuildCram() {
