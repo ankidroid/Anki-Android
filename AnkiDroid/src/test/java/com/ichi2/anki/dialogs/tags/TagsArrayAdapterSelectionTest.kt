@@ -146,4 +146,18 @@ class TagsArrayAdapterSelectionTest : RobolectricTest() {
             assertEquals(UNCHECKED, holder("b").checkboxState)
         }
     }
+
+    @Test
+    fun `parent tags are case-insensitive`() {
+        val firstTag = "B::first"
+        val secondTag = "b::second"
+        val tagList = listOf(firstTag, secondTag)
+        withTags(TagsList(tagList, tagList)) {
+            val firstParentTag = holder(firstTag).node.parent?.tag
+            val secondParentTag = holder(secondTag).node.parent?.tag
+            assertEquals(firstParentTag, secondParentTag)
+            assertEquals(1, holder(firstTag).node.level)
+            assertEquals(1, holder(secondTag).node.level)
+        }
+    }
 }
