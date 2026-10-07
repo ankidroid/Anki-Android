@@ -3,16 +3,20 @@
 This module generates AnkiDroid's **baseline profile** - a list of classes
 and methods ART pre-compiles at install time so cold start is faster.
 
-It has two classes:
+It has three classes:
 
 - **`BaselineProfileGenerator`** captures a cold-start trace and writes
   `baseline-prof.txt` into `:AnkiDroid`.
 - **`StartupBenchmark`** measures cold-start time with vs without the
   profile so you can see the impact.
+- **`ReleaseSmokeTest`** opens a fresh install of a minified release
+  build and fails if the app crashes before the deck list. It clears the
+  app's data, so it only runs with `-e releaseSmokeTest true`. CI runs
+  it from `tests_emulator.yml`.
 
 For results to be valid for comparisons and real-world impact, they must
 be run on real hardware devices ideally the same device over time and
-representative of typical user hardware. So this is currently not
+representative of typical user hardware. So the first two are not
 intended to be used in CI unless CI is connected to real devices (e.g.
 Firebase Test Lab or similar).
 
