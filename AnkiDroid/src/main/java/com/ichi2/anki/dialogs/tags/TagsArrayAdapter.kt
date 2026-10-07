@@ -15,7 +15,6 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.ItemTagBinding
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
@@ -353,7 +352,6 @@ class TagsArrayAdapter(
      *
      * @param expandTarget The target tag to expand. Do nothing if it is empty or not found.
      */
-    @NeedsTest("#18481 - case insensitivity")
     private fun rebuildTagTree(expandTarget: String = "") {
         // init mapping for newly added tags
         filteredList.forEach {
