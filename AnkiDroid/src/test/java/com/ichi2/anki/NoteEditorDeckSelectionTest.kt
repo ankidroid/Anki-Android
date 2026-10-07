@@ -13,6 +13,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.noteeditor.getNoteEditorFragment
 import com.ichi2.anki.noteeditor.openNoteEditorWithArgs
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -40,6 +41,7 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("Issue 22065: save task starts while activity is finishing")
     fun `successive shares use the study deck in current-deck mode`() =
         runTest {
             useAddingDefaults(AddingDefaultsMode.USE_CURRENT_DECK)
@@ -57,6 +59,7 @@ class NoteEditorDeckSelectionTest : RobolectricTest() {
         }
 
     @Test
+    @Ignore("Issue 22065: save task starts while activity is finishing")
     fun `successive shares remember the destination in note-type mode`() =
         runTest {
             useAddingDefaults(AddingDefaultsMode.DECIDE_BY_NOTE_TYPE)

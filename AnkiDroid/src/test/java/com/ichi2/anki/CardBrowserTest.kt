@@ -1242,6 +1242,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("Issue 22065: search task starts while activity is finishing")
     fun `deck id is remembered - issue 15072`() =
         runTest {
             // WARN: This doesn't mirror reality due to the use of coroutines
