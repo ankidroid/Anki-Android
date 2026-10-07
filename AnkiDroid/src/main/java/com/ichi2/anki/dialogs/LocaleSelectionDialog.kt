@@ -3,7 +3,11 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.ViewGroup
 import android.view.WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -17,6 +21,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.DialogLocaleSelectionBinding
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
 import com.ichi2.anki.servicelayer.LanguageHintService
@@ -109,7 +114,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             position: Int,
         ) {
             val locale = filteredLocales[position]
-            holder.textView.text = locale.displayName
+            holder.textView.text = locale.label(holder.textView.context)
             holder.textView.setOnClickListener { onLocaleSelected(locale) }
         }
 
@@ -123,7 +128,11 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 ): List<Locale> {
                     val normalisedConstraint = constraint.toString().lowercase(Locale.getDefault())
                     return items.filter {
-                        it.displayName.lowercase(Locale.getDefault()).contains(normalisedConstraint)
+                        it
+                            .label(requireContext())
+                            .toString()
+                            .lowercase(Locale.getDefault())
+                            .contains(normalisedConstraint)
                     }
                 }
 
@@ -153,3 +162,17 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         private val IPALanguage = Locale.Builder().setLanguageTag("und-fonipa").build()
     }
 }
+
+/** Some locales like Locale.ROOT have empty display name */
+internal fun Locale.label(context: Context): CharSequence =
+    displayName.ifBlank {
+        val text = context.getString(R.string.locale_selection_dialog_unknown_language, toLanguageTag())
+        val spannable = SpannableString(text)
+        spannable.setSpan(
+            ForegroundColorSpan(getColorFromAttr(context, android.R.attr.textColorSecondary)),
+            0,
+            text.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
+        spannable
+    }
