@@ -24,6 +24,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import anki.collection.OpChanges
 import com.ichi2.anki.AnkiDroidApp.Companion.sharedPreferencesTestingOverride
 import com.ichi2.anki.analytics.initializeAnalytics
+import com.ichi2.anki.analytics.launchPreviousAnrReporting
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.common.android.Animations
@@ -222,6 +223,7 @@ open class AnkiDroidApp :
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
             return
         }
+        launchPreviousAnrReporting()
         ProfileManager.attachError?.let {
             Timber.w(it, "Failed to load the profile environment, running on the base context")
         }
