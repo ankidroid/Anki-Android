@@ -15,6 +15,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.core.net.toUri
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
@@ -106,17 +107,19 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     }
 
     /**
+     * Preloads a URL for future loading.
+     *
      * @see CustomTabsSession.mayLaunchUrl
-     * @return true if call to mayLaunchUrl was accepted.
      */
     fun mayLaunchUrl(
-        uri: Uri?,
-        extras: Bundle?,
-        otherLikelyBundles: List<Bundle?>?,
-    ): Boolean {
-        if (client == null) return false
-        val session = session ?: return false
-        return session.mayLaunchUrl(uri, extras, otherLikelyBundles)
+        url: String,
+        extras: Bundle? = null,
+        otherLikelyBundles: List<Bundle?>? = null,
+    ) {
+        val success = session?.mayLaunchUrl(url.toUri(), extras, otherLikelyBundles) == true
+        if (!success) {
+            Timber.w("Couldn't preload url: %s", url)
+        }
     }
 
     override fun onServiceConnected(client: CustomTabsClient) {
