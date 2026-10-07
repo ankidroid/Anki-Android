@@ -28,6 +28,7 @@ import com.ichi2.anki.i18n.normalize
 import com.ichi2.anki.i18n.toAnkiTwoLetterCode
 import com.ichi2.anki.libanki.TemplateManager
 import com.ichi2.anki.libanki.TtsVoice
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -242,7 +243,8 @@ object TtsVoices {
      * @param engine the package name of the TTS engine to use, or `null` to use the user's
      * default engine
      * @return a usable [TextToSpeech] instance, or `null` if the [TextToSpeech.OnInitListener]
-     * returns [TextToSpeech.ERROR]
+     * returns [TextToSpeech.ERROR] or construction fails
+     * @throws CancellationException if creation is cancelled
      */
     suspend fun createTts(engine: String? = null) =
         suspendCancellableCoroutine { continuation ->
@@ -267,10 +269,18 @@ object TtsVoices {
             // may be expected to disappear, as it would cause a memory leak. Hence
             // we pass it the application as context.
             textToSpeech =
-                if (engine == null) {
-                    TextToSpeech(appContext, onInit)
-                } else {
-                    TextToSpeech(appContext, onInit, engine)
+                try {
+                    if (engine == null) {
+                        TextToSpeech(appContext, onInit)
+                    } else {
+                        TextToSpeech(appContext, onInit, engine)
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Timber.w(e, "Unable to initialize TTS engine: %s", engine)
+                    continuation.resume(null)
+                    null
                 }
             // Register after construction so cancellation cannot miss the new instance.
             continuation.invokeOnCancellation {
