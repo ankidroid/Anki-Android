@@ -6,20 +6,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.recorder.AudioRecorder
+import com.ichi2.anki.recorder.RecorderState
+import com.ichi2.anki.recorder.VoiceRecorder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.io.File
 import kotlin.time.Duration.Companion.milliseconds
 
 class CheckPronunciationViewModel(
-    private val audioRecorder: AudioRecorder = AudioRecorder(appContext),
+    audioRecorder: AudioRecorder = AudioRecorder(appContext),
     private val audioPlayer: AudioPlayer = AudioPlayer(),
+    recordingsDirectory: File = File(appContext.cacheDir, VoiceRecorder.RECORDINGS_DIRECTORY),
 ) : ViewModel() {
+    private val recorder = VoiceRecorder(audioRecorder, recordingsDirectory, viewModelScope)
+
     init {
         addCloseable(audioPlayer)
-        addCloseable(audioRecorder)
+        addCloseable(recorder)
 
         audioPlayer.onCompletion = {
             viewModelScope.launch {
@@ -36,20 +42,20 @@ class CheckPronunciationViewModel(
     val isPlaybackVisibleFlow = MutableStateFlow(false)
 
     private var progressBarUpdateJob: Job? = null
-    private val currentFile get() = audioRecorder.currentFile
+    private val currentFile get() = (recorder.state.value as? RecorderState.Recorded)?.file
     private val isPlaying get() = audioPlayer.isPlaying
 
     fun onRecordingStarted() {
-        audioRecorder.start()
         onCancelPlayback()
+        recorder.start()
     }
 
     fun onRecordingCancelled() {
-        audioRecorder.stop()
+        recorder.discard()
     }
 
     fun onRecordingCompleted() {
-        audioRecorder.stop()
+        if (!recorder.stop()) return
         viewModelScope.launch {
             isPlaybackVisibleFlow.emit(true)
             isPlayingFlow.emit(false)
@@ -88,6 +94,9 @@ class CheckPronunciationViewModel(
     fun onCancelPlayback() {
         progressBarUpdateJob?.cancel()
         audioPlayer.close()
+        if (recorder.state.value is RecorderState.Recorded) {
+            recorder.discard()
+        }
         viewModelScope.launch {
             isPlaybackVisibleFlow.emit(false)
             playbackProgressFlow.emit(0)
