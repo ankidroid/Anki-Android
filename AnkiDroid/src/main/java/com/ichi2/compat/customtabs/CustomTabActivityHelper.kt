@@ -37,10 +37,8 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      * @param activity the activity that is connected to the service.
      */
     fun unbindCustomTabsService(activity: Activity) {
-        if (connection == null) return
-        connection.let { activity.unbindService(it!!) }
-        client = null
-        customTabsSession = null
+        onServiceDisconnected()
+        connection?.let { activity.unbindService(it) }
         connection = null
         customTabsProviderInfo = null
     }
@@ -65,7 +63,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
      * @param activity the activity to be bound to the service.
      */
     fun bindCustomTabsService(activity: Activity) {
-        if (client != null) return
+        if (connection != null) return
         customTabsProviderInfo = null
         try {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity) ?: return
@@ -89,7 +87,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
         sCustomTabsFailed = true
         client = null
         customTabsSession = null
-        connection = null
+        // connection should be set to null in `onStop`
         customTabsProviderInfo = null
     }
 

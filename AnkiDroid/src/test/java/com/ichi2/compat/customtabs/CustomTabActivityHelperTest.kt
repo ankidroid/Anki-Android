@@ -4,7 +4,10 @@ package com.ichi2.compat.customtabs
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.core.net.toUri
@@ -12,6 +15,8 @@ import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,16 +26,26 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.util.ReflectionHelpers
 
 @RunWith(RobolectricTestRunner::class)
 class CustomTabActivityHelperTest {
     @Before
     fun before() {
         CustomTabActivityHelper.resetFailed()
+        ReflectionHelpers.setStaticField(CustomTabsHelper::class.java, "sPackageNameToUse", null)
+    }
+
+    @After
+    fun after() {
+        CustomTabActivityHelper.resetFailed()
+        ReflectionHelpers.setStaticField(CustomTabsHelper::class.java, "sPackageNameToUse", null)
     }
 
     @Test
@@ -97,6 +112,58 @@ class CustomTabActivityHelperTest {
         CustomTabActivityHelper().also {
             assertThat("Should not be failed before call", not(it.isFailed))
         }
+
+    @Test
+    fun `failed initialization still releases the service binding`() {
+        val activity = activityWithBrowser()
+        whenever(activity.bindService(any(), any(), any<Int>())).thenReturn(true)
+        val helper = getValidTabHandler()
+        helper.bindCustomTabsService(activity)
+        helper.bindCustomTabsService(activity)
+        val connection = argumentCaptor<android.content.ServiceConnection>()
+        verify(activity).bindService(any(), connection.capture(), any<Int>())
+
+        helper.onServiceConnected(getClientThrowingSecurityException())
+        assertTrue(helper.isFailed)
+        helper.unbindCustomTabsService(activity)
+        helper.unbindCustomTabsService(activity)
+
+        verify(activity).unbindService(connection.firstValue)
+    }
+
+    @Test
+    fun `unsuccessful bind still releases the connection`() {
+        val activity = activityWithBrowser()
+        // bindService returns false by default, but Android still requires unbinding.
+        val helper = getValidTabHandler()
+        helper.bindCustomTabsService(activity)
+        val connection = argumentCaptor<android.content.ServiceConnection>()
+        verify(activity).bindService(any(), connection.capture(), any<Int>())
+
+        helper.unbindCustomTabsService(activity)
+
+        verify(activity).unbindService(connection.firstValue)
+    }
+
+    private fun activityWithBrowser(): Activity {
+        val browser =
+            ResolveInfo().apply {
+                activityInfo = ActivityInfo().apply { packageName = "test.browser" }
+            }
+        val packageManager =
+            mock<PackageManager> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    on { queryIntentActivities(any(), any<PackageManager.ResolveInfoFlags>()) } doReturn listOf(browser)
+                    on { resolveService(any(), any<PackageManager.ResolveInfoFlags>()) } doReturn ResolveInfo()
+                } else {
+                    on { queryIntentActivities(any(), any<Int>()) } doReturn listOf(browser)
+                    on { resolveService(any(), any<Int>()) } doReturn ResolveInfo()
+                }
+            }
+        return mock {
+            on { it.packageManager } doReturn packageManager
+        }
+    }
 
     @CheckResult
     private fun getClientThrowingSecurityException(): CustomTabsClient =
