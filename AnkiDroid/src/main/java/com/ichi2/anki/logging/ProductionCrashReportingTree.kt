@@ -66,8 +66,8 @@ class ProductionCrashReportingTree : Timber.Tree() {
         when (priority) {
             Log.VERBOSE, Log.DEBUG -> {}
             Log.INFO -> Log.i(AnkiDroidApp.TAG, message, t)
-            Log.WARN -> Log.w(AnkiDroidApp.TAG, "${this.tag}/ $message", t)
-            Log.ERROR, Log.ASSERT -> Log.e(AnkiDroidApp.TAG, "${this.tag}/ $message", t)
+            Log.WARN -> Log.w(AnkiDroidApp.TAG, "${tag ?: this.tag}/ $message", t)
+            Log.ERROR, Log.ASSERT -> Log.e(AnkiDroidApp.TAG, "${tag ?: this.tag}/ $message", t)
         }
     }
 

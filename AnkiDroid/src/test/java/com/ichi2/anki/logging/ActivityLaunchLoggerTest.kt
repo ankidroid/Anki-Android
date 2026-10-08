@@ -7,6 +7,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
@@ -36,6 +37,11 @@ class ActivityLaunchLoggerTest {
     private val messages = mutableListOf<String>()
     private val tree =
         object : Timber.Tree() {
+            override fun isLoggable(
+                tag: String?,
+                priority: Int,
+            ): Boolean = priority >= Log.INFO
+
             override fun log(
                 priority: Int,
                 tag: String?,

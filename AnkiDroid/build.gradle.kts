@@ -822,7 +822,7 @@ dependencies {
     implementation(libs.commons.collections4) // SetUniqueList
     implementation(libs.commons.io) // FileUtils.contentEquals
     implementation(libs.okhttp)
-    implementation(libs.slf4j.timber)
+    implementation(libs.slf4j.api)
     implementation(libs.jakewharton.timber)
     implementation(libs.jsoup)
     implementation(libs.java.semver) // For AnkiDroid JS API Versioning
