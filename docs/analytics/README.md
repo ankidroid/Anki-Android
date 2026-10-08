@@ -102,9 +102,11 @@ prevent app start.
 
 The library uses [`io.github.oshai:kotlin-logging`][klog] (an slf4j facade)
 and already logs the full request body, response, sampling decision, and
-drop reasons. To see them in AnkiDroid debug builds, add an slf4j → Timber
-bridge in the debug flavor (e.g. the `slf4j-timber` artifact, or a small
-custom binding). No library change required, no-op in release.
+drop reasons. AnkiDroid routes SLF4J to Timber through
+[`TimberServiceProvider`](../../AnkiDroid/src/main/java/com/ichi2/anki/logging/TimberServiceProvider.kt),
+so debug builds show these in logcat without any setup
+(`adb logcat -s GaImpl OkHttpClientImpl`). Release builds only keep INFO and
+above, so there you'll see the sampling decision and failed sends.
 
 [klog]: https://github.com/oshai/kotlin-logging
 
