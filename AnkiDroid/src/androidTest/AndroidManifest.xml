@@ -2,6 +2,13 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
+        <!-- The intentional ANR must not block or kill the instrumentation process. -->
+        <activity
+            android:name="com.ichi2.anki.testutil.AnrTestActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":anr_trace_test"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
         <service
             android:name="com.ichi2.anki.testutil.TestInputMethod"
             android:exported="true"
