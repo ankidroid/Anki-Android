@@ -959,6 +959,7 @@ open class DeckPicker :
 
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
         viewModel.flowOfDeleteDeckConfirmation.launchCollectionInLifecycleScope(::showDeleteDeckConfirmationDialog)
+        viewModel.flowOfRenameDeck.launchCollectionInLifecycleScope(::renameDeckDialog)
         viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
         viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
@@ -1453,10 +1454,7 @@ open class DeckPicker :
                 return true
             }
             R.id.action_deck_rename -> {
-                launchCatchingTask {
-                    val targetDeckId = withCol { decks.selected() }
-                    renameDeckDialog(targetDeckId)
-                }
+                viewModel.requestRenameSelectedDeck()
                 return true
             }
             R.id.action_deck_delete -> {
