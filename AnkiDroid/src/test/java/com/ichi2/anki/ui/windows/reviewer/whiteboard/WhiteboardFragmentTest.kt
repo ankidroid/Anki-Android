@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.ui.windows.reviewer.whiteboard
 
+import android.graphics.Path
 import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.fragment.app.commitNow
@@ -11,6 +12,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.preferences.reviewer.WhiteboardAction
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.testutils.launchFragmentInContainer
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +28,26 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class WhiteboardFragmentTest : RobolectricTest() {
+    @Test
+    fun `two finger tap clears the whiteboard with finger drawing`() = checkTapClearsWhiteboard(Gesture.TWO_FINGER_TAP, fingerCount = 2)
+
+    @Test
+    fun `three finger tap clears the whiteboard with finger drawing`() = checkTapClearsWhiteboard(Gesture.THREE_FINGER_TAP, fingerCount = 3)
+
+    @Test
+    fun `four finger tap clears the whiteboard with finger drawing`() = checkTapClearsWhiteboard(Gesture.FOUR_FINGER_TAP, fingerCount = 4)
+
+    @Test
+    fun `single finger input does not draw in stylus mode`() {
+        WhiteboardRepository(getPreferences()).stylusOnlyMode = true
+        withWhiteboard { fragment ->
+            fragment.dispatchFingerTouch(MotionEvent.ACTION_DOWN, 1)
+            fragment.dispatchFingerTouch(MotionEvent.ACTION_MOVE, 1)
+            fragment.dispatchFingerTouch(MotionEvent.ACTION_UP, 1)
+            assertEquals(emptyList(), fragment.viewModel.paths.value)
+        }
+    }
+
     @Test
     fun `hiding toolbar does not crash after view is destroyed`() {
         changeToolbarVisibilityBeforeDestroyingView(isShown = false)
@@ -115,6 +140,86 @@ class WhiteboardFragmentTest : RobolectricTest() {
                 assertTrue(fragment.isBrushSelected(1), "The second brush should now be selected")
                 assertFalse(fragment.isBrushSelected(0), "The first brush should no longer be selected")
             }
+        }
+    }
+
+    private fun checkTapClearsWhiteboard(
+        gesture: Gesture,
+        fingerCount: Int,
+    ) {
+        editPreferences {
+            putString(WhiteboardAction.CLEAR.preferenceKey, listOf(ReviewerBinding.fromGesture(gesture)).toPreferenceString())
+        }
+        WhiteboardRepository(getPreferences()).stylusOnlyMode = false
+        withWhiteboard { fragment ->
+            val view = fragment.binding.whiteboardView
+            assertFalse(view.isStylusOnlyMode)
+            fragment.viewModel.addPath(Path().apply { lineTo(10f, 10f) })
+            assertEquals(1, fragment.viewModel.paths.value.size)
+
+            fragment.tapWithFingers(fingerCount)
+
+            assertEquals(emptyList(), fragment.viewModel.paths.value)
+            assertFalse(view.isStylusOnlyMode)
+            view.dispatchStylusTouch(MotionEvent.ACTION_DOWN)
+            view.dispatchStylusTouch(MotionEvent.ACTION_UP)
+            assertEquals(1, fragment.viewModel.paths.value.size, "Stylus drawing should still work")
+        }
+    }
+
+    private fun WhiteboardFragment.tapWithFingers(fingerCount: Int) {
+        dispatchFingerTouch(MotionEvent.ACTION_DOWN, 1)
+        for (count in 2..fingerCount) {
+            dispatchFingerTouch(
+                MotionEvent.ACTION_POINTER_DOWN or ((count - 1) shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+                count,
+            )
+        }
+        for (count in fingerCount downTo 2) {
+            dispatchFingerTouch(
+                MotionEvent.ACTION_POINTER_UP or ((count - 1) shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),
+                count,
+            )
+        }
+        dispatchFingerTouch(MotionEvent.ACTION_UP, 1)
+    }
+
+    private fun WhiteboardFragment.dispatchFingerTouch(
+        action: Int,
+        pointerCount: Int,
+    ) {
+        val event =
+            MotionEvent.obtain(
+                0L,
+                0L,
+                action,
+                pointerCount,
+                Array(pointerCount) { index ->
+                    MotionEvent.PointerProperties().apply {
+                        id = index
+                        toolType = MotionEvent.TOOL_TYPE_FINGER
+                    }
+                },
+                Array(pointerCount) { index ->
+                    MotionEvent.PointerCoords().apply {
+                        x = 50f + index * 20f
+                        y = 50f
+                    }
+                },
+                0,
+                0,
+                1f,
+                1f,
+                0,
+                0,
+                InputDevice.SOURCE_TOUCHSCREEN,
+                0,
+            )
+        try {
+            // Use the parent: rejecting ACTION_DOWN prevents later pointer events reaching the whiteboard.
+            binding.root.dispatchTouchEvent(event)
+        } finally {
+            event.recycle()
         }
     }
 

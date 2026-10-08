@@ -19,6 +19,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardFragment
+import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardRepository
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import org.junit.After
 import org.junit.Before
@@ -98,13 +99,19 @@ class ReviewerShakeTest : RobolectricTest() {
         }
 
     @Test
-    fun `shake bound only to the whiteboard clears it`() =
+    fun `shake bound only to the whiteboard clears it`() = checkShakeClearsWhiteboard(stylusOnly = false)
+
+    @Test
+    fun `shake clears the whiteboard in stylus mode`() = checkShakeClearsWhiteboard(stylusOnly = true)
+
+    private fun checkShakeClearsWhiteboard(stylusOnly: Boolean) =
         runTest {
             editPreferences {
                 remove(ViewerAction.RESCHEDULE_NOTE.preferenceKey)
                 putString(WhiteboardAction.CLEAR.preferenceKey, listOf(ReviewerBinding.fromGesture(Gesture.SHAKE)).toPreferenceString())
             }
             StudyScreenRepository().isWhiteboardEnabled = true
+            WhiteboardRepository(getPreferences()).stylusOnlyMode = stylusOnly
             addBasicNote()
             withReviewer { scenario ->
                 scenario.onActivity { activity ->
@@ -117,6 +124,7 @@ class ReviewerShakeTest : RobolectricTest() {
                     sensors.shake()
 
                     assertEquals(emptyList(), whiteboard.viewModel.paths.value)
+                    assertEquals(stylusOnly, whiteboard.binding.whiteboardView.isStylusOnlyMode)
                 }
             }
         }

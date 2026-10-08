@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.Path
 import android.view.InputDevice
 import android.view.MotionEvent
+import android.view.View
+import android.widget.FrameLayout
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
@@ -22,6 +24,35 @@ class WhiteboardViewTest {
     @Before
     fun setUp() {
         whiteboardView = WhiteboardView(ApplicationProvider.getApplicationContext())
+    }
+
+    @Test
+    fun `stylus mode preserves finger input to the underlying card`() {
+        whiteboardView.isStylusOnlyMode = true
+        val received = mutableListOf<Int>()
+        val container = FrameLayout(whiteboardView.context)
+        val card = View(whiteboardView.context)
+        card.setOnTouchListener { _, event ->
+            received.add(event.actionMasked)
+            true
+        }
+        container.addView(card, FrameLayout.LayoutParams(300, 300))
+        container.addView(whiteboardView, FrameLayout.LayoutParams(300, 300))
+        val size = View.MeasureSpec.makeMeasureSpec(300, View.MeasureSpec.EXACTLY)
+        container.measure(size, size)
+        container.layout(0, 0, 300, 300)
+
+        val actions = listOf(MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP)
+        actions.forEachIndexed { index, action ->
+            val event = MotionEvent.obtain(0L, index * 20L, action, 50f, 50f + index * 40f, 0)
+            try {
+                container.dispatchTouchEvent(event)
+            } finally {
+                event.recycle()
+            }
+        }
+
+        assertEquals(actions, received, "Stylus mode must preserve finger input used for card scrolling, links and gestures")
     }
 
     @Test
