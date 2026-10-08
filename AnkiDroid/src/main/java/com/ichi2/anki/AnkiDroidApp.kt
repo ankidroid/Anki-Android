@@ -141,7 +141,7 @@ open class AnkiDroidApp :
      */
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        if (isAcraSenderProcess()) return
+        if (isAcraSenderProcess() || isPhoenixProcess()) return
         profileManager = ProfileManager.createOrNull(base)
     }
 
