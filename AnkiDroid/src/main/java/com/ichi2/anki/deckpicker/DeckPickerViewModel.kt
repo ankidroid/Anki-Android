@@ -122,6 +122,7 @@ class DeckPickerViewModel :
      */
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>(extraBufferCapacity = 1)
     val flowOfDeleteDeckConfirmation = MutableSharedFlow<DeleteDeckConfirmationRequest>(extraBufferCapacity = 1)
+    val flowOfRenameDeck = MutableSharedFlow<DeckId>(extraBufferCapacity = 1)
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
@@ -212,6 +213,12 @@ class DeckPickerViewModel :
                     )
                 }
             flowOfDeleteDeckConfirmation.emit(request)
+        }
+
+    fun requestRenameSelectedDeck() =
+        launchCatchingIO {
+            val deckId = withCol { decks.selected() }
+            flowOfRenameDeck.emit(deckId)
         }
 
     /**

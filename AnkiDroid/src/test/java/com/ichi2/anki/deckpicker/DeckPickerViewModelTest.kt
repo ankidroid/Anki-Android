@@ -92,6 +92,20 @@ class DeckPickerViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `rename request carries the selected deck despite different focus`() =
+        runTest {
+            val selected = addDeck("Selected", setAsSelected = true)
+            viewModel.focusedDeck = addDeck("Other")
+
+            viewModel.flowOfRenameDeck.test {
+                viewModel.requestRenameSelectedDeck().join()
+                selectDefaultDeck()
+                assertEquals(selected, awaitItem())
+                expectNoEvents()
+            }
+        }
+
+    @Test
     fun `empty cards - flow`() =
         runTest {
             val cardsToEmpty = createEmptyCards()
