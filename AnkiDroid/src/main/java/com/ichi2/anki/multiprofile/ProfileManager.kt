@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.AnkiDroidFolder
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.time.getTimestamp
@@ -194,7 +195,11 @@ class ProfileManager private constructor(
         if (prefs.getString(PREF_COLLECTION_PATH, null) != null) return
 
         val profileCollectionDir =
-            getDefaultAnkiDroidDirectory(profileContext, directoryName = profileId.value).apply { mkdirs() }
+            getDefaultAnkiDroidDirectory(
+                profileContext,
+                directoryName = profileId.value,
+                folder = AnkiDroidFolder.APP_PRIVATE,
+            ).apply { mkdirs() }
 
         prefs.edit { putString(PREF_COLLECTION_PATH, profileCollectionDir.absolutePath) }
     }
