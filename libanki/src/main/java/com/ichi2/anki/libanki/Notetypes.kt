@@ -1,28 +1,8 @@
-/*
- * Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>                             *
- * Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>                            *
- * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 3 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * This file incorporates code under the following license
- * https://github.com/ankitects/anki/blob/c4db4bd2913234d077aa289543da6405a62f53dc/pylib/anki/models.py
- *
- *    Copyright: Ankitects Pty Ltd and contributors
- *    License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
- *
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileCopyrightText: Copyright (c) 2009 Daniel Svärd <daniel.svard@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2010 Rick Gruber-Riemer <rick@vanosten.net>
+// SPDX-FileCopyrightText: Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+// SPDX-FileCopyrightText: Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>
 
 // This file is called models.py in the desktop code for legacy reasons.
 
