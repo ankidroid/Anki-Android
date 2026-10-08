@@ -1320,14 +1320,14 @@ open class DeckPicker :
     }
 
     /**
-     * Shows/hides deck related menu items based on the collection being empty or not.
+     * Shows/hides deck related menu items using the ViewModel's action eligibility.
      */
     private fun updateDeckRelatedMenuItems(menu: Menu) {
         viewModel.optionsMenuState?.run {
-            menu.findItem(R.id.action_deck_rename)?.isVisible = !isColEmpty
-            menu.findItem(R.id.action_deck_delete)?.isVisible = !isColEmpty
+            menu.findItem(R.id.action_deck_rename)?.isVisible = showDeckActions
+            menu.findItem(R.id.action_deck_delete)?.isVisible = showDeckActions
             // added to the menu by StudyOptionsFragment
-            menu.findItem(R.id.action_deck_or_study_options)?.isVisible = !isColEmpty
+            menu.findItem(R.id.action_deck_or_study_options)?.isVisible = showDeckActions
         }
     }
 

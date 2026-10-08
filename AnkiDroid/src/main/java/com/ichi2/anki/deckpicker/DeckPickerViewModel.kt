@@ -646,11 +646,11 @@ class DeckPickerViewModel :
                 val undoAvailable = undoAvailable()
                 // besides checking for cards being available also consider if we have empty decks
                 val isColEmpty = isEmpty && decks.count() == 1
+                val showDeckActions = !isColEmpty
                 // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
-                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
-            }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
-                val syncIcon = fetchSyncIconState()
-                OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
+                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, showDeckActions)
+            }?.let { state ->
+                state.copy(syncIcon = fetchSyncIconState())
             }
     }
 
@@ -762,5 +762,5 @@ data class OptionsMenuState(
     val undoLabel: String?,
     val syncIcon: SyncIconState,
     val undoAvailable: Boolean,
-    val isColEmpty: Boolean,
+    val showDeckActions: Boolean,
 )
