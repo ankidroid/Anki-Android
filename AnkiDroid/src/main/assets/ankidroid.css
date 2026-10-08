@@ -7,6 +7,11 @@ img {
     max-height: 100%;
 }
 
+/* Avoid reserving text descender space below the audio icon inside its span. */
+.replay-button svg {
+    display: block;
+}
+
 @font-face {
     font-family: "Noto Sans Mono";
     src: url("file:///android_asset/fonts/noto/NotoSansMono.ttf")
