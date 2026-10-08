@@ -948,6 +948,11 @@ open class DeckPicker :
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
         viewModel.flowOfDeleteDeckConfirmation.launchCollectionInLifecycleScope(::showDeleteDeckConfirmationDialog)
         viewModel.flowOfRenameDeck.launchCollectionInLifecycleScope(::renameDeckDialog)
+        viewModel.flowOfStudyDeck.launchCollectionInLifecycleScope { deckId ->
+            launchCatchingTask {
+                handleDeckSelection(deckId, DeckSelectionType.SKIP_STUDY_OPTIONS)
+            }
+        }
         viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
         viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
@@ -1688,9 +1693,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                launchCatchingTask {
-                    handleDeckSelection(withCol { decks.selected() }, DeckSelectionType.SKIP_STUDY_OPTIONS)
-                }
+                viewModel.requestStudySelectedDeck()
                 return true
             }
             KeyEvent.KEYCODE_T -> {
