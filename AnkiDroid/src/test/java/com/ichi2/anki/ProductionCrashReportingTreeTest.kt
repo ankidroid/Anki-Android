@@ -109,4 +109,19 @@ class ProductionCrashReportingTreeTest {
 
         assertThat(testWithProperClassNameCalled, equalTo(true))
     }
+
+    @Test
+    fun testProductionLogExplicitTag() {
+        mockStatic(Log::class.java).use { autoClosed ->
+            Timber.tag("ExplicitTag").w("warn level message")
+            Timber.tag("ExplicitTag").e("error level message")
+
+            autoClosed.verify {
+                Log.w(AnkiDroidApp.TAG, "ExplicitTag/ warn level message", null)
+            }
+            autoClosed.verify {
+                Log.e(AnkiDroidApp.TAG, "ExplicitTag/ error level message", null)
+            }
+        }
+    }
 }
