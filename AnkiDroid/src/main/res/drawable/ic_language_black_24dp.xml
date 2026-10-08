@@ -1,10 +1,9 @@
 <!--
-  ~ SPDX-License-Identifier: Apache-2.0
-  ~ SPDX-FileCopyrightText: Google LLC
-  ~
-  ~ Source: https://github.com/google/material-design-icons/blob/master/src/action/translate/materialicons/24px.svg
-  -->
-
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Filled
+  Source: https://fonts.gstatic.com/s/i/materialicons/translate/v16/24px.xml
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
