@@ -7,6 +7,9 @@
 -keep class kotlin.test.** { *; }
 -keep class **.R$layout { <init> (...); <fields>; }
 
+# The platform ANR test asserts this method appears in Android's captured stack.
+-keep class com.ichi2.anki.testutil.AnrTestActivity { *; }
+
 # Used by some test classes, not important for us
 -dontwarn androidx.concurrent.futures.SuspendToFutureAdapter
 
