@@ -98,6 +98,7 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.menu
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.testutils.withSplitPaneUiAsync
 import com.ichi2.utils.LanguageUtil
@@ -511,6 +512,26 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    fun completedSearchFormatsCardAndNoteCounts() {
+        val labels =
+            mapOf(
+                CARDS to listOf("0 cards shown", "1 card shown", "2 cards shown"),
+                NOTES to listOf("0 notes shown", "1 note shown", "2 notes shown"),
+            )
+        for ((mode, expectedLabels) in labels) {
+            expectedLabels.forEachIndexed { count, expected ->
+                val search =
+                    CardBrowserViewModel.SearchState.Completed(
+                        rowCount = count,
+                        cardsOrNotes = mode,
+                        resultMessage = CardBrowserViewModel.SearchResultMessage.CardCount(includeSearchAllDecksAction = false),
+                    )
+                assertThat(search.formatCardCount(targetContext.resources), equalTo(expected))
+            }
+        }
+    }
+
+    @Test
     fun cardCountIsShownAfterRecreation() {
         ensureCollectionLoadIsSynchronous()
         addBasicNote("dog", "barks")
@@ -522,6 +543,7 @@ class CardBrowserTest : RobolectricTest() {
             scenario.onActivity { browser ->
                 browser.waitForSearchResults()
                 assertThat("card count before recreation", browser.subtitle(), equalTo("2 cards shown"))
+                assertThat(browser.snackbarText, nullValue())
             }
 
             scenario.recreate()
@@ -529,6 +551,7 @@ class CardBrowserTest : RobolectricTest() {
 
             scenario.onActivity { browser ->
                 assertThat("card count after recreation", browser.subtitle(), equalTo("2 cards shown"))
+                assertThat(browser.snackbarText, nullValue())
             }
         }
     }

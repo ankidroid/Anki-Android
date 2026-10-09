@@ -1658,6 +1658,37 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
+    fun `searchResultMessage - initial search provides rows without a message - Issue 21242`() =
+        runViewModelTest(notes = 2, initMode = InitMode.MANUAL) {
+            flowOfSearchState.test {
+                manualInit()
+                val completed = awaitSearchCompleted()
+                assertThat(completed.rowCount, equalTo(2))
+                assertThat(completed.resultMessage, nullValue())
+            }
+        }
+
+    @Test
+    fun `searchResultMessage - sorting and reversing do not produce count messages`() =
+        runViewModelTest(notes = 2) {
+            flowOfSearchState.test {
+                ignoreEventsDuringViewModelInit()
+                val sortOrders =
+                    listOf(
+                        SortType.CollectionOrdering(BrowserColumnKey("noteCrt"), reverse = false),
+                        SortType.CollectionOrdering(BrowserColumnKey("noteCrt"), reverse = true),
+                        SortType.NoOrdering,
+                    )
+                for (sort in sortOrders) {
+                    setSortType(sort).join()
+                    val completed = awaitSearchCompleted()
+                    assertThat("sorting retains the results", completed.rowCount, equalTo(2))
+                    assertThat("sorting has its own feedback", completed.resultMessage, nullValue())
+                }
+            }
+        }
+
+    @Test
     fun `searchResultMessage - user search, all decks selected, with rows`() =
         runViewModelTest(notes = 3) {
             flowOfSearchState.test {
