@@ -187,6 +187,7 @@ import com.ichi2.anki.utils.ShortcutUtils
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.doOnScrolled
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
+import com.ichi2.anki.utils.ext.onGlobalLayout
 import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
@@ -715,7 +716,7 @@ open class DeckPicker :
         }
         // Insets move the FAB's ancestors without changing the FAB's bounds within its parent.
         // Wait until the whole hierarchy is laid out before reading positions in the window.
-        deckPickerBinding.root.viewTreeObserver.addOnGlobalLayoutListener {
+        deckPickerBinding.root.onGlobalLayout(this) {
             setRecyclerViewBottomPaddingAbove(listAnchor())
         }
         deckPickerBinding.reviewSummaryTextView.addOnLayoutChangeListener { view, _, _, _, _, _, _, _, _ ->
