@@ -14,6 +14,7 @@ import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.compat.CompatHelper
 import net.ankiweb.rsdroid.BackendFactory
+import timber.log.Timber
 import java.util.Locale
 
 /**
@@ -314,7 +315,10 @@ object LanguageUtil {
 
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
-    /** If locale is not provided, the current locale will be used. */
+    /**
+     * If locale is not provided, the current locale will be used.
+     * If conversion fails, passes the original tag to rslib for its own parsing and language fallback.
+     */
     fun setDefaultBackendLanguages(languageTag: String? = null) {
         val langCode =
             languageTag ?: appContext
@@ -328,7 +332,10 @@ object LanguageUtil {
                 langCode
             }
         val backendLanguage = AnkiBackendLanguage.fromLanguageTag(localeLanguage)
-        BackendFactory.defaultLanguages = listOf(backendLanguage.value)
+        if (backendLanguage == null) {
+            Timber.w("Could not normalize language tag '%s'; passing it to rslib unchanged", localeLanguage)
+        }
+        BackendFactory.defaultLanguages = listOf(backendLanguage?.value ?: localeLanguage)
     }
 
     /** @return string defined with [stringRes] on the specified [locale] */
