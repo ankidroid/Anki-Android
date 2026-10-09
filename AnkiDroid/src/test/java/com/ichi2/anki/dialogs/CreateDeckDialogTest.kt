@@ -3,10 +3,8 @@
 
 package com.ichi2.anki.dialogs
 
-import android.app.Activity
 import android.content.ContextWrapper
 import android.os.Looper
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -20,6 +18,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
 import okhttp3.internal.closeQuietly
@@ -119,7 +118,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
         activityScenario.onActivity { activity ->
             assertThat(
-                activity.latestSnackbarText(),
+                activity.snackbarText,
                 equalTo(TR.errorsFilteredParentDeck()),
             )
         }
@@ -159,7 +158,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
         activityScenario.onActivity { activity ->
             assertThat(
-                activity.latestSnackbarText(),
+                activity.snackbarText,
                 equalTo(TR.errorsFilteredParentDeck()),
             )
         }
@@ -353,7 +352,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertThat("the deck kept its name", col.decks.name(deckId), equalTo("a::b"))
         assertThat("no deck was created", col.decks.count(), equalTo(deckCount))
         activityScenario.onActivity { activity ->
-            assertThat("no rename is reported", activity.latestSnackbarText(), nullValue())
+            assertThat("no rename is reported", activity.snackbarText, nullValue())
         }
     }
 
@@ -441,7 +440,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             activityScenario.onActivity { activity ->
                 assertThat(
                     "Snackbar should confirm deck creation for valid name",
-                    activity.latestSnackbarText(),
+                    activity.snackbarText,
                     equalTo(getResourceString(CommonString.deck_created)),
                 )
             }
@@ -458,7 +457,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
             assertThat(
                 "Snackbar should show invalid name error for blank name",
-                activity.latestSnackbarText(),
+                activity.snackbarText,
                 equalTo(getResourceString(CommonString.invalid_deck_name)),
             )
         }
@@ -507,7 +506,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             activityScenario.onActivity { activity ->
                 assertThat(
                     "Snackbar should confirm rename for valid name",
-                    activity.latestSnackbarText(),
+                    activity.snackbarText,
                     equalTo(getResourceString(CommonString.deck_renamed)),
                 )
             }
@@ -525,7 +524,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
             assertThat(
                 "Snackbar should show invalid name error for blank name",
-                activity.latestSnackbarText(),
+                activity.snackbarText,
                 equalTo(getResourceString(CommonString.invalid_deck_name)),
             )
         }
@@ -627,7 +626,3 @@ class CreateDeckDialogNonAndroidTest {
         assertLargerThanNine("suffix", "Deck 34", true)
     }
 }
-
-// Returns latest snackbar text
-private fun Activity.latestSnackbarText(): String? =
-    findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.text?.toString()
