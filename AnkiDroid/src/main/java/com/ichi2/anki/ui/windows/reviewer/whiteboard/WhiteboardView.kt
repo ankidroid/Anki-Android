@@ -131,7 +131,7 @@ class WhiteboardView : View {
 
     /**
      * Handles user touch input for drawing and erasing.
-     * Ignores finger input if stylus-only mode is enabled.
+     * In stylus-only mode, finger input passes through to the card beneath the whiteboard.
      */
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.pointerCount >= 2) {

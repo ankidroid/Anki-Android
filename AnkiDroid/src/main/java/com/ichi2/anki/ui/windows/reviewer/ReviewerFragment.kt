@@ -731,7 +731,11 @@ class ReviewerFragment :
                     gestureParser.parse(url, scale, webView) { gesture ->
                         if (gesture == null) return@parse
                         Timber.v("ReviewerFragment::onGesture %s", gesture)
-                        bindingMap.onGesture(gesture)
+                        // Stylus mode passes finger input through to the WebView. Whiteboard
+                        // bindings still take priority while the whiteboard is visible.
+                        if (whiteboardFragment?.takeIf { it.isVisible }?.onGesture(gesture) != true) {
+                            bindingMap.onGesture(gesture)
+                        }
                     }
                     true
                 }

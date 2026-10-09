@@ -17,7 +17,6 @@ import com.ichi2.anki.ui.windows.reviewer.whiteboard.WhiteboardRepository
 import com.ichi2.testutils.mockWebResourceRequest
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -33,15 +32,12 @@ class ReviewerWhiteboardGestureTest : RobolectricTest() {
     override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
 
     @Test
-    @Ignore("Issue 22304: enabled by the following gesture-routing fix commit")
     fun `two finger tap clears the whiteboard in stylus mode`() = checkTapClearsWhiteboard(fingerCount = 2)
 
     @Test
-    @Ignore("Issue 22304: enabled by the following gesture-routing fix commit")
     fun `three finger tap clears the whiteboard in stylus mode`() = checkTapClearsWhiteboard(fingerCount = 3)
 
     @Test
-    @Ignore("Issue 22304: enabled by the following gesture-routing fix commit")
     fun `four finger tap clears the whiteboard in stylus mode`() = checkTapClearsWhiteboard(fingerCount = 4)
 
     @Test
