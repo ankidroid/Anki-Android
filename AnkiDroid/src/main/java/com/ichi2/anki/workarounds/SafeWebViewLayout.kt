@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.workarounds
 
+import android.app.Activity
 import android.content.Context
 import android.print.PrintDocumentAdapter
 import android.util.AttributeSet
@@ -129,6 +130,12 @@ open class SafeWebViewLayout :
     }
 
     @MainThread
+    fun canGoBack(): Boolean {
+        if (warnIfNotActive("canGoBack")) return false
+        return webView.canGoBack()
+    }
+
+    @MainThread
     fun pageUp(): Boolean {
         if (warnIfNotActive("pageUp")) return false
         return webView.pageUp(false)
@@ -205,29 +212,64 @@ open class SafeWebViewLayout :
         removeView(webView)
         webView.destroy()
 
-        val fragment =
-            try {
-                findFragment<Fragment>()
-            } catch (e: IllegalStateException) {
-                Timber.w(e, "skipping WebView recreation; layout is not attached to a Fragment")
-                webViewState = WebViewState.DESTROYED_RECOVERABLE
-                return
-            }
-        if (fragment.view == null) {
-            Timber.w("skipping WebView recreation; fragment view is gone")
-            webViewState = WebViewState.DESTROYED_RECOVERABLE
-            return
-        }
         if (!isAttachedToWindow) {
             Timber.w("skipping WebView recreation; layout is not attached to a window")
             webViewState = WebViewState.DESTROYED_RECOVERABLE
             return
         }
 
-        recreateInnerWebView(fragment)
+        val listener = findListener()
+        if (listener == null) {
+            Timber.w("skipping WebView recreation; no OnWebViewRecreatedListener found")
+            webViewState = WebViewState.DESTROYED_RECOVERABLE
+            return
+        }
+
+        recreateInnerWebView(listener)
     }
 
-    private fun recreateInnerWebView(fragment: Fragment) {
+    /** Finds the [OnWebViewRecreatedListener] from the host Fragment, falling back to the host Activity. */
+    private fun findListener(): OnWebViewRecreatedListener? {
+        val fragment =
+            try {
+                findFragment<Fragment>()
+            } catch (e: IllegalStateException) {
+                null
+            }
+
+        if (fragment != null) {
+            if (fragment.view == null) {
+                Timber.w("skipping WebView recreation; fragment view is gone")
+                return null
+            }
+            return (fragment as? OnWebViewRecreatedListener).also {
+                if (it == null) {
+                    if (BuildConfig.DEBUG && !isInEditMode) {
+                        throw IllegalStateException(
+                            "Fragment '${fragment::class.simpleName}' must implement OnWebViewRecreatedListener",
+                        )
+                    } else {
+                        Timber.w("Fragment does not implement OnWebViewRecreatedListener. WebView recreation may not be handled")
+                    }
+                }
+            }
+        }
+
+        return (context as? OnWebViewRecreatedListener).also {
+            if (it == null) {
+                val hostName = (context as? Activity)?.javaClass?.simpleName ?: context.javaClass.simpleName
+                if (BuildConfig.DEBUG && !isInEditMode) {
+                    throw IllegalStateException(
+                        "'$hostName' must implement OnWebViewRecreatedListener",
+                    )
+                } else {
+                    Timber.w("'$hostName' does not implement OnWebViewRecreatedListener. WebView recreation may not be handled")
+                }
+            }
+        }
+    }
+
+    private fun recreateInnerWebView(listener: OnWebViewRecreatedListener) {
         val previousWebView = this.webView
         if (previousWebView.parent == this) {
             removeView(previousWebView)
@@ -235,17 +277,26 @@ open class SafeWebViewLayout :
         this.webView = createWebView()
         webViewState = WebViewState.ACTIVE
         addView(this.webView, webViewLayoutParams)
-        (fragment as? OnWebViewRecreatedListener)?.onWebViewRecreated(this.webView)
+        listener.onWebViewRecreated(this.webView)
     }
 
-    private fun tryRecoverDestroyedWebViewIfNeeded(fragment: Fragment) {
+    private fun tryRecoverDestroyedWebViewIfNeeded(listener: OnWebViewRecreatedListener) {
         if (webViewState != WebViewState.DESTROYED_RECOVERABLE) return
-        val fragmentView = fragment.view ?: return
-        if (this === fragmentView || ancestors.any { it === fragmentView }) {
-            recreateInnerWebView(fragment)
-        } else {
-            Timber.w("skipping WebView recovery; layout is not in the fragment's current view hierarchy")
+        // For Fragment hosts, ensure the layout is still in the fragment's current view hierarchy.
+        val fragment =
+            try {
+                findFragment<Fragment>()
+            } catch (e: IllegalStateException) {
+                null
+            }
+        if (fragment != null) {
+            val fragmentView = fragment.view ?: return
+            if (this !== fragmentView && ancestors.none { it === fragmentView }) {
+                Timber.w("skipping WebView recovery; layout is not in the fragment's current view hierarchy")
+                return
+            }
         }
+        recreateInnerWebView(listener)
     }
 
     private fun warnIfNotActive(methodName: String): Boolean {
@@ -258,41 +309,8 @@ open class SafeWebViewLayout :
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-
-        val fragment =
-            try {
-                findFragment<Fragment>()
-            } catch (e: IllegalStateException) {
-                // findFragment throws if the View is not attached to a Fragment.
-                // This can happen in scenarios like Android Studio previews
-                // or if the view is added directly to an Activity.
-                if (webViewState == WebViewState.DESTROYED_RECOVERABLE) {
-                    Timber.w(e, "SafeWebViewLayout not attached to a Fragment; skipping WebView recovery")
-                    return
-                }
-                if (BuildConfig.DEBUG && !isInEditMode) {
-                    throw IllegalStateException(
-                        "SafeWebViewLayout must be used within a Fragment",
-                        e,
-                    )
-                } else {
-                    Timber.w(e, "SafeWebViewLayout not attached to a Fragment")
-                }
-                return
-            }
-
-        if (fragment !is OnWebViewRecreatedListener) {
-            if (BuildConfig.DEBUG && !isInEditMode) {
-                throw IllegalStateException(
-                    "Fragment '${fragment::class.simpleName}' must implement OnWebViewRecreatedListener",
-                )
-            } else {
-                Timber.w("Fragment does not implement OnWebViewRecreatedListener. WebView recreation may not be handled")
-            }
-            return
-        }
-
-        tryRecoverDestroyedWebViewIfNeeded(fragment)
+        val listener = findListener() ?: return
+        tryRecoverDestroyedWebViewIfNeeded(listener)
     }
 
     /**
