@@ -4,6 +4,7 @@ package com.ichi2.anki
 
 import android.Manifest.permission.INTERNET
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -46,6 +47,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.performPositiveClick
@@ -54,6 +56,7 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.navigation.AnkiDroidNavigator
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.RecyclerFastScroller
@@ -107,7 +110,9 @@ import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLooper
 import timber.log.Timber
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
@@ -670,16 +675,95 @@ class DeckPickerTest : RobolectricTest() {
         addBasicNote()
 
         deckPicker {
-            val initialState = assertNotNull(fragment).viewModel.state
+            val studyOptions = assertNotNull(fragment)
+            val initialState = studyOptions.viewModel.state
             assertEquals(1, initialState.dataOrNull()?.numberOfCardsInDeck)
 
             addBasicNote()
-            viewModel.reloadDeckCounts().join()
-            advanceRobolectricLooper()
+            reloadDecks()
 
+            assertSame(studyOptions, fragment)
             val updatedState = assertNotNull(fragment).viewModel.state
             assertEquals(2, updatedState.dataOrNull()?.numberOfCardsInDeck)
         }
+    }
+
+    @Test
+    fun `deck reload preserves reminder panel and its dialog`() =
+        withReminderPanel { reminders ->
+            val dialog = showSyncConflict()
+
+            reloadDecks()
+
+            assertSame(reminders, sidePanel)
+            assertTrue(dialog.isShowing)
+        }
+
+    @Test
+    fun `cancelling sync conflict after reload returns to reminders`() =
+        withReminderPanel { reminders ->
+            val dialog = showSyncConflict()
+            reloadDecks()
+
+            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).performClick()
+            advanceRobolectricLooper()
+
+            assertFalse(dialog.isShowing)
+            assertSame(reminders, sidePanel)
+        }
+
+    @Test
+    fun `reminder toolbar returns to study options after reload`() =
+        withReminderPanel { reminders ->
+            reloadDecks()
+
+            reminders.navigateUp()
+
+            assertNotNull(fragment)
+            assertEquals(0, supportFragmentManager.backStackEntryCount)
+        }
+
+    @Test
+    fun `selecting another deck closes reminders and clears pane navigation history`() =
+        withReminderPanel {
+            val anotherDeck = addDeck("Another Deck")
+
+            viewModel.selectDeck(anotherDeck).join()
+            advanceRobolectricLooper()
+
+            assertEquals(anotherDeck, assertNotNull(fragment).viewModel.selectedDeckId)
+            assertEquals(0, supportFragmentManager.backStackEntryCount)
+        }
+
+    private fun withReminderPanel(test: suspend DeckPicker.(ScheduleRemindersFragment) -> Unit) {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        addBasicNote()
+        Prefs.newReviewRemindersEnabled = true
+        deckPicker {
+            selectContextMenuOption(ContextMenuOption.SCHEDULE_REMINDERS, getColUnsafe.decks.selected())
+            advanceRobolectricLooper()
+            test(requireNotNull(sidePanel as? ScheduleRemindersFragment))
+        }
+    }
+
+    private val DeckPicker.sidePanel
+        get() = supportFragmentManager.findFragmentById(R.id.studyoptions_fragment)
+
+    private suspend fun DeckPicker.reloadDecks() {
+        viewModel.reloadDeckCounts().join()
+        advanceRobolectricLooper()
+    }
+
+    private fun DeckPicker.showSyncConflict(): AlertDialog {
+        showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_RESOLUTION)
+        advanceRobolectricLooper()
+        return ShadowDialog.getLatestDialog() as AlertDialog
+    }
+
+    private fun ScheduleRemindersFragment.navigateUp() {
+        val toolbar = requireView().findViewById<Toolbar>(R.id.non_collapsible_toolbar)
+        toolbar.children.first { it.contentDescription == toolbar.navigationContentDescription }.performClick()
+        advanceRobolectricLooper()
     }
 
     @Test
