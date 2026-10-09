@@ -12,7 +12,6 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -26,6 +25,8 @@ import com.ichi2.anki.common.utils.android.getColorFromAttr
 import com.ichi2.anki.databinding.ActivityInfoBinding
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
@@ -44,8 +45,10 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
  */
 class Info :
     AnkiActivity(R.layout.activity_info),
-    BaseSnackbarBuilderProvider {
+    BaseSnackbarBuilderProvider,
+    OnWebViewRecreatedListener {
     private val binding by viewBinding(ActivityInfoBinding::bind)
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = binding.buttons
@@ -69,18 +72,6 @@ class Info :
             binding.donate.isVisible = false
         }
         title = "$appName v$pkgVersionName"
-        binding.webView.webChromeClient =
-            object : WebChromeClient() {
-                override fun onProgressChanged(
-                    view: WebView,
-                    progress: Int,
-                ) {
-                    // Hide the progress indicator when the page has finished loaded
-                    if (progress == 100) {
-                        binding.progressBar.visibility = View.GONE
-                    }
-                }
-            }
         binding.leftButton.run {
             if (canOpenMarketUri()) {
                 setText(CommonString.info_rate)
@@ -94,33 +85,58 @@ class Info :
                 visibility = View.GONE
             }
         }
-        val onBackPressedCallback =
+        onBackPressedCallback =
             object : OnBackPressedCallback(false) {
                 override fun handleOnBackPressed() {
                     if (binding.webView.canGoBack()) binding.webView.goBack()
                 }
             }
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        binding.rightButton.run {
+            text = getString(CommonString.dialog_continue)
+            setOnClickListener { close() }
+        }
+        setupWebView()
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        setupWebView()
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun setupWebView() {
         // Apply Theme colors
         val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
         val backgroundColor = typedArray.getColor(0, -1)
         val textColor = typedArray.getColor(1, -1).toRGBHex()
+        typedArray.recycle()
 
         val anchorTextThemeColor = getColorFromAttr(this, android.R.attr.colorAccent)
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
+        val background = backgroundColor.toRGBHex()
 
         binding.webView.setBackgroundColor(backgroundColor)
         binding.webView.settings.allowFileAccess = true
         binding.webView.settings.allowContentAccess = true
         setRenderWorkaround(this)
-        binding.rightButton.run {
-            text = getString(CommonString.dialog_continue)
-            setOnClickListener { close() }
-        }
-        val background = backgroundColor.toRGBHex()
-        binding.webView.loadUrl("/android_asset/changelog.html")
+
+        binding.webView.setWebChromeClient(
+            object : WebChromeClient() {
+                override fun onProgressChanged(
+                    view: WebView,
+                    progress: Int,
+                ) {
+                    // Hide the progress indicator when the page has finished loaded
+                    if (progress == 100) {
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
+            },
+        )
+
         binding.webView.settings.javaScriptEnabled = true
-        binding.webView.webViewClient =
-            object : WebViewClient() {
+        binding.webView.setWebViewClient(
+            object : SafeWebViewClient() {
                 override fun onPageFinished(
                     view: WebView,
                     url: String,
@@ -129,7 +145,7 @@ class Info :
                  *  or else it will break in any one mode.
                  */
                     @Suppress("ktlint:standard:max-line-length")
-                    binding.webView.loadUrl(
+                    view.loadUrl(
                         """javascript:document.body.style.setProperty("color", "$textColor");
                             x=document.getElementsByTagName("a");
                             for(i=0; i<x.length; i++){
@@ -144,7 +160,7 @@ class Info :
                     )
                     if (!BuildConfig.SHOW_DONATE_LINKS) {
                         // remove donation links, keeping the text
-                        binding.webView.evaluateJavascript(
+                        view.evaluateJavascript(
                             """document.querySelectorAll('a[href*="opencollective.com"]')
                                 .forEach((a) => a.replaceWith(...a.childNodes));""",
                             null,
@@ -172,10 +188,16 @@ class Info :
                     isReload: Boolean,
                 ) {
                     super.doUpdateVisitedHistory(view, url, isReload)
-                    onBackPressedCallback.isEnabled = view != null && view.canGoBack()
+                    onBackPressedCallback.isEnabled = binding.webView.canGoBack()
                 }
-            }
-        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+            },
+        )
+        binding.webView.loadUrl("/android_asset/changelog.html")
+    }
+
+    override fun onDestroy() {
+        binding.webView.safeDestroy()
+        super.onDestroy()
     }
 
     /**
