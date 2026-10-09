@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.backend.AnkiBackendLanguage
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.compat.CompatHelper
@@ -326,17 +327,9 @@ object LanguageUtil {
             } else {
                 langCode
             }
-        BackendFactory.defaultLanguages = listOf(languageTagToBackendCode(localeLanguage))
+        val backendLanguage = AnkiBackendLanguage.fromLanguageTag(localeLanguage)
+        BackendFactory.defaultLanguages = listOf(backendLanguage.value)
     }
-
-    private fun languageTagToBackendCode(languageTag: String): String =
-        when (languageTag) {
-            "heb" -> "he"
-            "ind" -> "id"
-            "tgl" -> "tl"
-            "hi" -> "hi-IN"
-            else -> languageTag
-        }
 
     /** @return string defined with [stringRes] on the specified [locale] */
     fun Context.getStringByLocale(
