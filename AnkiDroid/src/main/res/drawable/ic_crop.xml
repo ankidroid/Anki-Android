@@ -1,11 +1,10 @@
 <!--
-  ~ SPDX-License-Identifier: Apache-2.0
-  ~ SPDX-FileCopyrightText: Google LLC
-  ~ Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
-  ~
-  ~ Source: https://github.com/google/material-design-icons/blob/master/src/image/crop/materialicons/24px.svg
-  -->
-
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  Copyright (c) 2024 Ashish Yadav <mailtoashish693@gmail.com>
+  SPDX-FileComment: Style: Filled
+  Source: https://fonts.gstatic.com/s/i/materialicons/crop/v12/24px.xml
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
