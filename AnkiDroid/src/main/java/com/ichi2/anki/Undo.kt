@@ -41,7 +41,7 @@ suspend fun tryRedo(): String {
     return if (changes.operation.isEmpty()) {
         TR.actionsNothingToRedo()
     } else {
-        TR.undoRedoAction(changes.operation)
+        TR.undoActionRedone(changes.operation)
     }
 }
 
