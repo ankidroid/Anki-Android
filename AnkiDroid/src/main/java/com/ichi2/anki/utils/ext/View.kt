@@ -7,7 +7,32 @@ import android.content.res.ColorStateList
 import android.graphics.Rect
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.color.MaterialColors
+
+/**
+ * Runs [action] on each global layout until [lifecycleOwner] is destroyed.
+ * Use a fragment's `viewLifecycleOwner` when observing its views.
+ */
+fun View.onGlobalLayout(
+    lifecycleOwner: LifecycleOwner,
+    action: () -> Unit,
+) {
+    if (lifecycleOwner.lifecycle.currentState == Lifecycle.State.DESTROYED) return
+    val listener = OnGlobalLayoutListener(action)
+    viewTreeObserver.addOnGlobalLayoutListener(listener)
+    lifecycleOwner.lifecycle.addObserver(
+        object : DefaultLifecycleObserver {
+            override fun onDestroy(owner: LifecycleOwner) {
+                // The observer is shared with the window and can outlive the lifecycle owner.
+                viewTreeObserver.takeIf { it.isAlive }?.removeOnGlobalLayoutListener(listener)
+            }
+        },
+    )
+}
 
 fun View.isTouchWithinBounds(event: MotionEvent): Boolean {
     val rect = Rect().apply { getDrawingRect(this) }

@@ -29,6 +29,32 @@ import org.robolectric.Robolectric
 @RunWith(AndroidJUnit4::class)
 class DeckPickerInsetsTest : RobolectricTest() {
     @Test
+    fun `destroying the deck picker removes its global layout listener`() {
+        ensureCollectionLoadIsSynchronous()
+        setIntroductionSlidesShown(true)
+        BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
+        targetContext.sharedPrefs().edit { putBoolean("backupPromptDisabled", true) }
+        addDeck("Test Deck")
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+        val deckPicker = controller.get()
+        deckPicker.dispatchInsets(navBarBottom = 48.dp)
+        deckPicker.layoutForTest()
+        val list = deckPicker.deckPickerBinding.decks
+        val observer = deckPicker.deckPickerBinding.root.viewTreeObserver
+        val padding = list.paddingBottom
+        check(padding > 0)
+
+        list.setPadding(list.paddingLeft, list.paddingTop, list.paddingRight, 0)
+        observer.dispatchOnGlobalLayout()
+        assertThat("the listener updates padding while the activity is alive", list.paddingBottom, equalTo(padding))
+
+        controller.pause().stop().destroy()
+        list.setPadding(list.paddingLeft, list.paddingTop, list.paddingRight, 0)
+        observer.dispatchOnGlobalLayout()
+        assertThat("the window observer must no longer call the destroyed activity", list.paddingBottom, equalTo(0))
+    }
+
+    @Test
     fun `deck list padding follows a dialog keyboard opening and closing`() =
         withDeckPicker(deckCount = 2) { deckPicker ->
             deckPicker.dispatchInsets(navBarBottom = 48.dp)
