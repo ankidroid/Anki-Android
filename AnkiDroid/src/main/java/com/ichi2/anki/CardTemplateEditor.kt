@@ -237,11 +237,11 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             ResizablePaneManager(
                 parentLayout = requireNotNull(binding.cardTemplateEditorXlView) { "cardTemplateEditorXlView" },
                 divider = requireNotNull(binding.cardTemplateEditorResizingDivider) { "cardTemplateEditorResizingDivider" },
-                leftPane = requireNotNull(binding.templateEditor.root) { "templateEditor.root" },
-                rightPane = requireNotNull(binding.fragmentContainer) { "fragmentContainer" },
+                startPane = requireNotNull(binding.templateEditor.root) { "templateEditor.root" },
+                endPane = requireNotNull(binding.fragmentContainer) { "fragmentContainer" },
                 sharedPrefs = Prefs.getUiConfig(this),
-                leftPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
-                rightPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
+                startPaneWeightKey = PREF_TEMPLATE_EDITOR_PANE_WEIGHT,
+                endPaneWeightKey = PREF_TEMPLATE_PREVIEWER_PANE_WEIGHT,
             )
         }
 
