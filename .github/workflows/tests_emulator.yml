@@ -157,7 +157,7 @@ jobs:
           timeout_minutes: 15
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew packagePlayRelease packagePlayReleaseAndroidTest --daemon
+          command: ./gradlew packagePlayRelease packagePlayReleaseAndroidTest :baselineprofile:packageBenchmarkBenchmark --daemon
 
       - name: Install Android Emulator
         # Retry to work around https://github.com/ReactiveCircus/android-emulator-runner/issues/496
@@ -255,6 +255,7 @@ jobs:
             bash .github/adb_retry.sh emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             bash .github/with_emulator_log.sh adb-log.txt python3 .github/run_emulator_tests.py
+            TEST_RELEASE_BUILD=false ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon
 
       - name: Report Emulator Test Results
         if: always() && hashFiles('AnkiDroid/build/outputs/androidTest-results/connected/**/TEST-*.xml') != ''
