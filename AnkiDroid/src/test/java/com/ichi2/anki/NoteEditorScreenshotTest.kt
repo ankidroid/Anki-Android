@@ -96,6 +96,17 @@ class NoteEditorScreenshotTest : ScreenshotTest() {
         }
     }
 
+    @Test
+    fun `tablet preview tabs are ready before capture`() {
+        setTabletQualifiers()
+        withNoteEditor { activity ->
+            val tabs = activity.binding.previewerTabLayout!!
+            assertThat(tabs.tabCount, equalTo(1))
+            assertThat(tabs.getTabAt(0)?.text.toString(), equalTo("Card 1 (empty)"))
+            assertThat(tabs.selectedTabPosition, equalTo(0))
+        }
+    }
+
     private fun withNoteEditor(block: (NoteEditorActivity) -> Unit) {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
@@ -103,7 +114,19 @@ class NoteEditorScreenshotTest : ScreenshotTest() {
                 NoteEditorDestination.AddNote().toIntent(targetContext),
             )
         advanceRobolectricLooper()
+        activity.waitForPreviewTabs()
         block(activity)
+    }
+
+    private fun NoteEditorActivity.waitForPreviewTabs() {
+        if (!isPreviewerVisible) return
+        val tabs = binding.previewerTabLayout!!
+        // wait for the background card rendering to complete
+        advanceRobolectricLooperUntil(
+            lazyMessage = { "Note editor preview tabs did not finish loading" },
+        ) {
+            tabs.tabCount == 1 && tabs.selectedTabPosition == 0
+        }
     }
 
     private fun NoteEditorActivity.simulateNavigationBar() {
