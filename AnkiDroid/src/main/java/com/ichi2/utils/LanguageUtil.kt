@@ -8,8 +8,10 @@ import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.backend.AnkiBackendLanguage
+import com.ichi2.anki.backend.getLocales
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.compat.CompatHelper
@@ -369,3 +371,16 @@ object LanguageUtil {
      */
     fun withUnicodeIsolation(s: String): String = "\u2068$s\u2069"
 }
+
+data class LanguageDebugInfo(
+    val systemLocale: String?,
+    val appLocale: String?,
+    val backendLocales: List<String>?,
+)
+
+fun getLanguageDebugInfo(context: Context): LanguageDebugInfo =
+    LanguageDebugInfo(
+        systemLocale = runCatching { LanguageUtil.getSystemLocale().toLanguageTag() }.getOrNull(),
+        appLocale = runCatching { context.sharedPrefs().getString("language", LanguageUtil.SYSTEM_LANGUAGE_TAG) }.getOrNull(),
+        backendLocales = runCatching { CollectionManager.getBackend().getLocales().all }.getOrNull(),
+    )
