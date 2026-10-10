@@ -1,4 +1,6 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-FileComment: Added by nobnago in 2011 (a4b836e83a), without a file-level license notice.
+
 package com.ichi2.anki
 
 import android.content.Context
