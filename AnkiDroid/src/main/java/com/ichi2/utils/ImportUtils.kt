@@ -33,6 +33,8 @@ import com.ichi2.anki.onSelectedCsvForImport
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.MimeTypeUtils
+import com.ichi2.utils.IntentUtil.resolveMimeType
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -46,6 +48,12 @@ import java.util.Locale
 object ImportUtils {
     // A filename should be shortened if over this threshold
     private const val FILE_NAME_SHORTENING_THRESHOLD = 100
+
+    /** Resolve the source and select its importer without copying files or starting UI. */
+    fun resolveImport(
+        context: Context,
+        intent: Intent,
+    ): ImportResolution = FileImporter().resolveImport(context, intent)
 
     /**
      * This code is used in multiple places to handle package imports
@@ -102,18 +110,61 @@ object ImportUtils {
         uri: Uri,
     ): Boolean {
         val mimeType = context.contentResolver.getType(uri)
-        return mimeType in
-            listOf(
-                "text/plain",
-                "text/comma-separated-values",
-                "text/tab-separated-values",
-                "text/csv",
-                "text/tsv",
-            )
+        return mimeType in MimeTypeUtils.CSV_TSV_MIME_TYPES
     }
 
     @SuppressWarnings("WeakerAccess")
     open class FileImporter {
+        fun resolveImport(
+            context: Context,
+            intent: Intent,
+        ): ImportResolution =
+            try {
+                resolveImportInternal(context, intent)
+            } catch (e: Exception) {
+                Timber.w(e, "Could not resolve import source")
+                ImportResolution.Failure(
+                    ImportResult.Failure(
+                        humanReadableMessage = context.getString(CommonString.import_error_handle_exception, e.localizedMessage),
+                        exception = e,
+                    ),
+                )
+            }
+
+        private fun resolveImportInternal(
+            context: Context,
+            intent: Intent,
+        ): ImportResolution {
+            val uri =
+                getDataUri(intent)
+                    ?: return ImportResolution.Failure(ImportResult.Failure(context.getString(CommonString.import_log_no_apkg)))
+            val providedName =
+                getFileNameFromContentProvider(context, uri)
+                    ?: when (intent.type) {
+                        "application/apkg", "application/zip" -> "unknown_filename.apkg"
+                        else -> return ImportResolution.Failure(
+                            ImportResult.Failure(
+                                context.getString(CommonString.import_error_content_provider, AnkiDroidApp.manualUrl + "#importing"),
+                            ),
+                        )
+                    }
+            val filename = validateFileName(providedName)
+            val source = ImportResolution.Source(uri, filename)
+            return when {
+                getExtension(filename).lowercase() in listOf("csv", "tsv", "txt") ||
+                    intent.resolveMimeType() in MimeTypeUtils.CSV_TSV_MIME_TYPES || isValidTextOrDataFile(context, uri) ->
+                    ImportResolution.Text(source)
+                isCollectionPackage(filename) -> ImportResolution.CollectionPackage(source)
+                isDeckPackage(filename) -> ImportResolution.DeckPackage(source)
+                isAnkiDatabase(filename) ->
+                    ImportResolution.Failure(ImportResult.Failure(context.getString(CommonString.import_error_load_imported_database)))
+                else ->
+                    ImportResolution.Failure(
+                        ImportResult.Failure(context.getString(CommonString.import_error_not_apkg_extension, filename)),
+                    )
+            }
+        }
+
         /**
          * This code is used in multiple places to handle package imports
          *
@@ -193,56 +244,20 @@ object ImportUtils {
             importPathUri: Uri,
             intent: Intent? = null,
         ): ImportResult {
-            // Note: intent.getData() can be null. Use data instead.
-            if (!isValidImportType(context, importPathUri)) {
-                return ImportResult.Failure(context.getString(CommonString.import_log_no_apkg))
-            }
-            // Get the original filename from the content provider URI
-            var filename = getFileNameFromContentProvider(context, importPathUri)
-            // Hack to fix bug where ContentResolver not returning filename correctly
-            if (filename == null) {
-                when (intent?.type) {
-                    "application/apkg", "application/zip" -> {
-                        // Set a dummy filename if MIME type provided or is a valid zip file
-                        filename = "unknown_filename.apkg"
-                        Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue")
-                    }
-
-                    else -> {
-                        Timber.e("Could not retrieve filename from ContentProvider")
-                        CrashReportService.sendExceptionReport(
-                            RuntimeException("Could not import apkg from ContentProvider"),
-                            "IntentHandler.java",
-                            "apkg import failed; mime type ${intent?.type}",
-                        )
-                        return ImportResult.Failure(
-                            AnkiDroidApp.appResources.getString(
-                                CommonString.import_error_content_provider,
-                                AnkiDroidApp.manualUrl + "#importing",
-                            ),
-                        )
-                    }
+            val file =
+                when (val resolution = resolveImport(context, intent ?: Intent().setData(importPathUri))) {
+                    is ImportResolution.Failure -> return resolution.error
+                    is ImportResolution.ResolvedFile -> resolution
                 }
-            }
-            if (isValidTextOrDataFile(context, importPathUri)) {
-                (context as Activity).onSelectedCsvForImport(intent!!)
+            if (file is ImportResolution.Text) {
+                (context as Activity).onSelectedCsvForImport(intent ?: Intent().setData(importPathUri))
                 return ImportResult.Success
-            } else if (!isValidPackageName(filename)) {
-                return if (isAnkiDatabase(filename)) {
-                    // .anki2 files aren't supported by Anki Desktop, we should eventually support them, because we can
-                    // but for now, show a "nice" error.
-                    ImportResult.Failure(context.resources.getString(CommonString.import_error_load_imported_database))
-                } else {
-                    // Don't import if file doesn't have an Anki package extension
-                    ImportResult.Failure(context.resources.getString(CommonString.import_error_not_apkg_extension, filename))
-                }
             }
 
             // Copy to temporary file
-            filename = validateFileName(filename)
             val checkFile =
                 try {
-                    context.cacheDir.withFileNameSafe(filename)
+                    context.cacheDir.withFileNameSafe(file.source.fileName)
                 } catch (_: SecurityException) {
                     // Do not log the exception: it may interpolate attacker-controlled paths (PII).
                     Timber.e("Path traversal detected in handleContentProviderFile")
@@ -254,7 +269,7 @@ object ImportUtils {
                 }
             val tempOutDir: String = Uri.fromFile(checkFile).encodedPath!!
 
-            copyFileToCache(context, importPathUri, tempOutDir).asErrorDetails()?.let { details ->
+            copyFileToCache(context, file.source.uri, tempOutDir).asErrorDetails()?.let { details ->
                 details.exceptionForReport?.let { CrashReportService.sendExceptionReport(it, "ImportUtils") }
                 return ImportResult.Failure(
                     title = details.buildTitle(context),
@@ -342,7 +357,7 @@ object ImportUtils {
                     ).use { cursor ->
                         if (cursor != null && cursor.moveToFirst()) {
                             filename = cursor.getString(0)
-                            Timber.d("handleFileImport() Importing from content provider: %s", filename)
+                            Timber.d("Resolved import filename from content provider: %s", filename)
                         }
                     }
             } catch (e: Exception) {

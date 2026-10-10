@@ -108,6 +108,60 @@ class ImportUtilsTest : RobolectricTest() {
         }
 
     @Test
+    fun `resolution reports missing filenames instead of assuming text`() {
+        val intent = Intent(Intent.ACTION_VIEW).setDataAndType("content://import/document/123".toUri(), "text/plain")
+
+        assertIs<ImportResolution.Failure>(TestFileImporter(null).resolveImport(targetContext, intent))
+    }
+
+    @Test
+    fun `resolution does not copy the source`() {
+        val importer =
+            object : FileImporter() {
+                override fun getFileNameFromContentProvider(
+                    context: Context,
+                    data: Uri,
+                ) = "collection.colpkg"
+
+                override fun copyFileToCache(
+                    context: Context,
+                    data: Uri,
+                    tempPath: String,
+                ): CacheFileResult = error("Resolving an import must not copy its contents")
+            }
+        val intent = Intent(Intent.ACTION_VIEW, "content://import/document/123".toUri())
+
+        assertIs<ImportResolution.CollectionPackage>(importer.resolveImport(targetContext, intent))
+    }
+
+    @Test
+    fun `legacy collection name is classified after sanitization`() {
+        val intent = Intent(Intent.ACTION_VIEW, "content://import/document/123".toUri())
+
+        val result = TestFileImporter("../collection.apkg").resolveImport(targetContext, intent)
+
+        assertIs<ImportResolution.CollectionPackage>(result)
+        assertEquals("collection.apkg", result.source.fileName)
+    }
+
+    @Test
+    fun `text MIME can come from the intent or the provider`() {
+        val intent = Intent(Intent.ACTION_VIEW).setDataAndType("content://import/document/123".toUri(), "text/plain")
+        assertIs<ImportResolution.Text>(TestFileImporter("notes").resolveImport(targetContext, intent))
+
+        intent.setDataAndType(intent.data, "application/octet-stream")
+        assertIs<ImportResolution.Text>(TestFileImporter("notes").resolveImport(mockContextWithMime("text/csv"), intent))
+    }
+
+    @Test
+    fun `text filenames remain importable without useful MIME metadata`() {
+        val intent = Intent(Intent.ACTION_VIEW).setDataAndType("content://import/document/123".toUri(), "application/octet-stream")
+        for (filename in listOf("notes.csv", "notes.TSV", "notes.txt")) {
+            assertIs<ImportResolution.Text>(TestFileImporter(filename).resolveImport(targetContext, intent))
+        }
+    }
+
+    @Test
     fun cjkNamesAreConvertedToUnicode() {
         // NOTE: I don't know whether this still needs to exist, but it was added as this previously crashes
         // and I would have added a regression without checking the history.
