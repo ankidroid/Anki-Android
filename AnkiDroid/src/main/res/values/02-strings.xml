@@ -402,7 +402,7 @@ voice. The parameter is a technical error code such as 'ERROR_NOT_INSTALLED_YET'
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if
 opening the system text to speech settings fails">Failed to open text to speech settings</string>
 
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
+    <string name="shared_decks_ankiweb_login_limit">Shared decks come from AnkiWeb, which limits downloads for people who aren’t logged in. AnkiDroid can’t change this limit.</string>
 
     <string name="deck_description_field_hint">Description</string>
     <string name="deck_description_saved">Description updated</string>

@@ -43,6 +43,7 @@ import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.compose.theme.AnkiDroidTheme
@@ -163,6 +164,8 @@ class SharedDecksDownloadFragment : Fragment() {
                         },
                         onTryAgainClick = ::retryDownload,
                         onOpenInBrowserClick = ::openInBrowser,
+                        onLogInClick = ::openLogin,
+                        onSignUpClick = ::openSignUp,
                     )
                 }
             }
@@ -212,6 +215,20 @@ class SharedDecksDownloadFragment : Fragment() {
         Timber.i("'Open in Browser' clicked")
         downloadManager.remove(downloadId)
         openUrl(requireContext().getDeckPageUri(fileToBeDownloaded.url).toUri())
+        parentFragmentManager.popBackStack()
+    }
+
+    private fun openLogin() {
+        Timber.i("'Log in' clicked")
+        downloadManager.remove(downloadId)
+        (requireActivity() as SharedDecksActivity).openAnkiWebLogin()
+        parentFragmentManager.popBackStack()
+    }
+
+    private fun openSignUp() {
+        Timber.i("'Sign up' clicked")
+        downloadManager.remove(downloadId)
+        (requireActivity() as SharedDecksActivity).openAnkiWebSignUp()
         parentFragmentManager.popBackStack()
     }
 
@@ -331,8 +348,13 @@ class SharedDecksDownloadFragment : Fragment() {
                         // Return if download was not successful.
                         if (it.getInt(columnStatusIndex) != DownloadManager.STATUS_SUCCESSFUL) {
                             Timber.i("Download could not be successful, update UI")
-                            Timber.d("Status code -> ${it.getIntOrNull(columnStatusIndex)}, reason ${it.getIntOrNull(columnReasonIndex)}")
-                            onDownloadFinished(isSuccessful = false)
+                            val reason = it.getIntOrNull(columnReasonIndex)
+                            Timber.d("Status code -> ${it.getIntOrNull(columnStatusIndex)}, reason $reason")
+                            if (reason == HTTP_STATUS_TOO_MANY_REQUESTS && !isLoggedInToAnkiWeb()) {
+                                onLoginRequired()
+                            } else {
+                                onDownloadFinished(isSuccessful = false)
+                            }
                             return null
                         }
 
@@ -541,6 +563,14 @@ class SharedDecksDownloadFragment : Fragment() {
         onBackPressedCallback.isEnabled = isDownloadInProgress
 
         // If the cancel confirmation dialog is being shown and the download is no longer in progress, then remove the dialog.
+        removeCancelConfirmationDialog()
+    }
+
+    private fun onLoginRequired() {
+        Timber.i("AnkiWeb wants a login before more downloads")
+        viewModel.onLoginRequired()
+        isDownloadInProgress = false
+        onBackPressedCallback.isEnabled = isDownloadInProgress
         removeCancelConfirmationDialog()
     }
 
