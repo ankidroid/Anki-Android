@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2026 Ashish Yadav <mailtoashish693@gmail.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation; either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="UnusedResources">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/waveform_card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.ichi2.anki.multimedia.audio.AudioWaveform
+                android:id="@+id/audio_waveform"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
+
+            <com.ichi2.anki.workarounds.SafeWebViewLayout
+                android:id="@+id/web_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/controls_area"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_constraintStart_toEndOf="@id/waveform_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggle_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedButton="@id/audio_wave_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/audio_wave_button"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetRight="1dp"
+                app:icon="@drawable/ic_audio_wave"
+                android:contentDescription="@string/waveform_button_description"
+                android:tooltipText="@string/waveform_button_description"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/content_button"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="1dp"
+                app:icon="@drawable/ic_notes"
+                android:contentDescription="@string/field_content_description"
+                android:tooltipText="@string/field_content_description" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_button"
+            style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:icon="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="@id/toggle_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toggle_button"
+            android:contentDescription="@string/delete_audio_button_description"
+            android:tooltipText="@string/delete_audio_button_description"/>
+
+        <LinearLayout
+            android:id="@+id/seek_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toggle_button"
+            app:layout_constraintBottom_toTopOf="@id/playback_controls">
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:thumbHeight="24dp"
+                app:tickVisible="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/current_time_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    tools:text="00:01:23" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/duration_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    tools:text="00:03:55" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/playback_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/seek_layout"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/replay_button"
+                style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/baseline_replay_5_24" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/play_pause_button"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:minWidth="140dp"
+                android:minHeight="64dp"
+                android:text="@string/play_recording"
+                android:textSize="18sp"
+                app:icon="@drawable/ic_play"
+                app:iconPadding="8dp"
+                app:iconSize="28dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/forward_button"
+                style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/baseline_forward_5_24" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
