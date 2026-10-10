@@ -19,6 +19,7 @@ import com.ichi2.utils.toRGBHex
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * Base WebViewClient to be used on [PageFragment]
@@ -54,7 +55,7 @@ open class PageWebViewClient : SafeWebViewClient() {
     ): Boolean {
         val url = request?.url ?: return true
         if (isInternalUrl(url)) {
-            return !isSvelteKitPage(url.path.orEmpty().removePrefix("/"))
+            return SvelteKitPage.fromPath(url.path.orEmpty()) == null
         }
         if (request.isForMainFrame && url.scheme in listOf("http", "https")) {
             view?.context?.openUrl(url)
@@ -72,10 +73,11 @@ open class PageWebViewClient : SafeWebViewClient() {
             return WebResourceResponse("image/x-icon", null, ByteArrayInputStream(byteArrayOf()))
         }
 
+        val page = SvelteKitPage.fromPath(path)
         val assetPath =
             if (path.startsWith("/_app/")) {
                 "backend/sveltekit/app/${path.substring(6)}"
-            } else if (isSvelteKitPage(path.removePrefix("/"))) {
+            } else if (page != null) {
                 "backend/sveltekit/index.html"
             } else {
                 return null
@@ -83,7 +85,14 @@ open class PageWebViewClient : SafeWebViewClient() {
 
         try {
             val mimeType = guessMimeType(assetPath)
-            val inputStream = view.context.assets.open(assetPath)
+            val inputStream =
+                view.context.assets.open(assetPath).let { asset ->
+                    if (page?.disableCsp == true) {
+                        removeBundledCsp(asset)
+                    } else {
+                        asset
+                    }
+                }
             val response = WebResourceResponse(mimeType, null, inputStream)
             if ("immutable" in path) {
                 response.responseHeaders = mapOf("Cache-Control" to "max-age=31536000")
@@ -135,21 +144,13 @@ open class PageWebViewClient : SafeWebViewClient() {
     }
 }
 
-fun isSvelteKitPage(path: String): Boolean {
-    val pageName = path.substringBefore("/")
-    return when (pageName) {
-        "graphs",
-        "congrats",
-        "card-info",
-        "change-notetype",
-        "deck-options",
-        "import-anki-package",
-        "import-csv",
-        "import-page",
-        "image-occlusion",
-        -> true
-        else -> false
-    }
+private val SVELTEKIT_CSP_META = Regex("""<meta http-equiv="content-security-policy" content="[^"]*">""")
+
+/** Reads and closes [asset], returning the HTML without its bundled CSP meta tag. */
+private fun removeBundledCsp(asset: InputStream): InputStream {
+    val html = asset.bufferedReader().use { reader -> reader.readText() }
+    val htmlWithoutCsp = html.replace(SVELTEKIT_CSP_META, "")
+    return htmlWithoutCsp.byteInputStream()
 }
 
 fun WebView.evaluateAfterDOMContentLoaded(
