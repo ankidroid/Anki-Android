@@ -144,6 +144,7 @@ private fun ensureBrowserViewModel() {
             cacheDir = deckPicker.cacheDir,
             options = null,
             isFragmented = false,
+            initialDeckId = null,
         ),
         deckPicker.defaultViewModelCreationExtras,
     )[CardBrowserViewModel::class.java]

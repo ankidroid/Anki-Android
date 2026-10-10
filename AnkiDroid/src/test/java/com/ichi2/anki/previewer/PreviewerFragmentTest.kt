@@ -15,6 +15,8 @@ import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.parcelledCopy
 import com.ichi2.testutils.saveState
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,12 +27,17 @@ import java.io.IOException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class PreviewerFragmentTest : RobolectricTest() {
+    // Changing the selected card renders its media controls, which requires a media folder.
+    override fun getCollectionStorageMode() = CollectionStorageMode.IN_MEMORY_WITH_MEDIA
+
     @Test
     fun `server startup failure is not handled as an unavailable selection`() {
         val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col))
@@ -93,6 +100,39 @@ class PreviewerFragmentTest : RobolectricTest() {
             assertTrue(activity.isFinishing)
             assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
             activity.dispatchKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT))
+        }
+    }
+
+    @Test
+    fun `launch index is honored and restored selection overrides it`() {
+        ensureCollectionLoadIsSynchronous()
+        val ids = (1..3).flatMap { addBasicNote().cardIds(col) }
+        val file = IdsFile(createTransientDirectory(), ids)
+        val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 1)
+        lateinit var original: PreviewerViewModel
+        val savedState =
+            Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
+                val activity = controller.setup().get()
+                original = (activity.supportFragmentManager.fragments.single() as PreviewerFragment).viewModel
+                assertEquals(1, original.currentIndex.value)
+                runBlocking { withTimeout(10.seconds) { assertEquals(ids[1], original.currentCard.await().id) } }
+
+                // Slider positions are one-based; move away from the launch index before saving.
+                val launchCard = original.currentCard
+                original.onSliderChange(3)
+                advanceRobolectricLooperUntil { original.currentCard !== launchCard && original.currentCard.isCompleted }
+                assertEquals(2, original.currentIndex.value)
+                runBlocking { withTimeout(10.seconds) { assertEquals(ids[2], original.currentCard.await().id) } }
+                controller.saveState().parcelledCopy(javaClass.classLoader)
+            }
+
+        // A new controller creates a new ViewModel, unlike a configuration-only recreation.
+        Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
+            val activity = controller.setup(savedState).get()
+            val restored = (activity.supportFragmentManager.fragments.single() as PreviewerFragment).viewModel
+            assertNotSame(original, restored)
+            assertEquals(2, restored.currentIndex.value)
+            runBlocking { withTimeout(10.seconds) { assertEquals(ids[2], restored.currentCard.await().id) } }
         }
     }
 
