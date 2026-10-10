@@ -6,6 +6,7 @@
  */
 
 import com.android.build.api.dsl.ApplicationExtension
+import com.ichi2.anki.gradle.configureAndroidLint
 import com.ichi2.anki.gradle.libsVersionFor
 
 plugins {
@@ -30,4 +31,4 @@ extensions.configure<ApplicationExtension> {
 }
 
 // Shared project-wide lint configuration.
-apply(from = "${rootDir}/lint.gradle")
+configureAndroidLint()

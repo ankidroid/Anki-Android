@@ -11,6 +11,7 @@
 // the consuming module — it's intrinsically per-module configuration.
 
 import com.android.build.api.dsl.LibraryExtension
+import com.ichi2.anki.gradle.configureAndroidLint
 import com.ichi2.anki.gradle.libsVersionFor
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
@@ -39,7 +40,7 @@ extensions.configure<KotlinAndroidProjectExtension> {
 }
 
 // Shared project-wide lint configuration.
-apply(from = "${rootDir}/lint.gradle")
+configureAndroidLint()
 
 dependencies {
     "lintChecks"(project(":lint-rules"))

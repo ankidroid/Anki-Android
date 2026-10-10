@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.TestExtension
+import com.ichi2.anki.gradle.configureAndroidLint
 
 plugins {
     // Use `id` to avoid classpath conflicts. Version pinned by buildSrc/.
@@ -66,7 +67,7 @@ baselineProfile {
     useConnectedDevices = true
 }
 
-apply(from = "../lint.gradle")
+configureAndroidLint()
 
 dependencies {
     implementation(libs.androidx.test.junit)
