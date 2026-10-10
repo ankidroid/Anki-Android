@@ -579,6 +579,8 @@ class DeckPickerViewModel :
                 // froze the DeckPicker when it was recreated
                 val failure =
                     withContext(Dispatchers.IO) {
+                        // Once we have permissions, we know the `StorageDecision`
+                        environment.decideStorageIfUndecided()
                         InitialActivity.getStartupFailureType(environment.preferences, environment::initializeAnkiDroidFolder)
                     }
                 if (failure != null) {
@@ -602,6 +604,16 @@ class DeckPickerViewModel :
 
         /** The preferences of the (profile) context the collection path is read from */
         val preferences: SharedPreferences
+
+        /**
+         * Persists the collection path if the user has not decided yet; no-op otherwise.
+         *
+         * Called once [hasRequiredPermissions] passes, so a deferred decision is recorded
+         * before the collection is opened.
+         *
+         * @see InitialActivity.decideStorageIfUndecided
+         */
+        fun decideStorageIfUndecided()
 
         fun initializeAnkiDroidFolder(): Boolean
     }

@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.InitialActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -46,7 +47,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         enableEdgeToEdge()
         setViewBinding(binding)
 
-        binding.continueButton.setOnClickListener { finish() }
+        binding.continueButton.setOnClickListener { decideStorageAndFinish() }
 
         // #20881: Activity should not be launchd without extras
         val permissionSet = intent.getParcelableExtraCompat<StoragePermissionSet>(EXTRA_PERMISSIONS_SET)
@@ -62,6 +63,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
             val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSIONS_KEY)
             setContinueButtonEnabled(hasAllPermissions)
         }
+        setFragmentResultListener(RESULT_COMPLETE) { _, _ -> decideStorageAndFinish() }
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
@@ -74,8 +76,30 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         binding.continueButton.isEnabled = isEnabled
     }
 
+    /**
+     * Records the storage decision and closes the screen: the granted permissions
+     * determine the default collection path.
+     *
+     * Called on 'Continue', or when the fragment reports [RESULT_COMPLETE].
+     * Preserves an existing collection path.
+     *
+     * @see InitialActivity.decideStorageIfUndecided
+     */
+    private fun decideStorageAndFinish() {
+        InitialActivity.decideStorageIfUndecided(this)
+        finish()
+    }
+
     companion object {
         const val EXTRA_PERMISSIONS_SET = "permissionsSet"
+
+        /**
+         * Fragment result request key: all the fragment's permissions are granted.
+         *
+         * Signals the activity to persist the
+         * [storage decision][com.ichi2.anki.common.storage.StorageDecision], and then close.
+         */
+        const val RESULT_COMPLETE = "result_complete"
 
         fun getIntent(
             context: Context,
