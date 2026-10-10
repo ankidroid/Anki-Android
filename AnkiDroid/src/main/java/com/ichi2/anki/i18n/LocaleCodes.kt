@@ -15,16 +15,15 @@ import java.util.Locale
  *
  * Anki on other platforms expects standardized locales: `{{tts es_ES:field}}`, rather than `spa`
  */
-private val twoLetterSystemLocaleMapping: Map<String, Locale> =
-    run {
-        val locales = Locale.getAvailableLocales()
-        val validLocales = mutableMapOf<String, Locale>()
-        for (locale in locales) {
-            val code = locale.iso3Code ?: continue
-            validLocales.putIfAbsent(code, locale)
-        }
-        validLocales
+private val twoLetterSystemLocaleMapping: Map<String, Locale> by lazy {
+    val locales = Locale.getAvailableLocales()
+    val validLocales = mutableMapOf<String, Locale>()
+    for (locale in locales) {
+        val code = locale.iso3Code ?: continue
+        validLocales.putIfAbsent(code, locale)
     }
+    validLocales
+}
 
 /**
  * Returns an Anki-compatible 'two letter' code (ISO-639-1 + ISO 3166-1 [alpha-2 preferred])
