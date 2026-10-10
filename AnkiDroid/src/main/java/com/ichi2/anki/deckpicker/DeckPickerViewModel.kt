@@ -122,6 +122,8 @@ class DeckPickerViewModel :
      */
     val deckDeletedNotification = MutableSharedFlow<DeckDeletionResult>(extraBufferCapacity = 1)
     val flowOfDeleteDeckConfirmation = MutableSharedFlow<DeleteDeckConfirmationRequest>(extraBufferCapacity = 1)
+    val flowOfRenameDeck = MutableSharedFlow<DeckId>(extraBufferCapacity = 1)
+    val flowOfStudyDeck = MutableSharedFlow<DeckId>(extraBufferCapacity = 1)
     val emptyCardsNotification = MutableSharedFlow<EmptyCardsResult>(extraBufferCapacity = 1)
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
@@ -212,6 +214,18 @@ class DeckPickerViewModel :
                     )
                 }
             flowOfDeleteDeckConfirmation.emit(request)
+        }
+
+    fun requestRenameSelectedDeck() =
+        launchCatchingIO {
+            val deckId = withCol { decks.selected() }
+            flowOfRenameDeck.emit(deckId)
+        }
+
+    fun requestStudySelectedDeck() =
+        launchCatchingIO {
+            val deckId = withCol { decks.selected() }
+            flowOfStudyDeck.emit(deckId)
         }
 
     /**
@@ -661,11 +675,11 @@ class DeckPickerViewModel :
                 val undoAvailable = undoAvailable()
                 // besides checking for cards being available also consider if we have empty decks
                 val isColEmpty = isEmpty && decks.count() == 1
+                val showDeckActions = !isColEmpty
                 // the correct sync status is fetched in the next call so "Normal" is used as a placeholder
-                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, isColEmpty)
-            }?.let { (searchIcon, undoLabel, _, undoAvailable, isColEmpty) ->
-                val syncIcon = fetchSyncIconState()
-                OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable, isColEmpty)
+                OptionsMenuState(searchIcon, undoLabel, SyncIconState.Normal, undoAvailable, showDeckActions)
+            }?.let { state ->
+                state.copy(syncIcon = fetchSyncIconState())
             }
     }
 
@@ -777,5 +791,5 @@ data class OptionsMenuState(
     val undoLabel: String?,
     val syncIcon: SyncIconState,
     val undoAvailable: Boolean,
-    val isColEmpty: Boolean,
+    val showDeckActions: Boolean,
 )

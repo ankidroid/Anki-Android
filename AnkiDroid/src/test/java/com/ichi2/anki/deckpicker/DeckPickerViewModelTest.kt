@@ -104,6 +104,33 @@ class DeckPickerViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `rename and study requests use the resolved selection despite focus search and collapsed parents`() =
+        runTest {
+            val parent = addDeck("Parent")
+            val selected = addDeck("Parent::Selected", setAsSelected = true)
+            val other = addDeck("Other")
+            col.decks.collapse(parent)
+            viewModel.focusedDeck = other
+            viewModel.updateDeckFilter("No matching decks")
+
+            for ((flow, request) in listOf(
+                viewModel.flowOfRenameDeck to viewModel::requestRenameSelectedDeck,
+                viewModel.flowOfStudyDeck to viewModel::requestStudySelectedDeck,
+            )) {
+                col.decks.select(selected)
+                val undoStatus = col.undoStatus()
+                flow.test {
+                    request().join()
+                    assertEquals(undoStatus, col.undoStatus())
+                    // The request keeps its target even if selection changes before it is handled.
+                    col.decks.select(other)
+                    assertEquals(selected, awaitItem())
+                    expectNoEvents()
+                }
+            }
+        }
+
+    @Test
     fun `empty cards - flow`() =
         runTest {
             val cardsToEmpty = createEmptyCards()

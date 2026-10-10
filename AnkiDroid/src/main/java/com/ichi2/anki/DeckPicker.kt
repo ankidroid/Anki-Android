@@ -954,6 +954,12 @@ open class DeckPicker :
 
         viewModel.deckDeletedNotification.launchCollectionInLifecycleScope(::onDeckDeleted)
         viewModel.flowOfDeleteDeckConfirmation.launchCollectionInLifecycleScope(::showDeleteDeckConfirmationDialog)
+        viewModel.flowOfRenameDeck.launchCollectionInLifecycleScope(::renameDeckDialog)
+        viewModel.flowOfStudyDeck.launchCollectionInLifecycleScope { deckId ->
+            launchCatchingTask {
+                handleDeckSelection(deckId, DeckSelectionType.SKIP_STUDY_OPTIONS)
+            }
+        }
         viewModel.emptyCardsNotification.launchCollectionInLifecycleScope(::onCardsEmptied)
         viewModel.flowOfDeckCountsChanged.launchCollectionInLifecycleScope(::onDeckCountsChanged)
         viewModel.flowOfDestination.launchCollectionInLifecycleScope(::onDestinationChanged)
@@ -1321,14 +1327,14 @@ open class DeckPicker :
     }
 
     /**
-     * Shows/hides deck related menu items based on the collection being empty or not.
+     * Shows/hides deck related menu items using the ViewModel's action eligibility.
      */
     private fun updateDeckRelatedMenuItems(menu: Menu) {
         viewModel.optionsMenuState?.run {
-            menu.findItem(R.id.action_deck_rename)?.isVisible = !isColEmpty
-            menu.findItem(R.id.action_deck_delete)?.isVisible = !isColEmpty
+            menu.findItem(R.id.action_deck_rename)?.isVisible = showDeckActions
+            menu.findItem(R.id.action_deck_delete)?.isVisible = showDeckActions
             // added to the menu by StudyOptionsFragment
-            menu.findItem(R.id.action_deck_or_study_options)?.isVisible = !isColEmpty
+            menu.findItem(R.id.action_deck_or_study_options)?.isVisible = showDeckActions
         }
     }
 
@@ -1446,10 +1452,7 @@ open class DeckPicker :
                 return true
             }
             R.id.action_deck_rename -> {
-                launchCatchingTask {
-                    val targetDeckId = withCol { decks.selected() }
-                    renameDeckDialog(targetDeckId)
-                }
+                viewModel.requestRenameSelectedDeck()
                 return true
             }
             R.id.action_deck_delete -> {
@@ -1698,9 +1701,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                launchCatchingTask {
-                    handleDeckSelection(withCol { decks.selected() }, DeckSelectionType.SKIP_STUDY_OPTIONS)
-                }
+                viewModel.requestStudySelectedDeck()
                 return true
             }
             KeyEvent.KEYCODE_T -> {
