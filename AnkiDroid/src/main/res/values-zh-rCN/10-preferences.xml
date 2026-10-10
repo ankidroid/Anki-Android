@@ -308,7 +308,7 @@
     <string name="pref_cat_about_title" maxLength="41">关于</string>
     <string name="contributors_title">贡献者</string>
     <string name="about_contributors_description"><![CDATA[这些是我们非常了不起的<a href=\"%1$s\">贡献者</a>。您也可以通过贡献代码、翻译、捐赠和<a href=\"%2$s\">更多方式</a>来帮助 AnkiDroid！]]></string>
-    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[这些是我们非常了不起的<a href=\"%1$s\">贡献者</a>。您也可以通过贡献代码、翻译、捐赠和<a href=\"%2$s\">更多方式</a>来帮助 AnkiDroid！]]></string>
     <string name="license">许可证</string>
     <string name="license_description"><![CDATA[AnkiDroid 根据<a href=\"%1$s\">GPL-3.0</a>和<a href=\"%2$s\">AGPL-3.0</a>许可证发布，源代码可在 <a href=\"%3$s\">Github</a> 上获取]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid 也使用第三方库和图标，它们按照多种开源<a href=\"%1$s\">许可证</a>许可]]></string>

@@ -128,10 +128,10 @@
     <string name="sync_conflict_message_new">コレクションを統合できません。\nどちらのコレクションを保持しますか？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">AnkiDroid内のコレクションのデータを、AnkiWeb上のコレクションのデータで上書きしますか？</string>
-    <string name="sync_conflict_local_confirm_new">AnkiWeb上のコレクションのデータを、AnkiDroid内のコレクションのデータで上書きしますか？</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid内のコレクションを、AnkiWeb上のコレクションと同じ内容に置換（上書き）します。よろしいですか？</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb上のコレクションを、AnkiDroid内のコレクションと同じ内容に置換（上書き）します。よろしいですか？</string>
     <string name="sync_conflict_title_new">保持するコレクションを選択</string>
-    <string name="sync_conflict_replace_title">コレクションを上書き</string>
+    <string name="sync_conflict_replace_title">コレクションを置換（上書き）</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>

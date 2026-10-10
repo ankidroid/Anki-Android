@@ -59,7 +59,7 @@
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_add" comment="Positive dialog action button label to add \'something\'">追加</string>
-    <string name="restore">Restore</string>
+    <string name="restore">復元</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">いいえ</string>
     <string name="dialog_yes">はい</string>
@@ -75,7 +75,7 @@
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">無効化</string>
     <string name="dialog_positive_overwrite">上書きする</string>
     <string name="dialog_positive_repair">修復</string>
-    <string name="dialog_positive_replace">上書き</string>
+    <string name="dialog_positive_replace">置換</string>
     <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
     <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
     <string name="dialog_invalid_custom_certificate">提供されたテキストをPEMエンコードしても有効な X.509証明書になりません</string>

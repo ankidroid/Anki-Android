@@ -140,7 +140,7 @@
     <string name="locale_selection_dialog_title_new">Estabelecer Idioma</string>
     <string name="locale_selection_dialog_summary">Algúns teclados multilingües, como GBoard, permiten cambiar o idioma mentres se edita o texto.\n\nSe o teu teclado non cambia o idioma, solicita a función \"setImeHintLocales\" ao fabricante.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Empregar o AnkiDroid</string>
+    <string name="help_title_using_ankidroid">Como usar o AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Manual do AnkiDroid</string>
     <string name="help_item_anki_manual">Manual do Anki</string>
     <string name="help_item_ankidroid_faq">FAQ do AnkiDroid</string>

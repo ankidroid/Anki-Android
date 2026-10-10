@@ -275,8 +275,8 @@
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Velocidade</string>
+    <string name="download_time_left_label">Tempo restante</string>
     <string name="deck_download_progress_message">Podes utilizar outras aplicacións mentres a descarga está en curso</string>
     <string name="check_network">Comproba a túa conexión de rede</string>
     <string name="external_storage_unavailable">Descarga interrompida, o almacenamento externo non está dispoñíbel</string>
