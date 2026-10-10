@@ -10,9 +10,11 @@
 import com.android.build.api.dsl.LibraryExtension
 import com.ichi2.anki.gradle.configureAndroidLint
 import com.ichi2.anki.gradle.libsVersionFor
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 
 plugins {
     id("com.android.library")
+    jacoco
 }
 
 extensions.configure<LibraryExtension> {
@@ -40,6 +42,14 @@ if (path != ":vbpd") {
     }
 }
 
-// Apply jacoco so module unit tests produce .exec files that
+// Configure jacoco so module unit tests produce .exec files that
 // AnkiDroid's jacocoUnitTestReport aggregates across modules.
-apply(from = "${rootDir}/jacocoSupport.gradle")
+val jacocoToolVersion = libsVersionFor("jacoco")
+
+extensions.configure<JacocoPluginExtension> {
+    toolVersion = jacocoToolVersion
+}
+
+extensions.configure<LibraryExtension> {
+    testCoverage.jacocoVersion = jacocoToolVersion
+}
