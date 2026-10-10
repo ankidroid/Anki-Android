@@ -177,6 +177,17 @@ jobs:
         if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.iteration == 1 && matrix.os == 'ubuntu-latest'
         run: ./gradlew testFullDebugUnitTest -PemptyApplication --daemon
 
+      # Compile the extra release variant once per scheduled run, keeping PR checks unchanged.
+      - name: Test Parallel Content Provider (scheduled run only)
+        if: github.event_name == 'schedule' && matrix.iteration == 1 && matrix.os == 'ubuntu-latest'
+        env:
+          TEST_RELEASE_BUILD: "true"
+        run: >
+          ./gradlew :AnkiDroid:testFullReleaseUnitTest
+          -PcustomSuffix=a
+          --tests 'com.ichi2.anki.provider.CardContentProviderTest'
+          --daemon
+
       - name: Store Logcat as Artifact
         # cancelled() handles test timeouts
         # remove when test timeouts cause a failure()
