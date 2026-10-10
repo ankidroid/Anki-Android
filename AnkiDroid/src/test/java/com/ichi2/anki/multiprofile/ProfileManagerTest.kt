@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.os.Build
+import android.os.Environment
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebView
@@ -34,6 +35,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowEnvironment
 import java.io.File
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -398,6 +400,22 @@ class ProfileManagerTest {
         val deckPath = reloaded.activeProfileContext.sharedPrefs().getString(PREF_COLLECTION_PATH, null)!!
 
         assertTrue("deckPath directory must exist after profile load", File(deckPath).isDirectory)
+    }
+
+    @Test
+    fun `loading a non-default profile keeps deckPath in app storage when Default uses legacy storage`() {
+        ShadowEnvironment.setIsExternalStorageLegacy(true)
+        context.sharedPrefs().edit(commit = true) {
+            putString(PREF_COLLECTION_PATH, File(Environment.getExternalStorageDirectory(), "AnkiDroid").absolutePath)
+        }
+        val manager = ProfileManager.create(context)
+        val ashishId = manager.createNewProfile(ProfileName.fromTrustedSource("Ashish"))
+        with(ProfileManager.ProfileSwitchContext) { manager.switchActiveProfile(ashishId) }
+
+        val reloaded = ProfileManager.create(context)
+        val deckPath = reloaded.activeProfileContext.sharedPrefs().getString(PREF_COLLECTION_PATH, null)
+
+        assertEquals(File(context.getExternalFilesDir(null), ashishId.value).absolutePath, deckPath)
     }
 
     @Test
