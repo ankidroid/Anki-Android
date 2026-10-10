@@ -7,8 +7,11 @@ import android.os.Build
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.getWebViewInfo
+import net.ankiweb.rsdroid.BackendFactory
 import org.acra.util.Installation
 import timber.log.Timber
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
@@ -23,6 +26,9 @@ object DebugInfoService {
         val webviewInfo = getWebViewInfo(info)
         // isFSRSEnabled is null on startup
         val isFSRSEnabled = getFSRSStatus()
+        val systemLocale = LanguageUtil.getSystemLocale().toLanguageTag()
+        val appLocale = info.sharedPrefs().getString("language", LanguageUtil.SYSTEM_LANGUAGE_TAG) ?: ""
+        val backendLocale = BackendFactory.defaultLanguages.firstOrNull() ?: ""
         return """
             AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
             Backend Version = ${BuildConfig.BACKEND_VERSION} (${BackendBuildConfig.ANKI_DESKTOP_VERSION} ${BackendBuildConfig.ANKI_COMMIT_HASH})
@@ -33,6 +39,7 @@ object DebugInfoService {
             ACRA UUID = ${Installation.id(info)}
             FSRS = ${BackendBuildConfig.FSRS_VERSION} (Enabled: $isFSRSEnabled)
             Crash Reports Enabled = ${isSendingCrashReports(info)}
+            Language = System: $systemLocale | App: $appLocale | Backend: $backendLocale
             """.trimIndent()
             // A Markdown newline is two spaces followed by '\n', this avoids the need for
             // code fences
