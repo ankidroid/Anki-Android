@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.annotation.VisibleForTesting
+import androidx.concurrent.futures.await
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Constraints
@@ -30,6 +31,7 @@ import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.receiver.CopyToClipboardReceiver
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.sync.syncMedia
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -38,8 +40,10 @@ import com.ichi2.utils.TruncatedString
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.Backend
 import timber.log.Timber
+import java.util.UUID
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -199,30 +203,64 @@ class SyncMediaWorker(
     companion object {
         val NOTIFICATION_UPDATE_RATE = 500.milliseconds
 
-        fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
+        /** Ensure a metered network request approval only affects the intended request. */
+        private val schedulingLock = Mutex()
+
+        fun getWorkRequest(
+            auth: SyncAuth,
+            networkType: NetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true),
+            id: UUID = UUID.randomUUID(),
+        ): OneTimeWorkRequest {
             val constraints =
                 Constraints
                     .Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiredNetworkType(networkType)
                     .build()
 
             return OneTimeWorkRequestBuilder<SyncMediaWorker>()
+                .setId(id)
                 .setInputData(auth.toWorkData())
                 .setConstraints(constraints)
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build()
         }
 
-        fun start(
+        /**
+         * A later metered approval must also release media already waiting for Wi-Fi.
+         * Updating the existing request preserves any sync that has started in the meantime.
+         */
+        suspend fun start(
             context: Context,
             auth: SyncAuth,
+            networkType: NetworkType = MeteredSyncPolicy.getNetworkTypeRequiredForSync(forMedia = true),
         ) {
-            Timber.i("Launching background media sync")
-            val request = getWorkRequest(auth)
+            schedulingLock.withLock {
+                Timber.i("Launching background media sync")
+                val request = getWorkRequest(auth, networkType)
 
-            WorkManager
-                .getInstance(context)
-                .enqueueUniqueWork(UniqueWorkNames.SYNC_MEDIA, ExistingWorkPolicy.KEEP, request)
+                val manager = WorkManager.getInstance(context)
+                manager.enqueueUniqueWork(UniqueWorkNames.SYNC_MEDIA, ExistingWorkPolicy.KEEP, request).result.await()
+                if (networkType == NetworkType.CONNECTED) {
+                    manager.allowMeteredMediaSync(auth)
+                }
+            }
+        }
+
+        /**
+         * Applies a new request's permission to use metered networks to retained media work.
+         *
+         * If a new request allows metered networks, it does not overwrite the old work due to
+         * [ExistingWorkPolicy.KEEP], so explicitly update the work request.
+         *
+         * Call after `enqueueUniqueWork` has completed while holding [schedulingLock].
+         */
+        private suspend fun WorkManager.allowMeteredMediaSync(auth: SyncAuth) {
+            val existing =
+                getWorkInfosForUniqueWork(UniqueWorkNames.SYNC_MEDIA).await().firstOrNull {
+                    !it.state.isFinished && it.constraints.requiredNetworkType == NetworkType.UNMETERED
+                } ?: return
+            val result = updateWork(getWorkRequest(auth, NetworkType.CONNECTED, existing.id)).await()
+            Timber.i("Allowing metered media sync for work %s: %s", existing.id, result)
         }
     }
 }

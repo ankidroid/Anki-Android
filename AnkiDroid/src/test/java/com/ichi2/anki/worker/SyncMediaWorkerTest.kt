@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.work.NetworkType
 import androidx.work.testing.TestListenableWorkerBuilder
 import androidx.work.testing.WorkManagerTestInitHelper
 import anki.sync.syncAuth
@@ -46,7 +47,7 @@ class SyncMediaWorkerTest {
     fun `default AnkiWeb endpoint remains absent in work data`() {
         val auth = SyncAuth(syncAuth { hkey = "test" })
 
-        val input = SyncMediaWorker.getWorkRequest(auth).workSpec.input
+        val input = SyncMediaWorker.getWorkRequest(auth, NetworkType.CONNECTED).workSpec.input
         val restoredAuth = input.toSyncAuth()!!
 
         assertThat(restoredAuth.endpoint, nullValue())

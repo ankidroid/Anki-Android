@@ -13,7 +13,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
-import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
@@ -31,6 +30,7 @@ import com.ichi2.anki.common.permissions.canPostNotifications
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.setLastSyncTimeToNow
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.SyncAuth
 import com.ichi2.anki.sync.syncCollection
 import com.ichi2.anki.utils.ext.trySetForeground
@@ -65,7 +65,6 @@ class SyncWorker(
     context: Context,
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
-    private val workManager = WorkManager.getInstance(context)
     private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
     private val notificationManager: NotificationManagerCompat? =
         if (canPostNotifications(context)) {
@@ -173,13 +172,9 @@ class SyncWorker(
         }
     }
 
-    private fun syncMedia(auth: SyncAuth) {
+    private suspend fun syncMedia(auth: SyncAuth) {
         Timber.i("Enqueuing SyncMediaWorker")
-        workManager.enqueueUniqueWork(
-            UniqueWorkNames.SYNC_MEDIA,
-            ExistingWorkPolicy.KEEP,
-            SyncMediaWorker.getWorkRequest(auth),
-        )
+        SyncMediaWorker.start(applicationContext, auth)
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
@@ -240,7 +235,7 @@ class SyncWorker(
             val constraints =
                 Constraints
                     .Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiredNetworkType(MeteredSyncPolicy.getNetworkTypeRequiredForSync())
                     .build()
 
             val data =
