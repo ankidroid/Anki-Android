@@ -1397,6 +1397,11 @@ class DeckPickerTest : RobolectricTest() {
         var databaseErrorDialog: DatabaseErrorDialogType? = null
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
+        var integrityCheckCalled = false
+
+        override fun integrityCheck() {
+            integrityCheckCalled = true
+        }
 
         /** result of the last [onCreateOptionsMenu] call: false means the menu was blanked */
         var lastCreateOptionsMenuResult: Boolean? = null

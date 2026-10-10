@@ -17,6 +17,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.R
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_COLLECTION_TOO_LARGE
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_CONNECTION_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_MEDIA_SYNC_ERROR
 import com.ichi2.anki.dialogs.SyncErrorDialog.Type.DIALOG_SYNC_BASIC_CHECK_ERROR
@@ -192,6 +193,14 @@ class SyncErrorDialog : AsyncDialogFragment() {
                         setupEnterKeyHandler()
                     }
             }
+            DIALOG_COLLECTION_TOO_LARGE -> {
+                dialog
+                    .setPositiveButton(TR.sentenceCase.checkDatabase) { _, _ ->
+                        requireSyncErrorDialogListener().integrityCheck()
+                        activity?.dismissAllDialogFragments()
+                    }.setNegativeButton(CommonString.dialog_cancel) { _, _ -> }
+                    .create()
+            }
         }
     }
 
@@ -211,6 +220,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 DIALOG_MEDIA_SYNC_ERROR,
                 DIALOG_SYNC_CORRUPT_COLLECTION,
                 DIALOG_SYNC_BASIC_CHECK_ERROR,
+                DIALOG_COLLECTION_TOO_LARGE,
                 -> res().getString(CommonString.sync_error)
                 DIALOG_SYNC_CLOCK_OFF -> res().getString(CommonString.vague_error)
             }
@@ -319,6 +329,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         DIALOG_SYNC_CORRUPT_COLLECTION(9),
         DIALOG_SYNC_BASIC_CHECK_ERROR(10),
         DIALOG_SYNC_CLOCK_OFF(11),
+        DIALOG_COLLECTION_TOO_LARGE(12),
         ;
 
         companion object {
