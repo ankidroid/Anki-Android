@@ -25,6 +25,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
@@ -82,6 +83,13 @@ class AnkiDroidAppTest {
             app.baseContext.javaClass.name,
             "ActivityThread.handleReceiver casts the application's base context to ContextImpl",
         )
+    }
+
+    @Test
+    fun `the application retains the profile manager`() {
+        val app = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
+
+        assertNotNull(app.profileManager, "callers need the manager to reach the active profile")
     }
 
     @Test
