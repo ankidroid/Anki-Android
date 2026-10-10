@@ -9,10 +9,12 @@ import androidx.annotation.StringRes
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.CommonString
+import com.ichi2.anki.backend.AnkiBackendLanguage
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.compat.CompatHelper
 import net.ankiweb.rsdroid.BackendFactory
+import timber.log.Timber
 import java.util.Locale
 
 /**
@@ -313,7 +315,10 @@ object LanguageUtil {
 
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
-    /** If locale is not provided, the current locale will be used. */
+    /**
+     * If locale is not provided, the current locale will be used.
+     * If conversion fails, passes the original tag to rslib for its own parsing and language fallback.
+     */
     fun setDefaultBackendLanguages(languageTag: String? = null) {
         val langCode =
             languageTag ?: appContext
@@ -326,17 +331,12 @@ object LanguageUtil {
             } else {
                 langCode
             }
-        BackendFactory.defaultLanguages = listOf(languageTagToBackendCode(localeLanguage))
-    }
-
-    private fun languageTagToBackendCode(languageTag: String): String =
-        when (languageTag) {
-            "heb" -> "he"
-            "ind" -> "id"
-            "tgl" -> "tl"
-            "hi" -> "hi-IN"
-            else -> languageTag
+        val backendLanguage = AnkiBackendLanguage.fromLanguageTag(localeLanguage)
+        if (backendLanguage == null) {
+            Timber.w("Could not normalize language tag '%s'; passing it to rslib unchanged", localeLanguage)
         }
+        BackendFactory.defaultLanguages = listOf(backendLanguage?.value ?: localeLanguage)
+    }
 
     /** @return string defined with [stringRes] on the specified [locale] */
     fun Context.getStringByLocale(
