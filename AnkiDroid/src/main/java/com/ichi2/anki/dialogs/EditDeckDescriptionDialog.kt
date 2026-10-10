@@ -75,6 +75,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
                     handleOutsideTouch(binding) { viewModel.onBackRequested() }
                 }
                 setCanceledOnTouchOutside(false)
+                // TODO: Use DialogFragment.isCancelable and retain 'Back' handling
                 setCancelable(false)
                 onBackPressedDispatcher.addCallback(this, onUnsavedChangesBackCallback)
                 show()

@@ -102,11 +102,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         }
         return when (requireDialogType()) {
             DIALOG_LOAD_FAILED -> {
+                isCancelable = false
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
                 alertDialog.show {
                     title(R.string.open_collection_failed_title)
-                    cancelable(false)
                     message(text = message)
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
@@ -118,11 +118,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DB_ERROR -> {
+                isCancelable = false
                 // Database Check failed to execute successfully; give user the option of either choosing from repair
                 // options, submitting an error report, or closing the activity
                 alertDialog
                     .create {
-                        cancelable(false)
                         title(R.string.answering_error_title)
                         message(text = message)
                         setIcon(R.drawable.ic_warning)
@@ -353,6 +353,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_DB_LOCKED -> {
+                isCancelable = false
                 // If the database is locked, all we can do is ask the user to exit.
                 alertDialog.show {
                     title(R.string.database_locked_title)
@@ -360,10 +361,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
                     }
-                    cancelable(false)
                 }
             }
             INCOMPATIBLE_DB_VERSION -> {
+                isCancelable = false
                 val values: MutableList<IncompatibleDbVersionEntries> = ArrayList(2)
                 val options = mutableListOf<CharSequence>()
                 options.add(makeBold(res.getString(R.string.backup_restore)))
@@ -373,7 +374,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     values.add(IncompatibleDbVersionEntries.ONE_WAY)
                 }
                 alertDialog.show {
-                    cancelable(false)
                     title(R.string.incompatible_database_version_title)
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.close) {
@@ -403,6 +403,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> {
+                isCancelable = false
                 val listItems = UninstallListItem.createList()
                 alertDialog.show {
                     title(R.string.directory_inaccessible_after_uninstall)
@@ -413,7 +414,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             dismiss()
                         }
                     }
-                    cancelable(false)
                 }
             }
         }

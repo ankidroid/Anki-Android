@@ -147,12 +147,12 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     .create()
             }
             DIALOG_SYNC_CORRUPT_COLLECTION -> {
+                isCancelable = false
                 dialog
                     .setPositiveButton(R.string.dialog_ok) { _, _ -> }
                     .setNegativeButton(R.string.help) { _, _ ->
                         requireContext().openUrl(R.string.repair_deck)
-                    }.setCancelable(false)
-                    .create()
+                    }.create()
             }
             DIALOG_SYNC_BASIC_CHECK_ERROR -> {
                 dialog
