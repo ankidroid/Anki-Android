@@ -50,7 +50,7 @@
     <string name="pref_cat_security" maxLength="41">セキュリティ</string>
     <!-- Card template JavaScript API permissions -->
     <string name="allow_dangerous_js_api_title" maxLength="41">JavaScript API を包括的に許可</string>
-    <string name="allow_dangerous_js_api_summ">すべてのカードやテンプレートにおいて、他のカードやコレクションデータの読み取りや変更を可能にします。\n他者が作成した悪意や不具合のあるカードなどによる被害を防ぐため、そのような機能を与えるほどには信用していないカードやテンプレートがコレクション内にある場合は、このオプションはオンにしないでください。</string>
+    <string name="allow_dangerous_js_api_summ">すべてのカードやテンプレートに、他のカードやコレクションデータの読み取りや変更を許可します。\nそのような許可をするほどには信頼していないカードやテンプレートがコレクション内にある場合は、オフのままにしてください。</string>
     <string name="dangerous_js_api_denied_snackbar">Security: Unsafe JavaScript call blocked.\nIf you trust all cards and templates in your collection, this can be unblocked in the advanced settings</string>
     <!-- External-app launching from card content (intent: / android-app: URLs) -->
     <string name="allow_card_external_launch_title" maxLength="41">カード内で別のアプリの起動を許可</string>
@@ -156,8 +156,8 @@
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>
     <string name="show_large_answer_buttons_summ">「解答を表示」ボタンの縦幅を２倍にし、回答ボタンを縦２列で表示します</string>
-    <string name="remove_animations" maxLength="41">Remove animations</string>
-    <string name="remove_animations_summary">Also enabled if animations are removed on the system settings</string>
+    <string name="remove_animations" maxLength="41">アニメーションを無効化</string>
+    <string name="remove_animations_summary">Androidシステムの設定でアニメーションを無効化している場合は、そちらの設定が優先されます</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
     <string name="show_top_bar_summary">カードの残り枚数、回答時間測定タイマー、フラグ、マークをトップバーに表示する</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
@@ -226,9 +226,9 @@
     <string name="review_reminders_summary_deck_specific" comment="The descriptor for reminders attached to one particular deck.">特定のデッキ</string>
     <string name="review_reminders_load_error" comment="Error dialog shown when stored review reminders could not be read back. Technical details follow this text.">学習リマインダーの読み込み中にエラーが発生しました。破損したリマインダーは削除されました。詳細:</string>
     <!-- Schedule reminders screen -->
-    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">Schedule reminders</string>
+    <string name="schedule_reminders_title" maxLength="28" comment="Name of the menu option for scheduling review reminders for a deck.">リマインダー</string>
     <string name="add_reminder" comment="Label for the add reminder button in the screen for adding and editing review reminders">リマインダーを追加</string>
-    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">学習のリマインダーがありません</string>
+    <string name="you_have_no_review_reminders" comment="Text that appears in the review reminder editing screen when there are no reminders set">学習リマインダーがありません</string>
     <string name="schedule_reminders_troubleshoot_menu" maxLength="28" comment="Text in a menu button which opens a screen for diagnosing why review reminders may not be delivered.">トラブルシューティング</string>
     <string name="schedule_reminders_notification_settings_menu" maxLength="28" comment="Text in a menu button which opens the operating system notification settings for the app.">アプリの通知設定</string>
     <string name="schedule_reminders_list_content_description" comment="Accessibility description of the list showing scheduled review reminders.">スケジュール済みの学習リマインダーの一覧</string>
@@ -255,14 +255,14 @@
     <string name="reminder_troubleshooting_summary_error" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders cannot be delivered at all.">リマインダーが機能していません。</string>
     <string name="reminder_troubleshooting_summary_warning" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when reminders may be delayed or suppressed.">リマインダーが正常に動作しない可能性があります。</string>
     <string name="reminder_troubleshooting_summary_ok" comment="Overall verdict shown at the top of the review reminder troubleshooting screen when no issues are found.">リマインダーは正常に動作するはずです。</string>
-    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">Different devices have different notification restriction settings. Check your system settings or search online if issues persist.</string>
+    <string name="reminder_troubleshooting_footer" comment="Closing advice at the bottom of the review reminder troubleshooting screen.">通知制限に関する設定はデバイスによって異なります。問題が解決しない場合は、Androidシステムの設定を確認するか、ご利用中のデバイスの設定についてインターネットで検索してください。</string>
     <!-- Troubleshooting check titles -->
     <string name="reminder_troubleshooting_check_notification_permission" comment="Name of a review reminder troubleshooting check: whether the app may post notifications.">通知の許可</string>
     <string name="reminder_troubleshooting_check_notification_channel" comment="Name of a review reminder troubleshooting check: whether the review reminders notification channel is turned on.">通知カテゴリー</string>
     <string name="reminder_troubleshooting_check_do_not_disturb" comment="Name of a review reminder troubleshooting check: whether the system Do Not Disturb mode is active.">サイレントモード</string>
     <string name="reminder_troubleshooting_check_battery_optimization" comment="Name of a review reminder troubleshooting check: whether the system restricts the app\'s background battery usage.">バッテリーの最適化</string>
     <string name="reminder_troubleshooting_check_power_saving_mode" comment="Name of a review reminder troubleshooting check: whether the system power saving mode is active.">省電力モード</string>
-    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">Alarms &amp; reminders permission</string>
+    <string name="reminder_troubleshooting_check_exact_alarm_permission" comment="Name of a review reminder troubleshooting check: whether the app has permission to schedule alarms at exact times.">アラームとリマインダーの権限</string>
     <!-- Troubleshooting check statuses -->
     <string name="reminder_troubleshooting_status_granted" comment="Status of a review reminder troubleshooting check: the permission has been given.">許可済み</string>
     <string name="reminder_troubleshooting_status_denied" comment="Status of a review reminder troubleshooting check: the permission has not been given.">許可されていません</string>
@@ -447,7 +447,7 @@
     <string name="related_settings_title" comment="Title of the section for related settings">関連設定</string>
     <!-- External Directory Selection Preference -->
     <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
-    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
-    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">カスタム パス</string>
+    <string name="pref_enter_custom_path" maxLength="41">カスタムパスを入力</string>
     <string name="pref_directory_not_writable">ディレクトリが書き込み可能ではありません</string>
 </resources>

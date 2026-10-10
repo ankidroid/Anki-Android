@@ -226,8 +226,8 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Rozmiar czcionki</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Pokaż pasek narzędzi</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Pokaż podgląd</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Ukryj podgląd</string>
     <string name="format_insert_bold">Pogrubienie</string>
     <string name="format_insert_italic">Pochylenie</string>
     <string name="format_insert_underline">Podkreślenie</string>
@@ -281,8 +281,8 @@
     <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
     <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Szybkość</string>
+    <string name="download_time_left_label">Pozostały czas</string>
     <string name="deck_download_progress_message">Możesz używać innych aplikacji podczas pobierania</string>
     <string name="check_network">Sprawdź swoje połączenie internetowe</string>
     <string name="external_storage_unavailable">Pobieranie przerwane, pamięć zewnętrzna nie jest dostępna</string>
@@ -391,7 +391,7 @@
     <string name="set_due_date_date_range">Zakres dat</string>
     <string comment="Shown when retrying a running action" name="already_in_progress">Obecnie w toku</string>
     <!-- Switch profiles screen -->
-    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Switch profile</string>
-    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edit profile</string>
-    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Delete profile</string>
+    <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">Przełącz profil</string>
+    <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">Edytuj profil</string>
+    <string name="delete_profile" comment="Content description of the button that deletes a profile in the profile list">Usuń profil</string>
 </resources>

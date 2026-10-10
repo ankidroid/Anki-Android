@@ -217,8 +217,8 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">フォントサイズ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ツールバーを表示</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">プレビューを表示</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">プレビューを非表示</string>
     <string name="format_insert_bold">太字</string>
     <string name="format_insert_italic">斜体</string>
     <string name="format_insert_underline">下線</string>
@@ -371,7 +371,7 @@
     <!--Set up date-->
     <string name="set_due_date_day" comment="Used for setting due date">日</string>
     <string name="set_due_date_date_range">期間</string>
-    <string comment="Shown when retrying a running action" name="already_in_progress">Already in progress</string>
+    <string comment="Shown when retrying a running action" name="already_in_progress">すでに進行中です</string>
     <!-- Switch profiles screen -->
     <string name="switch_profile" maxLength="41" comment="Title of the screen where the user switches between profiles">プロファイルを切り替える</string>
     <string name="edit_profile" comment="Content description of the button that edits a profile in the profile list">プロファイルを編集</string>
