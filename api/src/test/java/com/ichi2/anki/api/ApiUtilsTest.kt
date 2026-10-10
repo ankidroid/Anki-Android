@@ -1,4 +1,4 @@
-//noinspection MissingCopyrightHeader #8659
+// SPDX-License-Identifier: LGPL-3.0-or-later
 
 package com.ichi2.anki.api
 
