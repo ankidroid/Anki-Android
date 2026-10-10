@@ -1,3 +1,9 @@
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Filled
+  Source: https://fonts.gstatic.com/s/i/materialicons/done/v19/24px.xml
+-->
 <!-- for grep: tick check save -->
 <vector android:height="24dp" android:tint="?attr/colorControlNormal"
     android:viewportHeight="24.0" android:viewportWidth="24.0"

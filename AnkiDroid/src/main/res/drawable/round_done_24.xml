@@ -1,3 +1,9 @@
+<!--
+  SPDX-License-Identifier: Apache-2.0
+  SPDX-FileCopyrightText: Google LLC
+  SPDX-FileComment: Style: Round
+  Source: https://fonts.gstatic.com/s/i/materialiconsround/done/v19/24px.xml
+-->
 <vector android:height="24dp"
     android:viewportHeight="24"
     android:viewportWidth="24"
