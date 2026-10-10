@@ -8,18 +8,11 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.CollectionLockedException
 import org.junit.After
 import org.junit.Assert.assertThrows
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class BackendEmulatingOpenConflictTest : RobolectricTest() {
-    @Before
-    override fun setUp() {
-        super.setUp()
-        BackendEmulatingOpenConflict.enable()
-    }
-
     @After
     override fun tearDown() {
         super.tearDown()
@@ -27,7 +20,10 @@ class BackendEmulatingOpenConflictTest : RobolectricTest() {
     }
 
     @Test
-    fun assumeMocksAreValid() {
+    fun `enabling conflicts replaces an already initialized backend`() {
+        CollectionManager.getBackend()
+        BackendEmulatingOpenConflict.enable()
+
         assertThrows(
             CollectionLockedException::class.java,
         ) { CollectionManager.getColUnsafe() }

@@ -3,6 +3,8 @@
 package com.ichi2.testutils
 
 import anki.backend.BackendError
+import com.ichi2.anki.CollectionManager
+import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import net.ankiweb.rsdroid.BackendFactory
@@ -24,6 +26,8 @@ class BackendEmulatingOpenConflict : Backend() {
     companion object {
         fun enable() {
             BackendFactory.setOverride { BackendEmulatingOpenConflict() }
+            // Startup debug info may have already initialized a backend before the override.
+            runBlocking { CollectionManager.discardBackend() }
         }
 
         fun disable() {
