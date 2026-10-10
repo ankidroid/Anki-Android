@@ -49,11 +49,11 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
     }
 };
 
-// ============================================================================
-// Input focus listeners
-// ============================================================================
-
 (() => {
+    // ============================================================================
+    // Reviewer listeners and gesture detection
+    // ============================================================================
+
     function localRequest(endpoint, payload = {}) {
         fetch(`ankidroid/${endpoint}`, {
             method: "POST",
@@ -63,6 +63,10 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             body: JSON.stringify(payload),
         }).catch(err => console.log("Failed to reach local server:", err));
     }
+
+    // ============================================================================
+    // Input focus listeners
+    // ============================================================================
 
     /**
      * Checks if the target element is a text input field.
@@ -85,13 +89,11 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             localRequest("focusout");
         }
     });
-})();
 
-// ============================================================================
-// Gesture detection
-// ============================================================================
+    // ============================================================================
+    // Gesture detection
+    // ============================================================================
 
-(() => {
     const SCHEME = "gesture";
     const MULTI_TOUCH_TIMEOUT = 300;
     const GESTURE_TIMEOUT = 800;
@@ -132,7 +134,8 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
                 if (Date.now() - touchStartTime > MULTI_TOUCH_TIMEOUT) {
                     return;
                 }
-                window.location.href = `${SCHEME}://multiFingerTap/?touchCount=${touchCount}`;
+
+                localRequest("multiFingerTap", { touchCount: touchCount });
                 return;
             }
 
@@ -145,17 +148,27 @@ globalThis.ankidroid.onTypeAnswerKeyDown = function (event) {
             const endX = event.changedTouches[0].pageX;
             const endY = event.changedTouches[0].pageY;
             const scrollDirection = getScrollDirection(event.target);
-            const params = new URLSearchParams({
+
+            const payload = {
                 x: Math.round(endX),
                 y: Math.round(endY),
                 deltaX: Math.round(endX - startX),
                 deltaY: Math.round(endY - startY),
                 time: Date.now(),
-            });
+            };
             if (scrollDirection !== null) {
-                params.append("scrollDirection", scrollDirection);
+                payload.scrollDirection = scrollDirection;
             }
-            window.location.href = `${SCHEME}://tapOrSwipe/?${params.toString()}`;
+
+            localRequest("tapOrSwipe", payload);
+        },
+        { passive: true },
+    );
+
+    document.addEventListener(
+        "touchcancel",
+        () => {
+            touchCount = 0;
         },
         { passive: true },
     );
