@@ -87,8 +87,10 @@ class BrowserMultiColumnAdapter(
 
                 // recreate the columns and the dividers
                 columnViews.replaceWith(
-                    (1..value).map { index ->
-                        ViewBrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root
+                    (0 until value).map { index ->
+                        ViewBrowserColumnCellBinding.inflate(layoutInflater, binding.root, true).root.apply {
+                            setBrowserCellAccessibility(index) { layoutPosition }
+                        }
                     },
                 )
 
