@@ -6,15 +6,49 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.contentForCloze
 import org.intellij.lang.annotations.Language
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class TypeAnswerTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         col
+    }
+
+    @Test
+    fun `HTML answer marks nosuggest fields and requests a Done key`() =
+        runTest {
+            val field = htmlAnswerField("nosuggest:type")
+
+            assertEquals("true", field.attr("data-ankidroid-nosuggest"))
+            assertEquals("done", field.attr("enterkeyhint"))
+        }
+
+    @Test
+    fun `ordinary HTML answers keep their keyboard defaults`() =
+        runTest {
+            val field = htmlAnswerField("type")
+
+            assertFalse(field.hasAttr("data-ankidroid-nosuggest"))
+            assertFalse(field.hasAttr("enterkeyhint"))
+        }
+
+    private fun htmlAnswerField(filter: String): Element {
+        val card = addBasicWithTypingNote("front", "back").firstCard()
+        val noteType = card.noteType(col)
+        noteType.templates[0].qfmt = "{{Front}}{{$filter:Back}}"
+        col.notetypes.save(noteType)
+
+        val typeAnswer = TypeAnswer(useInputTag = true, autoFocus = true)
+        typeAnswer.updateInfo(col, card, targetContext.resources)
+        val html = typeAnswer.filterQuestion(card.question(col))
+        return assertNotNull(Jsoup.parseBodyFragment(html).selectFirst("input#typeans"))
     }
 
     @Test

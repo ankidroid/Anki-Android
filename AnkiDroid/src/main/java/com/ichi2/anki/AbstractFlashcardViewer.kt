@@ -93,6 +93,7 @@ import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.cardviewer.TTS
 import com.ichi2.anki.cardviewer.TypeAnswer
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
+import com.ichi2.anki.cardviewer.TypeAnswerWebView
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
@@ -2015,7 +2016,7 @@ abstract class AbstractFlashcardViewer :
     /** Fixing bug 720: <input></input> focus, thanks to pablomouzo on android issue 7189  */
     internal inner class MyWebView(
         context: Context?,
-    ) : WebView(context!!) {
+    ) : TypeAnswerWebView(context!!) {
         override fun loadDataWithBaseURL(
             baseUrl: String?,
             data: String,
