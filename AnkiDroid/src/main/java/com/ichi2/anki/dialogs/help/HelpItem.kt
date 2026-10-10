@@ -8,6 +8,8 @@ import androidx.annotation.StringRes
 import com.ichi2.anki.common.analytics.LinkAction
 import kotlinx.parcelize.Parcelize
 
+private typealias HelpItemId = Long
+
 /**
  * A class containing all the information required to show an entry in the application help/support
  * menus.
@@ -26,12 +28,12 @@ data class HelpItem(
     /**
      * Unique(per menu) identifier for this menu item.
      */
-    val id: Long,
+    val id: HelpItemId,
     /**
      * If not null this property indicates that this menu item belongs to the submenu of the
      * referenced menu item.
      */
-    val parentId: Long? = null,
+    val parentId: HelpItemId? = null,
     /**
      * Reference to the action that needs to be done when the user selects this menu item. Can be
      * null, in which case this is a top level item(with or without children).
