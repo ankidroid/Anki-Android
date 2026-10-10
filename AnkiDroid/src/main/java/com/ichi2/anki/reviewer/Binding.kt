@@ -136,9 +136,9 @@ sealed interface Binding {
     val isValid get() = true
 
     open class ModifierKeys internal constructor(
-        val shift: Boolean,
-        val ctrl: Boolean,
-        val alt: Boolean,
+        val shift: Boolean = false,
+        val ctrl: Boolean = false,
+        val alt: Boolean = false,
     ) {
         fun matches(event: KeyEvent): Boolean {
             // return false if Ctrl+1 is pressed and 1 is expected
@@ -176,13 +176,13 @@ sealed interface Binding {
         override fun hashCode(): Int = Objects.hash(ctrl, alt, shiftMatches(true))
 
         companion object {
-            fun none(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = false)
+            fun none(): ModifierKeys = ModifierKeys()
 
-            fun ctrl(): ModifierKeys = ModifierKeys(shift = false, ctrl = true, alt = false)
+            fun ctrl(): ModifierKeys = ModifierKeys(ctrl = true)
 
-            fun shift(): ModifierKeys = ModifierKeys(shift = true, ctrl = false, alt = false)
+            fun shift(): ModifierKeys = ModifierKeys(shift = true)
 
-            fun alt(): ModifierKeys = ModifierKeys(shift = false, ctrl = false, alt = true)
+            fun alt(): ModifierKeys = ModifierKeys(alt = true)
 
             /**
              * Parses a [ModifierKeys] from a string.
@@ -200,7 +200,7 @@ sealed interface Binding {
     }
 
     /** Modifier keys which cannot be defined by a binding  */
-    class AppDefinedModifierKeys private constructor() : ModifierKeys(false, false, false) {
+    class AppDefinedModifierKeys private constructor() : ModifierKeys() {
         override fun shiftMatches(shiftPressed: Boolean): Boolean = true
 
         companion object {
@@ -290,11 +290,6 @@ sealed interface Binding {
             return UnknownBinding
         }
 
-        fun unicode(
-            modifierKeys: ModifierKeys,
-            unicodeChar: Char,
-        ): Binding = unicode(unicodeChar, modifierKeys)
-
         /**
          * Specifies a unicode binding from an unknown input device
          * See [AppDefinedModifierKeys]
@@ -310,11 +305,6 @@ sealed interface Binding {
         fun keyCode(
             keyCode: Int,
             modifiers: ModifierKeys = ModifierKeys.none(),
-        ) = KeyCode(keyCode, modifiers)
-
-        fun keyCode(
-            modifiers: ModifierKeys,
-            keyCode: Int,
         ) = KeyCode(keyCode, modifiers)
 
         fun gesture(gesture: Gesture) = GestureInput(gesture)

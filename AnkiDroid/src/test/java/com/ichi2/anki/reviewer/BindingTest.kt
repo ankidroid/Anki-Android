@@ -18,6 +18,8 @@ import kotlin.test.assertTrue
 class BindingTest {
     @Test
     fun modifierKeys_Are_Loaded() {
+        // TODO: Stub a nonzero key code or Unicode character and assert that bindings is not empty.
+        // The mock currently produces no bindings, so the assertion loop in testModifierKeys never runs.
         testModifierKeys("shift", KeyEvent::isShiftPressed, Binding.ModifierKeys::shiftMatches)
         testModifierKeys("ctrl", KeyEvent::isCtrlPressed) { k, ctrlPressed -> k.ctrl == ctrlPressed }
         testModifierKeys("alt", KeyEvent::isAltPressed) { k, altPressed -> k.alt == altPressed }
@@ -40,10 +42,10 @@ class BindingTest {
     @Test
     fun testUnicodeToString() {
         assertEquals(UNICODE_PREFIX + "Ä", Binding.unicode('Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode(Binding.ModifierKeys.ctrl(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode(Binding.ModifierKeys.shift(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode(Binding.ModifierKeys.alt(), 'Ä').toString())
-        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode(allModifierKeys(), 'Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode('Ä', Binding.ModifierKeys.ctrl()).toString())
+        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode('Ä', Binding.ModifierKeys.shift()).toString())
+        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode('Ä', Binding.ModifierKeys.alt()).toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode('Ä', allModifierKeys()).toString())
     }
 
     @Test
@@ -60,7 +62,7 @@ class BindingTest {
     @Test
     fun testModifierKeysEquality() {
         val one = Binding.AppDefinedModifierKeys.allowShift()
-        val two = Binding.ModifierKeys(shift = true, ctrl = false, alt = false)
+        val two = Binding.ModifierKeys(shift = true)
 
         assertTrue(one.shiftMatches(true))
         assertTrue(one.shiftMatches(false))
