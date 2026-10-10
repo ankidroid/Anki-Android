@@ -113,6 +113,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
@@ -714,6 +715,80 @@ class DeckPickerTest : RobolectricTest() {
                 assertTrue(currentSearchItem.isActionViewExpanded, "Search should stay open for '$query'")
                 assertEquals(query, (currentSearchItem.actionView as AccessibleSearchView).query.toString())
                 advanceRobolectricLooperUntil { visibleDeckCount == expectedCount }
+            }
+        }
+    }
+
+    @Test
+    fun `deck search query is restored after recreation`() {
+        addBasicNote()
+        repeat(10) { addDeck("Test Deck $it") }
+
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            lateinit var retainedViewModel: DeckPickerViewModel
+            scenario.onActivity { deckPicker ->
+                advanceRobolectricLooper()
+                retainedViewModel = deckPicker.viewModel
+                val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
+                assertTrue(searchItem.expandActionView())
+                (searchItem.actionView as AccessibleSearchView).setQuery("Test Deck 1", false)
+                advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 1 }
+            }
+
+            scenario.recreate()
+            advanceRobolectricLooper()
+
+            scenario.onActivity { deckPicker ->
+                assertSame(retainedViewModel, deckPicker.viewModel)
+                assertEquals("Test Deck 1", deckPicker.viewModel.deckSearchQuery)
+                val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
+                assertTrue(searchItem.isActionViewExpanded)
+                assertEquals("Test Deck 1", (searchItem.actionView as AccessibleSearchView).query.toString())
+                advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 1 }
+                deckPicker.invalidateOptionsMenu()
+            }
+            advanceRobolectricLooper()
+
+            scenario.onActivity { deckPicker ->
+                val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
+                assertTrue(searchItem.isActionViewExpanded)
+                assertEquals("Test Deck 1", (searchItem.actionView as AccessibleSearchView).query.toString())
+                assertEquals(1, deckPicker.visibleDeckCount)
+                assertTrue(searchItem.collapseActionView())
+                advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 11 }
+                assertEquals("", deckPicker.viewModel.deckSearchQuery)
+            }
+        }
+    }
+
+    @Test
+    fun `empty expanded deck search is restored after recreation`() {
+        addBasicNote()
+        repeat(10) { addDeck("Test Deck $it") }
+
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            scenario.onActivity { deckPicker ->
+                advanceRobolectricLooper()
+                assertTrue(deckPicker.menu().findItem(R.id.deck_picker_action_filter).expandActionView())
+            }
+
+            scenario.recreate()
+            advanceRobolectricLooper()
+
+            scenario.onActivity { deckPicker ->
+                val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
+                assertTrue(searchItem.isActionViewExpanded)
+                assertEquals("", (searchItem.actionView as AccessibleSearchView).query.toString())
+                assertTrue(searchItem.collapseActionView())
+            }
+
+            scenario.recreate()
+            advanceRobolectricLooper()
+
+            scenario.onActivity { deckPicker ->
+                val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
+                assertFalse(searchItem.isActionViewExpanded)
+                assertEquals(11, deckPicker.visibleDeckCount)
             }
         }
     }
