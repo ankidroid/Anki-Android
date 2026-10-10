@@ -2712,7 +2712,7 @@ class NoteEditorFragment :
 
         getColUnsafe.notetypes.setCurrent(noteType)
         val currentDeck = getColUnsafe.decks.current()
-        currentDeck.put("mid", newId)
+        currentDeck.noteTypeId = newId
         getColUnsafe.decks.save(currentDeck)
 
         // Preserves the editor's deck when the new note type has no remembered destination.
