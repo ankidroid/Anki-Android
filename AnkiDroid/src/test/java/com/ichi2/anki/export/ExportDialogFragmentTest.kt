@@ -198,7 +198,7 @@ class ExportDialogFragmentTest : RobolectricTest() {
     fun `ids file is not removed on a configuration change`() {
         val fragment =
             ExportDialogFragment.newInstance(
-                cacheDir = targetContext.cacheDir,
+                idsFileDirectory = targetContext.cacheDir,
                 type = ExportDialogFragment.ExportType.Notes,
                 ids = listOf(1L, 2L, 3L),
             )

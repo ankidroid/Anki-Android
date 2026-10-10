@@ -468,11 +468,11 @@ class ExportDialogFragment : AnalyticsDialogFragment() {
          * Create a new instance of this dialog targeting a selection of cards or notes for export.
          */
         fun newInstance(
-            cacheDir: File,
+            idsFileDirectory: File,
             type: ExportType,
             ids: List<Long>,
         ) = ExportDialogFragment().apply {
-            val idsFile = IdsFile(cacheDir, ids, "export")
+            val idsFile = IdsFile(idsFileDirectory, ids, IdsFile.Purpose.EXPORT)
 
             arguments =
                 Bundle().apply {

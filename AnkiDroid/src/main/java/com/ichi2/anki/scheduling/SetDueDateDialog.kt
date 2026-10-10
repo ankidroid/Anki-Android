@@ -278,20 +278,20 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                 Timber.d("Ignoring 'set due date' request: dialog is already open")
                 return
             }
-            val dialog = newInstance(activity.externalCacheDir ?: activity.cacheDir, cardIds)
+            val dialog = newInstance(IdsFile.getDirectory(activity), cardIds)
             activity.showDialogFragment(dialog)
         }
 
         @VisibleForTesting
         @CheckResult
         fun newInstance(
-            cacheDir: File,
+            idsFileDirectory: File,
             cardIds: List<CardId>,
         ): SetDueDateDialog =
             SetDueDateDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putParcelable(ARG_IDS_FILE, IdsFile(cacheDir, cardIds, "set-due-date"))
+                        putParcelable(ARG_IDS_FILE, IdsFile(idsFileDirectory, cardIds, IdsFile.Purpose.SET_DUE_DATE))
                     }
                 Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
             }

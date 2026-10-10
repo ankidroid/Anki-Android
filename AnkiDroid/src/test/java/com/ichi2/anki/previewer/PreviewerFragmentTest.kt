@@ -33,7 +33,7 @@ import kotlin.test.assertTrue
 class PreviewerFragmentTest : RobolectricTest() {
     @Test
     fun `server startup failure is not handled as an unavailable selection`() {
-        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col))
+        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col), IdsFile.Purpose.PREVIEW)
         val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
         val failure = IOException("server bind failed")
         // A constructor failure never registers the ViewModel for cleanup, so avoid creating real media resources.
@@ -68,7 +68,7 @@ class PreviewerFragmentTest : RobolectricTest() {
     }
 
     private fun assertUnavailableSelection(changeFile: IdsFile.() -> Unit) {
-        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col)).apply(changeFile)
+        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col), IdsFile.Purpose.PREVIEW).apply(changeFile)
         val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
         Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
             val activity = controller.setup().get()
@@ -79,7 +79,7 @@ class PreviewerFragmentTest : RobolectricTest() {
 
     @Test
     fun `restoring after selection loss closes previewer and accepts key dispatch`() {
-        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col))
+        val file = IdsFile(createTransientDirectory(), addBasicNote().cardIds(col), IdsFile.Purpose.PREVIEW)
         val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
         val savedState =
             Robolectric.buildActivity(CardViewerActivity::class.java, intent).use { controller ->
@@ -99,7 +99,7 @@ class PreviewerFragmentTest : RobolectricTest() {
     @Test
     fun `rotation retains loaded selection when its file has disappeared`() {
         val ids = addBasicAndReversedNote().cardIds(col)
-        val file = IdsFile(createTransientDirectory(), ids)
+        val file = IdsFile(createTransientDirectory(), ids, IdsFile.Purpose.PREVIEW)
         val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 0)
         ActivityScenario.launch<CardViewerActivity>(intent).use { scenario ->
             lateinit var original: PreviewerViewModel
@@ -124,7 +124,7 @@ class PreviewerFragmentTest : RobolectricTest() {
         val intent =
             PreviewerFragment.getIntent(
                 targetContext,
-                idsFile = IdsFile(createTransientDirectory(), note.cardIds(col)),
+                idsFile = IdsFile(createTransientDirectory(), note.cardIds(col), IdsFile.Purpose.PREVIEW),
                 currentIndex = 0,
             )
 
