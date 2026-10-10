@@ -8,6 +8,7 @@
  */
 
 import com.android.build.api.dsl.LibraryExtension
+import com.ichi2.anki.gradle.configureAndroidLint
 import com.ichi2.anki.gradle.libsVersionFor
 
 plugins {
@@ -29,7 +30,7 @@ extensions.configure<LibraryExtension> {
 }
 
 // Shared project-wide lint configuration.
-apply(from = "${rootDir}/lint.gradle")
+configureAndroidLint()
 
 // `:vbpd` is vendored third-party code; not subject to our lint rules.
 if (path != ":vbpd") {
