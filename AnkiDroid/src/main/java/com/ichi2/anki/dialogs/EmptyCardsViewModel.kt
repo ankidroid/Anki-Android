@@ -10,6 +10,7 @@ import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchFailure
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchResult
 import com.ichi2.anki.dialogs.EmptyCardsUiState.SearchingForEmptyCards
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,18 +20,22 @@ class EmptyCardsViewModel : ViewModel() {
     val uiState: StateFlow<EmptyCardsUiState>
         field = MutableStateFlow<EmptyCardsUiState>(SearchingForEmptyCards)
 
+    private var searchJob: Job? = null
+
     fun searchForEmptyCards() {
-        viewModelScope.launch {
-            runCatching { withCol { getEmptyCards() } }
-                .onFailure { exception ->
-                    if (exception is CancellationException) {
-                        throw exception
+        if (searchJob != null) return
+        searchJob =
+            viewModelScope.launch {
+                runCatching { withCol { getEmptyCards() } }
+                    .onFailure { exception ->
+                        if (exception is CancellationException) {
+                            throw exception
+                        }
+                        uiState.emit(EmptyCardsSearchFailure(exception))
+                    }.onSuccess { emptyCardsReport ->
+                        uiState.emit(EmptyCardsSearchResult(emptyCardsReport))
                     }
-                    uiState.emit(EmptyCardsSearchFailure(exception))
-                }.onSuccess { emptyCardsReport ->
-                    uiState.emit(EmptyCardsSearchResult(emptyCardsReport))
-                }
-        }
+            }
     }
 }
 
