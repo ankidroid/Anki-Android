@@ -36,6 +36,11 @@ with a card trigger threshold of 1 and enable the "only notify if no reviews" op
 3. A user currently has a legacy notification that shows a permanent notification in the notification shade if they have at least ten cards due, and they wish to migrate
 this to the new review reminders system. This is not exactly possible, but they can get close by creating one review reminder per each daytime hour (or perhaps even more granularly) and setting the card trigger
 threshold to 10 for each.
+4. A user does not want to open up the app every day but would like to be reminded to review their cards if they have a large backlog. 
+They set up a review reminder for 5 PM with a card trigger threshold of 50 and filter on the "Cards In Review" threshold filter.
+5. A user has customized a deck to have hour-long learning steps and would like to be reminded precisely when their cards become due.
+This is not exactly possible, but they can get close by creating one review reminder per each daytime hour (or perhaps even more granularly), setting the card trigger threshold to 1 for each, and filtering on the "Cards In Learning" threshold filter.
+
 
 ## UI / UX
 

@@ -98,13 +98,15 @@ object ReviewRemindersDatabase {
      *
      * - Version 1: [ReviewReminderSchemaV1]: 3 August 2025 -  Initial version
      * - Version 2: [ReviewReminderSchemaV2]: 25 January 2026 - Added [ReviewReminder.onlyNotifyIfNoReviews]
-     * - Version 3: [ReviewReminder]: 8 February 2026 - Added [ReviewReminder.latestNotifTime]
+     * - Version 3: [ReviewReminderSchemaV3]: 8 February 2026 - Added [ReviewReminder.latestNotifTime]
+     * - Version 4: [ReviewReminderSchemaV4]: 4 October 2026 - Fixed having [ReviewReminderScope.DeckSpecific.cachedDeckName] serialized
+     * - Version 5: [ReviewReminder]: 4 October 2026 - Added [ReviewReminder.thresholdFilter]
      *
      * @see [oldReviewReminderSchemasForMigration]
      * @see [ReviewReminder]
      */
     @VisibleForTesting
-    var schemaVersion = ReviewReminderSchemaVersion(3)
+    var schemaVersion = ReviewReminderSchemaVersion(5)
 
     /**
      * A map of all old [ReviewReminderSchema]s that [ReviewRemindersDatabase.performSchemaMigration] will attempt to migrate old
@@ -123,7 +125,9 @@ object ReviewRemindersDatabase {
         mapOf(
             ReviewReminderSchemaVersion(1) to ReviewReminderSchemaV1::class,
             ReviewReminderSchemaVersion(2) to ReviewReminderSchemaV2::class,
-            ReviewReminderSchemaVersion(3) to ReviewReminder::class, // Most up to date version
+            ReviewReminderSchemaVersion(3) to ReviewReminderSchemaV3::class,
+            ReviewReminderSchemaVersion(4) to ReviewReminderSchemaV4::class,
+            ReviewReminderSchemaVersion(5) to ReviewReminder::class, // Most up-to-date version
         )
 
     /**

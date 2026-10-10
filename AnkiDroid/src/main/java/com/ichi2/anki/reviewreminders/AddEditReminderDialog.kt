@@ -7,14 +7,20 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.format.DateFormat
+import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.text.buildSpannedString
+import androidx.core.text.color
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.ichi2.anki.CollectionManager.TR
@@ -22,6 +28,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.ALL_DECKS_ID
+import com.ichi2.anki.common.utils.partition
 import com.ichi2.anki.databinding.DialogAddEditReminderBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
@@ -39,6 +46,7 @@ import com.ichi2.anki.utils.ext.getParcelableCompat
 import com.ichi2.anki.utils.ext.requireParcelable
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.showDialogFragment
+import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.DisplayUtils.setDialogKeyboardResize
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.customView
@@ -123,6 +131,7 @@ class AddEditReminderDialog : DialogFragment() {
         setInitialDeckSelection()
         setUpAdvancedDropdown()
         setUpCardThresholdInput()
+        setUpCountCheckboxes()
         setUpOnlyNotifyIfNoReviewsCheckbox()
 
         setDialogKeyboardResize(dialog)
@@ -242,6 +251,70 @@ class AddEditReminderDialog : DialogFragment() {
                     else -> null
                 }
             viewModel.setCardTriggerThreshold(value ?: 0)
+        }
+    }
+
+    /**
+     * Convenience data class for setting up the checkboxes for whether to count new, learning, and review cards
+     * when considering the card trigger threshold.
+     * @see setUpCountCheckboxes
+     */
+    private data class CountViewsAndActions(
+        val section: LinearLayout,
+        val textView: FixedTextView,
+        val checkbox: MaterialCheckBox,
+        val actionOnClick: () -> Unit,
+        val state: LiveData<Boolean>,
+    )
+
+    private fun setUpCountCheckboxes() {
+        val countViewsAndActionsItems =
+            listOf(
+                CountViewsAndActions(
+                    section = binding.addEditReminderCountNewSection,
+                    textView = binding.addEditReminderCountNewLabel,
+                    checkbox = binding.addEditReminderCountNewCheckbox,
+                    actionOnClick = viewModel::toggleCountNew,
+                    state = viewModel.countNew,
+                ),
+                CountViewsAndActions(
+                    section = binding.addEditReminderCountLrnSection,
+                    textView = binding.addEditReminderCountLrnLabel,
+                    checkbox = binding.addEditReminderCountLrnCheckbox,
+                    actionOnClick = viewModel::toggleCountLrn,
+                    state = viewModel.countLrn,
+                ),
+                CountViewsAndActions(
+                    section = binding.addEditReminderCountRevSection,
+                    textView = binding.addEditReminderCountRevLabel,
+                    checkbox = binding.addEditReminderCountRevCheckbox,
+                    actionOnClick = viewModel::toggleCountRev,
+                    state = viewModel.countRev,
+                ),
+            )
+
+        (countViewsAndActionsItems zip REVIEW_STATE_STRINGS_AND_COLORS.toList()).forEach { (item, associatedTextAndStyle) ->
+            val (reviewState, colorAttr) = associatedTextAndStyle
+            item.section.setOnClickListener { item.actionOnClick() }
+
+            // Manually split the string resource so that we can color just the review state part
+            val (beforeStateText, afterStateText) =
+                getString(
+                    R.string.add_edit_reminder_include_review_state_for_threshold,
+                ).partition("%s")
+            item.textView.text =
+                buildSpannedString {
+                    append(beforeStateText)
+                    color(MaterialColors.getColor(requireContext(), colorAttr, 0)) {
+                        append(getString(reviewState))
+                    }
+                    append(afterStateText)
+                }
+
+            item.checkbox.setOnClickListener { item.actionOnClick() }
+            item.state.observe(this) { value ->
+                item.checkbox.isChecked = value
+            }
         }
     }
 
@@ -387,6 +460,17 @@ class AddEditReminderDialog : DialogFragment() {
          * Unique fragment tag for the Material TimePicker shown for setting the time of a review reminder.
          */
         private const val TIME_PICKER_TAG = "REMINDER_TIME_PICKER_DIALOG"
+
+        /**
+         * String resources and colors to display them in for the different review states (new, learning, review).
+         * Used for styling the advanced options for which card types to count towards the card trigger threshold.
+         */
+        private val REVIEW_STATE_STRINGS_AND_COLORS =
+            mapOf(
+                R.string.add_edit_reminder_threshold_filter_new_review_state to R.attr.newCountColor,
+                R.string.add_edit_reminder_threshold_filter_learning_review_state to R.attr.learnCountColor,
+                R.string.add_edit_reminder_threshold_filter_reviewing_review_state to R.attr.reviewCountColor,
+            )
 
         /**
          * Register a fragment result listener to listen for results from a recently closed [AddEditReminderDialog].

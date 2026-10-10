@@ -252,6 +252,10 @@
     <string name="add_edit_reminder_only_notify_if_no_reviews_label" comment="Label of the switch suppressing a review reminder on days which have already had reviews.">Only notify me if no reviews have been done today</string>
     <string name="add_edit_reminder_card_threshold_error_not_a_number" comment="Validation error shown when the review reminder card threshold field does not hold a whole number.">Please enter a whole number of cards</string>
     <string name="add_edit_reminder_card_threshold_error_negative" comment="Validation error shown when the review reminder card threshold field holds a negative number.">The threshold must be at least 0</string>
+    <string name="add_edit_reminder_include_review_state_for_threshold" comment="Label of the advanced review reminder option for including new / learn / review cards. This feature is used when calculating whether the number of cards to review exceeds the reminder's triggering threshold, ex. 'Include [learn] cards for card threshold'.">Include %s cards for card threshold</string>
+    <string name="add_edit_reminder_threshold_filter_new_review_state" comment="The name of cards the user has never seen before, for use in the review reminder threshold filter UI, ex. 'Include [new] cards for card threshold'.">new</string>
+    <string name="add_edit_reminder_threshold_filter_learning_review_state" comment="The name of cards the user is currently learning, for use in the review reminder threshold filter UI, ex. 'Include [learn] cards for card threshold'.">learn</string>
+    <string name="add_edit_reminder_threshold_filter_reviewing_review_state" comment="The name of in-review cards, for use in the review reminder threshold filter UI, ex. 'Include [review] cards for card threshold'.">review</string>
     <string name="add_edit_reminder_delete_confirmation_title" comment="Title of the dialog confirming deletion of a review reminder.">Delete this reminder?</string>
     <string name="add_edit_reminder_delete_confirmation_message" comment="Body of the dialog confirming deletion of a review reminder.">This action cannot be undone.</string>
 

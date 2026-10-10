@@ -10,10 +10,12 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.EpochMilliseconds
+import com.ichi2.anki.libanki.sched.Counts
 import com.ichi2.anki.settings.Prefs
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import timber.log.Timber
 import java.util.Calendar
 import kotlin.time.Duration.Companion.hours
@@ -97,6 +99,31 @@ value class ReviewReminderCardTriggerThreshold(
 }
 
 /**
+ * A filter specifying which types of cards to count towards the [ReviewReminderCardTriggerThreshold].
+ *
+ * @param countNew Whether new cards are counted when checking the threshold.
+ * @param countLrn Whether learning cards are counted when checking the threshold.
+ * @param countRev Whether review cards are counted when checking the threshold.
+ */
+@Serializable
+@Parcelize
+data class ReviewReminderThresholdFilter(
+    val countNew: Boolean = true,
+    val countLrn: Boolean = true,
+    val countRev: Boolean = true,
+) : Parcelable {
+    /**
+     * Filters the given [inputCounts] according to this filter's settings and returns the resulting [Counts].
+     */
+    fun filterCounts(inputCounts: Counts): Counts =
+        Counts(
+            new = if (countNew) inputCounts.new else 0,
+            lrn = if (countLrn) inputCounts.lrn else 0,
+            rev = if (countRev) inputCounts.rev else 0,
+        )
+}
+
+/**
  * An indicator of whether a review reminders feature is associated with every deck in the user's
  * collection or if it is associated with a single deck. For example, the [ScheduleRemindersFragment] fragment
  * can be triggered in either global or deck-specific editing mode. A [ReviewReminder] can be associated
@@ -122,6 +149,7 @@ sealed class ReviewReminderScope : Parcelable {
         val did: DeckId,
     ) : ReviewReminderScope() {
         @IgnoredOnParcel
+        @Transient
         private var cachedDeckName: String? = null
 
         /**
@@ -193,6 +221,7 @@ data class ReviewReminder private constructor(
     var latestNotifTime: EpochMilliseconds,
     val profileID: String,
     val onlyNotifyIfNoReviews: Boolean,
+    val thresholdFilter: ReviewReminderThresholdFilter,
 ) : Parcelable,
     ReviewReminderSchema {
     companion object {
@@ -208,6 +237,7 @@ data class ReviewReminder private constructor(
             enabled: Boolean = true,
             profileID: String = "",
             onlyNotifyIfNoReviews: Boolean = false,
+            thresholdFilter: ReviewReminderThresholdFilter = ReviewReminderThresholdFilter(),
         ) = ReviewReminder(
             id = ReviewReminderId.getAndIncrementNextFreeReminderId(),
             time,
@@ -217,7 +247,30 @@ data class ReviewReminder private constructor(
             latestNotifTime = TimeManager.time.calendar().timeInMillis,
             profileID,
             onlyNotifyIfNoReviews,
+            thresholdFilter,
         )
+
+        /**
+         * Creates a review reminder from the latest outdated schema. Should only be used for migration.
+         * Must be changed when the schema is updated.
+         *
+         * This method is necessary for schema migration because migrated review reminders should retain
+         * their original ID. Otherwise, review reminder alarms associated with the old ID will remain active
+         * and become orphaned. Note that this method must be located here because the constructor of [ReviewReminder]
+         * (and hence access to the [id] field) is private.
+         */
+        fun createViaMigration(latestOutdatedSchema: ReviewReminderSchemaV4) =
+            ReviewReminder(
+                id = latestOutdatedSchema.id,
+                time = latestOutdatedSchema.time,
+                cardTriggerThreshold = latestOutdatedSchema.cardTriggerThreshold,
+                scope = latestOutdatedSchema.scope,
+                enabled = latestOutdatedSchema.enabled,
+                latestNotifTime = latestOutdatedSchema.latestNotifTime,
+                profileID = latestOutdatedSchema.profileID,
+                onlyNotifyIfNoReviews = latestOutdatedSchema.onlyNotifyIfNoReviews,
+                thresholdFilter = ReviewReminderThresholdFilter(),
+            )
     }
 
     /**

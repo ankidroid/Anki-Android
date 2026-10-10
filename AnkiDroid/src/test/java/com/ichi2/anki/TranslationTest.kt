@@ -338,6 +338,18 @@ class TranslationTest : RobolectricTest() {
                 "Show answer", // R.string.show_answer
                 // TR.studyingShowAnswer()
                 // TR.deckConfigQuestionActionShowAnswer()
+                "learn", // R.string.add_edit_reminder_threshold_filter_learning_review_state
+                // TR.cardStatsReviewLogTypeLearn()
+                // TR.decksLearnHeader()
+                "new", // R.string.add_edit_reminder_threshold_filter_new_review_state
+                // TR.actionsNew()
+                // TR.changeNotetypeNew()
+                // TR.statisticsCountsNewCards()
+                "review", // R.string.add_edit_reminder_threshold_filter_reviewing_review_state
+                // TR.browsingSidebarCardStateReview()
+                // TR.cardStatsReviewLogTypeReview()
+                // TR.preferencesReview()
+                // TR.schedulingReview()
             )
 
         /**
