@@ -24,6 +24,7 @@ object TtsPlaybackErrorDialog {
     ) {
         Timber.i("Dialog is shown to guide users correctly to troubleshoot the Tts error: Missing voice error")
         activity.runOnUiThread {
+            if (showMissingEngineDialogIfNeeded(activity)) return@runOnUiThread
             AlertDialog.Builder(activity).show {
                 setTitle(activity.getString(CommonString.tts_error_dialog_title))
                 setMessage(activity.getString(CommonString.tts_error_dialog_reason_text, TtsVoices.ttsEngine, ttsTag?.lang))
@@ -36,6 +37,25 @@ object TtsPlaybackErrorDialog {
                 }
             }
         }
+    }
+
+    /**
+     * Shows installation guidance if no TTS engine is installed.
+     *
+     * @return `true` if the dialog is shown or queued on the UI thread; `false` if an engine is installed.
+     */
+    fun showMissingEngineDialogIfNeeded(activity: Activity): Boolean {
+        if (TtsVoices.hasInstalledEngine(activity)) return false
+
+        activity.runOnUiThread {
+            AlertDialog.Builder(activity).show {
+                setTitle(CommonString.tts_no_engine_title)
+                setMessage(CommonString.tts_no_engine_message)
+                setPositiveButton(CommonString.dialog_ok, null)
+                setNeutralButton(CommonString.help) { _, _ -> activity.openUrl(R.string.link_faq_tts) }
+            }
+        }
+        return true
     }
 
     private fun openSettings(activity: Activity) {
