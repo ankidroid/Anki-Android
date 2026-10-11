@@ -16,10 +16,12 @@ class ConfigTest : InMemoryAnkiTest() {
         val keys =
             listOf(
                 "curDeck",
+                "schedVer",
             )
 
         fun assertDefaults() {
             assertEquals(1L, col.config.currentDeckId)
+            assertEquals(1L, col.config.schedulerVersion)
         }
 
         keys.forEach { col.config.remove(it) }
@@ -31,8 +33,10 @@ class ConfigTest : InMemoryAnkiTest() {
     @Test
     fun `legacy settings observe values changed outside the accessors`() {
         col.config.set("curDeck", 123L)
+        col.config.set("schedVer", 2L)
 
         assertEquals(123L, col.config.currentDeckId)
+        assertEquals(2L, col.config.schedulerVersion)
     }
 
     @Test
