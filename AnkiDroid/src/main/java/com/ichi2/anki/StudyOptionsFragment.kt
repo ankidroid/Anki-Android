@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.doOnAttach
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
@@ -86,6 +88,10 @@ class StudyOptionsFragment :
 
     private var fragmented = false
 
+    /** Deck whose scroll position is held by the current or saved view. */
+    // TODO: Include deckId in StudyOptionsState, and stop resetting scroll based on this
+    private var displayedDeckId: DeckId? = null
+
     private val buttonClickListener =
         View.OnClickListener { v: View ->
             if (v.id == R.id.studyoptions_start) {
@@ -101,6 +107,7 @@ class StudyOptionsFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        displayedDeckId = savedInstanceState?.getLong(STATE_DISPLAYED_DECK_ID)?.takeIf { it != 0L }
         // Subscribe once per fragment: returning from another panel can recreate its view.
         ChangeManager.subscribe(this)
         viewModel.flowOfState.launchCollectionInLifecycleScope(::rebuildUi)
@@ -129,6 +136,11 @@ class StudyOptionsFragment :
         }
         setupContentInsets(view)
         refreshInterface()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        displayedDeckId?.let { outState.putLong(STATE_DISPLAYED_DECK_ID, it) }
     }
 
     /** Keeps the content clear of the system bars, display cutout and keyboard. */
@@ -331,6 +343,12 @@ class StudyOptionsFragment :
 
         initAllContentViews(studyOptionsView)
 
+        if (displayedDeckId != null && displayedDeckId != viewModel.selectedDeckId) {
+            // ScrollView restores its saved position during its first layout after a panel returns.
+            studyOptionsView.findViewById<ScrollView>(R.id.studyoptions_scrollview).doOnLayout { it.scrollTo(0, 0) }
+        }
+        displayedDeckId = viewModel.selectedDeckId
+
         updateDeckNameView(state)
 
         when (state) {
@@ -344,6 +362,7 @@ class StudyOptionsFragment :
                     buttonStart.visibility = View.VISIBLE
                     buttonStart.text = TR.sentenceCase.customStudy
                 } else {
+                    deckInfoLayout.visibility = View.VISIBLE
                     buttonStart.visibility = View.GONE
                 }
             }
@@ -446,6 +465,8 @@ class StudyOptionsFragment :
     }
 
     companion object {
+        private const val STATE_DISPLAYED_DECK_ID = "displayedDeckId"
+
         /**
          * Identifier for a fragment result request to study(open the reviewer). Activities using
          * this fragment need to handle this request and initialize the study screen as they see fit.

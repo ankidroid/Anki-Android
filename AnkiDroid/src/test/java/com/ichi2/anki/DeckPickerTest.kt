@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
+import android.view.View.MeasureSpec
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -24,6 +26,9 @@ import androidx.core.view.ContentInfoCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
 import androidx.test.filters.SdkSuppress
 import anki.backend.backendError
@@ -727,14 +732,28 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun `study options follows the selected deck`() {
         assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        addBasicNote()
         val deckId = addDeck("Another Deck")
+        addNoteToDeck(deckId, count = 2)
 
         deckPicker {
+            val studyOptions = assertNotNull(fragment)
+            val studyOptionsView = studyOptions.requireView()
             viewModel.selectDeck(deckId).join()
             advanceRobolectricLooper()
 
+            assertSame(studyOptions, fragment)
+            assertSame(studyOptionsView, assertNotNull(fragment).requireView())
             assertEquals(deckId, assertNotNull(fragment).viewModel.selectedDeckId)
             assertEquals("Another Deck", findViewById<TextView>(R.id.studyoptions_deck_name).text.toString())
+            assertEquals("2", findViewById<TextView>(R.id.studyoptions_new_count).text.toString())
+
+            viewModel.selectDeck(1L).join()
+            advanceRobolectricLooper()
+
+            assertSame(studyOptionsView, assertNotNull(fragment).requireView())
+            assertEquals(1L, studyOptions.viewModel.selectedDeckId)
+            assertEquals("1", findViewById<TextView>(R.id.studyoptions_new_count).text.toString())
         }
     }
 
@@ -830,6 +849,94 @@ class DeckPickerTest : RobolectricTest() {
             }
         }
     }
+
+    @Test
+    fun `returning from reminders restores scroll only for the same deck`() {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        addBasicNote()
+        val anotherDeck = addDeck("Another deck")
+        addNoteToDeck(anotherDeck, count = 2)
+        Prefs.newReviewRemindersEnabled = true
+
+        deckPicker {
+            makeStudyOptionsScrollable()
+            val studyOptions = assertNotNull(fragment)
+            for (selectAnotherDeck in listOf(false, true)) {
+                val scroll = studyOptions.layoutScroll()
+                scroll.scrollTo(0, 200)
+                assertEquals(200, scroll.scrollY)
+
+                selectContextMenuOption(ContextMenuOption.SCHEDULE_REMINDERS, studyOptions.viewModel.selectedDeckId)
+                advanceRobolectricLooper()
+                val reminders = assertNotNull(sidePanel as? ScheduleRemindersFragment)
+                if (selectAnotherDeck) {
+                    viewModel.selectDeck(anotherDeck).join()
+                    advanceRobolectricLooper()
+                } else {
+                    reminders.navigateUp()
+                }
+
+                assertSame(studyOptions, fragment)
+                assertEquals(if (selectAnotherDeck) anotherDeck else 1L, studyOptions.viewModel.selectedDeckId)
+                val restoredScroll = studyOptions.layoutScroll()
+                assertEquals(if (selectAnotherDeck) 0 else 200, restoredScroll.scrollY)
+            }
+        }
+    }
+
+    @Test
+    fun `restored study options associates saved scroll with its deck`() {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        addBasicNote()
+        val anotherDeck = addDeck("Another deck")
+        addNoteToDeck(anotherDeck, count = 2)
+
+        deckPicker {
+            makeStudyOptionsScrollable()
+            for (deckId in listOf(1L, anotherDeck)) {
+                val studyOptions = assertNotNull(fragment)
+                studyOptions.layoutScroll().scrollTo(0, 200)
+                val savedState = supportFragmentManager.saveFragmentInstanceState(studyOptions)
+                viewModel.selectDeck(deckId).join()
+                advanceRobolectricLooper()
+
+                // Recreate the fragment from its saved state, including its view hierarchy.
+                val restored = StudyOptionsFragment().apply { setInitialSavedState(savedState) }
+                supportFragmentManager.commitNow { replace(R.id.studyoptions_fragment, restored) }
+                advanceRobolectricLooper()
+
+                assertEquals(deckId, restored.viewModel.selectedDeckId)
+                assertEquals(if (deckId == 1L) 200 else 0, restored.layoutScroll().scrollY)
+            }
+        }
+    }
+
+    /** Keep original and restored panes scrollable without relying on font metrics. */
+    private fun DeckPicker.makeStudyOptionsScrollable() {
+        val studyOptionsView = assertNotNull(fragment).requireView()
+        studyOptionsView.findViewById<ScrollView>(R.id.studyoptions_scrollview).getChildAt(0).minimumHeight = 10000
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    v: View,
+                    savedInstanceState: Bundle?,
+                ) {
+                    if (f is StudyOptionsFragment) {
+                        v.findViewById<ScrollView>(R.id.studyoptions_scrollview).getChildAt(0).minimumHeight = 10000
+                    }
+                }
+            },
+            false,
+        )
+    }
+
+    private fun StudyOptionsFragment.layoutScroll(): ScrollView =
+        requireView().findViewById<ScrollView>(R.id.studyoptions_scrollview).apply {
+            measure(MeasureSpec.makeMeasureSpec(400, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(300, MeasureSpec.EXACTLY))
+            layout(0, 0, 400, 300)
+        }
 
     private fun withReminderPanel(test: suspend DeckPicker.(ScheduleRemindersFragment) -> Unit) {
         assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
