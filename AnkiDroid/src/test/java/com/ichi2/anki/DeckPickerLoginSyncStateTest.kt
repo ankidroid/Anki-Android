@@ -6,14 +6,22 @@ import android.content.Intent
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.utils.NetworkUtils
+import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.android.controller.ActivityController
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotSame
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerLoginSyncStateTest : RobolectricTest() {
@@ -49,6 +57,32 @@ class DeckPickerLoginSyncStateTest : RobolectricTest() {
         controller.pause().newIntent(loginIntent(autoSync = true)).resume()
         advanceRobolectricLooper()
         assertEquals(1, controller.get().syncRequests)
+    }
+
+    @Test
+    @Ignore("Re-enabled by the following fix: CollectionNotOpen currently escapes the exit coroutine")
+    fun `back exits without syncing when the collection is closed`() {
+        val activity = launch(autoSync = false).get()
+        CollectionManager.closeCollectionBlocking()
+        getPreferences().edit { putBoolean(getResourceString(R.string.automatic_sync_choice_key), true) }
+        Prefs.hkey = "test"
+        Prefs.allowSyncOnMeteredConnections = true
+        Prefs.lastSyncTime = 0
+
+        mockkObject(NetworkUtils)
+        try {
+            every { NetworkUtils.isOnline } returns true
+
+            activity.onBackPressedDispatcher.onBackPressed()
+            advanceRobolectricLooperUntil { activity.isFinishing }
+
+            assertTrue(activity.isFinishing)
+            assertFalse(CollectionManager.isOpenUnsafe())
+            assertEquals(0L, Prefs.lastSyncTime, "Skipping sync must not update the last sync time")
+            assertEquals(0, activity.syncRequests)
+        } finally {
+            unmockkObject(NetworkUtils)
+        }
     }
 
     private fun launch(autoSync: Boolean): ActivityController<SyncCountingDeckPicker> =
