@@ -5,9 +5,9 @@ package com.ichi2.anki.browser
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.utils.ext.defaultBrowserSearch
-import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
