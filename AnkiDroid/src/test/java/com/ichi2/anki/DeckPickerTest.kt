@@ -10,8 +10,10 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Bundle
+import android.text.Layout
 import android.view.KeyEvent
 import android.view.Menu
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.MeasureSpec
 import android.widget.ScrollView
@@ -79,6 +81,7 @@ import com.ichi2.testutils.BackendEmulatingOpenConflict
 import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.dispatchTouch
 import com.ichi2.testutils.ext.addBasicNoteWithOp
 import com.ichi2.testutils.ext.menu
 import com.ichi2.testutils.ext.text
@@ -754,6 +757,37 @@ class DeckPickerTest : RobolectricTest() {
             assertSame(studyOptionsView, assertNotNull(fragment).requireView())
             assertEquals(1L, studyOptions.viewModel.selectedDeckId)
             assertEquals("1", findViewById<TextView>(R.id.studyoptions_new_count).text.toString())
+        }
+    }
+
+    @Test
+    fun `description wrapping is restored after releasing or cancelling divider drag`() {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        addBasicNote()
+
+        deckPicker {
+            val description = findViewById<TextView>(R.id.studyoptions_deck_description)
+            val defaultDescription =
+                layoutInflater.inflate(R.layout.fragment_study_options, null).findViewById<TextView>(R.id.studyoptions_deck_description)
+            assertEquals(defaultDescription.breakStrategy, description.breakStrategy)
+            assertEquals(defaultDescription.hyphenationFrequency, description.hyphenationFrequency)
+            val divider = findViewById<View>(R.id.resizing_divider)
+
+            for (endAction in listOf(MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL)) {
+                // Restore the view's own settings, including values different from the theme defaults.
+                @SuppressLint("WrongConstant")
+                description.breakStrategy = Layout.BREAK_STRATEGY_BALANCED
+                description.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_FULL
+
+                divider.dispatchTouch(MotionEvent.ACTION_DOWN)
+                repeat(2) { divider.dispatchTouch(MotionEvent.ACTION_MOVE) }
+                assertEquals(Layout.BREAK_STRATEGY_SIMPLE, description.breakStrategy)
+                assertEquals(Layout.HYPHENATION_FREQUENCY_NONE, description.hyphenationFrequency)
+
+                divider.dispatchTouch(endAction)
+                assertEquals(Layout.BREAK_STRATEGY_BALANCED, description.breakStrategy)
+                assertEquals(Layout.HYPHENATION_FREQUENCY_FULL, description.hyphenationFrequency)
+            }
         }
     }
 

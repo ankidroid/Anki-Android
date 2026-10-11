@@ -934,6 +934,7 @@ open class DeckPicker :
                             sharedPrefs = Prefs.getUiConfig(this),
                             startPaneWeightKey = PREF_DECK_PICKER_PANE_WEIGHT,
                             endPaneWeightKey = PREF_STUDY_OPTIONS_PANE_WEIGHT,
+                            onResizingChanged = { isResizing -> fragment?.onResizingChanged(isResizing) },
                         )
                     }
                 }
