@@ -14,7 +14,6 @@ import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.android.controller.ActivityController
@@ -60,7 +59,6 @@ class DeckPickerLoginSyncStateTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("Re-enabled by the following fix: CollectionNotOpen currently escapes the exit coroutine")
     fun `back exits without syncing when the collection is closed`() {
         val activity = launch(autoSync = false).get()
         CollectionManager.closeCollectionBlocking()

@@ -18,7 +18,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 import net.ankiweb.rsdroid.Backend
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
@@ -40,7 +39,6 @@ class DeckPickerAutomaticSyncTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("Re-enabled by the following fix: CollectionNotOpen currently escapes the exit coroutine")
     fun `back exits without syncing if the collection closes before the status request`() =
         withAutomaticSync(syncMedia = true) { activity, backend ->
             every { backend.syncStatus(any<SyncAuth>()) } answers {
