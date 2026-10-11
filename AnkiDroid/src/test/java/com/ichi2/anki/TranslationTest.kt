@@ -207,7 +207,6 @@ class TranslationTest : RobolectricTest() {
                 "Copied to clipboard", // R.string.about_ankidroid_successfully_copied_debug_info
                 // TR.aboutCopiedToClipboard()
                 // TR.errorsCopiedToClipboard()
-                "Dark", // R.string.night_theme_dark | TR.preferencesThemeDark()
                 "Delete", // R.string.dialog_positive_delete
                 // TR.actionsDelete()
                 // TR.editingImageOcclusionDelete()
@@ -247,7 +246,6 @@ class TranslationTest : RobolectricTest() {
                 "Later", // R.string.button_backup_later | TR.schedulingUpdateLaterButton()
                 "Learn More", // R.string.scoped_storage_learn_more | TR.schedulingUpdateMoreInfoButton()
                 "Learn ahead limit", // R.string.learn_cutoff | TR.preferencesLearnAheadLimit()
-                "Light", // R.string.day_theme_light | TR.preferencesThemeLight()
                 "Media", // R.string.media
                 // TR.editingMedia()
                 // TR.preferencesMedia()
@@ -333,7 +331,6 @@ class TranslationTest : RobolectricTest() {
                 //                       // TR.mediaCheckCheckMediaAction()
                 //                       // TR.mediaCheckWindowTitle()
                 "Answer buttons", // R.string.answer_buttons | TR.statisticsAnswerButtonsTitle()
-                "Follow system", // R.string.theme_follow_system | TR.preferencesThemeFollowSystem()
                 "Select all", // R.string.card_browser_select_all | TR.editingImageOcclusionSelectAll()
                 "Show answer", // R.string.show_answer
                 // TR.studyingShowAnswer()
@@ -361,7 +358,7 @@ class TranslationTest : RobolectricTest() {
 
         /**
          * Backend translation method names (e.g. `TR.xx()`) excluded from the
-         * duplicate check as the strings are unrelated conceptually.
+         * duplicate check because they are unrelated conceptually or intentionally kept in XML.
          *
          * Do not remove this set when empty.
          */
@@ -372,6 +369,12 @@ class TranslationTest : RobolectricTest() {
                 // "Advanced Settings" - this upstream string is Title Case; R.string.add_edit_reminder_advanced_label
                 // is both unrelated and sentence case (per AnkiDroid convention)
                 "deckConfigAdvancedSettings",
+                // Keep theme labels in XML: migrating adds maintenance complexity, loses XML previews
+                // and translations for languages absent from Anki; the apps' themes also differ.
+                // https://github.com/ankidroid/Anki-Android/pull/21325#pullrequestreview-5483017226
+                "preferencesThemeDark", // R.string.night_theme_dark
+                "preferencesThemeLight", // R.string.day_theme_light
+                "preferencesThemeFollowSystem", // R.string.theme_follow_system
             )
     }
 }
