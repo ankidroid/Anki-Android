@@ -72,3 +72,6 @@ val Config.schedulerVersion by jsonConfigProperty<Long>("schedVer").orDefault(1L
 
 /** Hour of day at which the scheduler starts a new day. */
 val Config.rolloverHour by jsonConfigProperty<Int>("rollover").orDefault(4)
+
+/** Whether answer buttons display the next review interval. */
+val Config.showIntervalsOnButtons by jsonConfigProperty<Boolean>("estTimes").orDefault(true)

@@ -6,6 +6,8 @@ import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.model.CardsOrNotes
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * Tests for extensions to [com.ichi2.anki.libanki.Config]
@@ -18,12 +20,14 @@ class ConfigTest : InMemoryAnkiTest() {
                 "curDeck",
                 "schedVer",
                 "rollover",
+                "estTimes",
             )
 
         fun assertDefaults() {
             assertEquals(1L, col.config.currentDeckId)
             assertEquals(1L, col.config.schedulerVersion)
             assertEquals(4, col.config.rolloverHour)
+            assertTrue(col.config.showIntervalsOnButtons)
         }
 
         keys.forEach { col.config.remove(it) }
@@ -37,10 +41,12 @@ class ConfigTest : InMemoryAnkiTest() {
         col.config.set("curDeck", 123L)
         col.config.set("schedVer", 2L)
         col.config.set("rollover", 8)
+        col.config.set("estTimes", false)
 
         assertEquals(123L, col.config.currentDeckId)
         assertEquals(2L, col.config.schedulerVersion)
         assertEquals(8, col.config.rolloverHour)
+        assertFalse(col.config.showIntervalsOnButtons)
     }
 
     @Test
