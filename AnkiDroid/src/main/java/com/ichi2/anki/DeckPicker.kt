@@ -221,6 +221,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import timber.log.Timber
 import java.io.File
 import kotlin.time.Duration
@@ -1582,16 +1583,21 @@ open class DeckPicker :
      */
     private suspend fun automaticSync(runInBackground: Boolean = false): Boolean {
         /**
-         * @return whether there are collection changes to sync.
+         * @return whether there are collection changes to sync, or null if the collection is closed.
          *
          * It DOES NOT include if there are media to be synced.
          */
-        suspend fun areThereChangesToSync(): Boolean {
+        suspend fun areThereChangesToSync(): Boolean? {
             val auth = syncAuth() ?: return false
             val status =
                 withContext(Dispatchers.IO) {
-                    CollectionManager.getBackend().syncStatus(auth)
-                }
+                    // The status check may wait for the network. Do not hold the collection queue.
+                    try {
+                        CollectionManager.getBackend().syncStatus(auth)
+                    } catch (_: BackendCollectionNotOpenException) {
+                        null
+                    }
+                } ?: return null
 
             return when (status.required) {
                 SyncStatusResponse.Required.NO_CHANGES,
@@ -1614,7 +1620,12 @@ open class DeckPicker :
             !runInBackground && !syncIntervalPassed() -> Timber.d("autoSync: interval not passed")
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
             else -> {
+                // Startup may have failed to open the collection. Do not sync on exit in that case.
                 val hasChanges = areThereChangesToSync()
+                if (hasChanges == null) {
+                    Timber.d("autoSync: collection not open")
+                    return false
+                }
                 if (!hasChanges) {
                     Timber.d("autoSync: no collection changes to sync. Syncing media if set")
                     if (shouldFetchMedia()) {
