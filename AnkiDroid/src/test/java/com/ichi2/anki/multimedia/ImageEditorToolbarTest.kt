@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -30,28 +31,64 @@ class ImageEditorToolbarTest : RobolectricTest() {
             AnkiDroidTheme {
                 ImageEditorToolbar(
                     hasImage = true,
+                    hasExternalEditor = true,
                     replaceIcon = R.drawable.ic_photo_library,
                     onReplace = { actions.add("replace") },
                     onCrop = { actions.add("crop") },
+                    onEditExternally = { actions.add("external") },
                 )
             }
         }
         composeRule.onNodeWithText(targetContext.getString(CommonString.dialog_positive_replace)).performClick()
         composeRule.onNodeWithText(targetContext.getString(CommonString.crop_button)).performClick()
-        assertEquals(listOf("replace", "crop"), actions)
+        composeRule.onNodeWithText(TR.studyingEdit()).performClick()
+        assertEquals(listOf("replace", "crop", "external"), actions)
     }
 
     @Test
-    fun `crop becomes available when an image is selected`() {
+    fun `editing actions become available when an image is selected`() {
         val hasImage = mutableStateOf(false)
         composeRule.setContent {
             AnkiDroidTheme {
-                ImageEditorToolbar(hasImage.value, replaceIcon = R.drawable.ic_photo_library, onReplace = {}, onCrop = {})
+                ImageEditorToolbar(
+                    hasImage = hasImage.value,
+                    hasExternalEditor = true,
+                    replaceIcon = R.drawable.ic_photo_library,
+                    onReplace = {},
+                    onCrop = {},
+                    onEditExternally = {},
+                )
             }
         }
         composeRule.onNodeWithText(targetContext.getString(CommonString.dialog_positive_replace)).assertIsEnabled()
         composeRule.onNodeWithText(targetContext.getString(CommonString.crop_button)).assertIsNotEnabled()
+        composeRule.onNodeWithText(TR.studyingEdit()).assertIsNotEnabled()
         composeRule.runOnIdle { hasImage.value = true }
         composeRule.onNodeWithText(targetContext.getString(CommonString.crop_button)).assertIsEnabled()
+        composeRule.onNodeWithText(TR.studyingEdit()).assertIsEnabled()
+    }
+
+    @Test
+    fun `edit is hidden when no external editor is available`() {
+        val hasExternalEditor = mutableStateOf(false)
+        composeRule.setContent {
+            AnkiDroidTheme {
+                ImageEditorToolbar(
+                    hasImage = true,
+                    hasExternalEditor = hasExternalEditor.value,
+                    replaceIcon = R.drawable.ic_photo_library,
+                    onReplace = {},
+                    onCrop = {},
+                    onEditExternally = {},
+                )
+            }
+        }
+        composeRule.onNodeWithText(targetContext.getString(CommonString.dialog_positive_replace)).assertIsEnabled()
+        composeRule.onNodeWithText(targetContext.getString(CommonString.crop_button)).assertIsEnabled()
+        composeRule.onNodeWithText(TR.studyingEdit()).assertDoesNotExist()
+        composeRule.runOnIdle { hasExternalEditor.value = true }
+        composeRule.onNodeWithText(TR.studyingEdit()).assertIsEnabled()
+        composeRule.runOnIdle { hasExternalEditor.value = false }
+        composeRule.onNodeWithText(TR.studyingEdit()).assertDoesNotExist()
     }
 }

@@ -20,10 +20,11 @@ import com.ichi2.compose.ui.preview.ThemePreviews
 fun HeroToolbarActionButton(
     modifier: Modifier = Modifier,
     label: String = stringResource(CommonString.multimedia_editor_field_editing_done),
+    enabled: Boolean = true,
     onClick: () -> Unit = {},
 ) {
     Box(modifier.padding(horizontal = 8.dp)) {
-        Button(onClick = onClick, modifier = Modifier.heightIn(min = 48.dp)) {
+        Button(onClick = onClick, modifier = Modifier.heightIn(min = 48.dp), enabled = enabled) {
             Text(text = label)
         }
     }

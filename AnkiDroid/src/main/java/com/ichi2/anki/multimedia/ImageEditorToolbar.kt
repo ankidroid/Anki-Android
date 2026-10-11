@@ -3,7 +3,6 @@
 package com.ichi2.anki.multimedia
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.internationalization.tr
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.ThemePreviews
 
@@ -41,25 +41,51 @@ import com.ichi2.compose.ui.preview.ThemePreviews
  *
  * * Replace
  * * Crop
+ * * Edit
  */
 @Composable
 internal fun ImageEditorToolbar(
     hasImage: Boolean,
+    hasExternalEditor: Boolean,
     @DrawableRes replaceIcon: Int,
     onReplace: () -> Unit,
     onCrop: () -> Unit,
+    onEditExternally: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     Box(modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp), contentAlignment = Alignment.Center) {
         Surface(
-            modifier = Modifier.widthIn(max = 240.dp).fillMaxWidth(),
+            modifier = Modifier.widthIn(max = if (hasExternalEditor) 360.dp else 240.dp).fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
             color = MaterialTheme.colorScheme.surfaceContainer,
         ) {
             Row(modifier = Modifier.padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-                ImageEditorAction(CommonString.dialog_positive_replace, replaceIcon, onReplace, Modifier.weight(1f))
+                ImageEditorAction(
+                    stringResource(CommonString.dialog_positive_replace),
+                    replaceIcon,
+                    onReplace,
+                    Modifier.weight(1f),
+                    enabled = enabled,
+                )
                 ImageEditorDivider()
-                ImageEditorAction(CommonString.crop_button, R.drawable.ic_crop, onCrop, Modifier.weight(1f), enabled = hasImage)
+                ImageEditorAction(
+                    stringResource(CommonString.crop_button),
+                    R.drawable.ic_crop,
+                    onCrop,
+                    Modifier.weight(1f),
+                    enabled = enabled && hasImage,
+                )
+                if (hasExternalEditor) {
+                    ImageEditorDivider()
+                    ImageEditorAction(
+                        tr().studyingEdit(),
+                        R.drawable.ic_round_open_in_new,
+                        onEditExternally,
+                        Modifier.weight(1f),
+                        enabled = enabled && hasImage,
+                    )
+                }
             }
         }
     }
@@ -67,7 +93,7 @@ internal fun ImageEditorToolbar(
 
 @Composable
 private fun ImageEditorAction(
-    @StringRes label: Int,
+    label: String,
     @DrawableRes icon: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -82,7 +108,7 @@ private fun ImageEditorAction(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Icon(painterResource(icon), contentDescription = null, modifier = Modifier.size(22.dp))
-            Text(stringResource(label), style = MaterialTheme.typography.labelMedium, textAlign = TextAlign.Center)
+            Text(label, style = MaterialTheme.typography.labelMedium, textAlign = TextAlign.Center)
         }
     }
 }
@@ -113,6 +139,13 @@ private fun EmptyImageEditorToolbarPreview() {
 @Composable
 private fun ImageEditorToolbarPreviewContent(hasImage: Boolean) {
     AnkiDroidPreview {
-        ImageEditorToolbar(hasImage = hasImage, replaceIcon = R.drawable.ic_photo_library, onReplace = {}, onCrop = {})
+        ImageEditorToolbar(
+            hasImage = hasImage,
+            hasExternalEditor = hasImage,
+            replaceIcon = R.drawable.ic_photo_library,
+            onReplace = {},
+            onCrop = {},
+            onEditExternally = {},
+        )
     }
 }
