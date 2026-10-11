@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">ਰਿਕਾਰਡਰ ਟੂਲਬਾਰ ਬਣਾਉਣ ਵਿੱਚ ਅਸਮਰੱਥ</string>
     <!-- Crop function-->
     <string name="crop_image">ਕੀ ਤੁਸੀਂ ਇਸ ਚਿੱਤਰ ਨੂੰ ਕੱਟਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
-    <string name="crop_button" maxLength="28">Crop image</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">ਮੌਜੂਦਾ ਚਿੱਤਰ ਦਾ ਆਕਾਰ %sMB ਹੈ। ਪੂਰਵ-ਨਿਰਧਾਰਤ ਚਿੱਤਰ ਆਕਾਰ ਸੀਮਾ 1MB ਹੈ। ਕੀ ਤੁਸੀਂ ਇਸਨੂੰ ਸੰਕੁਚਿਤ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="select_image_failed">"Select image failed, Please retry"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ਖੇਤਰ ਸਮੱਗਰੀ</string>

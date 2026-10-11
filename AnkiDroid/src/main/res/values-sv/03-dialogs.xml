@@ -139,6 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Ställ in språk</string>
     <string name="locale_selection_dialog_summary">Vissa flerspråkiga tangentbord, till exempel GBoard har stöd för att ändra språk vid redigering av text\n\nVänligen begär funktionen ”setImeHintLocales” från din tangentbordstillverkare om ditt tangentbord inte ändrar språk.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Hur man använder AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid-handboken</string>

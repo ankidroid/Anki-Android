@@ -145,6 +145,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Nustatyti kalbą</string>
     <string name="locale_selection_dialog_summary">Kai kurios daugiakalbės klaviatūros, pvz., GBoard, palaiko kalbos keitimą redaguojant tekstą\n\nJei jūsų klaviatūra nekeičia kalbos, prašykite klaviatūros gamintojo įdiegti funkciją \"setImeHintLocales\".</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Naudojimasis \"AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid vadovas</string>

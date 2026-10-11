@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">ᱨᱮᱠᱚᱰ ᱦᱟᱹᱛᱤᱭᱟᱨ ᱵᱟᱨ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- Crop function-->
     <string name="crop_image">ᱟᱢ ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚ ᱥᱟᱱᱟᱮᱫ ᱢᱮᱭᱟ ᱥᱮ ᱵᱟᱝ-ᱟ  ?</string>
-    <string name="crop_button" maxLength="28">ᱪᱤᱛᱟᱹᱨ ᱠᱷᱟᱴᱚᱭ ᱢᱮ</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">ᱱᱤᱛᱚᱜᱟᱜ ᱪᱤᱛᱟᱹᱨ ᱢᱟᱨᱟᱝ ᱫᱚ %sMB ᱠᱟᱱᱟ. ᱰᱤᱯᱷᱚᱞᱴ ᱪᱤᱛᱟᱹᱨ ᱢᱟᱨᱟᱝ ᱜᱚᱴᱟ ᱫᱚ 1MB ᱠᱟᱱᱟ. ᱟᱢ ᱱᱚᱶᱟ ᱠᱚᱢᱯᱨᱮᱥ (compress) ᱠᱮᱭᱟᱢ ᱥᱮ?</string>
     <string name="select_image_failed">"ᱪᱤᱛᱹᱨ ᱵᱟᱪᱷᱟᱣ ᱦᱩᱰᱟᱹᱜ, ᱫᱚᱭᱚᱠᱟᱛᱮ ᱫᱩᱦᱰᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ᱯᱷᱤᱞᱰ ᱥᱟᱦᱴᱟ</string>

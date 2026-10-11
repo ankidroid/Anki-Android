@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Salvestaja tööriistariba loomine ebaõnnestus</string>
     <!-- Crop function-->
     <string name="crop_image">Kas soovid seda pilti kärpida?</string>
-    <string name="crop_button" maxLength="28">Kärbi pilti</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">Praeguse pildi suurus on %sMB. Vaikimisi pildi suuruse piirang on 1MB. KAs soovid seda kokku pakkida?</string>
     <string name="select_image_failed">"Pildi valimine ebaõnnestus. Palun proovi uuesti"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Välja sisu</string>

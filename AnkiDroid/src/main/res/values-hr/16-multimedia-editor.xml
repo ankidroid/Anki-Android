@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Greška pri stvaranju alatne trake za snimanje</string>
     <!-- Crop function-->
     <string name="crop_image">Želite li odrezati ovu sliku?</string>
-    <string name="crop_button" maxLength="28">Odreži sliku</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">Trenutna veličina slike je %sMB. Zadano ograničenje na veličinu slike je 1MB. Želite li je komprimirati?</string>
     <string name="select_image_failed">"Greška pri odabiru slike, pokušajte ponovno"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Sadržaj polja</string>

@@ -139,6 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">ഭാഷ സജ്ജമാക്കുക</string>
     <string name="locale_selection_dialog_summary">വാചകം എഡിറ്റുചെയ്യുമ്പോൾ ഭാഷ മാറ്റുന്നതിനെ GBoard പോലുള്ള ചില ബഹുഭാഷാ കീബോർഡുകൾ \n\n നിങ്ങളുടെ കീബോർഡ് ഭാഷ മാറ്റിയില്ലെങ്കിൽ കീബോർഡ് നിർമ്മാതാവിൽ നിന്ന് “setImeHintLocales” സവിശേഷത അഭ്യർത്ഥിക്കുക.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ഉപയോഗിക്കുന്നു</string>
     <string name="help_item_ankidroid_manual">AnkiDroid മാനുവൽ</string>

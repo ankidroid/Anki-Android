@@ -78,9 +78,9 @@
     <string name="slide_to_cancel" comment="Message shown when pressing the record button">左にｽﾗｲﾄﾞでｷｬﾝｾﾙ</string>
     <string name="filter_by_flags" maxLength="41">フラグ</string>
     <!-- filtered deck options -->
-    <string name="filtered_option_delay_again">Delay for again</string>
-    <string name="filtered_option_delay_hard">Delay for hard</string>
-    <string name="filtered_option_delay_good">Delay for good</string>
+    <string name="filtered_option_delay_again">[もう一度] の待ち時間</string>
+    <string name="filtered_option_delay_hard">[難しい] の待ち時間</string>
+    <string name="filtered_option_delay_good">[正解] の待ち時間</string>
     <!-- Custom study options -->
     <string name="custom_study_loading_tags">タグのリストを作成しています&#8230;</string>
     <!-- Study options -->
@@ -262,7 +262,7 @@
     <string name="percentage">%s%%</string>
     <string name="download_deck">デッキをダウンロード</string>
     <string name="open_in_browser" comment="Label of a button inviting to open ankiweb\'s shared deck page if automated download failed">ﾌﾞﾗｳｻﾞｱﾌﾟﾘで開く</string>
-    <string name="try_again">Try again</string>
+    <string name="try_again">再試行</string>
     <string name="cancel_download">ダウンロードをキャンセル</string>
     <string name="cancel_download_question_title">ダウンロードをキャンセルしますか？</string>
     <string name="downloading_file">%s をダウンロード中</string>

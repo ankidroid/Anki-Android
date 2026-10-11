@@ -136,6 +136,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">言語を設定</string>
     <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字編集のために各フィールドを選択した際にキーボードの言語を自動的に切り替えることができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードアプリの開発者に「setImeHintLocales」機能をリクエストしてください</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使い方</string>
     <string name="help_item_ankidroid_manual">AnkiDroidマニュアル</string>
@@ -192,13 +193,13 @@
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">復習間隔も同じ日数にする</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="other">この日を復習期日に指定</item>
+        <item quantity="other">この日を復習日に指定</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="other">この期間の日のどれかを復習期日に指定（ランダム）</item>
+        <item quantity="other">この期間の日のどれかを復習日に指定（ランダム）</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="other">日後</item>
+        <item quantity="other">日</item>
     </plurals>
     <plurals name="set_due_date_current_interval">
         <item quantity="other">現在の復習間隔: %d日</item>

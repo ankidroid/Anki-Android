@@ -139,6 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Set Language</string>
     <string name="locale_selection_dialog_summary">Alguns teclats multilingües, com GBoard, admeten canviar d\'idioma mentre s\'edita text\n\nSol·liciteu al fabricant del teclat la funció \"setImeHintLocales\" si el teclat no canvia d\'idioma.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Com usar AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid manual</string>

@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">रिकॉर्डर टूलबार बनने में असमर्थता |</string>
     <!-- Crop function-->
     <string name="crop_image">क्या आप इस प्रतिकृति को क्रॉप करना चाहते हैं?</string>
-    <string name="crop_button" maxLength="28">इमेज क्रॉप करें</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">वर्तमान छवि का आकार %sMB है. डिफ़ॉल्ट छवि आकार सीमा 1MB है. क्या आप इसे संपीड़ित करना चाहते हैं?</string>
     <string name="select_image_failed">"छवि का चयन विफल रहा, कृपया पुनः प्रयास करें"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">फ़ील्ड सामग्री</string>

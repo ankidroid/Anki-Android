@@ -146,6 +146,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Установить язык</string>
     <string name="locale_selection_dialog_summary">Некоторые многоязычные клавиатуры, например GBoard, могут переключать язык при редактировании текста\n\nПожалуйста, запросите функцию «setImeHintLocales» у разработчика клавиатуры, если клавиатура не переключает язык.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Использование AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Руководство AnkiDroid</string>

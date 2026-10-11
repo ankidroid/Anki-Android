@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Nav iespējams izveidot ierakstītaja rīkjoslu</string>
     <!-- Crop function-->
     <string name="crop_image">Vai apcirpt šo attēlu?</string>
-    <string name="crop_button" maxLength="28">Apcirpt attēlu</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">Pašreizējais attēla lielums ir % MB. Noklusējuma attēla izmēra ierobežojums ir 1 MB. Vai saspiest to?</string>
     <string name="select_image_failed">"Attēla atlasīšana neizdevās, lūgums mēģināt vēlreiz"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Lauka saturs</string>
