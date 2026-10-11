@@ -66,3 +66,6 @@ var Config.cardsOrNotes by configProperty(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTE
 
 /** The stored selected deck ID; the referenced deck may no longer exist. */
 val Config.currentDeckId by jsonConfigProperty<DeckId>(CURRENT_DECK).orDefault(Consts.DEFAULT_DECK_ID)
+
+/** Stored scheduler version, defaulting to the legacy scheduler when unavailable. */
+val Config.schedulerVersion by jsonConfigProperty<Long>("schedVer").orDefault(1L)

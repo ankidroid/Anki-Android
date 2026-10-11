@@ -24,6 +24,7 @@ import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.destinations.NoteEditorDestination
+import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
@@ -436,7 +437,7 @@ class DeckPickerViewModel :
                  * Checks the current scheduler version and prompts the upgrade dialog if using the legacy version.
                  * Ensures the dialog is only shown once per collection load, even if [updateDeckList()] is called multiple times.
                  */
-                val currentSchedulerVersion = withCol { config.get("schedVer") as? Long ?: 1L }
+                val currentSchedulerVersion = withCol { config.schedulerVersion }
 
                 if (currentSchedulerVersion == 1L && schedulerUpgradeDialogShownForVersion != 1L) {
                     schedulerUpgradeDialogShownForVersion = 1L
