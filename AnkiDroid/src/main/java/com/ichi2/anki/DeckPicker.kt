@@ -1582,7 +1582,7 @@ open class DeckPicker :
      */
     private suspend fun automaticSync(runInBackground: Boolean = false): Boolean {
         /**
-         * @return whether there are collection changes to be sync.
+         * @return whether there are collection changes to sync.
          *
          * It DOES NOT include if there are media to be synced.
          */
@@ -1591,9 +1591,9 @@ open class DeckPicker :
             val status =
                 withContext(Dispatchers.IO) {
                     CollectionManager.getBackend().syncStatus(auth)
-                }.required
+                }
 
-            return when (status) {
+            return when (status.required) {
                 SyncStatusResponse.Required.NO_CHANGES,
                 SyncStatusResponse.Required.UNRECOGNIZED,
                 null,
@@ -1613,24 +1613,26 @@ open class DeckPicker :
             !NetworkUtils.isOnline -> Timber.d("autoSync: offline")
             !runInBackground && !syncIntervalPassed() -> Timber.d("autoSync: interval not passed")
             !isLoggedIn() -> Timber.d("autoSync: not logged in")
-            !areThereChangesToSync() -> {
-                Timber.d("autoSync: no collection changes to sync. Syncing media if set")
-                if (shouldFetchMedia()) {
-                    val auth = syncAuth() ?: return false
-                    SyncMediaWorker.start(this, auth)
-                }
-                setLastSyncTimeToNow()
-            }
             else -> {
-                if (runInBackground) {
-                    Timber.i("autoSync: starting background")
-                    val auth = syncAuth() ?: return false
-                    SyncWorker.start(this, auth, shouldFetchMedia())
+                val hasChanges = areThereChangesToSync()
+                if (!hasChanges) {
+                    Timber.d("autoSync: no collection changes to sync. Syncing media if set")
+                    if (shouldFetchMedia()) {
+                        val auth = syncAuth() ?: return false
+                        SyncMediaWorker.start(this, auth)
+                    }
+                    setLastSyncTimeToNow()
                 } else {
-                    Timber.i("autoSync: starting foreground")
-                    sync()
+                    if (runInBackground) {
+                        Timber.i("autoSync: starting background")
+                        val auth = syncAuth() ?: return false
+                        SyncWorker.start(this, auth, shouldFetchMedia())
+                    } else {
+                        Timber.i("autoSync: starting foreground")
+                        sync()
+                    }
+                    return true
                 }
-                return true
             }
         }
         return false
