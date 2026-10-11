@@ -5,6 +5,8 @@ package com.ichi2.anki.multimedia
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.provider.MediaStore
 import androidx.core.graphics.createBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
@@ -50,6 +52,23 @@ class ExternalImageEditorTest : RobolectricTest(loadBackend = false) {
                 val grants = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 assertThat(edit.flags and grants, equalTo(grants))
                 targetContext.contentResolver.openOutputStream(edit.data!!, "wt")!!.use { it.write("edited".toByteArray()) }
+                assertThat(original.readText(), equalTo("original"))
+            } finally {
+                editor.clear(prepared.file)
+            }
+        }
+
+    @Test
+    fun `preparation provides Google Photos with a writable output URI`() =
+        runBlocking {
+            val original = File(targetContext.cacheDir, "original.png").apply { writeText("original") }
+            val prepared = editor.prepare(original)
+            try {
+                val edit = requireNotNull(prepared.intent.getParcelableExtraCompat<Intent>(Intent.EXTRA_INTENT))
+                val output = requireNotNull(edit.getParcelableExtraCompat<Uri>(MediaStore.EXTRA_OUTPUT))
+                assertThat(output, equalTo(edit.data))
+                targetContext.contentResolver.openOutputStream(output, "wt")!!.use { it.write("edited".toByteArray()) }
+                assertThat(prepared.file.readText(), equalTo("edited"))
                 assertThat(original.readText(), equalTo("original"))
             } finally {
                 editor.clear(prepared.file)

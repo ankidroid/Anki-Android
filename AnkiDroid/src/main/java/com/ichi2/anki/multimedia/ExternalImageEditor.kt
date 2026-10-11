@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import androidx.activity.result.ActivityResult
 import androidx.core.content.FileProvider
@@ -96,6 +97,8 @@ internal class ExternalImageEditor(
         Intent(Intent.ACTION_EDIT).apply {
             val uri = uriForFile(file)
             setDataAndType(uri, mimeType)
+            // Google Photos requires an explicit output URI for FileProvider images.
+            putExtra(MediaStore.EXTRA_OUTPUT, uri)
             clipData = ClipData.newRawUri("image", uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         }
