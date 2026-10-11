@@ -719,6 +719,20 @@ class ReviewerFragment :
                         isScrolling = false
                     }
             }
+
+            viewModel.gestureEventFlow.collectIn(lifecycleScope) { rawGesture ->
+                handleGesture(rawGesture)
+            }
+        }
+
+        fun handleGesture(rawGesture: RawGesture) {
+            val webView = webViewLayout.getChildAt(0) as? WebView ?: return
+            if (isScrolling) return
+            gestureParser.parse(rawGesture, scale, webView) { gesture ->
+                if (gesture == null) return@parse
+                Timber.v("ReviewerFragment::onGesture %s", gesture)
+                bindingMap.onGesture(gesture)
+            }
         }
 
         override fun handleUrl(
@@ -726,15 +740,6 @@ class ReviewerFragment :
             url: Uri,
         ): Boolean {
             return when (url.scheme) {
-                "gesture" -> {
-                    if (isScrolling) return true
-                    gestureParser.parse(url, scale, webView) { gesture ->
-                        if (gesture == null) return@parse
-                        Timber.v("ReviewerFragment::onGesture %s", gesture)
-                        bindingMap.onGesture(gesture)
-                    }
-                    true
-                }
                 "ankidroid" -> {
                     when (url.host) {
                         "show-answer" -> viewModel.onShowAnswer()
