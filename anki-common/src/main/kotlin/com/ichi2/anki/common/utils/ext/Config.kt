@@ -42,3 +42,6 @@ var Config.addingDefaultsMode by configProperty(ConfigKey.Bool.ADDING_DEFAULTS_T
  * [Added in Anki#1667](https://github.com/ankitects/anki/pull/1667)
  */
 var Config.ignoreAccentsInSearch by configProperty(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH)
+
+/** Whether pasted images are saved as PNG. */
+var Config.pasteImagesAsPng by configProperty(ConfigKey.Bool.PASTE_IMAGES_AS_PNG)

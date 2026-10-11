@@ -70,7 +70,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -101,6 +100,7 @@ import com.ichi2.anki.common.utils.ext.AddingDefaultsMode
 import com.ichi2.anki.common.utils.ext.addingDefaultsMode
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.common.utils.ext.ifZero
+import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.databinding.FragmentNoteEditorBinding
@@ -1858,7 +1858,7 @@ class NoteEditorFragment :
     }
 
     /** Determines whether pasted images should be handled as PNG format. **/
-    private suspend fun shouldPasteAsPng() = withCol { config.getBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG) }
+    private suspend fun shouldPasteAsPng() = withCol { config.pasteImagesAsPng }
 
     val currentFields: Fields
         get() = editorNote!!.notetype.fields
