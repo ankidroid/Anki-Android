@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreferenceCompat
-import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -15,6 +14,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode
 import com.ichi2.anki.common.utils.ext.addingDefaultsMode
+import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.launchCatchingTask
@@ -46,9 +46,9 @@ class GeneralSettingsFragment : SettingsFragment() {
         // whether to convert clipboard uri to png format or not.
         requirePreference<SwitchPreferenceCompat>(R.string.paste_png_key).apply {
             title = TR.preferencesPasteClipboardImagesAsPng()
-            launchCatchingTask { isChecked = withCol { config.getBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG) } }
+            launchCatchingTask { isChecked = withCol { config.pasteImagesAsPng } }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG, newValue) } }
+                launchCatchingTask { withCol { config.pasteImagesAsPng = newValue } }
             }
         }
         // Error reporting mode
