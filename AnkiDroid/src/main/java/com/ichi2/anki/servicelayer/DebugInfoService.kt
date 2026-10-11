@@ -7,6 +7,7 @@ import android.os.Build
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.utils.ext.fsrsEnabled
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.getWebViewInfo
 import org.acra.util.Installation
@@ -49,7 +50,7 @@ object DebugInfoService {
  */
 suspend fun getFSRSStatus(): Boolean? =
     try {
-        CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs", false) }
+        CollectionManager.withOpenColOrNull { config.fsrsEnabled }
     } catch (e: Throwable) {
         // Error and Exception paths are the same, so catch Throwable
         Timber.w(e)

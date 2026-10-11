@@ -78,3 +78,6 @@ val Config.showIntervalsOnButtons by jsonConfigProperty<Boolean>("estTimes").orD
 
 /** Whether the reviewer displays remaining card counts. */
 val Config.showRemainingDueCounts by jsonConfigProperty<Boolean>("dueCounts").orDefault(true)
+
+/** Whether the FSRS scheduler is enabled; false when absent, `null` when the stored value cannot be decoded. */
+val Config.fsrsEnabled by jsonConfigProperty("fsrs", missingValue = false)
