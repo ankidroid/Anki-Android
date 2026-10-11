@@ -75,3 +75,6 @@ val Config.rolloverHour by jsonConfigProperty<Int>("rollover").orDefault(4)
 
 /** Whether answer buttons display the next review interval. */
 val Config.showIntervalsOnButtons by jsonConfigProperty<Boolean>("estTimes").orDefault(true)
+
+/** Whether the reviewer displays remaining card counts. */
+val Config.showRemainingDueCounts by jsonConfigProperty<Boolean>("dueCounts").orDefault(true)

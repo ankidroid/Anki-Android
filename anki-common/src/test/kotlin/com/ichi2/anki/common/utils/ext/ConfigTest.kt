@@ -21,6 +21,7 @@ class ConfigTest : InMemoryAnkiTest() {
                 "schedVer",
                 "rollover",
                 "estTimes",
+                "dueCounts",
             )
 
         fun assertDefaults() {
@@ -28,6 +29,7 @@ class ConfigTest : InMemoryAnkiTest() {
             assertEquals(1L, col.config.schedulerVersion)
             assertEquals(4, col.config.rolloverHour)
             assertTrue(col.config.showIntervalsOnButtons)
+            assertTrue(col.config.showRemainingDueCounts)
         }
 
         keys.forEach { col.config.remove(it) }
@@ -42,11 +44,13 @@ class ConfigTest : InMemoryAnkiTest() {
         col.config.set("schedVer", 2L)
         col.config.set("rollover", 8)
         col.config.set("estTimes", false)
+        col.config.set("dueCounts", false)
 
         assertEquals(123L, col.config.currentDeckId)
         assertEquals(2L, col.config.schedulerVersion)
         assertEquals(8, col.config.rolloverHour)
         assertFalse(col.config.showIntervalsOnButtons)
+        assertFalse(col.config.showRemainingDueCounts)
     }
 
     @Test

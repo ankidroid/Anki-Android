@@ -87,6 +87,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.anki.common.utils.android.HandlerUtils.getDefaultLooper
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.ext.showRemainingDueCounts
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Collection
@@ -1846,7 +1847,7 @@ open class Reviewer :
 
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
-        showRemainingCardCount = col.config.get("dueCounts") ?: true
+        showRemainingCardCount = col.config.showRemainingDueCounts
         stopTimerOnAnswer = col.decks.configDictForDeckId(col.decks.current().id).stopTimerOnAnswer
     }
 
