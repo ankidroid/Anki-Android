@@ -4,6 +4,7 @@ package com.ichi2.anki.ui.windows.reviewer
 
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.common.time.TimeManager
+import com.ichi2.anki.common.utils.ext.cardStateCustomizer
 import com.ichi2.anki.preferences.reviewer.MenuDisplayType
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuRepository
 import com.ichi2.anki.preferences.reviewer.ViewerAction
@@ -11,7 +12,6 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.settings.enums.ToolbarPosition
 import com.ichi2.anki.utils.CollectionPreferences
-import com.ichi2.anki.utils.ext.cardStateCustomizer
 import timber.log.Timber
 import java.net.BindException
 import java.net.ServerSocket
@@ -56,7 +56,7 @@ class StudyScreenRepository(
 
     fun generateStateMutationKey(): String = TimeManager.time.intTimeMS().toString()
 
-    suspend fun getCustomSchedulingJs(): String = CollectionManager.withCol { cardStateCustomizer }
+    suspend fun getCustomSchedulingJs(): String = CollectionManager.withCol { config.cardStateCustomizer }
 
     suspend fun getShouldShowNextTimes(): Boolean = CollectionPreferences.getShowIntervalOnButtons()
 
