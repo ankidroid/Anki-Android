@@ -2,9 +2,11 @@
 
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.text.Html
+import android.text.Layout
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -92,6 +94,8 @@ class StudyOptionsFragment :
     // TODO: Include deckId in StudyOptionsState, and stop resetting scroll based on this
     private var displayedDeckId: DeckId? = null
 
+    private var descriptionLayoutBeforeResizing: DescriptionLayoutSettings? = null
+
     private val buttonClickListener =
         View.OnClickListener { v: View ->
             if (v.id == R.id.studyoptions_start) {
@@ -120,6 +124,7 @@ class StudyOptionsFragment :
     ): View? {
         Timber.i("onCreateView()")
         val studyOptionsView = inflater.inflate(R.layout.fragment_study_options, container, false)
+        descriptionLayoutBeforeResizing = null
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
         return studyOptionsView
@@ -141,6 +146,30 @@ class StudyOptionsFragment :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         displayedDeckId?.let { outState.putLong(STATE_DISPLAYED_DECK_ID, it) }
+    }
+
+    /** Uses cheaper wrapping during a divider drag, then restores the view's original settings. */
+    fun onResizingChanged(isResizing: Boolean) {
+        if (view == null) return
+        val description = textDeckDescription
+        if (isResizing) {
+            if (descriptionLayoutBeforeResizing != null) return
+            descriptionLayoutBeforeResizing =
+                DescriptionLayoutSettings(
+                    breakStrategy = description.breakStrategy,
+                    hyphenationFrequency = description.hyphenationFrequency,
+                )
+            // Avoid whole-paragraph optimization while the width changes. Setters invalidate the
+            // text layout, so only change these settings at the start and end of the gesture.
+            @SuppressLint("WrongConstant")
+            description.breakStrategy = Layout.BREAK_STRATEGY_SIMPLE
+            description.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
+        } else {
+            val originalSettings = descriptionLayoutBeforeResizing ?: return
+            description.breakStrategy = originalSettings.breakStrategy
+            description.hyphenationFrequency = originalSettings.hyphenationFrequency
+            descriptionLayoutBeforeResizing = null
+        }
     }
 
     /** Keeps the content clear of the system bars, display cutout and keyboard. */
@@ -463,6 +492,11 @@ class StudyOptionsFragment :
         }
         textDeckName.text = nameBuilder.toString()
     }
+
+    private data class DescriptionLayoutSettings(
+        val breakStrategy: Int,
+        val hyphenationFrequency: Int,
+    )
 
     companion object {
         private const val STATE_DISPLAYED_DECK_ID = "displayedDeckId"

@@ -27,6 +27,7 @@ class ResizablePaneManager(
     private val minWeight: Float = 0.5f, // Minimum weight for each pane
     private val dragColor: Int = divider.context.getColor(R.color.drag_divider_color),
     private val idleColor: Int = divider.context.getColor(R.color.idle_divider_color),
+    private val onResizingChanged: (Boolean) -> Unit = {},
 ) {
     init {
         setupResizableDivider()
@@ -76,6 +77,7 @@ class ResizablePaneManager(
                     initialTouchX = event.rawX
                     initialStartWeight = startParams.weight
                     initialEndWeight = endParams.weight
+                    onResizingChanged(true)
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
@@ -113,6 +115,7 @@ class ResizablePaneManager(
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     v.setBackgroundColor(idleColor)
+                    onResizingChanged(false)
 
                     // Save the new weights to SharedPreferences
                     sharedPrefs.edit {
