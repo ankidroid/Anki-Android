@@ -79,12 +79,11 @@ class LocaleRootDetector :
         val selector = uRef.selector as? UReferenceExpression ?: return false
 
         // Check if receiver is "Locale" and selector resolves to Locale.ROOT
-        val receiverText = receiver.asSourceString()
+        if (receiver.asSourceString() != "Locale") return false
         val resolvedField = selector.resolve() as? PsiField ?: return false
 
-        return receiverText == "Locale" &&
-            resolvedField.containingClass?.qualifiedName == "java.util.Locale" &&
-            resolvedField.name == "ROOT"
+        return resolvedField.name == "ROOT" &&
+            resolvedField.containingClass?.qualifiedName == "java.util.Locale"
     }
 
     private fun createFix(): LintFix =
