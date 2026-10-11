@@ -7,6 +7,7 @@ import com.ichi2.anki.common.utils.configProperty
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.USE_CURRENT_DECK
 import com.ichi2.anki.libanki.Config
+import com.ichi2.anki.model.CardsOrNotes
 
 /**
  * How the initial deck and note type are chosen when adding a note.
@@ -51,3 +52,9 @@ val Config.hideAudioPlayButtons by configProperty(ConfigKey.Bool.HIDE_AUDIO_PLAY
 
 /** The `Custom scheduling` global setting in deck options. */
 var Config.cardStateCustomizer by configProperty(ConfigKey.String.CARD_STATE_CUSTOMIZER)
+
+/** Whether the browser displays cards or notes. */
+var Config.cardsOrNotes by configProperty(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE).mapped(
+    decode = { if (it) CardsOrNotes.NOTES else CardsOrNotes.CARDS },
+    encode = { it == CardsOrNotes.NOTES },
+)
