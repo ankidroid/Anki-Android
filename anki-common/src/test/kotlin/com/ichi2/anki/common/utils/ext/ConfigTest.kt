@@ -32,4 +32,43 @@ class ConfigTest : InMemoryAnkiTest() {
         assertEquals(studyDeck, col.defaultsForAdding().deckId)
         assertEquals(studyDeck, col.decks.selected())
     }
+
+    @Test
+    fun `test non-diacritic input`() {
+        addBasicNote("uber")
+        addBasicNote("über")
+        addBasicNote("Über")
+
+        assertEquals(1, col.findCards("uber").size)
+
+        col.config.ignoreAccentsInSearch = true
+
+        assertEquals(3, col.findCards("uber").size)
+    }
+
+    @Test
+    fun `test diacritic input`() {
+        addBasicNote("uber")
+        addBasicNote("über")
+        addBasicNote("Über")
+
+        assertEquals(1, col.findCards("über").size)
+
+        col.config.ignoreAccentsInSearch = true
+
+        assertEquals(3, col.findCards("über").size)
+    }
+
+    @Test
+    fun `test Japanese input`() {
+        addBasicNote("は")
+        addBasicNote("ば")
+        addBasicNote("ぱ")
+
+        assertEquals(1, col.findCards("は").size)
+
+        col.config.ignoreAccentsInSearch = true
+
+        assertEquals(3, col.findCards("は").size)
+    }
 }

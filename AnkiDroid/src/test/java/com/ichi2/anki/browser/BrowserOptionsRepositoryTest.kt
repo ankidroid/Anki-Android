@@ -7,8 +7,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.common.utils.ext.ignoreAccentsInSearch
 import com.ichi2.anki.model.CardsOrNotes
-import com.ichi2.anki.utils.ext.ignoreAccentsInSearch
 import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.launch

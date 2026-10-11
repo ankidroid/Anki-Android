@@ -22,6 +22,8 @@ enum class AddingDefaultsMode {
     DECIDE_BY_NOTE_TYPE,
 }
 
+// TODO: Extract module-specific config to modules (when they exist).
+
 /**
  * @see AddingDefaultsMode
  */
@@ -29,3 +31,14 @@ var Config.addingDefaultsMode by configProperty(ConfigKey.Bool.ADDING_DEFAULTS_T
     decode = { if (it) USE_CURRENT_DECK else DECIDE_BY_NOTE_TYPE },
     encode = { it == USE_CURRENT_DECK },
 )
+
+/**
+ * When enabled, simple text searches automatically ignore accents.
+ *
+ * When enabled, both 'uber' and 'über' match `["uber", "über", "Über"]`.
+ *
+ * [Manual: Searching - Ignoring accents/combining characters](https://docs.ankiweb.net/searching.html#ignoring-accentscombining-characters)
+ *
+ * [Added in Anki#1667](https://github.com/ankitects/anki/pull/1667)
+ */
+var Config.ignoreAccentsInSearch by configProperty(ConfigKey.Bool.IGNORE_ACCENTS_IN_SEARCH)
