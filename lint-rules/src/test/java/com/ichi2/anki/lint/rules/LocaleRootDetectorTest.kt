@@ -4,12 +4,42 @@
 package com.ichi2.anki.lint.rules
 
 import com.android.tools.lint.checks.infrastructure.TestFile.JavaTestFile.create
+import com.android.tools.lint.checks.infrastructure.TestFiles.kotlin
 import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import com.android.tools.lint.checks.infrastructure.TestMode
 import org.intellij.lang.annotations.Language
 import org.junit.Test
 
 class LocaleRootDetectorTest {
+    @Test
+    fun `only explicit Locale ROOT arguments are reported in Kotlin`() {
+        lint()
+            .testModes(TestMode.DEFAULT)
+            .allowMissingSdk()
+            .files(
+                kotlin(
+                    """
+                    package com.ichi2.test
+                    import java.util.Locale
+
+                    object Other {
+                        val ROOT = Locale.ROOT
+                    }
+
+                    fun check() {
+                        println(Locale.ROOT)
+                        println(Locale.US)
+                        println(Other.ROOT)
+                        println(java.util.Locale.ROOT)
+                    }
+                    """.trimIndent(),
+                ),
+            ).issues(LocaleRootDetector.ISSUE)
+            .run()
+            .expectErrorCount(1)
+            .expectContains("println(Locale.ROOT)")
+    }
+
     @Language("JAVA")
     private val invalidCode =
         """
