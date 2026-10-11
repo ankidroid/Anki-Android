@@ -19,6 +19,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.time.Time
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
+import com.ichi2.anki.common.utils.ext.rolloverHour
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.runGloballyWithTimeout
@@ -191,7 +192,7 @@ class BootService : AnkiBroadcastReceiver() {
                         val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)
                     }
-                    2 -> col.config.get("rollover") ?: defValue
+                    2 -> col.config.rolloverHour
                     else -> {
                         val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)

@@ -69,3 +69,6 @@ val Config.currentDeckId by jsonConfigProperty<DeckId>(CURRENT_DECK).orDefault(C
 
 /** Stored scheduler version, defaulting to the legacy scheduler when unavailable. */
 val Config.schedulerVersion by jsonConfigProperty<Long>("schedVer").orDefault(1L)
+
+/** Hour of day at which the scheduler starts a new day. */
+val Config.rolloverHour by jsonConfigProperty<Int>("rollover").orDefault(4)
