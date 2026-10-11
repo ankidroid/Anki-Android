@@ -5,7 +5,6 @@ package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants.TAG_PLURALS
 import com.android.SdkConstants.TAG_STRING
-import com.android.SdkConstants.TAG_STRING_ARRAY
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.detector.api.Implementation
 import com.android.tools.lint.detector.api.Issue
@@ -19,7 +18,6 @@ import com.ichi2.anki.lint.utils.Constants.ANKI_XML_SEVERITY
 import com.ichi2.anki.lint.utils.StringFormatDetector
 import org.w3c.dom.Element
 import org.w3c.dom.Node
-import java.util.EnumSet
 import java.util.regex.Pattern
 
 /**
@@ -59,7 +57,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         private val INVALID_CAPITALIZATION = Pattern.compile("(?<!%)%[^%a-zA-Z]*[DFNOGC].*").toRegex()
     }
 
-    override fun appliesTo(folderType: ResourceFolderType): Boolean = EnumSet.of(ResourceFolderType.VALUES).contains(folderType)
+    override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.VALUES
 
     override fun getApplicableElements() = listOf(TAG_STRING, TAG_PLURALS)
 
@@ -75,18 +73,13 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                 val isStringResource =
                     (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) &&
                         TAG_STRING == element.localName
-                val isStringArrayOrPlurals =
-                    child.nodeType == Node.ELEMENT_NODE &&
-                        (
-                            TAG_STRING_ARRAY == element.localName ||
-                                TAG_PLURALS == element.localName
-                        )
+                val isPluralItem = child.nodeType == Node.ELEMENT_NODE && TAG_PLURALS == element.localName
 
                 if (isStringResource) {
                     checkText(context, element, child.nodeValue)
-                } else if (isStringArrayOrPlurals) {
+                } else if (isPluralItem) {
                     val sb = StringBuilder()
-                    StringFormatDetector.addText(sb, element)
+                    StringFormatDetector.addText(sb, child)
                     if (sb.isNotEmpty()) {
                         checkText(context, element, sb.toString())
                     }
@@ -99,6 +92,8 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         element: Element,
         text: String,
     ) {
+        if ('%' !in text) return
+
         text.split(" ").forEach {
             if (it.matches(INVALID_FORMAT_PATTERN) && it != "XXX%") {
                 val location = context.createLocationHandle(element).resolve()
