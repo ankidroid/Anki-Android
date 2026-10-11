@@ -10,6 +10,28 @@ import org.junit.Test
 
 /** Test for [InvalidStringFormatDetectorTest] */
 class InvalidStringFormatDetectorTest {
+    @Test
+    fun `invalid plural item is reported once`() {
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
+            .files(
+                TestFiles.xml(
+                    "res/values/strings.xml",
+                    """
+                    <resources>
+                        <plurals name="cards">
+                            <item quantity="one">%D card</item>
+                            <item quantity="other">%d cards</item>
+                        </plurals>
+                    </resources>
+                    """.trimIndent(),
+                ),
+            ).issues(InvalidStringFormatDetector.ISSUE)
+            .run()
+            .expectErrorCount(1)
+    }
+
     @Language("XML")
     private val invalid =
         """<resources>
