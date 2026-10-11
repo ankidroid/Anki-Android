@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Não foi possível criar a barra de ferramentas de gravação</string>
     <!-- Crop function-->
     <string name="crop_image">Quer recortar esta imagem?</string>
-    <string name="crop_button" maxLength="28">Recortar imagem</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">O tamanho da imagem é %sMB. O limite é de  1MB. Deseja comprimi-la?</string>
     <string name="select_image_failed">"A seleção de imagem falhou, por favor tente novamente"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Conteúdo do Campo</string>

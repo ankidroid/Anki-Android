@@ -136,6 +136,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">語言</string>
     <string name="locale_selection_dialog_summary">有些多國語言鍵盤，想是GBoard支援編輯文字時切換語言。\n\n如果您的鍵盤不會切換語言，句請請求您的鍵盤開發人員提供「setImeHintLocales」功能。</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使用 AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid 用戶手冊</string>

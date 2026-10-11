@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Crop function-->
     <string name="crop_image">𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌸𐍉 𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌰𐍆𐌼𐌰𐌹𐍄𐌰𐌽?</string>
-    <string name="crop_button" maxLength="28">𐍆𐍂𐌹𐍃𐌰𐌷𐍄 𐌰𐍆𐌼𐌰𐌹𐍄𐌰𐌽</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">𐌼𐌹𐌺𐌹𐌻𐌴𐌹 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐌰𐌽𐌳𐍅𐌰𐌹𐍂𐌸𐌰𐌹𐌶𐍉𐍃 %s𐌼𐌱 𐌹𐍃𐍄. 𐌼𐌰𐍂𐌺𐌰 𐌱𐌹𐌿𐌷𐍄𐌰 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐌼𐌹𐌺𐌹𐌻𐌴𐌹𐌽𐍃 𐌹𐍃𐍄 1𐌼𐌱. 𐍅𐌹𐌻𐌴𐌹𐌶𐌿 𐌲𐌰𐌸𐍂𐌿𐌺𐌾𐌰𐌽?</string>
     <string name="select_image_failed">"𐌽𐌹 𐌼𐌰𐌷𐍄𐌰 𐍆𐍂𐌹𐍃𐌰𐌷𐍄𐌰𐌹𐍃 𐍅𐌰𐌻𐌾𐌰𐌽, 𐌱𐌹𐌳𐌾𐌰𐌼 𐌸𐌿𐌺 𐌺𐌹𐌿𐍃𐌰𐌽 𐌰𐍆𐍄𐍂𐌰"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">𐍅𐌰𐌹𐍂𐌸𐌹𐍃 𐌱𐍉𐌺𐍉𐍃</string>

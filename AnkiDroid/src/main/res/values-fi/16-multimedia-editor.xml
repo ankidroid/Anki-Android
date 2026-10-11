@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Ääninauhurin työkalupalkin luominen epäonnistui</string>
     <!-- Crop function-->
     <string name="crop_image">Haluatko rajata kuvan?</string>
-    <string name="crop_button" maxLength="28">Rajaa kuva</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">Kuvan nykyinen koko on %s Mt. Kuvan kokorajoitus on oletusarvoisesti 1 Mt. Haluatko käyttää pakkausta kuvan pienentämiseksi?</string>
     <string name="select_image_failed">"Kuvan valitseminen epäonnistui – yritä uudelleen"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Kentän sisältö</string>

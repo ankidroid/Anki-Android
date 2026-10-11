@@ -139,6 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">மொழியை அமைக்கவும்</string>
     <string name="locale_selection_dialog_summary">GBoard போன்ற சில பன்மொழி விசைப்பலகைகள், உரையைத் திருத்தும்போது மொழியை மாற்றுவதை ஆதரிக்கின்றன\n\nஉங்கள் விசைப்பலகை மொழியை மாற்றவில்லை என்றால், உங்கள் விசைப்பலகை உற்பத்தியாளரிடமிருந்து \"setImeHintLocales\" அம்சத்தைக் கோரவும்.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ஐப் பயன்படுத்துதல்</string>
     <string name="help_item_ankidroid_manual">AnkiDroid கையேடு</string>

@@ -49,7 +49,7 @@
     <string name="multimedia_editor_audio_view_create_failed">Creatzione de sa barra de sas ainas de registratzione fallida</string>
     <!-- Crop function-->
     <string name="crop_image">Cheres segare cust\'immàgine?</string>
-    <string name="crop_button" maxLength="28">Sega s\'immàgine</string>
+    <string name="crop_button" maxLength="28">Crop</string>
     <string name="save_dialog_content">Sa mannària atuale de s\'immàgine est de %sMB. Su lìmite predefinidu de mannària pro sas immàgines est de 1MB. La cheres cumprìmere?</string>
     <string name="select_image_failed">"Seletzione de s\'immàgine fallida. Torra a proare"</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Cuntenutos de su campu</string>

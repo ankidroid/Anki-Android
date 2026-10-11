@@ -136,6 +136,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Cài ngôn ngữ</string>
     <string name="locale_selection_dialog_summary">Một số bàn phím đa ngôn ngữ, chẳng hạn như GBoard hỗ trợ thay đổi ngôn ngữ khi soạn thảo văn bản\n\nVui lòng yêu cầu tính năng “setImeHintLocales” từ nhà sản xuất bàn phím nếu bàn phím của bạn không thay đổi ngôn ngữ.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Sử dụng AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Hướng dẫn sử dụng AnkiDroid</string>

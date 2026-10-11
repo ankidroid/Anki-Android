@@ -139,6 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Difini lingvon</string>
     <string name="locale_selection_dialog_summary">Iuj plurlingvaj klavaroj – ekzemple GBoard – ebligas ŝanĝi lingvon dum enigi tekston\n\nSe via klavaro aŭtomate ne ŝanĝas lingvon, provu peti ĝiajn programistojn pri aldoni la eblaĵon “setImeHintLocales”.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Uzado de AnkiDroid</string>
     <string name="help_item_ankidroid_manual">AnkiDroid: manlibro</string>

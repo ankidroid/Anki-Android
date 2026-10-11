@@ -139,6 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">ಭಾಷೆಯನ್ನು ಹೊಂದಿಸಿ</string>
     <string name="locale_selection_dialog_summary">GBoard ನಂತಹ ಕೆಲವು ಬಹುಭಾಷಾ ಕೀಬೋರ್ಡ್‌ಗಳು ಪಠ್ಯವನ್ನು ಸಂಪಾದಿಸುವಾಗ ಭಾಷೆಯನ್ನು ಬದಲಾಯಿಸುವುದನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ\n\nನಿಮ್ಮ ಕೀಬೋರ್ಡ್ ಭಾಷೆಯನ್ನು ಬದಲಾಯಿಸದಿದ್ದರೆ ದಯವಿಟ್ಟು ನಿಮ್ಮ ಕೀಬೋರ್ಡ್ ತಯಾರಕರಿಂದ \"setImeHintLocales\" ವೈಶಿಷ್ಟ್ಯವನ್ನು ವಿನಂತಿಸಿ.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ಬಳಸುವುದು</string>
     <string name="help_item_ankidroid_manual">AnkiDroid manual</string>

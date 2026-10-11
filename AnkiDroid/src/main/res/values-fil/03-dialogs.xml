@@ -139,6 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Pumili ng Wika</string>
     <string name="locale_selection_dialog_summary">May mga multilingual na keyboard tulad ng GBoard na maaaring palitan ang wika habang nag-eedit ng teksto\n\nMangyaring magrequest ng \"setImeHintLocales\" na katangian mula sa gumawa ng iyong keyboard kung hindi nito sinusuporta ang pagpapalit ng wika.</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Paggamit sa AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Patnubay sa AnkiDroid</string>
