@@ -3,6 +3,7 @@
 package com.ichi2.anki.common.utils.ext
 
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
+import com.ichi2.anki.model.CardsOrNotes
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -10,6 +11,16 @@ import kotlin.test.assertEquals
  * Tests for extensions to [com.ichi2.anki.libanki.Config]
  */
 class ConfigTest : InMemoryAnkiTest() {
+    @Test
+    fun `browser mode helpers use the mapped config property`() {
+        CardsOrNotes.NOTES.saveToCollection(col)
+        assertEquals(CardsOrNotes.NOTES, col.config.cardsOrNotes)
+        assertEquals(CardsOrNotes.NOTES, CardsOrNotes.fromCollection(col))
+
+        col.config.cardsOrNotes = CardsOrNotes.CARDS
+        assertEquals(CardsOrNotes.CARDS, CardsOrNotes.fromCollection(col))
+    }
+
     @Test
     fun `adding defaults mode uses the backend default`() {
         col.config.remove("addToCur")
