@@ -99,6 +99,13 @@ class StudyOptionsFragment :
             }
         }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Subscribe once per fragment: returning from another panel can recreate its view.
+        ChangeManager.subscribe(this)
+        viewModel.flowOfState.launchCollectionInLifecycleScope(::rebuildUi)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -108,7 +115,6 @@ class StudyOptionsFragment :
         val studyOptionsView = inflater.inflate(R.layout.fragment_study_options, container, false)
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
-        ChangeManager.subscribe(this)
         return studyOptionsView
     }
 
@@ -122,7 +128,6 @@ class StudyOptionsFragment :
             requireAnkiActivity().setToolbarText(title = "")
         }
         setupContentInsets(view)
-        viewModel.flowOfState.launchCollectionInLifecycleScope(::rebuildUi)
         refreshInterface()
     }
 
