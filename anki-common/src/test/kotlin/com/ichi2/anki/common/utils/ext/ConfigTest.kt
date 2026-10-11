@@ -7,6 +7,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
@@ -51,6 +52,20 @@ class ConfigTest : InMemoryAnkiTest() {
         assertEquals(8, col.config.rolloverHour)
         assertFalse(col.config.showIntervalsOnButtons)
         assertFalse(col.config.showRemainingDueCounts)
+    }
+
+    @Test
+    fun `FSRS diagnostics distinguish missing and invalid values`() {
+        col.config.remove("fsrs")
+        assertEquals(false, col.config.fsrsEnabled)
+
+        col.config.set("fsrs", "invalid")
+        assertNull(col.config.fsrsEnabled)
+        col.config.set<Boolean?>("fsrs", null)
+        assertNull(col.config.fsrsEnabled)
+
+        col.config.set("fsrs", true)
+        assertEquals(true, col.config.fsrsEnabled)
     }
 
     @Test
