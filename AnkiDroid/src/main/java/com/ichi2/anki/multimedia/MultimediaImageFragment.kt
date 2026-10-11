@@ -21,13 +21,17 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.DrawingFragment
@@ -45,6 +49,7 @@ import com.ichi2.anki.multimedia.MultimediaUtils.createNewCacheImageFile
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.convertToString
 import com.ichi2.anki.utils.ext.toBase64Png
+import com.ichi2.anki.utils.savedStateViewModelFactory
 import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
 import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
@@ -62,6 +67,7 @@ import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -90,6 +96,25 @@ class MultimediaImageFragment :
 
     /** Keeps track of the process in case `Don't keep activities` in turned on*/
     private var hasStartedImageSelection = false
+
+    private val externalEditorViewModel by viewModels<ExternalImageEditorViewModel> {
+        savedStateViewModelFactory { state ->
+            ExternalImageEditorViewModel(
+                state,
+                ExternalImageEditor(requireContext().applicationContext, File(requireNotNull(ankiCacheDirectory))),
+            )
+        }
+    }
+
+    private val externalImageEditor get() = externalEditorViewModel.editor
+
+    @VisibleForTesting
+    internal val isExternalEditPending get() = externalEditorViewModel.state.value != null
+
+    private val externalEditorLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            externalEditorViewModel.readResult(result)
+        }
 
     /**
      * Launches an activity to pick an image from the device's gallery.
@@ -164,6 +189,8 @@ class MultimediaImageFragment :
                 else -> {
                     Timber.d("Camera aborted or some interruption, restoring multimedia data")
                     viewModel.restoreMultimedia()
+                    viewModel.currentMultimediaPath.value?.let(::updateAndDisplayImageSize)
+                    viewModel.currentMultimediaUri.value?.let(::previewImage)
                 }
             }
         }
@@ -199,8 +226,21 @@ class MultimediaImageFragment :
             setContent {
                 AnkiDroidTheme {
                     val imageUri by viewModel.currentMultimediaUri.collectAsStateWithLifecycle()
+                    val externalEdit by externalEditorViewModel.state.collectAsStateWithLifecycle()
+                    val editorAvailability =
+                        remember(viewModel, externalImageEditor) {
+                            viewModel.currentMultimediaPath.map { image ->
+                                image?.let { externalImageEditor.canEdit(it) } ?: false
+                            }
+                        }
+                    val hasExternalEditor by editorAvailability.collectAsStateWithLifecycle(
+                        initialValue = false,
+                        minActiveState = Lifecycle.State.RESUMED,
+                    )
                     ImageEditorToolbar(
                         hasImage = imageUri != null,
+                        hasExternalEditor = hasExternalEditor,
+                        enabled = externalEdit == null,
                         replaceIcon =
                             when (selectedImageOptions) {
                                 ImageOptions.GALLERY -> R.drawable.ic_photo_library
@@ -215,6 +255,7 @@ class MultimediaImageFragment :
                             )
                             requestCrop()
                         },
+                        onEditExternally = ::requestExternalEdit,
                     )
                 }
             }
@@ -246,6 +287,11 @@ class MultimediaImageFragment :
             return
         }
 
+        externalEditorViewModel.state.value?.originalPath?.let(::File)?.let {
+            viewModel.updateCurrentMultimediaPath(it)
+            viewModel.updateCurrentMultimediaUri(getUriForFile(it))
+        }
+
         arguments?.let {
             selectedImageOptions = it.getSerializableCompat<ImageOptions>(EXTRA_MEDIA_OPTIONS) as ImageOptions
         }
@@ -257,9 +303,16 @@ class MultimediaImageFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupImageActions()
+        observeExternalEdit()
 
         setupWebView()
-        handleImageUri()
+        val currentImage = viewModel.currentMultimediaPath.value
+        if (currentImage != null) {
+            previewImage(getUriForFile(currentImage))
+            updateAndDisplayImageSize(currentImage)
+        } else {
+            handleImageUri()
+        }
     }
 
     @NeedsTest("Verify the webview background color is transparent and matches the app theme")
@@ -281,6 +334,13 @@ class MultimediaImageFragment :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean("HAS_STARTED_IMAGE_SELECTION", hasStartedImageSelection)
+    }
+
+    override fun onDestroy() {
+        if (isRemoving || activity?.isFinishing == true) {
+            externalEditorViewModel.discard()
+        }
+        super.onDestroy()
     }
 
     private fun handleImageUri() {
@@ -318,6 +378,7 @@ class MultimediaImageFragment :
 
     internal fun onDone() {
         Timber.d("MultimediaImageFragment:: Done button pressed")
+        if (isExternalEditPending) return
         if (viewModel.selectedMediaFileSize == 0L) {
             Timber.d("Image length is not valid")
             return
@@ -605,8 +666,9 @@ class MultimediaImageFragment :
         Timber.i("Loading non-SVG image using WebView")
 
         try {
-            // read our own cache file directly, internalize anything else
-            val internalFile = (cachedFileOrNull(imageUri) ?: internalizeUri(imageUri))?.takeIf { it.exists() }
+            // Reuse the selected file for its FileProvider URI: importing it could copy it onto itself.
+            val selectedFile = viewModel.currentMultimediaPath.value?.takeIf { getUriForFile(it) == imageUri }
+            val internalFile = (selectedFile ?: cachedFileOrNull(imageUri) ?: internalizeUri(imageUri))?.takeIf { it.exists() }
             if (internalFile == null) {
                 Timber.w("loadImage() unable to resolve image from Uri %s", imageUri)
                 showSomethingWentWrong()
@@ -656,6 +718,51 @@ class MultimediaImageFragment :
             """.trimIndent()
 
         binding.multimediaWebView.loadDataWithBaseURL(null, errorHtml, "text/html", "UTF-8", null)
+    }
+
+    @VisibleForTesting
+    internal fun requestExternalEdit() {
+        viewModel.currentMultimediaPath.value?.let(externalEditorViewModel::prepare)
+    }
+
+    private fun observeExternalEdit() {
+        fun handleEditState(edit: ExternalImageEditorViewModel.Edit?) {
+            (activity as? MultimediaActivity)?.isImageEditorBusy = edit != null
+            when (edit) {
+                is ExternalImageEditorViewModel.Edit.Ready -> {
+                    externalEditorViewModel.launched()
+                    hasStartedImageSelection = true
+                    try {
+                        externalEditorLauncher.launch(edit.intent)
+                    } catch (e: ActivityNotFoundException) {
+                        Timber.w(e, "No app found to edit image")
+                        externalEditorViewModel.launchFailed()
+                    }
+                }
+                is ExternalImageEditorViewModel.Edit.Finished -> {
+                    edit.acceptedPath?.let(::File)?.let { accepted ->
+                        val uri = getUriForFile(accepted)
+                        viewModel.updateCurrentMultimediaPath(accepted)
+                        viewModel.updateCurrentMultimediaUri(uri)
+                        updateAndDisplayImageSize(accepted)
+                        previewImage(uri)
+                    }
+                    edit.error?.let { showSnackbar(it) }
+                    if (edit.unchanged) {
+                        showSnackbar(CommonString.external_image_editor_no_changes)
+                    }
+                    hasStartedImageSelection = false
+                    externalEditorViewModel.consumed()
+                }
+                else -> Unit
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                externalEditorViewModel.state.collect(::handleEditState)
+            }
+        }
     }
 
     private fun requestCrop() {
