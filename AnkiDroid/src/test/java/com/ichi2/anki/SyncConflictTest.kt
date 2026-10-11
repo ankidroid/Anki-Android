@@ -14,7 +14,10 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
 import org.junit.After
@@ -39,6 +42,12 @@ class SyncConflictTest : RobolectricTest() {
         @ParameterizedRobolectricTestRunner.Parameters
         @JvmStatic
         fun configurations(): Collection<String> = listOf("normal", "xlarge")
+    }
+
+    override fun setupTestDispatcher(dispatcher: TestDispatcher) {
+        super.setupTestDispatcher(dispatcher)
+        // undo the Main dispatcher override from `runTest`
+        Dispatchers.resetMain()
     }
 
     @Before
