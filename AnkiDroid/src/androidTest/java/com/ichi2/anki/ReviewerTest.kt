@@ -16,6 +16,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.utils.ext.cardStateCustomizer
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.tests.InstrumentedTest
@@ -28,7 +29,6 @@ import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.anki.testutil.useResumedActivity
 import com.ichi2.anki.testutil.waitUntil
-import com.ichi2.anki.utils.ext.cardStateCustomizer
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
@@ -77,7 +77,7 @@ class ReviewerTest : InstrumentedTest() {
             col.decks.select(Consts.DEFAULT_DECK_ID)
             testDeckId = 0
         }
-        col.cardStateCustomizer = ""
+        col.config.cardStateCustomizer = ""
     }
 
     @Test
@@ -86,7 +86,7 @@ class ReviewerTest : InstrumentedTest() {
         testDeckId = col.decks.addNormalDeckWithName(testDeckName).id
         col.decks.select(testDeckId)
 
-        col.cardStateCustomizer =
+        col.config.cardStateCustomizer =
             """
             states.good.normal.review.easeFactor = 3.0;
             states.good.normal.review.scheduledDays = 123;
@@ -134,7 +134,7 @@ class ReviewerTest : InstrumentedTest() {
         col.decks.select(testDeckId)
 
         // Issue 15035 - runtime errors weren't handled
-        col.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
+        col.config.cardStateCustomizer = "states.this_is_not_defined.normal.review = 12;"
         addNoteUsingBasicNoteType().firstCard(col).update { did = testDeckId }
 
         closeGetStartedScreenIfExists()

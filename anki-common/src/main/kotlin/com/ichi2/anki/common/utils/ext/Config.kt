@@ -48,3 +48,6 @@ var Config.pasteImagesAsPng by configProperty(ConfigKey.Bool.PASTE_IMAGES_AS_PNG
 
 /** Whether rendered cards hide their audio play buttons. */
 val Config.hideAudioPlayButtons by configProperty(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS)
+
+/** The `Custom scheduling` global setting in deck options. */
+var Config.cardStateCustomizer by configProperty(ConfigKey.String.CARD_STATE_CUSTOMIZER)
