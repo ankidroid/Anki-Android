@@ -2063,9 +2063,20 @@ open class DeckPicker :
      */
     private fun tryShowStudyOptionsPanel(): Boolean {
         val containerId = binding.studyoptionsFragment?.id ?: return false
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.commit {
-            replace(containerId, StudyOptionsFragment())
+
+        // Close other panels before looking for restored study options.
+        supportFragmentManager.popBackStackImmediate(
+            null,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE,
+        )
+
+        val studyOptions = fragment
+        if (studyOptions != null) {
+            studyOptions.refreshInterface()
+        } else {
+            supportFragmentManager.commitNow {
+                replace(containerId, StudyOptionsFragment())
+            }
         }
         return true
     }

@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki
 
+import android.view.View
+import android.view.View.MeasureSpec
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
@@ -38,6 +41,47 @@ import kotlin.test.assertTrue
  */
 @RunWith(AndroidJUnit4::class)
 class StudyOptionsFragmentTest : RobolectricTest() {
+    @Test
+    fun `empty filtered deck shows counts after a finished regular deck`() =
+        runTest {
+            val note = addBasicNote()
+            col.sched.suspendCards(note.cardIds(col))
+            withStudyOptions {
+                assertIs<StudyOptionsState.Congrats>(viewModel.state)
+                val counts = requireView().findViewById<View>(R.id.group_counts)
+                assertEquals(View.GONE, counts.visibility)
+
+                col.decks.select(col.decks.newFiltered("Filtered deck"))
+                refreshAndAwait()
+
+                assertTrue(assertIs<StudyOptionsState.Congrats>(viewModel.state).isDynamic)
+                assertEquals(View.VISIBLE, counts.visibility)
+            }
+        }
+
+    @Test
+    fun `scroll position is retained on refresh and reset for another deck`() =
+        runTest {
+            val anotherDeck = addDeck("Another deck")
+            withStudyOptions {
+                val scroll = requireView().findViewById<ScrollView>(R.id.studyoptions_scrollview)
+                // Give the pane scrollable content without depending on font metrics.
+                scroll.getChildAt(0).minimumHeight = 2000
+                scroll.measure(MeasureSpec.makeMeasureSpec(400, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(300, MeasureSpec.EXACTLY))
+                scroll.layout(0, 0, 400, 300)
+                scroll.scrollTo(0, 200)
+                assertEquals(200, scroll.scrollY)
+
+                addBasicNote()
+                refreshAndAwait()
+                assertEquals(200, scroll.scrollY)
+
+                col.decks.select(anotherDeck)
+                refreshAndAwait()
+                assertEquals(0, scroll.scrollY)
+            }
+        }
+
     /** Issue 22348: replacing the tablet panel can detach it before its initial refresh starts. */
     @Test
     @Config(qualifiers = "xlarge")
