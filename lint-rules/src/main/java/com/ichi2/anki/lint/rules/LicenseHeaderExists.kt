@@ -100,8 +100,8 @@ class LicenseHeaderExists :
     override fun afterCheckFile(context: Context) {
         val contents = context.getContents()
         if (contents == null ||
-            COPYRIGHT_PATTERN.matcher(contents).find() ||
             SPDX_PATTERN.matcher(contents).find() ||
+            COPYRIGHT_PATTERN.matcher(contents).find() ||
             IGNORE_CHECK_PATTERN.matcher(contents).find()
         ) {
             return
