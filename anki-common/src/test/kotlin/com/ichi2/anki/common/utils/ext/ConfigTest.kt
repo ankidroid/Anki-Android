@@ -4,9 +4,11 @@ package com.ichi2.anki.common.utils.ext
 
 import com.ichi2.anki.libanki.testutils.InMemoryAnkiTest
 import com.ichi2.anki.model.CardsOrNotes
+import org.json.JSONObject
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -66,6 +68,24 @@ class ConfigTest : InMemoryAnkiTest() {
 
         col.config.set("fsrs", true)
         assertEquals(true, col.config.fsrsEnabled)
+    }
+
+    @Test
+    fun `flag label objects must be saved explicitly and defaults are independent`() {
+        col.config.remove("flagLabels")
+        val first = col.config.flagLabels
+        first.put("1", "Red")
+        assertEquals(0, col.config.flagLabels.length())
+        assertNotSame(first, col.config.flagLabels)
+
+        col.config.flagLabels = first
+        assertEquals("Red", col.config.getObject("flagLabels", JSONObject()).getString("1"))
+        assertEquals("Red", col.config.flagLabels.getString("1"))
+
+        col.config.set("flagLabels", listOf("invalid"))
+        assertEquals(0, col.config.flagLabels.length())
+        col.config.flagLabels.put("2", "Orange")
+        assertEquals(0, col.config.flagLabels.length())
     }
 
     @Test

@@ -11,6 +11,7 @@ import anki.search.searchNode
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag.Companion.queryDisplayNames
+import com.ichi2.anki.common.utils.ext.flagLabels
 import com.ichi2.anki.common.utils.ext.getStringOrNull
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import kotlinx.serialization.KSerializer
@@ -173,12 +174,12 @@ private value class FlagLabels(
     ) {
         value.put(flag.code.toString(), newName)
         withCol {
-            config.set("flagLabels", value)
+            config.flagLabels = value
         }
     }
 
     companion object {
-        suspend fun loadFromColConfig() = FlagLabels(withCol { config.getObject("flagLabels", JSONObject()) })
+        suspend fun loadFromColConfig() = FlagLabels(withCol { config.flagLabels })
     }
 }
 

@@ -3,6 +3,7 @@
 package com.ichi2.anki.common.utils.ext
 
 import anki.config.ConfigKey
+import com.ichi2.anki.common.utils.ConfigProperty
 import com.ichi2.anki.common.utils.configProperty
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.USE_CURRENT_DECK
@@ -13,6 +14,7 @@ import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.model.CardsOrNotes
+import org.json.JSONObject
 
 /**
  * How the initial deck and note type are chosen when adding a note.
@@ -81,3 +83,11 @@ val Config.showRemainingDueCounts by jsonConfigProperty<Boolean>("dueCounts").or
 
 /** Whether the FSRS scheduler is enabled; false when absent, `null` when the stored value cannot be decoded. */
 val Config.fsrsEnabled by jsonConfigProperty("fsrs", missingValue = false)
+
+/** User-defined flag labels, keyed by the flag number as a string. */
+// TODO: Strongly type FlagLabels in anki-common
+var Config.flagLabels by ConfigProperty(
+    // Construct a fresh object on each read, including when the stored value is invalid.
+    read = { getObject("flagLabels", JSONObject()) },
+    write = { set("flagLabels", it) },
+)
