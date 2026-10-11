@@ -45,3 +45,6 @@ var Config.ignoreAccentsInSearch by configProperty(ConfigKey.Bool.IGNORE_ACCENTS
 
 /** Whether pasted images are saved as PNG. */
 var Config.pasteImagesAsPng by configProperty(ConfigKey.Bool.PASTE_IMAGES_AS_PNG)
+
+/** Whether rendered cards hide their audio play buttons. */
+val Config.hideAudioPlayButtons by configProperty(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS)
