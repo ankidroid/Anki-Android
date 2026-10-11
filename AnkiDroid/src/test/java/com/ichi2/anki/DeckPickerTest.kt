@@ -83,6 +83,7 @@ import com.ichi2.testutils.withBooleanPreference
 import com.ichi2.testutils.withDeniedPermissions
 import com.ichi2.testutils.withWritePermissions
 import com.ichi2.ui.AccessibleSearchView
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.merge
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import org.hamcrest.MatcherAssert.assertThat
@@ -97,6 +98,7 @@ import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -801,6 +803,33 @@ class DeckPickerTest : RobolectricTest() {
             assertEquals(anotherDeck, assertNotNull(fragment).viewModel.selectedDeckId)
             assertEquals(0, supportFragmentManager.backStackEntryCount)
         }
+
+    @Test
+    fun `returning from reminders does not accumulate study options subscriptions`() {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        addBasicNote()
+        Prefs.newReviewRemindersEnabled = true
+
+        deckPicker {
+            val studyOptions = assertNotNull(fragment)
+            val state = studyOptions.viewModel.flowOfState as MutableStateFlow<StudyOptionsState>
+            val initialSubscriberCount = ChangeManager.subscriberCount
+            assertEquals(1, state.subscriptionCount.value)
+
+            repeat(2) {
+                selectContextMenuOption(ContextMenuOption.SCHEDULE_REMINDERS, studyOptions.viewModel.selectedDeckId)
+                advanceRobolectricLooper()
+                val reminders = requireNotNull(sidePanel as? ScheduleRemindersFragment)
+                reminders.navigateUp()
+
+                assertSame(studyOptions, fragment)
+                assertAll(
+                    { assertEquals("Active study options state collectors", 1, state.subscriptionCount.value) },
+                    { assertEquals("ChangeManager subscriptions", initialSubscriberCount, ChangeManager.subscriberCount) },
+                )
+            }
+        }
+    }
 
     private fun withReminderPanel(test: suspend DeckPicker.(ScheduleRemindersFragment) -> Unit) {
         assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
