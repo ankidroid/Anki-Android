@@ -4,8 +4,8 @@ package com.ichi2.anki.cardviewer
 
 import android.content.Context
 import androidx.annotation.CheckResult
-import anki.config.ConfigKey
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.utils.ext.hideAudioPlayButtons
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
@@ -120,7 +120,7 @@ class AndroidCardRenderContext(
             val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences, context.resources.configuration.fontScale)
             val cardHtmlTemplate = CardTemplate.load(context)
-            val showAudioPlayButtons = !col.config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS)
+            val showAudioPlayButtons = !col.config.hideAudioPlayButtons
             return AndroidCardRenderContext(
                 typeAnswer,
                 cardAppearance,
