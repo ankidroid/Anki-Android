@@ -11,6 +11,11 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.junit4.v2.createEmptyComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithText
 import androidx.core.content.FileProvider
 import androidx.core.graphics.createBitmap
 import androidx.core.view.RoundedCornerCompat
@@ -20,6 +25,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.navigationBars
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
@@ -31,6 +37,7 @@ import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.insetsOf
+import org.junit.Rule
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.util.ReflectionHelpers
@@ -46,7 +53,9 @@ import kotlin.test.assertTrue
  * `./gradlew :AnkiDroid:verifyRoborazziPlayDebug -Pscreenshot --tests "com.ichi2.anki.multimedia.MultimediaScreenshotTest"`
  */
 class MultimediaScreenshotTest : ScreenshotTest() {
-    /** Captures the existing image controls as a baseline for their Compose migration. */
+    @get:Rule
+    val composeRule = createEmptyComposeRule()
+
     @Test
     fun imageEditorToolbar() =
         withImage { activity ->
@@ -96,6 +105,7 @@ class MultimediaScreenshotTest : ScreenshotTest() {
     ) {
         // Each Robolectric test has its own cache directory; discard AndroidX's cached roots.
         ReflectionHelpers.getStaticField<MutableMap<String, Any>>(FileProvider::class.java, "sCache").clear()
+        targetContext.registerExternalImageEditor()
         val image = File(targetContext.cacheDir, "image_editor_test.png")
         val bitmap = createBitmap(600, 400)
         bitmap.eraseColor(Color.rgb(100, 149, 237))
@@ -115,6 +125,11 @@ class MultimediaScreenshotTest : ScreenshotTest() {
                 MultimediaImageFragment.getIntent(targetContext, extra, imageOptions),
             )
         advanceRobolectricLooper()
+        val editLabel = TR.studyingEdit()
+        composeRule.waitUntil(timeoutMillis = 10_000) {
+            composeRule.onAllNodesWithText(editLabel).fetchSemanticsNodes().isNotEmpty()
+        }
+        composeRule.onNodeWithText(editLabel).assertIsDisplayed().assertIsEnabled()
         block(activity)
     }
 

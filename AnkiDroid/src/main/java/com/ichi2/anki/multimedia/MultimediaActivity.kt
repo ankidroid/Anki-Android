@@ -10,6 +10,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -62,6 +65,8 @@ class MultimediaActivity :
     AnkiActivity(R.layout.activity_multimedia),
     BaseSnackbarBuilderProvider {
     private val binding by viewBinding(ActivityMultimediaBinding::bind)
+
+    internal var isImageEditorBusy by mutableStateOf(false)
 
     override val analyticsScreenName: String
         get() = intent.getStringExtra(EXTRA_FRAGMENT_NAME)?.substringAfterLast('.') ?: super.analyticsScreenName
@@ -127,7 +132,7 @@ class MultimediaActivity :
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 AnkiDroidTheme {
-                    HeroToolbarActionButton(onClick = {
+                    HeroToolbarActionButton(enabled = !isImageEditorBusy, onClick = {
                         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as? MultimediaImageFragment
                         fragment?.onDone()
                     })
