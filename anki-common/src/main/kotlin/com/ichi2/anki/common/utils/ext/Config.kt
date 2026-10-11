@@ -6,7 +6,12 @@ import anki.config.ConfigKey
 import com.ichi2.anki.common.utils.configProperty
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.DECIDE_BY_NOTE_TYPE
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode.USE_CURRENT_DECK
+import com.ichi2.anki.common.utils.jsonConfigProperty
+import com.ichi2.anki.common.utils.orDefault
 import com.ichi2.anki.libanki.Config
+import com.ichi2.anki.libanki.Consts
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.model.CardsOrNotes
 
 /**
@@ -58,3 +63,6 @@ var Config.cardsOrNotes by configProperty(ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTE
     decode = { if (it) CardsOrNotes.NOTES else CardsOrNotes.CARDS },
     encode = { it == CardsOrNotes.NOTES },
 )
+
+/** The stored selected deck ID; the referenced deck may no longer exist. */
+val Config.currentDeckId by jsonConfigProperty<DeckId>(CURRENT_DECK).orDefault(Consts.DEFAULT_DECK_ID)

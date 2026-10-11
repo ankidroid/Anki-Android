@@ -12,6 +12,30 @@ import kotlin.test.assertEquals
  */
 class ConfigTest : InMemoryAnkiTest() {
     @Test
+    fun `legacy settings retain their missing and invalid value defaults`() {
+        val keys =
+            listOf(
+                "curDeck",
+            )
+
+        fun assertDefaults() {
+            assertEquals(1L, col.config.currentDeckId)
+        }
+
+        keys.forEach { col.config.remove(it) }
+        assertDefaults()
+        keys.forEach { col.config.set(it, listOf("invalid")) }
+        assertDefaults()
+    }
+
+    @Test
+    fun `legacy settings observe values changed outside the accessors`() {
+        col.config.set("curDeck", 123L)
+
+        assertEquals(123L, col.config.currentDeckId)
+    }
+
+    @Test
     fun `browser mode helpers use the mapped config property`() {
         CardsOrNotes.NOTES.saveToCollection(col)
         assertEquals(CardsOrNotes.NOTES, col.config.cardsOrNotes)

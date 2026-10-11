@@ -98,6 +98,7 @@ import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.AddingDefaultsMode
 import com.ichi2.anki.common.utils.ext.addingDefaultsMode
+import com.ichi2.anki.common.utils.ext.currentDeckId
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.common.utils.ext.ifZero
 import com.ichi2.anki.common.utils.ext.pasteImagesAsPng
@@ -118,7 +119,6 @@ import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
-import com.ichi2.anki.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.anki.libanki.Field
 import com.ichi2.anki.libanki.Fields
 import com.ichi2.anki.libanki.Note
@@ -2207,7 +2207,7 @@ class NoteEditorFragment :
                 }
             }
 
-            val currentDeckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1L
+            val currentDeckId = getColUnsafe.config.currentDeckId
             return if (getColUnsafe.decks.isFiltered(currentDeckId)) {
                 /*
                  * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
