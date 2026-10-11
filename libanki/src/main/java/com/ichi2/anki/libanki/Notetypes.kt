@@ -129,7 +129,7 @@ class Notetypes(
     /** Get current model.*/
     @RustCleanup("Should use defaultsForAdding() instead")
     fun current(forDeck: Boolean = true): NotetypeJson {
-        var noteType = get(col.decks.current().getLongOrNull("mid"))
+        var noteType = get(col.decks.current().noteTypeId)
         if (!forDeck || noteType == null) {
             noteType = get(col.config.get("curModel") ?: 1L)
         }
@@ -720,23 +720,6 @@ class Notetypes(
                 template.setOrd(i)
             }
         }
-    }
-}
-
-/**
- * @return null if the key doesn't exist, or the value is not a long. The long value of the key
- * otherwise
- *
- * This better approximates `JSON.get` in the Python
- */
-private fun Deck.getLongOrNull(key: String): Long? {
-    if (!has(key)) {
-        return null
-    }
-    try {
-        return getLong(key)
-    } catch (ex: Exception) {
-        return null
     }
 }
 
