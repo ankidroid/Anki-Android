@@ -59,6 +59,7 @@ import com.ichi2.anki.multiprofile.isPhoenixProcess
 import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.recorder.VoiceRecorder
 import com.ichi2.anki.reviewreminders.ReminderLogTree
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.servicelayer.ThrowableFilterService
@@ -279,6 +280,7 @@ open class AnkiDroidApp :
             runCatching {
                 measureTime("cacheCleanup") {
                     MultimediaArgsStorage.create(this@AnkiDroidApp).removeExpiredFiles()
+                    VoiceRecorder.removeExpiredRecordings(VoiceRecorder.recordingsDirectory(this@AnkiDroidApp))
                 }
             }.onFailure { Timber.w(it, "Unable to clean up expired cache files") }
         }
