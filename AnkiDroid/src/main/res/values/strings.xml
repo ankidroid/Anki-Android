@@ -1,0 +1,4 @@
+Mode note: append the following two string resources inside the existing <resources> element of AnkiDroid/src/main/res/values/strings.xml (do not duplicate the surrounding <resources> tag).
+
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_default_summary">Default (inside AnkiDroid folder)</string>
