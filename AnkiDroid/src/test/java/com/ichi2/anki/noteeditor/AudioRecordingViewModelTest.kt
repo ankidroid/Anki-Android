@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.noteeditor
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModelStore
 import androidx.media3.common.MediaItem
@@ -14,6 +15,7 @@ import com.ichi2.anki.recorder.MediaRecorderStub
 import com.ichi2.anki.recorder.PlayerState
 import com.ichi2.anki.recorder.PlayerStub
 import com.ichi2.anki.recorder.RecorderState
+import com.ichi2.anki.recorder.VoiceRecorder
 import com.ichi2.testutils.JvmTest
 import io.mockk.every
 import io.mockk.verify
@@ -331,6 +333,22 @@ class AudioRecordingViewModelTest : JvmTest() {
 
             verify(exactly = 2) { playerStub.player.setMediaItem(any()) }
             assertEquals(RecorderState.Recorded(recording), viewModel.recorderState.value, "the recording can still be inserted")
+        }
+
+    @Test
+    fun `recordings are stored outside the cache`() =
+        runTest {
+            val context = ApplicationProvider.getApplicationContext<Context>()
+            val viewModel =
+                AudioRecordingViewModel(AudioRecorder(context), playerStub.factory)
+                    .also { viewModelStore.put(VIEW_MODEL_KEY, it) }
+            try {
+                val recording = viewModel.record()
+
+                assertEquals(File(context.noBackupFilesDir, VoiceRecorder.RECORDINGS_DIRECTORY), recording.parentFile)
+            } finally {
+                viewModelStore.clear()
+            }
         }
 
     private fun runViewModelTest(testBody: suspend TestScope.(AudioRecordingViewModel) -> Unit) =

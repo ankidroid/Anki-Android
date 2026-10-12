@@ -26,7 +26,7 @@ import kotlin.time.Duration.Companion.seconds
 class AudioRecordingViewModel(
     audioRecorder: AudioRecorder = AudioRecorder(appContext),
     createPlayer: () -> Player = { VoicePlayer.createExoPlayer(appContext) },
-    recordingsDirectory: File = File(appContext.cacheDir, VoiceRecorder.RECORDINGS_DIRECTORY),
+    recordingsDirectory: File = VoiceRecorder.recordingsDirectory(appContext),
 ) : ViewModel() {
     private val recorder = VoiceRecorder(audioRecorder, recordingsDirectory, viewModelScope)
     private val player = VoicePlayer(viewModelScope, createPlayer)
