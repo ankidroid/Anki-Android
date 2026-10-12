@@ -15,6 +15,7 @@ import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.preferences.reviewer.ReviewerMenuSettingsFragment
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.anki.utils.CollectionPreferences
 import com.ichi2.testutils.HIDDEN_GESTURE_BAR
 import com.ichi2.testutils.dispatchInsets
 import com.ichi2.testutils.ext.clear
@@ -22,10 +23,13 @@ import com.ichi2.testutils.launchForFullHeightScreenshot
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateSystemBars
 import com.ichi2.testutils.withWritePermissions
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Test
 import org.robolectric.RuntimeEnvironment
 import kotlin.reflect.KClass
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class PreferencesScreenshotTest : ScreenshotTest() {
     @After
@@ -113,6 +117,16 @@ class PreferencesScreenshotTest : ScreenshotTest() {
             activity.simulateSystemBars(navBarBottom = 24.dp, bottomCornerRadius = 34.dp)
             activity.scrollSettingsToBottom()
             captureScreen("HeaderFragment_gesture_bar_scrolled_to_bottom")
+        }
+
+    @Test
+    fun timeboxSettingsFragmentEnabled() =
+        runTest {
+            CollectionPreferences.setTimeboxTimeLimit(20.toDuration(DurationUnit.MINUTES))
+            withPreferencesActivity(TimeboxSettingsFragment::class) { activity ->
+                activity.simulateSystemBars()
+                captureScreen("TimeboxSettingsFragment_enabled")
+            }
         }
 
     @Test

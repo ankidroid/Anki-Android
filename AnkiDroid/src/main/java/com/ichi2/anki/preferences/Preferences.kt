@@ -120,6 +120,12 @@ class PreferencesFragment :
             return
         }
 
+        if (result.key == getString(R.string.time_limit_preference)) {
+            Timber.i("Preferences:: Opening timebox settings from search result")
+            openPreferencesFragmentFromSearch(TimeboxSettingsFragment())
+            return
+        }
+
         val fragment = getFragmentFromXmlRes(result.resourceFile) ?: return
         openPreferencesFragmentFromSearch(fragment)
 
