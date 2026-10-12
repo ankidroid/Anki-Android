@@ -25,6 +25,10 @@ interface CrashReporter {
         origin: String?,
     )
 
+    /**
+     * @param onlyIfSilent Only report when the user has opted into automatic reporting.
+     * Only send if the consent dialog is skippable, but a toast is still shown.
+     */
     fun sendExceptionReport(
         e: Throwable,
         origin: String?,
@@ -32,6 +36,10 @@ interface CrashReporter {
         onlyIfSilent: Boolean = false,
     )
 
+    /**
+     * @param onlyIfSilent Only report when the user has opted into automatic reporting.
+     * Only send if the consent dialog is skippable, but a toast is still shown.
+     */
     fun sendExceptionReport(
         e: Throwable,
         origin: String?,
@@ -112,6 +120,8 @@ object CrashReportService {
      * @param origin The tag or location where it occurred.
      * @param additionalInfo Optional extra metadata to include in the report.
      * @param onlyIfSilent If true, only sends the report if the user has opted into automatic reporting.
+     * This avoids the consent dialog, but still shows the reporting toast for reports accepted by ACRA.
+     * Use [Timber.w] when only a log entry is wanted.
      */
     fun sendExceptionReport(
         e: Throwable,
@@ -123,6 +133,9 @@ object CrashReportService {
     /**
      * Reports a caught [Throwable] with a specific [Context].
      * Use this when the application context is insufficient
+     * @param onlyIfSilent If true, only sends the report if the user has opted into automatic reporting.
+     * This avoids the consent dialog, but still shows the reporting toast for reports accepted by ACRA.
+     * Use [Timber.w] when only a log entry is wanted.
      */
     fun sendExceptionReport(
         e: Throwable,
@@ -241,7 +254,9 @@ private object UninitializedCrashReporter : CrashReporter {
  * **Note**: This differs from [runCatching] - `Error` is thrown
  *
  * @param origin Data logged to Timber, and provided as the 'origin' field in the error report
- * @param onlyIfSilent Skip crash report if the crash reporting service is not 'always accept'
+ * @param onlyIfSilent Skip crash report if the crash reporting service is not 'always accept'.
+ * This avoids the consent dialog, but still shows the reporting toast for reports accepted by ACRA.
+ * Use [runCatching] with [Timber.w] when only a log entry is wanted.
  * @param block Code to execute
  *
  * @throws Error If raised, this will be reported and rethrown
