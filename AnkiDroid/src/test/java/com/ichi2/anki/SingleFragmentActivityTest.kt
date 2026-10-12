@@ -21,6 +21,6 @@ class SingleFragmentActivityTest : RobolectricTest() {
         val activity = startRegularActivity<AccountActivity>(intent)
 
         assertTrue(activity.isFinishing)
-        assertEquals(targetContext.getString(R.string.something_wrong), ShadowToast.getTextOfLatestToast())
+        assertEquals(targetContext.getString(CommonString.something_wrong), ShadowToast.getTextOfLatestToast())
     }
 }

@@ -92,7 +92,7 @@ open class SingleFragmentActivity :
         val fragment = createFragment()
         if (fragment == null) {
             Timber.w("'%s' extra not provided, finishing", EXTRA_FRAGMENT_NAME)
-            showThemedToast(this, R.string.something_wrong, false)
+            showThemedToast(this, CommonString.something_wrong, false)
             finish()
             return
         }
