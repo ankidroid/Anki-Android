@@ -87,16 +87,7 @@ class TestInputMethodRule(
                 "received inputType=${info?.inputType}, action=$actualAction, package=${info?.packageName}"
         }) {
             info = BundleCompat.getParcelable(snapshot(), "editor", EditorInfo::class.java)
-            val editor = info ?: return@waitUntil false
-            val matchesInputType =
-                if (inputType == null) {
-                    editor.inputType and InputType.TYPE_MASK_CLASS == InputType.TYPE_CLASS_TEXT &&
-                        editor.inputType and InputType.TYPE_MASK_VARIATION == InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT
-                } else {
-                    editor.inputType == inputType
-                }
-            editor.packageName == instrumentation.targetContext.packageName && matchesInputType &&
-                (imeAction == null || editor.imeOptions and EditorInfo.IME_MASK_ACTION == imeAction)
+            info?.matches(inputType, imeAction) == true
         }
         return assertNotNull(info)
     }
@@ -108,6 +99,21 @@ class TestInputMethodRule(
         val result = instrumentation.context.contentResolver.call(uri, action, text, null)
         assertTrue(result?.getBoolean("accepted") == true, "IME rejected $action")
     }
+
+    private fun EditorInfo.matches(
+        inputType: Int?,
+        imeAction: Int?,
+    ): Boolean =
+        packageName == instrumentation.targetContext.packageName && matchesInputType(inputType) &&
+            (imeAction == null || imeOptions and EditorInfo.IME_MASK_ACTION == imeAction)
+
+    private fun EditorInfo.matchesInputType(expected: Int?): Boolean =
+        if (expected == null) {
+            inputType and InputType.TYPE_MASK_CLASS == InputType.TYPE_CLASS_TEXT &&
+                inputType and InputType.TYPE_MASK_VARIATION == InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT
+        } else {
+            inputType == expected
+        }
 }
 
 // Commands need no shell syntax or stdin; the rule verifies the resulting keyboard state.
