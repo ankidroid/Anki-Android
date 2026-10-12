@@ -17,7 +17,10 @@ import com.ichi2.utils.NetworkUtils
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
@@ -32,6 +35,12 @@ import org.robolectric.shadows.ShadowDialog
 class ForegroundMediaNetworkTest : RobolectricTest() {
     private var metered = false
     private var syncRequired = SyncCollectionResponse.ChangesRequired.NO_CHANGES
+
+    override fun setupTestDispatcher(dispatcher: TestDispatcher) {
+        super.setupTestDispatcher(dispatcher)
+        // Keep UI continuations on Robolectric's main looper after real background work.
+        Dispatchers.resetMain()
+    }
 
     @Before
     fun prepareSync() {
