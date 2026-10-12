@@ -10,6 +10,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Layout
 import android.view.KeyEvent
 import android.view.Menu
@@ -1219,6 +1220,46 @@ class DeckPickerTest : RobolectricTest() {
             // TalkBack activate a focused control, which routes to [View.performClick]
             fab.performClick()
             assertThat("FAB menu opens on click", floatingActionMenu.isFABOpen, equalTo(true))
+        }
+
+    @Test
+    @Ignore("Issue 22445: enabled by the following fix commit")
+    fun `adding a note by single tap closes the FAB menu`() = assertAddingNoteByTouchClosesMenu(doubleTap = false)
+
+    @Test
+    @Ignore("Issue 22445: enabled by the following fix commit")
+    fun `adding a note by double tap closes the FAB menu`() = assertAddingNoteByTouchClosesMenu(doubleTap = true)
+
+    private fun assertAddingNoteByTouchClosesMenu(doubleTap: Boolean) =
+        deckPicker {
+            val fab = floatingActionButtonBinding.fabMain
+            val startTime = SystemClock.uptimeMillis()
+
+            fun tap(offset: Long) {
+                val downTime = startTime + offset
+                for (action in listOf(MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP)) {
+                    val eventTime = downTime + if (action == MotionEvent.ACTION_UP) 50 else 0
+                    val event = MotionEvent.obtain(downTime, eventTime, action, 0f, 0f, 0)
+                    try {
+                        fab.dispatchTouchEvent(event)
+                    } finally {
+                        event.recycle()
+                    }
+                }
+            }
+
+            if (!doubleTap) floatingActionMenu.showFloatingActionMenu()
+            viewModel.flowOfNavigate.test {
+                if (doubleTap) {
+                    tap(0)
+                    assertTrue(floatingActionMenu.isFABOpen)
+                }
+                tap(100)
+                val intent = AnkiDroidNavigator.toIntent(awaitItem())
+                assertEquals("com.ichi2.anki.NoteEditorActivity", intent.component!!.className)
+                assertFalse(floatingActionMenu.isFABOpen, "Adding a note must close the FAB menu")
+                assertEquals(View.GONE, floatingActionButtonBinding.fabBGLayout.visibility)
+            }
         }
 
     @Test
