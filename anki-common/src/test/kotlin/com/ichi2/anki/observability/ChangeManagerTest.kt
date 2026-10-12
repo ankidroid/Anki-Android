@@ -25,6 +25,7 @@ import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.javaType
 import kotlin.reflect.jvm.isAccessible
+import kotlin.test.assertFailsWith
 
 class ChangeManagerExceptionHandlingTest {
     @Before
@@ -133,6 +134,27 @@ class ChangeManagerPublishTest {
             assertThat("First subscriber should be notified", counter1.hasChanges, equalTo(true))
             assertThat("Second subscriber should be notified", counter2.hasChanges, equalTo(true))
         }
+}
+
+class ChangeManagerDuplicateSubscriptionTest {
+    @Before
+    fun setUp() {
+        ChangeManager.resetForTesting()
+    }
+
+    @After
+    fun tearDown() {
+        ChangeManager.throwOnDuplicateSubscription = false
+    }
+
+    @Test
+    fun `subscribing twice throws when enabled`() {
+        ChangeManager.throwOnDuplicateSubscription = true
+        val counter = ChangeCounter()
+        ChangeManager.subscribe(counter)
+
+        assertFailsWith<IllegalStateException> { ChangeManager.subscribe(counter) }
+    }
 }
 
 /**

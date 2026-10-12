@@ -192,6 +192,7 @@ open class AnkiDroidApp :
         CollectionLockedException.messageProvider = {
             getString(CommonString.database_locked_summary_new, getString(CommonString.col_path))
         }
+        ChangeManager.throwOnDuplicateSubscription = BuildConfig.DEBUG
         val logType = LogType.value
         when (logType) {
             LogType.DEBUG -> Timber.plant(DebugTree())

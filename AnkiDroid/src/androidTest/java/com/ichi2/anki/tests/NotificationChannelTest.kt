@@ -13,6 +13,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NotificationChannel
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.compat.CompatHelper.Companion.sdkVersion
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThanOrEqualTo
@@ -39,7 +40,9 @@ class NotificationChannelTest : InstrumentedTest() {
     @UiThreadTest
     fun setUp() {
         val targetContext = testContext
-        (targetContext.applicationContext as AnkiDroidApp).onCreate()
+        val app = targetContext.applicationContext as AnkiDroidApp
+        ChangeManager.unsubscribe(app)
+        app.onCreate()
         currentAPI = sdkVersion
         targetAPI = targetContext.applicationInfo.targetSdkVersion
         manager = targetContext.getSystemService<NotificationManager>()!!
