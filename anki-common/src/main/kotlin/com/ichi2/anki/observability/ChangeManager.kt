@@ -59,6 +59,8 @@ object ChangeManager {
 
     val subscriberCount get() = subscribers.size
 
+    var throwOnDuplicateSubscription = false
+
     /**
      * Delivers changes to [subscribers][ChangeManager.subscribers] off the caller's thread.
      *
@@ -98,6 +100,10 @@ object ChangeManager {
         subscriber: Subscriber,
         owner: LifecycleOwner? = subscriber as? LifecycleOwner,
     ) {
+        if (throwOnDuplicateSubscription && subscribers.any { it.get() === subscriber }) {
+            throw IllegalStateException("Duplicate ChangeManager subscription: ${subscriber.javaClass.name}")
+        }
+
         val weakRef = WeakReference(subscriber)
 
         if (owner == null) {

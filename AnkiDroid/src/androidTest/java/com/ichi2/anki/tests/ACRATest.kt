@@ -20,6 +20,7 @@ import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REP
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.logging.ProductionCrashReportingTree
+import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.setDebugACRAConfig
 import com.ichi2.anki.setProductionACRAConfig
@@ -56,6 +57,7 @@ class ACRATest : InstrumentedTest() {
     fun setUp() {
         app = testContext.applicationContext as AnkiDroidApp
         // Note: attachBaseContext can't be called twice as we're using the same instance between all tests.
+        ChangeManager.unsubscribe(app!!)
         app!!.onCreate()
     }
 
