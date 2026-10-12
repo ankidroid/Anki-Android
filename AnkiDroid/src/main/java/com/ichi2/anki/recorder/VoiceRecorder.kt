@@ -5,6 +5,7 @@ package com.ichi2.anki.recorder
 
 import android.content.Context
 import androidx.annotation.MainThread
+import com.ichi2.anki.common.time.TimeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,6 +17,7 @@ import java.io.Closeable
 import java.io.File
 import java.io.IOException
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
 import kotlin.time.TimeSource
 
 sealed interface RecorderState {
@@ -184,7 +186,23 @@ class VoiceRecorder(
         const val RECORDINGS_DIRECTORY = "recordings"
         private const val FILE_PREFIX = "ankidroid_audiorec"
         private const val FILE_SUFFIX = ".3gp"
+        private val RECORDING_RETENTION = 7.days
 
         fun recordingsDirectory(context: Context): File = File(context.noBackupFilesDir, RECORDINGS_DIRECTORY)
+
+        fun removeExpiredRecordings(
+            directory: File,
+            now: Long = TimeManager.time.intTimeMS(),
+        ) {
+            val cutoff = now - RECORDING_RETENTION.inWholeMilliseconds
+            directory
+                .listFiles { _, name -> name.startsWith(FILE_PREFIX) && name.endsWith(FILE_SUFFIX) }
+                ?.forEach { file ->
+                    val modified = file.lastModified()
+                    if (file.isFile && modified > 0 && modified < cutoff && !file.delete()) {
+                        Timber.w("Could not delete %s", file)
+                    }
+                }
+        }
     }
 }
