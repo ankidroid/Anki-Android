@@ -12,6 +12,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/pref_cat_reviewing"
     android:key="@string/pref_reviewing_screen_key"
     tools:context=".preferences.ReviewingSettingsFragment">
@@ -29,12 +30,11 @@
             app:max="999"
             app:min="0"
             app:summaryFormat="@plurals/pref_summ_minutes"/>
-        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+        <Preference
             android:key="@string/time_limit_preference"
             android:title="@string/time_limit"
-            app:max="999"
-            app:min="0"
-            app:summaryFormat="@plurals/pref_summ_minutes"/>
+            android:fragment="com.ichi2.anki.preferences.TimeboxSettingsFragment"
+            search:ignore="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
         <SwitchPreferenceCompat
