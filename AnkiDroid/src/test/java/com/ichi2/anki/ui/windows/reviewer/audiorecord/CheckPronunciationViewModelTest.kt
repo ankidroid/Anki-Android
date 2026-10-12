@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.ui.windows.reviewer.audiorecord
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModelStore
 import androidx.media3.common.MediaItem
@@ -11,6 +12,7 @@ import app.cash.turbine.test
 import com.ichi2.anki.recorder.AudioRecorder
 import com.ichi2.anki.recorder.MediaRecorderStub
 import com.ichi2.anki.recorder.PlayerStub
+import com.ichi2.anki.recorder.VoiceRecorder
 import com.ichi2.testutils.JvmTest
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
@@ -285,6 +287,22 @@ class CheckPronunciationViewModelTest : JvmTest() {
 
             assertFalse(viewModel.isPlaybackVisibleFlow.value, "no playback for a failed recording")
             assertFalse(mediaRecorderStub.outputFiles.single().exists(), "the empty file is deleted")
+        }
+
+    @Test
+    fun `recordings are stored outside the cache`() =
+        runTest {
+            val context = ApplicationProvider.getApplicationContext<Context>()
+            val viewModel =
+                CheckPronunciationViewModel(AudioRecorder(context), playerStub.factory)
+                    .also { viewModelStore.put(VIEW_MODEL_KEY, it) }
+            try {
+                val recording = viewModel.record()
+
+                assertEquals(File(context.noBackupFilesDir, VoiceRecorder.RECORDINGS_DIRECTORY), recording.parentFile)
+            } finally {
+                viewModelStore.clear()
+            }
         }
 
     private fun runViewModelTest(testBody: suspend TestScope.(CheckPronunciationViewModel) -> Unit) =

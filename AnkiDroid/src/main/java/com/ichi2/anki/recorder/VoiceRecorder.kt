@@ -3,6 +3,7 @@
 
 package com.ichi2.anki.recorder
 
+import android.content.Context
 import androidx.annotation.MainThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.BufferOverflow
@@ -183,5 +184,7 @@ class VoiceRecorder(
         const val RECORDINGS_DIRECTORY = "recordings"
         private const val FILE_PREFIX = "ankidroid_audiorec"
         private const val FILE_SUFFIX = ".3gp"
+
+        fun recordingsDirectory(context: Context): File = File(context.noBackupFilesDir, RECORDINGS_DIRECTORY)
     }
 }
