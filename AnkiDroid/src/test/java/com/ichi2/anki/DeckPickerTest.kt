@@ -1223,11 +1223,9 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    @Ignore("Issue 22445: enabled by the following fix commit")
     fun `adding a note by single tap closes the FAB menu`() = assertAddingNoteByTouchClosesMenu(doubleTap = false)
 
     @Test
-    @Ignore("Issue 22445: enabled by the following fix commit")
     fun `adding a note by double tap closes the FAB menu`() = assertAddingNoteByTouchClosesMenu(doubleTap = true)
 
     private fun assertAddingNoteByTouchClosesMenu(doubleTap: Boolean) =

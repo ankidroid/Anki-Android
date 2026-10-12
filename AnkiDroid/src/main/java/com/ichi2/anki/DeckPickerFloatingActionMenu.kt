@@ -314,7 +314,6 @@ class DeckPickerFloatingActionMenu(
                         if (!isFABOpen) {
                             showFloatingActionMenu()
                         } else {
-                            closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                             addNote()
                         }
                         return@setOnKeyListener true
@@ -396,7 +395,6 @@ class DeckPickerFloatingActionMenu(
                 if (!isFABOpen) {
                     showFloatingActionMenu()
                 } else {
-                    closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                     Timber.d("configureFloatingActionsMenu::fabMain::onClickListener - Adding Note")
                     addNote()
                 }
@@ -413,6 +411,7 @@ class DeckPickerFloatingActionMenu(
      * @see DeckPicker.addNote
      */
     private fun addNote() {
+        closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
         deckPicker.addNote()
     }
 
