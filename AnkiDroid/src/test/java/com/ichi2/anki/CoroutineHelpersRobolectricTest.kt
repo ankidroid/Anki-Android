@@ -21,9 +21,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
-import org.mockito.kotlin.argThat
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.isNull
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
@@ -108,7 +105,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
         }
 
     @Test
-    fun `invalid fragment task reports without throwing outside Robolectric`() {
+    fun `invalid fragment task skips without reporting or throwing outside Robolectric`() {
         val originalFingerprint = Build.FINGERPRINT
         try {
             ShadowBuild.setFingerprint("production")
@@ -121,7 +118,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
         } finally {
             ShadowBuild.setFingerprint(originalFingerprint)
         }
-        assertLifecycleExceptionReported("not attached to an activity")
+        verify(crashReporter, never()).sendExceptionReport(any<Throwable>(), anyOrNull(), anyOrNull(), any())
     }
 
     private fun assertLifecycleFailure(
@@ -130,16 +127,7 @@ class CoroutineHelpersRobolectricTest : RobolectricTest() {
     ) {
         val failure = assertFailsWith<IllegalStateException> { runTest { block() } }
         assertThat(failure.message, containsString(message))
-        assertLifecycleExceptionReported(message)
-    }
-
-    private fun assertLifecycleExceptionReported(message: String) {
-        verify(crashReporter).sendExceptionReport(
-            argThat<Throwable> { this is IllegalStateException && this.message?.contains(message) == true },
-            eq("Fragment.launchCatchingTask"),
-            isNull(),
-            eq(true),
-        )
+        verify(crashReporter, never()).sendExceptionReport(any<Throwable>(), anyOrNull(), anyOrNull(), any())
     }
 
     /**
