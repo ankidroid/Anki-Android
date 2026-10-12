@@ -11,7 +11,6 @@ import android.content.DialogInterface
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.net.Uri
 import android.text.format.Formatter
-import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -40,6 +39,8 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.StorageNotConfiguredException
 import com.ichi2.anki.pages.toIntent
 import com.ichi2.anki.preferences.toIntent
+import com.ichi2.anki.progress.blockTouches
+import com.ichi2.anki.progress.unblockTouches
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.redirectToMainEntryPoint
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -458,9 +459,7 @@ suspend fun <T> withProgressDialog(
                 }
             }
         // disable taps immediately
-        context.runOnUiThread {
-            context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        }
+        context.runOnUiThread { context.window.blockTouches() }
         // reveal the dialog after 600ms
         var dialogIsOurs = false
         val dialogJob =
@@ -492,7 +491,7 @@ suspend fun <T> withProgressDialog(
         } finally {
             dialogJob.cancel()
             dismissDialogIfShowing(dialog)
-            context.runOnUiThread { context.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) }
+            context.runOnUiThread { context.window.unblockTouches() }
             if (dialogIsOurs) {
                 AnkiDroidApp.instance.progressDialogShown = false
             }
