@@ -3,12 +3,21 @@
 const fs = require("node:fs");
 
 module.exports = async function checkAlphaRelease({ github, context, core }) {
+    async function skipRelease(reason) {
+        core.info(`Skipping scheduled release: ${reason}`);
+        await github.rest.actions.cancelWorkflowRun({
+            ...context.repo,
+            run_id: context.runId,
+        });
+        // Cancellation is asynchronous. Keep this step alive so cancelWorkflowRun can kill it.
+        await keepProcessAlive();
+    }
+
     const metadata = JSON.parse(
         fs.readFileSync("AnkiDroid/build/outputs/release-metadata.json", "utf8"),
     );
     if (metadata.releaseType !== "alpha") {
-        core.info("Skipping scheduled release: main is not on an alpha version.");
-        return false;
+        return await skipRelease("main is not on an alpha version.");
     }
 
     const releases = await github.paginate(github.rest.repos.listReleases, {
@@ -22,18 +31,16 @@ module.exports = async function checkAlphaRelease({ github, context, core }) {
         release => !release.draft && today - Math.floor(Date.parse(release.published_at) / day) < 7,
     );
     if (recentRelease) {
-        core.info(
-            `Skipping scheduled release: ${recentRelease.tag_name} was published fewer than seven UTC calendar days ago.`,
+        return await skipRelease(
+            `${recentRelease.tag_name} was published fewer than seven UTC calendar days ago.`,
         );
-        return false;
     }
 
     const latestAlpha = releases
         .filter(release => !release.draft && /^v\d+\.\d+\.\d+alpha\d+$/.test(release.tag_name))
         .sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at))[0];
     if (!latestAlpha) {
-        core.info("Skipping scheduled release: no published alpha to compare against.");
-        return false;
+        return await skipRelease("no published alpha to compare against.");
     }
 
     const { data: comparison } = await github.rest.repos.compareCommitsWithBasehead({
@@ -41,10 +48,7 @@ module.exports = async function checkAlphaRelease({ github, context, core }) {
         basehead: `${latestAlpha.tag_name}...${context.sha}`,
     });
     if (comparison.status !== "ahead" || comparison.ahead_by === 0) {
-        core.info(
-            `Skipping scheduled release: no new commits descending from ${latestAlpha.tag_name}.`,
-        );
-        return false;
+        return await skipRelease(`no new commits descending from ${latestAlpha.tag_name}.`);
     }
 
     core.info(
@@ -52,3 +56,9 @@ module.exports = async function checkAlphaRelease({ github, context, core }) {
     );
     return true;
 };
+
+async function keepProcessAlive() {
+    // Fail after five minutes if cancellation never arrives.
+    await new Promise(resolve => setTimeout(resolve, 5 * 60 * 1000));
+    throw new Error("Timed out waiting for workflow cancellation.");
+}

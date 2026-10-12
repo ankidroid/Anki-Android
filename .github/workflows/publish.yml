@@ -27,6 +27,9 @@ concurrency:
 jobs:
   check_release:
     name: 'Check whether a release is due'
+    permissions:
+      contents: read
+      actions: write # Cancel this run when a scheduled publish is skipped.
     if: github.event_name == 'schedule' && github.repository == 'ankidroid/Anki-Android' && github.ref == 'refs/heads/main'
     timeout-minutes: 20
     runs-on: ubuntu-latest
