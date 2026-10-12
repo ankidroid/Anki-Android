@@ -16,6 +16,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
 import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.startDeletingEmptyCards
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.libanki.DeckId
@@ -214,6 +215,25 @@ class DeckPickerErrorTest : RobolectricTest() {
             throwOnShowError = false
             failDeckTree = true
             deckPicker.viewModel.updateDeckList()
+
+            assertErrorShown()
+        }
+    }
+
+    @Test
+    fun `failed empty cards deletion shows an error`() {
+        useBackend {
+            object : Backend() {
+                override fun removeCards(cardIds: Iterable<Long>): OpChangesWithCount = throw failure
+            }
+        }
+        addStandardNoteType("Empty", arrayOf("Front"), "", "")
+        addNoteUsingNoteTypeName("Empty", "Front")
+        val report = col.getEmptyCards()
+
+        withDeckPicker(deckCount = 0) { deckPicker ->
+            throwOnShowError = false
+            deckPicker.startDeletingEmptyCards(report, keepNotes = false)
 
             assertErrorShown()
         }
