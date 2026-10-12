@@ -305,7 +305,7 @@ class DeckPickerViewModel :
     fun deleteEmptyCards(
         report: EmptyCardsReport,
         preserveNotes: Boolean,
-    ) = viewModelScope.launch {
+    ) = launchCatchingTask {
         progressManager.withProgress(message = DeckPickerProgress.DELETING_EMPTY_CARDS) {
             // https://github.com/ankitects/anki/blob/39e293b27d36318e00131fd10144755eec8d1922/qt/aqt/emptycards.py#L98-L109
             val toDelete = mutableListOf<CardId>()
