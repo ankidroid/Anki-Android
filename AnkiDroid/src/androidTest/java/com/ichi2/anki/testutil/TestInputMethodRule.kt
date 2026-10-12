@@ -73,31 +73,32 @@ class TestInputMethodRule(
             }
         }
 
-    private fun snapshot(): Bundle = assertNotNull(instrumentation.context.contentResolver.call(uri, "editor", null, null))
+    private fun callIme(
+        action: String,
+        text: String? = null,
+    ): Bundle? = instrumentation.context.contentResolver.call(uri, action, text, null)
 
     /** Chromium and the keyboard bridge update asynchronously; match all requested properties in one snapshot. */
     fun awaitEditor(
         inputType: Int? = null,
         imeAction: Int? = null,
     ): EditorInfo {
-        var info: EditorInfo? = null
+        var response = ImeResponse()
         waitUntil(message = {
-            val actualAction = info?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)
-            "IME expected inputType=$inputType, action=$imeAction; " +
-                "received inputType=${info?.inputType}, action=$actualAction, package=${info?.packageName}"
+            "IME expected inputType=$inputType, action=$imeAction; received ${response.describeEditor()}"
         }) {
-            info = BundleCompat.getParcelable(snapshot(), "editor", EditorInfo::class.java)
-            info?.matches(inputType, imeAction) == true
+            response = ImeResponse(assertNotNull(callIme("editor")))
+            response.editor?.matches(inputType, imeAction) == true
         }
-        return assertNotNull(info)
+        return assertNotNull(response.editor)
     }
 
     fun perform(
         action: String,
         text: String? = null,
     ) {
-        val result = instrumentation.context.contentResolver.call(uri, action, text, null)
-        assertTrue(result?.getBoolean("accepted") == true, "IME rejected $action")
+        val response = ImeResponse(callIme(action, text))
+        assertTrue(response.accepted, "IME rejected $action")
     }
 
     private fun EditorInfo.matches(
@@ -114,6 +115,18 @@ class TestInputMethodRule(
         } else {
             inputType == expected
         }
+
+    private class ImeResponse(
+        bundle: Bundle? = null,
+    ) {
+        val editor = bundle?.let { BundleCompat.getParcelable(it, "editor", EditorInfo::class.java) }
+        val accepted = bundle?.getBoolean("accepted") == true
+
+        fun describeEditor(): String {
+            val action = editor?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)
+            return "inputType=${editor?.inputType}, action=$action, package=${editor?.packageName}"
+        }
+    }
 }
 
 // Commands need no shell syntax or stdin; the rule verifies the resulting keyboard state.
