@@ -28,6 +28,9 @@ if (path != ":lint-rules") {
         "lintChecks"(project(":lint-rules"))
     }
     configure<com.android.build.api.dsl.Lint> {
+        // Only relevant to lint implementations; :lint-rules is excluded above.
+        disable += "UElementAsPsi"
+
         // Workaround for internal lint rule: `CannotEnableHidden`
         // we want to enable this in `:AnkiDroid` with `checkDependencies = true`
 
