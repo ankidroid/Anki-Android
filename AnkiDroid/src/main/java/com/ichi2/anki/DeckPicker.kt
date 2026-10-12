@@ -137,6 +137,8 @@ import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
+import com.ichi2.anki.dialogs.DeckPickerMaintenanceDialog
+import com.ichi2.anki.dialogs.DeckPickerMaintenanceDialog.Check
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.EditDeckDescriptionDialog
@@ -211,7 +213,6 @@ import com.ichi2.utils.configureView
 import com.ichi2.utils.customView
 import com.ichi2.utils.dp
 import com.ichi2.utils.message
-import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.showDialogIfWebViewOutdated
@@ -626,6 +627,14 @@ open class DeckPicker :
 
         setDeckPickerContextMenuResultListener { result ->
             handleContextMenuSelection(result.option, result.deckId)
+        }
+
+        setFragmentResultListener(Check.MEDIA.requestKey) { _, _ ->
+            Timber.i("Starting media check")
+            startActivity(MediaCheckFragment.getIntent(this))
+        }
+        setFragmentResultListener(Check.DATABASE.requestKey) { _, _ ->
+            performIntegrityCheck()
         }
 
         registerStudyOptionsStudyHandler {
@@ -1498,15 +1507,7 @@ open class DeckPicker :
 
     private fun showMediaCheckDialog() {
         Timber.i("showing media check dialog")
-        AlertDialog.Builder(this).show {
-            title(text = TR.sentenceCase.checkMediaTitle)
-            message(text = getString(CommonString.check_media_warning))
-            positiveButton(CommonString.dialog_ok) {
-                Timber.i("Starting media check")
-                startActivity(MediaCheckFragment.getIntent(this@DeckPicker))
-            }
-            negativeButton(CommonString.dialog_cancel)
-        }
+        DeckPickerMaintenanceDialog.newInstance(Check.MEDIA).show(supportFragmentManager, DeckPickerMaintenanceDialog.TAG)
     }
 
     fun showCreateFilteredDeckDialog() {
@@ -1991,14 +1992,9 @@ open class DeckPicker :
         val status = CollectionIntegrityStorageCheck.createInstance(this)
         if (status.shouldWarnOnIntegrityCheck()) {
             Timber.d("Displaying File Size confirmation")
-            AlertDialog.Builder(this).show {
-                title(text = TR.sentenceCase.checkDatabase)
-                message(text = status.getWarningDetails(this@DeckPicker))
-                positiveButton(CommonString.integrity_check_continue_anyway) {
-                    performIntegrityCheck()
-                }
-                negativeButton(CommonString.dialog_cancel)
-            }
+            DeckPickerMaintenanceDialog
+                .newInstance(Check.DATABASE, status.getWarningDetails(this))
+                .show(supportFragmentManager, DeckPickerMaintenanceDialog.TAG)
         } else {
             performIntegrityCheck()
         }
