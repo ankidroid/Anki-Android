@@ -48,6 +48,11 @@ public class TestInputMethod extends InputMethodService {
         result.putParcelable("editor", info);
         InputConnection connection = getCurrentInputConnection();
         if (connection == null) return result;
+        // EditorInfo can outlive its connection while Chromium restarts input.
+        // Probe immediately before each action, as well as when awaiting metadata.
+        // Returning before dispatch lets the caller safely retry without typing twice.
+        if (connection.getTextBeforeCursor(0, 0) == null) return result;
+        result.putBoolean("ready", true);
         boolean accepted = true;
         switch (method) {
             case "editor":
