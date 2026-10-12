@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-"""Report failures and skipped tests from Android's JUnit XML using the standard library."""
+"""Report failures and skipped tests from JUnit XML using the standard library."""
 
+import argparse
 import html
 import os
 from pathlib import Path
@@ -25,11 +26,11 @@ def read_ignored_tests(log_file):
     return ignored - failed
 
 
-def main(results_dir, log_file=None):
+def main(results_dir, log_file=None, pattern="TEST-*.xml", title="Test failures"):
     failures = []
     skipped = []
     ignored = read_ignored_tests(log_file)
-    for report in sorted(results_dir.rglob("TEST-*.xml")):
+    for report in sorted(results_dir.rglob(pattern)):
         try:
             root = ET.parse(report).getroot()
         except (ET.ParseError, OSError) as error:
@@ -68,11 +69,11 @@ def main(results_dir, log_file=None):
             print(failure, end="\n\n")
 
     if skipped:
-        title = f"Skipped tests ({len(skipped)})"
+        skipped_title = f"Skipped tests ({len(skipped)})"
         if os.environ.get("GITHUB_ACTIONS") == "true":
-            print(f"::group::{title}")
+            print(f"::group::{skipped_title}")
         else:
-            print(title, end="\n\n")
+            print(skipped_title, end="\n\n")
         for skip in skipped:
             print(skip, end="\n\n")
         if os.environ.get("GITHUB_ACTIONS") == "true":
@@ -81,11 +82,11 @@ def main(results_dir, log_file=None):
     if (failures or skipped) and os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
             if failures:
-                summary.write("### Emulator test failures\n\n")
+                summary.write(f"### {title}\n\n")
                 for failure in failures:
                     summary.write(f"<pre>{html.escape(failure)}</pre>\n\n")
             if skipped:
-                summary.write(f"<details><summary>{title}</summary>\n\n")
+                summary.write(f"<details><summary>{skipped_title}</summary>\n\n")
                 for skip in skipped:
                     summary.write(f"<pre>{html.escape(skip)}</pre>\n\n")
                 summary.write("</details>\n\n")
@@ -94,4 +95,10 @@ def main(results_dir, log_file=None):
 
 
 if __name__ == "__main__":
-    sys.exit(main(Path(sys.argv[1]), Path(sys.argv[2]) if len(sys.argv) > 2 else None))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("results_dir", type=Path)
+    parser.add_argument("log_file", type=Path, nargs="?")
+    parser.add_argument("--pattern", default="TEST-*.xml", help="Recursive report glob relative to results_dir")
+    parser.add_argument("--title", default="Test failures", help="Failure heading in the job summary")
+    args = parser.parse_args()
+    sys.exit(main(args.results_dir, args.log_file, args.pattern, args.title))

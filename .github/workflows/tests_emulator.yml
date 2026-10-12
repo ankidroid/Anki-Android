@@ -275,7 +275,7 @@ jobs:
 
       - name: Report Emulator Test Results
         if: always() && hashFiles('AnkiDroid/build/outputs/androidTest-results/connected/**/TEST-*.xml') != ''
-        run: python3 .github/report_emulator_test_failures.py AnkiDroid/build/outputs/androidTest-results/connected adb-log.txt
+        run: python3 .github/report_test_failures.py AnkiDroid/build/outputs/androidTest-results/connected adb-log.txt --title "Emulator test failures"
 
       - name: Configure NDK tools PATH for alignment checking
         run: |
