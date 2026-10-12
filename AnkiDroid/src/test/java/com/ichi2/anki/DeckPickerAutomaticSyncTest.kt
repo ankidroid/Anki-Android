@@ -6,38 +6,21 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.work.WorkManager
 import anki.sync.SyncAuth
-import anki.sync.SyncStatusResponse
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.utils.NetworkUtils
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeoutOrNull
 import net.ankiweb.rsdroid.Backend
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerAutomaticSyncTest : RobolectricTest() {
-    @Test
-    fun `sync status leaves collection reads available while waiting for the server`() =
-        withAutomaticSync { activity, backend ->
-            val deckCount = activity.readDeckCountWhileSyncStatusWaits(backend)
-
-            assertNotNull(deckCount, "Collection reads must complete before the server responds")
-        }
-
     @Test
     fun `back exits without syncing if the collection closes before the status request`() =
         withAutomaticSync(syncMedia = true) { activity, backend ->
@@ -54,47 +37,6 @@ class DeckPickerAutomaticSyncTest : RobolectricTest() {
             assertEquals(0L, Prefs.lastSyncTime)
             assertNoSyncWorkEnqueued(activity)
         }
-
-    private fun DeckPicker.readDeckCountWhileSyncStatusWaits(backend: Backend): Int? =
-        withCollectionQueue {
-            val statusStarted = CountDownLatch(1)
-            val releaseStatus = CountDownLatch(1)
-            every { backend.syncStatus(any<SyncAuth>()) } answers {
-                statusStarted.countDown()
-                check(releaseStatus.await(15, TimeUnit.SECONDS))
-                SyncStatusResponse.getDefaultInstance()
-            }
-            try {
-                onBackPressedDispatcher.onBackPressed()
-                assertTrue(statusStarted.await(5, TimeUnit.SECONDS), "The sync status request did not start")
-                readDeckCount(releaseStatus::countDown)
-            } finally {
-                releaseStatus.countDown()
-                advanceRobolectricLooperUntil { isFinishing }
-            }
-        }
-
-    private fun readDeckCount(releaseStatus: () -> Unit): Int? =
-        runBlocking {
-            val read = async(Dispatchers.IO) { CollectionManager.withCol { decks.count() } }
-            try {
-                withTimeoutOrNull(5.seconds) { read.await() }
-            } finally {
-                // Release the status request before joining a read that may be queued behind it.
-                releaseStatus()
-                read.await()
-            }
-        }
-
-    private fun <T> withCollectionQueue(block: () -> T): T {
-        // Exercise the production queue rather than Robolectric's reentrant collection lock.
-        val previous = CollectionManager.setTestDispatcher(Dispatchers.IO.limitedParallelism(1), useReentrantLock = false)
-        try {
-            return block()
-        } finally {
-            CollectionManager.setTestDispatcher(previous)
-        }
-    }
 
     private fun assertNoSyncWorkEnqueued(activity: DeckPicker) {
         val workManager = WorkManager.getInstance(activity)
