@@ -2433,13 +2433,8 @@ open class DeckPicker :
 
     private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck()
 
-    @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
-        launchCatchingTask {
-            viewModel.rebuildFilteredDeck(did).join()
-            updateDeckList()
-            tryShowStudyOptionsPanel()
-        }
+        viewModel.rebuildFilteredDeck(did)
     }
 
     private fun emptyFiltered(did: DeckId) {
