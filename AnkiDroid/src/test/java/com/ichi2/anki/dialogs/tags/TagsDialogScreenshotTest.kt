@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.dialogs.tags
 
+import androidx.core.view.isVisible
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.ichi2.anki.DialogScreenshotTest
 import com.ichi2.anki.R
@@ -9,6 +10,17 @@ import com.ichi2.anki.dialogs.tags.TagsDialog.DialogType
 import org.junit.Test
 
 class TagsDialogScreenshotTest : DialogScreenshotTest() {
+    @Test
+    fun `empty tags`() =
+        runTest {
+            val dialog = TagsDialog().withArguments(targetContext, DialogType.EDIT_TAGS)
+            withDialog(dialog) {
+                dialog.viewModel.tags.await()
+                advanceRobolectricLooperUntil { dialog.binding.noTagsTextView.isVisible }
+                captureScreen("empty_tags")
+            }
+        }
+
     @Test
     fun `tag selection and search`(
         @TestParameter type: DialogType,
