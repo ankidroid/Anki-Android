@@ -339,7 +339,6 @@ class DeckPickerViewModel :
     /**
      * Rebuilds a filtered deck with its current filter settings
      */
-    @CheckResult
     fun rebuildFilteredDeck(deckId: DeckId): Job =
         launchCatchingTask {
             progressManager.withProgress(message = DeckPickerProgress.REBUILDING_FILTERED_DECK) {
