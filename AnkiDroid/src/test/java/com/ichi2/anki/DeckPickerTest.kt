@@ -28,6 +28,7 @@ import androidx.core.view.ContentInfoCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commitNow
@@ -1540,6 +1541,34 @@ class DeckPickerTest : RobolectricTest() {
                 viewModel.flowOfStartupResponse.value,
                 nullValue(),
             )
+        }
+
+    @Test
+    fun `menu state refresh tolerates a cleared menu`() =
+        deckPicker {
+            createMenuJob?.join()
+            assertNotNull(viewModel.optionsMenuState)
+            val menu = menu()
+            // Menu invalidation can clear the menu while refreshMenuState is suspended.
+            menu.clear()
+
+            updateMenuFromState(menu)
+
+            assertEquals(0, menu.size)
+        }
+
+    @Test
+    fun `menu state refresh tolerates a removed sync item`() =
+        deckPicker {
+            createMenuJob?.join()
+            assertNotNull(viewModel.optionsMenuState)
+            val menu = menu()
+            assertNotNull(menu.findItem(R.id.action_undo))
+            menu.removeItem(R.id.action_sync)
+
+            updateMenuFromState(menu)
+
+            assertThat(menu.findItem(R.id.action_sync), nullValue())
         }
 
     @Test

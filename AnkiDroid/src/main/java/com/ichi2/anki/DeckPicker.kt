@@ -1327,8 +1327,9 @@ open class DeckPicker :
 
     fun updateMenuFromState(menu: Menu) {
         viewModel.optionsMenuState?.run {
-            updateUndoLabelFromState(menu.findItem(R.id.action_undo), undoLabel, undoAvailable)
-            updateSyncIconFromState(menu.findItem(R.id.action_sync), this)
+            // The menu may have been cleared while refreshMenuState was suspended.
+            menu.findItem(R.id.action_undo)?.let { updateUndoLabelFromState(it, undoLabel, undoAvailable) }
+            menu.findItem(R.id.action_sync)?.let { updateSyncIconFromState(it, this) }
         }
         updateDeckRelatedMenuItems(menu)
     }
