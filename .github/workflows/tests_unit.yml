@@ -177,6 +177,10 @@ jobs:
         if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.iteration == 1 && matrix.os == 'ubuntu-latest'
         run: ./gradlew testFullDebugUnitTest -PemptyApplication --daemon
 
+      - name: Report Unit Test Results
+        if: always() && hashFiles('**/build/test-results/**/TEST-*.xml') != ''
+        run: python3 .github/report_test_failures.py . --pattern "build/test-results/**/TEST-*.xml" --title "Unit test failures"
+
       - name: Store Logcat as Artifact
         # cancelled() handles test timeouts
         # remove when test timeouts cause a failure()
