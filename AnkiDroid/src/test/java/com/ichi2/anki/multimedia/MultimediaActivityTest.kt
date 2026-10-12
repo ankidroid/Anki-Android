@@ -8,6 +8,9 @@ import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import android.os.Parcel
+import android.os.SystemClock
+import android.view.MotionEvent
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.descendants
@@ -19,6 +22,7 @@ import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.anki.recorder.MediaRecorderStub
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.launchFragmentInContainer
@@ -27,6 +31,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.nullValue
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -38,6 +44,18 @@ import kotlin.test.assertIs
 
 @RunWith(AndroidJUnit4::class)
 class MultimediaActivityTest : RobolectricTest() {
+    private val mediaRecorderStub = MediaRecorderStub()
+
+    @Before
+    fun installMediaRecorder() {
+        mediaRecorderStub.install()
+    }
+
+    @After
+    fun uninstallMediaRecorder() {
+        mediaRecorderStub.uninstall()
+    }
+
     @Test
     fun `fragment loads and releases its arguments independently of the host`() {
         val args = largeNoteIntent().extras!!.parcelCopy()
@@ -174,11 +192,13 @@ class MultimediaActivityTest : RobolectricTest() {
         assertNotePreview(activity)
 
         val fragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as AudioRecordingFragment
-        val recording = File(targetContext.cacheDir, "recording.ogg").apply { writeText("audio") }
-        fragment.viewModel.updateCurrentMultimediaPath(recording)
-        fragment.viewModel.updateMediaFileLength(recording.length())
+        val recordButton = fragment.requireView().findViewById<View>(R.id.action_start_recording)
+        val time = SystemClock.uptimeMillis()
+        recordButton.dispatchTouchEvent(MotionEvent.obtain(time, time, MotionEvent.ACTION_DOWN, 0f, 0f, 0))
+        fragment.requireView().findViewById<View>(R.id.action_save_recording).performClick()
         advanceRobolectricLooper()
         fragment.binding.actionDone.performClick()
+        val recording = mediaRecorderStub.outputFiles.single()
 
         val shadow = shadowOf(activity)
         val result = assertIs<MultimediaResult.Success>(MultimediaResultContract().parseResult(shadow.resultCode, shadow.resultIntent))
