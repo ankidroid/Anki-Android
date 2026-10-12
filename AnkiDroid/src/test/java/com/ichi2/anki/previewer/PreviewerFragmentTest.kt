@@ -107,7 +107,7 @@ class PreviewerFragmentTest : RobolectricTest() {
     fun `launch index is honored and restored selection overrides it`() {
         ensureCollectionLoadIsSynchronous()
         val ids = (1..3).flatMap { addBasicNote().cardIds(col) }
-        val file = IdsFile(createTransientDirectory(), ids)
+        val file = IdsFile(createTransientDirectory(), ids, IdsFile.Purpose.PREVIEW)
         val intent = PreviewerFragment.getIntent(targetContext, file, currentIndex = 1)
         lateinit var original: PreviewerViewModel
         val savedState =
