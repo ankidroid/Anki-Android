@@ -39,7 +39,6 @@ import com.ichi2.anki.databinding.DialogEmptyCardsBinding
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchFailure
 import com.ichi2.anki.dialogs.EmptyCardsUiState.EmptyCardsSearchResult
 import com.ichi2.anki.dialogs.EmptyCardsUiState.SearchingForEmptyCards
-import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.emptyCids
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -296,7 +295,5 @@ fun DeckPicker.startDeletingEmptyCards(
         report.emptyCids().size,
         keepNotes,
     )
-    launchCatchingTask {
-        viewModel.deleteEmptyCards(report, keepNotes).join()
-    }
+    viewModel.deleteEmptyCards(report, keepNotes)
 }
