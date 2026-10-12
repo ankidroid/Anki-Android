@@ -107,7 +107,7 @@ object ActivityList {
                 normalIntent = { note ->
                     PreviewerFragment.getIntent(
                         targetContext,
-                        idsFile = IdsFile(tempFolder.root, note.cardIds(col)),
+                        idsFile = IdsFile(tempFolder.root, note.cardIds(col), IdsFile.Purpose.PREVIEW),
                         currentIndex = 0,
                     )
                 },
