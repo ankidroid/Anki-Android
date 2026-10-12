@@ -160,7 +160,7 @@ class SyncTest : RobolectricTest() {
                 dialog.positiveButton.text,
             )
             assertEquals(
-                getString(R.string.dialog_cancel),
+                getString(CommonString.dialog_cancel),
                 dialog.negativeButton.text,
             )
 

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.utils.android.getColorFromAttr
@@ -166,7 +167,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 /** Some locales like Locale.ROOT have empty display name */
 internal fun Locale.label(context: Context): CharSequence =
     displayName.ifBlank {
-        val text = context.getString(R.string.locale_selection_dialog_unknown_language, toLanguageTag())
+        val text = context.getString(CommonString.locale_selection_dialog_unknown_language, toLanguageTag())
         val spannable = SpannableString(text)
         spannable.setSpan(
             ForegroundColorSpan(getColorFromAttr(context, android.R.attr.textColorSecondary)),

@@ -2526,14 +2526,14 @@ class NoteEditorFragment :
             if (hasIcon) {
                 etIconLayout.isErrorEnabled = false
             } else {
-                etIconLayout.setErrorIfChanged(getString(R.string.note_editor_toolbar_icon_requirement_error))
+                etIconLayout.setErrorIfChanged(getString(CommonString.note_editor_toolbar_icon_requirement_error))
             }
 
             if (hasHtml) {
                 etBeforeLayout.isErrorEnabled = false
                 etAfterLayout.isErrorEnabled = false
             } else {
-                val message = getString(R.string.before_after_text_requirement_error)
+                val message = getString(CommonString.before_after_text_requirement_error)
                 etBeforeLayout.setErrorIfChanged(message)
                 etAfterLayout.setErrorIfChanged(message)
             }
