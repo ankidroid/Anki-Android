@@ -78,7 +78,7 @@ class TestInputMethodRule(
         text: String? = null,
     ): Bundle? = instrumentation.context.contentResolver.call(uri, action, text, null)
 
-    /** Chromium and the keyboard bridge update asynchronously; match all requested properties in one snapshot. */
+    /** Wait for a responsive input connection and matching metadata in the same IME snapshot. */
     fun awaitEditor(
         inputType: Int? = null,
         imeAction: Int? = null,
@@ -88,7 +88,7 @@ class TestInputMethodRule(
             "IME expected inputType=$inputType, action=$imeAction; received ${response.describeEditor()}"
         }) {
             response = ImeResponse(assertNotNull(callIme("editor")))
-            response.editor?.matches(inputType, imeAction) == true
+            response.ready && response.editor?.matches(inputType, imeAction) == true
         }
         return assertNotNull(response.editor)
     }
@@ -97,7 +97,11 @@ class TestInputMethodRule(
         action: String,
         text: String? = null,
     ) {
-        val response = ImeResponse(callIme(action, text))
+        var response = ImeResponse()
+        waitUntil(message = { "IME connection did not become ready for $action" }) {
+            response = ImeResponse(callIme(action, text))
+            response.ready
+        }
         assertTrue(response.accepted, "IME rejected $action")
     }
 
@@ -116,15 +120,17 @@ class TestInputMethodRule(
             inputType == expected
         }
 
+    /** Metadata and readiness must come from the same call to the IME. */
     private class ImeResponse(
         bundle: Bundle? = null,
     ) {
         val editor = bundle?.let { BundleCompat.getParcelable(it, "editor", EditorInfo::class.java) }
+        val ready = bundle?.getBoolean("ready") == true
         val accepted = bundle?.getBoolean("accepted") == true
 
         fun describeEditor(): String {
             val action = editor?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)
-            return "inputType=${editor?.inputType}, action=$action, package=${editor?.packageName}"
+            return "inputType=${editor?.inputType}, action=$action, package=${editor?.packageName}, ready=$ready"
         }
     }
 }
