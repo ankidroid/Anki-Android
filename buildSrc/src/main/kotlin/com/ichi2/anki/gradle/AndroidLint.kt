@@ -20,6 +20,9 @@ fun Project.configureAndroidLint() {
             textReport = true
             warningsAsErrors = true
 
+            // Only relevant to lint implementations; these modules do not use UAST/PSI APIs.
+            disable += "UElementAsPsi"
+
             if (System.getenv("CI") == "true") {
                 // 14853: we want this to appear in the IDE, but it adds noise to CI
                 disable += "WrongThread"
