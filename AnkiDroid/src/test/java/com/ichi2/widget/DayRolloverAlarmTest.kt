@@ -7,7 +7,7 @@ import android.content.Context
 import androidx.core.content.getSystemService
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.utils.AlarmManagement
+import com.ichi2.anki.common.android.AlarmManagement
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

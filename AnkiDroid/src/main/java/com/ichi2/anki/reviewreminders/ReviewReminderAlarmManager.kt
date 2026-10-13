@@ -7,9 +7,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.PendingIntentCompat
+import com.ichi2.anki.common.android.AlarmManagement
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.services.NotificationService
-import com.ichi2.utils.AlarmManagement
 import timber.log.Timber
 import java.util.Calendar
 
