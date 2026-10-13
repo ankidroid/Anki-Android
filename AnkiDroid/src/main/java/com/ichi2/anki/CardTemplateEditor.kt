@@ -60,6 +60,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.common.analytics.Analytics
 import com.ichi2.anki.common.android.animationDisabled
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -87,6 +88,8 @@ import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
 import com.ichi2.anki.libanki.Notetypes
 import com.ichi2.anki.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.anki.libanki.backend.BackendUtils
+import com.ichi2.anki.libanki.backend.model.toBackendNote
 import com.ichi2.anki.libanki.exception.ConfirmModSchemaException
 import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.getStockNotetypeKinds
@@ -117,14 +120,18 @@ import com.ichi2.utils.show
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.launch
 import net.ankiweb.rsdroid.Translations
+import net.ankiweb.rsdroid.exceptions.BackendTemplateException
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
+import java.util.concurrent.TimeoutException
 import java.util.regex.Pattern
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeSource
 
 private typealias BackendCardTemplate = com.ichi2.anki.libanki.CardTemplate
 
@@ -1076,16 +1083,13 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 Timber.w("addCardTemplate attempted on cloze note type")
                 return
             }
-            // Show confirmation dialog
-            // isOrdinalPendingAdd method will check if there are any new card types added or not,
-            // if TempModel has new card type then numAffectedCards will be 0 by default.
-            val numAffectedCards =
-                if (!CardTemplateNotetype.isOrdinalPendingAdd(templateEditor.tempNoteType!!, templateEditor.ord)) {
-                    templateEditor.getColUnsafe.notetypes.tmplUseCount(templateEditor.tempNoteType!!.notetype, templateEditor.ord)
-                } else {
-                    0
-                }
-            confirmAddCards(templateEditor.tempNoteType!!.notetype, numAffectedCards)
+            val noteType = templateEditor.tempNoteType!!.notetype
+            val newTemplate = buildNewTemplate(noteType)
+            launchCatchingTask {
+                // Show confirmation dialog
+                val numAffectedCards = withProgress { withCol { countCardsCreatedBy(noteType, newTemplate) } }
+                confirmAddCards(noteType, newTemplate, numAffectedCards)
+            }
         }
 
         fun saveNoteType(): Boolean {
@@ -1484,6 +1488,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
          */
         private fun confirmAddCards(
             notetype: NotetypeJson,
+            newTemplate: BackendCardTemplate,
             numAffectedCards: Int,
         ) {
             val d = ConfirmationDialog()
@@ -1501,7 +1506,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 positiveButtonText = getString(CommonString.menu_add),
             )
 
-            val addCard = Runnable { addNewTemplate(notetype) }
+            val addCard = Runnable { addNewTemplate(notetype, newTemplate) }
             val confirm = Runnable { executeWithSyncCheck(addCard) }
             d.setConfirm(confirm)
             templateEditor.showDialogFragment(d)
@@ -1577,8 +1582,22 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
          * Add new template to a given note type
          * @param noteType note type to add new template to
          */
-        private fun addNewTemplate(noteType: NotetypeJson) {
-            // Build new template
+        private fun addNewTemplate(
+            noteType: NotetypeJson,
+            newTemplate: BackendCardTemplate,
+        ) {
+            val templates = noteType.templates
+            templates.append(newTemplate)
+            templateEditor.tempNoteType!!.addNewTemplate(newTemplate)
+            templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
+                .notifyDataSetChanged()
+            templateEditor.mainBinding.cardTemplateEditorPager.setCurrentItem(
+                templates.length() - 1,
+                templateEditor.animationDisabled(),
+            )
+        }
+
+        private fun buildNewTemplate(noteType: NotetypeJson): BackendCardTemplate {
             val oldCardIndex = requireArguments().getInt(CARD_INDEX)
             val templates = noteType.templates
             val oldTemplate = templates[oldCardIndex]
@@ -1591,16 +1610,9 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                 flipQA(newTemplate)
             }
             val lastExistingOrd = templates.last().ord
-            Timber.d("addNewTemplate() lastExistingOrd was %s", lastExistingOrd)
+            Timber.d("buildNewTemplate() lastExistingOrd was %s", lastExistingOrd)
             newTemplate.setOrd(lastExistingOrd + 1)
-            templates.append(newTemplate)
-            templateEditor.tempNoteType!!.addNewTemplate(newTemplate)
-            templateEditor.mainBinding.cardTemplateEditorPager.adapter!!
-                .notifyDataSetChanged()
-            templateEditor.mainBinding.cardTemplateEditorPager.setCurrentItem(
-                templates.length() - 1,
-                templateEditor.animationDisabled(),
-            )
+            return newTemplate
         }
 
         /**
@@ -1724,5 +1736,32 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
                     ord,
                 )
             }
+    }
+}
+
+@VisibleForTesting
+internal fun Collection.countCardsCreatedBy(
+    noteType: NotetypeJson,
+    template: BackendCardTemplate,
+    timeout: Duration = 1.seconds,
+): Int {
+    val deadline = TimeSource.Monotonic.markNow() + timeout
+    val unreferencedOrd = generateSequence(0) { it + 1 }.first { "c${it + 1}" !in template.qfmt }
+    val templateBytes = BackendUtils.toJsonBytes(template.deepClone().apply { setOrd(unreferencedOrd) })
+    val noteIds = notetypes.nids(noteType)
+    return try {
+        noteIds.count { nid ->
+            if (deadline.hasPassedNow()) {
+                Timber.w("counting the cards of a new card type timed out")
+                Analytics.sendAnalyticsException(TimeoutException("New card type count timed out with ${noteIds.size} notes"), false)
+                return noteIds.size
+            }
+            !backend
+                .renderUncommittedCardLegacy(getNote(nid).toBackendNote(), unreferencedOrd, templateBytes, false, true)
+                .isEmpty
+        }
+    } catch (e: BackendTemplateException) {
+        Timber.w(e, "new card type has a template error")
+        0
     }
 }
