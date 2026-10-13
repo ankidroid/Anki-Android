@@ -47,6 +47,7 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotEquals
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNull
 import kotlin.test.junit5.JUnit5Asserter.assertTrue
+import kotlin.time.Duration
 
 @RunWith(AndroidJUnit4::class)
 class CardTemplateEditorTest : RobolectricTest() {
@@ -1140,6 +1141,185 @@ class CardTemplateEditorTest : RobolectricTest() {
             advanceRobolectricLooper()
             assertThat("card 1 is focused again", window.decorView.findFocus(), equalTo(templateFragment(0).binding.editText))
         }
+    }
+
+    @Test
+    fun `adding a second card type still counts the notes`() {
+        addBasicNote()
+        val intent = Intent(Intent.ACTION_VIEW).putExtra("noteTypeId", col.notetypes.byName("Basic")!!.id)
+        val controller =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
+        saveControllerForCleanup(controller)
+        val editor = controller.get()
+
+        addCardType(editor, shadowOf(editor))
+        assertTrue("Unable to click?", shadowOf(editor).clickMenuItem(R.id.action_add))
+        advanceRobolectricLooper()
+        assertEquals(
+            "Adding from a new card type should count the notes",
+            getQuantityString(CommonPlurals.card_template_editor_confirm_add, 1, 1),
+            getAlertDialogText(true),
+        )
+    }
+
+    @Test
+    fun `adding an optional reverse template with an empty condition creates no cards`() {
+        val noteType = col.notetypes.byName("Basic (optional reversed card)")!!
+        val note = col.newNote(noteType)
+        note.setField(0, "Front")
+        note.setField(1, "Back")
+        note.setField(2, "")
+        col.addNote(note)
+        assertEquals("Only the forward card should exist", 1, getNoteTypeCardCount(noteType))
+
+        withCardTemplateEditor(noteType) {
+            selectTab(1)
+            advanceRobolectricLooper()
+            assertEquals("The optional reverse template should be selected", 1, selectedTabPosition)
+
+            assertTrue("Unable to add a card type", shadowOf(this).clickMenuItem(R.id.action_add))
+            advanceRobolectricLooper()
+            val confirmation = getAlertDialogText(true)
+            clickAlertDialogButton { positiveButton }
+            assertEquals("The duplicate template should be added", 3, tempNoteType!!.templateCount)
+
+            // Saving rejects identical fronts. Keep the empty condition while making the new front distinct.
+            advanceRobolectricLooper()
+            templateFragment(2).binding.editText.setText("{{#Add Reverse}}{{Front}} {{Back}}{{/Add Reverse}}")
+
+            assertTrue("Unable to save the templates", shadowOf(this).clickMenuItem(R.id.action_confirm))
+            advanceRobolectricLooper()
+            val savedNoteType = col.notetypes.get(noteType.id)!!
+            assertEquals("The duplicate template should be saved", 3, savedNoteType.templates.length())
+            assertEquals("An empty Add Reverse field should prevent generating another card", 1, getNoteTypeCardCount(noteType))
+            assertEquals(
+                "The confirmation must not promise a card that will not be generated",
+                getQuantityString(CommonPlurals.card_template_editor_confirm_add, 0, 0),
+                confirmation,
+            )
+        }
+    }
+
+    @Test
+    fun `adding from an unsaved optional reverse template creates no cards`() {
+        val noteType = col.notetypes.byName("Basic (optional reversed card)")!!
+        val note = col.newNote(noteType)
+        note.setField(0, "Front")
+        note.setField(1, "Back")
+        note.setField(2, "")
+        col.addNote(note)
+        assertEquals("Only the forward card should exist", 1, getNoteTypeCardCount(noteType))
+
+        withCardTemplateEditor(noteType) {
+            selectTab(1)
+            advanceRobolectricLooper()
+            addCardType(this, shadowOf(this))
+            advanceRobolectricLooper()
+            assertEquals("The first duplicate should be selected", 2, selectedTabPosition)
+            assertTrue(
+                "The selected template must be unsaved",
+                CardTemplateNotetype.isOrdinalPendingAdd(tempNoteType!!, selectedTabPosition),
+            )
+
+            // Keep the empty condition, but make each front distinct so saving succeeds.
+            templateFragment(2).binding.editText.setText("{{#Add Reverse}}{{Front}} {{Back}}{{/Add Reverse}}")
+            assertTrue("Unable to add a card type", shadowOf(this).clickMenuItem(R.id.action_add))
+            advanceRobolectricLooper()
+            val confirmation = getAlertDialogText(true)
+            clickAlertDialogButton { positiveButton }
+            advanceRobolectricLooper()
+            assertEquals("The second duplicate should be selected", 3, selectedTabPosition)
+            templateFragment(3).binding.editText.setText("{{#Add Reverse}}{{Back}} {{Front}}{{/Add Reverse}}")
+
+            assertTrue("Unable to save the templates", shadowOf(this).clickMenuItem(R.id.action_confirm))
+            advanceRobolectricLooper()
+            assertEquals(
+                "Both new templates should be saved",
+                4,
+                col.notetypes
+                    .get(noteType.id)!!
+                    .templates
+                    .length(),
+            )
+            assertEquals("Neither conditional template should generate cards", 1, getNoteTypeCardCount(noteType))
+            assertEquals(
+                "Adding from an unsaved conditional template must not promise a card that will not be generated",
+                getQuantityString(CommonPlurals.card_template_editor_confirm_add, 0, 0),
+                confirmation,
+            )
+        }
+    }
+
+    @Test
+    fun `adding from a broken template does not crash`() {
+        addBasicAndReversedNote()
+        withCardTemplateEditor(col.notetypes.basicAndReversed) {
+            templateFragment(0).binding.editText.setText("{{#Front}}")
+            assertTrue("Unable to add a card type", shadowOf(this).clickMenuItem(R.id.action_add))
+            advanceRobolectricLooper()
+            assertEquals(
+                "A broken template should not create cards",
+                getQuantityString(CommonPlurals.card_template_editor_confirm_add, 0, 0),
+                getAlertDialogText(true),
+            )
+        }
+    }
+
+    @Test
+    fun `adding a template with a card number condition counts generated cards`() {
+        addBasicAndReversedNote()
+        val noteType = col.notetypes.basicAndReversed
+        val initialCardCount = getNoteTypeCardCount(noteType)
+        assertEquals("Both original cards should exist", 2, initialCardCount)
+
+        withCardTemplateEditor(noteType) {
+            // Preview supplies c3 for the new template, but card generation does not.
+            templateFragment(0).binding.editText.setText("{{#c3}}{{Front}}{{/c3}}")
+            assertTrue("Unable to add a card type", shadowOf(this).clickMenuItem(R.id.action_add))
+            advanceRobolectricLooper()
+            val confirmation = getAlertDialogText(true)
+            clickAlertDialogButton { positiveButton }
+            advanceRobolectricLooper()
+            assertEquals("The new template should be selected", 2, selectedTabPosition)
+
+            // Avoid identical fronts without changing the condition or field requirements.
+            templateFragment(2).binding.editText.setText("{{#c3}}{{Front}} extra{{/c3}}")
+            assertTrue("Unable to save the templates", shadowOf(this).clickMenuItem(R.id.action_confirm))
+            advanceRobolectricLooper()
+            assertEquals(
+                "The new template should be saved",
+                3,
+                col.notetypes
+                    .get(noteType.id)!!
+                    .templates
+                    .length(),
+            )
+            val createdCards = getNoteTypeCardCount(noteType) - initialCardCount
+            assertEquals("The card number condition should prevent generation", 0, createdCards)
+            assertEquals(
+                "The confirmation must count generated cards, not nonempty previews",
+                getQuantityString(CommonPlurals.card_template_editor_confirm_add, createdCards, createdCards),
+                confirmation,
+            )
+        }
+    }
+
+    @Test
+    fun `counting falls back to the note count when it times out`() {
+        val noteType = col.notetypes.byName("Basic (optional reversed card)")!!
+        val note = col.newNote(noteType)
+        note.setField(0, "Front")
+        note.setField(1, "Back")
+        col.addNote(note)
+        val reverseTemplate = noteType.templates[1]
+
+        assertEquals("No reverse card is created", 0, col.countCardsCreatedBy(noteType, reverseTemplate))
+        assertEquals("A timeout counts every note", 1, col.countCardsCreatedBy(noteType, reverseTemplate, timeout = Duration.ZERO))
     }
 
     private fun CardTemplateEditor.templateFragment(ord: Int) = supportFragmentManager.findFragmentByTag("f$ord") as CardTemplateFragment
