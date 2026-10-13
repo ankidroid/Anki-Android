@@ -19,6 +19,7 @@ import com.ichi2.anki.databinding.IncludeFloatingAddButtonBinding
 import com.ichi2.anki.ui.DoubleTapListener
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 class DeckPickerFloatingActionMenu(
     private val context: Context,
@@ -42,7 +43,7 @@ class DeckPickerFloatingActionMenu(
     private val addNoteIcon: Int = R.drawable.ic_add_note
 
     // Add White Icon
-    private val addWhiteIcon: Int = R.drawable.ic_add
+    private val addWhiteIcon: Int = CommonR.drawable.ic_add
 
     var isFABOpen = false
         private set

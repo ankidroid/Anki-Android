@@ -17,6 +17,7 @@ import com.ichi2.anki.databinding.ItemBrowserColumnsEntryBinding
 import com.ichi2.anki.databinding.ItemBrowserColumnsHeadingBinding
 import com.ichi2.anki.utils.ext.runWhenNotComputingLayout
 import com.ichi2.anki.utils.ext.swapPositions
+import com.ichi2.anki.common.android.R as CommonR
 
 class BrowserColumnSelectionAdapter(
     val items: MutableList<BrowserColumnSelectionRecyclerItem>,
@@ -124,7 +125,7 @@ class BrowserColumnSelectionAdapter(
             binding.buttonToggleColumn.apply {
                 // NICE_TO_HAVE: animate between + and -
                 val isExclude = absoluteAdapterPosition < positionOfAvailableHeading
-                setImageResource(if (isExclude) R.drawable.ic_remove else R.drawable.ic_add)
+                setImageResource(if (isExclude) R.drawable.ic_remove else CommonR.drawable.ic_add)
 
                 val label = context.getString(if (isExclude) CommonString.exclude_column else CommonString.include_column)
                 contentDescription = label
