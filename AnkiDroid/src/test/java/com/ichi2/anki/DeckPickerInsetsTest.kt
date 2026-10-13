@@ -37,6 +37,9 @@ class DeckPickerInsetsTest : RobolectricTest() {
         addDeck("Test Deck")
         val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
         val deckPicker = controller.get()
+        advanceRobolectricLooperUntil(lazyMessage = { "the deck list should be shown" }) {
+            deckPicker.deckPickerBinding.deckPickerContent.isVisible
+        }
         deckPicker.dispatchInsets(navBarBottom = 48.dp)
         deckPicker.layoutForTest()
         val list = deckPicker.deckPickerBinding.decks
