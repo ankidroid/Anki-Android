@@ -31,6 +31,7 @@ import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.doOnNextLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -48,6 +49,7 @@ import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.common.annotations.NeedsTest
+import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.compat.setTooltipTextCompat
 import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
 import com.ichi2.anki.databinding.DialogFieldsBinding
@@ -683,6 +685,9 @@ private fun createMappingRow(
     addView(
         MaterialTextView(context).apply {
             layoutParams = LinearLayout.LayoutParams(0, WRAP_CONTENT, 1f)
+            val themeTextColors = textColors
+            TextViewCompat.setTextAppearance(this, getResFromAttr(context, com.google.android.material.R.attr.textAppearanceBodyLarge))
+            setTextColor(themeTextColors)
             text = label
             textAlignment = View.TEXT_ALIGNMENT_CENTER
         },
