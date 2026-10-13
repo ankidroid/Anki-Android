@@ -14,7 +14,7 @@ import com.ichi2.anki.ScreenshotTest.DeviceConfig.DESKTOP
 import com.ichi2.anki.databinding.DialogChangeNoteTypeBinding
 import com.ichi2.anki.databinding.DialogFieldsBinding
 import com.ichi2.anki.databinding.DialogTemplatesBinding
-import com.ichi2.anki.databinding.ViewTabLayoutIconOnEndBinding
+import com.ichi2.anki.databinding.ViewTabLayoutIconOnStartBinding
 import com.ichi2.anki.dialogs.ChangeNoteTypeViewModel.Tab
 import com.ichi2.anki.withCardBrowser
 import com.ichi2.testutils.simulateSystemBars
@@ -121,7 +121,7 @@ class ChangeNoteTypeDialogScreenshotTest : ScreenshotTest() {
             root.updateLayoutParams { width = originalWidth }
             advanceRobolectricLooper()
             val tab = binding.changeNoteTypeTabLayout.getTabAt(Tab.Templates.position)!!
-            val tabBinding = ViewTabLayoutIconOnEndBinding.bind(tab.customView!!)
+            val tabBinding = ViewTabLayoutIconOnStartBinding.bind(tab.customView!!)
             val icon = tabBinding.tabIcon
             val visibleBounds = Rect()
             assertTrue("The selected tab icon is visible", icon.getGlobalVisibleRect(visibleBounds))
