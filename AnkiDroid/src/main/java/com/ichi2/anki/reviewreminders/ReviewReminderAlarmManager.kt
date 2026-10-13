@@ -77,7 +77,7 @@ object ReviewReminderAlarmManager {
      * triggering [NotificationService.sendReviewReminderNotification], this method is called again to
      * schedule the next upcoming notification. If for some reason the next day's alarm fails to be set by
      * the current day's notification, we fall back to setting alarms whenever the application process is started: see
-     * [com.ichi2.anki.AnkiDroidApp]'s call to [AlarmManagement.scheduleAllNotifications].
+     * [com.ichi2.anki.AnkiDroidApp]'s call to [com.ichi2.anki.scheduleAllNotifications].
      *
      * If an old version of this review reminder with the same review reminder ID has already had
      * its notifications scheduled, this will merely update the existing notifications. If, however,
