@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -15,7 +16,11 @@ import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.settings.Prefs
+import com.ichi2.testutils.assertNoActivityStarted
+import com.ichi2.testutils.assertOpenedUrl
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.mockWebResourceRequest
+import com.ichi2.testutils.registerWebBrowser
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import org.hamcrest.MatcherAssert.assertThat
@@ -34,6 +39,37 @@ import org.robolectric.shadows.ShadowDialog
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // WebChromeClient
 @RunWith(AndroidJUnit4::class)
 class CardViewerFragmentTest : RobolectricTest() {
+    @Test
+    fun `web links open with external app permission disabled`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        withCardViewerWebView { webView ->
+            for (scheme in listOf("http", "https")) {
+                val url = "$scheme://github.com/ankidroid/Anki-Android/releases"
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
+                targetContext.assertOpenedUrl(url.toUri())
+            }
+        }
+    }
+
+    @Test
+    fun `custom schemes and parsed intents still require external app permission`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        withCardViewerWebView { webView ->
+            val urls =
+                listOf(
+                    "market://details?id=com.example",
+                    "intent://example.org/#Intent;scheme=https;end",
+                    "android-app://com.example/https/example.org",
+                )
+            for (url in urls) {
+                shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url))
+                targetContext.assertNoActivityStarted(url)
+            }
+        }
+    }
+
     @Test
     fun `dismissing the opt-in dialog denies the audio capture request`() {
         grantRecordAudioPermission()
@@ -115,7 +151,12 @@ class CardViewerFragmentTest : RobolectricTest() {
         }
 
     /** Runs [block] on the [WebChromeClient] attached to an open previewer's WebView */
-    private fun withCardViewerChromeClient(block: (WebChromeClient) -> Unit) {
+    private fun withCardViewerChromeClient(block: (WebChromeClient) -> Unit) =
+        withCardViewerWebView { webView ->
+            block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
+        }
+
+    private fun withCardViewerWebView(block: (WebView) -> Unit) {
         val note = addBasicAndReversedNote()
         val intent =
             PreviewerFragment.getIntent(
@@ -133,7 +174,7 @@ class CardViewerFragmentTest : RobolectricTest() {
                         .map { webViewLayout.getChildAt(it) }
                         .filterIsInstance<WebView>()
                         .single()
-                block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
+                block(webView)
             }
         }
     }

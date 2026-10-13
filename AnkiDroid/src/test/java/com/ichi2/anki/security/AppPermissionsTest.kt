@@ -2,7 +2,9 @@
 
 package com.ichi2.anki.security
 
+import android.content.Intent
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -18,6 +20,8 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
@@ -75,6 +79,46 @@ class AppPermissionsTest : RobolectricTest() {
             AppPermissions(targetContext) { snackbars += it }.requirePermission(QUERY_COLLECTION)
         }
         assertThat(snackbars.size, equalTo(2))
+    }
+
+    @Test
+    fun `web URLs are allowed without external app permission or a warning`() {
+        allowCardExternalLaunch = false
+        for (scheme in listOf("http", "https")) {
+            val url = "$scheme://example.org/path?query=value#fragment".toUri()
+            val intent = assertNotNull(permissions.createUrlIntent(url))
+            assertThat(intent.action, equalTo(Intent.ACTION_VIEW))
+            assertThat(intent.data, equalTo(url))
+            assertThat(intent.categories, equalTo(setOf(Intent.CATEGORY_BROWSABLE)))
+            assertNull(intent.selector)
+        }
+        assertThat(snackbars.size, equalTo(0))
+    }
+
+    @Test
+    fun `non-web URLs are denied without external app permission`() {
+        allowCardExternalLaunch = false
+        val urls =
+            listOf(
+                "market://details?id=com.example",
+                "intent://example.org/#Intent;scheme=https;end",
+                "android-app://com.example/https/example.org",
+            )
+        for (url in urls) {
+            assertNull(permissions.createUrlIntent(url.toUri()), url)
+        }
+        assertThat(snackbars.size, equalTo(2))
+    }
+
+    @Test
+    fun `non-web URLs are allowed with external app permission`() {
+        allowCardExternalLaunch = true
+        val url = "market://details?id=com.example".toUri()
+        val intent = assertNotNull(permissions.createUrlIntent(url))
+        assertThat(intent.action, equalTo(Intent.ACTION_VIEW))
+        assertThat(intent.data, equalTo(url))
+        assertNull(intent.categories)
+        assertThat(snackbars.size, equalTo(0))
     }
 
     @Test

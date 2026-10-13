@@ -30,6 +30,7 @@ import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.ViewerResourceHandler
+import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
@@ -312,12 +313,22 @@ abstract class CardViewerFragment(
                         Timber.w("URL blocked")
                         return true
                     }
-                    if (!appPermission.checkCanLaunchExternalApps()) {
+                    val intent = appPermission.createUrlIntent(url)
+                    if (intent == null) {
                         Timber.w("URL blocked: canLaunchExternalApps")
                         return true
                     }
                     try {
-                        openUrl(url)
+                        if (intent.hasCategory(Intent.CATEGORY_BROWSABLE)) {
+                            if (!AdaptionUtil.hasWebBrowser(requireContext())) {
+                                showSnackbar(getString(CommonString.no_browser_msg, url.toString()))
+                                return true
+                            }
+                            startActivity(intent)
+                        } else {
+                            // Preserve the existing browser check for custom schemes.
+                            openUrl(url)
+                        }
                     } catch (_: Throwable) {
                         Timber.w("Could not open url")
                         return false
