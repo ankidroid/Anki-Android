@@ -19,7 +19,6 @@ import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.core.os.BundleCompat
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.destinations.DeckOptionsDestination
@@ -27,6 +26,7 @@ import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.ReviewDeckDestination
 import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.isCollectionEmpty
+import com.ichi2.anki.widgets.R
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.AppWidgetId
