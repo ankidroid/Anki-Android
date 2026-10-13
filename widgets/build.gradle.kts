@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":libanki"))
 
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core)
     implementation(libs.androidx.recyclerview)
     implementation(libs.google.material)
