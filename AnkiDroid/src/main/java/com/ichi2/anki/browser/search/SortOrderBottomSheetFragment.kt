@@ -37,6 +37,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.utils.ext.behavior
 import com.ichi2.anki.utils.ext.requireParcelable
+import com.ichi2.anki.utils.isWindowCompact
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
@@ -85,6 +86,9 @@ class SortOrderBottomSheetFragment(
             state = BottomSheetBehavior.STATE_EXPANDED
             skipCollapsed = true
             isDraggable = false
+            if (resources.isWindowCompact()) {
+                maxWidth = ViewGroup.LayoutParams.MATCH_PARENT
+            }
         }
 
         binding.list.adapter =
