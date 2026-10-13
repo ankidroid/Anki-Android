@@ -115,7 +115,12 @@ class CardViewerFragmentTest : RobolectricTest() {
         }
 
     /** Runs [block] on the [WebChromeClient] attached to an open previewer's WebView */
-    private fun withCardViewerChromeClient(block: (WebChromeClient) -> Unit) {
+    private fun withCardViewerChromeClient(block: (WebChromeClient) -> Unit) =
+        withCardViewerWebView { webView ->
+            block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
+        }
+
+    private fun withCardViewerWebView(block: (WebView) -> Unit) {
         val note = addBasicAndReversedNote()
         val intent =
             PreviewerFragment.getIntent(
@@ -133,7 +138,7 @@ class CardViewerFragmentTest : RobolectricTest() {
                         .map { webViewLayout.getChildAt(it) }
                         .filterIsInstance<WebView>()
                         .single()
-                block(requireNotNull(webView.webChromeClient) { "no WebChromeClient attached" })
+                block(webView)
             }
         }
     }
