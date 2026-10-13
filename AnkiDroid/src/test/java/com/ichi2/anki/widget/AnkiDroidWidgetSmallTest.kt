@@ -8,8 +8,8 @@ import android.widget.RemoteViews
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.R
-import com.ichi2.anki.databinding.WidgetSmallBinding
+import com.ichi2.anki.widgets.R
+import com.ichi2.anki.widgets.databinding.WidgetSmallBinding
 import com.ichi2.testutils.EmptyApplication
 import org.junit.Test
 import org.junit.experimental.categories.Category

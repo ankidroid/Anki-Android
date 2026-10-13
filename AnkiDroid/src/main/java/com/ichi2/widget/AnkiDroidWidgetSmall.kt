@@ -21,7 +21,6 @@ import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.CommonPlurals
-import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.LauncherDestination
@@ -29,6 +28,7 @@ import com.ichi2.anki.common.destinations.toIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
+import com.ichi2.anki.widgets.R
 import timber.log.Timber
 import kotlin.math.sqrt
 
