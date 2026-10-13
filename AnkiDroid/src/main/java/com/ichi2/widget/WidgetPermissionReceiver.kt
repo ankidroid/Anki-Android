@@ -18,7 +18,7 @@ class WidgetPermissionReceiver : AnkiBroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        if (grantedStoragePermissions(context)) {
+        if (runCatching { grantedStoragePermissions(context) }.getOrNull() == true) {
             val appWidgetManager = getAppWidgetManager(context) ?: return
             val widgetIds = appWidgetManager.getAppWidgetIdsEx(ComponentName(context, AddNoteWidget::class.java))
             AddNoteWidget.updateWidgets(context, appWidgetManager, widgetIds)
