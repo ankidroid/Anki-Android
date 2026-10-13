@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
@@ -188,6 +189,7 @@ abstract class CardViewerFragment(
         with(webViewLayout) {
             setWebViewClient(onCreateWebViewClient(savedInstanceState))
             setWebChromeClient(onCreateWebChromeClient())
+            setBackgroundColor(ThemeUtils.getThemeAttrColor(requireContext(), android.R.attr.colorBackground))
             scrollBars = View.SCROLLBARS_OUTSIDE_OVERLAY
             setAcceptThirdPartyCookies(true)
             with(settings) {
