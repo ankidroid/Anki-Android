@@ -28,6 +28,8 @@ on:
       - 'gh-readonly-queue/**'
       # Dependabot branches are already checked by the pull_request trigger.
       - 'dependabot/**'
+      # Crowdin translations are already checked by the pull_request trigger.
+      - 'i18n_sync'
   merge_group:
 
 permissions:
