@@ -83,4 +83,8 @@
     <color name="material_deep_purple_400">#ff7E57C2</color>
 
     <color name="material_theme_grey">#303030</color>
+
+    <color name="flag_reviewer_red">#ff0000</color>
+    <color name="flag_reviewer_green">#057A05</color>
+    <color name="flag_reviewer_blue">#ff1976d2</color>
 </resources>
