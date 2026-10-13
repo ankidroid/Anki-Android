@@ -268,7 +268,7 @@ sealed class AndroidTtsError : TtsPlayer.TtsError() {
                 is AndroidGenericError -> "ERROR"
                 is AndroidSynthesisError -> "ERROR_SYNTHESIS"
                 is AndroidInvalidRequest -> "ERROR_INVALID_REQUEST"
-                is AndroidNetworkError -> "ERROR_NETWORK_ERROR"
+                is AndroidNetworkError -> "ERROR_NETWORK"
                 is AndroidNetworkTimeoutError -> "ERROR_NETWORK_TIMEOUT"
                 is AndroidNotInstalledYet -> "ERROR_NOT_INSTALLED_YET"
                 is AndroidOutputError -> "ERROR_OUTPUT"
