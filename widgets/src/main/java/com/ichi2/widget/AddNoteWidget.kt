@@ -6,10 +6,10 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
-import com.ichi2.anki.R
 import com.ichi2.anki.common.destinations.DeferredNavigation
 import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.destinations.toIntent
+import com.ichi2.anki.widgets.R
 
 class AddNoteWidget : AnalyticsWidgetProvider() {
     override fun performUpdate(
