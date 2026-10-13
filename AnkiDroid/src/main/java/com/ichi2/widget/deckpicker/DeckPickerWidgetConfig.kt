@@ -29,11 +29,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.ext.unregisterReceiverSilently
-import com.ichi2.anki.databinding.WidgetDeckPickerConfigBinding
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.registerDeckSelectedHandler
@@ -45,6 +43,8 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
+import com.ichi2.anki.widgets.R
+import com.ichi2.anki.widgets.databinding.WidgetDeckPickerConfigBinding
 import com.ichi2.utils.dp
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
