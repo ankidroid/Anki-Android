@@ -9,7 +9,6 @@ import androidx.annotation.StringRes
 import androidx.core.content.getSystemService
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.utils.android.showThemedToast
-import com.ichi2.anki.reviewreminders.ReviewReminderAlarmManager
 import timber.log.Timber
 import kotlin.time.Duration.Companion.minutes
 
@@ -62,16 +61,5 @@ object AlarmManagement {
                 Timber.w(e, "Failed to show AlarmManager exception toast for error: $error")
             }
         }
-    }
-
-    /**
-     * Schedules all notifications defined by AnkiDroid.
-     * Since notifications are deleted when the device restarts, this method should be called on
-     * device start-up, on app start-up, etc.
-     * To extend the notifications created by AnkiDroid, add more functionality to the body of this method.
-     */
-    suspend fun scheduleAllNotifications(context: Context) {
-        // currently, the only scheduled notifications supported by AnkiDroid are review reminder notifications
-        ReviewReminderAlarmManager.scheduleAllEnabledReviewReminderNotifications(context)
     }
 }
