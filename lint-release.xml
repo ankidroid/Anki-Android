@@ -32,6 +32,7 @@
         <!-- We only need to handle -af and all others are implicitly ignored -->
         <!-- tested and this does not block a string in /values/ from triggering lint -->
         <ignore path="res/values-af/" />
+        <ignore path="common/android/src/main/res/values-af/" />
     </issue>
     <issue id="MissingDefaultResource" severity="fatal">
         <!-- Ignore all translations except values - CrowdIn will handle deletions -->
