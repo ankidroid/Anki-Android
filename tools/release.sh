@@ -25,7 +25,7 @@ echo "Checking basic utility installation status..."
 for UTILITY in sed gawk gh asciidoctor; do
   if ! command -v "$UTILITY" >/dev/null 2>&1; then echo "$UTILITY" missing; exit 1; fi
 done
-if [ "$PUBLIC" = "public" ] && ! [ -f ../ankidroiddocs/changelog.asc ]; then
+if ! [ -f ../ankidroiddocs/changelog.asc ]; then
   echo "Could not find ../ankidroiddocs/changelog.asc?"
   exit 1
 fi
@@ -52,20 +52,6 @@ if [ "$PUBLIC" = "public" ]; then
   echo "- Author and merge a PR to ankidroiddocs/changelog.asc with details for the current version"
   echo "Press Enter to continue."
   read -r
-
-  # Render the new changelog
-  echo "Rendering changelog..."
-  if ! asciidoctor -a webfonts! ../ankidroiddocs/changelog.asc -o "$CHANGELOG"
-  then
-    echo "Failed to render changelog?"
-    exit 1
-  fi
-  if ! grep "Version $VERSION " "$CHANGELOG"
-  then
-    echo "Could not find entry for version $VERSION in rendered $CHANGELOG ?"
-    exit 1
-  fi
-
 else
   echo "Performing testing release."
 fi
@@ -94,6 +80,30 @@ if [ "$PUBLIC" != "public" ]; then
   echo "Bumping version from $PREVIOUS_VERSION$SUFFIX to $VERSION (and code from $PREVIOUS_CODE to $GUESSED_CODE)"
   sed -i -e s/"$PREVIOUS_VERSION""$SUFFIX"/"$VERSION"/g $GRADLEFILE
   sed -i -e s/"versionCode = $PREVIOUS_CODE"/"versionCode = $GUESSED_CODE"/g $GRADLEFILE
+fi
+
+# Render the new changelog
+echo "Rendering changelog..."
+if ! asciidoctor -a webfonts! ../ankidroiddocs/changelog.asc -o "$CHANGELOG"
+then
+  echo "Failed to render changelog?"
+  exit 1
+fi
+if [ "$PUBLIC" = "public" ]; then
+  if ! grep "Version $VERSION " "$CHANGELOG"
+  then
+    echo "Could not find entry for version $VERSION in rendered $CHANGELOG ?"
+    exit 1
+  fi
+else
+  NOTE="Version $VERSION is a test build. Its changelog comes with the stable release. Until then, here are the changes in the latest stable version."
+  if ! NOTE_HTML=$(echo "_${NOTE}_" | asciidoctor -s -o - -) ||
+    ! NOTE_HTML="$NOTE_HTML" gawk '{ print } /^<div id="content">$/ { print ENVIRON["NOTE_HTML"]; added = 1 } END { exit !added }' "$CHANGELOG" > "$CHANGELOG.tmp"
+  then
+    echo "Could not add the test build note to $CHANGELOG ?"
+    exit 1
+  fi
+  mv "$CHANGELOG.tmp" "$CHANGELOG"
 fi
 
 # Validate the resulting versionCode before committing or tagging the release.

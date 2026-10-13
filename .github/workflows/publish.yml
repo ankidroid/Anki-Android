@@ -123,13 +123,13 @@ jobs:
           gunzip *.gz
         shell: bash
 
+      - name: Clone ankidroiddocs for the changelog
+        run: git clone git@github.com:ankidroid/ankidroiddocs ../ankidroiddocs
+        shell: bash
+
       - name: Build and Release public release
         if: "${{ github.event.inputs.public != '' }}"
-        run: |
-          pushd ../
-          git clone git@github.com:ankidroid/ankidroiddocs
-          popd
-          ./tools/release.sh public
+        run: ./tools/release.sh public
         shell: bash
 
       - name: Build and Release test release
