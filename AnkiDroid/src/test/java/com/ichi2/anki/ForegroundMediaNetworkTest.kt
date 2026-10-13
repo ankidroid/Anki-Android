@@ -10,8 +10,10 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncCollectionResponse
+import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.utils.NetworkUtils
 import io.mockk.every
@@ -30,6 +32,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.shadows.ShadowDialog
+import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class ForegroundMediaNetworkTest : RobolectricTest() {
@@ -154,11 +157,19 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
         if (resolveConflict) {
             Prefs.lastSyncTime = 0
             // Choose "Keep AnkiDroid" and confirm replacing the server collection.
-            (ShadowDialog.getLatestDialog() as AlertDialog).getButton(DialogInterface.BUTTON_POSITIVE).performClick()
+            conflictDialog().getButton(DialogInterface.BUTTON_POSITIVE).performClick()
             advanceRobolectricLooper()
-            (ShadowDialog.getLatestDialog() as AlertDialog).getButton(DialogInterface.BUTTON_POSITIVE).performClick()
+            conflictDialog().getButton(DialogInterface.BUTTON_POSITIVE).performClick()
             advanceRobolectricLooperUntil { Prefs.lastSyncTime != 0L }
         }
         return manager.getWorkInfosForUniqueWork(UniqueWorkNames.SYNC_MEDIA).get().single { !it.state.isFinished }
+    }
+
+    private fun DeckPicker.conflictDialog(): AlertDialog {
+        // A later deck-refresh progress dialog can replace ShadowDialog's latest dialog.
+        val fragment = assertNotNull(supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as? SyncErrorDialog)
+        val dialog = assertNotNull(fragment.dialog as? AlertDialog)
+        assertThat("isShowing", dialog.isShowing, equalTo(true))
+        return dialog
     }
 }
