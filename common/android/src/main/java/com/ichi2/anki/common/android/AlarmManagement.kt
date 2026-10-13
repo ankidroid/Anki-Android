@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // SPDX-FileCopyrightText: Copyright (c) 2026 Eric Li <ericli3690@gmail.com>
 
-package com.ichi2.utils
+package com.ichi2.anki.common.android
 
 import android.app.AlarmManager
 import android.content.Context
