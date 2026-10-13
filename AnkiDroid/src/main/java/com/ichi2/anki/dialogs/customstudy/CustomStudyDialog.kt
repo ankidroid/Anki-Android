@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.text.InputFilter
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
@@ -58,6 +59,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS_KEY
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
@@ -72,6 +74,7 @@ import com.ichi2.utils.cancelable
 import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.customView
 import com.ichi2.utils.dp
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.setPaddingRelative
@@ -288,10 +291,16 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         @SuppressLint("InflateParams")
         binding = FragmentCustomStudyBinding.inflate(requireActivity().layoutInflater)
 
-        binding.detailsText1.text = text1
+        val isExtendLimits = contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV
         // 'review ahead' has a dialog title, so the empty label would only add a blank line
-        binding.detailsText1.isVisible = contextMenuOption != STUDY_AHEAD && contextMenuOption != STUDY_PREVIEW
+        binding.detailsText1.isVisible = contextMenuOption != STUDY_AHEAD && !isExtendLimits
         binding.detailsText2.text = text2
+        binding.detailsAvailableCards.text = text1
+        binding.detailsAvailableCards.isVisible = isExtendLimits
+        binding.detailsDecrementButton.isVisible = isExtendLimits
+        binding.detailsIncrementButton.isVisible = isExtendLimits
+        binding.detailsDecrementButton.setOnClickListener { stepUserInputValue(-1) }
+        binding.detailsIncrementButton.setOnClickListener { stepUserInputValue(1) }
 
         binding.cardsStateSelectorLayout.isVisible = contextMenuOption == STUDY_TAGS
         binding.cardsStateSelector.apply {
@@ -327,8 +336,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             setSelectAllOnFocus(true)
             requestFocus()
             // a user may enter a negative value when extending limits
-            if (contextMenuOption == EXTEND_NEW || contextMenuOption == EXTEND_REV) {
+            if (isExtendLimits) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+                gravity = Gravity.CENTER
             }
             if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                 inputType = EditorInfo.TYPE_CLASS_NUMBER
@@ -339,8 +349,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         val positiveBtnLabel =
             if (contextMenuOption == STUDY_TAGS) {
                 TR.sentenceCase.chooseTags
-            } else if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
-                getString(CommonString.dialog_positive_create)
+            } else if (contextMenuOption == STUDY_AHEAD) {
+                getString(R.string.dialog_positive_create)
+            } else if (isExtendLimits) {
+                getString(R.string.custom_study_increase)
             } else {
                 getString(CommonString.dialog_ok)
             }
@@ -355,6 +367,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 .apply {
                     if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
                         title(text = contextMenuOption.getTitle(resources))
+                    } else if (isExtendLimits) {
+                        title(text = getString(R.string.custom_study_extend_limits_title))
                     }
                 }.customView(
                     view = binding.root,
@@ -425,21 +439,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 }
                 launchCustomStudy(contextMenuOption, n)
             }
-            if (contextMenuOption == STUDY_AHEAD || contextMenuOption == STUDY_PREVIEW) {
-                // the stored default may match no cards
-                searchJob = launchCatchingTask { updateCreateButtonState(dialog, userInputValue) }
-            }
+            validateInput(dialog, contextMenuOption)
         }
 
         binding.detailsEditText2.doAfterTextChanged {
-            val value = userInputValue
-            if (contextMenuOption != STUDY_AHEAD && contextMenuOption != STUDY_PREVIEW) {
-                dialog.positiveButton.isEnabled = value != null && value != 0
-                return@doAfterTextChanged
-            }
-            value?.let { setSuffixText(it) }
-            searchJob?.cancel()
-            searchJob = launchCatchingTask { updateCreateButtonState(dialog, value) }
+            validateInput(dialog, contextMenuOption)
         }
 
         // Show soft keyboard
@@ -447,16 +451,45 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         return dialog
     }
 
+    private fun validateInput(
+        dialog: AlertDialog,
+        contextMenuOption: ContextMenuOption,
+    ) {
+        val rawText = binding.detailsEditText2.text?.toString() ?: ""
+        val value = userInputValue
+        val range = contextMenuOption.validRange
+
+        if (contextMenuOption == STUDY_AHEAD) {
+            value?.let { setSuffixText(it) }
+            searchJob?.cancel()
+            searchJob = launchCatchingTask { updateCreateButtonState(dialog, value) }
+            return
+        }
+
+        val isValid = value != null && value != 0 && value in range
+        dialog.positiveButton.isEnabled = isValid
+
+        binding.detailsEditText2Layout.error =
+            when {
+                rawText.isEmpty() || rawText == "-" -> null
+                value == null || value > range.last -> getString(R.string.maximum_value_is, range.last)
+                value < range.first -> getString(R.string.minimum_value_is, range.first)
+                else -> null
+            }
+    }
+
     /** Sets the suffix of the days input: `[1] day`, `[3] days` */
     private fun setSuffixText(days: Int) {
         binding.detailsEditText2Layout.suffixText = resources.getQuantityString(CommonPlurals.set_due_date_label_suffix, days)
     }
 
-    /**
-     * Whether the deck has new cards added in the last [days] days.
-     *
-     * Upstream: https://github.com/ankitects/anki/blob/618c1787c83ac9baace0527a2f572631b86b7aee/qt/aqt/customstudy.py
-     */
+    private fun stepUserInputValue(delta: Int) {
+        val range = selectedSubDialog?.validRange ?: return
+        val newValue = ((userInputValue ?: 0) + delta).coerceIn(range)
+        binding.detailsEditText2.setText(newValue.toString())
+        binding.detailsEditText2.moveCursorToEnd()
+    }
+
     private suspend fun hasPreviewCards(days: Int): Boolean =
         withCol {
             val search =
@@ -473,8 +506,16 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         dialog: AlertDialog,
         days: Int?,
     ) {
-        if (days == null || days == 0) {
-            binding.detailsEditText2Layout.error = if (days == 0) getString(CommonString.minimum_value_is, 1) else null
+        val range = ContextMenuOption.STUDY_AHEAD.validRange
+        val rawText = binding.detailsEditText2.text?.toString() ?: ""
+        if (days == null || days !in range) {
+            binding.detailsEditText2Layout.error =
+                when {
+                    rawText.isEmpty() -> null
+                    days == null || days > range.last -> getString(R.string.maximum_value_is, range.last)
+                    days < range.first -> getString(R.string.minimum_value_is, range.first)
+                    else -> null
+                }
             dialog.positiveButton.isEnabled = false
             return
         }
@@ -658,25 +699,34 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     @VisibleForTesting(otherwise = PRIVATE)
     enum class ContextMenuOption(
         val getTitle: Resources.() -> String,
+        val validRange: IntRange,
         val checkAvailability: ((CustomStudyDefaults) -> Boolean)? = null,
     ) {
         /** Increase today's new card limit */
-        EXTEND_NEW({ TR.customStudyIncreaseTodaysNewCardLimit() }, checkAvailability = { it.extendNew.isUsable }),
+        EXTEND_NEW(
+            { TR.customStudyIncreaseTodaysNewCardLimit() },
+            validRange = -Consts.DYN_MAX_SIZE..Consts.DYN_MAX_SIZE,
+            checkAvailability = { it.extendNew.isUsable },
+        ),
 
         /** Increase today's review card limit */
-        EXTEND_REV({ TR.customStudyIncreaseTodaysReviewCardLimit() }, checkAvailability = { it.extendReview.isUsable }),
+        EXTEND_REV(
+            { TR.customStudyIncreaseTodaysReviewCardLimit() },
+            validRange = -Consts.DYN_MAX_SIZE..Consts.DYN_MAX_SIZE,
+            checkAvailability = { it.extendReview.isUsable },
+        ),
 
         /** Review forgotten cards */
-        STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }),
+        STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }, validRange = 1..FORGOT_MAX_DAYS),
 
         /** Review ahead */
-        STUDY_AHEAD({ TR.customStudyReviewAhead() }),
+        STUDY_AHEAD({ TR.customStudyReviewAhead() }, validRange = 1..Consts.DYN_MAX_SIZE),
 
         /** Preview new cards */
-        STUDY_PREVIEW({ TR.customStudyPreviewNewCards() }),
+        STUDY_PREVIEW({ TR.customStudyPreviewNewCards() }, validRange = 1..Consts.DYN_MAX_SIZE),
 
         /** Limit to particular tags */
-        STUDY_TAGS({ TR.customStudyStudyByCardStateOrTag() }),
+        STUDY_TAGS({ TR.customStudyStudyByCardStateOrTag() }, validRange = 1..Consts.DYN_MAX_SIZE),
     }
 
     @Parcelize
@@ -841,6 +891,8 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                         putInt(ARG_SUB_DIALOG_ID, contextMenuAttribute.ordinal)
                     }
             }
+
+        const val FORGOT_MAX_DAYS = 30
 
         /**
          * (optional) Key for the ordinal of the [ContextMenuOption] to display.
