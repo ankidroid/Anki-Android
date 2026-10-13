@@ -351,9 +351,7 @@ class NoteEditorFragment :
         }
 
     @VisibleForTesting
-    internal val multimediaController: NoteEditorMultimediaController by lazy {
-        NoteEditorMultimediaController(this, multimediaFragmentLauncher)
-    }
+    internal val multimediaController: NoteEditorMultimediaController = NoteEditorMultimediaController(this, multimediaFragmentLauncher)
 
     private val requestTemplateEditLauncher =
         registerForActivityResult(

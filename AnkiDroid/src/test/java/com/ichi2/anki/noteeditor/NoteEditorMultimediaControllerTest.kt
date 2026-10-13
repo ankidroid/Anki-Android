@@ -3,11 +3,19 @@
 
 package com.ichi2.anki.noteeditor
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import androidx.core.net.toUri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.NoteEditorActivity
 import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.multimedia.MultimediaArgsStorage
 import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaResult
@@ -21,6 +29,7 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Shadows.shadowOf
@@ -30,6 +39,84 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class NoteEditorMultimediaControllerTest : RobolectricTest() {
+    @Test
+    fun `cancelling gallery returns directly to the unchanged note editor`() {
+        val noteEditor = openNoteEditor()
+        val field = noteEditor.getFieldForTest(1)
+        field.setText("back")
+        field.requestFocus()
+        field.setSelection(1, 3)
+        selectGallery(noteEditor, 1)
+        val activity = shadowOf(noteEditor.requireActivity())
+        val picker = activity.nextStartedActivityForResult.intent
+
+        assertThat(picker.action, equalTo(Intent.ACTION_PICK))
+        assertThat(picker.data, equalTo(MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
+        assertThat("no intermediate editor", picker.component, nullValue())
+        activity.receiveResult(picker, Activity.RESULT_CANCELED, null)
+        advanceRobolectricLooper()
+
+        assertThat(activity.nextStartedActivityForResult, nullValue())
+        assertThat(noteEditor.requireActivity().isFinishing, equalTo(false))
+        assertThat(field.text.toString(), equalTo("back"))
+        assertThat(field.selectionStart, equalTo(1))
+        assertThat(field.selectionEnd, equalTo(3))
+
+        selectGallery(noteEditor, 1)
+        assertThat(activity.nextStartedActivityForResult.intent.action, equalTo(Intent.ACTION_PICK))
+    }
+
+    @Test
+    fun `gallery selection opens the image editor for the selected field with read access`() {
+        val noteEditor = openNoteEditor()
+        noteEditor.setField(0, "front")
+        noteEditor.setField(1, "back")
+        selectGallery(noteEditor, 1)
+        val activity = shadowOf(noteEditor.requireActivity())
+        val picker = activity.nextStartedActivityForResult.intent
+        val imageUri = "content://media/external/images/media/1".toUri()
+
+        activity.receiveResult(picker, Activity.RESULT_OK, Intent().setData(imageUri))
+        advanceRobolectricLooper()
+
+        assertGalleryEditor(activity.nextStartedActivityForResult.intent, imageUri, 1)
+        assertThat(noteEditor.editFieldAt(0)!!.text.toString(), equalTo("front"))
+        assertThat(noteEditor.editFieldAt(1)!!.text.toString(), equalTo("back"))
+    }
+
+    @Test
+    fun `gallery result retains its target field after note editor recreation`() {
+        ensureCollectionLoadIsSynchronous()
+        val controller =
+            startActivityControllerNormallyOpenCollectionWithIntent(
+                NoteEditorActivity::class.java,
+                NoteEditorDestination.PassArguments(NoteEditorFragment.addNoteArgs()).toIntent(targetContext),
+            )
+        selectGallery(controller.get().getNoteEditorFragment(), 1)
+        val picker = shadowOf(controller.get()).nextStartedActivityForResult
+
+        controller.recreate()
+        advanceRobolectricLooper()
+        val imageUri = "content://media/external/images/media/2".toUri()
+        controller.get().activityResultRegistry.dispatchResult(picker.requestCode, Activity.RESULT_OK, Intent().setData(imageUri))
+        advanceRobolectricLooper()
+
+        assertGalleryEditor(shadowOf(controller.get()).nextStartedActivityForResult.intent, imageUri, 1)
+    }
+
+    @Test
+    fun `gallery file uri result cannot open the image editor`() {
+        val noteEditor = openNoteEditor()
+        selectGallery(noteEditor, 0)
+        val activity = shadowOf(noteEditor.requireActivity())
+        val picker = activity.nextStartedActivityForResult.intent
+
+        activity.receiveResult(picker, Activity.RESULT_OK, Intent().setData(Uri.fromFile(File("/private/image.png"))))
+        advanceRobolectricLooper()
+
+        assertThat(activity.nextStartedActivityForResult, nullValue())
+    }
+
     @Test
     fun `controller is reachable from the hosted fragment`() {
         val noteEditor = openNoteEditor()
@@ -128,6 +215,30 @@ class NoteEditorMultimediaControllerTest : RobolectricTest() {
             assertThat(editText.selectionStart, equalTo(0))
             assertThat(editText.selectionEnd, equalTo(5))
         }
+
+    private fun selectGallery(
+        noteEditor: NoteEditorFragment,
+        fieldIndex: Int,
+    ) {
+        noteEditor.multimediaController.handleActions(fieldIndex)
+        advanceRobolectricLooper()
+        noteEditor.multimediaViewModel.setMultimediaAction(MultimediaBottomSheet.MultimediaAction.SELECT_IMAGE_FILE)
+        advanceRobolectricLooper()
+    }
+
+    private fun assertGalleryEditor(
+        intent: Intent,
+        imageUri: Uri,
+        fieldIndex: Int,
+    ) {
+        assertThat(intent.component!!.className, equalTo(MultimediaActivity::class.java.name))
+        assertThat(intent.data, equalTo(imageUri))
+        assertThat(intent.flags and Intent.FLAG_GRANT_READ_URI_PERMISSION, equalTo(Intent.FLAG_GRANT_READ_URI_PERMISSION))
+        val argsFile = intent.extras!!.getSerializableCompat<File>(MultimediaActivity.EXTRA_FRAGMENT_ARGS)!!
+        val args = MultimediaArgsStorage.create(targetContext).read(argsFile)
+        assertThat(args.index, equalTo(fieldIndex))
+        assertThat(args.imageUri, equalTo(imageUri.toString()))
+    }
 
     private fun openNoteEditor(): NoteEditorFragment {
         ensureCollectionLoadIsSynchronous()
