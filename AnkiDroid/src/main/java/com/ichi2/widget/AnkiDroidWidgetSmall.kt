@@ -155,8 +155,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                        val etaText = if (Build.VERSION.SDK_INT >= 31) "⏱$eta" else "$eta"
-                        updateViews.setTextViewText(R.id.widget_eta, etaText)
+                        updateViews.setTextViewText(R.id.widget_eta, "⏱$eta")
                         updateViews.setContentDescription(
                             R.id.widget_eta,
                             context.resources.getQuantityString(CommonPlurals.widget_eta, eta, eta),

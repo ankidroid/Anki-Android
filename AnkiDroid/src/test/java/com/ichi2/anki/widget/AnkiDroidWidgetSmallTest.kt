@@ -34,7 +34,7 @@ class AnkiDroidWidgetSmallTest {
     @Config(sdk = [Build.VERSION_CODES.R])
     fun `initial widget keeps the legacy icon before Android 12`() =
         withSmallWidget {
-            assertEquals(R.drawable.widget_bg_small, shadowOf(ankidroidWidgetSmallButton.drawable).createdFromResId)
+            assertEquals(R.drawable.ic_anki, shadowOf(ankidroidWidgetSmallButton.drawable).createdFromResId)
         }
 }
 
