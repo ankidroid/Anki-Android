@@ -2,6 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- supportsRtl: must match AnkiDroid/src/main/AndroidManifest.xml (manifest merger) -->
-    <application android:supportsRtl="true" />
+    <application android:supportsRtl="true">
+        <!-- "Add Note" widget -->
+        <receiver
+            android:name="com.ichi2.widget.AddNoteWidget"
+            android:label="@string/menu_add_note"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_add_note"
+                />
+        </receiver>
+
+        <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
+            </intent-filter>
+        </receiver>
+    </application>
 
 </manifest>

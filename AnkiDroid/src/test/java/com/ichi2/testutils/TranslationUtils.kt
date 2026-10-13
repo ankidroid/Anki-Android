@@ -45,13 +45,16 @@ fun getBackendNonArgStrings(): List<BackendTranslation> {
 }
 
 /**
- * Returns the names of the string resources referenced from `AndroidManifest.xml`
+ * Returns the names of the string resources referenced from the app and widgets manifests
  * (`@string/app_name` -> `app_name`).
  */
 fun getAndroidManifestStringResourceNames(): Set<String> =
-    Regex("@string/(\\w+)")
-        .findAll(File("src/main/AndroidManifest.xml").readText())
-        .mapTo(mutableSetOf()) { it.groupValues[1] }
+    sequenceOf(
+        "src/main/AndroidManifest.xml",
+        "../widgets/src/main/AndroidManifest.xml",
+    ).flatMap { manifest ->
+        Regex("@string/(\\w+)").findAll(File(manifest).readText())
+    }.mapTo(mutableSetOf()) { it.groupValues[1] }
 
 /**
  * Parses all translatable XML files from `:common:android`'s `res/values/` and extracts
