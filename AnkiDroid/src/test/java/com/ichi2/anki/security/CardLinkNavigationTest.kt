@@ -20,6 +20,7 @@ import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.testutils.assertNoActivityStarted
+import com.ichi2.testutils.assertOpenedUrl
 import com.ichi2.testutils.createTransientDirectory
 import com.ichi2.testutils.mockWebResourceRequest
 import com.ichi2.testutils.registerWebBrowser
@@ -72,6 +73,17 @@ class CardLinkNavigationTest(
                 )
                 targetContext.assertNoActivityStarted()
             }
+        }
+    }
+
+    @Test
+    fun `web links can open a native app without a browser or external app permission`() {
+        registerNativeHandler(browsable = true)
+        withWebView { webView ->
+            shadowOf(targetContext.applicationContext as Application).checkActivities(true)
+            val url = "https://native.example.org/action?value=1#fragment"
+            assertTrue(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, mockWebResourceRequest(url)))
+            targetContext.assertOpenedUrl(url.toUri())
         }
     }
 
