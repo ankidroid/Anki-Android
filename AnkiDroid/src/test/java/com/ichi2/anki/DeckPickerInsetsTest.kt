@@ -37,10 +37,14 @@ class DeckPickerInsetsTest : RobolectricTest() {
         addDeck("Test Deck")
         val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
         val deckPicker = controller.get()
+        advanceRobolectricLooperUntil(lazyMessage = { "the deck list should be shown" }) {
+            deckPicker.deckPickerBinding.deckPickerContent.isVisible
+        }
         deckPicker.dispatchInsets(navBarBottom = 48.dp)
         deckPicker.layoutForTest()
         val list = deckPicker.deckPickerBinding.decks
         val observer = deckPicker.deckPickerBinding.root.viewTreeObserver
+        check(list.height > 0) { "the deck list must be laid out, or the layout listener is a no-op" }
         val padding = list.paddingBottom
         check(padding > 0)
 
