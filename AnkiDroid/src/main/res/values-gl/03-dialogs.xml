@@ -78,7 +78,7 @@
     <string name="dialog_positive_overwrite">Substituír</string>
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituír</string>
-    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrect the date and time, or enable automatic date and time, then sync again.\n\nYour device’s current time is: %2$s</string>
+    <string name="sync_clock_off_with_current_time">%1$s\n\nCorrixe a data e a hora ou activa o axuste automático e, deseguido, sincroniza de novo.\n\nA hora actual do teu dispositivo é %2$s</string>
     <string name="dialog_collection_path_not_dir">A ruta especificada non é un cartafol válido</string>
     <string name="dialog_invalid_custom_certificate">O texto proporcionado non corresponde a un certificado X509 codificado nun formato PEM válido</string>
     <string name="dialog_invalid_custom_certificate_title">Erro na análise do certificado</string>
@@ -117,7 +117,7 @@
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">Base de datos bloqueada</string>
-    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Another AnkiDroid app is using this collection. It may conflict even when it is not visibly running.\n\nTo keep using both apps, change the ‘%s’ in one app\'s Advanced settings.\n\nTo use this app now, force-stop the conflicting app.</string>
+    <string name="database_locked_summary_new" comment="%s is the name of the \'AnkiDroid directory\' setting">Outra instalación do AnkiDroid está a usar esta colección. Pode haber conflitos aínda que non se vexa en execución.\n\nPara seguir usando as dúas aplicacións, cambia «%s» nos axustes avanzados dunha delas.\n\nPara usar esta aplicación agora, forza a detención da aplicación en conflito.</string>
     <string name="incompatible_database_version_title">Versión da base de datos incompatíbel</string>
     <string name="incompatible_database_version_summary">A base de datos é dunha versión máis avanzada da que esta versión do AnkiDroid pode manexar. Actualiza o AnkiDroid ou reverte a versión da base de datos para abrila.\n\nVersión compatíbel: %1$d\nVersión da base de datos: %2$d\n\nAs seguintes opcións de restauración sobrescribirán a túa colección actual, posibelmente cunha versión compatible da base de datos:</string>
     <!-- Deck Picker Background-->
@@ -139,7 +139,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">Estabelecer Idioma</string>
     <string name="locale_selection_dialog_summary">Algúns teclados multilingües, como GBoard, permiten cambiar o idioma mentres se edita o texto.\n\nSe o teu teclado non cambia o idioma, solicita a función \"setImeHintLocales\" ao fabricante.</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Idioma descoñecido [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Como usar o AnkiDroid</string>
     <string name="help_item_ankidroid_manual">Manual do AnkiDroid</string>

@@ -224,8 +224,8 @@
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>
-    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Show preview</string>
-    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Hide preview</string>
+    <string name="note_editor_show_previewer" comment="Checkable item stating whether the note editor preview sidebar should be shown" maxLength="28">Паказаць папярэдні прагляд</string>
+    <string name="note_editor_hide_previewer" comment="Checkable item stating whether the note editor preview sidebar should be hidden" maxLength="28">Схаваць папярэдні прагляд</string>
     <string name="format_insert_bold">Фарматаваць як тлусты</string>
     <string name="format_insert_italic">Фарматаваць як курсіў</string>
     <string name="format_insert_underline">Фарматаваць як падкрэслены</string>
@@ -240,8 +240,8 @@
     <string name="edit_toolbar_item">Рэдагаваць элемент панэлі інструментаў</string>
     <string name="toolbar_item_explain_edit_or_remove">Увядзіце HTML, які будзе ўстаўлены да і пасля вылучанага тэксту\n\nДоўгі націск на элемент панэлі інструментаў дазволіць адрэдагаваць або выдаліць яго</string>
     <string name="remove_toolbar_item">Выдаліць элемент панэлі інструментаў?</string>
-    <string name="note_editor_toolbar_icon_requirement_error">Button text is required</string>
-    <string name="before_after_text_requirement_error">At least one HTML field is required</string>
+    <string name="note_editor_toolbar_icon_requirement_error">Патрабуецца тэкст кнопкі</string>
+    <string name="before_after_text_requirement_error">Патрабуецца прынамсі адно поле HTML</string>
     <string name="note_editor_image_too_large">Занадта вялікі відарыс, паспрабуйце ўставіць відарыс уручную</string>
     <string name="note_editor_video_too_large">Занадта вялікі відэафайл, паспрабуйце ўставіць відэа ўручную</string>
     <string name="note_editor_audio_too_large">Занадта вялікі аўдыяфайл, паспрабуйце ўставіць аўдыя ўручную</string>
@@ -276,11 +276,11 @@
     <string name="import_deck">Імпартаваць калоду</string>
     <string name="something_wrong">Нешта пайшло не так, калі ласка, паспрабуйце яшчэ раз</string>
     <string name="download_failed">Збой спампоўвання</string>
-    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/s</string>
-    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/s</string>
+    <string name="download_speed_unit" comment="Download speed. %1$s is an amount of data, e.g. \'1.2 MB\', giving \'1.2 MB/s\'">%1$s/с</string>
+    <string name="download_speed_unknown" comment="Placeholder shown when the current download speed is unknown">-/с</string>
     <string name="download_time_unknown" comment="Placeholder when the remaining download time is unknown">-</string>
-    <string name="download_speed_label">Speed</string>
-    <string name="download_time_left_label">Time left</string>
+    <string name="download_speed_label">Хуткасць</string>
+    <string name="download_time_left_label">Засталося часу</string>
     <string name="deck_download_progress_message">Можаце карыстацца іншымі праграмамі падчас спампоўвання</string>
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
     <string name="external_storage_unavailable">Спампоўванне перарвана. Прычына: знешняе сховішча недаступна</string>

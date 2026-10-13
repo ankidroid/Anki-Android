@@ -80,7 +80,7 @@
     <string name="menu_unmark_note">Desmarcar nota</string>
     <string name="menu_enable_voice_playback" maxLength="28">Activar reproducción de voz</string>
     <string name="menu_disable_voice_playback">Desactivar reproducción de voz</string>
-    <string name="menu_create_backup" maxLength="28">Create backup</string>
+    <string name="menu_create_backup" maxLength="28">Crear copia de seguridad</string>
     <string name="new_dynamic_deck">Crear mazo filtrado</string>
     <string name="directory_inaccessible">El directorio AnkiDroid es inaccesible</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
@@ -127,8 +127,8 @@
     <string name="read_write_permission_label">Leer y escribir en la base de datos de AnkiDroid</string>
     <string name="read_write_permission_description">acceder a notas, tarjetas, tipo de notas, y mazos existentes, así como crear otros nuevos</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Card browser</string>
-    <string name="context_menu_anki_card_label">Anki card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu.">Explorador de tarjetas</string>
+    <string name="context_menu_anki_card_label">Tarjeta Anki</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Las colecciones no se pueden combinar.\n¿Qué colección quieres mantener?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
