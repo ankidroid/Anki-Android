@@ -301,6 +301,30 @@ class WhiteboardViewModel(
     }
 
     /**
+     * Cancels the running path-erase gesture, and brings back the paths it erased.
+     * Does nothing if no erase gesture is active.
+     */
+    fun cancelPathEraseGesture() {
+        if (pathsErasedInCurrentGesture.isNotEmpty()) {
+            val restoredWithIndices =
+                pathsErasedInCurrentGesture.mapNotNull { erasedAction ->
+                    pathsBeforeGesture
+                        .indexOfOrNull(erasedAction)
+                        ?.let { Pair(it, erasedAction) }
+                }
+            // only the erased paths are put back, so anything done meanwhile is kept
+            paths.update { currentPaths ->
+                val mutablePaths = currentPaths.toMutableList()
+                restoredWithIndices.sortedBy { it.first }.forEach { (index, action) ->
+                    mutablePaths.add(index.coerceAtMost(mutablePaths.size), action)
+                }
+                mutablePaths
+            }
+            pathsErasedInCurrentGesture.clear()
+        }
+    }
+
+    /**
      * Reverts the last drawing action.
      */
     fun undo() {
@@ -355,6 +379,7 @@ class WhiteboardViewModel(
      * Clears all paths from the canvas.
      */
     fun clearCanvas() {
+        pathsErasedInCurrentGesture.clear()
         if (paths.value.isNotEmpty()) {
             val action = ClearAction(paths.value)
             undoStack.update { it + action }
