@@ -3,6 +3,8 @@
 package com.ichi2.anki.security
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -33,6 +35,20 @@ class AppPermissions(
     private val context: Context,
     private val showSnackbar: (String) -> Unit = {},
 ) {
+    /**
+     * Creates a new URL navigation intent, or `null` when permission is denied.
+     *
+     * HTTP(S) links do not require external app launches to be enabled and are returned with
+     * `CATEGORY_BROWSABLE`.
+     *
+     * Other URL schemes require [external app launches][checkCanLaunchExternalApps] to be enabled.
+     */
+    fun createUrlIntent(url: Uri): Intent? =
+        when (url.scheme) {
+            "http", "https" -> Intent(Intent.ACTION_VIEW, url).addCategory(Intent.CATEGORY_BROWSABLE)
+            else -> if (checkCanLaunchExternalApps()) Intent(Intent.ACTION_VIEW, url) else null
+        }
+
     /**
      * Returns true if cards may launch external apps;
      * shows a rate-limited snackbar on denial.

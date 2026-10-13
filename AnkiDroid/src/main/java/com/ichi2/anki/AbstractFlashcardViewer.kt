@@ -2623,7 +2623,8 @@ abstract class AbstractFlashcardViewer :
             }
             if (intent == null) {
                 val uri = url.toUri()
-                if (!appPermission.checkCanLaunchExternalApps()) {
+                intent = appPermission.createUrlIntent(uri)
+                if (intent == null) {
                     Timber.w("URL blocked: canLaunchExternalApps")
                     return true
                 }
@@ -2632,7 +2633,6 @@ abstract class AbstractFlashcardViewer :
                     return true
                 }
                 Timber.d("Opening external link \"%s\" with an Intent", url)
-                intent = Intent(Intent.ACTION_VIEW, uri)
             } else {
                 Timber.d("Opening resolved external link \"%s\" with an Intent: %s", url, intent)
             }
