@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.format.Formatter
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -284,7 +285,12 @@ class MultimediaImageFragment :
     }
 
     private fun handleImageUri() {
-        if (imageUri != null) {
+        val currentImageUri = viewModel.currentMultimediaUri.value
+        if (currentImageUri != null) {
+            // The launch URI is only the initial image; cropping or replacement may have changed it.
+            previewImage(currentImageUri)
+            binding.imageFileSize.text = Formatter.formatFileSize(requireContext(), viewModel.selectedMediaFileSize)
+        } else if (imageUri != null) {
             // a content:// or a file:// already in our cache; resolveUriToFile handles both
             handleSelectImageIntent(imageUri)
         } else {

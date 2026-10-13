@@ -37,15 +37,23 @@ import java.io.File
 /**
  * Owns the multimedia capture lifecycle for a [NoteEditorFragment].
  *
- * The [launcher] must already be registered on the fragment (an
- * `ActivityResultLauncher` can only be created during fragment initialisation);
- * its callback forwards to [handleActions] / [handleResult].
+ * Must be created during fragment initialization to register the Gallery picker.
+ * The [launcher] must already be registered; its callback forwards to [handleActions] / [handleResult].
  */
 internal class NoteEditorMultimediaController(
     private val fragment: NoteEditorFragment,
     private val launcher: ActivityResultLauncher<Intent>,
 ) {
     private var actionJob: Job? = null
+
+    private val galleryPicker =
+        NoteEditorGalleryPicker(fragment) { fieldIndex, imageUri ->
+            fragment.launchCatchingTask {
+                val note = fragment.getCurrentMultimediaEditableNote()
+                if (note.isEmpty) return@launchCatchingTask
+                launchEditor(MultimediaActionHandler.ImageFile, fieldIndex, note, imageUri)
+            }
+        }
 
     // Use the same HTML if the same image is pasted multiple times.
     private var pastedImageCache: HashMap<String, String> = HashMap()
@@ -65,7 +73,12 @@ internal class NoteEditorMultimediaController(
                 fragment.multimediaViewModel.multimediaAction.first { action ->
                     Timber.i("Selected multimedia action: %s", action)
                     val handler = MultimediaActionHandler.forAction(action)
-                    launchEditor(handler, fieldIndex, note)
+                    if (handler == MultimediaActionHandler.ImageFile) {
+                        // An empty image editor would be exposed during the picker's back animation.
+                        galleryPicker.launch(fieldIndex)
+                    } else {
+                        launchEditor(handler, fieldIndex, note)
+                    }
                     true
                 }
             }
@@ -75,13 +88,19 @@ internal class NoteEditorMultimediaController(
         handler: MultimediaActionHandler,
         fieldIndex: Int,
         note: MultimediaEditableNote,
+        imageUri: Uri? = null,
     ) {
         val field = handler.createField().also { note.setField(fieldIndex, it) }
         val intent =
             handler.buildIntent(
                 fragment.requireContext(),
-                MultimediaActivityExtra(fieldIndex, field, note),
+                MultimediaActivityExtra(fieldIndex, field, note, imageUri?.toString()),
             )
+        if (imageUri != null) {
+            // The URI in the serialized arguments does not carry the picker's read grant.
+            intent.data = imageUri
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
         launcher.launch(intent)
     }
 
@@ -192,12 +211,14 @@ internal class NoteEditorMultimediaController(
 
     fun onSaveInstanceState(outState: Bundle) {
         outState.putSerializable(STATE_KEY_IMAGE_CACHE, pastedImageCache)
+        galleryPicker.onSaveInstanceState(outState)
     }
 
     fun onRestoreInstanceState(state: Bundle) {
         pastedImageCache =
             state.getSerializableCompat<HashMap<String, String>>(STATE_KEY_IMAGE_CACHE)
                 ?: HashMap()
+        galleryPicker.onRestoreInstanceState(state)
     }
 
     /**
