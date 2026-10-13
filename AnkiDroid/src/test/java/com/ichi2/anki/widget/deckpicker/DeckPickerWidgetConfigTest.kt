@@ -8,9 +8,9 @@ import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.widgets.R
 import com.ichi2.widget.AppWidgetId
 import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
 import com.ichi2.widget.deckpicker.DeckPickerWidgetPreferences
