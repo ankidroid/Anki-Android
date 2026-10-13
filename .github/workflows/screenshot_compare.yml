@@ -85,12 +85,16 @@ jobs:
           SUBDIR: ${{ github.event_name == 'pull_request' && format('screenshot-diff-pr-{0}', github.event.number) || format('screenshot-diff-{0}', github.ref_name) }}
         run: |
           # Trim 'AnkiDroid/build/outputs/roborazzi' from the artifact
-          # Only keep diagnostic content for failing cases: each <class>/diffs/ becomes <class>/
+          # Only keep the _compare images of failing cases: <class>/diffs/*_compare.png moves to <class>/
           mkdir -p "screenshot-diff/$SUBDIR"
           shopt -s nullglob
           for diffs_dir in AnkiDroid/build/outputs/roborazzi/*/diffs; do
             class_name="$(basename "$(dirname "$diffs_dir")")"
-            mv "$diffs_dir" "screenshot-diff/$SUBDIR/$class_name"
+            compares=("$diffs_dir"/*_compare.png)
+            if (( ${#compares[@]} )); then
+              mkdir -p "screenshot-diff/$SUBDIR/$class_name"
+              mv "${compares[@]}" "screenshot-diff/$SUBDIR/$class_name/"
+            fi
           done
 
       - name: Upload screenshot diffs
