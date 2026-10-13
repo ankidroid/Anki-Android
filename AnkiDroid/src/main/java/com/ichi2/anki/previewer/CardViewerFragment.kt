@@ -321,9 +321,10 @@ abstract class CardViewerFragment(
                             // Preserve the existing browser check for custom schemes.
                             openUrl(url)
                         }
-                    } catch (_: Throwable) {
-                        Timber.w("Could not open url")
-                        return false
+                    } catch (e: Throwable) {
+                        Timber.w(e, "Could not open url")
+                        showSnackbar(CommonString.activity_start_failed)
+                        // Consume failed launches: external pages must not load inside the card.
                     }
                 }
             }

@@ -88,6 +88,17 @@ class CardLinkNavigationTest(
     }
 
     @Test
+    fun `missing browsable handler does not load an external page in the card`() {
+        registerNativeHandler(browsable = false)
+        withWebView { webView ->
+            shadowOf(targetContext.applicationContext as Application).checkActivities(true)
+            val request = mockWebResourceRequest("https://native.example.org/action")
+            assertTrue(shadowOf(webView).webViewClient.shouldOverrideUrlLoading(webView, request))
+            targetContext.assertNoActivityStarted()
+        }
+    }
+
+    @Test
     fun `parsed intents with web data still require permission`() {
         targetContext.registerWebBrowser()
         withWebView { webView ->
