@@ -24,6 +24,7 @@ import com.ichi2.anki.multimedia.MultimediaActivityExtra
 import com.ichi2.anki.multimedia.MultimediaResult
 import com.ichi2.anki.multimediacard.fields.EFieldType
 import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.ContentResolverUtil
@@ -64,16 +65,24 @@ internal class NoteEditorMultimediaController(
                 fragment.multimediaViewModel.multimediaAction.first { action ->
                     Timber.i("Selected multimedia action: %s", action)
                     val handler = MultimediaActionHandler.forAction(action)
-                    val field = handler.createField().also { note.setField(fieldIndex, it) }
-                    val intent =
-                        handler.buildIntent(
-                            fragment.requireContext(),
-                            MultimediaActivityExtra(fieldIndex, field, note),
-                        )
-                    launcher.launch(intent)
+                    launchEditor(handler, fieldIndex, note)
                     true
                 }
             }
+    }
+
+    private fun launchEditor(
+        handler: MultimediaActionHandler,
+        fieldIndex: Int,
+        note: MultimediaEditableNote,
+    ) {
+        val field = handler.createField().also { note.setField(fieldIndex, it) }
+        val intent =
+            handler.buildIntent(
+                fragment.requireContext(),
+                MultimediaActivityExtra(fieldIndex, field, note),
+            )
+        launcher.launch(intent)
     }
 
     /**
