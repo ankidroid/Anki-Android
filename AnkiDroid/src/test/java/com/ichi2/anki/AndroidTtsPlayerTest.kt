@@ -34,6 +34,13 @@ import kotlin.time.Duration.Companion.seconds
 @RunWith(AndroidJUnit4::class)
 class AndroidTtsPlayerTest {
     @Test
+    fun `network timeout is reported with its specific error code`() {
+        val error = AndroidTtsError.fromErrorCode(TextToSpeech.ERROR_NETWORK_TIMEOUT)
+
+        assertThat(error.developerString, equalTo("ERROR_NETWORK_TIMEOUT"))
+    }
+
+    @Test
     fun `locale fallback prefers the first installed voice`() {
         val unavailable = frenchVoice("unavailable", installed = false)
         val first = frenchVoice("first")
