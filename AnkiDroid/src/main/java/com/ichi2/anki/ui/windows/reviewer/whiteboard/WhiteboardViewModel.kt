@@ -90,7 +90,19 @@ class WhiteboardViewModel(
 ) : ViewModel(),
     BindingProcessor<ReviewerBinding, WhiteboardAction> {
     // State for drawing history and undo/redo
+
+    /**
+     * What the whiteboard shows: [allPaths] without the ones hidden by the running erase gesture.
+     */
     val paths = MutableStateFlow<List<DrawingAction>>(emptyList())
+
+    /**
+     * Every path the undo/redo history knows about.
+     *
+     * A path erased by the running gesture stays here until the gesture ends, so that undo, redo
+     * and clear keep working on it while a finger is held down.
+     */
+    private var allPaths: List<DrawingAction> = emptyList()
     private val undoStack = MutableStateFlow<List<UndoableAction>>(emptyList())
     private val redoStack = MutableStateFlow<List<UndoableAction>>(emptyList())
     val canUndo = undoStack.map { it.isNotEmpty() }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -128,8 +140,12 @@ class WhiteboardViewModel(
     private var eraserLastX = 0.0f
     private var eraserLastY = 0.0f
     private val pathsErasedInCurrentGesture = mutableListOf<DrawingAction>()
-    private var pathsBeforeGesture: List<DrawingAction> = emptyList()
     private var isDarkMode = false
+
+    /** Publishes [allPaths] minus the paths the running erase gesture hides */
+    private fun publishPaths() {
+        paths.value = allPaths.filterNot { it in pathsErasedInCurrentGesture }
+    }
 
     /**
      * Loads saved preferences for brushes and eraser settings from the repository.
@@ -174,7 +190,8 @@ class WhiteboardViewModel(
                 strokeWidth,
                 isPixelEraser,
             )
-        paths.update { it + newAction }
+        allPaths = allPaths + newAction
+        publishPaths()
         undoStack.update { it + AddAction(newAction) }
         redoStack.value = emptyList()
     }
@@ -187,7 +204,6 @@ class WhiteboardViewModel(
         x: Float,
         y: Float,
     ) {
-        pathsBeforeGesture = paths.value
         pathsErasedInCurrentGesture.clear()
         eraserLastX = x
         eraserLastY = y
@@ -201,25 +217,23 @@ class WhiteboardViewModel(
         x: Float,
         y: Float,
     ) {
-        if (paths.value.isEmpty()) return
+        val visiblePaths = paths.value
+        if (visiblePaths.isEmpty()) return
 
-        val remainingPaths = paths.value.toMutableList()
         var pathWasErased = false
-
-        val pathsToEvaluate = remainingPaths.filter { it !in pathsErasedInCurrentGesture && !it.isEraser }
+        val pathsToEvaluate = visiblePaths.filter { !it.isEraser }
         val eraserRadius =
             ((activeTool.value as? WhiteboardTool.Eraser)?.width ?: eraser.width) / 2
 
         for (action in pathsToEvaluate) {
             if (isPathIntersectingWithSegment(action, x, y, eraserLastX, eraserLastY, eraserRadius)) {
-                remainingPaths.remove(action)
                 pathsErasedInCurrentGesture.add(action)
                 pathWasErased = true
             }
         }
 
         if (pathWasErased) {
-            paths.value = remainingPaths
+            publishPaths()
         }
 
         eraserLastX = x
@@ -286,18 +300,28 @@ class WhiteboardViewModel(
      * Finalizes a path erase gesture, adding the erased paths to the undo stack.
      */
     fun endPathEraseGesture() {
-        if (pathsErasedInCurrentGesture.isNotEmpty()) {
-            val removedWithIndices =
-                pathsErasedInCurrentGesture.mapNotNull { removedAction ->
-                    pathsBeforeGesture
-                        .indexOfOrNull(removedAction)
-                        ?.let { Pair(it, removedAction) }
-                }
-            val action = RemoveAction(removedWithIndices)
-            undoStack.update { it + action }
-            redoStack.value = emptyList()
-            pathsErasedInCurrentGesture.clear()
-        }
+        val removedWithIndices =
+            pathsErasedInCurrentGesture.mapNotNull { removedAction ->
+                allPaths.indexOfOrNull(removedAction)?.let { Pair(it, removedAction) }
+            }
+        pathsErasedInCurrentGesture.clear()
+        if (removedWithIndices.isEmpty()) return
+
+        val removed = removedWithIndices.map { it.second }
+        allPaths = allPaths.filterNot { it in removed }
+        publishPaths()
+        undoStack.update { it + RemoveAction(removedWithIndices) }
+        redoStack.value = emptyList()
+    }
+
+    /**
+     * Cancels the running path-erase gesture, so the paths it hid are shown again.
+     * Does nothing if no erase gesture is active.
+     */
+    fun cancelPathEraseGesture() {
+        if (pathsErasedInCurrentGesture.isEmpty()) return
+        pathsErasedInCurrentGesture.clear()
+        publishPaths()
     }
 
     /**
@@ -311,21 +335,20 @@ class WhiteboardViewModel(
 
         when (lastAction) {
             is AddAction -> {
-                paths.update { list -> list.filterNot { it === lastAction.added } }
+                allPaths = allPaths.filterNot { it === lastAction.added }
             }
             is RemoveAction -> {
-                paths.update { currentPaths ->
-                    val mutablePaths = currentPaths.toMutableList()
-                    lastAction.removed.sortedBy { it.first }.forEach { (index, action) ->
-                        mutablePaths.add(index.coerceAtMost(mutablePaths.size), action)
-                    }
-                    mutablePaths
+                val mutablePaths = allPaths.toMutableList()
+                lastAction.removed.sortedBy { it.first }.forEach { (index, action) ->
+                    mutablePaths.add(index.coerceAtMost(mutablePaths.size), action)
                 }
+                allPaths = mutablePaths
             }
             is ClearAction -> {
-                paths.update { it + lastAction.cleared }
+                allPaths = allPaths + lastAction.cleared
             }
         }
+        publishPaths()
     }
 
     /**
@@ -338,29 +361,28 @@ class WhiteboardViewModel(
         undoStack.update { it + actionToRedo }
 
         when (actionToRedo) {
-            is AddAction -> {
-                paths.update { it + actionToRedo.added }
-            }
+            is AddAction -> allPaths = allPaths + actionToRedo.added
             is RemoveAction -> {
                 val actionsToRemove = actionToRedo.removed.map { it.second }
-                paths.update { list -> list.filterNot { it in actionsToRemove } }
+                allPaths = allPaths.filterNot { it in actionsToRemove }
             }
-            is ClearAction -> {
-                paths.value = emptyList()
-            }
+            is ClearAction -> allPaths = emptyList()
         }
+        publishPaths()
     }
 
     /**
      * Clears all paths from the canvas.
      */
     fun clearCanvas() {
-        if (paths.value.isNotEmpty()) {
-            val action = ClearAction(paths.value)
+        pathsErasedInCurrentGesture.clear()
+        if (allPaths.isNotEmpty()) {
+            val action = ClearAction(allPaths)
             undoStack.update { it + action }
             redoStack.value = emptyList()
-            paths.value = emptyList()
+            allPaths = emptyList()
         }
+        publishPaths()
     }
 
     /**
