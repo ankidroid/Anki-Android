@@ -97,7 +97,7 @@ class LayoutValidationTest : InstrumentedTest() {
                     com.ichi2.anki.R.layout.fragment_card_browser_searchview,
                 ) +
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-                        listOf(com.ichi2.anki.R.layout.widget_small_unthemed)
+                        listOf(com.ichi2.anki.widgets.R.layout.widget_small_unthemed)
                     } else {
                         emptyList()
                     }
