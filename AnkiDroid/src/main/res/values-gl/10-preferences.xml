@@ -312,7 +312,7 @@
     <string name="pref_cat_about_title" maxLength="41">Sobre</string>
     <string name="contributors_title">Contribuíntes</string>
     <string name="about_contributors_description"><![CDATA[Estes son os nosos incríbeis <a href=\"%1$s\">contribuíntes</a>. Ti tamén podes colaborar co AnkiDroid programando, traducindo, doando e <a href=\"%2$s\">máis</a>!]]></string>
-    <string name="about_contributors_description_no_donate"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description_no_donate"><![CDATA[Estes son os nosos incríbeis <a href=\"%1$s\">contribuíntes</a>. Ti tamén podes colaborar co AnkiDroid programando, traducindo e  <a href=\"%2$s\">máis</a>!]]></string>
     <string name="license">Licenza</string>
     <string name="license_description"><![CDATA[AnkiDroid publícase baixo as licenzas <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a>, co código fonte dispoñíbel <a href=\"%3$s\">no GitHub</a>]]></string>
     <string name="other_licenses"><![CDATA[AnkiDroid tamén emprega bibliotecas e iconas de terceiros, que están publicadas baixo varias <a href=\"%1$s\">licenzas</a> de código aberto]]></string>
@@ -443,15 +443,15 @@
     <string name="new_study_screen_summ"><![CDATA[Esta pantalla de estudo mellorada substituirá a actual. Algunhas funcións da versión anterior foron cambiadas ou eliminadas. Por favor, informa de calquera <a href="%1$s">suxestión</a> ou <a href="%2$s">erro</a>]]></string>
     <string name="show_answer_feedback" maxLength="41">Amosar explicación da resposta</string>
     <string name="screen" maxLength="41">Pantalla</string>
-    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Also assign to ‘%1$s’?</string>
+    <string name="also_assign_binding_to_show_answer" comment="Question shown after assigning binding to an \'Answer\' command, asking whether it should also be assigned to the \'Show answer\'; %1$s is \'Show answer\'">Asignar tamén a «%1$s»?</string>
     <string name="dialog_skip" comment="Skip assigning binding to \'Show answer\'">Omitir</string>
-    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Atribuír</string>
+    <string name="dialog_assign" comment="Assign binding to \'Answer\' command">Asignar</string>
     <!--Keyboard shortcuts dialog-->
     <string name="open_settings" comment="Description of the shortcut that opens the app settings">Abrir configuración</string>
     <string name="related_settings_title" comment="Title of the section for related settings">Configuracións relacionadas</string>
     <!-- External Directory Selection Preference -->
-    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Not set</string>
-    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
-    <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
-    <string name="pref_directory_not_writable">Directory is not writable</string>
+    <string name="pref_directory_not_set" comment="Summary of the AnkiDroid directory setting when no directory is set">Sen definir</string>
+    <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Ruta personalizada</string>
+    <string name="pref_enter_custom_path" maxLength="41">Inserir ruta personalizada</string>
+    <string name="pref_directory_not_writable">O directorio non permite a escritura</string>
 </resources>

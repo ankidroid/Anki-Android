@@ -45,9 +45,9 @@
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか、\"default\" という名前のカテゴリを追加してください</string>
     <string name="custom_study_new_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
-    <string name="custom_study_forgotten">直近 x 日間で「やり直し」を選んだカードを再学習</string>
-    <string name="custom_study_ahead_description">Review cards due in the next:</string>
-    <string name="custom_study_preview">Preview new cards added in the last:</string>
+    <string name="custom_study_forgotten">（今日を含め）何日の間に [もう一度] と回答したカードを復習しますか？</string>
+    <string name="custom_study_ahead_description">何日先まで復習しますか？</string>
+    <string name="custom_study_preview">（今日を含め）何日の間に追加した新規カードをプレビューしますか？</string>
     <string name="custom_study_tags">デッキから抽出する枚数：</string>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
@@ -65,7 +65,7 @@
     <string name="dialog_yes">はい</string>
     <string name="dialog_keep">維持</string>
     <string name="dialog_remove">削除</string>
-    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">Exit</string>
+    <string name="dialog_exit" comment="Label for a button which will exit/finish the current screen">終了</string>
     <string name="dialog_continue">続行</string>
     <string name="dialog_processing">処理中です&#8230;</string>
     <string name="dialog_allow">許可</string>
@@ -136,7 +136,7 @@
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">言語を設定</string>
     <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字編集のために各フィールドを選択した際にキーボードの言語を自動的に切り替えることができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードアプリの開発者に「setImeHintLocales」機能をリクエストしてください</string>
-    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">Unknown language [%1$s]</string>
+    <string name="locale_selection_dialog_unknown_language" comment="Used for the locales whose name is not displayed when selected and placeholder is language tag">不明な言語 [%1$s]</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使い方</string>
     <string name="help_item_ankidroid_manual">AnkiDroidマニュアル</string>
