@@ -134,6 +134,8 @@ class HtmlTypeAnswerReviewerTest : InstrumentedTest() {
     @Test
     fun onlyTheMarkedAnswerDisablesSuggestions() =
         withReviewer { webView ->
+            // Let reviewer autofocus finish before moving to another field.
+            focusAnswer(webView, noSuggest = true)
             webView.focusInput("ordinary")
             val baseline = keyboard.awaitEditor().inputType
             webView.focusInput("typeans")
