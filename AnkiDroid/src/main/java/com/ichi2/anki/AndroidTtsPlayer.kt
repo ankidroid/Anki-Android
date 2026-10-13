@@ -288,6 +288,7 @@ sealed class AndroidTtsError : TtsPlayer.TtsError() {
                 TextToSpeech.ERROR_SYNTHESIS -> AndroidSynthesisError
                 TextToSpeech.ERROR_INVALID_REQUEST -> AndroidInvalidRequest
                 TextToSpeech.ERROR_NETWORK -> AndroidNetworkError
+                TextToSpeech.ERROR_NETWORK_TIMEOUT -> AndroidNetworkTimeoutError
                 TextToSpeech.ERROR_OUTPUT -> AndroidOutputError
                 TextToSpeech.ERROR_NOT_INSTALLED_YET -> AndroidNotInstalledYet
                 TextToSpeech.ERROR_SERVICE -> AndroidServiceError
