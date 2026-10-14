@@ -65,6 +65,7 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.NetworkType
@@ -221,6 +222,7 @@ import com.ichi2.utils.showDialogIfWebViewOutdated
 import com.ichi2.utils.title
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -301,6 +303,7 @@ open class DeckPicker :
 
     private lateinit var decksLayoutManager: LinearLayoutManager
     private lateinit var deckListAdapter: DeckAdapter
+    private var backgroundImageErrorShown = false
     private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
     @VisibleForTesting
@@ -588,7 +591,16 @@ open class DeckPicker :
             )
         }
 
-        lifecycleScope.launch { applyDeckPickerBackground() }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                applyDeckPickerBackground()
+                try {
+                    awaitCancellation()
+                } finally {
+                    deckPickerBinding.background.setImageDrawable(null)
+                }
+            }
+        }
 
         setupPullToSync()
         // Setup the FloatingActionButtons
@@ -1212,15 +1224,21 @@ open class DeckPicker :
     private suspend fun applyDeckPickerBackground() {
         val result = BackgroundImage.resolve(this)
         if (result is BackgroundImage.ResolveResult.Failure) {
-            showThemedToast(this, result.message(this), shortLength = false)
+            showBackgroundImageError(result.message(this))
         }
         val drawable = (result as? BackgroundImage.ResolveResult.Ready)?.drawable
         val applied =
             deckPickerBinding.background.setImageDrawableSafe(drawable) {
-                showThemedToast(this, getString(CommonString.background_image_too_large), shortLength = false)
+                showBackgroundImageError(getString(CommonString.background_image_too_large))
             }
         // activityHasBackground calls notifyDataSetChanged, ensure only 1 call
         deckListAdapter.activityHasBackground = applied && drawable != null
+    }
+
+    private fun showBackgroundImageError(message: String) {
+        if (backgroundImageErrorShown) return
+        backgroundImageErrorShown = true
+        showThemedToast(this, message, shortLength = false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
