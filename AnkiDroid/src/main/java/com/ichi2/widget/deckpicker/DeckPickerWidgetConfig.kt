@@ -48,6 +48,7 @@ import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.AppWidgetId.Companion.updateWidget
 import com.ichi2.widget.WidgetConfigScreenAdapter
+import com.ichi2.widget.getAppWidgetManager
 import dev.androidbroadcast.vbpd.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -268,8 +269,9 @@ class DeckPickerWidgetConfig :
 
             val selectedDeckIds = deckPickerWidgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
 
-            val appWidgetManager = AppWidgetManager.getInstance(this)
-            DeckPickerWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
+            getAppWidgetManager(this)?.let { appWidgetManager ->
+                DeckPickerWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
+            }
 
             val resultValue = Intent().updateWidget(appWidgetId)
             setResult(RESULT_OK, resultValue)

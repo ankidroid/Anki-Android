@@ -38,6 +38,7 @@ import com.ichi2.widget.AppWidgetIds
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.cancelRecurringAlarm
 import com.ichi2.widget.getAppWidgetIdsEx
+import com.ichi2.widget.getAppWidgetManager
 import com.ichi2.widget.setRecurringAlarm
 import com.ichi2.widget.updateAppWidget
 import kotlinx.coroutines.launch
@@ -301,7 +302,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
          * It fetches the App Widget IDs and updates each widget with the associated deck IDs.
          */
         fun updateDeckPickerWidgets(context: Context) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val appWidgetManager = getAppWidgetManager(context) ?: return
 
             val provider = ComponentName(context, DeckPickerWidget::class.java)
             Timber.d("Fetching appWidgetIds for provider: ${provider.shortClassName}")
@@ -367,14 +368,13 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         context: Context,
         intent: Intent,
     ) {
+        val appWidgetManager = getAppWidgetManager(context) ?: return
         super.onReceive(context, intent)
 
         val widgetPreferences = DeckPickerWidgetPreferences(context)
 
         when (intent.action) {
             ACTION_APPWIDGET_UPDATE -> {
-                val appWidgetManager = AppWidgetManager.getInstance(context)
-
                 // Retrieve the widget ID from the intent
                 val appWidgetId = intent.getAppWidgetId()
                 val selectedDeckIds = intent.getLongArrayExtra(EXTRA_SELECTED_DECK_IDS)
@@ -415,7 +415,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                         selectedDeckIds.joinToString(", ")
                     }",
                 )
-                updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId, selectedDeckIds)
+                updateWidget(context, appWidgetManager, appWidgetId, selectedDeckIds)
             }
             AppWidgetManager.ACTION_APPWIDGET_DELETED -> {
                 Timber.d("ACTION_APPWIDGET_DELETED received")
