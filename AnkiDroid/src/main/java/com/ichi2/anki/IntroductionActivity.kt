@@ -20,7 +20,7 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
-import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.FRAGMENT_KEY
+import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.REQUEST_COLLECTION_SETUP
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.RESULT_KEY
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.utils.ext.setFragmentResultListener
@@ -63,7 +63,7 @@ class IntroductionActivity :
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
 
-        setFragmentResultListener(FRAGMENT_KEY) { _, bundle ->
+        setFragmentResultListener(REQUEST_COLLECTION_SETUP) { _, bundle ->
             val option =
                 BundleCompat.getParcelable(bundle, RESULT_KEY, CollectionSetupOption::class.java) ?: error("Missing introduction option!")
             when (option) {

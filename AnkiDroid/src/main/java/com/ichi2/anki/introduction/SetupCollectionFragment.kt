@@ -64,7 +64,7 @@ class SetupCollectionFragment : Fragment(R.layout.fragment_introduction) {
     }
 
     private fun setResult(option: CollectionSetupOption) {
-        setFragmentResult(FRAGMENT_KEY, Bundle().apply { putParcelable(RESULT_KEY, option) })
+        setFragmentResult(REQUEST_COLLECTION_SETUP, Bundle().apply { putParcelable(RESULT_KEY, option) })
     }
 
     @Parcelize
@@ -77,7 +77,7 @@ class SetupCollectionFragment : Fragment(R.layout.fragment_introduction) {
     }
 
     companion object {
-        const val FRAGMENT_KEY = "collectionSetup"
+        const val REQUEST_COLLECTION_SETUP = "collectionSetup"
         const val RESULT_KEY = "result"
     }
 }
