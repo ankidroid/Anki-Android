@@ -78,6 +78,15 @@ class SwitchProfilesViewModelTest {
     }
 
     @Test
+    fun `addProfile lists the new profile`() {
+        val viewModel = viewModel()
+
+        viewModel.addProfile(nameOf("Work"))
+
+        assertEquals(listOf("Default", "Work"), viewModel.profiles.value.map { it.name })
+    }
+
+    @Test
     fun `the list starts with the Default profile`() {
         assertEquals(listOf(ProfileId.DEFAULT), viewModel().profiles.value.map { it.id })
     }

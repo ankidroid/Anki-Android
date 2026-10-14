@@ -16,6 +16,8 @@ value class ProfileName private constructor(
 ) {
     override fun toString(): String = value
 
+    fun existsIn(names: Iterable<String>): Boolean = names.any { it.equals(value, ignoreCase = true) }
+
     companion object {
         const val MAX_LENGTH = 50
 

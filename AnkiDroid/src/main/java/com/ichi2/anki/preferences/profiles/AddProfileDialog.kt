@@ -21,11 +21,13 @@ import com.ichi2.compose.ui.preview.DialogPreviews
  */
 @Composable
 fun AddProfileDialog(
+    existingNames: List<String>,
     onDismissRequest: () -> Unit,
     onConfirm: (ProfileName) -> Unit,
 ) {
     val emptyError = stringResource(CommonString.profile_name_empty_error)
     val tooLongError = stringResource(CommonString.profile_name_too_long_error, ProfileName.MAX_LENGTH)
+    val nameExistsError = stringResource(CommonString.error_name_exists)
 
     TextInputDialog(
         title = stringResource(CommonString.add_profile),
@@ -38,8 +40,8 @@ fun AddProfileDialog(
         maxLengthCounter = ProfileName.MAX_LENGTH,
         capitalization = KeyboardCapitalization.Words,
         errorMessageFor = { text ->
-            when (ProfileName.validate(text)) {
-                is ValidationResult.Valid -> null
+            when (val result = ProfileName.validate(text)) {
+                is ValidationResult.Valid -> nameExistsError.takeIf { result.name.existsIn(existingNames) }
                 is ValidationResult.Empty -> emptyError
                 is ValidationResult.TooLong -> tooLongError
             }
@@ -51,6 +53,6 @@ fun AddProfileDialog(
 @Composable
 private fun AddProfileDialogPreview() {
     AnkiDroidTheme {
-        AddProfileDialog(onDismissRequest = {}, onConfirm = {})
+        AddProfileDialog(existingNames = emptyList(), onDismissRequest = {}, onConfirm = {})
     }
 }
