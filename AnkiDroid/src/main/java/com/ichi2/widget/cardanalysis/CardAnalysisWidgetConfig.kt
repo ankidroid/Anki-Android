@@ -35,6 +35,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.widget.AppWidgetId.Companion.INVALID_APPWIDGET_ID
 import com.ichi2.widget.AppWidgetId.Companion.getAppWidgetId
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget.Companion.EXTRA_SELECTED_DECK_ID
+import com.ichi2.widget.getAppWidgetManager
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
 
@@ -168,6 +169,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
     }
 
     private fun updateWidget() {
+        val appWidgetManager = getAppWidgetManager(this) ?: return
         val updateIntent =
             Intent(this, CardAnalysisWidget::class.java).apply {
                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
@@ -177,7 +179,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
 
         sendBroadcast(updateIntent)
 
-        val appWidgetManager = AppWidgetManager.getInstance(this)
         CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
     }
 

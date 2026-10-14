@@ -33,6 +33,7 @@ import com.ichi2.widget.cancelRecurringAlarm
 import com.ichi2.widget.deckpicker.DeckWidgetData
 import com.ichi2.widget.deckpicker.getDeckNameAndStats
 import com.ichi2.widget.getAppWidgetIdsEx
+import com.ichi2.widget.getAppWidgetManager
 import com.ichi2.widget.setRecurringAlarm
 import com.ichi2.widget.updateAppWidget
 import kotlinx.coroutines.launch
@@ -204,7 +205,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
          * It fetches the App Widget IDs and updates each widget with the associated deck ID.
          */
         fun updateCardAnalysisWidgets(context: Context) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val appWidgetManager = getAppWidgetManager(context) ?: return
 
             val provider = ComponentName(context, CardAnalysisWidget::class.java)
             Timber.d("Fetching appWidgetIds for provider: ${provider.shortClassName}")
@@ -260,14 +261,13 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         context: Context,
         intent: Intent,
     ) {
+        val appWidgetManager = getAppWidgetManager(context) ?: return
         super.onReceive(context, intent)
 
         val widgetPreferences = CardAnalysisWidgetPreferences(context)
 
         when (intent.action) {
             ACTION_APPWIDGET_UPDATE -> {
-                val appWidgetManager = AppWidgetManager.getInstance(context)
-
                 // Retrieve the widget ID from the intent
                 val appWidgetId = intent.getAppWidgetId()
                 val selectedDeckId = intent.getLongExtra(EXTRA_SELECTED_DECK_ID, -1L)
@@ -290,7 +290,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     Timber.d("Received ACTION_UPDATE_WIDGET for widget ID: $appWidgetId")
 
                     // Update the widget using the internally fetched deck ID
-                    updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId)
+                    updateWidget(context, appWidgetManager, appWidgetId)
                 }
             }
             AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED -> {
