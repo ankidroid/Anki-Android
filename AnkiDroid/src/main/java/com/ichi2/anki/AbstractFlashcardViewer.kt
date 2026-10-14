@@ -143,6 +143,7 @@ import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator
 import com.ichi2.anki.security.AppPermissions
+import com.ichi2.anki.security.showExternalAppLaunchBlockedDialog
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.settings.Prefs
@@ -298,7 +299,14 @@ abstract class AbstractFlashcardViewer :
     val onRenderProcessGoneDelegate = OnRenderProcessGoneDelegate(this)
     protected val tts = TTS()
 
-    private val appPermission by lazy { AppPermissions(this) { msg -> showSnackbar(msg) } }
+    private val appPermission
+        by lazy {
+            AppPermissions(
+                this,
+                showSnackbar = { msg -> showSnackbar(msg) },
+                showLaunchDeniedDialog = { showExternalAppLaunchBlockedDialog(this) },
+            )
+        }
 
     // ----------------------------------------------------------------------------
     // LISTENERS
