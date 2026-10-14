@@ -97,6 +97,7 @@ fun SwitchProfilesScreen(
 
     if (isAddProfileDialogVisible) {
         AddProfileDialog(
+            existingNames = profiles.map { it.name },
             onDismissRequest = onAddProfileDismiss,
             onConfirm = onAddProfileConfirm,
         )

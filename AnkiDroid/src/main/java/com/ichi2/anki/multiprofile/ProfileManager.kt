@@ -80,9 +80,11 @@ class ProfileManager private constructor(
      * @param displayName The name to be associated with the new profile.
      * @return The unique [ProfileId] assigned to the newly created profile.
      *
+     * @throws IllegalArgumentException if another profile already uses [displayName], ignoring case.
      * @throws Exception if profile creation or persistence fails.
      */
     fun createNewProfile(displayName: ProfileName): ProfileId {
+        require(!isNameTaken(displayName)) { "Profile name is already in use" }
         val newProfileId = generateUniqueProfileId()
 
         val metadata = ProfileMetadata(displayName = displayName)
@@ -101,6 +103,8 @@ class ProfileManager private constructor(
      * @see ProfileRegistry.getAllProfiles
      */
     fun getAllProfiles(): Map<ProfileId, ProfileMetadata> = profileRegistry.getAllProfiles()
+
+    private fun isNameTaken(name: ProfileName): Boolean = name.existsIn(getAllProfiles().values.map { it.displayName.value })
 
     /**
      * Generates a unique [ProfileId] that does not collide with existing profiles.

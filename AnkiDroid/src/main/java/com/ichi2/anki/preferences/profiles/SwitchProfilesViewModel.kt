@@ -39,7 +39,8 @@ class SwitchProfilesViewModel(
     fun addProfile(name: ProfileName) {
         isAddProfileDialogVisible.value = false
         Timber.i("Add profile confirmed (%d chars)", name.value.length)
-        // TODO: handle profile creation via ProfileManager.createNewProfile
+        profileManager.createNewProfile(name)
+        refresh()
     }
 
     fun editProfile(profile: ProfileItem) {
