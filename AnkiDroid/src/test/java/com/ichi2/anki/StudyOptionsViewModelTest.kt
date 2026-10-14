@@ -7,6 +7,7 @@ import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.observability.ensureOpsExecuted
+import com.ichi2.anki.progress.ViewModelProgress
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -173,6 +174,24 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `rebuildCram - reports progress`() =
+        runTest {
+            addBasicNote()
+            addDynamicDeck("Filtered", "")
+
+            assertProgressAround(StudyOptionsProgress.REBUILDING_FILTERED_DECK) { viewModel.rebuildCram() }
+        }
+
+    @Test
+    fun `emptyCram - reports progress`() =
+        runTest {
+            addBasicNote()
+            addDynamicDeck("Filtered", "")
+
+            assertProgressAround(StudyOptionsProgress.EMPTYING_FILTERED_DECK) { viewModel.emptyCram() }
+        }
+
+    @Test
     fun `unbury - is undoable`() =
         runTest {
             addBasicNote()
@@ -299,6 +318,20 @@ class StudyOptionsViewModelTest : RobolectricTest() {
                 assertIs<StudyOptionsState.Loading>(viewModel.state)
             }
         }
+
+    private suspend fun assertProgressAround(
+        message: StudyOptionsProgress,
+        op: suspend () -> Unit,
+    ) {
+        viewModel.progressManager.progress.test {
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            op()
+            val active = assertIs<ViewModelProgress.Active<StudyOptionsProgress>>(awaitItem())
+            assertEquals(message, active.message)
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            expectNoEvents()
+        }
+    }
 
     /** Hold the production queue as a sync would; restore Robolectric's lock after all work finishes. */
     private suspend fun withBlockedCollectionQueue(block: suspend CoroutineScope.(releaseQueue: () -> Unit) -> Unit) {
