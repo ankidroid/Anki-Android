@@ -113,8 +113,8 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
         Timber.d("Set due date dialog: %d card(s)", cardIds.size)
         this.initialRotation = getScreenRotation()
 
-        childFragmentManager.setFragmentResultListener(RESULT_SUBMIT_DUE_DATE, this) { _, _ ->
-            Timber.i(RESULT_SUBMIT_DUE_DATE)
+        childFragmentManager.setFragmentResultListener(REQUEST_SUBMIT_DUE_DATE, this) { _, _ ->
+            Timber.i(REQUEST_SUBMIT_DUE_DATE)
             requireActivity().launchCatchingTask {
                 if (launchUpdateDueDate(showError = false).await() == null) {
                     Timber.w("unsuccessful updating dates; not dismissing dialog")
@@ -266,7 +266,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
         const val ARG_IDS_FILE = "ARGS_IDS_FILE"
         const val MAX_WIDTH_DP = 450f
 
-        private const val RESULT_SUBMIT_DUE_DATE = "SubmitDueDate"
+        private const val REQUEST_SUBMIT_DUE_DATE = "SubmitDueDate"
 
         /** Keeps the existing dialog and its input when another request arrives. */
         @MainThread
@@ -348,7 +348,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                             event?.keyCode == KeyEvent.KEYCODE_ENTER
                         ) {
                             parentFragmentManager.setFragmentResult(
-                                RESULT_SUBMIT_DUE_DATE,
+                                REQUEST_SUBMIT_DUE_DATE,
                                 Bundle(),
                             )
                             true
@@ -423,7 +423,7 @@ class SetDueDateDialog : AnalyticsDialogFragment() {
                             event?.keyCode == KeyEvent.KEYCODE_ENTER
                         ) {
                             parentFragmentManager.setFragmentResult(
-                                RESULT_SUBMIT_DUE_DATE,
+                                REQUEST_SUBMIT_DUE_DATE,
                                 Bundle(),
                             )
                             true

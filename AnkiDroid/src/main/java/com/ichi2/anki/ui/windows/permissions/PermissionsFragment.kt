@@ -61,7 +61,7 @@ abstract class PermissionsFragment(
         super.onResume()
         permissionsItems.forEach { it.updateSwitchCheckedStatus() }
         setFragmentResult(
-            PERMISSIONS_FRAGMENT_RESULT_KEY,
+            REQUEST_PERMISSIONS,
             Bundle().apply { putBoolean(HAS_ALL_PERMISSIONS_KEY, hasAllPermissions()) },
         )
     }
@@ -135,7 +135,7 @@ abstract class PermissionsFragment(
     }
 
     companion object {
-        const val PERMISSIONS_FRAGMENT_RESULT_KEY = "PERMISSION_FRAGMENT_RESULT"
+        const val REQUEST_PERMISSIONS = "PERMISSION_FRAGMENT_RESULT"
         const val HAS_ALL_PERMISSIONS_KEY = "HAS_ALL_PERMISSIONS"
     }
 }

@@ -30,7 +30,7 @@ interface TagsDialogListener {
 
     fun <F> F.registerFragmentResultReceiver() where F : Fragment, F : TagsDialogListener {
         parentFragmentManager.setFragmentResultListener(
-            ON_SELECTED_TAGS_KEY,
+            REQUEST_SELECT_TAGS,
             this,
         ) { _: String?, bundle: Bundle ->
             val selectedTags: List<String> =
@@ -56,11 +56,11 @@ interface TagsDialogListener {
                             putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
                             putSerializable(ON_SELECTED_TAGS__OPTION, stateFilter)
                         }
-                    fragmentManager.setFragmentResult(ON_SELECTED_TAGS_KEY, bundle)
+                    fragmentManager.setFragmentResult(REQUEST_SELECT_TAGS, bundle)
                 }
             }
 
-        const val ON_SELECTED_TAGS_KEY = "ON_SELECTED_TAGS_KEY"
+        const val REQUEST_SELECT_TAGS = "ON_SELECTED_TAGS_KEY"
         const val ON_SELECTED_TAGS__SELECTED_TAGS = "SELECTED_TAGS"
         const val ON_SELECTED_TAGS__INDETERMINATE_TAGS = "INDETERMINATE_TAGS"
         const val ON_SELECTED_TAGS__OPTION = "OPTION"

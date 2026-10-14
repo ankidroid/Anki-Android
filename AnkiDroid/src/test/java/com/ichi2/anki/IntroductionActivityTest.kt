@@ -72,7 +72,7 @@ class IntroductionActivityTest : RobolectricTest() {
             val activity = startRegularActivity<IntroductionActivity>(Intent())
 
             activity.supportFragmentManager.setFragmentResult(
-                SetupCollectionFragment.FRAGMENT_KEY,
+                SetupCollectionFragment.REQUEST_COLLECTION_SETUP,
                 Bundle().apply { putParcelable(SetupCollectionFragment.RESULT_KEY, DeckPickerWithNewCollection) },
             )
 
@@ -95,7 +95,7 @@ class IntroductionActivityTest : RobolectricTest() {
 
     private fun IntroductionActivity.clickSync() {
         supportFragmentManager.setFragmentResult(
-            SetupCollectionFragment.FRAGMENT_KEY,
+            SetupCollectionFragment.REQUEST_COLLECTION_SETUP,
             Bundle().apply { putParcelable(SetupCollectionFragment.RESULT_KEY, SyncFromExistingAccount) },
         )
     }

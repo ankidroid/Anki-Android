@@ -31,7 +31,7 @@ class PermissionsStartingAt30Fragment : PermissionsFragment(R.layout.fragment_pe
         ) {
             if (hasAllPermissions()) {
                 // the activity records the storage decision and finishes
-                setFragmentResult(PermissionsActivity.RESULT_COMPLETE, Bundle())
+                setFragmentResult(PermissionsActivity.REQUEST_PERMISSIONS_GRANTED, Bundle())
             }
         }
 

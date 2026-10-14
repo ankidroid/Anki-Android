@@ -18,7 +18,7 @@ import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
-import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.PERMISSIONS_FRAGMENT_RESULT_KEY
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.REQUEST_PERMISSIONS
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -59,11 +59,11 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
             return
         }
         val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
-        setFragmentResultListener(PERMISSIONS_FRAGMENT_RESULT_KEY) { _, bundle ->
+        setFragmentResultListener(REQUEST_PERMISSIONS) { _, bundle ->
             val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSIONS_KEY)
             setContinueButtonEnabled(hasAllPermissions)
         }
-        setFragmentResultListener(RESULT_COMPLETE) { _, _ -> decideStorageAndFinish() }
+        setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ -> decideStorageAndFinish() }
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
@@ -80,7 +80,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
      * Records the storage decision and closes the screen: the granted permissions
      * determine the default collection path.
      *
-     * Called on 'Continue', or when the fragment reports [RESULT_COMPLETE].
+     * Called on 'Continue', or when the fragment reports [REQUEST_PERMISSIONS_GRANTED].
      * Preserves an existing collection path.
      *
      * @see InitialActivity.decideStorageIfUndecided
@@ -99,7 +99,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
          * Signals the activity to persist the
          * [storage decision][com.ichi2.anki.common.storage.StorageDecision], and then close.
          */
-        const val RESULT_COMPLETE = "result_complete"
+        const val REQUEST_PERMISSIONS_GRANTED = "result_complete"
 
         fun getIntent(
             context: Context,
