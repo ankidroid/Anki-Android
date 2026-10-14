@@ -25,18 +25,55 @@ fun AddProfileDialog(
     onDismissRequest: () -> Unit,
     onConfirm: (ProfileName) -> Unit,
 ) {
+    ProfileNameDialog(
+        title = stringResource(CommonString.add_profile),
+        confirmText = stringResource(CommonString.dialog_add),
+        initialText = "",
+        existingNames = existingNames,
+        onDismissRequest = onDismissRequest,
+        onConfirm = onConfirm,
+    )
+}
+
+@Composable
+fun RenameProfileDialog(
+    currentName: String,
+    existingNames: List<String>,
+    onDismissRequest: () -> Unit,
+    onConfirm: (ProfileName) -> Unit,
+) {
+    ProfileNameDialog(
+        title = stringResource(CommonString.rename_profile),
+        confirmText = stringResource(CommonString.rename),
+        initialText = currentName,
+        existingNames = existingNames,
+        onDismissRequest = onDismissRequest,
+        onConfirm = onConfirm,
+    )
+}
+
+@Composable
+private fun ProfileNameDialog(
+    title: String,
+    confirmText: String,
+    initialText: String,
+    existingNames: List<String>,
+    onDismissRequest: () -> Unit,
+    onConfirm: (ProfileName) -> Unit,
+) {
     val emptyError = stringResource(CommonString.profile_name_empty_error)
     val tooLongError = stringResource(CommonString.profile_name_too_long_error, ProfileName.MAX_LENGTH)
     val nameExistsError = stringResource(CommonString.error_name_exists)
 
     TextInputDialog(
-        title = stringResource(CommonString.add_profile),
+        title = title,
         label = stringResource(CommonString.profile_name),
-        confirmText = stringResource(CommonString.dialog_add),
+        confirmText = confirmText,
         onConfirm = { text ->
             (ProfileName.validate(text) as? ValidationResult.Valid)?.let { onConfirm(it.name) }
         },
         onDismissRequest = onDismissRequest,
+        initialText = initialText,
         maxLengthCounter = ProfileName.MAX_LENGTH,
         capitalization = KeyboardCapitalization.Words,
         errorMessageFor = { text ->
@@ -54,5 +91,13 @@ fun AddProfileDialog(
 private fun AddProfileDialogPreview() {
     AnkiDroidTheme {
         AddProfileDialog(existingNames = emptyList(), onDismissRequest = {}, onConfirm = {})
+    }
+}
+
+@DialogPreviews
+@Composable
+private fun RenameProfileDialogPreview() {
+    AnkiDroidTheme {
+        RenameProfileDialog(currentName = "Work", existingNames = emptyList(), onDismissRequest = {}, onConfirm = {})
     }
 }
