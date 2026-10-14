@@ -48,11 +48,14 @@ import androidx.appcompat.R as AppCompatR
 fun SwitchProfilesScreen(
     profiles: List<ProfileItem>,
     isAddProfileDialogVisible: Boolean,
+    profileBeingRenamed: ProfileItem?,
     onNavigateUp: () -> Unit,
     onAddProfileClick: () -> Unit,
     onAddProfileConfirm: (ProfileName) -> Unit,
     onAddProfileDismiss: () -> Unit,
     onEditProfile: (ProfileItem) -> Unit,
+    onRenameProfileConfirm: (ProfileName) -> Unit,
+    onRenameProfileDismiss: () -> Unit,
     onDeleteProfile: (ProfileItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -100,6 +103,15 @@ fun SwitchProfilesScreen(
             existingNames = profiles.map { it.name },
             onDismissRequest = onAddProfileDismiss,
             onConfirm = onAddProfileConfirm,
+        )
+    }
+
+    profileBeingRenamed?.let { profile ->
+        RenameProfileDialog(
+            currentName = profile.name,
+            existingNames = profiles.filter { it.id != profile.id }.map { it.name },
+            onDismissRequest = onRenameProfileDismiss,
+            onConfirm = onRenameProfileConfirm,
         )
     }
 }
@@ -177,11 +189,14 @@ private fun SwitchProfilesScreenPreview() {
                     ProfileItem(id = ProfileId("p_work"), name = "Work"),
                 ),
             isAddProfileDialogVisible = false,
+            profileBeingRenamed = null,
             onNavigateUp = {},
             onAddProfileClick = {},
             onAddProfileConfirm = {},
             onAddProfileDismiss = {},
             onEditProfile = {},
+            onRenameProfileConfirm = {},
+            onRenameProfileDismiss = {},
             onDeleteProfile = {},
         )
     }

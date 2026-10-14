@@ -19,6 +19,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class SwitchProfilesViewModelTest {
@@ -84,6 +85,38 @@ class SwitchProfilesViewModelTest {
         viewModel.addProfile(nameOf("Work"))
 
         assertEquals(listOf("Default", "Work"), viewModel.profiles.value.map { it.name })
+    }
+
+    @Test
+    fun `showRenameProfileDialog opens the dialog for that profile`() {
+        val viewModel = viewModel()
+        val default = viewModel.profiles.value.single()
+
+        viewModel.showRenameProfileDialog(default)
+
+        assertEquals(default, viewModel.profileBeingRenamed.value)
+    }
+
+    @Test
+    fun `dismissRenameProfileDialog hides the dialog`() {
+        val viewModel = viewModel()
+        viewModel.showRenameProfileDialog(viewModel.profiles.value.single())
+
+        viewModel.dismissRenameProfileDialog()
+
+        assertNull(viewModel.profileBeingRenamed.value)
+    }
+
+    @Test
+    fun `renameProfile lists the new name and closes the dialog`() {
+        createProfile("Work")
+        val viewModel = viewModel()
+        viewModel.showRenameProfileDialog(viewModel.profiles.value.single { it.name == "Work" })
+
+        viewModel.renameProfile(nameOf("Office"))
+
+        assertEquals(listOf("Default", "Office"), viewModel.profiles.value.map { it.name })
+        assertNull(viewModel.profileBeingRenamed.value)
     }
 
     @Test

@@ -439,6 +439,28 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `renameProfile rejects a name used by another profile, ignoring case`() {
+        val manager = ProfileManager.create(context)
+        manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        val home = manager.createNewProfile(ProfileName.fromTrustedSource("Home"))
+
+        assertThrows(IllegalArgumentException::class.java) {
+            manager.renameProfile(home, ProfileName.fromTrustedSource("work"))
+        }
+        assertEquals("Home", manager.getAllProfiles()[home]?.displayName?.value)
+    }
+
+    @Test
+    fun `renameProfile can change the case of the profile's own name`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("work"))
+
+        manager.renameProfile(work, ProfileName.fromTrustedSource("Work"))
+
+        assertEquals("Work", manager.getAllProfiles()[work]?.displayName?.value)
+    }
+
+    @Test
     fun `reloading an existing profile does not overwrite a pre-existing deckPath`() {
         val manager = ProfileManager.create(context)
         val newId = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))

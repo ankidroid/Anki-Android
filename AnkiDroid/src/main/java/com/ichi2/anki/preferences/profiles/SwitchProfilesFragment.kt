@@ -49,14 +49,18 @@ class SwitchProfilesFragment : Fragment() {
                 AnkiDroidTheme {
                     val profiles by viewModel.profiles.collectAsStateWithLifecycle()
                     val isAddProfileDialogVisible by viewModel.isAddProfileDialogVisible.collectAsStateWithLifecycle()
+                    val profileBeingRenamed by viewModel.profileBeingRenamed.collectAsStateWithLifecycle()
                     SwitchProfilesScreen(
                         profiles = profiles,
                         isAddProfileDialogVisible = isAddProfileDialogVisible,
+                        profileBeingRenamed = profileBeingRenamed,
                         onNavigateUp = { requireActivity().onBackPressedDispatcher.onBackPressed() },
                         onAddProfileClick = viewModel::showAddProfileDialog,
                         onAddProfileConfirm = viewModel::addProfile,
                         onAddProfileDismiss = viewModel::dismissAddProfileDialog,
-                        onEditProfile = viewModel::editProfile,
+                        onEditProfile = viewModel::showRenameProfileDialog,
+                        onRenameProfileConfirm = viewModel::renameProfile,
+                        onRenameProfileDismiss = viewModel::dismissRenameProfileDialog,
                         onDeleteProfile = viewModel::deleteProfile,
                     )
                 }
