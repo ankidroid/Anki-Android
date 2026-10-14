@@ -20,6 +20,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.constraintlayout.widget.Group
 import androidx.core.text.HtmlCompat
@@ -48,6 +49,7 @@ import com.ichi2.anki.filtered.FilteredDeckOptionsFragment
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Decks
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.doOnApplyWindowInsets
@@ -114,6 +116,7 @@ class StudyOptionsFragment :
         displayedDeckId = savedInstanceState?.getLong(STATE_DISPLAYED_DECK_ID)?.takeIf { it != 0L }
         // Subscribe once per fragment: returning from another panel can recreate its view.
         ChangeManager.subscribe(this)
+        observeProgress(viewModel) { progress -> getString(progress.messageRes) }
     }
 
     override fun onCreateView(
@@ -289,20 +292,12 @@ class StudyOptionsFragment :
             }
             R.id.action_rebuild -> {
                 Timber.i("StudyOptionsFragment:: rebuild cram deck button pressed")
-                launchCatchingTask {
-                    withProgress(CommonString.rebuild_filtered_deck) {
-                        viewModel.rebuildCram()
-                    }
-                }
+                launchCatchingTask { viewModel.rebuildCram() }
                 return true
             }
             R.id.action_empty -> {
                 Timber.i("StudyOptionsFragment:: empty cram deck button pressed")
-                launchCatchingTask {
-                    withProgress(CommonString.empty_filtered_deck) {
-                        viewModel.emptyCram()
-                    }
-                }
+                launchCatchingTask { viewModel.emptyCram() }
                 return true
             }
             else -> return false
@@ -571,3 +566,11 @@ class StudyOptionsFragment :
         }
     }
 }
+
+@get:StringRes
+private val StudyOptionsProgress.messageRes: Int
+    get() =
+        when (this) {
+            StudyOptionsProgress.REBUILDING_FILTERED_DECK -> CommonString.rebuild_filtered_deck
+            StudyOptionsProgress.EMPTYING_FILTERED_DECK -> CommonString.empty_filtered_deck
+        }

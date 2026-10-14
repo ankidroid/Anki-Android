@@ -10,6 +10,8 @@ import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.progress.HasProgress
+import com.ichi2.anki.progress.ProgressManager
 import com.ichi2.anki.study.DeckKind
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.currentDeckStudyState
@@ -20,7 +22,11 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
-class StudyOptionsViewModel : ViewModel() {
+class StudyOptionsViewModel :
+    ViewModel(),
+    HasProgress<StudyOptionsProgress> {
+    override val progressManager = ProgressManager<StudyOptionsProgress>()
+
     val flowOfState: StateFlow<StudyOptionsState>
         field = MutableStateFlow<StudyOptionsState>(StudyOptionsState.Loading)
     val state: StudyOptionsState get() = flowOfState.value
@@ -52,14 +58,18 @@ class StudyOptionsViewModel : ViewModel() {
 
     suspend fun rebuildCram() {
         Timber.d("doInBackground - RebuildCram")
-        undoableOp { sched.rebuildFilteredDeck(decks.selected()) }
-        withCol { updateStateFromCollection() }
+        progressManager.withProgress(message = StudyOptionsProgress.REBUILDING_FILTERED_DECK) {
+            undoableOp { sched.rebuildFilteredDeck(decks.selected()) }
+            withCol { updateStateFromCollection() }
+        }
     }
 
     suspend fun emptyCram() {
         Timber.d("doInBackgroundEmptyCram")
-        undoableOp { sched.emptyFilteredDeck(decks.selected()) }
-        withCol { updateStateFromCollection() }
+        progressManager.withProgress(message = StudyOptionsProgress.EMPTYING_FILTERED_DECK) {
+            undoableOp { sched.emptyFilteredDeck(decks.selected()) }
+            withCol { updateStateFromCollection() }
+        }
     }
 
     fun unbury(): Job =
@@ -137,6 +147,11 @@ class StudyOptionsViewModel : ViewModel() {
                     )
             }
     }
+}
+
+enum class StudyOptionsProgress {
+    REBUILDING_FILTERED_DECK,
+    EMPTYING_FILTERED_DECK,
 }
 
 class DeckStudyData(
