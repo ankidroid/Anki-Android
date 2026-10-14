@@ -81,8 +81,13 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
 import com.ichi2.testutils.Robolectric as RobolectricActivities
 
-open class RobolectricTest :
-    AnkiTest,
+/**
+ * @param loadBackend Disable for tests using custom sandboxes which do not need the backend.
+ * Loading the native library into one sandbox can prevent later sandboxes from using it (Issue 14796).
+ */
+open class RobolectricTest(
+    private val loadBackend: Boolean = true,
+) : AnkiTest,
     AndroidTest {
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
@@ -168,7 +173,7 @@ open class RobolectricTest :
 
         CollectionManager.closeCollectionBlocking()
 
-        maybeSetupBackend()
+        if (loadBackend) maybeSetupBackend()
 
         // Reset static variable for custom tabs failure.
         CustomTabActivityHelper.resetFailed()
