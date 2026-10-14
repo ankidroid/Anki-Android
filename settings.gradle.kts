@@ -37,6 +37,7 @@ include(
     ":compat",
     ":libanki",
     ":lint-rules",
+    ":note-editor",
     ":vbpd",
     ":widgets",
 )

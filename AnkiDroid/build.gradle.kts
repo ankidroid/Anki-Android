@@ -750,6 +750,7 @@ dependencies {
     implementation(project(":common:android"))
     implementation(project(":compat"))
     implementation(project(":libanki"))
+    implementation(project(":note-editor"))
     implementation(project(":vbpd"))
     "baselineProfile"(project(":baselineprofile"))
     implementation(project(":widgets"))

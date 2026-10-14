@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+import com.android.build.api.dsl.LibraryExtension
+
+plugins {
+    id("ankidroid.android.library")
+    id("ankidroid.android.compose")
+    alias(libs.plugins.roborazzi)
+}
+
+configure<LibraryExtension> {
+    namespace = "com.ichi2.anki.noteeditor"
+}
+
+dependencies {
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.junit.vintage.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
+}
