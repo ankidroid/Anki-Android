@@ -10,7 +10,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.dialogs.LoadingDialogFragment
@@ -18,6 +19,7 @@ import com.ichi2.anki.dialogs.dismissLoadingDialog
 import com.ichi2.anki.dialogs.showLoadingDialog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.WeakHashMap
@@ -33,9 +35,17 @@ fun <M : Any> AnkiActivity.observeProgress(
     viewModel: HasProgress<M>,
     delayMillis: Duration = 600.milliseconds,
     resolveMessage: Context.(M) -> String,
+) = observeProgressFor(this, viewModel, delayMillis, resolveMessage)
+
+private fun <M : Any> AnkiActivity.observeProgressFor(
+    owner: LifecycleOwner,
+    viewModel: HasProgress<M>,
+    delayMillis: Duration,
+    resolveMessage: Context.(M) -> String,
 ) {
     val dialogTag = "${LoadingDialogFragment.TAG}:${viewModel.javaClass.name}"
     var dialogVisible = supportFragmentManager.findFragmentByTag(dialogTag) != null
+    val ownerLifecycle = owner.lifecycle
     var backBlock: OnBackPressedCallback? = null
 
     fun blockInput() {
@@ -51,13 +61,17 @@ fun <M : Any> AnkiActivity.observeProgress(
         window.unblockTouches()
     }
 
-    lifecycleScope.launch {
-        repeatOnLifecycle(Lifecycle.State.STARTED) {
+    ownerLifecycle.coroutineScope.launch {
+        ownerLifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             // Pending "show after delay" job survives subsequent Active emissions so the
             // anti-flash delay isn't restarted on every progress update. Kept inside the
             // block: a job cancelled on stop must not linger into the next start.
             var pendingShow: Job? = null
-            viewModel.progressManager.progress.collect { state ->
+            val progress =
+                viewModel.progressManager.progress.onCompletion {
+                    unblockInput()
+                }
+            progress.collect { state ->
                 when (state) {
                     is ViewModelProgress.Idle -> {
                         pendingShow?.cancel()
@@ -131,7 +145,7 @@ private fun AnkiActivity.wireCancelListener(
 }
 
 /**
- * Fragment wrapper that delegates to the host activity.
+ * Follows this fragment's lifecycle, showing the dialog and blocking touches and back on the host activity.
  *
  * If the host is not an [AnkiActivity], logs a warning and returns — no observer is set up.
  *
@@ -154,7 +168,7 @@ fun <M : Any> Fragment.observeProgress(
         )
         return
     }
-    activity.observeProgress(viewModel, delayMillis, resolveMessage)
+    activity.observeProgressFor(this, viewModel, delayMillis, resolveMessage)
 }
 
 private fun <M : Any> Context.formatMessage(
