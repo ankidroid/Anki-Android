@@ -341,6 +341,17 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `createNewProfile rejects a name already in use, ignoring case`() {
+        val manager = ProfileManager.create(context)
+        manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+
+        assertThrows(IllegalArgumentException::class.java) {
+            manager.createNewProfile(ProfileName.fromTrustedSource("work"))
+        }
+        assertEquals(2, manager.getAllProfiles().size)
+    }
+
+    @Test
     fun `renameProfile updates displayName in registry`() {
         val manager = ProfileManager.create(context)
         val profileId = manager.createNewProfile(ProfileName.fromTrustedSource("Original Name"))
