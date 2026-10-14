@@ -470,6 +470,9 @@ open class PrefsRepository protected constructor(
     var devMaterialYouEnabled: Boolean by booleanPref(R.string.dev_material_you_key, false)
 
     @set:VisibleForTesting
+    var devInlineAudioRecorderEnabled: Boolean by booleanPref(R.string.dev_inline_audio_recorder_key, false)
+
+    @set:VisibleForTesting
     var devUsingCardBrowserSearchView: Boolean by booleanPref(R.string.dev_card_browser_search_view, false)
 
     @set:VisibleForTesting
