@@ -2,6 +2,7 @@
 
 package com.ichi2.widget
 
+import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.Context
 
@@ -11,6 +12,7 @@ import android.content.Context
  * @see AppWidgetManager.getInstance
  */
 
+@SuppressLint("DirectAppWidgetManagerInstanceUsage")
 fun getAppWidgetManager(context: Context): AppWidgetManager? {
     // The call returns null on a Supernote A5X, but as the underlying platform call is in Java,
     // the result is assumed to be non-null in Kotlin

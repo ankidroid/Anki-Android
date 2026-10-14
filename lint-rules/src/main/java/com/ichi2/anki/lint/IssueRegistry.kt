@@ -7,6 +7,7 @@ import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 import com.android.tools.lint.detector.api.Issue
 import com.ichi2.anki.lint.rules.AvoidAlertDialogUsage
+import com.ichi2.anki.lint.rules.DirectAppWidgetManagerInstanceUsage
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage
 import com.ichi2.anki.lint.rules.DirectDateInstantiation
 import com.ichi2.anki.lint.rules.DirectGregorianInstantiation
@@ -35,6 +36,7 @@ class IssueRegistry : IssueRegistry() {
             // Keep this list lexicographically ordered.
             return listOf(
                 LayoutPrefixDetector.ISSUE,
+                DirectAppWidgetManagerInstanceUsage.ISSUE,
                 DirectCalendarInstanceUsage.ISSUE,
                 DirectDateInstantiation.ISSUE,
                 DirectGregorianInstantiation.ISSUE,
