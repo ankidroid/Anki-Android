@@ -121,5 +121,10 @@
             android:summary="Not applied to E-Ink"
             android:key="@string/dev_material_you_key"
             android:defaultValue="false"/>
+        <SwitchPreferenceCompat
+            android:title="Inline audio recorder"
+            android:summary="Records audio inside the note editor instead of a separate screen"
+            android:key="@string/dev_inline_audio_recorder_key"
+            android:defaultValue="false"/>
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
