@@ -68,13 +68,23 @@ jobs:
             // try different architectures, targets, delays etc
             let arch = ['x86_64'];
             let target = ['google_apis', 'google_apis_ps16k'];
-            // Keep API 37 and the 16 KB emulator off the per-change CI path.
-            // Scheduled and manual runs exercise both API levels and targets.
+            let include = [];
+            // Keep API 37, the 16 KB emulator and the tablet off the per-change CI path.
+            // Scheduled and manual runs exercise both API levels and targets, plus a tablet.
             if (context.eventName !== 'schedule' && context.eventName !== 'workflow_dispatch') {
               target = ['google_apis'];
             } else {
               // Keep the minor version: SDK 37 packages use android-37.0.
               apiLevel.push('37.0');
+              include = iterationArray.map((iteration) => ({
+                "iteration": iteration,
+                "api-level": 36,
+                "arch": "x86_64",
+                "target": "google_apis",
+                "first-boot-delay": 600,
+                "device": "tablet",
+                "profile": "pixel_tablet"
+              }));
             }
             let firstBootDelay = [600];
 
@@ -83,7 +93,9 @@ jobs:
               "api-level": apiLevel,
               "arch": arch,
               "target": target,
-              "first-boot-delay": firstBootDelay
+              "first-boot-delay": firstBootDelay,
+              "device": ["phone"],
+              "include": include
             }
       - name: Debug Output
         run: echo "${{ steps.build-matrix.outputs.result }}"
@@ -91,7 +103,7 @@ jobs:
   # This uses the matrix generated from the matrix-prep stage
   # it will run unit tests on whatever OS combinations are desired
   emulator_test:
-    name: Android Emulator Test (${{ matrix.api-level }}, ${{ matrix.arch }}, ${{ matrix.target }}, ${{ matrix.first-boot-delay }}, ${{ matrix.iteration }})
+    name: Android Emulator Test (${{ matrix.api-level }}, ${{ matrix.arch }}, ${{ matrix.target }}, ${{ matrix.first-boot-delay }}, ${{ matrix.iteration }}${{ matrix.device == 'tablet' && ', tablet' || '' }})
     runs-on: ubuntu-latest
     needs: matrix_prep
     timeout-minutes: 75
@@ -152,7 +164,7 @@ jobs:
 
         # Cache only the per-change emulator: the 16 KB snapshot costs about 2.5 GiB.
       - name: AVD cache
-        if: matrix.target == 'google_apis'
+        if: matrix.target == 'google_apis' && matrix.device == 'phone'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: avd-cache
         with:
@@ -202,15 +214,16 @@ jobs:
             "${ANDROID_HOME:?}/system-images/android-${SDK_API_LEVEL:?}/${SDK_TARGET:?}/${SDK_ARCH:?}/.installer"
 
       - name: AVD Boot and Snapshot Creation
-        # Warm up the uncached 16 KB emulator on every run; otherwise only on main cache misses.
+        # Warm up the uncached 16 KB and tablet emulators on every run; otherwise only on main cache misses.
         # Comment the if out to generate snapshots on branch for performance testing
-        if: "${{ matrix.target == 'google_apis_ps16k' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
+        if: "${{ matrix.target == 'google_apis_ps16k' || matrix.device == 'tablet' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
           api-level: ${{ matrix.api-level }}
           force-avd-creation: false
           target: ${{ matrix.target }}
           arch: ${{ matrix.arch }}
+          profile: ${{ matrix.profile }}
           emulator-options: ${{ env.EMULATOR_OPTIONS }}
           ram-size: ${{ env.EMULATOR_RAM_SIZE }}
           pre-emulator-launch-script: ${{ env.EMULATOR_PRE_LAUNCH_SCRIPT }}
@@ -225,10 +238,10 @@ jobs:
 
         # This step is separate so pure install time may be calculated as a step
       - name: Emulator Snapshot After Firstboot Warmup
-        # Always warm up the 16 KB emulator. The default emulator only needs it on main cache misses.
+        # Always warm up the 16 KB and tablet emulators. The default emulator only needs it on main cache misses.
         # Switch the if statements via comment if generating snapshots for performance testing
         # if: matrix.first-boot-delay != '0'
-        if: "${{ matrix.target == 'google_apis_ps16k' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
+        if: "${{ matrix.target == 'google_apis_ps16k' || matrix.device == 'tablet' || (steps.avd-cache.outputs.cache-hit != 'true' && github.ref == 'refs/heads/main') }}"
         env:
           FIRST_BOOT_DELAY: ${{ matrix.first-boot-delay }}
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
@@ -237,6 +250,7 @@ jobs:
           force-avd-creation: false
           target: ${{ matrix.target }}
           arch: ${{ matrix.arch }}
+          profile: ${{ matrix.profile }}
           emulator-options: ${{ env.EMULATOR_OPTIONS }}
           ram-size: ${{ env.EMULATOR_RAM_SIZE }}
           pre-emulator-launch-script: ${{ env.EMULATOR_PRE_LAUNCH_SCRIPT }}
@@ -260,6 +274,7 @@ jobs:
           force-avd-creation: false
           target: ${{ matrix.target }}
           arch: ${{ matrix.arch }}
+          profile: ${{ matrix.profile }}
           emulator-options: -no-snapshot-save ${{ env.EMULATOR_OPTIONS }}
           ram-size: ${{ env.EMULATOR_RAM_SIZE }}
           pre-emulator-launch-script: ${{ env.EMULATOR_PRE_LAUNCH_SCRIPT }}
@@ -332,21 +347,21 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
-          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-jacocoAndroidTestReport
+          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-${{ matrix.device }}-jacocoAndroidTestReport
           path: ~/work/Anki-Android/Anki-Android/AnkiDroid/build/reports/jacoco/
 
       - name: Upload Emulator Log
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
-          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_logs
+          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-${{ matrix.device }}-adb_logs
           path: adb-log.txt
 
       - name: Upload Emulator Screen Record
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
-          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_video
+          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-${{ matrix.device }}-adb_video
           path: video.webm
 
       - uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
