@@ -38,11 +38,15 @@ class ReminderTroubleshootingLayoutTest : RobolectricTest() {
 
         withTroubleshootingFragment {
             val checksList = binding.checksList
-            @Suppress("UNCHECKED_CAST")
-            (checksList.adapter as ListAdapter<TroubleshootingCheck, *>).submitList(checks)
-            advanceRobolectricLooper()
 
-            val itemCount = checksList.adapter!!.itemCount
+            @Suppress("UNCHECKED_CAST")
+            val adapter = checksList.adapter as ListAdapter<TroubleshootingCheck, *>
+            adapter.submitList(checks)
+            // ListAdapter computes the diff on a background thread before posting the layout.
+            advanceRobolectricLooperUntil { adapter.currentList == checks && !checksList.isLayoutRequested }
+
+            assertThat("the submitted checks are displayed", adapter.currentList, equalTo(checks))
+            val itemCount = checks.size
             assertThat(
                 "sanity: enough checks to overflow the landscape viewport",
                 itemCount,
