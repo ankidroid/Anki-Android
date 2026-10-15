@@ -8,20 +8,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.ichi2.anki.R
+import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.anki.settings.enums.NightTheme
+import com.ichi2.anki.settings.enums.Theme
 import com.ichi2.compose.theme.AnkiDroidTheme
 
 /**
- * Applies the AnkiDroid theme matching the preview's light or dark UI mode.
+ * Applies [theme] to preview content, defaulting to the preview's light or dark UI mode.
  *
- * Use this wrapper with [ThemePreviews].
+ * Use [AnkiDroidThemeProvider] to preview every app theme, or [ThemePreviews] for light and dark.
  */
 @Composable
-fun AnkiDroidPreview(content: @Composable () -> Unit) {
+fun AnkiDroidPreview(
+    theme: Theme = if (isSystemInDarkTheme()) NightTheme.DARK else DayTheme.LIGHT,
+    content: @Composable () -> Unit,
+) {
     // AnkiDroidTheme reads XML attributes, so changing only the preview's UI mode is insufficient.
     val context = LocalContext.current
-    val theme = if (isSystemInDarkTheme()) R.style.Theme_Dark else R.style.Theme_Light
-    val themedContext = remember(context, theme) { ContextThemeWrapper(context, theme) }
+    val themedContext = remember(context, theme) { ContextThemeWrapper(context, theme.styleResId) }
     CompositionLocalProvider(LocalContext provides themedContext) {
         AnkiDroidTheme(content = content)
     }
