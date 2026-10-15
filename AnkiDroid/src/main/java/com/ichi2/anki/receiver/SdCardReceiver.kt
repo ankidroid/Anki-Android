@@ -22,7 +22,7 @@ class SdCardReceiver : AnkiBroadcastReceiver() {
         if (intent.action == Intent.ACTION_MEDIA_EJECT) {
             Timber.i("media eject detected - closing collection and sending broadcast")
             val i = Intent()
-            i.action = MEDIA_EJECT
+            i.action = ACTION_MEDIA_EJECT
             context.sendBroadcast(i)
             try {
                 val col = CollectionManager.getColUnsafe()
@@ -33,13 +33,13 @@ class SdCardReceiver : AnkiBroadcastReceiver() {
         } else if (intent.action == Intent.ACTION_MEDIA_MOUNTED) {
             Timber.i("media mount detected - sending broadcast")
             val i = Intent()
-            i.action = MEDIA_MOUNT
+            i.action = ACTION_MEDIA_MOUNT
             context.sendBroadcast(i)
         }
     }
 
     companion object {
-        const val MEDIA_EJECT = "com.ichi2.anki.action.MEDIA_EJECT"
-        const val MEDIA_MOUNT = "com.ichi2.anki.action.MEDIA_MOUNT"
+        const val ACTION_MEDIA_EJECT = "com.ichi2.anki.action.MEDIA_EJECT"
+        const val ACTION_MEDIA_MOUNT = "com.ichi2.anki.action.MEDIA_MOUNT"
     }
 }

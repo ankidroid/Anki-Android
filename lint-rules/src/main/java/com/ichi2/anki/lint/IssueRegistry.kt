@@ -18,6 +18,7 @@ import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings
 import com.ichi2.anki.lint.rules.FragmentRequestKeyNamingDetector
 import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
+import com.ichi2.anki.lint.rules.IntentActionNamingDetector
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
 import com.ichi2.anki.lint.rules.LayoutPrefixDetector
@@ -48,6 +49,7 @@ class IssueRegistry : IssueRegistry() {
                 DuplicateCrowdInStrings.ISSUE,
                 FragmentRequestKeyNamingDetector.ISSUE,
                 HardcodedPreferenceKey.ISSUE,
+                IntentActionNamingDetector.ISSUE,
                 JUnitNullAssertionDetector.ISSUE,
                 LicenseHeaderExists.ISSUE,
                 LocaleRootDetector.ISSUE,
