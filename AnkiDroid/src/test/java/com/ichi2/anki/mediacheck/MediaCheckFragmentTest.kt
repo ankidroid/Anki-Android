@@ -2,7 +2,9 @@
 // SPDX-FileCopyrightText: Copyright (c) 2026 Ashish Yadav <mailtoashish693@gmail.com>
 package com.ichi2.anki.mediacheck
 
+import android.webkit.WebView
 import android.widget.Button
+import androidx.fragment.app.commitNow
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.BackendError
 import anki.backend.backendError
@@ -12,6 +14,7 @@ import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.testutils.rules.BackendOverrideRule
 import com.ichi2.utils.positiveButton
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -22,10 +25,13 @@ import net.ankiweb.rsdroid.exceptions.BackendIoException
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 import kotlin.test.assertSame
@@ -59,6 +65,48 @@ class MediaCheckFragmentTest : RobolectricTest() {
             startMediaCheck()
 
             assertEquals(failure.localizedMessage, getAlertDialogText(checkDismissed = true))
+        }
+
+    @Test
+    fun `onRenderProcessGone recovers webview and reloads content`() =
+        runTest {
+            val mediaCheck = startMediaCheck()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+
+            val layout = mediaCheck.get().findViewById<SafeWebViewLayout>(R.id.web_view)
+            val initialWebView = assertNotNull(layout.getChildAt(0) as? WebView)
+
+            layout.onRenderProcessGone(initialWebView)
+            advanceRobolectricLooper()
+
+            assertTrue(shadowOf(initialWebView).wasDestroyCalled(), "Dead WebView should be destroyed")
+            assertNull(initialWebView.parent, "Dead WebView should be removed from parent")
+
+            val recoveredWebView = assertNotNull(layout.getChildAt(0) as? WebView)
+            assertNotSame(initialWebView, recoveredWebView, "A new WebView instance should be created")
+            assertFalse(shadowOf(recoveredWebView).wasDestroyCalled(), "Recovered WebView should not be destroyed")
+        }
+
+    @Test
+    fun `onRenderProcessGone after fragment view is destroyed cleans up dead webview without recreating`() =
+        runTest {
+            val mediaCheck = startMediaCheck()
+            advanceUntilIdle()
+            advanceRobolectricLooper()
+
+            val layout = mediaCheck.get().findViewById<SafeWebViewLayout>(R.id.web_view)
+            val initialWebView = assertNotNull(layout.getChildAt(0) as? WebView)
+
+            val fragment = mediaCheck.get().supportFragmentManager.findFragmentById(R.id.fragment_container) as MediaCheckFragment
+            mediaCheck.get().supportFragmentManager.commitNow { detach(fragment) }
+            assertNull(fragment.view, "Fragment view should be null after detach")
+
+            layout.onRenderProcessGone(initialWebView)
+
+            assertTrue(shadowOf(initialWebView).wasDestroyCalled(), "Dead WebView should be destroyed")
+            assertNull(initialWebView.parent, "Dead WebView should be removed from parent")
+            assertEquals(0, layout.childCount, "No new WebView should be created when fragment view is gone")
         }
 
     @Test

@@ -10,7 +10,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebViewClient
+import android.webkit.WebView
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,8 @@ import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.utils.showAndAwaitDismissal
+import com.ichi2.anki.workarounds.OnWebViewRecreatedListener
+import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -47,10 +50,14 @@ import kotlinx.coroutines.launch
  * MediaCheckFragment for displaying a list of media files that are either unused or missing.
  * It allows users to tag missing media files or delete unused ones.
  **/
-class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
+class MediaCheckFragment :
+    Fragment(R.layout.fragment_media_check),
+    OnWebViewRecreatedListener {
     private val viewModel: MediaCheckViewModel by viewModels()
 
     private val binding by viewBinding(FragmentMediaCheckBinding::bind)
+
+    private var lastReport: String? = null
 
     override fun onViewCreated(
         view: View,
@@ -123,6 +130,7 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
     }
 
     private fun updateWebView(report: String) {
+        lastReport = report
         val backgroundColor = getColorFromAttr(requireContext(), android.R.attr.colorBackground)
         val textColor = getColorFromAttr(requireContext(), android.R.attr.textColorPrimary)
 
@@ -142,8 +150,18 @@ class MediaCheckFragment : Fragment(R.layout.fragment_media_check) {
             </html>
             """.trimIndent()
 
-        binding.webView.webViewClient = WebViewClient()
+        binding.webView.setWebViewClient(object : SafeWebViewClient() {})
         binding.webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
+    }
+
+    override fun onWebViewRecreated(webView: WebView) {
+        lastReport?.let { updateWebView(it) }
+    }
+
+    @CallSuper
+    override fun onDestroyView() {
+        binding.webView.safeDestroy()
+        super.onDestroyView()
     }
 
     private fun setupButtonListeners() {
