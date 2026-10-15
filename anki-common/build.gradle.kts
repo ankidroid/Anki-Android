@@ -5,8 +5,8 @@ import com.ichi2.anki.gradle.addAnkiBackendDependencies
 
 plugins {
     id("ankidroid.android.library")
+    id("ankidroid.android.compose")
     id("org.jetbrains.kotlin.plugin.parcelize")
-    alias(libs.plugins.kotlin.compose)
 }
 
 configure<LibraryExtension> {
@@ -14,7 +14,6 @@ configure<LibraryExtension> {
     // namespace must be unique for resources generation.
     namespace = "com.ichi2.anki.ankicommon"
     buildFeatures.buildConfig = false
-    buildFeatures.compose = true
     testFixtures.enable = true
 }
 
@@ -23,11 +22,6 @@ dependencies {
     implementation(project(":common:android"))
     implementation(project(":libanki"))
     implementation(project(":compat"))
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    debugImplementation(libs.androidx.compose.ui.tooling)
 
     addAnkiBackendDependencies(project)
 
@@ -57,10 +51,4 @@ dependencies {
     testFixturesImplementation(libs.androidx.test.core)
     testFixturesImplementation(libs.jakewharton.timber)
     testFixturesImplementation(libs.kotlin.test)
-    // The Kotlin Compose Compiler plugin attaches to every Kotlin compilation in the
-    // module including testFixtures, which has no @Composable code and refuses to
-    // run unless the Compose Runtime is on the classpath. compileOnly satisfies the
-    // plugin's version check without shipping the runtime in the testFixtures output.
-    testFixturesCompileOnly(platform(libs.androidx.compose.bom))
-    testFixturesCompileOnly(libs.androidx.compose.runtime)
 }

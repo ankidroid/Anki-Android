@@ -30,8 +30,8 @@ plugins {
     alias(libs.plugins.androidx.baselineprofile) apply false
     // Serialization is a separate artifact, not pinned transitively by AGP.
     alias(libs.plugins.kotlin.serialization) apply false
-    // Compose Compiler plugin (required since Kotlin 2.0); applied per-module that opts in.
-    alias(libs.plugins.kotlin.compose) apply false
+    // Pinned by buildSrc; applied by the Compose convention plugin.
+    id("org.jetbrains.kotlin.plugin.compose") apply false
     alias(libs.plugins.ktlint.gradle.plugin) apply false
     alias(libs.plugins.keeper) apply false
 }
