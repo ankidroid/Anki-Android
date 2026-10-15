@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.checks.infrastructure.LintDetectorTest.java
 import com.android.tools.lint.checks.infrastructure.LintDetectorTest.kotlin
 import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import org.junit.Test
@@ -164,19 +163,31 @@ class FragmentRequestKeyNamingDetectorTest {
 
     companion object {
         private val manager =
-            java(
+            kotlin(
                 """
-                package androidx.fragment.app;
-                public class FragmentManager {
-                    public void setFragmentResult(String requestKey, String result) {}
-                    public void setFragmentResultListener(String requestKey, Runnable listener) {}
-                    public void clearFragmentResult(String requestKey) {}
-                    public void clearFragmentResultListener(String requestKey) {}
+                package androidx.fragment.app
+                class FragmentManager {
+                    fun setFragmentResult(requestKey: String, result: String) {}
+                    fun setFragmentResultListener(requestKey: String, listener: () -> Unit) {}
+                    fun clearFragmentResult(requestKey: String) {}
+                    fun clearFragmentResultListener(requestKey: String) {}
                 }
                 """,
             ).indented()
-        private val fragment = java("package androidx.fragment.app; public class Fragment {}")
-        private val activity = java("package androidx.fragment.app; public class FragmentActivity {}")
+        private val fragment =
+            kotlin(
+                """
+                package androidx.fragment.app
+                open class Fragment
+                """,
+            ).indented()
+        private val activity =
+            kotlin(
+                """
+                package androidx.fragment.app
+                class FragmentActivity
+                """,
+            ).indented()
         private val fragmentExtensions =
             kotlin(
                 """
