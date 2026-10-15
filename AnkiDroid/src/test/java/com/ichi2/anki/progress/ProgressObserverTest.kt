@@ -345,6 +345,124 @@ class ProgressObserverTest : RobolectricTest() {
         op.cancel()
     }
 
+    @Test
+    fun `an operation completing while its fragment is stopped leaves no dialog`() {
+        val activity = startActivity().get()
+        val fragment = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(fragment, null) }
+        val gate = CompletableDeferred<Unit>()
+        val op = fragment.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertTrue(assertNotNull(activity.loadingDialog()).requireDialog().isShowing)
+
+        activity.supportFragmentManager.commitNow { setMaxLifecycle(fragment, Lifecycle.State.CREATED) }
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        assertFalse(activity.touchesBlocked())
+        assertNull(activity.loadingDialog(), "completed operation must not leave a modal dialog over the host")
+        op.cancel()
+    }
+
+    @Test
+    fun `destroying a fragment removes its visible progress dialog`() {
+        val activity = startActivity().get()
+        val fragment = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(fragment, null) }
+        fragment.viewModel.runOp(CompletableDeferred())
+        idleMainLooper(SHOW_DELAY * 2)
+        assertTrue(assertNotNull(activity.loadingDialog()).requireDialog().isShowing)
+
+        activity.supportFragmentManager.commitNow { remove(fragment) }
+        idleMainLooper(SHOW_DELAY)
+        assertNull(activity.loadingDialog(), "destroyed fragment must not leave a modal dialog over the host")
+    }
+
+    @Test
+    fun `restarting a fragment after its operation completes dismisses visible progress`() {
+        val activity = startActivity().get()
+        val fragment = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(fragment, null) }
+        val gate = CompletableDeferred<Unit>()
+        fragment.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertTrue(assertNotNull(activity.loadingDialog()).requireDialog().isShowing)
+        activity.supportFragmentManager.commitNow { setMaxLifecycle(fragment, Lifecycle.State.CREATED) }
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        activity.supportFragmentManager.commitNow { setMaxLifecycle(fragment, Lifecycle.State.RESUMED) }
+        idleMainLooper(SHOW_DELAY)
+        assertNull(activity.loadingDialog())
+    }
+
+    @Test
+    fun `recreating the activity during visible fragment progress is safe`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        val fragment = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(fragment, "progress-owner") }
+        val gate = CompletableDeferred<Unit>()
+        fragment.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertTrue(assertNotNull(activity.loadingDialog()).requireDialog().isShowing)
+
+        controller.recreate()
+        idleMainLooper(SHOW_DELAY)
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        assertNull(controller.get().loadingDialog())
+    }
+
+    @Test
+    fun `recreating the activity keeps a fragment's visible dialog`() {
+        val controller = startActivity()
+        val fragment = ProgressObservingFragment()
+        controller.get().supportFragmentManager.commitNow { add(fragment, "progress-owner") }
+        fragment.viewModel.runOp(CompletableDeferred())
+        idleMainLooper(SHOW_DELAY * 2)
+
+        controller.recreate()
+        idleMainLooper(Duration.ZERO)
+
+        assertNotNull(controller.get().loadingDialog())
+    }
+
+    @Test
+    fun `an operation completing while the activity is stopped leaves no dialog on return`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        val fragment = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(fragment, null) }
+        val gate = CompletableDeferred<Unit>()
+        fragment.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertNotNull(activity.loadingDialog())
+
+        controller.pause().stop()
+        gate.complete(Unit)
+        controller.start().resume()
+        idleMainLooper(SHOW_DELAY)
+
+        assertNull(activity.loadingDialog())
+    }
+
+    @Test
+    fun `removing a fragment while the activity is stopped leaves no dialog on return`() {
+        val controller = startActivity()
+        val activity = controller.get()
+        val fragment = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(fragment, null) }
+        fragment.viewModel.runOp(CompletableDeferred())
+        idleMainLooper(SHOW_DELAY * 2)
+        assertNotNull(activity.loadingDialog())
+
+        controller.pause().stop()
+        activity.supportFragmentManager.commitNow(allowStateLoss = true) { remove(fragment) }
+        controller.start().resume()
+        idleMainLooper(SHOW_DELAY)
+
+        assertNull(activity.loadingDialog())
+    }
+
     private fun launchOp(
         gate: CompletableDeferred<Unit>,
         message: String = "op",
