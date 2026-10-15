@@ -16,17 +16,119 @@
 package com.ichi2.anki
 
 import android.content.Intent
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
+import androidx.lifecycle.ViewModelProvider
+import com.ichi2.anki.deckpicker.DeckPickerViewModel
+import com.ichi2.anki.deckpicker.DeckPickerViewModel.AnkiDroidEnvironment
 import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.testutils.SingleViewModelFactory
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
+import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.utils.ImportUtils
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
+import org.junit.After
 import org.junit.Assert.fail
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.doCallRealMethod
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
+import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.Robolectric
+import org.robolectric.RuntimeEnvironment
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(ParameterizedRobolectricTestRunner::class)
 class DeckPickerImportTest : RobolectricTest() {
+    @ParameterizedRobolectricTestRunner.Parameter
+    @JvmField
+    var qualifiers: String? = null
+
+    companion object {
+        @ParameterizedRobolectricTestRunner.Parameters
+        @JvmStatic
+        fun configurations(): Collection<String> = listOf("normal", "xlarge")
+    }
+
+    @Before
+    fun configureScreen() {
+        RuntimeEnvironment.setQualifiers(qualifiers)
+        setIntroductionSlidesShown(true)
+        InitialActivity.setUpgradedToLatestVersion(getPreferences())
+        getPreferences().edit { putBoolean("backupPromptDisabled", true) }
+        BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
+    }
+
+    @After
+    fun resetBackupSpace() {
+        BackupManagerTestUtilities.reset()
+    }
+
+    @Test
+    fun `import confirmation survives delayed startup`() {
+        val viewModel = spy(DeckPickerViewModel())
+        lateinit var startupEnvironment: AnkiDroidEnvironment
+        doAnswer { invocation ->
+            startupEnvironment = invocation.getArgument(0)
+            null
+        }.whenever(viewModel).handleStartup(any())
+
+        DialogHandler.storeMessage(ImportUtils.CollectionImportAdd("deck.apkg").toMessage())
+        val controller = Robolectric.buildActivity(DeckPicker::class.java)
+        saveControllerForCleanup(controller)
+        val activity = controller.get()
+        ViewModelProvider(activity, SingleViewModelFactory.create(viewModel))[DeckPickerViewModel::class.java]
+        controller
+            .create()
+            .start()
+            .resume()
+            .visible()
+        advanceRobolectricLooper()
+        activity.assertImportConfirmationVisible()
+
+        // Opening the collection at startup can finish after the pending import dialog is shown.
+        doCallRealMethod().whenever(viewModel).handleStartup(any())
+        viewModel.handleStartup(startupEnvironment)
+        viewModel.awaitStartup()
+        advanceRobolectricLooper()
+
+        activity.assertImportConfirmationVisible()
+    }
+
+    @Test
+    fun `import confirmation survives startup`() {
+        DialogHandler.storeMessage(ImportUtils.CollectionImportAdd("deck.apkg").toMessage())
+
+        deckPicker {
+            assertImportConfirmationVisible()
+        }
+    }
+
+    @Test
+    fun `import confirmation survives returning from file picker`() {
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent())
+        controller.pause().stop()
+        DialogHandler.storeMessage(ImportUtils.CollectionImportAdd("deck.apkg").toMessage())
+
+        controller.start().resume().visible()
+        advanceRobolectricLooper()
+
+        controller.get().assertImportConfirmationVisible()
+    }
+
+    private fun DeckPicker.assertImportConfirmationVisible() {
+        val fragment = assertNotNull(supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as? ImportDialog)
+        assertTrue(assertNotNull(fragment.dialog as? AlertDialog).isShowing)
+    }
+
     @Test
     fun importAddShowsImportDialog() {
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
