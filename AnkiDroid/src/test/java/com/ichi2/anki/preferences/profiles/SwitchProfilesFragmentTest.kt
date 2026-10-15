@@ -13,8 +13,6 @@ import com.ichi2.anki.preferences.HeaderFragment
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.PreferencesFragment
 import com.ichi2.anki.preferences.requirePreference
-import io.mockk.every
-import io.mockk.mockkObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -44,18 +42,20 @@ class SwitchProfilesFragmentTest : RobolectricTest() {
 
     private fun openSwitchProfilesWhenProfilesFailedToLoad(): PreferencesActivity {
         val app = AnkiDroidApp.instance
-        lateinit var activity: PreferencesActivity
-        mockkObject(app) {
-            every { app.profileManager } returns null
-            activity = startRegularActivity<PreferencesActivity>(PreferencesActivity.getIntent(targetContext))
+        val profileManager = app.profileManager
+        app.profileManager = null
+        try {
+            val activity = startRegularActivity<PreferencesActivity>(PreferencesActivity.getIntent(targetContext))
             activity.settings.fragments
                 .filterIsInstance<HeaderFragment>()
                 .single()
                 .requirePreference<Preference>(R.string.pref_switch_profile_screen_key)
                 .performClick()
             advanceRobolectricLooper()
+            return activity
+        } finally {
+            app.profileManager = profileManager
         }
-        return activity
     }
 
     private val PreferencesActivity.settings

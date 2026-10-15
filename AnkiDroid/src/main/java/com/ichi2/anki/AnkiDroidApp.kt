@@ -130,8 +130,8 @@ open class AnkiDroidApp :
         }
     }
 
+    @set:VisibleForTesting
     var profileManager: ProfileManager? = null
-        private set
 
     private val profileContext: Context?
         get() = profileManager?.activeProfileContext
