@@ -209,7 +209,8 @@ object MediaRegistration {
         }
 
         // register media for webView
-        if (!registerMediaForWebView(tempFilePath)) {
+        val importedFile = registerMediaForWebView(tempFilePath)
+        if (importedFile == null) {
             clipCopy.delete()
             return null
         }
@@ -217,8 +218,7 @@ object MediaRegistration {
 
         val field = if (isImage) ImageField() else MediaClipField()
 
-        field.hasTemporaryMedia = true
-        field.mediaFile = tempFilePath
+        field.mediaFile = importedFile
         return field.formattedValue
     }
 
@@ -243,25 +243,22 @@ object MediaRegistration {
     }
 
     /**
+     * @return the imported file, including any filename changes made by the backend, or null on failure
+     *
      * @throws OutOfMemoryError if the file could not be copied to a contiguous block of memory (or is >= 2GB)
      */
     @CheckResult
-    fun registerMediaForWebView(mediaPath: File?): Boolean {
-        if (mediaPath == null) {
-            // Nothing to register - continue with execution.
-            return true
-        }
+    private fun registerMediaForWebView(mediaPath: File): File? {
         Timber.i("Adding media to collection: %s", mediaPath)
-        val f = mediaPath
         return try {
-            CollectionManager.getColUnsafe().media.addFile(f)
-            true
+            val media = CollectionManager.getColUnsafe().media
+            File(media.dir, media.addFile(mediaPath))
         } catch (e: IOException) {
             Timber.w(e, "Failed to add file")
-            false
+            null
         } catch (e: EmptyMediaException) {
             Timber.w(e, "Failed to add file")
-            false
+            null
         }
     }
 }
