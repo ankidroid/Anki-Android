@@ -99,6 +99,7 @@ import com.ichi2.anki.browser.search.SearchString
 import com.ichi2.anki.browser.search.SortOrderBottomSheetFragment
 import com.ichi2.anki.browser.search.StandardSearchFragment
 import com.ichi2.anki.browser.search.formatChipDescription
+import com.ichi2.anki.browser.search.getIcon
 import com.ichi2.anki.browser.search.iconRes
 import com.ichi2.anki.browser.search.savedFilters
 import com.ichi2.anki.common.ALL_DECKS_ID
@@ -1198,15 +1199,7 @@ class CardBrowserFragment :
             tagsChip?.hasCheckedBackground = filters.tags.any()
 
             cardStateChip?.text = formatChipDescription(filters.cardStates.map { it.label }, emptyValue = "Card state")
-            cardStateChip?.chipIcon =
-                ContextCompat.getDrawable(requireContext(), filters.cardStates.firstOrNull().iconRes)?.also {
-                    if (filters.cardStates.isEmpty()) {
-                        DrawableCompat.setTint(
-                            it.mutate(),
-                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
-                        )
-                    }
-                }
+            cardStateChip?.chipIcon = filters.cardStates.firstOrNull().getIcon(requireContext())
             cardStateChip?.hasCheckedBackground = filters.cardStates.any()
 
             // Flags: Use the icon/checked state to explain what the filter is.

@@ -132,15 +132,7 @@ class StandardSearchFragment :
             binding.decksChip.text = it.decks.firstOrNull()?.name ?: TR.sentenceCase.allDecks
             binding.tagsChip.text = formatChipDescription(it.tags, emptyValue = "Tags")
             binding.cardStateChip.text = formatChipDescription(it.cardStates.map { it.label }, emptyValue = "Card state")
-            binding.cardStateChip.chipIcon =
-                ContextCompat.getDrawable(requireContext(), it.cardStates.firstOrNull().iconRes)?.also { drawable ->
-                    if (it.cardStates.isEmpty()) {
-                        DrawableCompat.setTint(
-                            drawable.mutate(),
-                            MaterialColors.getColor(requireContext(), androidx.appcompat.R.attr.colorPrimary, 0),
-                        )
-                    }
-                }
+            binding.cardStateChip.chipIcon = it.cardStates.firstOrNull().getIcon(requireContext())
 
             binding.flagsChip.text =
                 formatChipDescription(
