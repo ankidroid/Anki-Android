@@ -9,7 +9,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -2642,8 +2641,8 @@ abstract class AbstractFlashcardViewer :
             }
             try {
                 startActivity(intent)
-            } catch (_: ActivityNotFoundException) {
-                Timber.w("No app found to handle open external url from AbstractFlashcardViewer")
+            } catch (e: Exception) {
+                Timber.w(e, "Could not open url from AbstractFlashcardViewer")
                 showSnackbar(CommonString.activity_start_failed)
             }
             return true
