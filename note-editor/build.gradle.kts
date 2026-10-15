@@ -14,6 +14,7 @@ configure<LibraryExtension> {
 
 dependencies {
     implementation(project(":common:android"))
+    implementation(libs.androidx.core)
 
     testImplementation(libs.robolectric)
     testImplementation(libs.roborazzi)

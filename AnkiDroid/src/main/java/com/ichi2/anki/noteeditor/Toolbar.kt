@@ -38,11 +38,10 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.NoteEditorFragment
 import com.ichi2.anki.R
-import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.noteeditor.data.ToolbarPreferences
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
@@ -64,12 +63,13 @@ import kotlin.math.ceil
  *    * Handles generating the 'icon' for these custom buttons: [createDrawableForString]
  *    * Handles CTRL+ the tag of the button: [onKeyUp]. Allows for Ctrl+1..9 shortcuts
  * * Handles adding a dynamic number of buttons and aligning them into rows: [insertItem]
- *    * And handles whether these should be stacked or scrollable: [shouldScrollToolbar]
+ *    * And handles whether these should be stacked or scrollable: [ToolbarPreferences.isScrollable]
  */
 class Toolbar : FrameLayout {
     var formatListener: TextFormatListener? = null
     private val toolbar: LinearLayout
     private val toolbarLayout: LinearLayout
+    private val toolbarPreferences = ToolbarPreferences(context.sharedPrefs())
 
     @VisibleForTesting
     internal val scrollView: HorizontalScrollView
@@ -229,11 +229,7 @@ class Toolbar : FrameLayout {
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPaddingRelative(twoDp, twoDp, twoDp, twoDp)
         // end apply style
-        val shouldScroll =
-            appContext
-                .sharedPrefs()
-                .getBoolean(NoteEditorFragment.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
-        if (shouldScroll) {
+        if (toolbarPreferences.isScrollable) {
             toolbar.addView(button, toolbar.childCount)
         } else {
             addViewToToolbar(button)
