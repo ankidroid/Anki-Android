@@ -30,6 +30,7 @@ import com.ichi2.anki.cardviewer.ViewerCommand.ANSWER_EASY
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
 import com.ichi2.anki.cardviewer.ViewerCommand.SHOW_ANSWER
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.common.storage.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.common.time.MockTime
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.ui.TransitionDirection
@@ -48,12 +49,14 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.reviewer.ActionButtonStatus
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.testutils.RecordingInputMethodManager
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.ext.addNoSuggestNote
 import com.ichi2.testutils.ext.createInputConnection
+import com.ichi2.testutils.ext.text
 import com.ichi2.testutils.withBooleanPreference
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
@@ -73,7 +76,12 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.shadow.api.Shadow
+import org.robolectric.shadows.ShadowMediaPlayer
+import org.robolectric.shadows.util.DataSource
 import timber.log.Timber
+import java.io.File
+import java.io.IOException
+import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.test.assertContains
 import kotlin.test.assertNotEquals
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
@@ -261,15 +269,31 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun noErrorShouldOccurIfSoundFileNotPresent() {
-        addBasicNote("[[sound:not_on_file_system.mp3]]", "World")
+    fun `missing sound is reported without interrupting review`() {
+        val filename = "not_on_file_system.mp3"
+        addBasicNote("[sound:$filename]", "World")
             .firstCard()
             .moveToReviewQueue()
 
-        val reviewer = startReviewer()
+        val reviewer = startReviewer(ReviewerWithSnackbarRecording::class.java)
+        val mediaDirectory = getMediaDirectory(reviewer)
+        assertFalse(File(mediaDirectory, filename).exists())
+        // The default media shadow accepts every file, including missing ones.
+        ShadowMediaPlayer.addException(
+            DataSource.toDataSource(AbstractFlashcardViewer.getMediaBaseUrl(mediaDirectory) + filename),
+            IOException("Missing sound file"),
+        )
         reviewer.displayCardQuestion()
 
-        assertThat("If the sound file with given name is not present, then no error occurs", true)
+        // Playback runs on Dispatchers.IO; draining the main looper alone can miss it.
+        advanceRobolectricLooperUntil { reviewer.snackbarMessages.isNotEmpty() && !reviewer.cardMediaPlayer.isPlaying }
+        assertThat(
+            reviewer.snackbarMessages.toList(),
+            equalTo(listOf(reviewer.getString(CommonString.card_viewer_could_not_find_image, filename))),
+        )
+        reviewer.displayCardAnswer()
+        assertTrue(reviewer.isDisplayingAnswer)
+        assertFalse(reviewer.isFinishing)
     }
 
     @Test
@@ -627,6 +651,15 @@ class ReviewerTest : RobolectricTest() {
 
     private val defaultDeckConfig
         get() = col.decks.configDictForDeckId(Consts.DEFAULT_DECK_ID)
+
+    private class ReviewerWithSnackbarRecording : Reviewer() {
+        val snackbarMessages = ConcurrentLinkedQueue<String>()
+
+        override val baseSnackbarBuilder: SnackbarBuilder = {
+            super.baseSnackbarBuilder.invoke(this)
+            text?.let(snackbarMessages::add)
+        }
+    }
 
     private class ReviewerForMenuItems : Reviewer() {
         var menu: Menu? = null
