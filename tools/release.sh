@@ -199,8 +199,10 @@ export GITHUB_REPO="Anki-Android"
 
 if [ "$PUBLIC" = "public" ]; then
   RELEASE_TYPE="--latest"
+  RELEASE_KIND="Public release"
 else
   RELEASE_TYPE="--prerelease"
+  RELEASE_KIND="Pre-release"
 fi
 
 # Get the directory of the current script
@@ -276,3 +278,9 @@ then
   exit 1
 fi
 echo "Release published successfully"
+
+cat <<EOF >> "${GITHUB_STEP_SUMMARY:-/dev/null}"
+### [AnkiDroid $VERSION](https://github.com/ankidroid/Anki-Android/releases/tag/v$VERSION)
+
+$RELEASE_KIND
+EOF
