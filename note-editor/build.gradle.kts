@@ -13,6 +13,8 @@ configure<LibraryExtension> {
 }
 
 dependencies {
+    implementation(project(":common:android"))
+
     testImplementation(libs.robolectric)
     testImplementation(libs.roborazzi)
     testImplementation(libs.junit.vintage.engine)
