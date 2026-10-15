@@ -8,6 +8,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -15,8 +16,8 @@ import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.dialogs.LoadingDialogFragment
-import com.ichi2.anki.dialogs.dismissLoadingDialog
 import com.ichi2.anki.dialogs.showLoadingDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.onCompletion
@@ -61,54 +62,63 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
         window.unblockTouches()
     }
 
+    fun dismissDialog() {
+        (supportFragmentManager.findFragmentByTag(dialogTag) as? DialogFragment)?.dismissAllowingStateLoss()
+    }
+
     ownerLifecycle.coroutineScope.launch {
-        ownerLifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            // Pending "show after delay" job survives subsequent Active emissions so the
-            // anti-flash delay isn't restarted on every progress update. Kept inside the
-            // block: a job cancelled on stop must not linger into the next start.
-            var pendingShow: Job? = null
-            val progress =
-                viewModel.progressManager.progress.onCompletion {
-                    unblockInput()
-                }
-            progress.collect { state ->
-                when (state) {
-                    is ViewModelProgress.Idle -> {
-                        pendingShow?.cancel()
-                        pendingShow = null
-                        dialogVisible = false
-                        dismissLoadingDialog(dialogTag)
-                        unblockInput()
-                    }
-                    is ViewModelProgress.Active -> {
-                        blockInput()
-                        if (dialogVisible) {
+        try {
+            ownerLifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // Pending "show after delay" job survives subsequent Active emissions so the
+                // anti-flash delay isn't restarted on every progress update. Kept inside the
+                // block: a job cancelled on stop must not linger into the next start.
+                var pendingShow: Job? = null
+
+                fun showDialogAfter(wait: Duration) =
+                    ownerLifecycle.coroutineScope.launch(Dispatchers.Main) {
+                        delay(wait)
+                        val latest = viewModel.progressManager.progress.value
+                        if (latest is ViewModelProgress.Active) {
+                            dialogVisible = true
                             showLoadingDialog(
-                                message = formatMessage(state, resolveMessage),
-                                cancellable = state.cancellable,
+                                message = formatMessage(latest, resolveMessage),
+                                cancellable = latest.cancellable,
                                 tag = dialogTag,
                             )
-                            if (state.cancellable) wireCancelListener(viewModel, dialogTag)
-                        } else if (pendingShow == null) {
-                            pendingShow =
-                                launch {
-                                    delay(delayMillis)
-                                    val latest = viewModel.progressManager.progress.value
-                                    if (latest is ViewModelProgress.Active) {
-                                        dialogVisible = true
-                                        showLoadingDialog(
-                                            message = formatMessage(latest, resolveMessage),
-                                            cancellable = latest.cancellable,
-                                            tag = dialogTag,
-                                        )
-                                        if (latest.cancellable) wireCancelListener(viewModel, dialogTag)
-                                    }
-                                    pendingShow = null
-                                }
+                            if (latest.cancellable) wireCancelListener(viewModel, dialogTag)
+                        }
+                        pendingShow = null
+                    }
+
+                val progress =
+                    viewModel.progressManager.progress.onCompletion {
+                        pendingShow?.cancel()
+                        unblockInput()
+                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) dismissDialog()
+                    }
+                progress.collect { state ->
+                    when (state) {
+                        is ViewModelProgress.Idle -> {
+                            pendingShow?.cancel()
+                            pendingShow = null
+                            dialogVisible = false
+                            dismissDialog()
+                            unblockInput()
+                        }
+                        is ViewModelProgress.Active -> {
+                            blockInput()
+                            if (dialogVisible) {
+                                pendingShow?.cancel()
+                                pendingShow = showDialogAfter(Duration.ZERO)
+                            } else if (pendingShow == null) {
+                                pendingShow = showDialogAfter(delayMillis)
+                            }
                         }
                     }
                 }
             }
+        } finally {
+            dismissDialog()
         }
     }
 }
