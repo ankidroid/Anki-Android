@@ -2181,7 +2181,7 @@ open class DeckPicker :
     override val broadcastsActions =
         super.broadcastsActions +
             mapOf(
-                SdCardReceiver.MEDIA_MOUNT
+                SdCardReceiver.ACTION_MEDIA_MOUNT
                     to { ActivityCompat.recreate(this) },
             )
 
