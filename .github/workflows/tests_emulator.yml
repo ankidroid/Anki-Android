@@ -277,11 +277,31 @@ jobs:
             bash .github/adb_retry.sh emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             bash .github/with_emulator_log.sh adb-log.txt python3 .github/run_emulator_tests.py
-            TEST_RELEASE_BUILD=false ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon
 
       - name: Report Emulator Test Results
         if: always() && hashFiles('AnkiDroid/build/outputs/androidTest-results/connected/**/TEST-*.xml') != ''
         run: python3 .github/report_test_failures.py AnkiDroid/build/outputs/androidTest-results/connected adb-log.txt --title "Emulator test failures"
+
+      - name: Build Release Smoke Test
+        run: TEST_RELEASE_BUILD=false ./gradlew packagePlayRelease :baselineprofile:packageBenchmarkBenchmark --daemon
+
+      - name: Run Release Smoke Test
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        timeout-minutes: 10
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          emulator-options: -no-snapshot-save ${{ env.EMULATOR_OPTIONS }}
+          ram-size: ${{ env.EMULATOR_RAM_SIZE }}
+          pre-emulator-launch-script: ${{ env.EMULATOR_PRE_LAUNCH_SCRIPT }}
+          sdcard-path-or-size: 100M
+          disable-animations: true
+          script: |
+            bash .github/disable_art_metrics.sh
+            bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
+            TEST_RELEASE_BUILD=false ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon
 
       - name: Configure NDK tools PATH for alignment checking
         run: |
