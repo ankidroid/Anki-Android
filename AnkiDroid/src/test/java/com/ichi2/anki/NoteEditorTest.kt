@@ -352,7 +352,7 @@ class NoteEditorTest : RobolectricTest() {
         col.config.set(CURRENT_DECK, currentDid)
         val n = super.addBasicNote("Test", "Note")
         n.notetype.did = currentDid
-        val editor = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
+        val editor = getNoteEditorEditingExistingBasicNote("Test", "Note", REVIEWER)
         col.config.set(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
         val copyNoteBundle = getCopyNoteIntent(editor)
         val newNoteEditor = openNoteEditorWithArgs(copyNoteBundle)
