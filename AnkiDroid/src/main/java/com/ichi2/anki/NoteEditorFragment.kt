@@ -145,6 +145,7 @@ import com.ichi2.anki.noteeditor.NoteEditorMultimediaController
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
+import com.ichi2.anki.noteeditor.data.ToolbarPreferences
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.pages.viewmodel.ImageOcclusionArgs
@@ -300,6 +301,7 @@ class NoteEditorFragment :
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
+    private val toolbarPreferences by lazy { ToolbarPreferences(sharedPrefs()) }
 
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     @VisibleForTesting
@@ -1502,15 +1504,12 @@ class NoteEditorFragment :
                 }
             }
         }
-        menu.findItem(R.id.action_show_toolbar).isChecked =
-            !shouldHideToolbar()
+        menu.findItem(R.id.action_show_toolbar).isChecked = toolbarPreferences.isVisible
         menu.findItem(R.id.action_capitalize).isChecked =
             sharedPrefs().getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true)
         menu.findItem(R.id.action_scroll_toolbar).apply {
-            isChecked =
-                sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
-            isEnabled =
-                !shouldHideToolbar()
+            isChecked = toolbarPreferences.isScrollable
+            isEnabled = toolbarPreferences.isVisible
         }
     }
 
@@ -1588,9 +1587,7 @@ class NoteEditorFragment :
             }
             R.id.action_show_toolbar -> {
                 item.isChecked = !item.isChecked
-                this.sharedPrefs().edit {
-                    putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, item.isChecked)
-                }
+                toolbarPreferences.isVisible = item.isChecked
                 updateToolbar()
 
                 // Update the overflow action menu in order to switch the enable/disable status of the "Scroll toolbar" item on the spot
@@ -1604,9 +1601,7 @@ class NoteEditorFragment :
             }
             R.id.action_scroll_toolbar -> {
                 item.isChecked = !item.isChecked
-                this.sharedPrefs().edit {
-                    putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, item.isChecked)
-                }
+                toolbarPreferences.isScrollable = item.isChecked
                 updateToolbar()
             }
         }
@@ -2353,7 +2348,7 @@ class NoteEditorFragment :
     }
 
     private fun updateToolbar() {
-        toolbar.isVisible = !shouldHideToolbar()
+        toolbar.isVisible = toolbarPreferences.isVisible
         applyBottomInset()
         if (!toolbar.isVisible) return
         toolbar.clearCustomItems()
@@ -2884,8 +2879,6 @@ class NoteEditorFragment :
         const val RESULT_UPDATED_IO_NOTE = 11
 
         // preferences keys
-        const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"
-        private const val PREF_NOTE_EDITOR_SHOW_TOOLBAR = "noteEditorShowToolbar"
         private const val PREF_NOTE_EDITOR_NEWLINE_REPLACE = "noteEditorNewlineReplace"
         private const val PREF_NOTE_EDITOR_CAPITALIZE = "note_editor_capitalize"
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
@@ -2914,10 +2907,5 @@ class NoteEditorFragment :
             if (ImportUtils.isInvalidViewIntent(intent)) return false
             return intent.resolveMimeType()?.startsWith("image/") == true
         }
-
-        private fun shouldHideToolbar(): Boolean =
-            !appContext
-                .sharedPrefs()
-                .getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
     }
 }
