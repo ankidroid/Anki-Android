@@ -12,7 +12,7 @@ import org.jetbrains.uast.UReferenceExpression
 import org.jetbrains.uast.toUElementOfType
 
 /**
- * Resolves a field reference, including a Kotlin property accessed through its getter.
+ * Resolves a Kotlin property to its backing field, including access through its getter.
  *
  * [UReferenceExpression.resolve] can return a getter method for an ordinary Kotlin `val`.
  *
@@ -21,8 +21,6 @@ import org.jetbrains.uast.toUElementOfType
 internal fun UExpression.resolveToField(): PsiField? {
     val reference = (this as? UQualifiedReferenceExpression)?.selector ?: this
     val resolved = (reference as? UReferenceExpression)?.resolve() ?: return null
-    if (resolved is PsiField) return resolved
-
     val property = resolved.unwrapped as? KtProperty ?: return null
     return property.toUElementOfType<UField>()?.javaPsi as? PsiField
 }
