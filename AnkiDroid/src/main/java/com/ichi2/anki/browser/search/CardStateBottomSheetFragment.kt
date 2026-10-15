@@ -2,15 +2,19 @@
 
 package com.ichi2.anki.browser.search
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
 import com.ichi2.anki.databinding.FragmentBottomSheetListBinding
 import com.ichi2.anki.databinding.ItemBrowserFilterBottomSheetBinding
@@ -92,7 +96,7 @@ class CardStateBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment
             val state = this.states[position]
             holder.binding.text.text = state.label
             holder.binding.checkbox.contentDescription = state.label
-            holder.binding.icon.setImageResource(state.iconRes)
+            holder.binding.icon.setImageDrawable(state.getIcon(holder.itemView.context))
             holder.binding.root.setOnClickListener { onItemClickedListener(state) }
             holder.binding.checkbox.apply {
                 this.isChecked = checkedItems.contains(state)
@@ -121,14 +125,19 @@ class CardStateBottomSheetFragment : BottomSheetDialogFragment(R.layout.fragment
     }
 }
 
-@get:DrawableRes
-val CardState?.iconRes
-    get() =
+/** Returns the card-state icon tinted with the current theme's state color. */
+fun CardState?.getIcon(context: Context): Drawable? {
+    val iconRes = if (this == null) R.drawable.ic_card_state_default else R.drawable.ic_card_state
+    val colorAttr =
         when (this) {
-            null -> R.drawable.ic_card_state_default
-            CardState.New -> R.drawable.ic_card_state_new
-            CardState.Learning -> R.drawable.ic_card_state_learning
-            CardState.Review -> R.drawable.ic_card_state_review
-            CardState.Buried -> R.drawable.ic_card_state_buried
-            CardState.Suspended -> R.drawable.ic_card_state_suspended
+            null -> androidx.appcompat.R.attr.colorPrimary
+            CardState.New -> R.attr.newCountColor
+            CardState.Learning -> R.attr.learnCountColor
+            CardState.Review -> R.attr.reviewCountColor
+            CardState.Buried -> R.attr.buriedColor
+            CardState.Suspended -> R.attr.suspendedColor
         }
+    return ContextCompat.getDrawable(context, iconRes)?.mutate()?.also {
+        DrawableCompat.setTint(it, MaterialColors.getColor(context, colorAttr, 0))
+    }
+}
