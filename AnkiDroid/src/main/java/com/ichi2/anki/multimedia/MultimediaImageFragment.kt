@@ -51,7 +51,7 @@ import com.ichi2.anki.workarounds.SafeWebViewClient
 import com.ichi2.anki.workarounds.SafeWebViewLayout
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.imagecropper.ImageCropper
-import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
+import com.ichi2.imagecropper.ImageCropper.Companion.EXTRA_CROP_IMAGE_RESULT
 import com.ichi2.utils.BitmapUtil
 import com.ichi2.utils.ExifUtil
 import com.ichi2.utils.FileUtil
@@ -178,7 +178,7 @@ class MultimediaImageFragment :
                 Activity.RESULT_OK -> {
                     result.data?.let {
                         val cropResultData =
-                            it.getParcelableExtraCompat<ImageCropper.CropResultData>(CROP_IMAGE_RESULT)
+                            it.getParcelableExtraCompat<ImageCropper.CropResultData>(EXTRA_CROP_IMAGE_RESULT)
                         Timber.d("Cropped image data: $cropResultData")
 
                         if (cropResultData?.uriPath == null || cropResultData.uriContent == null) return@registerForActivityResult
@@ -385,7 +385,7 @@ class MultimediaImageFragment :
         val imageUri =
             BundleCompat.getParcelable(
                 intent.extras!!,
-                DrawingFragment.IMAGE_PATH_KEY,
+                DrawingFragment.EXTRA_IMAGE_PATH,
                 Uri::class.java,
             )
 

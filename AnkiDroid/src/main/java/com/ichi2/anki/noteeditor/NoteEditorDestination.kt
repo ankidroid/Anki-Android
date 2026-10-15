@@ -44,7 +44,7 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
             Intent(context, NoteEditorActivity::class.java).also { intent ->
                 intent.putExtra(NoteEditorFragment.EXTRA_CALLER, NoteEditorCaller.CARDBROWSER_ADD.value)
                 intent.putExtra(NoteEditorFragment.EXTRA_TEXT_FROM_SEARCH_VIEW, searchTerms)
-                intent.putExtra(NoteEditorFragment.IN_CARD_BROWSER_ACTIVITY, false)
+                intent.putExtra(NoteEditorFragment.EXTRA_IN_CARD_BROWSER_ACTIVITY, false)
                 deckId?.takeIf { it > 0 }?.let { intent.putExtra(NoteEditorFragment.EXTRA_DID, it) }
             }
         is NoteEditorDestination.EditSelection ->
@@ -55,7 +55,7 @@ fun NoteEditorDestination.toIntent(context: Context): Intent =
                 // To handle multi select and note edit
                 intent.putExtra(NoteEditorFragment.EXTRA_CARD_IDS, cardIds.toLongArray())
                 intent.putExtra(AnkiActivity.EXTRA_FINISH_ANIMATION, animation as Parcelable)
-                intent.putExtra(NoteEditorFragment.IN_CARD_BROWSER_ACTIVITY, inCardBrowserActivity)
+                intent.putExtra(NoteEditorFragment.EXTRA_IN_CARD_BROWSER_ACTIVITY, inCardBrowserActivity)
             }
         is NoteEditorDestination.CopyNote ->
             Intent(context, NoteEditorActivity::class.java).also { intent ->

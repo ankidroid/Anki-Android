@@ -194,7 +194,7 @@ class ImageCropper :
         if (result.error == null) {
             val resultIntent = Intent()
             resultIntent.putExtra(
-                CROP_IMAGE_RESULT,
+                EXTRA_CROP_IMAGE_RESULT,
                 CropResultData(
                     uriContent = result.uriContent,
                     uriPath = context?.let { result.getUriFilePath(it) },
@@ -225,7 +225,7 @@ class ImageCropper :
         /**
          * The key for the cropped image path sent back in the result Intent.
          */
-        const val CROP_IMAGE_RESULT = "crop_image_result"
+        const val EXTRA_CROP_IMAGE_RESULT = "crop_image_result"
     }
 
     @Parcelize

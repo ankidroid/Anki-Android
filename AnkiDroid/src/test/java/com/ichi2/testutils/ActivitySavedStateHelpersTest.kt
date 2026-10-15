@@ -29,22 +29,25 @@ class ActivitySavedStateHelpersTest : AndroidTest {
         val payload = byteArrayOf(1, 2, 3)
         assertNull(intent.getBundleExtra(SingleFragmentActivity.EXTRA_FRAGMENT_ARGS))
 
-        intent.withLaunchPayload(SingleFragmentActivity::class.java, PAYLOAD_KEY, payload)
+        intent.withLaunchPayload(SingleFragmentActivity::class.java, EXTRA_PAYLOAD, payload)
 
-        assertContentEquals(payload, intent.getByteArrayExtra(PAYLOAD_KEY))
-        assertContentEquals(payload, intent.getBundleExtra(SingleFragmentActivity.EXTRA_FRAGMENT_ARGS)?.getByteArray(PAYLOAD_KEY))
+        assertContentEquals(payload, intent.getByteArrayExtra(EXTRA_PAYLOAD))
+        assertContentEquals(payload, intent.getBundleExtra(SingleFragmentActivity.EXTRA_FRAGMENT_ARGS)?.getByteArray(EXTRA_PAYLOAD))
     }
 
     @Test
     fun `saved state inspection detects copies made by the unfiltered default factory`() {
-        val intent = Intent().putExtra(PAYLOAD_KEY, ByteArray(300_000))
+        val intent = Intent().putExtra(EXTRA_PAYLOAD, ByteArray(300_000))
         // A plain AndroidX activity reproduces argument copying without AnkiActivity's override.
         Robolectric.buildActivity(FragmentActivity::class.java, intent).setup().use { controller ->
             controller.get().createSavedStateHandleWithDefaultFactory()
             val savedState = controller.saveState().parcelledCopy(javaClass.classLoader)
 
             assertTrue(savedState.savedStateHandlePaths().isNotEmpty(), "Expected a serialized SavedStateHandle provider")
-            assertTrue(savedState.savedStateHandlePathsToKey(PAYLOAD_KEY).isNotEmpty(), "Expected the copied intent payload to be detected")
+            assertTrue(
+                savedState.savedStateHandlePathsToKey(EXTRA_PAYLOAD).isNotEmpty(),
+                "Expected the copied intent payload to be detected",
+            )
         }
     }
 
@@ -54,7 +57,7 @@ class ActivitySavedStateHelpersTest : AndroidTest {
         val savedState =
             Robolectric.buildActivity(FragmentActivity::class.java).setup().use { controller ->
                 val activity = controller.get()
-                val fragment = Fragment().apply { arguments = Bundle().apply { putByteArray(PAYLOAD_KEY, payload) } }
+                val fragment = Fragment().apply { arguments = Bundle().apply { putByteArray(EXTRA_PAYLOAD, payload) } }
                 activity.supportFragmentManager
                     .beginTransaction()
                     .add(fragment, "payload")
@@ -64,14 +67,14 @@ class ActivitySavedStateHelpersTest : AndroidTest {
             }
 
         assertTrue(savedState.savedStateHandlePaths().isNotEmpty(), "Expected a serialized SavedStateHandle provider")
-        assertTrue(savedState.savedStateHandlePathsToKey(PAYLOAD_KEY).isEmpty(), "Fragment arguments are not ViewModel state")
+        assertTrue(savedState.savedStateHandlePathsToKey(EXTRA_PAYLOAD).isEmpty(), "Fragment arguments are not ViewModel state")
         Robolectric.buildActivity(FragmentActivity::class.java).setup(savedState).use { controller ->
             val restoredFragment = controller.get().supportFragmentManager.findFragmentByTag("payload")
-            assertContentEquals(payload, restoredFragment?.arguments?.getByteArray(PAYLOAD_KEY))
+            assertContentEquals(payload, restoredFragment?.arguments?.getByteArray(EXTRA_PAYLOAD))
         }
     }
 
     companion object {
-        private const val PAYLOAD_KEY = "saved_state_test_payload"
+        private const val EXTRA_PAYLOAD = "saved_state_test_payload"
     }
 }

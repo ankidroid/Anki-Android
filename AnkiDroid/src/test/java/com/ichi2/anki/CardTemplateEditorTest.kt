@@ -909,8 +909,8 @@ class CardTemplateEditorTest : RobolectricTest() {
                 shadowEditor.nextStartedActivity,
                 Activity.RESULT_OK,
                 Intent()
-                    .putExtra(CardTemplateBrowserAppearanceEditor.INTENT_QUESTION_FORMAT, "q")
-                    .putExtra(CardTemplateBrowserAppearanceEditor.INTENT_ANSWER_FORMAT, "a"),
+                    .putExtra(CardTemplateBrowserAppearanceEditor.EXTRA_QUESTION_FORMAT, "q")
+                    .putExtra(CardTemplateBrowserAppearanceEditor.EXTRA_ANSWER_FORMAT, "a"),
             )
             assertDiscardChangesDialogShown(shadowEditor)
         }

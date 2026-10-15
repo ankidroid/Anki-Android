@@ -169,7 +169,7 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.insetsOf
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.imagecropper.ImageCropper
-import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
+import com.ichi2.imagecropper.ImageCropper.Companion.EXTRA_CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
 import com.ichi2.utils.AndroidUiUtils.showSoftInput
 import com.ichi2.utils.ClipboardUtil
@@ -326,7 +326,7 @@ class NoteEditorFragment :
      * If true, this fragment is on the trailing side of the card browser.
      */
     private val inCardBrowserActivity
-        get() = requireArguments().getBoolean(IN_CARD_BROWSER_ACTIVITY)
+        get() = requireArguments().getBoolean(EXTRA_IN_CARD_BROWSER_ACTIVITY)
 
     private val requestAddLauncher =
         registerForActivityResult(
@@ -929,7 +929,7 @@ class NoteEditorFragment :
 
                     result.data?.let {
                         val cropResultData =
-                            it.getParcelableExtraCompat<ImageCropper.CropResultData>(CROP_IMAGE_RESULT)
+                            it.getParcelableExtraCompat<ImageCropper.CropResultData>(EXTRA_CROP_IMAGE_RESULT)
                         Timber.d("Cropped image data: $cropResultData")
                         if (cropResultData?.uriPath == null) return@registerForActivityResult
                         setupImageOcclusionEditor(cropResultData.uriPath)
@@ -2847,7 +2847,7 @@ class NoteEditorFragment :
         const val EXTRA_NOTE_CHANGED = "noteChanged"
         const val EXTRA_RELOAD_REQUIRED = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
-        const val IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
+        const val EXTRA_IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
         const val EXTRA_CARD_IDS = "EXTRA_CARD_IDS"
         const val REQUEST_DECK_SELECTION_NOTE_EDITOR = "request_deck_selection_note_editor"
 

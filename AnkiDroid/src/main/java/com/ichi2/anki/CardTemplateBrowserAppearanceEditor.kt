@@ -137,14 +137,14 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(INTENT_QUESTION_FORMAT, questionFormat)
-        outState.putString(INTENT_ANSWER_FORMAT, answerFormat)
+        outState.putString(EXTRA_QUESTION_FORMAT, questionFormat)
+        outState.putString(EXTRA_ANSWER_FORMAT, answerFormat)
         super.onSaveInstanceState(outState)
     }
 
     private fun initializeUiFromBundle(bundle: Bundle) {
-        binding.questionFormat.setText(bundle.getString(INTENT_QUESTION_FORMAT))
-        binding.answerFormat.setText(bundle.getString(INTENT_ANSWER_FORMAT))
+        binding.questionFormat.setText(bundle.getString(EXTRA_QUESTION_FORMAT))
+        binding.answerFormat.setText(bundle.getString(EXTRA_ANSWER_FORMAT))
 
         discardChangesCallback.isEnabled = hasChanges()
 
@@ -152,9 +152,9 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
         title = TR.sentenceCase.browserAppearance
     }
 
-    private fun answerHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat
+    private fun answerHasChanged(intent: Intent): Boolean = intent.getStringExtra(EXTRA_ANSWER_FORMAT) != answerFormat
 
-    private fun questionHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_QUESTION_FORMAT) != questionFormat
+    private fun questionHasChanged(intent: Intent): Boolean = intent.getStringExtra(EXTRA_QUESTION_FORMAT) != questionFormat
 
     private val questionFormat: String
         get() = getTextValue(binding.questionFormat)
@@ -174,8 +174,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
         Timber.i("Save and Exit")
         val data =
             Intent().apply {
-                putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-                putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+                putExtra(EXTRA_QUESTION_FORMAT, questionFormat)
+                putExtra(EXTRA_ANSWER_FORMAT, answerFormat)
             }
         setResult(RESULT_OK, data)
         finish()
@@ -208,8 +208,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
                     null
                 } else {
                     try {
-                        val question = intent.getStringExtra(INTENT_QUESTION_FORMAT)
-                        val answer = intent.getStringExtra(INTENT_ANSWER_FORMAT)
+                        val question = intent.getStringExtra(EXTRA_QUESTION_FORMAT)
+                        val answer = intent.getStringExtra(EXTRA_ANSWER_FORMAT)
                         Result(question, answer)
                     } catch (e: Exception) {
                         Timber.w(e, "Could not read result from intent")
@@ -220,8 +220,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
     }
 
     companion object {
-        const val INTENT_QUESTION_FORMAT = "bqfmt"
-        const val INTENT_ANSWER_FORMAT = "bafmt"
+        const val EXTRA_QUESTION_FORMAT = "bqfmt"
+        const val EXTRA_ANSWER_FORMAT = "bafmt"
 
         /** Specified the card browser should use the default template formatter  */
         const val VALUE_USE_DEFAULT = ""
@@ -239,8 +239,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
             answerFormat: String,
         ): Intent =
             Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
-                putExtra(INTENT_QUESTION_FORMAT, questionFormat)
-                putExtra(INTENT_ANSWER_FORMAT, answerFormat)
+                putExtra(EXTRA_QUESTION_FORMAT, questionFormat)
+                putExtra(EXTRA_ANSWER_FORMAT, answerFormat)
             }
     }
 }

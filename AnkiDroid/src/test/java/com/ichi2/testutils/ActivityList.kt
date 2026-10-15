@@ -10,8 +10,8 @@ import android.content.Intent
 import androidx.annotation.CheckResult
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor
-import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWER_FORMAT
-import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
+import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.EXTRA_ANSWER_FORMAT
+import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.EXTRA_QUESTION_FORMAT
 import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.DrawingFragment
@@ -130,13 +130,13 @@ object ActivityList {
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
         // bundle != null
         return Intent().apply {
-            putExtra(INTENT_QUESTION_FORMAT, "{{Front}}")
-            putExtra(INTENT_ANSWER_FORMAT, "{{FrontSide}}\n{{Back}}")
+            putExtra(EXTRA_QUESTION_FORMAT, "{{Front}}")
+            putExtra(EXTRA_ANSWER_FORMAT, "{{FrontSide}}\n{{Back}}")
         }
     }
 
     private fun intentForCardTemplateEditor(noteTypeId: Long = 1L): Intent =
-        Intent().putExtra(CardTemplateEditor.EDITOR_NOTE_TYPE_ID, noteTypeId)
+        Intent().putExtra(CardTemplateEditor.EXTRA_NOTE_TYPE_ID, noteTypeId)
 
     private fun intentForWidgetConfig(): Intent = Intent().apply { putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1) }
 
