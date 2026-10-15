@@ -199,6 +199,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import com.ichi2.anki.common.android.R as CommonR
+import com.ichi2.anki.noteeditor.R as NoteEditorR
 
 const val CALLER_KEY = "caller"
 
@@ -2398,7 +2399,7 @@ class NoteEditorFragment :
 
         // Let the user add more buttons (always at the end).
         // Sets the add custom tag icon color.
-        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
+        val drawable = ResourcesCompat.getDrawable(resources, NoteEditorR.drawable.ic_add_toolbar_icon, null)
         drawable!!.setTint(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
         addButton.contentDescription = resources.getString(CommonString.add_toolbar_item)

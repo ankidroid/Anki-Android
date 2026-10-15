@@ -25,6 +25,7 @@ import com.ichi2.utils.TypedFilter
 import java.util.Locale
 import java.util.Stack
 import java.util.TreeSet
+import com.ichi2.anki.common.android.R as CommonR
 
 /**
  * @param tags A reference to the [TagsList]
@@ -412,7 +413,7 @@ class TagsArrayAdapter(
         // For example, display some icon if the node is a leaf? (assets required)
         when (node.isExpanded) {
             true -> button.setBackgroundResource(R.drawable.ic_expand_more_black_24dp_xml)
-            false -> button.setBackgroundResource(R.drawable.ic_baseline_chevron_right_24)
+            false -> button.setBackgroundResource(CommonR.drawable.ic_baseline_chevron_right_24)
         }
     }
 

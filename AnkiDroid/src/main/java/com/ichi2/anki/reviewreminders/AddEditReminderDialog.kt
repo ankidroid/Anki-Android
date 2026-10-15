@@ -47,6 +47,7 @@ import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
+import com.ichi2.anki.common.android.R as CommonR
 
 class AddEditReminderDialog : DialogFragment() {
     /**
@@ -359,7 +360,7 @@ class AddEditReminderDialog : DialogFragment() {
         /**
          * Icon that shows next to the advanced settings section when the dropdown is closed.
          */
-        private val DROPDOWN_COLLAPSED_CHEVRON = R.drawable.ic_baseline_chevron_right_24
+        private val DROPDOWN_COLLAPSED_CHEVRON = CommonR.drawable.ic_baseline_chevron_right_24
 
         /**
          * Arguments key for the dialog mode to open this dialog in.
