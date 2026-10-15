@@ -1663,7 +1663,7 @@ class DeckPickerTest : RobolectricTest() {
                     browser.childFragmentManager.setFragmentResult(
                         DeckSelectionDialog.REQUEST_SELECT_DECK,
                         Bundle().apply {
-                            putParcelable(DeckSelectionDialog.ARG_SELECTED_DECK, SelectableDeck.AllDecks)
+                            putParcelable(DeckSelectionDialog.RESULT_SELECTED_DECK, SelectableDeck.AllDecks)
                         },
                     )
                 }

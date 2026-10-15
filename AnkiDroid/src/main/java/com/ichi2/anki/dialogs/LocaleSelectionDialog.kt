@@ -87,7 +87,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     private fun sendSelectionResult(locale: Locale? = null) {
         parentFragmentManager.setFragmentResult(
             REQUEST_HINT_LOCALE_SELECTION,
-            Bundle().apply { putSerializable(KEY_SELECTED_LOCALE, locale) },
+            Bundle().apply { putSerializable(RESULT_SELECTED_LOCALE, locale) },
         )
     }
 
@@ -151,7 +151,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
 
     companion object {
         const val REQUEST_HINT_LOCALE_SELECTION = "request_hint_locale_selection"
-        const val KEY_SELECTED_LOCALE = "key_selected_locale"
+        const val RESULT_SELECTED_LOCALE = "key_selected_locale"
 
         /**
          * Language identifier for International Phonetic Alphabet. This isn't available from [Locale.getAvailableLocales], but

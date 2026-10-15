@@ -16,7 +16,7 @@ import com.ichi2.anki.browser.search.SavedSearches
 import com.ichi2.anki.browser.search.toMap
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.databinding.ItemSavedSearchBinding
-import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.ARG_SAVED_SEARCH
+import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.RESULT_SAVED_SEARCH
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_REMOVED
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment.Companion.TYPE_SEARCH_SELECTED
 import com.ichi2.anki.launchCatchingTask
@@ -51,8 +51,8 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
                     parentFragmentManager.setFragmentResult(
                         REQUEST_SAVED_SEARCH_ACTION,
                         Bundle().apply {
-                            putInt(ARG_TYPE, TYPE_SEARCH_SELECTED)
-                            putString(ARG_SAVED_SEARCH, searchName)
+                            putInt(RESULT_SAVED_SEARCH_ACTION, TYPE_SEARCH_SELECTED)
+                            putString(RESULT_SAVED_SEARCH, searchName)
                         },
                     )
                     dismiss()
@@ -77,8 +77,8 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_SAVED_SEARCH_ACTION,
                     Bundle().apply {
-                        putInt(ARG_TYPE, TYPE_SEARCH_REMOVED)
-                        putString(ARG_SAVED_SEARCH, searchName)
+                        putInt(RESULT_SAVED_SEARCH_ACTION, TYPE_SEARCH_REMOVED)
+                        putString(RESULT_SAVED_SEARCH, searchName)
                     },
                 )
                 dialog?.dismiss() // Dismiss the root dialog
@@ -127,14 +127,14 @@ class SavedBrowserSearchesDialogFragment : AnalyticsDialogFragment() {
         /**
          * The user given name for the saved search that can be used as an identifier.
          */
-        const val ARG_SAVED_SEARCH = "arg_saved_search"
+        const val RESULT_SAVED_SEARCH = "arg_saved_search"
 
         /**
          * [Int] number identifying the type of action for the saved search specified by
-         * [ARG_SAVED_SEARCH]. Currently there are just two possible values [TYPE_SEARCH_SELECTED]
+         * [RESULT_SAVED_SEARCH]. Currently there are just two possible values [TYPE_SEARCH_SELECTED]
          * and [TYPE_SEARCH_REMOVED].
          */
-        const val ARG_TYPE = "arg_type"
+        const val RESULT_SAVED_SEARCH_ACTION = "arg_type"
         private const val ARG_SAVED_FILTERS = "arg_saved_filters"
 
         fun newInstance(savedFilters: List<SavedSearch>): SavedBrowserSearchesDialogFragment =
@@ -156,8 +156,8 @@ fun CardBrowser.registerSavedSearchActionHandler(action: (Int, String?) -> Unit)
         SavedBrowserSearchesDialogFragment.REQUEST_SAVED_SEARCH_ACTION,
         this,
     ) { _, bundle ->
-        val type = bundle.getInt(SavedBrowserSearchesDialogFragment.ARG_TYPE)
-        val searchName = bundle.getString(ARG_SAVED_SEARCH)
+        val type = bundle.getInt(SavedBrowserSearchesDialogFragment.RESULT_SAVED_SEARCH_ACTION)
+        val searchName = bundle.getString(RESULT_SAVED_SEARCH)
         Timber.d("On user saved search selection named: %s", searchName)
         action(type, searchName)
     }
@@ -172,8 +172,8 @@ fun Fragment.registerSavedSearchActionHandler(action: (ManageSavedSearchAction) 
         SavedBrowserSearchesDialogFragment.REQUEST_SAVED_SEARCH_ACTION,
         this,
     ) { _, bundle ->
-        val type = bundle.getInt(SavedBrowserSearchesDialogFragment.ARG_TYPE)
-        val searchName = bundle.getString(SavedBrowserSearchesDialogFragment.ARG_SAVED_SEARCH) ?: return@setFragmentResultListener
+        val type = bundle.getInt(SavedBrowserSearchesDialogFragment.RESULT_SAVED_SEARCH_ACTION)
+        val searchName = bundle.getString(SavedBrowserSearchesDialogFragment.RESULT_SAVED_SEARCH) ?: return@setFragmentResultListener
         Timber.d("On user saved search selection named: %s", searchName)
 
         launchCatchingTask {

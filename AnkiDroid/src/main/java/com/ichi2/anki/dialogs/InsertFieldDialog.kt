@@ -107,7 +107,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
                 if (field == null) return@collect
                 parentFragmentManager.setFragmentResult(
                     requestKey,
-                    Bundle().apply { putString(KEY_INSERTED_FIELD, field.renderToTemplateTag()) },
+                    Bundle().apply { putString(RESULT_INSERTED_FIELD, field.renderToTemplateTag()) },
                 )
                 dismiss()
             }
@@ -132,7 +132,7 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
          *
          * Represents the template tag for the selected field: `{{Front}}`
          */
-        const val KEY_INSERTED_FIELD = "key_inserted_field"
+        const val RESULT_INSERTED_FIELD = "key_inserted_field"
 
         /**
          * Creates a new instance of [InsertFieldDialog]

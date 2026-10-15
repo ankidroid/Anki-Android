@@ -27,8 +27,8 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.customstudy.CustomStudyViewModel
-import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.REQUEST_SELECT_TAGS
+import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.RESULT_SELECTED_TAGS
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.libanki.CardType
 import com.ichi2.anki.libanki.Collection
@@ -225,7 +225,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                 // simulate tag selection
                 studyDialog.parentFragmentManager.setFragmentResult(
                     REQUEST_SELECT_TAGS,
-                    Bundle().apply { putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, selectedTags) },
+                    Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, selectedTags) },
                 )
                 val customStudyDeck = col.decks.customStudySession
                 assertNotNull(customStudyDeck)

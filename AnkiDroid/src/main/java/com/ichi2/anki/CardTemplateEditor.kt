@@ -816,7 +816,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
             parentFragmentManager.setFragmentResultListener(insertFieldRequestKey, viewLifecycleOwner) { key, bundle ->
                 // this is guaranteed to be non null, as we put a non null value on the other side
-                insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
+                insertField(bundle.getString(InsertFieldDialog.RESULT_INSERTED_FIELD)!!)
             }
             setupMenu()
         }

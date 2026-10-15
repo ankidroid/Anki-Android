@@ -38,8 +38,8 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.databinding.DialogDeckPickerBinding
 import com.ichi2.anki.databinding.ItemDeckPickerDialogBinding
 import com.ichi2.anki.deckpicker.DeckFilters
-import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.REQUEST_SELECT_DECK
+import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.RESULT_SELECTED_DECK
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
@@ -187,7 +187,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         parentFragmentManager.setFragmentResult(
             requestKey,
             Bundle().apply {
-                putParcelable(ARG_SELECTED_DECK, deck)
+                putParcelable(RESULT_SELECTED_DECK, deck)
             },
         )
     }
@@ -414,7 +414,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
     companion object {
         const val TAG = "DeckSelectionDialog"
         const val REQUEST_SELECT_DECK = "request_select_deck"
-        const val ARG_SELECTED_DECK = "arg_selected_deck"
+        const val RESULT_SELECTED_DECK = "arg_selected_deck"
         const val ARG_REQUEST_KEY = "arg_request_key"
         const val ARG_ALLOW_ALL = "arg_allow_all"
         const val ARG_ALLOW_FILTERED = "arg_allow_filtered"
@@ -462,7 +462,7 @@ fun FragmentActivity.registerDeckSelectedHandler(
     action: (deck: SelectableDeck?) -> Unit,
 ) {
     setFragmentResultListener(requestKey) { _, bundle ->
-        val selectedDeck = bundle.getParcelableCompat<SelectableDeck?>(ARG_SELECTED_DECK)
+        val selectedDeck = bundle.getParcelableCompat<SelectableDeck?>(RESULT_SELECTED_DECK)
         action(selectedDeck)
     }
 }
@@ -479,7 +479,7 @@ fun Fragment.registerDeckSelectedHandler(
     action: (deck: SelectableDeck?) -> Unit,
 ) {
     setFragmentResultListener(requestKey) { _, bundle ->
-        val selectedDeck = bundle.getParcelableCompat<SelectableDeck?>(ARG_SELECTED_DECK)
+        val selectedDeck = bundle.getParcelableCompat<SelectableDeck?>(RESULT_SELECTED_DECK)
         action(selectedDeck)
     }
 }

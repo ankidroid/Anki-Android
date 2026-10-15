@@ -98,8 +98,8 @@ class TagLimitFragment : DialogFragment() {
                 setFragmentResult(
                     REQUEST_CUSTOM_STUDY_TAGS,
                     Bundle().apply {
-                        putStringArrayList(KEY_INCLUDED_TAGS, ArrayList(tagsToInclude))
-                        putStringArrayList(KEY_EXCLUDED_TAGS, ArrayList(tagsToExclude))
+                        putStringArrayList(RESULT_INCLUDED_TAGS, ArrayList(tagsToInclude))
+                        putStringArrayList(RESULT_EXCLUDED_TAGS, ArrayList(tagsToExclude))
                     },
                 )
                 dismiss()
@@ -133,8 +133,8 @@ class TagLimitFragment : DialogFragment() {
     companion object {
         const val TAG = "TagLimitFragment"
         const val REQUEST_CUSTOM_STUDY_TAGS = "request_custom_study_tags"
-        const val KEY_INCLUDED_TAGS = "key_included_tags"
-        const val KEY_EXCLUDED_TAGS = "key_excluded_tags"
+        const val RESULT_INCLUDED_TAGS = "key_included_tags"
+        const val RESULT_EXCLUDED_TAGS = "key_excluded_tags"
         private const val ARG_DECK_ID = "arg_deck_id"
 
         fun newInstance(deckId: DeckId) =

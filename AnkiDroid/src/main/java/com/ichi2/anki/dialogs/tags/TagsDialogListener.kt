@@ -34,10 +34,10 @@ interface TagsDialogListener {
             this,
         ) { _: String?, bundle: Bundle ->
             val selectedTags: List<String> =
-                bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
+                bundle.getStringArrayList(RESULT_SELECTED_TAGS)!!
             val indeterminateTags: List<String> =
-                bundle.getStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS)!!
-            val option = bundle.getSerializableCompat<CardStateFilter>(ON_SELECTED_TAGS__OPTION)!!
+                bundle.getStringArrayList(RESULT_INDETERMINATE_TAGS)!!
+            val option = bundle.getSerializableCompat<CardStateFilter>(RESULT_CARD_STATE_FILTER)!!
             onSelectedTags(selectedTags, indeterminateTags, option)
         }
     }
@@ -52,17 +52,17 @@ interface TagsDialogListener {
                 ) {
                     val bundle =
                         Bundle().apply {
-                            putStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS, ArrayList(selectedTags))
-                            putStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS, ArrayList(indeterminateTags))
-                            putSerializable(ON_SELECTED_TAGS__OPTION, stateFilter)
+                            putStringArrayList(RESULT_SELECTED_TAGS, ArrayList(selectedTags))
+                            putStringArrayList(RESULT_INDETERMINATE_TAGS, ArrayList(indeterminateTags))
+                            putSerializable(RESULT_CARD_STATE_FILTER, stateFilter)
                         }
                     fragmentManager.setFragmentResult(REQUEST_SELECT_TAGS, bundle)
                 }
             }
 
         const val REQUEST_SELECT_TAGS = "ON_SELECTED_TAGS_KEY"
-        const val ON_SELECTED_TAGS__SELECTED_TAGS = "SELECTED_TAGS"
-        const val ON_SELECTED_TAGS__INDETERMINATE_TAGS = "INDETERMINATE_TAGS"
-        const val ON_SELECTED_TAGS__OPTION = "OPTION"
+        const val RESULT_SELECTED_TAGS = "SELECTED_TAGS"
+        const val RESULT_INDETERMINATE_TAGS = "INDETERMINATE_TAGS"
+        const val RESULT_CARD_STATE_FILTER = "OPTION"
     }
 }

@@ -110,7 +110,7 @@ import com.ichi2.anki.common.utils.ext.ifNotZero
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.ChangeNoteTypeDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.ARG_SELECTED_DECK
+import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.RESULT_SELECTED_DECK
 import com.ichi2.anki.dialogs.GradeNowDialog
 import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment
 import com.ichi2.anki.dialogs.SavedBrowserSearchesDialogFragment
@@ -327,7 +327,7 @@ class CardBrowserFragment :
 
         // onSearchForDecks starts deck selection using childFragmentManager
         childFragmentManager.setFragmentResultListener(DeckSelectionDialog.REQUEST_SELECT_DECK, this) { _, bundle ->
-            val selectedDeck = bundle.getParcelableCompat<SelectableDeck>(ARG_SELECTED_DECK)
+            val selectedDeck = bundle.getParcelableCompat<SelectableDeck>(RESULT_SELECTED_DECK)
             activityViewModel.setSelectedDeck(requireNotNull(selectedDeck) { "Expected non-null deck" })
         }
 
@@ -1293,10 +1293,10 @@ class CardBrowserFragment :
     private fun setupFragmentResultListeners() {
         ankiActivity.setFragmentResultListener(REQUEST_REPOSITION_NEW_CARDS) { _, bundle ->
             repositionCardsNoValidation(
-                position = bundle.getInt(RepositionCardFragment.ARG_POSITION),
-                step = bundle.getInt(RepositionCardFragment.ARG_STEP),
-                shuffle = bundle.getBoolean(RepositionCardFragment.ARG_RANDOM),
-                shift = bundle.getBoolean(RepositionCardFragment.ARG_SHIFT),
+                position = bundle.getInt(RepositionCardFragment.RESULT_POSITION),
+                step = bundle.getInt(RepositionCardFragment.RESULT_STEP),
+                shuffle = bundle.getBoolean(RepositionCardFragment.RESULT_RANDOM),
+                shift = bundle.getBoolean(RepositionCardFragment.RESULT_SHIFT),
             )
         }
     }

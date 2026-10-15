@@ -82,7 +82,7 @@ class HelpDialog : AnalyticsDialogFragment() {
         val selectedItem =
             BundleCompat.getParcelable(
                 from,
-                ARG_SELECTED_MENU_ITEM,
+                RESULT_SELECTED_MENU_ITEM,
                 HelpItem::class.java,
             ) ?: return
         when (selectedItem.action) {
@@ -173,7 +173,7 @@ internal fun Fragment.requireArgsHelpEntries(): Array<HelpItem> {
 
 internal const val ARG_MENU_ITEMS = "arg_menu_items"
 internal const val REQUEST_HELP_PAGE = "request_help_page"
-internal const val ARG_SELECTED_MENU_ITEM = " selected_menu_item"
+internal const val RESULT_SELECTED_MENU_ITEM = " selected_menu_item"
 
 /**
  * This fragment is responsible for showing a list of menu items in the application's [HelpDialog].
@@ -196,7 +196,7 @@ class HelpPageFragment : Fragment(R.layout.fragment_help_page) {
                     Analytics.send(LinkClicked(menuItem.analyticsId))
                     parentFragmentManager.setFragmentResult(
                         REQUEST_HELP_PAGE,
-                        Bundle().apply { putParcelable(ARG_SELECTED_MENU_ITEM, menuItem) },
+                        Bundle().apply { putParcelable(RESULT_SELECTED_MENU_ITEM, menuItem) },
                     )
                 }
                 binding.pageContent.addView(this)
