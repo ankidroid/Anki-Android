@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.work.NetworkType
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import anki.sync.FullUploadOrDownloadRequest
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncCollectionResponse
 import com.ichi2.anki.dialogs.SyncErrorDialog
@@ -15,6 +16,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.worker.UniqueWorkNames
+import com.ichi2.testutils.BackupManagerTestUtilities
 import com.ichi2.utils.NetworkUtils
 import io.mockk.every
 import io.mockk.mockkObject
@@ -38,6 +40,9 @@ import kotlin.test.assertNotNull
 class ForegroundMediaNetworkTest : RobolectricTest() {
     private var metered = false
     private var syncRequired = SyncCollectionResponse.ChangesRequired.NO_CHANGES
+    private var fullSyncRequest: FullUploadOrDownloadRequest? = null
+
+    override fun getCollectionStorageMode() = CollectionStorageMode.ON_DISK
 
     override fun setupTestDispatcher(dispatcher: TestDispatcher) {
         super.setupTestDispatcher(dispatcher)
@@ -47,6 +52,7 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
 
     @Before
     fun prepareSync() {
+        BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
         Prefs.hkey = "test"
         Prefs.lastSyncTime = 0
         Prefs.allowSyncOnMeteredConnections = false
@@ -65,13 +71,16 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
                     return syncCollectionResponse { required = syncRequired }
                 }
 
-                override fun fullUploadOrDownload(input: anki.sync.FullUploadOrDownloadRequest) = Unit
+                override fun fullUploadOrDownload(input: FullUploadOrDownloadRequest) {
+                    fullSyncRequest = input
+                }
             }
         }
     }
 
     @After
     fun resetSync() {
+        BackupManagerTestUtilities.reset()
         BackendFactory.setOverride(null)
         unmockkObject(NetworkUtils)
     }
@@ -127,9 +136,10 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
         deckPicker {
             syncRequired = SyncCollectionResponse.ChangesRequired.FULL_SYNC
 
-            val request = syncAndGetMediaWork(resolveConflict = true)
+            val request = syncAndGetMediaWork(resolveConflict = ConflictResolution.FULL_UPLOAD)
 
             assertThat(request.constraints.requiredNetworkType, equalTo(NetworkType.UNMETERED))
+            assertFullSyncDoesNotStartMedia(upload = true)
         }
 
     @Test
@@ -138,15 +148,56 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
             metered = true
             syncRequired = SyncCollectionResponse.ChangesRequired.FULL_SYNC
 
-            val request = syncAndGetMediaWork(confirmWarning = true, resolveConflict = true)
+            val request = syncAndGetMediaWork(confirmWarning = true, resolveConflict = ConflictResolution.FULL_UPLOAD)
 
             assertThat(Prefs.allowSyncOnMeteredConnections, equalTo(false))
             assertThat(request.constraints.requiredNetworkType, equalTo(NetworkType.CONNECTED))
+            assertFullSyncDoesNotStartMedia(upload = true)
         }
+
+    @Test
+    fun `conflict download leaves media startup to the constrained worker`() =
+        deckPicker {
+            syncRequired = SyncCollectionResponse.ChangesRequired.FULL_SYNC
+
+            val request = syncAndGetMediaWork(resolveConflict = ConflictResolution.FULL_DOWNLOAD)
+
+            assertThat(request.constraints.requiredNetworkType, equalTo(NetworkType.UNMETERED))
+            assertFullSyncDoesNotStartMedia(upload = false)
+        }
+
+    @Test
+    fun `direct full upload leaves media startup to the constrained worker`() =
+        deckPicker {
+            syncRequired = SyncCollectionResponse.ChangesRequired.FULL_UPLOAD
+
+            val request = syncAndGetMediaWork()
+
+            assertThat(request.constraints.requiredNetworkType, equalTo(NetworkType.UNMETERED))
+            assertFullSyncDoesNotStartMedia(upload = true)
+        }
+
+    @Test
+    fun `direct full download leaves media startup to the constrained worker`() =
+        deckPicker {
+            syncRequired = SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD
+
+            val request = syncAndGetMediaWork()
+
+            assertThat(request.constraints.requiredNetworkType, equalTo(NetworkType.UNMETERED))
+            assertFullSyncDoesNotStartMedia(upload = false)
+        }
+
+    private fun assertFullSyncDoesNotStartMedia(upload: Boolean) {
+        val request = requireNotNull(fullSyncRequest)
+        assertThat(request.upload, equalTo(upload))
+        // Supplying serverUsn makes the Rust backend start media before WorkManager can gate it.
+        assertThat("the full sync must not start native media sync", request.hasServerUsn(), equalTo(false))
+    }
 
     private fun DeckPicker.syncAndGetMediaWork(
         confirmWarning: Boolean = false,
-        resolveConflict: Boolean = false,
+        resolveConflict: ConflictResolution? = null,
     ): WorkInfo {
         val manager = WorkManager.getInstance(this)
         sync()
@@ -154,10 +205,14 @@ class ForegroundMediaNetworkTest : RobolectricTest() {
             (ShadowDialog.getLatestDialog() as AlertDialog).getButton(DialogInterface.BUTTON_POSITIVE).performClick()
         }
         advanceRobolectricLooperUntil { Prefs.lastSyncTime != 0L }
-        if (resolveConflict) {
+        if (resolveConflict != null) {
             Prefs.lastSyncTime = 0
-            // Choose "Keep AnkiDroid" and confirm replacing the server collection.
-            conflictDialog().getButton(DialogInterface.BUTTON_POSITIVE).performClick()
+            val button =
+                when (resolveConflict) {
+                    ConflictResolution.FULL_UPLOAD -> DialogInterface.BUTTON_POSITIVE
+                    ConflictResolution.FULL_DOWNLOAD -> DialogInterface.BUTTON_NEGATIVE
+                }
+            conflictDialog().getButton(button).performClick()
             advanceRobolectricLooper()
             conflictDialog().getButton(DialogInterface.BUTTON_POSITIVE).performClick()
             advanceRobolectricLooperUntil { Prefs.lastSyncTime != 0L }
