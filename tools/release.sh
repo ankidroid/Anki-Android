@@ -112,14 +112,22 @@ then
   exit 1
 fi
 
-# If any changes go in during the release process, pushing fails, so push immediately.
-# Worst case this burns a version number despite a failure later, and we have a version/tag
-# that never launched. That's better than having to manually patch up build.gradle.kts and push a tag
-# for a release that did launch, but the push failed
+# Push the version bump before Play. A merge during the upload rejects the push,
+# and the script would otherwise carry on after Play had already accepted the build,
+# leaving main without the version that shipped.
+# If this push fails, nothing has been published yet and the release stops.
+# Worst case a later failure burns a version on main. That is better than
+# hand-patching a release that did launch but whose push failed.
+# The tag is pushed only after Play accepts, so a Play failure does not create a GitHub release.
 echo "Committing changelog and version bump via git"
 git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION"
 git tag v"$VERSION"
+if ! git push
+then
+  echo "Failed to push the version bump. Nothing was published yet."
+  exit 1
+fi
 
 . tools/check-keystore.sh
 
@@ -134,8 +142,7 @@ then
   exit 1
 fi
 
-# If the Play Store accepted the builds, the version bump should be pushed / made concrete
-git push
+# If the Play Store accepted the builds, the tag should be pushed / made concrete
 git push --tags
 
 # Build the full set of release APKs for all flavors, with universals
