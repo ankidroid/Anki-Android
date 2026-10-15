@@ -285,10 +285,11 @@ private suspend fun handleDownload(
                     Timber.i("Sync: Backup skipped before full download: collection unchanged")
                 }
                 close(downgrade = false, forFullSync = true)
+                // Media starts through SyncMediaWorker so WorkManager can enforce network constraints.
                 fullUploadOrDownload(
                     auth,
                     upload = false,
-                    mediaSync = mediaUsn?.let { MediaSync.Start(it) } ?: MediaSync.Skip,
+                    mediaSync = MediaSync.Skip,
                 )
             } finally {
                 reopen(afterFullSync = true)
@@ -323,10 +324,11 @@ private suspend fun handleUpload(
         ) {
             close(downgrade = false, forFullSync = true)
             try {
+                // Media starts through SyncMediaWorker so WorkManager can enforce network constraints.
                 fullUploadOrDownload(
                     auth,
                     upload = true,
-                    mediaSync = mediaUsn?.let { MediaSync.Start(it) } ?: MediaSync.Skip,
+                    mediaSync = MediaSync.Skip,
                 )
             } finally {
                 reopen(afterFullSync = true)
