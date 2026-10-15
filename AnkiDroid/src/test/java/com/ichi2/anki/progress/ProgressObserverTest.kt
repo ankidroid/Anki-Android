@@ -444,6 +444,22 @@ class ProgressObserverTest : RobolectricTest() {
     }
 
     @Test
+    fun `an operation completing right after the activity is recreated leaves no dialog`() {
+        val controller = startActivity()
+        val fragment = ProgressObservingFragment()
+        controller.get().supportFragmentManager.commitNow { add(fragment, "progress-owner") }
+        val gate = CompletableDeferred<Unit>()
+        fragment.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+
+        controller.recreate()
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+
+        assertNull(controller.get().loadingDialog())
+    }
+
+    @Test
     fun `an operation completing while the activity is stopped leaves no dialog on return`() {
         val controller = startActivity()
         val activity = controller.get()
@@ -478,6 +494,64 @@ class ProgressObserverTest : RobolectricTest() {
         idleMainLooper(SHOW_DELAY)
 
         assertNull(activity.loadingDialog())
+    }
+
+    @Test
+    fun `destroying an idle fragment does not dismiss a different instance's progress`() {
+        val activity = startActivity().get()
+        val idle = ProgressObservingFragment()
+        val active = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow {
+            add(idle, "idle")
+            add(active, "active")
+        }
+        val gate = CompletableDeferred<Unit>()
+        active.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertNotNull(activity.loadingDialog())
+
+        activity.supportFragmentManager.commitNow { remove(idle) }
+        idleMainLooper(SHOW_DELAY * 2)
+        assertTrue(activity.touchesBlocked())
+        assertNotNull(activity.loadingDialog(), "another fragment still owns active progress")
+        gate.complete(Unit)
+    }
+
+    @Test
+    fun `restarting an idle fragment does not dismiss a different instance's progress`() {
+        val activity = startActivity().get()
+        val idle = ProgressObservingFragment()
+        val active = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow {
+            add(idle, "idle")
+            add(active, "active")
+        }
+        val gate = CompletableDeferred<Unit>()
+        active.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+
+        activity.supportFragmentManager.commitNow { setMaxLifecycle(idle, Lifecycle.State.CREATED) }
+        activity.supportFragmentManager.commitNow { setMaxLifecycle(idle, Lifecycle.State.RESUMED) }
+        idleMainLooper(SHOW_DELAY * 2)
+
+        assertNotNull(activity.loadingDialog())
+        gate.complete(Unit)
+    }
+
+    @Test
+    fun `adding an idle fragment does not dismiss a different instance's progress`() {
+        val activity = startActivity().get()
+        val active = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(active, "active") }
+        val gate = CompletableDeferred<Unit>()
+        active.viewModel.runOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+
+        activity.supportFragmentManager.commitNow { add(ProgressObservingFragment(), "idle") }
+        idleMainLooper(SHOW_DELAY * 2)
+
+        assertNotNull(activity.loadingDialog())
+        gate.complete(Unit)
     }
 
     private fun launchOp(

@@ -45,7 +45,9 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
     resolveMessage: Context.(M) -> String,
 ) {
     val dialogTag = "${LoadingDialogFragment.TAG}:${viewModel.javaClass.name}"
-    var dialogVisible = supportFragmentManager.findFragmentByTag(dialogTag) != null
+    var dialogVisible =
+        !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) &&
+            supportFragmentManager.findFragmentByTag(dialogTag) != null
     val ownerLifecycle = owner.lifecycle
     var backBlock: OnBackPressedCallback? = null
 
@@ -63,6 +65,7 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
     }
 
     fun dismissDialog() {
+        if (!dialogVisible) return
         (supportFragmentManager.findFragmentByTag(dialogTag) as? DialogFragment)?.dismissAllowingStateLoss()
     }
 
@@ -101,8 +104,8 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
                         is ViewModelProgress.Idle -> {
                             pendingShow?.cancel()
                             pendingShow = null
-                            dialogVisible = false
                             dismissDialog()
+                            dialogVisible = false
                             unblockInput()
                         }
                         is ViewModelProgress.Active -> {
