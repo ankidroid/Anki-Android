@@ -55,8 +55,8 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.ST
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_TAGS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
 import com.ichi2.anki.dialogs.tags.TagsDialog
-import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.ON_SELECTED_TAGS__SELECTED_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.REQUEST_SELECT_TAGS
+import com.ichi2.anki.dialogs.tags.TagsDialogListener.Companion.RESULT_SELECTED_TAGS
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
@@ -138,7 +138,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentFragmentManager.setFragmentResultListener(REQUEST_SELECT_TAGS, this) { _, bundle ->
-            val tagsToInclude = bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS) ?: emptyList<String>()
+            val tagsToInclude = bundle.getStringArrayList(RESULT_SELECTED_TAGS) ?: emptyList<String>()
             val option = selectedSubDialog ?: return@setFragmentResultListener
             val selectedCardStateIndex = viewModel.selectedCardStateIndex
             if (selectedCardStateIndex == AdapterView.INVALID_POSITION) return@setFragmentResultListener
@@ -539,7 +539,10 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
                 STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS -> CustomStudyAction.CUSTOM_STUDY_SESSION
             }
 
-        setFragmentResult(CustomStudyAction.REQUEST_KEY, Bundle().apply { putInt(CustomStudyAction.BUNDLE_KEY, action.ordinal) })
+        setFragmentResult(
+            CustomStudyAction.REQUEST_KEY,
+            Bundle().apply { putInt(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION, action.ordinal) },
+        )
 
         // save the default values (not in upstream)
         when (contextMenuOption) {
@@ -640,11 +643,11 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
         companion object {
             const val REQUEST_KEY = "CustomStudyDialog"
-            const val BUNDLE_KEY = "action"
+            const val RESULT_CUSTOM_STUDY_ACTION = "action"
 
             /** Extracts a [CustomStudyAction] from a [Bundle] */
             fun fromBundle(bundle: Bundle): CustomStudyAction =
-                bundle.getInt(CustomStudyAction.BUNDLE_KEY).let { actionOrdinal ->
+                bundle.getInt(CustomStudyAction.RESULT_CUSTOM_STUDY_ACTION).let { actionOrdinal ->
                     entries.first { it.ordinal == actionOrdinal }
                 }
         }

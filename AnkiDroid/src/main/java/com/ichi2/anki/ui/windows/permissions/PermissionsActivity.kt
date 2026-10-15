@@ -17,8 +17,8 @@ import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityPermissionsBinding
-import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.HAS_ALL_PERMISSIONS_KEY
 import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.REQUEST_PERMISSIONS
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment.Companion.RESULT_HAS_ALL_PERMISSIONS
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -60,7 +60,7 @@ class PermissionsActivity : AnkiActivity(R.layout.activity_permissions) {
         }
         val permissionsFragment = permissionSet.permissionsFragment.getDeclaredConstructor().newInstance()
         setFragmentResultListener(REQUEST_PERMISSIONS) { _, bundle ->
-            val hasAllPermissions = bundle.getBoolean(HAS_ALL_PERMISSIONS_KEY)
+            val hasAllPermissions = bundle.getBoolean(RESULT_HAS_ALL_PERMISSIONS)
             setContinueButtonEnabled(hasAllPermissions)
         }
         setFragmentResultListener(REQUEST_PERMISSIONS_GRANTED) { _, _ -> decideStorageAndFinish() }

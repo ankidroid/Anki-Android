@@ -13,8 +13,8 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.search.SavedSearch
-import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.ARG_SEARCH_QUERY
-import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.ARG_SEARCH_QUERY_NAME
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.RESULT_SEARCH_QUERY
+import com.ichi2.anki.dialogs.SaveBrowserSearchDialogFragment.Companion.RESULT_SEARCH_QUERY_NAME
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.input
@@ -53,8 +53,8 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
                 setFragmentResult(
                     REQUEST_SAVE_SEARCH,
                     Bundle().apply {
-                        putString(ARG_SEARCH_QUERY, searchQuery)
-                        putCharSequence(ARG_SEARCH_QUERY_NAME, name)
+                        putString(RESULT_SEARCH_QUERY, searchQuery)
+                        putCharSequence(RESULT_SEARCH_QUERY_NAME, name)
                     },
                 )
                 dialog.dismiss()
@@ -67,12 +67,14 @@ class SaveBrowserSearchDialogFragment : DialogFragment() {
         /**
          * The actual search query that the user is saving to use later.
          */
-        const val ARG_SEARCH_QUERY = "arg_search_query"
+        const val RESULT_SEARCH_QUERY = "arg_search_query"
+
+        private const val ARG_SEARCH_QUERY = "arg_search_query"
 
         /**
          * The name given by the user to the saved search.
          */
-        const val ARG_SEARCH_QUERY_NAME = "arg_search_query_name"
+        const val RESULT_SEARCH_QUERY_NAME = "arg_search_query_name"
 
         fun newInstance(searchQuery: String): SaveBrowserSearchDialogFragment =
             SaveBrowserSearchDialogFragment().apply {
@@ -94,7 +96,7 @@ fun CardBrowser.registerSaveSearchHandler() {
         this,
     ) { _, bundle ->
         val savedSearchName =
-            bundle.getString(ARG_SEARCH_QUERY_NAME)
+            bundle.getString(RESULT_SEARCH_QUERY_NAME)
         if (savedSearchName.isNullOrEmpty()) {
             showSnackbar(
                 CommonString.card_browser_list_my_searches_new_search_error_empty_name,
@@ -105,7 +107,7 @@ fun CardBrowser.registerSaveSearchHandler() {
         val toSave =
             SavedSearch(
                 name = savedSearchName,
-                query = bundle.getString(ARG_SEARCH_QUERY) ?: return@setFragmentResultListener,
+                query = bundle.getString(RESULT_SEARCH_QUERY) ?: return@setFragmentResultListener,
             )
 
         launchCatchingTask {
@@ -125,7 +127,7 @@ fun Fragment.registerSaveSearchHandler(onSaveSearch: (SavedSearch) -> Unit) {
         this,
     ) { _, bundle ->
         val savedSearchName =
-            bundle.getString(ARG_SEARCH_QUERY_NAME)
+            bundle.getString(RESULT_SEARCH_QUERY_NAME)
         if (savedSearchName.isNullOrEmpty()) {
             showSnackbar(
                 CommonString.card_browser_list_my_searches_new_search_error_empty_name,
@@ -137,7 +139,7 @@ fun Fragment.registerSaveSearchHandler(onSaveSearch: (SavedSearch) -> Unit) {
         val savedSearch =
             SavedSearch(
                 name = savedSearchName,
-                query = bundle.getString(ARG_SEARCH_QUERY) ?: return@setFragmentResultListener,
+                query = bundle.getString(RESULT_SEARCH_QUERY) ?: return@setFragmentResultListener,
             )
 
         onSaveSearch(savedSearch)

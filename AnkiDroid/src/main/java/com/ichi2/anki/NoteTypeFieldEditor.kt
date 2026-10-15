@@ -36,8 +36,8 @@ import com.ichi2.anki.databinding.ActivityNoteTypeFieldEditorBinding
 import com.ichi2.anki.databinding.ItemNotetypeFieldBinding
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
-import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.KEY_SELECTED_LOCALE
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.REQUEST_HINT_LOCALE_SELECTION
+import com.ichi2.anki.dialogs.LocaleSelectionDialog.Companion.RESULT_SELECTED_LOCALE
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.NoteTypeFieldEditorContextMenu.NoteTypeFieldEditorContextMenuAction
 import com.ichi2.anki.libanki.Collection
@@ -123,7 +123,7 @@ class NoteTypeFieldEditor : AnkiActivity(R.layout.activity_note_type_field_edito
             val selectedLocale =
                 BundleCompat.getSerializable(
                     bundle,
-                    KEY_SELECTED_LOCALE,
+                    RESULT_SELECTED_LOCALE,
                     Locale::class.java,
                 )
             if (selectedLocale != null) {

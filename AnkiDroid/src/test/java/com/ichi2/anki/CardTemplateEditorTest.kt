@@ -1069,7 +1069,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooper()
 
         val resultBundle = Bundle()
-        resultBundle.putString(InsertFieldDialog.KEY_INSERTED_FIELD, expectedFieldText)
+        resultBundle.putString(InsertFieldDialog.RESULT_INSERTED_FIELD, expectedFieldText)
         testEditor.supportFragmentManager.setFragmentResult(firstFragmentAgain.insertFieldRequestKey, resultBundle)
         advanceRobolectricLooper()
 

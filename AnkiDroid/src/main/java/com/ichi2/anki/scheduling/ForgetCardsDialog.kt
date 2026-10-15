@@ -114,8 +114,8 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_FORGET,
                     Bundle().apply {
-                        putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
-                        putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
+                        putBoolean(RESULT_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+                        putBoolean(RESULT_RESET_REPETITION, resetRepetitionAndLapseCounts)
                     },
                 )
             }
@@ -132,8 +132,11 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
 
     companion object {
         const val REQUEST_KEY_FORGET = "request_key_forget_cards"
-        const val ARG_RESTORE_ORIGINAL = "key_restore_original"
-        const val ARG_RESET_REPETITION = "key_reset_repetition"
+        const val RESULT_RESTORE_ORIGINAL = "key_restore_original"
+        const val RESULT_RESET_REPETITION = "key_reset_repetition"
+
+        private const val ARG_RESTORE_ORIGINAL = "key_restore_original"
+        private const val ARG_RESET_REPETITION = "key_reset_repetition"
     }
 }
 
@@ -147,8 +150,8 @@ internal fun FragmentActivity.registerOnForgetHandler(cardsIdsProducer: suspend 
     setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET) { _, bundle ->
         forgetCards(
             cardsIdsProducer = cardsIdsProducer,
-            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL),
-            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.ARG_RESET_REPETITION),
+            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.RESULT_RESTORE_ORIGINAL),
+            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.RESULT_RESET_REPETITION),
         )
     }
 }
@@ -163,8 +166,8 @@ internal fun Fragment.registerOnForgetHandler(cardsIdsProducer: suspend () -> Li
     setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET) { _, bundle ->
         activity?.forgetCards(
             cardsIdsProducer = cardsIdsProducer,
-            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL),
-            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.ARG_RESET_REPETITION),
+            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.RESULT_RESTORE_ORIGINAL),
+            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.RESULT_RESET_REPETITION),
         )
     }
 }

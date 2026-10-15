@@ -57,13 +57,13 @@ import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ALL_FIELDS_AS_FIELD
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_FIELD
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_MATCH_CASE
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_ONLY_SELECTED_NOTES
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REGEX
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REPLACEMENT
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIND_AND_REPLACE
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_FIELD
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_MATCH_CASE
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_ONLY_SELECTED_NOTES
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_REGEX
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_REPLACEMENT
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_SEARCH
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.TAGS_AS_FIELD
 import com.ichi2.anki.browser.IdsFile
 import com.ichi2.anki.browser.column1
@@ -832,8 +832,8 @@ class CardBrowserTest : RobolectricTest() {
             b.supportFragmentManager.setFragmentResult(
                 ForgetCardsDialog.REQUEST_KEY_FORGET,
                 Bundle().apply {
-                    putBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL, true)
-                    putBoolean(ForgetCardsDialog.ARG_RESET_REPETITION, false)
+                    putBoolean(ForgetCardsDialog.RESULT_RESTORE_ORIGINAL, true)
+                    putBoolean(ForgetCardsDialog.RESULT_RESET_REPETITION, false)
                 },
             )
 
@@ -2112,13 +2112,13 @@ class CardBrowserTest : RobolectricTest() {
         supportFragmentManager.setFragmentResult(
             REQUEST_FIND_AND_REPLACE,
             Bundle().apply {
-                putString(ARG_SEARCH, search)
-                putString(ARG_REPLACEMENT, replacement)
-                putString(ARG_FIELD, field)
-                putBoolean(ARG_ONLY_SELECTED_NOTES, onlyInSelectedNotes)
+                putString(RESULT_SEARCH, search)
+                putString(RESULT_REPLACEMENT, replacement)
+                putString(RESULT_FIELD, field)
+                putBoolean(RESULT_ONLY_SELECTED_NOTES, onlyInSelectedNotes)
                 // "Ignore case" checkbox text => when it's checked we pass false to the backend
-                putBoolean(ARG_MATCH_CASE, matchCase)
-                putBoolean(ARG_REGEX, regex)
+                putBoolean(RESULT_MATCH_CASE, matchCase)
+                putBoolean(RESULT_REGEX, regex)
             },
         )
     }

@@ -134,19 +134,19 @@ data class DeckPickerContextMenuResult(
 ) {
     fun toBundle(): Bundle =
         Bundle().apply {
-            putLong(ARG_DECK_ID, deckId)
-            putSerializable(ARG_OPTION, option)
+            putLong(RESULT_DECK_ID, deckId)
+            putSerializable(RESULT_CONTEXT_MENU_OPTION, option)
         }
 
     companion object {
         const val REQUEST_KEY = "request_key_deck_picker_context_menu"
-        private const val ARG_DECK_ID = "deck_id"
-        private const val ARG_OPTION = "option"
+        private const val RESULT_DECK_ID = "deck_id"
+        private const val RESULT_CONTEXT_MENU_OPTION = "option"
 
         fun fromBundle(bundle: Bundle) =
             DeckPickerContextMenuResult(
-                deckId = bundle.requireLong(ARG_DECK_ID),
-                option = bundle.requireSerializableCompat<DeckPickerContextMenuOption>(ARG_OPTION),
+                deckId = bundle.requireLong(RESULT_DECK_ID),
+                option = bundle.requireSerializableCompat<DeckPickerContextMenuOption>(RESULT_CONTEXT_MENU_OPTION),
             )
     }
 }

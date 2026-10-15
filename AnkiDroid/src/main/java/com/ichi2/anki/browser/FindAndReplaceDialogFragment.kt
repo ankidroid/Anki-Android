@@ -20,13 +20,13 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_FIELD
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_MATCH_CASE
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_ONLY_SELECTED_NOTES
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REGEX
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_REPLACEMENT
-import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.ARG_SEARCH
 import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.REQUEST_FIND_AND_REPLACE
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_FIELD
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_MATCH_CASE
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_ONLY_SELECTED_NOTES
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_REGEX
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_REPLACEMENT
+import com.ichi2.anki.browser.FindAndReplaceDialogFragment.Companion.RESULT_SEARCH
 import com.ichi2.anki.databinding.FragmentFindReplaceBinding
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.notetype.ManageNotetypes
@@ -147,13 +147,13 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
         setFragmentResult(
             REQUEST_FIND_AND_REPLACE,
             Bundle().apply {
-                putString(ARG_SEARCH, search.toString())
-                putString(ARG_REPLACEMENT, replacement.toString())
-                putString(ARG_FIELD, selectedField)
-                putBoolean(ARG_ONLY_SELECTED_NOTES, onlyInSelectedNotes)
+                putString(RESULT_SEARCH, search.toString())
+                putString(RESULT_REPLACEMENT, replacement.toString())
+                putString(RESULT_FIELD, selectedField)
+                putBoolean(RESULT_ONLY_SELECTED_NOTES, onlyInSelectedNotes)
                 // "Ignore case" checkbox text => when it's checked we pass false to the backend
-                putBoolean(ARG_MATCH_CASE, !ignoreCase)
-                putBoolean(ARG_REGEX, inputAsRegex)
+                putBoolean(RESULT_MATCH_CASE, !ignoreCase)
+                putBoolean(RESULT_REGEX, inputAsRegex)
             },
         )
     }
@@ -167,21 +167,21 @@ class FindAndReplaceDialogFragment : AnalyticsDialogFragment() {
         const val TAG = "FindAndReplaceDialogFragment"
         const val REQUEST_FIND_AND_REPLACE = "request_find_and_replace"
         const val ARG_IDS = "arg_ids"
-        const val ARG_SEARCH = "arg_search"
-        const val ARG_REPLACEMENT = "arg_replacement"
-        const val ARG_FIELD = "arg_field"
-        const val ARG_ONLY_SELECTED_NOTES = "arg_only_selected_notes"
-        const val ARG_MATCH_CASE = "arg_match_case"
-        const val ARG_REGEX = "arg_regex"
+        const val RESULT_SEARCH = "arg_search"
+        const val RESULT_REPLACEMENT = "arg_replacement"
+        const val RESULT_FIELD = "arg_field"
+        const val RESULT_ONLY_SELECTED_NOTES = "arg_only_selected_notes"
+        const val RESULT_MATCH_CASE = "arg_match_case"
+        const val RESULT_REGEX = "arg_regex"
 
         /**
-         * Receiving this value in the result [Bundle] for the [ARG_FIELD] entry means that
+         * Receiving this value in the result [Bundle] for the [RESULT_FIELD] entry means that
          * the user selected "All fields" as the field target for the find and replace action.
          */
         const val ALL_FIELDS_AS_FIELD = "find_and_replace_dialog_fragment_all_fields_as_field"
 
         /**
-         * Receiving this value in the result [Bundle] for the [ARG_FIELD] entry means that
+         * Receiving this value in the result [Bundle] for the [RESULT_FIELD] entry means that
          * the user selected "Tags" as the field target for the find and replace action.
          */
         const val TAGS_AS_FIELD = "find_and_replace_dialog_fragment_tags_as_field"
@@ -205,12 +205,12 @@ fun CardBrowser.registerFindReplaceHandler(action: (FindReplaceResult) -> Unit) 
     setFragmentResultListener(REQUEST_FIND_AND_REPLACE) { _, bundle ->
         action(
             FindReplaceResult(
-                search = bundle.getString(ARG_SEARCH) ?: error("Missing required argument: search"),
-                replacement = bundle.getString(ARG_REPLACEMENT) ?: error("Missing required argument: replacement"),
-                field = bundle.getString(ARG_FIELD) ?: error("Missing required argument: field"),
-                onlyOnSelectedNotes = bundle.getBoolean(ARG_ONLY_SELECTED_NOTES, true),
-                matchCase = bundle.getBoolean(ARG_MATCH_CASE, false),
-                regex = bundle.getBoolean(ARG_REGEX, false),
+                search = bundle.getString(RESULT_SEARCH) ?: error("Missing required argument: search"),
+                replacement = bundle.getString(RESULT_REPLACEMENT) ?: error("Missing required argument: replacement"),
+                field = bundle.getString(RESULT_FIELD) ?: error("Missing required argument: field"),
+                onlyOnSelectedNotes = bundle.getBoolean(RESULT_ONLY_SELECTED_NOTES, true),
+                matchCase = bundle.getBoolean(RESULT_MATCH_CASE, false),
+                regex = bundle.getBoolean(RESULT_REGEX, false),
             ),
         )
     }

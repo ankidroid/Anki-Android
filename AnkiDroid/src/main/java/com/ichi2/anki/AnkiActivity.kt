@@ -83,10 +83,10 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DialogHandler
-import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.ARG_SHARE_AS_TEXT
-import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.KEY_EXPORT_PATH
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SAVE
 import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.REQUEST_EXPORT_SHARE
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.RESULT_EXPORT_PATH
+import com.ichi2.anki.dialogs.ExportReadyDialog.Companion.RESULT_SHARE_AS_TEXT
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.handleExportReadyRequest
 import com.ichi2.anki.dialogs.viewmodel.ExportReadyViewModel
@@ -170,13 +170,13 @@ open class AnkiActivity(
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SAVE, this) { _, bundle ->
             saveExportFile(
-                bundle.getString(KEY_EXPORT_PATH) ?: error("Missing required exportPath!"),
+                bundle.getString(RESULT_EXPORT_PATH) ?: error("Missing required exportPath!"),
             )
         }
         supportFragmentManager.setFragmentResultListener(REQUEST_EXPORT_SHARE, this) { _, bundle ->
             shareFile(
-                path = bundle.requireString(KEY_EXPORT_PATH),
-                asText = bundle.getBoolean(ARG_SHARE_AS_TEXT, false),
+                path = bundle.requireString(RESULT_EXPORT_PATH),
+                asText = bundle.getBoolean(RESULT_SHARE_AS_TEXT, false),
             )
         }
 
