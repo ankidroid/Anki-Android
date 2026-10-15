@@ -83,7 +83,7 @@ class IntroductionActivityTest : RobolectricTest() {
             )
             assertThat(
                 "DeckPicker isn't asked to sync (Get Started, not Sync)",
-                intent.getBooleanExtra(DeckPicker.INTENT_SYNC_FROM_LOGIN, false),
+                intent.getBooleanExtra(DeckPicker.EXTRA_SYNC_FROM_LOGIN, false),
                 equalTo(false),
             )
             assertThat(

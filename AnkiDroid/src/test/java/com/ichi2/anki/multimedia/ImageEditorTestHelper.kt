@@ -65,7 +65,11 @@ class ImageEditorTestHelper(
     }
 
     fun cropTo(image: File) {
-        val result = Intent().putExtra(ImageCropper.CROP_IMAGE_RESULT, ImageCropper.CropResultData(contentUri(image), image.absolutePath))
+        val result =
+            Intent().putExtra(
+                ImageCropper.EXTRA_CROP_IMAGE_RESULT,
+                ImageCropper.CropResultData(contentUri(image), image.absolutePath),
+            )
         returnImage(CommonString.crop_button, result)
     }
 

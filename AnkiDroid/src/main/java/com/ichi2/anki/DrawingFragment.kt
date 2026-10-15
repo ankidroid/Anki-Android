@@ -94,7 +94,7 @@ class DrawingFragment : Fragment(R.layout.fragment_drawing) {
         val imagePath = saveWhiteboard(whiteboardView)
         val result =
             Intent().apply {
-                putExtra(IMAGE_PATH_KEY, imagePath)
+                putExtra(EXTRA_IMAGE_PATH, imagePath)
             }
         // TODO don't depend on an Activity
         requireActivity().setResult(Activity.RESULT_OK, result)
@@ -130,7 +130,7 @@ class DrawingFragment : Fragment(R.layout.fragment_drawing) {
     }
 
     companion object {
-        const val IMAGE_PATH_KEY = "path"
+        const val EXTRA_IMAGE_PATH = "path"
 
         fun getIntent(context: Context): Intent = SingleFragmentActivity.getIntent(context, DrawingFragment::class)
     }

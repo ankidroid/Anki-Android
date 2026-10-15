@@ -86,7 +86,7 @@ class IntroductionActivity :
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         if (result == RESULT_SYNC_PROFILE) {
-            deckPicker.putExtra(DeckPicker.INTENT_SYNC_FROM_LOGIN, true)
+            deckPicker.putExtra(DeckPicker.EXTRA_SYNC_FROM_LOGIN, true)
         }
 
         startActivity(deckPicker)

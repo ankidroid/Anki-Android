@@ -525,7 +525,7 @@ open class DeckPicker :
             return
         }
         Timber.d("Not displaying app intro")
-        if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
+        if (intent.hasExtra(EXTRA_SYNC_FROM_LOGIN)) {
             Timber.d("launched from introduction activity login: syncing")
             syncOnResume = true
         }
@@ -1590,7 +1590,7 @@ open class DeckPicker :
         // Due to the App Introduction, this may be called before permission has been granted.
         if (syncOnResume && hasCollectionStoragePermissions()) {
             syncOnResume = false
-            intent.removeExtra(INTENT_SYNC_FROM_LOGIN)
+            intent.removeExtra(EXTRA_SYNC_FROM_LOGIN)
             Timber.i("Performing Sync on Resume")
             Permissions.requestNotificationPermissionsForSyncing(this)
             sync()
@@ -2510,7 +2510,7 @@ open class DeckPicker :
          *
          * This is for the 'download existing collection from AnkiWeb' use case
          */
-        const val INTENT_SYNC_FROM_LOGIN = "syncFromLogin"
+        const val EXTRA_SYNC_FROM_LOGIN = "syncFromLogin"
 
         /**
          * Available options performed by other activities (request codes for onActivityResult())
@@ -2537,7 +2537,7 @@ open class DeckPicker :
             autoSync: Boolean = false,
         ) = Intent(context, DeckPicker::class.java).apply {
             if (autoSync) {
-                putExtra(INTENT_SYNC_FROM_LOGIN, true)
+                putExtra(EXTRA_SYNC_FROM_LOGIN, true)
             }
         }
     }
@@ -2545,7 +2545,7 @@ open class DeckPicker :
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         this.intent = intent
-        if (intent.hasExtra(INTENT_SYNC_FROM_LOGIN)) {
+        if (intent.hasExtra(EXTRA_SYNC_FROM_LOGIN)) {
             Timber.i("Sync requested from Login")
             this.syncOnResume = true
         }
