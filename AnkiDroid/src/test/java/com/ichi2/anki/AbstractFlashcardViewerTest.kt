@@ -31,8 +31,12 @@ import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.testutils.assertNoActivityStarted
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.testutils.ext.snackbarText
+import com.ichi2.testutils.mockWebResourceRequest
+import com.ichi2.testutils.registerWebBrowser
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
@@ -48,10 +52,13 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.robolectric.Robolectric
+import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import timber.log.Timber
 import java.util.Locale
 import java.util.stream.Stream
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 @Suppress("SameParameterValue")
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
@@ -61,7 +68,13 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Rating? = null
+        var startActivityFailure: Exception? = null
         private var lastTime = 0
+
+        override fun startActivity(intent: Intent) {
+            startActivityFailure?.let { throw it }
+            super.startActivity(intent)
+        }
 
         override fun performReload() {
             // intentionally blank
@@ -120,6 +133,25 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 require(mediaGroupCompleted) { "mediaGroupCompleted never occurred" }
             }
         }
+    }
+
+    @Test
+    fun `rejected web link launch shows an error and consumes navigation`() {
+        editPreferences { putBoolean(targetContext.getString(R.string.pref_allow_card_external_launch_key), false) }
+        targetContext.registerWebBrowser()
+        val viewer = getViewer(addCard = true)
+        viewer.startActivityFailure = SecurityException("The handler requires a permission")
+        val webView = assertNotNull(viewer.webView)
+
+        assertTrue(
+            shadowOf(webView).webViewClient.shouldOverrideUrlLoading(
+                webView,
+                mockWebResourceRequest("https://example.org"),
+            ),
+        )
+        advanceRobolectricLooper()
+        targetContext.assertNoActivityStarted()
+        assertEquals(viewer.getString(R.string.activity_start_failed), viewer.snackbarText)
     }
 
     @ParameterizedTest
