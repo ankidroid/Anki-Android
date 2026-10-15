@@ -35,9 +35,3 @@ fun Collection.syncCollection(
     auth: SyncAuth,
     syncMedia: Boolean,
 ): SyncCollectionResponse = syncCollection(auth.toProto(), syncMedia)
-
-fun Collection.fullUploadOrDownload(
-    auth: SyncAuth,
-    serverUsn: Int?,
-    upload: Boolean,
-) = fullUploadOrDownload(auth.toProto(), serverUsn, upload)
