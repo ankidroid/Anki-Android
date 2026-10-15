@@ -2117,11 +2117,15 @@ open class DeckPicker :
     private fun tryShowStudyOptionsPanel(): Boolean {
         val containerId = binding.studyoptionsFragment?.id ?: return false
 
-        // Close other panels before looking for restored study options.
-        supportFragmentManager.popBackStackImmediate(
-            null,
-            FragmentManager.POP_BACK_STACK_INCLUSIVE,
-        )
+        // Only clear navigation when closing another side panel. Import dialogs can already
+        // be on the back stack when startup finishes, and must survive panel initialization.
+        val sidePanel = supportFragmentManager.findFragmentById(containerId)
+        if (sidePanel != null && sidePanel !is StudyOptionsFragment) {
+            supportFragmentManager.popBackStackImmediate(
+                null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE,
+            )
+        }
 
         val studyOptions = fragment
         if (studyOptions != null) {
