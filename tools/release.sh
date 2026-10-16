@@ -143,7 +143,11 @@ then
 fi
 
 # If the Play Store accepted the builds, the tag should be pushed / made concrete
-git push --tags
+if ! git push --tags
+then
+  echo "Failed to push the v$VERSION tag. Play already has this build."
+  exit 1
+fi
 
 # Build the full set of release APKs for all flavors, with universals
 UCFLAVORS='Full Amazon Play'
@@ -217,7 +221,11 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 # Read the content of the markdown file using the absolute path
 RELEASE_NOTES="$SCRIPT_DIR/release-description.md"
 echo "Creating new Github release"
-gh release create v"$VERSION" --title "AnkiDroid $VERSION" -F "$RELEASE_NOTES" $RELEASE_TYPE --draft
+if ! gh release create v"$VERSION" --verify-tag --title "AnkiDroid $VERSION" -F "$RELEASE_NOTES" $RELEASE_TYPE --draft
+then
+  echo "Failed to create the GitHub release for v$VERSION"
+  exit 1
+fi
 
 echo "Sleeping 30s to make sure the release exists, see issue 11746"
 sleep 30
