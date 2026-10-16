@@ -10,6 +10,7 @@ import com.ichi2.anki.libanki.Tags
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.tags.ManageTagsState.Error
 import com.ichi2.anki.tags.UserMessage.ClearedUnusedTags
+import com.ichi2.anki.tags.UserMessage.TagMoved
 import com.ichi2.anki.tags.UserMessage.TagRemoved
 import com.ichi2.anki.tags.UserMessage.TagRenamed
 import com.ichi2.anki.utils.MessageQueue
@@ -154,6 +155,20 @@ class ManageTagsViewModel : ViewModel() {
             Timber.i("Deleted %d unused tags", result.count)
             messageQueue.enqueue(ClearedUnusedTags(result.count))
         }
+
+    /**
+     * Reparents [tag] and its descendants on notes under [newParent]. An empty [newParent] moves
+     * [tag] to the top level.
+     * @see moveTagTree
+     */
+    fun moveTag(
+        tag: TagName,
+        newParent: TagName?,
+    ) = launchTagOpAndRefresh {
+        Timber.i("Moving tag")
+        val result = undoableOp { moveTagTree(tag, newParent) }
+        messageQueue.enqueue(TagMoved(result.count))
+    }
 
     private suspend fun loadTags() {
         Timber.i("Loading tags from collection")
@@ -370,6 +385,11 @@ sealed interface UserMessage {
 
     /** @param notesAffected number of notes whose tags were updated */
     data class TagRenamed(
+        val notesAffected: Int,
+    ) : UserMessage
+
+    /** @param notesAffected number of notes whose tags were reparented */
+    data class TagMoved(
         val notesAffected: Int,
     ) : UserMessage
 

@@ -4,6 +4,7 @@ package com.ichi2.anki.tags
 
 import anki.collection.OpChangesWithCount
 import anki.collection.copy
+import anki.collection.opChangesWithCount
 import com.ichi2.anki.libanki.Collection
 
 /**
@@ -34,6 +35,20 @@ internal fun Collection.renameTagTree(
     @Suppress("CheckResult")
     updateNotes(duplicates)
     return result.copy { changes = mergeUndoEntries(undoStep) }
+}
+
+/** Move tags on notes, merging overlapping subtrees with the same semantics as [renameTagTree]. */
+internal fun Collection.moveTagTree(
+    tag: TagName,
+    newParent: TagName?,
+): OpChangesWithCount {
+    require(newParent == null || !newParent.isSameOrDescendantOf(tag)) { "A tag cannot be moved under itself" }
+    val leaf = tag.value.substringAfterLast("::")
+    val destination = TagName.build(newParent?.let { "${it.value}::$leaf" } ?: leaf)!!
+    if (destination == tag) return opChangesWithCount { }
+    // Moving one subtree is a prefix rename. The backend reparent operation also rejects
+    // valid sibling prefixes (e.g. parent::a beneath parent::ab).
+    return renameTagTree(tag, destination)
 }
 
 /** A literal regex avoids tag-search wildcards and reserved names such as "none". */

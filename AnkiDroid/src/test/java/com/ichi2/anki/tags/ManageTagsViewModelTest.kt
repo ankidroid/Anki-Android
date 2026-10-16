@@ -37,6 +37,54 @@ import kotlin.time.Duration.Companion.seconds
 @RunWith(AndroidJUnit4::class)
 class ManageTagsViewModelTest : RobolectricTest() {
     @Test
+    fun `move uses backend identity to reject its own subtree`() =
+        runTest {
+            for ((source, parent) in listOf(
+                "café" to "cafe\u0301",
+                "café" to "cafe\u0301::child",
+                "Straße" to "STRASSE",
+                "Straße" to "STRASSE::child",
+            )) {
+                val note = addTags(source)
+                val undoBefore = col.undoStatus()
+                withViewModel {
+                    moveTag(source, parent).join()
+                    assertIs<IllegalArgumentException>(loadedState.error, "$source / $parent")
+                    assertEquals(listOf(source), col.getNote(note.id).tags)
+                    assertEquals(undoBefore, col.undoStatus())
+                }
+            }
+        }
+
+    @Test
+    fun `move uses backend identity to distinguish Turkish parents`() =
+        runTest {
+            val note = addTags("i::child")
+            addTags("ı")
+            withViewModel {
+                moveTag("i::child", "ı").join()
+                assertEquals(null, loadedState.error)
+                assertEquals(listOf("ı::child"), col.getNote(note.id).tags)
+                col.undo()
+                assertEquals(listOf("i::child"), col.getNote(note.id).tags)
+            }
+        }
+
+    @Test
+    fun `move uses backend identity to detect an unchanged parent`() =
+        runTest {
+            val note = addTags("Straße::child")
+            val undoBefore = col.undoStatus()
+            withViewModel {
+                moveTag("Straße::child", "STRASSE").join()
+                assertEquals(null, loadedState.error)
+                assertEquals(listOf("Straße::child"), col.getNote(note.id).tags)
+                assertEquals(undoBefore, col.undoStatus())
+                assertEquals(UserMessage.TagMoved(0), pendingMessages.value.single().message)
+            }
+        }
+
+    @Test
     fun `merge deduplicates using backend tag identity`() =
         runTest {
             val note = addBasicNote().update { listOf("source", "STRASSE", "i", "ı").forEach(::addTag) }
@@ -141,6 +189,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
                     assertThat(renameTag("history", "past"), sameInstance(refresh))
                     assertThat(clearUnusedTags(), sameInstance(refresh))
                     assertThat(toggleCollapsed("science"), sameInstance(refresh))
+                    assertThat(moveTag("history", "science"), sameInstance(refresh))
                     assertThat(refreshTags(), sameInstance(refresh))
 
                     refresh.join()
@@ -517,6 +566,49 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `moveTag updates descendants on notes and reports affected notes`() =
+        runTest {
+            val first = addTags("source::child", "unrelated")
+            val second = addTags("source", "source::other")
+            withViewModel {
+                moveTag("source", "target").join()
+
+                assertThat(col.getNote(first.id).tags, containsInAnyOrder("target::source::child", "unrelated"))
+                assertThat(col.getNote(second.id).tags, containsInAnyOrder("target::source", "target::source::other"))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(2)))
+                assertThat(loadedState.visibleTagNames, containsInAnyOrder("target", "unrelated"))
+            }
+        }
+
+    @Test
+    fun `moveTag to the top level preserves descendants and siblings`() =
+        runTest {
+            val note = addTags("parent::topic::child", "parent::sibling")
+            withViewModel {
+                moveTag("parent::topic", null).join()
+
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder("topic::child", "parent::sibling"))
+                assertThat(loadedState.visibleTagNames, containsInAnyOrder("parent", "topic"))
+            }
+        }
+
+    @Test
+    fun `moveTag emits changes and can be undone`() =
+        runTest {
+            val note = addTags("source::child")
+            withViewModel {
+                ensureOpsExecuted(1) { moveTag("source", "target").join() }
+                assertThat(col.getNote(note.id).tags, equalTo(listOf("target::source::child")))
+
+                col.undo()
+                refreshTags().join()
+
+                assertThat(col.getNote(note.id).tags, equalTo(listOf("source::child")))
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("source")))
+            }
+        }
+
+    @Test
     fun `clearUnusedTags queues message with count`() =
         runTest {
             addTags("used")
@@ -681,6 +773,51 @@ class ManageTagsViewModelTest : RobolectricTest() {
                 assertEquals(before, col.getNote(note.id).tags.toSet())
                 col.redo()
                 assertThat(col.getNote(note.id).tags, hasSize(0))
+            }
+        }
+
+    @Test
+    fun `moving an unused subtree preserves tags and the previous undo action`() =
+        runTest {
+            val note = addUnusedTags("parent", "parent::child", "parent::child::leaf", "parent::sibling")
+            withViewModel {
+                val before = col.tags.all().toSet()
+                val undoBefore = col.undoStatus()
+                moveTag("parent::child", "target").join()
+                assertThat(col.tags.all().toSet(), equalTo(before))
+                assertEquals(undoBefore.undo, col.undoStatus().undo)
+                assertEquals(undoBefore.redo, col.undoStatus().redo)
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(0)))
+                col.undo()
+                assertEquals(before, col.getNote(note.id).tags.toSet())
+                col.redo()
+                assertThat(col.getNote(note.id).tags, hasSize(0))
+            }
+        }
+
+    @Test
+    fun `moving a tag onto an existing subtree deduplicates notes and is undoable`() =
+        runTest {
+            val original = listOf("source", "source::child", "target::source", "target::source::child", "unrelated")
+            val note = addBasicNote().update { original.forEach(::addTag) }
+            withViewModel {
+                ensureOpsExecuted(1) { moveTag("source", "target").join() }
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder("target::source", "target::source::child", "unrelated"))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(1)))
+                col.undo()
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder(*original.toTypedArray()))
+                col.redo()
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder("target::source", "target::source::child", "unrelated"))
+            }
+        }
+
+    @Test
+    fun `move to a sibling whose name starts with the source preserves notes`() =
+        runTest {
+            val note = addBasicNote().update { addTag("parent::a::child") }
+            withViewModel {
+                moveTag("parent::a", "parent::ab").join()
+                assertThat(col.getNote(note.id).tags, equalTo(listOf("parent::ab::a::child")))
             }
         }
 
