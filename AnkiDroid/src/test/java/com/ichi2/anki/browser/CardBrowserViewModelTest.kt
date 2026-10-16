@@ -2136,6 +2136,16 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `external search launches request feedback`() {
+        for (options in listOf(DeepLink("cat"), SystemContextMenu("cat"), CardBrowserLaunchOptions.SearchQueryJs("cat", allDecks = true))) {
+            runViewModelTest(options = options) {
+                waitForSearchResults()
+                assertEquals(BrowserSearchFeedbackMode.SEARCH_RESULTS, flowOfSearchFeedback.value?.feedbackMode)
+            }
+        }
+    }
+
+    @Test
     fun `a newer automatic refresh discards unshown feedback`() =
         runViewModelTest(notes = 1) {
             setQuery("", feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS).join()
