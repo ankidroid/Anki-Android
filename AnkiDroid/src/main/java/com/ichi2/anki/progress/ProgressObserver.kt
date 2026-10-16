@@ -45,9 +45,12 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
     resolveMessage: Context.(M) -> String,
 ) {
     val dialogTag = "${LoadingDialogFragment.TAG}:${viewModel.javaClass.name}"
-    var dialogVisible =
-        !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) &&
-            supportFragmentManager.findFragmentByTag(dialogTag) != null
+    var ownDialog =
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            null
+        } else {
+            supportFragmentManager.findFragmentByTag(dialogTag) as? DialogFragment
+        }
     val ownerLifecycle = owner.lifecycle
     var backBlock: OnBackPressedCallback? = null
 
@@ -65,8 +68,8 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
     }
 
     fun dismissDialog() {
-        if (!dialogVisible) return
-        (supportFragmentManager.findFragmentByTag(dialogTag) as? DialogFragment)?.dismissAllowingStateLoss()
+        ownDialog?.takeIf { it.isAdded }?.dismissAllowingStateLoss()
+        ownDialog = null
     }
 
     ownerLifecycle.coroutineScope.launch {
@@ -82,12 +85,12 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
                         delay(wait)
                         val latest = viewModel.progressManager.progress.value
                         if (latest is ViewModelProgress.Active) {
-                            dialogVisible = true
                             showLoadingDialog(
                                 message = formatMessage(latest, resolveMessage),
                                 cancellable = latest.cancellable,
                                 tag = dialogTag,
                             )
+                            ownDialog = supportFragmentManager.findFragmentByTag(dialogTag) as? DialogFragment
                             if (latest.cancellable) wireCancelListener(viewModel, dialogTag)
                         }
                         pendingShow = null
@@ -105,12 +108,11 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
                             pendingShow?.cancel()
                             pendingShow = null
                             dismissDialog()
-                            dialogVisible = false
                             unblockInput()
                         }
                         is ViewModelProgress.Active -> {
                             blockInput()
-                            if (dialogVisible) {
+                            if (ownDialog != null) {
                                 pendingShow?.cancel()
                                 pendingShow = showDialogAfter(Duration.ZERO)
                             } else if (pendingShow == null) {
