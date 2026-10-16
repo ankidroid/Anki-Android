@@ -7,6 +7,7 @@ import android.os.Looper
 import androidx.core.net.toUri
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.CardsOrNotes
@@ -90,6 +91,21 @@ class CardBrowserUserActionFeedbackTest : RobolectricTest() {
             assertEquals(1, activityViewModel.rowCount)
             assertEquals("1 note shown", snackbarText)
             assertEquals(CardsOrNotes.NOTES, activityViewModel.flowOfLastCompletedSearch.value?.cardsOrNotes)
+        }
+    }
+
+    @Test
+    fun `mark and flag changes remain silent without rerunning search`() {
+        val note = addBasicNote("cat", "meows")
+        withBrowser {
+            val completed = activityViewModel.flowOfLastCompletedSearch.value
+            activityViewModel.selectRowAtPosition(0)
+            activityViewModel.toggleMark()
+            activityViewModel.updateSelectedCardsFlag(Flag.RED)
+            advanceRobolectricLooper()
+            assertEquals(completed, activityViewModel.flowOfLastCompletedSearch.value)
+            assertNull(snackbarText)
+            assertEquals(true, withCol { getNote(note.id).hasTag(this, "marked") })
         }
     }
 
