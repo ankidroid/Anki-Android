@@ -28,7 +28,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -36,6 +39,20 @@ import kotlin.time.Duration.Companion.seconds
 /** Integration tests for [ManageTagsViewModel] with a real collection */
 @RunWith(AndroidJUnit4::class)
 class ManageTagsViewModelTest : RobolectricTest() {
+    @Test
+    fun `tagExists follows backend identity for hidden Unicode tags`() =
+        runTest {
+            addTags("i", "Straße::café")
+            withViewModel {
+                for (query in listOf("", "missing")) {
+                    filter(query)
+                    assertTrue(tagExists(TagName.asValid("I")))
+                    assertTrue(!tagExists(TagName.asValid("ı")))
+                    assertTrue(tagExists(TagName.asValid("STRASSE::cafe\u0301")))
+                }
+            }
+        }
+
     @Test
     fun `move uses backend identity to reject its own subtree`() =
         runTest {
@@ -865,6 +882,236 @@ class ManageTagsViewModelTest : RobolectricTest() {
 
                 assertThat(col.getNote(note.id).tags, containsInAnyOrder("target", "target::child", "unrelated"))
                 assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagRenamed(1)))
+            }
+        }
+
+    @Test
+    fun `tagExists includes collapsed and filtered tags regardless of case`() =
+        runTest {
+            addTags("parent::child", "other")
+            withViewModel {
+                assertThat(loadedState.visibleTagNames, not(hasItem("parent::child")))
+                assertTrue(tagExists(TagName.asValid("PARENT::CHILD")))
+                filter("other")
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("other")))
+                assertTrue(tagExists(TagName.asValid("parent::CHILD")))
+                assertTrue(!tagExists(TagName.asValid("missing")))
+            }
+        }
+
+    @Test
+    fun `rename refreshes hidden lookups and totals through undo and redo`() =
+        runTest {
+            val note = addTags("source::leaf", "unrelated")
+            withViewModel {
+                filter("no-match")
+                assertEquals(3, loadedState.totalTagCount)
+
+                renameTag("source", "target::topic").join()
+
+                assertNull(loadedState.error)
+                assertEquals(4, loadedState.totalTagCount)
+                assertTrue(loadedState.visibleNodes.isEmpty())
+                assertFalse(tagExists(TagName.asValid("source")))
+                assertFalse(tagExists(TagName.asValid("source::leaf")))
+                assertTrue(tagExists(TagName.asValid("target")))
+                assertTrue(tagExists(TagName.asValid("TARGET::TOPIC::LEAF")))
+                assertEquals(setOf("target::topic::leaf", "unrelated"), col.getNote(note.id).tags.toSet())
+
+                col.undo()
+                refreshTags().join()
+                assertEquals(3, loadedState.totalTagCount)
+                assertTrue(tagExists(TagName.asValid("source::leaf")))
+                assertFalse(tagExists(TagName.asValid("target")))
+
+                col.redo()
+                refreshTags().join()
+                assertEquals(4, loadedState.totalTagCount)
+                assertTrue(tagExists(TagName.asValid("target::topic::leaf")))
+                assertFalse(tagExists(TagName.asValid("source")))
+            }
+        }
+
+    @Test
+    fun `merge refreshes hidden lookups and totals and undo restores both trees`() =
+        runTest {
+            val note = addTags("source::child", "target::child", "other")
+            withViewModel {
+                filter("other")
+                assertEquals(5, loadedState.totalTagCount)
+
+                renameTag("source", "target").join()
+
+                assertNull(loadedState.error)
+                assertEquals(3, loadedState.totalTagCount)
+                assertFalse(tagExists(TagName.asValid("source::child")))
+                assertTrue(tagExists(TagName.asValid("target::child")))
+                assertEquals(setOf("other", "target::child"), col.getNote(note.id).tags.toSet())
+                assertEquals(2, col.getNote(note.id).tags.size)
+
+                col.undo()
+                refreshTags().join()
+                assertEquals(5, loadedState.totalTagCount)
+                assertTrue(tagExists(TagName.asValid("source::child")))
+                assertTrue(tagExists(TagName.asValid("target::child")))
+                assertEquals(3, col.getNote(note.id).tags.size)
+            }
+        }
+
+    @Test
+    fun `move refreshes hidden destinations without losing sibling lookups`() =
+        runTest {
+            val note = addTags("old::topic::child", "old::keep", "unrelated")
+            withViewModel {
+                filter("unrelated")
+                assertEquals(5, loadedState.totalTagCount)
+
+                moveTag("old::topic", "new").join()
+
+                assertNull(loadedState.error)
+                assertEquals(6, loadedState.totalTagCount)
+                assertFalse(tagExists(TagName.asValid("old::topic")))
+                assertTrue(tagExists(TagName.asValid("old::keep")))
+                assertTrue(tagExists(TagName.asValid("new::topic::child")))
+                assertEquals(listOf("unrelated"), loadedState.visibleTagNames)
+                assertEquals(setOf("new::topic::child", "old::keep", "unrelated"), col.getNote(note.id).tags.toSet())
+
+                col.undo()
+                refreshTags().join()
+                assertEquals(5, loadedState.totalTagCount)
+                assertTrue(tagExists(TagName.asValid("old::topic::child")))
+                assertFalse(tagExists(TagName.asValid("new")))
+            }
+        }
+
+    @Test
+    fun `invalid move preserves state and retry refreshes lookups`() =
+        runTest {
+            val note = addTags("source::child")
+            withViewModel {
+                val before = loadedState
+                val undoBefore = col.undoStatus()
+
+                moveTag("source", "source::child").join()
+
+                assertIs<IllegalArgumentException>(loadedState.error)
+                assertFalse(loadedState.isWorking)
+                assertEquals(before.visibleNodes, loadedState.visibleNodes)
+                assertEquals(before.totalTagCount, loadedState.totalTagCount)
+                assertTrue(tagExists(TagName.asValid("source::child")))
+                assertEquals(listOf("source::child"), col.getNote(note.id).tags)
+                assertEquals(undoBefore, col.undoStatus())
+                assertTrue(pendingMessages.value.isEmpty())
+
+                moveTag("source", "target").join()
+
+                assertNull(loadedState.error)
+                assertEquals(3, loadedState.totalTagCount)
+                assertFalse(tagExists(TagName.asValid("source")))
+                assertTrue(tagExists(TagName.asValid("target::source::child")))
+                assertEquals(
+                    UserMessage.TagMoved(1),
+                    pendingMessages.value
+                        .single()
+                        .message,
+                )
+            }
+        }
+
+    @Test
+    fun `unchanged move preserves an available redo`() =
+        runTest {
+            val note = addTags("source::child")
+            withViewModel {
+                moveTag("source", "target").join()
+                col.undo()
+                refreshTags().join()
+                messageShown(
+                    pendingMessages.value
+                        .single()
+                        .id,
+                )
+                val undoBefore = col.undoStatus()
+                assertNotNull(undoBefore.redo)
+
+                moveTag("source", null).join()
+
+                assertNull(loadedState.error)
+                assertEquals(undoBefore, col.undoStatus())
+                assertEquals(2, loadedState.totalTagCount)
+                assertEquals(
+                    UserMessage.TagMoved(0),
+                    pendingMessages.value
+                        .single()
+                        .message,
+                )
+                col.redo()
+                assertEquals(listOf("target::source::child"), col.getNote(note.id).tags)
+            }
+        }
+
+    @Test
+    fun `clear unused refreshes cached descendants and their implicit parents`() =
+        runTest {
+            addTags("used::leaf", "unused::leaf").update { removeTag("unused::leaf") }
+            withViewModel {
+                filter("used")
+                assertEquals(4, loadedState.totalTagCount)
+                assertTrue(tagExists(TagName.asValid("unused::leaf")))
+
+                clearUnusedTags().join()
+
+                assertNull(loadedState.error)
+                assertEquals(2, loadedState.totalTagCount)
+                assertFalse(tagExists(TagName.asValid("unused")))
+                assertFalse(tagExists(TagName.asValid("unused::leaf")))
+                assertTrue(tagExists(TagName.asValid("used")))
+                assertTrue(tagExists(TagName.asValid("used::leaf")))
+
+                col.undo()
+                refreshTags().join()
+                assertEquals(4, loadedState.totalTagCount)
+                assertTrue(tagExists(TagName.asValid("unused::leaf")))
+            }
+        }
+
+    @Test
+    fun `backend rename rejection preserves visible state and permits a valid retry`() =
+        runTest {
+            val note = addTags("source::child")
+            withViewModel {
+                val before = loadedState
+
+                renameTag("source", "invalid\u3000target").join()
+
+                assertNotNull(loadedState.error)
+                assertFalse(loadedState.isWorking)
+                assertEquals(before.visibleNodes, loadedState.visibleNodes)
+                assertEquals(before.totalTagCount, loadedState.totalTagCount)
+                assertEquals(listOf("source::child"), col.getNote(note.id).tags)
+                assertTrue(pendingMessages.value.isEmpty())
+
+                renameTag("source", "valid").join()
+
+                assertNull(loadedState.error)
+                assertFalse(tagExists(TagName.asValid("source")))
+                assertTrue(tagExists(TagName.asValid("valid::child")))
+                assertEquals(
+                    UserMessage.TagRenamed(1),
+                    pendingMessages.value
+                        .single()
+                        .message,
+                )
+            }
+        }
+
+    @Test
+    fun `lookup recognizes backend-equivalent spelling`() =
+        runTest {
+            addBasicNote().update { addTag("ﬃ") }
+            assertEquals(1, col.db.queryScalar("select ? = ? collate unicase", "ﬃ", "iff"))
+            withViewModel {
+                assertTrue(tagExists(TagName.asValid("iff")))
             }
         }
 
