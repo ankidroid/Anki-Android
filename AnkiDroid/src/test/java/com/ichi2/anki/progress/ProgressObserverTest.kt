@@ -89,6 +89,26 @@ class ProgressObserverTest : RobolectricTest() {
     }
 
     @Test
+    fun `a later operation waits for the delay again`() {
+        val activity = startActivity().get()
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
+        val gate = CompletableDeferred<Unit>()
+        val op = launchOp(gate)
+        idleMainLooper(SHOW_DELAY * 2)
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+
+        val laterGate = CompletableDeferred<Unit>()
+        val laterOp = launchOp(laterGate)
+        idleMainLooper(SHOW_DELAY / 2)
+
+        assertNull(activity.loadingDialog(), "a quick later op must not flash a dialog")
+        laterGate.complete(Unit)
+        op.cancel()
+        laterOp.cancel()
+    }
+
+    @Test
     fun `dialog is shown when the activity is stopped and restarted during the show delay`() {
         val controller = startActivity()
         val activity = controller.get()
@@ -535,6 +555,55 @@ class ProgressObserverTest : RobolectricTest() {
 
         assertNotNull(activity.loadingDialog())
         gate.complete(Unit)
+    }
+
+    @Test
+    fun `destroying a stopped former owner does not dismiss another fragments progress`() {
+        val activity = startActivity().get()
+        val former = ProgressObservingFragment()
+        val current = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow { add(former, "former") }
+        val formerGate = CompletableDeferred<Unit>()
+        former.viewModel.runOp(formerGate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertNotNull(activity.loadingDialog())
+        activity.supportFragmentManager.commitNow { setMaxLifecycle(former, Lifecycle.State.CREATED) }
+        idleMainLooper(SHOW_DELAY)
+        assertNull(activity.loadingDialog())
+        formerGate.complete(Unit)
+        activity.supportFragmentManager.commitNow { add(current, "current") }
+        val currentGate = CompletableDeferred<Unit>()
+        current.viewModel.runOp(currentGate)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertNotNull(activity.loadingDialog())
+        activity.supportFragmentManager.commitNow { remove(former) }
+        idleMainLooper(SHOW_DELAY)
+        assertTrue(activity.touchesBlocked())
+        assertNotNull(activity.loadingDialog(), "former owner must not dismiss the current operation")
+        currentGate.complete(Unit)
+    }
+
+    @Test
+    fun `an operation ending does not dismiss the dialog another instance showed after it`() {
+        val activity = startActivity().get()
+        val first = ProgressObservingFragment()
+        val second = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow {
+            add(first, "first")
+            add(second, "second")
+        }
+        val firstGate = CompletableDeferred<Unit>()
+        first.viewModel.runOp(firstGate)
+        idleMainLooper(SHOW_DELAY * 2)
+        val secondGate = CompletableDeferred<Unit>()
+        second.viewModel.runOp(secondGate)
+        idleMainLooper(SHOW_DELAY * 2)
+
+        firstGate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+
+        assertNotNull(activity.loadingDialog())
+        secondGate.complete(Unit)
     }
 
     private fun launchOp(
