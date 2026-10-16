@@ -566,6 +566,24 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `tag totals include hidden descendants and stay stable during search`() =
+        runTest {
+            addTags("parent::child::leaf", "unrelated")
+            withViewModel {
+                assertThat(loadedState.visibleNodes, hasSize(2))
+                assertThat(loadedState.totalTagCount, equalTo(4))
+                filter("leaf")
+                assertThat(loadedState.visibleNodes, hasSize(3))
+                assertThat(loadedState.totalTagCount, equalTo(4))
+                filter("absent")
+                assertThat(loadedState.visibleNodes, hasSize(0))
+                assertThat(loadedState.totalTagCount, equalTo(4))
+                removeTag("parent").join()
+                assertThat(loadedState.totalTagCount, equalTo(1))
+            }
+        }
+
+    @Test
     fun `moveTag updates descendants on notes and reports affected notes`() =
         runTest {
             val first = addTags("source::child", "unrelated")
@@ -577,6 +595,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
                 assertThat(col.getNote(second.id).tags, containsInAnyOrder("target::source", "target::source::other"))
                 assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagMoved(2)))
                 assertThat(loadedState.visibleTagNames, containsInAnyOrder("target", "unrelated"))
+                assertThat(loadedState.totalTagCount, equalTo(5))
             }
         }
 
