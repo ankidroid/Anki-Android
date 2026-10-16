@@ -17,7 +17,7 @@
             <include layout="@layout/include_toolbar" />
         </FrameLayout>
 
-        <LinearLayout
+        <com.ichi2.anki.ui.ResizablePaneLayout
             android:id="@+id/deckpicker_xl_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,6 +39,6 @@
                 android:layout_weight="2"
                 android:layout_width="1dip"
                 android:layout_height="match_parent"/>
-        </LinearLayout>
+        </com.ichi2.anki.ui.ResizablePaneLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

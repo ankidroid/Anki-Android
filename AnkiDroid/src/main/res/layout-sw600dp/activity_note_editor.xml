@@ -15,7 +15,7 @@
 
             <include layout="@layout/include_toolbar" />
         </FrameLayout>
-        <LinearLayout
+        <com.ichi2.anki.ui.ResizablePaneLayout
             android:id="@+id/note_editor_xl_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -49,6 +49,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>
-        </LinearLayout>
+        </com.ichi2.anki.ui.ResizablePaneLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
