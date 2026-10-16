@@ -84,6 +84,9 @@ class ManageTagsViewModel : ViewModel() {
     /** Acknowledges that the UI has finished displaying a message. */
     fun messageShown(id: MessageId) = messageQueue.acknowledge(id)
 
+    /** Checks the complete tag tree, including tags hidden by search or collapsed ancestors. */
+    fun tagExists(tag: TagName): Boolean = tagList.any { it.fullTag == tag }
+
     /** Returns the visible node for [tag], or null with a warning if not found or not loaded */
     private fun findVisibleNode(tag: TagName): TagListItemState? {
         val loaded = state.value as? ManageTagsState.Content
