@@ -90,7 +90,7 @@ class ProfileManager private constructor(
 
         profileRegistry.saveProfile(newProfileId, metadata)
 
-        Timber.i("Created new profile: ${displayName.value} (${newProfileId.value})")
+        Timber.i("Created new profile: ${newProfileId.value}")
         return newProfileId
     }
 

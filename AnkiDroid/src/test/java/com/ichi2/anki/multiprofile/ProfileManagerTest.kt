@@ -34,6 +34,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import timber.log.Timber
 import java.io.File
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -349,6 +350,16 @@ class ProfileManagerTest {
             manager.createNewProfile(ProfileName.fromTrustedSource("work"))
         }
         assertEquals(2, manager.getAllProfiles().size)
+    }
+
+    @Test
+    fun `createNewProfile does not log the profile name`() {
+        val manager = ProfileManager.create(context)
+
+        val logs = captureLogs { manager.createNewProfile(ProfileName.fromTrustedSource("Alice")) }
+
+        assertTrue("Expected createNewProfile to log", logs.isNotEmpty())
+        assertFalse("Profile name was logged: $logs", logs.any { it.contains("Alice") })
     }
 
     @Test
@@ -745,5 +756,27 @@ class ProfileManagerTest {
         context
             .getSharedPreferences(prefsName, Context.MODE_PRIVATE)
             .edit(commit = true) { putString(PREF_COLLECTION_PATH, dir.absolutePath) }
+    }
+
+    private fun captureLogs(block: () -> Unit): List<String> {
+        val messages = mutableListOf<String>()
+        val tree =
+            object : Timber.Tree() {
+                override fun log(
+                    priority: Int,
+                    tag: String?,
+                    message: String,
+                    t: Throwable?,
+                ) {
+                    messages += message
+                }
+            }
+        Timber.plant(tree)
+        try {
+            block()
+        } finally {
+            Timber.uproot(tree)
+        }
+        return messages
     }
 }
