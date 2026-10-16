@@ -1330,7 +1330,7 @@ class NoteEditorFragment :
                 reloadRequired = true
 
                 val cardIdsToMove = getAffectedCards()
-                undoableOp { setDeck(cardIdsToMove, deckId) }
+                undoableOp(this@NoteEditorFragment) { setDeck(cardIdsToMove, deckId) }
 
                 // refresh the card object to reflect the database changes from above
                 currentEditedCard!!.load(getColUnsafe)
@@ -1368,7 +1368,7 @@ class NoteEditorFragment :
             // accept & update the note in the activity
             if (caller == NoteEditorCaller.PREVIEWER_EDIT || caller == NoteEditorCaller.EDIT) {
                 requireActivity().withProgress {
-                    undoableOp {
+                    undoableOp(this@NoteEditorFragment) {
                         updateNote(currentEditedCard!!.note(this@undoableOp))
                     }
                 }
