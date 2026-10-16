@@ -6,6 +6,7 @@ package com.ichi2.anki.utils
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.withStarted
@@ -22,12 +23,17 @@ fun <T> Fragment.observeMessages(
     messages: StateFlow<List<Message<T>>>,
     acknowledge: (MessageId) -> Unit,
     show: suspend (T) -> Unit,
+) = viewLifecycleOwner.observeMessages(messages, acknowledge, show)
+
+fun <T> LifecycleOwner.observeMessages(
+    messages: StateFlow<List<Message<T>>>,
+    acknowledge: (MessageId) -> Unit,
+    show: suspend (T) -> Unit,
 ) {
-    val owner = viewLifecycleOwner
-    owner.lifecycleScope.launch {
-        owner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+    lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.CREATED) {
             messages.mapNotNull { it.firstOrNull() }.collect { pending ->
-                owner.withStarted {}
+                withStarted {}
                 show(pending.message)
                 acknowledge(pending.id)
             }
