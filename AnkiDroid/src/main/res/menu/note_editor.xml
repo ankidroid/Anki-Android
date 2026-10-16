@@ -34,15 +34,8 @@
         android:title="@string/note_editor_capitalize"
         ankidroid:showAsAction="never"/>
     <item
-        android:id="@+id/action_show_toolbar"
-        android:title="@string/menu_show_toolbar"
-        android:checkable="true"
-        ankidroid:showAsAction="never"/>
-    <item
-        android:id="@+id/action_scroll_toolbar"
-        android:title="@string/menu_scroll_toolbar"
-        android:checkable="true"
-        android:checked="true"
+        android:id="@+id/action_toolbar_layout"
+        android:title="@string/note_editor_toolbar_layout"
         ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_toggle_previewer"

@@ -1883,8 +1883,7 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_copy_note to true,
                     R.id.action_font_size to true,
                     R.id.action_capitalize to true,
-                    R.id.action_show_toolbar to true,
-                    R.id.action_scroll_toolbar to true,
+                    R.id.action_toolbar_layout to true,
                     R.id.action_toggle_previewer to false,
                 )
 
@@ -1927,8 +1926,7 @@ class CardBrowserTest : RobolectricTest() {
                     R.id.action_copy_note to true,
                     R.id.action_font_size to true,
                     R.id.action_capitalize to true,
-                    R.id.action_show_toolbar to true,
-                    R.id.action_scroll_toolbar to true,
+                    R.id.action_toolbar_layout to true,
                     R.id.action_toggle_previewer to false,
                 )
 
