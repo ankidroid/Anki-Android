@@ -205,6 +205,7 @@ import com.ichi2.anki.utils.ext.positionIsVisible
 import com.ichi2.anki.utils.ext.setFragmentResultListener
 import com.ichi2.anki.utils.ext.setImageDrawableSafe
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.anki.utils.observeMessages
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.widgets.DeckHierarchyLinesDecoration
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -1015,6 +1016,7 @@ open class DeckPicker :
         viewModel.flowOfCreateShortcut.launchCollectionInLifecycleScope(::createIcon)
         viewModel.flowOfDisableShortcuts.launchCollectionInLifecycleScope(::disableDeckAndChildrenShortcuts)
         viewModel.onError.launchCollectionInLifecycleScope(::onError)
+        observeMessages(viewModel.pendingErrors, viewModel::errorShown) { showException(it) }
         viewModel.flowOfPromptUserToUpdateScheduler.launchCollectionInLifecycleScope(::onPromptUserToUpdateScheduler)
         viewModel.flowOfOptionsMenuState.filterNotNull().launchCollectionInLifecycleScope(::onOptionsMenuUpdated)
         viewModel.flowOfStudiedTodayStats.launchCollectionInLifecycleScope(::onStudiedTodayChanged)
@@ -2427,15 +2429,9 @@ open class DeckPicker :
      * Deletes the provided deck, child decks, and all cards inside.
      * @param did ID of the deck to delete
      */
-    fun deleteDeck(did: DeckId) =
-        launchCatchingTask {
-            viewModel.deleteDeck(did).join()
-        }
+    fun deleteDeck(did: DeckId) = viewModel.deleteDeck(did)
 
-    private fun deleteSelectedDeck() =
-        launchCatchingTask {
-            viewModel.deleteSelectedDeck().join()
-        }
+    private fun deleteSelectedDeck() = viewModel.deleteSelectedDeck()
 
     @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
@@ -2447,9 +2443,7 @@ open class DeckPicker :
     }
 
     private fun emptyFiltered(did: DeckId) {
-        launchCatchingTask {
-            viewModel.emptyFilteredDeck(did).join()
-        }
+        viewModel.emptyFilteredDeck(did)
     }
 
     override fun onAttachedToWindow() {
