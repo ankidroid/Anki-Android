@@ -323,7 +323,7 @@ abstract class CardViewerFragment(
                         }
                     } catch (e: Exception) {
                         Timber.w(e, "Could not open url")
-                        showSnackbar(CommonString.activity_start_failed)
+                        showSnackbar(R.string.activity_start_failed)
                         // Consume failed launches: external pages must not load inside the card.
                     }
                 }

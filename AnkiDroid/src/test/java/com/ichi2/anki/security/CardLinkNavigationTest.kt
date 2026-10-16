@@ -161,7 +161,7 @@ class CardLinkNavigationTest(
                 if (viewerType == ViewerType.PREVIEWER) {
                     PreviewerFragment.getIntent(
                         targetContext,
-                        idsFile = IdsFile(createTransientDirectory(), note.cardIds(col), IdsFile.Purpose.PREVIEW),
+                        idsFile = IdsFile(createTransientDirectory(), note.cardIds(col)),
                         currentIndex = 0,
                     )
                 } else {
