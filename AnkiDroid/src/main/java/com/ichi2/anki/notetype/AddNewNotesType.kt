@@ -11,18 +11,12 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import anki.notetypes.StockNotetype
-import anki.notetypes.copy
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.databinding.DialogNewNoteTypeBinding
-import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.libanki.Utils
-import com.ichi2.anki.libanki.addNotetype
-import com.ichi2.anki.libanki.addNotetypeLegacy
-import com.ichi2.anki.libanki.backend.BackendUtils
-import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNames
 import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -85,9 +79,10 @@ class AddNewNotesType(
                         if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
                         val selectedOption = allOptions[selectedPosition]
                         if (selectedOption.isStandard) {
-                            addStandardNotetype(newName, selectedOption)
+                            val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
+                            activity.viewModel.addStockNoteType(newName, kind)
                         } else {
-                            cloneStandardNotetype(newName, selectedOption)
+                            activity.viewModel.cloneNoteType(newName, selectedOption.id)
                         }
                     }
                     negativeButton(CommonString.dialog_cancel)
@@ -152,41 +147,6 @@ class AddNewNotesType(
                 }
             binding.notetypeNewName.requestFocus()
             window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-        }
-    }
-
-    private fun addStandardNotetype(
-        newName: String,
-        selectedOption: AddNotetypeUiModel,
-    ) {
-        activity.launchCatchingTask {
-            withCol {
-                val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
-                val updatedStandardNotetype =
-                    getStockNotetype(kind).apply {
-                        name = newName
-                    }
-                addNotetypeLegacy(BackendUtils.toJsonBytes(updatedStandardNotetype))
-            }
-            activity.viewModel.refreshNoteTypes()
-        }
-    }
-
-    private fun cloneStandardNotetype(
-        newName: String,
-        model: AddNotetypeUiModel,
-    ) {
-        activity.launchCatchingTask {
-            withCol {
-                val targetNotetype = getNotetype(model.id)
-                val newNotetype =
-                    targetNotetype.copy {
-                        id = 0
-                        name = newName
-                    }
-                addNotetype(newNotetype)
-            }
-            activity.viewModel.refreshNoteTypes()
         }
     }
 
