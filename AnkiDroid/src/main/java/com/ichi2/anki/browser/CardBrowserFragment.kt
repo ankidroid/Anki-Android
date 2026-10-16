@@ -210,7 +210,7 @@ class CardBrowserFragment :
             if (result.resultCode == Activity.RESULT_OK) {
                 // The old forceRefreshSearch called setQuery(searchView.text) before searching,
                 // but the ViewModel already holds the submitted query, so we just re-run the search directly.
-                activityViewModel.launchSearchForCards()
+                activityViewModel.launchSearchForCards(feedbackMode = BrowserSearchFeedbackMode.COUNT_ONLY)
             }
         }
 

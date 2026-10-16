@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.browser.BrowserRowCollection
+import com.ichi2.anki.browser.BrowserSearchFeedbackMode
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
@@ -617,18 +618,21 @@ open class CardBrowser :
         )
     }
 
-    private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
+    private fun forceRefreshSearch(
+        useSearchTextValue: Boolean = false,
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+    ) {
         if (useSearchTextValue && searchView != null) {
-            viewModel.setQuery(searchView!!.query.toString())
+            viewModel.setQuery(searchView!!.query.toString(), feedbackMode = feedbackMode)
         } else {
-            viewModel.launchSearchForCards()
+            viewModel.launchSearchForCards(feedbackMode = feedbackMode)
         }
     }
 
-    private fun refreshBrowserUI() {
+    private fun refreshBrowserUI(feedbackMode: BrowserSearchFeedbackMode) {
         hideProgressBar()
         // reload whole view
-        forceRefreshSearch()
+        forceRefreshSearch(feedbackMode = feedbackMode)
         viewModel.endMultiSelectMode(SingleSelectCause.Other)
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
@@ -670,7 +674,9 @@ open class CardBrowser :
             changes.card
         ) {
             // We refresh the Browser's own UI
-            refreshBrowserUI()
+            val feedbackMode =
+                if (handler is NoteEditorFragment) BrowserSearchFeedbackMode.COUNT_ONLY else BrowserSearchFeedbackMode.NONE
+            refreshBrowserUI(feedbackMode)
         }
     }
 
