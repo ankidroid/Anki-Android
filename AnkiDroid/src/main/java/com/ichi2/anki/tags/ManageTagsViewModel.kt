@@ -176,6 +176,7 @@ class ManageTagsViewModel : ViewModel() {
         state.value =
             ManageTagsState.Content(
                 visibleNodes = computeVisibleNodes(searchQuery.value),
+                totalTagCount = tagList.size,
             )
     }
 
@@ -364,12 +365,16 @@ data class TagListItemState(
 sealed class ManageTagsState {
     data object Loading : ManageTagsState()
 
+    /**
+     * @param totalTagCount every tag in the collection, unaffected by search/collapse
+     */
     data class Content(
         val visibleNodes: List<TagListItemState>,
         /** `true` while a tag operation runs, allowing the UI to show progress without hiding the list. */
         val isWorking: Boolean = false,
         /** Most recent operation failure, cleared when the next operation starts. */
         val error: Throwable? = null,
+        val totalTagCount: Int = 0,
     ) : ManageTagsState()
 
     data class Error(
