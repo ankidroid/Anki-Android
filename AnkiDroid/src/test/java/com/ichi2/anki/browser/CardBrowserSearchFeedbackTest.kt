@@ -5,6 +5,7 @@ package com.ichi2.anki.browser
 import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import android.widget.TextView
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.SelectableDeck
@@ -12,6 +13,7 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.testutils.ext.snackbarAction
 import com.ichi2.testutils.ext.snackbarText
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
@@ -88,6 +90,98 @@ class CardBrowserSearchFeedbackTest : RobolectricTest() {
             assertThat(activityViewModel.hasSelectedAllDecks(), equalTo(true))
             assertThat(activityViewModel.searchTerms, equalTo("cat"))
             assertThat(activityViewModel.rowCount, equalTo(1))
+        }
+    }
+
+    @Test
+    fun `suspending a card updates the hidden search count - Issue 22384`() {
+        addBasicNote("cat", "meows")
+        addBasicNote("dog", "barks")
+        withBrowser {
+            submitSearch("-is:suspended")
+            assertThat(activityViewModel.rowCount, equalTo(2))
+            for ((count, message) in listOf(1 to "1 card shown", 0 to "0 cards shown")) {
+                activityViewModel.selectRowAtPosition(0)
+
+                activityViewModel.toggleSuspendCards().join()
+                awaitSearch()
+
+                assertThat(activityViewModel.rowCount, equalTo(count))
+                assertThat(snackbarText, equalTo(message))
+                assertThat(snackbarAction?.visibility, equalTo(View.GONE))
+            }
+        }
+    }
+
+    @Test
+    fun `tag edits update the hidden search count - Issue 22384`() {
+        addBasicNote("cat", "meows")
+        addBasicNote("dog", "barks")
+        withBrowser {
+            submitSearch("-tag:edited")
+            assertThat(activityViewModel.rowCount, equalTo(2))
+            activityViewModel.selectRowAtPosition(0)
+
+            activityViewModel.editSelectedCardsTags(listOf("edited"), emptyList())
+            awaitSearch()
+
+            assertThat(activityViewModel.rowCount, equalTo(1))
+            assertThat(snackbarText, equalTo("1 card shown"))
+            assertThat(snackbarAction?.visibility, equalTo(View.GONE))
+        }
+    }
+
+    @Test
+    fun `unfiltered suspend reports the count only when the header is hidden`() {
+        addBasicNote("cat", "meows")
+        addBasicNote("dog", "barks")
+        withBrowser {
+            activityViewModel.selectRowAtPosition(0)
+
+            activityViewModel.toggleSuspendCards().join()
+            awaitSearch()
+
+            assertThat("the count need not change", activityViewModel.rowCount, equalTo(2))
+            assertThat(snackbarText, equalTo(if (useSearchView) "2 cards shown" else null))
+        }
+    }
+
+    @Test
+    fun `bury retains its undo feedback after refreshing the results`() {
+        addBasicNote("cat", "meows")
+        withBrowser {
+            submitSearch("cat")
+            activityViewModel.selectRowAtPosition(0)
+
+            toggleBury().join()
+            awaitSearch()
+
+            assertThat(snackbarAction?.text?.toString(), equalTo("Undo"))
+            assertThat(snackbarAction?.visibility, equalTo(View.VISIBLE))
+
+            onUndo().join()
+            awaitSearch()
+            assertThat(snackbarText, containsString("undone"))
+
+            // A previous operation's message must not suppress feedback for the next edit.
+            activityViewModel.selectRowAtPosition(0)
+            activityViewModel.toggleSuspendCards().join()
+            awaitSearch()
+            assertThat(snackbarText, equalTo("1 card shown"))
+        }
+    }
+
+    @Test
+    fun `repositioning keeps its operation feedback after refreshing the results`() {
+        addBasicNote("cat", "meows")
+        withBrowser {
+            submitSearch("cat")
+            activityViewModel.selectRowAtPosition(0)
+
+            repositionCardsNoValidation(position = 10, step = 1, shuffle = false, shift = false).join()
+            awaitSearch()
+
+            assertThat(snackbarText, equalTo(TR.browsingChangedNewPosition(1)))
         }
     }
 
