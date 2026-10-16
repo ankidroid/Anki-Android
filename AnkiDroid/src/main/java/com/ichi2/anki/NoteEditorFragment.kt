@@ -143,6 +143,7 @@ import com.ichi2.anki.noteeditor.NoteEditorMultimediaController
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
+import com.ichi2.anki.noteeditor.ToolbarLayoutDialogHost
 import com.ichi2.anki.noteeditor.data.ToolbarPreferences
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.ImageOcclusion
@@ -298,6 +299,7 @@ class NoteEditorFragment :
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
     private val toolbarPreferences by lazy { ToolbarPreferences(sharedPrefs()) }
+    private val toolbarLayoutDialog = ToolbarLayoutDialogHost()
 
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     @VisibleForTesting
@@ -581,6 +583,7 @@ class NoteEditorFragment :
             )
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
+        toolbarLayoutDialog.bind(binding.toolbarLayoutDialog, toolbarPreferences, savedInstanceState, ::updateToolbar)
         setupEdgeToEdge()
         registerDeckSelectedHandler(REQUEST_DECK_SELECTION_NOTE_EDITOR, ::onDeckSelected)
         try {
@@ -608,6 +611,7 @@ class NoteEditorFragment :
     override fun onSaveInstanceState(outState: Bundle) {
         addInstanceStateToBundle(outState)
         super.onSaveInstanceState(outState)
+        toolbarLayoutDialog.onSaveInstanceState(outState)
     }
 
     private fun addInstanceStateToBundle(savedInstanceState: Bundle) {
@@ -1498,13 +1502,8 @@ class NoteEditorFragment :
                 }
             }
         }
-        menu.findItem(R.id.action_show_toolbar).isChecked = toolbarPreferences.isVisible
         menu.findItem(R.id.action_capitalize).isChecked =
             sharedPrefs().getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true)
-        menu.findItem(R.id.action_scroll_toolbar).apply {
-            isChecked = toolbarPreferences.isScrollable
-            isEnabled = toolbarPreferences.isVisible
-        }
     }
 
     /**
@@ -1579,24 +1578,15 @@ class NoteEditorFragment :
                 showDialogFragment(fontSizeDialog)
                 return true
             }
-            R.id.action_show_toolbar -> {
-                item.isChecked = !item.isChecked
-                toolbarPreferences.isVisible = item.isChecked
-                updateToolbar()
-
-                // Update the overflow action menu in order to switch the enable/disable status of the "Scroll toolbar" item on the spot
-                requireActivity().invalidateOptionsMenu()
+            R.id.action_toolbar_layout -> {
+                toolbarLayoutDialog.show()
+                return true
             }
             R.id.action_capitalize -> {
                 Timber.i("NoteEditor:: Capitalize button pressed. New State: %b", !item.isChecked)
                 item.isChecked = !item.isChecked // Needed for Android 9
                 toggleCapitalize(item.isChecked)
                 return true
-            }
-            R.id.action_scroll_toolbar -> {
-                item.isChecked = !item.isChecked
-                toolbarPreferences.isScrollable = item.isChecked
-                updateToolbar()
             }
         }
         return false

@@ -17,18 +17,12 @@ private const val PREF_NOTE_EDITOR_SHOW_TOOLBAR = "noteEditorShowToolbar"
 class ToolbarPreferences(
     private val preferences: SharedPreferences,
 ) {
-    var isVisible: Boolean
+    val isVisible: Boolean
         get() = preferences.getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
-        set(value) {
-            preferences.edit { putBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, value) }
-        }
 
     /** The layout to use when visible, retained while the toolbar is hidden. */
-    var isScrollable: Boolean
+    val isScrollable: Boolean
         get() = preferences.getBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
-        set(value) {
-            preferences.edit { putBoolean(PREF_NOTE_EDITOR_SCROLL_TOOLBAR, value) }
-        }
 
     var layout: ToolbarLayoutMode
         get() =
