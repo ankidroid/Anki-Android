@@ -1018,7 +1018,8 @@ class CardBrowserFragment :
             }
         }
 
-        fun onSearchCompleted(state: SearchState.Completed) {
+        fun onSearchFeedback(state: SearchState.Completed) {
+            if (!activityViewModel.consumeSearchFeedback(state)) return
             val subtitle = legacySubtitle ?: requireActivity().findViewById<TextView>(R.id.subtitle)
             val feedback =
                 browserSearchFeedback(
@@ -1047,7 +1048,6 @@ class CardBrowserFragment :
             cardsAdapter.refreshRows()
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
             if (searchState is SearchState.Completed) {
-                onSearchCompleted(searchState)
                 invalidateMenu()
             }
         }
@@ -1273,6 +1273,7 @@ class CardBrowserFragment :
         activityViewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         activityViewModel.flowOfMultiSelectModeChanged.launchCollectionInLifecycleScope(::onMultiSelectModeChanged)
         activityViewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
+        activityViewModel.flowOfSearchFeedback.filterNotNull().launchCollectionInLifecycleScope(::onSearchFeedback)
         activityViewModel.flowOfLastCompletedSearch.filterNotNull().launchCollectionInLifecycleScope(::onLastCompletedSearchChanged)
         activityViewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
         activityViewModel.flowOfCardStateChanged.launchCollectionInLifecycleScope(::onCardsMarkedEvent)
