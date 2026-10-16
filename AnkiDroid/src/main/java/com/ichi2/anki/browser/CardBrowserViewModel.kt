@@ -163,6 +163,13 @@ class CardBrowserViewModel(
                 initialValue = null,
             )
 
+    // Keep feedback while the browser is stopped (e.g. saving in the note editor).
+    // The UI consumes it once; a newer search discards feedback for the old results.
+    val flowOfSearchFeedback: StateFlow<SearchState.Completed?>
+        field = MutableStateFlow<SearchState.Completed?>(null)
+
+    fun consumeSearchFeedback(search: SearchState.Completed): Boolean = flowOfSearchFeedback.compareAndSet(search, null)
+
     /**
      * Commands to drive the note editor either in a fragment or a standalone activity
      * @see NoteEditorCommand
@@ -1464,9 +1471,12 @@ class CardBrowserViewModel(
         if (!initCompleted) return
 
         viewModelScope.launch {
+            searchJob?.cancel()
+            flowOfSearchFeedback.value = null
             // update the UI while we're searching
             clearCardsList()
 
+            // Another request may have started a search while clearCardsList() was suspended.
             searchJob?.cancel()
             searchJob =
                 launchCatchingIO(
@@ -1486,7 +1496,12 @@ class CardBrowserViewModel(
                     }
                     ensurePaneRowValid()
                     if (isFragmented) flowOfNoteEditorCommand.emit(NoteEditorCommand.fromCurrentSearchState())
-                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState(feedbackMode))
+                    val completed = SearchState.Completed.fromCurrentState(feedbackMode)
+                    withContext(Dispatchers.Main) {
+                        ensureActive()
+                        flowOfSearchState.emit(completed)
+                        flowOfSearchFeedback.value = completed.takeUnless { feedbackMode == BrowserSearchFeedbackMode.NONE }
+                    }
                     selectUnvalidatedRowIds(pendingSelectionRestore)
                     pendingSelectionRestore = emptyList()
                 }

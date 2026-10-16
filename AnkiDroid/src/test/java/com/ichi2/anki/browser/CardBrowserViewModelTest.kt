@@ -2136,6 +2136,33 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `a newer automatic refresh discards unshown feedback`() =
+        runViewModelTest(notes = 1) {
+            setQuery("", feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS).join()
+            waitForSearchResults()
+            val feedback = assertNotNull(flowOfSearchFeedback.value)
+
+            launchSearchForCards()
+            waitForSearchResults()
+
+            assertNull(flowOfSearchFeedback.value)
+            assertEquals(false, consumeSearchFeedback(feedback))
+        }
+
+    @Test
+    fun `feedback is consumed once but identical later searches still request it`() =
+        runViewModelTest(notes = 1) {
+            repeat(2) {
+                setQuery("", feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS).join()
+                waitForSearchResults()
+                val feedback = assertNotNull(flowOfSearchFeedback.value)
+                assertEquals(true, consumeSearchFeedback(feedback))
+                assertEquals(false, consumeSearchFeedback(feedback))
+                assertNull(flowOfSearchFeedback.value)
+            }
+        }
+
+    @Test
     fun `setDefaultSearchText round-trips through collection config`() {
         try {
             Prefs.devUsingCardBrowserSearchView = true
