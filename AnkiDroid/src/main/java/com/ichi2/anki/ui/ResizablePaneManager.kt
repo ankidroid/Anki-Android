@@ -9,7 +9,9 @@ import android.view.PointerIcon
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.edit
+import androidx.core.view.doOnPreDraw
 import com.ichi2.anki.R
+import com.ichi2.utils.dp
 import timber.log.Timber
 
 /**
@@ -24,7 +26,6 @@ class ResizablePaneManager(
     private val sharedPrefs: SharedPreferences,
     private val startPaneWeightKey: String,
     private val endPaneWeightKey: String,
-    private val minWeight: Float = 0.5f, // Minimum weight for each pane
     private val dragColor: Int = divider.context.getColor(R.color.drag_divider_color),
     private val idleColor: Int = divider.context.getColor(R.color.idle_divider_color),
     private val onResizingChanged: (Boolean) -> Unit = {},
@@ -36,6 +37,10 @@ class ResizablePaneManager(
     private fun setupResizableDivider() {
         // Load saved weights if available
         loadSavedWeights()
+        parentLayout.doOnPreDraw { clampWeights() }
+        parentLayout.addOnLayoutChangeListener { _, left, _, right, _, oldLeft, _, oldRight, _ ->
+            if (right - left != oldRight - oldLeft) parentLayout.doOnPreDraw { clampWeights() }
+        }
 
         var initialTouchX = 0f
         var initialStartWeight = 0f
@@ -97,6 +102,7 @@ class ResizablePaneManager(
 
                         // Clamp the new weight for the start pane
                         // Ensures it's not too small and not too large (leaving space for the other pane's minWeight)
+                        val minWeight = minWeight(sumOfInitialWeights)
                         newStartWeight = newStartWeight.coerceIn(minWeight, sumOfInitialWeights - minWeight)
 
                         val newEndWeight = sumOfInitialWeights - newStartWeight
@@ -150,6 +156,33 @@ class ResizablePaneManager(
         } catch (e: Exception) {
             Timber.w(e, "Failed to load saved pane weights")
         }
+    }
+
+    /** The weight that keeps a pane [MIN_PANE_WIDTH] wide, or half of [totalWeight] if two of those don't fit */
+    private fun minWeight(totalWeight: Float): Float {
+        val paneSpace = parentLayout.width - divider.width
+        if (paneSpace <= 0) return 0f
+        val minPaneWidth = MIN_PANE_WIDTH.toPx(parentLayout.context) * parentLayout.resources.configuration.fontScale
+        return (totalWeight * minPaneWidth / paneSpace).coerceAtMost(totalWeight / 2)
+    }
+
+    /** Moves the divider back within the limits when a saved split or a narrower screen leaves a pane too small */
+    private fun clampWeights() {
+        val startParams = startPane.layoutParams as LinearLayout.LayoutParams
+        val endParams = endPane.layoutParams as LinearLayout.LayoutParams
+        val totalWeight = startParams.weight + endParams.weight
+        val minWeight = minWeight(totalWeight)
+        val clampedStartWeight = startParams.weight.coerceIn(minWeight, totalWeight - minWeight)
+        if (clampedStartWeight == startParams.weight) return
+        startParams.weight = clampedStartWeight
+        endParams.weight = totalWeight - clampedStartWeight
+        startPane.layoutParams = startParams
+        endPane.layoutParams = endParams
+    }
+
+    companion object {
+        /** Narrowest a pane can be, times the font scale: the panes hold text, which needs more room at a larger font size */
+        private val MIN_PANE_WIDTH = 240.dp
     }
 }
 
