@@ -1038,7 +1038,7 @@ class CardBrowserFragment :
             showSnackbar(message, Snackbar.LENGTH_SHORT) {
                 if (feedback.offersSearchAllDecks) {
                     setAction(CommonString.card_browser_search_all_decks) {
-                        activityViewModel.setSelectedDeck(SelectableDeck.AllDecks)
+                        activityViewModel.setSelectedDeck(SelectableDeck.AllDecks, feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
                     }
                 }
             }
@@ -1914,7 +1914,11 @@ class CardBrowserFragment :
                             tags = selectedTags,
                         ),
                 )
-            activityViewModel.launchSearchForCards(updatedSearch, forceRefresh = false)
+            activityViewModel.launchSearchForCards(
+                updatedSearch,
+                forceRefresh = false,
+                feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS,
+            )
         } else {
             activityViewModel.filterByTags(selectedTags, cardState)
         }

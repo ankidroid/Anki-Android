@@ -414,7 +414,10 @@ class CardBrowserViewModel(
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
 
-    fun setSelectedDeck(deck: SelectableDeck) {
+    fun setSelectedDeck(
+        deck: SelectableDeck,
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+    ) {
         Timber.i("setting deck: %s", deck)
 
         lastDeckIdRepository.lastDeckId =
@@ -430,7 +433,7 @@ class CardBrowserViewModel(
             }
 
         val updatedFilter = searchRequestFlow.value.copyFilters { it.copy(decks = deckFilter) }
-        launchSearchForCards(updatedFilter, forceRefresh = false)
+        launchSearchForCards(updatedFilter, forceRefresh = false, feedbackMode = feedbackMode)
     }
 
     val searchRequestFlow = MutableStateFlow(SearchRequest(query = ""))
@@ -585,10 +588,22 @@ class CardBrowserViewModel(
             null -> {}
         }
 
+        val initialFeedbackMode =
+            when (options) {
+                is CardBrowserLaunchOptions.DeepLink,
+                is CardBrowserLaunchOptions.SystemContextMenu,
+                is CardBrowserLaunchOptions.SearchQueryJs,
+                -> BrowserSearchFeedbackMode.SEARCH_RESULTS
+                is CardBrowserLaunchOptions.ScrollToCard, null -> BrowserSearchFeedbackMode.NONE
+            }
+        var firstSearch = true
         performSearchFlow
             .onEach {
                 Timber.d("performSearchFlow -> launching search")
-                launchSearchForCards()
+                // After initialization, this flow only runs when cards/notes mode changes.
+                val feedbackMode = if (firstSearch) initialFeedbackMode else BrowserSearchFeedbackMode.NONE
+                firstSearch = false
+                launchSearchForCards(feedbackMode = feedbackMode)
             }.launchIn(viewModelScope)
 
         flowOfCardsOrNotes
@@ -607,7 +622,7 @@ class CardBrowserViewModel(
 
             val initialDeckId = if (selectAllDecks) SelectableDeck.AllDecks else getInitialDeck()
             // PERF: slightly inefficient if the source was lastDeckId
-            setSelectedDeck(initialDeckId)
+            setSelectedDeck(initialDeckId, feedbackMode = initialFeedbackMode)
             refreshBackendColumns()
 
             refreshSortState()
@@ -1264,7 +1279,7 @@ class CardBrowserViewModel(
             searchRequestFlow.value.copy(
                 query = filterQuery,
             )
-        launchSearchForCards()
+        launchSearchForCards(feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
     }
 
     fun setQuery(
