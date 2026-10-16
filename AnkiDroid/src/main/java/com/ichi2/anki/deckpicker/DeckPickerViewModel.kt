@@ -46,6 +46,10 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.sync.syncStatus
 import com.ichi2.anki.syncAuth
 import com.ichi2.anki.utils.Destination
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.MessageId
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -60,6 +64,8 @@ import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import com.ichi2.anki.common.destinations.Destination as NavigateDestination
 
 /**
@@ -140,6 +146,8 @@ class DeckPickerViewModel :
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
     override val onError = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    private val errorQueue = MessageQueue<Exception>()
+    val pendingErrors = errorQueue.messages
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
     val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
@@ -240,14 +248,29 @@ class DeckPickerViewModel :
             flowOfStudyDeck.emit(deckId)
         }
 
+    fun errorShown(id: MessageId) = errorQueue.acknowledge(id)
+
+    private fun launchCatchingTask(
+        context: CoroutineContext = EmptyCoroutineContext,
+        block: suspend CoroutineScope.() -> Unit,
+    ): Job =
+        viewModelScope.launch(context) {
+            try {
+                block()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main.immediate) { errorQueue.enqueue(e) }
+            }
+        }
+
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      *
      * @param did ID of the deck to delete
      */
-    @CheckResult
     fun deleteDeck(did: DeckId) =
-        viewModelScope.launch {
+        launchCatchingTask {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val deckName = withCol { decks.getLegacy(did)!!.name }
                 val changes = undoableOp { decks.remove(listOf(did)) }
@@ -264,9 +287,8 @@ class DeckPickerViewModel :
     /**
      * Deletes the currently selected deck
      */
-    @CheckResult
     fun deleteSelectedDeck() =
-        viewModelScope.launch {
+        launchCatchingTask {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val targetDeckId = withCol { decks.selected() }
                 deleteDeck(targetDeckId).join()
@@ -302,7 +324,7 @@ class DeckPickerViewModel :
     }
 
     fun emptyFilteredDeck(deckId: DeckId): Job =
-        viewModelScope.launch {
+        launchCatchingTask {
             progressManager.withProgress {
                 Timber.i("empty filtered deck %s", deckId)
                 withCol { decks.select(deckId) }
@@ -316,7 +338,7 @@ class DeckPickerViewModel :
      */
     @CheckResult
     fun rebuildFilteredDeck(deckId: DeckId): Job =
-        viewModelScope.launch {
+        launchCatchingTask {
             progressManager.withProgress(message = DeckPickerProgress.REBUILDING_FILTERED_DECK) {
                 Timber.i("rebuilding filtered deck %s", deckId)
                 withCol {
@@ -331,7 +353,7 @@ class DeckPickerViewModel :
      * Marks [deckId] as the currently selected deck and updates the selection in the deck list.
      */
     fun selectDeck(deckId: DeckId) =
-        viewModelScope.launch {
+        launchCatchingTask {
             // TODO: should we always reset the Card Browser default deck here?
             withCol { decks.select(deckId) }
             focusedDeck = deckId
@@ -454,7 +476,7 @@ class DeckPickerViewModel :
     fun reloadDeckCounts(): Job {
         loadDeckCounts?.cancel()
         val loadDeckCounts =
-            viewModelScope.launch(Dispatchers.IO) {
+            launchCatchingTask(Dispatchers.IO) {
                 Timber.d("Refreshing deck list")
                 val (deckDueTree, collectionHasNoCards) =
                     withCol {
