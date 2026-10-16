@@ -7,15 +7,21 @@ import androidx.annotation.VisibleForTesting.Companion.PRIVATE
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import anki.collection.OpChanges
+import anki.collection.OpChangesWithId
 import anki.notetypes.Notetype
+import anki.notetypes.StockNotetype
 import anki.notetypes.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.exception.CombinedException
 import com.ichi2.anki.exception.ReportableException
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.NoteTypeId
+import com.ichi2.anki.libanki.addNotetype
+import com.ichi2.anki.libanki.addNotetypeLegacy
+import com.ichi2.anki.libanki.backend.BackendUtils
 import com.ichi2.anki.libanki.getNotetype
 import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
+import com.ichi2.anki.libanki.getStockNotetype
 import com.ichi2.anki.libanki.removeNotetype
 import com.ichi2.anki.libanki.updateNotetype
 import com.ichi2.anki.notetype.ManageNoteTypesState.CardEditor
@@ -25,6 +31,8 @@ import com.ichi2.anki.notetype.NoteTypeItemState.Companion.asModel
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.progress.HasProgress
 import com.ichi2.anki.progress.ProgressManager
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -40,6 +48,10 @@ class ManageNoteTypesViewModel :
     val state: StateFlow<ManageNoteTypesState>
         field = MutableStateFlow(ManageNoteTypesState())
 
+    /** An add or clone that is still running, so a recreated screen can still show its errors */
+    var pendingAdd: Deferred<Unit>? = null
+        private set
+
     init {
         refreshNoteTypes()
     }
@@ -47,19 +59,60 @@ class ManageNoteTypesViewModel :
     fun refreshNoteTypes() {
         Timber.i("Refreshing list of notetypes")
         viewModelScope.launch {
-            progressManager.withProgress {
-                withCol { safeGetNotetypeNameIdUseCount() }
-                    .onFailure {
-                        state.update { oldState ->
-                            oldState.copy(error = ReportableException(it))
-                        }
-                    }.onSuccess {
-                        state.update { oldState ->
-                            oldState.copy(noteTypes = it)
-                        }
-                    }
-            }
+            progressManager.withProgress { loadNoteTypes() }
         }
+    }
+
+    fun addStockNoteType(
+        newName: String,
+        kind: StockNotetype.Kind,
+    ): Deferred<Unit> {
+        Timber.i("Adding notetype from stock kind $kind")
+        return addNoteType {
+            val stockNoteType = getStockNotetype(kind).apply { name = newName }
+            addNotetypeLegacy(BackendUtils.toJsonBytes(stockNoteType))
+        }
+    }
+
+    fun cloneNoteType(
+        newName: String,
+        ntid: NoteTypeId,
+    ): Deferred<Unit> {
+        Timber.i("Cloning notetype with id $ntid")
+        return addNoteType {
+            val newNoteType =
+                getNotetype(ntid).copy {
+                    id = 0
+                    name = newName
+                }
+            addNotetype(newNoteType)
+        }
+    }
+
+    private fun addNoteType(add: Collection.() -> OpChangesWithId): Deferred<Unit> {
+        val added =
+            viewModelScope.async {
+                progressManager.withProgress {
+                    withCol { add() }
+                    loadNoteTypes()
+                }
+            }
+        pendingAdd = added
+        added.invokeOnCompletion { if (pendingAdd === added) pendingAdd = null }
+        return added
+    }
+
+    private suspend fun loadNoteTypes() {
+        withCol { safeGetNotetypeNameIdUseCount() }
+            .onFailure {
+                state.update { oldState ->
+                    oldState.copy(error = ReportableException(it))
+                }
+            }.onSuccess {
+                state.update { oldState ->
+                    oldState.copy(noteTypes = it)
+                }
+            }
     }
 
     fun filter(query: String) {

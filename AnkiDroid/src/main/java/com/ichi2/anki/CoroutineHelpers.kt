@@ -219,6 +219,9 @@ fun FragmentActivity.launchCatchingTask(
         runCatching(errorMessage, skipCrashReport = skipCrashReport) { block() }
     }
 
+context(activity: FragmentActivity)
+fun Deferred<*>.awaitCatchingTask(): Job = activity.launchCatchingTask { await() }
+
 /**
  * Launch a job that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.

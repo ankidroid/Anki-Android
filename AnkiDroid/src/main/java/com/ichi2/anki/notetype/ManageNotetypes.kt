@@ -37,6 +37,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonPlurals
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
+import com.ichi2.anki.awaitCatchingTask
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.utils.dp
 import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
@@ -106,6 +107,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         enableToolbar()
         binding.noteTypesList.adapter = notetypesAdapter
         observeProgress(viewModel) { it }
+        viewModel.pendingAdd?.awaitCatchingTask()
         binding.floatingActionButton.apply {
             setOnClickListener {
                 val addNewNotesType = AddNewNotesType(this@ManageNotetypes)
