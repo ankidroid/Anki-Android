@@ -27,6 +27,7 @@ import org.hamcrest.Matchers.sameInstance
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.system.measureTimeMillis
+import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.milliseconds
@@ -35,6 +36,21 @@ import kotlin.time.Duration.Companion.seconds
 /** Integration tests for [ManageTagsViewModel] with a real collection */
 @RunWith(AndroidJUnit4::class)
 class ManageTagsViewModelTest : RobolectricTest() {
+    @Test
+    fun `merge deduplicates using backend tag identity`() =
+        runTest {
+            val note = addBasicNote().update { listOf("source", "STRASSE", "i", "ı").forEach(::addTag) }
+            withViewModel {
+                ensureOpsExecuted(1) { renameTag("source", "Straße").join() }
+                assertEquals(null, loadedState.error)
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder("STRASSE", "i", "ı"))
+                col.undo()
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder("source", "STRASSE", "i", "ı"))
+                col.redo()
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder("STRASSE", "i", "ı"))
+            }
+        }
+
     @Test
     fun `refreshTags loads empty collection`() =
         runTest {
@@ -115,7 +131,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
     fun `operations requested while busy do not mutate tags`() =
         runTest {
             addTags("science::biology", "history")
-            addUnusedTag("unused")
+            addUnusedTags("unused")
             withViewModel {
                 withQueuedCollectionAccess {
                     val refresh = refreshTags()
@@ -453,10 +469,44 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `merge removes duplicates according to backend identity`() =
+        runTest {
+            val note =
+                addBasicNote().update {
+                    addTag("source")
+                    addTag("ﬃ")
+                }
+            assertEquals(1, col.db.queryScalar("select ? = ? collate unicase", "ﬃ", "iff"))
+            withViewModel {
+                renameTag("source", "iff").join()
+
+                assertEquals(1, col.getNote(note.id).tags.size)
+            }
+        }
+
+    @Test
+    fun `unrelated rename preserves backend-distinct tags`() =
+        runTest {
+            val note =
+                addBasicNote().update {
+                    addTag("source")
+                    addTag("ffi")
+                    addTag("ﬃ")
+                }
+            assertEquals(setOf("source", "ffi", "ﬃ"), col.getNote(note.id).tags.toSet())
+
+            withViewModel {
+                renameTag("source", "renamed").join()
+
+                assertEquals(setOf("renamed", "ffi", "ﬃ"), col.getNote(note.id).tags.toSet())
+            }
+        }
+
+    @Test
     fun `clearUnusedTags removes tags not on any note`() =
         runTest {
             addTags("used")
-            addUnusedTag("unused")
+            addUnusedTags("unused")
             withViewModel {
                 assertThat(loadedState.visibleTagNames, hasItem("unused"))
 
@@ -470,7 +520,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
     fun `clearUnusedTags queues message with count`() =
         runTest {
             addTags("used")
-            addUnusedTag("unused")
+            addUnusedTags("unused")
             withViewModel {
                 clearUnusedTags()
                 assertThat(pendingMessages.value.single().message, equalTo(UserMessage.ClearedUnusedTags(1)))
@@ -556,7 +606,7 @@ class ManageTagsViewModelTest : RobolectricTest() {
     fun `clearUnusedTags fires opChanges`() =
         runTest {
             addTags("used")
-            addUnusedTag("unused")
+            addUnusedTags("unused")
             ensureOpsExecuted(1) {
                 withViewModel { clearUnusedTags() }
             }
@@ -597,6 +647,71 @@ class ManageTagsViewModelTest : RobolectricTest() {
             }
         }
 
+    @Test
+    fun `rename follows backend removal of unused descendants and remains undoable`() =
+        runTest {
+            val note = addBasicNote().update { addTag("source::used") }
+            addUnusedTags("source", "source::unused", "source::unused::leaf")
+            withViewModel {
+                val before = col.tags.all().toSet()
+                ensureOpsExecuted(1) { renameTag("source", "renamed").join() }
+                assertThat(col.tags.all(), equalTo(listOf("renamed::used")))
+                assertThat(col.getNote(note.id).tags, equalTo(listOf("renamed::used")))
+                col.undo()
+                assertThat(col.tags.all().toSet(), equalTo(before))
+                assertThat(col.getNote(note.id).tags, equalTo(listOf("source::used")))
+                col.redo()
+                assertThat(col.tags.all(), equalTo(listOf("renamed::used")))
+            }
+        }
+
+    @Test
+    fun `renaming an unused subtree preserves tags and the previous undo action`() =
+        runTest {
+            val note = addUnusedTags("unused", "unused::child")
+            withViewModel {
+                val before = col.tags.all().toSet()
+                val undoBefore = col.undoStatus()
+                renameTag("UNUSED", "renamed").join()
+                assertThat(col.tags.all().toSet(), equalTo(before))
+                assertEquals(undoBefore.undo, col.undoStatus().undo)
+                assertEquals(undoBefore.redo, col.undoStatus().redo)
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagRenamed(0)))
+                col.undo()
+                assertEquals(before, col.getNote(note.id).tags.toSet())
+                col.redo()
+                assertThat(col.getNote(note.id).tags, hasSize(0))
+            }
+        }
+
+    @Test
+    fun `merge uses literal tag names and one undo step`() =
+        runTest {
+            for (source in listOf("none", "_*", "a*b", "a_b", "a\"b", "a\\b", "a.b")) {
+                val note = addBasicNote().update { listOf(source, "target").forEach(::addTag) }
+                withViewModel {
+                    ensureOpsExecuted(1) { renameTag(source, "target").join() }
+                    assertThat(col.getNote(note.id).tags, equalTo(listOf("target")))
+                    col.undo()
+                    assertThat(col.getNote(note.id).tags, containsInAnyOrder(source, "target"))
+                    col.redo()
+                    assertThat(col.getNote(note.id).tags, equalTo(listOf("target")))
+                }
+            }
+        }
+
+    @Test
+    fun `merge updates descendants and deduplicates tags on notes`() =
+        runTest {
+            val note = addBasicNote().update { listOf("source", "source::child", "target", "target::child", "unrelated").forEach(::addTag) }
+            with(ManageTagsViewModel()) {
+                renameTag("source", "target").join()
+
+                assertThat(col.getNote(note.id).tags, containsInAnyOrder("target", "target::child", "unrelated"))
+                assertThat(pendingMessages.value.single().message, equalTo(UserMessage.TagRenamed(1)))
+            }
+        }
+
     private suspend fun <T> withLockedCollection(block: suspend () -> T): T {
         CollectionManager.emulatedOpenFailure = CollectionManager.CollectionOpenFailure.LOCKED
         try {
@@ -629,12 +744,8 @@ class ManageTagsViewModelTest : RobolectricTest() {
 
     private fun addTags(vararg tags: String) = addBasicNote().update { tags.forEach { addTag(it) } }
 
-    /** Adds a tag to the collection cache without it being on any note */
-    private fun addUnusedTag(
-        @Suppress("SameParameterValue") tag: String,
-    ) {
-        addTags(tag).update { removeTag(tag) }
-    }
+    /** Removing tags from notes leaves their entries in the collection's tag cache. */
+    private fun addUnusedTags(vararg names: String) = addTags(*names).update { names.forEach(::removeTag) }
 }
 
 private val ManageTagsViewModel.loadedState: ManageTagsState.Content
