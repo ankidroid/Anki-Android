@@ -3,6 +3,7 @@
 package com.ichi2.anki.preferences
 
 import android.content.Context
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commitNow
@@ -23,8 +24,11 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -128,4 +132,32 @@ class PreferencesTest : RobolectricTest() {
             assertThat("rollover config should be set to new value", col.config.get("rollover") ?: 4, equalTo(2))
         }
     }
+
+    @Test
+    @Config(qualifiers = "w800dp-h1280dp")
+    fun `tablet settings are split`() {
+        assertTrue(openSettings().isSplit)
+    }
+
+    @Test
+    @Config(qualifiers = "w800dp-h1280dp")
+    fun `tablet settings stay split with a slightly larger font`() {
+        RuntimeEnvironment.setFontScale(1.3f)
+        assertTrue(openSettings().isSplit)
+    }
+
+    @Test
+    @Config(qualifiers = "w800dp-h1280dp")
+    fun `tablet settings use one pane with a large font`() {
+        RuntimeEnvironment.setFontScale(1.5f)
+        val activity = openSettings()
+        assertFalse(activity.isSplit)
+        assertIs<HeaderFragment>(activity.settings.findFragmentById(R.id.settings_container))
+    }
+
+    private fun openSettings() = startRegularActivity<PreferencesActivity>(PreferencesActivity.getIntent(targetContext))
+
+    private val PreferencesActivity.isSplit get() = findViewById<View>(R.id.lateral_nav_container) != null
+
+    private val PreferencesActivity.settings get() = (fragment as PreferencesFragment).childFragmentManager
 }
