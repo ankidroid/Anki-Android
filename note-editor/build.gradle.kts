@@ -5,7 +5,6 @@ import com.android.build.api.dsl.LibraryExtension
 plugins {
     id("ankidroid.android.library")
     id("ankidroid.android.compose")
-    id("ankidroid.plugins.screenshots")
 }
 
 configure<LibraryExtension> {
@@ -18,7 +17,6 @@ dependencies {
 
     testImplementation(testFixtures(project(":common:android")))
     testImplementation(libs.robolectric)
-    testImplementation(libs.roborazzi)
     testImplementation(libs.junit.vintage.engine)
     testRuntimeOnly(libs.junit.platform.launcher)
 }
