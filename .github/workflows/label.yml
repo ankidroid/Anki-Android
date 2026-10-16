@@ -14,6 +14,7 @@ jobs:
     steps:
     - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
       with:
+        retries: 3
         script: |
           let removeLabelsList = [
             "Pending Merge", 
@@ -42,6 +43,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
+              request: { retries: 0 },
               body: `Maintainers: Please [Sync Translations](https://github.com/ankidroid/Anki-Android/actions/workflows/sync_translations.yml) to produce a commit with only the automated changes from this PR.
               
           Read more about updating strings on the wiki,
@@ -80,6 +82,7 @@ jobs:
     steps:
       - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
+          retries: 3
           script: |
             const I18N_FILES = [
                 "01-core",
@@ -133,6 +136,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
+                request: { retries: 0 },
                 body: `> [!IMPORTANT]
             > **Maintainers**: This PR contains https://github.com/ankidroid/Anki-Android/labels/Strings changes
             
@@ -207,6 +211,7 @@ jobs:
     steps:
       - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
+          retries: 3
           script: |
             const creator = context.payload.sender.login
             const opts = github.rest.issues.listForRepo.endpoint.merge({
@@ -240,6 +245,7 @@ jobs:
     steps:
       - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
+          retries: 3
           script: |
             await github.rest.issues.addLabels({
               issue_number: context.issue.number,
