@@ -16,8 +16,6 @@ import com.ichi2.anki.utils.Destination
 
 /** Encapsulates the entire state for [ManageNotetypes] */
 data class ManageNoteTypesState(
-    /** Indicator if the UI should show a "loading" view to the user */
-    val isLoading: Boolean = true,
     /** List of [Notetype] to show */
     val noteTypes: List<NoteTypeItemState> = emptyList(),
     /** User entered string to use for filtering the [noteTypes] list */

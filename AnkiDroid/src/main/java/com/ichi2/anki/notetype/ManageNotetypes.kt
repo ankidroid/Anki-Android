@@ -41,10 +41,9 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.databinding.ActivityManageNoteTypesBinding
-import com.ichi2.anki.dialogs.dismissLoadingDialog
-import com.ichi2.anki.dialogs.showLoadingDialog
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
+import com.ichi2.anki.progress.observeProgress
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.startup.ensureStorageIsReady
 import com.ichi2.anki.sync.userAcceptsSchemaChange
@@ -107,6 +106,7 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
         setTransparentStatusBar()
         enableToolbar()
         binding.noteTypesList.adapter = notetypesAdapter
+        observeProgress(viewModel) { it }
         binding.floatingActionButton.apply {
             setOnClickListener {
                 val addNewNotesType = AddNewNotesType(this@ManageNotetypes)
@@ -204,11 +204,6 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
             }
             viewModel.clearError()
             return
-        }
-        if (state.isLoading) {
-            showLoadingDialog()
-        } else {
-            dismissLoadingDialog()
         }
         // send only the items that should be displayed
         notetypesAdapter.submitList(state.noteTypes.filter { it.shouldBeDisplayed })
