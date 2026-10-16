@@ -2146,6 +2146,14 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `restoring notes mode on startup does not request feedback`() =
+        runViewModelNotesTest(notes = 1) {
+            waitForSearchResults()
+            assertEquals(CardsOrNotes.NOTES, cardsOrNotes)
+            assertNull(flowOfSearchFeedback.value)
+        }
+
+    @Test
     fun `a newer automatic refresh discards unshown feedback`() =
         runViewModelTest(notes = 1) {
             setQuery("", feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS).join()

@@ -9,6 +9,7 @@ import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.Flag
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.testutils.ext.snackbarAction
@@ -76,6 +77,19 @@ class CardBrowserUserActionFeedbackTest : RobolectricTest() {
             activityViewModel.setFlagFilter(Flag.RED)
             awaitSearch()
             assertCount(0)
+        }
+    }
+
+    @Test
+    fun `switching to notes shows the refreshed count`() {
+        addBasicAndReversedNote("cat", "meows")
+        withBrowser {
+            assertEquals(2, activityViewModel.rowCount)
+            activityViewModel.setCardsOrNotes(CardsOrNotes.NOTES).join()
+            awaitSearch()
+            assertEquals(1, activityViewModel.rowCount)
+            assertEquals("1 note shown", snackbarText)
+            assertEquals(CardsOrNotes.NOTES, activityViewModel.flowOfLastCompletedSearch.value?.cardsOrNotes)
         }
     }
 

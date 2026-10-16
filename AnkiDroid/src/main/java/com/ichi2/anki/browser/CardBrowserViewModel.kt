@@ -601,7 +601,7 @@ class CardBrowserViewModel(
             .onEach {
                 Timber.d("performSearchFlow -> launching search")
                 // After initialization, this flow only runs when cards/notes mode changes.
-                val feedbackMode = if (firstSearch) initialFeedbackMode else BrowserSearchFeedbackMode.NONE
+                val feedbackMode = if (firstSearch) initialFeedbackMode else BrowserSearchFeedbackMode.COUNT_ONLY
                 firstSearch = false
                 launchSearchForCards(feedbackMode = feedbackMode)
             }.launchIn(viewModelScope)
