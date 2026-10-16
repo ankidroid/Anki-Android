@@ -331,7 +331,17 @@ class DeckPickerFloatingActionMenu(
             false
         }
 
+        // Close the FAB menu when clicking outside the menu container
         binding.fabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
+
+        // Close the FAB menu when clicking the background inside the menu container
+        // (e.g., when tapping to the left of narrower buttons such as the "Add" button)
+        binding.fabLinearLayout.setOnClickListener {
+            if (isFABOpen) {
+                closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
+            }
+        }
+
         val addDeckListener =
             View.OnClickListener {
                 if (isFABOpen) {
