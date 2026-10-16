@@ -17,6 +17,11 @@ internal fun ManageTagsViewModel.renameTag(
     newName: String,
 ) = renameTag(TagName.asValid(oldName), TagName.asValid(newName))
 
+internal fun ManageTagsViewModel.moveTag(
+    tag: String,
+    newParent: String?,
+) = moveTag(TagName.asValid(tag), newParent?.let(TagName::asValid))
+
 /** Creates a [TagListItemState] from a plain [String] tag */
 internal fun tagListItem(
     fullTag: String,
