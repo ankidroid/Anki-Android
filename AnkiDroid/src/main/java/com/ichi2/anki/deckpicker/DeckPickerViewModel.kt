@@ -4,6 +4,7 @@ package com.ichi2.anki.deckpicker
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.lifecycle.ViewModel
@@ -27,6 +28,7 @@ import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.utils.ext.schedulerVersion
 import com.ichi2.anki.configureRenderingMode
 import com.ichi2.anki.isLoggedIn
+import com.ichi2.anki.launchCatching
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
@@ -48,6 +50,8 @@ import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.syncStatus
 import com.ichi2.anki.syncAuth
 import com.ichi2.anki.utils.Destination
+import com.ichi2.anki.utils.MessageQueue
+import com.ichi2.anki.utils.MessageQueue.MessageId
 import com.ichi2.utils.NetworkUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -61,6 +65,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException.BackendCollectionNotOpenException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
@@ -152,6 +157,9 @@ class DeckPickerViewModel :
     val flowOfDestination = MutableSharedFlow<Destination>(extraBufferCapacity = 1)
     val flowOfNavigate = MutableSharedFlow<NavigateDestination>(extraBufferCapacity = 1)
     override val onError = Channel<Exception>(Channel.BUFFERED)
+    private val errorQueue = MessageQueue<Exception>()
+    val pendingErrors = errorQueue.messages
+    private var reloadAfterError: Exception? = null
     val flowOfExportDeck = MutableSharedFlow<DeckId>()
     val flowOfCreateShortcut = MutableSharedFlow<ShortcutData>()
     val flowOfDisableShortcuts = MutableSharedFlow<List<String>>()
@@ -248,14 +256,33 @@ class DeckPickerViewModel :
             flowOfStudyDeck.emit(deckId)
         }
 
+    fun errorShown(id: MessageId) {
+        val shown = pendingErrors.value.find { it.id == id }?.message
+        errorQueue.acknowledge(id)
+        if (shown == null || shown !== reloadAfterError) return
+        reloadAfterError = null
+        reloadDeckCounts(retryAfterError = false)
+    }
+
+    private suspend fun reportError(e: Exception) {
+        withContext(Dispatchers.Main.immediate) { errorQueue.enqueue(e) }
+    }
+
+    private suspend fun reportRefreshError(
+        e: Exception,
+        retryAfterError: Boolean,
+    ) = withContext(Dispatchers.Main.immediate) {
+        if (retryAfterError && !e.isDatabaseCorruption) reloadAfterError = e
+        errorQueue.enqueue(e)
+    }
+
     /**
      * Deletes the provided deck, child decks. and all cards inside.
      *
      * @param did ID of the deck to delete
      */
-    @CheckResult
     fun deleteDeck(did: DeckId) =
-        viewModelScope.launch {
+        viewModelScope.launchCatching(onError = ::reportError) {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val deckName = withCol { decks.getLegacy(did)!!.name }
                 val changes =
@@ -277,9 +304,8 @@ class DeckPickerViewModel :
     /**
      * Deletes the currently selected deck
      */
-    @CheckResult
     fun deleteSelectedDeck() =
-        viewModelScope.launch {
+        viewModelScope.launchCatching(onError = ::reportError) {
             progressManager.withProgress(message = DeckPickerProgress.DELETING_DECK) {
                 val targetDeckId = withCol { decks.selected() }
                 deleteDeck(targetDeckId).join()
@@ -315,7 +341,7 @@ class DeckPickerViewModel :
     }
 
     fun emptyFilteredDeck(deckId: DeckId): Job =
-        viewModelScope.launch {
+        viewModelScope.launchCatching(onError = ::reportError) {
             progressManager.withProgress {
                 Timber.i("empty filtered deck %s", deckId)
                 withCol { decks.select(deckId) }
@@ -328,7 +354,7 @@ class DeckPickerViewModel :
      * Rebuilds a filtered deck with its current filter settings
      */
     fun rebuildFilteredDeck(deckId: DeckId): Job =
-        viewModelScope.launch {
+        viewModelScope.launchCatching(onError = ::reportError) {
             progressManager.withProgress(message = DeckPickerProgress.REBUILDING_FILTERED_DECK) {
                 Timber.i("rebuilding filtered deck %s", deckId)
                 withCol {
@@ -343,7 +369,7 @@ class DeckPickerViewModel :
      * Marks [deckId] as the currently selected deck and updates the selection in the deck list.
      */
     fun selectDeck(deckId: DeckId) =
-        viewModelScope.launch {
+        viewModelScope.launchCatching(onError = ::reportError) {
             // TODO: should we always reset the Card Browser default deck here?
             withCol { decks.select(deckId) }
             focusedDeck = deckId
@@ -463,10 +489,12 @@ class DeckPickerViewModel :
         reloadDeckCounts().join()
     }
 
-    fun reloadDeckCounts(): Job {
+    fun reloadDeckCounts(): Job = reloadDeckCounts(retryAfterError = true)
+
+    private fun reloadDeckCounts(retryAfterError: Boolean): Job {
         loadDeckCounts?.cancel()
         val loadDeckCounts =
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launchCatching(Dispatchers.IO, onError = { reportRefreshError(it, retryAfterError) }) {
                 Timber.d("Refreshing deck list")
                 withCol {
                     dueTree = sched.deckDueTree()
@@ -513,7 +541,7 @@ class DeckPickerViewModel :
     }
 
     fun toggleDeckExpand(deckId: DeckId) =
-        viewModelScope.launch {
+        viewModelScope.launchCatching(onError = ::reportError) {
             withCol {
                 // update stored state
                 dueTree?.find(deckId)?.run {
@@ -915,3 +943,6 @@ data class OptionsMenuState(
     val undoAvailable: Boolean,
     val showDeckActions: Boolean,
 )
+
+internal val Exception.isDatabaseCorruption
+    get() = this is BackendDbCorruptException || this is SQLiteDatabaseCorruptException
