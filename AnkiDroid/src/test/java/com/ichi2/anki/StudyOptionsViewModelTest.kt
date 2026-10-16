@@ -197,19 +197,19 @@ class StudyOptionsViewModelTest : RobolectricTest() {
         }
 
     @Test
-    fun `refreshData - buried cards are counted`() =
+    fun `refreshData - buried siblings are counted`() =
         runTest {
-            addBasicNote("Front1", "Back1")
-            addBasicNote("Front2", "Back2")
+            addBasicAndReversedNote("Front", "Back")
             withCol {
-                val card = sched.card!!
-                sched.buryCards(listOf(card.id), true)
+                val config = decks.configDictForDeckId(decks.current().id)
+                config.new.bury = true
+                decks.save(config)
             }
 
             viewModel.refreshData()
 
             val state = assertIs<StudyOptionsState.StudyOptions>(viewModel.state)
-            assertTrue(state.data.buriedNew > 0, "expected buried new cards")
+            assertEquals(1, state.data.buriedNew)
             assertEquals(1, state.data.newCardsToday)
         }
 
