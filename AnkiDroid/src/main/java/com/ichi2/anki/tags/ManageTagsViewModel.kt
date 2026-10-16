@@ -133,14 +133,14 @@ class ManageTagsViewModel : ViewModel() {
         }
 
     /**
-     * Renames [oldName] to [newName], updating all notes and child tags.
+     * Renames [oldName] to [newName] on notes, including matching child tags.
      * @see Tags.rename
      */
     fun renameTag(
         oldName: TagName,
         newName: TagName,
     ) = launchTagOpAndRefresh {
-        val result = undoableOp { tags.rename(oldName, newName) }
+        val result = undoableOp { renameTagTree(oldName, newName) }
         messageQueue.enqueue(TagRenamed(result.count))
     }
 
