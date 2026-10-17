@@ -5,7 +5,7 @@ import com.android.build.api.dsl.LibraryExtension
 plugins {
     id("ankidroid.android.library")
     id("ankidroid.android.compose")
-    alias(libs.plugins.roborazzi)
+    id("ankidroid.plugins.screenshots")
 }
 
 configure<LibraryExtension> {
