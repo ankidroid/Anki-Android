@@ -142,14 +142,9 @@ class DeckPickerFloatingActionMenu(
                 binding.fabMain.shrink()
 
                 with(binding) {
-                    addSharedButton.animate().alpha(0f).duration = 50
-                    addDeckButton.animate().alpha(0f).duration = 100
-                    addFilteredDeckButton.animate().alpha(0f).duration = 100
-                    addSharedButton.animate().translationY(style.otherOffset).duration = 100
+                    addSharedButton.animateClose(style.otherOffset, 100)
                     addDeckButton
-                        .animate()
-                        .translationY(style.deckOffset)
-                        .setDuration(50)
+                        .animateClose(style.deckOffset, 50)
                         .setListener(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
@@ -160,9 +155,7 @@ class DeckPickerFloatingActionMenu(
                             },
                         )
                     addFilteredDeckButton
-                        .animate()
-                        .translationY(400f)
-                        .setDuration(100)
+                        .animateClose(style.otherOffset, 100)
                         .setListener(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
@@ -193,14 +186,9 @@ class DeckPickerFloatingActionMenu(
                 binding.fabMain.shrink()
 
                 with(binding) {
-                    addSharedButton.animate().alpha(0f).duration = 70
-                    addDeckButton.animate().alpha(0f).duration = 50
-                    addFilteredDeckButton.animate().alpha(0f).duration = 50
-                    addSharedButton.animate().translationY(style.otherOffset).duration = 100
+                    addSharedButton.animateClose(style.otherOffset, 100)
                     addDeckButton
-                        .animate()
-                        .translationY(style.deckOffset)
-                        .setDuration(50)
+                        .animateClose(style.deckOffset, 50)
                         .setListener(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
@@ -211,9 +199,7 @@ class DeckPickerFloatingActionMenu(
                             },
                         )
                     addFilteredDeckButton
-                        .animate()
-                        .translationY(600f)
-                        .setDuration(100)
+                        .animateClose(style.otherOffset, 100)
                         .setListener(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
@@ -240,6 +226,14 @@ class DeckPickerFloatingActionMenu(
             addDeckButton.visibility = View.GONE
             addFilteredDeckButton.visibility = View.GONE
         }
+
+    private fun View.animateClose(
+        offset: Float,
+        duration: Long,
+    ) = animate()
+        .alpha(0f)
+        .translationY(offset)
+        .setDuration(duration)
 
     fun showFloatingActionButton() {
         if (!binding.fabMain.isShown) {
