@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat.Type.statusBars
 import androidx.fragment.app.commit
 import com.ichi2.anki.R
 import com.ichi2.anki.ScreenshotTest
+import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.HTTP_STATUS_TOO_MANY_REQUESTS
 import com.ichi2.testutils.insetsOf
 import com.ichi2.utils.dp
 import org.junit.Test
@@ -62,6 +65,16 @@ class SharedDecksScreenshotTest : ScreenshotTest() {
             activity.showDownloadFragment()
             activity.simulateNavigationBar()
             captureScreen("download")
+        }
+
+    @Test
+    fun loginRequiredDialog() =
+        withSharedDecks { activity ->
+            activity.simulateNavigationBar()
+            val response = mock<WebResourceResponse> { on { statusCode } doReturn HTTP_STATUS_TOO_MANY_REQUESTS }
+            activity.webViewClient.onReceivedHttpError(activity.findViewById<WebView>(R.id.web_view), mock(), response)
+            advanceRobolectricLooper()
+            captureScreen("login_required_dialog")
         }
 
     private fun withSharedDecks(block: (SharedDecksActivity) -> Unit) {
