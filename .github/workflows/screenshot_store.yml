@@ -32,9 +32,12 @@ on:
     paths:
       - '.github/workflows/screenshot_*.yml'
       - 'gradle/libs.versions.toml'
-      - 'AnkiDroid/build.gradle'
-      - 'AnkiDroid/build.gradle.kts' # future-proof
+      - '**/build.gradle'
+      - '**/build.gradle.kts'
+      - 'settings.gradle.kts'
       - '**/ScreenshotTest.kt'
+      - '**/ScreenshotTestCategory.kt'
+      - 'buildSrc/src/main/kotlin/ankidroid.plugins.screenshots.gradle.kts'
       - 'tools/compare-screenshot-test.sh'
 
 permissions: {}
@@ -71,20 +74,21 @@ jobs:
           gradle-version: wrapper
 
       - name: Warm Gradle Cache
-        # This makes sure we fetch gradle network resources with a retry
-        # TODO: --rerun-tasks in 'Record screenshots' discards the compilation performed here
+        # Keep compilation here: robolectricSdkDownload only downloads SDK jars.
+        # Compiling resolves test dependencies within the retry (Issue 21682).
+        # --rerun-tasks repeats compilation but reuses downloaded dependencies.
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
           timeout_minutes: 10
           retry_wait_seconds: 60
           max_attempts: 3
-          command: ./gradlew robolectricSdkDownload :AnkiDroid:compilePlayDebugUnitTestKotlin -Pscreenshot --daemon
+          command: ./gradlew robolectricSdkDownload compileScreenshotTests -Pscreenshot --daemon
 
       - name: Record screenshots
         id: record-test
         run: |
           # Use --rerun-tasks to disable cache for test task
-          ./gradlew recordRoborazziPlayDebug -Pscreenshot --stacktrace --rerun-tasks
+          ./gradlew recordScreenshots -Pscreenshot --stacktrace --rerun-tasks
 
       - name: Upload screenshot baseline
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

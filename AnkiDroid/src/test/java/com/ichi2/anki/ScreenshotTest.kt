@@ -31,8 +31,6 @@ import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowWindowManagerImpl
 import java.io.File
 
-interface ScreenshotTestCategory
-
 /**
  * Base class for [roborazzi](https://github.com/takahirom/roborazzi) screenshot tests
  */
