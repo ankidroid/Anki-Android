@@ -3,13 +3,22 @@
 package com.ichi2.anki.notetype
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.notetypes.StockNotetype
+import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.CombinedException
 import com.ichi2.anki.libanki.Collection
+import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
 import com.ichi2.anki.libanki.removeNotetype
+import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
+import com.ichi2.anki.progress.ViewModelProgress
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.hasItems
 import org.hamcrest.CoreMatchers.not
@@ -23,7 +32,9 @@ import org.junit.runner.RunWith
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -191,6 +202,114 @@ class ManageNoteTypesViewModelTest : RobolectricTest() {
             unmockkStatic(Collection::removeNotetype)
         }
 
+    @Test
+    fun `adding a stock note type adds it to the list`() =
+        runTest {
+            val viewModel = ManageNoteTypesViewModel()
+
+            viewModel.addStockNoteType(TEST_NAME_1, StockNotetype.Kind.KIND_CLOZE)
+
+            assertTrue(TEST_NAME_1 in viewModel.noteTypes.map { it.name })
+            assertTrue(col.notetypes.byName(TEST_NAME_1)!!.isCloze)
+        }
+
+    @Test
+    fun `cloning a note type copies its fields`() =
+        runTest {
+            addStandardNoteType(TEST_NAME_1, arrayOf("front", "back"), "{{front}}", "{{back}}")
+            val viewModel = ManageNoteTypesViewModel()
+
+            viewModel.cloneNoteType(TEST_NAME_2, viewModel.noteTypeForName(TEST_NAME_1).id)
+
+            assertThat(viewModel.noteTypes.map { it.name }, hasItems(TEST_NAME_1, TEST_NAME_2))
+            assertEquals(listOf("front", "back"), col.notetypes.byName(TEST_NAME_2)!!.fieldsNames)
+        }
+
+    @Test
+    fun `cloning a missing note type shows an error`() =
+        runTest {
+            val viewModel = ManageNoteTypesViewModel()
+
+            viewModel.cloneNoteType(TEST_NAME_1, MISSING_NOTE_TYPE_ID)
+
+            assertNotNull(viewModel.state.value.error)
+            assertNull(col.notetypes.byName(TEST_NAME_1))
+        }
+
+    @Test
+    fun `addStockNoteType reports progress`() =
+        runProgressTest {
+            assertProgressAround { addStockNoteType(TEST_NAME_2, StockNotetype.Kind.KIND_BASIC) }
+        }
+
+    @Test
+    fun `cloneNoteType reports progress`() =
+        runProgressTest {
+            assertProgressAround { cloneNoteType(TEST_NAME_2, noteTypeForName(TEST_NAME_1).id) }
+        }
+
+    @Test
+    fun `refreshNoteTypes reports progress`() =
+        runProgressTest {
+            assertProgressAround { refreshNoteTypes() }
+        }
+
+    @Test
+    fun `rename reports progress`() =
+        runProgressTest {
+            assertProgressAround { rename(noteTypeForName(TEST_NAME_1).id, TEST_NAME_2) }
+        }
+
+    @Test
+    fun `delete reports progress`() =
+        runProgressTest {
+            assertProgressAround { delete(noteTypeForName(TEST_NAME_1).id) }
+        }
+
+    @Test
+    fun `deleteSelectedNoteTypes reports progress`() =
+        runProgressTest {
+            onItemLongClick(noteTypeForName(TEST_NAME_1))
+
+            assertProgressAround { deleteSelectedNoteTypes() }
+        }
+
+    @Test
+    fun `deleting the last note type reports no progress`() =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            col.getNotetypeNameIdUseCount().drop(1).forEach { col.removeNotetype(it.id) }
+            val viewModel = ManageNoteTypesViewModel()
+            advanceUntilIdle()
+
+            viewModel.progressManager.progress.test {
+                assertIs<ViewModelProgress.Idle>(awaitItem())
+                viewModel.delete(viewModel.noteTypes.single().id)
+                advanceUntilIdle()
+                expectNoEvents()
+            }
+            assertEquals(UserMessage.DeletingLastModel, viewModel.state.value.message)
+        }
+
+    private fun runProgressTest(testBody: suspend ManageNoteTypesViewModel.() -> Unit) =
+        runTest {
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            addStandardNoteType(TEST_NAME_1, arrayOf("front", "back"), "{{front}}", "{{back}}")
+            val viewModel = ManageNoteTypesViewModel()
+            advanceUntilIdle()
+            viewModel.testBody()
+        }
+
+    private suspend fun ManageNoteTypesViewModel.assertProgressAround(op: () -> Unit) {
+        progressManager.progress.test {
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            op()
+            assertIs<ViewModelProgress.Active<Nothing>>(awaitItem())
+            assertIs<ViewModelProgress.Idle>(awaitItem())
+            expectNoEvents()
+        }
+    }
+
     /** Returns the current list of [NoteTypeItemState] */
     private val ManageNoteTypesViewModel.noteTypes: List<NoteTypeItemState>
         get() = state.value.noteTypes
@@ -216,6 +335,8 @@ class ManageNoteTypesViewModelTest : RobolectricTest() {
 
         /** Exception message used when mocking backend calls that should fail */
         private const val TEST_EXCEPTION_MESSAGE = "Failure: can't delete"
+
+        private const val MISSING_NOTE_TYPE_ID = 1L
 
         /**
          * The current number of available [anki.notetypes.StockNotetype] found in the [Collection].
