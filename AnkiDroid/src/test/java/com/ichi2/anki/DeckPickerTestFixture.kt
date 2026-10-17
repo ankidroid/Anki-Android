@@ -9,6 +9,11 @@ import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperUntil
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.DeckPickerViewModel.StartupResponse
+import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
+import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
+import com.ichi2.anki.dialogs.setDeckPickerContextMenuResult
+import com.ichi2.anki.libanki.DeckId
+import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.testutils.BackupManagerTestUtilities
 
 // TODO: move to testFixtures once RobolectricTest is moved
@@ -41,3 +46,26 @@ fun DeckPickerViewModel.awaitStartup() =
     advanceRobolectricLooperUntil {
         startupJob?.isActive != true && flowOfStartupResponse.value !is StartupResponse.Success
     }
+
+/** Waits for the adapter to display the expected decks, including background list diffs. */
+fun DeckPicker.awaitVisibleDecks(expectedDeckIds: List<DeckId>) {
+    val adapter = deckPickerBinding.decks.adapter as DeckAdapter
+    advanceRobolectricLooperUntil(
+        lazyMessage = { "Expected visible decks $expectedDeckIds, but found ${adapter.currentList.map { it.did }}" },
+    ) {
+        adapter.currentList.map { it.did } == expectedDeckIds
+    }
+}
+
+/** Selects a context-menu action and waits for its observable result before returning. */
+fun DeckPicker.selectContextMenuOptionAndAwait(
+    option: DeckPickerContextMenuOption,
+    deckId: DeckId,
+    condition: () -> Boolean,
+) {
+    supportFragmentManager.setDeckPickerContextMenuResult(DeckPickerContextMenuResult(deckId = deckId, option = option))
+    advanceRobolectricLooperUntil(
+        lazyMessage = { "Context-menu action $option on deck $deckId did not reach its expected state" },
+        condition = condition,
+    )
+}
