@@ -79,6 +79,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.BottomNavController.NavigationItem
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckPickerFloatingActionMenu.CloseAnimation
 import com.ichi2.anki.DeckPickerFloatingActionMenu.FloatingActionBarToggleListener
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.DBError
@@ -434,7 +435,7 @@ open class DeckPicker :
     private val closeFloatingActionBarBackPressCallback =
         object : OnBackPressedCallback(enabled = false) {
             override fun handleOnBackPressed() {
-                floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
+                floatingActionMenu.closeFloatingActionMenu(style = CloseAnimation.SHORT)
             }
         }
 
@@ -1248,7 +1249,7 @@ open class DeckPicker :
 
         Timber.d("onCreateOptionsMenu()")
         if (isDrawerOpen) {
-            floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+            floatingActionMenu.closeFloatingActionMenu(style = CloseAnimation.LONG)
         }
         // Fragments own their menus: each fragment registers a MenuProvider against this
         // activity (see StudyOptionsFragment), and the menu host dispatches creation,
