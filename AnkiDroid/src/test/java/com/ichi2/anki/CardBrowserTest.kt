@@ -5,9 +5,12 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.TextUtils
 import android.view.Menu
+import android.view.MotionEvent
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.SpinnerAdapter
 import android.widget.TextView
@@ -72,6 +75,7 @@ import com.ichi2.anki.browser.selectRowAtPosition
 import com.ichi2.anki.browser.setColumn
 import com.ichi2.anki.browser.setSelectedDeck
 import com.ichi2.anki.browser.toRowSelection
+import com.ichi2.anki.common.destinations.NoteEditorDestination
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -103,6 +107,7 @@ import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.testutils.parcelledCopy
 import com.ichi2.testutils.saveState
+import com.ichi2.testutils.withSplitPaneUi
 import com.ichi2.testutils.withSplitPaneUiAsync
 import com.ichi2.utils.LanguageUtil
 import io.mockk.every
@@ -1970,6 +1975,29 @@ class CardBrowserTest : RobolectricTest() {
         }
 
     @Test
+    @Config(qualifiers = "w1024dp-h768dp")
+    fun `resizing the note editor's panes does not resize the split browser`() {
+        withSplitPaneUi {
+            val noteEditor =
+                startActivityNormallyOpenCollectionWithIntent(
+                    NoteEditorActivity::class.java,
+                    NoteEditorDestination.AddNote().toIntent(targetContext),
+                )
+            advanceRobolectricLooper()
+            noteEditor.findViewById<View>(R.id.note_editor_resizing_divider).dragBy(-100f)
+        }
+
+        withBrowser(noteCount = 1, fragmented = true) {
+            val editorPane = findViewById<View>(R.id.note_editor_frame)
+            assertThat(
+                "the browser's editor pane keeps its default weight",
+                (editorPane.layoutParams as LinearLayout.LayoutParams).weight,
+                equalTo(2f),
+            )
+        }
+    }
+
+    @Test
     fun `deck chip performs a search`() {
         // The deck chip uses `DeckSelectionListener`, which uses a different code path
         val did = addDeck("AA")
@@ -2205,6 +2233,18 @@ class CardBrowserTest : RobolectricTest() {
 fun setCardBrowserFragmented(value: Boolean) = Prefs.putBoolean(R.string.dev_card_browser_fragmented, value)
 
 fun setUsingSearchView(value: Boolean) = Prefs.putBoolean(R.string.dev_card_browser_search_view, value)
+
+private fun View.dragBy(dx: Float) {
+    val downTime = SystemClock.uptimeMillis()
+    for ((action, x) in listOf(MotionEvent.ACTION_DOWN to 0f, MotionEvent.ACTION_MOVE to dx, MotionEvent.ACTION_UP to dx)) {
+        val event = MotionEvent.obtain(downTime, downTime, action, x, 0f, 0)
+        try {
+            dispatchTouchEvent(event)
+        } finally {
+            event.recycle()
+        }
+    }
+}
 
 private fun CardBrowser.rerenderAllCards() {
     cardBrowserFragment.cardsAdapter.notifyDataSetChanged()
