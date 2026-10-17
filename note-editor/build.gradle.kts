@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":common:android"))
     implementation(libs.androidx.core)
 
+    testImplementation(testFixtures(project(":common:android")))
     testImplementation(libs.robolectric)
     testImplementation(libs.roborazzi)
     testImplementation(libs.junit.vintage.engine)
