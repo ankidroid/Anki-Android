@@ -187,7 +187,7 @@ open class AnkiActivity(
         }
 
         if (savedInstanceState != null) {
-            val restoredValue = savedInstanceState.getString(KEY_EXPORT_FILE_NAME) ?: return
+            val restoredValue = savedInstanceState.getString(STATE_EXPORT_FILE_NAME) ?: return
             fileExportPath = restoredValue
         }
     }
@@ -718,7 +718,7 @@ open class AnkiActivity(
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (::fileExportPath.isInitialized) {
-            outState.putString(KEY_EXPORT_FILE_NAME, fileExportPath)
+            outState.putString(STATE_EXPORT_FILE_NAME, fileExportPath)
         }
         super.onSaveInstanceState(outState)
     }
@@ -864,7 +864,7 @@ open class AnkiActivity(
         const val EXTRA_FINISH_ANIMATION = "finishAnimation"
 
         private const val SIMPLE_NOTIFICATION_ID = 0
-        private const val KEY_EXPORT_FILE_NAME = "key_export_file_name"
+        private const val STATE_EXPORT_FILE_NAME = "key_export_file_name"
     }
 }
 

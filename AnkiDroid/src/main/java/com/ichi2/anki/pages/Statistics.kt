@@ -60,7 +60,7 @@ class Statistics : PageFragment(R.layout.page_statistics) {
         requireActivity().launchCatchingTask {
             withProgress {
                 val deckName =
-                    savedInstanceState?.getString(KEY_DECK_NAME, null) ?: withCol { decks.current().name }
+                    savedInstanceState?.getString(STATE_DECK_NAME, null) ?: withCol { decks.current().name }
                 changeDeck(deckName)
             }
         }
@@ -100,7 +100,7 @@ class Statistics : PageFragment(R.layout.page_statistics) {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY_DECK_NAME, binding.deckName.text.toString())
+        outState.putString(STATE_DECK_NAME, binding.deckName.text.toString())
     }
 
     /**
@@ -124,7 +124,7 @@ class Statistics : PageFragment(R.layout.page_statistics) {
 
     companion object {
         const val ARG_HIDE_BACK_BUTTON = "hideBackButton"
-        private const val KEY_DECK_NAME = "key_deck_name"
+        private const val STATE_DECK_NAME = "key_deck_name"
     }
 }
 

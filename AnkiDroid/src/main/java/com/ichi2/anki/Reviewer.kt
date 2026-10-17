@@ -266,7 +266,7 @@ open class Reviewer :
         }
         startLoadingCollection()
         registerOnForgetHandler { listOf(currentCardId!!) }
-        previousCardId = savedInstanceState?.getLongOrNull(KEY_PREVIOUS_CARD_ID)
+        previousCardId = savedInstanceState?.getLongOrNull(STATE_PREVIOUS_CARD_ID)
     }
 
     override fun onPause() {
@@ -287,7 +287,7 @@ open class Reviewer :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        previousCardId?.let { outState.putLong(KEY_PREVIOUS_CARD_ID, it) }
+        previousCardId?.let { outState.putLong(STATE_PREVIOUS_CARD_ID, it) }
     }
 
     protected val flagToDisplay: Flag
@@ -2143,7 +2143,7 @@ open class Reviewer :
          */
         const val EXTRA_DECK_ID = "deckId"
 
-        private const val KEY_PREVIOUS_CARD_ID = "key_previous_card_id"
+        private const val STATE_PREVIOUS_CARD_ID = "key_previous_card_id"
 
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
