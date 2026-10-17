@@ -4,6 +4,7 @@
 package com.ichi2.anki
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.KeyEvent
@@ -150,20 +151,14 @@ class DeckPickerFloatingActionMenu(
                         .translationY(style.deckOffset)
                         .setDuration(50)
                         .setListener(
-                            object : Animator.AnimatorListener {
-                                override fun onAnimationStart(animator: Animator) {}
-
-                                override fun onAnimationEnd(animator: Animator) {
+                            object : AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
                                         addSharedButton.visibility = View.GONE
                                         addDeckButton.visibility = View.GONE
                                         addFilteredDeckButton.visibility = View.GONE
                                     }
                                 }
-
-                                override fun onAnimationCancel(animator: Animator) {}
-
-                                override fun onAnimationRepeat(animator: Animator) {}
                             },
                         )
                     addFilteredDeckButton
@@ -171,20 +166,14 @@ class DeckPickerFloatingActionMenu(
                         .translationY(400f)
                         .setDuration(100)
                         .setListener(
-                            object : Animator.AnimatorListener {
-                                override fun onAnimationStart(animator: Animator) {}
-
-                                override fun onAnimationEnd(animator: Animator) {
+                            object : AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
                                         addSharedButton.visibility = View.GONE
                                         addDeckButton.visibility = View.GONE
                                         addFilteredDeckButton.visibility = View.GONE
                                     }
                                 }
-
-                                override fun onAnimationCancel(animator: Animator) {}
-
-                                override fun onAnimationRepeat(animator: Animator) {}
                             },
                         )
                 }
@@ -219,20 +208,14 @@ class DeckPickerFloatingActionMenu(
                         .translationY(style.deckOffset)
                         .setDuration(50)
                         .setListener(
-                            object : Animator.AnimatorListener {
-                                override fun onAnimationStart(animator: Animator) {}
-
-                                override fun onAnimationEnd(animator: Animator) {
+                            object : AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
                                         addSharedButton.visibility = View.GONE
                                         addDeckButton.visibility = View.GONE
                                         addFilteredDeckButton.visibility = View.GONE
                                     }
                                 }
-
-                                override fun onAnimationCancel(animator: Animator) {}
-
-                                override fun onAnimationRepeat(animator: Animator) {}
                             },
                         )
                     addFilteredDeckButton
@@ -240,20 +223,14 @@ class DeckPickerFloatingActionMenu(
                         .translationY(600f)
                         .setDuration(100)
                         .setListener(
-                            object : Animator.AnimatorListener {
-                                override fun onAnimationStart(animator: Animator) {}
-
-                                override fun onAnimationEnd(animator: Animator) {
+                            object : AnimatorListenerAdapter() {
+                                override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
                                         addSharedButton.visibility = View.GONE
                                         addDeckButton.visibility = View.GONE
                                         addFilteredDeckButton.visibility = View.GONE
                                     }
                                 }
-
-                                override fun onAnimationCancel(animator: Animator) {}
-
-                                override fun onAnimationRepeat(animator: Animator) {}
                             },
                         )
                 }
