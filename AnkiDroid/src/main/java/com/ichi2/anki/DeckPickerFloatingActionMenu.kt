@@ -154,9 +154,7 @@ class DeckPickerFloatingActionMenu(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
-                                        addSharedButton.visibility = View.GONE
-                                        addDeckButton.visibility = View.GONE
-                                        addFilteredDeckButton.visibility = View.GONE
+                                        hideMenuButtons()
                                     }
                                 }
                             },
@@ -169,9 +167,7 @@ class DeckPickerFloatingActionMenu(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
-                                        addSharedButton.visibility = View.GONE
-                                        addDeckButton.visibility = View.GONE
-                                        addFilteredDeckButton.visibility = View.GONE
+                                        hideMenuButtons()
                                     }
                                 }
                             },
@@ -179,9 +175,7 @@ class DeckPickerFloatingActionMenu(
                 }
             } else {
                 // Close without animation
-                binding.addSharedButton.visibility = View.GONE
-                binding.addDeckButton.visibility = View.GONE
-                binding.addFilteredDeckButton.visibility = View.GONE
+                hideMenuButtons()
                 binding.fabMain.isExtended = false
 
                 binding.fabMain.setIconResource(addWhiteIcon)
@@ -211,9 +205,7 @@ class DeckPickerFloatingActionMenu(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
-                                        addSharedButton.visibility = View.GONE
-                                        addDeckButton.visibility = View.GONE
-                                        addFilteredDeckButton.visibility = View.GONE
+                                        hideMenuButtons()
                                     }
                                 }
                             },
@@ -226,9 +218,7 @@ class DeckPickerFloatingActionMenu(
                             object : AnimatorListenerAdapter() {
                                 override fun onAnimationEnd(animation: Animator) {
                                     if (!isFABOpen) {
-                                        addSharedButton.visibility = View.GONE
-                                        addDeckButton.visibility = View.GONE
-                                        addFilteredDeckButton.visibility = View.GONE
+                                        hideMenuButtons()
                                     }
                                 }
                             },
@@ -236,15 +226,20 @@ class DeckPickerFloatingActionMenu(
                 }
             } else {
                 // Close without animation
-                binding.addSharedButton.visibility = View.GONE
-                binding.addDeckButton.visibility = View.GONE
-                binding.addFilteredDeckButton.visibility = View.GONE
+                hideMenuButtons()
                 binding.fabMain.isExtended = false
 
                 binding.fabMain.setIconResource(addWhiteIcon)
             }
         }
     }
+
+    private fun hideMenuButtons() =
+        with(binding) {
+            addSharedButton.visibility = View.GONE
+            addDeckButton.visibility = View.GONE
+            addFilteredDeckButton.visibility = View.GONE
+        }
 
     fun showFloatingActionButton() {
         if (!binding.fabMain.isShown) {
