@@ -1005,12 +1005,13 @@ class CardBrowserFragment :
         }
 
         fun onSearchCompleted(state: SearchState.Completed) {
+            val subtitle = legacySubtitle ?: requireActivity().findViewById<TextView>(R.id.subtitle)
             val feedback =
                 browserSearchFeedback(
                     feedbackMode = state.feedbackMode,
                     rowCount = state.rowCount,
                     allDecksSelected = state.allDecksSelected,
-                    isHeaderCountVisible = legacySearchView?.isIconified == true,
+                    isHeaderCountVisible = subtitle?.isShown == true && legacySearchView?.isIconified != false,
                 )
             val message =
                 when (feedback) {
