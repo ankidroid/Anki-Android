@@ -598,7 +598,7 @@ class CardBrowserFragment :
                                         }
 
                                         override fun onQueryTextSubmit(query: String): Boolean {
-                                            vm.setQuery(query, fromUserSearch = true)
+                                            vm.setQuery(query, feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
                                             legacySearchView!!.clearFocus()
                                             return true
                                         }
@@ -1007,7 +1007,7 @@ class CardBrowserFragment :
         fun onSearchCompleted(state: SearchState.Completed) {
             val feedback =
                 browserSearchFeedback(
-                    fromUserSearch = state.fromUserSearch,
+                    feedbackMode = state.feedbackMode,
                     rowCount = state.rowCount,
                     allDecksSelected = state.allDecksSelected,
                     isHeaderCountVisible = legacySearchView?.isIconified == true,
@@ -1142,7 +1142,7 @@ class CardBrowserFragment :
             launchCatchingTask { searchBar?.setText(value.toUserSpannable()) }
 
             Timber.i("relaying submitted search to activity")
-            activityViewModel.launchSearchForCards(value, forceRefresh = false, fromUserSearch = true)
+            activityViewModel.launchSearchForCards(value, forceRefresh = false, feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
         }
 
         fun onUserMessage(message: UserMessage) =

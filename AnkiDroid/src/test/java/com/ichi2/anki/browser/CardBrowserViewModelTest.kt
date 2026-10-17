@@ -1657,34 +1657,34 @@ class CardBrowserViewModelTest : JvmTest() {
         }
 
     @Test
-    fun `initial search is not a user submission - Issue 21242`() =
+    fun `initial search does not request feedback - Issue 21242`() =
         runViewModelTest(notes = 2, initMode = InitMode.MANUAL) {
             flowOfSearchState.test {
                 manualInit()
                 val completed = awaitSearchCompleted()
                 assertThat(completed.rowCount, equalTo(2))
-                assertThat(completed.fromUserSearch, equalTo(false))
+                assertThat(completed.feedbackMode, equalTo(BrowserSearchFeedbackMode.NONE))
             }
         }
 
     @Test
-    fun `completed search retains the user submission and deck scope`() =
+    fun `completed search retains the feedback mode and deck scope`() =
         runViewModelTest(notes = 3) {
             flowOfSearchState.test {
                 ignoreEventsDuringViewModelInit()
                 setSelectedDeck(SelectableDeck.AllDecks)
                 awaitSearchCompleted()
-                setQuery("", fromUserSearch = true)
+                setQuery("", feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS)
                 val completed = awaitSearchCompleted()
                 assertThat("count", completed.rowCount, equalTo(3))
                 assertThat("cardsOrNotes", completed.cardsOrNotes, equalTo(CardsOrNotes.CARDS))
-                assertThat(completed.fromUserSearch, equalTo(true))
+                assertThat(completed.feedbackMode, equalTo(BrowserSearchFeedbackMode.SEARCH_RESULTS))
                 assertThat(completed.allDecksSelected, equalTo(true))
             }
         }
 
     @Test
-    fun `deck change is not a user search submission`() =
+    fun `deck change does not request search feedback`() =
         runViewModelTest {
             val deck = addDeck("Specific")
             addNoteToDeck(deck)
@@ -1693,13 +1693,13 @@ class CardBrowserViewModelTest : JvmTest() {
                 setSelectedDeck(deck)
                 val completed = awaitSearchCompleted()
                 assertThat(completed.rowCount, equalTo(1))
-                assertThat(completed.fromUserSearch, equalTo(false))
+                assertThat(completed.feedbackMode, equalTo(BrowserSearchFeedbackMode.NONE))
                 assertThat(completed.allDecksSelected, equalTo(false))
             }
         }
 
     @Test
-    fun `sorting and reversing are not user search submissions`() =
+    fun `sorting and reversing do not request search feedback`() =
         runViewModelTest(notes = 2) {
             flowOfSearchState.test {
                 ignoreEventsDuringViewModelInit()
@@ -1713,7 +1713,7 @@ class CardBrowserViewModelTest : JvmTest() {
                     setSortType(sort).join()
                     val completed = awaitSearchCompleted()
                     assertThat("sorting retains the results", completed.rowCount, equalTo(2))
-                    assertThat("sorting has its own feedback", completed.fromUserSearch, equalTo(false))
+                    assertThat("sorting has its own feedback", completed.feedbackMode, equalTo(BrowserSearchFeedbackMode.NONE))
                 }
             }
         }

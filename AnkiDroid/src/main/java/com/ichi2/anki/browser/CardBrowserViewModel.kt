@@ -1263,7 +1263,7 @@ class CardBrowserViewModel(
     fun setQuery(
         query: String,
         forceRefresh: Boolean = true,
-        fromUserSearch: Boolean = false,
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
     ) = viewModelScope.launch {
         val newValue = searchRequestFlow.value.copy(query = query)
         if (!forceRefresh && withCol { searchRequestFlow.value.toSearchString() == newValue.toSearchString() }) {
@@ -1272,7 +1272,7 @@ class CardBrowserViewModel(
         }
 
         searchRequestFlow.value = newValue
-        launchSearchForCards(fromUserSearch = fromUserSearch)
+        launchSearchForCards(feedbackMode = feedbackMode)
     }
 
     /**
@@ -1434,12 +1434,12 @@ class CardBrowserViewModel(
 
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
-     * @param fromUserSearch whether the user explicitly submitted this search; controls feedback via [browserSearchFeedback]
+     * @param feedbackMode the feedback requested for this search, resolved by [browserSearchFeedback]
      */
     fun launchSearchForCards(
         searchRequest: SearchRequest,
         forceRefresh: Boolean,
-        fromUserSearch: Boolean = false,
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
     ) = viewModelScope.launch {
         Timber.d("launching search [new syntax]: '%s'", searchRequest)
 
@@ -1451,7 +1451,7 @@ class CardBrowserViewModel(
         }
 
         searchRequestFlow.value = searchRequest
-        launchSearchForCards(fromUserSearch = fromUserSearch)
+        launchSearchForCards(feedbackMode = feedbackMode)
     }
 
     /**
@@ -1460,7 +1460,7 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    fun launchSearchForCards(fromUserSearch: Boolean = false) {
+    fun launchSearchForCards(feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE) {
         if (!initCompleted) return
 
         viewModelScope.launch {
@@ -1486,7 +1486,7 @@ class CardBrowserViewModel(
                     }
                     ensurePaneRowValid()
                     if (isFragmented) flowOfNoteEditorCommand.emit(NoteEditorCommand.fromCurrentSearchState())
-                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState(fromUserSearch))
+                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState(feedbackMode))
                     selectUnvalidatedRowIds(pendingSelectionRestore)
                     pendingSelectionRestore = emptyList()
                 }
@@ -1599,13 +1599,15 @@ class CardBrowserViewModel(
     /**
      * Builds a [SearchState.Completed] event reflecting the current ViewModel state.
      *
-     * @param fromUserSearch whether the user explicitly submitted this search.
+     * @param feedbackMode the feedback requested for this search.
      */
-    private fun SearchState.Completed.Companion.fromCurrentState(fromUserSearch: Boolean = false): SearchState.Completed =
+    private fun SearchState.Completed.Companion.fromCurrentState(
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+    ): SearchState.Completed =
         SearchState.Completed(
             rowCount = rowCount,
             cardsOrNotes = cardsOrNotes,
-            fromUserSearch = fromUserSearch,
+            feedbackMode = feedbackMode,
             allDecksSelected = hasSelectedAllDecks(),
         )
 
@@ -1731,8 +1733,8 @@ class CardBrowserViewModel(
         data class Completed(
             val rowCount: Int,
             val cardsOrNotes: CardsOrNotes,
-            /** Whether the user explicitly submitted this search, rather than an automatic refresh. */
-            val fromUserSearch: Boolean,
+            /** The feedback requested by the caller for this search. */
+            val feedbackMode: BrowserSearchFeedbackMode,
             /** The deck scope used by this search, before any subsequent UI changes. */
             val allDecksSelected: Boolean,
         ) : SearchState {
