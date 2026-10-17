@@ -72,7 +72,6 @@ class PreviewerViewModel(
 
     /** Call this after the webView has finished loading the page */
     @NeedsTest("16302 - a sound-only card on the back/flipped with 'don't keep activities'")
-    @NeedsTest("16302 - on config changes, sound continues to play")
     override fun onPageFinished(isAfterRecreation: Boolean) {
         launchCatchingIO {
             if (isAfterRecreation) {
@@ -95,9 +94,11 @@ class PreviewerViewModel(
         launchCatchingIO {
             backSideOnly.emit(!backSideOnly.value)
             if (!backSideOnly.value && showingAnswer.value) {
+                cardMediaPlayer.stop()
                 showQuestion()
                 cardMediaPlayer.autoplayAllForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
+                cardMediaPlayer.stop()
                 showAnswer()
                 cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
             }
@@ -138,6 +139,7 @@ class PreviewerViewModel(
     fun onNextButtonClick() {
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
+                cardMediaPlayer.stop()
                 showAnswer()
                 cardMediaPlayer.autoplayAllForSide(CardSide.ANSWER)
             } else {
@@ -155,6 +157,7 @@ class PreviewerViewModel(
             if (currentIndex.value > 0) {
                 updateCurrentIndex { it - 1 }
             } else if (showingAnswer.value && !backSideOnly.value) {
+                cardMediaPlayer.stop()
                 showQuestion()
             }
         }
