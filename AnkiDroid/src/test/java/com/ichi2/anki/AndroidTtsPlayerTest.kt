@@ -34,6 +34,59 @@ import kotlin.time.Duration.Companion.milliseconds
 @RunWith(AndroidJUnit4::class)
 class AndroidTtsPlayerTest {
     @Test
+    fun `locale fallback respects engine preference order`() {
+        val first = AndroidTtsVoice(fakeVoice("first", Locale.FRANCE), ENGINE_A)
+        val second = AndroidTtsVoice(fakeVoice("second", Locale.FRANCE), ENGINE_B)
+
+        for (voices in listOf(listOf(first, second), listOf(second, first))) {
+            val player = AndroidTtsPlayer(voices)
+            assertThat(player.voiceForTag(frenchTag()), equalTo(TtsVoiceMatch(voices.first(), rank = -100)))
+        }
+    }
+
+    @Test
+    fun `unavailable voices follow installed voices with engine order preserved in both groups`() {
+        val installedB = AndroidTtsVoice(fakeVoice("installed-b", Locale.FRANCE), ENGINE_B)
+        val unavailableB = AndroidTtsVoice(fakeVoice("unavailable-b", Locale.FRANCE, installed = false), ENGINE_B)
+        val installedA = AndroidTtsVoice(fakeVoice("installed-a", Locale.FRANCE), ENGINE_A)
+        val unavailableA = AndroidTtsVoice(fakeVoice("unavailable-a", Locale.FRANCE, installed = false), ENGINE_A)
+        val installedC = AndroidTtsVoice(fakeVoice("installed-c", Locale.FRANCE), ENGINE_C)
+        val unavailableC = AndroidTtsVoice(fakeVoice("unavailable-c", Locale.FRANCE, installed = false), ENGINE_C)
+        val player = AndroidTtsPlayer(listOf(unavailableB, installedB, unavailableA, installedA, unavailableC, installedC))
+
+        assertThat(player.voices(), equalTo(listOf(installedB, installedA, installedC, unavailableB, unavailableA, unavailableC)))
+        assertThat(player.voiceForTag(frenchTag()), equalTo(TtsVoiceMatch(installedB, rank = -100)))
+    }
+
+    @Test
+    fun `locale fallback uses another engine when the default lacks the language`() {
+        val french = AndroidTtsVoice(fakeVoice("french", Locale.FRANCE), ENGINE_A)
+        val english = AndroidTtsVoice(fakeVoice("english", Locale.US), ENGINE_B)
+        val player = AndroidTtsPlayer(listOf(english, french))
+
+        assertThat(player.voiceForTag(frenchTag()), equalTo(TtsVoiceMatch(french, rank = -100)))
+    }
+
+    @Test
+    fun `installed voice from another engine precedes unavailable default engine voice`() {
+        val installed = AndroidTtsVoice(fakeVoice("installed", Locale.FRANCE), ENGINE_A)
+        val unavailable = AndroidTtsVoice(fakeVoice("unavailable", Locale.FRANCE, installed = false), ENGINE_B)
+        val player = AndroidTtsPlayer(listOf(unavailable, installed))
+
+        assertThat(player.voiceForTag(frenchTag()), equalTo(TtsVoiceMatch(installed, rank = -100)))
+    }
+
+    @Test
+    fun `explicit voice from another engine takes precedence over the default engine`() {
+        val requested = AndroidTtsVoice(fakeVoice("requested", Locale.FRANCE), ENGINE_A)
+        val preferred = AndroidTtsVoice(fakeVoice("preferred", Locale.FRANCE), ENGINE_B)
+        val player = AndroidTtsPlayer(listOf(preferred, requested))
+
+        assertThat(player.voiceForTag(frenchTag(requested.name)), equalTo(TtsVoiceMatch(requested, rank = 0)))
+        assertThat(player.voiceForTag(frenchTag("missing")), equalTo(TtsVoiceMatch(preferred, rank = -100)))
+    }
+
+    @Test
     fun `network timeout is reported with its specific error code`() {
         val error = AndroidTtsError.fromErrorCode(TextToSpeech.ERROR_NETWORK_TIMEOUT)
 
@@ -265,6 +318,7 @@ class AndroidTtsPlayerTest {
     companion object {
         private const val ENGINE_A = "com.example.engine.a"
         private const val ENGINE_B = "com.example.engine.b"
+        private const val ENGINE_C = "com.example.engine.c"
         private const val ENGINE_FAILING = "com.example.engine.failing"
         private const val PLAYBACK_TIMEOUT_MS = 5_000L
     }

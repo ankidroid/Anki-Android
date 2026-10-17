@@ -24,6 +24,7 @@ import timber.log.Timber
 import kotlin.coroutines.resume
 
 class AndroidTtsPlayer(
+    /** Voices in engine-preference order, with the default engine first. */
     private val voices: List<TtsVoice>,
     /** Builds a [TextToSpeech] bound to an engine package. Overridable for testing */
     private val ttsFactory: suspend (engine: String) -> TextToSpeech? = { engine -> TtsVoices.createTts(engine) },
@@ -93,7 +94,7 @@ class AndroidTtsPlayer(
         TtsVoices.ttsEngine?.let { defaultEngine -> getOrCreateTts(defaultEngine) }
     }
 
-    // Prefer installed voices for language fallback without changing the shared matcher.
+    // Prefer installed voices for language fallback, preserving engine-preference order.
     // Keep uninstalled voices selectable: an explicit request can trigger their download.
     override fun getAvailableVoices(): List<TtsVoice> = voices.sortedBy { it.unavailable() }
 
@@ -198,7 +199,7 @@ class AndroidTtsPlayer(
 
         @CheckResult
         suspend fun createInstance(scope: CoroutineScope): AndroidTtsPlayer {
-            val voices = TtsVoices.allTtsVoices().toList()
+            val voices = TtsVoices.allTtsVoices()
             return AndroidTtsPlayer(voices).apply {
                 init(scope)
                 Timber.v("TTS creation: initialized player instance")
