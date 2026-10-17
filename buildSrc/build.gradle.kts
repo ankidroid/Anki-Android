@@ -30,6 +30,8 @@ tasks.test {
     useJUnitPlatform()
     // Rerun the path guard if the app build file is moved.
     inputs.files("../AnkiDroid/build.gradle.kts")
+    // The screenshot fixture uses the same Android SDK as the main build.
+    inputs.file("../gradle/libs.versions.toml")
 }
 
 configure<KtlintExtension> {
