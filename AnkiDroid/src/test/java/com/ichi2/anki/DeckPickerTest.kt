@@ -34,6 +34,8 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commitNow
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -45,6 +47,7 @@ import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.DeckPickerFloatingActionMenu.CloseAnimation
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -1367,12 +1370,12 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    fun `adding a note by single tap closes the FAB menu`() = assertAddingNoteByTouchClosesMenu(doubleTap = false)
+    fun `adding a note by single tap preserves the visible FAB menu`() = assertAddingNoteByTouchPreservesMenu(doubleTap = false)
 
     @Test
-    fun `adding a note by double tap closes the FAB menu`() = assertAddingNoteByTouchClosesMenu(doubleTap = true)
+    fun `adding a note by double tap preserves the visible FAB menu`() = assertAddingNoteByTouchPreservesMenu(doubleTap = true)
 
-    private fun assertAddingNoteByTouchClosesMenu(doubleTap: Boolean) =
+    private fun assertAddingNoteByTouchPreservesMenu(doubleTap: Boolean) =
         deckPicker {
             val fab = floatingActionButtonBinding.fabMain
             val startTime = SystemClock.uptimeMillis()
@@ -1399,10 +1402,74 @@ class DeckPickerTest : RobolectricTest() {
                 tap(100)
                 val intent = AnkiDroidNavigator.toIntent(awaitItem())
                 assertEquals("com.ichi2.anki.NoteEditorActivity", intent.component!!.className)
-                assertFalse(floatingActionMenu.isFABOpen, "Adding a note must close the FAB menu")
-                assertEquals(View.GONE, floatingActionButtonBinding.fabBGLayout.visibility)
+                assertFalse(floatingActionMenu.isFABOpen, "Adding a note must save a closed menu state")
+                assertTrue(floatingActionButtonBinding.fabMain.isExtended)
+                assertEquals(View.VISIBLE, floatingActionButtonBinding.fabBGLayout.visibility)
             }
         }
+
+    @Test
+    fun `selecting Add during FAB reopening keeps menu buttons visible`() =
+        deckPicker {
+            floatingActionMenu.showFloatingActionMenu()
+            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
+            floatingActionMenu.closeFloatingActionMenu(style = CloseAnimation.SHORT)
+            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
+            assertEquals(View.GONE, floatingActionButtonBinding.addDeckButton.visibility)
+
+            floatingActionMenu.showFloatingActionMenu()
+            // Select Add before the opening animations have finished.
+            floatingActionButtonBinding.fabMain.performClick()
+            shadowOf(mainLooper).idleFor(java.time.Duration.ofMillis(200))
+
+            with(floatingActionButtonBinding) {
+                assertTrue(fabMain.isExtended)
+                assertEquals(View.VISIBLE, addDeckButton.visibility)
+                assertEquals(View.VISIBLE, addFilteredDeckButton.visibility)
+                assertEquals(View.VISIBLE, addSharedButton.visibility)
+            }
+        }
+
+    @Test
+    fun `Add menu resets on resume without stopping in multi-window`() {
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            val events = mutableListOf<Lifecycle.Event>()
+            scenario.onActivity { deckPicker ->
+                deckPicker.lifecycle.addObserver(LifecycleEventObserver { _, event -> events.add(event) })
+                deckPicker.floatingActionMenu.showFloatingActionMenu()
+                advanceRobolectricLooper()
+                with(deckPicker.floatingActionButtonBinding) {
+                    val expandedColor = fabMain.backgroundTintList
+                    fabMain.performClick()
+                    assertTrue(fabMain.isExtended)
+                    assertEquals(expandedColor, fabMain.backgroundTintList)
+                    assertEquals(View.VISIBLE, fabBGLayout.visibility)
+                }
+            }
+
+            // A visible activity can be paused without being stopped in multi-window mode.
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onActivity { deckPicker ->
+                assertTrue(deckPicker.floatingActionButtonBinding.fabMain.isExtended)
+            }
+            scenario.moveToState(Lifecycle.State.RESUMED)
+
+            scenario.onActivity { deckPicker ->
+                assertTrue(Lifecycle.Event.ON_PAUSE in events)
+                assertFalse(Lifecycle.Event.ON_STOP in events)
+                with(deckPicker.floatingActionButtonBinding) {
+                    assertFalse(fabMain.isExtended)
+                    assertEquals(View.GONE, fabBGLayout.visibility)
+                    assertEquals(View.GONE, addDeckButton.visibility)
+                    assertEquals(View.GONE, addFilteredDeckButton.visibility)
+                    assertEquals(View.GONE, addSharedButton.visibility)
+                    fabMain.performClick()
+                    assertTrue(deckPicker.floatingActionMenu.isFABOpen)
+                    assertEquals(View.VISIBLE, fabBGLayout.visibility)
+                }
+            }
+        }
+    }
 
     @Test
     fun `FAB menu opens on ENTER key`() =

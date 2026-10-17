@@ -12,6 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.common.android.animationEnabled
@@ -50,12 +52,15 @@ class DeckPickerFloatingActionMenu(
     var isFABOpen = false
         private set
 
+    private var pendingMenuReset = false
+
     @Suppress("unused")
     val isFragmented: Boolean
         get() = studyOptionsFrame != null
 
     @VisibleForTesting
     fun showFloatingActionMenu() {
+        if (pendingMenuReset) return
         toggleListener.onBeginToggle(isOpening = true)
         deckPicker.activeSnackBar?.dismiss()
         linearLayout.alpha = 0.5f
@@ -75,6 +80,9 @@ class DeckPickerFloatingActionMenu(
             extendMainButton()
 
             with(binding) {
+                // Dismissal listeners must not run when these opening animations finish.
+                addDeckButton.animate().setListener(null)
+                addFilteredDeckButton.animate().setListener(null)
                 addSharedButton.animate().translationY(0f).duration = 100
                 addDeckButton.animate().translationY(0f).duration = 70
                 addFilteredDeckButton.animate().translationY(0f).duration = 100
@@ -125,24 +133,32 @@ class DeckPickerFloatingActionMenu(
         }
 
     /**
-     * Closes the menu using the selected animation [style].
+     * Dismisses the menu, or resets it off-screen after opening the editor.
+     * [style] selects the closing animation for Back/outside taps or menu actions.
+     * [animate] is false for the off-screen reset.
      */
-    fun closeFloatingActionMenu(style: CloseAnimation) {
+    fun closeFloatingActionMenu(
+        style: CloseAnimation,
+        animate: Boolean = deckPicker.animationEnabled(),
+    ) {
         toggleListener.onBeginToggle(isOpening = false)
         linearLayout.alpha = 1f
         studyOptionsFrame?.let { it.alpha = 1f }
         isFABOpen = false
         with(binding) {
             fabBGLayout.visibility = View.GONE
+            fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
             fabMain.setIconResource(addWhiteIcon)
 
-            if (!deckPicker.animationEnabled()) {
+            if (!animate) {
+                addSharedButton.animate().cancel()
+                addDeckButton.animate().cancel()
+                addFilteredDeckButton.animate().cancel()
                 hideMenuButtons()
                 fabMain.isExtended = false
                 return
             }
 
-            fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
             fabMain.shrink()
             val hideButtons =
                 object : AnimatorListenerAdapter() {
@@ -205,6 +221,14 @@ class DeckPickerFloatingActionMenu(
         }
 
     init {
+        deckPicker.lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                override fun onStop(owner: LifecycleOwner) = resetMenuAfterAdding()
+
+                // In multi-window mode the deck screen may remain visible behind the editor.
+                override fun onResume(owner: LifecycleOwner) = resetMenuAfterAdding()
+            },
+        )
         binding.fabMain.isExtended = false
         binding.fabMain.setOnTouchListener(
             object : DoubleTapListener(context) {
@@ -336,12 +360,21 @@ class DeckPickerFloatingActionMenu(
     }
 
     /**
-     * Closes the FAB menu and opens the [NoteEditorFragment]
+     * Opens the [NoteEditorFragment], preserving the menu during the outgoing transition.
      * @see DeckPicker.addNote
      */
     private fun addNote() {
-        closeFloatingActionMenu(style = CloseAnimation.LONG)
+        if (pendingMenuReset) return
+        pendingMenuReset = true
+        // Save a closed menu state without changing its appearance during the transition.
+        isFABOpen = false
         deckPicker.addNote()
+    }
+
+    private fun resetMenuAfterAdding() {
+        if (!pendingMenuReset) return
+        pendingMenuReset = false
+        closeFloatingActionMenu(style = CloseAnimation.LONG, animate = false)
     }
 
     /**
