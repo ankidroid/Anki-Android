@@ -6,6 +6,8 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.time.TimeManager
@@ -41,14 +43,9 @@ class ReviewingSettingsFragment : SettingsFragment() {
         }
         // Timebox time limit
         // Represents in Android preferences the collections configuration "timeLim": i.e.
-        // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
-        // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
-        requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
-            launchCatchingTask { setValue(CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)) }
-            setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { CollectionPreferences.setTimeboxTimeLimit(newValue.toDuration(DurationUnit.MINUTES)) }
-            }
-        }
+        // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appears suggesting to halt and giving the number of cards reviewed.
+        // Managed in TimeboxSettingsFragment.
+        updateTimeboxSummary()
         // Start of next day
         // Represents the collection pref "rollover"
         // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
@@ -57,6 +54,25 @@ class ReviewingSettingsFragment : SettingsFragment() {
             setOnPreferenceChangeListener { newValue ->
                 launchCatchingTask { setDayOffset(requireContext(), newValue) }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateTimeboxSummary()
+    }
+
+    private fun updateTimeboxSummary() {
+        launchCatchingTask {
+            val minutes = CollectionPreferences.getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)
+            val pref =
+                findPreference<androidx.preference.Preference>(getString(R.string.time_limit_preference)) ?: return@launchCatchingTask
+            pref.summary =
+                if (minutes > 0) {
+                    resources.getQuantityString(CommonPlurals.pref_summ_minutes, minutes, minutes)
+                } else {
+                    getString(CommonString.disabled)
+                }
         }
     }
 }
