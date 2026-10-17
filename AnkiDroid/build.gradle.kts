@@ -333,8 +333,6 @@ android {
                 test.useJUnitPlatform {
                     // ./gradlew testFullDebugUnitTest -Pscreenshot
                     if (project.hasProperty("screenshot")) {
-                        includeTags("com.ichi2.anki.ScreenshotTestCategory")
-
                         // ./gradlew :AnkiDroid:recordRoborazziPlayDebug -Pscreenshot -Ptheme=black -Pdevice=tablet,foldable
                         val theme = project.findProperty("theme")?.takeIf { it.toString().isNotEmpty() } ?: "light"
                         val device = project.findProperty("device")?.takeIf { it.toString().isNotEmpty() } ?: "phone"
@@ -357,8 +355,6 @@ android {
 
                         test.systemProperty("screenshot.theme", theme)
                         test.systemProperty("screenshot.device", device)
-                    } else {
-                        excludeTags("com.ichi2.anki.ScreenshotTestCategory")
                     }
                     // Ensures that no EmptyApplication test relies on AnkiDroidApp
                     //  by only running EmptyApplication tests
