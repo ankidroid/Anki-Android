@@ -79,7 +79,6 @@ import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.MultiSe
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeMultiSelectMode.SingleSelectCause
 import com.ichi2.anki.browser.CardBrowserViewModel.ChangeNoteTypeResponse
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
-import com.ichi2.anki.browser.CardBrowserViewModel.SearchResultMessage
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Initializing
 import com.ichi2.anki.browser.CardBrowserViewModel.SearchState.Searching
@@ -1006,38 +1005,26 @@ class CardBrowserFragment :
         }
 
         fun onSearchCompleted(state: SearchState.Completed) {
-            // #3592: show the number of cards found the number of cards is not visible in the menu
-            val isMenuSubtitleVisible = legacySearchView != null && legacySearchView!!.isIconified
-
-            fun showSnackbar(
-                message: String,
-                searchAllDecks: Boolean,
-            ) {
-                // Don't show a snackbar if the results are visible in the header.
-                // But do show the snackbar if an action is available
-                if (isMenuSubtitleVisible && !searchAllDecks) return
-
-                showSnackbar(message, Snackbar.LENGTH_SHORT) {
-                    if (!searchAllDecks) return@showSnackbar
+            val feedback =
+                browserSearchFeedback(
+                    fromUserSearch = state.fromUserSearch,
+                    rowCount = state.rowCount,
+                    allDecksSelected = state.allDecksSelected,
+                    isHeaderCountVisible = legacySearchView?.isIconified == true,
+                )
+            val message =
+                when (feedback) {
+                    BrowserSearchFeedback.NONE -> return
+                    BrowserSearchFeedback.COUNT, BrowserSearchFeedback.COUNT_WITH_SEARCH_ALL_DECKS -> state.formatCardCount(resources)
+                    BrowserSearchFeedback.NO_CARDS_IN_SELECTED_DECK ->
+                        getString(CommonString.card_browser_no_cards_in_deck, selectedDeckNameForUi)
+                }
+            showSnackbar(message, Snackbar.LENGTH_SHORT) {
+                if (feedback.offersSearchAllDecks) {
                     setAction(CommonString.card_browser_search_all_decks) {
                         activityViewModel.setSelectedDeck(SelectableDeck.AllDecks)
                     }
                 }
-            }
-
-            when (val result = state.resultMessage) {
-                // no message for browser open / deck change / order change: only user searches
-                null -> return
-                is SearchResultMessage.CardCount ->
-                    showSnackbar(
-                        message = state.formatCardCount(resources),
-                        searchAllDecks = result.includeSearchAllDecksAction,
-                    )
-                SearchResultMessage.NoCardsInSelectedDeck ->
-                    showSnackbar(
-                        getString(CommonString.card_browser_no_cards_in_deck, selectedDeckNameForUi),
-                        searchAllDecks = true,
-                    )
             }
         }
 
