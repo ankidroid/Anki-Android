@@ -103,7 +103,7 @@ class TtsVoicesMultiEngineTest {
 
             assertTrue(defaultLocales.isCompleted)
             assertEquals(emptyList(), defaultLocales.await().locales)
-            assertEquals(emptySet(), voices)
+            assertEquals(emptyList(), voices)
         }
 
     @Test
@@ -145,6 +145,61 @@ class TtsVoicesMultiEngineTest {
                 listOf(ENGINE_A, ENGINE_B).map { engine ->
                     TextToSpeech.EngineInfo().apply { name = engine }
                 }
+        }
+
+    @Test
+    fun `default engine comes first while other engines retain discovery order`() =
+        runTest {
+            val probe = probeTts()
+            every { probe.defaultEngine } returns ENGINE_B
+            every { probe.engines } returns
+                listOf(ENGINE_C, ENGINE_B, ENGINE_A).map { engine ->
+                    TextToSpeech.EngineInfo().apply { name = engine }
+                }
+
+            val voices =
+                TtsVoices.loadVoices(CompletableDeferred()) { engine ->
+                    if (engine == null) {
+                        probe
+                    } else {
+                        fakeTts(setOf(fakeVoice("first", Locale.US), fakeVoice("second", Locale.FRANCE)), emptySet())
+                    }
+                }
+
+            assertEquals(listOf(ENGINE_B, ENGINE_B, ENGINE_C, ENGINE_C, ENGINE_A, ENGINE_A), voices.map { it.engine })
+            assertEquals(listOf("first", "second", "first", "second", "first", "second"), voices.map { it.voice.name })
+        }
+
+    @Test
+    fun `default engine is included first even when missing from discovered engines`() =
+        runTest {
+            val probe = probeTts()
+            every { probe.defaultEngine } returns ENGINE_C
+
+            val voices =
+                TtsVoices.loadVoices(CompletableDeferred()) { engine ->
+                    if (engine == null) probe else fakeTts(setOf(fakeVoice("voice", Locale.US)), emptySet())
+                }
+
+            assertEquals(listOf(ENGINE_C, ENGINE_A, ENGINE_B), voices.map { it.engine })
+        }
+
+    @Test
+    fun `voices are distinct by engine and name while preserving their first occurrence`() =
+        runTest {
+            val first = fakeVoice("shared", Locale.US)
+            val duplicate = fakeVoice("shared", Locale.US)
+            val other = fakeVoice("other", Locale.FRANCE)
+            val engineB = fakeTts(setOf(first, duplicate, other), emptySet())
+            val engineA = fakeTts(setOf(fakeVoice("shared", Locale.US)), emptySet())
+
+            val voices =
+                TtsVoices.loadVoicesFromEngines(listOf(ENGINE_B, ENGINE_A, ENGINE_B)) { engine ->
+                    if (engine == ENGINE_B) engineB else engineA
+                }
+
+            assertEquals(listOf("$ENGINE_B-shared", "$ENGINE_B-other", "$ENGINE_A-shared"), voices.map { it.name })
+            assertSame(first, voices.first().voice)
         }
 
     @Test
@@ -222,7 +277,7 @@ class TtsVoicesMultiEngineTest {
             setUpFailingTts()
             val locales = CompletableDeferred<TtsVoices.EngineLocales>()
 
-            assertEquals(emptySet(), TtsVoices.loadVoices(locales, TtsVoices::createTts))
+            assertEquals(emptyList(), TtsVoices.loadVoices(locales, TtsVoices::createTts))
             assertEquals(TtsVoices.EngineLocales(null, emptyList()), locales.await())
         }
 
@@ -320,5 +375,6 @@ class TtsVoicesMultiEngineTest {
     companion object {
         private const val ENGINE_A = "com.example.engine.a"
         private const val ENGINE_B = "com.example.engine.b"
+        private const val ENGINE_C = "com.example.engine.c"
     }
 }
