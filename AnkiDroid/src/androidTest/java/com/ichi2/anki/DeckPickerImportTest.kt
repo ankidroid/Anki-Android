@@ -132,9 +132,9 @@ class DeckPickerImportTest : InstrumentedTest() {
     }
 
     private fun assertImportConfirmationVisible() {
-        onView(withText(testContext.getString(CommonString.import_dialog_message_add, "deck.apkg")))
+        onView(withText(testContext.getString(R.string.import_dialog_message_add, "deck.apkg")))
             .check(matches(isDisplayed()))
-        onView(withText(CommonString.import_message_add))
+        onView(withText(R.string.import_message_add))
             .check(matches(isDisplayed()))
     }
 }
