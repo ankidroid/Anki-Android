@@ -11,6 +11,7 @@ import com.ichi2.anki.utils.ext.flag
 import com.ichi2.testutils.JvmTest
 import io.mockk.coEvery
 import io.mockk.spyk
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -58,6 +59,7 @@ class PreviewerViewModelTest : JvmTest() {
                 val note = addBasicNote()
                 note.cards().map { it.id }
             }
+        updateDeckConfig(col.decks.selected()) { autoplay = false }
         viewModel = spyk(PreviewerViewModel(SavedStateHandle(), cardIds, initialIndex = 0))
         // the default implementation requires the Collection media directory,
         // which needs Robolectric with CollectionStorageMode.IN_MEMORY_WITH_MEDIA or ON_DISK
@@ -254,4 +256,52 @@ class PreviewerViewModelTest : JvmTest() {
             onSliderChange(sliderPosition = 2)
             assertEquals("Index should update for valid input", 1, viewModel.currentIndex.value)
         }
+
+    @Test
+    fun `showing the answer stops the question audio`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            val audio = audioPlaying()
+
+            onNextButtonClick()
+
+            assertTrue("question audio should stop", audio.isCancelled)
+        }
+
+    @Test
+    fun `going back to the question stops the answer audio`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            onNextButtonClick()
+            val audio = audioPlaying()
+
+            onPreviousButtonClick()
+
+            assertTrue("answer audio should stop", audio.isCancelled)
+        }
+
+    @Test
+    fun `showing only the back side stops the question audio`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            val audio = audioPlaying()
+
+            toggleBackSideOnly()
+
+            assertTrue("question audio should stop", audio.isCancelled)
+        }
+
+    @Test
+    fun `audio keeps playing after a configuration change`() =
+        runTest {
+            viewModel.onPageFinished(false)
+            val audio = audioPlaying()
+
+            viewModel.onPageFinished(isAfterRecreation = true)
+            advanceUntilIdle()
+
+            assertFalse("audio should keep playing", audio.isCancelled)
+        }
+
+    private fun audioPlaying() = Job().also { viewModel.cardMediaPlayer.playAvTagsJob = it }
 }
