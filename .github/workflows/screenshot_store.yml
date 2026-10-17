@@ -71,8 +71,9 @@ jobs:
           gradle-version: wrapper
 
       - name: Warm Gradle Cache
-        # This makes sure we fetch gradle network resources with a retry
-        # TODO: --rerun-tasks in 'Record screenshots' discards the compilation performed here
+        # Keep compilation here: robolectricSdkDownload only downloads SDK jars.
+        # Compiling resolves test dependencies within the retry (Issue 21682).
+        # --rerun-tasks repeats compilation but reuses downloaded dependencies.
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
           timeout_minutes: 10
