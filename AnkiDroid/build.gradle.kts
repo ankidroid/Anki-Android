@@ -18,7 +18,7 @@ plugins {
     alias(libs.plugins.androidx.baselineprofile)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.keeper)
-    alias(libs.plugins.roborazzi)
+    id("ankidroid.plugins.screenshots")
     id("idea")
 }
 
