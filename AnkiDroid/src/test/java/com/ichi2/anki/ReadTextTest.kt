@@ -2,8 +2,12 @@
 
 package com.ichi2.anki
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.speech.tts.TextToSpeech
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -11,6 +15,7 @@ import com.ichi2.anki.ReadText.closeForTests
 import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
+import com.ichi2.anki.dialogs.utils.title
 import com.ichi2.anki.reviewer.CardSide
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -26,13 +31,18 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
+import org.robolectric.Robolectric.buildActivity
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.Implementation
 import org.robolectric.annotation.Implements
+import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowTextToSpeech
+import org.robolectric.shadows.ShadowToast
 import java.util.Locale
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class ReadTextTest : RobolectricTest() {
@@ -91,6 +101,33 @@ class ReadTextTest : RobolectricTest() {
         releaseTts(mock(Context::class.java))
         assertThat(isTextToSpeechShutdown, equalTo(false))
     }
+
+    @Test
+    fun `legacy TTS initialization failure explains missing engines`() =
+        withTtsActivity { activity ->
+            initializeTextToSpeech(activity)
+            shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.ERROR)
+            val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+            assertEquals("No text-to-speech engine installed", dialog.title)
+        }
+
+    @Test
+    fun `legacy TTS initialization failure with an installed engine shows a toast instead of installation guidance`() =
+        withTtsActivity { activity ->
+            shadowOf(activity.packageManager).apply {
+                val engine = ComponentName("test.tts", "TestTtsService")
+                addServiceIfNotPresent(engine)
+                addIntentFilterForService(
+                    engine,
+                    IntentFilter(TextToSpeech.Engine.INTENT_ACTION_TTS_SERVICE).apply { addCategory(Intent.CATEGORY_DEFAULT) },
+                )
+            }
+            initializeTextToSpeech(activity)
+            shadowOf(textToSpeech).onInitListener.onInit(TextToSpeech.ERROR)
+
+            assertEquals(activity.getString(CommonString.no_tts_available_message), ShadowToast.getTextOfLatestToast())
+            assertNull(ShadowDialog.getLatestDialog())
+        }
 
     @Test
     @Config(shadows = [NoLanguageQueryTextToSpeech::class])
@@ -194,6 +231,17 @@ class ReadTextTest : RobolectricTest() {
 
     private val isTextToSpeechShutdown: Boolean
         get() = shadowOf(textToSpeech).isShutdown
+
+    private fun withTtsActivity(block: (AnkiActivity) -> Unit) {
+        buildActivity(AnkiActivity::class.java).use { controller ->
+            val activity = controller.setup().get()
+            try {
+                block(activity)
+            } finally {
+                releaseTts(activity)
+            }
+        }
+    }
 
     private fun initializeTextToSpeech(context: Context) {
         initializeTts(context, mock(AbstractFlashcardViewer.ReadTextListener::class.java))
