@@ -19,6 +19,7 @@ import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ImageButton
@@ -130,6 +131,7 @@ import com.ichi2.anki.libanki.undoLabel
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.SelectableDeck
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.progress.observeProgress
@@ -362,11 +364,12 @@ class CardBrowserFragment :
             )
         cardsListView.adapter = cardsAdapter
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = BrowserLayoutManager(requireContext()) { activityViewModel.flowOfActiveColumns.value.count }
         cardsListView.layoutManager = layoutManager
         cardsListView.addItemDecoration(DividerItemDecoration(requireContext(), layoutManager.orientation))
 
         browserColumnHeadings = view.findViewById(R.id.browser_column_headings)
+        view.setBrowserTableAccessibility(activityViewModel)
         toggleRowSelections =
             view.findViewById<ImageButton>(R.id.toggle_row_selections).apply {
                 setOnClickListener { activityViewModel.toggleSelectAllOrNone() }
@@ -964,6 +967,7 @@ class CardBrowserFragment :
         fun onColumnsChanged(columnCollection: BrowserColumnCollection) {
             Timber.d("columns changed")
             cardsAdapter.notifyDataSetChanged()
+            view?.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
         }
 
         fun onMultiSelectModeChanged(modeChange: ChangeMultiSelectMode) {
@@ -981,6 +985,7 @@ class CardBrowserFragment :
 
             // update adapter to remove check boxes
             cardsAdapter.notifyDataSetChanged()
+            view?.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
             if (modeChange is SingleSelectCause.DeselectRow) {
                 cardsAdapter.notifyDataSetChanged()
                 autoScrollTo(modeChange.selection)
@@ -1043,6 +1048,7 @@ class CardBrowserFragment :
 
         fun searchStateChanged(searchState: SearchState) {
             cardsAdapter.refreshRows()
+            view?.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
             progressIndicator.isVisible = searchState == Initializing || searchState == Searching
             if (searchState is SearchState.Completed) {
                 onSearchCompleted(searchState)
@@ -1078,11 +1084,12 @@ class CardBrowserFragment :
             browserColumnHeadings.removeAllViews()
 
             val layoutInflater = LayoutInflater.from(browserColumnHeadings.context)
-            for (column in columnCollection) {
+            for ((index, column) in columnCollection.withIndex()) {
                 Timber.d("setting up column %s", column)
                 val columnView = layoutInflater.inflate(R.layout.view_browser_column_heading, browserColumnHeadings, false) as TextView
 
                 columnView.text = column.label
+                columnView.setBrowserHeadingAccessibility(index, column.ankiColumnKey) { activityViewModel.flowOfSortType.value }
 
                 // Attach click listener to open the selection dialog
                 columnView.setOnClickListener {
@@ -1223,8 +1230,10 @@ class CardBrowserFragment :
             searchViewModel.syncState(search)
         }
 
-        fun reverseDirectionChanged(reverse: ReverseDirection?) {
+        fun sortTypeChanged(sortType: SortType) {
+            val reverse = (sortType as? SortType.CollectionOrdering)?.reverse
             sortChip?.scaleY = if (reverse == false || reverse == null) 1.0f else -1.0f
+            browserColumnHeadings.sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
         }
 
         fun onChangeNoteType(result: ChangeNoteTypeResponse) =
@@ -1263,7 +1272,7 @@ class CardBrowserFragment :
             sortChip?.contentDescription = sort?.let(::describeSort) ?: getString(CommonString.card_browser_change_display_order_title)
         }
 
-        activityViewModel.flowOfReverseDirection.launchCollectionInLifecycleScope(::reverseDirectionChanged)
+        activityViewModel.flowOfSortType.launchCollectionInLifecycleScope(::sortTypeChanged)
         activityViewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         activityViewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         activityViewModel.flowOfPaneRow.launchCollectionInLifecycleScope(::onPaneRowChanged)
