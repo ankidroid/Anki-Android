@@ -46,7 +46,7 @@ class CardBrowserSearchFeedbackTest : RobolectricTest() {
             val header = requireActivity().findViewById<TextView>(R.id.subtitle)
             assertThat(header?.isShown == true, equalTo(!useSearchView))
 
-            activityViewModel.setQuery("", fromUserSearch = true).join()
+            activityViewModel.setQuery("", feedbackMode = BrowserSearchFeedbackMode.SEARCH_RESULTS).join()
             awaitSearch()
 
             assertThat(snackbarText, equalTo(if (useSearchView) "1 card shown" else null))
