@@ -690,26 +690,23 @@ class DeckPickerTest : RobolectricTest() {
         }
 
     @Test
-    fun `ContextMenu testDynRebuildAndEmpty`() =
-        deckPicker {
-            val cardIds =
-                (0..3)
-                    .map { addBasicNote("$it", "").firstCard().id }
-            assertTrue(allCardsInSameDeck(cardIds, 1))
-            val deckId = addDynamicDeck("Deck 1")
-            getColUnsafe.sched.rebuildFilteredDeck(deckId)
-            assertTrue(allCardsInSameDeck(cardIds, deckId))
-            updateDeckList()
-            assertEquals(1, visibleDeckCount)
+    fun `ContextMenu testDynRebuildAndEmpty`() {
+        val cardIds = (0..3).map { addBasicNote("$it", "").firstCard().id }
+        assertTrue(allCardsInSameDeck(cardIds, 1))
+        val deckId = addDynamicDeck("Deck 1")
+        col.sched.rebuildFilteredDeck(deckId)
+        assertTrue(allCardsInSameDeck(cardIds, deckId))
 
-            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_EMPTY, deckId)
+        deckPicker(expectedDeckIds = listOf(deckId)) {
+            selectContextMenuOptionAndAwait(ContextMenuOption.CUSTOM_STUDY_EMPTY, deckId) {
+                allCardsInSameDeck(cardIds, 1)
+            }
 
-            assertTrue(allCardsInSameDeck(cardIds, 1))
-
-            selectContextMenuOption(ContextMenuOption.CUSTOM_STUDY_REBUILD, deckId)
-
-            assertTrue(allCardsInSameDeck(cardIds, deckId))
+            selectContextMenuOptionAndAwait(ContextMenuOption.CUSTOM_STUDY_REBUILD, deckId) {
+                allCardsInSameDeck(cardIds, deckId)
+            }
         }
+    }
 
     private suspend fun <T> TestScope.withQueuedCollectionAccess(block: suspend () -> T): T {
         val previousQueue = CollectionManager.setTestDispatcher(StandardTestDispatcher(testScheduler), useReentrantLock = false)
@@ -1964,9 +1961,14 @@ fun RobolectricTest.setIntroductionSlidesShown(shown: Boolean) {
     }
 }
 
+/**
+ * Launches the deck picker, waiting for [expectedDeckIds] in adapter order before running [function]
+ * when supplied. Prepare collection data before calling this helper.
+ */
 fun RobolectricTest.deckPicker(
     exposeTestData: Boolean = false,
     skipIntroduction: Boolean = true,
+    expectedDeckIds: List<DeckId>? = null,
     function: suspend DeckPicker.() -> Unit,
 ) = runTest {
     setIntroductionSlidesShown(skipIntroduction)
@@ -1975,6 +1977,7 @@ fun RobolectricTest.deckPicker(
             if (exposeTestData) DeckPickerTest.DeckPickerEx::class.java else DeckPicker::class.java,
             Intent(),
         )
+    expectedDeckIds?.let { deckPicker.awaitVisibleDecks(it) }
     function(deckPicker)
 }
 
