@@ -129,94 +129,32 @@ class DeckPickerFloatingActionMenu(
      */
     fun closeFloatingActionMenu(style: CloseAnimation) {
         toggleListener.onBeginToggle(isOpening = false)
-        if (style == CloseAnimation.SHORT) {
-            linearLayout.alpha = 1f
-            studyOptionsFrame?.let { it.alpha = 1f }
-            isFABOpen = false
-            binding.fabBGLayout.visibility = View.GONE
-            if (deckPicker.animationEnabled()) {
-                // Changes the background color of FAB to default
-                binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
-                // Close with animation
-                binding.fabMain.setIconResource(addWhiteIcon)
-                binding.fabMain.shrink()
+        linearLayout.alpha = 1f
+        studyOptionsFrame?.let { it.alpha = 1f }
+        isFABOpen = false
+        with(binding) {
+            fabBGLayout.visibility = View.GONE
+            fabMain.setIconResource(addWhiteIcon)
 
-                with(binding) {
-                    addSharedButton.animateClose(style.otherOffset, 100)
-                    addDeckButton
-                        .animateClose(style.deckOffset, 50)
-                        .setListener(
-                            object : AnimatorListenerAdapter() {
-                                override fun onAnimationEnd(animation: Animator) {
-                                    if (!isFABOpen) {
-                                        hideMenuButtons()
-                                    }
-                                }
-                            },
-                        )
-                    addFilteredDeckButton
-                        .animateClose(style.otherOffset, 100)
-                        .setListener(
-                            object : AnimatorListenerAdapter() {
-                                override fun onAnimationEnd(animation: Animator) {
-                                    if (!isFABOpen) {
-                                        hideMenuButtons()
-                                    }
-                                }
-                            },
-                        )
-                }
-            } else {
-                // Close without animation
+            if (!deckPicker.animationEnabled()) {
                 hideMenuButtons()
-                binding.fabMain.isExtended = false
-
-                binding.fabMain.setIconResource(addWhiteIcon)
+                fabMain.isExtended = false
+                return
             }
-        } else {
-            linearLayout.alpha = 1f
-            studyOptionsFrame?.let { it.alpha = 1f }
-            isFABOpen = false
-            binding.fabBGLayout.visibility = View.GONE
-            if (deckPicker.animationEnabled()) {
-                // Changes the background color of FAB to default
-                binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
-                // Close with animation
-                binding.fabMain.setIconResource(addWhiteIcon)
-                binding.fabMain.shrink()
 
-                with(binding) {
-                    addSharedButton.animateClose(style.otherOffset, 100)
-                    addDeckButton
-                        .animateClose(style.deckOffset, 50)
-                        .setListener(
-                            object : AnimatorListenerAdapter() {
-                                override fun onAnimationEnd(animation: Animator) {
-                                    if (!isFABOpen) {
-                                        hideMenuButtons()
-                                    }
-                                }
-                            },
-                        )
-                    addFilteredDeckButton
-                        .animateClose(style.otherOffset, 100)
-                        .setListener(
-                            object : AnimatorListenerAdapter() {
-                                override fun onAnimationEnd(animation: Animator) {
-                                    if (!isFABOpen) {
-                                        hideMenuButtons()
-                                    }
-                                }
-                            },
-                        )
+            fabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
+            fabMain.shrink()
+            val hideButtons =
+                object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (!isFABOpen) {
+                            hideMenuButtons()
+                        }
+                    }
                 }
-            } else {
-                // Close without animation
-                hideMenuButtons()
-                binding.fabMain.isExtended = false
-
-                binding.fabMain.setIconResource(addWhiteIcon)
-            }
+            addSharedButton.animateClose(style.otherOffset, 100)
+            addDeckButton.animateClose(style.deckOffset, 50).setListener(hideButtons)
+            addFilteredDeckButton.animateClose(style.otherOffset, 100).setListener(hideButtons)
         }
     }
 
