@@ -186,17 +186,6 @@ class CardBrowserViewModel(
         companion object
     }
 
-    /** Result of a completed search, used to drive a snackbar in the UI */
-    sealed interface SearchResultMessage {
-        /** "X cards/notes shown | Search all decks" */
-        data class CardCount(
-            val includeSearchAllDecksAction: Boolean,
-        ) : SearchResultMessage
-
-        /** "No cards in deck X" message; always paired with a "search all decks" action. */
-        data object NoCardsInSelectedDeck : SearchResultMessage
-    }
-
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
     val flowOfFilterQuery = MutableSharedFlow<String>()
@@ -1274,7 +1263,7 @@ class CardBrowserViewModel(
     fun setQuery(
         query: String,
         forceRefresh: Boolean = true,
-        fromUserSearch: Boolean = false,
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
     ) = viewModelScope.launch {
         val newValue = searchRequestFlow.value.copy(query = query)
         if (!forceRefresh && withCol { searchRequestFlow.value.toSearchString() == newValue.toSearchString() }) {
@@ -1283,7 +1272,7 @@ class CardBrowserViewModel(
         }
 
         searchRequestFlow.value = newValue
-        launchSearchForCards(fromUserSearch = fromUserSearch)
+        launchSearchForCards(feedbackMode = feedbackMode)
     }
 
     /**
@@ -1445,13 +1434,12 @@ class CardBrowserViewModel(
 
     /**
      * @param forceRefresh if `true`, perform a search even if the search query is unchanged
-     * @param fromUserSearch whether the user explicitly searched for something; controls whether a
-     * result message (snackbar) is surfaced. See [SearchState.Completed.resultMessage]
+     * @param feedbackMode the feedback requested for this search, resolved by [browserSearchFeedback]
      */
     fun launchSearchForCards(
         searchRequest: SearchRequest,
         forceRefresh: Boolean,
-        fromUserSearch: Boolean = false,
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
     ) = viewModelScope.launch {
         Timber.d("launching search [new syntax]: '%s'", searchRequest)
 
@@ -1463,7 +1451,7 @@ class CardBrowserViewModel(
         }
 
         searchRequestFlow.value = searchRequest
-        launchSearchForCards(fromUserSearch = fromUserSearch)
+        launchSearchForCards(feedbackMode = feedbackMode)
     }
 
     /**
@@ -1472,7 +1460,7 @@ class CardBrowserViewModel(
      * @see com.ichi2.anki.searchForRows
      */
     @NeedsTest("Invalid searches are handled. For instance: 'and'")
-    fun launchSearchForCards(fromUserSearch: Boolean = false) {
+    fun launchSearchForCards(feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE) {
         if (!initCompleted) return
 
         viewModelScope.launch {
@@ -1498,7 +1486,7 @@ class CardBrowserViewModel(
                     }
                     ensurePaneRowValid()
                     if (isFragmented) flowOfNoteEditorCommand.emit(NoteEditorCommand.fromCurrentSearchState())
-                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState(fromUserSearch))
+                    flowOfSearchState.emit(SearchState.Completed.fromCurrentState(feedbackMode))
                     selectUnvalidatedRowIds(pendingSelectionRestore)
                     pendingSelectionRestore = emptyList()
                 }
@@ -1611,20 +1599,16 @@ class CardBrowserViewModel(
     /**
      * Builds a [SearchState.Completed] event reflecting the current ViewModel state.
      *
-     * @param fromUserSearch whether this search was triggered by the user searching for something.
+     * @param feedbackMode the feedback requested for this search.
      */
-    private fun SearchState.Completed.Companion.fromCurrentState(fromUserSearch: Boolean = false): SearchState.Completed =
+    private fun SearchState.Completed.Companion.fromCurrentState(
+        feedbackMode: BrowserSearchFeedbackMode = BrowserSearchFeedbackMode.NONE,
+    ): SearchState.Completed =
         SearchState.Completed(
             rowCount = rowCount,
             cardsOrNotes = cardsOrNotes,
-            resultMessage =
-                when {
-                    !fromUserSearch -> null
-                    // TODO: better message if rowCount == 0 AND hasSelectedAllDecks
-                    hasSelectedAllDecks() -> SearchResultMessage.CardCount(includeSearchAllDecksAction = false)
-                    rowCount == 0 -> SearchResultMessage.NoCardsInSelectedDeck
-                    else -> SearchResultMessage.CardCount(includeSearchAllDecksAction = true)
-                },
+            feedbackMode = feedbackMode,
+            allDecksSelected = hasSelectedAllDecks(),
         )
 
     /** Builds the post-search trailing-pane command from current ViewModel state (tablet only). */
@@ -1749,13 +1733,10 @@ class CardBrowserViewModel(
         data class Completed(
             val rowCount: Int,
             val cardsOrNotes: CardsOrNotes,
-            /**
-             * The message (snackbar) to surface for this search, or `null` if none should be shown.
-             *
-             * Only populated for explicit user searches; `null` for browser open, deck change and
-             * order/direction changes.
-             */
-            val resultMessage: SearchResultMessage?,
+            /** The feedback requested by the caller for this search. */
+            val feedbackMode: BrowserSearchFeedbackMode,
+            /** The deck scope used by this search, before any subsequent UI changes. */
+            val allDecksSelected: Boolean,
         ) : SearchState {
             companion object
         }
