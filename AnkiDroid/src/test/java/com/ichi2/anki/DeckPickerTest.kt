@@ -17,6 +17,7 @@ import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.MeasureSpec
+import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -106,6 +107,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.notNullValue
 import org.hamcrest.Matchers.nullValue
@@ -744,6 +746,33 @@ class DeckPickerTest : RobolectricTest() {
             deckPickerEx.fragmented,
             equalTo(true),
         )
+    }
+
+    @Test
+    fun `dragging next to the tablet divider resizes the panes`() {
+        assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
+        addBasicNote()
+        val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(DeckPickerEx::class.java, Intent())
+        advanceRobolectricLooper()
+        val divider = deckPicker.findViewById<View>(R.id.resizing_divider)
+        val deckPickerPane = deckPicker.findViewById<View>(R.id.deck_picker_pane)
+        val weightBefore = (deckPickerPane.layoutParams as LinearLayout.LayoutParams).weight
+        val location = IntArray(2).also { divider.getLocationInWindow(it) }
+        val startX = location[0] + divider.width / 2f - 16 * divider.resources.displayMetrics.density
+        val y = location[1] + divider.height / 2f
+        val window = deckPicker.window.decorView
+        val downTime = SystemClock.uptimeMillis()
+
+        window.dispatchTouchEvent(MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN, startX, y, 0))
+        for (step in 1..10) {
+            window.dispatchTouchEvent(
+                MotionEvent.obtain(downTime, downTime + step * 10L, MotionEvent.ACTION_MOVE, startX + step * 10f, y, 0),
+            )
+        }
+        window.dispatchTouchEvent(MotionEvent.obtain(downTime, downTime + 200, MotionEvent.ACTION_UP, startX + 100f, y, 0))
+
+        val weightAfter = (deckPickerPane.layoutParams as LinearLayout.LayoutParams).weight
+        assertThat("the deck list grows when dragged towards the end", weightAfter, greaterThan(weightBefore))
     }
 
     @Test
