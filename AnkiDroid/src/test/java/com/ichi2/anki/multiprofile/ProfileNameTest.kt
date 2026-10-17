@@ -128,4 +128,9 @@ class ProfileNameTest {
         val untouched = "  weird!! value  "
         assertEquals(untouched, ProfileName.fromTrustedSource(untouched).value)
     }
+
+    @Test
+    fun `existsIn ignores the case of non-ASCII letters, unlike Anki Desktop`() {
+        assertTrue(ProfileName.fromTrustedSource("Ä").existsIn(listOf("ä")))
+    }
 }

@@ -16,6 +16,15 @@ value class ProfileName private constructor(
 ) {
     override fun toString(): String = value
 
+    /**
+     * Whether [names] already contains this name, ignoring case.
+     *
+     * Stricter than Anki Desktop, which compares with SQLite's `NOCASE` and only folds ASCII:
+     * `Ä` and `ä` are two names there but one name here. Profile names are never shared
+     * with Desktop, so the two checks never have to agree.
+     */
+    fun existsIn(names: Iterable<String>): Boolean = names.any { it.equals(value, ignoreCase = true) }
+
     companion object {
         const val MAX_LENGTH = 50
 

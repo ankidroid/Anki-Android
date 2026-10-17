@@ -79,16 +79,18 @@ class ProfileManager private constructor(
      * @param displayName The name to be associated with the new profile.
      * @return The unique [ProfileId] assigned to the newly created profile.
      *
+     * @throws IllegalArgumentException if another profile already uses [displayName], ignoring case.
      * @throws Exception if profile creation or persistence fails.
      */
     fun createNewProfile(displayName: ProfileName): ProfileId {
+        require(!isNameTaken(displayName)) { "Profile name is already in use" }
         val newProfileId = generateUniqueProfileId()
 
         val metadata = ProfileMetadata(displayName = displayName)
 
         profileRegistry.saveProfile(newProfileId, metadata)
 
-        Timber.i("Created new profile: ${displayName.value} (${newProfileId.value})")
+        Timber.i("Created new profile: ${newProfileId.value}")
         return newProfileId
     }
 
@@ -100,6 +102,11 @@ class ProfileManager private constructor(
      * @see ProfileRegistry.getAllProfiles
      */
     fun getAllProfiles(): Map<ProfileId, ProfileMetadata> = profileRegistry.getAllProfiles()
+
+    private fun isNameTaken(
+        name: ProfileName,
+        ignoring: ProfileId? = null,
+    ): Boolean = name.existsIn(getAllProfiles().filterKeys { it != ignoring }.values.map { it.displayName.value })
 
     /**
      * Generates a unique [ProfileId] that does not collide with existing profiles.
@@ -293,7 +300,8 @@ class ProfileManager private constructor(
      * @param newDisplayName  The new user-facing name.
      *
      * @throws IllegalArgumentException if [profileId] does not
-     *   exist in the registry.
+     *   exist in the registry, or another profile already uses
+     *   [newDisplayName], ignoring case.
      */
     fun renameProfile(
         profileId: ProfileId,
@@ -309,6 +317,8 @@ class ProfileManager private constructor(
             Timber.d("Rename skipped: New name matches existing name for $profileId")
             return
         }
+
+        require(!isNameTaken(newDisplayName, ignoring = profileId)) { "Profile name is already in use" }
 
         val updated = existing.copy(displayName = newDisplayName)
         profileRegistry.saveProfile(profileId, updated)

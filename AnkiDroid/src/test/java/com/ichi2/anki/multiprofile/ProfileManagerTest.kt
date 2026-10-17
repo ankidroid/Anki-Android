@@ -34,6 +34,7 @@ import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import timber.log.Timber
 import java.io.File
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -341,6 +342,27 @@ class ProfileManagerTest {
     }
 
     @Test
+    fun `createNewProfile rejects a name already in use, ignoring case`() {
+        val manager = ProfileManager.create(context)
+        manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+
+        assertThrows(IllegalArgumentException::class.java) {
+            manager.createNewProfile(ProfileName.fromTrustedSource("work"))
+        }
+        assertEquals(2, manager.getAllProfiles().size)
+    }
+
+    @Test
+    fun `createNewProfile does not log the profile name`() {
+        val manager = ProfileManager.create(context)
+
+        val logs = captureLogs { manager.createNewProfile(ProfileName.fromTrustedSource("Alice")) }
+
+        assertTrue("Expected createNewProfile to log", logs.isNotEmpty())
+        assertFalse("Profile name was logged: $logs", logs.any { it.contains("Alice") })
+    }
+
+    @Test
     fun `renameProfile updates displayName in registry`() {
         val manager = ProfileManager.create(context)
         val profileId = manager.createNewProfile(ProfileName.fromTrustedSource("Original Name"))
@@ -425,6 +447,28 @@ class ProfileManagerTest {
             }
 
         assertTrue(exception.message!!.contains("not found"))
+    }
+
+    @Test
+    fun `renameProfile rejects a name used by another profile, ignoring case`() {
+        val manager = ProfileManager.create(context)
+        manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        val home = manager.createNewProfile(ProfileName.fromTrustedSource("Home"))
+
+        assertThrows(IllegalArgumentException::class.java) {
+            manager.renameProfile(home, ProfileName.fromTrustedSource("work"))
+        }
+        assertEquals("Home", manager.getAllProfiles()[home]?.displayName?.value)
+    }
+
+    @Test
+    fun `renameProfile can change the case of the profile's own name`() {
+        val manager = ProfileManager.create(context)
+        val work = manager.createNewProfile(ProfileName.fromTrustedSource("work"))
+
+        manager.renameProfile(work, ProfileName.fromTrustedSource("Work"))
+
+        assertEquals("Work", manager.getAllProfiles()[work]?.displayName?.value)
     }
 
     @Test
@@ -712,5 +756,27 @@ class ProfileManagerTest {
         context
             .getSharedPreferences(prefsName, Context.MODE_PRIVATE)
             .edit(commit = true) { putString(PREF_COLLECTION_PATH, dir.absolutePath) }
+    }
+
+    private fun captureLogs(block: () -> Unit): List<String> {
+        val messages = mutableListOf<String>()
+        val tree =
+            object : Timber.Tree() {
+                override fun log(
+                    priority: Int,
+                    tag: String?,
+                    message: String,
+                    t: Throwable?,
+                ) {
+                    messages += message
+                }
+            }
+        Timber.plant(tree)
+        try {
+            block()
+        } finally {
+            Timber.uproot(tree)
+        }
+        return messages
     }
 }

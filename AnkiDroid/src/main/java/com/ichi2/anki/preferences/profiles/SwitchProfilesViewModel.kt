@@ -27,6 +27,9 @@ class SwitchProfilesViewModel(
     val isAddProfileDialogVisible: StateFlow<Boolean>
         field = MutableStateFlow(false)
 
+    val profileBeingRenamed: StateFlow<ProfileItem?>
+        field = MutableStateFlow<ProfileItem?>(null)
+
     fun showAddProfileDialog() {
         isAddProfileDialogVisible.value = true
     }
@@ -39,12 +42,24 @@ class SwitchProfilesViewModel(
     fun addProfile(name: ProfileName) {
         isAddProfileDialogVisible.value = false
         Timber.i("Add profile confirmed (%d chars)", name.value.length)
-        // TODO: handle profile creation via ProfileManager.createNewProfile
+        profileManager.createNewProfile(name)
+        refresh()
     }
 
-    fun editProfile(profile: ProfileItem) {
-        Timber.i("Edit profile requested: %s", profile.id)
-        // TODO: implement profile rename via ProfileManager
+    fun showRenameProfileDialog(profile: ProfileItem) {
+        profileBeingRenamed.value = profile
+    }
+
+    fun dismissRenameProfileDialog() {
+        profileBeingRenamed.value = null
+    }
+
+    fun renameProfile(name: ProfileName) {
+        val profile = profileBeingRenamed.value ?: return
+        profileBeingRenamed.value = null
+        Timber.i("Rename profile confirmed: %s", profile.id)
+        profileManager.renameProfile(profile.id, name)
+        refresh()
     }
 
     fun deleteProfile(profile: ProfileItem) {
