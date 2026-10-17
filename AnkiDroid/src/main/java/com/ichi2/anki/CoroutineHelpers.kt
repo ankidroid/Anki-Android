@@ -155,51 +155,59 @@ suspend fun <T> FragmentActivity.runCatching(
             showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
             return null
         }
-        when (exc) {
-            is CancellationException -> {
-                throw exc // CancellationException should be re-thrown to propagate it to the parent coroutine
-            }
-            is BackendInterruptedException -> {
-                Timber.w(exc, errorMessage)
-                exc.localizedMessage?.let { showSnackbar(it) }
-            }
-            is StorageNotConfiguredException -> {
-                // expected before first-run setup completes: no crash report
-                // edge case when 'ensureStorageIsReady' was insufficient
-                Timber.w(exc, errorMessage)
-                if (!isFinishing) redirectToMainEntryPoint()
-            }
-            is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException,
-            is CollectionLockedException,
-            -> {
-                // these exceptions do not generate worthwhile crash reports
-                Timber.i("Showing error dialog but not sending a crash report.")
-                showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
-            }
-            // must precede `is BackendException`: BackendDbCorruptException is a subclass
-            is SQLiteDatabaseCorruptException, is BackendDbCorruptException -> {
-                Timber.e(exc, errorMessage)
-                DatabaseCorruption.isDetected = true
-                if (callerTrace != null) Timber.e(callerTrace)
-                (this as? AnkiActivity)
-                    ?.showDatabaseErrorDialog(
-                        errorDialogType = DatabaseErrorDialogType.DIALOG_LOAD_FAILED,
-                        exceptionData = DatabaseErrorDialog.CustomExceptionData.fromException(exc),
-                    )
-            }
-            is BackendException -> {
-                Timber.e(exc, errorMessage)
-                if (callerTrace != null) Timber.e(callerTrace)
-                showError(exc.localizedMessage!!, exc.toCrashReportData(this))
-            }
-            else -> {
-                Timber.e(exc, errorMessage)
-                if (callerTrace != null) Timber.e(callerTrace)
-                showError(exc)
-            }
+        if (exc is CancellationException) {
+            throw exc // CancellationException should be re-thrown to propagate it to the parent coroutine
         }
+        showException(exc, errorMessage, callerTrace)
     }
     return null
+}
+
+fun FragmentActivity.showException(
+    exc: Exception,
+    errorMessage: String? = null,
+    callerTrace: String? = null,
+) {
+    when (exc) {
+        is BackendInterruptedException -> {
+            Timber.w(exc, errorMessage)
+            exc.localizedMessage?.let { showSnackbar(it) }
+        }
+        is StorageNotConfiguredException -> {
+            // expected before first-run setup completes: no crash report
+            // edge case when 'ensureStorageIsReady' was insufficient
+            Timber.w(exc, errorMessage)
+            if (!isFinishing) redirectToMainEntryPoint()
+        }
+        is BackendNetworkException, is BackendSyncException, is StorageAccessException, is BackendCardTypeException,
+        is CollectionLockedException,
+        -> {
+            // these exceptions do not generate worthwhile crash reports
+            Timber.i("Showing error dialog but not sending a crash report.")
+            showError(exc.localizedMessage!!, exc.toCrashReportData(this, reportException = false))
+        }
+        // must precede `is BackendException`: BackendDbCorruptException is a subclass
+        is SQLiteDatabaseCorruptException, is BackendDbCorruptException -> {
+            Timber.e(exc, errorMessage)
+            DatabaseCorruption.isDetected = true
+            if (callerTrace != null) Timber.e(callerTrace)
+            (this as? AnkiActivity)
+                ?.showDatabaseErrorDialog(
+                    errorDialogType = DatabaseErrorDialogType.DIALOG_LOAD_FAILED,
+                    exceptionData = DatabaseErrorDialog.CustomExceptionData.fromException(exc),
+                )
+        }
+        is BackendException -> {
+            Timber.e(exc, errorMessage)
+            if (callerTrace != null) Timber.e(callerTrace)
+            showError(exc.localizedMessage!!, exc.toCrashReportData(this))
+        }
+        else -> {
+            Timber.e(exc, errorMessage)
+            if (callerTrace != null) Timber.e(callerTrace)
+            showError(exc)
+        }
+    }
 }
 
 /**
