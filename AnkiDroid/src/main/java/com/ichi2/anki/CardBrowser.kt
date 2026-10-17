@@ -728,7 +728,7 @@ open class CardBrowser :
     companion object {
         // Keys for saving pane weights in SharedPreferences
         private const val PREF_CARD_BROWSER_PANE_WEIGHT = "cardBrowserPaneWeight"
-        private const val PREF_NOTE_EDITOR_PANE_WEIGHT = "noteEditorPaneWeight"
+        private const val PREF_NOTE_EDITOR_PANE_WEIGHT = "cardBrowserNoteEditorPaneWeight"
 
         // Values related to persistent state data
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
