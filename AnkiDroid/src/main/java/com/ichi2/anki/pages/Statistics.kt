@@ -20,6 +20,7 @@ import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.updateBottomNavOnScroll
 import com.ichi2.anki.withProgress
 import dev.androidbroadcast.vbpd.viewBinding
 import timber.log.Timber
@@ -63,6 +64,17 @@ class Statistics : PageFragment(R.layout.page_statistics) {
                     savedInstanceState?.getString(KEY_DECK_NAME, null) ?: withCol { decks.current().name }
                 changeDeck(deckName)
             }
+        }
+    }
+
+    override fun onWebViewCreated() {
+        // Also called when the WebView is recreated after a renderer crash, so the listener is re-attached.
+        var lastHeight: Int? = null
+        webViewLayout.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            // Hiding the bar makes the page taller, which pulls a scroll at the bottom back up.
+            // That scroll comes from the resize, not the user: reacting to it would show the bar again.
+            if (lastHeight == null || webViewLayout.height == lastHeight) updateBottomNavOnScroll(scrollY - oldScrollY)
+            lastHeight = webViewLayout.height
         }
     }
 

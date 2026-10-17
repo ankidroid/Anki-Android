@@ -119,6 +119,18 @@ class DeckPickerScreenshotTest : ScreenshotTest() {
             captureScreen("keyboard_open_scrolled_to_bottom")
         }
 
+    /** The studied summary and final deck must remain above the keyboard with bottom navigation enabled. */
+    @Test
+    fun bottom_navigation_keyboard_open_scrolled_to_bottom() {
+        enableBottomNavigation()
+        withDeckPicker(deckCount = 30) { deckPicker ->
+            deckPicker.searchWithKeyboard()
+            deckPicker.deckPickerBinding.decks.scrollToEnd()
+
+            captureScreen("bottom_navigation_keyboard_open_scrolled_to_bottom")
+        }
+    }
+
     @Test
     fun hierarchy_lines() =
         runTest {
