@@ -30,6 +30,7 @@ class DeckPickerFloatingActionMenu(
 ) {
     // TODO: refactor this to decouple with Homescreen & DeckPicker
     private val binding: IncludeFloatingAddButtonBinding = homescreenBinding.deckPickerPane.floatingActionButton
+    private val extendedFabHorizontalPadding = binding.fabMain.paddingStart + binding.fabMain.paddingEnd
 
     /** Layout deck_picker.xml is attached here */
     private val linearLayout: LinearLayout = homescreenBinding.deckPickerPane.deckpickerView
@@ -70,7 +71,7 @@ class DeckPickerFloatingActionMenu(
             binding.fabBGLayout.visibility = View.VISIBLE
             binding.fabMain.backgroundTintList = ColorStateList.valueOf(fabPressedColor)
             binding.fabMain.setIconResource(addNoteIcon)
-            binding.fabMain.extend()
+            extendMainButton()
 
             with(binding) {
                 addSharedButton.animate().translationY(0f).duration = 100
@@ -101,6 +102,26 @@ class DeckPickerFloatingActionMenu(
             }
         }
     }
+
+    /** Extends Add without overshooting its final width, preserving the styled minimum width. */
+    private fun extendMainButton() =
+        with(binding.fabMain) {
+            val originalMinWidth = minWidth
+            val originalMinimumWidth = minimumWidth
+            // Material measures with collapsed padding, then adds the extra extended padding.
+            // Discount that padding from the minimum during measurement so it isn't counted twice.
+            val extraPadding = extendedFabHorizontalPadding - paddingStart - paddingEnd
+            // Both TextView's minWidth and View's minimumWidth constrain this measurement.
+            minWidth = (originalMinWidth - extraPadding).coerceAtLeast(0)
+            minimumWidth = (originalMinimumWidth - extraPadding).coerceAtLeast(0)
+            try {
+                extend()
+            } finally {
+                // Preserve the styled minimum width for the final wrap_content layout.
+                minWidth = originalMinWidth
+                minimumWidth = originalMinimumWidth
+            }
+        }
 
     /**
      * This function takes a parameter which decides if we want to apply the rise and shrink animation
