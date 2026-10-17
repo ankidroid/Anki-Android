@@ -33,7 +33,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
-            outState.putParcelableArrayList(AVAILABLE_COLUMNS, availableColumns.toCollection(ArrayList()))
+            outState.putParcelableArrayList(STATE_AVAILABLE_COLUMNS, availableColumns.toCollection(ArrayList()))
             super.onSaveInstanceState(this)
         }
     }
@@ -87,7 +87,13 @@ class ColumnSelectionDialogFragment : DialogFragment() {
                 if (savedInstanceState == null) {
                     viewModel.previewColumnHeadings(viewModel.cardsOrNotes).second
                 } else {
-                    BundleCompat.getParcelableArrayList(savedInstanceState, AVAILABLE_COLUMNS, ColumnWithSample::class.java)!!.toList()
+                    BundleCompat
+                        .getParcelableArrayList(
+                            savedInstanceState,
+                            STATE_AVAILABLE_COLUMNS,
+                            ColumnWithSample::class.java,
+                        )!!
+                        .toList()
                 }
             adapter.clear()
             adapter.addAll(availableColumns)
@@ -122,7 +128,7 @@ class ColumnSelectionDialogFragment : DialogFragment() {
         const val TAG = "ColumnSelectionDialog"
 
         private const val SELECTED_COLUMN = "selected_column"
-        private const val AVAILABLE_COLUMNS = "availableColumns"
+        private const val STATE_AVAILABLE_COLUMNS = "availableColumns"
 
         fun newInstance(selectedColumn: ColumnHeading): ColumnSelectionDialogFragment =
             ColumnSelectionDialogFragment().apply {
