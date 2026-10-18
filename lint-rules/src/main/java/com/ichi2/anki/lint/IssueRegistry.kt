@@ -27,6 +27,7 @@ import com.ichi2.anki.lint.rules.LicenseHeaderExists
 import com.ichi2.anki.lint.rules.LocaleRootDetector
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
 import com.ichi2.anki.lint.rules.OpenInputStreamSafeDetector
+import com.ichi2.anki.lint.rules.PreferenceKeyNamingDetector
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.SavedStateKeyNamingDetector
 import com.ichi2.anki.lint.rules.SentenceCaseConventions
@@ -59,6 +60,7 @@ class IssueRegistry : IssueRegistry() {
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
                 OpenInputStreamSafeDetector.ISSUE,
+                PreferenceKeyNamingDetector.ISSUE,
                 SavedStateKeyNamingDetector.ISSUE,
                 SentenceCaseConventions.ISSUE,
                 TranslationTypo.ISSUE,
