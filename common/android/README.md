@@ -57,8 +57,12 @@ getString(CommonPreferenceKey.pref_new_review_reminders)
 
 The key remains defined once in XML with `translatable="false"` and referenced
 as `@string/pref_new_review_reminders` by the preference UI. `CommonPreferenceKey`
-and `CommonString` alias the same generated `R.string` class, so the distinction
-is a naming convention rather than a compiler-enforced restriction.
+and `CommonString` alias the same generated `R.string` class. Their intended uses
+are enforced by lint rather than the Kotlin compiler.
+
+Define shared preference keys in `preferences.xml` or `preferences_*.xml`.
+The `CommonPreferenceKeyUsage` lint check uses these resource files to enforce
+the alias convention, including for keys whose names do not start with `pref_`.
 
 ### Other resource types (`CommonR`)
 

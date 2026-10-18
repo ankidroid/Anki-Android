@@ -13,7 +13,8 @@ typealias CommonString = com.ichi2.anki.common.android.R.string
 /**
  * Non-translatable preference keys: `getString(CommonPreferenceKey.pref_new_review_reminders)`.
  *
- * Shares the generated resource type with [CommonString]; the distinction is a naming convention.
+ * Shares the generated resource type with [CommonString]; enforced by lint
+ * (`CommonPreferenceKeyDetector`).
  */
 typealias CommonPreferenceKey = com.ichi2.anki.common.android.R.string
 
