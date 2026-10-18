@@ -16,6 +16,7 @@ import com.ichi2.anki.lint.rules.DirectSystemCurrentTimeMillisUsage
 import com.ichi2.anki.lint.rules.DirectSystemTimeInstantiation
 import com.ichi2.anki.lint.rules.DirectToastMakeTextUsage
 import com.ichi2.anki.lint.rules.DuplicateCrowdInStrings
+import com.ichi2.anki.lint.rules.FragmentArgumentKeyNamingDetector
 import com.ichi2.anki.lint.rules.FragmentRequestKeyNamingDetector
 import com.ichi2.anki.lint.rules.FragmentResultKeyNamingDetector
 import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
@@ -49,6 +50,7 @@ class IssueRegistry : IssueRegistry() {
                 DirectSystemTimeInstantiation.ISSUE,
                 DirectToastMakeTextUsage.ISSUE,
                 DuplicateCrowdInStrings.ISSUE,
+                FragmentArgumentKeyNamingDetector.ISSUE,
                 FragmentRequestKeyNamingDetector.ISSUE,
                 FragmentResultKeyNamingDetector.ISSUE,
                 HardcodedPreferenceKey.ISSUE,
