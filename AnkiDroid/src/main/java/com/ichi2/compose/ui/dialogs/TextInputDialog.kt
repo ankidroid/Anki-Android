@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.BasicAlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -31,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -44,13 +41,9 @@ import com.ichi2.compose.ui.preview.ThemePreviews
  * Dialog asking the user for a single line of text. Compose counterpart of
  * the View based `AlertDialog.input(...)` helper.
  *
- * In previews the card renders inline, because dialog windows don't show up
- * in the static preview pane.
- *
  * @param onConfirm called with the text, but only while it is valid
  * @param errorMessageFor error to show for the current input, null when valid
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextInputDialog(
     title: String,
@@ -64,7 +57,7 @@ fun TextInputDialog(
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Sentences,
     errorMessageFor: (String) -> String? = { null },
 ) {
-    if (LocalInspectionMode.current) {
+    AnkiDroidDialog(onDismissRequest = onDismissRequest) {
         TextInputDialogCard(
             title = title,
             label = label,
@@ -77,21 +70,6 @@ fun TextInputDialog(
             capitalization = capitalization,
             errorMessageFor = errorMessageFor,
         )
-    } else {
-        BasicAlertDialog(onDismissRequest = onDismissRequest) {
-            TextInputDialogCard(
-                title = title,
-                label = label,
-                confirmText = confirmText,
-                onConfirm = onConfirm,
-                onDismissRequest = onDismissRequest,
-                dismissText = dismissText,
-                initialText = initialText,
-                maxLengthCounter = maxLengthCounter,
-                capitalization = capitalization,
-                errorMessageFor = errorMessageFor,
-            )
-        }
     }
 }
 
