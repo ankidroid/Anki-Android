@@ -7,6 +7,7 @@ import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 import com.android.tools.lint.detector.api.Issue
 import com.ichi2.anki.lint.rules.AvoidAlertDialogUsage
+import com.ichi2.anki.lint.rules.CommonPreferenceKeyDetector
 import com.ichi2.anki.lint.rules.DirectAppWidgetManagerInstanceUsage
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage
 import com.ichi2.anki.lint.rules.DirectDateInstantiation
@@ -42,6 +43,7 @@ class IssueRegistry : IssueRegistry() {
         get() {
             // Keep this list lexicographically ordered.
             return listOf(
+                CommonPreferenceKeyDetector.ISSUE,
                 LayoutPrefixDetector.ISSUE,
                 DirectAppWidgetManagerInstanceUsage.ISSUE,
                 DirectCalendarInstanceUsage.ISSUE,
