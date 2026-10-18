@@ -33,7 +33,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.CrashReportData.Companion.toCrashReportData
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
-import com.ichi2.anki.account.AccountActivity.Companion.START_FROM_DECKPICKER
+import com.ichi2.anki.account.AccountActivity.Companion.ARG_START_FOR_RESULT
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.getEndpoint
@@ -235,7 +235,7 @@ class LoginFragment : Fragment(R.layout.fragment_my_account) {
                     is LoginState.Success -> {
                         Timber.i("Login Successful")
                         val activity = requireActivity()
-                        val isForResult = arguments?.getBoolean(START_FROM_DECKPICKER) ?: false
+                        val isForResult = arguments?.getBoolean(ARG_START_FOR_RESULT) ?: false
 
                         // If the user explicitly came from a sync prompt (onboarding/pressing sync)
                         // then their intent was to sync after login success

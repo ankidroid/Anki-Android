@@ -23,10 +23,10 @@ import com.ichi2.utils.customView
 class LoadingDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = layoutInflater.inflate(R.layout.fragment_loading, null)
-        val canBeCancelled = arguments?.getBoolean(KEY_CANCELLABLE) ?: true
+        val canBeCancelled = arguments?.getBoolean(ARG_CANCELLABLE) ?: true
         isCancelable = canBeCancelled
         dialogView.findViewById<TextView>(R.id.text).text =
-            arguments?.getString(KEY_MESSAGE) ?: getString(CommonString.dialog_processing)
+            arguments?.getString(ARG_MESSAGE) ?: getString(CommonString.dialog_processing)
         return AlertDialog
             .Builder(requireContext())
             .create {
@@ -37,8 +37,8 @@ class LoadingDialogFragment : DialogFragment() {
 
     companion object {
         const val TAG = "LoadingDialogFragment"
-        private const val KEY_MESSAGE = "key_message"
-        private const val KEY_CANCELLABLE = "key_cancellable"
+        private const val ARG_MESSAGE = "key_message"
+        private const val ARG_CANCELLABLE = "key_cancellable"
 
         /**
          * Creates an instance of [LoadingDialogFragment].
@@ -53,8 +53,8 @@ class LoadingDialogFragment : DialogFragment() {
         ) = LoadingDialogFragment().apply {
             arguments =
                 Bundle().apply {
-                    putString(KEY_MESSAGE, message)
-                    putBoolean(KEY_CANCELLABLE, cancellable)
+                    putString(ARG_MESSAGE, message)
+                    putBoolean(ARG_CANCELLABLE, cancellable)
                 }
             isCancelable = cancellable
         }

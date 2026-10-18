@@ -47,7 +47,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
     }
 
     private val cardsOrNotes by lazy {
-        when (arguments?.getBoolean(CARDS_OR_NOTES_KEY)) {
+        when (arguments?.getBoolean(ARG_CARDS_OR_NOTES)) {
             true -> CardsOrNotes.CARDS
             false -> CardsOrNotes.NOTES
             null -> {
@@ -59,7 +59,7 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
     }
 
     private val isTruncated by lazy {
-        arguments?.getBoolean(IS_TRUNCATED_KEY) ?: run {
+        arguments?.getBoolean(ARG_IS_TRUNCATED) ?: run {
             Timber.w("BrowserOptionsDialog instantiated without configuration.")
             false
         }
@@ -120,8 +120,8 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
     }
 
     companion object {
-        private const val CARDS_OR_NOTES_KEY = "cardsOrNotes"
-        private const val IS_TRUNCATED_KEY = "isTruncated"
+        private const val ARG_CARDS_OR_NOTES = "cardsOrNotes"
+        private const val ARG_IS_TRUNCATED = "isTruncated"
 
         fun newInstance(
             cardsOrNotes: CardsOrNotes,
@@ -131,8 +131,8 @@ class BrowserOptionsDialog : AppCompatDialogFragment(R.layout.dialog_browser_opt
             return BrowserOptionsDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putBoolean(CARDS_OR_NOTES_KEY, cardsOrNotes == CardsOrNotes.CARDS)
-                        putBoolean(IS_TRUNCATED_KEY, isTruncated)
+                        putBoolean(ARG_CARDS_OR_NOTES, cardsOrNotes == CardsOrNotes.CARDS)
+                        putBoolean(ARG_IS_TRUNCATED, isTruncated)
                     }
             }
         }

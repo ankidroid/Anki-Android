@@ -39,10 +39,10 @@ import java.util.concurrent.atomic.AtomicInteger
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 @NeedsTest("17905: pressing back before the webpage is ready closes the screen")
 class DeckOptions : PageFragment() {
-    private val deckId: DeckId by lazy { requireArguments().getLong(KEY_DECK_ID) }
+    private val deckId: DeckId by lazy { requireArguments().getLong(ARG_DECK_ID) }
 
     override val pagePath: String by lazy {
-        val deckId = requireArguments().getLong(KEY_DECK_ID)
+        val deckId = requireArguments().getLong(ARG_DECK_ID)
         "deck-options/$deckId"
     }
     private var webViewIsReady = false
@@ -433,7 +433,7 @@ class DeckOptions : PageFragment() {
     }
 
     companion object {
-        private const val KEY_DECK_ID = "deckId"
+        private const val ARG_DECK_ID = "deckId"
 
         fun getIntent(
             context: Context,
@@ -442,7 +442,7 @@ class DeckOptions : PageFragment() {
             SingleFragmentActivity.getIntent(
                 context,
                 fragmentClass = DeckOptions::class,
-                arguments = Bundle().apply { putLong(KEY_DECK_ID, deckId) },
+                arguments = Bundle().apply { putLong(ARG_DECK_ID, deckId) },
             )
     }
 }

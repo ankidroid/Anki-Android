@@ -36,7 +36,7 @@ sealed interface ImageCropperLauncher {
     ) : ImageCropperLauncher {
         override fun toBundle(): Bundle =
             Bundle().apply {
-                putParcelable(ImageCropper.CROP_IMAGE_URI, imageUri)
+                putParcelable(ImageCropper.ARG_IMAGE_URI, imageUri)
             }
     }
 }

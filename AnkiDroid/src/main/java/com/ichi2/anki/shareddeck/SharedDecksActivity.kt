@@ -195,7 +195,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
     companion object {
         const val SHARED_DECKS_DOWNLOAD_FRAGMENT = "SharedDecksDownloadFragment"
-        const val DOWNLOAD_FILE = "DownloadFile"
+        const val ARG_DOWNLOAD_FILE = "DownloadFile"
 
         const val HTTP_STATUS_TOO_MANY_REQUESTS = 429
     }
@@ -239,7 +239,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
                 val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
                 sharedDecksDownloadFragment.arguments =
                     Bundle().apply {
-                        putSerializable(DOWNLOAD_FILE, DownloadFile(url, userAgent, contentDisposition, mimetype))
+                        putSerializable(ARG_DOWNLOAD_FILE, DownloadFile(url, userAgent, contentDisposition, mimetype))
                     }
                 supportFragmentManager.commit {
                     add(

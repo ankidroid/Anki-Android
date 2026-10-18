@@ -125,7 +125,7 @@ abstract class SettingsFragment :
             (preference as? DialogFragmentProvider)?.makeDialogFragment()
                 ?: return super.onDisplayPreferenceDialog(preference)
         Timber.d("displaying custom preference: ${dialogFragment::class.simpleName}")
-        dialogFragment.arguments = Bundle().apply { putString(PREF_DIALOG_KEY, preference.key) }
+        dialogFragment.arguments = Bundle().apply { putString(ARG_PREFERENCE_KEY, preference.key) }
         dialogFragment.setTargetFragment(this, 0)
         dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
     }
@@ -145,7 +145,7 @@ abstract class SettingsFragment :
     }
 
     companion object {
-        const val PREF_DIALOG_KEY = "key"
+        const val ARG_PREFERENCE_KEY = "key"
 
         /**
          * Converts a preference value to a numeric number that

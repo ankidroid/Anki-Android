@@ -221,7 +221,7 @@ open class ControlPreferenceDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val key = requireArguments().requireString(SettingsFragment.PREF_DIALOG_KEY)
+        val key = requireArguments().requireString(SettingsFragment.ARG_PREFERENCE_KEY)
         preference = (targetFragment as PreferenceFragmentCompat).requirePreference(key)
     }
 

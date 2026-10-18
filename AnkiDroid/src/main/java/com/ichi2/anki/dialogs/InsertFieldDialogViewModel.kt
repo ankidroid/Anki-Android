@@ -36,14 +36,14 @@ class InsertFieldDialogViewModel(
     var currentTab by currentTabFlow.asVar()
 
     /** The field names of the note type */
-    val fieldNames = savedStateHandle.require<ArrayList<String>>(KEY_FIELD_ITEMS).map(::FieldName)
+    val fieldNames = savedStateHandle.require<ArrayList<String>>(ARG_FIELD_NAMES).map(::FieldName)
 
     /**
      * State of the selected card when the screen was opened
      *
      * Used for providing [special fields][SpecialFields] with the output they'd produce.
      */
-    val metadata = savedStateHandle.require<InsertFieldMetadata>(KEY_INSERT_FIELD_METADATA)
+    val metadata = savedStateHandle.require<InsertFieldMetadata>(ARG_INSERT_FIELD_METADATA)
 
     val selectedFieldFlow = MutableStateFlow<SelectedField?>(null)
 
@@ -112,9 +112,9 @@ class InsertFieldDialogViewModel(
     }
 
     companion object {
-        const val KEY_FIELD_ITEMS = "key_field_items"
-        const val KEY_INSERT_FIELD_METADATA = "key_field_options"
-        const val KEY_REQUEST_KEY = "key_request_key"
+        const val ARG_FIELD_NAMES = "key_field_items"
+        const val ARG_INSERT_FIELD_METADATA = "key_field_options"
+        const val ARG_REQUEST_KEY = "key_request_key"
 
         const val STATE_TAB = "state_tab"
     }

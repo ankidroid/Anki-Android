@@ -1113,8 +1113,8 @@ class NoteEditorFragment :
         } else if (ACTION_CREATE_FLASHCARD == intent.action) {
             // mSourceLanguage = extras.getString(SOURCE_LANGUAGE);
             // mTargetLanguage = extras.getString(TARGET_LANGUAGE);
-            sourceText!![0] = extras.getString(SOURCE_TEXT)
-            sourceText!![1] = extras.getString(TARGET_TEXT)
+            sourceText!![0] = extras.getString(EXTRA_SOURCE_TEXT)
+            sourceText!![1] = extras.getString(EXTRA_TARGET_TEXT)
         } else {
             var first: String?
             var second: String?
@@ -2830,8 +2830,8 @@ class NoteEditorFragment :
         // the action is cancelled?
         //    public static final String SOURCE_LANGUAGE = "SOURCE_LANGUAGE";
         //    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
-        const val SOURCE_TEXT = "SOURCE_TEXT"
-        const val TARGET_TEXT = "TARGET_TEXT"
+        const val EXTRA_SOURCE_TEXT = "SOURCE_TEXT"
+        const val EXTRA_TARGET_TEXT = "TARGET_TEXT"
         const val EXTRA_CALLER = "CALLER"
         const val EXTRA_CARD_ID = "CARD_ID"
         const val EXTRA_CONTENTS = "CONTENTS"

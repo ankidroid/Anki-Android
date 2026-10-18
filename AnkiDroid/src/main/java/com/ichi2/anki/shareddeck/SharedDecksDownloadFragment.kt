@@ -44,7 +44,7 @@ import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.compat.CompatHelper.Companion.registerReceiverCompat
-import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.DOWNLOAD_FILE
+import com.ichi2.anki.shareddeck.SharedDecksActivity.Companion.ARG_DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.launchCollectionInLifecycleScope
 import com.ichi2.anki.utils.openUrl
@@ -66,7 +66,7 @@ import com.ichi2.anki.common.android.R as CommonR
 class SharedDecksDownloadFragment : Fragment() {
     private val viewModel: SharedDecksDownloadViewModel by viewModels()
 
-    private val fileToBeDownloaded by lazy { arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!! }
+    private val fileToBeDownloaded by lazy { arguments?.getSerializableCompat<DownloadFile>(ARG_DOWNLOAD_FILE)!! }
 
     private var downloadId: Long = 0
 

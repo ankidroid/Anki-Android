@@ -22,10 +22,10 @@ class ImportDialog : AsyncDialogFragment() {
     private val importViewModel: ImportViewModel by activityViewModels()
 
     private val dialogType: Type
-        get() = Type.fromCode(requireArguments().getInt(IMPORT_DIALOG_TYPE_KEY))
+        get() = Type.fromCode(requireArguments().getInt(ARG_DIALOG_TYPE))
 
     private val packagePath: String
-        get() = requireArguments().getString(IMPORT_DIALOG_PACKAGE_PATH_KEY)!!
+        get() = requireArguments().getString(ARG_PACKAGE_PATH)!!
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         val dialog = AlertDialog.Builder(requireActivity())
@@ -90,8 +90,8 @@ class ImportDialog : AsyncDialogFragment() {
     }
 
     companion object {
-        const val IMPORT_DIALOG_TYPE_KEY = "dialogType"
-        const val IMPORT_DIALOG_PACKAGE_PATH_KEY = "packagePath"
+        const val ARG_DIALOG_TYPE = "dialogType"
+        const val ARG_PACKAGE_PATH = "packagePath"
 
         /**
          * A set of dialogs which deal with importing a file
@@ -107,8 +107,8 @@ class ImportDialog : AsyncDialogFragment() {
             ImportDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putInt(IMPORT_DIALOG_TYPE_KEY, dialogType.code)
-                        putString(IMPORT_DIALOG_PACKAGE_PATH_KEY, packagePath)
+                        putInt(ARG_DIALOG_TYPE, dialogType.code)
+                        putString(ARG_PACKAGE_PATH, packagePath)
                     }
             }
 

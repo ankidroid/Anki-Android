@@ -36,7 +36,7 @@ class FieldSelectionDialog : DialogFragment() {
             }
 
     val resultType: ResultType by lazy {
-        requireArguments().requireParcelable(RESULT_TYPE)
+        requireArguments().requireParcelable(ARG_RESULT_TYPE)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -73,6 +73,7 @@ class FieldSelectionDialog : DialogFragment() {
          * Default value: `""`
          */
         private const val RESULT_TYPE = "resultType"
+        private const val ARG_RESULT_TYPE = "resultType"
 
         /**
          * @param resultType optional result string returned in the Fragment Result API bundle under
@@ -88,7 +89,7 @@ class FieldSelectionDialog : DialogFragment() {
 
             val bundle =
                 Bundle().apply {
-                    putParcelable(RESULT_TYPE, resultType)
+                    putParcelable(ARG_RESULT_TYPE, resultType)
                     putStringArrayList(ARG_FIELD_NAMES, ArrayList(fieldNames))
                 }
 

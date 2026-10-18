@@ -26,7 +26,7 @@ import timber.log.Timber
 class ColumnSelectionDialogFragment : DialogFragment() {
     private val viewModel: CardBrowserViewModel by activityViewModels()
     private val columnToReplace: ColumnHeading by lazy {
-        requireArguments().requireParcelable(SELECTED_COLUMN)
+        requireArguments().requireParcelable(ARG_SELECTED_COLUMN)
     }
 
     private var availableColumns: List<ColumnWithSample> = emptyList()
@@ -127,12 +127,12 @@ class ColumnSelectionDialogFragment : DialogFragment() {
     companion object {
         const val TAG = "ColumnSelectionDialog"
 
-        private const val SELECTED_COLUMN = "selected_column"
+        private const val ARG_SELECTED_COLUMN = "selected_column"
         private const val STATE_AVAILABLE_COLUMNS = "availableColumns"
 
         fun newInstance(selectedColumn: ColumnHeading): ColumnSelectionDialogFragment =
             ColumnSelectionDialogFragment().apply {
-                arguments = Bundle().apply { putParcelable(SELECTED_COLUMN, selectedColumn) }
+                arguments = Bundle().apply { putParcelable(ARG_SELECTED_COLUMN, selectedColumn) }
             }
     }
 }

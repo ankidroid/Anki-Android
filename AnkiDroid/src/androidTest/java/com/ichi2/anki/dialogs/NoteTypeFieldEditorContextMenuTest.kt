@@ -26,7 +26,7 @@ class NoteTypeFieldEditorContextMenuTest : InstrumentedTest() {
     @Ignore("flaky")
     fun showsAllOptions() {
         launchFragment(
-            fragmentArgs = Bundle().apply { putString(NoteTypeFieldEditorContextMenu.KEY_LABEL, testDialogTitle) },
+            fragmentArgs = Bundle().apply { putString(NoteTypeFieldEditorContextMenu.ARG_LABEL, testDialogTitle) },
             themeResId = R.style.Theme_Light,
         ) { NoteTypeFieldEditorContextMenu() }
         onView(withText(testDialogTitle))

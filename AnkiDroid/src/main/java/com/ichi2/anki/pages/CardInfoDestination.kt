@@ -17,8 +17,8 @@ fun CardInfoDestination.toIntent(context: Context): Intent {
     val title = entryPoint.toCardInfoTitle(context)
     val arguments =
         Bundle().apply {
-            putString(CardInfoFragment.KEY_TITLE, title)
-            putLong(CardInfoFragment.KEY_CARD_ID, cardId)
+            putString(CardInfoFragment.ARG_TITLE, title)
+            putLong(CardInfoFragment.ARG_CARD_ID, cardId)
         }
     return SingleFragmentActivity.getIntent(
         context,
