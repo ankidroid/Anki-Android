@@ -4,7 +4,7 @@ package com.ichi2.widget
 
 import android.content.Context
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CommonPreferenceKey
+import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.ext.allDecksCounts
@@ -19,6 +19,8 @@ import timber.log.Timber
  * The status of the widget.
  */
 object WidgetStatus {
+    private val notificationPreferences: NotificationPreferences = Prefs
+
     private var smallWidgetEnabled = false
     private var smallWidgetUpdateJob: Job? = null
 
@@ -33,7 +35,7 @@ object WidgetStatus {
         smallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
         val canExecuteTask = smallWidgetUpdateJob == null || smallWidgetUpdateJob?.isActive == false
 
-        if (Prefs.newReviewRemindersEnabled) {
+        if (notificationPreferences.newReviewRemindersEnabled) {
             if (smallWidgetEnabled && canExecuteTask) {
                 Timber.d("WidgetStatus.update(): updating")
                 smallWidgetUpdateJob = launchSmallWidgetUpdateJob(context)
@@ -41,10 +43,7 @@ object WidgetStatus {
                 Timber.d("WidgetStatus.update(): already running or not enabled")
             }
         } else {
-            val notificationEnabled =
-                preferences
-                    .getString(context.getString(CommonPreferenceKey.pref_notifications_minimum_cards_due_key), "1000001")!!
-                    .toInt() < 1000000
+            val notificationEnabled = notificationPreferences.legacyNotificationsEnabled
             if ((smallWidgetEnabled || notificationEnabled) && canExecuteTask) {
                 Timber.d("WidgetStatus.update(): updating")
                 smallWidgetUpdateJob = launchSmallWidgetUpdateJob(context)
@@ -76,7 +75,7 @@ object WidgetStatus {
             Timber.i("triggering small widget UI update")
             AnkiDroidWidgetSmall.UpdateService().doUpdate(context)
         }
-        if (!Prefs.newReviewRemindersEnabled) {
+        if (!notificationPreferences.newReviewRemindersEnabled) {
             widgetNotificationScheduler.scheduleNotification()
         }
     }
