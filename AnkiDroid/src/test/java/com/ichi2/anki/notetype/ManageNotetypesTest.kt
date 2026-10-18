@@ -10,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.dialogs.LoadingDialogFragment
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -77,6 +78,35 @@ class ManageNotetypesTest : RobolectricTest() {
                 activity.viewModel.state.value.noteTypes
                     .none { it.id == noteType.id },
             )
+        }
+
+    @Test
+    fun `back during the progress delay does not finish an activity deleting note types`() =
+        runTest {
+            ensureCollectionLoadIsSynchronous()
+            addStandardNoteType(TEST_NOTE_TYPE_NAME, arrayOf("front", "back"), "", "")
+            val activity = startRegularActivity<ManageNotetypes>()
+            val noteType =
+                activity.viewModel.state.value.noteTypes
+                    .first { it.name == TEST_NOTE_TYPE_NAME }
+            activity.viewModel.onItemLongClick(noteType)
+
+            try {
+                withQueuedCollectionAccess {
+                    activity.viewModel.deleteSelectedNoteTypes()
+                    assertTrue("deletion is still in progress", activity.touchesBlocked())
+                    assertFalse(
+                        "the progress dialog has not appeared yet",
+                        activity.supportFragmentManager.fragments.any { it is LoadingDialogFragment },
+                    )
+
+                    activity.onBackPressedDispatcher.onBackPressed()
+
+                    assertFalse("Back must not finish the activity during deletion", activity.isFinishing)
+                }
+            } finally {
+                advanceUntilIdle()
+            }
         }
 
     private suspend fun <T> TestScope.withQueuedCollectionAccess(block: suspend () -> T): T {
