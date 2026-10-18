@@ -8,6 +8,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.os.Bundle
 import android.os.SystemClock
@@ -1733,6 +1734,24 @@ class DeckPickerTest : RobolectricTest() {
                 equalTo(null),
             )
         }
+
+    @Test
+    fun `rotating while finishing to show the App Intro does not crash`() {
+        setIntroductionSlidesShown(false)
+        val controller = Robolectric.buildActivity(DeckPicker::class.java, Intent()).create()
+        saveControllerForCleanup(controller)
+        val deckPicker = controller.get()
+        assertTrue(deckPicker.isFinishing, "DeckPicker should finish to show the App Intro")
+
+        val current = deckPicker.resources.configuration
+        val rotated =
+            Configuration(current).apply {
+                orientation = Configuration.ORIENTATION_LANDSCAPE
+                screenWidthDp = current.screenHeightDp
+                screenHeightDp = current.screenWidthDp
+            }
+        assertDoesNotThrow { controller.configurationChange(rotated, deckPicker.resources.displayMetrics) }
+    }
 
     @Test
     fun `startup response is cleared after handling so it does not re-run on resume`() =
