@@ -13,7 +13,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.crashreporting.CrashReportService.sendExceptionReport
 import com.ichi2.anki.multiprofile.ProfileManager
-import com.ichi2.anki.multiprofile.ProfileManager.Companion.KEY_LAST_ACTIVE_PROFILE_ID
+import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
 import com.ichi2.anki.multiprofile.isPhoenixProcess
 import io.mockk.every
@@ -95,7 +95,7 @@ class AnkiDroidAppTest {
 
     @Test
     fun `storage follows a non-default profile`() {
-        profileRegistry.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, "p_routed") }
+        profileRegistry.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_routed") }
 
         val app = startApplication()
         app.getSharedPreferences("settings", Context.MODE_PRIVATE).edit(commit = true) {
@@ -122,7 +122,7 @@ class AnkiDroidAppTest {
 
         val app = startApplication()
 
-        assertNull(profileRegistry.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+        assertNull(profileRegistry.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
         assertEquals(frameworkBase.filesDir, app.filesDir)
     }
 
@@ -134,7 +134,7 @@ class AnkiDroidAppTest {
 
         val app = startApplication()
 
-        assertNull(profileRegistry.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+        assertNull(profileRegistry.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
         assertEquals(frameworkBase.filesDir, app.filesDir)
     }
 

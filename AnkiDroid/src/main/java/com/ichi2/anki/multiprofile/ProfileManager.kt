@@ -577,7 +577,7 @@ class ProfileManager private constructor(
         private val globalPrefs: SharedPreferences,
     ) {
         fun getLastActiveProfileId(): ProfileId? {
-            val id = globalPrefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null)
+            val id = globalPrefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null)
             return id?.let { ProfileId(it) }
         }
 
@@ -585,16 +585,16 @@ class ProfileManager private constructor(
             id: ProfileId,
             commit: Boolean = false,
         ) {
-            globalPrefs.edit(commit = commit) { putString(KEY_LAST_ACTIVE_PROFILE_ID, id.value) }
+            globalPrefs.edit(commit = commit) { putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value) }
         }
 
         fun getWebViewProfileId(): ProfileId? {
-            val id = globalPrefs.getString(KEY_WEBVIEW_PROFILE_ID, null)
+            val id = globalPrefs.getString(PREF_WEBVIEW_PROFILE_ID, null)
             return id?.let { ProfileId(it) }
         }
 
         fun setWebViewProfileId(id: ProfileId) {
-            globalPrefs.edit { putString(KEY_WEBVIEW_PROFILE_ID, id.value) }
+            globalPrefs.edit { putString(PREF_WEBVIEW_PROFILE_ID, id.value) }
         }
 
         /**
@@ -616,7 +616,7 @@ class ProfileManager private constructor(
             globalPrefs.edit {
                 putString(id.value, metadata.toJson())
                 if (isActive) {
-                    putString(KEY_LAST_ACTIVE_PROFILE_ID, id.value)
+                    putString(PREF_LAST_ACTIVE_PROFILE_ID, id.value)
                 }
             }
         }
@@ -635,7 +635,7 @@ class ProfileManager private constructor(
          * Retrieves all registered profiles from the global SharedPreferences.
          *
          * Iterates over all stored entries, skipping the
-         * [KEY_LAST_ACTIVE_PROFILE_ID] metadata key, and deserializes each
+         * [PREF_LAST_ACTIVE_PROFILE_ID] metadata key, and deserializes each
          * value into a [ProfileMetadata] instance. Entries that fail to parse
          * are logged and silently skipped.
          *
@@ -690,13 +690,13 @@ class ProfileManager private constructor(
     companion object {
         private const val MAX_ATTEMPTS = 10
         const val PROFILE_REGISTRY_FILENAME = "profiles_prefs"
-        const val KEY_LAST_ACTIVE_PROFILE_ID = "last_active_profile_id"
+        const val PREF_LAST_ACTIVE_PROFILE_ID = "last_active_profile_id"
 
         /** Profile whose data the shared WebView storage currently holds. Pre-API 28 only. */
-        const val KEY_WEBVIEW_PROFILE_ID = "webview_profile_id"
+        const val PREF_WEBVIEW_PROFILE_ID = "webview_profile_id"
 
         /** Registry keys that are not profile entries. */
-        private val BOOKKEEPING_KEYS = setOf(KEY_LAST_ACTIVE_PROFILE_ID, KEY_WEBVIEW_PROFILE_ID)
+        private val BOOKKEEPING_KEYS = setOf(PREF_LAST_ACTIVE_PROFILE_ID, PREF_WEBVIEW_PROFILE_ID)
 
         const val DEFAULT_PROFILE_DISPLAY_NAME = "Default"
 

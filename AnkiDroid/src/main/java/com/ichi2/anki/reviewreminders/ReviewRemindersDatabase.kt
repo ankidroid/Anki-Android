@@ -64,14 +64,14 @@ object ReviewRemindersDatabase {
      * Its value is a [ReviewReminderGroup] serialized as a JSON String.
      */
     @VisibleForTesting
-    const val DECK_SPECIFIC_KEY = "deck_"
+    const val PREF_DECK_SPECIFIC_REMINDERS = "deck_"
 
     /**
      * Key in SharedPreferences for retrieving app-wide reminders.
      * Its value is a [ReviewReminderGroup] serialized as a JSON String.
      */
     @VisibleForTesting
-    const val APP_WIDE_KEY = "app_wide"
+    const val PREF_APP_WIDE_REMINDERS = "app_wide"
 
     /**
      * The form in which [ReviewReminderGroup] are actually written to SharedPreferences.
@@ -279,8 +279,8 @@ object ReviewRemindersDatabase {
     suspend fun getRemindersForScope(scope: ReviewReminderScope): ReviewReminderGroup =
         mutex.withLock {
             when (scope) {
-                is ReviewReminderScope.DeckSpecific -> getRemindersForKey(DECK_SPECIFIC_KEY + scope.did)
-                is ReviewReminderScope.Global -> getRemindersForKey(APP_WIDE_KEY)
+                is ReviewReminderScope.DeckSpecific -> getRemindersForKey(PREF_DECK_SPECIFIC_REMINDERS + scope.did)
+                is ReviewReminderScope.Global -> getRemindersForKey(PREF_APP_WIDE_REMINDERS)
             }
         }
 
@@ -340,8 +340,8 @@ object ReviewRemindersDatabase {
         editor: ReviewReminderGroupEditor,
     ) {
         when (scope) {
-            is ReviewReminderScope.DeckSpecific -> editRemindersForKey(DECK_SPECIFIC_KEY + scope.did, editor)
-            is ReviewReminderScope.Global -> editRemindersForKey(APP_WIDE_KEY, editor)
+            is ReviewReminderScope.DeckSpecific -> editRemindersForKey(PREF_DECK_SPECIFIC_REMINDERS + scope.did, editor)
+            is ReviewReminderScope.Global -> editRemindersForKey(PREF_APP_WIDE_REMINDERS, editor)
         }
     }
 

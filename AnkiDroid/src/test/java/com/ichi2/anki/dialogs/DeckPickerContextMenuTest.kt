@@ -40,7 +40,7 @@ class DeckPickerContextMenuTest : JvmTest() {
     @Before
     fun before() {
         val context = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
-        context.sharedPrefs().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        context.sharedPrefs().edit { putBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, true) }
         setupSpaceForBackup(context)
     }
 

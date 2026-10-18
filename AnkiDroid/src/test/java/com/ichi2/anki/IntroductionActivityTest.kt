@@ -88,7 +88,7 @@ class IntroductionActivityTest : RobolectricTest() {
             )
             assertThat(
                 "intro is marked as shown so it doesn't reappear",
-                getPreferences().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false),
+                getPreferences().getBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, false),
                 equalTo(true),
             )
         }

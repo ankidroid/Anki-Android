@@ -15,8 +15,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper.PREF_COLLECTION_PATH
-import com.ichi2.anki.multiprofile.ProfileManager.Companion.KEY_LAST_ACTIVE_PROFILE_ID
-import com.ichi2.anki.multiprofile.ProfileManager.Companion.KEY_WEBVIEW_PROFILE_ID
+import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_LAST_ACTIVE_PROFILE_ID
+import com.ichi2.anki.multiprofile.ProfileManager.Companion.PREF_WEBVIEW_PROFILE_ID
 import com.ichi2.anki.multiprofile.ProfileManager.Companion.PROFILE_REGISTRY_FILENAME
 import io.mockk.every
 import io.mockk.just
@@ -63,7 +63,7 @@ class ProfileManagerTest {
     fun `initialize sets up Default profile if none exists`() {
         ProfileManager.create(context)
 
-        assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+        assertEquals("default", prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
     }
 
     @Test
@@ -79,7 +79,7 @@ class ProfileManagerTest {
     fun `createOrNull initializes the Default profile on first run`() {
         ProfileManager.createOrNull(context)
 
-        assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+        assertEquals("default", prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
     }
 
     @Test
@@ -109,7 +109,7 @@ class ProfileManagerTest {
 
         val manager = ProfileManager.create(duringAttachBaseContext)
 
-        assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+        assertEquals("default", prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
         assertEquals(context.filesDir.absolutePath, manager.activeProfileContext.filesDir.absolutePath)
     }
 
@@ -119,7 +119,7 @@ class ProfileManagerTest {
 
         val manager = ProfileManager.create(context)
 
-        assertEquals("default", prefs.getString(KEY_LAST_ACTIVE_PROFILE_ID, null))
+        assertEquals("default", prefs.getString(PREF_LAST_ACTIVE_PROFILE_ID, null))
 
         val activeContext = manager.activeProfileContext as ProfileContextWrapper
         val currentFile = File(activeContext.filesDir, "old_user_data.txt")
@@ -134,7 +134,7 @@ class ProfileManagerTest {
         val aliceId = "p_alice"
 
         prefs.edit(commit = true) {
-            putString(KEY_LAST_ACTIVE_PROFILE_ID, aliceId)
+            putString(PREF_LAST_ACTIVE_PROFILE_ID, aliceId)
             putString(aliceId, "Alice")
         }
 
@@ -148,7 +148,7 @@ class ProfileManagerTest {
     @Config(minSdk = Build.VERSION_CODES.P)
     fun `New profile sets WebView directory suffix (API 28+)`() {
         val newId = "p_webview_test"
-        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, newId) }
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, newId) }
 
         mockkStatic(WebView::class)
         every { WebView.setDataDirectorySuffix(any()) } just runs
@@ -173,7 +173,7 @@ class ProfileManagerTest {
     @Config(minSdk = Build.VERSION_CODES.P)
     fun `Swallows exception if WebView is already initialized`() {
         val newId = "p_error_test"
-        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, newId) }
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, newId) }
 
         mockkStatic(WebView::class)
         every { WebView.setDataDirectorySuffix(any()) } throws IllegalStateException("Already initialized")
@@ -191,20 +191,20 @@ class ProfileManagerTest {
     @Config(sdk = [Build.VERSION_CODES.O_MR1])
     fun `Legacy device keeps cookies on first run as the WebView data is already Default's (Pre-API 28)`() {
         val cookieManager = mockCookieManager()
-        assertNull(prefs.getString(KEY_WEBVIEW_PROFILE_ID, null), "no WebView owner is recorded before the first run")
+        assertNull(prefs.getString(PREF_WEBVIEW_PROFILE_ID, null), "no WebView owner is recorded before the first run")
 
         ProfileManager.create(context)
 
         verify(exactly = 0) { cookieManager.removeAllCookies(any()) }
         verify(exactly = 0) { CookieManager.getInstance() }
-        assertEquals(ProfileId.DEFAULT.value, prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(PREF_WEBVIEW_PROFILE_ID, null))
     }
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.O_MR1])
     fun `Legacy device does not clear cookies for the same profile repeatedly (Pre-API 28)`() {
         val cookieManager = mockCookieManager()
-        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, "p_bob") }
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_bob") }
 
         // the first launch clears the cookies as p_bob takes ownership of the WebView data
         ProfileManager.create(context)
@@ -213,7 +213,7 @@ class ProfileManagerTest {
 
         verify(exactly = 1) { cookieManager.removeAllCookies(any()) }
         verify(exactly = 1) { cookieManager.flush() }
-        assertEquals("p_bob", prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+        assertEquals("p_bob", prefs.getString(PREF_WEBVIEW_PROFILE_ID, null))
     }
 
     @Test
@@ -222,11 +222,11 @@ class ProfileManagerTest {
         val cookieManager = mockCookieManager()
 
         ProfileManager.create(context)
-        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, "p_bob") }
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_bob") }
         ProfileManager.create(context)
 
         verify(exactly = 1) { cookieManager.removeAllCookies(any()) }
-        assertEquals("p_bob", prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+        assertEquals("p_bob", prefs.getString(PREF_WEBVIEW_PROFILE_ID, null))
     }
 
     @Test
@@ -235,25 +235,25 @@ class ProfileManagerTest {
         val cookieManager = mockCookieManager()
         val manager = ProfileManager.create(context)
         manager.createNewProfile(ProfileName.fromTrustedSource("Bob"))
-        prefs.edit(commit = true) { remove(KEY_WEBVIEW_PROFILE_ID) }
+        prefs.edit(commit = true) { remove(PREF_WEBVIEW_PROFILE_ID) }
 
         ProfileManager.create(context)
 
         verify(exactly = 1) { cookieManager.removeAllCookies(any()) }
-        assertEquals(ProfileId.DEFAULT.value, prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+        assertEquals(ProfileId.DEFAULT.value, prefs.getString(PREF_WEBVIEW_PROFILE_ID, null))
     }
 
     @Test
     @Config(sdk = [Build.VERSION_CODES.O_MR1])
     fun `Legacy device clears cookies again if the removal never completed (Pre-API 28)`() {
         val cookieManager = mockCookieManager(completesRemoval = false)
-        prefs.edit(commit = true) { putString(KEY_LAST_ACTIVE_PROFILE_ID, "p_bob") }
+        prefs.edit(commit = true) { putString(PREF_LAST_ACTIVE_PROFILE_ID, "p_bob") }
 
         ProfileManager.create(context)
         ProfileManager.create(context)
 
         verify(exactly = 2) { cookieManager.removeAllCookies(any()) }
-        assertNull(prefs.getString(KEY_WEBVIEW_PROFILE_ID, null))
+        assertNull(prefs.getString(PREF_WEBVIEW_PROFILE_ID, null))
     }
 
     @Test
@@ -264,11 +264,11 @@ class ProfileManagerTest {
                 .ProfileMetadata(displayName = ProfileName.fromTrustedSource("Not a profile"))
                 .toJson()
 
-        prefs.edit(commit = true) { putString(KEY_WEBVIEW_PROFILE_ID, metadataJson) }
+        prefs.edit(commit = true) { putString(PREF_WEBVIEW_PROFILE_ID, metadataJson) }
 
         assertFalse(
             "Bookkeeping keys must never surface as profiles",
-            manager.getAllProfiles().containsKey(ProfileId(KEY_WEBVIEW_PROFILE_ID)),
+            manager.getAllProfiles().containsKey(ProfileId(PREF_WEBVIEW_PROFILE_ID)),
         )
     }
 
@@ -503,7 +503,7 @@ class ProfileManagerTest {
         val other = manager.createNewProfile(ProfileName.fromTrustedSource("Other"))
 
         prefs.edit(commit = true) {
-            putString(KEY_LAST_ACTIVE_PROFILE_ID, other.value)
+            putString(PREF_LAST_ACTIVE_PROFILE_ID, other.value)
         }
 
         val freshManager = ProfileManager.create(context)
@@ -518,7 +518,7 @@ class ProfileManagerTest {
         val profileId = manager.createNewProfile(ProfileName.fromTrustedSource("Active"))
 
         prefs.edit(commit = true) {
-            putString(KEY_LAST_ACTIVE_PROFILE_ID, profileId.value)
+            putString(PREF_LAST_ACTIVE_PROFILE_ID, profileId.value)
         }
 
         val freshManager = ProfileManager.create(context)

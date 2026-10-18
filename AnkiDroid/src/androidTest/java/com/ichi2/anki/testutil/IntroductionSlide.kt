@@ -9,6 +9,6 @@ import com.ichi2.anki.IntroductionActivity
 
 fun disableIntroductionSlide() {
     AnkiDroidApp.sharedPrefs().edit {
-        putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
+        putBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, true)
     }
 }

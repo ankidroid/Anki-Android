@@ -79,8 +79,8 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
         } else {
             // If no saved instance state, load the last saved preferences for restore position and reset counts.
             with(sharedPrefs) {
-                restoreOriginalPositionIfPossible = getBoolean(ARG_RESTORE_ORIGINAL, true)
-                resetRepetitionAndLapseCounts = getBoolean(ARG_RESET_REPETITION, false)
+                restoreOriginalPositionIfPossible = getBoolean(PREF_RESTORE_ORIGINAL, true)
+                resetRepetitionAndLapseCounts = getBoolean(PREF_RESET_REPETITION, false)
             }
         }
         val binding = DialogForgetCardsBinding.inflate(layoutInflater)
@@ -108,8 +108,8 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
             }
             positiveButton(CommonString.reset) {
                 sharedPrefs.edit {
-                    putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
-                    putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
+                    putBoolean(PREF_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+                    putBoolean(PREF_RESET_REPETITION, resetRepetitionAndLapseCounts)
                 }
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_FORGET,
@@ -135,10 +135,10 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
         const val RESULT_RESTORE_ORIGINAL = "key_restore_original"
         const val RESULT_RESET_REPETITION = "key_reset_repetition"
 
-        private const val ARG_RESTORE_ORIGINAL = "key_restore_original"
-        private const val ARG_RESET_REPETITION = "key_reset_repetition"
         private const val STATE_RESTORE_ORIGINAL = "key_restore_original"
         private const val STATE_RESET_REPETITION = "key_reset_repetition"
+        private const val PREF_RESTORE_ORIGINAL = "key_restore_original"
+        private const val PREF_RESET_REPETITION = "key_reset_repetition"
     }
 }
 
