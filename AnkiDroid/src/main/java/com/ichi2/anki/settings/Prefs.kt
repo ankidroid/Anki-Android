@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.preferences.AnimationPreferences
@@ -276,7 +277,7 @@ open class PrefsRepository protected constructor(
     /**
      * Whether to enable the new review reminders notification system.
      */
-    var newReviewRemindersEnabled by booleanPref(R.string.pref_new_review_reminders, false)
+    var newReviewRemindersEnabled by booleanPref(CommonPreferenceKey.pref_new_review_reminders, false)
 
     /**
      * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.

@@ -4,7 +4,7 @@ package com.ichi2.widget
 
 import android.content.Context
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.R
+import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.ext.allDecksCounts
@@ -43,7 +43,7 @@ object WidgetStatus {
         } else {
             val notificationEnabled =
                 preferences
-                    .getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
+                    .getString(context.getString(CommonPreferenceKey.pref_notifications_minimum_cards_due_key), "1000001")!!
                     .toInt() < 1000000
             if ((smallWidgetEnabled || notificationEnabled) && canExecuteTask) {
                 Timber.d("WidgetStatus.update(): updating")

@@ -10,6 +10,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnkiDroidUsageAnalytics
@@ -173,7 +174,7 @@ class DeveloperOptionsFragment : SettingsFragment() {
          * with a "Review reminders" button, so we need to immediately reload the settings activity
          * to make this change show up.
          */
-        requirePreference<Preference>(R.string.pref_new_review_reminders).setOnPreferenceChangeListener { _, _ ->
+        requirePreference<Preference>(CommonPreferenceKey.pref_new_review_reminders).setOnPreferenceChangeListener { _, _ ->
             ActivityCompat.recreate(requireActivity())
             true
         }

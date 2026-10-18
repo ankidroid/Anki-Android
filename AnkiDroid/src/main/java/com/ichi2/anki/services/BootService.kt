@@ -9,9 +9,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
-import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AnkiBroadcastReceiver
 import com.ichi2.anki.common.annotations.LegacyNotifications
 import com.ichi2.anki.common.annotations.NeedsTest
@@ -149,7 +149,7 @@ class BootService : AnkiBroadcastReceiver() {
             // Don't schedule a notification if the due reminders setting is not enabled
             if (sp
                     .getString(
-                        context.getString(R.string.pref_notifications_minimum_cards_due_key),
+                        context.getString(CommonPreferenceKey.pref_notifications_minimum_cards_due_key),
                         PENDING_NOTIFICATIONS_ONLY.toString(),
                     )!!
                     .toInt() >= PENDING_NOTIFICATIONS_ONLY
