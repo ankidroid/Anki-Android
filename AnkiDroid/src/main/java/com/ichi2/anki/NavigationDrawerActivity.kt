@@ -306,7 +306,9 @@ abstract class NavigationDrawerActivity(
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         // Pass any configuration change to the drawer toggles
-        drawerToggle.onConfigurationChanged(newConfig)
+        if (::drawerToggle.isInitialized) {
+            drawerToggle.onConfigurationChanged(newConfig)
+        }
     }
 
     /**
