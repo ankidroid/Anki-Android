@@ -40,7 +40,7 @@ class DeckPickerContextMenuTest {
         // The menu needs native translations, but does not need an open collection.
         RustBackendLoader.ensureSetup()
         val context = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
-        context.sharedPrefs().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        context.sharedPrefs().edit { putBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, true) }
         setupSpaceForBackup(context)
     }
 

@@ -35,8 +35,8 @@ import java.util.UUID
  */
 @NeedsTest("Add coverage for opt-in handling, client id persistence and event/exception sending")
 internal object AnkiDroidUsageAnalytics : UsageAnalytics {
-    const val ANALYTICS_OPTIN_KEY = UsageAnalytics.ANALYTICS_OPTIN_KEY
-    private const val ANALYTICS_CLIENT_ID = "googleAnalyticsClientId"
+    const val PREF_ANALYTICS_OPTIN = UsageAnalytics.PREF_ANALYTICS_OPTIN
+    private const val PREF_ANALYTICS_CLIENT_ID = "googleAnalyticsClientId"
 
     /**
      * Hard cap on the length of an exception description sent to GA.
@@ -73,7 +73,7 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
 
     private val sharedPrefsListener =
         SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
-            if (key == ANALYTICS_OPTIN_KEY) {
+            if (key == PREF_ANALYTICS_OPTIN) {
                 val newOptIn = prefs.getBoolean(key, false)
                 // [isEnabled] updates `optIn` before it writes, so an unchanged value
                 // means it's already handling this toggle: don't rebuild twice
@@ -147,7 +147,7 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
 
     private fun handlePreferences(context: Context) {
         val userPrefs = context.sharedPrefs()
-        optIn = userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false)
+        optIn = userPrefs.getBoolean(PREF_ANALYTICS_OPTIN, false)
         userPrefs.registerOnSharedPreferenceChangeListener(sharedPrefsListener)
     }
 
@@ -226,8 +226,8 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
     private fun getOrCreateClientId(context: Context): String {
         Timber.d("AnkiDroidUsageAnalytics:: getting client Id")
         val prefs = context.getSharedPreferences(ANALYTICS_PREFS, Context.MODE_PRIVATE)
-        return prefs.getString(ANALYTICS_CLIENT_ID, null) ?: UUID.randomUUID().toString().also {
-            prefs.edit { putString(ANALYTICS_CLIENT_ID, it) }
+        return prefs.getString(PREF_ANALYTICS_CLIENT_ID, null) ?: UUID.randomUUID().toString().also {
+            prefs.edit { putString(PREF_ANALYTICS_CLIENT_ID, it) }
         }
     }
 
@@ -258,7 +258,7 @@ internal object AnkiDroidUsageAnalytics : UsageAnalytics {
         set(value) {
             optIn = value
             appContext.sharedPrefs().edit {
-                putBoolean(ANALYTICS_OPTIN_KEY, value)
+                putBoolean(PREF_ANALYTICS_OPTIN, value)
             }
             // Rebuild the underlying client so its own `enabled` flag picks
             // up the new opt-in state without waiting for the next launch.

@@ -99,7 +99,7 @@ abstract class NavigationDrawerActivity(
             ) as ClosableDrawerLayout
 
         val coordinatorLayout = binding.root
-        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+        if (preferences.getBoolean(PREF_FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
             val fullDraggableContainer = FullDraggableContainerFix(this)
@@ -129,7 +129,7 @@ abstract class NavigationDrawerActivity(
             LayoutInflater
                 .from(this)
                 .inflate(layoutResID, closableDrawerLayout, false) as CoordinatorLayout
-        if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
+        if (preferences.getBoolean(PREF_FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
             val fullDraggableContainer = FullDraggableContainerFix(this)
@@ -499,7 +499,7 @@ abstract class NavigationDrawerActivity(
     companion object {
         // Intent request codes
         const val REQUEST_PREFERENCES_UPDATE = 100
-        const val FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer"
+        const val PREF_FULL_SCREEN_NAVIGATION_DRAWER = "gestureFullScreenNavigationDrawer"
 
         const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"
 

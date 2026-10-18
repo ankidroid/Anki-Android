@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.UPGRADE_VERSION_PREF_KEY
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.Companion.PREF_PREFERENCE_UPGRADE_VERSION
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeGesturesToControls
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -49,7 +49,7 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
         upgradeAllGestures()
 
         // ensure that no settings were added to the preferences
-        assertThat(changedKeys, Matchers.contains(UPGRADE_VERSION_PREF_KEY))
+        assertThat(changedKeys, Matchers.contains(PREF_PREFERENCE_UPGRADE_VERSION))
     }
 
     @Test
@@ -66,7 +66,7 @@ class UpgradeGesturesToControlsTestNoParam : RobolectricTest() {
         upgradeAllGestures()
 
         // ensure that no settings were added to the preferences
-        assertThat(changedKeys, Matchers.contains(UPGRADE_VERSION_PREF_KEY, PREF_KEY_VOLUME_DOWN, PREF_KEY_VOLUME_UP))
+        assertThat(changedKeys, Matchers.contains(PREF_PREFERENCE_UPGRADE_VERSION, PREF_KEY_VOLUME_DOWN, PREF_KEY_VOLUME_UP))
 
         assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_DOWN), equalTo(false))
         assertThat("Volume gestures are removed", prefs.contains(PREF_KEY_VOLUME_UP), equalTo(false))

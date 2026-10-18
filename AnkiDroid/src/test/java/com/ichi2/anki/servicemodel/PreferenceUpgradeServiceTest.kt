@@ -166,12 +166,12 @@ class PreferenceUpgradeServiceTest : AndroidTest {
     @Test
     fun `Fetch media pref's values are converted to 'always' if enabled and 'never' if disabled`() {
         // enabled -> always
-        prefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, true) }
+        prefs.edit { putBoolean(RemovedPreferences.PREF_SYNC_FETCHES_MEDIA, true) }
         PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(prefs)
         assertThat(prefs.getString("syncFetchMedia", null), equalTo("always"))
 
         // disabled -> never
-        prefs.edit { putBoolean(RemovedPreferences.SYNC_FETCHES_MEDIA, false) }
+        prefs.edit { putBoolean(RemovedPreferences.PREF_SYNC_FETCHES_MEDIA, false) }
         PreferenceUpgrade.UpgradeFetchMedia().performUpgrade(prefs)
         assertThat(prefs.getString("syncFetchMedia", null), equalTo("never"))
     }
@@ -247,47 +247,47 @@ class PreferenceUpgradeServiceTest : AndroidTest {
         assertEquals(UpgradeThemes.THEME_NIGHT, targetContext.getString(R.string.theme_night_scheme_value))
 
         // Follow System -> Should remain Follow System, no sub-themes set
-        prefs.edit { putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_FOLLOW_SYSTEM) }
+        prefs.edit { putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_FOLLOW_SYSTEM) }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_FOLLOW_SYSTEM))
-        assertThat(prefs.contains(UpgradeThemes.KEY_DAY_THEME), equalTo(false))
-        assertThat(prefs.contains(UpgradeThemes.KEY_NIGHT_THEME), equalTo(false))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_FOLLOW_SYSTEM))
+        assertThat(prefs.contains(UpgradeThemes.PREF_DAY_THEME), equalTo(false))
+        assertThat(prefs.contains(UpgradeThemes.PREF_NIGHT_THEME), equalTo(false))
 
         // Light -> Day + dayTheme: Light
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_LIGHT)
-            remove(UpgradeThemes.KEY_DAY_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_LIGHT)
+            remove(UpgradeThemes.PREF_DAY_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
-        assertThat(prefs.getString(UpgradeThemes.KEY_DAY_THEME, null), equalTo(UpgradeThemes.THEME_LIGHT))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
+        assertThat(prefs.getString(UpgradeThemes.PREF_DAY_THEME, null), equalTo(UpgradeThemes.THEME_LIGHT))
 
         // Plain -> Day + dayTheme: Plain
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_PLAIN)
-            remove(UpgradeThemes.KEY_DAY_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_PLAIN)
+            remove(UpgradeThemes.PREF_DAY_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
-        assertThat(prefs.getString(UpgradeThemes.KEY_DAY_THEME, null), equalTo(UpgradeThemes.THEME_PLAIN))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_DAY))
+        assertThat(prefs.getString(UpgradeThemes.PREF_DAY_THEME, null), equalTo(UpgradeThemes.THEME_PLAIN))
 
         // Black -> Night + nightTheme: Black
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_BLACK)
-            remove(UpgradeThemes.KEY_NIGHT_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_BLACK)
+            remove(UpgradeThemes.PREF_NIGHT_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
-        assertThat(prefs.getString(UpgradeThemes.KEY_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_BLACK))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
+        assertThat(prefs.getString(UpgradeThemes.PREF_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_BLACK))
 
         // Dark -> Night + nightTheme: Dark
         prefs.edit {
-            putString(UpgradeThemes.KEY_APP_THEME, UpgradeThemes.THEME_DARK)
-            remove(UpgradeThemes.KEY_NIGHT_THEME)
+            putString(UpgradeThemes.PREF_APP_THEME, UpgradeThemes.THEME_DARK)
+            remove(UpgradeThemes.PREF_NIGHT_THEME)
         }
         upgrade.performUpgrade(prefs)
-        assertThat(prefs.getString(UpgradeThemes.KEY_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
-        assertThat(prefs.getString(UpgradeThemes.KEY_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_DARK))
+        assertThat(prefs.getString(UpgradeThemes.PREF_APP_THEME, null), equalTo(UpgradeThemes.THEME_NIGHT))
+        assertThat(prefs.getString(UpgradeThemes.PREF_NIGHT_THEME, null), equalTo(UpgradeThemes.THEME_DARK))
     }
 
     @Test

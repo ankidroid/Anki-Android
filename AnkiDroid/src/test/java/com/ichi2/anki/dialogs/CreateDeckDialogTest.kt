@@ -45,7 +45,7 @@ class CreateDeckDialogTest : RobolectricTest() {
 
     override fun setUp() {
         super.setUp()
-        getPreferences().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        getPreferences().edit { putBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, true) }
         ensureCollectionLoadIsSynchronous()
         activityScenario =
             ActivityScenario.launch(DeckPicker::class.java).apply {

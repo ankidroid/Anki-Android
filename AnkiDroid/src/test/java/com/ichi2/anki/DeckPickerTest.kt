@@ -182,16 +182,16 @@ class DeckPickerTest : RobolectricTest() {
     fun getPreviousVersionUpgradeFrom201to292() {
         val newVersion = 20900302 // 2.9.2
         val preferences = mock(SharedPreferences::class.java)
-        whenever(preferences.getLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, newVersion.toLong()))
+        whenever(preferences.getLong(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, newVersion.toLong()))
             .thenThrow(ClassCastException::class.java)
-        whenever(preferences.getInt(DeckPickerViewModel.UPGRADE_VERSION_KEY, newVersion))
+        whenever(preferences.getInt(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, newVersion))
             .thenThrow(ClassCastException::class.java)
-        whenever(preferences.getString(DeckPickerViewModel.UPGRADE_VERSION_KEY, ""))
+        whenever(preferences.getString(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, ""))
             .thenReturn("2.0.1")
         val editor = mock(SharedPreferences.Editor::class.java)
         whenever(preferences.edit()).thenReturn(editor)
         val updated = mock(SharedPreferences.Editor::class.java)
-        whenever(editor.remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)).thenReturn(updated)
+        whenever(editor.remove(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)).thenReturn(updated)
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             scenario.onActivity { deckPicker: DeckPicker ->
                 val previousVersion =
@@ -199,7 +199,7 @@ class DeckPickerTest : RobolectricTest() {
                 assertEquals(0, previousVersion)
             }
         }
-        verify(editor, times(1)).remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)
+        verify(editor, times(1)).remove(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)
         verify(updated, times(1)).apply()
     }
 
@@ -208,23 +208,23 @@ class DeckPickerTest : RobolectricTest() {
     fun getPreviousVersionUpgradeFrom202to292() {
         val newVersion: Long = 20900302 // 2.9.2
         val preferences = mock(SharedPreferences::class.java)
-        whenever(preferences.getLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, newVersion))
+        whenever(preferences.getLong(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, newVersion))
             .thenThrow(ClassCastException::class.java)
-        whenever(preferences.getInt(DeckPickerViewModel.UPGRADE_VERSION_KEY, 20900203))
+        whenever(preferences.getInt(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, 20900203))
             .thenThrow(ClassCastException::class.java)
-        whenever(preferences.getString(DeckPickerViewModel.UPGRADE_VERSION_KEY, ""))
+        whenever(preferences.getString(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, ""))
             .thenReturn("2.0.2")
         val editor = mock(SharedPreferences.Editor::class.java)
         whenever(preferences.edit()).thenReturn(editor)
         val updated = mock(SharedPreferences.Editor::class.java)
-        whenever(editor.remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)).thenReturn(updated)
+        whenever(editor.remove(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)).thenReturn(updated)
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             scenario.onActivity { deckPicker: DeckPicker ->
                 val previousVersion = deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
                 assertEquals(40, previousVersion)
             }
         }
-        verify(editor, times(1)).remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)
+        verify(editor, times(1)).remove(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)
         verify(updated, times(1)).apply()
     }
 
@@ -234,21 +234,21 @@ class DeckPickerTest : RobolectricTest() {
         val prevVersion = 20800301 // 2.8.1
         val newVersion: Long = 20900301 // 2.9.1
         val preferences = mock(SharedPreferences::class.java)
-        whenever(preferences.getLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, newVersion))
+        whenever(preferences.getLong(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, newVersion))
             .thenThrow(ClassCastException::class.java)
-        whenever(preferences.getInt(DeckPickerViewModel.UPGRADE_VERSION_KEY, 20900203))
+        whenever(preferences.getInt(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, 20900203))
             .thenReturn(prevVersion)
         val editor = mock(SharedPreferences.Editor::class.java)
         whenever(preferences.edit()).thenReturn(editor)
         val updated = mock(SharedPreferences.Editor::class.java)
-        whenever(editor.remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)).thenReturn(updated)
+        whenever(editor.remove(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)).thenReturn(updated)
         ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
             scenario.onActivity { deckPicker: DeckPicker ->
                 val previousVersion = deckPicker.viewModel.getPreviousVersion(preferences, newVersion)
                 assertEquals(prevVersion.toLong(), previousVersion)
             }
         }
-        verify(editor, times(1)).remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)
+        verify(editor, times(1)).remove(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)
         verify(updated, times(1)).apply()
     }
 
@@ -257,7 +257,7 @@ class DeckPickerTest : RobolectricTest() {
         val prevVersion: Long = 20900301 // 2.9.1
         val newVersion: Long = 20900302 // 2.9.2
         val preferences = mock(SharedPreferences::class.java)
-        whenever(preferences.getLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, newVersion))
+        whenever(preferences.getLong(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, newVersion))
             .thenReturn(prevVersion)
         val editor = mock(SharedPreferences.Editor::class.java)
         whenever(preferences.edit()).thenReturn(editor)
@@ -267,7 +267,7 @@ class DeckPickerTest : RobolectricTest() {
                 assertEquals(prevVersion, previousVersion)
             }
         }
-        verify(editor, never()).remove(DeckPickerViewModel.UPGRADE_VERSION_KEY)
+        verify(editor, never()).remove(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)
     }
 
     @Test
@@ -2057,7 +2057,7 @@ class DeckPickerTest : RobolectricTest() {
 
 fun RobolectricTest.setIntroductionSlidesShown(shown: Boolean) {
     getPreferences().edit {
-        putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, shown)
+        putBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, shown)
     }
 }
 

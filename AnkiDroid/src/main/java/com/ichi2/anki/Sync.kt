@@ -44,7 +44,7 @@ import timber.log.Timber
 import kotlin.time.Duration.Companion.milliseconds
 
 object SyncPreferences {
-    const val CURRENT_SYNC_URI = "currentSyncUri"
+    const val PREF_CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
 }

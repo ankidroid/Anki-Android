@@ -21,8 +21,8 @@ class StudyScreenRepository(
 ) {
     val isMarkShownInToolbar: Boolean
     val isFlagShownInToolbar: Boolean
-    var isWhiteboardEnabled by prefs.booleanPref(KEY_WHITEBOARD_ENABLED, false)
-    var isRecordVoiceEnabled by prefs.booleanPref(KEY_RECORD_VOICE_ENABLED, false)
+    var isWhiteboardEnabled by prefs.booleanPref(PREF_WHITEBOARD_ENABLED, false)
+    var isRecordVoiceEnabled by prefs.booleanPref(PREF_RECORD_VOICE_ENABLED, false)
     val isHtmlTypeAnswerEnabled get() = prefs.isHtmlTypeAnswerEnabled
 
     init {
@@ -61,7 +61,7 @@ class StudyScreenRepository(
     suspend fun getShouldShowNextTimes(): Boolean = CollectionPreferences.getShowIntervalOnButtons()
 
     companion object {
-        private const val KEY_WHITEBOARD_ENABLED = "whiteboardEnabled"
-        private const val KEY_RECORD_VOICE_ENABLED = "recordVoiceEnabled"
+        private const val PREF_WHITEBOARD_ENABLED = "whiteboardEnabled"
+        private const val PREF_RECORD_VOICE_ENABLED = "recordVoiceEnabled"
     }
 }

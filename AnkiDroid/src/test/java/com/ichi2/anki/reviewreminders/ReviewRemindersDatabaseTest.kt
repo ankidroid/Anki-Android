@@ -265,9 +265,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         expectedDeletedKeys: Set<String>,
         inputKeys: Set<String> =
             setOf(
-                ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
-                ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
-                ReviewRemindersDatabase.APP_WIDE_KEY,
+                ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did1,
+                ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did2,
+                ReviewRemindersDatabase.PREF_APP_WIDE_REMINDERS,
             ),
         access: suspend () -> ReviewReminderGroup,
     ) {
@@ -287,7 +287,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         runTest {
             corruptedRemindersTest(
                 corruptedValue = "corrupted_and_invalid_json_string",
-                expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1),
+                expectedDeletedKeys = setOf(ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did1),
             ) {
                 ReviewRemindersDatabase.getRemindersForScope(scope1)
             }
@@ -298,7 +298,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
         runTest {
             corruptedRemindersTest(
                 corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
-                expectedDeletedKeys = setOf(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2),
+                expectedDeletedKeys = setOf(ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did2),
             ) {
                 ReviewRemindersDatabase.getRemindersForScope(scope2)
             }
@@ -315,7 +315,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                             "corrupted_and_invalid_json_string",
                         ),
                     ),
-                expectedDeletedKeys = setOf(ReviewRemindersDatabase.APP_WIDE_KEY),
+                expectedDeletedKeys = setOf(ReviewRemindersDatabase.PREF_APP_WIDE_REMINDERS),
             ) {
                 ReviewRemindersDatabase.getRemindersForScope(appScope)
             }
@@ -328,9 +328,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 corruptedValue = "corrupted_and_invalid_json_string",
                 expectedDeletedKeys =
                     setOf(
-                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
-                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
-                        ReviewRemindersDatabase.APP_WIDE_KEY,
+                        ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did1,
+                        ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did2,
+                        ReviewRemindersDatabase.PREF_APP_WIDE_REMINDERS,
                     ),
             ) {
                 ReviewRemindersDatabase.getAllReminders()
@@ -344,9 +344,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                 corruptedValue = Json.encodeToString(Pair("not a group of", "review reminders")),
                 expectedDeletedKeys =
                     setOf(
-                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
-                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
-                        ReviewRemindersDatabase.APP_WIDE_KEY,
+                        ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did1,
+                        ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did2,
+                        ReviewRemindersDatabase.PREF_APP_WIDE_REMINDERS,
                     ),
             ) {
                 ReviewRemindersDatabase.getAllReminders()
@@ -366,9 +366,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
                     ),
                 expectedDeletedKeys =
                     setOf(
-                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1,
-                        ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did2,
-                        ReviewRemindersDatabase.APP_WIDE_KEY,
+                        ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did1,
+                        ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did2,
+                        ReviewRemindersDatabase.PREF_APP_WIDE_REMINDERS,
                     ),
             ) {
                 ReviewRemindersDatabase.getAllReminders()
@@ -386,7 +386,7 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
             assertThat(attemptedRetrieval, equalTo(emptyReminderGroup))
             assertThat(
                 ReviewRemindersDatabase.remindersSharedPrefs.all.keys,
-                not(hasItem(ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did1)),
+                not(hasItem(ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did1)),
             )
         }
 
@@ -563,9 +563,9 @@ class ReviewRemindersDatabaseTest : RobolectricTest() {
 
             val key =
                 if (did != null) {
-                    ReviewRemindersDatabase.DECK_SPECIFIC_KEY + did
+                    ReviewRemindersDatabase.PREF_DECK_SPECIFIC_REMINDERS + did
                 } else {
-                    ReviewRemindersDatabase.APP_WIDE_KEY
+                    ReviewRemindersDatabase.PREF_APP_WIDE_REMINDERS
                 }
             ReviewRemindersDatabase.remindersSharedPrefs.edit(commit = true) {
                 putString(key, Json.encodeToString(packagedInput))

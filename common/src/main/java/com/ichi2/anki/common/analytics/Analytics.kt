@@ -33,7 +33,7 @@ interface UsageAnalytics {
 
     companion object {
         /** Bumped to `_v2` for GA4 so consent given for the old backend isn't reused. */
-        const val ANALYTICS_OPTIN_KEY = "analytics_opt_in_v2"
+        const val PREF_ANALYTICS_OPTIN = "analytics_opt_in_v2"
     }
 }
 

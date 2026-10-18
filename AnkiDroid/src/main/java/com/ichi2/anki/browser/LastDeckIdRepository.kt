@@ -25,14 +25,14 @@ class SharedPreferencesLastDeckIdRepository : LastDeckIdRepository {
         get() =
             appContext
                 .getSharedPreferences(PERSISTENT_STATE_FILE, 0)
-                .getLong(LAST_DECK_ID_KEY, Decks.NOT_FOUND_DECK_ID)
+                .getLong(PREF_LAST_DECK_ID, Decks.NOT_FOUND_DECK_ID)
                 .takeUnless { it == Decks.NOT_FOUND_DECK_ID }
         set(value) =
             if (value == null) {
                 clearLastDeckId()
             } else {
                 appContext.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
-                    putLong(LAST_DECK_ID_KEY, value)
+                    putLong(PREF_LAST_DECK_ID, value)
                 }
             }
 
@@ -40,11 +40,11 @@ class SharedPreferencesLastDeckIdRepository : LastDeckIdRepository {
         fun clearLastDeckId() {
             val context: Context = appContext
             context.getSharedPreferences(PERSISTENT_STATE_FILE, 0).edit {
-                remove(LAST_DECK_ID_KEY)
+                remove(PREF_LAST_DECK_ID)
             }
         }
 
         private const val PERSISTENT_STATE_FILE = "DeckPickerState"
-        private const val LAST_DECK_ID_KEY = "lastDeckId"
+        private const val PREF_LAST_DECK_ID = "lastDeckId"
     }
 }

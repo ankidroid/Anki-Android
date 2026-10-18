@@ -43,7 +43,7 @@ class AllActivitiesRecreationTest : RobolectricTest() {
     @Before
     fun startAsAnExistingUser() {
         grantWritePermissions()
-        targetContext.sharedPrefs().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
+        targetContext.sharedPrefs().edit { putBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, true) }
     }
 
     @Before

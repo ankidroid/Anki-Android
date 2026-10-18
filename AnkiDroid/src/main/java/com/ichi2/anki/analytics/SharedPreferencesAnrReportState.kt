@@ -11,10 +11,10 @@ internal class SharedPreferencesAnrReportState(
     private val preferences get() = context.getSharedPreferences("historical_anrs", Context.MODE_PRIVATE)
 
     val lastProcessedTimestamp: Long
-        get() = preferences.getLong(TIMESTAMP_KEY, 0L)
+        get() = preferences.getLong(PREF_TIMESTAMP, 0L)
 
     @SuppressLint("UseKtx") // The commit result decides whether it is safe to report this exit.
-    fun markProcessed(timestamp: Long): Boolean = preferences.edit().putLong(TIMESTAMP_KEY, timestamp).commit()
+    fun markProcessed(timestamp: Long): Boolean = preferences.edit().putLong(PREF_TIMESTAMP, timestamp).commit()
 }
 
-private const val TIMESTAMP_KEY = "checked_through"
+private const val PREF_TIMESTAMP = "checked_through"

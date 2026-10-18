@@ -1952,7 +1952,7 @@ open class DeckPicker :
         } else if (skip < 2 && !InitialActivity.isLatestVersion(preferences)) {
             Timber.i("AnkiDroid is being updated and a collection already exists.")
             // The user might appreciate us now, see if they will help us get better?
-            if (!preferences.contains(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY)) {
+            if (!preferences.contains(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN)) {
                 displayAnalyticsOptInDialog()
             }
 
@@ -1963,14 +1963,14 @@ open class DeckPicker :
             val current = VersionUtils.pkgVersionCode
             Timber.i("Current AnkiDroid version: %s", current)
             val previous: Long =
-                if (preferences.contains(DeckPickerViewModel.UPGRADE_VERSION_KEY)) {
+                if (preferences.contains(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION)) {
                     // Upgrading currently installed app
                     viewModel.getPreviousVersion(preferences, current)
                 } else {
                     // Fresh install
                     current
                 }
-            preferences.edit { putLong(DeckPickerViewModel.UPGRADE_VERSION_KEY, current) }
+            preferences.edit { putLong(DeckPickerViewModel.PREF_LAST_UPGRADE_VERSION, current) }
 
             val upgradedPreferences = InitialActivity.upgradePreferences(this, previous)
             // Integrity check loads asynchronously and then restart deck picker when finished

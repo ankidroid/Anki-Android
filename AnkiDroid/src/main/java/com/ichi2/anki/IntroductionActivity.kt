@@ -82,7 +82,7 @@ class IntroductionActivity :
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
         Timber.i("Opening deck picker, login: %b", result == RESULT_SYNC_PROFILE)
-        this.sharedPrefs().edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
+        this.sharedPrefs().edit { putBoolean(PREF_INTRODUCTION_SLIDES_SHOWN, true) }
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         if (result == RESULT_SYNC_PROFILE) {
@@ -101,8 +101,8 @@ class IntroductionActivity :
          * Key for the preference recording that the slide "Study less/ Remember more" offering to
          * get started or sync from ankiweb, was displayed. If so don't display it again.
          */
-        const val INTRODUCTION_SLIDES_SHOWN = "IntroductionSlidesShown"
+        const val PREF_INTRODUCTION_SLIDES_SHOWN = "IntroductionSlidesShown"
     }
 }
 
-internal fun Context.hasShownAppIntro(): Boolean = sharedPrefs().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
+internal fun Context.hasShownAppIntro(): Boolean = sharedPrefs().getBoolean(IntroductionActivity.PREF_INTRODUCTION_SLIDES_SHOWN, false)

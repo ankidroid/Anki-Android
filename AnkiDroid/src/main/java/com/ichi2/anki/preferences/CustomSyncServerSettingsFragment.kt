@@ -69,7 +69,7 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
                 key == SyncPreferences.CUSTOM_SYNC_ENABLED
             ) {
                 prefs.edit {
-                    remove(SyncPreferences.CURRENT_SYNC_URI)
+                    remove(SyncPreferences.PREF_CURRENT_SYNC_URI)
                 }
             }
         }

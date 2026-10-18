@@ -32,24 +32,24 @@ class AnkiDroidUsageAnalyticsTest : RobolectricTest() {
         // itself, so a mismatch silently stops it controlling analytics
         assertThat(
             targetContext.getString(R.string.analytics_opt_in_key),
-            equalTo(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY),
+            equalTo(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN),
         )
     }
 
     @Test
     fun `opt-in key is the v2 key`() {
-        assertThat(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, equalTo("analytics_opt_in_v2"))
+        assertThat(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN, equalTo("analytics_opt_in_v2"))
     }
 
     @Test
     fun `analytics is disabled by default`() {
-        assertThat(getPreferences().getBoolean(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, false), equalTo(false))
+        assertThat(getPreferences().getBoolean(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN, false), equalTo(false))
     }
 
     @Test
     fun `a preference write from elsewhere rebuilds the client`() {
         withStubbedRebuild {
-            getPreferences().edit(commit = true) { putBoolean(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, true) }
+            getPreferences().edit(commit = true) { putBoolean(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN, true) }
 
             assertThat(AnkiDroidUsageAnalytics.isEnabled, equalTo(true))
             verify(exactly = 1) { AnkiDroidUsageAnalytics.reinitialize(any()) }
@@ -59,7 +59,7 @@ class AnkiDroidUsageAnalyticsTest : RobolectricTest() {
     @Test
     fun `a write that leaves the value unchanged does not rebuild the client`() {
         withStubbedRebuild {
-            getPreferences().edit(commit = true) { putBoolean(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY, false) }
+            getPreferences().edit(commit = true) { putBoolean(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN, false) }
 
             verify(exactly = 0) { AnkiDroidUsageAnalytics.reinitialize(any()) }
         }
@@ -123,7 +123,7 @@ class AnkiDroidUsageAnalyticsTest : RobolectricTest() {
         } finally {
             // clear the preference before unmocking, so the resulting change
             // doesn't reach the real `reinitialize`
-            getPreferences().edit(commit = true) { remove(AnkiDroidUsageAnalytics.ANALYTICS_OPTIN_KEY) }
+            getPreferences().edit(commit = true) { remove(AnkiDroidUsageAnalytics.PREF_ANALYTICS_OPTIN) }
             unmockkObject(AnkiDroidUsageAnalytics)
             AnalyticsExceptionHandler.uninstall()
         }
