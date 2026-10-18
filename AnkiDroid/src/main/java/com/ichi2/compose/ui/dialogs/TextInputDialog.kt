@@ -35,7 +35,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CommonString
 import com.ichi2.compose.ui.preview.AnkiDroidPreview
-import com.ichi2.compose.ui.preview.ThemePreviews
+import com.ichi2.compose.ui.preview.DialogPreviews
 
 /**
  * Dialog asking the user for a single line of text. Compose counterpart of
@@ -170,7 +170,7 @@ private fun TextInputDialogCard(
     }
 }
 
-@ThemePreviews
+@DialogPreviews
 @Composable
 private fun TextInputDialogPreview() {
     AnkiDroidPreview {

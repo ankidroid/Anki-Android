@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
  *
  * Apply to any private `*Preview` function in a composable file so the IDE
  * shows both variants side-by-side without duplicating @Preview blocks.
+ * Use [DialogPreviews] for dialogs that need a transparent preview background.
  */
 @Preview(
     name = "Light",
