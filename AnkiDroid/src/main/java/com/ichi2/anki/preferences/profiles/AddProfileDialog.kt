@@ -11,7 +11,7 @@ import com.ichi2.anki.multiprofile.ProfileName
 import com.ichi2.anki.multiprofile.ProfileName.ValidationResult
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.compose.ui.dialogs.TextInputDialog
-import com.ichi2.compose.ui.preview.ThemePreviews
+import com.ichi2.compose.ui.preview.DialogPreviews
 
 /**
  * Dialog asking for the display name of a new profile.
@@ -47,7 +47,7 @@ fun AddProfileDialog(
     )
 }
 
-@ThemePreviews
+@DialogPreviews
 @Composable
 private fun AddProfileDialogPreview() {
     AnkiDroidTheme {
