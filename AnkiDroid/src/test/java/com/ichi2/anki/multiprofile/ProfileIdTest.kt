@@ -16,7 +16,7 @@ class ProfileIdTest {
     }
 
     @Test
-    fun `generate creates unique IDs using the purely random portion of a UUID`() {
+    fun `generate uses the purely random portion of a UUID`() {
         val iterations = 1000
         val generatedIds = List(iterations) { ProfileId.generate().value }
 
@@ -24,9 +24,6 @@ class ProfileIdTest {
             assertTrue("ID should start with p_", id.startsWith("p_"))
             assertEquals("ID length should be 10 (p_ + 8 hex chars)", 10, id.length)
         }
-
-        val uniqueIds = generatedIds.toSet()
-        assertEquals("All $iterations generated IDs should be unique", iterations, uniqueIds.size)
 
         val prefixLength = 2
         val hexLength = 8

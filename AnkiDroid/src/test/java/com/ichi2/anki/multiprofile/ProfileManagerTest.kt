@@ -35,6 +35,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
+import java.util.UUID
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -338,6 +339,24 @@ class ProfileManagerTest {
 
         assertEquals(1, allProfiles.size)
         assertTrue(allProfiles.containsKey(ProfileId.DEFAULT))
+    }
+
+    @Test
+    fun `a new profile ID that matches an existing profile is generated again`() {
+        val manager = ProfileManager.create(context)
+        mockkStatic(UUID::class)
+        every { UUID.randomUUID() } returnsMany
+            listOf(
+                UUID.fromString("aaaaaaaa-0000-4000-8000-000000000000"),
+                UUID.fromString("aaaaaaaa-1111-4111-8111-111111111111"),
+                UUID.fromString("bbbbbbbb-0000-4000-8000-000000000000"),
+            )
+
+        val first = manager.createNewProfile(ProfileName.fromTrustedSource("Work"))
+        val second = manager.createNewProfile(ProfileName.fromTrustedSource("Personal"))
+
+        assertEquals(ProfileId("p_aaaaaaaa"), first)
+        assertEquals(ProfileId("p_bbbbbbbb"), second)
     }
 
     @Test
