@@ -90,7 +90,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
             deck =
                 BundleCompat.getParcelable(
                     savedInstanceState,
-                    KEY_DECK,
+                    STATE_DECK,
                     SelectableDeck.Deck::class.java,
                 )
             binding.deckName.text = deck?.name
@@ -109,7 +109,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(KEY_DECK, deck)
+        outState.putParcelable(STATE_DECK, deck)
     }
 
     override fun onDestroy() {
@@ -209,6 +209,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(R.layout.activity_card_analysis_wi
         }
 
     companion object {
-        private const val KEY_DECK = "key_deck"
+        private const val STATE_DECK = "key_deck"
     }
 }

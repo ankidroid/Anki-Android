@@ -224,11 +224,11 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
             tabToCursorPositions[0] = hashMapOf()
             tabToViewId[0] = R.id.front_edit
         } else {
-            noteTypeId = savedInstanceState.getLong(EXTRA_NOTE_TYPE_ID)
-            noteId = savedInstanceState.getLong(EXTRA_NOTE_ID)
-            startingOrdId = savedInstanceState.getInt(EXTRA_START_ORD_ID)
-            tabToCursorPositions = savedInstanceState.getSerializableCompat<HashMap<Int, HashMap<Int, Int>>>(TAB_TO_CURSOR_POSITION_KEY)!!
-            tabToViewId = savedInstanceState.getSerializableCompat<HashMap<Int, Int?>>(TAB_TO_VIEW_ID)!!
+            noteTypeId = savedInstanceState.getLong(STATE_NOTE_TYPE_ID)
+            noteId = savedInstanceState.getLong(STATE_NOTE_ID)
+            startingOrdId = savedInstanceState.getInt(STATE_STARTING_TEMPLATE_ORDINAL)
+            tabToCursorPositions = savedInstanceState.getSerializableCompat<HashMap<Int, HashMap<Int, Int>>>(STATE_TAB_TO_CURSOR_POSITION)!!
+            tabToViewId = savedInstanceState.getSerializableCompat<HashMap<Int, Int?>>(STATE_TAB_TO_VIEW_ID)!!
             tempNoteType = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
@@ -342,11 +342,11 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
     public override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
             tempNoteType?.let { putAll(it.toBundle()) }
-            putLong(EXTRA_NOTE_TYPE_ID, noteTypeId)
-            putLong(EXTRA_NOTE_ID, noteId)
-            putInt(EXTRA_START_ORD_ID, startingOrdId)
-            putSerializable(TAB_TO_VIEW_ID, tabToViewId)
-            putSerializable(TAB_TO_CURSOR_POSITION_KEY, tabToCursorPositions)
+            putLong(STATE_NOTE_TYPE_ID, noteTypeId)
+            putLong(STATE_NOTE_ID, noteId)
+            putInt(STATE_STARTING_TEMPLATE_ORDINAL, startingOrdId)
+            putSerializable(STATE_TAB_TO_VIEW_ID, tabToViewId)
+            putSerializable(STATE_TAB_TO_CURSOR_POSITION, tabToCursorPositions)
             super.onSaveInstanceState(this)
         }
     }
@@ -1696,12 +1696,15 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
     }
 
     companion object {
-        private const val TAB_TO_CURSOR_POSITION_KEY = "tabToCursorPosition"
+        private const val STATE_TAB_TO_CURSOR_POSITION = "tabToCursorPosition"
         private const val EDITOR_VIEW_ID_KEY = "editorViewId"
-        private const val TAB_TO_VIEW_ID = "tabToViewId"
+        private const val STATE_TAB_TO_VIEW_ID = "tabToViewId"
         const val EXTRA_NOTE_TYPE_ID = "noteTypeId"
         private const val EXTRA_NOTE_ID = "noteId"
         private const val EXTRA_START_ORD_ID = "ordId"
+        private const val STATE_NOTE_TYPE_ID = "noteTypeId"
+        private const val STATE_NOTE_ID = "noteId"
+        private const val STATE_STARTING_TEMPLATE_ORDINAL = "ordId"
         private const val CARD_INDEX = "card_ord"
 
         // Keys for saving pane weights in SharedPreferences

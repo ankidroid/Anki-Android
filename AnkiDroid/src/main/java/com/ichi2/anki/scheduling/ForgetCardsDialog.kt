@@ -74,8 +74,8 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val sharedPrefs = requireContext().sharedPrefs()
         if (savedInstanceState != null) {
-            restoreOriginalPositionIfPossible = savedInstanceState.getBoolean(ARG_RESTORE_ORIGINAL, true)
-            resetRepetitionAndLapseCounts = savedInstanceState.getBoolean(ARG_RESET_REPETITION, false)
+            restoreOriginalPositionIfPossible = savedInstanceState.getBoolean(STATE_RESTORE_ORIGINAL, true)
+            resetRepetitionAndLapseCounts = savedInstanceState.getBoolean(STATE_RESET_REPETITION, false)
         } else {
             // If no saved instance state, load the last saved preferences for restore position and reset counts.
             with(sharedPrefs) {
@@ -126,8 +126,8 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
-        outState.putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
+        outState.putBoolean(STATE_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+        outState.putBoolean(STATE_RESET_REPETITION, resetRepetitionAndLapseCounts)
     }
 
     companion object {
@@ -137,6 +137,8 @@ class ForgetCardsDialog : AnalyticsDialogFragment() {
 
         private const val ARG_RESTORE_ORIGINAL = "key_restore_original"
         private const val ARG_RESET_REPETITION = "key_reset_repetition"
+        private const val STATE_RESTORE_ORIGINAL = "key_restore_original"
+        private const val STATE_RESET_REPETITION = "key_reset_repetition"
     }
 }
 

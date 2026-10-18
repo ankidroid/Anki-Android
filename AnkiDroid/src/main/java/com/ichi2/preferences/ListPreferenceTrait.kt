@@ -95,17 +95,17 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             entries = preference.entryKeys.toTypedArray()
             entryValues = preference.entryValues.toTypedArray()
         } else {
-            clickedDialogEntryIndex = savedInstanceState.getInt(SAVE_STATE_INDEX, 0)
-            entries = savedInstanceState.getCharSequenceArray(SAVE_STATE_ENTRIES)!!
-            entryValues = savedInstanceState.getCharSequenceArray(SAVE_STATE_ENTRY_VALUES)!!
+            clickedDialogEntryIndex = savedInstanceState.getInt(STATE_INDEX, 0)
+            entries = savedInstanceState.getCharSequenceArray(STATE_ENTRIES)!!
+            entryValues = savedInstanceState.getCharSequenceArray(STATE_ENTRY_VALUES)!!
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(SAVE_STATE_INDEX, clickedDialogEntryIndex)
-        outState.putCharSequenceArray(SAVE_STATE_ENTRIES, entries)
-        outState.putCharSequenceArray(SAVE_STATE_ENTRY_VALUES, entryValues)
+        outState.putInt(STATE_INDEX, clickedDialogEntryIndex)
+        outState.putCharSequenceArray(STATE_ENTRIES, entries)
+        outState.putCharSequenceArray(STATE_ENTRY_VALUES, entryValues)
     }
 
     private val listPreference get() = preference as ListPreferenceTrait
@@ -142,9 +142,9 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     }
 
     companion object {
-        private const val SAVE_STATE_INDEX = "ListPreferenceDialogFragment.index"
-        private const val SAVE_STATE_ENTRIES = "ListPreferenceDialogFragment.entries"
-        private const val SAVE_STATE_ENTRY_VALUES = "ListPreferenceDialogFragment.entryValues"
+        private const val STATE_INDEX = "ListPreferenceDialogFragment.index"
+        private const val STATE_ENTRIES = "ListPreferenceDialogFragment.entries"
+        private const val STATE_ENTRY_VALUES = "ListPreferenceDialogFragment.entryValues"
 
         fun newInstance(key: String?): ListPreferenceDialogFragment =
             ListPreferenceDialogFragment().apply {

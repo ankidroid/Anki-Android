@@ -45,13 +45,13 @@ class CardTemplateNotetype(
 
     fun toBundle(): Bundle =
         Bundle().apply {
-            putString(INTENT_MODEL_FILENAME, saveTempNoteType(appContext, notetype))
-            putSerializable("mTemplateChanges", templateChanges)
+            putString(STATE_EDITED_NOTE_TYPE_FILENAME, saveTempNoteType(appContext, notetype))
+            putSerializable(STATE_TEMPLATE_CHANGES, templateChanges)
         }
 
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
-            templateChanges = bundle.getSerializableCompat("mTemplateChanges")!!
+            templateChanges = bundle.getSerializableCompat(STATE_TEMPLATE_CHANGES)!!
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
@@ -142,19 +142,20 @@ class CardTemplateNotetype(
         get() = changes.adjustedTemplateChanges
 
     companion object {
-        const val INTENT_MODEL_FILENAME = "editedNoteTypeFilename"
+        private const val STATE_EDITED_NOTE_TYPE_FILENAME = "editedNoteTypeFilename"
+        private const val STATE_TEMPLATE_CHANGES = "mTemplateChanges"
 
         /**
          * Load the TemporaryNoteType from the filename included in a Bundle
          *
-         * @param bundle a Bundle that should contain persisted JSON under INTENT_MODEL_FILENAME key
+         * @param bundle a Bundle that should contain persisted JSON under STATE_EDITED_NOTE_TYPE_FILENAME key
          * @return re-hydrated TemporaryNoteType or null if there was a problem, null means should reload from database
          */
         fun fromBundle(bundle: Bundle): CardTemplateNotetype? {
-            val editedNoteTypeFileName = bundle.getString(INTENT_MODEL_FILENAME)
+            val editedNoteTypeFileName = bundle.getString(STATE_EDITED_NOTE_TYPE_FILENAME)
             // Bundle.getString is @Nullable, so we have to check.
             if (editedNoteTypeFileName == null) {
-                Timber.d("fromBundle() - note type file name under key %s", INTENT_MODEL_FILENAME)
+                Timber.d("fromBundle() - note type file name under key %s", STATE_EDITED_NOTE_TYPE_FILENAME)
                 return null
             }
             Timber.d("onCreate() loading saved note type file %s", editedNoteTypeFileName)

@@ -71,7 +71,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
         }
         when {
             savedInstanceState != null ->
-                initializeUi(savedInstanceState.getString(EXTRA_QUESTION_FORMAT), savedInstanceState.getString(EXTRA_ANSWER_FORMAT))
+                initializeUi(savedInstanceState.getString(STATE_QUESTION_FORMAT), savedInstanceState.getString(STATE_ANSWER_FORMAT))
             intent.extras != null ->
                 initializeUi(intent.getStringExtra(EXTRA_QUESTION_FORMAT), intent.getStringExtra(EXTRA_ANSWER_FORMAT))
             else -> {
@@ -141,8 +141,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(EXTRA_QUESTION_FORMAT, questionFormat)
-        outState.putString(EXTRA_ANSWER_FORMAT, answerFormat)
+        outState.putString(STATE_QUESTION_FORMAT, questionFormat)
+        outState.putString(STATE_ANSWER_FORMAT, answerFormat)
         super.onSaveInstanceState(outState)
     }
 
@@ -229,6 +229,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
     companion object {
         const val EXTRA_QUESTION_FORMAT = "bqfmt"
         const val EXTRA_ANSWER_FORMAT = "bafmt"
+        private const val STATE_QUESTION_FORMAT = "bqfmt"
+        private const val STATE_ANSWER_FORMAT = "bafmt"
 
         /** Specified the card browser should use the default template formatter  */
         const val VALUE_USE_DEFAULT = ""
