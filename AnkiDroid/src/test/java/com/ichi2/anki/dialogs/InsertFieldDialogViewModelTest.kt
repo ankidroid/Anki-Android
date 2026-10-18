@@ -104,8 +104,8 @@ class InsertFieldDialogViewModelTest {
     ) {
         val savedStateHandle =
             SavedStateHandle().apply {
-                this[InsertFieldDialogViewModel.KEY_FIELD_ITEMS] = ArrayList(fieldList)
-                this[InsertFieldDialogViewModel.KEY_INSERT_FIELD_METADATA] =
+                this[InsertFieldDialogViewModel.ARG_FIELD_NAMES] = ArrayList(fieldList)
+                this[InsertFieldDialogViewModel.ARG_INSERT_FIELD_METADATA] =
                     InsertFieldMetadata(
                         side = side,
                         cardTemplateName = "Card Template",

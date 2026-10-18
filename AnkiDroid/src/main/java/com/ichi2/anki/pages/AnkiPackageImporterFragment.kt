@@ -19,7 +19,7 @@ import com.ichi2.utils.WebViewVersion
 
 class AnkiPackageImporterFragment : PageFragment() {
     override val pagePath: String by lazy {
-        val filePath = requireArguments().getString(KEY_FILE_PATH)
+        val filePath = requireArguments().getString(ARG_FILE_PATH)
         "import-anki-package$filePath"
     }
 
@@ -85,13 +85,13 @@ class AnkiPackageImporterFragment : PageFragment() {
     }
 
     companion object {
-        private const val KEY_FILE_PATH = "filePath"
+        private const val ARG_FILE_PATH = "filePath"
 
         fun getIntent(
             context: Context,
             filePath: String,
         ): Intent {
-            val arguments = Bundle().apply { putString(KEY_FILE_PATH, filePath) }
+            val arguments = Bundle().apply { putString(ARG_FILE_PATH, filePath) }
             return SingleFragmentActivity.getIntent(context, AnkiPackageImporterFragment::class, arguments)
         }
     }

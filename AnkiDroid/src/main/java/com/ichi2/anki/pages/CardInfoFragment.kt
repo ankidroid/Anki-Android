@@ -9,7 +9,7 @@ import com.ichi2.anki.R
 
 class CardInfoFragment : PageFragment() {
     override val pagePath: String by lazy {
-        val cardId = requireArguments().getLong(KEY_CARD_ID)
+        val cardId = requireArguments().getLong(ARG_CARD_ID)
         "card-info/$cardId"
     }
 
@@ -18,14 +18,14 @@ class CardInfoFragment : PageFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val title = requireArguments().getString(KEY_TITLE)
+        val title = requireArguments().getString(ARG_TITLE)
         if (title != null) {
             view.findViewById<MaterialToolbar>(R.id.toolbar)?.setTitle(title)
         }
     }
 
     companion object {
-        const val KEY_CARD_ID = "cardId"
-        const val KEY_TITLE = "title"
+        const val ARG_CARD_ID = "cardId"
+        const val ARG_TITLE = "title"
     }
 }

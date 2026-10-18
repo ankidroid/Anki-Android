@@ -23,7 +23,7 @@ import com.ichi2.utils.WebViewVersion
  */
 class CsvImporter : PageFragment() {
     override val pagePath: String by lazy {
-        val filePath = requireArguments().getString(KEY_FILE_PATH)
+        val filePath = requireArguments().getString(ARG_FILE_PATH)
         "import-csv$filePath"
     }
 
@@ -90,7 +90,7 @@ class CsvImporter : PageFragment() {
     }
 
     companion object {
-        private const val KEY_FILE_PATH = "filePath"
+        private const val ARG_FILE_PATH = "filePath"
 
         /**
          * @param filePath path of the csv file that will be imported, which should be accessible by AnkiDroid
@@ -100,7 +100,7 @@ class CsvImporter : PageFragment() {
             context: Context,
             filePath: String,
         ): Intent {
-            val arguments = Bundle().apply { putString(KEY_FILE_PATH, filePath) }
+            val arguments = Bundle().apply { putString(ARG_FILE_PATH, filePath) }
             return SingleFragmentActivity.getIntent(context, fragmentClass = CsvImporter::class, arguments)
         }
     }

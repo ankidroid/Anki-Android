@@ -35,9 +35,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.databinding.DialogGenericRecyclerViewBinding
 import com.ichi2.anki.databinding.DialogInsertFieldBinding
 import com.ichi2.anki.databinding.ItemInsertSpecialFieldBinding
-import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_FIELD_ITEMS
-import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_INSERT_FIELD_METADATA
-import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.KEY_REQUEST_KEY
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.ARG_FIELD_NAMES
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.ARG_INSERT_FIELD_METADATA
+import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Companion.ARG_REQUEST_KEY
 import com.ichi2.anki.dialogs.InsertFieldDialogViewModel.Tab
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.SpecialField
@@ -56,7 +56,7 @@ import org.jetbrains.annotations.VisibleForTesting
 class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
     private val viewModel by viewModels<InsertFieldDialogViewModel>()
     private val requestKey: String by lazy {
-        requireArguments().requireString(KEY_REQUEST_KEY)
+        requireArguments().requireString(ARG_REQUEST_KEY)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -149,9 +149,9 @@ class InsertFieldDialog : DialogFragment(R.layout.dialog_insert_field) {
             InsertFieldDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putStringArrayList(KEY_FIELD_ITEMS, ArrayList(fieldItems))
-                        putParcelable(KEY_INSERT_FIELD_METADATA, metadata)
-                        putString(KEY_REQUEST_KEY, requestKey)
+                        putStringArrayList(ARG_FIELD_NAMES, ArrayList(fieldItems))
+                        putParcelable(ARG_INSERT_FIELD_METADATA, metadata)
+                        putString(ARG_REQUEST_KEY, requestKey)
                     }
             }
     }

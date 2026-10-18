@@ -23,7 +23,7 @@ class NoteTypeFieldEditorContextMenu : AnalyticsDialogFragment() {
         val availableItems = NoteTypeFieldEditorContextMenuAction.entries.sortedBy { it.order }
 
         return AlertDialog.Builder(requireActivity()).create {
-            setTitle(requireArguments().getString(KEY_LABEL))
+            setTitle(requireArguments().getString(ARG_LABEL))
             setItems(availableItems.map { resources.getString(it.actionTextId) }.toTypedArray()) { _, index ->
                 (activity as? NoteTypeFieldEditor)?.run { handleAction(availableItems[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
@@ -44,11 +44,11 @@ class NoteTypeFieldEditorContextMenu : AnalyticsDialogFragment() {
 
     companion object {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        const val KEY_LABEL = "key_label"
+        const val ARG_LABEL = "key_label"
 
         fun newInstance(label: String): NoteTypeFieldEditorContextMenu =
             NoteTypeFieldEditorContextMenu().apply {
-                arguments = Bundle().apply { putString(KEY_LABEL, label) }
+                arguments = Bundle().apply { putString(ARG_LABEL, label) }
             }
     }
 }

@@ -823,7 +823,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             CustomStudyDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putLong(CustomStudyViewModel.KEY_DID, deckId)
+                        putLong(CustomStudyViewModel.ARG_DECK_ID, deckId)
                     }
             }
 
@@ -840,7 +840,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
             CustomStudyDialog().apply {
                 arguments =
                     Bundle().apply {
-                        putLong(CustomStudyViewModel.KEY_DID, deckId)
+                        putLong(CustomStudyViewModel.ARG_DECK_ID, deckId)
                         putInt(ARG_SUB_DIALOG_ID, contextMenuAttribute.ordinal)
                     }
             }

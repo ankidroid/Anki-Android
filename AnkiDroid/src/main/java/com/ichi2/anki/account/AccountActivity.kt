@@ -17,7 +17,7 @@ import com.ichi2.anki.isLoggedIn
 class AccountActivity : SingleFragmentActivity() {
     companion object {
         /** Sees if we want to go back to the DeckPicker after login*/
-        const val START_FROM_DECKPICKER = "START_FOR_RESULT"
+        const val ARG_START_FOR_RESULT = "START_FOR_RESULT"
 
         /**
          * Returns an [Intent] to launch either [LoggedInFragment] or [LoginFragment]
@@ -39,7 +39,7 @@ class AccountActivity : SingleFragmentActivity() {
                 fragmentClass = if (isLoggedIn()) LoggedInFragment::class else LoginFragment::class,
                 arguments =
                     Bundle().apply {
-                        putBoolean(START_FROM_DECKPICKER, forResult)
+                        putBoolean(ARG_START_FOR_RESULT, forResult)
                     },
             ).setClass(context, AccountActivity::class.java)
     }

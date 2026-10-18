@@ -464,7 +464,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
                 arguments =
                     Bundle().apply {
                         putSerializable(
-                            SharedDecksActivity.DOWNLOAD_FILE,
+                            SharedDecksActivity.ARG_DOWNLOAD_FILE,
                             DownloadFile(
                                 url = "https://ankiweb.net/svc/shared/download-deck/1",
                                 userAgent = "AnkiDroid",

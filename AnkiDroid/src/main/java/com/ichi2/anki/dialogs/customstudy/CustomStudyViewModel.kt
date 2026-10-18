@@ -29,7 +29,7 @@ class CustomStudyViewModel(
 
     /** Required [DeckId] of the [Deck] for which the custom study session is being built. */
     val deckId: DeckId
-        get() = savedStateHandle.get<DeckId>(KEY_DID) ?: error("Deck id was not provided!")
+        get() = savedStateHandle.get<DeckId>(ARG_DECK_ID) ?: error("Deck id was not provided!")
 
     /*
      * Translates the user's selection into a specific study type.
@@ -48,7 +48,7 @@ class CustomStudyViewModel(
         /**
          * Required key for a [DeckId] which [CustomStudyDialog] expects to receive as an argument.
          */
-        const val KEY_DID = "key_did"
+        const val ARG_DECK_ID = "key_did"
         private const val KEY_CARDS_SELECTION_INDEX = "key_cards_selection_index"
     }
 }

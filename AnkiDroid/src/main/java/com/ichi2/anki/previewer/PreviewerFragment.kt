@@ -29,7 +29,7 @@ import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.navigate
 import com.ichi2.anki.common.utils.android.showThemedToast
 import com.ichi2.anki.databinding.FragmentPreviewerBinding
-import com.ichi2.anki.previewer.PreviewerFragment.Companion.CARD_IDS_FILE_ARG
+import com.ichi2.anki.previewer.PreviewerFragment.Companion.ARG_CARD_IDS_FILE
 import com.ichi2.anki.reviewer.BindingMap
 import com.ichi2.anki.reviewer.BindingProcessor
 import com.ichi2.anki.reviewer.MappableBinding
@@ -62,12 +62,12 @@ class PreviewerFragment :
             // Read before constructing the ViewModel, which immediately loads the first card.
             val ids =
                 try {
-                    arguments.requireParcelable<IdsFile>(CARD_IDS_FILE_ARG).getIds()
+                    arguments.requireParcelable<IdsFile>(ARG_CARD_IDS_FILE).getIds()
                 } catch (e: IOException) {
                     throw UnavailableSelectionException(e)
                 }
             if (ids.isEmpty()) throw UnavailableSelectionException()
-            PreviewerViewModel(handle, ids, requireNotNull(arguments.getIntOrNull(CURRENT_INDEX_ARG)))
+            PreviewerViewModel(handle, ids, requireNotNull(arguments.getIntOrNull(ARG_CURRENT_INDEX)))
         }
     }
 
@@ -308,11 +308,11 @@ class PreviewerFragment :
     ) : Exception("Unable to load preview selection", cause)
 
     companion object {
-        /** Index of the card to be first displayed among the IDs provided by [CARD_IDS_FILE_ARG] */
-        const val CURRENT_INDEX_ARG = "currentIndex"
+        /** Index of the card to be first displayed among the IDs provided by [ARG_CARD_IDS_FILE] */
+        const val ARG_CURRENT_INDEX = "currentIndex"
 
         /** Argument key to a [IdsFile] with the IDs of the cards to be displayed */
-        const val CARD_IDS_FILE_ARG = "cardIdsFile"
+        const val ARG_CARD_IDS_FILE = "cardIdsFile"
 
         fun getIntent(
             context: Context,
@@ -321,8 +321,8 @@ class PreviewerFragment :
         ): Intent {
             val arguments =
                 Bundle().apply {
-                    putInt(CURRENT_INDEX_ARG, currentIndex)
-                    putParcelable(CARD_IDS_FILE_ARG, idsFile)
+                    putInt(ARG_CURRENT_INDEX, currentIndex)
+                    putParcelable(ARG_CARD_IDS_FILE, idsFile)
                 }
             return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }

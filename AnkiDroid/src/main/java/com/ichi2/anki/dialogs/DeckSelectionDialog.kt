@@ -113,7 +113,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     private fun getDeckNames(): ArrayList<SelectableDeck> =
-        BundleCompat.getParcelableArrayList(requireArguments(), DECK_NAMES, SelectableDeck::class.java)!!
+        BundleCompat.getParcelableArrayList(requireArguments(), ARG_DECK_NAMES, SelectableDeck::class.java)!!
 
     private fun setupMenu() {
         val toolbar: Toolbar = binding.toolbar
@@ -421,7 +421,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
         const val ARG_SKIP_EMPTY_DEFAULT = "arg_skip_empty_default"
         private const val ARG_TITLE = "arg_title"
         private const val ARG_TEMPLATE_EDITOR_MESSAGE = "arg_template_editor_message"
-        private const val DECK_NAMES = "deckNames"
+        private const val ARG_DECK_NAMES = "deckNames"
         private const val ARG_ALLOW_MULTIPLE_SELECTION = "arg_allow_multiple_selection"
 
         /** Creates a new instance of [DeckSelectionDialog]. */
@@ -440,7 +440,7 @@ class DeckSelectionDialog : AnalyticsDialogFragment() {
                     Bundle().apply {
                         putString(ARG_TEMPLATE_EDITOR_MESSAGE, templateEditorMessage)
                         putString(ARG_TITLE, title)
-                        putParcelableArrayList(DECK_NAMES, ArrayList(decks))
+                        putParcelableArrayList(ARG_DECK_NAMES, ArrayList(decks))
                         putString(ARG_REQUEST_KEY, requestKey)
                         putBoolean(ARG_ALLOW_MULTIPLE_SELECTION, allowMultipleSelection)
                         putBoolean(ARG_ALLOW_ALL, allowAll)
