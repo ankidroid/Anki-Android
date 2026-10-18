@@ -13,6 +13,7 @@ import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonPlurals
+import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntentHandler
@@ -362,7 +363,7 @@ class NotificationService : AnkiBroadcastReceiver() {
             val minCardsDue =
                 preferences
                     .getString(
-                        context.getString(R.string.pref_notifications_minimum_cards_due_key),
+                        context.getString(CommonPreferenceKey.pref_notifications_minimum_cards_due_key),
                         PENDING_NOTIFICATIONS_ONLY.toString(),
                     )!!
                     .toInt()

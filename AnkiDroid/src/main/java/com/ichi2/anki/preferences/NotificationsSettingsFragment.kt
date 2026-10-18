@@ -8,6 +8,7 @@ import android.content.Intent
 import androidx.core.app.PendingIntentCompat
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreferenceCompat
+import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.AdaptionUtil
 import com.ichi2.anki.common.time.TimeManager
@@ -32,7 +33,7 @@ class NotificationsSettingsFragment : SettingsFragment() {
         }
         // Minimum cards due
         // The number of cards that should be due today in a deck to justify adding a notification.
-        requirePreference<ListPreference>(R.string.pref_notifications_minimum_cards_due_key).apply {
+        requirePreference<ListPreference>(CommonPreferenceKey.pref_notifications_minimum_cards_due_key).apply {
             updateNotificationPreference(this)
             setOnPreferenceChangeListener { preference, newValue ->
                 updateNotificationPreference(preference as ListPreference)
