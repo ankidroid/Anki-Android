@@ -86,6 +86,30 @@ class ImportUtilsTest : RobolectricTest() {
     }
 
     @Test
+    fun `pending or trashed download returns an import failure without a crash report`() {
+        val uri = "content://import/pending.apkg".toUri()
+        val exception = IllegalStateException("Only owner is able to interact with pending/trashed item $uri")
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) { throw exception }
+
+        val result = importerWithFileName("pending.apkg").handleFileImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        assertEquals(exception, assertIs<ImportResult.Failure>(result).exception)
+        verifyNoInteractions(crashReporter)
+    }
+
+    @Test
+    fun `other illegal state errors from the source are still reported`() {
+        val uri = "content://import/illegal-state.apkg".toUri()
+        val exception = IllegalStateException("Provider failed")
+        shadowOf(targetContext.contentResolver).registerInputStreamSupplier(uri) { throw exception }
+
+        val result = importerWithFileName("illegal-state.apkg").handleFileImport(targetContext, Intent(Intent.ACTION_VIEW, uri))
+
+        assertEquals(exception, assertIs<ImportResult.Failure>(result).exception)
+        verify(crashReporter).sendExceptionReport(exception, "ImportUtils", null, false)
+    }
+
+    @Test
     fun `file not found while reading an open source is still reported`() {
         val uri = "content://import/unreadable.apkg".toUri()
         val exception = FileNotFoundException("Read failed after opening")
