@@ -24,10 +24,14 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
 import com.ichi2.utils.openInputStreamSafe
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,6 +40,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
@@ -59,6 +64,20 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
 
     @get:Rule
     val composeRule = createEmptyComposeRule()
+
+    private lateinit var originalCrashReporter: CrashReporter
+    private val crashReporter = mock<CrashReporter>()
+
+    @Before
+    fun captureCrashReports() {
+        originalCrashReporter = CrashReportService.getReporter()
+        CrashReportService.setReporter(crashReporter)
+    }
+
+    @After
+    fun restoreCrashReporter() {
+        CrashReportService.setReporter(originalCrashReporter)
+    }
 
     @Test
     fun `completed download opens the existing file for import`() {
@@ -251,6 +270,22 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         assertFalse(dialog.isShowing)
     }
 
+    @Test
+    fun `download manager rejecting the destination offers retry instead of crashing`() {
+        val failure = SecurityException("Unsupported path")
+        val download = startDownload(enqueueFailure = failure)
+
+        retryButton.assertExists()
+        verify(crashReporter).sendExceptionReport(failure, "SharedDecksDownloadFragment::downloadFile", null, false)
+
+        doReturn(2L).whenever(download.activity.downloadManager).enqueue(any())
+        retryButton.performSemanticsAction(SemanticsActions.OnClick)
+        download.file.writeText("deck contents")
+        download.complete(downloadId = 2L)
+
+        assertNotNull(shadowOf(download.activity).nextStartedActivity)
+    }
+
     /** 19876: AnkiWeb returns 429 to anonymous users downloading a second deck, asking them to log in */
     @Test
     fun `rate limited download while logged out prompts login instead of showing a generic error`() {
@@ -377,15 +412,22 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
             complete()
         }
 
-    private fun startDownload(): Download {
+    private fun startDownload(enqueueFailure: Exception? = null): Download {
         val activity = startActivityNormallyOpenCollectionWithIntent(SharedDecksActivity::class.java, Intent())
-        return setupDownload(activity)
+        return setupDownload(activity, enqueueFailure)
     }
 
-    private fun setupDownload(activity: SharedDecksActivity): Download {
+    private fun setupDownload(
+        activity: SharedDecksActivity,
+        enqueueFailure: Exception? = null,
+    ): Download {
         activity.downloadManager =
             mock {
-                on { enqueue(any()) } doReturn 1L
+                if (enqueueFailure != null) {
+                    on { enqueue(any()) } doThrow enqueueFailure
+                } else {
+                    on { enqueue(any()) } doReturn 1L
+                }
                 on { query(any()) } doAnswer { downloadCursor(DownloadManager.STATUS_RUNNING) }
             }
         val fragment =

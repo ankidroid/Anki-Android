@@ -261,7 +261,15 @@ class SharedDecksDownloadFragment : Fragment() {
 
         completedFile = null
         // Store unique download ID to be used when onReceiveBroadcast() of AnkiBroadcastReceiver gets executed.
-        downloadId = downloadManager.enqueue(downloadRequest)
+        downloadId =
+            try {
+                downloadManager.enqueue(downloadRequest)
+            } catch (e: SecurityException) {
+                CrashReportService.sendExceptionReport(e, "SharedDecksDownloadFragment::downloadFile")
+                viewModel.onDownloadStarted(currentFileName)
+                onDownloadFinished(DownloadOutcome.Failed)
+                return
+            }
         fileName = currentFileName
         isDownloadInProgress = true
         onBackPressedCallback.isEnabled = isDownloadInProgress
