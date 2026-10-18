@@ -202,8 +202,6 @@ import kotlin.math.roundToInt
 import com.ichi2.anki.common.android.R as CommonR
 import com.ichi2.anki.noteeditor.R as NoteEditorR
 
-const val CALLER_KEY = "caller"
-
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
  * sides: a question and an answer. Any number of fields can appear on each side. When you add a note to Anki, cards
@@ -2850,6 +2848,7 @@ class NoteEditorFragment :
         const val EXTRA_IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
         const val EXTRA_CARD_IDS = "EXTRA_CARD_IDS"
         const val REQUEST_DECK_SELECTION_NOTE_EDITOR = "request_deck_selection_note_editor"
+        private const val CALLER_KEY = "caller"
 
         // calling activity
         enum class NoteEditorCaller(
