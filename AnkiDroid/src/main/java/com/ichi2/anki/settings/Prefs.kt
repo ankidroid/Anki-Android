@@ -14,6 +14,7 @@ import com.ichi2.anki.CommonPreferenceKey
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.preferences.AnimationPreferences
+import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.preferences.SharedPreferencesProvider
@@ -37,7 +38,8 @@ object Prefs : PrefsRepository(AnkiDroidApp.sharedPreferencesProvider, AnkiDroid
 open class PrefsRepository protected constructor(
     private val preferences: SharedPreferencesProvider,
     private val resources: Resources,
-) : AnimationPreferences {
+) : AnimationPreferences,
+    NotificationPreferences {
     constructor(sharedPrefs: SharedPreferences, resources: Resources) : this(SharedPreferencesProvider { sharedPrefs }, resources)
 
     constructor(context: Context) : this(context.sharedPrefs(), context.resources)
@@ -277,7 +279,12 @@ open class PrefsRepository protected constructor(
     /**
      * Whether to enable the new review reminders notification system.
      */
-    var newReviewRemindersEnabled by booleanPref(CommonPreferenceKey.pref_new_review_reminders, false)
+    override var newReviewRemindersEnabled by booleanPref(CommonPreferenceKey.pref_new_review_reminders, defaultValue = false)
+
+    private val minimumCardsDueForNotification by stringPref(CommonPreferenceKey.pref_notifications_minimum_cards_due_key, "1000000")
+
+    override val legacyNotificationsEnabled: Boolean
+        get() = minimumCardsDueForNotification!!.toInt() < 1000000
 
     /**
      * Review reminder IDs are unique, starting at 0 and climbing upwards by one each time a new one is created.
