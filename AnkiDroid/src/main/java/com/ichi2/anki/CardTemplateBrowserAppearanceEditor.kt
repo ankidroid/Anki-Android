@@ -69,13 +69,17 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
             view.updatePadding(left = constraints.left, right = constraints.right, bottom = constraints.bottom)
             insets
         }
-        val bundle = savedInstanceState ?: intent.extras
-        if (bundle == null) {
-            showThemedToast(this, getString(CommonString.something_wrong), true)
-            finish()
-            return
+        when {
+            savedInstanceState != null ->
+                initializeUi(savedInstanceState.getString(EXTRA_QUESTION_FORMAT), savedInstanceState.getString(EXTRA_ANSWER_FORMAT))
+            intent.extras != null ->
+                initializeUi(intent.getStringExtra(EXTRA_QUESTION_FORMAT), intent.getStringExtra(EXTRA_ANSWER_FORMAT))
+            else -> {
+                showThemedToast(this, getString(CommonString.something_wrong), true)
+                finish()
+                return
+            }
         }
-        initializeUiFromBundle(bundle)
         // default result, only changed to RESULT_OK if actually saving changes
         setResult(RESULT_CANCELED)
         onBackPressedDispatcher.addCallback(discardChangesCallback)
@@ -142,9 +146,12 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity(R.layout.activity_card_
         super.onSaveInstanceState(outState)
     }
 
-    private fun initializeUiFromBundle(bundle: Bundle) {
-        binding.questionFormat.setText(bundle.getString(EXTRA_QUESTION_FORMAT))
-        binding.answerFormat.setText(bundle.getString(EXTRA_ANSWER_FORMAT))
+    private fun initializeUi(
+        questionFormat: String?,
+        answerFormat: String?,
+    ) {
+        binding.questionFormat.setText(questionFormat)
+        binding.answerFormat.setText(answerFormat)
 
         discardChangesCallback.isEnabled = hasChanges()
 
