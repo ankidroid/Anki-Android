@@ -233,6 +233,23 @@ class ProgressObserverTest : RobolectricTest() {
     }
 
     @Test
+    fun `back is blocked as soon as an op starts and restored when it ends`() {
+        val activity = startActivity().get()
+        activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }
+
+        val gate = CompletableDeferred<Unit>()
+        val op = launchOp(gate)
+        activity.onBackPressedDispatcher.onBackPressed()
+        assertFalse(activity.isFinishing, "back must be blocked before the dialog shows")
+
+        gate.complete(Unit)
+        idleMainLooper(SHOW_DELAY)
+        activity.onBackPressedDispatcher.onBackPressed()
+        assertTrue(activity.isFinishing, "back must work again once the op ends")
+        op.cancel()
+    }
+
+    @Test
     fun `an observer whose op ends does not restore touches while another op runs`() {
         val activity = startActivity().get()
         activity.observeProgress(viewModel, delayMillis = SHOW_DELAY) { it }

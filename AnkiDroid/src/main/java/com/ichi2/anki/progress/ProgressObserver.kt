@@ -6,6 +6,8 @@ package com.ichi2.anki.progress
 import android.content.Context
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -23,7 +25,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
- * Blocks touches and shows/dismisses a loading dialog driven by [viewModel]'s progress flow.
+ * Blocks touches and back, and shows/dismisses a loading dialog driven by [viewModel]'s progress flow.
  * [delayMillis] defers the initial show so quick operations don't flash a dialog.
  * [resolveMessage] maps the ViewModel's message to the text shown in the dialog.
  */
@@ -34,7 +36,20 @@ fun <M : Any> AnkiActivity.observeProgress(
 ) {
     val dialogTag = "${LoadingDialogFragment.TAG}:${viewModel.javaClass.name}"
     var dialogVisible = supportFragmentManager.findFragmentByTag(dialogTag) != null
-    var blockingTouches = false
+    var backBlock: OnBackPressedCallback? = null
+
+    fun blockInput() {
+        if (backBlock != null) return
+        window.blockTouches()
+        backBlock = onBackPressedDispatcher.addCallback(this) { Timber.i("Ignoring back while an operation runs") }
+    }
+
+    fun unblockInput() {
+        val block = backBlock ?: return
+        backBlock = null
+        block.remove()
+        window.unblockTouches()
+    }
 
     lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -49,16 +64,10 @@ fun <M : Any> AnkiActivity.observeProgress(
                         pendingShow = null
                         dialogVisible = false
                         dismissLoadingDialog(dialogTag)
-                        if (blockingTouches) {
-                            blockingTouches = false
-                            window.unblockTouches()
-                        }
+                        unblockInput()
                     }
                     is ViewModelProgress.Active -> {
-                        if (!blockingTouches) {
-                            blockingTouches = true
-                            window.blockTouches()
-                        }
+                        blockInput()
                         if (dialogVisible) {
                             showLoadingDialog(
                                 message = formatMessage(state, resolveMessage),
