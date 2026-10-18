@@ -733,7 +733,6 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
 
     /** Adds a note to [deckName] whose card is due tomorrow */
-
     private fun addNoteDueTomorrow(deckName: String) {
         addBasicNote().update { moveToDeck(deckName, false) }.firstCard().update {
             queue = QueueType.Rev

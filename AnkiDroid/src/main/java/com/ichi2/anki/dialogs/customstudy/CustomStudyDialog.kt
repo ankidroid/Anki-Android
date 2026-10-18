@@ -74,7 +74,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.coMeasureTime
 import com.ichi2.utils.customView
-
+import com.ichi2.utils.moveCursorToEnd
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.setPaddingRelative
@@ -446,6 +446,7 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
         }
 
         binding.detailsEditText2.doAfterTextChanged {
+            viewModel.userInputText = it?.toString()
             validateInput(dialog, contextMenuOption)
         }
 
