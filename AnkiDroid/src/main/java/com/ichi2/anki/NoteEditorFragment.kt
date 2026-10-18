@@ -538,17 +538,17 @@ class NoteEditorFragment :
         fieldState.setInstanceState(savedInstanceState)
         val intent = requireActivity().intent
         if (savedInstanceState != null) {
-            caller = fromValue(savedInstanceState.getInt(CALLER_KEY))
+            caller = fromValue(savedInstanceState.getInt(STATE_CALLER))
             addNote = savedInstanceState.getBoolean("addNote")
             deckId = savedInstanceState.getLong("did")
             selectedNoteTypeId =
                 if (savedInstanceState.containsKey("noteTypeId")) savedInstanceState.getLong("noteTypeId") else null
             selectedTags = savedInstanceState.getStringArrayList("tags")
-            reloadRequired = savedInstanceState.getBoolean(EXTRA_RELOAD_REQUIRED)
+            reloadRequired = savedInstanceState.getBoolean(STATE_RELOAD_REQUIRED)
             multimediaController.onRestoreInstanceState(savedInstanceState)
             toggleStickyText =
                 savedInstanceState.getSerializableCompat<HashMap<Int, String?>>("toggleSticky")!!
-            changed = savedInstanceState.getBoolean(EXTRA_NOTE_CHANGED)
+            changed = savedInstanceState.getBoolean(STATE_NOTE_CHANGED)
         } else {
             caller = fromValue(requireArguments().getInt(EXTRA_CALLER, NoteEditorCaller.NO_CALLER.value))
             if (caller == NoteEditorCaller.NO_CALLER) {
@@ -614,12 +614,12 @@ class NoteEditorFragment :
 
     private fun addInstanceStateToBundle(savedInstanceState: Bundle) {
         Timber.i("Saving instance")
-        savedInstanceState.putInt(CALLER_KEY, caller.value)
+        savedInstanceState.putInt(STATE_CALLER, caller.value)
         savedInstanceState.putBoolean("addNote", addNote)
         savedInstanceState.putLong("did", deckId)
         selectedNoteTypeId?.let { savedInstanceState.putLong("noteTypeId", it) }
-        savedInstanceState.putBoolean(EXTRA_NOTE_CHANGED, changed)
-        savedInstanceState.putBoolean(EXTRA_RELOAD_REQUIRED, reloadRequired)
+        savedInstanceState.putBoolean(STATE_NOTE_CHANGED, changed)
+        savedInstanceState.putBoolean(STATE_RELOAD_REQUIRED, reloadRequired)
         savedInstanceState.putIntegerArrayList("customViewIds", customViewIds)
         multimediaController.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putSerializable("toggleSticky", toggleStickyText)
@@ -2844,11 +2844,13 @@ class NoteEditorFragment :
         const val ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND"
         const val EXTRA_NOTE_CHANGED = "noteChanged"
         const val EXTRA_RELOAD_REQUIRED = "reloadRequired"
+        private const val STATE_NOTE_CHANGED = "noteChanged"
+        private const val STATE_RELOAD_REQUIRED = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
         const val EXTRA_IN_CARD_BROWSER_ACTIVITY = "inCardBrowserActivity"
         const val EXTRA_CARD_IDS = "EXTRA_CARD_IDS"
         const val REQUEST_DECK_SELECTION_NOTE_EDITOR = "request_deck_selection_note_editor"
-        private const val CALLER_KEY = "caller"
+        private const val STATE_CALLER = "caller"
 
         // calling activity
         enum class NoteEditorCaller(
