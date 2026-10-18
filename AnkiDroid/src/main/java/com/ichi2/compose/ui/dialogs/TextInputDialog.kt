@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.ichi2.anki.CommonString
-import com.ichi2.compose.theme.AnkiDroidTheme
+import com.ichi2.compose.ui.preview.AnkiDroidPreview
 import com.ichi2.compose.ui.preview.ThemePreviews
 
 /**
@@ -173,7 +173,7 @@ private fun TextInputDialogCard(
 @ThemePreviews
 @Composable
 private fun TextInputDialogPreview() {
-    AnkiDroidTheme {
+    AnkiDroidPreview {
         TextInputDialog(
             title = "Rename deck",
             label = "Deck name",
