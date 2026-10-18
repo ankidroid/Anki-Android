@@ -432,6 +432,14 @@ object ImportUtils {
                 // The selected file may have been deleted since the provider returned its URI.
                 Timber.w(e, "Import source file is unavailable")
                 CacheFileResult.SourceFileUnavailable(e)
+            } catch (e: IllegalStateException) {
+                if (e.message?.contains("pending/trashed") == true) {
+                    Timber.w(e, "Import source file is pending or trashed")
+                    CacheFileResult.SourceFileUnavailable(e)
+                } else {
+                    Timber.w("Could not open import source")
+                    CacheFileResult.Error(e)
+                }
             } catch (e: Exception) {
                 Timber.w("Could not open import source")
                 CacheFileResult.Error(e)
@@ -462,7 +470,7 @@ object ImportUtils {
             ) : CacheFileResult()
 
             data class SourceFileUnavailable(
-                val exception: FileNotFoundException,
+                val exception: Exception,
             ) : CacheFileResult()
 
             data object ContentProviderCrashed : CacheFileResult()
