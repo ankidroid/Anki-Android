@@ -75,8 +75,10 @@ import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.measureTime
 import com.ichi2.utils.setWebContentsDebuggingEnabled
+import com.ichi2.widget.AnkiDroidWidgetSmall
 import com.ichi2.widget.DayRolloverAlarm
 import com.ichi2.widget.WidgetNotificationScheduler
+import com.ichi2.widget.WidgetStatus
 import com.ichi2.widget.cardanalysis.CardAnalysisWidget
 import com.ichi2.widget.deckpicker.DeckPickerWidget
 import com.ichi2.widget.restoreRecurringAlarms
@@ -189,6 +191,7 @@ open class AnkiDroidApp :
         initializeNavigator()
         initializeWidgetRepository()
         WidgetNotificationScheduler.register { scheduleNotification() }
+        WidgetStatus.register(Prefs) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
         Animations.setPreferencesProvider { context -> PrefsRepository(context) }
         CollectionLockedException.messageProvider = {
             getString(CommonString.database_locked_summary_new, getString(CommonString.col_path))

@@ -9,6 +9,8 @@ import com.ichi2.anki.navigation.initializeNavigator
 import com.ichi2.anki.settings.PrefsRepository
 import com.ichi2.anki.startup.ensureCollectionPathSet
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.widget.AnkiDroidWidgetSmall
+import com.ichi2.widget.WidgetStatus
 
 /**
  * Registers the global singletons that [com.ichi2.anki.AnkiDroidApp.onCreate] wires up, for tests
@@ -18,6 +20,7 @@ context(application: Application)
 fun registerTestApplicationSingletons() {
     initializeNavigator()
     initializeWidgetRepository()
+    WidgetStatus.register(PrefsRepository(application)) { context -> AnkiDroidWidgetSmall.UpdateService().doUpdate(context) }
     Animations.setPreferencesProvider { context -> PrefsRepository(context) }
     ensureCollectionPathSet(application)
 }

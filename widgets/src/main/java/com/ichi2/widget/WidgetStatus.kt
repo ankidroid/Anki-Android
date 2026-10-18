@@ -2,13 +2,13 @@
 
 package com.ichi2.widget
 
+import android.app.Application
 import android.content.Context
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.preferences.NotificationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.android.SdCard
 import com.ichi2.anki.common.utils.ext.allDecksCounts
-import com.ichi2.anki.settings.Prefs
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -19,7 +19,18 @@ import timber.log.Timber
  * The status of the widget.
  */
 object WidgetStatus {
-    private val notificationPreferences: NotificationPreferences = Prefs
+    private lateinit var notificationPreferences: NotificationPreferences
+    private lateinit var updateWidget: (Context) -> Unit
+
+    /** Registers notification preferences and the small widget UI updater during app startup. */
+    context(_: Application)
+    fun register(
+        preferences: NotificationPreferences,
+        updater: (Context) -> Unit,
+    ) {
+        notificationPreferences = preferences
+        updateWidget = updater
+    }
 
     private var smallWidgetEnabled = false
     private var smallWidgetUpdateJob: Job? = null
@@ -73,7 +84,7 @@ object WidgetStatus {
         widgetRepository.storeSmallWidgetStatus(status)
         if (smallWidgetEnabled) {
             Timber.i("triggering small widget UI update")
-            AnkiDroidWidgetSmall.UpdateService().doUpdate(context)
+            updateWidget(context)
         }
         if (!notificationPreferences.newReviewRemindersEnabled) {
             widgetNotificationScheduler.scheduleNotification()
