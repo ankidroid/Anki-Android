@@ -16,9 +16,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.crashreporting.CrashReportService
+import com.ichi2.anki.common.crashreporting.CrashReporter
 import com.ichi2.anki.shareddeck.SharedDecksDownloadFragment.Companion.getDeckPageUri
 import com.ichi2.utils.openInputStreamSafe
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mockStatic
@@ -26,6 +30,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
@@ -41,6 +46,20 @@ import kotlin.test.assertTrue
 /** Tests for [SharedDecksDownloadFragment] */
 @RunWith(AndroidJUnit4::class)
 class SharedDecksDownloadFragmentTest : RobolectricTest() {
+    private lateinit var originalCrashReporter: CrashReporter
+    private val crashReporter = mock<CrashReporter>()
+
+    @Before
+    fun captureCrashReports() {
+        originalCrashReporter = CrashReportService.getReporter()
+        CrashReportService.setReporter(crashReporter)
+    }
+
+    @After
+    fun restoreCrashReporter() {
+        CrashReportService.setReporter(originalCrashReporter)
+    }
+
     @Test
     fun `completed download opens the existing file for import`() {
         val download = completedDownload()
@@ -244,6 +263,23 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `download manager rejecting every destination offers retry instead of crashing`() {
+        val failure = SecurityException("Unsupported path")
+        val download = startDownload(enqueueFailure = failure)
+
+        assertTrue(download.fragment.binding.tryDownloadAgainButton.isVisible)
+        verify(crashReporter).sendExceptionReport(failure, "SharedDecksDownloadFragment::downloadFile", null, false)
+
+        doReturn(2L).whenever(download.activity.downloadManager).enqueue(any())
+        download.fragment.binding.tryDownloadAgainButton
+            .performClick()
+        download.file.writeText("deck contents")
+        download.complete(downloadId = 2L)
+
+        assertNotNull(shadowOf(download.activity).nextStartedActivity)
+    }
+
+    @Test
     fun `test getDeckIdFromDownloadURL with valid URL`() {
         val url = "https://ankiweb.net/svc/shared/download-deck/1104981491?t=some-token"
         assertEquals("1104981491", SharedDecksDownloadFragment.getDeckIdFromDownloadURL(url))
@@ -279,11 +315,15 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
             complete()
         }
 
-    private fun startDownload(): Download {
+    private fun startDownload(enqueueFailure: Exception? = null): Download {
         val activity = startActivityNormallyOpenCollectionWithIntent(SharedDecksActivity::class.java, Intent())
         activity.downloadManager =
             mock {
-                on { enqueue(any()) } doReturn 1L
+                if (enqueueFailure != null) {
+                    on { enqueue(any()) } doThrow enqueueFailure
+                } else {
+                    on { enqueue(any()) } doReturn 1L
+                }
                 on { query(any()) } doAnswer { downloadCursor(DownloadManager.STATUS_RUNNING) }
             }
         val fragment =
