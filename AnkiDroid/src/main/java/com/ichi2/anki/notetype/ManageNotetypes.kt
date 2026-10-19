@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
 import androidx.core.view.updateMargins
 import androidx.core.view.updateMarginsRelative
 import androidx.core.view.updatePadding
@@ -168,15 +169,23 @@ class ManageNotetypes : AnkiActivity(R.layout.activity_manage_note_types) {
     }
 
     private fun applyInsets() {
+        // Material 3 supplies the FAB size before layout.
+        val fabSize = binding.floatingActionButton.customSize
+        val fabBottomMargin = binding.floatingActionButton.marginBottom
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, insets ->
             val constraints = insets.getInsets(systemBars() or displayCutout() or ime())
             Timber.d("Applying insets: $constraints")
             binding.appBarLayout.updatePadding(left = constraints.left, top = constraints.top, right = constraints.right)
-            binding.noteTypesList.updatePadding(left = constraints.left, right = constraints.right, bottom = constraints.bottom)
+            binding.noteTypesList.updatePadding(
+                left = constraints.left,
+                right = constraints.right,
+                // FAB size + its layout margin + a 16dp gap.
+                bottom = constraints.bottom + fabSize + fabBottomMargin + 16.dp.toPx(this),
+            )
             val fabLayoutParams = binding.floatingActionButton.layoutParams as ViewGroup.MarginLayoutParams
             // also applies the 32dp bottom/end margin to not sit right on top of navigation bar
             fabLayoutParams.updateMarginsRelative(
-                bottom = constraints.bottom + 32.dp.toPx(this),
+                bottom = constraints.bottom + fabBottomMargin,
                 end = constraints.right + 32.dp.toPx(this),
             )
             // needed otherwise the updated relative margins are not seen
