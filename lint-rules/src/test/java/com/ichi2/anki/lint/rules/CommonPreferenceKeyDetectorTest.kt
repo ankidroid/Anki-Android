@@ -163,6 +163,45 @@ class CommonPreferenceKeyDetectorTest {
     }
 
     @Test
+    fun `escaped canonical and renamed aliases are accepted`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonPreferenceKey
+            import com.ichi2.anki.CommonPreferenceKey as `Preference Keys`
+            val first = `CommonPreferenceKey`.pref_new_review_reminders
+            val second = `Preference Keys`.arbitrary_key_name
+            val third = com.ichi2.anki.`CommonPreferenceKey`.pref_new_review_reminders
+            """,
+        ).expectClean()
+    }
+
+    @Test
+    fun `line breaks and comments do not change a qualified key alias`() {
+        check(
+            """
+            package test
+            val first = com.ichi2.anki
+                .CommonPreferenceKey.pref_new_review_reminders
+            val second = com.ichi2.anki./* shared keys */CommonPreferenceKey.arbitrary_key_name
+            """,
+        ).expectClean()
+    }
+
+    @Test
+    fun `formatting cannot hide display strings accessed through the key alias`() {
+        check(
+            """
+            package test
+            val first = com.ichi2.anki
+                .CommonPreferenceKey.pref_notification_title
+            val second = com.ichi2.anki./* shared keys */CommonPreferenceKey.pref_notification_title
+            """,
+        ).expectErrorCount(2)
+            .expectContains("Use CommonString for strings that are not preference keys")
+    }
+
+    @Test
     fun `unrelated objects with the same name are ignored`() {
         check(
             """

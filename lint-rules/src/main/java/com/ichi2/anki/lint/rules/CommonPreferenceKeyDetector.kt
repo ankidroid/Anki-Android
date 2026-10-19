@@ -20,6 +20,7 @@ import com.android.tools.lint.detector.api.XmlContext
 import com.ichi2.anki.lint.utils.Constants
 import com.intellij.psi.PsiField
 import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.uast.UExpression
 import org.jetbrains.uast.UQualifiedReferenceExpression
 import org.jetbrains.uast.USimpleNameReferenceExpression
 import org.w3c.dom.Element
@@ -63,7 +64,7 @@ class CommonPreferenceKeyDetector :
                 val qualified = (node.uastParent as? UQualifiedReferenceExpression)?.takeIf { it.selector == node }
                 val usesKeyAlias =
                     if (qualified != null) {
-                        qualified.receiver.asSourceString() in keyAliasNames
+                        qualified.receiver.referenceName() in keyAliasNames
                     } else {
                         // Direct imports have no receiver at the use site, including renamed imports.
                         file.importDirectives.any { directive ->
@@ -81,6 +82,19 @@ class CommonPreferenceKeyDetector :
                 val references = context.resultMap(REFERENCES)
                 references.put(references.size.toString(), reference)
             }
+        }
+    }
+
+    /** Preserve alias names while ignoring whitespace, comments, and identifier escaping. */
+    private fun UExpression.referenceName(): String? {
+        return when (this) {
+            is USimpleNameReferenceExpression -> identifier
+            is UQualifiedReferenceExpression -> {
+                val receiverName = receiver.referenceName() ?: return null
+                val selectorName = selector.referenceName() ?: return null
+                "$receiverName.$selectorName"
+            }
+            else -> null
         }
     }
 
