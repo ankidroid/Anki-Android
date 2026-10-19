@@ -20,7 +20,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.anki.common.android.appContext
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.coroutines.applicationScope
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.exception.ManuallyReportedException
@@ -311,7 +310,6 @@ object ImportUtils {
             }
         }
 
-        @NeedsTest("Add test for the fallback, ensure the fallback filename \"file_<timestamp>.<ext>\" is produced when decoding fails")
         private fun validateFileName(fileName: String): String {
             // #6137 - filenames can be too long when URLEncoded
             val sanitized = sanitizeFileName(fileName)

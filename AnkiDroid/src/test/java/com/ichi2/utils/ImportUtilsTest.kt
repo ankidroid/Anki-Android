@@ -15,6 +15,8 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
+import com.ichi2.anki.common.time.MockTime
+import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.utils.ImportUtils.FileImporter
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
@@ -252,6 +254,19 @@ class ImportUtilsTest : RobolectricTest() {
         val filename = "spaced filename.apkg"
         val expectedFilepath = File(targetContext.cacheDir, filename).absolutePath
         val actualFilepath = TestFileImporter(filename).getFileCachedCopy(targetContext, "dummy".toUri())
+        assertEquals(expectedFilepath, actualFilepath)
+    }
+
+    @Test
+    fun getFileCachedCopyUsesFallbackFileNameWhenDecodingFails() {
+        TimeManager.resetWith(MockTime(1_600_000_000_000))
+        val prefix = "a".repeat(89)
+        val invalidShortenedFileName = "${prefix}ääääääääää.apkg"
+        val expectedFallbackFileName = "file_1600000000000.apkg"
+        val expectedFilepath = File(targetContext.cacheDir, expectedFallbackFileName).absolutePath
+
+        val actualFilepath = TestFileImporter(invalidShortenedFileName).getFileCachedCopy(targetContext, "dummy".toUri())
+
         assertEquals(expectedFilepath, actualFilepath)
     }
 
