@@ -2,17 +2,23 @@
 
 package com.ichi2.anki
 
+import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import androidx.core.content.getSystemService
 import androidx.core.view.allViews
 import androidx.core.view.drawToBitmap
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
+import com.github.takahirom.roborazzi.RoborazziATFAccessibilityCheckOptions
+import com.github.takahirom.roborazzi.RoborazziATFAccessibilityChecker
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.github.takahirom.roborazzi.captureScreenRoboImage
+import com.github.takahirom.roborazzi.checkRoboAccessibility
 import com.github.takahirom.roborazzi.provideRoborazziContext
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
@@ -145,12 +151,38 @@ abstract class ScreenshotTest : RobolectricTest() {
      * Captures a screenshot to `build/outputs/roborazzi/<TestClass>/<name>.png`.
      *
      * Writes to /diffs/ if there is an issue.
+     * Add `-PaccessibilityScan` to scan the live UI and log accessibility findings.
      */
     @OptIn(ExperimentalRoborazziApi::class)
     protected fun captureScreen(name: String) =
         capture(name) { filePath, options ->
             captureScreenRoboImage(filePath = filePath, roborazziOptions = options)
+            scanAccessibilityIfEnabled(filePath, options)
         }
+
+    /**
+     * Scan the live download UI across all themes, logging findings without failing on them:
+     * ```sh
+     * ./gradlew :AnkiDroid:testPlayDebugUnitTest -Pscreenshot -PaccessibilityScan -Ptheme=all \
+     *   --tests '*SharedDecksScreenshotTest.downloadFragment*'
+     * ```
+     */
+    @OptIn(ExperimentalRoborazziApi::class)
+    private fun scanAccessibilityIfEnabled(
+        filePath: String,
+        options: RoborazziOptions,
+    ) {
+        if (!java.lang.Boolean.getBoolean("screenshot.accessibilityScan")) return
+        check(Build.VERSION.SDK_INT >= 34) { "Accessibility scans require API 34 or newer" }
+        println("Accessibility scan: $filePath")
+        onView(isRoot()).checkRoboAccessibility(
+            roborazziATFAccessibilityCheckOptions =
+                RoborazziATFAccessibilityCheckOptions(
+                    failureLevel = RoborazziATFAccessibilityChecker.CheckLevel.LogOnly,
+                ),
+            roborazziOptions = options,
+        )
+    }
 
     /** Captures a laid-out view, including content extending beyond the screen. */
     protected fun captureView(

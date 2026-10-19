@@ -355,6 +355,7 @@ android {
 
                         test.systemProperty("screenshot.theme", theme)
                         test.systemProperty("screenshot.device", device)
+                        test.systemProperty("screenshot.accessibilityScan", project.hasProperty("accessibilityScan"))
                     }
                     // Ensures that no EmptyApplication test relies on AnkiDroidApp
                     //  by only running EmptyApplication tests
@@ -862,6 +863,7 @@ dependencies {
     }
     testImplementation(libs.androidx.work.testing)
     testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.accessibility.check)
     testImplementation(libs.roborazzi.rule)
     // for testing flows
     testImplementation(libs.cashapp.turbine)
