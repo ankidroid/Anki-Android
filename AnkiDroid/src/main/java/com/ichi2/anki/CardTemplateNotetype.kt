@@ -117,9 +117,6 @@ class CardTemplateNotetype(
 
     fun getDeleteDbOrds(ord: Int): IntArray = changes.getDeleteDbOrds(ord)
 
-    val adjustedTemplateChanges: ArrayList<TemplateChange>
-        get() = changes.adjustedTemplateChanges
-
     companion object {
         private const val STATE_EDITED_NOTE_TYPE_FILENAME = "editedNoteTypeFilename"
         private const val STATE_TEMPLATE_CHANGES = "mTemplateChanges"
