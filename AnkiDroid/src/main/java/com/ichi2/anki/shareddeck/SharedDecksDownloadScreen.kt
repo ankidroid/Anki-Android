@@ -63,6 +63,7 @@ import com.ichi2.anki.CommonString
 import com.ichi2.anki.R
 import com.ichi2.compose.theme.AnkiDroidTheme
 import com.ichi2.compose.theme.dimensions
+import com.ichi2.compose.theme.widgetBorder
 import com.ichi2.compose.ui.preview.ThemePreviews
 
 private val MaxContentWidth = 600.dp
@@ -329,12 +330,29 @@ private fun TonalCard(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        modifier = modifier,
-        content = content,
-    )
+    val border = MaterialTheme.widgetBorder
+    val colors = MaterialTheme.colorScheme
+    // Outlined e-ink cards use white surfaces and black content without changing the app palette.
+    val cardColors =
+        if (border != null) {
+            colors.copy(
+                surfaceVariant = colors.surface,
+                onSurfaceVariant = colors.onSurface,
+                tertiary = colors.onSurface,
+                onTertiary = colors.surface,
+            )
+        } else {
+            colors
+        }
+    MaterialTheme(colorScheme = cardColors) {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+            border = border,
+            modifier = modifier,
+            content = content,
+        )
+    }
 }
 
 /** Warning shown while the download waits for a network connection. */
