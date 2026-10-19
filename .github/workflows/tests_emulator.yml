@@ -316,7 +316,7 @@ jobs:
           script: |
             bash .github/disable_art_metrics.sh
             bash .github/adb_retry.sh shell settings put global hide_error_dialogs 1
-            TEST_RELEASE_BUILD=false ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon
+            TEST_RELEASE_BUILD=false bash .github/with_emulator_cleanup.sh ./gradlew :baselineprofile:connectedBenchmarkBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.ichi2.anki.baselineprofile.ReleaseSmokeTest -Pandroid.testInstrumentationRunnerArguments.releaseSmokeTest=true --daemon
 
       - name: Configure NDK tools PATH for alignment checking
         run: |
