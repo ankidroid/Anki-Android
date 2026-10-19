@@ -1526,9 +1526,7 @@ open class DeckPicker :
                 return true
             }
             R.id.action_deck_delete -> {
-                launchCatchingTask {
-                    viewModel.deleteSelectedDeck().join()
-                }
+                deleteSelectedDeck()
                 return true
             }
             R.id.action_export_collection -> {
@@ -1805,7 +1803,7 @@ open class DeckPicker :
                     if (event.isShiftPressed) {
                         // Shortcut: Shift + DEL - Delete deck without confirmation dialog
                         Timber.i("Shift+DEL: Deck deck without confirmation")
-                        viewModel.focusedDeck?.let { did -> deleteDeck(did) }
+                        deleteSelectedDeck()
                     } else {
                         // Shortcut: DEL
                         Timber.i("Delete Deck from keypress")
@@ -1820,7 +1818,7 @@ open class DeckPicker :
                 // that is, when it appears in the trailing study option fragment
                 if (fragmented) {
                     Timber.i("Rename Deck from keypress")
-                    viewModel.focusedDeck?.let { did -> renameDeckDialog(did) }
+                    viewModel.requestRenameSelectedDeck()
                     return true
                 }
             }
@@ -2385,6 +2383,11 @@ open class DeckPicker :
     fun deleteDeck(did: DeckId) =
         launchCatchingTask {
             viewModel.deleteDeck(did).join()
+        }
+
+    private fun deleteSelectedDeck() =
+        launchCatchingTask {
+            viewModel.deleteSelectedDeck().join()
         }
 
     @NeedsTest("14285: regression test to ensure UI is updated after this call")

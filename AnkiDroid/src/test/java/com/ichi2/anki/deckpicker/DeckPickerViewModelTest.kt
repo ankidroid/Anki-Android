@@ -57,7 +57,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
     private val viewModel: DeckPickerViewModel by lazy { DeckPickerViewModel() }
 
     @Test
-    fun `delete confirmation uses focused deck and includes cards in subdecks`() =
+    fun `delete confirmation includes cards in subdecks`() =
         runTest {
             val deckId = addDeck("Parent")
             val childDeckId = addDeck("Parent::Child")
@@ -66,7 +66,7 @@ class DeckPickerViewModelTest : RobolectricTest() {
             addBasicNote("Unrelated card")
             col.setDeck(listOf(parentCard.id), deckId)
             col.setDeck(listOf(childCard.id), childDeckId)
-            selectDefaultDeck()
+            col.decks.select(deckId)
             viewModel.focusedDeck = deckId
 
             viewModel.flowOfDeleteDeckConfirmation.test {
@@ -98,23 +98,13 @@ class DeckPickerViewModelTest : RobolectricTest() {
     @Test
     fun `delete confirmation supports an empty deck`() =
         runTest {
-            val deckId = addDeck("Empty")
+            val deckId = addDeck("Empty", setAsSelected = true)
             viewModel.focusedDeck = deckId
 
             viewModel.flowOfDeleteDeckConfirmation.test {
                 viewModel.requestDeleteDeckConfirmation().join()
 
                 assertEquals(DeleteDeckConfirmationRequest(deckId, "Empty", 0, false), awaitItem())
-            }
-        }
-
-    @Test
-    fun `delete confirmation without a focused deck emits nothing`() =
-        runTest {
-            viewModel.flowOfDeleteDeckConfirmation.test {
-                viewModel.requestDeleteDeckConfirmation().join()
-
-                expectNoEvents()
             }
         }
 
