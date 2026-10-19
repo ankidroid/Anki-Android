@@ -52,6 +52,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
@@ -60,6 +61,7 @@ import androidx.core.view.GravityCompat
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.utils.ext.wholeAndFraction
@@ -67,6 +69,7 @@ import com.ichi2.anki.utils.postDelayed
 import com.ichi2.utils.dp
 import com.ichi2.utils.isRtl
 import timber.log.Timber
+import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -130,7 +133,37 @@ class RecyclerFastScroller
             object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() {
                     super.onChanged()
+                    drag?.onRowsChanged()
                     requestLayout()
+                }
+
+                override fun onItemRangeChanged(
+                    positionStart: Int,
+                    itemCount: Int,
+                ) {
+                    drag?.onRowsChanged()
+                }
+
+                override fun onItemRangeInserted(
+                    positionStart: Int,
+                    itemCount: Int,
+                ) {
+                    drag?.onRowsChanged()
+                }
+
+                override fun onItemRangeRemoved(
+                    positionStart: Int,
+                    itemCount: Int,
+                ) {
+                    drag?.onRowsChanged()
+                }
+
+                override fun onItemRangeMoved(
+                    fromPosition: Int,
+                    toPosition: Int,
+                    itemCount: Int,
+                ) {
+                    drag?.onRowsChanged()
                 }
             }
 
@@ -328,79 +361,65 @@ class RecyclerFastScroller
         }
 
         /**
-         * The current scroll progress as a value between 0.0 and 1.0.
+         * The current drag. It is kept after release so a frame it queued can still run, and the next
+         * press replaces it.
          */
-        private var pendingScrollProportion = 0f
+        private var drag: DragSession? = null
 
-        // Task that converts handle position into scroll command
-        private val scrollTask =
-            Runnable {
-                val lm = recyclerView?.layoutManager as? LinearLayoutManager ?: return@Runnable
-                val adapter = recyclerView?.adapter ?: return@Runnable
+        /**
+         * Starts a [DragSession] for a press at [y].
+         *
+         * The adapter observer is registered here too, since some screens set their adapter after
+         * attaching the scroller.
+         */
+        private fun startDrag(
+            recyclerView: RecyclerView,
+            y: Float,
+        ) {
+            drag?.cancel()
+            attachAdapter(recyclerView.adapter)
+            val session = DragSession(recyclerView, thumbHeight = handle.height, relayoutThumb = ::layoutBeforeDraw)
+            drag = session
+            session.press(y, scrollableHeight(session.thumbHeight), thumb = handle.top..handle.bottom, isThumbStale = isLayoutRequested)
+        }
 
-                try {
-                    // Calculate the exact target including the decimal
-                    val (targetIndex, fraction) = (pendingScrollProportion.toDouble() * adapter.itemCount).wholeAndFraction()
-                    // Estimate height using the first visible view, this is a heuristic
-                    val estimatedHeight = recyclerView?.getChildAt(0)?.height ?: 0
+        // The valid scroll area is (usable track - handle.height), since the position of the handle is defined by its top edge, we subtract it.
+        // The usable track excludes handleBottomInset (nav bar) so the handle can't be dragged into it.
+        private fun scrollableHeight(thumbHeight: Int) = ((height - handleBottomInset) - thumbHeight).coerceAtLeast(1)
 
-                    // Calculate the offset by pushing the item up by the fraction of its height
-                    // e.g. If at 99.9%, push the last card up by 90% of its height so we can see the bottom.
-                    val offset = -(fraction * estimatedHeight).toInt()
-                    lm.scrollToPositionWithOffset(targetIndex.toInt(), offset)
-                } catch (e: Exception) {
-                    Timber.w(e, "scrollToPosition")
-                }
-            }
+        /**
+         * Lays the thumb out now. A settle runs in pre-draw, where a requestLayout would only show on
+         * the next frame.
+         */
+        private fun layoutBeforeDraw() {
+            forceLayout()
+            measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+            layout(left, top, right, bottom)
+        }
 
         override fun onTouchEvent(event: MotionEvent): Boolean {
             return when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                    val recyclerView = recyclerView ?: return false
                     // Retrieve the adapter to determine item count.
-                    val adapter = recyclerView?.adapter ?: return false
+                    val adapter = recyclerView.adapter ?: return false
 
                     if (adapter.itemCount == 0) return false
 
                     // Force the handle to be selected since the user is touching the track (the parent container) and not the handle itself.
                     handle.isPressed = true
 
-                    // The valid scroll area is (usable track - handle.height), since the position of the handle is defined by its top edge, we subtract it.
-                    // The usable track excludes handleBottomInset (nav bar) so the handle can't be dragged into it.
-                    val scrollableHeight = (height - handleBottomInset) - handle.height
-
-                    // Subtract half the handle's height and divide by 2 so the handle centers below the user's finger instead of hanging above or below.
-                    // Divide by the scrollableHeight to make sure that the handle doesn't go off the screen and we use coerceAtLeast to prevent divide by 0 errors
-                    val scrollProportion =
-                        ((event.y - handle.height / 2) / scrollableHeight.coerceAtLeast(1))
-                            .coerceIn(0f, 1f)
-                    pendingScrollProportion = scrollProportion
-                    // Calculates the item index we want to go to by multiplying our ScrollProportion to the item count
-                    // e.g. if we are going to 50% then 0.5*itemcount gives us the index we need.
-                    // toInt prevents decimal values, and coerceIn here makes it so when we scroll all the way to the end, we don't get an out of bounds error.
-                    val targetPosition =
-                        (scrollProportion * adapter.itemCount)
-                            .toInt()
-                            .coerceIn(0, adapter.itemCount - 1)
-
-                    try {
-                        (recyclerView?.layoutManager as? LinearLayoutManager)
-                            ?.scrollToPositionWithOffset(targetPosition, 0)
-                            ?: recyclerView?.scrollToPosition(targetPosition)
-                    } catch (e: Exception) {
-                        Timber.w(e, "scrollToPosition")
+                    val session = drag
+                    if (event.actionMasked == MotionEvent.ACTION_DOWN || session == null) {
+                        startDrag(recyclerView, event.y)
+                    } else {
+                        session.moveTo(event.y, scrollableHeight(session.thumbHeight))
                     }
-
-                    // destroys any redundant calls to the scrolltask and sets a small delay to improve performance
-                    recyclerView?.removeCallbacks(scrollTask)
-                    recyclerView?.postDelayed(scrollTask, 20.milliseconds)
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handle.isPressed = false
-                    if (recyclerView != null) {
-                        recyclerView?.let { removeCallbacks(scrollTask) }
-                        scrollTask.run()
-                    }
+                    drag?.release()
                     postAutoHide()
                     false
                 }
@@ -468,6 +487,415 @@ class RecyclerFastScroller
             val barBottom = bar.top + if (isEdgeToEdge) fullBarHeight else lastRowBottomEdge
             if (bar.bottom != barBottom) {
                 bar.layout(bar.left, bar.top, bar.right, barBottom)
+            }
+        }
+
+        /**
+         * One press on the fast scroller, from ACTION_DOWN until the finger lifts.
+         *
+         * The finger's position maps to rows through a [DragPivot] taken from the rows on screen, so
+         * the list moves in step with the finger from wherever it started.
+         *
+         * Lifecycle:
+         * 1. Press ([press]): stops any fling and takes the pivot. A press on the thumb keeps the
+         *    point it grabbed under the finger and does not scroll. A tap on the track scrolls there.
+         * 2. Move ([moveTo]): updates [fingerProportion] and queues a frame. Moves within one frame
+         *    are placed together.
+         * 3. Layout ([placeRows], on the next animation frame): scrolls to [target]. If the target row
+         *    is not laid out, it jumps to the row and [settleAfterLayout] corrects the position with
+         *    the row's real height just before that frame is drawn. If the rows changed, the pivot is
+         *    retaken from the rows on screen first.
+         * 4. Release (ACTION_UP or ACTION_CANCEL): nothing scrolls. A queued frame or settle still
+         *    runs, so the last move shows, unless the rows change first. The next press [cancel]s
+         *    this session.
+         */
+        private class DragSession(
+            private val recyclerView: RecyclerView,
+            /** The thumb's height at the press, kept so a resize mid-drag cannot nudge the list. */
+            val thumbHeight: Int,
+            /** Lays the thumb out, so it is drawn where a settle left the list. */
+            private val relayoutThumb: () -> Unit,
+        ) {
+            /** Where the finger is, as a share of the thumb's travel: 0 at the top, 1 at the bottom. */
+            private var fingerProportion = 0f
+
+            /** The finger's y at the last press or move, so a move past a track end is still placed. */
+            private var fingerY = 0f
+
+            /** The [fingerProportion] last placed. A pivot retaken after the rows change is taken here. */
+            private var shownProportion = 0f
+
+            /** Pixels from the thumb's centre to where the finger grabbed it, or null for a tap on the track. */
+            private var grabOffset: Float? = null
+
+            /** Anchors the finger's mapping to rows. Null until the rows are laid out after a change. */
+            private var pivot: DragPivot? = null
+
+            /** The pre-draw listener waiting to correct a jump, if any. */
+            private var settle: ViewTreeObserver.OnPreDrawListener? = null
+
+            /** Jumps left before [placeRows] stops chasing a row that never gets laid out. */
+            private var settlesLeft = 0
+
+            private var isFramePending = false
+
+            private var isReleased = false
+
+            private val frame =
+                Runnable {
+                    isFramePending = false
+                    placeRows()
+                }
+
+            /**
+             * Handles ACTION_DOWN at [y].
+             *
+             * @param thumb the thumb's drawn top to bottom
+             * @param isThumbStale true if the thumb's layout is pending, so it may not match the list yet
+             */
+            fun press(
+                y: Float,
+                scrollableHeight: Int,
+                thumb: IntRange,
+                isThumbStale: Boolean,
+            ) {
+                recyclerView.stopScroll()
+                val thumbProportion = (thumb.first.toFloat() / scrollableHeight).coerceIn(0f, 1f)
+                val isLaidOut = !isThumbStale && !hasPendingLayout()
+                pivot = if (isLaidOut) pivotAt(thumbProportion, snapToEnds = true) else null
+                shownProportion = pivot?.proportion ?: thumbProportion.coerceIn(MIN_PIVOT_PROPORTION, 1 - MIN_PIVOT_PROPORTION)
+                val isOnThumb = y.toInt() in thumb
+                val grabProportion = if (thumbProportion == 0f || thumbProportion == 1f) thumbProportion else shownProportion
+                grabOffset = if (isOnThumb) y - (thumbHeight / 2 + grabProportion * scrollableHeight) else null
+                fingerY = y
+                fingerProportion = proportionAt(y, scrollableHeight)
+                if (grabOffset == null) requestFrame()
+            }
+
+            /** Handles ACTION_MOVE at [y]. Queues a frame if the finger moved or the pivot needs retaking. */
+            fun moveTo(
+                y: Float,
+                scrollableHeight: Int,
+            ) {
+                val previousY = fingerY
+                fingerY = y
+                fingerProportion = proportionAt(y, scrollableHeight)
+                if (y != previousY || pivot == null) requestFrame()
+            }
+
+            /** Handles ACTION_UP or ACTION_CANCEL. */
+            fun release() {
+                isReleased = true
+            }
+
+            /**
+             * Called on any adapter change. The pivot's rows may have moved, so the next placement
+             * retakes it. After release, the finger is gone and a queued placement was for the old
+             * rows, so it is dropped.
+             */
+            fun onRowsChanged() {
+                pivot = null
+                if (isReleased) cancel()
+            }
+
+            /** Drops a queued frame or settle, when a new press replaces this session or the rows change after release. */
+            fun cancel() {
+                recyclerView.removeCallbacks(frame)
+                isFramePending = false
+                cancelSettle()
+            }
+
+            /**
+             * The finger's share of the thumb's travel. The finger keeps the point it grabbed on the
+             * thumb, and a tap on the track puts the thumb's centre under it.
+             */
+            private fun proportionAt(
+                y: Float,
+                scrollableHeight: Int,
+            ) = ((y - (grabOffset ?: 0f) - thumbHeight / 2) / scrollableHeight).coerceIn(0f, 1f)
+
+            /**
+             * Queues [placeRows] for the next animation frame. Moves until then only update
+             * [fingerProportion], so they are placed together in one scroll.
+             */
+            private fun requestFrame() {
+                if (isFramePending) return
+                isFramePending = true
+                recyclerView.postOnAnimation(frame)
+            }
+
+            /**
+             * Scrolls the list to where the finger maps to.
+             *
+             * @param isSettling true when a settle calls it after a jump. It then keeps counting down
+             * [settlesLeft] instead of starting again, so the chase for a row is capped.
+             */
+            private fun placeRows(isSettling: Boolean = false) {
+                cancelSettle()
+                val itemCount = recyclerView.adapter?.itemCount ?: return
+                if (itemCount == 0) return
+                if (!isSettling) settlesLeft = MAX_SETTLES
+
+                try {
+                    val layoutManager = recyclerView.layoutManager as? LinearLayoutManager
+                    if (layoutManager == null) {
+                        recyclerView.scrollToPosition((fingerProportion * itemCount).toInt().coerceAtMost(itemCount - 1))
+                        return
+                    }
+                    if (!refreshPivot(itemCount)) return
+                    val target = target(itemCount) ?: return
+                    shownProportion = fingerProportion
+                    if (scrollExactlyTo(target, layoutManager, itemCount)) return
+                    jumpAndSettle(target, layoutManager, itemCount)
+                } catch (e: Exception) {
+                    Timber.w(e, "scrollToPosition")
+                }
+            }
+
+            /**
+             * Drops a [pivot] taken for a different item count, and retakes a missing one at
+             * [shownProportion], so the list carries on from the rows on screen.
+             *
+             * No pivot is taken at a track end. The ends need none, and the next move away takes it
+             * from the end the list went to.
+             *
+             * @return false while a layout is pending. A settle runs [placeRows] again after it.
+             */
+            private fun refreshPivot(itemCount: Int): Boolean {
+                if (pivot?.itemCount != itemCount) pivot = null
+                if (pivot != null) return true
+                if (hasPendingLayout()) {
+                    settleAfterLayout()
+                    return false
+                }
+                if (fingerProportion > 0f && fingerProportion < 1f) {
+                    pivot = pivotAt(shownProportion, snapToEnds = false)
+                }
+                return true
+            }
+
+            /**
+             * Scrolls straight to [target] if its row is laid out, so the distance is exact.
+             *
+             * @return false if the row is not laid out, or a layout is pending so its position is stale
+             */
+            private fun scrollExactlyTo(
+                target: DragTarget,
+                layoutManager: LinearLayoutManager,
+                itemCount: Int,
+            ): Boolean {
+                if (recyclerView.isLayoutRequested) return false
+                val helper = OrientationHelper.createVerticalHelper(layoutManager)
+                val distance = layoutManager.distanceTo(target, helper, itemCount) ?: return false
+                if (distance != 0) recyclerView.scrollBy(0, distance)
+                return true
+            }
+
+            /**
+             * Jumps to [target]'s row by its edge, then lets a settle apply the fraction once the row
+             * is laid out with its real height. Does nothing once [settlesLeft] runs out.
+             */
+            private fun jumpAndSettle(
+                target: DragTarget,
+                layoutManager: LinearLayoutManager,
+                itemCount: Int,
+            ) {
+                if (settlesLeft-- <= 0) return
+                layoutManager.jumpTo(target, itemCount)
+                settleAfterLayout()
+            }
+
+            /**
+             * Runs [placeRows] again just before the next frame is drawn, once its layout is done, so
+             * that frame shows the corrected rows and thumb rather than the jump.
+             */
+            private fun settleAfterLayout() {
+                val listener =
+                    object : ViewTreeObserver.OnPreDrawListener {
+                        override fun onPreDraw(): Boolean {
+                            if (recyclerView.isLayoutRequested) return true
+                            placeRows(isSettling = true)
+                            relayoutThumb()
+                            return true
+                        }
+                    }
+                settle = listener
+                recyclerView.viewTreeObserver.addOnPreDrawListener(listener)
+            }
+
+            private fun cancelSettle() {
+                val listener = settle ?: return
+                settle = null
+                recyclerView.viewTreeObserver.takeIf { it.isAlive }?.removeOnPreDrawListener(listener)
+            }
+
+            /**
+             * Maps [fingerProportion] to where the list should be.
+             *
+             * Dragging down from the pivot moves the list's bottom edge from [DragPivot.bottomRow] to
+             * the end in step with the finger, and dragging up moves its top edge from
+             * [DragPivot.topRow] to the start. The track ends always mean the list ends. For a given
+             * pivot it depends only on the finger, so any path to the same point shows the same rows.
+             *
+             * @return null without a pivot, except at the track ends
+             */
+            private fun target(itemCount: Int): DragTarget? {
+                if (fingerProportion >= 1f) return DragTarget(itemCount.toDouble(), isBottomRow = true)
+                if (fingerProportion <= 0f) return DragTarget(0.0, isBottomRow = false)
+                val pivot = pivot ?: return null
+                return when {
+                    fingerProportion > pivot.proportion -> {
+                        val rowsLeft = (itemCount - pivot.bottomRow).coerceAtLeast(0.0)
+                        val bottomRow = pivot.bottomRow + rowsLeft * (fingerProportion - pivot.proportion) / (1 - pivot.proportion)
+                        DragTarget(bottomRow, isBottomRow = true)
+                    }
+                    fingerProportion < pivot.proportion -> {
+                        val topRow = pivot.topRow * fingerProportion / pivot.proportion
+                        DragTarget(topRow, isBottomRow = false)
+                    }
+                    else -> DragTarget(pivot.topRow, isBottomRow = false)
+                }
+            }
+
+            /**
+             * Takes a pivot at [proportion] from the rows at the list's top and bottom edges.
+             *
+             * @param snapToEnds use 0 or 1 if the list is already at that end. Only for a press, where
+             * the grab offset is then measured from the pivot, unless the thumb is drawn at a track end.
+             * @return null if no laid-out row covers an edge
+             */
+            private fun pivotAt(
+                proportion: Float,
+                snapToEnds: Boolean,
+            ): DragPivot? {
+                val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return null
+                val itemCount = recyclerView.adapter?.itemCount ?: return null
+                val helper = OrientationHelper.createVerticalHelper(layoutManager)
+                val topRow = layoutManager.topRowIndex(helper) ?: return null
+                val bottomRow = layoutManager.bottomRowIndex(helper, itemCount) ?: return null
+                val pivotProportion =
+                    when {
+                        snapToEnds && topRow <= 0.0 -> 0f
+                        snapToEnds && bottomRow >= itemCount -> 1f
+                        else -> proportion.coerceIn(MIN_PIVOT_PROPORTION, 1 - MIN_PIVOT_PROPORTION)
+                    }
+                return DragPivot(topRow, bottomRow, pivotProportion, itemCount)
+            }
+
+            /** True if the rows on screen are stale: a layout or an adapter update is still to come. */
+            private fun hasPendingLayout() = recyclerView.isLayoutRequested || recyclerView.hasPendingAdapterUpdates()
+
+            /**
+             * Pixels to scroll so [target]'s point sits on its edge of the list.
+             *
+             * @return null if the target row is not laid out
+             */
+            private fun LinearLayoutManager.distanceTo(
+                target: DragTarget,
+                helper: OrientationHelper,
+                itemCount: Int,
+            ): Int? {
+                val (position, fraction) = target.rowAndFraction(itemCount)
+                val row = findViewByPosition(position) ?: return null
+                val point = helper.getDecoratedStart(row) + (fraction * helper.getDecoratedMeasurement(row)).roundToInt()
+                return point - if (target.isBottomRow) helper.endAfterPadding else helper.startAfterPadding
+            }
+
+            /**
+             * Brings [target]'s row on screen by its own edge, without the fraction. For a bottom edge
+             * target, scrollToPosition lines up a row below the screen with the bottom edge.
+             */
+            private fun LinearLayoutManager.jumpTo(
+                target: DragTarget,
+                itemCount: Int,
+            ) {
+                val (position, _) = target.rowAndFraction(itemCount)
+                if (target.isBottomRow) scrollToPosition(position) else scrollToPositionWithOffset(position, 0)
+            }
+
+            /** Row position at the list's top edge, or null if no laid-out row covers it. */
+            private fun LinearLayoutManager.topRowIndex(helper: OrientationHelper): Double? {
+                val y = helper.startAfterPadding
+                val row =
+                    laidOutChildren().firstOrNull { helper.getDecoratedStart(it) <= y && y < helper.getDecoratedEnd(it) } ?: return null
+                return getPosition(row) + (y - helper.getDecoratedStart(row)).toDouble() / helper.getDecoratedMeasurement(row)
+            }
+
+            /**
+             * Row position at the list's bottom edge, or null if no laid-out row covers it. A row
+             * ending exactly on the edge counts, as the row below it is not laid out. A last row
+             * ending above the edge gives itemCount.
+             */
+            private fun LinearLayoutManager.bottomRowIndex(
+                helper: OrientationHelper,
+                itemCount: Int,
+            ): Double? {
+                val y = helper.endAfterPadding
+                val row = laidOutChildren().firstOrNull { helper.getDecoratedStart(it) < y && y <= helper.getDecoratedEnd(it) }
+                if (row != null) {
+                    return getPosition(row) + (y - helper.getDecoratedStart(row)).toDouble() / helper.getDecoratedMeasurement(row)
+                }
+                val lastRow = findViewByPosition(itemCount - 1) ?: return null
+                return if (helper.getDecoratedEnd(lastRow) <= y) itemCount.toDouble() else null
+            }
+
+            private fun LinearLayoutManager.laidOutChildren(): List<View> = (0 until childCount).mapNotNull { getChildAt(it) }
+
+            /**
+             * The rows at the list's edges when a drag's mapping was anchored, and the thumb
+             * proportion they belong to.
+             *
+             * Row positions are fractional adapter positions: 12.25 is a quarter of the way down row
+             * 12, and itemCount is the bottom of the last row.
+             *
+             * @property topRow row position at the list's top edge, inside the padding
+             * @property bottomRow row position at the list's bottom edge, inside the padding
+             * @property proportion share of the thumb's travel, from 0 to 1
+             * @property itemCount the adapter's item count when it was taken
+             */
+            private class DragPivot(
+                val topRow: Double,
+                val bottomRow: Double,
+                val proportion: Float,
+                val itemCount: Int,
+            )
+
+            /**
+             * Where the list should be for the finger.
+             *
+             * @property row fractional row position, as in [DragPivot]
+             * @property isBottomRow true if [row] goes on the list's bottom edge, false for the top edge
+             */
+            private class DragTarget(
+                val row: Double,
+                val isBottomRow: Boolean,
+            ) {
+                /**
+                 * Splits [row] into an adapter position and the share of that row's height, from 0
+                 * to 1. A bottom edge on a row boundary uses the end of the row above, which is on
+                 * screen.
+                 */
+                fun rowAndFraction(itemCount: Int): Pair<Int, Double> {
+                    if (row >= itemCount) return Pair(itemCount - 1, 1.0)
+                    val (wholeRows, fraction) = row.coerceAtLeast(0.0).wholeAndFraction()
+                    if (isBottomRow && fraction == 0.0 && wholeRows > 0) return Pair(wholeRows.toInt() - 1, 1.0)
+                    return Pair(wholeRows.toInt(), fraction)
+                }
+            }
+
+            private companion object {
+                /**
+                 * Jumps one placement may make before it waits for the next move. A jump lays its row
+                 * out, so one is normally enough and the rest is headroom. The cap stops a row that
+                 * never gets laid out from re-laying out the list on every frame.
+                 */
+                const val MAX_SETTLES = 3
+
+                /**
+                 * Keeps a pivot just off a track end the list has not reached, so the finger still has
+                 * track left to scroll to that end.
+                 */
+                const val MIN_PIVOT_PROPORTION = 0.000001f
             }
         }
 
