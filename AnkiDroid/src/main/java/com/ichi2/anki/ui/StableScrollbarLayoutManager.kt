@@ -13,6 +13,7 @@ class StableScrollbarLayoutManager(
 ) : LinearLayoutManager(context) {
     private var measuredRange: MeasuredRange? = null
     private var rowHeightsBeforeChange: Map<Int, Int>? = null
+    private var thumbPosition: Float? = null
 
     override fun onLayoutCompleted(state: RecyclerView.State) {
         super.onLayoutCompleted(state)
@@ -21,6 +22,7 @@ class StableScrollbarLayoutManager(
         rowHeightsBeforeChange = null
         if (measuredRange?.shape != shape || rowsChangedHeight) {
             measuredRange = MeasuredRange(super.computeVerticalScrollRange(state), shape)
+            thumbPosition = null
         }
     }
 
@@ -30,6 +32,34 @@ class StableScrollbarLayoutManager(
     ) {
         super.onAdapterChanged(oldAdapter, newAdapter)
         measuredRange = null
+        thumbPosition = null
+    }
+
+    override fun scrollToPosition(position: Int) {
+        thumbPosition = null
+        super.scrollToPosition(position)
+    }
+
+    override fun scrollToPositionWithOffset(
+        position: Int,
+        offset: Int,
+    ) {
+        thumbPosition = null
+        super.scrollToPositionWithOffset(position, offset)
+    }
+
+    override fun scrollVerticallyBy(
+        dy: Int,
+        recycler: RecyclerView.Recycler,
+        state: RecyclerView.State,
+    ): Int {
+        val scrolled = super.scrollVerticallyBy(dy, recycler, state)
+        if (scrolled != 0) {
+            val offset = super.computeVerticalScrollOffset(state)
+            val scrollable = super.computeVerticalScrollRange(state) - computeVerticalScrollExtent(state)
+            thumbPosition = nextThumbPosition(scrolled, offset, scrollable)
+        }
+        return scrolled
     }
 
     override fun onItemsChanged(recyclerView: RecyclerView) {
@@ -57,7 +87,10 @@ class StableScrollbarLayoutManager(
         return when {
             estimatedOffset <= 0 -> 0
             estimatedOffset >= estimatedScrollable - 1 -> scrollable
-            else -> (estimatedOffset.toFloat() / estimatedScrollable * scrollable).roundToInt().coerceIn(1, scrollable - 2)
+            else -> {
+                val position = thumbPosition ?: (estimatedOffset.toFloat() / estimatedScrollable)
+                (position * scrollable).roundToInt().coerceIn(1, scrollable - 2)
+            }
         }
     }
 
@@ -66,6 +99,24 @@ class StableScrollbarLayoutManager(
         val extent = computeVerticalScrollExtent(state)
         val estimatedRange = super.computeVerticalScrollRange(state)
         return range.takeIf { it - extent >= MIN_SCROLLABLE_PIXELS && estimatedRange - extent >= MIN_SCROLLABLE_PIXELS }
+    }
+
+    private fun nextThumbPosition(
+        scrolled: Int,
+        offset: Int,
+        scrollable: Int,
+    ): Float {
+        val position = thumbPosition
+        return when {
+            offset <= 0 -> 0f
+            offset >= scrollable - 1 -> 1f
+            position == null -> offset.toFloat() / scrollable
+            scrolled > 0 -> {
+                val remaining = scrollable - offset
+                1 - (1 - position) * remaining / (remaining + scrolled)
+            }
+            else -> position * offset / (offset - scrolled)
+        }
     }
 
     private fun anyRowChangedHeight(heightsBefore: Map<Int, Int>) =

@@ -17,6 +17,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.closeTo
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.everyItem
 import org.hamcrest.Matchers.not
@@ -47,6 +48,29 @@ class StableScrollbarLayoutManagerTest {
         val bottoms = list.scrollToEndCollecting { list.thumb.bottom }
 
         assertThat(bottoms.last(), equalTo(list.trackHeight))
+    }
+
+    @Test
+    fun `thumb never moves against the scroll`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+
+        val topsScrollingDown = list.scrollToEndCollecting { list.thumb.top }
+        val topsScrollingUp = list.scrollToStartCollecting { list.thumb.top }
+
+        assertThat(topsScrollingDown, equalTo(topsScrollingDown.sorted()))
+        assertThat(topsScrollingUp, equalTo(topsScrollingUp.sortedDescending()))
+        assertThat(topsScrollingUp.last(), equalTo(0))
+    }
+
+    @Test
+    fun `thumb carries on from where the list jumped to`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+        list.scrollBy(DISTANCE_TO_TALL_ROWS)
+
+        list.jumpToLastRow()
+        list.scrollBy(-SHORT_ROW)
+
+        assertThat(list.thumb.bottom.toDouble(), closeTo(list.trackHeight.toDouble(), list.trackHeight * 0.05))
     }
 
     @Test
@@ -135,6 +159,20 @@ private class ScrollbarTestList(
             values.add(value())
         }
         return values
+    }
+
+    fun <T> scrollToStartCollecting(value: () -> T): List<T> {
+        val values = mutableListOf<T>()
+        while (recyclerView.canScrollVertically(-1)) {
+            scrollBy(-SCROLL_STEP)
+            values.add(value())
+        }
+        return values
+    }
+
+    fun jumpToLastRow() {
+        recyclerView.scrollToPosition(adapter.itemCount - 1)
+        layout()
     }
 
     fun notifyRowChanged(position: Int) = adapter.notifyItemChanged(position)
