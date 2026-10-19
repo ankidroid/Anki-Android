@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="?attr/actionBarTextColor"
             android:textAppearance="?textAppearanceBodyMediumEmphasized"
             tools:text="5 note types selected" />
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_delete"
             style="@style/Widget.Material3.Button.IconButton"
-            app:iconTint="@color/white"/>
+            app:iconTint="?attr/actionBarTextColor"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_clear_selection"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_clear_white"
             style="@style/Widget.Material3.Button.IconButton"
-            app:iconTint="@color/white"/>
+            app:iconTint="?attr/actionBarTextColor"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
