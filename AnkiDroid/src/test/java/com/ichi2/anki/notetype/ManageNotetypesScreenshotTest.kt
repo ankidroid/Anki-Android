@@ -7,8 +7,23 @@ import com.ichi2.anki.ScreenshotTest
 import com.ichi2.testutils.scrollToEnd
 import com.ichi2.testutils.simulateKeyboard
 import org.junit.Test
+import org.robolectric.RuntimeEnvironment
 
 class ManageNotetypesScreenshotTest : ScreenshotTest() {
+    @Test
+    fun eight_note_types() =
+        runTest {
+            // #22609: FAB covered the last item
+            RuntimeEnvironment.setQualifiers("+h740dp")
+            ensureCollectionLoadIsSynchronous()
+            repeat(8 - col.notetypes.count()) { addStandardNoteType("Note type $it", arrayOf("front", "back"), "", "") }
+            withManageNoteTypes { activity ->
+                captureScreen("eight_note_types")
+                activity.binding.noteTypesList.scrollToEnd()
+                captureScreen("eight_note_types_scrolled_to_bottom")
+            }
+        }
+
     @Test
     fun keyboard_scrolled_to_bottom() =
         runTest {
