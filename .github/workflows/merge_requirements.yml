@@ -9,9 +9,7 @@ on:
 
 permissions: {}
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+# Don't cancel runs: this is a fast check which shows as a failing check when canceled.
 
 jobs:
   squashMerge:
