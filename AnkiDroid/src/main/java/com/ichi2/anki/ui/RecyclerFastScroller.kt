@@ -52,6 +52,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
@@ -60,6 +61,7 @@ import androidx.core.view.GravityCompat
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.utils.ext.wholeAndFraction
@@ -67,6 +69,7 @@ import com.ichi2.anki.utils.postDelayed
 import com.ichi2.utils.dp
 import com.ichi2.utils.isRtl
 import timber.log.Timber
+import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -330,28 +333,186 @@ class RecyclerFastScroller
         /**
          * The current scroll progress as a value between 0.0 and 1.0.
          */
-        private var pendingScrollProportion = 0f
+        private var dragProportion = 0f
 
-        // Task that converts handle position into scroll command
-        private val scrollTask =
+        private var dragHandleHeight = 0
+
+        private var dragGrabOffset: Float? = null
+
+        private var dragPivot: DragPivot? = null
+
+        private var dragSettle: ViewTreeObserver.OnPreDrawListener? = null
+
+        private var dragSettlesLeft = 0
+
+        private var isDragFramePending = false
+
+        private val dragFrame =
             Runnable {
-                val lm = recyclerView?.layoutManager as? LinearLayoutManager ?: return@Runnable
-                val adapter = recyclerView?.adapter ?: return@Runnable
-
-                try {
-                    // Calculate the exact target including the decimal
-                    val (targetIndex, fraction) = (pendingScrollProportion.toDouble() * adapter.itemCount).wholeAndFraction()
-                    // Estimate height using the first visible view, this is a heuristic
-                    val estimatedHeight = recyclerView?.getChildAt(0)?.height ?: 0
-
-                    // Calculate the offset by pushing the item up by the fraction of its height
-                    // e.g. If at 99.9%, push the last card up by 90% of its height so we can see the bottom.
-                    val offset = -(fraction * estimatedHeight).toInt()
-                    lm.scrollToPositionWithOffset(targetIndex.toInt(), offset)
-                } catch (e: Exception) {
-                    Timber.w(e, "scrollToPosition")
-                }
+                isDragFramePending = false
+                scrollToDragPosition()
             }
+
+        private fun startDrag(
+            y: Float,
+            scrollableHeight: Int,
+        ) {
+            cancelDragSettle()
+            val recyclerView = recyclerView ?: return
+            recyclerView.stopScroll()
+            val proportion = recyclerView.scrollProportion()
+            dragPivot = recyclerView.dragPivotAt(proportion)
+            val isOnHandle = y.toInt() in handle.top..handle.bottom
+            dragGrabOffset = if (isOnHandle) y - (dragHandleHeight / 2 + proportion * scrollableHeight) else null
+        }
+
+        private fun RecyclerView.scrollProportion(): Float {
+            val scrollRange = computeVerticalScrollRange() - computeVerticalScrollExtent()
+            return (computeVerticalScrollOffset().toFloat() / scrollRange.coerceAtLeast(1)).coerceIn(0f, 1f)
+        }
+
+        private fun RecyclerView.dragPivotAt(proportion: Float): DragPivot? {
+            val layoutManager = layoutManager as? LinearLayoutManager ?: return null
+            val itemCount = adapter?.itemCount ?: return null
+            val helper = OrientationHelper.createVerticalHelper(layoutManager)
+            val topRow = layoutManager.topRowIndex(helper) ?: return null
+            val bottomRow = layoutManager.bottomRowIndex(helper, itemCount) ?: return null
+            val pivotProportion =
+                when {
+                    topRow <= 0.0 -> 0f
+                    bottomRow >= itemCount -> 1f
+                    else -> proportion.coerceIn(MIN_PIVOT_PROPORTION, 1 - MIN_PIVOT_PROPORTION)
+                }
+            return DragPivot(topRow, bottomRow, pivotProportion, itemCount)
+        }
+
+        private fun requestDragFrame() {
+            if (isDragFramePending) return
+            val recyclerView = recyclerView ?: return
+            isDragFramePending = true
+            recyclerView.postOnAnimation(dragFrame)
+        }
+
+        private fun scrollToDragPosition(isSettling: Boolean = false) {
+            val recyclerView = recyclerView ?: return
+            val itemCount = recyclerView.adapter?.itemCount ?: return
+            if (itemCount == 0) return
+            cancelDragSettle()
+            if (!isSettling) dragSettlesLeft = MAX_DRAG_SETTLES
+
+            try {
+                val layoutManager = recyclerView.layoutManager as? LinearLayoutManager
+                if (layoutManager == null) {
+                    recyclerView.scrollToPosition((dragProportion * itemCount).toInt().coerceAtMost(itemCount - 1))
+                    return
+                }
+                if (dragPivot?.itemCount != itemCount && !recyclerView.isLayoutRequested) {
+                    dragPivot = recyclerView.dragPivotAt(dragProportion)
+                }
+                val target = dragTarget(itemCount) ?: return
+                val helper = OrientationHelper.createVerticalHelper(layoutManager)
+                val distance = if (recyclerView.isLayoutRequested) null else layoutManager.distanceTo(target, helper, itemCount)
+                if (distance != null) {
+                    if (distance != 0) recyclerView.scrollBy(0, distance)
+                    return
+                }
+                if (dragSettlesLeft-- <= 0) return
+                layoutManager.jumpTo(target, itemCount)
+                settleAfterLayout(recyclerView)
+            } catch (e: Exception) {
+                Timber.w(e, "scrollToPosition")
+            }
+        }
+
+        private fun settleAfterLayout(recyclerView: RecyclerView) {
+            val listener =
+                object : ViewTreeObserver.OnPreDrawListener {
+                    override fun onPreDraw(): Boolean {
+                        if (!recyclerView.isLayoutRequested) scrollToDragPosition(isSettling = true)
+                        return true
+                    }
+                }
+            dragSettle = listener
+            recyclerView.viewTreeObserver.addOnPreDrawListener(listener)
+        }
+
+        private fun cancelDragSettle() {
+            val listener = dragSettle ?: return
+            dragSettle = null
+            recyclerView?.viewTreeObserver?.takeIf { it.isAlive }?.removeOnPreDrawListener(listener)
+        }
+
+        private fun dragTarget(itemCount: Int): DragTarget? {
+            val pivot = dragPivot ?: return null
+            return when {
+                dragProportion >= 1f -> DragTarget(itemCount.toDouble(), isBottomRow = true)
+                dragProportion <= 0f -> DragTarget(0.0, isBottomRow = false)
+                dragProportion > pivot.proportion -> {
+                    val rowsLeft = (itemCount - pivot.bottomRow).coerceAtLeast(0.0)
+                    val bottomRow = pivot.bottomRow + rowsLeft * (dragProportion - pivot.proportion) / (1 - pivot.proportion)
+                    DragTarget(bottomRow, isBottomRow = true)
+                }
+                dragProportion < pivot.proportion -> DragTarget(pivot.topRow * dragProportion / pivot.proportion, isBottomRow = false)
+                else -> DragTarget(pivot.topRow, isBottomRow = false)
+            }
+        }
+
+        private fun LinearLayoutManager.distanceTo(
+            target: DragTarget,
+            helper: OrientationHelper,
+            itemCount: Int,
+        ): Int? {
+            val (position, fraction) = target.rowAndFraction(itemCount)
+            val row = findViewByPosition(position) ?: return null
+            val point = helper.getDecoratedStart(row) + (fraction * helper.getDecoratedMeasurement(row)).roundToInt()
+            return point - if (target.isBottomRow) helper.endAfterPadding else helper.startAfterPadding
+        }
+
+        private fun LinearLayoutManager.jumpTo(
+            target: DragTarget,
+            itemCount: Int,
+        ) {
+            val (position, _) = target.rowAndFraction(itemCount)
+            if (target.isBottomRow) scrollToPosition(position) else scrollToPositionWithOffset(position, 0)
+        }
+
+        private fun LinearLayoutManager.topRowIndex(helper: OrientationHelper): Double? {
+            val y = helper.startAfterPadding
+            val row = laidOutChildren().firstOrNull { helper.getDecoratedStart(it) <= y && y < helper.getDecoratedEnd(it) } ?: return null
+            return getPosition(row) + (y - helper.getDecoratedStart(row)).toDouble() / helper.getDecoratedMeasurement(row)
+        }
+
+        private fun LinearLayoutManager.bottomRowIndex(
+            helper: OrientationHelper,
+            itemCount: Int,
+        ): Double? {
+            val y = helper.endAfterPadding
+            val row = laidOutChildren().firstOrNull { helper.getDecoratedStart(it) < y && y <= helper.getDecoratedEnd(it) }
+            if (row != null) return getPosition(row) + (y - helper.getDecoratedStart(row)).toDouble() / helper.getDecoratedMeasurement(row)
+            val lastRow = findViewByPosition(itemCount - 1) ?: return null
+            return if (helper.getDecoratedEnd(lastRow) <= y) itemCount.toDouble() else null
+        }
+
+        private fun LinearLayoutManager.laidOutChildren(): List<View> = (0 until childCount).mapNotNull { getChildAt(it) }
+
+        private class DragPivot(
+            val topRow: Double,
+            val bottomRow: Double,
+            val proportion: Float,
+            val itemCount: Int,
+        )
+
+        private class DragTarget(
+            val row: Double,
+            val isBottomRow: Boolean,
+        ) {
+            fun rowAndFraction(itemCount: Int): Pair<Int, Double> {
+                if (row >= itemCount) return Pair(itemCount - 1, 1.0)
+                val (wholeRows, fraction) = row.coerceAtLeast(0.0).wholeAndFraction()
+                if (isBottomRow && fraction == 0.0 && wholeRows > 0) return Pair(wholeRows.toInt() - 1, 1.0)
+                return Pair(wholeRows.toInt(), fraction)
+            }
+        }
 
         override fun onTouchEvent(event: MotionEvent): Boolean {
             return when (event.actionMasked) {
@@ -364,43 +525,26 @@ class RecyclerFastScroller
                     // Force the handle to be selected since the user is touching the track (the parent container) and not the handle itself.
                     handle.isPressed = true
 
+                    val isDown = event.actionMasked == MotionEvent.ACTION_DOWN
+                    if (isDown) dragHandleHeight = handle.height
+
                     // The valid scroll area is (usable track - handle.height), since the position of the handle is defined by its top edge, we subtract it.
                     // The usable track excludes handleBottomInset (nav bar) so the handle can't be dragged into it.
-                    val scrollableHeight = (height - handleBottomInset) - handle.height
+                    val scrollableHeight = (height - handleBottomInset) - dragHandleHeight
+                    if (isDown) startDrag(event.y, scrollableHeight.coerceAtLeast(1))
 
+                    val previousProportion = dragProportion
                     // Subtract half the handle's height and divide by 2 so the handle centers below the user's finger instead of hanging above or below.
                     // Divide by the scrollableHeight to make sure that the handle doesn't go off the screen and we use coerceAtLeast to prevent divide by 0 errors
-                    val scrollProportion =
-                        ((event.y - handle.height / 2) / scrollableHeight.coerceAtLeast(1))
+                    dragProportion =
+                        ((event.y - (dragGrabOffset ?: 0f) - dragHandleHeight / 2) / scrollableHeight.coerceAtLeast(1))
                             .coerceIn(0f, 1f)
-                    pendingScrollProportion = scrollProportion
-                    // Calculates the item index we want to go to by multiplying our ScrollProportion to the item count
-                    // e.g. if we are going to 50% then 0.5*itemcount gives us the index we need.
-                    // toInt prevents decimal values, and coerceIn here makes it so when we scroll all the way to the end, we don't get an out of bounds error.
-                    val targetPosition =
-                        (scrollProportion * adapter.itemCount)
-                            .toInt()
-                            .coerceIn(0, adapter.itemCount - 1)
-
-                    try {
-                        (recyclerView?.layoutManager as? LinearLayoutManager)
-                            ?.scrollToPositionWithOffset(targetPosition, 0)
-                            ?: recyclerView?.scrollToPosition(targetPosition)
-                    } catch (e: Exception) {
-                        Timber.w(e, "scrollToPosition")
-                    }
-
-                    // destroys any redundant calls to the scrolltask and sets a small delay to improve performance
-                    recyclerView?.removeCallbacks(scrollTask)
-                    recyclerView?.postDelayed(scrollTask, 20.milliseconds)
+                    val shouldScroll = if (isDown) dragGrabOffset == null else dragProportion != previousProportion
+                    if (shouldScroll) requestDragFrame()
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handle.isPressed = false
-                    if (recyclerView != null) {
-                        recyclerView?.let { removeCallbacks(scrollTask) }
-                        scrollTask.run()
-                    }
                     postAutoHide()
                     false
                 }
@@ -473,6 +617,8 @@ class RecyclerFastScroller
 
         companion object {
             private val DEFAULT_AUTO_HIDE_DELAY = 1500.milliseconds
+            private const val MAX_DRAG_SETTLES = 3
+            private const val MIN_PIVOT_PROPORTION = 0.001f
         }
     }
 
