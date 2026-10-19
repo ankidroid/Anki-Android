@@ -21,7 +21,7 @@ import com.ichi2.anki.lint.utils.Constants
 import com.intellij.psi.PsiField
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.uast.UQualifiedReferenceExpression
-import org.jetbrains.uast.UReferenceExpression
+import org.jetbrains.uast.USimpleNameReferenceExpression
 import org.w3c.dom.Element
 import java.util.EnumSet
 
@@ -44,7 +44,7 @@ class CommonPreferenceKeyDetector :
         context.resultMap(RESOURCES).put(element.getAttribute(ATTR_NAME), isKey)
     }
 
-    override fun getApplicableUastTypes() = listOf(UQualifiedReferenceExpression::class.java)
+    override fun getApplicableUastTypes() = listOf(USimpleNameReferenceExpression::class.java)
 
     override fun createUastHandler(context: JavaContext): UElementHandler? {
         val file = context.uastFile?.sourcePsi as? KtFile ?: return null
@@ -55,21 +55,31 @@ class CommonPreferenceKeyDetector :
             }
         }
         return object : UElementHandler() {
-            override fun visitQualifiedReferenceExpression(node: UQualifiedReferenceExpression) {
-                val field = (node.selector as? UReferenceExpression)?.resolve() as? PsiField ?: return
+            override fun visitSimpleNameReferenceExpression(node: USimpleNameReferenceExpression) {
+                val field = node.resolve() as? PsiField ?: return
                 if (field.containingClass?.qualifiedName != "com.ichi2.anki.common.android.R.string") return
                 if (context.driver.isSuppressed(context, ISSUE, node)) return
 
-                val usesKeyAlias = node.receiver.asSourceString() in keyAliasNames
-                val references = context.resultMap(REFERENCES)
-                references.put(
-                    references.size.toString(),
+                val qualified = (node.uastParent as? UQualifiedReferenceExpression)?.takeIf { it.selector == node }
+                val usesKeyAlias =
+                    if (qualified != null) {
+                        qualified.receiver.asSourceString() in keyAliasNames
+                    } else {
+                        // Direct imports have no receiver at the use site, including renamed imports.
+                        file.importDirectives.any { directive ->
+                            val imported = directive.importedFqName
+                            val name = directive.aliasName ?: imported?.shortName()?.asString()
+                            name == node.identifier && imported?.parent()?.asString() == "com.ichi2.anki.CommonPreferenceKey"
+                        }
+                    }
+                val reference =
                     LintMap()
                         .put(RESOURCE_NAME, field.name)
                         .put(USES_KEY_ALIAS, usesKeyAlias)
-                        .put(LOCATION, context.getLocation(node))
-                        .put(QUALIFIER_LOCATION, context.getLocation(node.receiver)),
-                )
+                        .put(LOCATION, context.getLocation(qualified ?: node))
+                qualified?.let { reference.put(QUALIFIER_LOCATION, context.getLocation(it.receiver)) }
+                val references = context.resultMap(REFERENCES)
+                references.put(references.size.toString(), reference)
             }
         }
     }
@@ -99,9 +109,12 @@ class CommonPreferenceKeyDetector :
         reference: LintMap,
     ) {
         val location = reference.getLocation(LOCATION) ?: return
-        val qualifierLocation = reference.getLocation(QUALIFIER_LOCATION) ?: return
+        val qualifierLocation = reference.getLocation(QUALIFIER_LOCATION)
         val usesKeyAlias = reference.getBoolean(USES_KEY_ALIAS) == true
         val expectedAlias = if (usesKeyAlias) "CommonString" else "CommonPreferenceKey"
+        val replacement =
+            "com.ichi2.anki.$expectedAlias" +
+                if (qualifierLocation == null) ".${reference.getString(RESOURCE_NAME)}" else ""
         val message =
             if (usesKeyAlias) {
                 "Use CommonString for strings that are not preference keys"
@@ -116,8 +129,8 @@ class CommonPreferenceKeyDetector :
                 fix()
                     .name("Use $expectedAlias")
                     .replace()
-                    .range(qualifierLocation)
-                    .with("com.ichi2.anki.$expectedAlias")
+                    .range(qualifierLocation ?: location)
+                    .with(replacement)
                     .shortenNames()
                     .build(),
             ),
