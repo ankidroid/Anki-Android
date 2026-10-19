@@ -155,7 +155,51 @@ class PreferencesTest : RobolectricTest() {
         assertIs<HeaderFragment>(activity.settings.findFragmentById(R.id.settings_container))
     }
 
+    @Test
+    @Config(qualifiers = "w800dp-h1280dp")
+    fun `split settings stay split when a larger font recreates them`() {
+        val controller = settingsController()
+        RuntimeEnvironment.setFontScale(1.5f)
+        controller.recreate()
+        advanceRobolectricLooper()
+
+        assertTrue(controller.get().isSplit)
+    }
+
+    @Test
+    @Config(qualifiers = "w800dp-h1280dp")
+    fun `split settings stay split when a smaller window recreates them`() {
+        val controller = settingsController()
+        RuntimeEnvironment.setQualifiers("sw560dp-w560dp-h900dp")
+        controller.recreate()
+        advanceRobolectricLooper()
+
+        val activity = controller.get()
+        assertTrue(activity.isSplit)
+        assertIs<HeaderFragment>(activity.settings.findFragmentById(R.id.lateral_nav_container))
+    }
+
+    @Test
+    @Config(qualifiers = "w800dp-h1280dp")
+    fun `one pane settings stay one pane when a smaller font recreates them`() {
+        RuntimeEnvironment.setFontScale(1.5f)
+        val controller = settingsController()
+        RuntimeEnvironment.setFontScale(1.0f)
+        controller.recreate()
+        advanceRobolectricLooper()
+
+        val activity = controller.get()
+        assertFalse(activity.isSplit)
+        assertEquals(1, activity.settings.fragments.count { it is HeaderFragment })
+    }
+
     private fun openSettings() = startRegularActivity<PreferencesActivity>(PreferencesActivity.getIntent(targetContext))
+
+    private fun settingsController() =
+        startActivityControllerNormallyOpenCollectionWithIntent(
+            PreferencesActivity::class.java,
+            PreferencesActivity.getIntent(targetContext),
+        )
 
     private val PreferencesActivity.isSplit get() = findViewById<View>(R.id.lateral_nav_container) != null
 
