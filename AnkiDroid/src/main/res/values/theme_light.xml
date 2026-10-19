@@ -12,6 +12,11 @@
         <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
         <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
         <item name="colorSecondaryContainer">#C1E7FF</item>
+        <item name="colorSurfaceVariant">#D6ECFA</item>
+        <item name="colorOnSurfaceVariant">#36566F</item>
+        <item name="colorOutlineVariant">#9BBDD4</item>
+        <item name="colorTertiary">#006DA8</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">#E4F5FD</item>
