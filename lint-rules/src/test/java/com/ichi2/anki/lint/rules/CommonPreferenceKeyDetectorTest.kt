@@ -121,6 +121,48 @@ class CommonPreferenceKeyDetectorTest {
     }
 
     @Test
+    fun `direct and renamed field imports must use the appropriate alias`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonString.pref_new_review_reminders
+            import com.ichi2.anki.common.android.R.string.arbitrary_key_name as key
+            import com.ichi2.anki.CommonPreferenceKey.pref_notification_title as title
+            val first = pref_new_review_reminders
+            val second = key
+            val third = title
+            """,
+        ).expectErrorCount(3)
+    }
+
+    @Test
+    fun `direct field imports using the appropriate alias are accepted`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonPreferenceKey.pref_new_review_reminders
+            import com.ichi2.anki.CommonPreferenceKey.arbitrary_key_name as key
+            import com.ichi2.anki.CommonString.pref_notification_title
+            val first = pref_new_review_reminders
+            val second = key
+            val title = pref_notification_title
+            """,
+        ).expectClean()
+    }
+
+    @Test
+    fun `wildcard field imports cannot bypass the key alias`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.common.android.R.string.*
+            val key = pref_new_review_reminders
+            val title = pref_notification_title
+            """,
+        ).expectErrorCount(1)
+    }
+
+    @Test
     fun `unrelated objects with the same name are ignored`() {
         check(
             """
@@ -143,6 +185,36 @@ class CommonPreferenceKeyDetectorTest {
             val key = CommonString.pref_new_review_reminders
             """,
         ).expectClean()
+    }
+
+    @Test
+    fun `directly imported fields can be suppressed at the use site`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonString.pref_new_review_reminders
+            @Suppress("CommonPreferenceKeyUsage")
+            val key = pref_new_review_reminders
+            """,
+        ).expectClean()
+    }
+
+    @Test
+    fun `fix qualifies a directly imported field with the appropriate alias`() {
+        check(
+            """
+            package com.ichi2.anki
+            import com.ichi2.anki.CommonString.pref_new_review_reminders as reminders
+            val key = reminders
+            """,
+        ).expectFixDiffs(
+            """
+            Fix for src/test/Usage.kt line 3: Use CommonPreferenceKey:
+            @@ -3 +3
+            - val key = reminders
+            + val key = CommonPreferenceKey.pref_new_review_reminders
+            """.trimIndent(),
+        )
     }
 
     @Test
