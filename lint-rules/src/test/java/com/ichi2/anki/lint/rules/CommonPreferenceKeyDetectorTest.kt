@@ -163,6 +163,75 @@ class CommonPreferenceKeyDetectorTest {
     }
 
     @Test
+    fun `wildcard import through the key alias accepts preference keys`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonPreferenceKey.*
+            val key = pref_new_review_reminders
+            """,
+        ).expectClean()
+    }
+
+    @Test
+    fun `wildcard key alias rejects display strings and offers a qualified fix`() {
+        check(
+            """
+            package com.ichi2.anki
+            import com.ichi2.anki.CommonPreferenceKey.*
+            val title = pref_notification_title
+            """,
+        ).expectErrorCount(1)
+            .expectFixDiffs(
+                """
+                Fix for src/test/Usage.kt line 3: Use CommonString:
+                @@ -3 +3
+                - val title = pref_notification_title
+                + val title = CommonString.pref_notification_title
+                """.trimIndent(),
+            )
+    }
+
+    @Test
+    fun `explicit display string imports override the key wildcard`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonPreferenceKey.*
+            import com.ichi2.anki.CommonString.pref_notification_title as title
+            val key = pref_new_review_reminders
+            val label = title
+            """,
+        ).expectClean()
+    }
+
+    @Test
+    fun `a key wildcard cannot hide an incorrect explicit field import`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonPreferenceKey.*
+            import com.ichi2.anki.CommonString.pref_new_review_reminders
+            val key = pref_new_review_reminders
+            """,
+        ).expectErrorCount(1)
+            .expectContains("Use CommonPreferenceKey for shared preference keys")
+    }
+
+    @Test
+    fun `explicit key imports override the display string wildcard`() {
+        check(
+            """
+            package test
+            import com.ichi2.anki.CommonString.*
+            import com.ichi2.anki.CommonPreferenceKey.pref_new_review_reminders as reminders
+            val key = reminders
+            val title = pref_notification_title
+            """,
+        ).expectClean()
+    }
+
+    @Test
     fun `escaped canonical and renamed aliases are accepted`() {
         check(
             """

@@ -49,9 +49,9 @@ class CommonPreferenceKeyDetector :
 
     override fun createUastHandler(context: JavaContext): UElementHandler? {
         val file = context.uastFile?.sourcePsi as? KtFile ?: return null
-        val keyAliasNames = mutableSetOf("CommonPreferenceKey", "com.ichi2.anki.CommonPreferenceKey")
+        val keyAliasNames = mutableSetOf("CommonPreferenceKey", KEY_ALIAS)
         file.importDirectives.forEach { directive ->
-            if (directive.importedFqName?.asString() == "com.ichi2.anki.CommonPreferenceKey") {
+            if (directive.importedFqName?.asString() == KEY_ALIAS) {
                 directive.aliasName?.let(keyAliasNames::add)
             }
         }
@@ -66,12 +66,7 @@ class CommonPreferenceKeyDetector :
                     if (qualified != null) {
                         qualified.receiver.referenceName() in keyAliasNames
                     } else {
-                        // Direct imports have no receiver at the use site, including renamed imports.
-                        file.importDirectives.any { directive ->
-                            val imported = directive.importedFqName
-                            val name = directive.aliasName ?: imported?.shortName()?.asString()
-                            name == node.identifier && imported?.parent()?.asString() == "com.ichi2.anki.CommonPreferenceKey"
-                        }
+                        file.importsKeyField(node.identifier)
                     }
                 val reference =
                     LintMap()
@@ -83,6 +78,18 @@ class CommonPreferenceKeyDetector :
                 references.put(references.size.toString(), reference)
             }
         }
+    }
+
+    /** Explicit field imports take precedence over wildcard imports. */
+    private fun KtFile.importsKeyField(name: String): Boolean {
+        val explicitImport =
+            importDirectives.firstOrNull { directive ->
+                !directive.isAllUnder && (directive.aliasName ?: directive.importedFqName?.shortName()?.asString()) == name
+            }
+        if (explicitImport != null) {
+            return explicitImport.importedFqName?.parent()?.asString() == KEY_ALIAS
+        }
+        return importDirectives.any { it.isAllUnder && it.importedFqName?.asString() == KEY_ALIAS }
     }
 
     /** Preserve alias names while ignoring whitespace, comments, and identifier escaping. */
@@ -163,6 +170,7 @@ class CommonPreferenceKeyDetector :
     }
 
     companion object {
+        private const val KEY_ALIAS = "com.ichi2.anki.CommonPreferenceKey"
         private const val RESOURCES = "resources"
         private const val REFERENCES = "references"
         private const val LOCATION = "location"
