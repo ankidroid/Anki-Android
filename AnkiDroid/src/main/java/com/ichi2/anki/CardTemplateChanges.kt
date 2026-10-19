@@ -104,55 +104,11 @@ class CardTemplateChanges {
         if (!BuildConfig.DEBUG) {
             return
         }
-        val adjustedChanges = adjustedTemplateChanges
         for (i in templateChanges.indices) {
             val change = templateChanges[i]
-            val adjustedChange = adjustedChanges[i]
             Timber.d("dumpChanges() Change %s is ord/type %s/%s", i, change.ordinal, change.type)
-            Timber.d(
-                "dumpChanges() During save change %s will be ord/type %s/%s",
-                i,
-                adjustedChange.ordinal,
-                adjustedChange.type,
-            )
         }
     }
-
-    /**
-     * Adjust the ordinals in our accrued change list so that any pending adds have the correct
-     * ordinal after taking into account any pending deletes
-     *
-     * @return ArrayList<Object></Object>[2]> of [ordinal][ChangeType] entries
-     */
-    val adjustedTemplateChanges: ArrayList<TemplateChange>
-        get() {
-            val changes = templateChanges
-            val adjustedChanges = ArrayList<TemplateChange>(changes.size)
-
-            // In order to save the changes into the database, the ordinals in the changelist must correspond to the
-            // ordinals in the database (for deletes) or the correct index in the changes array (for adds)
-            // It is not possible to know what those will be until the user requests a save, so they are stored in the
-            // change list as-is until the save time comes, then the adjustment is made all at once
-            for (i in changes.indices) {
-                val change = changes[i]
-                val adjustedChange =
-                    when (change.type) {
-                        ChangeType.ADD -> {
-                            val adjustedOrdinal = getAdjustedAddOrdinalAtChangeIndex(this, i)
-                            Timber.d(
-                                "getAdjustedTemplateChanges() change %s ordinal adjusted from %s to %s",
-                                i,
-                                change.ordinal,
-                                adjustedOrdinal,
-                            )
-                            TemplateChange(adjustedOrdinal, ChangeType.ADD)
-                        }
-                        ChangeType.DELETE -> change
-                    }
-                adjustedChanges.add(adjustedChange)
-            }
-            return adjustedChanges
-        }
 
     /**
      * Scan the sequence of template add/deletes, looking for the given ordinal.

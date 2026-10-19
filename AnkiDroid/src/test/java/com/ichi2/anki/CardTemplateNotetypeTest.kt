@@ -97,32 +97,25 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         val expected1 = arrayOf(TemplateChange(3, ADD))
         // 3 templates and one change now
         assertTemplateChangesEqual(expected1, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(expected1, tempNotetype.adjustedTemplateChanges)
         Assert.assertArrayEquals(intArrayOf(3), tempNotetype.getDeleteDbOrds(3))
 
         tempNotetype.addTemplateChange(DELETE, 2)
         // 2 templates and two changes now
         val expected2 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE))
-        val adjExpected2 = arrayOf(TemplateChange(2, ADD), TemplateChange(2, DELETE))
         assertTemplateChangesEqual(expected2, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(adjExpected2, tempNotetype.adjustedTemplateChanges)
         Assert.assertArrayEquals(intArrayOf(2, 4), tempNotetype.getDeleteDbOrds(3))
 
         tempNotetype.addTemplateChange(DELETE, 1)
         // 1 template and three changes now
         Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
         val expected3 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE))
-        val adjExpected3 = arrayOf(TemplateChange(1, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE))
         assertTemplateChangesEqual(expected3, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(adjExpected3, tempNotetype.adjustedTemplateChanges)
 
         tempNotetype.addTemplateChange(ADD, 2)
         // 2 templates and 4 changes now
         Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
         val expected4 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(2, ADD))
-        val adjExpected4 = arrayOf(TemplateChange(1, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(2, ADD))
         assertTemplateChangesEqual(expected4, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(adjExpected4, tempNotetype.adjustedTemplateChanges)
 
         // Make sure we can resurrect these changes across lifecycle
         val outBundle = tempNotetype.toBundle()
@@ -135,17 +128,13 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         // 1 template and 3 changes now (the delete just cancelled out one of the adds)
         Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
         val expected5 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD))
-        val adjExpected5 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD))
         assertTemplateChangesEqual(expected5, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(adjExpected5, tempNotetype.adjustedTemplateChanges)
 
         tempNotetype.addTemplateChange(ADD, 2)
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
         Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
         val expected6 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
-        val adjExpected6 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
         assertTemplateChangesEqual(expected6, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(adjExpected6, tempNotetype.adjustedTemplateChanges)
 
         tempNotetype.addTemplateChange(ADD, 3)
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
@@ -158,24 +147,13 @@ class CardTemplateNotetypeTest : RobolectricTest() {
                 TemplateChange(2, ADD),
                 TemplateChange(3, ADD),
             )
-        val adjExpected7 =
-            arrayOf(
-                TemplateChange(2, DELETE),
-                TemplateChange(1, DELETE),
-                TemplateChange(1, ADD),
-                TemplateChange(2, ADD),
-                TemplateChange(3, ADD),
-            )
         assertTemplateChangesEqual(expected7, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(adjExpected7, tempNotetype.adjustedTemplateChanges)
 
         tempNotetype.addTemplateChange(DELETE, 3)
         // 1 template and 3 changes now (two deletes cancelled out adds)
         Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
         val expected8 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
-        val adjExpected8 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
         assertTemplateChangesEqual(expected8, tempNotetype.templateChanges)
-        assertTemplateChangesEqual(adjExpected8, tempNotetype.adjustedTemplateChanges)
     }
 
     @Suppress("UNCHECKED_CAST")
