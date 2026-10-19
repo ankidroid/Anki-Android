@@ -5,7 +5,6 @@ package com.ichi2.anki.previewer
 import android.os.LocaleList
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.TypeAnswerModifiers
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.Field
 import com.ichi2.anki.servicelayer.LanguageHintService
@@ -20,13 +19,11 @@ import org.jetbrains.annotations.VisibleForTesting
  * @see [imeHintLocales]
  * @see [noSuggest]
  * */
-@NeedsTest("combining and non combining answers are properly parsed")
-@NeedsTest("nosuggest modifier is parsed and composes with nc/cloze")
 class TypeAnswer private constructor(
     private val text: String,
     /** whether combining characters should be compared. Defined by the presence of the
      *   `nc:` specifier in the type answer tag */
-    private val combining: Boolean,
+    val combining: Boolean,
     /**
      * Whether keyboard suggestions, swiping and autocorrect should be disabled (#10352).
      *
@@ -88,7 +85,6 @@ class TypeAnswer private constructor(
          * @param isCloze whether the placeholder was a `cloze:` type filter
          * @param fieldName the name of the field in the card template
          */
-        @NeedsTest("cloze type-in-answer are properly parsed")
         private suspend fun getExpectedTypeInAnswer(
             card: Card,
             isCloze: Boolean,
