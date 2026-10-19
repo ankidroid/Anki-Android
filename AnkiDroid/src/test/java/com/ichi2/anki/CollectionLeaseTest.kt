@@ -11,6 +11,7 @@ import com.ichi2.anki.CollectionManager.withLeaseForTest
 import com.ichi2.anki.exception.CollectionLockedException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
@@ -144,6 +145,7 @@ class CollectionLeaseTest : RobolectricTest() {
     fun `a lease cannot overtake brief work paused before queue dispatch`() =
         runTest {
             val queue = StandardTestDispatcher(testScheduler)
+            val pausedBrief = CoroutineName("paused brief")
             var dispatchBrief: (() -> Unit)? = null
             val pausedQueue =
                 object : CoroutineDispatcher() {
@@ -151,8 +153,10 @@ class CollectionLeaseTest : RobolectricTest() {
                         context: CoroutineContext,
                         block: Runnable,
                     ) {
-                        if (dispatchBrief == null) {
+                        if (context[CoroutineName] === pausedBrief) {
                             // Pause after admission but before submitting to the serial queue.
+                            // Only this coroutine may save dispatchBrief: application background
+                            // work can dispatch concurrently and must not overwrite the saved task.
                             dispatchBrief = { queue.dispatch(context, block) }
                         } else {
                             queue.dispatch(context, block)
@@ -161,8 +165,11 @@ class CollectionLeaseTest : RobolectricTest() {
                 }
             withCollectionQueue(pausedQueue) {
                 val events = mutableListOf<String>()
+                // Application startup can submit unrelated work (for example, the rollover alarm).
+                // It must not steal the pause intended for the brief call below.
+                launch(start = CoroutineStart.UNDISPATCHED) { withCol { } }
                 val brief =
-                    async(start = CoroutineStart.UNDISPATCHED) {
+                    async(pausedBrief, start = CoroutineStart.UNDISPATCHED) {
                         tryWithCol { events.add("brief") }
                     }
                 val otherBrief =
