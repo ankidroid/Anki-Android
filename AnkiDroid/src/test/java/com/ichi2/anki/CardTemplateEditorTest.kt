@@ -1322,6 +1322,72 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals("A timeout counts every note", 1, col.countCardsCreatedBy(noteType, reverseTemplate, timeout = Duration.ZERO))
     }
 
+    @Test
+    fun `a failed save does not add card types - Issue 19953`() {
+        addBasicNote()
+        val noteType = col.notetypes.basic
+        val savedNames = noteType.templatesNames
+
+        withCardTemplateEditor(noteType) {
+            repeat(2) {
+                assertTrue("Unable to add a card type", shadowOf(this).clickMenuItem(R.id.action_add))
+                advanceRobolectricLooper()
+                clickAlertDialogButton { positiveButton }
+                advanceRobolectricLooper()
+            }
+            assertEquals("The new card types should share a front", tempNoteType!!.getTemplate(1).qfmt, tempNoteType!!.getTemplate(2).qfmt)
+
+            throwOnShowError = false
+            saveChanges()
+            assertEquals("A failed save must not add card types", savedNames, col.notetypes.get(noteType.id)!!.templatesNames)
+
+            templateFragment(2).binding.editText.setText("{{Back}} {{Front}}")
+            val editedNames = tempNoteType!!.notetype.templatesNames
+            saveChanges()
+            assertEquals("Saving again should add each card type once", editedNames, col.notetypes.get(noteType.id)!!.templatesNames)
+        }
+    }
+
+    @Test
+    fun `deleting the first card type keeps the cards of the second`() {
+        val note = addBasicAndReversedNote()
+        val reverseCardId = note.cards().single { it.ord == 1 }.id
+
+        withCardTemplateEditor(col.notetypes.basicAndReversed) {
+            deleteSelectedCardType()
+            saveChanges()
+        }
+
+        assertEquals("Only the deleted card type's card should be removed", listOf(reverseCardId), note.cids())
+    }
+
+    @Test
+    fun `deleting the first card type keeps the cards of the second after recreation`() {
+        val note = addBasicAndReversedNote()
+        val reverseCardId = note.cards().single { it.ord == 1 }.id
+        val intent = CardEditor(ntid = col.notetypes.basicAndReversed.id).toIntent(targetContext)
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(CardTemplateEditor::class.java, intent)
+
+        controller.get().deleteSelectedCardType()
+        controller.recreate()
+        advanceRobolectricLooper()
+        controller.get().saveChanges()
+
+        assertEquals("Only the deleted card type's card should be removed", listOf(reverseCardId), note.cids())
+    }
+
+    private fun CardTemplateEditor.deleteSelectedCardType() {
+        assertTrue("Unable to delete the card type", shadowOf(this).clickMenuItem(R.id.action_delete))
+        advanceRobolectricLooper()
+        clickAlertDialogButton { positiveButton }
+        advanceRobolectricLooper()
+    }
+
+    private fun CardTemplateEditor.saveChanges() {
+        assertTrue("Unable to save", shadowOf(this).clickMenuItem(R.id.action_confirm))
+        advanceRobolectricLooper()
+    }
+
     private fun CardTemplateEditor.templateFragment(ord: Int) = supportFragmentManager.findFragmentByTag("f$ord") as CardTemplateFragment
 
     private fun addCardType(

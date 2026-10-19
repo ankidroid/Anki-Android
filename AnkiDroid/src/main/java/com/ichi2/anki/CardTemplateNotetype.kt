@@ -8,9 +8,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.common.android.appContext
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.anki.libanki.CardOrdinal
 import com.ichi2.anki.libanki.CardTemplate
 import com.ichi2.anki.libanki.NoteTypeId
 import com.ichi2.anki.libanki.NotetypeJson
@@ -37,6 +37,8 @@ class CardTemplateNotetype(
 
     private val changes = CardTemplateChanges()
 
+    private var originalTemplateOrds: ArrayList<CardOrdinal?> = notetype.templates.mapTo(ArrayList()) { it.ord }
+
     var templateChanges: ArrayList<TemplateChange>
         get() = changes.templateChanges
         private set(value) {
@@ -47,11 +49,13 @@ class CardTemplateNotetype(
         Bundle().apply {
             putString(STATE_EDITED_NOTE_TYPE_FILENAME, saveTempNoteType(appContext, notetype))
             putSerializable(STATE_TEMPLATE_CHANGES, templateChanges)
+            putSerializable(STATE_ORIGINAL_TEMPLATE_ORDS, originalTemplateOrds)
         }
 
     private fun loadTemplateChanges(bundle: Bundle) {
         try {
             templateChanges = bundle.getSerializableCompat(STATE_TEMPLATE_CHANGES)!!
+            originalTemplateOrds = bundle.getSerializableCompat(STATE_ORIGINAL_TEMPLATE_ORDS)!!
         } catch (e: ClassCastException) {
             Timber.e(e, "Unexpected cast failure")
         }
@@ -84,50 +88,25 @@ class CardTemplateNotetype(
     fun addNewTemplate(newTemplate: CardTemplate) {
         Timber.d("addNewTemplate()")
         addTemplateChange(ChangeType.ADD, newTemplate.ord)
+        originalTemplateOrds.add(null)
     }
 
     fun removeTemplate(ord: Int) {
         Timber.d("removeTemplate() on ordinal %s", ord)
         addTemplateChange(ChangeType.DELETE, ord)
+        originalTemplateOrds.removeAt(ord)
     }
 
     suspend fun saveToDatabase() {
         Timber.d("saveToDatabase() called")
         changes.dumpChanges()
         clearTempNoteTypeFiles()
-        saveNoteType(notetype, adjustedTemplateChanges)
-    }
-
-    /**
-     * Handles everything for a note type change at once - template add / deletes as well as content updates
-     */
-    suspend fun saveNoteType(
-        notetype: NotetypeJson,
-        templateChanges: ArrayList<TemplateChange>,
-    ) {
-        Timber.d("saveNoteType")
-        val oldNoteType = withCol { notetypes.get(notetype.id) }
-
-        val newTemplates = notetype.templates
-        for (change in templateChanges) {
-            val oldTemplates = oldNoteType!!.templates
-            when (change.type) {
-                ChangeType.ADD -> {
-                    Timber.d("saveNoteType() adding template %s", change.ordinal)
-                    withCol { notetypes.addTemplate(oldNoteType, newTemplates[change.ordinal]) }
-                }
-                ChangeType.DELETE -> {
-                    Timber.d("saveNoteType() deleting template currently at ordinal %s", change.ordinal)
-                    withCol { notetypes.removeTemplate(oldNoteType, oldTemplates[change.ordinal]) }
-                }
-            }
+        val updated = notetype.deepClone()
+        for ((i, template) in updated.templates.withIndex()) {
+            template.setOrd(originalTemplateOrds[i])
         }
-
-        // required for Rust: the modified time can't go backwards, and we updated the note type by adding fields
-        // This could be done better
-        notetype.mod = oldNoteType!!.mod
         undoableOp {
-            notetypes.updateDict(notetype)
+            notetypes.updateDict(updated)
         }
     }
 
@@ -144,6 +123,7 @@ class CardTemplateNotetype(
     companion object {
         private const val STATE_EDITED_NOTE_TYPE_FILENAME = "editedNoteTypeFilename"
         private const val STATE_TEMPLATE_CHANGES = "mTemplateChanges"
+        private const val STATE_ORIGINAL_TEMPLATE_ORDS = "originalTemplateOrds"
 
         /**
          * Load the TemporaryNoteType from the filename included in a Bundle

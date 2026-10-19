@@ -91,7 +91,7 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         // Assume you start with a 2 template model (like "Basic (and reversed)")
         // Add a 3rd new template, remove the 2nd, remove the 1st, add a new now-2nd, remove 1st again
         // ...and it should reduce to just removing the original 1st/2nd and adding the final as first
-        val tempNotetype = CardTemplateNotetype(NotetypeJson("{ \"foo\": \"bar\" }"))
+        val tempNotetype = CardTemplateNotetype(NotetypeJson("{ \"foo\": \"bar\", \"tmpls\": [] }"))
 
         tempNotetype.addTemplateChange(ADD, 3)
         val expected1 = arrayOf(TemplateChange(3, ADD))
