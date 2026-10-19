@@ -55,15 +55,21 @@ class TagsList(
         indeterminateTags = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
         if (uncheckedTags != null) {
             this.allTags.addAll(uncheckedTags)
-            // intersection between mCheckedTags and uncheckedTags
-            indeterminateTags.addAll(this.checkedTags)
-            val uncheckedSet: MutableSet<String> = TreeSet(java.lang.String.CASE_INSENSITIVE_ORDER)
-            uncheckedSet.addAll(uncheckedTags)
-            indeterminateTags.retainAll(uncheckedSet)
+            for (tag in uncheckedTags) {
+                val checkedTag = findCheckedTagIgnoringCase(tag) ?: continue
+                indeterminateTags.add(checkedTag)
+            }
             this.checkedTags.removeAll(indeterminateTags)
         }
         partiallySelectedTags.addAll(indeterminateTags)
         prepareTagHierarchy()
+    }
+
+    /** Returns the matching checked tag with its stored spelling, or `null` if absent. */
+    private fun findCheckedTagIgnoringCase(tag: String): String? {
+        // O(log n); returns "Biology" for a "biology" search or vice versa
+        val candidate = checkedTags.ceiling(tag) ?: return null
+        return candidate.takeIf { it.equals(tag, ignoreCase = true) }
     }
 
     /**
