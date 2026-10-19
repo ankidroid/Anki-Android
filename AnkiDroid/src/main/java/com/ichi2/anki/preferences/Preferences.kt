@@ -55,7 +55,7 @@ class PreferencesFragment :
      * If so, the left side contains the list of all preference categories, and the right side contains the category currently opened.
      * Otherwise, the same view is used to show the list of categories first, and then one specific category.
      */
-    private val settingsIsSplit get() = resources.configuration.run { smallestScreenWidthDp / fontScale >= 600 }
+    private var settingsIsSplit = false
 
     private val childFragmentOnBackPressedCallback =
         object : OnBackPressedCallback(enabled = false) {
@@ -69,6 +69,17 @@ class PreferencesFragment :
         FragmentManager.OnBackStackChangedListener {
             childFragmentOnBackPressedCallback.isEnabled = childFragmentManager.backStackEntryCount > 0
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val fitsSplit = resources.configuration.run { smallestScreenWidthDp / fontScale >= 600 }
+        settingsIsSplit = savedInstanceState?.getBoolean(STATE_SETTINGS_IS_SPLIT, fitsSplit) ?: fitsSplit
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(STATE_SETTINGS_IS_SPLIT, settingsIsSplit)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -233,6 +244,10 @@ class PreferencesFragment :
         childFragmentManager.commit {
             replace(R.id.settings_container, initialFragment, initialFragment::class.java.name)
         }
+    }
+
+    companion object {
+        private const val STATE_SETTINGS_IS_SPLIT = "settingsIsSplit"
     }
 }
 
