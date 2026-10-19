@@ -623,6 +623,28 @@ class ProgressObserverTest : RobolectricTest() {
         secondGate.complete(Unit)
     }
 
+    @Test
+    fun `review - later operation ends while earlier operation still runs`() {
+        val activity = startActivity().get()
+        val first = ProgressObservingFragment()
+        val second = ProgressObservingFragment()
+        activity.supportFragmentManager.commitNow {
+            add(first, "first")
+            add(second, "second")
+        }
+        val firstGate = CompletableDeferred<Unit>()
+        first.viewModel.runOp(firstGate)
+        idleMainLooper(SHOW_DELAY * 2)
+        val secondGate = CompletableDeferred<Unit>()
+        second.viewModel.runOp(secondGate)
+        idleMainLooper(SHOW_DELAY * 2)
+        secondGate.complete(Unit)
+        idleMainLooper(SHOW_DELAY * 2)
+        assertTrue(activity.touchesBlocked())
+        assertNotNull(activity.loadingDialog(), "earlier operation still needs visible progress")
+        firstGate.complete(Unit)
+    }
+
     private fun launchOp(
         gate: CompletableDeferred<Unit>,
         message: String = "op",

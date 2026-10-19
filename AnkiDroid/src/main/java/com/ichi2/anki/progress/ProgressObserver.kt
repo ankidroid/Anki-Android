@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.coroutineScope
@@ -45,12 +46,7 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
     resolveMessage: Context.(M) -> String,
 ) {
     val dialogTag = "${LoadingDialogFragment.TAG}:${viewModel.javaClass.name}"
-    var ownDialog =
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            null
-        } else {
-            supportFragmentManager.findFragmentByTag(dialogTag) as? DialogFragment
-        }
+    var holdingDialog = false
     val ownerLifecycle = owner.lifecycle
     var backBlock: OnBackPressedCallback? = null
 
@@ -67,10 +63,19 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
         window.unblockTouches()
     }
 
-    fun dismissDialog() {
-        ownDialog?.takeIf { it.isAdded }?.dismissAllowingStateLoss()
-        ownDialog = null
+    fun holdDialog() {
+        if (holdingDialog) return
+        holdingDialog = true
+        supportFragmentManager.addDialogHold(dialogTag)
     }
+
+    fun releaseDialog() {
+        if (!holdingDialog) return
+        holdingDialog = false
+        supportFragmentManager.removeDialogHold(dialogTag)
+    }
+
+    if (supportFragmentManager.findFragmentByTag(dialogTag) != null) holdDialog()
 
     ownerLifecycle.coroutineScope.launch {
         try {
@@ -85,12 +90,12 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
                         delay(wait)
                         val latest = viewModel.progressManager.progress.value
                         if (latest is ViewModelProgress.Active) {
+                            holdDialog()
                             showLoadingDialog(
                                 message = formatMessage(latest, resolveMessage),
                                 cancellable = latest.cancellable,
                                 tag = dialogTag,
                             )
-                            ownDialog = supportFragmentManager.findFragmentByTag(dialogTag) as? DialogFragment
                             if (latest.cancellable) wireCancelListener(viewModel, dialogTag)
                         }
                         pendingShow = null
@@ -100,19 +105,19 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
                     viewModel.progressManager.progress.onCompletion {
                         pendingShow?.cancel()
                         unblockInput()
-                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) dismissDialog()
+                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) releaseDialog()
                     }
                 progress.collect { state ->
                     when (state) {
                         is ViewModelProgress.Idle -> {
                             pendingShow?.cancel()
                             pendingShow = null
-                            dismissDialog()
+                            releaseDialog()
                             unblockInput()
                         }
                         is ViewModelProgress.Active -> {
                             blockInput()
-                            if (ownDialog != null) {
+                            if (holdingDialog) {
                                 pendingShow?.cancel()
                                 pendingShow = showDialogAfter(Duration.ZERO)
                             } else if (pendingShow == null) {
@@ -123,9 +128,27 @@ private fun <M : Any> AnkiActivity.observeProgressFor(
                 }
             }
         } finally {
-            dismissDialog()
+            releaseDialog()
         }
     }
+}
+
+private val dialogHolds = WeakHashMap<FragmentManager, MutableMap<String, Int>>()
+
+private fun FragmentManager.addDialogHold(tag: String) {
+    val holds = dialogHolds.getOrPut(this) { mutableMapOf() }
+    holds[tag] = (holds[tag] ?: 0) + 1
+}
+
+private fun FragmentManager.removeDialogHold(tag: String) {
+    val holds = dialogHolds[this] ?: return
+    val count = holds[tag] ?: return
+    if (count > 1) {
+        holds[tag] = count - 1
+        return
+    }
+    holds.remove(tag)
+    (findFragmentByTag(tag) as? DialogFragment)?.dismissAllowingStateLoss()
 }
 
 private val touchBlockCounts = WeakHashMap<Window, Int>()
