@@ -45,6 +45,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -138,20 +140,36 @@ private fun ProgressRing(
     state: SharedDecksDownloadUiState,
     modifier: Modifier = Modifier,
 ) {
+    val border = MaterialTheme.widgetBorder
+    val colors = MaterialTheme.colorScheme
+    val trackColor = if (border != null) colors.surface else colors.surfaceVariant
+    val sizeTextColor = if (border != null) colors.onSurface else colors.onSurfaceVariant
+    val indicatorModifier =
+        Modifier.size(ProgressRingSize).drawWithContent {
+            drawContent()
+            if (border != null) {
+                // The thin outline distinguishes the track from the thicker progress arc.
+                drawCircle(
+                    brush = border.brush,
+                    radius = (size.minDimension - ProgressRingStroke.toPx()) / 2,
+                    style = Stroke(width = border.width.toPx()),
+                )
+            }
+        }
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         val percent = state.percent
         if (percent == null) {
             CircularProgressIndicator(
-                modifier = Modifier.size(ProgressRingSize),
+                modifier = indicatorModifier,
                 strokeWidth = ProgressRingStroke,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                trackColor = trackColor,
             )
         } else {
             CircularProgressIndicator(
                 progress = { (percent / 100f).coerceIn(0f, 1f) },
-                modifier = Modifier.size(ProgressRingSize),
+                modifier = indicatorModifier,
                 strokeWidth = ProgressRingStroke,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                trackColor = trackColor,
             )
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -164,7 +182,7 @@ private fun ProgressRing(
                         Text(
                             text = it,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = sizeTextColor,
                             modifier = Modifier.padding(top = MaterialTheme.dimensions.space50),
                         )
                     }
