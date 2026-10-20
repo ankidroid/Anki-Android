@@ -396,11 +396,12 @@ class RecyclerFastScroller
                     true
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    handle.isSelected = false
+                    handle.isPressed = false
                     if (recyclerView != null) {
                         recyclerView?.let { removeCallbacks(scrollTask) }
                         scrollTask.run()
                     }
+                    postAutoHide()
                     false
                 }
                 else -> super.onTouchEvent(event)
