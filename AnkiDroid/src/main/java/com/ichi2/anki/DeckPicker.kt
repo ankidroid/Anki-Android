@@ -183,6 +183,7 @@ import com.ichi2.anki.shareddeck.SharedDecksActivity
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.study.currentDeckStudyState
 import com.ichi2.anki.sync.MeteredSyncPolicy
@@ -2295,21 +2296,22 @@ open class DeckPicker :
             updateDeckList()
         }
 
-        withCol { decks.select(did) }
+        val study =
+            withCol {
+                decks.select(did)
+                currentDeckStudyState()
+            }
         deckListAdapter.updateSelectedDeck(did)
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
         viewModel.focusedDeck = did
 
-        // TODO: Reuse dueTree from ViewModel instead of recalculating for better performance.
-        val deck = withCol { sched.deckDueTree().find(did) }
-        if (deck?.hasCardsReadyToStudy() == true) {
+        if (study.availability == StudyAvailability.CardsAvailable) {
             openReviewerOrStudyOptions(selectionType)
             return
         }
 
-        val isEmpty = withCol { decks.cardCount(did, includeSubdecks = true) == 0 }
-        if (!deck?.filtered!! && isEmpty) {
+        if (study.isEmptyRegularDeck) {
             showEmptyDeckSnackbar()
             updateUi()
         } else {
