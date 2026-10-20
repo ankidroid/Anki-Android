@@ -768,7 +768,7 @@ open class Reviewer :
 
         Flag.entries.find { it.id == item.itemId }?.let { flag ->
             Timber.i("Reviewer:: onOptionItemSelected Flag - ${flag.name} clicked")
-            onFlag(currentCard, flag)
+            toggleFlag(flag)
             return true
         }
 
