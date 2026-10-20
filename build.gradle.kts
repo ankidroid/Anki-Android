@@ -1,9 +1,11 @@
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
+import com.ichi2.anki.gradle.BackendTempLibraryService
 import com.ichi2.anki.gradle.GitHubActionsTestListener
 import com.ichi2.anki.gradle.TestSummaryService
 import com.ichi2.anki.gradle.configureRobolectricJvm
+import com.ichi2.anki.gradle.reportBackendTempLibraries
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.buildconfiguration.tasks.UpdateDaemonJvm
@@ -53,6 +55,15 @@ val testSummaryService = System.getenv("GITHUB_STEP_SUMMARY")?.let { path ->
     }
 }
 
+// The backend keeps native libraries in the test JVM's temp directory, outside Gradle clean.
+// Use -PbackendTempLibraryWarnBytes=0 to report even small amounts; the default is 1 GiB.
+val backendTempLibraryService =
+    gradle.sharedServices.registerIfAbsent("backendTempLibraryService", BackendTempLibraryService::class) {
+        parameters.warnAboveBytes.set(
+            providers.gradleProperty("backendTempLibraryWarnBytes").map { it.toLong() }.orElse(1024L * 1024 * 1024),
+        )
+    }
+
 /**
  * Per-fork JVM heap for unit tests.
  * See [Test.setMaxHeapSize]
@@ -96,6 +107,7 @@ subprojects {
                 it.minHeapSize = "1g"
 
                 it.configureRobolectricJvm()
+                it.reportBackendTempLibraries(backendTempLibraryService)
 
                 it.useJUnitPlatform()
                 it.testLogging {
