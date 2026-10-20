@@ -48,6 +48,7 @@ import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPickerFloatingActionMenu.CloseAnimation
 import com.ichi2.anki.browser.CardBrowserFragment
 import com.ichi2.anki.browser.CardBrowserViewModel.RowSelection
@@ -57,8 +58,10 @@ import com.ichi2.anki.common.utils.android.getResFromAttr
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
 import com.ichi2.anki.common.utils.ext.getParcelableExtraCompat
 import com.ichi2.anki.databinding.ActivityHomescreenBinding
+import com.ichi2.anki.deckpicker.DeckFilters
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.deckpicker.SyncIconState
+import com.ichi2.anki.deckpicker.filterAndFlattenDisplay
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
@@ -782,7 +785,6 @@ class DeckPickerTest : RobolectricTest() {
         repeat(10) { addDeck("Test Deck $it") }
 
         deckPicker {
-            advanceRobolectricLooper()
             val searchItem = menu().findItem(R.id.deck_picker_action_filter)
             assertTrue(searchItem.isVisible)
             assertTrue(searchItem.expandActionView())
@@ -2058,8 +2060,9 @@ fun RobolectricTest.setIntroductionSlidesShown(shown: Boolean) {
 }
 
 /**
- * Launches the deck picker, waiting for [expectedDeckIds] in adapter order before running [function]
- * when supplied. Prepare collection data before calling this helper.
+ * Launches the deck picker, waiting for the initial deck list after successful startup.
+ * When supplied, also waits for [expectedDeckIds] in adapter order before running [function].
+ * Prepare collection data before calling this helper.
  */
 fun RobolectricTest.deckPicker(
     exposeTestData: Boolean = false,
@@ -2073,6 +2076,17 @@ fun RobolectricTest.deckPicker(
             if (exposeTestData) DeckPickerTest.DeckPickerEx::class.java else DeckPicker::class.java,
             Intent(),
         )
+    val viewModel = deckPicker.viewModel
+    // Startup can stop at permissions, an error dialog, or the app introduction.
+    if (!deckPicker.isFinishing && viewModel.startupJob?.isCompleted == true && viewModel.flowOfStartupResponse.value == null) {
+        val expectedCount =
+            withCol {
+                sched.deckDueTree().filterAndFlattenDisplay(DeckFilters.create(viewModel.deckSearchQuery), decks.selected()).size
+            }
+        RobolectricTest.advanceRobolectricLooperUntil(
+            lazyMessage = { "Expected $expectedCount visible decks, got ${deckPicker.visibleDeckCount}" },
+        ) { deckPicker.visibleDeckCount == expectedCount }
+    }
     expectedDeckIds?.let { deckPicker.awaitVisibleDecks(it) }
     function(deckPicker)
 }
