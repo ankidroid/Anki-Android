@@ -248,17 +248,32 @@ object ImportUtils {
                     is ImportResolution.Failure -> return resolution.error
                     is ImportResolution.ResolvedFile -> resolution
                 }
+            val result = cacheImport(context, file)
+            if (result is ImportResult.Success) {
+                if (result.file is ImportResolution.Text) {
+                    (context as Activity).openCsvImporter(result.path)
+                } else {
+                    sendShowImportFileDialogMsg(result.path)
+                }
+            }
+            return result
+        }
+
+        private fun cacheImport(
+            context: Context,
+            file: ImportResolution.ResolvedFile,
+        ): ImportResult {
             // Copy to temporary file
             val checkFile =
                 try {
                     context.cacheDir.withFileNameSafe(file.source.fileName)
                 } catch (_: SecurityException) {
                     // Do not log the exception: it may interpolate attacker-controlled paths (PII).
-                    Timber.e("Path traversal detected in handleContentProviderFile")
+                    Timber.e("Path traversal detected in cacheImport")
                     return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 } catch (_: IllegalArgumentException) {
                     // Do not log the exception: it may interpolate attacker-controlled paths (PII).
-                    Timber.e("Path traversal detected in handleContentProviderFile")
+                    Timber.e("Path traversal detected in cacheImport")
                     return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 }
             // The package WebView/backend route expects encoded filenames on disk; CSV uses a raw path.
@@ -275,11 +290,6 @@ object ImportUtils {
                     humanReadableMessage = details.buildHumanReadableMessage(context),
                     exception = details.userFacingException,
                 )
-            }
-            if (file is ImportResolution.Text) {
-                (context as Activity).openCsvImporter(tempOutDir)
-            } else {
-                sendShowImportFileDialogMsg(tempOutDir)
             }
             return ImportResult.Success(file, tempOutDir)
         }
