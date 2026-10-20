@@ -513,27 +513,6 @@
                 android:name="autoStoreLocales"
                 android:value="true" />
         </service>
-        <!-- Service to perform web API queries -->
-        <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
-
-
-        <!-- Don't disable/enable the widgets here until min API>=31, see issue #15747 & https://issuetracker.google.com/issues/36914010 -->
-        <!-- small widget -->
-        <receiver
-            android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
-            android:label="@string/widget_small"
-            android:exported="true"
-            >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider_small"
-                />
-        </receiver>
-
         <!-- Copy Sync Error Message to Clipboard -->
         <receiver
             android:name="com.ichi2.anki.receiver.CopyToClipboardReceiver"
