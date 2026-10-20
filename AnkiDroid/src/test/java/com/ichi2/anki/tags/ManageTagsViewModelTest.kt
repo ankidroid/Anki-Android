@@ -9,6 +9,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.exception.CollectionLockedException
 import com.ichi2.anki.observability.ensureOpsExecuted
+import com.ichi2.testutils.NeedsRobolectric
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -38,6 +39,9 @@ import kotlin.time.Duration.Companion.seconds
 
 /** Integration tests for [ManageTagsViewModel] with a real collection */
 @RunWith(AndroidJUnit4::class)
+@NeedsRobolectric(
+    "Preserve RobolectricTest's scoped CollectionManager dispatcher when switching to JvmTest; tag operations must finish before assertions and teardown.",
+)
 class ManageTagsViewModelTest : RobolectricTest() {
     @Test
     fun `tagExists follows backend identity for hidden Unicode tags`() =

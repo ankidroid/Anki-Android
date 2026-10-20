@@ -11,6 +11,7 @@ import com.ichi2.anki.libanki.getNotetypeNameIdUseCount
 import com.ichi2.anki.libanki.removeNotetype
 import com.ichi2.anki.notetype.ManageNoteTypesState.UserMessage
 import com.ichi2.anki.progress.ViewModelProgress
+import com.ichi2.testutils.NeedsRobolectric
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
@@ -36,6 +37,9 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
+@NeedsRobolectric(
+    "Preserve RobolectricTest's scoped CollectionManager dispatcher when switching to JvmTest; initialization and progress updates currently race assertions.",
+)
 class ManageNoteTypesViewModelTest : RobolectricTest() {
     @Test
     fun `multiple selection with one entry works as expected`() =

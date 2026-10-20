@@ -8,6 +8,7 @@ import com.ichi2.anki.libanki.sched.SetDueDateDays
 import com.ichi2.anki.scheduling.SetDueDateViewModel.DateRange
 import com.ichi2.anki.scheduling.SetDueDateViewModel.Tab
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.NeedsRobolectric
 import com.ichi2.testutils.common.assertThrows
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.hamcrest.MatcherAssert.assertThat
@@ -18,6 +19,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
+@NeedsRobolectric(
+    "Schedule CollectionManager work on the test dispatcher before removing the Android runner; advanceUntilIdle must await initialization.",
+)
 class SetDueDateViewModelTest : JvmTest() {
     @Test
     fun `initial values`() =
