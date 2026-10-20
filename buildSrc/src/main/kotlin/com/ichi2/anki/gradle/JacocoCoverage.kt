@@ -48,7 +48,7 @@ fun Project.registerJacocoCoverageReports(
         project: Project,
         classDir: String,
     ) {
-        report.sourceDirectories.from(project.files("src/main/java"))
+        report.sourceDirectories.from(project.files("src/main/java", "src/main/kotlin"))
         report.classDirectories.from(
             project.files(
                 project.fileTree(
