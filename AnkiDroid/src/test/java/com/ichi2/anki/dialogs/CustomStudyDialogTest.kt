@@ -7,9 +7,12 @@ import android.os.Looper
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
@@ -37,8 +40,10 @@ import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.libanki.Note
 import com.ichi2.anki.libanki.QueueType
 import com.ichi2.anki.libanki.sched.Scheduler
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.isJsonEqual
+import com.ichi2.testutils.launchFragment
 import com.ichi2.testutils.uninitializeField
 import com.ichi2.utils.positiveButton
 import io.mockk.every
@@ -308,6 +313,31 @@ class CustomStudyDialogTest : RobolectricTest() {
                 .check(matches(isEnabled()))
         }
     }
+
+    @Test
+    fun `tags chosen after recreation start a custom study session`() =
+        runTest {
+            addBasicNote().update { addTag("testTag") }
+
+            launchFragment<Fragment>().use { scenario ->
+                scenario.onFragment {
+                    it.requireActivity().showDialogFragment(CustomStudyDialog.createInstance(Consts.DEFAULT_DECK_ID))
+                }
+                onView(withText(TR.customStudyStudyByCardStateOrTag()))
+                    .inRoot(isDialog())
+                    .perform(scrollTo(), click())
+
+                scenario.recreate()
+
+                scenario.onFragment {
+                    it.parentFragmentManager.setFragmentResult(
+                        REQUEST_SELECT_TAGS,
+                        Bundle().apply { putStringArrayList(RESULT_SELECTED_TAGS, arrayListOf("testTag")) },
+                    )
+                }
+                assertNotNull(col.decks.customStudySession)
+            }
+        }
 
     @Test
     fun `selectedKind maps selected card state index to cram kind`() {
