@@ -2,12 +2,15 @@
 
 package com.ichi2.anki.tags
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.tags.tagTreeNode
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
+import org.junit.runner.RunWith
 
 /** Unit tests for [ManageTagsViewModel.flattenTree] (no collection needed) */
+@RunWith(AndroidJUnit4::class)
 class FlattenTreeTest {
     /** Composes flatten + filter to match the old two-arg flattenTree behavior */
     private fun flattenAndFilter(

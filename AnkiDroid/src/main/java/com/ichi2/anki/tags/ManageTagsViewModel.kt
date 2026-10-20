@@ -113,7 +113,7 @@ class ManageTagsViewModel : ViewModel() {
                     return@launchTagOperation
                 }
             val newCollapsed = !node.collapsed
-            withCol { tags.setCollapsed(tag, newCollapsed) }
+            withCol { tags.setCollapsed(node.fullTag, newCollapsed) }
             // Update the in-memory list with the new collapsed state
             tagList =
                 tagList.map {

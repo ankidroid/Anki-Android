@@ -2,20 +2,31 @@
 
 package com.ichi2.anki.tags
 
+import android.icu.lang.UCharacter
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import com.ichi2.anki.libanki.Tags
+import com.ichi2.anki.libanki.utils.RustCompat
 import timber.log.Timber
+import java.text.Normalizer
 
 /**
  * A tag name, e.g. "science::biology".
  *
+ * Equality, hashing and hierarchy checks use normalized Unicode case folding. [value] retains
+ * the name's case for display and case-only renames; compare it explicitly when
+ * checking whether the spelling changed.
+ *
  * Tag names should not be logged using `Timber.i` or above to avoid leaking PII to crash reports.
  */
-@JvmInline
-value class TagName private constructor(
+class TagName private constructor(
     val value: String,
 ) {
+    private val identity = foldCase(normalize(value))
+
+    /** Includes [root] itself; `a::b` is a descendant of `a`, but `ab` is not. */
+    fun isSameOrDescendantOf(root: TagName): Boolean = identity == root.identity || identity.startsWith("${root.identity}::")
+
     /** Ancestor tags, e.g. `TagName.build("a::b::c").ancestors` returns `["a", "a::b"]` */
     val ancestors: List<String>
         get() {
@@ -32,6 +43,10 @@ value class TagName private constructor(
             }
         }
 
+    override fun equals(other: Any?): Boolean = other is TagName && identity == other.identity
+
+    override fun hashCode(): Int = identity.hashCode()
+
     override fun toString(): String = value
 
     companion object {
@@ -41,6 +56,38 @@ value class TagName private constructor(
             // But "_" is converted to " " in some visual displays
             return TagName(tagName.replace(" ", "_"))
         }
+
+        /** Match the three-character expansion order in Anki's pinned unicase 2.6.0. */
+        private fun foldCase(spelling: String): String =
+            buildString {
+                var offset = 0
+                while (offset < spelling.length) {
+                    val codePoint = spelling.codePointAt(offset)
+                    val folded = UCharacter.foldCase(String(Character.toChars(codePoint)), true)
+                    // unicase's Fold::Three yields the third character before the first two.
+                    // Fold each input character separately: literal "ffi" must stay "ffi",
+                    // while the ligature "ﬃ" must become "iff".
+                    if (folded.codePointCount(0, folded.length) == 3) {
+                        val last = folded.offsetByCodePoints(0, 2)
+                        append(folded, last, folded.length)
+                        append(folded, 0, last)
+                    } else {
+                        append(folded)
+                    }
+                    offset += Character.charCount(codePoint)
+                }
+            }
+
+        // Mirror tags/register.rs for identity only. Preserve the supplied spelling
+        // and leave mutation validation (e.g. forbidden separators) to the backend.
+        private fun normalize(spelling: String): String =
+            spelling.split("::").joinToString("::") { component ->
+                Normalizer
+                    .normalize(component, Normalizer.Form.NFC)
+                    .filterNot { it <= '\u001f' || it == '\u007f' || it == '\u3000' }
+                    .trim(RustCompat::isWhitespace)
+                    .ifEmpty { "blank" }
+            }
     }
 }
 

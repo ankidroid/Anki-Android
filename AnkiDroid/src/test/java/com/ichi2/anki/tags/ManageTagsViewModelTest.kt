@@ -374,6 +374,22 @@ class ManageTagsViewModelTest : RobolectricTest() {
         }
 
     @Test
+    fun `expanding one distinct root leaves the other collapsed`() =
+        runTest {
+            addBasicNote().update {
+                addTag("ffi::child")
+                addTag("ﬃ::child")
+            }
+            withViewModel {
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("ffi", "ﬃ")))
+
+                toggleCollapsed("ﬃ").join()
+
+                assertThat(loadedState.visibleTagNames, equalTo(listOf("ffi", "ﬃ", "ﬃ::child")))
+            }
+        }
+
+    @Test
     fun `toggleCollapsed on unknown tag queues UnexpectedError`() =
         runTest {
             addTags("science")
