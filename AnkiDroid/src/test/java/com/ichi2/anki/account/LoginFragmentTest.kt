@@ -16,6 +16,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.shadows.ShadowDialog
 
 @RunWith(AndroidJUnit4::class)
 class LoginFragmentTest : RobolectricTest() {
@@ -43,7 +44,7 @@ class LoginFragmentTest : RobolectricTest() {
         activity.findViewById<TextInputEditField>(R.id.password).setText("hunter2")
 
         activity.findViewById<Button>(R.id.login_button).performClick()
-        advanceRobolectricLooper()
+        advanceRobolectricLooperUntil { ShadowDialog.getLatestDialog() != null }
 
         assertThat(getAlertDialogText(true), containsString("Advanced settings"))
     }
