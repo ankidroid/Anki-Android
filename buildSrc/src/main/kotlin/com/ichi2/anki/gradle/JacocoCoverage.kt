@@ -2,8 +2,13 @@
 
 package com.ichi2.anki.gradle
 
+import com.ichi2.anki.gradle.HasUnitTestSources.Companion.hasAndroidUnitTestSources
 import org.gradle.api.Project
+import org.gradle.api.artifacts.component.ProjectComponentIdentifier
+import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.extra
+import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.register
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
@@ -35,8 +40,6 @@ fun Project.coverageFileTree(
 /** Registers the merged, unit-test, and Android-test coverage reports. */
 fun Project.registerJacocoCoverageReports(
     fileFilter: List<String>,
-    androidModulesToUnitTest: List<String>,
-    jvmModulesToUnitTest: List<String>,
     openReportRequested: Boolean,
     linuxHtmlCmd: String?,
 ) {
@@ -60,6 +63,27 @@ fun Project.registerJacocoCoverageReports(
             ),
         )
         report.executionData.from(project.coverageFileTree(unitTestCoverageDirs, listOf("**/*.exec")))
+    }
+
+    fun configureModuleUnitTestCoverage(
+        report: JacocoReport,
+        module: Project,
+    ) {
+        when {
+            module.plugins.hasPlugin("com.android.library") -> {
+                includeUnitTestCoverage(report, module, moduleClassDir)
+                // Include classes exercised by app tests even when the library has no tests.
+                // Avoid empty test tasks: their resource linking may require app resources.
+                if (module.hasAndroidUnitTestSources()) {
+                    runUnitTestsWithoutCaching(report, module, "testDebugUnitTest")
+                }
+            }
+
+            module.plugins.hasPlugin("org.jetbrains.kotlin.jvm") -> {
+                includeUnitTestCoverage(report, module, "classes/kotlin/main")
+                runUnitTestsWithoutCaching(report, module, "test")
+            }
+        }
     }
 
     // Our merge report task
@@ -91,16 +115,10 @@ fun Project.registerJacocoCoverageReports(
         configureJacocoReportOutput(layout, openReportRequested, linuxHtmlCmd)
 
         includeUnitTestCoverage(report, getProject(), flavorClassDir)
-        dependsOn("testPlayDebugUnitTest")
+        runUnitTestsWithoutCaching(report, getProject(), "testPlayDebugUnitTest")
 
-        for (module in androidModulesToUnitTest) {
-            includeUnitTestCoverage(report, project(module), moduleClassDir)
-            dependsOn("$module:testDebugUnitTest")
-        }
-
-        for (module in jvmModulesToUnitTest) {
-            includeUnitTestCoverage(report, project(module), "classes/kotlin/main")
-            dependsOn("$module:test")
+        for (module in project.runtimeProjectDependencies("playDebugRuntimeClasspath")) {
+            configureModuleUnitTestCoverage(report, module)
         }
     }
 
@@ -122,6 +140,29 @@ fun Project.registerJacocoCoverageReports(
         executionData.setFrom(project.coverageFileTree(androidTestCoverageDirs, listOf("**/*.ec")))
         dependsOn("connectedPlay${rootProject.androidTestVariantName}AndroidTest")
     }
+}
+
+// Follow the app's runtime graph, including transitive project dependencies.
+// This excludes build tooling such as lint rules and baseline-profile generators.
+fun Project.runtimeProjectDependencies(configurationName: String): List<Project> =
+    configurations[configurationName]
+        .incoming.resolutionResult.allComponents
+        .mapNotNull { it.id as? ProjectComponentIdentifier }
+        .filter { it.build.buildPath == ":" && it.projectPath != path }
+        .map { project(it.projectPath) }
+
+fun runUnitTestsWithoutCaching(
+    report: JacocoReport,
+    project: Project,
+    taskName: String,
+) {
+    val test = project.tasks.named<Test>(taskName).get()
+    report.dependsOn(test)
+    // Preserve the existing coverage policy: always rerun these tests, bypassing
+    // up-to-date checks and the build cache. Configuration caching is unaffected.
+    // TODO: Revisit whether coverage reports need fresh test executions.
+    test.outputs.upToDateWhen { false }
+    test.outputs.cacheIf { false }
 }
 
 val Project.androidTestVariantName: String get() = extra["androidTestVariantName"] as String

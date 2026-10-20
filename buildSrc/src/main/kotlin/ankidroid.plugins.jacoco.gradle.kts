@@ -76,40 +76,11 @@ val fileFilter =
         "**/*\$Result\$*.*",
     )
 
-// Android library modules (do not yet support flavors play/full)
-val androidModulesToUnitTest = listOf(":api", ":common:android", ":libanki", ":compat")
-// JVM modules: use 'test' task and 'classes/kotlin/main' class dir
-val jvmModulesToUnitTest = listOf(":common")
-
 registerJacocoCoverageReports(
     fileFilter,
-    androidModulesToUnitTest,
-    jvmModulesToUnitTest,
     openReportRequested,
     linuxHtmlCmd,
 )
-
-gradle.projectsEvaluated {
-    // ensure test results aren't cached
-    tasks.configureEach {
-        if (name == "testPlayDebugUnitTest") {
-            outputs.upToDateWhen { false }
-            outputs.cacheIf { false }
-        }
-    }
-    for (module in androidModulesToUnitTest) {
-        project(module).tasks.findByName("testDebugUnitTest")?.let { task ->
-            task.outputs.upToDateWhen { false }
-            task.outputs.cacheIf { false }
-        }
-    }
-    for (module in jvmModulesToUnitTest) {
-        project(module).tasks.findByName("test")?.let { task ->
-            task.outputs.upToDateWhen { false }
-            task.outputs.cacheIf { false }
-        }
-    }
-}
 
 // Issue 16640 - some emulators run, but register zero coverage
 tasks.register("assertNonzeroAndroidTestCoverage") {
