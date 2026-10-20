@@ -69,7 +69,7 @@ class DayRolloverAlarm : AnkiBroadcastReceiver() {
         }
 
         @VisibleForTesting
-        internal suspend fun scheduleNextInternal(context: Context) {
+        suspend fun scheduleNextInternal(context: Context) {
             val cutoffMs = nextFutureCutoffMs() ?: return
             val pendingIntent = context.buildPendingIntent(ACTION_ROLLOVER) ?: return
             // TODO: This uses setWindow with a 10 minute window, so likely fires at 04:10, rather than 04:00
