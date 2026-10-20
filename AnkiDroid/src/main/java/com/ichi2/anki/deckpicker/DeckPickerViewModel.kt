@@ -90,6 +90,9 @@ class DeckPickerViewModel :
     var isDeckSearchExpanded: Boolean = false
         private set
 
+    /** Media choice for a metered confirmation waiting for a resumed activity to show it. */
+    var deferredMeteredSyncMedia: Boolean? = null
+
     /**
      * Keep track of which deck was last given focus in the deck list. If we find that this value
      * has changed between deck list refreshes, we need to recenter the deck list to the new current
