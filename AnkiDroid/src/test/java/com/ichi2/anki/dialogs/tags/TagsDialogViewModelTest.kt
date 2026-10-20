@@ -3,10 +3,9 @@
 
 package com.ichi2.anki.dialogs.tags
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.NoteId
 import com.ichi2.anki.libanki.testutils.ext.newNote
+import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Assert.assertEquals
@@ -14,12 +13,10 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.properties.Delegates
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(AndroidJUnit4::class)
-class TagsDialogViewModelTest : RobolectricTest() {
+class TagsDialogViewModelTest : JvmTest() {
     private var note1 by Delegates.notNull<NoteId>()
     private var note2 by Delegates.notNull<NoteId>()
 

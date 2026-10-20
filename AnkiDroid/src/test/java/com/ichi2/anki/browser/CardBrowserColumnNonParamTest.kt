@@ -2,14 +2,11 @@
 
 package com.ichi2.anki.browser
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.JvmTest
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertContentEquals
 
 /** @see CardBrowserColumn */
-@RunWith(AndroidJUnit4::class)
 class CardBrowserColumnNonParamTest : JvmTest() {
     @Test
     fun `all keys are documented`() {

@@ -13,10 +13,11 @@ import com.ichi2.anki.recorder.AudioRecorder
 import com.ichi2.anki.recorder.MediaRecorderStub
 import com.ichi2.anki.recorder.PlayerStub
 import com.ichi2.anki.recorder.VoiceRecorder
-import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.rules.MainDispatcherRule
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -29,7 +30,10 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class CheckPronunciationViewModelTest : JvmTest() {
+class CheckPronunciationViewModelTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     @get:Rule
     val recordingsFolder = TemporaryFolder()
 

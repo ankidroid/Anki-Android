@@ -2,23 +2,15 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.anki.utils.ext.flag
-import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.experimental.categories.Category
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
 /** Tests for [Flag] */
-@RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class)
-@Category(EmptyApplicationCategory::class)
 class FlagTest : JvmTest() {
     @Test
     fun `search node conversion integration test`() {

@@ -3,7 +3,6 @@
 
 package com.ichi2.anki.libanki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.notetypes.copy
 import com.ichi2.anki.backend.stripHTML
 import com.ichi2.anki.common.utils.annotation.KotlinCleanup
@@ -19,9 +18,7 @@ import org.hamcrest.Matchers.not
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 @KotlinCleanup("improve kotlin code where possible")
 class NoteTypeTest : JvmTest() {
     @Test

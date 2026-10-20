@@ -8,10 +8,11 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import anki.sync.syncAuth
 import com.ichi2.anki.R
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.settings.enums.ShouldFetchMedia
 import com.ichi2.anki.sync.SyncAuth
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.targetContext
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -23,7 +24,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SyncNetworkConstraintsTest : RobolectricTest() {
+class SyncNetworkConstraintsTest : AndroidTest {
     private val auth = SyncAuth(syncAuth { hkey = "test" })
 
     @Test

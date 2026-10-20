@@ -6,16 +6,21 @@ package com.ichi2.preferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.startup.getDefaultAnkiDroidDirectory
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import java.io.File
 
 /**
@@ -23,7 +28,9 @@ import java.io.File
  * would expect to pick from.
  */
 @RunWith(AndroidJUnit4::class)
-class ExternalDirectorySelectionPreferenceTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class ExternalDirectorySelectionPreferenceTest : AndroidTest {
     @Test
     fun `the default directory is offered`() {
         val pref = buildPreference()

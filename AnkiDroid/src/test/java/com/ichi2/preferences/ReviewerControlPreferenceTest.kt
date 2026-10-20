@@ -5,13 +5,14 @@ package com.ichi2.preferences
 
 import androidx.preference.PreferenceManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.ReviewerBinding
+import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.getJavaMethodAsAccessible
+import com.ichi2.testutils.targetContext
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -25,7 +26,7 @@ import kotlin.test.assertNull
  * `getPreferenceAssignedTo` are accessed via reflection as they're `protected`.
  */
 @RunWith(AndroidJUnit4::class)
-class ReviewerControlPreferenceTest : RobolectricTest() {
+class ReviewerControlPreferenceTest : AndroidTest {
     private val bindingsToPersist = mutableMapOf<ReviewerControlPreference, Binding>()
 
     @Test

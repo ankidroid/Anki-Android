@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.cardviewer
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardUtils
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.CONTINUE_MEDIA
 import com.ichi2.anki.cardviewer.MediaErrorBehavior.RETRY_MEDIA
@@ -25,9 +24,7 @@ import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class CardMediaPlayerTest : JvmTest() {
     internal val tagPlayer: SoundTagPlayer = mockk<SoundTagPlayer>()
     internal val ttsPlayer: TtsPlayer = mockk<TtsPlayer>()

@@ -3,15 +3,12 @@
 
 package com.ichi2.anki.widget.deckpicker
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.JvmTest
 import com.ichi2.widget.deckpicker.getDeckNamesAndStats
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 
-@RunWith(AndroidJUnit4::class)
-class DeckNameAndStatsTest : RobolectricTest() {
+class DeckNameAndStatsTest : JvmTest() {
     @Test
     fun testGetDeckNameAndStats_withTopLevelDecks() =
         runTest {

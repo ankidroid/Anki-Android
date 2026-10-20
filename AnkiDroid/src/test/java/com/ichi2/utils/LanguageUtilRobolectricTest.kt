@@ -3,7 +3,6 @@
 package com.ichi2.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import net.ankiweb.rsdroid.BackendFactory
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -11,7 +10,7 @@ import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
-class LanguageUtilRobolectricTest : RobolectricTest() {
+class LanguageUtilRobolectricTest {
     @Test
     @Config(qualifiers = "zn")
     fun `Language without region is set`() {

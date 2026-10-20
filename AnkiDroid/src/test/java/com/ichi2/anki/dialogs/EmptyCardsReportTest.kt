@@ -2,16 +2,13 @@
 
 package com.ichi2.anki.dialogs
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.JvmTest
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class EmptyCardsReportTest : RobolectricTest() {
+class EmptyCardsReportTest : JvmTest() {
     @Test
     fun `backend report has expected html structure`() =
         runTest {

@@ -7,12 +7,16 @@ import android.webkit.JsResult
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.mockito.Answers.RETURNS_SELF
 import org.mockito.Mockito.mockConstruction
@@ -22,10 +26,13 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
+import org.robolectric.annotation.Config
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class PageChromeClientTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class PageChromeClientTest : AndroidTest {
     private lateinit var originalCrashReporter: CrashReporter
     private val crashReporter = mock<CrashReporter>()
     private val client = PageChromeClient()

@@ -6,15 +6,22 @@ import android.view.LayoutInflater
 import androidx.preference.PreferenceViewHolder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.slider.Slider
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.databinding.PreferenceSliderBinding
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class SliderPreferenceTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class SliderPreferenceTest : AndroidTest {
     @Suppress("DEPRECATION")
     @Test
     fun `onTouchListener is only called once`() {

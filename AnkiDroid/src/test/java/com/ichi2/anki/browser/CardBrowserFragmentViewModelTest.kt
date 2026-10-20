@@ -3,23 +3,29 @@
 
 package com.ichi2.anki.browser
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
-import com.ichi2.anki.RobolectricTest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /** Test of [CardBrowserFragmentViewModel] */
-@RunWith(AndroidJUnit4::class)
-class CardBrowserFragmentViewModelTest : RobolectricTest() {
+class CardBrowserFragmentViewModelTest {
     @Test
     fun `openDeckSelectionDialog emits from flowOfSearchForDecks`() =
         runTest {
-            val viewModel = CardBrowserFragmentViewModel()
+            Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+            try {
+                val viewModel = CardBrowserFragmentViewModel()
 
-            viewModel.flowOfSearchForDecks.test {
-                viewModel.openDeckSelectionDialog()
-                awaitItem()
+                viewModel.flowOfSearchForDecks.test {
+                    viewModel.openDeckSelectionDialog()
+                    awaitItem()
+                }
+            } finally {
+                Dispatchers.resetMain()
             }
         }
 }

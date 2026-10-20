@@ -3,20 +3,27 @@
 package com.ichi2.ui
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
 import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.KeyEventUtils
+import com.ichi2.testutils.targetContext
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.CoreMatchers.sameInstance
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class KeyPickerTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class KeyPickerTest : AndroidTest {
     private var keyPicker: KeyPicker =
         run {
             targetContext.setTheme(DayTheme.LIGHT.styleResId)

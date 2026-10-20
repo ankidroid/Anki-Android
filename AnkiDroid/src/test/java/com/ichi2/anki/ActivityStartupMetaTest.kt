@@ -7,13 +7,20 @@ import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.anki.compat.GET_ACTIVITIES_L
 import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.testutils.ActivityList
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class ActivityStartupMetaTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class ActivityStartupMetaTest : AndroidTest {
     @Test
     fun ensureAllActivitiesAreTested() {
         // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()

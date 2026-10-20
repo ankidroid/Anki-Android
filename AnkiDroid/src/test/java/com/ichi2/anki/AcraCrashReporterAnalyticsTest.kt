@@ -11,6 +11,8 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_KEY
 import com.ichi2.anki.common.crashreporting.CrashReporter.Companion.FEEDBACK_REPORT_NEVER
 import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.targetContext
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
@@ -22,18 +24,16 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class AcraCrashReporterAnalyticsTest : RobolectricTest() {
+class AcraCrashReporterAnalyticsTest : AndroidTest {
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         targetContext.sharedPrefs().edit { putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER) }
         mockkObject(Analytics)
         every { Analytics.sendAnalyticsException(any(), any()) } returns Unit
     }
 
     @After
-    override fun tearDown() {
-        super.tearDown()
+    fun tearDown() {
         unmockkObject(Analytics)
     }
 

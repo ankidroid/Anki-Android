@@ -5,8 +5,8 @@ package com.ichi2.anki.servicemodel
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.R
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.common.android.getCurrentLocaleTag
 import com.ichi2.anki.common.preferences.sharedPrefs
@@ -21,6 +21,9 @@ import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeThemes
 import com.ichi2.anki.servicelayer.RemovedPreferences
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import com.ichi2.utils.LanguageUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -28,17 +31,20 @@ import org.hamcrest.Matchers.lessThan
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import java.util.Locale
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
-class PreferenceUpgradeServiceTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class PreferenceUpgradeServiceTest : AndroidTest {
     private lateinit var prefs: SharedPreferences
 
     @Before
-    override fun setUp() {
-        super.setUp()
+    fun setUp() {
         prefs = targetContext.sharedPrefs()
     }
 

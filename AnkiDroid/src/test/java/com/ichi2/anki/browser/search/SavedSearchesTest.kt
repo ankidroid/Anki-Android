@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.browser.search
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -11,11 +10,9 @@ import org.hamcrest.Matchers.hasSize
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@RunWith(AndroidJUnit4::class)
 class SavedSearchesTest : JvmTest() {
     @Test
     fun `matches Anki Desktop ordering`() =

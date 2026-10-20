@@ -6,7 +6,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
 import com.ichi2.testutils.EmptyApplication
-import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -19,7 +18,7 @@ import org.robolectric.shadows.ShadowLooper.runUiThreadTasksIncludingDelayedTask
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
-class AutomaticAnswerTest : JvmTest() {
+class AutomaticAnswerTest {
     @Test
     fun disableWorks() {
         val answer = validAnswer(automaticallyAnsweredMock())

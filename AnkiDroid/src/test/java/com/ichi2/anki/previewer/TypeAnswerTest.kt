@@ -2,7 +2,6 @@
 
 package com.ichi2.anki.previewer
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.libanki.Card
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
@@ -11,10 +10,8 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.not
 import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.runner.RunWith
 import kotlin.test.assertNotNull
 
-@RunWith(AndroidJUnit4::class)
 class TypeAnswerTest : JvmTest() {
     /** [Issue #20575](https://github.com/ankidroid/Anki-Android/issues/20575) */
     @Test
