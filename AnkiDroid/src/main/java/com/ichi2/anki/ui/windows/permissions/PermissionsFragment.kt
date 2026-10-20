@@ -17,7 +17,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.CommonString
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.permissions.MANAGE_EXTERNAL_STORAGE
 import com.ichi2.anki.common.permissions.hasPermission
 import com.ichi2.anki.settings.Prefs
@@ -97,8 +96,6 @@ abstract class PermissionsFragment(
         }
     }
 
-    @NeedsTest("Shows the permission item when INTERNET permission is denied")
-    @NeedsTest("Hides the permission item when INTERNET permission is already granted")
     protected fun PermissionsItem.initializeInternetPermissionItem() {
         if (hasPermission(requireContext(), Manifest.permission.INTERNET)) {
             // If internet permission is already granted (which is the case for most of devices), hide the permission item.

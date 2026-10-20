@@ -2,6 +2,7 @@
 
 package com.ichi2.anki.ui.windows.permissions
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ComponentName
@@ -12,6 +13,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.ActivityAction
@@ -26,6 +28,8 @@ import com.ichi2.anki.StoragePermissionSet
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
+import com.ichi2.testutils.denyPermissions
+import com.ichi2.testutils.grantPermissions
 import com.ichi2.testutils.publicCollectionPath
 import com.ichi2.testutils.withAllFilesAccess
 import com.ichi2.testutils.withManageExternalStorageInManifest
@@ -41,6 +45,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class PermissionsActivityTest : RobolectricTest() {
@@ -141,6 +146,38 @@ class PermissionsActivityTest : RobolectricTest() {
 
                 assertThat(permissionSet.permissions, containsInAnyOrder(allPermissions))
             }
+        }
+    }
+
+    @Test
+    fun `internet permission item is hidden when INTERNET permission is granted`() {
+        grantPermissions(Manifest.permission.INTERNET)
+        testActivity { activity ->
+            val fragment = InternetPermissionFragment()
+            activity.supportFragmentManager.commitNow {
+                replace(R.id.fragment_container, fragment)
+            }
+            val internetItem = fragment.requireView().findViewById<PermissionsItem>(R.id.internet_permission)
+            assertNotNull(internetItem)
+            assertFalse(internetItem.isVisible)
+        }
+    }
+
+    @Test
+    fun `internet permission item is visible when INTERNET permission is denied`() {
+        try {
+            denyPermissions(Manifest.permission.INTERNET)
+            testActivity { activity ->
+                val fragment = InternetPermissionFragment()
+                activity.supportFragmentManager.commitNow {
+                    replace(R.id.fragment_container, fragment)
+                }
+                val internetItem = fragment.requireView().findViewById<PermissionsItem>(R.id.internet_permission)
+                assertNotNull(internetItem)
+                assertTrue(internetItem.isVisible)
+            }
+        } finally {
+            grantPermissions(Manifest.permission.INTERNET)
         }
     }
 
