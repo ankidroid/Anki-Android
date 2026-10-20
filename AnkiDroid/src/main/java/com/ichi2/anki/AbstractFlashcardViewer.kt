@@ -130,7 +130,6 @@ import com.ichi2.anki.multimedia.getAvTag
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.pages.AnkiServer
-import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.pages.PostRequestUri
 import com.ichi2.anki.reviewer.AutomaticAnswer
@@ -149,6 +148,7 @@ import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.ui.windows.reviewer.StudyScreenRepository
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
@@ -525,7 +525,7 @@ abstract class AbstractFlashcardViewer :
             closeReviewer(RESULT_NO_MORE_CARDS)
             // When launched with a shortcut, we want to display a message when finishing
             if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
-                CongratsPage.display(this)
+                StudyCompletionUi.displayFromShortcut(this)
             }
             return
         }
