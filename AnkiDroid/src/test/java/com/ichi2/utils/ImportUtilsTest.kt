@@ -276,7 +276,7 @@ class ImportUtilsTest : RobolectricTest() {
             val result = testFileImporter.handleFileImport(targetContext, intent)
             assertTrue("Import should succeed after basename sanitization: $maliciousFilename", result is ImportResult.Success)
 
-            // the cached path is Uri-encoded (see handleContentProviderFile): decode it before resolving it on disk
+            // the cached path is Uri-encoded (see cacheImport): decode it before resolving it on disk
             val cachedFile = File(Uri.decode(testFileImporter.cacheFileName)).canonicalFile
             assertEquals(
                 "Cached file must be a direct child of cacheDir: $maliciousFilename -> $cachedFile",
