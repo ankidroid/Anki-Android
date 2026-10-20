@@ -154,6 +154,7 @@ import com.ichi2.anki.dialogs.FatalErrorDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
 import com.ichi2.anki.dialogs.ImportViewModel
+import com.ichi2.anki.dialogs.MeteredSyncDialog
 import com.ichi2.anki.dialogs.SchedulerUpgradeDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
@@ -186,6 +187,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.study.StudyAvailability
 import com.ichi2.anki.study.StudyCompletionUi
 import com.ichi2.anki.study.currentDeckStudyState
+import com.ichi2.anki.sync.MeteredSyncPermission
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
 import com.ichi2.anki.sync.syncStatus
@@ -665,6 +667,13 @@ open class DeckPicker :
             } else {
                 onBackPressedDispatcher.onBackPressed()
             }
+        }
+        setFragmentResultListener(MeteredSyncDialog.REQUEST_METERED_SYNC) { _, result ->
+            handleNewSync(
+                conflict = null,
+                syncMedia = result.getBoolean(MeteredSyncDialog.RESULT_SYNC_MEDIA),
+                meteredSyncPermission = MeteredSyncPermission.ALLOW_METERED_SYNC_THIS_TIME,
+            )
         }
 
         registerStudyOptionsStudyHandler {
@@ -1605,6 +1614,11 @@ open class DeckPicker :
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
 
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        showDeferredMeteredSyncConfirmation()
+    }
+
     fun refreshState() {
         // Due to the App Introduction, this may be called before permission has been granted.
         if (syncOnResume && hasCollectionStoragePermissions()) {
@@ -1695,6 +1709,7 @@ open class DeckPicker :
 
         when {
             !Prefs.isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
+            hasPendingMeteredSyncConfirmation() -> Timber.d("autoSync: waiting for metered sync confirmation")
             MeteredSyncPolicy.shouldBlock() -> Timber.d("autoSync: blocked by metered connection")
             !NetworkUtils.isOnline -> Timber.d("autoSync: offline")
             !runInBackground && !syncIntervalPassed() -> Timber.d("autoSync: interval not passed")
@@ -1702,6 +1717,11 @@ open class DeckPicker :
             else -> {
                 // Startup may have failed to open the collection. Do not sync on exit in that case.
                 val hasChanges = areThereChangesToSync()
+                // A manual request may have opened the confirmation during the status check.
+                if (hasPendingMeteredSyncConfirmation()) {
+                    Timber.d("autoSync: waiting for metered sync confirmation")
+                    return false
+                }
                 if (hasChanges == null) {
                     Timber.d("autoSync: collection not open")
                     return false
@@ -2143,14 +2163,39 @@ open class DeckPicker :
             return
         }
 
+        // Preference or network changes must not bypass an unanswered confirmation.
+        if (conflict == null && hasPendingMeteredSyncConfirmation()) {
+            refreshState()
+            return
+        }
+
+        val syncMedia = shouldFetchMedia()
         MeteredSyncPolicy.confirmThen(
             // After selecting 'upload/download', the user has already accepted the metered warning.
             skipPrompt = conflict != null,
-            // TODO: why is this needed? 1f91b2868d
-            onDialogShown = ::refreshState,
+            onConfirmationRequired = {
+                viewModel.deferredMeteredSyncMedia = syncMedia
+                if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                    showDeferredMeteredSyncConfirmation()
+                }
+                // Dismiss the deck-list loading indicator while the sync decision is pending.
+                refreshState()
+            },
         ) { permission ->
-            handleNewSync(conflict, shouldFetchMedia(), meteredSyncPermission = permission)
+            handleNewSync(conflict, syncMedia, meteredSyncPermission = permission)
         }
+    }
+
+    private fun hasPendingMeteredSyncConfirmation(): Boolean =
+        viewModel.deferredMeteredSyncMedia != null || supportFragmentManager.findFragmentByTag(MeteredSyncDialog.TAG) != null
+
+    private fun showDeferredMeteredSyncConfirmation() {
+        val syncMedia = viewModel.deferredMeteredSyncMedia ?: return
+        if (supportFragmentManager.isStateSaved) return
+        if (supportFragmentManager.findFragmentByTag(MeteredSyncDialog.TAG) == null) {
+            MeteredSyncDialog.newInstance(syncMedia).showNow(supportFragmentManager, MeteredSyncDialog.TAG)
+        }
+        viewModel.deferredMeteredSyncMedia = null
     }
 
     override fun loginToSyncServer() {
