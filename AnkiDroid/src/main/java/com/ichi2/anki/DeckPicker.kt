@@ -180,6 +180,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.study.StudyCompletionUi
+import com.ichi2.anki.study.currentDeckStudyState
 import com.ichi2.anki.sync.MeteredSyncPolicy
 import com.ichi2.anki.sync.launchCatchingRequiringOneWaySyncDiscardUndo
 import com.ichi2.anki.sync.syncStatus
@@ -1565,7 +1566,10 @@ open class DeckPicker :
 
     private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            StudyCompletionUi.onReviewsCompleted(this, getColUnsafe.sched.totalCount() == 0)
+            launchCatchingTask {
+                val state = withCol { currentDeckStudyState() }
+                StudyCompletionUi.onReviewsCompleted(this@DeckPicker, state)
+            }
             fragment?.refreshInterface()
         }
     }

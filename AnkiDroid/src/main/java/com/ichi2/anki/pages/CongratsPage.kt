@@ -32,6 +32,8 @@ import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.study.StudyAvailability
+import com.ichi2.anki.study.currentDeckStudyState
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
@@ -242,8 +244,8 @@ class CongratsViewModel :
         }
     }
 
-    /** Called every time the screen becomes STARTED. [isDeckFinished] is cheap so it's always
-     * run, but the (latency-sensitive) reload/navigation only happens if something was actually
+    /** Called every time the screen becomes STARTED. [isDeckFinished] is always checked,
+     * but reload/navigation only happens if something was actually
      * missed while unwatched, or the deck no longer needs the congrats page. */
     suspend fun refreshIfNeeded() {
         // desktop's Overview re-checks sched._is_finished() on every refresh instead of
@@ -264,7 +266,7 @@ class CongratsViewModel :
         )
     }
 
-    private suspend fun isDeckFinished(): Boolean = withCol { sched.counts().count() == 0 }
+    private suspend fun isDeckFinished(): Boolean = withCol { currentDeckStudyState().availability == StudyAvailability.NoCardsAvailable }
 }
 
 sealed class UnburyState {
