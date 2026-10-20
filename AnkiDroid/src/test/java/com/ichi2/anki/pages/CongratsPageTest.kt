@@ -1,14 +1,27 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 package com.ichi2.anki.pages
 
+import android.os.Looper
 import androidx.lifecycle.Lifecycle
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CongratsInfoResponse
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.ioDispatcher
+import com.ichi2.anki.libanki.Consts
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.testutils.launchFragmentInContainer
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -68,6 +81,30 @@ class CongratsPageTest : RobolectricTest() {
                     val next = shadowOf(fragment.requireActivity()).nextStartedActivity
                     assertEquals(StudyOptionsActivity::class.java.name, next?.component?.className)
                 }
+            }
+        }
+
+    @Test
+    fun `custom study input dialog survives activity recreation`() =
+        runTest {
+            updateDeckConfig(Consts.DEFAULT_DECK_ID) { new.perDay = 0 }
+            addBasicNote()
+            ioDispatcher = StandardTestDispatcher(testScheduler)
+
+            launchFragmentInContainer<CongratsPage>().use { scenario ->
+                scenario.onFragment { it.bridgeCommands.getValue("customStudy").invoke() }
+                shadowOf(Looper.getMainLooper()).idle()
+                advanceUntilIdle()
+                onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
+                    .inRoot(isDialog())
+                    .perform(click())
+                advanceUntilIdle()
+
+                scenario.recreate()
+
+                onView(withId(R.id.details_edit_text_2))
+                    .inRoot(isDialog())
+                    .check(matches(isDisplayed()))
             }
         }
 }
