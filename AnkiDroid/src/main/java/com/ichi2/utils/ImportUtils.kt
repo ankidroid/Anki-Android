@@ -28,7 +28,7 @@ import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
-import com.ichi2.anki.onSelectedCsvForImport
+import com.ichi2.anki.openCsvImporter
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -248,11 +248,6 @@ object ImportUtils {
                     is ImportResolution.Failure -> return resolution.error
                     is ImportResolution.ResolvedFile -> resolution
                 }
-            if (file is ImportResolution.Text) {
-                (context as Activity).onSelectedCsvForImport(intent ?: Intent().setData(importPathUri))
-                return ImportResult.Success
-            }
-
             // Copy to temporary file
             val checkFile =
                 try {
@@ -266,7 +261,12 @@ object ImportUtils {
                     Timber.e("Path traversal detected in handleContentProviderFile")
                     return ImportResult.Failure(context.getString(CommonString.import_error_handle_exception, "Invalid path"))
                 }
-            val tempOutDir: String = Uri.fromFile(checkFile).encodedPath!!
+            // The package WebView/backend route expects encoded filenames on disk; CSV uses a raw path.
+            val tempOutDir =
+                when (file) {
+                    is ImportResolution.Text -> checkFile.absolutePath
+                    is ImportResolution.DeckPackage, is ImportResolution.CollectionPackage -> Uri.fromFile(checkFile).encodedPath!!
+                }
 
             copyFileToCache(context, file.source.uri, tempOutDir).asErrorDetails()?.let { details ->
                 details.exceptionForReport?.let { CrashReportService.sendExceptionReport(it, "ImportUtils") }
@@ -276,7 +276,11 @@ object ImportUtils {
                     exception = details.userFacingException,
                 )
             }
-            sendShowImportFileDialogMsg(tempOutDir)
+            if (file is ImportResolution.Text) {
+                (context as Activity).openCsvImporter(tempOutDir)
+            } else {
+                sendShowImportFileDialogMsg(tempOutDir)
+            }
             return ImportResult.Success
         }
 
