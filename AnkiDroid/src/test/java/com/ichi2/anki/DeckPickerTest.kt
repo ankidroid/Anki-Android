@@ -752,6 +752,10 @@ class DeckPickerTest : RobolectricTest() {
         )
     }
 
+    // Menu invalidation can replace the action view, so resolve it on each access.
+    private val DeckPicker.searchView: AccessibleSearchView
+        get() = menu().findItem(R.id.deck_picker_action_filter).actionView as AccessibleSearchView
+
     @Test
     fun `dragging next to the tablet divider resizes the panes`() {
         assumeTrue("We are running on a tablet", qualifiers!!.contains("xlarge"))
@@ -788,16 +792,14 @@ class DeckPickerTest : RobolectricTest() {
             val searchItem = menu().findItem(R.id.deck_picker_action_filter)
             assertTrue(searchItem.isVisible)
             assertTrue(searchItem.expandActionView())
-            val searchView = searchItem.actionView as AccessibleSearchView
 
             for ((query, expectedCount) in listOf("s" to 10, "Test Deck 1" to 1, "missing" to 0, "" to 11)) {
                 searchView.setQuery(query, false)
-                advanceRobolectricLooper()
+                advanceRobolectricLooperUntil { visibleDeckCount == expectedCount }
 
                 val currentSearchItem = menu().findItem(R.id.deck_picker_action_filter)
                 assertTrue(currentSearchItem.isActionViewExpanded, "Search should stay open for '$query'")
-                assertEquals(query, (currentSearchItem.actionView as AccessibleSearchView).query.toString())
-                advanceRobolectricLooperUntil { visibleDeckCount == expectedCount }
+                assertEquals(query, searchView.query.toString())
             }
         }
     }
@@ -814,7 +816,7 @@ class DeckPickerTest : RobolectricTest() {
                 retainedViewModel = deckPicker.viewModel
                 val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
                 assertTrue(searchItem.expandActionView())
-                (searchItem.actionView as AccessibleSearchView).setQuery("Test Deck 1", false)
+                deckPicker.searchView.setQuery("Test Deck 1", false)
                 advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 1 }
             }
 
@@ -826,7 +828,7 @@ class DeckPickerTest : RobolectricTest() {
                 assertEquals("Test Deck 1", deckPicker.viewModel.deckSearchQuery)
                 val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
                 assertTrue(searchItem.isActionViewExpanded)
-                assertEquals("Test Deck 1", (searchItem.actionView as AccessibleSearchView).query.toString())
+                assertEquals("Test Deck 1", deckPicker.searchView.query.toString())
                 advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 1 }
                 deckPicker.invalidateOptionsMenu()
             }
@@ -835,7 +837,7 @@ class DeckPickerTest : RobolectricTest() {
             scenario.onActivity { deckPicker ->
                 val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
                 assertTrue(searchItem.isActionViewExpanded)
-                assertEquals("Test Deck 1", (searchItem.actionView as AccessibleSearchView).query.toString())
+                assertEquals("Test Deck 1", deckPicker.searchView.query.toString())
                 assertEquals(1, deckPicker.visibleDeckCount)
                 assertTrue(searchItem.collapseActionView())
                 assertFalse(deckPicker.viewModel.isDeckSearchExpanded)
@@ -855,7 +857,7 @@ class DeckPickerTest : RobolectricTest() {
             val menu = deckPicker.menu()
             val searchItem = menu.findItem(R.id.deck_picker_action_filter)
             assertTrue(searchItem.expandActionView())
-            (searchItem.actionView as AccessibleSearchView).setQuery("Test Deck 1", false)
+            deckPicker.searchView.setQuery("Test Deck 1", false)
             advanceRobolectricLooperUntil { deckPicker.visibleDeckCount == 1 }
 
             // A synchronous collection refresh restores the query a second time, masking
@@ -868,7 +870,7 @@ class DeckPickerTest : RobolectricTest() {
 
                 val restoredSearchItem = menu.findItem(R.id.deck_picker_action_filter)
                 assertTrue(restoredSearchItem.isActionViewExpanded)
-                assertEquals("Test Deck 1", (restoredSearchItem.actionView as AccessibleSearchView).query.toString())
+                assertEquals("Test Deck 1", deckPicker.searchView.query.toString())
                 advanceRobolectricLooper()
                 assertEquals("Test Deck 1", deckPicker.viewModel.deckSearchQuery)
 
@@ -896,7 +898,7 @@ class DeckPickerTest : RobolectricTest() {
             scenario.onActivity { deckPicker ->
                 val searchItem = deckPicker.menu().findItem(R.id.deck_picker_action_filter)
                 assertTrue(searchItem.isActionViewExpanded)
-                assertEquals("", (searchItem.actionView as AccessibleSearchView).query.toString())
+                assertEquals("", deckPicker.searchView.query.toString())
                 assertTrue(searchItem.collapseActionView())
             }
 
