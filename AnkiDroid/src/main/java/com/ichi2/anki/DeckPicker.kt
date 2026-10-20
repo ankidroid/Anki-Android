@@ -651,6 +651,16 @@ open class DeckPicker :
         setFragmentResultListener(Check.DATABASE.requestKey) { _, _ ->
             performIntegrityCheck()
         }
+        setFragmentResultListener(SchedulerUpgradeDialog.REQUEST_SCHEDULER_UPGRADE) { _, result ->
+            if (result.getBoolean(SchedulerUpgradeDialog.RESULT_UPGRADE)) {
+                launchCatchingRequiringOneWaySyncDiscardUndo {
+                    this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
+                    showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
+                }
+            } else {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
 
         registerStudyOptionsStudyHandler {
             Timber.d("Opening study screen from DeckPicker's study options panel")
@@ -824,18 +834,9 @@ open class DeckPicker :
         }
 
         fun onPromptUserToUpdateScheduler(op: Unit) {
-            SchedulerUpgradeDialog(
-                activity = this,
-                onUpgrade = {
-                    launchCatchingRequiringOneWaySyncDiscardUndo {
-                        this@DeckPicker.withProgress { withCol { sched.upgradeToV2() } }
-                        showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
-                    }
-                },
-                onCancel = {
-                    onBackPressedDispatcher.onBackPressed()
-                },
-            ).showDialog()
+            if (supportFragmentManager.findFragmentByTag(SchedulerUpgradeDialog.TAG) == null) {
+                SchedulerUpgradeDialog().showNow(supportFragmentManager, SchedulerUpgradeDialog.TAG)
+            }
         }
 
         fun onOptionsMenuUpdated(unused: OptionsMenuState) = invalidateOptionsMenu()
