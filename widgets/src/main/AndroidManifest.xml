@@ -24,6 +24,16 @@
                 <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
             </intent-filter>
         </receiver>
+
+        <!-- #14372: Handles updates after the day rollover (04:00). -->
+        <receiver android:name="com.ichi2.widget.DayRolloverAlarm"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.ichi2.widget.ACTION_ROLLOVER" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
