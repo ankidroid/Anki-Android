@@ -82,8 +82,7 @@ import kotlin.time.TimeSource
 import com.ichi2.testutils.Robolectric as RobolectricActivities
 
 /**
- * @param loadBackend Disable for tests using custom sandboxes which do not need the backend.
- * Loading the native library into one sandbox can prevent later sandboxes from using it (Issue 14796).
+ * @param loadBackend Disable for tests which do not use the native backend.
  */
 open class RobolectricTest(
     private val loadBackend: Boolean = true,
@@ -173,7 +172,7 @@ open class RobolectricTest(
 
         CollectionManager.closeCollectionBlocking()
 
-        if (loadBackend) maybeSetupBackend()
+        if (loadBackend) setupBackend()
 
         // Reset static variable for custom tabs failure.
         CustomTabActivityHelper.resetFailed()
@@ -470,16 +469,7 @@ open class RobolectricTest(
             undoableOp<OpChanges> { col.updateNote(note) }
         }
 
-    private fun maybeSetupBackend() {
-        try {
-            targetContext
-        } catch (exc: IllegalStateException) {
-            // We must make sure not to load the backend library into a test running outside
-            // the Robolectric classloader, or subsequent Robolectric tests that run in this
-            // process will be unable to make calls into the backend.
-            println("not annotated with junit, not setting up backend")
-            return
-        }
+    private fun setupBackend() {
         try {
             RustBackendLoader.ensureSetup()
         } catch (e: UnsatisfiedLinkError) {

@@ -10,6 +10,7 @@ import androidx.fragment.app.testing.FragmentScenario.Companion.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.IntroductionActivity
@@ -18,7 +19,8 @@ import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.ui.internationalization.sentenceCase
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
-import com.ichi2.testutils.JvmTest
+import kotlinx.coroutines.runBlocking
+import net.ankiweb.rsdroid.testing.RustBackendLoader
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.junit.After
@@ -29,16 +31,14 @@ import timber.log.Timber
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-// JvmTest loads the rust backend. Without it this class only passes when it happens to run
-// after a test which loads it, which is filesystem order dependent (#14796)
-// TODO: PERF: JvmTest also opens a collection, which these tests never use. They only
-// need the backend for the menu's translated labels
 @RunWith(AndroidJUnit4::class)
-class DeckPickerContextMenuTest : JvmTest() {
+class DeckPickerContextMenuTest {
     private val scenariosForCleanup = ArrayList<FragmentScenario<*>>()
 
     @Before
     fun before() {
+        // The menu needs native translations, but does not need an open collection.
+        RustBackendLoader.ensureSetup()
         val context = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
         context.sharedPrefs().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
         setupSpaceForBackup(context)
@@ -53,6 +53,7 @@ class DeckPickerContextMenuTest : JvmTest() {
                 Timber.e(e, "ignored")
             }
         }
+        runBlocking { CollectionManager.discardBackend() }
     }
 
     @Test
