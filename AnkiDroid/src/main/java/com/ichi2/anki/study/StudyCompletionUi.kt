@@ -8,7 +8,6 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CommonString
 import com.ichi2.anki.common.preferences.sharedPrefs
-import com.ichi2.anki.common.time.SECONDS_PER_DAY
 import com.ichi2.anki.common.time.TIME_HOUR
 import com.ichi2.anki.common.time.TIME_MINUTE
 import com.ichi2.anki.common.utils.android.showThemedToast
@@ -23,57 +22,47 @@ object StudyCompletionUi {
         activity.startActivity(CongratsPage.getIntent(activity))
     }
 
-    private fun displayNewCongratsScreen(context: Context): Boolean = context.sharedPrefs().getBoolean("new_congrats_screen", false)
-
     fun displayFromShortcut(activity: FragmentActivity) {
         if (displayNewCongratsScreen(activity)) {
             openCongratsPage(activity)
         } else {
             activity.launchCatchingTask {
-                val message = getDeckFinishedMessage(activity)
-                showThemedToast(activity, message, false)
+                val state = withCol { currentDeckStudyState() }
+                showThemedToast(activity, finishedMessage(activity, state), false)
             }
         }
     }
 
     fun onReviewsCompleted(
         activity: FragmentActivity,
-        cardsInDeck: Boolean,
+        state: DeckStudyState,
     ) {
         if (displayNewCongratsScreen(activity)) {
             openCongratsPage(activity)
             return
         }
-
-        // Show a message when reviewing has finished
-        if (cardsInDeck) {
-            activity.launchCatchingTask {
-                val message = getDeckFinishedMessage(activity)
-                activity.showSnackbar(message)
-            }
-        } else {
-            activity.showSnackbar(CommonString.studyoptions_no_cards_due)
+        when (state.availability) {
+            StudyAvailability.NoCardsAvailable -> activity.showSnackbar(finishedMessage(activity, state))
+            StudyAvailability.CardsAvailable -> activity.showSnackbar(CommonString.studyoptions_no_cards_due)
         }
     }
 
-    // based in https://github.com/ankitects/anki/blob/9b4dd54312de8798a3f2bee07892bb3a488d1f9b/ts/routes/congrats/lib.ts#L8C17-L8C34
-    private suspend fun getDeckFinishedMessage(activity: FragmentActivity): String {
-        val info = withCol { sched.congratulationsInfo() }
-        val secsUntilNextLearn = info.secsUntilNextLearn
-        if (secsUntilNextLearn >= SECONDS_PER_DAY) {
-            return activity.getString(CommonString.studyoptions_congrats_finished)
-        }
-        // https://github.com/ankitects/anki/blob/9b4dd54312de8798a3f2bee07892bb3a488d1f9b/ts/lib/tslib/time.ts#L22
-        val (unit, amount) =
-            if (secsUntilNextLearn < TIME_MINUTE) {
-                "seconds" to secsUntilNextLearn.toDouble()
-            } else if (secsUntilNextLearn < TIME_HOUR) {
-                "minutes" to secsUntilNextLearn / TIME_MINUTE
-            } else {
-                "hours" to secsUntilNextLearn / TIME_HOUR
-            }
+    private fun displayNewCongratsScreen(context: Context) = context.sharedPrefs().getBoolean("new_congrats_screen", false)
 
+    private fun finishedMessage(
+        context: Context,
+        state: DeckStudyState,
+    ): String {
+        val seconds = state.nextLearningIn?.inWholeSeconds ?: return context.getString(CommonString.studyoptions_congrats_finished)
+        val (unit, amount) =
+            if (seconds < TIME_MINUTE) {
+                "seconds" to seconds.toDouble()
+            } else if (seconds < TIME_HOUR) {
+                "minutes" to seconds / TIME_MINUTE
+            } else {
+                "hours" to seconds / TIME_HOUR
+            }
         val nextLearnDue = TR.schedulingNextLearnDue(unit, round(amount).toInt())
-        return activity.getString(CommonString.studyoptions_congrats_next_due_in, nextLearnDue)
+        return context.getString(CommonString.studyoptions_congrats_next_due_in, nextLearnDue)
     }
 }
