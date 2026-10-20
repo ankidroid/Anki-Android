@@ -31,13 +31,63 @@ import org.robolectric.annotation.Config
 @Category(EmptyApplicationCategory::class)
 class StableScrollbarLayoutManagerTest {
     @Test
+    fun `returning to same content restores thumb position`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+        repeat(20) { list.scrollBy(50) }
+        val before = list.thumb.top
+        repeat(260) { list.scrollBy(50) }
+        repeat(260) { list.scrollBy(-50) }
+        assertThat(list.thumb.top.toDouble(), closeTo(before.toDouble(), 2.0))
+    }
+
+    @Test
+    fun `thumb calibrated after visiting every row`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+        list.scrollToEndCollecting { list.thumb.height }
+        val expected = list.trackHeight.toDouble() * 2000 / shortThenTallRows.sum()
+        assertThat(list.thumb.height.toDouble(), closeTo(expected, 2.0))
+    }
+
+    @Test
+    fun `thumb is calibrated at the end after the rows refresh on the way`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+        list.scrollBy(DISTANCE_TO_TALL_ROWS)
+
+        list.refreshRows()
+        list.scrollToEndCollecting { list.thumb.height }
+
+        val expected = list.trackHeight.toDouble() * 2000 / shortThenTallRows.sum()
+        assertThat(list.thumb.height.toDouble(), closeTo(expected, 2.0))
+    }
+
+    @Test
+    fun `jumping to the last row keeps the estimated size`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+        val initialSize = list.thumb.height
+        list.scrollBy(DISTANCE_TO_TALL_ROWS)
+
+        list.jumpToLastRow()
+
+        assertThat(list.thumb.height, equalTo(initialSize))
+    }
+
+    @Test
+    fun `reanchoring same row does not move thumb`() {
+        val list = ScrollbarTestList(shortThenTallRows)
+        repeat(100) { list.scrollBy(50) }
+        val before = list.thumb.top
+        list.reanchor()
+        assertThat(list.thumb.top.toDouble(), closeTo(before.toDouble(), 2.0))
+    }
+
+    @Test
     fun `thumb keeps its size while rows of different heights scroll past`() {
         val list = ScrollbarTestList(shortThenTallRows)
         val initialSize = list.thumb.height
 
-        val sizes = list.scrollToEndCollecting { list.thumb.height }
+        val sizesBeforeTheEnd = list.scrollToEndCollecting { list.thumb.height }.dropLast(1)
 
-        assertThat(sizes, everyItem(equalTo(initialSize)))
+        assertThat(sizesBeforeTheEnd, everyItem(equalTo(initialSize)))
     }
 
     @Test
@@ -172,10 +222,20 @@ private class ScrollbarTestList(
 
     fun jumpToLastRow() {
         recyclerView.scrollToPosition(adapter.itemCount - 1)
+        scroller.requestLayout()
         layout()
     }
 
     fun notifyRowChanged(position: Int) = adapter.notifyItemChanged(position)
+
+    fun reanchor() {
+        val lm = recyclerView.layoutManager as StableScrollbarLayoutManager
+        val first = lm.findFirstVisibleItemPosition()
+        val top = lm.findViewByPosition(first)!!.top
+        lm.scrollToPositionWithOffset(first, top)
+        scroller.requestLayout()
+        layout()
+    }
 
     fun refreshRows(rowHeights: List<Int> = adapter.rowHeights) {
         adapter.rowHeights = rowHeights
