@@ -27,7 +27,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.REVIEWS
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.HashUtil.hashSetInit
 import com.ichi2.anki.libanki.Consts
@@ -675,7 +674,6 @@ object PreferenceUpgradeService {
             }
         }
 
-        @NeedsTest("long touch gesture is removed from preferences")
         internal class RemoveLongTouchGesture : PreferenceUpgrade(21) {
             private val keys =
                 listOf(

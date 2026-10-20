@@ -331,4 +331,26 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         assertThat("Migrates 'Again' question binding", bindings.contains(questionBinding), equalTo(true))
         assertThat("Splits 'Good' Both binding to Question side", bindings.contains(bothBinding), equalTo(true))
     }
+
+    @Test
+    fun removeLongTouchGesture() {
+        val validBinding = ReviewerBinding(Binding.gesture(Gesture.TAP_LEFT), CardSide.BOTH)
+        val unknownBinding = ReviewerBinding(Binding.unknown(), CardSide.BOTH)
+        val initialBindings = listOf(validBinding, unknownBinding)
+
+        prefs.edit {
+            putString("binding_SHOW_ANSWER", initialBindings.toPreferenceString())
+            putString("binding_EDIT", listOf(validBinding).toPreferenceString())
+        }
+
+        PreferenceUpgrade.RemoveLongTouchGesture().performUpgrade(prefs)
+
+        val updatedShowAnswer = ReviewerBinding.fromPreferenceString(prefs.getString("binding_SHOW_ANSWER", "")!!)
+        assertThat("Unknown long touch binding is removed", updatedShowAnswer.size, equalTo(1))
+        assertThat(updatedShowAnswer[0].binding, equalTo(validBinding.binding))
+
+        val updatedEdit = ReviewerBinding.fromPreferenceString(prefs.getString("binding_EDIT", "")!!)
+        assertThat("Valid binding is preserved", updatedEdit.size, equalTo(1))
+        assertThat(updatedEdit[0].binding, equalTo(validBinding.binding))
+    }
 }
