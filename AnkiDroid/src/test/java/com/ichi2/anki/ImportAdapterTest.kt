@@ -113,6 +113,20 @@ class ImportAdapterTest : RobolectricTest() {
     }
 
     @Test
+    fun `preparation copies text without opening the importer`() {
+        val activity = importActivity()
+        val contents = "front,back"
+        val uri = textSource("notes.csv") { contents.byteInputStream() }
+
+        val result = assertIs<ImportResult.Success>(ImportUtils.prepareImport(activity, Intent(Intent.ACTION_VIEW, uri)))
+
+        assertEquals(uri, result.file.source.uri)
+        assertEquals(File(activity.cacheDir, "notes.csv").absolutePath, result.path)
+        assertEquals(contents, File(result.path).readText())
+        assertNull(shadowOf(activity).nextStartedActivity)
+    }
+
+    @Test
     fun `failure to launch text importer is returned to the caller`() {
         val activity = spy(importActivity())
         val exception = ActivityNotFoundException("Importer could not be opened")
