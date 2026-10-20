@@ -6,10 +6,12 @@ package com.ichi2.anki.shareddeck
 import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -70,7 +72,7 @@ class SharedDecksDownloadFragment : Fragment() {
 
     private var fileName: String? = null
 
-    private var completedFile: File? = null
+    private var completedDeck: Uri? = null
 
     private var handler: Handler = Handler(Looper.getMainLooper())
     private var isProgressCheckerRunning = false
@@ -160,7 +162,7 @@ class SharedDecksDownloadFragment : Fragment() {
                         },
                         onImportClick = {
                             Timber.i("Import deck button clicked")
-                            completedFile?.let { openDownloadedDeck(requireContext(), it) }
+                            completedDeck?.let { openDownloadedDeck(requireContext(), it) }
                         },
                         onTryAgainClick = ::retryDownload,
                         onOpenInBrowserClick = ::openInBrowser,
@@ -257,13 +259,11 @@ class SharedDecksDownloadFragment : Fragment() {
         }
         val currentFileName = fileToBeDownloaded.toFileName(extension = "apkg")
 
-        val downloadRequest = generateDeckDownloadRequest(fileToBeDownloaded, currentFileName)
-
-        completedFile = null
+        completedDeck = null
         // Store unique download ID to be used when onReceiveBroadcast() of AnkiBroadcastReceiver gets executed.
         downloadId =
             try {
-                downloadManager.enqueue(downloadRequest)
+                enqueueDownload(fileToBeDownloaded, currentFileName)
             } catch (e: SecurityException) {
                 CrashReportService.sendExceptionReport(e, "SharedDecksDownloadFragment::downloadFile")
                 viewModel.onDownloadStarted(currentFileName)
@@ -277,6 +277,24 @@ class SharedDecksDownloadFragment : Fragment() {
         Timber.d("File name -> $fileName")
         viewModel.onDownloadStarted(currentFileName)
         startDownloadProgressChecker()
+    }
+
+    private fun enqueueDownload(
+        fileToBeDownloaded: DownloadFile,
+        currentFileName: String,
+    ): Long {
+        val request =
+            generateDeckDownloadRequest(fileToBeDownloaded, currentFileName).setDestinationInExternalFilesDir(
+                context,
+                null,
+                "$SHARED_DECKS_DOWNLOAD_FOLDER/$currentFileName",
+            )
+        return try {
+            downloadManager.enqueue(request)
+        } catch (_: SecurityException) {
+            Timber.w("DownloadManager rejected the app folder, downloading into its own storage")
+            downloadManager.enqueue(generateDeckDownloadRequest(fileToBeDownloaded, currentFileName))
+        }
     }
 
     private fun generateDeckDownloadRequest(
@@ -294,11 +312,6 @@ class SharedDecksDownloadFragment : Fragment() {
         request.setTitle(currentFileName)
 
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalFilesDir(
-            context,
-            null,
-            "$SHARED_DECKS_DOWNLOAD_FOLDER/$currentFileName",
-        )
 
         return request
     }
@@ -317,9 +330,9 @@ class SharedDecksDownloadFragment : Fragment() {
                 Timber.i("Download might be complete now, verify and continue with import")
 
                 /**
-                 * @return The completed download's file, or null if it cannot be imported.
+                 * @return The completed download's location, or null if it cannot be imported.
                  */
-                fun getImportableDeck(): File? {
+                fun getImportableDeck(): Uri? {
                     if (fileName == null) {
                         // Send ACRA report
                         CrashReportService.sendExceptionReport(
@@ -384,11 +397,11 @@ class SharedDecksDownloadFragment : Fragment() {
                             onDownloadFinished(DownloadOutcome.Failed)
                             return null
                         }
-                        return localUri.toUri().toFile()
+                        return localUri.toUri()
                     }
                 }
 
-                val downloadedFile =
+                val downloadedDeck =
                     try {
                         getImportableDeck()
                     } catch (exception: Exception) {
@@ -397,20 +410,20 @@ class SharedDecksDownloadFragment : Fragment() {
                         return
                     }
 
-                if (downloadedFile == null) {
+                if (downloadedDeck == null) {
                     // Could be a retryable fault (we received notification of another file)
                     // Otherwise, onDownloadFinished should have been called
                     // to update the UI
                     return
                 }
 
-                completedFile = downloadedFile
+                completedDeck = downloadedDeck
 
                 // the progress checker can stop before it sees 100%, so complete it here
                 viewModel.onDownloadComplete()
 
                 Timber.i("Opening downloaded deck for import")
-                openDownloadedDeck(context, downloadedFile)
+                openDownloadedDeck(context, downloadedDeck)
 
                 Timber.d("Download finished")
                 onDownloadFinished(DownloadOutcome.Success)
@@ -523,25 +536,30 @@ class SharedDecksDownloadFragment : Fragment() {
      */
     private fun openDownloadedDeck(
         context: Context,
-        downloadedFile: File,
+        downloadedDeck: Uri,
     ) {
-        // A successful DownloadManager entry can outlive its file, e.g. after another import.
-        if (!downloadedFile.isFile) {
-            Timber.w("Downloaded shared deck no longer exists")
-            onDownloadFinished(DownloadOutcome.Failed)
-            return
-        }
+        val fileUri =
+            if (downloadedDeck.scheme == ContentResolver.SCHEME_FILE) {
+                val downloadedFile = downloadedDeck.toFile()
+                // A successful DownloadManager entry can outlive its file, e.g. after another import.
+                if (!downloadedFile.isFile) {
+                    Timber.w("Downloaded shared deck no longer exists")
+                    onDownloadFinished(DownloadOutcome.Failed)
+                    return
+                }
+                FileProvider.getUriForFile(
+                    context,
+                    context.packageName + ".apkgfileprovider",
+                    downloadedFile,
+                )
+            } else {
+                downloadedDeck
+            }
 
-        val mimeType = URLConnection.guessContentTypeFromName(downloadedFile.name)
+        val mimeType = URLConnection.guessContentTypeFromName(fileName)
         val fileIntent = Intent(context, IntentHandler::class.java)
         fileIntent.action = Intent.ACTION_VIEW
 
-        val fileUri =
-            FileProvider.getUriForFile(
-                context,
-                context.packageName + ".apkgfileprovider",
-                downloadedFile,
-            )
         Timber.d("File URI -> $fileUri")
         fileIntent.setDataAndType(fileUri, mimeType)
         fileIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
