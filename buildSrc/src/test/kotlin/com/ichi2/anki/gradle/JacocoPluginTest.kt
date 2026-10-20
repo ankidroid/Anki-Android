@@ -2,15 +2,22 @@
 
 package com.ichi2.anki.gradle
 
+import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.TaskOutcome
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.not
+import org.jacoco.core.tools.ExecFileLoader
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import javax.tools.ToolProvider
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.xpath.XPathFactory
 
 class JacocoPluginTest {
     @TempDir
@@ -51,6 +58,36 @@ class JacocoPluginTest {
     }
 
     @Test
+    fun `library without unit tests is included as uncovered in the report`() {
+        compileUncoveredLibraryClass()
+        // A valid, empty execution file represents a run that never touched this class.
+        ExecFileLoader().save(File(projectDir, "app/build/jacoco/empty.exec"), false)
+
+        // Run the real report, skipping Android compilation and test execution.
+        val result =
+            runCoverage(
+                "-x",
+                ":app:testPlayDebugUnitTest",
+                "-x",
+                ":library:testDebugUnitTest",
+                "-x",
+                ":nested:core:test",
+            )
+        assertThat(result.task(":app:jacocoUnitTestReport")?.outcome, equalTo(TaskOutcome.SUCCESS))
+
+        val report =
+            DocumentBuilderFactory
+                .newInstance()
+                .apply { setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false) }
+                .newDocumentBuilder()
+                .parse(File(projectDir, "app/build/reports/jacoco/jacocoUnitTestReport/jacocoUnitTestReport.xml"))
+        val xpath = XPathFactory.newInstance().newXPath()
+        val counter = "/report/package/class[@name='regression/Uncovered']/counter[@type='LINE']"
+        assertThat(xpath.evaluate("$counter/@covered", report), equalTo("0"))
+        assertThat(xpath.evaluate("$counter/@missed", report).toInt(), greaterThan(0))
+    }
+
+    @Test
     fun `adding the first test in a custom source root updates the cached task graph`() {
         val before = dryRunCoverage()
         assertThat(before, not(containsString(":empty:testDebugUnitTest")))
@@ -74,15 +111,33 @@ class JacocoPluginTest {
         assertThat(after, not(containsString(":empty:testDebugUnitTest")))
     }
 
-    private fun dryRunCoverage(): String =
+    private fun compileUncoveredLibraryClass() {
+        // Supply bytecode in AGP's Kotlin output directory without building an Android project.
+        val classes = File(projectDir, "empty/build/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes")
+        classes.mkdirs()
+        val exitCode =
+            ToolProvider.getSystemJavaCompiler().run(
+                null,
+                null,
+                null,
+                "-g",
+                "-d",
+                classes.absolutePath,
+                File(projectDir, "empty/src/main/java/regression/Uncovered.java").absolutePath,
+            )
+        assertThat(exitCode, equalTo(0))
+    }
+
+    private fun dryRunCoverage(): String = runCoverage("--dry-run").output
+
+    private fun runCoverage(vararg arguments: String): BuildResult =
         GradleRunner
             .create()
             .withProjectDir(projectDir)
             .withTestKitDir(File("build/test-kit").absoluteFile)
             .withPluginClasspath()
-            .withArguments(":app:jacocoUnitTestReport", "--dry-run", "--configuration-cache", "--stacktrace")
+            .withArguments(":app:jacocoUnitTestReport", "--configuration-cache", "--stacktrace", *arguments)
             .build()
-            .output
 
     private fun writeFile(
         path: String,

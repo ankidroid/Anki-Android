@@ -24,6 +24,7 @@ dependencies {
     testImplementation(gradleTestKit())
     testImplementation(libs.hamcrest)
     testImplementation(libs.junit.jupiter)
+    testImplementation("org.jacoco:org.jacoco.core:${libs.versions.jacoco.get()}")
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 
