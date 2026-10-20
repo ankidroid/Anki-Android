@@ -9,8 +9,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CardAnswer.Rating
 import app.cash.turbine.test
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.common.destinations.DeckOptionsDestination
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.ext.cardStateCustomizer
+import com.ichi2.anki.preferences.reviewer.ViewerAction
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -167,6 +169,94 @@ class ReviewerViewModelTest : RobolectricTest() {
                 viewModel.answerCard(Rating.GOOD)
                 advanceUntilIdle()
                 assertEquals(1, col.getCard(card.id).reps)
+            }
+        }
+
+    @Test
+    fun `deck options emits destination with current deck targets`() =
+        runTest {
+            addBasicNote()
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            advanceUntilIdle()
+
+            viewModel.navigateFlow.test {
+                viewModel.executeAction(ViewerAction.DECK_OPTIONS)
+                advanceUntilIdle()
+                val destination = assertIs<DeckOptionsDestination>(awaitItem())
+                assertEquals(col.decks.getCurrentId(), destination.deckId)
+                assertFalse(destination.isFiltered)
+                assertEquals(1, destination.options.size)
+                assertEquals(col.decks.getCurrentId(), destination.options[0].deckId)
+                assertFalse(destination.options[0].isFiltered)
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `deck options for filtered card includes original and filtered decks in order`() =
+        runTest {
+            val originalDeckId = col.decks.id("Original Deck")
+            val filteredDeckId = col.decks.newFiltered("Filtered Deck")
+            col.decks.select(filteredDeckId)
+
+            addBasicNote().firstCard().apply {
+                did = filteredDeckId
+                oDid = originalDeckId
+                col.updateCard(this)
+            }
+
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            advanceUntilIdle()
+
+            viewModel.navigateFlow.test {
+                viewModel.executeAction(ViewerAction.DECK_OPTIONS)
+                advanceUntilIdle()
+                val destination = assertIs<DeckOptionsDestination>(awaitItem())
+                assertEquals(filteredDeckId, destination.deckId)
+                assertTrue(destination.isFiltered)
+                assertEquals(2, destination.options.size)
+                // Unfiltered deck is listed first
+                assertEquals(originalDeckId, destination.options[0].deckId)
+                assertEquals("Original Deck", destination.options[0].name)
+                assertFalse(destination.options[0].isFiltered)
+                // Filtered deck is listed second
+                assertEquals(filteredDeckId, destination.options[1].deckId)
+                assertEquals("Filtered Deck", destination.options[1].name)
+                assertTrue(destination.options[1].isFiltered)
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `deck options filters out deleted deck targets`() =
+        runTest {
+            val originalDeckId = col.decks.id("Deck to delete")
+            val filteredDeckId = col.decks.newFiltered("Filtered Deck")
+            col.decks.select(filteredDeckId)
+
+            addBasicNote().firstCard().apply {
+                did = filteredDeckId
+                oDid = originalDeckId
+                col.updateCard(this)
+            }
+
+            col.decks.remove(listOf(originalDeckId))
+
+            val viewModel = ReviewerViewModel(SavedStateHandle()).also { viewModelStore.put("reviewer", it) }
+            viewModel.onPageFinished(false)
+            advanceUntilIdle()
+
+            viewModel.navigateFlow.test {
+                viewModel.executeAction(ViewerAction.DECK_OPTIONS)
+                advanceUntilIdle()
+                val destination = assertIs<DeckOptionsDestination>(awaitItem())
+                assertEquals(filteredDeckId, destination.deckId)
+                // Deleted deck is excluded
+                assertEquals(1, destination.options.size)
+                assertEquals(filteredDeckId, destination.options[0].deckId)
+                cancelAndIgnoreRemainingEvents()
             }
         }
 }

@@ -16,7 +16,6 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.cardviewer.appendNoSuggestAttributes
-import com.ichi2.anki.common.annotations.NeedsTest
 import com.ichi2.anki.common.destinations.BrowserDestination
 import com.ichi2.anki.common.destinations.CardInfoDestination
 import com.ichi2.anki.common.destinations.CardInfoDestination.EntryPoint
@@ -298,7 +297,6 @@ class ReviewerViewModel(
         navigateFlow.emit(destination)
     }
 
-    @NeedsTest("verify that we show the proper deck option targets for the current card")
     private suspend fun emitDeckOptionsDestination() {
         val deckId = withCol { decks.getCurrentId() }
         val card = currentCard.await()
