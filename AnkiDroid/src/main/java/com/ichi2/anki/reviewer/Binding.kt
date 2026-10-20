@@ -95,9 +95,14 @@ sealed interface Binding {
         override fun hashCode(): Int = Objects.hash(keycode)
     }
 
+    /**
+     * A keyboard shortcut matched by the character produced by a key press.
+     *
+     * [KeyCode] is insufficient: e.g. `@` doesn't have a consistent keypress across keyboards.
+     */
     @Suppress("EqualsOrHashCode")
     data class UnicodeCharacter(
-        val unicodeCharacter: Char,
+        val unicodeCharacter: BindingUnicodeCharacter,
         override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
     ) : KeyBinding {
         override fun toDisplayString(context: Context): String =
@@ -105,18 +110,18 @@ sealed interface Binding {
                 append(KEY_PREFIX)
                 append(' ')
                 append(modifierKeys.toString())
-                append(unicodeCharacter)
+                append(unicodeCharacter.value)
             }
 
         override fun toString(): String =
             buildString {
                 append(UNICODE_PREFIX)
                 append(modifierKeys.toString())
-                append(unicodeCharacter)
+                append(unicodeCharacter.value)
             }
 
         // don't include the modifierKeys
-        override fun hashCode(): Int = Objects.hash(unicodeCharacter)
+        override fun hashCode(): Int = Objects.hash(unicodeCharacter.value)
     }
 
     data object UnknownBinding : Binding {
@@ -220,8 +225,6 @@ sealed interface Binding {
     }
 
     companion object {
-        const val FORBIDDEN_UNICODE_CHAR = MappableBinding.PREF_SEPARATOR
-
         /**
          * https://www.fileformat.info/info/unicode/char/2328/index.htm (Keyboard)
          */
@@ -275,7 +278,8 @@ sealed interface Binding {
                     GESTURE_PREFIX -> GestureInput(Gesture.valueOf(from.substring(1)))
                     UNICODE_PREFIX -> {
                         val (modifierKeys, char) = ModifierKeys.parse(from.substring(1))
-                        UnicodeCharacter(char[0], modifierKeys)
+                        val unicodeChar = BindingUnicodeCharacter.fromCharOrNull(char[0]) ?: return UnknownBinding
+                        UnicodeCharacter(unicodeChar, modifierKeys)
                     }
                     KEY_PREFIX -> {
                         val (modifierKeys, keyCodeAsString) = ModifierKeys.parse(from.substring(1))
@@ -298,8 +302,8 @@ sealed interface Binding {
             unicodeChar: Char,
             modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
         ): Binding {
-            if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return unknown()
-            return UnicodeCharacter(unicodeChar, modifierKeys)
+            val character = BindingUnicodeCharacter.fromCharOrNull(unicodeChar) ?: return unknown()
+            return UnicodeCharacter(character, modifierKeys)
         }
 
         fun keyCode(

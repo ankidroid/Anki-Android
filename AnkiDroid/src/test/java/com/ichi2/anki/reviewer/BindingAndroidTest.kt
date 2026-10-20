@@ -51,6 +51,19 @@ class BindingAndroidTest : RobolectricTest() {
     }
 
     @Test
+    fun `deserialization rejects the preference separator`() {
+        assertEquals(Binding.UnknownBinding, Binding.fromString("✅|"))
+        assertEquals(Binding.UnknownBinding, Binding.fromString("✅Ctrl+|"))
+    }
+
+    @Test
+    fun `unicode display unwraps the character`() {
+        val binding = Binding.UnicodeCharacter(BindingUnicodeCharacter('Ä'), BindingTest.allModifierKeys())
+
+        assertEquals("⌨ Ctrl+Alt+Shift+Ä", binding.toDisplayString())
+    }
+
+    @Test
     fun `motion event serde`() {
         assertEquals(axis(Axis.X, 1.0f), axisBindingFromString("0 1.0"))
         assertEquals(axis(Axis.Y, -1.0f), axisBindingFromString("1 -1.0"))

@@ -29,7 +29,7 @@ class BindingTest {
     fun unicodeKeyIsLoaded() {
         val binding = unicodeCharacter('a')
 
-        assertThat(binding.unicodeCharacter, equalTo('a'))
+        assertThat(binding.unicodeCharacter, equalTo(BindingUnicodeCharacter('a')))
     }
 
     @Test
