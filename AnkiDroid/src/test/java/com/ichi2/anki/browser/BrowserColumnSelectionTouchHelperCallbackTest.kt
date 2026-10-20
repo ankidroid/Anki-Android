@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.ColumnItem
 import com.ichi2.anki.browser.BrowserColumnSelectionRecyclerItem.UsageItem
 import com.ichi2.anki.browser.ColumnUsage.ACTIVE
 import com.ichi2.anki.browser.ColumnUsage.AVAILABLE
+import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.changedPositions
 import com.ichi2.testutils.completeDroppedItem
 import com.ichi2.testutils.dispatchTouch
@@ -29,7 +29,7 @@ import org.junit.runner.RunWith
 
 /** Tests for [BrowserColumnSelectionTouchHelperCallback] */
 @RunWith(AndroidJUnit4::class)
-class BrowserColumnSelectionTouchHelperCallbackTest : RobolectricTest() {
+class BrowserColumnSelectionTouchHelperCallbackTest : AndroidTest {
     @Test
     fun `all rows are refreshed once a dropped row completes`() =
         withColumnSelectionList { list ->

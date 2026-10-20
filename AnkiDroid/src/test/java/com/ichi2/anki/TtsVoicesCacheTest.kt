@@ -3,9 +3,7 @@
 package com.ichi2.anki
 
 import android.speech.tts.TextToSpeech
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.i18n.normalize
-import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.TtsVoicesCacheOverride
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -14,15 +12,12 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkObject
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 import java.util.Locale
 import kotlin.test.assertEquals
 
-@RunWith(AndroidJUnit4::class)
-@Config(application = EmptyApplication::class)
-class TtsVoicesCacheTest : RobolectricTest() {
+class TtsVoicesCacheTest {
     @Test
     fun `a new reviewer engine gets its own cached languages`() =
         runTest {

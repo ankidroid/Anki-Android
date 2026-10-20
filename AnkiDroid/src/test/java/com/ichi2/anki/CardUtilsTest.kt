@@ -3,14 +3,12 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class CardUtilsTest : RobolectricTest() {
+class CardUtilsTest : JvmTest() {
     @Test
     fun getDeckIdForCard_regularDeck_returnsDid() {
         val note = addBasicNote("Front", "Back")

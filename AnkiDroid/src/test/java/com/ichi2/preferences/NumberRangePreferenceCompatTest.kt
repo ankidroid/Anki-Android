@@ -7,7 +7,10 @@ import android.content.Context
 import android.widget.EditText
 import androidx.preference.PreferenceDialogFragmentCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -15,10 +18,14 @@ import io.mockk.verify
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class NumberRangePreferenceCompatTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class NumberRangePreferenceCompatTest : AndroidTest {
     private val preference = TestableNumberRangePreferenceCompat(targetContext)
     private val preferenceMock: NumberRangePreferenceCompat = mockk(relaxed = true)
 

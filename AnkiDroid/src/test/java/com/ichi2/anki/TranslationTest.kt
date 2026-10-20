@@ -2,18 +2,17 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.i18n.GeneratedTranslations
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.TranslationTest.Companion.BASELINE_CASE_INSENSITIVE_DUPLICATES
 import com.ichi2.anki.TranslationTest.Companion.BASELINE_DUPLICATES
 import com.ichi2.testutils.BackendTranslation
+import com.ichi2.testutils.JvmTest
 import com.ichi2.testutils.XmlStringResource
 import com.ichi2.testutils.getAndroidManifestStringResourceNames
 import com.ichi2.testutils.getBackendNonArgStrings
 import com.ichi2.testutils.getTranslatableXmlStrings
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.File
 import kotlin.test.fail
 
@@ -22,8 +21,7 @@ import kotlin.test.fail
  * (01-core, 02-strings, etc.) do not duplicate strings already available
  * from the backend via [GeneratedTranslations]/[TR].
  */
-@RunWith(AndroidJUnit4::class) // TODO: no Android dependencies; could be JvmTest
-class TranslationTest : RobolectricTest() {
+class TranslationTest : JvmTest() {
     @Test
     fun `CrowdIn-managed files do not reappear in this module`() {
         val resDir = File("src/main/res")

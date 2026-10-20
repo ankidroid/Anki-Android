@@ -2,8 +2,6 @@
 
 package com.ichi2.anki.utils
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.utils.OnlyOnce.Method.UNIT_TEST
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import kotlinx.coroutines.awaitCancellation
@@ -11,14 +9,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /** Tests for [OnlyOnce] */
-@RunWith(AndroidJUnit4::class)
-class OnlyOnceTest : RobolectricTest() {
+class OnlyOnceTest {
     @Test
     fun `single run works`() =
         runTest {

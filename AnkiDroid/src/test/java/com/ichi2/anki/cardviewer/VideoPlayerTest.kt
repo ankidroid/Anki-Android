@@ -2,8 +2,6 @@
 
 package com.ichi2.anki.cardviewer
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.libanki.SoundOrVideoTag
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CompletionHandler
@@ -13,14 +11,12 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.InternalForInheritanceCoroutinesApi
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.coroutines.CoroutineContext
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-@RunWith(AndroidJUnit4::class)
 @InternalForInheritanceCoroutinesApi
-class VideoPlayerTest : RobolectricTest() {
+class VideoPlayerTest {
     @Test
     fun `stops audio playback when paused`() {
         val v = VideoPlayer { JavascriptEvaluator { } }

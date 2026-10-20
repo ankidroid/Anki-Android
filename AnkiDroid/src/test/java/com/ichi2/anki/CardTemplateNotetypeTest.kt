@@ -9,6 +9,8 @@ import com.ichi2.anki.CardTemplateNotetype.ChangeType.DELETE
 import com.ichi2.anki.CardTemplateNotetype.TemplateChange
 import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.libanki.NotetypeJson
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.targetContext
 import org.json.JSONObject
 import org.junit.Assert
 import org.junit.Test
@@ -23,7 +25,7 @@ import java.io.Serializable
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
-class CardTemplateNotetypeTest : RobolectricTest() {
+class CardTemplateNotetypeTest : AndroidTest {
     @Test
     @Throws(Exception::class)
     fun testTempNoteTypeStorage() {

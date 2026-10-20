@@ -7,7 +7,6 @@ import android.net.Uri
 import androidx.media3.common.MediaItem
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.recorder.PlayerState.Empty
 import com.ichi2.anki.recorder.PlayerState.Failed
 import com.ichi2.anki.recorder.PlayerState.Loading
@@ -19,12 +18,15 @@ import kotlinx.coroutines.job
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasSize
+import org.junit.Rule
 import org.junit.Test
 import org.junit.experimental.categories.Category
+import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import java.io.File
@@ -35,7 +37,10 @@ import kotlin.time.Duration.Companion.seconds
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
-class VoicePlayerTest : RobolectricTest() {
+class VoicePlayerTest {
+    @get:Rule
+    val tempFolder = TemporaryFolder()
+
     private val playerStub = PlayerStub()
     private val recording by lazy { File(tempFolder.root, "recording.3gp") }
 

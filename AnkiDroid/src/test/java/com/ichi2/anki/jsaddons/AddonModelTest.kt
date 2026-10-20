@@ -3,9 +3,7 @@
 
 package com.ichi2.anki.jsaddons
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.utils.FileOperation
@@ -15,21 +13,17 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringEndsWith.endsWith
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertIs
 
-@RunWith(AndroidJUnit4::class)
-class AddonModelTest : RobolectricTest() {
+class AddonModelTest {
     private lateinit var validNpmPackageJson: File
     private lateinit var notValidNpmPackageJson: File
     private lateinit var addonsPackageListTestJson: String
 
     @Before
-    override fun setUp() {
-        super.setUp()
-
+    fun setUp() {
         validNpmPackageJson = File(FileOperation.getFileResource("valid-ankidroid-js-addon-test.json"))
         notValidNpmPackageJson = File(FileOperation.getFileResource("not-valid-ankidroid-js-addon-test.json"))
         addonsPackageListTestJson = FileOperation.getFileResource("test-js-addon.json")

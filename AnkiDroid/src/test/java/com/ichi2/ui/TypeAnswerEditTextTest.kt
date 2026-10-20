@@ -6,18 +6,25 @@ import android.os.LocaleList
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.settings.enums.DayTheme
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.ext.createInputConnection
+import com.ichi2.testutils.targetContext
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import org.robolectric.ParameterizedRobolectricTestRunner as Parameterized
 
 @RunWith(Parameterized::class)
-class TypeAnswerEditTextTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class TypeAnswerEditTextTest : AndroidTest {
     enum class AnswerField {
         FIXED_EDIT_TEXT,
         TYPE_ANSWER_EDIT_TEXT,

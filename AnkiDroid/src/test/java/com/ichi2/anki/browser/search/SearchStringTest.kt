@@ -2,20 +2,17 @@
 
 package com.ichi2.anki.browser.search
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.search.SearchNode
 import anki.search.searchNode
 import com.ichi2.anki.libanki.exception.InvalidSearchException
 import com.ichi2.anki.libanki.testutils.AnkiTest
 import com.ichi2.testutils.JvmTest
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 /** Tests for [SearchString] */
-@RunWith(AndroidJUnit4::class)
 class SearchStringTest : JvmTest() {
     @Test
     fun `valid searchString from string`() {

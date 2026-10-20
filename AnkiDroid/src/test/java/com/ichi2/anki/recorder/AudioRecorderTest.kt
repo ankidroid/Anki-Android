@@ -6,9 +6,10 @@ package com.ichi2.anki.recorder
 import android.media.MediaRecorder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.EmptyApplicationCategory
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.targetContext
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -31,7 +32,7 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 @Category(EmptyApplicationCategory::class)
-class AudioRecorderTest : RobolectricTest() {
+class AudioRecorderTest : AndroidTest {
     private val mockMediaRecorder = mockk<MediaRecorder>(relaxed = true)
 
     private fun createRecorder(): AudioRecorder {

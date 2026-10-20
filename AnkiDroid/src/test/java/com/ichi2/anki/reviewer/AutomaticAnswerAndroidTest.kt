@@ -3,16 +3,22 @@
 package com.ichi2.anki.reviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.reviewer.AutomaticAnswerAction.Companion.answerAction
+import com.ichi2.testutils.EmptyApplication
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
 import org.mockito.kotlin.mock
+import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class AutomaticAnswerAndroidTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class AutomaticAnswerAndroidTest : JvmTest() {
     @Test
     fun default_is_bury() {
         assertThat("no value", createInstance().settings.answerAction, equalTo(AutomaticAnswerAction.BURY_CARD))

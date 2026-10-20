@@ -4,23 +4,29 @@ package com.ichi2.anki.browser
 
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.EmptyApplicationCategory
 import com.ichi2.anki.browser.CardBrowserColumn.DECK
 import com.ichi2.anki.browser.CardBrowserColumn.FSRS_STABILITY
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
+import com.ichi2.testutils.AndroidTest
+import com.ichi2.testutils.EmptyApplication
 import com.ichi2.testutils.getSharedPrefs
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
+import org.junit.experimental.categories.Category
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 /** @see BrowserColumnCollection */
 @RunWith(AndroidJUnit4::class)
-class BrowserColumnCollectionTest : RobolectricTest() {
+@Config(application = EmptyApplication::class)
+@Category(EmptyApplicationCategory::class)
+class BrowserColumnCollectionTest : AndroidTest {
     val prefs = this.getSharedPrefs()
 
     @Test

@@ -16,10 +16,11 @@ import com.ichi2.anki.recorder.PlayerState
 import com.ichi2.anki.recorder.PlayerStub
 import com.ichi2.anki.recorder.RecorderState
 import com.ichi2.anki.recorder.VoiceRecorder
-import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.rules.MainDispatcherRule
 import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -36,7 +37,10 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 @RunWith(AndroidJUnit4::class)
-class AudioRecordingViewModelTest : JvmTest() {
+class AudioRecordingViewModelTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     @get:Rule
     val recordingsFolder = TemporaryFolder()
 

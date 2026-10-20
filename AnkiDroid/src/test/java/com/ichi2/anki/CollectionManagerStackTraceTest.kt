@@ -2,19 +2,17 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.exception.CollectionLockedException
+import com.ichi2.testutils.JvmTest
 import kotlinx.coroutines.test.StandardTestDispatcher
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
-@RunWith(AndroidJUnit4::class)
-class CollectionManagerStackTraceTest : RobolectricTest() {
+class CollectionManagerStackTraceTest : JvmTest() {
     @Test
     fun `opening failure records the withCol caller`() =
         runTest {

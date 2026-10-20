@@ -3,16 +3,14 @@
 
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.deckpicker.addVisibleToList
 import com.ichi2.anki.libanki.filterAndFlatten
 import com.ichi2.anki.libanki.sched.DeckNode
+import com.ichi2.testutils.JvmTest
 import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class DeckAdapterFilterTest : RobolectricTest() {
+class DeckAdapterFilterTest : JvmTest() {
     @Test
     fun verifyFilterResultsReturnsCorrectList() {
         val pattern = "Math"
