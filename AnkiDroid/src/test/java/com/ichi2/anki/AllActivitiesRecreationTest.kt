@@ -5,6 +5,8 @@ package com.ichi2.anki
 import android.os.Build
 import android.os.Bundle
 import androidx.core.content.edit
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterValuesProvider
 import com.ichi2.anki.account.AccountActivity
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.multimedia.MultimediaActivity
@@ -23,23 +25,20 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.RobolectricTestParameterInjector
 import org.robolectric.android.controller.ActivityController
 
 /**
  * Tests "Don't keep activities" for all activities in the manifest.
  *
  * @see ActivityList.allActivitiesAndIntents
- *
- * TODO: consider RobolectricTestParameterInjector after #14796 is fixed
  */
-@RunWith(ParameterizedRobolectricTestRunner::class)
+@RunWith(RobolectricTestParameterInjector::class)
 class AllActivitiesRecreationTest : RobolectricTest() {
-    @ParameterizedRobolectricTestRunner.Parameter
-    @JvmField // required for Parameter
-    var config: ActivityConfig? = null
+    @TestParameter(valuesProvider = ActivityLauncherProvider::class)
+    lateinit var config: ActivityConfig
 
-    private val launcher: ActivityLaunchParam get() = config!!.launcher
+    private val launcher: ActivityLaunchParam get() = config.launcher
 
     @Before
     fun startAsAnExistingUser() {
@@ -144,16 +143,15 @@ class AllActivitiesRecreationTest : RobolectricTest() {
         override fun toString(): String = launcher.simpleName
     }
 
-    companion object {
-        // Use the same sandbox as the other activity tests until the backend supports multiple classloaders.
-        @ParameterizedRobolectricTestRunner.Parameters(name = "{0}")
-        @JvmStatic // required for initParameters
-        fun initParameters(): List<ActivityConfig> =
+    class ActivityLauncherProvider : TestParameterValuesProvider() {
+        override fun provideValues(context: Context?): List<ActivityConfig> =
             ActivityList
                 .allActivitiesAndIntents()
                 .filterNot { handled.contains(it.activity) }
                 .map { ActivityConfig(it) }
+    }
 
+    companion object {
         /**
          * Activities which finish on the way up given what this test provides: an empty
          * collection, no card to review, no notetype and no widget id.
