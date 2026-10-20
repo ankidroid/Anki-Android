@@ -5,6 +5,8 @@ package com.ichi2.ui
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.Binding
+import com.ichi2.anki.reviewer.BindingTest
+import com.ichi2.anki.reviewer.BindingUnicodeCharacter
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -33,12 +35,26 @@ class BindingPreferenceTest {
         assertEquals(expected, getSampleBindings().toPreferenceString())
     }
 
+    @Test
+    fun `unicode characters and modifiers survive preference round trip`() {
+        val bindings =
+            listOf(
+                ReviewerBinding(Binding.UnicodeCharacter(BindingUnicodeCharacter('Ä'), BindingTest.allModifierKeys()), CardSide.QUESTION),
+                ReviewerBinding(Binding.UnicodeCharacter(BindingUnicodeCharacter(' ')), CardSide.ANSWER),
+                ReviewerBinding(Binding.UnicodeCharacter(BindingUnicodeCharacter('*')), CardSide.BOTH),
+            )
+        val expected = "1/r✅Ctrl+Alt+Shift+Ä0|r✅ 1|r✅*2"
+
+        assertEquals(expected, bindings.toPreferenceString())
+        assertEquals(bindings, ReviewerBinding.fromPreferenceString(expected))
+    }
+
     private fun getSampleBindings(): List<MappableBinding> =
         listOf(
             ReviewerBinding(Binding.unicode('a'), CardSide.BOTH),
             ReviewerBinding(Binding.unicode(' '), CardSide.ANSWER),
             // this one is important: ensure that "|" as a unicode char can't be used
-            ReviewerBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), CardSide.QUESTION),
+            ReviewerBinding(Binding.unicode(MappableBinding.PREF_SEPARATOR), CardSide.QUESTION),
             ReviewerBinding(Binding.gesture(Gesture.DOUBLE_TAP), CardSide.BOTH),
             ReviewerBinding(Binding.keyCode(12), CardSide.BOTH),
         )
