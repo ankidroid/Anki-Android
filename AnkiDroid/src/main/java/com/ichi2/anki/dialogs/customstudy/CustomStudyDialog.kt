@@ -137,9 +137,9 @@ class CustomStudyDialog : AnalyticsDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val option = selectedSubDialog ?: return
         parentFragmentManager.setFragmentResultListener(REQUEST_SELECT_TAGS, this) { _, bundle ->
             val tagsToInclude = bundle.getStringArrayList(RESULT_SELECTED_TAGS) ?: emptyList<String>()
-            val option = selectedSubDialog ?: return@setFragmentResultListener
             val selectedCardStateIndex = viewModel.selectedCardStateIndex
             if (selectedCardStateIndex == AdapterView.INVALID_POSITION) return@setFragmentResultListener
             val kind = viewModel.selectedKind
