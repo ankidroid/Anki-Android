@@ -5,6 +5,7 @@ package com.ichi2.anki.lint.rules
 
 import com.android.SdkConstants.TAG_PLURALS
 import com.android.SdkConstants.TAG_STRING
+import com.android.SdkConstants.TAG_STRING_ARRAY
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.detector.api.Implementation
 import com.android.tools.lint.detector.api.Issue
@@ -59,7 +60,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
 
     override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.VALUES
 
-    override fun getApplicableElements() = listOf(TAG_STRING, TAG_PLURALS)
+    override fun getApplicableElements() = listOf(TAG_STRING, TAG_PLURALS, TAG_STRING_ARRAY)
 
     override fun visitElement(
         context: XmlContext,
@@ -73,11 +74,13 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                 val isStringResource =
                     (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) &&
                         TAG_STRING == element.localName
-                val isPluralItem = child.nodeType == Node.ELEMENT_NODE && TAG_PLURALS == element.localName
+                val isItem =
+                    child.nodeType == Node.ELEMENT_NODE &&
+                        (TAG_PLURALS == element.localName || TAG_STRING_ARRAY == element.localName)
 
                 if (isStringResource) {
                     checkText(context, element, child.nodeValue)
-                } else if (isPluralItem) {
+                } else if (isItem) {
                     val sb = StringBuilder()
                     StringFormatDetector.addText(sb, child)
                     if (sb.isNotEmpty()) {
