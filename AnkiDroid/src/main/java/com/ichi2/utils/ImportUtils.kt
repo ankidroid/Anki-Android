@@ -281,7 +281,7 @@ object ImportUtils {
             } else {
                 sendShowImportFileDialogMsg(tempOutDir)
             }
-            return ImportResult.Success
+            return ImportResult.Success(file, tempOutDir)
         }
 
         fun isValidImportType(
@@ -636,7 +636,10 @@ object ImportUtils {
 }
 
 sealed class ImportResult {
-    data object Success : ImportResult()
+    data class Success(
+        val file: ImportResolution.ResolvedFile,
+        val path: String,
+    ) : ImportResult()
 
     data class Failure(
         val humanReadableMessage: String,

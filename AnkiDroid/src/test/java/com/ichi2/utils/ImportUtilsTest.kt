@@ -134,6 +134,35 @@ class ImportUtilsTest : RobolectricTest() {
         }
 
     @Test
+    fun `preparation keeps the filename resolved before copying`() {
+        var queries = 0
+        val importer =
+            object : FileImporter() {
+                override fun getFileNameFromContentProvider(
+                    context: Context,
+                    data: Uri,
+                ): String {
+                    queries++
+                    return if (queries == 1) "deck name.apkg" else "collection.colpkg"
+                }
+
+                override fun copyFileToCache(
+                    context: Context,
+                    data: Uri,
+                    tempPath: String,
+                ) = CacheFileResult.Success(tempPath)
+            }
+        val uri = "content://import/document/123".toUri()
+
+        val result = assertIs<ImportResult.Success>(importer.handleFileImport(targetContext, Intent(Intent.ACTION_VIEW, uri)))
+
+        assertIs<ImportResolution.DeckPackage>(result.file)
+        assertEquals(uri, result.file.source.uri)
+        assertEquals("deck name.apkg", File(Uri.decode(result.path)).name)
+        assertEquals(1, queries)
+    }
+
+    @Test
     fun `resolution reports missing filenames instead of assuming text`() {
         val intent = Intent(Intent.ACTION_VIEW).setDataAndType("content://import/document/123".toUri(), "text/plain")
 
