@@ -74,10 +74,12 @@ import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.message
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.dialogs.utils.title
+import com.ichi2.anki.libanki.Consts.DEFAULT_DECK_ID
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.model.SelectableDeck
 import com.ichi2.anki.navigation.AnkiDroidNavigator
 import com.ichi2.anki.observability.ChangeManager
+import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.reviewreminders.ScheduleRemindersFragment
 import com.ichi2.anki.settings.Prefs
@@ -97,6 +99,7 @@ import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.dispatchTouch
 import com.ichi2.testutils.ext.addBasicNoteWithOp
 import com.ichi2.testutils.ext.menu
+import com.ichi2.testutils.ext.snackbarText
 import com.ichi2.testutils.ext.text
 import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.revokeWritePermissions
@@ -167,6 +170,43 @@ class DeckPickerTest : RobolectricTest() {
     fun before() {
         RuntimeEnvironment.setQualifiers(qualifiers)
         setIntroductionSlidesShown(true)
+    }
+
+    @Test
+    fun `study shortcut on hidden Default shows the empty deck message`() {
+        val other = addDeck("Other")
+        col.setDeck(listOf(addBasicNote().firstCard().id), other)
+        assertEquals(DEFAULT_DECK_ID, col.decks.selected())
+        assertThat(col.sched.deckDueTree().find(DEFAULT_DECK_ID), nullValue())
+
+        deckPicker {
+            advanceRobolectricLooperUntil { deckPickerBinding.decks.adapter?.itemCount == 1 }
+            shadowOf(this).clearNextStartedActivities()
+
+            assertTrue(onKeyUp(KeyEvent.KEYCODE_S, KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_S)))
+            advanceRobolectricLooperUntil { snackbarText == getString(CommonString.empty_deck) }
+
+            assertEquals(DEFAULT_DECK_ID, col.decks.selected())
+            assertThat(shadowOf(this).nextStartedActivity, nullValue())
+        }
+    }
+
+    @Test
+    fun `study shortcut on an empty filtered deck opens the finished screen`() {
+        addBasicNote()
+        val filtered = col.decks.newFiltered("Filtered")
+
+        deckPicker {
+            advanceRobolectricLooperUntil { deckPickerBinding.decks.adapter?.itemCount == 2 }
+            shadowOf(this).clearNextStartedActivities()
+
+            assertTrue(onKeyUp(KeyEvent.KEYCODE_S, KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_S)))
+            advanceRobolectricLooperUntil { shadowOf(this).peekNextStartedActivity() != null }
+
+            val intent = assertNotNull(shadowOf(this).nextStartedActivity)
+            assertEquals(CongratsPage::class.java.name, intent.getStringExtra(SingleFragmentActivity.EXTRA_FRAGMENT_NAME))
+            assertEquals(filtered, col.decks.selected())
+        }
     }
 
     @Test
