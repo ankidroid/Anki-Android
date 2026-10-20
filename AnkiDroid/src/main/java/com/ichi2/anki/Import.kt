@@ -55,7 +55,10 @@ fun AnkiActivity.onSelectedPackageToImport(data: Intent) {
 
 fun Activity.onSelectedCsvForImport(data: Intent) {
     val path = ImportUtils.getFileCachedCopy(this, data) ?: return
+    openCsvImporter(path)
+}
 
+fun Activity.openCsvImporter(path: String) {
     val stackBuilder = TaskStackBuilder.create(this)
     stackBuilder.addNextIntentWithParentStack(Intent(this, DeckPicker::class.java))
     stackBuilder.addNextIntent(CsvImporterDestination(path))
