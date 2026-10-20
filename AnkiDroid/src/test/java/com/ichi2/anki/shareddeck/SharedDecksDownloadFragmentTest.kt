@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
@@ -28,11 +29,13 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mockStatic
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.atLeastOnce
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows.shadowOf
@@ -263,6 +266,24 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
     }
 
     @Test
+    fun `download manager rejecting the app folder downloads into its own storage instead`() {
+        val download = startDownload(rejectsAppStorage = true)
+        val deckUri = "content://downloads/all_downloads/1".toUri()
+
+        download.complete(localUri = deckUri)
+
+        val intent = assertNotNull(shadowOf(download.activity).nextStartedActivity)
+        assertEquals(IntentHandler::class.java.name, intent.component?.className)
+        assertEquals(deckUri, intent.data)
+        verify(crashReporter, never()).sendExceptionReport(any(), any(), any(), any())
+
+        download.fragment.binding.importSharedDeckButton
+            .performClick()
+        shadowOf(Looper.getMainLooper()).idle()
+        assertEquals(deckUri, shadowOf(download.activity).nextStartedActivity?.data)
+    }
+
+    @Test
     fun `download manager rejecting every destination offers retry instead of crashing`() {
         val failure = SecurityException("Unsupported path")
         val download = startDownload(enqueueFailure = failure)
@@ -315,14 +336,30 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
             complete()
         }
 
-    private fun startDownload(enqueueFailure: Exception? = null): Download {
+    private fun startDownload(
+        enqueueFailure: Exception? = null,
+        rejectsAppStorage: Boolean = false,
+    ): Download {
         val activity = startActivityNormallyOpenCollectionWithIntent(SharedDecksActivity::class.java, Intent())
+        return setupDownload(activity, enqueueFailure, rejectsAppStorage)
+    }
+
+    private fun setupDownload(
+        activity: SharedDecksActivity,
+        enqueueFailure: Exception? = null,
+        rejectsAppStorage: Boolean = false,
+    ): Download {
         activity.downloadManager =
             mock {
-                if (enqueueFailure != null) {
-                    on { enqueue(any()) } doThrow enqueueFailure
-                } else {
-                    on { enqueue(any()) } doReturn 1L
+                when {
+                    enqueueFailure != null -> on { enqueue(any()) } doThrow enqueueFailure
+                    rejectsAppStorage ->
+                        on { enqueue(any()) } doAnswer { invocation ->
+                            val destination = shadowOf(invocation.getArgument<DownloadManager.Request>(0)).destination
+                            if (destination != null) throw SecurityException("Unsupported path ${destination.path}")
+                            1L
+                        }
+                    else -> on { enqueue(any()) } doReturn 1L
                 }
                 on { query(any()) } doAnswer { downloadCursor(DownloadManager.STATUS_RUNNING) }
             }
@@ -346,7 +383,7 @@ class SharedDecksDownloadFragmentTest : RobolectricTest() {
         }
         shadowOf(Looper.getMainLooper()).idle()
         val request = argumentCaptor<DownloadManager.Request>()
-        verify(activity.downloadManager).enqueue(request.capture())
+        verify(activity.downloadManager, atLeastOnce()).enqueue(request.capture())
         return Download(activity, fragment, File(shadowOf(request.firstValue).destination.path!!))
     }
 
