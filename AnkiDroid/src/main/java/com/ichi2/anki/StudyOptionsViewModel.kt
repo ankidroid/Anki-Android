@@ -10,6 +10,9 @@ import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.libanki.Collection
 import com.ichi2.anki.libanki.DeckId
 import com.ichi2.anki.observability.undoableOp
+import com.ichi2.anki.study.DeckKind
+import com.ichi2.anki.study.StudyAvailability
+import com.ichi2.anki.study.currentDeckStudyState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -69,18 +72,18 @@ class StudyOptionsViewModel : ViewModel() {
      */
     private fun Collection.updateStateFromCollection() {
         val deck = decks.current()
-        val deckId = deck.id
-        val counts = sched.counts()
+        val study = currentDeckStudyState()
+        val deckId = study.deckId
         var buriedNew = 0
         var buriedLearning = 0
         var buriedReview = 0
         val tree = sched.deckDueTree(deckId)
         if (tree != null) {
-            buriedNew = tree.newCount - counts.new
-            buriedLearning = tree.learnCount - counts.lrn
-            buriedReview = tree.reviewCount - counts.rev
+            buriedNew = tree.newCount - study.newCardsAvailable
+            buriedLearning = tree.learnCount - study.learningCardsAvailable
+            buriedReview = tree.reviewCount - study.reviewCardsAvailable
         }
-        val isDynamic = deck.isFiltered
+        val isDynamic = study.kind == DeckKind.Filtered
         val fullName = deck.getString("name")
         val description =
             if (isDynamic) {
@@ -95,32 +98,31 @@ class StudyOptionsViewModel : ViewModel() {
             }
         val data =
             DeckStudyData(
-                newCardsToday = counts.new,
-                lrnCardsToday = counts.lrn,
-                revCardsToday = counts.rev,
+                newCardsToday = study.newCardsAvailable,
+                lrnCardsToday = study.learningCardsAvailable,
+                revCardsToday = study.reviewCardsAvailable,
                 buriedNew = buriedNew,
                 buriedLearning = buriedLearning,
                 buriedReview = buriedReview,
                 totalNewCards = sched.totalNewForCurrentDeck(),
-                numberOfCardsInDeck = decks.cardCount(deckId, includeSubdecks = true),
+                numberOfCardsInDeck = study.cardCount,
             )
 
         flowOfIsFilteredDeck.value = isDynamic
         flowOfHaveBuried.value = sched.haveBuried()
-        flowOfSelectedDeckId.value = decks.selected()
+        flowOfSelectedDeckId.value = study.deckId
         // Only resolve the media directory when a description will render it: an in-memory
         // collection has no media folder and `media.dir` would throw.
         flowOfMediaDir.value = if (!description.isNullOrEmpty()) media.dir else null
 
-        val totalDue = data.newCardsToday + data.lrnCardsToday + data.revCardsToday
         flowOfState.value =
             when {
-                data.numberOfCardsInDeck == 0 && !isDynamic ->
+                study.isEmptyRegularDeck ->
                     StudyOptionsState.Empty(
                         deckName = fullName,
                         data = data,
                     )
-                totalDue == 0 ->
+                study.availability == StudyAvailability.NoCardsAvailable ->
                     StudyOptionsState.Congrats(
                         deckName = fullName,
                         isDynamic = isDynamic,
