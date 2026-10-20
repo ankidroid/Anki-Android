@@ -24,11 +24,13 @@ class PageWebViewClientAssetTest : PageWebViewClientTestBase() {
         val policies = Jsoup.parse(bundledHtml).select("meta[http-equiv=content-security-policy]").map { it.attr("content") }
 
         // Pin the entire declaration, including the bootstrap script hash, to require review on backend updates.
-        val expectedPolicy = "script-src 'self' 'sha256-XS3vJEMX35yHnfJK0xeyGQsaLeoAMxwE7I43asI/SmY='"
+        // Backend updates are expected to change this hash and fail this test until the new declaration is reviewed.
+        val expectedPolicy = "script-src 'self' 'sha256-zbUXAZ9cNd1OhKazElPpdVvjYXz5xeBtJ0twbbVwB3o='"
         assertEquals(
             listOf(expectedPolicy),
             policies,
-            "Bundled SvelteKit CSP changed. Review the policy and the congrats exemption before updating this expectation.",
+            "Bundled SvelteKit CSP changed. This is expected after a backend update changes the bootstrap script hash. " +
+                "Review the policy and the congrats exemption before updating this expectation.",
         )
     }
 
