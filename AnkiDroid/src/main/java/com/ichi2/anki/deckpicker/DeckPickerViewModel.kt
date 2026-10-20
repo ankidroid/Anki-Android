@@ -118,7 +118,10 @@ class DeckPickerViewModel :
             if (tree == null) return@combine FlattenedDeckList.empty
 
             // TODO: use flowOfFocusedDeck once it's set on all instances
-            val currentDeckId = withCol { decks.current().getLong("id") }
+            // This flow can outlive the visible screen. Do not reopen the collection just to redraw it.
+            val currentDeckId =
+                withOpenColOrNull { decks.current().getLong("id") }
+                    ?: return@combine FlattenedDeckList.empty
             Timber.i("currentDeckId: %d", currentDeckId)
 
             FlattenedDeckList(
@@ -490,6 +493,8 @@ class DeckPickerViewModel :
                 focusedDeck = withCol { decks.current().id }
                 refreshUndoMenuState()
 
+                // Reopening can leave the counts and selection unchanged after a skipped display refresh.
+                flowOfRefreshDeckList.emit(Unit)
                 flowOfDecksReloaded.emit(Unit)
             }
         this.loadDeckCounts = loadDeckCounts
