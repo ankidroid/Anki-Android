@@ -41,6 +41,7 @@ import com.ichi2.anki.observability.ChangeManager
 import com.ichi2.anki.observability.undoableOp
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.sentenceCase
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.show
@@ -185,7 +186,7 @@ class CongratsPage :
     private fun onStudyMore() {
         launchCatchingTask {
             val customStudy = CustomStudyDialog.createInstance(deckId = withCol { decks.selected() })
-            customStudy.show(childFragmentManager, null)
+            requireActivity().showDialogFragment(customStudy)
         }
     }
 
