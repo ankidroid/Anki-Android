@@ -100,7 +100,6 @@ class CardTemplateNotetype(
     suspend fun saveToDatabase() {
         Timber.d("saveToDatabase() called")
         changes.dumpChanges()
-        clearTempNoteTypeFiles()
         val updated = notetype.deepClone()
         for ((i, template) in updated.templates.withIndex()) {
             template.setOrd(originalTemplateOrds[i])
@@ -108,6 +107,7 @@ class CardTemplateNotetype(
         undoableOp {
             notetypes.updateDict(updated)
         }
+        clearTempNoteTypeFiles()
     }
 
     fun addTemplateChange(
