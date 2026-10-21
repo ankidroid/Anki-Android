@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.ViewGroup.MarginLayoutParams
 import android.webkit.CookieManager
 import android.webkit.URLUtil
+import android.webkit.WebBackForwardList
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -58,13 +59,22 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
 
     private var shouldHistoryBeCleared = false
 
+    private var isReturningAfterLogin = false
+
+    private val pagesBeforeLogin = mutableListOf<String>()
+
     private var loginRequiredDialog: AlertDialog? = null
 
     private val allowedHosts = listOf(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
     private val onBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (binding.webView.canGoBack()) binding.webView.goBack()
+                if (isReturningAfterLogin) return
+                if (binding.webView.canGoBack()) {
+                    binding.webView.goBack()
+                } else {
+                    pagesBeforeLogin.removeLastOrNull()?.let { returnTo(it) }
+                }
             }
         }
 
@@ -83,7 +93,14 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
             isReload: Boolean,
         ) {
             super.doUpdateVisitedHistory(view, url, isReload)
-            onBackPressedCallback.isEnabled = binding.webView.canGoBack()
+            if (isReturningAfterLogin && url?.startsWith(SHARED_PAGES_PREFIX) == true) {
+                binding.webView.clearHistory()
+                isReturningAfterLogin = false
+            }
+            onBackPressedCallback.isEnabled = binding.webView.canGoBack() || pagesBeforeLogin.isNotEmpty()
+            if (url?.startsWith(AFTER_LOGIN_URL) == true && isLoggedInToAnkiWeb()) {
+                returnToSharedDecks()
+            }
         }
 
         override fun onPageFinished(
@@ -167,14 +184,30 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
     private fun redirectToLogin() {
         val url = getString(R.string.shared_decks_login_url)
         Timber.i("HTTP 429, redirecting to login: '$url'")
-        // TODO: the result of login is typically redirecting the user to their decks
-        // this should be improved
         binding.webView.loadUrl(url)
     }
 
     private fun redirectToSignUp() {
         val url = getString(R.string.shared_decks_sign_up_url)
         Timber.i("HTTP 429, redirecting to sign up: '$url'")
+        binding.webView.loadUrl(url)
+    }
+
+    private fun returnToSharedDecks() {
+        if (isReturningAfterLogin) return
+        val history = binding.webView.copyBackForwardList()
+        val sharedPages =
+            history.urlsBeforeCurrent
+                .filter { it.startsWith(SHARED_PAGES_PREFIX) }
+                .toList()
+        val url = sharedPages.lastOrNull() ?: return
+        Timber.d("Logged in to AnkiWeb, returning to '$url'")
+        pagesBeforeLogin += sharedPages.dropLast(1)
+        returnTo(url)
+    }
+
+    private fun returnTo(url: String) {
+        isReturningAfterLogin = true
         binding.webView.loadUrl(url)
     }
 
@@ -186,6 +219,9 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         const val ARG_DOWNLOAD_FILE = "DownloadFile"
 
         const val HTTP_STATUS_TOO_MANY_REQUESTS = 429
+
+        private const val AFTER_LOGIN_URL = "https://ankiweb.net/account/login?afterAuth=1"
+        private const val SHARED_PAGES_PREFIX = "https://ankiweb.net/shared/"
     }
 
     // Show WebView with AnkiWeb shared decks with the functionality to capture downloads and import decks.
@@ -280,6 +316,7 @@ class SharedDecksActivity : AnkiActivity(R.layout.activity_shared_decks) {
         if (item.itemId == R.id.home) {
             // R.id.home refers to a custom 'home' menu item defined in your app resources (res/menu/...).
             shouldHistoryBeCleared = true
+            pagesBeforeLogin.clear()
             binding.webView.loadUrl(resources.getString(R.string.shared_decks_url))
         } else if (item.itemId == android.R.id.home) {
             // android.R.id.home refers to the system-provided "up" button in the app toolbar
@@ -341,3 +378,6 @@ internal fun isLoggedInToAnkiWeb(): Boolean =
         Timber.w(e, "Could not determine login status")
         false
     }
+
+private val WebBackForwardList.urlsBeforeCurrent: Sequence<String>
+    get() = (0 until currentIndex).asSequence().map { getItemAtIndex(it).url }
