@@ -67,4 +67,18 @@ class ThrowableFilterServiceTest {
 
         assertTrue(ThrowableFilterService.shouldDiscardThrowable(exception))
     }
+
+    @Test
+    fun `PII in suppressed exceptions is filtered`() {
+        val exception = Exception()
+        val suppressed = Exception()
+        suppressed.addSuppressed(BackendSyncServerMessageException(backendError {}))
+        exception.addSuppressed(suppressed)
+
+        assertFalse(exception.safeFromPII())
+        assertTrue(ThrowableFilterService.shouldDiscardThrowable(exception))
+
+        suppressed.addSuppressed(exception)
+        assertFalse(exception.safeFromPII())
+    }
 }
