@@ -10,6 +10,27 @@ import timber.log.Timber
 class CardTemplateChanges {
     var templateChanges = ArrayList<TemplateChange>()
 
+    /** Database ordinal for a UI position, or null for a template added in this session. */
+    fun getOriginalOrdinal(ordinal: Int): Int? = originalOrdinalBefore(ordinal, templateChanges.size)
+
+    private fun originalOrdinalBefore(
+        ordinal: Int,
+        endIndex: Int,
+    ): Int? {
+        var position = ordinal
+        for (i in endIndex - 1 downTo 0) {
+            val change = templateChanges[i]
+            when (change.type) {
+                ChangeType.ADD -> {
+                    if (position == change.ordinal) return null
+                    if (position > change.ordinal) position--
+                }
+                ChangeType.DELETE -> if (position >= change.ordinal) position++
+            }
+        }
+        return position
+    }
+
     /**
      * Template deletes shift card ordinals in the database. To operate without saving, we must keep track to apply in order.
      * In addition, we don't want to persist a template add just to delete it later, so we combine those if they happen
@@ -56,48 +77,11 @@ class CardTemplateChanges {
      * @return int[] of all ordinals currently in the database, pending delete
      */
     fun getDeleteDbOrds(ord: Int): IntArray {
-        dumpChanges()
-        Timber.d("getDeleteDbOrds()")
-
-        // array containing the original / db-relative ordinals for all pending deletes plus the proposed one
-        val deletedDbOrds = ArrayList<Int>(templateChanges.size)
-
-        // For each entry in the changes list - and the proposed delete - scan for deletes to get original ordinal
-        for (i in 0..templateChanges.size) {
-            var ordinalAdjustment = 0
-
-            // We need an initializer. Though proposed change is checked last, it's a reasonable default initializer.
-            var currentChange = TemplateChange(ord, ChangeType.DELETE)
-            if (i < templateChanges.size) {
-                // Until we exhaust the pending change list we will use them
-                currentChange = templateChanges[i]
+        val deleted =
+            templateChanges.mapIndexedNotNull { index, change ->
+                if (change.type == ChangeType.DELETE) originalOrdinalBefore(change.ordinal, index) else null
             }
-
-            // If the current pending change isn't a delete, it is unimportant here
-            if (currentChange.type !== ChangeType.DELETE) {
-                continue
-            }
-
-            // If it is a delete, scan previous deletes and shift as necessary for original ord
-            for (j in 0 until i) {
-                val previousChange = templateChanges[j]
-
-                // Is previous change a delete? Lower ordinal than current change?
-                if (previousChange.type === ChangeType.DELETE && previousChange.ordinal <= currentChange.ordinal) {
-                    // If so, that is the case where things shift. It means our ordinals moved and original ord is higher
-                    ordinalAdjustment++
-                }
-            }
-
-            // We know how many times ordinals smaller than the current were deleted so we have the total adjustment
-            // Save this pending delete at it's original / db-relative position
-            deletedDbOrds.add(currentChange.ordinal + ordinalAdjustment)
-        }
-        val deletedDbOrdInts = IntArray(deletedDbOrds.size)
-        for (i in deletedDbOrdInts.indices) {
-            deletedDbOrdInts[i] = deletedDbOrds[i]
-        }
-        return deletedDbOrdInts
+        return (deleted + listOfNotNull(getOriginalOrdinal(ord))).toIntArray()
     }
 
     fun dumpChanges() {
@@ -200,43 +184,19 @@ class CardTemplateChanges {
             if (changesIndex >= noteType.templateChanges.size) {
                 return -1
             }
-            var ordinalAdjustment = 0
             val change = noteType.templateChanges[changesIndex]
-            val ordinalToInspect = change.ordinal
-            for (i in noteType.templateChanges.size - 1 downTo changesIndex) {
-                val oldChange = noteType.templateChanges[i]
-                val currentOrdinal = change.ordinal
-                when (oldChange.type) {
+            if (change.type != ChangeType.ADD) return -1
+            var position = change.ordinal
+            for (later in noteType.templateChanges.drop(changesIndex + 1)) {
+                when (later.type) {
+                    ChangeType.ADD -> if (position >= later.ordinal) position++
                     ChangeType.DELETE -> {
-                        // Deleting an ordinal at or below us? Adjust our comparison basis...
-                        if (currentOrdinal - ordinalAdjustment <= ordinalToInspect) {
-                            ordinalAdjustment++
-                            continue
-                        }
-                        Timber.d(
-                            "getAdjustedAddOrdinalAtChangeIndex() contemplating delete at index %s, current ord adj %s",
-                            i,
-                            ordinalAdjustment,
-                        )
+                        if (position == later.ordinal) return -1
+                        if (position > later.ordinal) position--
                     }
-                    ChangeType.ADD ->
-                        if (changesIndex == i) {
-                            // something we added this session
-                            Timber.d(
-                                "getAdjustedAddOrdinalAtChangeIndex() pending add found at at index %s, old ord/adjusted ord %s/%s",
-                                i,
-                                currentOrdinal,
-                                currentOrdinal - ordinalAdjustment,
-                            )
-                            return currentOrdinal - ordinalAdjustment
-                        }
                 }
             }
-            Timber.d(
-                "getAdjustedAddOrdinalAtChangeIndex() determined changesIndex %s was not a pending add",
-                changesIndex,
-            )
-            return -1
+            return position
         }
     }
 }
