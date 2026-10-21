@@ -894,16 +894,7 @@ open class CardTemplateEditor : AnkiActivity(R.layout.activity_card_template_edi
 
                 // use the ord of the selected template, not the ord of the currently edited card
 
-                val ord =
-                    // deletions change ordinals, don't try to preview metadata if this occurs.
-                    if (tempModel.templateChanges.any {
-                            it.type == CardTemplateNotetype.ChangeType.DELETE
-                        }
-                    ) {
-                        null
-                    } else {
-                        templateEditor.ord
-                    }
+                val ord = tempModel.getOriginalOrdinal(templateEditor.ord)
 
                 val dialog =
                     InsertFieldDialog.newInstance(
