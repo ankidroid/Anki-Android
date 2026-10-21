@@ -25,10 +25,9 @@ import com.ichi2.anki.common.crashreporting.CrashReportService
 import com.ichi2.anki.common.exception.ManuallyReportedException
 import com.ichi2.anki.common.time.TimeManager
 import com.ichi2.anki.compat.CompatHelper
-import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
-import com.ichi2.anki.openCsvImporter
+import com.ichi2.anki.openImport
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.ui.internationalization.sentenceCase
@@ -166,11 +165,7 @@ object ImportUtils {
         ): ImportResult =
             prepareImport(activity, intent ?: Intent().setData(importPathUri)).also { result ->
                 if (result is ImportResult.Success) {
-                    if (result.file is ImportResolution.Text) {
-                        activity.openCsvImporter(result.path)
-                    } else {
-                        sendShowImportFileDialogMsg(result.path)
-                    }
+                    activity.openImport(result)
                 }
             }
 
@@ -574,24 +569,6 @@ object ImportUtils {
                     }
                     else -> null
                 }
-            }
-
-            /**
-             * Send a Message to AnkiDroidApp so that the DialogMessageHandler shows the Import apkg dialog.
-             * @param importPath path of to apkg file which will be imported
-             */
-            private fun sendShowImportFileDialogMsg(importPath: String) {
-                // Get the filename from the path
-                val filename = File(importPath).name
-
-                val dialogMessage =
-                    if (isCollectionPackage(filename)) {
-                        CollectionImportReplace(importPath)
-                    } else {
-                        CollectionImportAdd(importPath)
-                    }
-                // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-                DialogHandler.storeMessage(dialogMessage.toMessage())
             }
 
             @SuppressLint("LocaleRootUsage")

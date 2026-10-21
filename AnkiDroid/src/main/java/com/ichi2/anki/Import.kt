@@ -13,11 +13,13 @@ import com.ichi2.anki.common.destinations.addNextIntent
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.storage.CollectionHelper
 import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
+import com.ichi2.utils.ImportResolution
 import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -64,6 +66,25 @@ fun Activity.openCsvImporter(path: String) {
     stackBuilder.addNextIntent(CsvImporterDestination(path))
 
     stackBuilder.startActivities()
+}
+
+/**
+ * Open prepared text immediately, or store a package confirmation for the caller or onResume.
+ * Uses the cached path; package confirmations are selected from its filename.
+ */
+fun Activity.openImport(result: ImportResult.Success) {
+    if (result.file is ImportResolution.Text) {
+        openCsvImporter(result.path)
+        return
+    }
+    val filename = File(result.path).name
+    val message =
+        if (ImportUtils.isCollectionPackage(filename)) {
+            ImportUtils.CollectionImportReplace(result.path)
+        } else {
+            ImportUtils.CollectionImportAdd(result.path)
+        }
+    DialogHandler.storeMessage(message.toMessage())
 }
 
 fun AnkiActivity.showImportDialog(
