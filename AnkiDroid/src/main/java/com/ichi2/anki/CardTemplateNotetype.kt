@@ -117,6 +117,9 @@ class CardTemplateNotetype(
 
     fun getDeleteDbOrds(ord: Int): IntArray = changes.getDeleteDbOrds(ord)
 
+    /** Database ordinal for an editor position, or null for an unsaved addition. */
+    fun getOriginalOrdinal(ordinal: Int): CardOrdinal? = originalTemplateOrds[ordinal]
+
     companion object {
         private const val STATE_EDITED_NOTE_TYPE_FILENAME = "editedNoteTypeFilename"
         private const val STATE_TEMPLATE_CHANGES = "mTemplateChanges"
