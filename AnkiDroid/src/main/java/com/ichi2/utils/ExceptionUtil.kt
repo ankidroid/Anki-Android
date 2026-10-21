@@ -11,6 +11,10 @@ import java.io.PrintWriter
 import java.io.StringWriter
 
 object ExceptionUtil {
+    /** This throwable followed lazily by its causes. Cyclic chains repeat instances indefinitely. */
+    internal val Throwable.causeChain: Sequence<Throwable>
+        get() = generateSequence(this) { it.cause }
+
     @CheckResult
     fun getExceptionMessage(e: Throwable?): String = getExceptionMessage(e, "\n")
 
