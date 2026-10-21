@@ -195,6 +195,10 @@ class DeckPickerInsetsTest : RobolectricTest() {
             // delete every deck: the deck picker enters the initial state
             col.decks.remove(listOf("Test Deck 0", "Test Deck 1").map { col.decks.id(it) })
             deckPicker.updateDeckList()
+            // Refreshing the decks runs on IO: draining the main looper alone may finish first.
+            advanceRobolectricLooperUntil(lazyMessage = { "the empty collection placeholder should be shown" }) {
+                deckPicker.deckPickerBinding.noDecksPlaceholder.isVisible
+            }
             deckPicker.layoutForTest()
             check(deckPicker.fabBottomMargin == 0) { "the FAB should be unraised initially" }
 
@@ -202,6 +206,9 @@ class DeckPickerInsetsTest : RobolectricTest() {
             // so no layout pass fires on it
             addDeck("A Deck")
             deckPicker.updateDeckList()
+            advanceRobolectricLooperUntil(lazyMessage = { "the deck list should be shown again" }) {
+                deckPicker.deckPickerBinding.deckPickerContent.isVisible
+            }
             deckPicker.layoutForTest()
 
             assertThat(

@@ -4,7 +4,7 @@ package com.ichi2.anki
 
 import android.content.Intent
 import androidx.core.content.edit
-import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooper
+import androidx.core.view.isVisible
 import com.ichi2.anki.RobolectricTest.Companion.advanceRobolectricLooperUntil
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.deckpicker.DeckPickerViewModel
@@ -37,7 +37,10 @@ fun withDeckPicker(
     }
     val deckPicker =
         test.startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).also {
-            advanceRobolectricLooper() // may be a fix for flaky tests
+            // Deck refreshes run on IO, so draining the main looper alone may finish first.
+            advanceRobolectricLooperUntil(lazyMessage = { "the deck list or empty collection placeholder should be shown" }) {
+                it.deckPickerBinding.deckPickerContent.isVisible || it.deckPickerBinding.noDecksPlaceholder.isVisible
+            }
         }
     block(deckPicker)
 }
