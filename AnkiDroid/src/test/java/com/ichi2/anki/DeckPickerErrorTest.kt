@@ -3,8 +3,10 @@
 package com.ichi2.anki
 
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
+import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.BackendError
 import anki.backend.backendError
@@ -12,6 +14,8 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.decks.DeckTreeNode
 import com.ichi2.anki.backend.DatabaseCorruption
+import com.ichi2.anki.common.preferences.sharedPrefs
+import com.ichi2.anki.deckpicker.DeckPickerViewModel
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerContextMenuResult
@@ -20,6 +24,7 @@ import com.ichi2.anki.dialogs.startDeletingEmptyCards
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.anki.libanki.DeckId
+import com.ichi2.testutils.BackupManagerTestUtilities
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbCorruptException
@@ -34,6 +39,8 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowDialog
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNotSame
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
@@ -72,6 +79,46 @@ class DeckPickerErrorTest : RobolectricTest() {
                 lifecycle.currentState = Lifecycle.State.RESUMED
             }
             assertErrorShown()
+        }
+    }
+
+    @Test
+    fun `unacknowledged deck deletion error survives activity recreation`() {
+        useBackend {
+            object : Backend() {
+                override fun removeDecks(dids: Iterable<Long>): OpChangesWithCount = throw failure
+            }
+        }
+        val deckId = addDeck("Deck")
+        setIntroductionSlidesShown(true)
+        BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
+        targetContext.sharedPrefs().edit { putBoolean("backupPromptDisabled", true) }
+        throwOnShowError = false
+
+        ActivityScenario.launch(DeckPicker::class.java).use { scenario ->
+            lateinit var retainedViewModel: DeckPickerViewModel
+            lateinit var originalDialog: AlertDialog
+            scenario.onActivity { deckPicker ->
+                deckPicker.viewModel.awaitStartup()
+                retainedViewModel = deckPicker.viewModel
+                val job = deckPicker.deleteDeck(deckId)
+                advanceRobolectricLooperUntil { job.isCompleted }
+                assertErrorShown()
+                originalDialog = ShadowDialog.getLatestDialog() as AlertDialog
+            }
+
+            // Recreate without dismissing the error, as for a font-scale configuration change.
+            scenario.recreate()
+            scenario.onActivity { deckPicker ->
+                assertSame(retainedViewModel, deckPicker.viewModel)
+                deckPicker.viewModel.awaitStartup()
+                advanceRobolectricLooper()
+                val restoredDialog = ShadowDialog.getLatestDialog() as? AlertDialog
+                assertNotNull(restoredDialog, "The unacknowledged error must be shown again")
+                assertNotSame(originalDialog, restoredDialog, "The old activity's dialog must not count as restored")
+                assertTrue(restoredDialog.isShowing)
+                assertEquals(failure.localizedMessage, getAlertDialogText(checkDismissed = true))
+            }
         }
     }
 
