@@ -18,6 +18,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runCurrent
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -102,6 +103,19 @@ class MessageQueueObserverTest : RobolectricTest() {
             waiting.cancel()
 
             assertTrue(shadowOf(dialog).hasBeenDismissed())
+        }
+
+    @Test
+    fun `awaiting a dialog returns once it is dismissed`() =
+        runTest {
+            val dialog = AlertDialog.Builder(ContextThemeWrapper(targetContext, CommonR.style.Theme_AnkiDroid)).show()
+            val waiting = launch(start = CoroutineStart.UNDISPATCHED) { dialog.awaitDismissal() }
+            assertTrue(waiting.isActive)
+
+            dialog.dismiss()
+            runCurrent()
+
+            assertTrue(waiting.isCompleted)
         }
 
     private fun observeInFragment(observe: Fragment.() -> Unit): ActivityController<EmptyAnkiActivity> =
