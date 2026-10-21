@@ -2,6 +2,8 @@
 
 package com.ichi2.anki.account
 
+import android.os.Looper
+import android.view.WindowManager
 import android.widget.Button
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.material.textfield.TextInputEditText
@@ -16,6 +18,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.Shadows.shadowOf
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeSource
 
 @RunWith(AndroidJUnit4::class)
 class LoginFragmentTest : RobolectricTest() {
@@ -43,8 +48,17 @@ class LoginFragmentTest : RobolectricTest() {
         activity.findViewById<TextInputEditField>(R.id.password).setText("hunter2")
 
         activity.findViewById<Button>(R.id.login_button).performClick()
-        advanceRobolectricLooper()
+        activity.waitForLoginToFinish()
 
         assertThat(getAlertDialogText(true), containsString("Advanced settings"))
+    }
+
+    private fun AccountActivity.waitForLoginToFinish() {
+        val start = TimeSource.Monotonic.markNow()
+        while (window.attributes.flags and WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE != 0) {
+            check(start.elapsedNow() < 10.seconds) { "login did not finish" }
+            Thread.sleep(10)
+            shadowOf(Looper.getMainLooper()).idle()
+        }
     }
 }
