@@ -74,6 +74,11 @@ fun Bundle.requireBoolean(key: String): Boolean {
     return getBoolean(key)
 }
 
+fun Bundle.requireLongArray(key: String): LongArray {
+    check(containsKey(key)) { "key: '$key' not found" }
+    return requireNotNull(getLongArray(key)) { "LongArray in '$key' was null" }
+}
+
 /**
  * Returns the value associated with the given key
 
