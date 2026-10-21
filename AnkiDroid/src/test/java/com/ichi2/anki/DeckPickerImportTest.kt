@@ -20,6 +20,8 @@ import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.testutils.SingleViewModelFactory
 import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.utils.ImportResolution
+import com.ichi2.utils.ImportResult
 import com.ichi2.utils.ImportUtils
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
@@ -94,6 +96,50 @@ class DeckPickerImportTest : RobolectricTest() {
             executor.shutdownNow()
             File(cachedPath).delete()
         }
+    }
+
+    @Test
+    fun `prepared deck waits for resume and selects Add from its resolved type`() {
+        assertPreparedConfirmation(
+            ImportResult.Success(
+                ImportResolution.DeckPackage(ImportResolution.Source("content://unavailable/deck.apkg".toUri(), "deck.apkg")),
+                "/cache/cached.colpkg",
+            ),
+            ImportDialog.Type.DIALOG_IMPORT_ADD_CONFIRM,
+        )
+    }
+
+    @Test
+    fun `prepared collection waits for resume and selects Replace from its resolved type`() {
+        assertPreparedConfirmation(
+            ImportResult.Success(
+                ImportResolution.CollectionPackage(ImportResolution.Source("content://unavailable/backup.colpkg".toUri(), "backup.colpkg")),
+                "/cache/cached.apkg",
+            ),
+            ImportDialog.Type.DIALOG_IMPORT_REPLACE_CONFIRM,
+        )
+    }
+
+    private fun assertPreparedConfirmation(
+        result: ImportResult.Success,
+        type: ImportDialog.Type,
+    ) {
+        val controller = startActivityControllerNormallyOpenCollectionWithIntent(DeckPickerImport::class.java, Intent())
+        val activity = controller.get()
+
+        activity.openImport(result)
+        advanceRobolectricLooper()
+        assertTrue(activity.importConfirmations.isEmpty(), "The caller or onResume must dispatch the stored confirmation")
+
+        controller
+            .pause()
+            .stop()
+            .start()
+            .resume()
+            .visible()
+        advanceRobolectricLooper()
+
+        activity.assertSingleImportConfirmation(type, result.path)
     }
 
     private fun DeckPickerImport.assertSingleImportConfirmation(
