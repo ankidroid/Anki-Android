@@ -27,6 +27,16 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 @RunWith(AndroidJUnit4::class)
 class CardTemplateNotetypeTest : AndroidTest {
     @Test
+    fun `deletion checks reverse earlier deletions in order`() {
+        // Starting with A, B, C, D, delete B and then A before proposing C.
+        val changes = CardTemplateChanges()
+        changes.addTemplateChange(DELETE, 1)
+        changes.addTemplateChange(DELETE, 0)
+
+        Assert.assertArrayEquals(intArrayOf(1, 0, 2), changes.getDeleteDbOrds(0))
+    }
+
+    @Test
     @Throws(Exception::class)
     fun testTempNoteTypeStorage() {
         // Start off with clean state in the cache dir
@@ -99,23 +109,23 @@ class CardTemplateNotetypeTest : AndroidTest {
         val expected1 = arrayOf(TemplateChange(3, ADD))
         // 3 templates and one change now
         assertTemplateChangesEqual(expected1, tempNotetype.templateChanges)
-        Assert.assertArrayEquals(intArrayOf(3), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(), tempNotetype.getDeleteDbOrds(3))
 
         tempNotetype.addTemplateChange(DELETE, 2)
         // 2 templates and two changes now
         val expected2 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE))
         assertTemplateChangesEqual(expected2, tempNotetype.templateChanges)
-        Assert.assertArrayEquals(intArrayOf(2, 4), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(2, 0), tempNotetype.getDeleteDbOrds(0))
 
         tempNotetype.addTemplateChange(DELETE, 1)
         // 1 template and three changes now
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
         val expected3 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE))
         assertTemplateChangesEqual(expected3, tempNotetype.templateChanges)
 
         tempNotetype.addTemplateChange(ADD, 2)
         // 2 templates and 4 changes now
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
         val expected4 = arrayOf(TemplateChange(3, ADD), TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(2, ADD))
         assertTemplateChangesEqual(expected4, tempNotetype.templateChanges)
 
@@ -128,19 +138,19 @@ class CardTemplateNotetypeTest : AndroidTest {
         // So the first template add should be negated by this delete, and the second template add should slide down to 1
         tempNotetype.addTemplateChange(DELETE, 1)
         // 1 template and 3 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
         val expected5 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD))
         assertTemplateChangesEqual(expected5, tempNotetype.templateChanges)
 
         tempNotetype.addTemplateChange(ADD, 2)
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
         val expected6 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
         assertTemplateChangesEqual(expected6, tempNotetype.templateChanges)
 
         tempNotetype.addTemplateChange(ADD, 3)
         // 2 template and 4 changes now (the delete just cancelled out one of the adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
         val expected7 =
             arrayOf(
                 TemplateChange(2, DELETE),
@@ -153,7 +163,7 @@ class CardTemplateNotetypeTest : AndroidTest {
 
         tempNotetype.addTemplateChange(DELETE, 3)
         // 1 template and 3 changes now (two deletes cancelled out adds)
-        Assert.assertArrayEquals(intArrayOf(2, 1, 5), tempNotetype.getDeleteDbOrds(3))
+        Assert.assertArrayEquals(intArrayOf(2, 1, 0), tempNotetype.getDeleteDbOrds(0))
         val expected8 = arrayOf(TemplateChange(2, DELETE), TemplateChange(1, DELETE), TemplateChange(1, ADD), TemplateChange(2, ADD))
         assertTemplateChangesEqual(expected8, tempNotetype.templateChanges)
     }
