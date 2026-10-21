@@ -135,7 +135,20 @@ class SyncWorker(
                     }
                 try {
                     withCol {
-                        syncCollection(auth, syncMedia = false)
+                        val response = syncCollection(auth, syncMedia = false)
+                        Timber.i("Sync required: %s", response.required)
+                        when (response.required) {
+                            SyncCollectionResponse.ChangesRequired.NO_CHANGES -> _loadScheduler()
+                            SyncCollectionResponse.ChangesRequired.FULL_SYNC,
+                            SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD,
+                            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD,
+                            -> Timber.d("One-way sync required: Skipping background sync")
+                            SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
+                            SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
+                            null,
+                            -> TODO("should never happen")
+                        }
+                        response
                     }
                 } finally {
                     Timber.d("Collection sync completed. Cancelling monitor...")
@@ -143,34 +156,15 @@ class SyncWorker(
                     monitor.cancel()
                 }
             }
-        Timber.i("Sync required: %s", response.required)
-        when (response.required) {
-            // a successful sync returns this value
-            SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
-                withCol { _loadScheduler() } // scheduler version may have changed
-                if (!syncMedia) return
-                val syncAuth =
-                    if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
-                        Prefs.currentSyncUri = response.newEndpoint
-                        auth.withEndpoint(response.newEndpoint)
-                    } else {
-                        auth
-                    }
-                syncMedia(syncAuth)
+        if (response.required != SyncCollectionResponse.ChangesRequired.NO_CHANGES || !syncMedia) return
+        val syncAuth =
+            if (response.hasNewEndpoint() && response.newEndpoint.isNotEmpty()) {
+                Prefs.currentSyncUri = response.newEndpoint
+                auth.withEndpoint(response.newEndpoint)
+            } else {
+                auth
             }
-            SyncCollectionResponse.ChangesRequired.FULL_SYNC,
-            SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD,
-            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD,
-            -> {
-                Timber.d("One-way sync required: Skipping background sync")
-            }
-            SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
-            SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
-            null,
-            -> {
-                TODO("should never happen")
-            }
-        }
+        syncMedia(syncAuth)
     }
 
     private suspend fun syncMedia(auth: SyncAuth) {
